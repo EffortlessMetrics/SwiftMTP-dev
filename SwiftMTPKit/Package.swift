@@ -31,7 +31,7 @@ let package = Package(
             swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     // libusb via Homebrew for dev (dynamic)
-    .systemLibrary(name: "CLibusb", pkgConfig: "libusb-1.0", providers: [.brew(["libusb"])]),
+    .systemLibrary(name: "CLibusb", path: "Sources/CLibusb", pkgConfig: "libusb-1.0", providers: [.brew(["libusb"])]),
 
     .target(name: "SwiftMTPTransportLibUSB",
             dependencies: [
@@ -51,6 +51,7 @@ let package = Package(
 
     .executableTarget(name: "swiftmtp-cli",
                       dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPSync"],
+                      path: "Sources/Tools/swiftmtp-cli",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .testTarget(name: "CoreTests", dependencies: ["SwiftMTPCore"]),

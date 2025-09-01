@@ -1,0 +1,5 @@
+module CLibusb [system] {
+  header "/usr/local/include/libusb-1.0/libusb.h"
+  link "usb-1.0"
+  export *
+}
