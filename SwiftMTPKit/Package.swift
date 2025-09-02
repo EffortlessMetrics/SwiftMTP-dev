@@ -11,6 +11,8 @@ let package = Package(
     .library(name: "SwiftMTPTransportLibUSB", targets: ["SwiftMTPTransportLibUSB"]),
     .library(name: "SwiftMTPIndex", targets: ["SwiftMTPIndex"]),
     .library(name: "SwiftMTPSync", targets: ["SwiftMTPSync"]),
+    .library(name: "SwiftMTPXPC", targets: ["SwiftMTPXPC"]),
+    .library(name: "SwiftMTPFileProvider", targets: ["SwiftMTPFileProvider"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
   ],
   dependencies: [
@@ -48,6 +50,14 @@ let package = Package(
 
     .target(name: "SwiftMTPSync",
             dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPObservability", .product(name: "SQLite", package: "SQLite.swift")],
+            swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+
+    .target(name: "SwiftMTPXPC",
+            dependencies: ["SwiftMTPCore"],
+            swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+
+    .target(name: "SwiftMTPFileProvider",
+            dependencies: ["SwiftMTPXPC"],
             swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .executableTarget(name: "swiftmtp-cli",
