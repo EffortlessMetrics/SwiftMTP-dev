@@ -1,8 +1,8 @@
 import Foundation
 
 // PTP/MTP Unicode String format: count-prefixed UTF-16LE
-struct PTPString {
-    static func parse(from data: Data, at offset: inout Int) -> String? {
+public struct PTPString {
+    public static func parse(from data: Data, at offset: inout Int) -> String? {
         guard offset + 1 <= data.count else { return nil }
 
         // Read string length (number of Unicode characters, not bytes)
@@ -37,7 +37,7 @@ struct PTPString {
         return String(utf16CodeUnits: utf16Array, count: utf16Array.count)
     }
 
-    static func encode(_ string: String) -> Data {
+    public static func encode(_ string: String) -> Data {
         var data = Data()
 
         if string.isEmpty {
