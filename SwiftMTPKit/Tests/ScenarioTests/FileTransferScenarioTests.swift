@@ -80,7 +80,7 @@ struct FileTransferScenarioTests {
         await link.close()
     }
 
-    @Test("Transfer cancellation works")
+    @Test("Transfer cancellation works with timing validation")
     func testTransferCancellation() async throws {
         // Create mock transport
         let mockData = MockTransportFactory.deviceData(for: .androidPixel7)
@@ -106,7 +106,8 @@ struct FileTransferScenarioTests {
                 try await device.read(handle: firstObject.handle, range: nil, to: tempURL)
             }
 
-            // Cancel immediately
+            // Measure cancellation latency
+            let cancelStart = Date()
             downloadTask.cancel()
 
             // Wait for cancellation
@@ -114,9 +115,17 @@ struct FileTransferScenarioTests {
                 _ = try await downloadTask.value
                 Issue.record("Expected task to be cancelled")
             } catch {
+                let cancelLatency = Date().timeIntervalSince(cancelStart)
+
                 // Expected to catch cancellation
-                if !Task.isCancelled && !(error is CancellationError) {
-                    Issue.record("Unexpected error: \(error)")
+                if Task.isCancelled || error is CancellationError {
+                    print("✅ Transfer cancelled in \(String(format: "%.3f", cancelLatency * 1000))ms")
+
+                    // Validate cancellation is reasonably fast (< 1 second)
+                    #expect(cancelLatency < 1.0,
+                           "Cancellation took too long: \(String(format: "%.3f", cancelLatency * 1000))ms")
+                } else {
+                    Issue.record("Unexpected error during cancellation: \(error)")
                 }
             }
 
