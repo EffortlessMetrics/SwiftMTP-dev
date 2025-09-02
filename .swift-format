@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "rules": {
+    "AllPublicDeclarationsHaveDocumentation": false,
+    "AlwaysUseLowerCamelCase": true,
+    "DoNotUseSemicolons": true,
+    "NoParensAroundConditions": true,
+    "NoVoidReturnOnFunctionSignature": true,
+    "UseEarlyExits": true
+  },
+  "indentation": {
+    "spaces": 2
+  },
+  "lineBreakAroundMultilineExpressionChainComponents": true
+}
