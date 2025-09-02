@@ -50,7 +50,7 @@ let package = Package(
             swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .executableTarget(name: "swiftmtp-cli",
-                      dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPSync"],
+                      dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPSync"],
                       path: "Sources/Tools/swiftmtp-cli",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 

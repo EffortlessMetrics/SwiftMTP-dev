@@ -1,5 +1,8 @@
 import Foundation
-public struct MTPDeviceID: Hashable, Sendable { public let raw: String }
+public struct MTPDeviceID: Hashable, Sendable {
+    public let raw: String
+    public init(raw: String) { self.raw = raw }
+}
 public struct MTPStorageID: Hashable, Sendable { public let raw: UInt32 }
 public typealias MTPObjectHandle = UInt32
 public struct MTPDeviceInfo: Sendable {
@@ -21,5 +24,5 @@ public struct MTPObjectInfo: Sendable {
   public let sizeBytes: UInt64?
   public let modified: Date?
   public let formatCode: UInt16
-  public let properties: [UInt16: Any]
+  public let properties: [UInt16: Sendable]
 }
