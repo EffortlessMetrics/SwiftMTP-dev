@@ -1,4 +1,6 @@
 import Foundation
+import SwiftMTPObservability
+import OSLog
 
 public actor MTPDeviceActor: MTPDevice {
     public let id: MTPDeviceID
@@ -56,8 +58,12 @@ public actor MTPDeviceActor: MTPDevice {
     public nonisolated func list(parent: MTPObjectHandle?, in storage: MTPStorageID) -> AsyncThrowingStream<[MTPObjectInfo], Error> {
         AsyncThrowingStream { continuation in
             Task {
+                let enumStartTime = Date()
                 do {
                     let link = try await getMTPLink()
+
+                    // Performance logging: begin enumeration
+                    MTPLog.perf.info("Enumeration begin: storage=\(storage.raw) parent=\(parent ?? 0)")
 
                     // Get object handles for this parent/storage
                     let objectHandles = try await getObjectHandles(parent: parent, storage: storage, using: link)
@@ -69,10 +75,18 @@ public actor MTPDeviceActor: MTPDevice {
                         objectInfos.append(objectInfo)
                     }
 
+                    // Performance logging: end enumeration (success)
+                    let enumDuration = Date().timeIntervalSince(enumStartTime)
+                    MTPLog.perf.info("Enumeration completed: \(objectInfos.count) objects in \(String(format: "%.2f", enumDuration))s")
+
                     // Yield the results
                     continuation.yield(objectInfos)
                     continuation.finish()
                 } catch {
+                    // Performance logging: end enumeration (failure)
+                    let enumDuration = Date().timeIntervalSince(enumStartTime)
+                    MTPLog.perf.error("Enumeration failed: after \(String(format: "%.2f", enumDuration))s - \(error.localizedDescription)")
+
                     continuation.finish(throwing: error)
                 }
             }

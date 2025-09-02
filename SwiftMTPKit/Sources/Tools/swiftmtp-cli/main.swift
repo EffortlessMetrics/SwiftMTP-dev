@@ -112,6 +112,19 @@ import Foundation
         await runMirrorCommand(destination: destination, includePattern: includePattern,
                              useMock: useMock, mockProfile: mockProfile)
         return
+      case "probe":
+        commandIndex += 1
+        await runProbeCommand(useMock: useMock, mockProfile: mockProfile)
+        return
+      case "bench":
+        commandIndex += 1
+        guard commandIndex < args.count else {
+          print("Usage: swift run swiftmtp [--mock [profile]] bench <size> (e.g., 1G, 500M, 100K)")
+          return
+        }
+        let sizeSpec = args[commandIndex]
+        await runBenchCommand(sizeSpec: sizeSpec, useMock: useMock, mockProfile: mockProfile)
+        return
       default:
         print("Unknown argument: \(args[commandIndex])")
         printHelp()
@@ -148,6 +161,8 @@ import Foundation
     print("  snapshot                          Take a snapshot of device contents")
     print("  diff                              Show differences since last snapshot")
     print("  mirror <dest> [--include <pattern>] Mirror device to local directory")
+    print("  probe                             Probe device capabilities and USB info")
+    print("  bench <size>                      Run transfer benchmark (e.g., 1G, 500M)")
     print("")
     print("OPTIONS:")
     print("  --mock [profile]    Use mock device instead of real hardware")
@@ -530,5 +545,279 @@ import Foundation
     } else {
       return String(format: "%.0f seconds", interval)
     }
+  }
+
+  static func runProbeCommand(useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async {
+    do {
+      let device = try await getDevice(useMock: useMock, mockProfile: mockProfile)
+
+      print("🔍 Probing device capabilities...")
+      print("")
+
+      // Get device info
+      let info = try await device.info
+      print("📱 Device Information:")
+      print("   Manufacturer: \(info.manufacturer)")
+      print("   Model: \(info.model)")
+      print("   Version: \(info.version)")
+      if let serial = info.serialNumber {
+        print("   Serial Number: \(serial)")
+      }
+
+      // Get supported operations
+      print("")
+      print("⚙️  Supported Operations (\(info.operationsSupported.count)):")
+      for op in info.operationsSupported.sorted() {
+        if let opName = operationName(for: op) {
+          print("   0x\(String(format: "%04x", op)) - \(opName)")
+        } else {
+          print("   0x\(String(format: "%04x", op)) - Unknown")
+        }
+      }
+
+      // Get storage info
+      let storages = try await device.storages()
+      print("")
+      print("💾 Storage Devices (\(storages.count)):")
+      for storage in storages {
+        let usedBytes = storage.capacityBytes - storage.freeBytes
+        let usedPercent = Double(usedBytes) / Double(storage.capacityBytes) * 100
+        print("   📁 \(storage.description)")
+        print("      Capacity: \(formatBytes(storage.capacityBytes))")
+        print("      Free: \(formatBytes(storage.freeBytes))")
+        print("      Used: \(formatBytes(usedBytes)) (\(String(format: "%.1f", usedPercent))%)")
+        print("      Read-only: \(storage.isReadOnly ? "Yes" : "No")")
+        print("")
+      }
+
+      // Sample some files for format analysis
+      if let firstStorage = storages.first {
+        print("📄 Sample Files (first 10 from root):")
+        let objects = await listObjects(device: device, storage: firstStorage.id, parent: nil, maxCount: 10)
+
+        var formatCounts = [String: Int]()
+        for object in objects {
+          if let format = object.formatCode {
+            let formatName = formatName(for: format) ?? "Unknown (0x\(String(format: "%04x", format)))"
+            formatCounts[formatName, default: 0] += 1
+          }
+        }
+
+        for (format, count) in formatCounts.sorted(by: { $0.value > $1.value }) {
+          print("   \(format): \(count) files")
+        }
+      }
+
+      print("")
+      print("✅ Probe complete")
+
+    } catch {
+      print("❌ Probe failed: \(error)")
+    }
+  }
+
+  static func runBenchCommand(sizeSpec: String, useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async {
+    do {
+      let device = try await getDevice(useMock: useMock, mockProfile: mockProfile)
+      let benchSize = try parseSizeSpec(sizeSpec)
+
+      print("🏃 Running transfer benchmark (\(formatBytes(benchSize)) test file)...")
+      print("")
+
+      // Create a test file of the specified size
+      let tempDir = FileManager.default.temporaryDirectory
+      let testFileURL = tempDir.appendingPathComponent("swiftmtp-bench-\(UUID().uuidString).bin")
+
+      print("📝 Generating test file...")
+      try generateTestFile(at: testFileURL, size: benchSize)
+
+      // Get storage info
+      let storages = try await device.storages()
+      guard let storage = storages.first else {
+        print("❌ No storage devices found")
+        return
+      }
+
+      print("📤 Benchmarking write performance...")
+
+      // Benchmark write
+      let writeStart = Date()
+      let writeProgress = try await device.write(parent: 0, name: "swiftmtp-bench.bin", size: UInt64(benchSize), from: testFileURL)
+      let writeDuration = Date().timeIntervalSince(writeStart)
+      let writeMbps = Double(benchSize) / writeDuration / (1024 * 1024)
+
+      print("   ✅ Write: \(String(format: "%.2f", writeMbps)) MB/s (\(String(format: "%.1f", writeDuration))s)")
+
+      // Find the uploaded file
+      print("🔍 Locating uploaded file...")
+      let objects = await listObjects(device: device, storage: storage.id, parent: nil, maxCount: 100)
+      guard let uploadedObject = objects.first(where: { $0.name == "swiftmtp-bench.bin" }) else {
+        print("❌ Could not find uploaded test file")
+        return
+      }
+
+      print("📥 Benchmarking read performance...")
+
+      // Benchmark read
+      let readStart = Date()
+      let readProgress = try await device.read(handle: uploadedObject.handle, range: nil, to: tempDir.appendingPathComponent("swiftmtp-bench-read.bin"))
+      let readDuration = Date().timeIntervalSince(readStart)
+      let readMbps = Double(benchSize) / readDuration / (1024 * 1024)
+
+      print("   ✅ Read: \(String(format: "%.2f", readMbps)) MB/s (\(String(format: "%.1f", readDuration))s)")
+
+      // Cleanup
+      try? FileManager.default.removeItem(at: testFileURL)
+      try? FileManager.default.removeItem(at: tempDir.appendingPathComponent("swiftmtp-bench-read.bin"))
+
+      // Try to delete from device (this might fail on some devices)
+      do {
+        try await device.delete(uploadedObject.handle, recursive: false)
+        print("🧹 Cleaned up test file from device")
+      } catch {
+        print("⚠️  Could not delete test file from device (normal for some devices)")
+      }
+
+      print("")
+      print("📊 Benchmark Results:")
+      print("   Write Speed: \(String(format: "%.2f", writeMbps)) MB/s")
+      print("   Read Speed: \(String(format: "%.2f", readMbps)) MB/s")
+      print("   Test Size: \(formatBytes(benchSize))")
+      print("   Device: \(try await device.info.model)")
+
+    } catch {
+      print("❌ Benchmark failed: \(error)")
+    }
+  }
+
+  static func operationName(for code: UInt16) -> String? {
+    switch code {
+    case 0x1001: return "GetDeviceInfo"
+    case 0x1002: return "OpenSession"
+    case 0x1003: return "CloseSession"
+    case 0x1004: return "GetStorageIDs"
+    case 0x1005: return "GetStorageInfo"
+    case 0x1006: return "GetNumObjects"
+    case 0x1007: return "GetObjectHandles"
+    case 0x1008: return "GetObjectInfo"
+    case 0x1009: return "GetObject"
+    case 0x100A: return "GetThumb"
+    case 0x100B: return "DeleteObject"
+    case 0x100C: return "SendObjectInfo"
+    case 0x100D: return "SendObject"
+    case 0x100E: return "InitiateCapture"
+    case 0x100F: return "FormatStore"
+    case 0x1010: return "ResetDevice"
+    case 0x1014: return "GetDevicePropDesc"
+    case 0x1015: return "GetDevicePropValue"
+    case 0x1016: return "SetDevicePropValue"
+    case 0x1017: return "ResetDevicePropValue"
+    case 0x1018: return "TerminateOpenCapture"
+    case 0x1019: return "MoveObject"
+    case 0x101A: return "CopyObject"
+    case 0x101B: return "GetPartialObject"
+    case 0x101C: return "InitiateOpenCapture"
+    case 0x95C1: return "SendPartialObject"
+    case 0x95C2: return "TruncateObject"
+    case 0x95C3: return "BeginEditObject"
+    case 0x95C4: return "EndEditObject"
+    case 0x95C5: return "GetPartialObject64"
+    case 0x95C6: return "SendPartialObject64"
+    case 0x95C7: return "TruncateObject64"
+    case 0x95C8: return "BeginEditObject64"
+    case 0x95C9: return "EndEditObject64"
+    default: return nil
+    }
+  }
+
+  static func formatName(for code: UInt16) -> String? {
+    switch code {
+    case 0x3000: return "Undefined"
+    case 0x3001: return "Association"
+    case 0x3002: return "Script"
+    case 0x3003: return "Executable"
+    case 0x3004: return "Text"
+    case 0x3005: return "HTML"
+    case 0x3006: return "DPOF"
+    case 0x3007: return "AIFF"
+    case 0x3008: return "WAV"
+    case 0x3009: return "MP3"
+    case 0x300A: return "AVI"
+    case 0x300B: return "MPEG"
+    case 0x300C: return "ASF"
+    case 0x3800: return "Undefined Image"
+    case 0x3801: return "EXIF/JPEG"
+    case 0x3802: return "TIFF/EP"
+    case 0x3803: return "FlashPix"
+    case 0x3804: return "BMP"
+    case 0x3805: return "CIFF"
+    case 0x3806: return "Undefined Reserved"
+    case 0x3807: return "GIF"
+    case 0x3808: return "JFIF"
+    case 0x3809: return "PCD"
+    case 0x380A: return "PICT"
+    case 0x380B: return "PNG"
+    case 0x380C: return "Undefined Reserved"
+    case 0x380D: return "TIFF"
+    case 0x380E: return "TIFF/IT"
+    case 0x380F: return "JP2"
+    case 0x3810: return "JPX"
+    case 0xB900: return "Undefined Video"
+    case 0xB901: return "AVI"
+    case 0xB902: return "MP4"
+    case 0xB903: return "MOV"
+    default: return nil
+    }
+  }
+
+  static func parseSizeSpec(_ spec: String) throws -> Int {
+    let spec = spec.uppercased()
+    let regex = try NSRegularExpression(pattern: "^(\\d+)([KMGT]?)B?$", options: [])
+    let range = NSRange(spec.startIndex..<spec.endIndex, in: spec)
+
+    guard let match = regex.firstMatch(in: spec, options: [], range: range),
+          let numberRange = Range(match.range(at: 1), in: spec),
+          let number = Double(String(spec[numberRange])) else {
+      throw MTPError.invalidParameter("Invalid size specification: \(spec). Use format like 1G, 500M, 100K")
+    }
+
+    let multiplier: Double
+    if let unitRange = Range(match.range(at: 2), in: spec), !unitRange.isEmpty {
+      let unit = String(spec[unitRange])
+      switch unit {
+      case "K": multiplier = 1024
+      case "M": multiplier = 1024 * 1024
+      case "G": multiplier = 1024 * 1024 * 1024
+      case "T": multiplier = 1024 * 1024 * 1024 * 1024
+      default: multiplier = 1
+      }
+    } else {
+      multiplier = 1
+    }
+
+    let bytes = number * multiplier
+    guard bytes <= Double(Int.max) else {
+      throw MTPError.invalidParameter("Size too large: \(spec)")
+    }
+
+    return Int(bytes)
+  }
+
+  static func generateTestFile(at url: URL, size: Int) throws {
+    let bufferSize = 64 * 1024 // 64KB chunks
+    var remaining = size
+    let pattern: [UInt8] = Array("SwiftMTP Benchmark Data Pattern 1234567890".utf8)
+
+    try Data().write(to: url)
+    let fileHandle = try FileHandle(forWritingTo: url)
+
+    while remaining > 0 {
+      let chunkSize = min(bufferSize, remaining)
+      let chunk = Data(repeating: pattern, count: chunkSize / pattern.count + 1).prefix(chunkSize)
+      try fileHandle.write(contentsOf: chunk)
+      remaining -= chunkSize
+    }
+
+    try fileHandle.close()
   }
 }
