@@ -1,7 +1,9 @@
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPIndex
+import SwiftMTPSync
 import Foundation
+@preconcurrency import SQLite
 
 @main struct CLI {
   static func main() async {
@@ -84,6 +86,32 @@ import Foundation
           print("Available commands: list, clear")
         }
         return
+      case "snapshot":
+        commandIndex += 1
+        await runSnapshotCommand(useMock: useMock, mockProfile: mockProfile)
+        return
+      case "diff":
+        commandIndex += 1
+        await runDiffCommand(useMock: useMock, mockProfile: mockProfile)
+        return
+      case "mirror":
+        commandIndex += 1
+        guard commandIndex < args.count else {
+          print("Usage: swift run swiftmtp [--mock [profile]] mirror <destination> [--include <pattern>]")
+          return
+        }
+        let destination = args[commandIndex]
+        commandIndex += 1
+        var includePattern: String? = nil
+        if commandIndex < args.count && args[commandIndex] == "--include" {
+          commandIndex += 1
+          if commandIndex < args.count {
+            includePattern = args[commandIndex]
+          }
+        }
+        await runMirrorCommand(destination: destination, includePattern: includePattern,
+                             useMock: useMock, mockProfile: mockProfile)
+        return
       default:
         print("Unknown argument: \(args[commandIndex])")
         printHelp()
@@ -108,12 +136,18 @@ import Foundation
     print("  swift run swiftmtp --mock [profile]               # Mock device mode")
     print("  swift run swiftmtp [--mock [profile]] pull <handle> <output-file>")
     print("  swift run swiftmtp [--mock [profile]] push <parent-handle> <input-file>")
+    print("  swift run swiftmtp [--mock [profile]] snapshot")
+    print("  swift run swiftmtp [--mock [profile]] diff")
+    print("  swift run swiftmtp [--mock [profile]] mirror <destination> [--include <pattern>]")
     print("")
     print("COMMANDS:")
     print("  pull <handle> <output-file>        Download file by handle")
     print("  push <parent-handle> <input-file>  Upload file to parent directory")
     print("  resume list                       List resumable transfers")
     print("  resume clear [older-than]         Clear stale transfers (default: 7d)")
+    print("  snapshot                          Take a snapshot of device contents")
+    print("  diff                              Show differences since last snapshot")
+    print("  mirror <dest> [--include <pattern>] Mirror device to local directory")
     print("")
     print("OPTIONS:")
     print("  --mock [profile]    Use mock device instead of real hardware")
@@ -363,6 +397,127 @@ import Foundation
     print("🧹 Resume clear functionality is implemented but requires TransferJournal setup")
     print("   In M5, stale temp files will be automatically cleaned up")
     print("   Use 'swift run swiftmtp --mock pull <handle> <file>' to test transfers")
+  }
+
+  static func runSnapshotCommand(useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async {
+    do {
+      let (device, deviceId, dbPath) = try await setupForIndexCommands(useMock: useMock, mockProfile: mockProfile)
+      defer { try? FileManager.default.removeItem(atPath: dbPath) }
+
+      let snapshotter = try createSnapshotter(dbPath: dbPath)
+      let gen = try await snapshotter.capture(device: device, deviceId: deviceId)
+
+      print("✅ Snapshot captured!")
+      print("   Generation: \(gen)")
+      print("   Device: \(deviceId.raw)")
+
+    } catch {
+      print("❌ Snapshot failed: \(error)")
+    }
+  }
+
+  static func runDiffCommand(useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async {
+    do {
+      let (device, deviceId, dbPath) = try await setupForIndexCommands(useMock: useMock, mockProfile: mockProfile)
+      defer { try? FileManager.default.removeItem(atPath: dbPath) }
+
+      let snapshotter = try createSnapshotter(dbPath: dbPath)
+      let diffEngine = try createDiffEngine(dbPath: dbPath)
+
+      // Take current snapshot
+      let newGen = try await snapshotter.capture(device: device, deviceId: deviceId)
+
+      // Get previous generation
+      let prevGen = try snapshotter.previousGeneration(for: deviceId, before: newGen)
+
+      if let prevGen = prevGen {
+        let diff = try diffEngine.diff(deviceId: deviceId, oldGen: prevGen, newGen: newGen)
+
+        print("📊 Diff since generation \(prevGen):")
+        print("   Added: \(diff.added.count)")
+        print("   Removed: \(diff.removed.count)")
+        print("   Modified: \(diff.modified.count)")
+        print("   Total changes: \(diff.totalChanges)")
+
+        if !diff.added.isEmpty {
+          print("\n📁 Added files:")
+          for file in diff.added.prefix(5) {
+            print("   + \(file.pathKey)")
+          }
+          if diff.added.count > 5 {
+            print("   ... and \(diff.added.count - 5) more")
+          }
+        }
+      } else {
+        print("ℹ️  No previous snapshot found - this is the first snapshot")
+      }
+
+    } catch {
+      print("❌ Diff failed: \(error)")
+    }
+  }
+
+  static func runMirrorCommand(destination: String, includePattern: String?, useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async {
+    do {
+      let (device, deviceId, dbPath) = try await setupForIndexCommands(useMock: useMock, mockProfile: mockProfile)
+      defer { try? FileManager.default.removeItem(atPath: dbPath) }
+
+      let snapshotter = try createSnapshotter(dbPath: dbPath)
+      let diffEngine = try createDiffEngine(dbPath: dbPath)
+      let journal = try createTransferJournal(dbPath: dbPath)
+      let mirrorEngine = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
+
+      let destURL = URL(fileURLWithPath: (destination as NSString).expandingTildeInPath)
+
+      print("🔄 Starting mirror operation...")
+      print("   Source: \(deviceId.raw)")
+      print("   Destination: \(destURL.path)")
+      if let pattern = includePattern {
+        print("   Include pattern: \(pattern)")
+      }
+
+      let report: MTPSyncReport
+      if let pattern = includePattern {
+        report = try await mirrorEngine.mirror(device: device, deviceId: deviceId, to: destURL, includePattern: pattern)
+      } else {
+        report = try await mirrorEngine.mirror(device: device, deviceId: deviceId, to: destURL)
+      }
+
+      print("✅ Mirror completed!")
+      print("   Downloaded: \(report.downloaded)")
+      print("   Skipped: \(report.skipped)")
+      print("   Failed: \(report.failed)")
+      print("   Success rate: \(String(format: "%.1f", report.successRate))%")
+
+    } catch {
+      print("❌ Mirror failed: \(error)")
+    }
+  }
+
+  // Helper functions for index commands
+  static func setupForIndexCommands(useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async throws -> (any MTPDevice, MTPDeviceID, String) {
+    let device = try await getDevice(useMock: useMock, mockProfile: mockProfile)
+    let deviceId = MTPDeviceID(raw: "test-device-\(Int(Date().timeIntervalSince1970))")
+
+    // Create temporary database
+    let tempDir = FileManager.default.temporaryDirectory
+    let dbPath = tempDir.appendingPathComponent("swiftmtp-index-\(UUID().uuidString).db").path
+
+    return (device, deviceId, dbPath)
+  }
+
+  static func createSnapshotter(dbPath: String) throws -> Snapshotter {
+    let db = try Connection(dbPath)
+    return Snapshotter(db: db)
+  }
+
+  static func createDiffEngine(dbPath: String) throws -> DiffEngine {
+    let db = try Connection(dbPath)
+    return DiffEngine(db: db)
+  }
+
+  static func createTransferJournal(dbPath: String) throws -> TransferJournal {
+    try DefaultTransferJournal(dbPath: dbPath)
   }
 
   static func formatTimeInterval(_ interval: TimeInterval) -> String {
