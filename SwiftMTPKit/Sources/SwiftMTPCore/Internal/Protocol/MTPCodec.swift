@@ -45,4 +45,7 @@ public enum PTPOp: UInt16 {
     case setDevicePropValue = 0x1016
     case resetDevicePropValue = 0x1017
     case getPartialObject = 0x101B
+    // Optional (resume on capable devices):
+    case getPartialObject64 = 0x95C4  // common Android vendor opcode
+    case sendPartialObject = 0x95C1  // ditto
 }
