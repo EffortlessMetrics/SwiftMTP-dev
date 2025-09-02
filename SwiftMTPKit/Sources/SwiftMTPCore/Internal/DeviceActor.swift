@@ -1,4 +1,5 @@
 import Foundation
+import SwiftMTPIndex
 
 public actor MTPDeviceActor: MTPDevice {
     public let id: MTPDeviceID
@@ -6,11 +7,18 @@ public actor MTPDeviceActor: MTPDevice {
     private let summary: MTPDeviceSummary
     private var deviceInfo: MTPDeviceInfo?
     private var mtpLink: (any MTPLink)?
+    private let transferJournal: (any TransferJournal)?
 
-    public init(id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport) {
+    public init(id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport, transferJournal: (any TransferJournal)? = nil) {
         self.id = id
         self.summary = summary
         self.transport = transport
+        self.transferJournal = transferJournal
+    }
+
+    public convenience init(id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport, indexManager: MTPIndexManager? = nil) throws {
+        let journal = try indexManager?.createTransferJournal()
+        self.init(id: id, summary: summary, transport: transport, transferJournal: journal)
     }
 
     public var info: MTPDeviceInfo {

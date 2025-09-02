@@ -21,6 +21,17 @@ struct FileSink: ByteSink {
         if truncate { FileManager.default.createFile(atPath: url.path, contents: nil) }
         fh = try FileHandle(forWritingTo: url)
     }
+    init(url: URL, append: Bool) throws {
+        let dir = url.deletingLastPathComponent()
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        if !FileManager.default.fileExists(atPath: url.path) {
+            FileManager.default.createFile(atPath: url.path, contents: nil)
+        }
+        fh = try FileHandle(forUpdating: url)
+        if append {
+            try fh.seekToEnd()
+        }
+    }
     mutating func write(_ chunk: UnsafeRawBufferPointer) throws {
         try fh.write(contentsOf: Data(bytes: chunk.baseAddress!, count: chunk.count))
     }

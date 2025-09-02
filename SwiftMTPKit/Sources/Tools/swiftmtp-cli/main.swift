@@ -1,5 +1,6 @@
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
+import SwiftMTPIndex
 import Foundation
 
 @main struct CLI {
@@ -61,6 +62,28 @@ import Foundation
         let inputPath = args[commandIndex + 1]
         await runPushCommand(parentHandle: parentHandle, inputPath: inputPath, useMock: useMock, mockProfile: mockProfile)
         return
+      case "resume":
+        commandIndex += 1
+        guard commandIndex < args.count else {
+          print("Usage: swift run swiftmtp resume <list|clear> [options]")
+          return
+        }
+        let resumeCommand = args[commandIndex]
+        commandIndex += 1
+        switch resumeCommand {
+        case "list":
+          await runResumeListCommand(useMock: useMock, mockProfile: mockProfile)
+        case "clear":
+          var olderThan: String = "7d"
+          if commandIndex < args.count {
+            olderThan = args[commandIndex]
+          }
+          await runResumeClearCommand(olderThan: olderThan, useMock: useMock, mockProfile: mockProfile)
+        default:
+          print("Unknown resume command: \(resumeCommand)")
+          print("Available commands: list, clear")
+        }
+        return
       default:
         print("Unknown argument: \(args[commandIndex])")
         printHelp()
@@ -89,6 +112,8 @@ import Foundation
     print("COMMANDS:")
     print("  pull <handle> <output-file>        Download file by handle")
     print("  push <parent-handle> <input-file>  Upload file to parent directory")
+    print("  resume list                       List resumable transfers")
+    print("  resume clear [older-than]         Clear stale transfers (default: 7d)")
     print("")
     print("OPTIONS:")
     print("  --mock [profile]    Use mock device instead of real hardware")
@@ -313,7 +338,8 @@ import Foundation
       let mockData = MockTransportFactory.deviceData(for: mockProfile)
       let deviceSummary = mockData.deviceSummary
       let transport = MockTransportFactory.createTransport(profile: mockProfile)
-      return try await MTPDeviceManager.shared.openDevice(with: deviceSummary, transport: transport)
+      let indexManager = MTPIndexManager()
+      return try await MTPDeviceManager.shared.openDevice(with: deviceSummary, transport: transport, indexManager: indexManager)
     } else {
       try await MTPDeviceManager.shared.startDiscovery()
 
@@ -324,7 +350,92 @@ import Foundation
       }
 
       let transport = LibUSBTransportFactory.createTransport()
-      return try await MTPDeviceManager.shared.openDevice(with: deviceSummary, transport: transport)
+      let indexManager = MTPIndexManager()
+      return try await MTPDeviceManager.shared.openDevice(with: deviceSummary, transport: transport, indexManager: indexManager)
+    }
+  }
+
+  static func runResumeListCommand(useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async {
+    do {
+      let device = try await getDevice(useMock: useMock, mockProfile: mockProfile)
+      guard let actor = device as? MTPDeviceActor else {
+        print("❌ Resume commands require TransferJournal support")
+        return
+      }
+
+      // Access the transfer journal through the actor (this would need a method to expose it)
+      // For now, we'll create a direct journal instance
+      let indexManager = MTPIndexManager()
+      let journal = try indexManager.createTransferJournal()
+      let records = try journal.loadResumables(for: device.id)
+
+      if records.isEmpty {
+        print("📭 No resumable transfers found")
+        return
+      }
+
+      print("📋 Resumable Transfers:")
+      print("ID                                    Device          Kind  Progress      State   Updated")
+      print("───────────────────────────────────── ────────────── ───── ───────────── ────── ───────────────")
+
+      for record in records {
+        let progress = record.totalBytes.map { total in
+          let percent = Double(record.committedBytes) / Double(total) * 100
+          return String(format: "%5.1f%%", percent)
+        } ?? "unknown"
+
+        let updated = ISO8601DateFormatter().string(from: record.updatedAt)
+        print(String(format: "%-37s %-13s %-4s %-12s %-5s %-15s",
+                    String(record.id.prefix(36)),
+                    String(record.deviceId.raw.prefix(13)),
+                    record.kind,
+                    progress,
+                    record.state,
+                    String(updated.prefix(15))))
+      }
+
+    } catch {
+      print("❌ Resume list failed: \(error)")
+    }
+  }
+
+  static func runResumeClearCommand(olderThan: String, useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async {
+    do {
+      let device = try await getDevice(useMock: useMock, mockProfile: mockProfile)
+      let indexManager = MTPIndexManager()
+      let journal = try indexManager.createTransferJournal()
+
+      // Parse the time interval
+      var timeInterval: TimeInterval = 7 * 24 * 60 * 60 // 7 days default
+      if olderThan.hasSuffix("d") {
+        if let days = Double(olderThan.dropLast()) {
+          timeInterval = days * 24 * 60 * 60
+        }
+      } else if olderThan.hasSuffix("h") {
+        if let hours = Double(olderThan.dropLast()) {
+          timeInterval = hours * 60 * 60
+        }
+      } else if let seconds = Double(olderThan) {
+        timeInterval = seconds
+      }
+
+      try journal.clearStaleTemps(olderThan: timeInterval)
+      print("✅ Cleared stale transfers older than \(formatTimeInterval(timeInterval))")
+
+    } catch {
+      print("❌ Resume clear failed: \(error)")
+    }
+  }
+
+  static func formatTimeInterval(_ interval: TimeInterval) -> String {
+    if interval >= 24 * 60 * 60 {
+      let days = interval / (24 * 60 * 60)
+      return String(format: "%.1f days", days)
+    } else if interval >= 60 * 60 {
+      let hours = interval / (60 * 60)
+      return String(format: "%.1f hours", hours)
+    } else {
+      return String(format: "%.0f seconds", interval)
     }
   }
 }

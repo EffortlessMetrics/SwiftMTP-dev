@@ -16,7 +16,8 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/apple/swift-async-algorithms.git", from: "1.0.0"),
     .package(url: "https://github.com/apple/swift-collections.git", from: "1.1.0"),
-    .package(url: "https://github.com/apple/swift-atomics.git", from: "1.2.0")
+    .package(url: "https://github.com/apple/swift-atomics.git", from: "1.2.0"),
+    .package(url: "https://github.com/stephencelis/SQLite.swift.git", from: "0.15.0")
   ],
   targets: [
     .target(name: "SwiftMTPObservability",
@@ -41,12 +42,12 @@ let package = Package(
             swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .target(name: "SwiftMTPIndex",
-            dependencies: ["SwiftMTPCore", .product(name: "Collections", package: "swift-collections")],
+            dependencies: ["SwiftMTPCore", .product(name: "Collections", package: "swift-collections"), .product(name: "SQLite", package: "SQLite.swift")],
             resources: [.copy("Schema.sql")],
             swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .target(name: "SwiftMTPSync",
-            dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPObservability"],
+            dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPObservability", .product(name: "SQLite", package: "SQLite.swift")],
             swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .executableTarget(name: "swiftmtp-cli",
@@ -57,6 +58,6 @@ let package = Package(
     .testTarget(name: "CoreTests", dependencies: ["SwiftMTPCore"]),
     .testTarget(name: "IndexTests", dependencies: ["SwiftMTPIndex"]),
     .testTarget(name: "TransportTests", dependencies: ["SwiftMTPTransportLibUSB"]),
-    .testTarget(name: "ScenarioTests", dependencies: ["SwiftMTPCore", "SwiftMTPObservability"]),
+    .testTarget(name: "ScenarioTests", dependencies: ["SwiftMTPCore", "SwiftMTPObservability", "SwiftMTPIndex"]),
   ]
 )
