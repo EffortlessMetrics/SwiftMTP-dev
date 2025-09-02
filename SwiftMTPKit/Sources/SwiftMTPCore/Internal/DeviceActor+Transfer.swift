@@ -1,6 +1,5 @@
 import Foundation
 import SwiftMTPObservability
-import SwiftMTPIndex
 
 extension MTPDeviceActor {
     public func read(handle: MTPObjectHandle, range: Range<UInt64>?, to url: URL) async throws -> Progress {
@@ -71,29 +70,22 @@ extension MTPDeviceActor {
 
         do {
             var bytesWritten: UInt64 = 0
-            let progressQueue = DispatchQueue(label: "com.swiftmtp.progress")
 
             try await ProtoTransfer.readWholeObject(handle: handle, on: link, dataHandler: { buf in
                 do {
-                    let written = try sink.write(buf)
-                    bytesWritten += UInt64(written)
-
-                    // Update progress and journal periodically
-                    progressQueue.async {
-                        progress.completedUnitCount = Int64(bytesWritten)
-                        if let journal = self.transferJournal, let transferId = transferId {
-                            try? journal.updateProgress(id: transferId, committed: bytesWritten)
-                        }
-                    }
-
-                    return written
+                    try sink.write(buf)
+                    bytesWritten += UInt64(buf.count)
+                    progress.completedUnitCount = Int64(bytesWritten)
+                    return buf.count
                 } catch {
-                    if let journal = self.transferJournal, let transferId = transferId {
-                        try? journal.fail(id: transferId, error: error)
-                    }
                     return 0
                 }
             }, ioTimeoutMs: timeout)
+
+            // Update journal after transfer completes
+            if let journal = transferJournal, let transferId = transferId {
+                try journal.updateProgress(id: transferId, committed: bytesWritten)
+            }
 
             try sink.close()
 
@@ -153,29 +145,22 @@ extension MTPDeviceActor {
 
         do {
             var bytesRead: UInt64 = 0
-            let progressQueue = DispatchQueue(label: "com.swiftmtp.progress")
 
             try await ProtoTransfer.writeWholeObject(parent: parent, name: name, size: size, dataHandler: { buf in
                 do {
                     let read = try source.read(into: buf)
                     bytesRead += UInt64(read)
-
-                    // Update progress and journal periodically
-                    progressQueue.async {
-                        progress.completedUnitCount = Int64(bytesRead)
-                        if let journal = self.transferJournal, let transferId = transferId {
-                            try? journal.updateProgress(id: transferId, committed: bytesRead)
-                        }
-                    }
-
+                    progress.completedUnitCount = Int64(bytesRead)
                     return read
                 } catch {
-                    if let journal = self.transferJournal, let transferId = transferId {
-                        try? journal.fail(id: transferId, error: error)
-                    }
                     return 0
                 }
             }, on: link, ioTimeoutMs: timeout)
+
+            // Update journal after transfer completes
+            if let journal = transferJournal, let transferId = transferId {
+                try journal.updateProgress(id: transferId, committed: bytesRead)
+            }
 
             progress.completedUnitCount = total
             try source.close()

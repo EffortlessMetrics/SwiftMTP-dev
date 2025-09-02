@@ -62,5 +62,5 @@ struct FileSource: ByteSource {
 
 // --- Atomic commit (temp → replace)
 func atomicReplace(temp: URL, final: URL) throws {
-    try FileManager.default.replaceItemAt(final, withItemAt: temp)
+    _ = try FileManager.default.replaceItemAt(final, withItemAt: temp, backupItemName: nil, options: [])
 }
