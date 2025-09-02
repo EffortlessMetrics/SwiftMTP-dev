@@ -26,15 +26,20 @@ enum USBDeviceWatcher {
                                          libusb_get_bus_number(dev), libusb_get_device_address(dev)))
 
         if event == LIBUSB_HOTPLUG_EVENT_DEVICE_ARRIVED {
+            // Debug: Print device info
+            MTPLog.transport.info("Device arrived: VID=\(String(format:"%04x", desc.idVendor)), PID=\(String(format:"%04x", desc.idProduct)), bus=\(libusb_get_bus_number(dev)), addr=\(libusb_get_device_address(dev))")
+
             // Filter for interface class 0x06 (MTP/PTP). Cheap check using config 0.
             var cfg: UnsafeMutablePointer<libusb_config_descriptor>? = nil
             if libusb_get_active_config_descriptor(dev, &cfg) == 0, let cfg {
                 defer { libusb_free_config_descriptor(cfg) }
                 var isMTP = false
+                MTPLog.transport.info("Device has \(cfg.pointee.bNumInterfaces) interfaces")
                 for i in 0..<cfg.pointee.bNumInterfaces {
                     let iface = cfg.pointee.interface[Int(i)]
                     for a in 0..<iface.num_altsetting {
                         let alt = iface.altsetting[Int(a)]
+                        MTPLog.transport.info("Interface \(i), alt \(a): class=\(alt.bInterfaceClass), subclass=\(alt.bInterfaceSubClass), protocol=\(alt.bInterfaceProtocol)")
                         if alt.bInterfaceClass == 0x06 {
                             isMTP = true
                             break
@@ -42,7 +47,13 @@ enum USBDeviceWatcher {
                     }
                     if isMTP { break }
                 }
-                if !isMTP { return 0 }
+                if !isMTP {
+                    MTPLog.transport.info("Device is not MTP, skipping")
+                    return 0
+                }
+            } else {
+                MTPLog.transport.info("Could not get config descriptor")
+                return 0
             }
             // Strings from USB descriptor are optional; use placeholders
             let summary = MTPDeviceSummary(id: id,
@@ -50,6 +61,7 @@ enum USBDeviceWatcher {
                                            model: "USB \(String(format:"%04x", desc.idProduct))")
             box.onAttach(summary)
         } else if event == LIBUSB_HOTPLUG_EVENT_DEVICE_LEFT {
+            MTPLog.transport.info("Device left: \(id.raw)")
             box.onDetach(id)
         }
         return 0
@@ -70,6 +82,8 @@ enum USBDeviceWatcher {
                           callback, box, &cb)
         if rc != 0 {
             MTPLog.transport.error("hotplug register failed: \(rc)")
+        } else {
+            MTPLog.transport.info("Hotplug callback registered successfully")
         }
     }
 }
