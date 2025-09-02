@@ -90,6 +90,12 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     if rc != 0 { throw TransportError.io("bulk read rc=\(rc)") }
     return Int(transferred)
   }
+
+  // MTP command execution - placeholder for now
+  public func executeCommand(_ command: PTPContainer) throws -> Data? {
+    // TODO: Implement real MTP command execution via USB
+    throw MTPError.notSupported("Real device command execution not yet implemented")
+  }
 }
 
 // MTPTransport and MTPLink protocols are defined in SwiftMTPCore

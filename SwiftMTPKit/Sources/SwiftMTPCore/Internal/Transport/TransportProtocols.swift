@@ -6,6 +6,7 @@ public protocol MTPTransport: Sendable {
 
 public protocol MTPLink: Sendable {
     func close() async
+    func executeCommand(_ command: PTPContainer) throws -> Data?
 }
 
 public protocol TransportFactory {
