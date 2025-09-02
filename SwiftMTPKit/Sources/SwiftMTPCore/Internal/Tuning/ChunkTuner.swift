@@ -3,9 +3,9 @@ import SwiftMTPObservability
 
 /// Auto-tunes transfer chunk sizes based on observed throughput
 /// Uses candidate sizes from 512KiB to 8MiB, promoting/demoting based on performance
-public struct ChunkTuner: Sendable {
+struct ChunkTuner: Sendable {
     /// Candidate chunk sizes in bytes (512KiB to 8MiB)
-    public static let candidates = [
+    static let candidates = [
         512 * 1024,      // 512KiB
         1 * 1024 * 1024, // 1MiB
         2 * 1024 * 1024, // 2MiB
@@ -20,7 +20,7 @@ public struct ChunkTuner: Sendable {
     private var isStabilized: Bool
 
     /// Initialize tuner starting at 1MiB (index 1)
-    public init() {
+    init() {
         self.currentIndex = 1 // Start at 1MiB
         self.throughputHistory = ThroughputRingBuffer(maxSamples: 20)
         self.samplesSinceLastChange = 0
@@ -29,12 +29,12 @@ public struct ChunkTuner: Sendable {
     }
 
     /// Get current chunk size in bytes
-    public var currentSize: Int {
+    var currentSize: Int {
         Self.candidates[currentIndex]
     }
 
     /// Get current chunk size in human-readable format
-    public var currentSizeDescription: String {
+    var currentSizeDescription: String {
         formatBytes(Int64(currentSize))
     }
 
@@ -45,7 +45,7 @@ public struct ChunkTuner: Sendable {
     ///   - hadTimeout: Whether the transfer timed out
     ///   - hadError: Whether the transfer encountered an error
     /// - Returns: New chunk size if changed, nil if unchanged
-    public mutating func recordSample(bytesTransferred: Int, duration: TimeInterval, hadTimeout: Bool, hadError: Bool) -> Int? {
+    mutating func recordSample(bytesTransferred: Int, duration: TimeInterval, hadTimeout: Bool, hadError: Bool) -> Int? {
         let currentThroughput = Double(bytesTransferred) / duration
         throughputHistory.addSample(currentThroughput)
         samplesSinceLastChange += 1
@@ -77,7 +77,7 @@ public struct ChunkTuner: Sendable {
     }
 
     /// Force promotion to next larger size
-    public mutating func promote() {
+    mutating func promote() {
         if currentIndex + 1 < Self.candidates.count {
             currentIndex += 1
             resetAfterChange()
@@ -85,7 +85,7 @@ public struct ChunkTuner: Sendable {
     }
 
     /// Force demotion to next smaller size
-    public mutating func demote() {
+    mutating func demote() {
         if currentIndex > 0 {
             currentIndex -= 1
             resetAfterChange()
@@ -93,14 +93,14 @@ public struct ChunkTuner: Sendable {
     }
 
     /// Check if tuner has stabilized (no changes for extended period)
-    public var stabilized: Bool {
+    var stabilized: Bool {
         guard let lastChange = lastChangeTime else { return false }
         let timeSinceChange = Date().timeIntervalSince(lastChange)
         return timeSinceChange > 60 && samplesSinceLastChange >= 16 // 1 minute and 16 samples
     }
 
     /// Get performance statistics
-    public var stats: ChunkTunerStats {
+    var stats: ChunkTunerStats {
         ChunkTunerStats(
             currentSizeBytes: currentSize,
             samplesCount: throughputHistory.count,
@@ -151,22 +151,22 @@ public struct ChunkTuner: Sendable {
 }
 
 /// Statistics for chunk tuner performance
-public struct ChunkTunerStats: Sendable {
-    public let currentSizeBytes: Int
-    public let samplesCount: Int
-    public let averageThroughput: Double
-    public let p95Throughput: Double
-    public let stabilized: Bool
+struct ChunkTunerStats: Sendable {
+    let currentSizeBytes: Int
+    let samplesCount: Int
+    let averageThroughput: Double
+    let p95Throughput: Double
+    let stabilized: Bool
 
-    public var currentSizeDescription: String {
+    var currentSizeDescription: String {
         formatBytes(Int64(currentSizeBytes))
     }
 
-    public var averageMbps: Double {
+    var averageMbps: Double {
         averageThroughput / (1024 * 1024)
     }
 
-    public var p95Mbps: Double {
+    var p95Mbps: Double {
         p95Throughput / (1024 * 1024)
     }
 

@@ -2,14 +2,14 @@ import Foundation
 import SwiftMTPObservability
 
 /// Device fingerprint for identifying unique devices
-public struct DeviceFingerprint: Hashable, Codable, Sendable {
-    public let vendorId: UInt16
-    public let productId: UInt16
-    public let usbSpeed: String?
-    public let product: String?
-    public let serialNumber: String?
+struct DeviceFingerprint: Hashable, Codable, Sendable {
+    let vendorId: UInt16
+    let productId: UInt16
+    let usbSpeed: String?
+    let product: String?
+    let serialNumber: String?
 
-    public var key: String {
+    var key: String {
         let components = [
             String(format: "%04x:%04x", vendorId, productId),
             usbSpeed ?? "unknown",
@@ -19,7 +19,7 @@ public struct DeviceFingerprint: Hashable, Codable, Sendable {
         return components.joined(separator: ":")
     }
 
-    public init(vendorId: UInt16, productId: UInt16, usbSpeed: String? = nil, product: String? = nil, serialNumber: String? = nil) {
+    init(vendorId: UInt16, productId: UInt16, usbSpeed: String? = nil, product: String? = nil, serialNumber: String? = nil) {
         self.vendorId = vendorId
         self.productId = productId
         self.usbSpeed = usbSpeed
@@ -29,20 +29,20 @@ public struct DeviceFingerprint: Hashable, Codable, Sendable {
 }
 
 /// Cached tuning settings for a device
-public struct DeviceTuningSettings: Codable, Sendable {
-    public var bestReadChunkBytes: Int?
-    public var bestWriteChunkBytes: Int?
-    public var bestEnumBudgetBytes: Int?
-    public var ioTimeoutMs: Int?
-    public var lastUpdated: Date
-    public var sampleCount: Int
+struct DeviceTuningSettings: Codable, Sendable {
+    var bestReadChunkBytes: Int?
+    var bestWriteChunkBytes: Int?
+    var bestEnumBudgetBytes: Int?
+    var ioTimeoutMs: Int?
+    var lastUpdated: Date
+    var sampleCount: Int
 
-    public init() {
+    init() {
         self.lastUpdated = Date()
         self.sampleCount = 0
     }
 
-    public mutating func update(readChunk: Int? = nil, writeChunk: Int? = nil, enumBudget: Int? = nil, timeout: Int? = nil) {
+    mutating func update(readChunk: Int? = nil, writeChunk: Int? = nil, enumBudget: Int? = nil, timeout: Int? = nil) {
         if let readChunk = readChunk { self.bestReadChunkBytes = readChunk }
         if let writeChunk = writeChunk { self.bestWriteChunkBytes = writeChunk }
         if let enumBudget = enumBudget { self.bestEnumBudgetBytes = enumBudget }
@@ -51,7 +51,7 @@ public struct DeviceTuningSettings: Codable, Sendable {
         self.sampleCount += 1
     }
 
-    public var isValid: Bool {
+    var isValid: Bool {
         // Consider valid if updated within last 30 days and has at least 5 samples
         let thirtyDays: TimeInterval = 30 * 24 * 60 * 60
         return Date().timeIntervalSince(lastUpdated) < thirtyDays && sampleCount >= 5
@@ -59,19 +59,19 @@ public struct DeviceTuningSettings: Codable, Sendable {
 }
 
 /// Manages per-device tuning cache persisted to disk
-public actor DeviceTuningCache {
+actor DeviceTuningCache {
     private let cacheFileURL: URL
     private var cache: [String: DeviceTuningSettings] = [:]
     private let fileManager: FileManager
 
-    public init(cacheDirectory: URL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!) {
+    init(cacheDirectory: URL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!) {
         self.fileManager = FileManager.default
         self.cacheFileURL = cacheDirectory.appendingPathComponent("swiftmtp-tuning-cache.json")
         Task { await loadFromDisk() }
     }
 
     /// Load cached settings for a device
-    public func loadSettings(for fingerprint: DeviceFingerprint) async -> DeviceTuningSettings? {
+    func loadSettings(for fingerprint: DeviceFingerprint) async -> DeviceTuningSettings? {
         await loadFromDisk() // Ensure fresh data
         let key = fingerprint.key
         guard let settings = cache[key], settings.isValid else {
@@ -81,14 +81,14 @@ public actor DeviceTuningCache {
     }
 
     /// Save tuning settings for a device
-    public func saveSettings(_ settings: DeviceTuningSettings, for fingerprint: DeviceFingerprint) async {
+    func saveSettings(_ settings: DeviceTuningSettings, for fingerprint: DeviceFingerprint) async {
         let key = fingerprint.key
         cache[key] = settings
         await saveToDisk()
     }
 
     /// Update specific settings for a device
-    public func updateSettings(for fingerprint: DeviceFingerprint,
+    func updateSettings(for fingerprint: DeviceFingerprint,
                               readChunk: Int? = nil,
                               writeChunk: Int? = nil,
                               enumBudget: Int? = nil,
@@ -101,13 +101,13 @@ public actor DeviceTuningCache {
     }
 
     /// Get all cached devices (for diagnostics)
-    public func allCachedDevices() async -> [String: DeviceTuningSettings] {
+    func allCachedDevices() async -> [String: DeviceTuningSettings] {
         await loadFromDisk()
         return cache
     }
 
     /// Clear cache (useful for testing or resetting)
-    public func clearCache() async {
+    func clearCache() async {
         cache.removeAll()
         try? fileManager.removeItem(at: cacheFileURL)
     }
@@ -149,4 +149,4 @@ public actor DeviceTuningCache {
 }
 
 /// Global tuning cache instance
-public let globalTuningCache = DeviceTuningCache()
+let globalTuningCache = DeviceTuningCache()
