@@ -82,15 +82,7 @@ public actor MTPDeviceActor: MTPDevice {
         return try await getObjectInfo(handle, using: link)
     }
 
-    public func read(handle: MTPObjectHandle, range: Range<UInt64>?, to url: URL) async throws -> Progress {
-        // TODO: Implement object reading
-        throw MTPError.notSupported("Object reading not implemented")
-    }
-
-    public func write(parent: MTPObjectHandle?, name: String, size: UInt64, from url: URL) async throws -> Progress {
-        // TODO: Implement object writing
-        throw MTPError.notSupported("Object writing not implemented")
-    }
+    // Note: read/write methods are implemented in DeviceActor+Transfer.swift
 
     public func delete(_ handle: MTPObjectHandle, recursive: Bool) async throws {
         // TODO: Implement object deletion
@@ -109,7 +101,7 @@ public actor MTPDeviceActor: MTPDevice {
 
     // MARK: - Helper Methods
 
-    private func getMTPLink() async throws -> any MTPLink {
+    internal func getMTPLink() async throws -> any MTPLink {
         if let link = mtpLink {
             return link
         }
@@ -278,7 +270,7 @@ public actor MTPDeviceActor: MTPDevice {
         return objectHandles
     }
 
-    private func getObjectInfo(_ handle: MTPObjectHandle, using link: any MTPLink) async throws -> MTPObjectInfo {
+    internal func getObjectInfo(_ handle: MTPObjectHandle, using link: any MTPLink) async throws -> MTPObjectInfo {
         let command = PTPContainer(
             length: 16,
             type: PTPContainer.Kind.command.rawValue,

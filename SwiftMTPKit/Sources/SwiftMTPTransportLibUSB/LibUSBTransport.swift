@@ -96,6 +96,21 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     // TODO: Implement real MTP command execution via USB
     throw MTPError.notSupported("Real device command execution not yet implemented")
   }
+
+  // Streaming command execution for file transfers
+  public func executeStreamingCommand(
+    _ command: PTPContainer,
+    dataInHandler: ((UnsafeRawBufferPointer) -> Int)?,
+    dataOutHandler: ((UnsafeMutableRawBufferPointer) -> Int)?
+  ) async throws -> Data? {
+    // TODO: Implement real MTP streaming command execution via USB
+    // This would involve:
+    // 1. Sending the command container
+    // 2. Handling data-out phase with dataOutHandler
+    // 3. Handling data-in phase with dataInHandler
+    // 4. Reading response container
+    throw MTPError.notSupported("Real device streaming command execution not yet implemented")
+  }
 }
 
 // MTPTransport and MTPLink protocols are defined in SwiftMTPCore

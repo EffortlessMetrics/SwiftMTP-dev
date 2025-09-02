@@ -9,13 +9,16 @@ import Foundation
     // Parse command line arguments
     var useMock = false
     var mockProfile: MockTransportFactory.DeviceProfile = .androidPixel7
+    var commandIndex = 1
 
-    if args.count > 1 {
-      switch args[1] {
+    // Parse flags and options first
+    while commandIndex < args.count {
+      switch args[commandIndex] {
       case "--mock", "-m":
         useMock = true
-        if args.count > 2 {
-          switch args[2] {
+        commandIndex += 1
+        if commandIndex < args.count {
+          switch args[commandIndex] {
           case "pixel7", "android":
             mockProfile = .androidPixel7
           case "galaxy", "samsung":
@@ -31,21 +34,42 @@ import Foundation
           case "disconnected":
             mockProfile = .failureDisconnected
           default:
-            print("Unknown mock profile: \(args[2])")
-            print("Available profiles: pixel7, galaxy, iphone, canon, timeout, busy, disconnected")
-            return
+            // If it's not a known profile, it might be the start of a command
+            commandIndex -= 1 // Back up to process this as a command
           }
         }
       case "--help", "-h":
         printHelp()
         return
+      case "pull":
+        commandIndex += 1
+        guard commandIndex + 1 < args.count else {
+          print("Usage: swift run swiftmtp [--mock [profile]] pull <handle> <output-file>")
+          return
+        }
+        let handle = UInt32(args[commandIndex]) ?? 0
+        let outputPath = args[commandIndex + 1]
+        await runPullCommand(handle: handle, outputPath: outputPath, useMock: useMock, mockProfile: mockProfile)
+        return
+      case "push":
+        commandIndex += 1
+        guard commandIndex + 1 < args.count else {
+          print("Usage: swift run swiftmtp [--mock [profile]] push <parent-handle> <input-file>")
+          return
+        }
+        let parentHandle = UInt32(args[commandIndex]) ?? 0
+        let inputPath = args[commandIndex + 1]
+        await runPushCommand(parentHandle: parentHandle, inputPath: inputPath, useMock: useMock, mockProfile: mockProfile)
+        return
       default:
-        print("Unknown argument: \(args[1])")
+        print("Unknown argument: \(args[commandIndex])")
         printHelp()
         return
       }
+      commandIndex += 1
     }
 
+    // No command specified, run default mode
     if useMock {
       await runMockMode(profile: mockProfile)
     } else {
@@ -57,8 +81,17 @@ import Foundation
     print("SwiftMTP CLI - Media Transfer Protocol Client")
     print("")
     print("USAGE:")
-    print("  swift run swiftmtp                    # Real device mode")
-    print("  swift run swiftmtp --mock [profile]   # Mock device mode")
+    print("  swift run swiftmtp                                # Real device mode")
+    print("  swift run swiftmtp --mock [profile]               # Mock device mode")
+    print("  swift run swiftmtp [--mock [profile]] pull <handle> <output-file>")
+    print("  swift run swiftmtp [--mock [profile]] push <parent-handle> <input-file>")
+    print("")
+    print("COMMANDS:")
+    print("  pull <handle> <output-file>        Download file by handle")
+    print("  push <parent-handle> <input-file>  Upload file to parent directory")
+    print("")
+    print("OPTIONS:")
+    print("  --mock [profile]    Use mock device instead of real hardware")
     print("")
     print("MOCK PROFILES:")
     print("  pixel7, android    - Google Pixel 7 (default)")
@@ -71,6 +104,8 @@ import Foundation
     print("")
     print("EXAMPLES:")
     print("  swift run swiftmtp --mock pixel7")
+    print("  swift run swiftmtp --mock pixel7 pull 0x00010001 ./downloaded.jpg")
+    print("  swift run swiftmtp --mock pixel7 push 0x00010002 ./upload.jpg")
     print("  swift run swiftmtp --mock timeout")
   }
 
@@ -232,6 +267,64 @@ import Foundation
     } catch {
       print("Error listing objects: \(error)")
       return []
+    }
+  }
+
+  static func runPullCommand(handle: UInt32, outputPath: String, useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async {
+    do {
+      let device = try await getDevice(useMock: useMock, mockProfile: mockProfile)
+      let outputURL = URL(fileURLWithPath: outputPath)
+
+      print("📥 Downloading object with handle \(handle)...")
+      let progress = try await device.read(handle: handle, range: nil, to: outputURL)
+
+      print("✅ Download completed!")
+      print("   Bytes transferred: \(progress.completedUnitCount)")
+      print("   Saved to: \(outputPath)")
+
+    } catch {
+      print("❌ Pull failed: \(error)")
+    }
+  }
+
+  static func runPushCommand(parentHandle: UInt32, inputPath: String, useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async {
+    do {
+      let device = try await getDevice(useMock: useMock, mockProfile: mockProfile)
+      let inputURL = URL(fileURLWithPath: inputPath)
+      let filename = inputURL.lastPathComponent
+
+      // Get file size
+      let attributes = try FileManager.default.attributesOfItem(atPath: inputPath)
+      let fileSize = (attributes[.size] as? NSNumber)?.uint64Value ?? 0
+
+      print("📤 Uploading \(filename) (\(formatBytes(fileSize))) to parent handle \(parentHandle)...")
+      let progress = try await device.write(parent: parentHandle, name: filename, size: fileSize, from: inputURL)
+
+      print("✅ Upload completed!")
+      print("   Bytes transferred: \(progress.completedUnitCount)")
+
+    } catch {
+      print("❌ Push failed: \(error)")
+    }
+  }
+
+  static func getDevice(useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async throws -> any MTPDevice {
+    if useMock {
+      let mockData = MockTransportFactory.deviceData(for: mockProfile)
+      let deviceSummary = mockData.deviceSummary
+      let transport = MockTransportFactory.createTransport(profile: mockProfile)
+      return try await MTPDeviceManager.shared.openDevice(with: deviceSummary, transport: transport)
+    } else {
+      try await MTPDeviceManager.shared.startDiscovery()
+
+      let attachedStream = await MTPDeviceManager.shared.deviceAttached
+      var iterator = attachedStream.makeAsyncIterator()
+      guard let deviceSummary = await iterator.next() else {
+        throw MTPError.deviceDisconnected
+      }
+
+      let transport = LibUSBTransportFactory.createTransport()
+      return try await MTPDeviceManager.shared.openDevice(with: deviceSummary, transport: transport)
     }
   }
 }

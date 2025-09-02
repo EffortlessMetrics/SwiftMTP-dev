@@ -78,6 +78,39 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
         }
     }
 
+    /// Handle streaming MTP command execution for file transfers
+    func executeStreamingCommand(
+        _ command: PTPContainer,
+        dataInHandler: ((UnsafeRawBufferPointer) -> Int)?,
+        dataOutHandler: ((UnsafeMutableRawBufferPointer) -> Int)?
+    ) async throws -> Data? {
+        switch command.code {
+        case PTPOp.getObject.rawValue:
+            return try await handleGetObject(command.params.first ?? 0, dataInHandler: dataInHandler)
+        case PTPOp.sendObjectInfo.rawValue:
+            return try await handleSendObjectInfo(dataOutHandler: dataOutHandler)
+        case PTPOp.sendObject.rawValue:
+            return try await handleSendObject(dataOutHandler: dataOutHandler)
+        case PTPOp.getPartialObject64.rawValue:
+            return try await handleGetPartialObject64(
+                handle: command.params[0],
+                offsetLow: command.params[1],
+                offsetHigh: command.params[2],
+                length: command.params[3],
+                dataInHandler: dataInHandler
+            )
+        case PTPOp.sendPartialObject.rawValue:
+            return try await handleSendPartialObject(
+                handle: command.params[0],
+                offsetLow: command.params[1],
+                offsetHigh: command.params[2],
+                dataOutHandler: dataOutHandler
+            )
+        default:
+            throw MTPError.protocolError(code: 0x2005, message: "Streaming operation not supported: \(command.code)")
+        }
+    }
+
     private func handleGetDeviceInfo() throws -> Data {
         // Create MTP DeviceInfo dataset
         var data = Data()
@@ -275,6 +308,122 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
         data.append(PTPString.encode(""))
 
         return data
+    }
+
+    private func handleGetObject(_ handle: UInt32, dataInHandler: ((UnsafeRawBufferPointer) -> Int)?) async throws -> Data? {
+        guard let object = deviceData.objects.first(where: { $0.handle == handle }) else {
+            throw MTPError.objectNotFound
+        }
+
+        // Generate mock file content based on object size
+        let size = Int(object.size ?? 1024)
+        var mockData = Data(count: size)
+        for i in 0..<size {
+            mockData[i] = UInt8(i % 256)
+        }
+
+        // Simulate streaming the data to the handler
+        if let dataInHandler = dataInHandler {
+            let chunkSize = 8192 // 8KB chunks
+            var offset = 0
+            while offset < mockData.count {
+                let remaining = mockData.count - offset
+                let chunkSizeActual = min(chunkSize, remaining)
+                let chunk = mockData[offset..<offset + chunkSizeActual]
+                chunk.withUnsafeBytes { buf in
+                    _ = dataInHandler(UnsafeRawBufferPointer(buf))
+                }
+                offset += chunkSizeActual
+
+                // Simulate some delay for realism
+                try await Task.sleep(nanoseconds: 1_000_000) // 1ms delay
+            }
+        }
+
+        return nil // No response data for GetObject
+    }
+
+    private func handleSendObjectInfo(dataOutHandler: ((UnsafeMutableRawBufferPointer) -> Int)?) async throws -> Data? {
+        // For mock, we just simulate receiving object info data
+        // In a real implementation, this would parse the ObjectInfo dataset
+        if let dataOutHandler = dataOutHandler {
+            // Mock: expect some data to be written
+            var buffer = [UInt8](repeating: 0, count: 1024)
+            let bytesWritten = buffer.withUnsafeMutableBytes { buf in
+                dataOutHandler(buf)
+            }
+            // Process the object info data here if needed
+        }
+
+        // Return new object handle (mock value)
+        let newHandle: UInt32 = 0x00010001
+        var responseData = Data()
+        responseData.append(contentsOf: withUnsafeBytes(of: newHandle) { Data($0) })
+        return responseData
+    }
+
+    private func handleSendObject(dataOutHandler: ((UnsafeMutableRawBufferPointer) -> Int)?) async throws -> Data? {
+        // Simulate receiving file data
+        if let dataOutHandler = dataOutHandler {
+            var totalReceived = 0
+            var buffer = [UInt8](repeating: 0, count: 8192)
+            while true {
+                let bytesRead = buffer.withUnsafeMutableBytes { buf in
+                    dataOutHandler(buf)
+                }
+                if bytesRead == 0 { break }
+                totalReceived += bytesRead
+                // In real implementation, you'd store this data
+
+                // Simulate processing delay
+                try await Task.sleep(nanoseconds: 1_000_000) // 1ms delay
+            }
+        }
+        return nil
+    }
+
+    private func handleGetPartialObject64(handle: UInt32, offsetLow: UInt32, offsetHigh: UInt32, length: UInt32, dataInHandler: ((UnsafeRawBufferPointer) -> Int)?) async throws -> Data? {
+        let offset = UInt64(offsetLow) | (UInt64(offsetHigh) << 32)
+        let requestedLength = Int(length)
+
+        guard let object = deviceData.objects.first(where: { $0.handle == handle }) else {
+            throw MTPError.objectNotFound
+        }
+
+        let totalSize = Int(object.size ?? 1024)
+        let startOffset = Int(offset)
+        let endOffset = min(startOffset + requestedLength, totalSize)
+        let actualLength = endOffset - startOffset
+
+        // Generate partial mock data
+        var mockData = Data(count: actualLength)
+        for i in 0..<actualLength {
+            mockData[i] = UInt8((startOffset + i) % 256)
+        }
+
+        // Stream the partial data
+        if let dataInHandler = dataInHandler {
+            mockData.withUnsafeBytes { buf in
+                _ = dataInHandler(buf)
+            }
+        }
+
+        return nil
+    }
+
+    private func handleSendPartialObject(handle: UInt32, offsetLow: UInt32, offsetHigh: UInt32, dataOutHandler: ((UnsafeMutableRawBufferPointer) -> Int)?) async throws -> Data? {
+        let offset = UInt64(offsetLow) | (UInt64(offsetHigh) << 32)
+
+        // Simulate receiving partial data at the given offset
+        if let dataOutHandler = dataOutHandler {
+            var buffer = [UInt8](repeating: 0, count: 8192)
+            let bytesRead = buffer.withUnsafeMutableBytes { buf in
+                dataOutHandler(buf)
+            }
+            // In real implementation, you'd append this data at the offset
+        }
+
+        return nil
     }
 }
 
