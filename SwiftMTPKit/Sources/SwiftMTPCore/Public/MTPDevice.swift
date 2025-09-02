@@ -90,8 +90,8 @@ public actor MTPDeviceManager {
     throw MTPError.notSupported("Use openDevice(with:) instead")
   }
 
-  public func openDevice(with summary: MTPDeviceSummary, transport: any MTPTransport, indexManager: MTPIndexManager? = nil) async throws -> MTPDevice {
-    return try MTPDeviceActor(id: summary.id, summary: summary, transport: transport, indexManager: indexManager)
+  public func openDevice(with summary: MTPDeviceSummary, transport: any MTPTransport) async throws -> MTPDevice {
+    return MTPDeviceActor(id: summary.id, summary: summary, transport: transport)
   }
 
   private var config: SwiftMTPConfig = .init()

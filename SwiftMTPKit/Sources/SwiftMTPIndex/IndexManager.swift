@@ -1,6 +1,6 @@
 import Foundation
-import SwiftMTPCore
 import Collections
+import SwiftMTPCore
 
 public struct MTPIndexManager {
   private let dbPath: String

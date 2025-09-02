@@ -1,36 +1,6 @@
 import Foundation
+@preconcurrency import SQLite
 import SwiftMTPCore
-import SQLite
-
-public protocol TransferJournal: Sendable {
-  func beginRead(device: MTPDeviceID, handle: UInt32, name: String,
-                 size: UInt64?, supportsPartial: Bool,
-                 tempURL: URL, finalURL: URL, etag: (size: UInt64?, mtime: Date?)) throws -> String // returns id
-  func beginWrite(device: MTPDeviceID, parent: UInt32, name: String,
-                  size: UInt64, supportsPartial: Bool,
-                  tempURL: URL, sourceURL: URL) throws -> String
-  func updateProgress(id: String, committed: UInt64) throws
-  func fail(id: String, error: Error) throws
-  func complete(id: String) throws
-  func loadResumables(for device: MTPDeviceID) throws -> [TransferRecord]
-  func clearStaleTemps(olderThan: TimeInterval) throws
-}
-
-public struct TransferRecord: Sendable {
-  public let id: String
-  public let deviceId: MTPDeviceID
-  public let kind: String
-  public let handle: UInt32?
-  public let parentHandle: UInt32?
-  public let name: String
-  public let totalBytes: UInt64?
-  public let committedBytes: UInt64
-  public let supportsPartial: Bool
-  public let localTempURL: URL
-  public let finalURL: URL
-  public let state: String
-  public let updatedAt: Date
-}
 
 public final class DefaultTransferJournal: TransferJournal {
   private let db: Connection
@@ -71,7 +41,7 @@ public final class DefaultTransferJournal: TransferJournal {
 
   public func beginRead(device: MTPDeviceID, handle: UInt32, name: String,
                        size: UInt64?, supportsPartial: Bool,
-                       tempURL: URL, finalURL: URL, etag: (size: UInt64?, mtime: Date?)) throws -> String {
+                       tempURL: URL, finalURL: URL?, etag: (size: UInt64?, mtime: Date?)) throws -> String {
     let transferId = UUID().uuidString
     let now = Int64(Date().timeIntervalSince1970)
 
@@ -89,7 +59,7 @@ public final class DefaultTransferJournal: TransferJournal {
       etag_size <- etag.size.map(Int64.init),
       etag_mtime <- etag.mtime.map { Int64($0.timeIntervalSince1970) },
       localTempURL <- tempURL.path,
-      finalURL <- finalURL.path,
+      self.finalURL <- finalURL?.path,
       state <- "active",
       lastError <- nil,
       updatedAt <- now
@@ -100,7 +70,7 @@ public final class DefaultTransferJournal: TransferJournal {
 
   public func beginWrite(device: MTPDeviceID, parent: UInt32, name: String,
                         size: UInt64, supportsPartial: Bool,
-                        tempURL: URL, sourceURL: URL) throws -> String {
+                        tempURL: URL, sourceURL: URL?) throws -> String {
     let transferId = UUID().uuidString
     let now = Int64(Date().timeIntervalSince1970)
 
@@ -118,7 +88,7 @@ public final class DefaultTransferJournal: TransferJournal {
       etag_size <- nil,
       etag_mtime <- nil,
       localTempURL <- tempURL.path,
-      finalURL <- sourceURL.path,
+      self.finalURL <- sourceURL?.path,
       state <- "active",
       lastError <- nil,
       updatedAt <- now
@@ -171,7 +141,7 @@ public final class DefaultTransferJournal: TransferJournal {
         committedBytes: UInt64(try row.get(committedBytes)),
         supportsPartial: try row.get(supportsPartial) == 1,
         localTempURL: URL(fileURLWithPath: try row.get(localTempURL)),
-        finalURL: URL(fileURLWithPath: try row.get(finalURL) ?? ""),
+        finalURL: (try row.get(finalURL)).map { URL(fileURLWithPath: $0) },
         state: try row.get(state),
         updatedAt: Date(timeIntervalSince1970: TimeInterval(try row.get(updatedAt)))
       )
