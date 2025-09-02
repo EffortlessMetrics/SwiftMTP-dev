@@ -12,7 +12,9 @@ final class LibUSBContext: @unchecked Sendable {
         let rc = libusb_init(&c)
         precondition(rc == 0, "libusb_init failed: \(rc)")
         ctx = c
+        // Enable debug logging to see device events
         // Skip libusb_set_option for now as it's variadic and unavailable in Swift
+        MTPLog.transport.info("LibUSB context initialized")
         startEventLoop()
     }
 
