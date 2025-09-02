@@ -1,5 +1,6 @@
 import Foundation
 import SwiftMTPObservability
+import OSLog
 
 extension MTPDeviceActor {
     public func read(handle: MTPObjectHandle, range: Range<UInt64>?, to url: URL) async throws -> Progress {
@@ -12,10 +13,14 @@ extension MTPDeviceActor {
         let timeout = 10_000 // 10 seconds
         let temp = url.appendingPathExtension("part")
 
+        // Performance logging: begin transfer
+        let startTime = Date()
+        MTPLog.perf.info("Transfer begin: read \(info.name) handle=\(handle) size=\(info.sizeBytes ?? 0)")
+
         // Check if partial read is supported
         let supportsPartial = deviceInfo.operationsSupported.contains(0x95C4) // GetPartialObject64
 
-        var transferId: String?
+        var journalTransferId: String?
         var sink: any ByteSink
 
         // Try to resume if we have a journal
@@ -26,12 +31,12 @@ extension MTPDeviceActor {
                     // Resume from existing temp file
                     if FileManager.default.fileExists(atPath: existing.localTempURL.path) {
                         sink = try FileSink(url: existing.localTempURL, append: true)
-                        transferId = existing.id
+                        journalTransferId = existing.id
                         progress.completedUnitCount = Int64(existing.committedBytes)
                     } else {
                         // Temp file missing, start fresh
                         sink = try FileSink(url: temp)
-                        transferId = try journal.beginRead(
+                        journalTransferId = try journal.beginRead(
                             device: id,
                             handle: handle,
                             name: info.name,
@@ -45,7 +50,7 @@ extension MTPDeviceActor {
                 } else {
                     // New transfer
                     sink = try FileSink(url: temp)
-                    transferId = try journal.beginRead(
+                                            journalTransferId = try journal.beginRead(
                         device: id,
                         handle: handle,
                         name: info.name,
@@ -83,25 +88,35 @@ extension MTPDeviceActor {
             }, ioTimeoutMs: timeout)
 
             // Update journal after transfer completes
-            if let journal = transferJournal, let transferId = transferId {
+            if let journal = transferJournal, let transferId = journalTransferId {
                 try journal.updateProgress(id: transferId, committed: bytesWritten)
             }
 
             try sink.close()
 
             // Mark as complete in journal
-            if let journal = transferJournal, let transferId = transferId {
+            if let journal = transferJournal, let transferId = journalTransferId {
                 try journal.complete(id: transferId)
             }
 
             try atomicReplace(temp: temp, final: url)
+
+            // Performance logging: end transfer (success)
+            let duration = Date().timeIntervalSince(startTime)
+            let throughput = Double(bytesWritten) / duration
+            MTPLog.perf.info("Transfer completed: read \(bytesWritten) bytes in \(String(format: "%.2f", duration))s (\(String(format: "%.2f", throughput/1024/1024)) MB/s)")
+
             return progress
         } catch {
             try? sink.close()
             try? FileManager.default.removeItem(at: temp)
 
+            // Performance logging: end transfer (failure)
+            let duration = Date().timeIntervalSince(startTime)
+            MTPLog.perf.error("Transfer failed: read after \(String(format: "%.2f", duration))s - \(error.localizedDescription)")
+
             // Mark as failed in journal
-            if let journal = transferJournal, let transferId = transferId {
+            if let journal = transferJournal, let transferId = journalTransferId {
                 try? journal.fail(id: transferId, error: error)
             }
 
@@ -115,17 +130,21 @@ extension MTPDeviceActor {
         let total = Int64(size)
         let progress = Progress(totalUnitCount: Int64(size))
 
+        // Performance logging: begin transfer
+        let startTime = Date()
+        MTPLog.perf.info("Transfer begin: write \(name) size=\(size)")
+
         // Check if partial write is supported
         let supportsPartial = deviceInfo.operationsSupported.contains(0x95C1) // SendPartialObject
 
-        var transferId: String?
+        var journalTransferId: String?
         var source: any ByteSource = try FileSource(url: url)
         let timeout = 10_000 // 10 seconds
 
         // Initialize transfer journal if available
         if let journal = transferJournal {
             do {
-                transferId = try journal.beginWrite(
+                journalTransferId = try journal.beginWrite(
                     device: id,
                     parent: parent ?? 0,
                     name: name,
@@ -158,7 +177,7 @@ extension MTPDeviceActor {
             }, on: link, ioTimeoutMs: timeout)
 
             // Update journal after transfer completes
-            if let journal = transferJournal, let transferId = transferId {
+            if let journal = transferJournal, let transferId = journalTransferId {
                 try journal.updateProgress(id: transferId, committed: bytesRead)
             }
 
@@ -166,16 +185,25 @@ extension MTPDeviceActor {
             try source.close()
 
             // Mark as complete in journal
-            if let journal = transferJournal, let transferId = transferId {
+            if let journal = transferJournal, let transferId = journalTransferId {
                 try journal.complete(id: transferId)
             }
+
+            // Performance logging: end transfer (success)
+            let duration = Date().timeIntervalSince(startTime)
+            let throughput = Double(bytesRead) / duration
+            MTPLog.perf.info("Transfer completed: write \(bytesRead) bytes in \(String(format: "%.2f", duration))s (\(String(format: "%.2f", throughput/1024/1024)) MB/s)")
 
             return progress
         } catch {
             try? source.close()
 
+            // Performance logging: end transfer (failure)
+            let duration = Date().timeIntervalSince(startTime)
+            MTPLog.perf.error("Transfer failed: write after \(String(format: "%.2f", duration))s - \(error.localizedDescription)")
+
             // Mark as failed in journal
-            if let journal = transferJournal, let transferId = transferId {
+            if let journal = transferJournal, let transferId = journalTransferId {
                 try? journal.fail(id: transferId, error: error)
             }
 
