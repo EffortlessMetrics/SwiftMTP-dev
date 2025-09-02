@@ -26,4 +26,23 @@ public struct PTPContainer {
   }
 }
 
-public enum PTPOp: UInt16 { case getDeviceInfo = 0x1001, openSession = 0x1002 } // enough for now
+public enum PTPOp: UInt16 {
+    case getDeviceInfo = 0x1001
+    case openSession = 0x1002
+    case closeSession = 0x1003
+    case getStorageIDs = 0x1004
+    case getStorageInfo = 0x1005
+    case getNumObjects = 0x1006
+    case getObjectHandles = 0x1007
+    case getObjectInfo = 0x1008
+    case getObject = 0x1009
+    case getThumb = 0x100A
+    case deleteObject = 0x100B
+    case sendObjectInfo = 0x100C
+    case sendObject = 0x100D
+    case getDevicePropDesc = 0x1014
+    case getDevicePropValue = 0x1015
+    case setDevicePropValue = 0x1016
+    case resetDevicePropValue = 0x1017
+    case getPartialObject = 0x101B
+}
