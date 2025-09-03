@@ -1,5 +1,5 @@
 {
-  "originHash" : "f8afb3394495fd3837fbdecf01ac0db64c77c200345527c813e7e52bb39a5d43",
+  "originHash" : "fe7dbb6a6c3ad0c07b48caf2cec1560e0cd940a685f16d80a03889b932837ef0",
   "pins" : [
     {
       "identity" : "sqlite.swift",
@@ -17,15 +17,6 @@
       "state" : {
         "revision" : "042e1c4d9d19748c9c228f8d4ebc97bb1e339b0b",
         "version" : "1.0.4"
-      }
-    },
-    {
-      "identity" : "swift-atomics",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-atomics.git",
-      "state" : {
-        "revision" : "b601256eab081c0f92f059e12818ac1d4f178ff7",
-        "version" : "1.3.0"
       }
     },
     {

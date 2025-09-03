@@ -1,0 +1,1 @@
+error: Could not find Package.swift in this directory or any of its parent directories.

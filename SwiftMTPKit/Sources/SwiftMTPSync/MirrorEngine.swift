@@ -2,7 +2,6 @@ import Foundation
 import SwiftMTPCore
 import SwiftMTPIndex
 import SwiftMTPObservability
-import SwiftMTPTransportLibUSB
 
 /// Result of a mirror operation
 public struct MTPSyncReport: Sendable {
@@ -116,7 +115,7 @@ public final class MirrorEngine {
 
     /// Convert a path key to a local file URL
     internal func pathKeyToLocalURL(_ pathKey: String, root: URL) -> URL {
-        let (storageId, components) = PathKey.parse(pathKey)
+        let (_, components) = PathKey.parse(pathKey)
         let relativePath = components.joined(separator: "/")
         return root.appendingPathComponent(relativePath)
     }
@@ -160,8 +159,8 @@ public final class MirrorEngine {
     /// - Returns: Report of the mirror operation
     public func mirror(device: any MTPDevice, deviceId: MTPDeviceID, to root: URL,
                        includePattern: String) async throws -> MTPSyncReport {
-        let filter: (MTPDiff.Row) -> Bool = { row in
-            return matchesPattern(row.pathKey, pattern: includePattern)
+        let filter: (MTPDiff.Row) -> Bool = { [self] row in
+            return self.matchesPattern(row.pathKey, pattern: includePattern)
         }
 
         return try await mirror(device: device, deviceId: deviceId, to: root, include: filter)

@@ -349,7 +349,7 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
         if let dataOutHandler = dataOutHandler {
             // Mock: expect some data to be written
             var buffer = [UInt8](repeating: 0, count: 1024)
-            let bytesWritten = buffer.withUnsafeMutableBytes { buf in
+            _ = buffer.withUnsafeMutableBytes { buf in
                 dataOutHandler(buf)
             }
             // Process the object info data here if needed
@@ -412,12 +412,12 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
     }
 
     private func handleSendPartialObject(handle: UInt32, offsetLow: UInt32, offsetHigh: UInt32, dataOutHandler: ((UnsafeMutableRawBufferPointer) -> Int)?) async throws -> Data? {
-        let offset = UInt64(offsetLow) | (UInt64(offsetHigh) << 32)
+        _ = UInt64(offsetLow) | (UInt64(offsetHigh) << 32)
 
         // Simulate receiving partial data at the given offset
         if let dataOutHandler = dataOutHandler {
             var buffer = [UInt8](repeating: 0, count: 8192)
-            let bytesRead = buffer.withUnsafeMutableBytes { buf in
+            _ = buffer.withUnsafeMutableBytes { buf in
                 dataOutHandler(buf)
             }
             // In real implementation, you'd append this data at the offset
@@ -448,6 +448,6 @@ extension MockMTPLink {
         let _ = cmd.encode(into: UnsafeMutablePointer<UInt8>.allocate(capacity: 16))
 
         // Handle session opening
-        try handleOpenSession(sessionID)
+        let _ = try handleOpenSession(sessionID)
     }
 }

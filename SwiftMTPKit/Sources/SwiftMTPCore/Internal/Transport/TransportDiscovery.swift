@@ -5,7 +5,7 @@ protocol TransportDiscoveryProtocol {
                       onDetach: @escaping (MTPDeviceID) -> Void)
 }
 
-enum TransportDiscovery {
+struct TransportDiscovery {
     static func start(onAttach: @escaping (MTPDeviceSummary) -> Void,
                              onDetach: @escaping (MTPDeviceID) -> Void) {
         // This will be implemented by the transport layer

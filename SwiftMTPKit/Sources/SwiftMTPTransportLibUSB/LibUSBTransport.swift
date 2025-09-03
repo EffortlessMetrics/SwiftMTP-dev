@@ -2,7 +2,6 @@ import Foundation
 import CLibusb
 import SwiftMTPCore
 import SwiftMTPObservability
-import Atomics
 
 public struct LibUSBTransport: MTPTransport {
   public init() {}
