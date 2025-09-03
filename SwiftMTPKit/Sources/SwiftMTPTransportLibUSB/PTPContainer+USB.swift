@@ -2,14 +2,9 @@ import Foundation
 import CLibusb
 import SwiftMTPCore
 
-// MARK: - PTP Container Type Enum
+// MARK: - PTP Container Type Enum (using canonical types from SwiftMTPCore)
 
-enum PTPContainerType: UInt16 {
-    case command = 1
-    case data = 2
-    case response = 3
-    case event = 4
-}
+import SwiftMTPCore  // Ensure we have access to canonical PTPContainer.Kind
 
 // MARK: - PTP Header Structure
 
@@ -57,7 +52,7 @@ func makePTPCommand(opcode: UInt16, txid: UInt32, params: [UInt32]) -> [UInt8] {
     precondition(params.count <= 5, "PTP allows up to 5 params")
     let total = PTPHeader.size + params.count * 4
     var out = [UInt8](repeating: 0, count: total)
-    let hdr = PTPHeader(length: UInt32(total), type: PTPContainerType.command.rawValue,
+    let hdr = PTPHeader(length: UInt32(total), type: PTPContainer.Kind.command.rawValue,
                         code: opcode, txid: txid)
     out.withUnsafeMutableBytes { hdr.encode(into: $0.baseAddress!) }
     var off = PTPHeader.size
@@ -76,7 +71,7 @@ func makePTPCommand(opcode: UInt16, txid: UInt32, params: [UInt32]) -> [UInt8] {
 @inline(__always)
 func makePTPDataContainer(length: UInt32, code: UInt16, txid: UInt32) -> [UInt8] {
     var out = [UInt8](repeating: 0, count: PTPHeader.size)
-    let hdr = PTPHeader(length: length, type: PTPContainerType.data.rawValue,
+    let hdr = PTPHeader(length: length, type: PTPContainer.Kind.data.rawValue,
                         code: code, txid: txid)
     out.withUnsafeMutableBytes { hdr.encode(into: $0.baseAddress!) }
     return out
