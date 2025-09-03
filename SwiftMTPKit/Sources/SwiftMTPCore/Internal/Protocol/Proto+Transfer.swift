@@ -5,7 +5,7 @@ enum TransferMode { case whole, partial }
 enum ProtoTransfer {
     /// Whole-object read: GetObject, stream data-in into a sink.
     static func readWholeObject(handle: UInt32, on link: MTPLink,
-                                dataHandler: @escaping (UnsafeRawBufferPointer) -> Int,
+                                dataHandler: @escaping MTPDataIn,
                                 ioTimeoutMs: Int) async throws {
         let command = PTPContainer(
             length: 16,
@@ -20,7 +20,7 @@ enum ProtoTransfer {
 
     /// Whole-object write: SendObjectInfo → SendObject (single pass).
     static func writeWholeObject(parent: UInt32?, name: String, size: UInt64,
-                                 dataHandler: @escaping (UnsafeMutableRawBufferPointer) -> Int,
+                                 dataHandler: @escaping MTPDataOut,
                                  on link: MTPLink,
                                  ioTimeoutMs: Int) async throws {
         let parentParam = parent ?? 0
