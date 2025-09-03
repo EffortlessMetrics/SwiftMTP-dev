@@ -1,0 +1,6 @@
+{
+  "_comment": "Device-specific quirks and tuning parameters for SwiftMTP",
+  "_schema": "See Docs/benchmarks.md for VID:PID format and parameter descriptions",
+  "devices": {
+  }
+}

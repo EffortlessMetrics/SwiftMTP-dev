@@ -597,10 +597,9 @@ import Foundation
 
         var formatCounts = [String: Int]()
         for object in objects {
-          if let format = object.formatCode {
-            let formatName = formatName(for: format) ?? "Unknown (0x\(String(format: "%04x", format)))"
-            formatCounts[formatName, default: 0] += 1
-          }
+          let format = object.formatCode
+          let formatName = formatName(for: format) ?? "Unknown (0x\(String(format: "%04x", format)))"
+          formatCounts[formatName, default: 0] += 1
         }
 
         for (format, count) in formatCounts.sorted(by: { $0.value > $1.value }) {
@@ -621,7 +620,7 @@ import Foundation
       let device = try await getDevice(useMock: useMock, mockProfile: mockProfile)
       let benchSize = try parseSizeSpec(sizeSpec)
 
-      print("🏃 Running transfer benchmark (\(formatBytes(benchSize)) test file)...")
+      print("🏃 Running transfer benchmark (\(formatBytes(UInt64(benchSize))) test file)...")
       print("")
 
       // Create a test file of the specified size
@@ -682,7 +681,7 @@ import Foundation
       print("📊 Benchmark Results:")
       print("   Write Speed: \(String(format: "%.2f", writeMbps)) MB/s")
       print("   Read Speed: \(String(format: "%.2f", readMbps)) MB/s")
-      print("   Test Size: \(formatBytes(benchSize))")
+      print("   Test Size: \(formatBytes(UInt64(benchSize)))")
       print("   Device: \(try await device.info.model)")
 
     } catch {
@@ -778,7 +777,7 @@ import Foundation
     guard let match = regex.firstMatch(in: spec, options: [], range: range),
           let numberRange = Range(match.range(at: 1), in: spec),
           let number = Double(String(spec[numberRange])) else {
-      throw MTPError.invalidParameter("Invalid size specification: \(spec). Use format like 1G, 500M, 100K")
+      throw MTPError.preconditionFailed("Invalid size specification: \(spec). Use format like 1G, 500M, 100K")
     }
 
     let multiplier: Double
@@ -797,7 +796,7 @@ import Foundation
 
     let bytes = number * multiplier
     guard bytes <= Double(Int.max) else {
-      throw MTPError.invalidParameter("Size too large: \(spec)")
+      throw MTPError.preconditionFailed("Size too large: \(spec)")
     }
 
     return Int(bytes)
@@ -813,7 +812,11 @@ import Foundation
 
     while remaining > 0 {
       let chunkSize = min(bufferSize, remaining)
-      let chunk = Data(repeating: pattern, count: chunkSize / pattern.count + 1).prefix(chunkSize)
+      var chunkData = Data()
+      for _ in 0..<(chunkSize / pattern.count + 1) {
+        chunkData.append(contentsOf: pattern)
+      }
+      let chunk = chunkData.prefix(chunkSize)
       try fileHandle.write(contentsOf: chunk)
       remaining -= chunkSize
     }

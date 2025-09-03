@@ -18,7 +18,6 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/apple/swift-async-algorithms.git", from: "1.0.0"),
     .package(url: "https://github.com/apple/swift-collections.git", from: "1.1.0"),
-    .package(url: "https://github.com/apple/swift-atomics.git", from: "1.2.0"),
     .package(url: "https://github.com/stephencelis/SQLite.swift.git", from: "0.15.0")
   ],
   targets: [
@@ -38,10 +37,8 @@ let package = Package(
 
     .target(name: "SwiftMTPTransportLibUSB",
             dependencies: [
-              "SwiftMTPCore", "SwiftMTPObservability", "CLibusb",
-              .product(name: "Atomics", package: "swift-atomics")
-            ],
-            swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+              "SwiftMTPCore", "SwiftMTPObservability", "CLibusb"
+            ]),
 
     .target(name: "SwiftMTPIndex",
             dependencies: ["SwiftMTPCore", .product(name: "Collections", package: "swift-collections"), .product(name: "SQLite", package: "SQLite.swift")],

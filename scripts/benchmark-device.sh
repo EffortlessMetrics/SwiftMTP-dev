@@ -65,7 +65,7 @@ echo "🧪 Starting SwiftMTP benchmark for: $DEVICE_NAME"
 echo "📁 Output directory: $RUN_DIR"
 
 # Build CLI if needed
-cd "$PROJECT_ROOT"
+cd "$PROJECT_ROOT/SwiftMTPKit"
 if [[ "$USE_REAL" == true ]]; then
   echo "🔨 Building SwiftMTP CLI..."
   swift build --configuration release
@@ -79,6 +79,9 @@ run_cmd() {
 
   echo "🏃 $description..."
   echo "Command: $cmd"
+
+  # Ensure we're in the SwiftMTPKit directory
+  cd "$PROJECT_ROOT/SwiftMTPKit"
 
   if [[ -n "$output_file" ]]; then
     if eval "$cmd" > "$output_file" 2>&1; then
