@@ -3,6 +3,86 @@ import CLibusb
 import SwiftMTPCore
 import SwiftMTPObservability
 
+// MARK: - MTP Interface Discovery Helpers
+
+private struct EPCandidates {
+    var bulkIn: UInt8 = 0
+    var bulkOut: UInt8 = 0
+    var evtIn: UInt8 = 0
+}
+
+private func endpoints(_ alt: libusb_interface_descriptor) -> EPCandidates {
+    var eps = EPCandidates()
+    for i in 0..<Int(alt.bNumEndpoints) {
+        let ed = alt.endpoint[i]
+        let addr = ed.bEndpointAddress
+        let dirIn = (addr & 0x80) != 0
+        let attr = ed.bmAttributes & 0x03
+        if attr == LIBUSB_TRANSFER_TYPE_BULK {
+            if dirIn { eps.bulkIn = addr } else { eps.bulkOut = addr }
+        } else if attr == LIBUSB_TRANSFER_TYPE_INTERRUPT, dirIn {
+            eps.evtIn = addr
+        }
+    }
+    return eps
+}
+
+private func asciiString(_ handle: OpaquePointer, _ index: UInt8) -> String {
+    guard index != 0 else { return "" }
+    var buf = [UInt8](repeating: 0, count: 128)
+    let n = libusb_get_string_descriptor_ascii(handle, index, &buf, UInt16(buf.count))
+    if n > 0 { return String(cString: UnsafePointer<CChar>(OpaquePointer(&buf))) }
+    return ""
+}
+
+/// Returns (ifaceIndex, altSetting, inEP, outEP, evtEP)
+private func findMTPInterface(handle: OpaquePointer, device: OpaquePointer) throws -> (UInt8, UInt8, UInt8, UInt8, UInt8) {
+    var cfgPtr: UnsafeMutablePointer<libusb_config_descriptor>?
+    try check(libusb_get_active_config_descriptor(libusb_get_device(device), &cfgPtr))
+    guard let cfg = cfgPtr?.pointee else { throw TransportError.io("no active config") }
+    defer { libusb_free_config_descriptor(cfgPtr) }
+
+    var best: (iface: UInt8, alt: UInt8, inEP: UInt8, outEP: UInt8, evt: UInt8, score: Int)? = nil
+
+    for i in 0..<Int(cfg.bNumInterfaces) {
+        let ifc = cfg.interface[i]
+        for a in 0..<Int(ifc.num_altsetting) {
+            let alt = ifc.altsetting[Int(a)]
+            let cls = alt.bInterfaceClass
+            let sub = alt.bInterfaceSubClass
+            let pro = alt.bInterfaceProtocol
+            let eps = endpoints(alt)
+            if eps.bulkIn == 0 || eps.bulkOut == 0 { continue }
+
+            // Score the candidate
+            var score = 0
+            // Primary path: PTP/MTP class (proto sometimes 0x00, 0x01, or vendor)
+            if cls == 0x06 && sub == 0x01 { score += 100 }
+            // Avoid ADB: vendor class with 0x42/0x01 or name containing "adb"
+            let name = asciiString(handle, alt.iInterface).lowercased()
+            let isADB = (cls == 0xFF && sub == 0x42 && pro == 0x01) || name.contains("adb")
+            if isADB { score -= 200 }
+            // Vendor-specific but labelled MTP/PTP in the string? accept cautiously
+            if cls == 0xFF && (name.contains("mtp") || name.contains("ptp")) { score += 60 }
+            // Bonus: has interrupt IN (event endpoint)
+            if eps.evtIn != 0 { score += 5 }
+
+            if score > (best?.score ?? -1) {
+                best = (UInt8(i), alt.bAlternateSetting, eps.bulkIn, eps.bulkOut, eps.evtIn, score)
+            }
+        }
+    }
+
+    guard let sel = best, sel.score >= 60 else {
+        throw TransportError.io("no MTP-like interface (scan failed)")
+    }
+
+    // Claim interface and set the selected alt
+    try check(libusb_claim_interface(handle, Int32(sel.iface)))
+    try check(libusb_set_interface_alt_setting(handle, Int32(sel.iface), Int32(sel.alt)))
+    return (sel.iface, sel.alt, sel.inEP, sel.outEP, sel.evt)
+}
+
 public struct LibUSBTransport: MTPTransport {
   public init() {}
   public func open(_ summary: MTPDeviceSummary) async throws -> MTPLink {
@@ -32,32 +112,9 @@ public struct LibUSBTransport: MTPTransport {
     }
     defer { libusb_free_config_descriptor(cfg) }
 
-    var ifaceNum: UInt8 = 0
-    var epIn: UInt8 = 0, epOut: UInt8 = 0, epEvt: UInt8 = 0
-    outer: for i in 0..<cfg.pointee.bNumInterfaces {
-      let iface = cfg.pointee.interface[Int(i)]
-      for a in 0..<iface.num_altsetting {
-        let alt = iface.altsetting[Int(a)]
-        if alt.bInterfaceClass == 0x06 {
-          ifaceNum = alt.bInterfaceNumber
-          for e in 0..<alt.bNumEndpoints {
-            let ep = alt.endpoint[Int(e)]
-            let addr = ep.bEndpointAddress
-            let transferType = ep.bmAttributes & UInt8(LIBUSB_TRANSFER_TYPE_MASK)
-            if transferType == UInt8(LIBUSB_TRANSFER_TYPE_BULK.rawValue) {
-              if (addr & 0x80) != 0 { epIn = addr } else { epOut = addr }
-            } else if transferType == UInt8(LIBUSB_TRANSFER_TYPE_INTERRUPT.rawValue) {
-              if (addr & 0x80) != 0 { epEvt = addr }
-            }
-          }
-          break outer
-        }
-      }
-    }
+    // Find the best MTP interface using robust alt-setting selection
+    let (ifaceNum, altSetting, epIn, epOut, epEvt) = try findMTPInterface(handle: handle, device: dev)
     guard epIn != 0 && epOut != 0 else { libusb_close(handle); throw TransportError.io("no bulk endpoints") }
-    guard libusb_claim_interface(handle, Int32(ifaceNum)) == 0 else {
-      libusb_close(handle); throw TransportError.busy
-    }
     return MTPUSBLink(handle: handle, iface: ifaceNum, epIn: epIn, epOut: epOut, epEvt: epEvt)
   }
 }
