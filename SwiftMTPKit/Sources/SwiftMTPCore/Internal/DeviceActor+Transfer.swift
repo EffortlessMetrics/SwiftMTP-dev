@@ -74,18 +74,20 @@ extension MTPDeviceActor {
         defer { ProcessInfo.processInfo.endActivity(activity) }
 
         do {
-            var bytesWritten: UInt64 = 0
+            // Create Sendable adapter to avoid capturing non-Sendable sink
+            let sinkAdapter = SendableSinkAdapter(sink)
+
+            // Use thread-safe progress tracking
+            let progressTracker = AtomicProgressTracker()
 
             try await ProtoTransfer.readWholeObject(handle: handle, on: link, dataHandler: { buf in
-                do {
-                    try sink.write(buf)
-                    bytesWritten += UInt64(buf.count)
-                    progress.completedUnitCount = Int64(bytesWritten)
-                    return buf.count
-                } catch {
-                    return 0
-                }
+                let consumed = sinkAdapter.consume(buf)
+                let totalBytes = progressTracker.add(consumed)
+                progress.completedUnitCount = Int64(totalBytes)
+                return consumed
             }, ioTimeoutMs: timeout)
+
+            let bytesWritten = progressTracker.total
 
             // Update journal after transfer completes
             if let journal = transferJournal, let transferId = journalTransferId {
@@ -163,18 +165,20 @@ extension MTPDeviceActor {
         defer { ProcessInfo.processInfo.endActivity(activity) }
 
         do {
-            var bytesRead: UInt64 = 0
+            // Create Sendable adapter to avoid capturing non-Sendable source
+            let sourceAdapter = SendableSourceAdapter(source)
+
+            // Use thread-safe progress tracking
+            let progressTracker = AtomicProgressTracker()
 
             try await ProtoTransfer.writeWholeObject(parent: parent, name: name, size: size, dataHandler: { buf in
-                do {
-                    let read = try source.read(into: buf)
-                    bytesRead += UInt64(read)
-                    progress.completedUnitCount = Int64(bytesRead)
-                    return read
-                } catch {
-                    return 0
-                }
+                let produced = sourceAdapter.produce(buf)
+                let totalBytes = progressTracker.add(produced)
+                progress.completedUnitCount = Int64(totalBytes)
+                return produced
             }, on: link, ioTimeoutMs: timeout)
+
+            let bytesRead = progressTracker.total
 
             // Update journal after transfer completes
             if let journal = transferJournal, let transferId = journalTransferId {

@@ -97,14 +97,14 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
                 offsetLow: command.params[1],
                 offsetHigh: command.params[2],
                 length: command.params[3],
-                dataInHandler: dataInHandler as? ((UnsafeRawBufferPointer) -> Int)?
+                dataInHandler: dataInHandler
             )
         case PTPOp.sendPartialObject.rawValue:
             return try await handleSendPartialObject(
                 handle: command.params[0],
                 offsetLow: command.params[1],
                 offsetHigh: command.params[2],
-                dataOutHandler: dataOutHandler as? ((UnsafeMutableRawBufferPointer) -> Int)?
+                dataOutHandler: dataOutHandler
             )
         default:
             throw MTPError.protocolError(code: 0x2005, message: "Streaming operation not supported: \(command.code)")
@@ -382,7 +382,7 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
         return nil
     }
 
-    private func handleGetPartialObject64(handle: UInt32, offsetLow: UInt32, offsetHigh: UInt32, length: UInt32, dataInHandler: ((UnsafeRawBufferPointer) -> Int)?) async throws -> Data? {
+    private func handleGetPartialObject64(handle: UInt32, offsetLow: UInt32, offsetHigh: UInt32, length: UInt32, dataInHandler: MTPDataIn?) async throws -> Data? {
         let offset = UInt64(offsetLow) | (UInt64(offsetHigh) << 32)
         let requestedLength = Int(length)
 
@@ -411,7 +411,7 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
         return nil
     }
 
-    private func handleSendPartialObject(handle: UInt32, offsetLow: UInt32, offsetHigh: UInt32, dataOutHandler: ((UnsafeMutableRawBufferPointer) -> Int)?) async throws -> Data? {
+    private func handleSendPartialObject(handle: UInt32, offsetLow: UInt32, offsetHigh: UInt32, dataOutHandler: MTPDataOut?) async throws -> Data? {
         _ = UInt64(offsetLow) | (UInt64(offsetHigh) << 32)
 
         // Simulate receiving partial data at the given offset

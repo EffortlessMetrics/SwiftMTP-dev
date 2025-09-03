@@ -18,9 +18,9 @@ private func endpoints(_ alt: libusb_interface_descriptor) -> EPCandidates {
         let addr = ed.bEndpointAddress
         let dirIn = (addr & 0x80) != 0
         let attr = ed.bmAttributes & 0x03
-        if attr == LIBUSB_TRANSFER_TYPE_BULK {
+        if attr == 2 { // LIBUSB_TRANSFER_TYPE_BULK
             if dirIn { eps.bulkIn = addr } else { eps.bulkOut = addr }
-        } else if attr == LIBUSB_TRANSFER_TYPE_INTERRUPT, dirIn {
+        } else if attr == 3 /* LIBUSB_TRANSFER_TYPE_INTERRUPT */, dirIn {
             eps.evtIn = addr
         }
     }
@@ -30,8 +30,8 @@ private func endpoints(_ alt: libusb_interface_descriptor) -> EPCandidates {
 private func asciiString(_ handle: OpaquePointer, _ index: UInt8) -> String {
     guard index != 0 else { return "" }
     var buf = [UInt8](repeating: 0, count: 128)
-    let n = libusb_get_string_descriptor_ascii(handle, index, &buf, UInt16(buf.count))
-    if n > 0 { return String(cString: UnsafePointer<CChar>(OpaquePointer(&buf))) }
+    let n = libusb_get_string_descriptor_ascii(handle, index, &buf, Int32(buf.count))
+    if n > 0 { return String(cString: &buf) }
     return ""
 }
 
@@ -113,7 +113,7 @@ public struct LibUSBTransport: MTPTransport {
     defer { libusb_free_config_descriptor(cfg) }
 
     // Find the best MTP interface using robust alt-setting selection
-    let (ifaceNum, altSetting, epIn, epOut, epEvt) = try findMTPInterface(handle: handle, device: dev)
+    let (ifaceNum, _, epIn, epOut, epEvt) = try findMTPInterface(handle: handle, device: dev)
     guard epIn != 0 && epOut != 0 else { libusb_close(handle); throw TransportError.io("no bulk endpoints") }
     return MTPUSBLink(handle: handle, iface: ifaceNum, epIn: epIn, epOut: epOut, epEvt: epEvt)
   }
@@ -248,7 +248,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       let gotFirst = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: 5000)
       if gotFirst >= PTPHeader.size {
         dataHeader = first.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
-        if dataHeader?.type == PTPContainerType.data.rawValue {
+        if dataHeader?.type == PTPContainer.Kind.data.rawValue {
           hasDataPhase = true
           let payloadLen = Int(dataHeader!.length) - PTPHeader.size
           let rem = gotFirst - PTPHeader.size
@@ -277,7 +277,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     var respHdrBuf = [UInt8](repeating: 0, count: PTPHeader.size)
     try bulkReadExact(inEP, into: &respHdrBuf, need: PTPHeader.size, timeout: 5000)
     let rHdr = respHdrBuf.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
-    guard rHdr.type == PTPContainerType.response.rawValue, rHdr.txid == txid else {
+    guard rHdr.type == PTPContainer.Kind.response.rawValue, rHdr.txid == txid else {
       throw MTPError.transport(.io("unexpected response container: type=\(rHdr.type) tx=\(rHdr.txid)"))
     }
 
