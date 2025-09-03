@@ -1,7 +1,11 @@
 import Foundation
 
-public struct PTPContainer {
-  public enum Kind: UInt16 { case command = 1, data = 2, response = 3, event = 4 }
+// Sendable closure type aliases for MTP data transfer
+public typealias MTPDataIn = @Sendable (UnsafeRawBufferPointer) -> Int
+public typealias MTPDataOut = @Sendable (UnsafeMutableRawBufferPointer) -> Int
+
+public struct PTPContainer: Sendable {
+  public enum Kind: UInt16, Sendable { case command = 1, data = 2, response = 3, event = 4 }
   public var length: UInt32 = 12
   public var type: UInt16
   public var code: UInt16

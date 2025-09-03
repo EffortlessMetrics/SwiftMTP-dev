@@ -7,11 +7,13 @@ extension MTPUSBLink {
                            code: PTPOp.openSession.rawValue, txid: 1, params: [sessionID])
     var out = [UInt8](repeating: 0, count: 16)
     _ = out.withUnsafeMutableBufferPointer { buf in cmd.encode(into: buf.baseAddress!) }
-    _ = try bulkWrite(outEP, out, out.count, timeout: UInt32(timeoutMs))
+    try out.withUnsafeBytes { raw in
+      try bulkWriteAll(outEP, from: raw.baseAddress!, count: raw.count, timeout: UInt32(timeoutMs))
+    }
 
     // Read response header (12 bytes) - no data phase for OpenSession
     var resp = [UInt8](repeating: 0, count: 12)
-    _ = try bulkRead(inEP, &resp, resp.count, timeout: UInt32(timeoutMs))
+    try bulkReadExact(inEP, into: &resp, need: resp.count, timeout: UInt32(timeoutMs))
 
     // Check response code (should be 0x2001 for OK)
     let responseCode = resp.withUnsafeBytes {
@@ -27,21 +29,24 @@ extension MTPUSBLink {
                            code: PTPOp.getDeviceInfo.rawValue, txid: 1, params: [])
     var out = [UInt8](repeating: 0, count: 12)
     _ = out.withUnsafeMutableBufferPointer { buf in cmd.encode(into: buf.baseAddress!) }
-    _ = try bulkWrite(outEP, out, out.count, timeout: UInt32(timeoutMs))
+    try out.withUnsafeBytes { raw in
+      try bulkWriteAll(outEP, from: raw.baseAddress!, count: raw.count, timeout: UInt32(timeoutMs))
+    }
 
     // Expect a DATA container back, then a RESPONSE
     var hdr = [UInt8](repeating: 0, count: 12)
-    let n = try bulkRead(inEP, &hdr, hdr.count, timeout: UInt32(timeoutMs))
-    guard n == 12 else { throw TransportError.io("short header") }
+    try bulkReadExact(inEP, into: &hdr, need: hdr.count, timeout: UInt32(timeoutMs))
     // Parse length for data payload
     let totalLen = hdr.withUnsafeBytes { $0.load(as: UInt32.self).littleEndian }
     let dataLen = Int(totalLen) - 12
     var payload = [UInt8](repeating: 0, count: max(0, dataLen))
-    if dataLen > 0 { _ = try bulkRead(inEP, &payload, dataLen, timeout: UInt32(timeoutMs)) }
+    if dataLen > 0 {
+      try bulkReadExact(inEP, into: &payload, need: dataLen, timeout: UInt32(timeoutMs))
+    }
 
     // Read response header (12 bytes)
     var resp = [UInt8](repeating: 0, count: 12)
-    _ = try bulkRead(inEP, &resp, resp.count, timeout: UInt32(timeoutMs))
+    try bulkReadExact(inEP, into: &resp, need: resp.count, timeout: UInt32(timeoutMs))
     return Data(payload)
   }
 }

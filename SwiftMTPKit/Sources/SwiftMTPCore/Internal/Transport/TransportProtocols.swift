@@ -11,8 +11,8 @@ public protocol MTPLink: Sendable {
     // Streaming data transfer methods for file operations
     func executeStreamingCommand(
         _ command: PTPContainer,
-        dataInHandler: ((UnsafeRawBufferPointer) -> Int)?,
-        dataOutHandler: ((UnsafeMutableRawBufferPointer) -> Int)?
+        dataInHandler: MTPDataIn?,
+        dataOutHandler: MTPDataOut?
     ) async throws -> Data?
 }
 

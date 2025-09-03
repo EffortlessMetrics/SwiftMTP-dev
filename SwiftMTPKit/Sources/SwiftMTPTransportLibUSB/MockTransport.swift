@@ -81,8 +81,8 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
     /// Handle streaming MTP command execution for file transfers
     func executeStreamingCommand(
         _ command: PTPContainer,
-        dataInHandler: ((UnsafeRawBufferPointer) -> Int)?,
-        dataOutHandler: ((UnsafeMutableRawBufferPointer) -> Int)?
+        dataInHandler: MTPDataIn?,
+        dataOutHandler: MTPDataOut?
     ) async throws -> Data? {
         switch command.code {
         case PTPOp.getObject.rawValue:
@@ -97,14 +97,14 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
                 offsetLow: command.params[1],
                 offsetHigh: command.params[2],
                 length: command.params[3],
-                dataInHandler: dataInHandler
+                dataInHandler: dataInHandler as? ((UnsafeRawBufferPointer) -> Int)?
             )
         case PTPOp.sendPartialObject.rawValue:
             return try await handleSendPartialObject(
                 handle: command.params[0],
                 offsetLow: command.params[1],
                 offsetHigh: command.params[2],
-                dataOutHandler: dataOutHandler
+                dataOutHandler: dataOutHandler as? ((UnsafeMutableRawBufferPointer) -> Int)?
             )
         default:
             throw MTPError.protocolError(code: 0x2005, message: "Streaming operation not supported: \(command.code)")

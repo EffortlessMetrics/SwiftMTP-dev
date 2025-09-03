@@ -29,8 +29,7 @@ let package = Package(
               "SwiftMTPObservability",
               .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
               .product(name: "Collections", package: "swift-collections")
-            ],
-            swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+            ]),
 
     // libusb via Homebrew for dev (dynamic)
     .systemLibrary(name: "CLibusb", path: "Sources/CLibusb", pkgConfig: "libusb-1.0", providers: [.brew(["libusb"])]),
@@ -60,6 +59,11 @@ let package = Package(
     .executableTarget(name: "swiftmtp-cli",
                       dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPSync"],
                       path: "Sources/Tools/swiftmtp-cli",
+                      swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+
+    .executableTarget(name: "simple-probe",
+                      dependencies: ["CLibusb"],
+                      path: "Sources/Tools/simple-probe",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .testTarget(name: "CoreTests", dependencies: ["SwiftMTPCore"]),

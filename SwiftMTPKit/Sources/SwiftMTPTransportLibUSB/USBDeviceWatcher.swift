@@ -3,7 +3,7 @@ import CLibusb
 import SwiftMTPCore
 import SwiftMTPObservability
 
-enum USBDeviceWatcher {
+public enum USBDeviceWatcher {
     private final class Box {
         let onAttach: (MTPDeviceSummary) -> Void
         let onDetach: (MTPDeviceID) -> Void
@@ -67,8 +67,8 @@ enum USBDeviceWatcher {
         return 0
     }
 
-    static func start(onAttach: @escaping (MTPDeviceSummary)->Void,
-                      onDetach: @escaping (MTPDeviceID)->Void) {
+    public static func start(onAttach: @escaping (MTPDeviceSummary)->Void,
+                              onDetach: @escaping (MTPDeviceID)->Void) {
         _ = LibUSBContext.shared // ensure ctx + event loop
         guard let ctx = LibUSBContext.shared.contextPointer else { return }
         let flags: Int32 = Int32(LIBUSB_HOTPLUG_ENUMERATE.rawValue)
