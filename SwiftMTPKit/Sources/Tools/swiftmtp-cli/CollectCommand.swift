@@ -188,7 +188,7 @@ struct CollectCommand {
 
         // Step 7: Generate quirk suggestion
         print("\n🧠 Generating quirk suggestion...")
-        let quirkSuggestion = generateQuirkSuggestion(device: device, effectiveTuning: probeData.effectiveTuning)
+        let quirkSuggestion = try await generateQuirkSuggestion(device: device, effectiveTuning: probeData.effectiveTuning)
 
         // Step 8: Create submission bundle
         print("\n📦 Creating submission bundle...")
@@ -264,30 +264,37 @@ struct CollectCommand {
         let devices = try await MTPDeviceManager.shared.currentRealDevices()
         print("Found \(devices.count) MTP device(s)")
 
-        guard let deviceInfo = devices.first else {
+        guard let deviceSummary = devices.first else {
             throw MTPError.notSupported("No MTP devices found. Please connect your device and ensure it's unlocked.")
         }
 
-        print("Selected device: \(deviceInfo.manufacturer) \(deviceInfo.model)")
+        print("Selected device: \(deviceSummary.manufacturer) \(deviceSummary.model)")
 
-        // Build effective tuning for this device
+        // Open device with default config first
+        let transport = LibUSBTransportFactory.createTransport()
+        let device = try await MTPDeviceManager.shared.openDevice(with: deviceSummary, transport: transport, config: SwiftMTPConfig())
+
+        // Get device info and build effective tuning
+        let deviceInfo = try await device.info
         let effectiveTuning = try await buildEffectiveTuning(for: deviceInfo, flags: flags)
 
-        // Open device
-        let transport = LibUSBTransportFactory.createTransport()
-        let config = effectiveTuning.toConfig()
-        let device = try await MTPDeviceManager.shared.openDevice(with: deviceInfo, transport: transport, config: config)
+        // Use the device as-is for now (reopening with different config is complex)
 
         return device
     }
 
     private func buildEffectiveTuning(for deviceInfo: MTPDeviceInfo, flags: Flags) async throws -> EffectiveTuning {
         // Create fingerprint from device info
+        let interfaceTripleData = try JSONSerialization.data(withJSONObject: ["class": "06", "subclass": "01", "protocol": "01"])
+        let endpointAddressesData = try JSONSerialization.data(withJSONObject: ["input": "81", "output": "01", "event": "82"])
+        let interfaceTriple = try JSONDecoder().decode(InterfaceTriple.self, from: interfaceTripleData)
+        let endpointAddresses = try JSONDecoder().decode(EndpointAddresses.self, from: endpointAddressesData)
+
         let fingerprint = MTPDeviceFingerprint(
             vid: "0x2717", // TODO: Extract from actual USB descriptor
             pid: "0xff10", // TODO: Extract from actual USB descriptor
-            interfaceTriple: InterfaceTriple(class: "06", subclass: "01", protocol: "01"),
-            endpointAddresses: EndpointAddresses(input: "81", output: "01", event: "82")
+            interfaceTriple: interfaceTriple,
+            endpointAddresses: endpointAddresses
         )
 
         // Create basic capabilities
@@ -313,7 +320,7 @@ struct CollectCommand {
         let jsonData: Data
         let effectiveTuning: EffectiveTuning
         let deviceInfo: MTPDeviceInfo
-        let storages: [MTPStorage]
+        let storages: [MTPStorageInfo]
     }
 
     private func collectProbeData(device: any MTPDevice, flags: Flags, salt: Data) async throws -> ProbeData {
@@ -392,7 +399,7 @@ struct CollectCommand {
         let oldStdout = dup(STDOUT_FILENO)
 
         dup2(pipe.fileHandleForWriting.fileDescriptor, STDOUT_FILENO)
-        pipe.fileHandleForWriting.close()
+        try pipe.fileHandleForWriting.close()
 
         try await usbDumper.run()
 
@@ -422,7 +429,7 @@ struct CollectCommand {
     private func runSingleBenchmark(device: any MTPDevice, size: String) async throws -> URL {
         let sizeBytes = parseSize(size)
         guard sizeBytes > 0 else {
-            throw MTPError.invalidParameter("Invalid benchmark size: \(size)")
+            throw MTPError.preconditionFailed("Invalid benchmark size: \(size)")
         }
 
         let storages = try await device.storages()
@@ -462,7 +469,7 @@ struct CollectCommand {
         return csvURL
     }
 
-    private func generateQuirkSuggestion(device: any MTPDevice, effectiveTuning: EffectiveTuning) -> QuirkSuggestion {
+    private func generateQuirkSuggestion(device: any MTPDevice, effectiveTuning: EffectiveTuning) async throws -> QuirkSuggestion {
         let deviceInfo = try? await device.info
         let vidPid = "0x2717:0xff10" // TODO: Extract from actual device
 
@@ -601,11 +608,11 @@ struct CollectCommand {
         let usbDumpURL = bundle.bundleDir.appendingPathComponent("usb-dump.txt")
 
         guard FileManager.default.fileExists(atPath: probeURL.path) else {
-            throw MTPError.invalidParameter("Missing probe.json in bundle")
+            throw MTPError.preconditionFailed("Missing probe.json in bundle")
         }
 
         guard FileManager.default.fileExists(atPath: usbDumpURL.path) else {
-            throw MTPError.invalidParameter("Missing usb-dump.txt in bundle")
+            throw MTPError.preconditionFailed("Missing usb-dump.txt in bundle")
         }
 
         // Validate JSON files can be parsed
@@ -765,11 +772,31 @@ struct CollectCommand {
     private func generateFingerprintHash(device: MTPDeviceInfo) throws -> String {
         let fingerprint = "\(device.manufacturer)|\(device.model)|\(device.serialNumber ?? "")"
         let data = fingerprint.data(using: .utf8) ?? Data()
-        return "sha256:" + data.sha256().hexString
+        return "sha256:" + sha256Hex(data)
     }
 
     private func redactSerial(_ serial: String, salt: Data) throws -> String {
-        return Redaction.redactSerial(serial, salt: salt)
+        let data = (serial + String(data: salt, encoding: .utf8)!).data(using: .utf8) ?? Data()
+        let hmac = hmacSHA256(data: data, key: salt)
+        return "hmacsha256:" + hmac.map { String(format: "%02x", $0) }.joined()
+    }
+
+    private func hmacSHA256(data: Data, key: Data) -> Data {
+        var hmac = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        key.withUnsafeBytes { keyBuffer in
+            data.withUnsafeBytes { dataBuffer in
+                CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA256), keyBuffer.baseAddress, key.count, dataBuffer.baseAddress, data.count, &hmac)
+            }
+        }
+        return Data(hmac)
+    }
+
+    private func sha256Hex(_ data: Data) -> String {
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        data.withUnsafeBytes { buffer in
+            _ = CC_SHA256(buffer.baseAddress, CC_LONG(data.count), &hash)
+        }
+        return hash.map { String(format: "%02x", $0) }.joined()
     }
 
     private func getGitCommit() async throws -> String? {
@@ -795,11 +822,12 @@ struct CollectCommand {
         process.waitUntilExit()
 
         if process.terminationStatus != 0 {
-            throw MTPError.invalidParameter("Command failed: \(command) \(arguments.joined(separator: " "))")
+            throw MTPError.preconditionFailed("Command failed: \(command) \(arguments.joined(separator: " "))")
         }
 
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         return String(data: data, encoding: .utf8) ?? ""
     }
 }
+
 
