@@ -6,6 +6,66 @@ import CLibusb
 import SwiftMTPCore
 import SwiftMTPObservability
 
+/// Discovery utilities for LibUSB MTP devices
+public struct LibUSBDiscovery {
+    /// Enumerate all currently connected MTP devices
+    public static func enumerateMTPDevices() async throws -> [MTPDeviceSummary] {
+        guard let ctx = LibUSBContext.shared.contextPointer else {
+            throw TransportError.io("no libusb context")
+        }
+
+        var list: UnsafeMutablePointer<OpaquePointer?>?
+        let cnt = libusb_get_device_list(ctx, &list)
+        guard cnt > 0, let list else {
+            throw TransportError.io("device list failed")
+        }
+        defer { libusb_free_device_list(list, 1) }
+
+        var devices: [MTPDeviceSummary] = []
+
+        for i in 0..<Int(cnt) {
+            guard let dev = list[i] else { continue }
+
+            var desc = libusb_device_descriptor()
+            guard libusb_get_device_descriptor(dev, &desc) == 0 else { continue }
+
+            // Check if this is an MTP device (interface class 0x06)
+            var cfg: UnsafeMutablePointer<libusb_config_descriptor>? = nil
+            guard libusb_get_active_config_descriptor(dev, &cfg) == 0, let cfg else { continue }
+            defer { libusb_free_config_descriptor(cfg) }
+
+            var isMTP = false
+            for i in 0..<cfg.pointee.bNumInterfaces {
+                let iface = cfg.pointee.interface[Int(i)]
+                for a in 0..<iface.num_altsetting {
+                    let alt = iface.altsetting[Int(a)]
+                    if alt.bInterfaceClass == 0x06 { // PTP/MTP
+                        isMTP = true
+                        break
+                    }
+                }
+                if isMTP { break }
+            }
+
+            if isMTP {
+                let bus = libusb_get_bus_number(dev)
+                let addr = libusb_get_device_address(dev)
+                let id = MTPDeviceID(raw: String(format:"%04x:%04x@%u:%u",
+                                                 desc.idVendor, desc.idProduct, bus, addr))
+
+                let summary = MTPDeviceSummary(
+                    id: id,
+                    manufacturer: "USB \(String(format:"%04x", desc.idVendor))",
+                    model: "USB \(String(format:"%04x", desc.idProduct))"
+                )
+                devices.append(summary)
+            }
+        }
+
+        return devices
+    }
+}
+
 // MARK: - MTP Interface Discovery Helpers
 
 private struct EPCandidates {
