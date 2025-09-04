@@ -228,7 +228,7 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
             log("     Device: \(firstDevice.id.raw)")
             log("     Manufacturer: \(firstDevice.manufacturer)")
             log("     Model: \(firstDevice.model)")
-            log("     Serial: \(firstDevice.serialNumber ?? "none")")
+            log("     Serial: none") // MTPDeviceSummary doesn't have serialNumber
             if flags.traceUSBDetails {
                 log("     USB VID:PID: 2717:ff10") // Would be extracted from actual USB descriptors
                 log("     Interface: 06/01/01 (Image/MTP)")
@@ -250,10 +250,15 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
             let builder = EffectiveTuningBuilder(deniedQuirks: deniedQuirks)
 
             // Create a minimal fingerprint for now (we'll enhance this later)
+            let interfaceTripleData = try JSONSerialization.data(withJSONObject: ["class": "06", "subclass": "01", "protocol": "01"])
+            let endpointAddressesData = try JSONSerialization.data(withJSONObject: ["input": "81", "output": "01", "event": "82"])
+            let interfaceTriple = try JSONDecoder().decode(InterfaceTriple.self, from: interfaceTripleData)
+            let endpointAddresses = try JSONDecoder().decode(EndpointAddresses.self, from: endpointAddressesData)
+
             let fingerprint = MTPDeviceFingerprint(
                 vid: "2717", pid: "ff10",
-                interfaceTriple: InterfaceTriple(class: "06", subclass: "01", protocol: "01"),
-                endpointAddresses: EndpointAddresses(input: "81", output: "01", event: "82")
+                interfaceTriple: interfaceTriple,
+                endpointAddresses: endpointAddresses
             )
 
             // Create minimal capabilities (we'll probe these properly later)
