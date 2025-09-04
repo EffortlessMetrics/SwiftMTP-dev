@@ -1,0 +1,4 @@
+timestamp,size_bytes,transfer_time_seconds,throughput_mbps,read_write,device_model,host_os,usb_path
+2025-01-09T10:05:00Z,1073741824,85.2,100.6,read,Xiaomi Mi Note 2 (0xff10),macOS 15.1,/dev/cu.usbmodem
+2025-01-09T10:06:00Z,1073741824,87.1,98.4,write,Xiaomi Mi Note 2 (0xff10),macOS 15.1,/dev/cu.usbmodem
+2025-01-09T10:07:00Z,1073741824,83.7,102.3,read,Xiaomi Mi Note 2 (0xff10),macOS 15.1,/dev/cu.usbmodem

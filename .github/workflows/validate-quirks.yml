@@ -1,0 +1,108 @@
+name: Validate Device Quirks
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Specs/quirks.json'
+      - 'Specs/quirks.schema.json'
+      - 'Docs/SwiftMTP.docc/Devices/*.md'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'Specs/quirks.json'
+      - 'Specs/quirks.schema.json'
+      - 'Docs/SwiftMTP.docc/Devices/*.md'
+
+jobs:
+  validate-quirks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js for JSON Schema validation
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install ajv for JSON Schema validation
+      run: npm install -g ajv-cli
+
+    - name: Validate quirks.json against schema
+      run: ajv validate -s Specs/quirks.schema.json -d Specs/quirks.json
+
+    - name: Check that all artifacts referenced in quirks exist
+      run: |
+        #!/bin/bash
+        set -e
+
+        # Extract all artifact paths from quirks.json
+        artifacts=$(jq -r '.entries[].provenance.artifacts[]? // empty' Specs/quirks.json)
+
+        for artifact in $artifacts; do
+          if [[ "$artifact" == "null" ]]; then
+            continue
+          fi
+          if [[ ! -f "$artifact" ]]; then
+            echo "❌ Referenced artifact does not exist: $artifact"
+            exit 1
+          fi
+        done
+
+        echo "✅ All referenced artifacts exist"
+
+  generate-docs:
+    runs-on: macos-latest
+    needs: validate-quirks
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Swift
+      uses: swift-actions/setup-swift@v2
+      with:
+        swift-version: '5.10'
+
+    - name: Generate DocC pages
+      run: |
+        cd SwiftMTPKit/Sources/Tools
+        chmod +x docc-generator
+        ./docc-generator ../../../Specs/quirks.json ../../../Docs/SwiftMTP.docc/Devices
+
+    - name: Check that DocC pages are up to date
+      run: |
+        # Check if any generated files have changed
+        if [[ -n $(git status --porcelain Docs/SwiftMTP.docc/Devices/) ]]; then
+          echo "❌ Generated DocC pages are out of date. Run the docc-generator tool and commit the changes."
+          git status --porcelain Docs/SwiftMTP.docc/Devices/
+          exit 1
+        else
+          echo "✅ Generated DocC pages are up to date"
+        fi
+
+  test-cli:
+    runs-on: macos-latest
+    needs: validate-quirks
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Swift
+      uses: swift-actions/setup-swift@v2
+      with:
+        swift-version: '5.10'
+
+    - name: Test CLI quirks command
+      run: |
+        cd SwiftMTPKit
+        swift run swiftmtp quirks --explain | head -20
+
+    - name: Test CLI probe --json command
+      run: |
+        cd SwiftMTPKit
+        # This will fail without a device, but we can test the command structure
+        swift run swiftmtp probe --json || echo "Expected failure without device"

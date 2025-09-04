@@ -1,0 +1,234 @@
+{
+  "$id": "https://effortlessmetrics.dev/swiftmtp/quirks.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "entries"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version for forward compatibility"
+    },
+    "entries": {
+      "type": "array",
+      "description": "Array of device quirk entries",
+      "items": {
+        "type": "object",
+        "required": ["id", "match", "tuning"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Unique identifier for this quirk entry"
+          },
+          "match": {
+            "type": "object",
+            "description": "Device matching criteria",
+            "properties": {
+              "vid": {
+                "type": "string",
+                "pattern": "^0x[0-9a-fA-F]{4}$",
+                "description": "USB Vendor ID (hex format)"
+              },
+              "pid": {
+                "type": "string",
+                "pattern": "^0x[0-9a-fA-F]{4}$",
+                "description": "USB Product ID (hex format)"
+              },
+              "deviceInfoRegex": {
+                "type": "string",
+                "description": "Regular expression to match device info string"
+              },
+              "iface": {
+                "type": "object",
+                "description": "USB interface descriptor",
+                "properties": {
+                  "class": {
+                    "type": "string",
+                    "pattern": "^0x[0-9a-fA-F]{2}$",
+                    "description": "Interface class (hex)"
+                  },
+                  "subclass": {
+                    "type": "string",
+                    "pattern": "^0x[0-9a-fA-F]{2}$",
+                    "description": "Interface subclass (hex)"
+                  },
+                  "protocol": {
+                    "type": "string",
+                    "pattern": "^0x[0-9a-fA-F]{2}$",
+                    "description": "Interface protocol (hex)"
+                  }
+                }
+              },
+              "endpoints": {
+                "type": "object",
+                "description": "USB endpoint addresses",
+                "properties": {
+                  "in": {
+                    "type": "string",
+                    "pattern": "^0x[0-9a-fA-F]{2}$",
+                    "description": "Input endpoint address (hex)"
+                  },
+                  "out": {
+                    "type": "string",
+                    "pattern": "^0x[0-9a-fA-F]{2}$",
+                    "description": "Output endpoint address (hex)"
+                  },
+                  "evt": {
+                    "type": "string",
+                    "pattern": "^0x[0-9a-fA-F]{2}$",
+                    "description": "Event endpoint address (hex)"
+                  }
+                }
+              }
+            }
+          },
+          "tuning": {
+            "type": "object",
+            "required": ["maxChunkBytes", "handshakeTimeoutMs", "ioTimeoutMs", "inactivityTimeoutMs", "overallDeadlineMs"],
+            "description": "Performance and timeout tuning parameters",
+            "properties": {
+              "maxChunkBytes": {
+                "type": "integer",
+                "minimum": 131072,
+                "maximum": 16777216,
+                "description": "Maximum chunk size for data transfers (bytes)"
+              },
+              "handshakeTimeoutMs": {
+                "type": "integer",
+                "minimum": 1000,
+                "maximum": 60000,
+                "description": "Timeout for initial handshake (milliseconds)"
+              },
+              "ioTimeoutMs": {
+                "type": "integer",
+                "minimum": 1000,
+                "maximum": 60000,
+                "description": "Timeout for individual I/O operations (milliseconds)"
+              },
+              "inactivityTimeoutMs": {
+                "type": "integer",
+                "minimum": 1000,
+                "maximum": 60000,
+                "description": "Timeout for detecting inactive connections (milliseconds)"
+              },
+              "overallDeadlineMs": {
+                "type": "integer",
+                "minimum": 30000,
+                "maximum": 600000,
+                "description": "Overall operation deadline (milliseconds)"
+              },
+              "stabilizeMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2000,
+                "description": "Stabilization delay after session open (milliseconds)"
+              },
+              "eventPumpDelayMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5000,
+                "description": "Delay between event polling cycles (milliseconds)"
+              }
+            }
+          },
+          "ops": {
+            "type": "object",
+            "description": "Operation capability flags",
+            "properties": {
+              "supportsGetPartialObject64": {
+                "type": "boolean",
+                "description": "Device supports 64-bit partial object retrieval"
+              },
+              "supportsSendPartialObject": {
+                "type": "boolean",
+                "description": "Device supports partial object sending"
+              },
+              "preferGetObjectPropList": {
+                "type": "boolean",
+                "description": "Prefer GetObjectPropList over GetObjectPropsSupported"
+              },
+              "disableWriteResume": {
+                "type": "boolean",
+                "description": "Disable write resume capability"
+              }
+            }
+          },
+          "benchGates": {
+            "type": "object",
+            "description": "Minimum performance thresholds for validation",
+            "properties": {
+              "readMBpsMin": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Minimum read throughput (MB/s)"
+              },
+              "writeMBpsMin": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Minimum write throughput (MB/s)"
+              }
+            }
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Human-readable notes about this device/quirk"
+          },
+          "provenance": {
+            "type": "object",
+            "description": "Metadata about when and how this quirk was created",
+            "properties": {
+              "author": {
+                "type": "string",
+                "description": "Person who created/validated this quirk"
+              },
+              "date": {
+                "type": "string",
+                "format": "date",
+                "description": "Date when quirk was created/validated (YYYY-MM-DD)"
+              },
+              "commit": {
+                "type": "string",
+                "description": "Git commit hash when quirk was added"
+              },
+              "artifacts": {
+                "type": "object",
+                "description": "Paths to evidence artifacts",
+                "properties": {
+                  "probe": {
+                    "type": "string",
+                    "description": "Path to device probe output"
+                  },
+                  "usbDump": {
+                    "type": "string",
+                    "description": "Path to USB dump artifact"
+                  },
+                  "bench100M": {
+                    "type": "string",
+                    "description": "Path to 100MB benchmark results"
+                  },
+                  "bench1G": {
+                    "type": "string",
+                    "description": "Path to 1GB benchmark results"
+                  },
+                  "mirrorLog": {
+                    "type": "string",
+                    "description": "Path to mirror operation log"
+                  }
+                }
+              }
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": ["experimental", "stable", "deprecated"],
+            "description": "Maturity status of this quirk"
+          }
+        }
+      }
+    }
+  }
+}
