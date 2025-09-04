@@ -4,7 +4,7 @@
 import Foundation
 
 public protocol MTPTransport: Sendable {
-    func open(_ summary: MTPDeviceSummary) async throws -> MTPLink
+    func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig) async throws -> MTPLink
 }
 
 public protocol MTPLink: Sendable {

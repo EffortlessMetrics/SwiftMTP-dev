@@ -9,14 +9,16 @@ public actor MTPDeviceActor: MTPDevice {
     public let id: MTPDeviceID
     private let transport: any MTPTransport
     private let summary: MTPDeviceSummary
+    private let config: SwiftMTPConfig
     private var deviceInfo: MTPDeviceInfo?
     private var mtpLink: (any MTPLink)?
     let transferJournal: (any TransferJournal)?
 
-    public init(id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport, transferJournal: (any TransferJournal)? = nil) {
+    public init(id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport, config: SwiftMTPConfig = .init(), transferJournal: (any TransferJournal)? = nil) {
         self.id = id
         self.summary = summary
         self.transport = transport
+        self.config = config
         self.transferJournal = transferJournal
     }
 
@@ -125,7 +127,7 @@ public actor MTPDeviceActor: MTPDevice {
             return link
         }
 
-        let link = try await transport.open(summary)
+        let link = try await transport.open(summary, config: config)
         self.mtpLink = link
         return link
     }
