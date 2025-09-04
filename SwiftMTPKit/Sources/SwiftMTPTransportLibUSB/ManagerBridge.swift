@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import SwiftMTPCore
+import CLibusb
 
 // Extend the core TransportDiscovery to provide the libusb implementation
 extension SwiftMTPCore.TransportDiscovery {
