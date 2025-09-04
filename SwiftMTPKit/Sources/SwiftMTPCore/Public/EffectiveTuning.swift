@@ -65,32 +65,45 @@ public struct EffectiveTuning: Sendable {
         }
     }
 
-    /// Applies learned profile data
+    /// Applies learned profile data with schema bounds clamping
     public mutating func apply(_ learned: LearnedProfile) {
-        // Apply learned optimal values if they exist and are reasonable
-        if let chunk = learned.optimalChunkSize, chunk > 0 {
-            maxChunkBytes = min(max(maxChunkBytes, chunk), 16_777_216)
-        }
-
-        if let handshake = learned.avgHandshakeMs, handshake > 0 {
-            handshakeTimeoutMs = max(handshake * 3, handshakeTimeoutMs) // 3x the typical time
-        }
-
-        if let io = learned.optimalIoTimeoutMs, io > 0 {
-            ioTimeoutMs = io
-        }
-
-        if let inactivity = learned.optimalInactivityTimeoutMs, inactivity > 0 {
-            inactivityTimeoutMs = inactivity
-        }
-
         // Only apply if learned profile has good success rate (>80%)
         guard learned.successRate > 0.8 else { return }
 
-        // Apply throughput-based adjustments
+        // Apply learned optimal values if they exist and are within schema bounds
+        if let chunk = learned.optimalChunkSize, chunk > 0 {
+            // Clamp to schema bounds: 131072 to 16777216 (128KB to 16MB)
+            let clamped = min(max(chunk, 131_072), 16_777_216)
+            maxChunkBytes = min(max(maxChunkBytes, clamped), 16_777_216)
+        }
+
+        if let handshake = learned.avgHandshakeMs, handshake > 0 {
+            // Clamp to schema bounds: 1000 to 60000 (1s to 60s)
+            let clamped = min(max(handshake, 1_000), 60_000)
+            handshakeTimeoutMs = max(clamped * 3, handshakeTimeoutMs) // 3x the typical time, but respect existing
+        }
+
+        if let io = learned.optimalIoTimeoutMs, io > 0 {
+            // Clamp to schema bounds: 1000 to 60000 (1s to 60s)
+            ioTimeoutMs = min(max(io, 1_000), 60_000)
+        }
+
+        if let inactivity = learned.optimalInactivityTimeoutMs, inactivity > 0 {
+            // Clamp to schema bounds: 1000 to 60000 (1s to 60s)
+            inactivityTimeoutMs = min(max(inactivity, 1_000), 60_000)
+        }
+
+        // Apply throughput-based adjustments with bounds
         if let readMBps = learned.p95ReadThroughputMBps, readMBps > 10 {
-            // High-throughput device - can use larger chunks
-            maxChunkBytes = min(maxChunkBytes * 2, 16_777_216)
+            // High-throughput device - can use larger chunks, but stay within bounds
+            let increased = maxChunkBytes * 2
+            maxChunkBytes = min(increased, 16_777_216)
+        }
+
+        if let writeMBps = learned.p95WriteThroughputMBps, writeMBps > 8 {
+            // High-throughput write device - can use larger chunks
+            let increased = maxChunkBytes * 2
+            maxChunkBytes = min(increased, 16_777_216)
         }
     }
 
@@ -412,9 +425,11 @@ public struct Hook: Sendable {
         case postOpenSession
         case beforeGetDeviceInfo
         case beforeGetStorageIDs
+        case beforeGetObjectHandles
         case beforeTransfer
         case afterTransfer
         case onDeviceBusy
+        case onDetach
     }
 
     public let phase: Phase
