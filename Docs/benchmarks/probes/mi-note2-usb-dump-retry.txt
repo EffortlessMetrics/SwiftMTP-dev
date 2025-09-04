@@ -1,3 +1,6 @@
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'swiftmtp' complete! (0.13s)
 🔍 Dumping USB device interfaces...
 Device 2717:ff10
   iface=0 alt=0 class=0x06 sub=0x01 proto=0x01 in=0x81 out=0x01 evt=0x82 name=""
