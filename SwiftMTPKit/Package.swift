@@ -74,8 +74,7 @@ let package = Package(
                       dependencies: [
                         "SwiftMTPCore",
                         "SwiftMTPTransportLibUSB",
-                        "SwiftMTPIndex",
-                        "SwiftMTPSync",
+                        "SwiftMTPObservability",
                         "CLibusb"
                       ],
                       path: "Sources/Tools/swiftmtp-cli",

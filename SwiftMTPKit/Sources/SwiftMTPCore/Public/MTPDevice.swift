@@ -258,6 +258,7 @@ public actor MTPDeviceManager {
   public static let shared = MTPDeviceManager()
   private var attachedContinuation: AsyncStream<MTPDeviceSummary>.Continuation?
   private var detachedContinuation: AsyncStream<MTPDeviceID>.Continuation?
+  private var currentDevices: [MTPDeviceSummary] = []
 
   /// Start MTP device discovery with the specified configuration.
   ///
@@ -303,10 +304,12 @@ public actor MTPDeviceManager {
   }
 
   private func yieldAttached(_ dev: MTPDeviceSummary) async {
+    currentDevices.append(dev)
     attachedContinuation?.yield(dev)
   }
 
   private func yieldDetached(_ id: MTPDeviceID) async {
+    currentDevices.removeAll { $0.id == id }
     detachedContinuation?.yield(id)
   }
 
@@ -326,7 +329,7 @@ public actor MTPDeviceManager {
   ///
   /// This property provides a snapshot of all currently connected devices.
   /// For real-time monitoring, use the `deviceAttached` and `deviceDetached` streams.
-  public var devices: [MTPDeviceSummary] { get async { [] } } // TODO: track current devices
+  public var devices: [MTPDeviceSummary] { get async { currentDevices } }
 
   /// Stream of device attachment events.
   ///
@@ -388,6 +391,11 @@ public actor MTPDeviceManager {
   /// ```
   public func openDevice(with summary: MTPDeviceSummary, transport: any MTPTransport, config: SwiftMTPConfig = .init()) async throws -> MTPDevice {
     return MTPDeviceActor(id: summary.id, summary: summary, transport: transport, config: config)
+  }
+
+  /// Get the current configuration used by this device manager.
+  public func getConfig() -> SwiftMTPConfig {
+    config
   }
 
   private var config: SwiftMTPConfig = .init()
