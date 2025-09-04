@@ -5,7 +5,7 @@ import Foundation
 
 /// Learned performance profile for a specific device fingerprint.
 /// Captures successful configurations and adapts over time.
-public struct LearnedProfile: Sendable {
+public struct LearnedProfile: Sendable, Codable {
     /// Unique fingerprint identifying the device + environment
     public let fingerprint: MTPDeviceFingerprint
 
@@ -100,7 +100,7 @@ public struct LearnedProfile: Sendable {
 }
 
 /// Device fingerprint for uniquely identifying a device configuration
-public struct MTPDeviceFingerprint: Sendable, Hashable {
+public struct MTPDeviceFingerprint: Sendable, Hashable, Codable {
     /// USB Vendor ID
     public let vid: String
 
@@ -186,14 +186,14 @@ public struct MTPDeviceFingerprint: Sendable, Hashable {
 }
 
 /// USB interface descriptor triple
-public struct InterfaceTriple: Sendable, Codable, Hashable {
+public struct InterfaceTriple: Sendable, Hashable, Codable {
     public let `class`: String
     public let subclass: String
     public let `protocol`: String
 }
 
 /// USB endpoint addresses
-public struct EndpointAddresses: Sendable, Codable, Hashable {
+public struct EndpointAddresses: Sendable, Hashable, Codable {
     public let input: String
     public let output: String
     public let event: String?
@@ -302,13 +302,27 @@ public final class LearnedProfileManager {
     }
 
     private func loadProfiles() {
-        // TODO: Implement proper persistence when LearnedProfile becomes Codable again
-        profiles = [:]
+        do {
+            let data = try Data(contentsOf: storageURL)
+            let decoder = JSONDecoder()
+            let container = try decoder.decode([String: LearnedProfile].self, from: data)
+            profiles = container
+        } catch {
+            // If file doesn't exist or is corrupted, start with empty profiles
+            profiles = [:]
+        }
     }
 
     private func saveProfiles() {
-        // TODO: Implement proper persistence when LearnedProfile becomes Codable again
-        // For now, profiles are in-memory only
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+            let data = try encoder.encode(profiles)
+            try data.write(to: storageURL)
+        } catch {
+            // Log error but don't crash - learned profiles are not critical
+            print("Warning: Failed to save learned profiles: \(error)")
+        }
     }
 
     private func evictOldProfiles() {

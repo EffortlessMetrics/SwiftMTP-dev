@@ -3,36 +3,28 @@
 
 import Foundation
 import SwiftMTPCore
+import SQLite3
 
 public final class DefaultTransferJournal: TransferJournal {
-  private let db: Connection
-  private let transfers = Table("transfers")
-
-  // Column definitions
-  private let id = Expression<String>("id")
-  private let deviceId = Expression<String>("deviceId")
-  private let kind = Expression<String>("kind")
-  private let handle = Expression<Int64?>("handle")
-  private let parentHandle = Expression<Int64?>("parentHandle")
-  private let pathKey = Expression<String?>("pathKey")
-  private let name = Expression<String>("name")
-  private let totalBytes = Expression<Int64?>("totalBytes")
-  private let committedBytes = Expression<Int64>("committedBytes")
-  private let supportsPartial = Expression<Int64>("supportsPartial")
-  private let etag_size = Expression<Int64?>("etag_size")
-  private let etag_mtime = Expression<Int64?>("etag_mtime")
-  private let localTempURL = Expression<String>("localTempURL")
-  private let finalURL = Expression<String?>("finalURL")
-  private let state = Expression<String>("state")
-  private let lastError = Expression<String?>("lastError")
-  private let updatedAt = Expression<Int64>("updatedAt")
+  private let dbPath: String
+  private var db: OpaquePointer?
 
   public init(dbPath: String) throws {
-    self.db = try Connection(dbPath)
+    self.dbPath = dbPath
     try setupDatabase()
   }
 
+  deinit {
+    sqlite3_close(db)
+  }
+
   private func setupDatabase() throws {
+    // Open database connection
+    let result = sqlite3_open(dbPath, &db)
+    guard result == SQLITE_OK else {
+      throw TransferJournalError.databaseError(String(cString: sqlite3_errmsg(db)))
+    }
+
     // Embedded schema for transfer journal database
     let schema = """
     PRAGMA foreign_keys = ON;
@@ -111,7 +103,86 @@ public final class DefaultTransferJournal: TransferJournal {
       FOREIGN KEY(deviceId) REFERENCES devices(id) ON DELETE CASCADE
     );
     """
-    try db.execute(schema)
+
+    try executeSQL(schema)
+  }
+
+  private func executeSQL(_ sql: String) throws {
+    guard let db = db else {
+      throw TransferJournalError.databaseError("Database not open")
+    }
+
+    var statement: OpaquePointer?
+    defer { sqlite3_finalize(statement) }
+
+    let result = sqlite3_prepare_v2(db, sql, -1, &statement, nil)
+    guard result == SQLITE_OK else {
+      throw TransferJournalError.databaseError(String(cString: sqlite3_errmsg(db)))
+    }
+
+    let stepResult = sqlite3_step(statement)
+    if stepResult != SQLITE_DONE && stepResult != SQLITE_ROW {
+      throw TransferJournalError.databaseError(String(cString: sqlite3_errmsg(db)))
+    }
+  }
+
+  private func executePrepared(_ sql: String, _ parameters: Any?...) throws {
+    guard let db = db else {
+      throw TransferJournalError.databaseError("Database not open")
+    }
+
+    var statement: OpaquePointer?
+    defer { sqlite3_finalize(statement) }
+
+    let result = sqlite3_prepare_v2(db, sql, -1, &statement, nil)
+    guard result == SQLITE_OK else {
+      throw TransferJournalError.databaseError(String(cString: sqlite3_errmsg(db)))
+    }
+
+    // Bind parameters
+    for (index, parameter) in parameters.enumerated() {
+      let paramIndex = Int32(index + 1)
+      try bindParameter(statement: statement, index: paramIndex, value: parameter)
+    }
+
+    let stepResult = sqlite3_step(statement)
+    if stepResult != SQLITE_DONE && stepResult != SQLITE_ROW {
+      throw TransferJournalError.databaseError(String(cString: sqlite3_errmsg(db)))
+    }
+  }
+
+  private func bindParameter(statement: OpaquePointer?, index: Int32, value: Any?) throws {
+    guard let statement = statement else { return }
+
+    if let value = value {
+      switch value {
+      case let stringValue as String:
+        let result = sqlite3_bind_text(statement, index, stringValue, -1, nil)
+        guard result == SQLITE_OK else {
+          throw TransferJournalError.databaseError("Failed to bind string parameter")
+        }
+      case let intValue as Int64:
+        let result = sqlite3_bind_int64(statement, index, intValue)
+        guard result == SQLITE_OK else {
+          throw TransferJournalError.databaseError("Failed to bind int parameter")
+        }
+      case let intValue as Int:
+        let result = sqlite3_bind_int64(statement, index, Int64(intValue))
+        guard result == SQLITE_OK else {
+          throw TransferJournalError.databaseError("Failed to bind int parameter")
+        }
+      default:
+        let result = sqlite3_bind_null(statement, index)
+        guard result == SQLITE_OK else {
+          throw TransferJournalError.databaseError("Failed to bind null parameter")
+        }
+      }
+    } else {
+      let result = sqlite3_bind_null(statement, index)
+      guard result == SQLITE_OK else {
+        throw TransferJournalError.databaseError("Failed to bind null parameter")
+      }
+    }
   }
 
   public func beginRead(device: MTPDeviceID, handle: UInt32, name: String,
@@ -120,25 +191,33 @@ public final class DefaultTransferJournal: TransferJournal {
     let transferId = UUID().uuidString
     let now = Int64(Date().timeIntervalSince1970)
 
-    try db.run(transfers.insert(
-      id <- transferId,
-      deviceId <- device.raw,
-      kind <- "read",
-      self.handle <- Int64(handle),
-      parentHandle <- nil,
-      pathKey <- nil,
-      self.name <- name,
-      totalBytes <- size.map(Int64.init),
-      committedBytes <- 0,
-      self.supportsPartial <- supportsPartial ? 1 : 0,
-      etag_size <- etag.size.map(Int64.init),
-      etag_mtime <- etag.mtime.map { Int64($0.timeIntervalSince1970) },
-      localTempURL <- tempURL.path,
-      self.finalURL <- finalURL?.path,
-      state <- "active",
-      lastError <- nil,
-      updatedAt <- now
-    ))
+    let sql = """
+    INSERT INTO transfers (
+      id, deviceId, kind, handle, parentHandle, pathKey, name, totalBytes,
+      committedBytes, supportsPartial, etag_size, etag_mtime, localTempURL,
+      finalURL, state, lastError, updatedAt
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """
+
+    try executePrepared(sql,
+      transferId,
+      device.raw,
+      "read",
+      Int64(handle),
+      nil,
+      nil,
+      name,
+      size.map(Int64.init),
+      Int64(0),
+      supportsPartial ? 1 : 0,
+      etag.size.map(Int64.init),
+      etag.mtime.map { Int64($0.timeIntervalSince1970) },
+      tempURL.path,
+      finalURL?.path,
+      "active",
+      nil,
+      now
+    )
 
     return transferId
   }
@@ -149,89 +228,147 @@ public final class DefaultTransferJournal: TransferJournal {
     let transferId = UUID().uuidString
     let now = Int64(Date().timeIntervalSince1970)
 
-    try db.run(transfers.insert(
-      id <- transferId,
-      deviceId <- device.raw,
-      kind <- "write",
-      handle <- nil,
-      parentHandle <- Int64(parent),
-      pathKey <- nil,
-      self.name <- name,
-      totalBytes <- Int64(size),
-      committedBytes <- 0,
-      self.supportsPartial <- supportsPartial ? 1 : 0,
-      etag_size <- nil,
-      etag_mtime <- nil,
-      localTempURL <- tempURL.path,
-      self.finalURL <- sourceURL?.path,
-      state <- "active",
-      lastError <- nil,
-      updatedAt <- now
-    ))
+    let sql = """
+    INSERT INTO transfers (
+      id, deviceId, kind, handle, parentHandle, pathKey, name, totalBytes,
+      committedBytes, supportsPartial, etag_size, etag_mtime, localTempURL,
+      finalURL, state, lastError, updatedAt
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """
+
+    try executePrepared(sql,
+      transferId,
+      device.raw,
+      "write",
+      nil,
+      Int64(parent),
+      nil,
+      name,
+      Int64(size),
+      Int64(0),
+      supportsPartial ? 1 : 0,
+      nil,
+      nil,
+      tempURL.path,
+      sourceURL?.path,
+      "active",
+      nil,
+      now
+    )
 
     return transferId
   }
 
   public func updateProgress(id: String, committed: UInt64) throws {
     let now = Int64(Date().timeIntervalSince1970)
-    let query = transfers.filter(self.id == id)
-    try db.run(query.update(
-      committedBytes <- Int64(committed),
-      updatedAt <- now
-    ))
+    let sql = "UPDATE transfers SET committedBytes = ?, updatedAt = ? WHERE id = ?"
+    try executePrepared(sql, Int64(committed), now, id)
   }
 
   public func fail(id: String, error: Error) throws {
     let now = Int64(Date().timeIntervalSince1970)
-    let query = transfers.filter(self.id == id)
-    try db.run(query.update(
-      state <- "failed",
-      lastError <- error.localizedDescription,
-      updatedAt <- now
-    ))
+    let sql = "UPDATE transfers SET state = ?, lastError = ?, updatedAt = ? WHERE id = ?"
+    try executePrepared(sql, "failed", error.localizedDescription, now, id)
   }
 
   public func complete(id: String) throws {
     let now = Int64(Date().timeIntervalSince1970)
-    let query = transfers.filter(self.id == id)
-    try db.run(query.update(
-      state <- "done",
-      updatedAt <- now
-    ))
+    let sql = "UPDATE transfers SET state = ?, updatedAt = ? WHERE id = ?"
+    try executePrepared(sql, "done", now, id)
   }
 
   public func loadResumables(for device: MTPDeviceID) throws -> [TransferRecord] {
-    let query = transfers.filter(deviceId == device.raw && (state == "active" || state == "paused"))
-    let rows = try db.prepare(query)
+    let sql = """
+    SELECT id, deviceId, kind, handle, parentHandle, name, totalBytes, committedBytes,
+           supportsPartial, localTempURL, finalURL, state, updatedAt
+    FROM transfers
+    WHERE deviceId = ? AND (state = 'active' OR state = 'paused')
+    """
 
-    return try rows.map { row in
-      TransferRecord(
-        id: try row.get(id),
-        deviceId: MTPDeviceID(raw: try row.get(deviceId)),
-        kind: try row.get(kind),
-        handle: try row.get(handle).map(UInt32.init),
-        parentHandle: try row.get(parentHandle).map(UInt32.init),
-        name: try row.get(name),
-        totalBytes: try row.get(totalBytes).map(UInt64.init),
-        committedBytes: UInt64(try row.get(committedBytes)),
-        supportsPartial: try row.get(supportsPartial) == 1,
-        localTempURL: URL(fileURLWithPath: try row.get(localTempURL)),
-        finalURL: (try row.get(finalURL)).map { URL(fileURLWithPath: $0) },
-        state: try row.get(state),
-        updatedAt: Date(timeIntervalSince1970: TimeInterval(try row.get(updatedAt)))
-      )
+    guard let db = db else {
+      throw TransferJournalError.databaseError("Database not open")
     }
+
+    var statement: OpaquePointer?
+    defer { sqlite3_finalize(statement) }
+
+    let result = sqlite3_prepare_v2(db, sql, -1, &statement, nil)
+    guard result == SQLITE_OK else {
+      throw TransferJournalError.databaseError(String(cString: sqlite3_errmsg(db)))
+    }
+
+    // Bind device ID parameter
+    let deviceIdResult = sqlite3_bind_text(statement, 1, device.raw, -1, nil)
+    guard deviceIdResult == SQLITE_OK else {
+      throw TransferJournalError.databaseError("Failed to bind deviceId parameter")
+    }
+
+    var records: [TransferRecord] = []
+
+    while sqlite3_step(statement) == SQLITE_ROW {
+      let record = try TransferRecord(
+        id: String(cString: sqlite3_column_text(statement, 0)),
+        deviceId: MTPDeviceID(raw: String(cString: sqlite3_column_text(statement, 1))),
+        kind: String(cString: sqlite3_column_text(statement, 2)),
+        handle: sqlite3_column_type(statement, 3) != SQLITE_NULL ? UInt32(sqlite3_column_int64(statement, 3)) : nil,
+        parentHandle: sqlite3_column_type(statement, 4) != SQLITE_NULL ? UInt32(sqlite3_column_int64(statement, 4)) : nil,
+        name: String(cString: sqlite3_column_text(statement, 5)),
+        totalBytes: sqlite3_column_type(statement, 6) != SQLITE_NULL ? UInt64(sqlite3_column_int64(statement, 6)) : nil,
+        committedBytes: UInt64(sqlite3_column_int64(statement, 7)),
+        supportsPartial: sqlite3_column_int64(statement, 8) == 1,
+        localTempURL: URL(fileURLWithPath: String(cString: sqlite3_column_text(statement, 9))),
+        finalURL: sqlite3_column_type(statement, 10) != SQLITE_NULL ? URL(fileURLWithPath: String(cString: sqlite3_column_text(statement, 10))) : nil,
+        state: String(cString: sqlite3_column_text(statement, 11)),
+        updatedAt: Date(timeIntervalSince1970: TimeInterval(sqlite3_column_int64(statement, 12)))
+      )
+      records.append(record)
+    }
+
+    return records
   }
 
   public func clearStaleTemps(olderThan: TimeInterval) throws {
     let cutoff = Int64(Date().timeIntervalSince1970 - olderThan)
-    let query = transfers.filter(updatedAt < cutoff && (state == "failed" || state == "paused"))
 
-    // Get temp URLs before deleting
-    let tempURLs = try db.prepare(query.select(localTempURL)).map { try $0.get(localTempURL) }
+    // First, get temp URLs for stale records
+    let selectSQL = """
+    SELECT localTempURL FROM transfers
+    WHERE updatedAt < ? AND (state = 'failed' OR state = 'paused')
+    """
 
-    // Delete records
-    try db.run(query.delete())
+    guard let db = db else {
+      throw TransferJournalError.databaseError("Database not open")
+    }
+
+    var tempURLs: [String] = []
+
+    do {
+      var statement: OpaquePointer?
+      defer { sqlite3_finalize(statement) }
+
+      let result = sqlite3_prepare_v2(db, selectSQL, -1, &statement, nil)
+      guard result == SQLITE_OK else {
+        throw TransferJournalError.databaseError(String(cString: sqlite3_errmsg(db)))
+      }
+
+      let cutoffResult = sqlite3_bind_int64(statement, 1, cutoff)
+      guard cutoffResult == SQLITE_OK else {
+        throw TransferJournalError.databaseError("Failed to bind cutoff parameter")
+      }
+
+      while sqlite3_step(statement) == SQLITE_ROW {
+        if let tempURL = sqlite3_column_text(statement, 0) {
+          tempURLs.append(String(cString: tempURL))
+        }
+      }
+    }
+
+    // Delete the stale records
+    let deleteSQL = """
+    DELETE FROM transfers
+    WHERE updatedAt < ? AND (state = 'failed' OR state = 'paused')
+    """
+    try executePrepared(deleteSQL, cutoff)
 
     // Clean up temp files
     for tempPath in tempURLs {
@@ -242,4 +379,5 @@ public final class DefaultTransferJournal: TransferJournal {
 
 enum TransferJournalError: Error {
   case schemaNotFound
+  case databaseError(String)
 }

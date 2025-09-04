@@ -89,6 +89,61 @@ fi
 
 echo "✅ All entry IDs are unique"
 
+# Validate bench gates against actual benchmark results
+echo "🔍 Validating bench gates..."
+jq -r '.entries[] | select(.benchGates) | {id: .id, readMin: (.benchGates.readMBpsMin // 0), writeMin: (.benchGates.writeMBpsMin // 0)}' "$QUIRKS_FILE" | while read -r entry; do
+    id=$(echo "$entry" | jq -r '.id')
+    read_min=$(echo "$entry" | jq -r '.readMin')
+    write_min=$(echo "$entry" | jq -r '.writeMin')
+
+    if [[ "$read_min" != "0" || "$write_min" != "0" ]]; then
+        echo "  Checking gates for $id (read ≥ ${read_min} MB/s, write ≥ ${write_min} MB/s)..."
+
+        # Look for benchmark CSV files for this device
+        csv_pattern="Docs/benchmarks/csv/${id//-/*}*.csv"
+        csv_files=$(find Docs/benchmarks/csv -name "${id//-/*}*.csv" 2>/dev/null || true)
+
+        if [[ -z "$csv_files" ]]; then
+            echo "  ⚠️  No benchmark CSV found for $id"
+            if [[ "${CI:-false}" == "true" ]]; then
+                echo "  ❌ CI requires benchmark evidence for quirk with gates"
+                exit 1
+            fi
+        else
+            # Parse the most recent benchmark results
+            latest_csv=$(ls -t $csv_files | head -1)
+            if [[ -f "$latest_csv" ]]; then
+                # Extract read/write speeds from CSV (simplified parsing)
+                read_speed=$(grep -E "(read|Read)" "$latest_csv" | tail -1 | sed 's/.*,//' | sed 's/[^0-9.]//g' || echo "0")
+                write_speed=$(grep -E "(write|Write)" "$latest_csv" | tail -1 | sed 's/.*,//' | sed 's/[^0-9.]//g' || echo "0")
+
+                read_pass=$(awk "BEGIN {print ($read_speed >= $read_min) ? 1 : 0}")
+                write_pass=$(awk "BEGIN {print ($write_speed >= $write_min) ? 1 : 0}")
+
+                if [[ "$read_pass" -eq 1 ]]; then
+                    echo "  ✅ Read gate passed: $read_speed ≥ $read_min MB/s"
+                else
+                    echo "  ❌ Read gate FAILED: $read_speed < $read_min MB/s"
+                    if [[ "${CI:-false}" == "true" ]]; then
+                        exit 1
+                    fi
+                fi
+
+                if [[ "$write_pass" -eq 1 ]]; then
+                    echo "  ✅ Write gate passed: $write_speed ≥ $write_min MB/s"
+                else
+                    echo "  ❌ Write gate FAILED: $write_speed < $write_min MB/s"
+                    if [[ "${CI:-false}" == "true" ]]; then
+                        exit 1
+                    fi
+                fi
+            fi
+        fi
+    fi
+done
+
+echo "✅ Bench gates validation complete"
+
 # Check that DocC generator exists and is executable
 echo "🔍 Checking DocC generator..."
 docc_generator="SwiftMTPKit/Sources/Tools/docc-generator"
@@ -104,10 +159,36 @@ fi
 
 echo "✅ DocC generator is ready"
 
+# Check DocC freshness (in CI mode)
+if [[ "${CI:-false}" == "true" ]]; then
+    echo "🔍 Checking DocC freshness..."
+    # Generate docs and check if they differ from committed versions
+    temp_dir=$(mktemp -d)
+    ./$docc_generator "$QUIRKS_FILE" "$temp_dir"
+
+    # Compare generated docs with committed docs
+    if ! diff -r "$temp_dir" "Docs/SwiftMTP.docc/Devices" >/dev/null 2>&1; then
+        echo "❌ DocC files are stale. Please regenerate with:"
+        echo "   ./$docc_generator $QUIRKS_FILE Docs/SwiftMTP.docc/Devices"
+        rm -rf "$temp_dir"
+        exit 1
+    fi
+
+    rm -rf "$temp_dir"
+    echo "✅ DocC files are up to date"
+fi
+
 echo ""
 echo "🎉 Validation complete!"
 echo ""
-echo "Next steps:"
-echo "1. Run DocC generator: ./$docc_generator $QUIRKS_FILE Docs/SwiftMTP.docc/Devices"
-echo "2. Commit any generated documentation changes"
-echo "3. Test CLI commands: swift run swiftmtp quirks --explain"
+
+if [[ "${CI:-false}" == "true" ]]; then
+    echo "✅ All CI evidence gates passed!"
+else
+    echo "Next steps:"
+    echo "1. Run DocC generator: ./$docc_generator $QUIRKS_FILE Docs/SwiftMTP.docc/Devices"
+    echo "2. Commit any generated documentation changes"
+    echo "3. Test CLI commands: swift run swiftmtp quirks --explain"
+    echo "4. Run benchmarks: ./scripts/benchmark-device.sh <device-id>"
+    echo "5. For CI: Set CI=true to enable strict evidence validation"
+fi

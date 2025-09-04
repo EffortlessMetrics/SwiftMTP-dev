@@ -43,6 +43,19 @@ public final class QuirkDatabase: Sendable {
         quirks.filter { $0.status == status }
     }
 
+    /// Validates schema version compatibility
+    public func validateSchemaVersion() throws {
+        let supportedVersions = ["1.0.0"]
+        guard supportedVersions.contains(schemaVersion) else {
+            throw QuirkDatabaseError.unsupportedSchemaVersion(schemaVersion, supportedVersions)
+        }
+    }
+
+    /// Gets the current schema version
+    public func getSchemaVersion() -> String {
+        schemaVersion
+    }
+
     private func matches(_ match: DeviceMatch, fingerprint: MTPDeviceFingerprint) -> Bool {
         // Check VID/PID
         if let vid = match.vid, vid != fingerprint.vid { return false }
@@ -184,4 +197,11 @@ public final class EffectiveTuningBuilder {
 
         return layers.joined(separator: "\n  ")
     }
+}
+
+/// Errors that can occur when working with quirk databases
+public enum QuirkDatabaseError: Error {
+    case unsupportedSchemaVersion(String, [String])
+    case invalidQuirkFormat(String)
+    case duplicateQuirkId(String)
 }
