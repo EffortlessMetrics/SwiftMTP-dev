@@ -19,6 +19,11 @@ struct CollectCommand {
         let safe: Bool
         let traceUSB: Bool
         let traceUSBDetails: Bool
+        let targetVID: String?
+        let targetPID: String?
+        let targetBus: Int?
+        let targetAddress: Int?
+        let jsonOutput: Bool
     }
 
     struct SubmissionBundle {
@@ -206,15 +211,47 @@ struct CollectCommand {
         print("\n✅ Validating submission bundle...")
         try await validateBundle(bundle: bundle)
 
-        // Step 10: Handle PR creation or manual submission
-        if flags.openPR {
-            try await createPullRequest(bundle: bundle)
-        } else {
-            printManualSubmissionInstructions(bundle: bundle)
-        }
+        // Step 10: Handle output format
+        if flags.jsonOutput {
+            // Emit JSON summary to stdout
+            let jsonSummary = [
+                "schemaVersion": "1.0.0",
+                "type": "collectionSummary",
+                "timestamp": ISO8601DateFormatter().string(from: Date()),
+                "bundlePath": bundle.bundleDir.path,
+                "device": [
+                    "vendor": bundle.manifest.device.vendor,
+                    "model": bundle.manifest.device.model,
+                    "vendorId": bundle.manifest.device.vendorId,
+                    "productId": bundle.manifest.device.productId,
+                    "fingerprintHash": bundle.manifest.device.fingerprintHash
+                ],
+                "artifacts": [
+                    "probe": bundle.manifest.artifacts.probe != nil,
+                    "usbDump": bundle.manifest.artifacts.usbDump,
+                    "benchmarks": bundle.manifest.artifacts.bench?.count ?? 0,
+                    "quirkSuggestion": true
+                ],
+                "consent": [
+                    "anonymizeSerial": bundle.manifest.consent.anonymizeSerial,
+                    "allowBench": bundle.manifest.consent.allowBench
+                ]
+            ] as [String: Any]
 
-        print("\n🎉 Device submission collection complete!")
-        print("Bundle saved to: \(bundle.bundleDir.path)")
+            let jsonData = try JSONSerialization.data(withJSONObject: jsonSummary, options: [.sortedKeys])
+            FileHandle.standardOutput.write(jsonData)
+            FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+        } else {
+            // Step 11: Handle PR creation or manual submission
+            if flags.openPR {
+                try await createPullRequest(bundle: bundle)
+            } else {
+                printManualSubmissionInstructions(bundle: bundle)
+            }
+
+            print("\n🎉 Device submission collection complete!")
+            print("Bundle saved to: \(bundle.bundleDir.path)")
+        }
     }
 
     private func handleConsent(flags: Flags) async throws {
@@ -264,15 +301,75 @@ struct CollectCommand {
         let devices = try await MTPDeviceManager.shared.currentRealDevices()
         print("Found \(devices.count) MTP device(s)")
 
-        guard let deviceSummary = devices.first else {
-            throw MTPError.notSupported("No MTP devices found. Please connect your device and ensure it's unlocked.")
+        // Filter devices based on targeting criteria
+        let filteredDevices = devices.filter { device in
+            // Check VID match - device.id.raw is typically in format like "0x2717:0xff10"
+            if let targetVID = flags.targetVID {
+                let parts = device.id.raw.split(separator: ":")
+                if parts.count >= 2, let deviceVID = parts.first?.dropFirst(2) { // Remove "0x" prefix
+                    if deviceVID.lowercased() != targetVID.lowercased() {
+                        return false
+                    }
+                }
+            }
+
+            // Check PID match
+            if let targetPID = flags.targetPID {
+                let parts = device.id.raw.split(separator: ":")
+                if parts.count >= 2, let devicePID = parts.last?.dropFirst(2) { // Remove "0x" prefix
+                    if devicePID.lowercased() != targetPID.lowercased() {
+                        return false
+                    }
+                }
+            }
+
+            // For bus/address filtering, we'd need libusb device handles
+            // This is a simplified implementation - in practice you'd need to
+            // get the actual USB device descriptors to match bus/address
+
+            return true
         }
 
-        print("Selected device: \(deviceSummary.manufacturer) \(deviceSummary.model)")
+        guard !filteredDevices.isEmpty else {
+            if devices.isEmpty {
+                throw MTPError.notSupported("No MTP devices found. Please connect your device and ensure it's unlocked.")
+            } else {
+                throw MTPError.notSupported("No devices match the specified targeting criteria.")
+            }
+        }
+
+        var selectedDevice: MTPDeviceSummary
+        if filteredDevices.count == 1 {
+            selectedDevice = filteredDevices[0]
+            print("Selected device: \(selectedDevice.manufacturer) \(selectedDevice.model)")
+        } else {
+            // Multiple matches - prompt user or use first one in non-interactive mode
+            print("Multiple devices match criteria:")
+            for (i, device) in filteredDevices.enumerated() {
+                print("  \(i+1). \(device.manufacturer) \(device.model) (\(String(format: "%04x:%04x", device.id.raw >> 16, device.id.raw & 0xFFFF)))")
+            }
+
+            if flags.nonInteractive {
+                selectedDevice = filteredDevices[0]
+                print("Selected first device (non-interactive mode)")
+            } else {
+                print("\nEnter device number (1-\(filteredDevices.count)): ", terminator: "")
+                fflush(stdout)
+
+                guard let input = readLine(),
+                      let choice = Int(input),
+                      choice >= 1 && choice <= filteredDevices.count else {
+                    throw MTPError.notSupported("Invalid device selection")
+                }
+
+                selectedDevice = filteredDevices[choice - 1]
+                print("Selected device \(choice): \(selectedDevice.manufacturer) \(selectedDevice.model)")
+            }
+        }
 
         // Open device with default config first
         let transport = LibUSBTransportFactory.createTransport()
-        let device = try await MTPDeviceManager.shared.openDevice(with: deviceSummary, transport: transport, config: SwiftMTPConfig())
+        let device = try await MTPDeviceManager.shared.openDevice(with: selectedDevice, transport: transport, config: SwiftMTPConfig())
 
         // Get device info and build effective tuning
         let deviceInfo = try await device.info
@@ -407,7 +504,38 @@ struct CollectCommand {
         close(oldStdout)
 
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        return String(data: data, encoding: .utf8) ?? ""
+        var usbDumpText = String(data: data, encoding: .utf8) ?? ""
+
+        // Sanitize the USB dump for privacy
+        let patterns = [
+            // Serial numbers in various formats
+            (#"(?i)\b(Serial Number:\s*)(\S+)"#, "$1<redacted>"),
+            (#"(?i)\b(iSerial\s*)(\S+)"#, "$1<redacted>"),
+            (#"(?i)\b(Serial:\s*)(\S+)"#, "$1<redacted>"),
+
+            // Device-friendly names that may contain personal info
+            (#"(?i)\b(Product|Manufacturer|Device Name|Model):\s+(.+)$"#, "$1: <redacted>"),
+
+            // Absolute user paths
+            (#"/Users/[^/[:space:]]+"#, "/Users/<redacted>"),
+
+            // Windows user paths
+            (#"(?i)C:\\Users\\[^\\[:space:]]+"#, "C:\\Users\\<redacted>"),
+
+            // Linux home paths
+            (#"(?i)/home/[^/[:space:]]+"#, "/home/<redacted>")
+        ]
+
+        // Apply all patterns
+        for (pattern, replacement) in patterns {
+            usbDumpText = usbDumpText.replacingOccurrences(
+                of: pattern,
+                with: replacement,
+                options: .regularExpression
+            )
+        }
+
+        return usbDumpText
     }
 
     private func runBenchmarks(device: any MTPDevice, flags: Flags) async throws -> [String: URL] {

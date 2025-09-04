@@ -211,6 +211,41 @@ validate_benchmark_csv() {
     echo -e "${GREEN}✅ Benchmark CSV ($size) is valid${NC}"
 }
 
+# Validate privacy redaction in USB dump and other files
+validate_privacy_redaction() {
+    local usb_file="$1"
+
+    echo "🔍 Validating privacy redaction..."
+
+    # Check for unredacted serials in USB dump
+    if grep -Eqi 'Serial Number:[[:space:]]*[A-Za-z0-9_-]+' "$usb_file"; then
+        if ! grep -qi 'Serial Number: <redacted>' "$usb_file"; then
+            echo -e "${RED}❌ USB dump contains unredacted serial numbers${NC}"
+            return 1
+        fi
+    fi
+
+    # Check for absolute user paths
+    if grep -Eq '/Users/[^/[:space:]]+' "$usb_file"; then
+        echo -e "${RED}❌ USB dump leaks local username paths${NC}"
+        return 1
+    fi
+
+    # Check for Windows user paths
+    if grep -Eqi 'C:\\Users\\[^\\[:space:]]+' "$usb_file"; then
+        echo -e "${RED}❌ USB dump leaks Windows username paths${NC}"
+        return 1
+    fi
+
+    # Check for Linux home paths
+    if grep -Eqi '/home/[^/[:space:]]+' "$usb_file"; then
+        echo -e "${RED}❌ USB dump leaks Linux username paths${NC}"
+        return 1
+    fi
+
+    echo -e "${GREEN}✅ Privacy redaction validated${NC}"
+}
+
 # Extract and display summary information
 display_summary() {
     local bundle_dir="$1"
@@ -318,6 +353,9 @@ validate_submission() {
     else
         echo -e "${GREEN}✅ Salt file present for redaction${NC}"
     fi
+
+    # Validate privacy redaction in USB dump
+    validate_privacy_redaction "$usb_dump_file"
 
     display_summary "$bundle_dir"
 
