@@ -8,7 +8,7 @@ import SwiftMTPSync
 import Foundation
 @preconcurrency import SQLite
 
-// Import for USB device watcher
+// Import for USB device watcher and dumper
 import SwiftMTPTransportLibUSB
 
 // Simple wrapper to get device info from an MTPLink
@@ -174,6 +174,10 @@ struct SimpleMTPDevice {
       case "licenses":
         runLicensesCommand()
         return
+      case "usb-dump":
+        commandIndex += 1
+        await runUSBDumpCommand()
+        return
       default:
         print("Unknown argument: \(args[commandIndex])")
         printHelp()
@@ -212,6 +216,7 @@ struct SimpleMTPDevice {
     print("  mirror <dest> [--include <pattern>] Mirror device to local directory")
     print("  probe                             Probe device capabilities and USB info")
     print("  bench <size>                      Run transfer benchmark (e.g., 1G, 500M)")
+    print("  usb-dump                          Show all USB interfaces/alt-settings")
     print("  licenses                          Show third-party license notices")
     print("")
     print("OPTIONS:")
@@ -927,6 +932,16 @@ struct SimpleMTPDevice {
     } else {
       print("❌ Third-party notices not bundled with this binary.")
       print("\nFor more information, visit: https://github.com/your-repo/SwiftMTP/blob/main/legal/licenses/THIRD-PARTY-NOTICES.md")
+    }
+  }
+
+  static func runUSBDumpCommand() async {
+    do {
+      print("🔍 Dumping USB device interfaces...")
+      try await USBDumper().run()
+      print("✅ USB dump complete")
+    } catch {
+      print("❌ USB dump failed: \(error)")
     }
   }
 }
