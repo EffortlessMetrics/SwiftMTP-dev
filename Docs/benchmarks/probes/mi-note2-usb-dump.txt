@@ -1,0 +1,1 @@
+Found unhandled resource at /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/legal/licenses/THIRD-PARTY-NOTICES.md
