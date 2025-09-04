@@ -41,8 +41,11 @@ struct USBDumper {
           var name = ""
           if alt.iInterface != 0 {
             var buf = [UInt8](repeating: 0, count: 128)
-            if libusb_get_string_descriptor_ascii(handle, alt.iInterface, &buf, UInt16(buf.count)) > 0 {
-              name = String(cString: UnsafePointer<CChar>(OpaquePointer(&buf)))
+            if libusb_get_string_descriptor_ascii(handle, alt.iInterface, &buf, Int32(buf.count)) > 0 {
+              // Find null terminator
+              if let nullIndex = buf.firstIndex(of: 0) {
+                name = String(decoding: buf[..<nullIndex], as: UTF8.self)
+              }
             }
           }
 
@@ -52,9 +55,9 @@ struct USBDumper {
             let addr = ed.bEndpointAddress
             let dirIn = (addr & 0x80) != 0
             let attr = ed.bmAttributes & 0x03
-            if attr == LIBUSB_TRANSFER_TYPE_BULK {
+            if attr == UInt8(LIBUSB_TRANSFER_TYPE_BULK.rawValue) {
               if dirIn { bulkIn = addr } else { bulkOut = addr }
-            } else if attr == LIBUSB_TRANSFER_TYPE_INTERRUPT, dirIn {
+            } else if attr == UInt8(LIBUSB_TRANSFER_TYPE_INTERRUPT.rawValue), dirIn {
               evt = addr
             }
           }

@@ -14,7 +14,7 @@ public final class MockTransport: @unchecked Sendable, MTPTransport {
         self.deviceData = deviceData
     }
 
-    public func open(_ summary: MTPDeviceSummary) async throws -> MTPLink {
+    public func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig) async throws -> MTPLink {
         // Simulate connection delay
         try await Task.sleep(nanoseconds: 100_000_000) // 100ms
 
@@ -41,6 +41,12 @@ public final class MockTransport: @unchecked Sendable, MTPTransport {
 
         isConnected = true
         return MockMTPLink(deviceData: deviceData, transport: self)
+    }
+
+    // Keep the old method for backward compatibility
+    public func open(_ summary: MTPDeviceSummary) async throws -> MTPLink {
+        let config = SwiftMTPConfig() // Use default config
+        return try await open(summary, config: config)
     }
 }
 
