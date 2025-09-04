@@ -116,8 +116,15 @@ public struct LibUSBTransport: MTPTransport {
     defer { libusb_free_config_descriptor(cfg) }
 
     // Find the best MTP interface using robust alt-setting selection
-    let (ifaceNum, _, epIn, epOut, epEvt) = try findMTPInterface(handle: handle, device: dev)
+    let (ifaceNum, altSetting, epIn, epOut, epEvt) = try findMTPInterface(handle: handle, device: dev)
     guard epIn != 0 && epOut != 0 else { libusb_close(handle); throw TransportError.io("no bulk endpoints") }
+
+    // Debug logging for interface selection
+    if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
+      let evtStr = epEvt != 0 ? String(format: "0x%02x", epEvt) : "none"
+      print("MTP iface=\(ifaceNum) alt=\(altSetting) epIn=0x\(String(format: "%02x", epIn)) epOut=0x\(String(format: "%02x", epOut)) evt=\(evtStr)")
+    }
+
     return MTPUSBLink(handle: handle, iface: ifaceNum, epIn: epIn, epOut: epOut, epEvt: epEvt)
   }
 }
@@ -246,32 +253,61 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     var dataHeader: PTPHeader?
 
     if dataInHandler != nil {
-      // First read: may contain header + some payload
+      // Time-bounded wait for first DATA container (prevents infinite hangs)
+      let start = DispatchTime.now()
+      let budgetMs = max(5000, 3000)  // at least 3s for DATA-IN timeout
+      let budgetNs = UInt64(budgetMs) * 1_000_000
+
+      var gotFirst = 0
       var first = [UInt8](repeating: 0, count: max(PTPHeader.size, 64 * 1024))
-      let gotFirst = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: 5000)
-      if gotFirst >= PTPHeader.size {
-        dataHeader = first.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
-        if dataHeader?.type == PTPContainer.Kind.data.rawValue {
-          hasDataPhase = true
-          let payloadLen = Int(dataHeader!.length) - PTPHeader.size
-          let rem = gotFirst - PTPHeader.size
-          if rem > 0 {
-            first.withUnsafeBytes { raw in
-              let chunk = UnsafeRawBufferPointer(start: raw.baseAddress!.advanced(by: PTPHeader.size), count: rem)
-              _ = dataInHandler!(chunk)
-            }
+
+      while gotFirst == 0 {
+        gotFirst = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: 5000)
+        if gotFirst == 0 {
+          if DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds > budgetNs {
+            throw MTPError.timeout
           }
-          // Read the rest exactly
-          var left = payloadLen - max(0, rem)
-          while left > 0 {
-            var buf = [UInt8](repeating: 0, count: min(left, 1 << 20))
-            let got = try bulkReadOnce(inEP, into: &buf, max: buf.count, timeout: 15000)
-            if got == 0 { continue }
-            buf.withUnsafeBytes { raw in
-              _ = dataInHandler!(UnsafeRawBufferPointer(start: raw.baseAddress!, count: got))
-            }
-            left -= got
+          continue
+        }
+      }
+
+      guard gotFirst >= PTPHeader.size else {
+        throw MTPError.transport(.io("short data header"))
+      }
+
+      dataHeader = first.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
+      guard dataHeader?.type == PTPContainer.Kind.data.rawValue,
+            dataHeader?.code == command.code,
+            dataHeader?.txid == txid else {
+        throw MTPError.transport(.io("unexpected data header type/code/tx"))
+      }
+
+      if dataHeader?.type == PTPContainer.Kind.data.rawValue {
+        hasDataPhase = true
+        let payloadLen = Int(dataHeader!.length) - PTPHeader.size
+        let rem = gotFirst - PTPHeader.size
+        if rem > 0 {
+          first.withUnsafeBytes { raw in
+            let chunk = UnsafeRawBufferPointer(start: raw.baseAddress!.advanced(by: PTPHeader.size), count: rem)
+            _ = dataInHandler!(chunk)
           }
+        }
+        // Read the rest exactly (also with timeout protection)
+        var left = payloadLen - max(0, rem)
+        while left > 0 {
+          var buf = [UInt8](repeating: 0, count: min(left, 1 << 20))
+          let got = try bulkReadOnce(inEP, into: &buf, max: buf.count, timeout: 15000)
+          if got == 0 {
+            // Timeout protection for remaining data
+            if DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds > budgetNs {
+              throw MTPError.timeout
+            }
+            continue
+          }
+          buf.withUnsafeBytes { raw in
+            _ = dataInHandler!(UnsafeRawBufferPointer(start: raw.baseAddress!, count: got))
+          }
+          left -= got
         }
       }
     }

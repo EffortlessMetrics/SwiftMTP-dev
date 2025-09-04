@@ -62,7 +62,7 @@ let package = Package(
     .executableTarget(name: "swiftmtp-cli",
                       dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPSync"],
                       path: "Sources/Tools/swiftmtp-cli",
-                      resources: [.copy("../../legal/licenses/THIRD-PARTY-NOTICES.md")],
+                      resources: [.copy("../../../legal/licenses/THIRD-PARTY-NOTICES.md")],
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .executableTarget(name: "simple-probe",
