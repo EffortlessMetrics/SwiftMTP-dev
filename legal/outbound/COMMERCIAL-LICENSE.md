@@ -44,7 +44,7 @@ Licensor will defend IP infringement claims alleging the SDK (unmodified) infrin
 
 ## 11. Governing Law
 
-Delaware, USA.
+Delaware, New York, NY.
 
 ## Order Form fields
 

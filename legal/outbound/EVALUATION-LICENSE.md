@@ -40,7 +40,7 @@ LICENSOR SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING FROM USE OF THE SOFTWARE.
 
 ## 8. Governing Law
 
-Delaware, USA.
+Delaware, New York, NY.
 
 ---
 

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2025 Effortless Metrics, Inc.
+
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPIndex
@@ -84,6 +87,9 @@ struct SimpleMTPDevice {
       case "--help", "-h":
         printHelp()
         return
+      case "--version", "-v":
+        printVersion()
+        return
       case "pull":
         commandIndex += 1
         guard commandIndex + 1 < args.count else {
@@ -165,6 +171,9 @@ struct SimpleMTPDevice {
         let sizeSpec = args[commandIndex]
         await runBenchCommand(sizeSpec: sizeSpec, useMock: useMock, mockProfile: mockProfile)
         return
+      case "licenses":
+        runLicensesCommand()
+        return
       default:
         print("Unknown argument: \(args[commandIndex])")
         printHelp()
@@ -203,9 +212,12 @@ struct SimpleMTPDevice {
     print("  mirror <dest> [--include <pattern>] Mirror device to local directory")
     print("  probe                             Probe device capabilities and USB info")
     print("  bench <size>                      Run transfer benchmark (e.g., 1G, 500M)")
+    print("  licenses                          Show third-party license notices")
     print("")
     print("OPTIONS:")
     print("  --mock [profile]    Use mock device instead of real hardware")
+    print("  --version, -v       Show version and license information")
+    print("  --help, -h          Show this help message")
     print("")
     print("MOCK PROFILES:")
     print("  pixel7, android    - Google Pixel 7 (default)")
@@ -872,5 +884,49 @@ struct SimpleMTPDevice {
     }
 
     try fileHandle.close()
+  }
+
+  static func printVersion() {
+    print("SwiftMTP CLI")
+    print("Version: 1.0.0")
+    print("License Edition: AGPL-3.0-only")
+
+    // Try to read SBOM info if available
+    if let sbomURL = Bundle.module.url(forResource: "sbom", withExtension: "json") {
+      do {
+        let sbomData = try Data(contentsOf: sbomURL)
+        if let sbom = try JSONSerialization.jsonObject(with: sbomData, options: []) as? [String: Any],
+           let spdxID = sbom["SPDXID"] as? String {
+          print("SBOM ID: \(spdxID)")
+        }
+      } catch {
+        // SBOM not available or not readable
+      }
+    }
+
+    print("")
+    print("Copyright (c) 2025 Effortless Metrics, Inc.")
+    print("Licensed under AGPL-3.0-only")
+    print("")
+    print("For third-party license notices: swiftmtp licenses")
+    print("For more information: https://github.com/your-repo/SwiftMTP")
+  }
+
+  static func runLicensesCommand() {
+    print("📋 Third-Party License Notices")
+    print("=" * 40)
+
+    if let url = Bundle.module.url(forResource: "THIRD-PARTY-NOTICES", withExtension: "md") {
+      do {
+        let contents = try String(contentsOf: url, encoding: .utf8)
+        print(contents)
+      } catch {
+        print("❌ Error reading license notices: \(error)")
+        print("\nFor more information, visit: https://github.com/your-repo/SwiftMTP/blob/main/legal/licenses/THIRD-PARTY-NOTICES.md")
+      }
+    } else {
+      print("❌ Third-party notices not bundled with this binary.")
+      print("\nFor more information, visit: https://github.com/your-repo/SwiftMTP/blob/main/legal/licenses/THIRD-PARTY-NOTICES.md")
+    }
   }
 }
