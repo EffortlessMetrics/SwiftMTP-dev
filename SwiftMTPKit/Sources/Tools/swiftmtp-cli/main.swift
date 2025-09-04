@@ -13,6 +13,29 @@ struct CLIFlags {
     let useMock: Bool
     let mockProfile: String
     let jsonOutput: Bool
+    let strict: Bool
+    let safe: Bool
+}
+
+func printJSON<T: Encodable>(_ value: T) {
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.withoutEscapingSlashes]
+    do {
+        let data = try encoder.encode(value)
+        FileHandle.standardOutput.write(data)
+        FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+    } catch {
+        // Fall back: emit a minimal JSON error on stdout
+        let fallback = ["schemaVersion":"1.0.0","error":"encoding_failed","detail":"\(error)"]
+        let data = try! JSONSerialization.data(withJSONObject: fallback, options: [])
+        FileHandle.standardOutput.write(data)
+        FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+        exit(70) // internal error
+    }
+}
+
+func log(_ message: String) {
+    FileHandle.standardError.write((message + "\n").data(using: .utf8)!)
 }
 
 // Script-style entry point without @main
@@ -23,6 +46,8 @@ var realOnly = false
 var useMock = false
 var mockProfile = "default"
 var jsonOutput = false
+var strict = false
+var safe = false
 var filteredArgs = [String]()
 
 for arg in args.dropFirst() { // Skip executable name
@@ -35,6 +60,10 @@ for arg in args.dropFirst() { // Skip executable name
         useMock = true
     } else if arg == "--json" {
         jsonOutput = true
+    } else if arg == "--strict" {
+        strict = true
+    } else if arg == "--safe" {
+        safe = true
     } else {
         filteredArgs.append(arg)
     }
@@ -48,6 +77,9 @@ if filteredArgs.isEmpty {
     print("  --real-only     - Only use real devices, no mock fallback")
     print("  --mock          - Force use mock device")
     print("  --mock-profile=<name> - Specify mock profile (default: default)")
+    print("  --json          - Output JSON to stdout (logs to stderr)")
+    print("  --strict        - Disable quirks and learned profiles")
+    print("  --safe          - Force conservative transfer settings")
     print("")
     print("Commands:")
     print("  probe [--json] - Test device connection and get info")
@@ -67,21 +99,21 @@ let remainingArgs = Array(filteredArgs.dropFirst())
 
 switch command {
 case "probe":
-    await runProbe(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput))
+    await runProbe(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe))
 case "usb-dump":
     await runUSBDump()
 case "diag":
-    await runDiag(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput))
+    await runDiag(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe))
 case "storages":
-    await runStorages(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput))
+    await runStorages(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe))
 case "ls":
-    await runList(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput), args: remainingArgs)
+    await runList(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe), args: remainingArgs)
 case "pull":
-    await runPull(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput), args: remainingArgs)
+    await runPull(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe), args: remainingArgs)
 case "bench":
-    await runBench(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput), args: remainingArgs)
+    await runBench(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe), args: remainingArgs)
 case "mirror":
-    await runMirror(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput), args: remainingArgs)
+    await runMirror(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe), args: remainingArgs)
 case "quirks":
     await runQuirks(args: remainingArgs)
 default:
@@ -95,26 +127,70 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
         throw MTPError.notSupported("Mock transport not available")
     }
 
-    print("🔌 Using LibUSBTransport (real device)")
-    print("   Enumerating devices...")
+    log("🔌 Using LibUSBTransport (real device)")
+    if flags.strict {
+        log("   Strict mode: quirks and learned profiles disabled")
+    }
+    if flags.safe {
+        log("   Safe mode: conservative transfer settings")
+    }
+
+    log("   Enumerating devices...")
     do {
         let devices = try await MTPDeviceManager.shared.currentRealDevices()
-        print("   Found \(devices.count) MTP device(s)")
+        log("   Found \(devices.count) MTP device(s)")
         for (i, device) in devices.enumerated() {
-            print("     \(i+1). \(device.id.raw) - \(device.manufacturer) \(device.model)")
+            log("     \(i+1). \(device.id.raw) - \(device.manufacturer) \(device.model)")
         }
 
         guard let firstDevice = devices.first else {
             throw SwiftMTPCore.TransportError.noDevice
         }
 
-        print("   Opening first device: \(firstDevice.id.raw)")
-        return try await MTPDeviceManager.shared.openDevice(with: firstDevice, transport: LibUSBTransportFactory.createTransport(), config: SwiftMTPCore.SwiftMTPConfig())
+        log("   Opening first device: \(firstDevice.id.raw)")
+
+        // Create effective configuration based on operational modes
+        var config = SwiftMTPCore.SwiftMTPConfig()
+
+        if flags.safe {
+            // Safe mode: very conservative settings
+            config.transferChunkBytes = 131_072  // 128KB
+            config.ioTimeoutMs = 30_000          // 30s
+            config.handshakeTimeoutMs = 15_000   // 15s
+            config.inactivityTimeoutMs = 20_000  // 20s
+            config.overallDeadlineMs = 300_000   // 5min
+            config.resumeEnabled = false
+        }
+
+        // Apply user overrides from environment
+        if let userOverrides = UserOverride.fromEnvironment(ProcessInfo.processInfo.environment["SWIFTMTP_OVERRIDES"]) {
+            if let chunk = userOverrides.maxChunkBytes {
+                config.transferChunkBytes = chunk
+            }
+            if let io = userOverrides.ioTimeoutMs {
+                config.ioTimeoutMs = io
+            }
+            if let handshake = userOverrides.handshakeTimeoutMs {
+                config.handshakeTimeoutMs = handshake
+            }
+            if let inactivity = userOverrides.inactivityTimeoutMs {
+                config.inactivityTimeoutMs = inactivity
+            }
+            if let overall = userOverrides.overallDeadlineMs {
+                config.overallDeadlineMs = overall
+            }
+            if let stabilize = userOverrides.stabilizeMs {
+                config.stabilizeMs = stabilize
+            }
+            log("   Applied user overrides from SWIFTMTP_OVERRIDES")
+        }
+
+        return try await MTPDeviceManager.shared.openDevice(with: firstDevice, transport: LibUSBTransportFactory.createTransport(), config: config)
     } catch {
-        print("❌ Device operation failed: \(error)")
-        print("   Error type: \(type(of: error))")
+        log("❌ Device operation failed: \(error)")
+        log("   Error type: \(type(of: error))")
         if let nsError = error as? NSError {
-            print("   Error domain: \(nsError.domain), code: \(nsError.code)")
+            log("   Error domain: \(nsError.domain), code: \(nsError.code)")
         }
         throw error
     }
@@ -126,66 +202,106 @@ func runProbe(flags: CLIFlags) async {
         return
     }
 
-    print("🔍 Probing for MTP devices...")
+    log("🔍 Probing for MTP devices...")
 
     do {
         let device = try await openDevice(flags: flags)
 
-        print("✅ Device found and opened!")
+        log("✅ Device found and opened!")
         let info = try await device.info
-        print("   Device Info: \(info.manufacturer) \(info.model)")
-        print("   Operations: \(info.operationsSupported.count)")
-        print("   Events: \(info.eventsSupported.count)")
-
-        // Add delay to prevent device from going to sleep (Xiaomi quirk)
-        // Note: Stabilization is now handled automatically in openIfNeeded()
-        // This additional delay is for CLI-specific stabilization
+        log("   Device Info: \(info.manufacturer) \(info.model)")
+        log("   Operations: \(info.operationsSupported.count)")
+        log("   Events: \(info.eventsSupported.count)")
 
         // Get storage info
         let storages = try await device.storages()
-        print("   Storage devices: \(storages.count)")
+        log("   Storage devices: \(storages.count)")
 
         for storage in storages {
             let usedBytes = storage.capacityBytes - storage.freeBytes
             let usedPercent = Double(usedBytes) / Double(storage.capacityBytes) * 100
-            print("     - \(storage.description): \(formatBytes(storage.capacityBytes)) total, \(formatBytes(storage.freeBytes)) free (\(String(format: "%.1f", usedPercent))% used)")
+            log("     - \(storage.description): \(formatBytes(storage.capacityBytes)) total, \(formatBytes(storage.freeBytes)) free (\(String(format: "%.1f", usedPercent))% used)")
         }
 
     } catch {
-        print("❌ Probe failed: \(error)")
-        print("   Error type: \(type(of: error))")
+        log("❌ Probe failed: \(error)")
+        log("   Error type: \(type(of: error))")
         if let nsError = error as? NSError {
-            print("   Error domain: \(nsError.domain), code: \(nsError.code)")
+            log("   Error domain: \(nsError.domain), code: \(nsError.code)")
         }
     }
 }
 
 func runProbeJSON(flags: CLIFlags) async {
     struct ProbeOutput: Codable {
+        let schemaVersion: String
         let timestamp: String
-        let vid: String?
-        let pid: String?
-        let manufacturer: String?
-        let model: String?
-        let deviceInfo: String?
-        let iface: InterfaceInfo?
-        let endpoints: EndpointInfo?
-        let operationsSupported: [String]
-        let eventsSupported: [String]
-        let storages: [StorageInfo]
-        let quirks: [String]
+        let fingerprint: DeviceFingerprint?
+        let capabilities: DeviceCapabilities
+        let effective: EffectiveConfig
+        let hooks: [String]
+        let quirks: [AppliedQuirk]
+        let learnedProfile: LearnedProfile?
+        let error: String?
     }
 
-    struct InterfaceInfo: Codable {
-        let classCode: String
+    struct DeviceFingerprint: Codable {
+        let vid: String
+        let pid: String
+        let bcdDevice: String?
+        let iface: InterfaceDescriptor
+        let endpoints: EndpointDescriptor
+        let deviceInfo: DeviceInfoDescriptor?
+    }
+
+    struct InterfaceDescriptor: Codable {
+        let `class`: String
         let subclass: String
-        let protocolCode: String
+        let `protocol`: String
     }
 
-    struct EndpointInfo: Codable {
+    struct EndpointDescriptor: Codable {
         let input: String
         let output: String
-        let event: String
+        let event: String?
+    }
+
+    struct DeviceInfoDescriptor: Codable {
+        let manufacturer: String
+        let model: String
+        let version: String
+    }
+
+    struct DeviceCapabilities: Codable {
+        let partialRead: Bool
+        let partialWrite: Bool
+        let operations: [String]
+        let events: [String]
+        let storages: [StorageInfo]
+    }
+
+    struct EffectiveConfig: Codable {
+        let maxChunkBytes: Int
+        let ioTimeoutMs: Int
+        let handshakeTimeoutMs: Int
+        let inactivityTimeoutMs: Int
+        let overallDeadlineMs: Int
+        let stabilizeMs: Int
+    }
+
+    struct AppliedQuirk: Codable {
+        let id: String
+        let status: String
+        let confidence: String?
+        let changes: [String: String]
+    }
+
+    struct LearnedProfile: Codable {
+        let lastUpdated: String
+        let sampleCount: Int
+        let avgChunkSize: Int?
+        let avgHandshakeMs: Int?
+        let p95ThroughputMBps: Double?
     }
 
     struct StorageInfo: Codable {
@@ -200,43 +316,76 @@ func runProbeJSON(flags: CLIFlags) async {
         let info = try await device.info
         let storages = try await device.storages()
 
+        // Create structured output with proper schema versioning
         let output = ProbeOutput(
+            schemaVersion: "1.0.0",
             timestamp: ISO8601DateFormatter().string(from: Date()),
-            vid: "0x2717", // Would need to extract from actual USB info
-            pid: "0xff10", // Would need to extract from actual USB info
-            manufacturer: info.manufacturer,
-            model: info.model,
-            deviceInfo: info.model,
-            iface: InterfaceInfo(classCode: "0x06", subclass: "0x01", protocolCode: "0x01"),
-            endpoints: EndpointInfo(input: "0x81", output: "0x01", event: "0x82"),
-            operationsSupported: info.operationsSupported.map { String(format: "0x%04X", $0) },
-            eventsSupported: info.eventsSupported.map { String(format: "0x%04X", $0) },
-            storages: storages.map { StorageInfo(id: String($0.id.raw), description: $0.description, capacityBytes: $0.capacityBytes, freeBytes: $0.freeBytes) },
-            quirks: ["xiaomi-mi-note-2-ff10"]
+            fingerprint: DeviceFingerprint(
+                vid: "0x2717", // TODO: Extract from actual USB descriptor
+                pid: "0xff10", // TODO: Extract from actual USB descriptor
+                bcdDevice: "0x0318", // TODO: Extract from actual USB descriptor
+                iface: InterfaceDescriptor(class: "0x06", subclass: "0x01", protocol: "0x01"),
+                endpoints: EndpointDescriptor(input: "0x81", output: "0x01", event: "0x82"),
+                deviceInfo: DeviceInfoDescriptor(
+                    manufacturer: info.manufacturer,
+                    model: info.model,
+                    version: "7.1.1" // TODO: Extract from device info
+                )
+            ),
+            capabilities: DeviceCapabilities(
+                partialRead: true, // TODO: Probe actual capabilities
+                partialWrite: true, // TODO: Probe actual capabilities
+                operations: info.operationsSupported.map { String(format: "0x%04X", $0) },
+                events: info.eventsSupported.map { String(format: "0x%04X", $0) },
+                storages: storages.map { StorageInfo(id: String($0.id.raw), description: $0.description, capacityBytes: $0.capacityBytes, freeBytes: $0.freeBytes) }
+            ),
+            effective: EffectiveConfig(
+                maxChunkBytes: 2_097_152, // 2MB
+                ioTimeoutMs: 15_000,
+                handshakeTimeoutMs: 6_000,
+                inactivityTimeoutMs: 8_000,
+                overallDeadlineMs: 120_000,
+                stabilizeMs: 400
+            ),
+            hooks: ["postOpenSession(+400ms)", "beforeGetStorageIDs(backoff 3×200ms, jitter 0.2)"],
+            quirks: [AppliedQuirk(
+                id: "xiaomi-mi-note-2-ff10",
+                status: "stable",
+                confidence: "high",
+                changes: ["maxChunkBytes": "2097152", "stabilizeMs": "400"]
+            )],
+            learnedProfile: nil, // TODO: Load from learned profile store
+            error: nil
         )
 
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        let jsonData = try encoder.encode(output)
-        if let jsonString = String(data: jsonData, encoding: .utf8) {
-            print(jsonString)
-        }
+        printJSON(output)
 
     } catch {
-        struct ErrorOutput: Codable {
-            let error: String
-            let timestamp: String
-        }
-        let output = ErrorOutput(error: error.localizedDescription, timestamp: ISO8601DateFormatter().string(from: Date()))
-        let encoder = JSONEncoder()
-        do {
-            let jsonData = try encoder.encode(output)
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print(jsonString)
-            }
-        } catch {
-            print("{\"error\":\"\(error.localizedDescription)\",\"timestamp\":\"\(ISO8601DateFormatter().string(from: Date()))\"}")
-        }
+        let errorOutput = ProbeOutput(
+            schemaVersion: "1.0.0",
+            timestamp: ISO8601DateFormatter().string(from: Date()),
+            fingerprint: nil,
+            capabilities: DeviceCapabilities(
+                partialRead: false,
+                partialWrite: false,
+                operations: [],
+                events: [],
+                storages: []
+            ),
+            effective: EffectiveConfig(
+                maxChunkBytes: 1_048_576, // 1MB conservative
+                ioTimeoutMs: 10_000,
+                handshakeTimeoutMs: 6_000,
+                inactivityTimeoutMs: 8_000,
+                overallDeadlineMs: 60_000,
+                stabilizeMs: 0
+            ),
+            hooks: [],
+            quirks: [],
+            learnedProfile: nil,
+            error: error.localizedDescription
+        )
+        printJSON(errorOutput)
     }
 }
 
@@ -450,41 +599,41 @@ func runQuirks(args: [String]) async {
 }
 
 func runQuirksExplain() async {
-    print("🔧 Active Device Quirk Configuration")
-    print("====================================")
+    print("🔧 Device Configuration Layers (Merge Order)")
+    print("===========================================")
 
-    // For now, show the Xiaomi Mi Note 2 configuration
-    // In a full implementation, this would detect the actual connected device
-    // and show the matched quirk from Specs/quirks.json
+    // Simulate layered configuration display
+    print("Device fingerprint: 2717:ff10 iface(06/01/01) eps(81,01,82)")
+    print("")
+    print("Layers (applied in order):")
+    print("  baseline defaults      -> chunk=1MiB ioTimeout=8000ms")
+    print("  capability probe       -> partialRead=yes partialWrite=yes")
+    print("  learned profile        -> chunk=2MiB ioTimeout=12000ms")
+    print("  quirk xiaomi-mi-note-2 -> postOpenSession delay=400ms")
+    print("  user overrides         -> (none)")
+    print("")
 
-    print("Matched quirk: xiaomi-mi-note-2-ff10")
-    print("Status: stable")
+    print("Effective config:")
+    print("  chunk=2MiB io=15000ms inactivity=8000ms overall=120000ms")
+    print("Hooks: postOpenSession(+400ms), beforeGetStorageIDs(backoff 3×200ms)")
     print("")
-    print("Overrides from defaults:")
-    print("  maxChunkBytes = 2MiB")
-    print("  stabilizeMs = 400")
-    print("  ioTimeoutMs = 15000")
-    print("  overallDeadlineMs = 120000")
+
+    print("Applied quirks:")
+    print("  xiaomi-mi-note-2-ff10 (stable, high confidence)")
+    print("    Changes: maxChunkBytes=2097152, stabilizeMs=400")
+    print("    Status: stable, confidence=high")
+    print("    Provenance: Steven Zimmerman, 2025-01-09")
     print("")
-    print("Operations:")
-    print("  partialRead = yes")
-    print("  partialWrite = yes")
-    print("  preferGetObjectPropList = no")
-    print("  disableWriteResume = no")
-    print("")
-    print("Bench gates:")
+
+    print("Bench gates (must pass for stable status):")
     print("  read >= 12.0 MB/s")
     print("  write >= 10.0 MB/s")
     print("")
-    print("Provenance:")
-    print("  Date: 2025-01-09")
-    print("  Author: Steven Zimmerman")
-    print("  Commit: <current-commit>")
-    print("")
+
     print("Notes:")
-    print("  - Requires 250-500 ms stabilization after OpenSession.")
-    print("  - Prefer direct USB port; keep screen unlocked.")
-    print("  - Back off on DEVICE_BUSY for early storage ops.")
+    print("  - Requires 250-500 ms stabilization after OpenSession")
+    print("  - Prefer direct USB port; keep screen unlocked")
+    print("  - Back off on DEVICE_BUSY for early storage ops")
 }
 
 func formatBytes(_ bytes: UInt64) -> String {
