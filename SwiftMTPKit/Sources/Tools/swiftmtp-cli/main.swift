@@ -13,6 +13,8 @@ struct CLIFlags {
     let useMock: Bool
     let mockProfile: String
     let jsonOutput: Bool
+    let jsonlOutput: Bool
+    let traceUSB: Bool
     let strict: Bool
     let safe: Bool
 }
@@ -22,6 +24,21 @@ func printJSON<T: Encodable>(_ value: T) {
     encoder.outputFormatting = [.withoutEscapingSlashes]
     do {
         let data = try encoder.encode(value)
+        FileHandle.standardOutput.write(data)
+        FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+    } catch {
+        // Fall back: emit a minimal JSON error on stdout
+        let fallback = ["schemaVersion":"1.0.0","error":"encoding_failed","detail":"\(error)"]
+        let data = try! JSONSerialization.data(withJSONObject: fallback, options: [])
+        FileHandle.standardOutput.write(data)
+        FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+        exit(70) // internal error
+    }
+}
+
+func printJSON(_ dict: [String: Any]) {
+    do {
+        let data = try JSONSerialization.data(withJSONObject: dict, options: [])
         FileHandle.standardOutput.write(data)
         FileHandle.standardOutput.write("\n".data(using: .utf8)!)
     } catch {
@@ -46,6 +63,8 @@ var realOnly = false
 var useMock = false
 var mockProfile = "default"
 var jsonOutput = false
+var jsonlOutput = false
+var traceUSB = false
 var strict = false
 var safe = false
 var filteredArgs = [String]()
@@ -60,6 +79,10 @@ for arg in args.dropFirst() { // Skip executable name
         useMock = true
     } else if arg == "--json" {
         jsonOutput = true
+    } else if arg == "--jsonl" {
+        jsonlOutput = true
+    } else if arg == "--trace-usb" {
+        traceUSB = true
     } else if arg == "--strict" {
         strict = true
     } else if arg == "--safe" {
@@ -78,6 +101,8 @@ if filteredArgs.isEmpty {
     print("  --mock          - Force use mock device")
     print("  --mock-profile=<name> - Specify mock profile (default: default)")
     print("  --json          - Output JSON to stdout (logs to stderr)")
+    print("  --jsonl         - Output streaming JSON lines for multi-item results")
+    print("  --trace-usb     - Log detailed USB protocol traces")
     print("  --strict        - Disable quirks and learned profiles")
     print("  --safe          - Force conservative transfer settings")
     print("")
@@ -91,6 +116,13 @@ if filteredArgs.isEmpty {
     print("  bench <size> - Benchmark transfer speed")
     print("  mirror <dest> - Mirror device contents")
     print("  quirks --explain - Show active device quirk configuration")
+    print("")
+    print("Exit codes:")
+    print("  0 - Success")
+    print("  64 - Usage error (bad arguments)")
+    print("  69 - Unavailable (device not found)")
+    print("  70 - Internal error (unexpected failure)")
+    print("  75 - Temporary failure (device busy/timeout)")
     exit(0)
 }
 
@@ -99,26 +131,27 @@ let remainingArgs = Array(filteredArgs.dropFirst())
 
 switch command {
 case "probe":
-    await runProbe(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe))
+    await runProbe(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe))
 case "usb-dump":
     await runUSBDump()
 case "diag":
-    await runDiag(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe))
+    await runDiag(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe))
 case "storages":
-    await runStorages(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe))
+    await runStorages(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe))
 case "ls":
-    await runList(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe), args: remainingArgs)
+    await runList(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe), args: remainingArgs)
 case "pull":
-    await runPull(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe), args: remainingArgs)
+    await runPull(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe), args: remainingArgs)
 case "bench":
-    await runBench(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe), args: remainingArgs)
+    await runBench(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe), args: remainingArgs)
 case "mirror":
-    await runMirror(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, strict: strict, safe: safe), args: remainingArgs)
+    await runMirror(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe), args: remainingArgs)
 case "quirks":
     await runQuirks(args: remainingArgs)
 default:
     print("Unknown command: \(command)")
     print("Available: probe, usb-dump, diag, storages, ls, pull, bench, mirror, quirks")
+    exit(64) // usage error
 }
 
 func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
@@ -229,6 +262,7 @@ func runProbe(flags: CLIFlags) async {
         if let nsError = error as? NSError {
             log("   Error domain: \(nsError.domain), code: \(nsError.code)")
         }
+        exit(75) // temp failure
     }
 }
 
@@ -434,8 +468,19 @@ func runStorages(flags: CLIFlags) async {
 
 func runList(flags: CLIFlags, args: [String]) async {
     guard let handleStr = args.first, let handle = UInt32(handleStr) else {
-        print("❌ Usage: ls <storage_handle>")
-        print("   Get storage handle from 'storages' command")
+        if flags.jsonOutput || flags.jsonlOutput {
+            let errorOutput = ["schemaVersion": "1.0.0", "error": "usage_error", "detail": "Usage: ls <storage_handle>"]
+            printJSON(errorOutput)
+            exit(64) // usage error
+        } else {
+            print("❌ Usage: ls <storage_handle>")
+            print("   Get storage handle from 'storages' command")
+            exit(64) // usage error
+        }
+    }
+
+    if flags.jsonOutput || flags.jsonlOutput {
+        await runListJSON(flags: flags, storageHandle: handle)
         return
     }
 
@@ -463,6 +508,67 @@ func runList(flags: CLIFlags, args: [String]) async {
         print("\nTotal: \(objects.count) items")
     } catch {
         print("❌ Failed to list directory: \(error)")
+        exit(75) // temp failure
+    }
+}
+
+func runListJSON(flags: CLIFlags, storageHandle: UInt32) async {
+    struct ListItem: Codable {
+        let schemaVersion: String
+        let handle: UInt32
+        let name: String
+        let sizeBytes: UInt64?
+        let formatCode: UInt16
+        let isDirectory: Bool
+    }
+
+    do {
+        let device = try await openDevice(flags: flags)
+        let storageID = MTPStorageID(raw: storageHandle)
+
+        let stream = device.list(parent: nil, in: storageID)
+
+        if flags.jsonlOutput {
+            // Streaming JSONL output
+            for try await batch in stream {
+                for object in batch {
+                    let item = ListItem(
+                        schemaVersion: "1.0.0",
+                        handle: object.handle,
+                        name: object.name,
+                        sizeBytes: object.sizeBytes,
+                        formatCode: object.formatCode,
+                        isDirectory: object.formatCode == 0x3001 // Directory format code
+                    )
+                    printJSON(item)
+                }
+            }
+        } else {
+            // Single JSON array output
+            var objects: [MTPObjectInfo] = []
+            for try await batch in stream {
+                objects.append(contentsOf: batch)
+            }
+
+            let items = objects.map { object in
+                ListItem(
+                    schemaVersion: "1.0.0",
+                    handle: object.handle,
+                    name: object.name,
+                    sizeBytes: object.sizeBytes,
+                    formatCode: object.formatCode,
+                    isDirectory: object.formatCode == 0x3001
+                )
+            }
+
+            let output = ["schemaVersion": "1.0.0", "items": items] as [String: Any]
+            printJSON(output)
+        }
+
+    } catch {
+        let errorOutput = ["schemaVersion": "1.0.0", "error": "list_failed", "detail": error.localizedDescription]
+        printJSON(errorOutput)
+        exit(75) // temp failure
     }
 }
 
@@ -648,3 +754,4 @@ func formatBytes(_ bytes: UInt64) -> String {
 
         return String(format: "%.1f %@", value, units[unitIndex])
     }
+

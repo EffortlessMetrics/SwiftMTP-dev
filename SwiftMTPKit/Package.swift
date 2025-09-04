@@ -17,6 +17,9 @@ let package = Package(
     // Temporarily removed external dependencies to fix compatibility issues
   ],
   targets: [
+    // SQLite3 via system library (commented out for now)
+    // .systemLibrary(name: "CSQLite", path: "Sources/CSQLite", providers: [.apt(["libsqlite3-dev"]), .brew(["sqlite"])]),
+
     // libusb via Homebrew for dev (dynamic)
     .systemLibrary(name: "CLibusb", path: "Sources/CLibusb", pkgConfig: "libusb-1.0", providers: [.brew(["libusb"])]),
 
@@ -30,7 +33,7 @@ let package = Package(
             dependencies: ["SwiftMTPCore", "CLibusb"],
             path: "Sources/SwiftMTPTransportLibUSB"),
 
-    // Index and snapshot functionality (excluded for now due to SQLite dependency issues)
+    // Index and snapshot functionality (commented out due to SQLite.swift dependency issues)
     // .target(name: "SwiftMTPIndex",
     //         dependencies: ["SwiftMTPCore"],
     //         path: "Sources/SwiftMTPIndex",
