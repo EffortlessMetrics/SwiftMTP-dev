@@ -2,7 +2,6 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
-@preconcurrency import SQLite
 import SwiftMTPCore
 
 public final class DefaultTransferJournal: TransferJournal {

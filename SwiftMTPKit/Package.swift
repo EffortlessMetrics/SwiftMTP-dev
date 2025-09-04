@@ -29,16 +29,16 @@ let package = Package(
             dependencies: ["SwiftMTPCore", "CLibusb"],
             path: "Sources/SwiftMTPTransportLibUSB"),
 
-    // Index and snapshot functionality
-    .target(name: "SwiftMTPIndex",
-            dependencies: ["SwiftMTPCore"],
-            path: "Sources/SwiftMTPIndex",
-            exclude: ["Schema.sql"]),
+    // Index and snapshot functionality (excluded for now due to SQLite dependency issues)
+    // .target(name: "SwiftMTPIndex",
+    //         dependencies: ["SwiftMTPCore"],
+    //         path: "Sources/SwiftMTPIndex",
+    //         exclude: ["Schema.sql"]),
 
-    // Sync and mirror functionality
-    .target(name: "SwiftMTPSync",
-            dependencies: ["SwiftMTPCore", "SwiftMTPIndex"],
-            path: "Sources/SwiftMTPSync"),
+    // Sync and mirror functionality (excluded for now due to SwiftMTPIndex dependency)
+    // .target(name: "SwiftMTPSync",
+    //         dependencies: ["SwiftMTPCore", "SwiftMTPIndex"],
+    //         path: "Sources/SwiftMTPSync"),
 
     // Observability utilities
     .target(name: "SwiftMTPObservability",
@@ -74,7 +74,6 @@ let package = Package(
                       dependencies: [
                         "SwiftMTPCore",
                         "SwiftMTPTransportLibUSB",
-                        "SwiftMTPObservability",
                         "CLibusb"
                       ],
                       path: "Sources/Tools/swiftmtp-cli",

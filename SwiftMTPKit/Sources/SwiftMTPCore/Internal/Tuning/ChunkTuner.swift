@@ -2,7 +2,6 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
-import SwiftMTPObservability
 
 /// Auto-tunes transfer chunk sizes based on observed throughput
 /// Uses candidate sizes from 512KiB to 8MiB, promoting/demoting based on performance
@@ -17,7 +16,7 @@ struct ChunkTuner: Sendable {
     ]
 
     private var currentIndex: Int
-    private var throughputHistory: ThroughputRingBuffer
+    private var throughputHistory: [Double] = []
     private var samplesSinceLastChange: Int
     private var lastChangeTime: Date?
     private var isStabilized: Bool
@@ -25,7 +24,6 @@ struct ChunkTuner: Sendable {
     /// Initialize tuner starting at 1MiB (index 1)
     init() {
         self.currentIndex = 1 // Start at 1MiB
-        self.throughputHistory = ThroughputRingBuffer(maxSamples: 20)
         self.samplesSinceLastChange = 0
         self.lastChangeTime = Date()
         self.isStabilized = false
@@ -34,6 +32,37 @@ struct ChunkTuner: Sendable {
     /// Get current chunk size in bytes
     var currentSize: Int {
         Self.candidates[currentIndex]
+    }
+
+    /// Add a throughput sample and maintain history
+    mutating func addSample(_ throughput: Double) {
+        throughputHistory.append(throughput)
+        if throughputHistory.count > 20 {
+            throughputHistory.removeFirst()
+        }
+    }
+
+    /// Get average throughput
+    var average: Double? {
+        throughputHistory.isEmpty ? nil : throughputHistory.reduce(0, +) / Double(throughputHistory.count)
+    }
+
+    /// Get p95 throughput (95th percentile)
+    var p95: Double? {
+        guard !throughputHistory.isEmpty else { return nil }
+        let sorted = throughputHistory.sorted()
+        let index = Int(Double(sorted.count) * 0.95)
+        return sorted[min(index, sorted.count - 1)]
+    }
+
+    /// Reset throughput history
+    mutating func reset() {
+        throughputHistory.removeAll()
+    }
+
+    /// Get count of samples
+    var count: Int {
+        throughputHistory.count
     }
 
     /// Get current chunk size in human-readable format
@@ -50,7 +79,7 @@ struct ChunkTuner: Sendable {
     /// - Returns: New chunk size if changed, nil if unchanged
     mutating func recordSample(bytesTransferred: Int, duration: TimeInterval, hadTimeout: Bool, hadError: Bool) -> Int? {
         let currentThroughput = Double(bytesTransferred) / duration
-        throughputHistory.addSample(currentThroughput)
+        addSample(currentThroughput)
         samplesSinceLastChange += 1
 
         // Don't change size if we had errors or timeouts
@@ -106,9 +135,9 @@ struct ChunkTuner: Sendable {
     var stats: ChunkTunerStats {
         ChunkTunerStats(
             currentSizeBytes: currentSize,
-            samplesCount: throughputHistory.count,
-            averageThroughput: throughputHistory.average ?? 0,
-            p95Throughput: throughputHistory.p95 ?? 0,
+            samplesCount: count,
+            averageThroughput: average ?? 0,
+            p95Throughput: p95 ?? 0,
             stabilized: stabilized
         )
     }
@@ -116,23 +145,23 @@ struct ChunkTuner: Sendable {
     private mutating func resetAfterChange() {
         samplesSinceLastChange = 0
         lastChangeTime = Date()
-        throughputHistory.reset()
+        reset()
         isStabilized = false
     }
 
     private func shouldPromote() -> Bool {
         guard currentIndex + 1 < Self.candidates.count else { return false }
-        guard let _ = throughputHistory.average,
-              let p95 = throughputHistory.p95 else { return false }
+        guard let _ = average,
+              let p95 = p95 else { return false }
 
         // Promote if average throughput improved by at least 8%
         // Simple heuristic: promote if we have stable good performance
-        return p95 > (throughputHistory.average ?? 0) * 1.08 && samplesSinceLastChange >= 12
+        return p95 > (average ?? 0) * 1.08 && samplesSinceLastChange >= 12
     }
 
     private func shouldDemote() -> Bool {
         guard currentIndex > 0 else { return false }
-        guard throughputHistory.average != nil else { return false }
+        guard average != nil else { return false }
 
         // Demote if average throughput dropped by more than 15%
         // This is a simplified check - in practice we'd compare to historical data

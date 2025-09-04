@@ -2,7 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
-import SwiftMTPObservability
+import OSLog
 
 /// Device fingerprint for identifying unique devices
 struct DeviceFingerprint: Hashable, Codable, Sendable {
@@ -133,7 +133,7 @@ actor DeviceTuningCache {
             self.cache = cleanedCache
         } catch {
             // File doesn't exist or is corrupted, start with empty cache
-            MTPLog.perf.info("Failed to load tuning cache: \(error.localizedDescription)")
+            Logger(subsystem: "SwiftMTP", category: "tuning").info("Failed to load tuning cache: \(error.localizedDescription)")
             self.cache = [:]
         }
     }
@@ -146,7 +146,7 @@ actor DeviceTuningCache {
             let data = try encoder.encode(cache)
             try data.write(to: cacheFileURL, options: .atomic)
         } catch {
-            MTPLog.perf.error("Failed to save tuning cache: \(error.localizedDescription)")
+            Logger(subsystem: "SwiftMTP", category: "tuning").error("Failed to save tuning cache: \(error.localizedDescription)")
         }
     }
 }

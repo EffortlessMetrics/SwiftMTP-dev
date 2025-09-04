@@ -3,13 +3,12 @@
 
 import Foundation
 import SwiftMTPCore
-import SwiftMTPObservability
-@preconcurrency import SQLite
+import OSLog
 
 /// Captures device object graph into SQLite for offline browsing and diffing
 public final class Snapshotter {
     private let db: Connection
-    private let log = MTPLog.index
+    private let log = Logger(subsystem: "SwiftMTP", category: "index")
 
     // Table definitions
     private let devices = Table("devices")

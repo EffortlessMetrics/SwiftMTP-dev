@@ -8,7 +8,17 @@ public protocol MTPTransport: Sendable {
 }
 
 public protocol MTPLink: Sendable {
+    func openUSBIfNeeded() async throws
+    func openSession(id: UInt32) async throws
+    func closeSession() async throws
     func close() async
+
+    func getDeviceInfo() async throws -> MTPDeviceInfo
+    func getStorageIDs() async throws -> [MTPStorageID]
+    func getStorageInfo(id: MTPStorageID) async throws -> MTPStorageInfo
+    func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> [MTPObjectHandle]
+    func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo]
+
     func executeCommand(_ command: PTPContainer) throws -> Data?
 
     // Streaming data transfer methods for file operations

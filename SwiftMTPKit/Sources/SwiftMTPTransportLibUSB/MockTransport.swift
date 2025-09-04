@@ -66,6 +66,74 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
         transport = nil
     }
 
+    // MARK: - Protocol Implementation
+
+    func openUSBIfNeeded() async throws {
+        // Mock implementation - already "opened" when created
+    }
+
+    func openSession(id: UInt32) async throws {
+        sessionID = id
+    }
+
+    func closeSession() async throws {
+        sessionID = nil
+    }
+
+    func getDeviceInfo() async throws -> MTPDeviceInfo {
+        // Simplified mock device info
+        return MTPDeviceInfo(
+            manufacturer: deviceData.deviceSummary.manufacturer,
+            model: deviceData.deviceSummary.model,
+            version: "Mock 1.0",
+            serialNumber: "MOCK123",
+            operationsSupported: Set(),
+            eventsSupported: Set()
+        )
+    }
+
+    func getStorageIDs() async throws -> [MTPStorageID] {
+        return deviceData.storages.map { $0.id }
+    }
+
+    func getStorageInfo(id: MTPStorageID) async throws -> MTPStorageInfo {
+        guard let storage = deviceData.storages.first(where: { $0.id == id }) else {
+            throw MTPError.objectNotFound
+        }
+        return storage
+    }
+
+    func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> [MTPObjectHandle] {
+        guard deviceData.storages.contains(where: { $0.id == storage }) else {
+            throw MTPError.objectNotFound
+        }
+
+        let objects = deviceData.objects.filter { obj in
+            obj.storage == storage && obj.parent == parent
+        }
+        return objects.map { $0.handle }
+    }
+
+    func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo] {
+        var result = [MTPObjectInfo]()
+        for handle in handles {
+            if let object = deviceData.objects.first(where: { $0.handle == handle }) {
+                let objectInfo = MTPObjectInfo(
+                    handle: object.handle,
+                    storage: object.storage,
+                    parent: object.parent,
+                    name: object.name,
+                    sizeBytes: object.size,
+                    modified: nil,
+                    formatCode: object.formatCode,
+                    properties: [:]
+                )
+                result.append(objectInfo)
+            }
+        }
+        return result
+    }
+
     /// Handle MTP command execution
     func executeCommand(_ command: PTPContainer) throws -> Data? {
         switch command.code {
