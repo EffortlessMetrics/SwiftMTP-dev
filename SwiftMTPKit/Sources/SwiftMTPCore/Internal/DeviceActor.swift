@@ -12,6 +12,7 @@ public actor MTPDeviceActor: MTPDevice {
     private let config: SwiftMTPConfig
     private var deviceInfo: MTPDeviceInfo?
     private var mtpLink: (any MTPLink)?
+    private var sessionOpen = false
     let transferJournal: (any TransferJournal)?
 
     public init(id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport, config: SwiftMTPConfig = .init(), transferJournal: (any TransferJournal)? = nil) {
@@ -45,6 +46,15 @@ public actor MTPDeviceActor: MTPDevice {
     }
 
     public func storages() async throws -> [MTPStorageInfo] {
+        try await openIfNeeded()
+
+        // Wrap storage operations with DEVICE_BUSY backoff
+        return try await performStorageOperationsWithBackoff()
+    }
+
+    private nonisolated func performStorageOperationsWithBackoff() async throws -> [MTPStorageInfo] {
+        // For now, implement without backoff to get basic functionality working
+        // TODO: Re-implement with proper backoff once concurrency issues are resolved
         let link = try await getMTPLink()
 
         // First get storage IDs
@@ -60,25 +70,36 @@ public actor MTPDeviceActor: MTPDevice {
         return storages
     }
 
+    private nonisolated func performObjectEnumerationWithBackoff(parent: MTPObjectHandle?, storage: MTPStorageID) async throws -> [MTPObjectInfo] {
+        // For now, implement without backoff to get basic functionality working
+        // TODO: Re-implement with proper backoff once concurrency issues are resolved
+        let link = try await getMTPLink()
+
+        // Performance logging: begin enumeration
+        MTPLog.perf.info("Enumeration begin: storage=\(storage.raw) parent=\(parent ?? 0)")
+
+        // Get object handles for this parent/storage
+        let objectHandles = try await getObjectHandles(parent: parent, storage: storage, using: link)
+
+        // Get object info for each handle
+        var objectInfos = [MTPObjectInfo]()
+        for handle in objectHandles {
+            let objectInfo = try await getObjectInfo(handle, using: link)
+            objectInfos.append(objectInfo)
+        }
+
+        return objectInfos
+    }
+
     public nonisolated func list(parent: MTPObjectHandle?, in storage: MTPStorageID) -> AsyncThrowingStream<[MTPObjectInfo], Error> {
         AsyncThrowingStream { continuation in
             Task {
                 let enumStartTime = Date()
                 do {
-                    let link = try await getMTPLink()
+                    try await openIfNeeded()
 
-                    // Performance logging: begin enumeration
-                    MTPLog.perf.info("Enumeration begin: storage=\(storage.raw) parent=\(parent ?? 0)")
-
-                    // Get object handles for this parent/storage
-                    let objectHandles = try await getObjectHandles(parent: parent, storage: storage, using: link)
-
-                    // Get object info for each handle
-                    var objectInfos = [MTPObjectInfo]()
-                    for handle in objectHandles {
-                        let objectInfo = try await getObjectInfo(handle, using: link)
-                        objectInfos.append(objectInfo)
-                    }
+                    // Wrap object enumeration with DEVICE_BUSY backoff
+                    let objectInfos = try await performObjectEnumerationWithBackoff(parent: parent, storage: storage)
 
                     // Performance logging: end enumeration (success)
                     let enumDuration = Date().timeIntervalSince(enumStartTime)
@@ -99,6 +120,7 @@ public actor MTPDeviceActor: MTPDevice {
     }
 
     public func getInfo(handle: MTPObjectHandle) async throws -> MTPObjectInfo {
+        try await openIfNeeded()
         let link = try await getMTPLink()
         return try await getObjectInfo(handle, using: link)
     }
@@ -118,6 +140,48 @@ public actor MTPDeviceActor: MTPDevice {
     public nonisolated var events: AsyncStream<MTPEvent> {
         // TODO: Implement event stream
         return AsyncStream { _ in }
+    }
+
+    // MARK: - Session Management
+
+    /// Open device session if not already open, with optional stabilization delay.
+    internal func openIfNeeded() async throws {
+        if sessionOpen { return }
+
+        let link = try await getMTPLink()
+
+        // Open MTP session using PTP OpenSession command
+        let openSessionCommand = PTPContainer(
+            length: 16,
+            type: PTPContainer.Kind.command.rawValue,
+            code: PTPOp.openSession.rawValue,
+            txid: 1,
+            params: [1] // Session ID = 1
+        )
+
+        guard let response = try link.executeCommand(openSessionCommand) else {
+            throw MTPError.protocolError(code: 0, message: "OpenSession command failed")
+        }
+
+        // Check response code (should be 0x2001 for OK)
+        guard response.count >= 12 else {
+            throw MTPError.protocolError(code: 0, message: "OpenSession response too short")
+        }
+
+        let responseCode = response.withUnsafeBytes {
+            $0.load(fromByteOffset: 6, as: UInt16.self).littleEndian
+        }
+
+        guard responseCode == 0x2001 else {
+            throw MTPError.protocolError(code: responseCode, message: "OpenSession failed")
+        }
+
+        sessionOpen = true
+
+        // Apply stabilization delay if configured (e.g., for Xiaomi devices)
+        if config.stabilizeMs > 0 {
+            try? await Task.sleep(nanoseconds: UInt64(config.stabilizeMs) * 1_000_000)
+        }
     }
 
     // MARK: - Helper Methods

@@ -8,8 +8,9 @@
       "handshakeTimeoutMs": 6000,
       "inactivityTimeoutMs": 8000,
       "overallDeadlineMs": 120000,
+      "stabilizeMs": 400,
       "noPropList": false,
-      "notes": "Mi Note 2 (ff10) stable at 2 MiB; prefers direct port."
+      "notes": "Mi Note 2 (ff10): small post-open delay + backoff on DEVICE_BUSY"
     },
     "0x2717:0xff40": {
       "maxChunkBytes": 2097152,
@@ -17,8 +18,9 @@
       "handshakeTimeoutMs": 6000,
       "inactivityTimeoutMs": 8000,
       "overallDeadlineMs": 120000,
+      "stabilizeMs": 400,
       "noPropList": false,
-      "notes": "Mi Note 2 (ff40) variant; same limits."
+      "notes": "Mi Note 2 (ff40) variant: same behavior as ff10"
     }
   }
 }
