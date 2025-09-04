@@ -2,5 +2,14 @@
   "_comment": "Device-specific quirks and tuning parameters for SwiftMTP",
   "_schema": "See Docs/benchmarks.md for VID:PID format and parameter descriptions",
   "devices": {
+    "0x2717:0xff40": {
+      "maxChunkBytes": 2097152,
+      "ioTimeoutMs": 15000,
+      "handshakeTimeoutMs": 6000,
+      "inactivityTimeoutMs": 8000,
+      "overallDeadlineMs": 120000,
+      "noPropList": false,
+      "notes": "Mi Note 2 stable at 2 MiB; timeouts at larger chunks via hubs."
+    }
   }
 }

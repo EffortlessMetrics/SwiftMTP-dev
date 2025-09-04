@@ -88,7 +88,7 @@ private func findMTPInterface(handle: OpaquePointer, device: OpaquePointer) thro
 
 public struct LibUSBTransport: MTPTransport {
   public init() {}
-  public func open(_ summary: MTPDeviceSummary) async throws -> MTPLink {
+  public func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig = .init()) async throws -> MTPLink {
     // 1) Find device by bus/addr from summary.id (we encoded those earlier).
     guard let ctx = LibUSBContext.shared.contextPointer else { throw TransportError.io("no ctx") }
     var list: UnsafeMutablePointer<OpaquePointer?>?
@@ -125,7 +125,7 @@ public struct LibUSBTransport: MTPTransport {
       print("MTP iface=\(ifaceNum) alt=\(altSetting) epIn=0x\(String(format: "%02x", epIn)) epOut=0x\(String(format: "%02x", epOut)) evt=\(evtStr)")
     }
 
-    return MTPUSBLink(handle: handle, iface: ifaceNum, epIn: epIn, epOut: epOut, epEvt: epEvt)
+    return MTPUSBLink(handle: handle, iface: ifaceNum, epIn: epIn, epOut: epOut, epEvt: epEvt, config: config)
   }
 }
 
@@ -135,9 +135,10 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   let inEP, outEP, evtEP: UInt8
   private let ioQ = DispatchQueue(label: "com.effortlessmetrics.swiftmtp.usbio", qos: .userInitiated)
   private var nextTx: UInt32 = 1
+  private let config: SwiftMTPConfig
 
-  init(handle: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8) {
-    self.h = handle; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt
+  init(handle: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8, config: SwiftMTPConfig) {
+    self.h = handle; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt; self.config = config
   }
 
   public func close() async {
@@ -218,33 +219,62 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let txid = nextTx &- 0 == 0 ? 1 : nextTx
     nextTx &+= 1
 
+    // Overall operation deadline
+    let opStartNs = DispatchTime.now().uptimeNanoseconds
+    let opBudgetNs = UInt64(config.overallDeadlineMs) * 1_000_000
+    @inline(__always) func checkDeadline() throws {
+      if DispatchTime.now().uptimeNanoseconds - opStartNs > opBudgetNs {
+        throw MTPError.timeout
+      }
+    }
+
+    // Debug logging
+    let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+    if debugEnabled {
+      print(String(format: "MTP op=0x%04x tx=%u phase=command", command.code, txid))
+    }
+
     // 1) COMMAND container
     let cmdBytes = makePTPCommand(opcode: command.code, txid: txid, params: command.params)
     try cmdBytes.withUnsafeBytes { raw in
-      try bulkWriteAll(outEP, from: raw.baseAddress!, count: raw.count, timeout: 5000)
+      try bulkWriteAll(outEP, from: raw.baseAddress!, count: raw.count, timeout: UInt32(config.ioTimeoutMs))
     }
+    try checkDeadline()
 
     // 2) Optional DATA OUT phase (host -> device)
     if let produce = dataOutHandler {
+      if debugEnabled {
+        print(String(format: "MTP op=0x%04x tx=%u phase=data-out", command.code, txid))
+      }
+
       var sent = 0
       var scratch = [UInt8](repeating: 0, count: min(1 << 20, 1024 * 1024)) // up to 1 MiB scratch
+      var lastProgressNs = DispatchTime.now().uptimeNanoseconds
+      let stallNs = UInt64(config.inactivityTimeoutMs) * 1_000_000
+
       while true {
         let wrote = scratch.withUnsafeMutableBytes { buf in
           produce(buf)
         }
         if wrote == 0 { break }
-        try scratch.withUnsafeBytes { raw in
-          try bulkWriteAll(outEP, from: raw.baseAddress!, count: wrote, timeout: 15000)
+        if DispatchTime.now().uptimeNanoseconds - lastProgressNs > stallNs {
+          throw MTPError.timeout
         }
+        try scratch.withUnsafeBytes { raw in
+          try bulkWriteAll(outEP, from: raw.baseAddress!, count: wrote, timeout: UInt32(config.ioTimeoutMs))
+        }
+        lastProgressNs = DispatchTime.now().uptimeNanoseconds
         sent += wrote
       }
+
       if sent > 0 {
         // Send data container header
         let hdrBytes = makePTPDataContainer(length: UInt32(PTPHeader.size + sent), code: command.code, txid: txid)
         try hdrBytes.withUnsafeBytes { raw in
-          try bulkWriteAll(outEP, from: raw.baseAddress!, count: raw.count, timeout: 5000)
+          try bulkWriteAll(outEP, from: raw.baseAddress!, count: raw.count, timeout: UInt32(config.ioTimeoutMs))
         }
       }
+      try checkDeadline()
     }
 
     // 3) Optional DATA IN phase (device -> host)
@@ -253,18 +283,25 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     var dataHeader: PTPHeader?
 
     if dataInHandler != nil {
-      // Time-bounded wait for first DATA container (prevents infinite hangs)
-      let start = DispatchTime.now()
-      let budgetMs = max(5000, 3000)  // at least 3s for DATA-IN timeout
-      let budgetNs = UInt64(budgetMs) * 1_000_000
+      if debugEnabled {
+        print(String(format: "MTP op=0x%04x tx=%u phase=data-in", command.code, txid))
+      }
 
+      // Handshake timeout for first DATA-IN packet
+      let startNs = DispatchTime.now().uptimeNanoseconds
+      let handshakeBudgetNs = UInt64(max(config.handshakeTimeoutMs, 3000)) * 1_000_000 // at least 3s
       var gotFirst = 0
       var first = [UInt8](repeating: 0, count: max(PTPHeader.size, 64 * 1024))
 
       while gotFirst == 0 {
-        gotFirst = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: 5000)
+        gotFirst = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: UInt32(config.ioTimeoutMs))
         if gotFirst == 0 {
-          if DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds > budgetNs {
+          let elapsed = DispatchTime.now().uptimeNanoseconds - startNs
+          if elapsed > handshakeBudgetNs {
+            if debugEnabled {
+              print(String(format: "MTP op=0x%04x tx=%u phase=handshake-in timeout after %d ms",
+                          command.code, txid, Int(elapsed / 1_000_000)))
+            }
             throw MTPError.timeout
           }
           continue
@@ -292,29 +329,42 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
             _ = dataInHandler!(chunk)
           }
         }
-        // Read the rest exactly (also with timeout protection)
+
+        // Read the rest with inactivity timeout protection
         var left = payloadLen - max(0, rem)
+        var lastProgressNs = DispatchTime.now().uptimeNanoseconds
+        let stallNs = UInt64(config.inactivityTimeoutMs) * 1_000_000
+
         while left > 0 {
           var buf = [UInt8](repeating: 0, count: min(left, 1 << 20))
-          let got = try bulkReadOnce(inEP, into: &buf, max: buf.count, timeout: 15000)
+          let got = try bulkReadOnce(inEP, into: &buf, max: buf.count, timeout: UInt32(config.ioTimeoutMs))
           if got == 0 {
-            // Timeout protection for remaining data
-            if DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds > budgetNs {
+            if DispatchTime.now().uptimeNanoseconds - lastProgressNs > stallNs {
+              if debugEnabled {
+                print(String(format: "MTP op=0x%04x tx=%u phase=data-in timeout after %lld bytes",
+                            command.code, txid, Int64(payloadLen - left)))
+              }
               throw MTPError.timeout
             }
             continue
           }
+          lastProgressNs = DispatchTime.now().uptimeNanoseconds
           buf.withUnsafeBytes { raw in
             _ = dataInHandler!(UnsafeRawBufferPointer(start: raw.baseAddress!, count: got))
           }
           left -= got
         }
       }
+      try checkDeadline()
     }
 
     // 4) RESPONSE phase
+    if debugEnabled {
+      print(String(format: "MTP op=0x%04x tx=%u phase=response", command.code, txid))
+    }
+
     var respHdrBuf = [UInt8](repeating: 0, count: PTPHeader.size)
-    try bulkReadExact(inEP, into: &respHdrBuf, need: PTPHeader.size, timeout: 5000)
+    try bulkReadExact(inEP, into: &respHdrBuf, need: PTPHeader.size, timeout: UInt32(config.ioTimeoutMs))
     let rHdr = respHdrBuf.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
     guard rHdr.type == PTPContainer.Kind.response.rawValue, rHdr.txid == txid else {
       throw MTPError.transport(.io("unexpected response container: type=\(rHdr.type) tx=\(rHdr.txid)"))
@@ -325,7 +375,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     if respParamBytes > 0 {
       precondition(respParamBytes % 4 == 0, "response params not multiple of 4")
       var buf = [UInt8](repeating: 0, count: respParamBytes)
-      try bulkReadExact(inEP, into: &buf, need: buf.count, timeout: 5000)
+      try bulkReadExact(inEP, into: &buf, need: buf.count, timeout: UInt32(config.ioTimeoutMs))
       params.reserveCapacity(respParamBytes / 4)
       buf.withUnsafeBytes { raw in
         var off = 0

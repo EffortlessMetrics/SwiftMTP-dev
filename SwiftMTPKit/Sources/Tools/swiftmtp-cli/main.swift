@@ -178,6 +178,10 @@ struct SimpleMTPDevice {
         commandIndex += 1
         await runUSBDumpCommand()
         return
+      case "diag":
+        commandIndex += 1
+        await runDiagCommand(useMock: useMock, mockProfile: mockProfile)
+        return
       default:
         print("Unknown argument: \(args[commandIndex])")
         printHelp()
@@ -217,6 +221,7 @@ struct SimpleMTPDevice {
     print("  probe                             Probe device capabilities and USB info")
     print("  bench <size>                      Run transfer benchmark (e.g., 1G, 500M)")
     print("  usb-dump                          Show all USB interfaces/alt-settings")
+    print("  diag                              Run diagnostic smoke test with timeouts")
     print("  licenses                          Show third-party license notices")
     print("")
     print("OPTIONS:")
@@ -465,7 +470,8 @@ struct SimpleMTPDevice {
       }
 
       let transport = LibUSBTransportFactory.createTransport()
-      return try await MTPDeviceManager.shared.openDevice(with: deviceSummary, transport: transport)
+      let config = SwiftMTPConfig() // Use default config with layered timeouts
+      return try await MTPDeviceManager.shared.openDevice(with: deviceSummary, transport: transport, config: config)
     }
   }
 
@@ -942,6 +948,44 @@ struct SimpleMTPDevice {
       print("✅ USB dump complete")
     } catch {
       print("❌ USB dump failed: \(error)")
+    }
+  }
+
+  static func runDiagCommand(useMock: Bool, mockProfile: MockTransportFactory.DeviceProfile) async {
+    do {
+      print("== Probe ==")
+      try await runProbeCommand(useMock: useMock, mockProfile: mockProfile)
+
+      print("\n== Storages ==")
+      let device = try await getDevice(useMock: useMock, mockProfile: mockProfile)
+      let storages = try await device.storages()
+      for storage in storages {
+        let usedBytes = storage.capacityBytes - storage.freeBytes
+        let usedPercent = Double(usedBytes) / Double(storage.capacityBytes) * 100
+        print("   📁 \(storage.description)")
+        print("      Capacity: \(formatBytes(storage.capacityBytes))")
+        print("      Free: \(formatBytes(storage.freeBytes))")
+        print("      Used: \(formatBytes(usedBytes)) (\(String(format: "%.1f", usedPercent))%)")
+      }
+
+      if let firstStorage = storages.first {
+        print("\n== List top 20 ==")
+        let objects = await listObjects(device: device, storage: firstStorage.id, parent: nil, maxCount: 20)
+        for object in objects {
+          if let size = object.sizeBytes {
+            print("   📄 \(object.name) (\(formatBytes(size)))")
+          } else {
+            print("   📁 \(object.name)/")
+          }
+        }
+      }
+
+      print("\n== OK ==")
+      print("✅ Diagnostic complete - device is responding correctly with timeout protections")
+
+    } catch {
+      print("Diag failed: \(error)")
+      exit(1)
     }
   }
 }

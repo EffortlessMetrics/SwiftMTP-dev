@@ -191,6 +191,24 @@ public struct SwiftMTPConfig: Sendable {
   /// Increase for slow devices or unreliable connections. Default: 10 seconds
   public var ioTimeoutMs         = 10_000
 
+  /// Timeout for handshake phase (waiting for first DATA-IN packet).
+  ///
+  /// Time budget for the first DATA-IN packet of a command (e.g., GetDeviceInfo).
+  /// Default: 6 seconds
+  public var handshakeTimeoutMs  = 6_000
+
+  /// Timeout for inactivity during streaming phases.
+  ///
+  /// Abort if no bytes arrive (or depart) for this duration during data transfers.
+  /// Default: 8 seconds
+  public var inactivityTimeoutMs = 8_000
+
+  /// Overall operation deadline.
+  ///
+  /// Absolute wall-clock cap for the whole command (command → data → response).
+  /// Default: 60 seconds
+  public var overallDeadlineMs   = 60_000
+
   /// Enable resumable transfers when device supports partial operations.
   ///
   /// When disabled, all transfers restart from beginning on interruption. Default: true
@@ -368,8 +386,8 @@ public actor MTPDeviceManager {
   ///     let storages = try await device.storages()
   /// }
   /// ```
-  public func openDevice(with summary: MTPDeviceSummary, transport: any MTPTransport) async throws -> MTPDevice {
-    return MTPDeviceActor(id: summary.id, summary: summary, transport: transport)
+  public func openDevice(with summary: MTPDeviceSummary, transport: any MTPTransport, config: SwiftMTPConfig = .init()) async throws -> MTPDevice {
+    return MTPDeviceActor(id: summary.id, summary: summary, transport: transport, config: config)
   }
 
   private var config: SwiftMTPConfig = .init()
