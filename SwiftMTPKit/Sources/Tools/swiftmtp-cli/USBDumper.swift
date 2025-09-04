@@ -5,6 +5,42 @@ import Foundation
 import CLibusb
 
 struct USBDumper {
+  /// Sanitize text output to remove privacy-sensitive information
+  static func sanitizeTextFile(_ url: URL) throws {
+      var text = String(decoding: try Data(contentsOf: url), as: UTF8.self)
+
+      // Define patterns to redact
+      let patterns = [
+          // Serial numbers in various formats
+          (#"(?i)\b(Serial Number:\s*)(\S+)"#, "$1<redacted>"),
+          (#"(?i)\b(iSerial\s*)(\S+)"#, "$1<redacted>"),
+          (#"(?i)\b(Serial:\s*)(\S+)"#, "$1<redacted>"),
+
+          // Device-friendly names that may contain personal info
+          (#"(?i)\b(Product|Manufacturer|Device Name|Model):\s+(.+)$"#, "$1: <redacted>"),
+
+          // Absolute user paths
+          (#"/Users/[^/[:space:]]+"#, "/Users/<redacted>"),
+
+          // Windows user paths
+          (#"(?i)C:\\Users\\[^\\[:space:]]+"#, "C:\\Users\\<redacted>"),
+
+          // Linux home paths
+          (#"(?i)/home/[^/[:space:]]+"#, "/home/<redacted>")
+      ]
+
+      // Apply all patterns
+      for (pattern, replacement) in patterns {
+          text = text.replacingOccurrences(
+              of: pattern,
+              with: replacement,
+              options: .regularExpression
+          )
+      }
+
+      try text.data(using: .utf8)!.write(to: url)
+  }
+
   func run() async throws {
     var ctx: OpaquePointer?
     guard libusb_init(&ctx) == 0, let ctx else { print("libusb_init failed"); return }

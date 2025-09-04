@@ -148,6 +148,7 @@ if filteredArgs.isEmpty {
     print("  quirks --explain - Show active device quirk configuration")
     print("  health    - Verify libusb availability and permissions")
     print("  collect   - Collect device data for submission (see collect --help)")
+    print("  learn-promote - Promote learned profiles to quirks (see learn-promote --help)")
     print("")
     print("Exit codes:")
     print("  0  - Success")
@@ -188,10 +189,110 @@ case "collect":
         exit(0)
     }
     await runCollect()
+case "learn-promote":
+    if remainingArgs.contains("--help") || remainingArgs.contains("-h") {
+        LearnPromoteCommand.printHelp()
+        exit(0)
+    }
+    await runLearnPromote()
 default:
     print("Unknown command: \(command)")
-    print("Available: probe, usb-dump, diag, storages, ls, pull, bench, mirror, quirks, health, collect")
+    print("Available: probe, usb-dump, diag, storages, ls, pull, bench, mirror, quirks, health, collect, learn-promote")
     exit(64) // usage error
+}
+
+func runLearnPromote() async {
+    // Parse learn-promote specific flags
+    var learnPromoteFlags = LearnPromoteCommand.Flags(
+        fromPath: nil,
+        toPath: nil,
+        dryRun: false,
+        apply: false,
+        verbose: false
+    )
+
+    var remainingArgs = [String]()
+
+    for arg in filteredArgs.dropFirst() { // Skip "learn-promote"
+        switch arg {
+        case "--from":
+            // Next arg should be the from path
+            if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
+               nextIndex + 1 < filteredArgs.count {
+                learnPromoteFlags = LearnPromoteCommand.Flags(
+                    fromPath: filteredArgs[nextIndex + 1],
+                    toPath: learnPromoteFlags.toPath,
+                    dryRun: learnPromoteFlags.dryRun,
+                    apply: learnPromoteFlags.apply,
+                    verbose: learnPromoteFlags.verbose
+                )
+            }
+        case let arg where arg.hasPrefix("--from="):
+            let fromPath = String(arg.dropFirst("--from=".count))
+            learnPromoteFlags = LearnPromoteCommand.Flags(
+                fromPath: fromPath,
+                toPath: learnPromoteFlags.toPath,
+                dryRun: learnPromoteFlags.dryRun,
+                apply: learnPromoteFlags.apply,
+                verbose: learnPromoteFlags.verbose
+            )
+        case "--to":
+            // Next arg should be the to path
+            if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
+               nextIndex + 1 < filteredArgs.count {
+                learnPromoteFlags = LearnPromoteCommand.Flags(
+                    fromPath: learnPromoteFlags.fromPath,
+                    toPath: filteredArgs[nextIndex + 1],
+                    dryRun: learnPromoteFlags.dryRun,
+                    apply: learnPromoteFlags.apply,
+                    verbose: learnPromoteFlags.verbose
+                )
+            }
+        case let arg where arg.hasPrefix("--to="):
+            let toPath = String(arg.dropFirst("--to=".count))
+            learnPromoteFlags = LearnPromoteCommand.Flags(
+                fromPath: learnPromoteFlags.fromPath,
+                toPath: toPath,
+                dryRun: learnPromoteFlags.dryRun,
+                apply: learnPromoteFlags.apply,
+                verbose: learnPromoteFlags.verbose
+            )
+        case "--dry-run":
+            learnPromoteFlags = LearnPromoteCommand.Flags(
+                fromPath: learnPromoteFlags.fromPath,
+                toPath: learnPromoteFlags.toPath,
+                dryRun: true,
+                apply: learnPromoteFlags.apply,
+                verbose: learnPromoteFlags.verbose
+            )
+        case "--apply":
+            learnPromoteFlags = LearnPromoteCommand.Flags(
+                fromPath: learnPromoteFlags.fromPath,
+                toPath: learnPromoteFlags.toPath,
+                dryRun: learnPromoteFlags.dryRun,
+                apply: true,
+                verbose: learnPromoteFlags.verbose
+            )
+        case "--verbose":
+            learnPromoteFlags = LearnPromoteCommand.Flags(
+                fromPath: learnPromoteFlags.fromPath,
+                toPath: learnPromoteFlags.toPath,
+                dryRun: learnPromoteFlags.dryRun,
+                apply: learnPromoteFlags.apply,
+                verbose: true
+            )
+        default:
+            remainingArgs.append(arg)
+        }
+    }
+
+    do {
+        let learnPromoteCommand = LearnPromoteCommand()
+        try await learnPromoteCommand.run(flags: learnPromoteFlags)
+    } catch {
+        print("❌ Learn-promote command failed: \(error)")
+        exit(75) // temp failure
+    }
 }
 
 func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
@@ -906,11 +1007,19 @@ func printCollectHelp() {
     print("  --safe                 - Force conservative transfer settings")
     print("  --trace-usb            - Log USB protocol phases and endpoint details")
     print("  --trace-usb-details    - Log detailed USB descriptor and packet traces")
+    print("  --vid <id>             - Target specific device by Vendor ID (hex)")
+    print("  --pid <id>             - Target specific device by Product ID (hex)")
+    print("  --bus <num>            - Target device on specific USB bus")
+    print("  --address <num>        - Target device at specific USB address")
+    print("  --json                 - Output collection summary as JSON to stdout")
     print("")
     print("Examples:")
     print("  swiftmtp collect --device-name \"Pixel 7\" --run-bench 100M,1G")
     print("  swiftmtp collect --no-bench --noninteractive")
     print("  swiftmtp collect --device-name \"Galaxy S21\" --open-pr")
+    print("  swiftmtp collect --vid 2717 --pid ff10 --device-name \"Mi Note 2\"")
+    print("  swiftmtp collect --bus 2 --address 3 --noninteractive")
+    print("  swiftmtp collect --json --device-name \"Device\" --no-bench")
     print("")
     print("The tool will:")
     print("• Request consent for data collection")
@@ -928,7 +1037,7 @@ func printCollectHelp() {
 }
 
 func runCollect() async {
-    // Parse collect-specific flags
+    // Parse collect-specific flags with safety defaults
     var collectFlags = CollectCommand.Flags(
         deviceName: nil,
         runBench: [],
@@ -939,8 +1048,56 @@ func runCollect() async {
         strict: strict,
         safe: safe,
         traceUSB: traceUSB,
-        traceUSBDetails: traceUSBDetails
+        traceUSBDetails: traceUSBDetails,
+        targetVID: nil,
+        targetPID: nil,
+        targetBus: nil,
+        targetAddress: nil,
+        jsonOutput: jsonOutput
     )
+
+    // Apply safety defaults: strict mode and no benchmarks unless explicitly requested
+    // Only default to strict if user didn't explicitly set it
+    if !strict {
+                    collectFlags = CollectCommand.Flags(
+                deviceName: collectFlags.deviceName,
+                runBench: collectFlags.runBench,
+                noBench: collectFlags.noBench,
+                openPR: collectFlags.openPR,
+                nonInteractive: collectFlags.nonInteractive,
+                realOnly: collectFlags.realOnly,
+                strict: true,  // Safety default: enable strict mode
+                safe: collectFlags.safe,
+                traceUSB: collectFlags.traceUSB,
+                traceUSBDetails: collectFlags.traceUSBDetails,
+                targetVID: collectFlags.targetVID,
+                targetPID: collectFlags.targetPID,
+                targetBus: collectFlags.targetBus,
+                targetAddress: collectFlags.targetAddress,
+                jsonOutput: collectFlags.jsonOutput
+            )
+    }
+
+    // Default to no benchmarks unless explicitly requested
+    if collectFlags.runBench.isEmpty && !collectFlags.noBench {
+        collectFlags = CollectCommand.Flags(
+            deviceName: collectFlags.deviceName,
+            runBench: collectFlags.runBench,
+            noBench: true,  // Safety default: no benchmarks
+            openPR: collectFlags.openPR,
+            nonInteractive: collectFlags.nonInteractive,
+            realOnly: collectFlags.realOnly,
+            strict: collectFlags.strict,
+            safe: collectFlags.safe,
+            traceUSB: collectFlags.traceUSB,
+            traceUSBDetails: collectFlags.traceUSBDetails,
+            targetVID: collectFlags.targetVID,
+            targetPID: collectFlags.targetPID,
+            targetBus: collectFlags.targetBus,
+            targetAddress: collectFlags.targetAddress,
+            jsonOutput: collectFlags.jsonOutput
+        )
+    }
 
     // Parse remaining arguments for collect-specific flags
     var remainingArgs = [String]()
@@ -961,7 +1118,12 @@ func runCollect() async {
                     strict: collectFlags.strict,
                     safe: collectFlags.safe,
                     traceUSB: collectFlags.traceUSB,
-                    traceUSBDetails: collectFlags.traceUSBDetails
+                    traceUSBDetails: collectFlags.traceUSBDetails,
+                    targetVID: collectFlags.targetVID,
+                    targetPID: collectFlags.targetPID,
+                    targetBus: collectFlags.targetBus,
+                    targetAddress: collectFlags.targetAddress,
+                    jsonOutput: collectFlags.jsonOutput
                 )
             }
         case let arg where arg.hasPrefix("--device-name="):
@@ -1048,8 +1210,174 @@ func runCollect() async {
                 strict: collectFlags.strict,
                 safe: collectFlags.safe,
                 traceUSB: collectFlags.traceUSB,
-                traceUSBDetails: collectFlags.traceUSBDetails
+                traceUSBDetails: collectFlags.traceUSBDetails,
+                targetVID: collectFlags.targetVID,
+                targetPID: collectFlags.targetPID,
+                targetBus: collectFlags.targetBus,
+                targetAddress: collectFlags.targetAddress
             )
+        case "--vid":
+            // Next arg should be the VID
+            if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
+               nextIndex + 1 < filteredArgs.count {
+                collectFlags = CollectCommand.Flags(
+                    deviceName: collectFlags.deviceName,
+                    runBench: collectFlags.runBench,
+                    noBench: collectFlags.noBench,
+                    openPR: collectFlags.openPR,
+                    nonInteractive: collectFlags.nonInteractive,
+                    realOnly: collectFlags.realOnly,
+                    strict: collectFlags.strict,
+                    safe: collectFlags.safe,
+                    traceUSB: collectFlags.traceUSB,
+                    traceUSBDetails: collectFlags.traceUSBDetails,
+                    targetVID: filteredArgs[nextIndex + 1],
+                    targetPID: collectFlags.targetPID,
+                    targetBus: collectFlags.targetBus,
+                    targetAddress: collectFlags.targetAddress
+                )
+            }
+        case let arg where arg.hasPrefix("--vid="):
+            let vid = String(arg.dropFirst("--vid=".count))
+            collectFlags = CollectCommand.Flags(
+                deviceName: collectFlags.deviceName,
+                runBench: collectFlags.runBench,
+                noBench: collectFlags.noBench,
+                openPR: collectFlags.openPR,
+                nonInteractive: collectFlags.nonInteractive,
+                realOnly: collectFlags.realOnly,
+                strict: collectFlags.strict,
+                safe: collectFlags.safe,
+                traceUSB: collectFlags.traceUSB,
+                traceUSBDetails: collectFlags.traceUSBDetails,
+                targetVID: vid,
+                targetPID: collectFlags.targetPID,
+                targetBus: collectFlags.targetBus,
+                targetAddress: collectFlags.targetAddress
+            )
+        case "--pid":
+            // Next arg should be the PID
+            if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
+               nextIndex + 1 < filteredArgs.count {
+                collectFlags = CollectCommand.Flags(
+                    deviceName: collectFlags.deviceName,
+                    runBench: collectFlags.runBench,
+                    noBench: collectFlags.noBench,
+                    openPR: collectFlags.openPR,
+                    nonInteractive: collectFlags.nonInteractive,
+                    realOnly: collectFlags.realOnly,
+                    strict: collectFlags.strict,
+                    safe: collectFlags.safe,
+                    traceUSB: collectFlags.traceUSB,
+                    traceUSBDetails: collectFlags.traceUSBDetails,
+                    targetVID: collectFlags.targetVID,
+                    targetPID: filteredArgs[nextIndex + 1],
+                    targetBus: collectFlags.targetBus,
+                    targetAddress: collectFlags.targetAddress
+                )
+            }
+        case let arg where arg.hasPrefix("--pid="):
+            let pid = String(arg.dropFirst("--pid=".count))
+            collectFlags = CollectCommand.Flags(
+                deviceName: collectFlags.deviceName,
+                runBench: collectFlags.runBench,
+                noBench: collectFlags.noBench,
+                openPR: collectFlags.openPR,
+                nonInteractive: collectFlags.nonInteractive,
+                realOnly: collectFlags.realOnly,
+                strict: collectFlags.strict,
+                safe: collectFlags.safe,
+                traceUSB: collectFlags.traceUSB,
+                traceUSBDetails: collectFlags.traceUSBDetails,
+                targetVID: collectFlags.targetVID,
+                targetPID: pid,
+                targetBus: collectFlags.targetBus,
+                targetAddress: collectFlags.targetAddress
+            )
+        case "--bus":
+            // Next arg should be the bus number
+            if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
+               nextIndex + 1 < filteredArgs.count,
+               let bus = Int(filteredArgs[nextIndex + 1]) {
+                collectFlags = CollectCommand.Flags(
+                    deviceName: collectFlags.deviceName,
+                    runBench: collectFlags.runBench,
+                    noBench: collectFlags.noBench,
+                    openPR: collectFlags.openPR,
+                    nonInteractive: collectFlags.nonInteractive,
+                    realOnly: collectFlags.realOnly,
+                    strict: collectFlags.strict,
+                    safe: collectFlags.safe,
+                    traceUSB: collectFlags.traceUSB,
+                    traceUSBDetails: collectFlags.traceUSBDetails,
+                    targetVID: collectFlags.targetVID,
+                    targetPID: collectFlags.targetPID,
+                    targetBus: bus,
+                    targetAddress: collectFlags.targetAddress
+                )
+            }
+        case let arg where arg.hasPrefix("--bus="):
+            let busStr = String(arg.dropFirst("--bus=".count))
+            if let bus = Int(busStr) {
+                collectFlags = CollectCommand.Flags(
+                    deviceName: collectFlags.deviceName,
+                    runBench: collectFlags.runBench,
+                    noBench: collectFlags.noBench,
+                    openPR: collectFlags.openPR,
+                    nonInteractive: collectFlags.nonInteractive,
+                    realOnly: collectFlags.realOnly,
+                    strict: collectFlags.strict,
+                    safe: collectFlags.safe,
+                    traceUSB: collectFlags.traceUSB,
+                    traceUSBDetails: collectFlags.traceUSBDetails,
+                    targetVID: collectFlags.targetVID,
+                    targetPID: collectFlags.targetPID,
+                    targetBus: bus,
+                    targetAddress: collectFlags.targetAddress
+                )
+            }
+        case "--address":
+            // Next arg should be the device address
+            if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
+               nextIndex + 1 < filteredArgs.count,
+               let address = Int(filteredArgs[nextIndex + 1]) {
+                collectFlags = CollectCommand.Flags(
+                    deviceName: collectFlags.deviceName,
+                    runBench: collectFlags.runBench,
+                    noBench: collectFlags.noBench,
+                    openPR: collectFlags.openPR,
+                    nonInteractive: collectFlags.nonInteractive,
+                    realOnly: collectFlags.realOnly,
+                    strict: collectFlags.strict,
+                    safe: collectFlags.safe,
+                    traceUSB: collectFlags.traceUSB,
+                    traceUSBDetails: collectFlags.traceUSBDetails,
+                    targetVID: collectFlags.targetVID,
+                    targetPID: collectFlags.targetPID,
+                    targetBus: collectFlags.targetBus,
+                    targetAddress: address
+                )
+            }
+        case let arg where arg.hasPrefix("--address="):
+            let addressStr = String(arg.dropFirst("--address=".count))
+            if let address = Int(addressStr) {
+                collectFlags = CollectCommand.Flags(
+                    deviceName: collectFlags.deviceName,
+                    runBench: collectFlags.runBench,
+                    noBench: collectFlags.noBench,
+                    openPR: collectFlags.openPR,
+                    nonInteractive: collectFlags.nonInteractive,
+                    realOnly: collectFlags.realOnly,
+                    strict: collectFlags.strict,
+                    safe: collectFlags.safe,
+                    traceUSB: collectFlags.traceUSB,
+                    traceUSBDetails: collectFlags.traceUSBDetails,
+                    targetVID: collectFlags.targetVID,
+                    targetPID: collectFlags.targetPID,
+                    targetBus: collectFlags.targetBus,
+                    targetAddress: address
+                )
+            }
         default:
             remainingArgs.append(arg)
         }
