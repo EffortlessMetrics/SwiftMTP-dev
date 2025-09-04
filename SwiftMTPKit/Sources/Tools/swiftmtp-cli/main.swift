@@ -147,6 +147,7 @@ if filteredArgs.isEmpty {
     print("  mirror <dest> - Mirror device contents")
     print("  quirks --explain - Show active device quirk configuration")
     print("  health    - Verify libusb availability and permissions")
+    print("  collect   - Collect device data for submission (see collect --help)")
     print("")
     print("Exit codes:")
     print("  0  - Success")
@@ -181,9 +182,15 @@ case "quirks":
     await runQuirks(args: remainingArgs)
 case "health":
     await runHealth()
+case "collect":
+    if remainingArgs.contains("--help") || remainingArgs.contains("-h") {
+        printCollectHelp()
+        exit(0)
+    }
+    await runCollect()
 default:
     print("Unknown command: \(command)")
-    print("Available: probe, usb-dump, diag, storages, ls, pull, bench, mirror, quirks, health")
+    print("Available: probe, usb-dump, diag, storages, ls, pull, bench, mirror, quirks, health, collect")
     exit(64) // usage error
 }
 
@@ -871,6 +878,202 @@ func runQuirksExplain() async {
     print("  --safe      : Conservative settings (128KiB chunks, long timeouts)")
     print("  SWIFTMTP_OVERRIDES=maxChunkBytes=1048576,ioTimeoutMs=8000")
     print("  SWIFTMTP_DENY_QUIRKS=xiaomi-mi-note-2-ff10")
+}
+
+func printCollectHelp() {
+    print("SwiftMTP Device Submission Collector")
+    print("===================================")
+    print("")
+    print("Collects device evidence for submission to the SwiftMTP project.")
+    print("Creates a submission bundle with probe data, USB dump, and optional benchmarks.")
+    print("")
+    print("Usage:")
+    print("  swiftmtp collect [flags]")
+    print("")
+    print("Flags:")
+    print("  --device-name <name>    - Friendly name for the device (optional)")
+    print("  --run-bench <sizes>     - Run benchmarks with sizes (e.g., '100M,1G')")
+    print("  --no-bench             - Skip benchmarks entirely")
+    print("  --open-pr              - Automatically create GitHub PR (requires gh CLI)")
+    print("  --noninteractive       - Skip consent prompts, accept defaults")
+    print("  --real-only            - Only use real devices, no mock fallback")
+    print("  --strict               - Disable quirks and learned profiles")
+    print("  --safe                 - Force conservative transfer settings")
+    print("  --trace-usb            - Log USB protocol phases and endpoint details")
+    print("  --trace-usb-details    - Log detailed USB descriptor and packet traces")
+    print("")
+    print("Examples:")
+    print("  swiftmtp collect --device-name \"Pixel 7\" --run-bench 100M,1G")
+    print("  swiftmtp collect --no-bench --noninteractive")
+    print("  swiftmtp collect --device-name \"Galaxy S21\" --open-pr")
+    print("")
+    print("The tool will:")
+    print("• Request consent for data collection")
+    print("• Probe the connected MTP device")
+    print("• Collect USB interface details")
+    print("• Run performance benchmarks (if requested)")
+    print("• Generate a quirk suggestion based on device behavior")
+    print("• Create a submission bundle in Contrib/submissions/")
+    print("• Optionally create a GitHub PR with the submission")
+    print("")
+    print("Privacy:")
+    print("• Serial numbers are redacted using HMAC-SHA256")
+    print("• No personal data or device contents are collected")
+    print("• Benchmarks are opt-in and can be skipped")
+}
+
+func runCollect() async {
+    // Parse collect-specific flags
+    var collectFlags = CollectCommand.Flags(
+        deviceName: nil,
+        runBench: [],
+        noBench: false,
+        openPR: false,
+        nonInteractive: false,
+        realOnly: realOnly,
+        strict: strict,
+        safe: safe,
+        traceUSB: traceUSB,
+        traceUSBDetails: traceUSBDetails
+    )
+
+    // Parse remaining arguments for collect-specific flags
+    var remainingArgs = [String]()
+
+    for arg in filteredArgs.dropFirst() { // Skip "collect"
+        switch arg {
+        case "--device-name":
+            // Next arg should be the device name
+            if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
+               nextIndex + 1 < filteredArgs.count {
+                collectFlags = CollectCommand.Flags(
+                    deviceName: filteredArgs[nextIndex + 1],
+                    runBench: collectFlags.runBench,
+                    noBench: collectFlags.noBench,
+                    openPR: collectFlags.openPR,
+                    nonInteractive: collectFlags.nonInteractive,
+                    realOnly: collectFlags.realOnly,
+                    strict: collectFlags.strict,
+                    safe: collectFlags.safe,
+                    traceUSB: collectFlags.traceUSB,
+                    traceUSBDetails: collectFlags.traceUSBDetails
+                )
+            }
+        case let arg where arg.hasPrefix("--device-name="):
+            let deviceName = String(arg.dropFirst("--device-name=".count))
+            collectFlags = CollectCommand.Flags(
+                deviceName: deviceName,
+                runBench: collectFlags.runBench,
+                noBench: collectFlags.noBench,
+                openPR: collectFlags.openPR,
+                nonInteractive: collectFlags.nonInteractive,
+                realOnly: collectFlags.realOnly,
+                strict: collectFlags.strict,
+                safe: collectFlags.safe,
+                traceUSB: collectFlags.traceUSB,
+                traceUSBDetails: collectFlags.traceUSBDetails
+            )
+        case "--run-bench":
+            // Next arg should be the bench sizes
+            if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
+               nextIndex + 1 < filteredArgs.count {
+                let benchSizes = filteredArgs[nextIndex + 1].split(separator: ",").map(String.init)
+                collectFlags = CollectCommand.Flags(
+                    deviceName: collectFlags.deviceName,
+                    runBench: benchSizes,
+                    noBench: collectFlags.noBench,
+                    openPR: collectFlags.openPR,
+                    nonInteractive: collectFlags.nonInteractive,
+                    realOnly: collectFlags.realOnly,
+                    strict: collectFlags.strict,
+                    safe: collectFlags.safe,
+                    traceUSB: collectFlags.traceUSB,
+                    traceUSBDetails: collectFlags.traceUSBDetails
+                )
+            }
+        case let arg where arg.hasPrefix("--run-bench="):
+            let benchArg = String(arg.dropFirst("--run-bench=".count))
+            let benchSizes = benchArg.split(separator: ",").map(String.init)
+            collectFlags = CollectCommand.Flags(
+                deviceName: collectFlags.deviceName,
+                runBench: benchSizes,
+                noBench: collectFlags.noBench,
+                openPR: collectFlags.openPR,
+                nonInteractive: collectFlags.nonInteractive,
+                realOnly: collectFlags.realOnly,
+                strict: collectFlags.strict,
+                safe: collectFlags.safe,
+                traceUSB: collectFlags.traceUSB,
+                traceUSBDetails: collectFlags.traceUSBDetails
+            )
+        case "--no-bench":
+            collectFlags = CollectCommand.Flags(
+                deviceName: collectFlags.deviceName,
+                runBench: collectFlags.runBench,
+                noBench: true,
+                openPR: collectFlags.openPR,
+                nonInteractive: collectFlags.nonInteractive,
+                realOnly: collectFlags.realOnly,
+                strict: collectFlags.strict,
+                safe: collectFlags.safe,
+                traceUSB: collectFlags.traceUSB,
+                traceUSBDetails: collectFlags.traceUSBDetails
+            )
+        case "--open-pr":
+            collectFlags = CollectCommand.Flags(
+                deviceName: collectFlags.deviceName,
+                runBench: collectFlags.runBench,
+                noBench: collectFlags.noBench,
+                openPR: true,
+                nonInteractive: collectFlags.nonInteractive,
+                realOnly: collectFlags.realOnly,
+                strict: collectFlags.strict,
+                safe: collectFlags.safe,
+                traceUSB: collectFlags.traceUSB,
+                traceUSBDetails: collectFlags.traceUSBDetails
+            )
+        case "--noninteractive":
+            collectFlags = CollectCommand.Flags(
+                deviceName: collectFlags.deviceName,
+                runBench: collectFlags.runBench,
+                noBench: collectFlags.noBench,
+                openPR: collectFlags.openPR,
+                nonInteractive: true,
+                realOnly: collectFlags.realOnly,
+                strict: collectFlags.strict,
+                safe: collectFlags.safe,
+                traceUSB: collectFlags.traceUSB,
+                traceUSBDetails: collectFlags.traceUSBDetails
+            )
+        default:
+            remainingArgs.append(arg)
+        }
+    }
+
+    // If no bench sizes specified but --run-bench was used without args, default to common sizes
+    if !collectFlags.noBench && collectFlags.runBench.isEmpty &&
+       filteredArgs.contains("--run-bench") {
+        collectFlags = CollectCommand.Flags(
+            deviceName: collectFlags.deviceName,
+            runBench: ["100M", "1G"],
+            noBench: collectFlags.noBench,
+            openPR: collectFlags.openPR,
+            nonInteractive: collectFlags.nonInteractive,
+            realOnly: collectFlags.realOnly,
+            strict: collectFlags.strict,
+            safe: collectFlags.safe,
+            traceUSB: collectFlags.traceUSB,
+            traceUSBDetails: collectFlags.traceUSBDetails
+        )
+    }
+
+    do {
+        let collectCommand = CollectCommand()
+        try await collectCommand.run(flags: collectFlags)
+    } catch {
+        print("❌ Collect command failed: \(error)")
+        exit(75) // temp failure
+    }
 }
 
 func runHealth() async {

@@ -1,0 +1,179 @@
+{
+  "$id": "https://effortlessmetrics.dev/swiftmtp/submission.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SwiftMTP Device Submission",
+  "type": "object",
+  "required": ["schemaVersion", "tool", "host", "timestamp", "device", "artifacts", "consent"],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of the schema format"
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "enum": ["swiftmtp"],
+          "description": "Tool name that created this submission"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+.*$",
+          "description": "Tool version that created this submission"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{7,40}$",
+          "description": "Git commit hash of the tool"
+        }
+      }
+    },
+    "host": {
+      "type": "object",
+      "required": ["os", "arch"],
+      "properties": {
+        "os": {
+          "type": "string",
+          "description": "Operating system name and version"
+        },
+        "arch": {
+          "type": "string",
+          "enum": ["x86_64", "arm64", "i386", "unknown"],
+          "description": "CPU architecture"
+        }
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when submission was created"
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "github": {
+          "type": "string",
+          "description": "GitHub username (optional)"
+        }
+      }
+    },
+    "device": {
+      "type": "object",
+      "required": ["vendorId", "productId", "vendor", "model", "interface", "fingerprintHash", "serialRedacted"],
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "pattern": "^0x[0-9a-fA-F]{4}$",
+          "description": "USB Vendor ID (hex format)"
+        },
+        "productId": {
+          "type": "string",
+          "pattern": "^0x[0-9a-fA-F]{4}$",
+          "description": "USB Product ID (hex format)"
+        },
+        "bcdDevice": {
+          "type": "string",
+          "pattern": "^0x[0-9a-fA-F]{4}$",
+          "description": "USB Device release number (BCD format)"
+        },
+        "vendor": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Device manufacturer name"
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Device model name"
+        },
+        "interface": {
+          "type": "object",
+          "required": ["class", "subclass", "protocol", "in", "out"],
+          "properties": {
+            "class": {
+              "type": "string",
+              "pattern": "^0x[0-9a-fA-F]{2}$",
+              "description": "USB interface class (hex)"
+            },
+            "subclass": {
+              "type": "string",
+              "pattern": "^0x[0-9a-fA-F]{2}$",
+              "description": "USB interface subclass (hex)"
+            },
+            "protocol": {
+              "type": "string",
+              "pattern": "^0x[0-9a-fA-F]{2}$",
+              "description": "USB interface protocol (hex)"
+            },
+            "in": {
+              "type": "string",
+              "pattern": "^0x[0-9a-fA-F]{2}$",
+              "description": "Input endpoint address (hex)"
+            },
+            "out": {
+              "type": "string",
+              "pattern": "^0x[0-9a-fA-F]{2}$",
+              "description": "Output endpoint address (hex)"
+            },
+            "evt": {
+              "type": "string",
+              "pattern": "^0x[0-9a-fA-F]{2}$",
+              "description": "Event endpoint address (hex)"
+            }
+          }
+        },
+        "fingerprintHash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "description": "SHA256 hash of device fingerprint for deduplication"
+        },
+        "serialRedacted": {
+          "type": "string",
+          "pattern": "^hmacsha256:[0-9a-f]{64}$",
+          "description": "HMAC-SHA256 redacted serial number"
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "required": ["probe", "usbDump"],
+      "properties": {
+        "probe": {
+          "type": "string",
+          "pattern": "^probe\\.json$",
+          "description": "Path to probe JSON artifact"
+        },
+        "usbDump": {
+          "type": "string",
+          "pattern": "^usb-dump\\.txt$",
+          "description": "Path to USB dump text artifact"
+        },
+        "bench": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^bench-[0-9]+[KMG]\\.csv$"
+          },
+          "description": "Array of benchmark CSV artifact paths"
+        }
+      }
+    },
+    "consent": {
+      "type": "object",
+      "required": ["anonymizeSerial", "allowBench"],
+      "properties": {
+        "anonymizeSerial": {
+          "type": "boolean",
+          "description": "User consented to serial number anonymization"
+        },
+        "allowBench": {
+          "type": "boolean",
+          "description": "User consented to running performance benchmarks"
+        }
+      }
+    }
+  }
+}

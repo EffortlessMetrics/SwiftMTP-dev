@@ -1,0 +1,343 @@
+name: Validate Device Submission
+
+on:
+  pull_request:
+    paths:
+      - 'Contrib/submissions/**'
+  push:
+    paths:
+      - 'Contrib/submissions/**'
+
+jobs:
+  validate-submission:
+    runs-on: ubuntu-latest
+    name: Validate Device Submission
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install validation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jsonschema
+
+      - name: Install jq for JSON processing
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Find submission bundles
+        id: find-bundles
+        run: |
+          # Find all submission directories modified in this PR
+          SUBMISSION_DIRS=$(find Contrib/submissions -name "submission.json" -exec dirname {} \; 2>/dev/null || true)
+
+          if [ -z "$SUBMISSION_DIRS" ]; then
+            echo "No submission bundles found"
+            echo "submission_dirs=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Convert to JSON array for GitHub Actions
+          JSON_ARRAY=$(echo "$SUBMISSION_DIRS" | jq -R -s 'split("\n") | map(select(. != ""))')
+          echo "submission_dirs=$JSON_ARRAY" >> $GITHUB_OUTPUT
+          echo "Found submission bundles: $SUBMISSION_DIRS"
+
+      - name: Validate submission bundles
+        if: steps.find-bundles.outputs.submission_dirs != ''
+        run: |
+          SUBMISSION_DIRS='${{ steps.find-bundles.outputs.submission_dirs }}'
+
+          # Iterate through each submission directory
+          echo "$SUBMISSION_DIRS" | jq -r '.[]' | while read -r bundle_dir; do
+            echo "🔍 Validating submission bundle: $bundle_dir"
+
+            # Run validation script
+            if ./scripts/validate-submission.sh "$bundle_dir"; then
+              echo "✅ Validation passed for $bundle_dir"
+            else
+              echo "❌ Validation failed for $bundle_dir"
+              exit 1
+            fi
+          done
+
+      - name: Extract submission metadata
+        if: steps.find-bundles.outputs.submission_dirs != ''
+        id: extract-metadata
+        run: |
+          SUBMISSION_DIRS='${{ steps.find-bundles.outputs.submission_dirs }}'
+
+          # Initialize arrays for metadata
+          DEVICES="[]"
+          VENDORS="[]"
+          PIDS="[]"
+          HAS_BENCHMARKS="[]"
+
+          # Extract metadata from each submission
+          echo "$SUBMISSION_DIRS" | jq -r '.[]' | while read -r bundle_dir; do
+            manifest="$bundle_dir/submission.json"
+
+            if [ -f "$manifest" ]; then
+              # Extract device info using jq
+              device_name=$(jq -r '.device.vendor + " " + .device.model' "$manifest" 2>/dev/null || echo "Unknown Device")
+              vendor_id=$(jq -r '.device.vendorId' "$manifest" 2>/dev/null || echo "0x0000")
+              product_id=$(jq -r '.device.productId' "$manifest" 2>/dev/null || echo "0x0000")
+              benchmark_count=$(jq -r '.artifacts.bench | length' "$manifest" 2>/dev/null || echo "0")
+
+              # Append to arrays
+              DEVICES=$(echo "$DEVICES" | jq --arg name "$device_name" '. + [$name]')
+              VENDORS=$(echo "$VENDORS" | jq --arg vid "$vendor_id" '. + [$vid]')
+              PIDS=$(echo "$PIDS" | jq --arg pid "$product_id" '. + [$pid]')
+              HAS_BENCHMARKS=$(echo "$HAS_BENCHMARKS" | jq --arg count "$benchmark_count" '. + [$count]')
+            fi
+          done
+
+          # Output metadata for use in PR comments
+          echo "devices=$DEVICES" >> $GITHUB_OUTPUT
+          echo "vendor_ids=$VENDORS" >> $GITHUB_OUTPUT
+          echo "product_ids=$PIDS" >> $GITHUB_OUTPUT
+          echo "benchmark_counts=$HAS_BENCHMARKS" >> $GITHUB_OUTPUT
+
+      - name: Generate validation summary
+        if: steps.find-bundles.outputs.submission_dirs != ''
+        run: |
+          SUBMISSION_DIRS='${{ steps.find-bundles.outputs.submission_dirs }}'
+
+          echo "## 🔍 Device Submission Validation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Device | VID:PID | Benchmarks | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|---------|------------|--------|" >> $GITHUB_STEP_SUMMARY
+
+          # Generate table rows
+          echo "$SUBMISSION_DIRS" | jq -r '.[]' | while read -r bundle_dir; do
+            manifest="$bundle_dir/submission.json"
+
+            if [ -f "$manifest" ]; then
+              device_name=$(jq -r '.device.vendor + " " + .device.model' "$manifest" 2>/dev/null || echo "Unknown")
+              vendor_id=$(jq -r '.device.vendorId' "$manifest" 2>/dev/null || echo "0x0000")
+              product_id=$(jq -r '.device.productId' "$manifest" 2>/dev/null || echo "0x0000")
+              benchmark_count=$(jq -r '.artifacts.bench | length' "$manifest" 2>/dev/null || echo "0")
+              vid_pid="$vendor_id:$product_id"
+
+              if [ "$benchmark_count" -gt 0 ]; then
+                bench_status="✅ $benchmark_count files"
+              else
+                bench_status="⚠️ None"
+              fi
+
+              echo "| $device_name | $vid_pid | $bench_status | ✅ Valid |" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📋 Validation Details" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ JSON schema validation" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Required files present" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Privacy redaction applied" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Quirk suggestion generated" >> $GITHUB_STEP_SUMMARY
+
+          if echo "$SUBMISSION_DIRS" | jq -r '.[]' | grep -q .; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📁 Submission Bundles" >> $GITHUB_STEP_SUMMARY
+            echo "$SUBMISSION_DIRS" | jq -r '.[]' | while read -r bundle_dir; do
+              echo "- \`$bundle_dir/\`" >> $GITHUB_STEP_SUMMARY
+            done
+          fi
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && steps.find-bundles.outputs.submission_dirs != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const submissionDirs = ${{ steps.find-bundles.outputs.submission_dirs }};
+            const devices = ${{ steps.extract-metadata.outputs.devices }};
+            const vendorIds = ${{ steps.extract-metadata.outputs.vendor_ids }};
+            const productIds = ${{ steps.extract-metadata.outputs.product_ids }};
+            const benchmarkCounts = ${{ steps.extract-metadata.outputs.benchmark_counts }};
+
+            let comment = '## 🔍 Device Submission Validation\n\n';
+            comment += 'This PR contains device submission(s) that have been validated:\n\n';
+            comment += '| Device | VID:PID | Benchmarks | Status |\n';
+            comment += '|--------|---------|------------|--------|\n';
+
+            for (let i = 0; i < devices.length; i++) {
+              const device = devices[i];
+              const vidPid = `${vendorIds[i]}:${productIds[i]}`;
+              const benchCount = parseInt(benchmarkCounts[i]);
+              const benchStatus = benchCount > 0 ? `✅ ${benchCount} files` : '⚠️ None';
+              comment += `| ${device} | ${vidPid} | ${benchStatus} | ✅ Valid |\n`;
+            }
+
+            comment += '\n### ✅ Validation Results\n\n';
+            comment += '- JSON schema validation passed\n';
+            comment += '- Required files present and intact\n';
+            comment += '- Privacy redaction properly applied\n';
+            comment += '- Quirk suggestions generated and valid\n\n';
+
+            comment += '### 📋 Next Steps\n\n';
+            comment += '1. Review the generated quirk suggestions in each submission bundle\n';
+            comment += '2. Test the proposed configurations if possible\n';
+            comment += '3. Merge the PR to add the device support\n';
+            comment += '4. The quirk will be integrated into `Specs/quirks.json` by maintainers\n\n';
+
+            comment += '### 📁 Files Changed\n\n';
+            for (const dir of submissionDirs) {
+              comment += `- \`${dir}/\` - Device submission bundle\n`;
+            }
+
+            // Post or update comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const existingComment = comments.find(comment =>
+              comment.body.includes('Device Submission Validation')
+            );
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: comment
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            }
+
+      - name: Validate no sensitive data
+        if: steps.find-bundles.outputs.submission_dirs != ''
+        run: |
+          SUBMISSION_DIRS='${{ steps.find-bundles.outputs.submission_dirs }}'
+
+          echo "🔐 Checking for sensitive data in submissions..."
+
+          # Check for potential sensitive patterns
+          SENSITIVE_PATTERNS=(
+            "password"
+            "token"
+            "secret"
+            "key"
+            "credential"
+          )
+
+          FOUND_SENSITIVE=false
+
+          echo "$SUBMISSION_DIRS" | jq -r '.[]' | while read -r bundle_dir; do
+            echo "Checking $bundle_dir for sensitive data..."
+
+            # Check JSON files for sensitive patterns
+            find "$bundle_dir" -name "*.json" -exec grep -l -i "${SENSITIVE_PATTERNS[*]}" {} \; 2>/dev/null || true
+
+            # Check for unexpected file types
+            find "$bundle_dir" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.mp4" -o -name "*.zip" \) | while read -r file; do
+              echo "⚠️ Found unexpected file type: $file"
+              FOUND_SENSITIVE=true
+            done
+
+            # Verify serial redaction
+            manifest="$bundle_dir/submission.json"
+            if [ -f "$manifest" ]; then
+              serial_pattern=$(jq -r '.device.serialRedacted' "$manifest" 2>/dev/null || echo "")
+              if [[ ! "$serial_pattern" =~ ^hmacsha256: ]]; then
+                echo "❌ Serial not properly redacted in $manifest"
+                FOUND_SENSITIVE=true
+              fi
+            fi
+          done
+
+          if [ "$FOUND_SENSITIVE" = true ]; then
+            echo "❌ Sensitive data validation failed"
+            exit 1
+          else
+            echo "✅ No sensitive data found"
+          fi
+
+  docc-preview:
+    runs-on: macos-latest
+    name: Generate DocC Preview
+    needs: validate-submission
+    if: needs.validate-submission.result == 'success'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: '6.0'
+
+      - name: Generate documentation preview
+        run: |
+          # This would generate DocC documentation including new device entries
+          # For now, just validate the SwiftMTPKit package builds
+          cd SwiftMTPKit
+          swift build
+
+      - name: Upload documentation artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: device-submission-summary
+          path: |
+            Contrib/submissions/**/submission.json
+            Contrib/submissions/**/quirk-suggestion.json
+          retention-days: 30
+
+  notify-maintainers:
+    runs-on: ubuntu-latest
+    name: Notify Maintainers
+    needs: [validate-submission, docc-preview]
+    if: needs.validate-submission.result == 'success' && github.event_name == 'pull_request'
+
+    steps:
+      - name: Extract device information
+        id: device-info
+        run: |
+          # Extract device info from submission bundles
+          find Contrib/submissions -name "submission.json" -exec jq -r '"Device: \(.device.vendor) \(.device.model) | VID:PID: \(.device.vendorId):\(.device.productId)"' {} \; 2>/dev/null || echo "No devices found"
+
+      - name: Post maintainer notification
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deviceInfo = `${{ steps.device-info.outputs.result }}`;
+
+            let notification = '## 🔔 Maintainer Notification\n\n';
+            notification += 'This PR adds support for new MTP device(s):\n\n';
+            notification += deviceInfo;
+            notification += '\n\n### 📋 Integration Checklist\n\n';
+            notification += '- [ ] Review generated quirk suggestions\n';
+            notification += '- [ ] Test with actual device if available\n';
+            notification += '- [ ] Integrate into `Specs/quirks.json`\n';
+            notification += '- [ ] Update device documentation\n';
+            notification += '- [ ] Add to compatibility matrix\n\n';
+
+            notification += '### 🔗 Useful Links\n\n';
+            notification += '- [Contribution Guide](https://github.com/${{ github.repository }}/blob/main/Docs/ContributionGuide.md)\n';
+            notification += '- [Device Tuning Guide](https://github.com/${{ github.repository }}/blob/main/Docs/DeviceTuningGuide.md)\n\n';
+
+            notification += '*This notification was automatically generated by the device submission CI.*';
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: notification
+            });

@@ -1,0 +1,132 @@
+{
+  "$id": "https://effortlessmetrics.dev/swiftmtp/quirk-suggestion.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SwiftMTP Device Quirk Suggestion",
+  "type": "object",
+  "required": ["schemaVersion", "id", "match", "status", "confidence", "overrides", "hooks", "benchGates", "provenance"],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of the schema format"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this quirk suggestion"
+    },
+    "match": {
+      "type": "object",
+      "required": ["vidPid"],
+      "properties": {
+        "vidPid": {
+          "type": "string",
+          "pattern": "^0x[0-9a-fA-F]{4}:0x[0-9a-fA-F]{4}$",
+          "description": "USB VID:PID combination to match"
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["experimental", "stable", "deprecated"],
+      "description": "Maturity status of this suggestion"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "description": "Confidence level in this suggestion's correctness"
+    },
+    "overrides": {
+      "type": "object",
+      "description": "Suggested tuning parameter overrides",
+      "additionalProperties": {
+        "oneOf": [
+          {"type": "integer", "minimum": 0},
+          {"type": "number", "minimum": 0},
+          {"type": "string"},
+          {"type": "boolean"}
+        ]
+      }
+    },
+    "hooks": {
+      "type": "array",
+      "description": "Suggested phase-specific hooks",
+      "items": {
+        "type": "object",
+        "required": ["phase"],
+        "properties": {
+          "phase": {
+            "type": "string",
+            "enum": [
+              "postOpenUSB", "postClaimInterface", "postOpenSession",
+              "beforeGetDeviceInfo", "beforeGetStorageIDs", "beforeGetObjectHandles",
+              "beforeTransfer", "afterTransfer", "onDeviceBusy", "onDetach"
+            ],
+            "description": "Phase in the MTP protocol where the hook applies"
+          },
+          "delayMs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5000,
+            "description": "Delay in milliseconds to apply at this phase"
+          },
+          "busyBackoff": {
+            "type": "object",
+            "description": "Backoff strategy for DEVICE_BUSY responses",
+            "properties": {
+              "retries": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10,
+                "description": "Maximum number of retry attempts"
+              },
+              "baseMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 5000,
+                "description": "Base delay in milliseconds"
+              },
+              "jitterPct": {
+                "type": "number",
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "description": "Jitter percentage (0.0-1.0) to randomize delays"
+              }
+            }
+          }
+        }
+      }
+    },
+    "benchGates": {
+      "type": "object",
+      "required": ["readMBps", "writeMBps"],
+      "properties": {
+        "readMBps": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Expected read throughput in MB/s"
+        },
+        "writeMBps": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Expected write throughput in MB/s"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["date"],
+      "properties": {
+        "submittedBy": {
+          "type": "string",
+          "description": "GitHub username of submitter"
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date when suggestion was generated (YYYY-MM-DD)"
+        }
+      }
+    }
+  }
+}
