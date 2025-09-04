@@ -3,8 +3,7 @@
 
 import Foundation
 import SwiftMTPCore
-import SwiftMTPObservability
-@preconcurrency import SQLite
+import OSLog
 
 /// Represents the differences between two device snapshots
 public struct MTPDiff: Sendable {
@@ -48,7 +47,7 @@ public struct MTPDiff: Sendable {
 /// Engine for computing differences between device snapshots
 public final class DiffEngine {
     private let db: Connection
-    private let log = MTPLog.index
+    private let log = Logger(subsystem: "SwiftMTP", category: "index")
 
     // Table definitions
     private let objects = Table("objects")

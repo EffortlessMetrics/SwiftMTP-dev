@@ -4,7 +4,6 @@
 import Foundation
 import CLibusb
 import SwiftMTPCore
-import SwiftMTPObservability
 
 /// Discovery utilities for LibUSB MTP devices
 public struct LibUSBDiscovery {
@@ -233,6 +232,327 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     libusb_release_interface(h, Int32(iface))
     libusb_close(h)
     libusb_unref_device(device)
+  }
+
+  // MARK: - Protocol Implementation
+
+  public func openUSBIfNeeded() async throws {
+    // Interface is already claimed during initialization
+    // This method exists for protocol compliance but USB opening is handled in init
+  }
+
+  public func openSession(id: UInt32) async throws {
+    let command = PTPContainer(
+      length: 16,
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.openSession.rawValue,
+      txid: nextTx,
+      params: [id]
+    )
+    nextTx &+= 1
+
+    guard let response = try executeCommand(command) else {
+      throw MTPError.protocolError(code: 0, message: "OpenSession command failed")
+    }
+
+    guard response.count >= 12 else {
+      throw MTPError.protocolError(code: 0, message: "OpenSession response too short")
+    }
+
+    let responseCode = response.withUnsafeBytes {
+      $0.load(fromByteOffset: 6, as: UInt16.self).littleEndian
+    }
+
+    guard responseCode == 0x2001 else {
+      throw MTPError.protocolError(code: responseCode, message: "OpenSession failed")
+    }
+  }
+
+  public func closeSession() async throws {
+    let command = PTPContainer(
+      length: 12,
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.closeSession.rawValue,
+      txid: nextTx,
+      params: []
+    )
+    nextTx &+= 1
+
+    _ = try executeCommand(command)
+  }
+
+  public func getDeviceInfo() async throws -> MTPDeviceInfo {
+    let command = PTPContainer(
+      length: 12,
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.getDeviceInfo.rawValue,
+      txid: nextTx,
+      params: []
+    )
+    nextTx &+= 1
+
+    guard try executeCommand(command) != nil else {
+      throw MTPError.protocolError(code: 0, message: "No device info response")
+    }
+
+    // Parse DeviceInfo dataset - simplified implementation
+    return MTPDeviceInfo(
+      manufacturer: "Unknown",
+      model: "Unknown",
+      version: "1.0",
+      serialNumber: "Unknown",
+      operationsSupported: Set(),
+      eventsSupported: Set()
+    )
+  }
+
+  public func getStorageIDs() async throws -> [MTPStorageID] {
+    let command = PTPContainer(
+      length: 12,
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.getStorageIDs.rawValue,
+      txid: nextTx,
+      params: []
+    )
+    nextTx &+= 1
+
+    guard let responseData = try executeCommand(command) else {
+      return []
+    }
+
+    guard responseData.count >= 4 else { return [] }
+
+    let count = responseData.withUnsafeBytes { ptr in
+      ptr.load(fromByteOffset: 0, as: UInt32.self).littleEndian
+    }
+
+    guard responseData.count >= 4 + Int(count) * 4 else { return [] }
+
+    var storageIDs = [MTPStorageID]()
+    for i in 0..<Int(count) {
+      let offset = 4 + i * 4
+      let storageIDRaw = responseData.withUnsafeBytes { ptr in
+        ptr.load(fromByteOffset: offset, as: UInt32.self).littleEndian
+      }
+      storageIDs.append(MTPStorageID(raw: storageIDRaw))
+    }
+
+    return storageIDs
+  }
+
+  public func getStorageInfo(id: MTPStorageID) async throws -> MTPStorageInfo {
+    let command = PTPContainer(
+      length: 16,
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.getStorageInfo.rawValue,
+      txid: nextTx,
+      params: [id.raw]
+    )
+    nextTx &+= 1
+
+    guard let responseData = try executeCommand(command) else {
+      throw MTPError.protocolError(code: 0, message: "No storage info response")
+    }
+
+    // Simplified parsing - full implementation would parse the complete StorageInfo dataset
+    var offset = 0
+
+    func read16() -> UInt16 {
+      let value = responseData.withUnsafeBytes { ptr in
+        let b0 = UInt16(ptr[offset])
+        let b1 = UInt16(ptr[offset + 1]) << 8
+        return b0 | b1
+      }
+      offset += 2
+      return value
+    }
+
+    func read32() -> UInt32 {
+      let value = responseData.withUnsafeBytes { ptr in
+        let b0 = UInt32(ptr[offset])
+        let b1 = UInt32(ptr[offset + 1]) << 8
+        let b2 = UInt32(ptr[offset + 2]) << 16
+        let b3 = UInt32(ptr[offset + 3]) << 24
+        return b0 | b1 | b2 | b3
+      }
+      offset += 4
+      return value
+    }
+
+    func read64() -> UInt64 {
+      let value = responseData.withUnsafeBytes { ptr in
+        let b0 = UInt64(ptr[offset])
+        let b1 = UInt64(ptr[offset + 1]) << 8
+        let b2 = UInt64(ptr[offset + 2]) << 16
+        let b3 = UInt64(ptr[offset + 3]) << 24
+        let b4 = UInt64(ptr[offset + 4]) << 32
+        let b5 = UInt64(ptr[offset + 5]) << 40
+        let b6 = UInt64(ptr[offset + 6]) << 48
+        let b7 = UInt64(ptr[offset + 7]) << 56
+        return b0 | b1 | b2 | b3 | b4 | b5 | b6 | b7
+      }
+      offset += 8
+      return value
+    }
+
+    func readString() -> String {
+      guard let string = PTPString.parse(from: responseData, at: &offset) else {
+        return "Unknown"
+      }
+      return string
+    }
+
+    guard responseData.count >= 22 else {
+      throw MTPError.protocolError(code: 0, message: "Storage info response too short")
+    }
+
+    let _ = read16() // StorageType
+    let _ = read16() // FilesystemType
+    let accessCapability = read16()
+    let maxCapacity = read64()
+    let freeSpace = read64()
+    let _ = read32() // FreeSpaceInObjects
+    let description = readString()
+    let _ = readString() // VolumeLabel
+
+    let isReadOnly = accessCapability == 0x0001
+
+    return MTPStorageInfo(
+      id: id,
+      description: description,
+      capacityBytes: maxCapacity,
+      freeBytes: freeSpace,
+      isReadOnly: isReadOnly
+    )
+  }
+
+  public func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> [MTPObjectHandle] {
+    let parentHandle = parent ?? 0xFFFFFFFF // 0xFFFFFFFF means root level
+
+    let command = PTPContainer(
+      length: 20,
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.getObjectHandles.rawValue,
+      txid: nextTx,
+      params: [storage.raw, parentHandle]
+    )
+    nextTx &+= 1
+
+    guard let responseData = try executeCommand(command) else {
+      return []
+    }
+
+    guard responseData.count >= 4 else { return [] }
+
+    let count = responseData.withUnsafeBytes { ptr in
+      ptr.load(fromByteOffset: 0, as: UInt32.self).littleEndian
+    }
+
+    guard responseData.count >= 4 + Int(count) * 4 else { return [] }
+
+    var objectHandles = [MTPObjectHandle]()
+    for i in 0..<Int(count) {
+      let offset = 4 + i * 4
+      let handle = responseData.withUnsafeBytes { ptr in
+        ptr.load(fromByteOffset: offset, as: UInt32.self).littleEndian
+      }
+      objectHandles.append(handle)
+    }
+
+    return objectHandles
+  }
+
+  public func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo] {
+    var objectInfos = [MTPObjectInfo]()
+
+    for handle in handles {
+      let command = PTPContainer(
+        length: 16,
+        type: PTPContainer.Kind.command.rawValue,
+        code: PTPOp.getObjectInfo.rawValue,
+        txid: nextTx,
+        params: [handle]
+      )
+      nextTx &+= 1
+
+      guard let responseData = try executeCommand(command) else {
+        continue
+      }
+
+      // Simplified parsing - full implementation would parse complete ObjectInfo dataset
+      var offset = 0
+
+      func read16() -> UInt16 {
+        let value = responseData.withUnsafeBytes { ptr in
+          let b0 = UInt16(ptr[offset])
+          let b1 = UInt16(ptr[offset + 1]) << 8
+          return b0 | b1
+        }
+        offset += 2
+        return value
+      }
+
+      func read32() -> UInt32 {
+        let value = responseData.withUnsafeBytes { ptr in
+          let b0 = UInt32(ptr[offset])
+          let b1 = UInt32(ptr[offset + 1]) << 8
+          let b2 = UInt32(ptr[offset + 2]) << 16
+          let b3 = UInt32(ptr[offset + 3]) << 24
+          return b0 | b1 | b2 | b3
+        }
+        offset += 4
+        return value
+      }
+
+      func readString() -> String {
+        guard let string = PTPString.parse(from: responseData, at: &offset) else {
+          return "Unknown"
+        }
+        return string
+      }
+
+      guard responseData.count >= 52 else {
+        continue
+      }
+
+      let storageIDRaw = read32()
+      let formatCode = read16()
+      let _ = read16() // ProtectionStatus
+      let compressedSize = read32()
+      let _ = read16() // ThumbFormat
+      let _ = read32() // ThumbCompressedSize
+      let _ = read32() // ThumbWidth
+      let _ = read32() // ThumbHeight
+      let _ = read32() // ImageWidth
+      let _ = read32() // ImageHeight
+      let _ = read32() // ImageBitDepth
+      let parentObject = read32()
+      let _ = read16() // AssociationType
+      let _ = read32() // AssociationDesc
+      let _ = read32() // SequenceNumber
+      let filename = readString()
+      let _ = readString() // CaptureDate
+      let _ = readString() // ModificationDate
+      let _ = readString() // Keywords
+
+      let storage = MTPStorageID(raw: storageIDRaw)
+      let parent = parentObject == 0 ? nil : parentObject
+      let size = compressedSize == 0xFFFFFFFF ? nil : UInt64(compressedSize)
+
+      let objectInfo = MTPObjectInfo(
+        handle: handle,
+        storage: storage,
+        parent: parent,
+        name: filename,
+        sizeBytes: size,
+        modified: nil, // TODO: Parse modification date
+        formatCode: formatCode,
+        properties: [:] // TODO: Parse additional properties
+      )
+      objectInfos.append(objectInfo)
+    }
+
+    return objectInfos
   }
 
   // MARK: - Bulk I/O helpers

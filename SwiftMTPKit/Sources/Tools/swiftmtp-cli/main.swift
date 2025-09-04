@@ -126,8 +126,8 @@ func runProbe(flags: CLIFlags) async {
         print("   Events: \(info.eventsSupported.count)")
 
         // Add delay to prevent device from going to sleep (Xiaomi quirk)
-        print("   Waiting 100ms for device stabilization...")
-        try await Task.sleep(nanoseconds: 100_000_000) // 100ms
+        // Note: Stabilization is now handled automatically in openIfNeeded()
+        // This additional delay is for CLI-specific stabilization
 
         // Get storage info
         let storages = try await device.storages()

@@ -4,7 +4,6 @@
 import Foundation
 import SwiftMTPCore
 import SwiftMTPIndex
-import SwiftMTPObservability
 
 /// Result of a mirror operation
 public struct MTPSyncReport: Sendable {

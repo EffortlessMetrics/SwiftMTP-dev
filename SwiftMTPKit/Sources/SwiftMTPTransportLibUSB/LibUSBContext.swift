@@ -3,7 +3,7 @@
 
 import Foundation
 import CLibusb
-import SwiftMTPObservability
+import OSLog
 
 final class LibUSBContext: @unchecked Sendable {
     static let shared = LibUSBContext()
@@ -16,7 +16,7 @@ final class LibUSBContext: @unchecked Sendable {
         precondition(rc == 0, "libusb_init failed: \(rc)")
         self.ctx = c!
         // Skip libusb_set_option as it's variadic and unavailable in Swift
-        MTPLog.transport.info("LibUSB context initialized")
+        Logger(subsystem: "SwiftMTP", category: "transport").info("LibUSB context initialized")
         startEventLoop()
     }
 

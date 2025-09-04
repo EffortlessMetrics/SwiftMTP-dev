@@ -2,7 +2,6 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
-import Collections
 import SwiftMTPCore
 
 public struct MTPIndexManager {

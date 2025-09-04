@@ -2,13 +2,12 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
-import SwiftMTPObservability
 import OSLog
 
 extension MTPDeviceActor {
     public func read(handle: MTPObjectHandle, range: Range<UInt64>?, to url: URL) async throws -> Progress {
         let link = try await getMTPLink()
-        let info = try await getObjectInfo(handle, using: link)
+        let info = try await link.getObjectInfos([handle])[0]
         let deviceInfo = try await self.info
 
         let total = Int64(info.sizeBytes ?? 0)
@@ -18,7 +17,7 @@ extension MTPDeviceActor {
 
         // Performance logging: begin transfer
         let startTime = Date()
-        MTPLog.perf.info("Transfer begin: read \(info.name) handle=\(handle) size=\(info.sizeBytes ?? 0)")
+        Logger(subsystem: "SwiftMTP", category: "performance").info("Transfer begin: read \(info.name) handle=\(handle) size=\(info.sizeBytes ?? 0)")
 
         // Check if partial read is supported
         let supportsPartial = deviceInfo.operationsSupported.contains(0x95C4) // GetPartialObject64
@@ -109,7 +108,7 @@ extension MTPDeviceActor {
             // Performance logging: end transfer (success)
             let duration = Date().timeIntervalSince(startTime)
             let throughput = Double(bytesWritten) / duration
-            MTPLog.perf.info("Transfer completed: read \(bytesWritten) bytes in \(String(format: "%.2f", duration))s (\(String(format: "%.2f", throughput/1024/1024)) MB/s)")
+            Logger(subsystem: "SwiftMTP", category: "performance").info("Transfer completed: read \(bytesWritten) bytes in \(String(format: "%.2f", duration))s (\(String(format: "%.2f", throughput/1024/1024)) MB/s)")
 
             return progress
         } catch {
@@ -118,7 +117,7 @@ extension MTPDeviceActor {
 
             // Performance logging: end transfer (failure)
             let duration = Date().timeIntervalSince(startTime)
-            MTPLog.perf.error("Transfer failed: read after \(String(format: "%.2f", duration))s - \(error.localizedDescription)")
+            Logger(subsystem: "SwiftMTP", category: "performance").error("Transfer failed: read after \(String(format: "%.2f", duration))s - \(error.localizedDescription)")
 
             // Mark as failed in journal
             if let journal = transferJournal, let transferId = journalTransferId {
@@ -137,7 +136,7 @@ extension MTPDeviceActor {
 
         // Performance logging: begin transfer
         let startTime = Date()
-        MTPLog.perf.info("Transfer begin: write \(name) size=\(size)")
+        Logger(subsystem: "SwiftMTP", category: "performance").info("Transfer begin: write \(name) size=\(size)")
 
         // Check if partial write is supported
         let supportsPartial = deviceInfo.operationsSupported.contains(0x95C1) // SendPartialObject
@@ -199,7 +198,7 @@ extension MTPDeviceActor {
             // Performance logging: end transfer (success)
             let duration = Date().timeIntervalSince(startTime)
             let throughput = Double(bytesRead) / duration
-            MTPLog.perf.info("Transfer completed: write \(bytesRead) bytes in \(String(format: "%.2f", duration))s (\(String(format: "%.2f", throughput/1024/1024)) MB/s)")
+            Logger(subsystem: "SwiftMTP", category: "performance").info("Transfer completed: write \(bytesRead) bytes in \(String(format: "%.2f", duration))s (\(String(format: "%.2f", throughput/1024/1024)) MB/s)")
 
             return progress
         } catch {
@@ -207,7 +206,7 @@ extension MTPDeviceActor {
 
             // Performance logging: end transfer (failure)
             let duration = Date().timeIntervalSince(startTime)
-            MTPLog.perf.error("Transfer failed: write after \(String(format: "%.2f", duration))s - \(error.localizedDescription)")
+            Logger(subsystem: "SwiftMTP", category: "performance").error("Transfer failed: write after \(String(format: "%.2f", duration))s - \(error.localizedDescription)")
 
             // Mark as failed in journal
             if let journal = transferJournal, let transferId = journalTransferId {
