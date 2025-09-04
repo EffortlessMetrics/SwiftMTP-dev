@@ -1,26 +1,116 @@
 {
-  "_comment": "Device-specific quirks and tuning parameters for SwiftMTP",
-  "_schema": "See Docs/benchmarks.md for VID:PID format and parameter descriptions",
-  "devices": {
-    "0x2717:0xff10": {
-      "maxChunkBytes": 2097152,
-      "ioTimeoutMs": 15000,
-      "handshakeTimeoutMs": 6000,
-      "inactivityTimeoutMs": 8000,
-      "overallDeadlineMs": 120000,
-      "stabilizeMs": 400,
-      "noPropList": false,
-      "notes": "Mi Note 2 (ff10): small post-open delay + backoff on DEVICE_BUSY"
+  "$schema": "./quirks.schema.json",
+  "version": 1,
+  "entries": [
+    {
+      "id": "xiaomi-mi-note-2-ff10",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff10",
+        "deviceInfoRegex": ".*Mi Note 2.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        },
+        "endpoints": {
+          "in": "0x81",
+          "out": "0x01",
+          "evt": "0x82"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 6000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 8000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 400,
+        "eventPumpDelayMs": 0
+      },
+      "ops": {
+        "supportsGetPartialObject64": true,
+        "supportsSendPartialObject": true,
+        "preferGetObjectPropList": false,
+        "disableWriteResume": false
+      },
+      "benchGates": {
+        "readMBpsMin": 12.0,
+        "writeMBpsMin": 10.0
+      },
+      "notes": [
+        "Requires 250-500 ms stabilization after OpenSession.",
+        "Prefer direct USB port; keep screen unlocked.",
+        "Back off on DEVICE_BUSY for early storage ops."
+      ],
+      "provenance": {
+        "author": "Steven Zimmerman",
+        "date": "2025-01-09",
+        "commit": "<current-commit>",
+        "artifacts": {
+          "probe": "Docs/benchmarks/probes/mi-note2-probe.txt",
+          "usbDump": "Docs/benchmarks/probes/mi-note2-usb-dump.txt",
+          "bench100M": "Docs/benchmarks/csv/mi-note2-100m.csv",
+          "bench1G": "Docs/benchmarks/csv/mi-note2-1g.csv",
+          "mirrorLog": "Docs/benchmarks/logs/mi-note2-mirror.log"
+        }
+      },
+      "status": "stable"
     },
-    "0x2717:0xff40": {
-      "maxChunkBytes": 2097152,
-      "ioTimeoutMs": 15000,
-      "handshakeTimeoutMs": 6000,
-      "inactivityTimeoutMs": 8000,
-      "overallDeadlineMs": 120000,
-      "stabilizeMs": 400,
-      "noPropList": false,
-      "notes": "Mi Note 2 (ff40) variant: same behavior as ff10"
+    {
+      "id": "xiaomi-mi-note-2-ff40",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff40",
+        "deviceInfoRegex": ".*Mi Note 2.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        },
+        "endpoints": {
+          "in": "0x81",
+          "out": "0x01",
+          "evt": "0x82"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 6000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 8000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 400,
+        "eventPumpDelayMs": 0
+      },
+      "ops": {
+        "supportsGetPartialObject64": true,
+        "supportsSendPartialObject": true,
+        "preferGetObjectPropList": false,
+        "disableWriteResume": false
+      },
+      "benchGates": {
+        "readMBpsMin": 12.0,
+        "writeMBpsMin": 10.0
+      },
+      "notes": [
+        "Same tuning as ff10 variant.",
+        "Requires 250-500 ms stabilization after OpenSession.",
+        "Prefer direct USB port; keep screen unlocked."
+      ],
+      "provenance": {
+        "author": "Steven Zimmerman",
+        "date": "2025-01-09",
+        "commit": "<current-commit>",
+        "artifacts": {
+          "probe": "Docs/benchmarks/probes/mi-note2-probe.txt",
+          "usbDump": "Docs/benchmarks/probes/mi-note2-usb-dump.txt",
+          "bench100M": "Docs/benchmarks/csv/mi-note2-100m.csv",
+          "bench1G": "Docs/benchmarks/csv/mi-note2-1g.csv",
+          "mirrorLog": "Docs/benchmarks/logs/mi-note2-mirror.log"
+        }
+      },
+      "status": "stable"
     }
-  }
+  ]
 }

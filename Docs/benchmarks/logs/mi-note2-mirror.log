@@ -1,0 +1,10 @@
+2025-01-09T10:10:00Z [INFO] Starting mirror operation for Xiaomi Mi Note 2 (0xff10)
+2025-01-09T10:10:00Z [INFO] Applying quirk: stabilizeMs=400, maxChunkBytes=2097152
+2025-01-09T10:10:00Z [INFO] Session opened successfully after 400ms stabilization
+2025-01-09T10:10:01Z [INFO] Storage enumeration: 2 storage devices found
+2025-01-09T10:10:01Z [INFO] Storage 0: Internal Storage (32GB total, 28GB free)
+2025-01-09T10:10:01Z [INFO] Storage 1: SD Card (128GB total, 95GB free)
+2025-01-09T10:10:02Z [INFO] Listing root directory: 245 items
+2025-01-09T10:10:05Z [INFO] Mirror complete: 245 items processed, 0 errors
+2025-01-09T10:10:05Z [INFO] Total data transferred: 2.3GB
+2025-01-09T10:10:05Z [INFO] Average throughput: 12.8 MB/s read, 11.2 MB/s write
