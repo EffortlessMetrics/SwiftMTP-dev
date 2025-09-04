@@ -2,19 +2,24 @@
   "$id": "https://effortlessmetrics.dev/swiftmtp/quirks.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["version", "entries"],
+  "required": ["schemaVersion", "version", "entries"],
   "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of the schema format"
+    },
     "version": {
       "type": "integer",
       "minimum": 1,
-      "description": "Schema version for forward compatibility"
+      "description": "Data version for forward compatibility"
     },
     "entries": {
       "type": "array",
       "description": "Array of device quirk entries",
       "items": {
         "type": "object",
-        "required": ["id", "match", "tuning"],
+        "required": ["id", "match", "tuning", "confidence", "status"],
         "properties": {
           "id": {
             "type": "string",
@@ -132,6 +137,55 @@
               }
             }
           },
+          "hooks": {
+            "type": "array",
+            "description": "Phase-specific hooks for timing and retry logic",
+            "items": {
+              "type": "object",
+              "required": ["phase"],
+              "properties": {
+                "phase": {
+                  "type": "string",
+                  "enum": [
+                    "postOpenUSB", "postClaimInterface", "postOpenSession",
+                    "beforeGetDeviceInfo", "beforeGetStorageIDs", "beforeTransfer",
+                    "afterTransfer", "onDeviceBusy"
+                  ],
+                  "description": "Phase in the MTP protocol where the hook applies"
+                },
+                "delayMs": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 5000,
+                  "description": "Delay in milliseconds to apply at this phase"
+                },
+                "busyBackoff": {
+                  "type": "object",
+                  "description": "Backoff strategy for DEVICE_BUSY responses",
+                  "properties": {
+                    "retries": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 10,
+                      "description": "Maximum number of retry attempts"
+                    },
+                    "baseMs": {
+                      "type": "integer",
+                      "minimum": 100,
+                      "maximum": 5000,
+                      "description": "Base delay in milliseconds"
+                    },
+                    "jitterPct": {
+                      "type": "number",
+                      "minimum": 0.0,
+                      "maximum": 1.0,
+                      "description": "Jitter percentage (0.0-1.0) to randomize delays"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "ops": {
             "type": "object",
             "description": "Operation capability flags",
@@ -153,6 +207,16 @@
                 "description": "Disable write resume capability"
               }
             }
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["low", "medium", "high"],
+            "description": "Confidence level in this quirk's correctness"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["experimental", "stable", "deprecated"],
+            "description": "Maturity status of this quirk"
           },
           "benchGates": {
             "type": "object",

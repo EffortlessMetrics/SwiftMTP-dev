@@ -1,5 +1,6 @@
 {
   "$schema": "./quirks.schema.json",
+  "schemaVersion": "1.0.0",
   "version": 1,
   "entries": [
     {
@@ -28,6 +29,10 @@
         "stabilizeMs": 400,
         "eventPumpDelayMs": 0
       },
+      "hooks": [
+        { "phase": "postOpenSession", "delayMs": 400 },
+        { "phase": "beforeGetStorageIDs", "busyBackoff": { "retries": 3, "baseMs": 200, "jitterPct": 0.2 } }
+      ],
       "ops": {
         "supportsGetPartialObject64": true,
         "supportsSendPartialObject": true,
@@ -38,6 +43,8 @@
         "readMBpsMin": 12.0,
         "writeMBpsMin": 10.0
       },
+      "confidence": "high",
+      "status": "stable",
       "notes": [
         "Requires 250-500 ms stabilization after OpenSession.",
         "Prefer direct USB port; keep screen unlocked.",
@@ -54,8 +61,7 @@
           "bench1G": "Docs/benchmarks/csv/mi-note2-1g.csv",
           "mirrorLog": "Docs/benchmarks/logs/mi-note2-mirror.log"
         }
-      },
-      "status": "stable"
+      }
     },
     {
       "id": "xiaomi-mi-note-2-ff40",
