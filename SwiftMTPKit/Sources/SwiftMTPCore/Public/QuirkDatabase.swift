@@ -105,15 +105,26 @@ public final class EffectiveTuningBuilder {
     private let quirkDB: QuirkDatabase?
     private let learnedProfiles: LearnedProfileManager?
     private let userOverrides: UserOverride?
+    private let deniedQuirks: Set<String>?
 
     public init(
         quirkDB: QuirkDatabase? = nil,
         learnedProfiles: LearnedProfileManager? = nil,
-        userOverrides: UserOverride? = nil
+        userOverrides: UserOverride? = nil,
+        deniedQuirks: Set<String>? = nil
     ) {
         self.quirkDB = quirkDB
         self.learnedProfiles = learnedProfiles
         self.userOverrides = userOverrides
+        self.deniedQuirks = deniedQuirks
+    }
+
+    /// Parse denied quirks from environment variable SWIFTMTP_DENY_QUIRKS
+    /// Format: "quirk1,quirk2,quirk3" (case-insensitive)
+    public static func deniedQuirksFromEnvironment(_ envValue: String?) -> Set<String>? {
+        guard let envValue = envValue else { return nil }
+        let quirks = envValue.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces).lowercased() }
+        return quirks.isEmpty ? nil : Set(quirks)
     }
 
     /// Builds effective tuning for a device fingerprint and capabilities
@@ -141,13 +152,20 @@ public final class EffectiveTuningBuilder {
         tuning.apply(capabilities)
 
         // Layer 2: Apply learned profile (skip in strict mode)
-        if !strict, let learned = learnedProfiles?.profile(for: fingerprint) {
+        if !strict, let learned = learnedProfiles?.profile(for: fingerprint, shouldUpdate: true) {
             tuning.apply(learned)
         }
 
         // Layer 3: Apply static quirk (skip in strict mode)
         if !strict, let quirk = quirkDB?.match(for: fingerprint) {
-            tuning.apply(quirk)
+            // Check if this quirk is denied
+            let isDenied = deniedQuirks?.contains(quirk.id.lowercased()) ?? false
+            if !isDenied {
+                tuning.apply(quirk)
+            } else {
+                // Log that quirk was denied (we'll enhance logging later)
+                print("Note: Quirk '\(quirk.id)' was denied via SWIFTMTP_DENY_QUIRKS")
+            }
         }
 
         // Layer 4: Apply user overrides (always applied)

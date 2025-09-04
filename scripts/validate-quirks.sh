@@ -100,22 +100,30 @@ jq -r '.entries[] | select(.benchGates) | {id: .id, readMin: (.benchGates.readMB
         echo "  Checking gates for $id (read ≥ ${read_min} MB/s, write ≥ ${write_min} MB/s)..."
 
         # Look for benchmark CSV files for this device
-        csv_pattern="Docs/benchmarks/csv/${id//-/*}*.csv"
-        csv_files=$(find Docs/benchmarks/csv -name "${id//-/*}*.csv" 2>/dev/null || true)
+        csv_files=$(find Docs/benchmarks/csv -name "${id//-/*}*.csv" 2>/dev/null | sort -r || true)
 
         if [[ -z "$csv_files" ]]; then
-            echo "  ⚠️  No benchmark CSV found for $id"
+            echo "  ❌ No benchmark CSV found for $id"
+            echo "    Required artifacts: Docs/benchmarks/csv/${id}-*.csv"
             if [[ "${CI:-false}" == "true" ]]; then
-                echo "  ❌ CI requires benchmark evidence for quirk with gates"
+                echo "    CI requires benchmark evidence for quirk with gates"
                 exit 1
             fi
         else
-            # Parse the most recent benchmark results
-            latest_csv=$(ls -t $csv_files | head -1)
+            # Use the most recent benchmark results
+            latest_csv=$(echo "$csv_files" | head -1)
+            echo "    Using benchmark file: $latest_csv"
+
             if [[ -f "$latest_csv" ]]; then
-                # Extract read/write speeds from CSV (simplified parsing)
-                read_speed=$(grep -E "(read|Read)" "$latest_csv" | tail -1 | sed 's/.*,//' | sed 's/[^0-9.]//g' || echo "0")
-                write_speed=$(grep -E "(write|Write)" "$latest_csv" | tail -1 | sed 's/.*,//' | sed 's/[^0-9.]//g' || echo "0")
+                # Extract read/write speeds from CSV with better parsing
+                read_speed=$(grep -i "read" "$latest_csv" | tail -1 | sed 's/.*[,;]/ /' | grep -oE '[0-9]+\.?[0-9]*' | tail -1 || echo "0")
+                write_speed=$(grep -i "write" "$latest_csv" | tail -1 | sed 's/.*[,;]/ /' | grep -oE '[0-9]+\.?[0-9]*' | tail -1 || echo "0")
+
+                # Validate extracted values are numeric
+                if ! [[ "$read_speed" =~ ^[0-9]*\.?[0-9]+$ ]]; then read_speed="0"; fi
+                if ! [[ "$write_speed" =~ ^[0-9]*\.?[0-9]+$ ]]; then write_speed="0"; fi
+
+                echo "    Measured: read=$read_speed MB/s, write=$write_speed MB/s"
 
                 read_pass=$(awk "BEGIN {print ($read_speed >= $read_min) ? 1 : 0}")
                 write_pass=$(awk "BEGIN {print ($write_speed >= $write_min) ? 1 : 0}")
@@ -125,7 +133,14 @@ jq -r '.entries[] | select(.benchGates) | {id: .id, readMin: (.benchGates.readMB
                 else
                     echo "  ❌ Read gate FAILED: $read_speed < $read_min MB/s"
                     if [[ "${CI:-false}" == "true" ]]; then
-                        exit 1
+                        # Check for maintainer override
+                        if [[ -n "${MAINTAINER_OVERRIDE:-}" ]]; then
+                            echo "  ⚠️  MAINTAINER_OVERRIDE applied - allowing gate failure"
+                            echo "    Reason: $MAINTAINER_OVERRIDE"
+                        else
+                            echo "  💡 Set MAINTAINER_OVERRIDE=reason to bypass gate in CI"
+                            exit 1
+                        fi
                     fi
                 fi
 
@@ -134,8 +149,20 @@ jq -r '.entries[] | select(.benchGates) | {id: .id, readMin: (.benchGates.readMB
                 else
                     echo "  ❌ Write gate FAILED: $write_speed < $write_min MB/s"
                     if [[ "${CI:-false}" == "true" ]]; then
-                        exit 1
+                        # Check for maintainer override
+                        if [[ -n "${MAINTAINER_OVERRIDE:-}" ]]; then
+                            echo "  ⚠️  MAINTAINER_OVERRIDE applied - allowing gate failure"
+                            echo "    Reason: $MAINTAINER_OVERRIDE"
+                        else
+                            echo "  💡 Set MAINTAINER_OVERRIDE=reason to bypass gate in CI"
+                            exit 1
+                        fi
                     fi
+                fi
+            else
+                echo "  ❌ Benchmark file not accessible: $latest_csv"
+                if [[ "${CI:-false}" == "true" ]]; then
+                    exit 1
                 fi
             fi
         fi
@@ -162,14 +189,41 @@ echo "✅ DocC generator is ready"
 # Check DocC freshness (in CI mode)
 if [[ "${CI:-false}" == "true" ]]; then
     echo "🔍 Checking DocC freshness..."
+
+    if [[ ! -x "$docc_generator" ]]; then
+        echo "❌ DocC generator not executable"
+        exit 1
+    fi
+
     # Generate docs and check if they differ from committed versions
     temp_dir=$(mktemp -d)
-    ./$docc_generator "$QUIRKS_FILE" "$temp_dir"
+    echo "  Generating docs to $temp_dir..."
+
+    if ! ./$docc_generator "$QUIRKS_FILE" "$temp_dir" 2>/dev/null; then
+        echo "❌ DocC generator failed to run"
+        rm -rf "$temp_dir"
+        exit 1
+    fi
+
+    # Check if target directory exists
+    if [[ ! -d "Docs/SwiftMTP.docc/Devices" ]]; then
+        echo "❌ Target DocC directory does not exist: Docs/SwiftMTP.docc/Devices"
+        rm -rf "$temp_dir"
+        exit 1
+    fi
 
     # Compare generated docs with committed docs
     if ! diff -r "$temp_dir" "Docs/SwiftMTP.docc/Devices" >/dev/null 2>&1; then
-        echo "❌ DocC files are stale. Please regenerate with:"
+        echo "❌ DocC files are stale!"
+        echo "   Generated files differ from committed versions."
+        echo ""
+        echo "   To fix, regenerate docs:"
         echo "   ./$docc_generator $QUIRKS_FILE Docs/SwiftMTP.docc/Devices"
+        echo ""
+        echo "   Then commit the changes."
+        echo ""
+        echo "   Diff summary:"
+        diff -r "$temp_dir" "Docs/SwiftMTP.docc/Devices" | head -20
         rm -rf "$temp_dir"
         exit 1
     fi

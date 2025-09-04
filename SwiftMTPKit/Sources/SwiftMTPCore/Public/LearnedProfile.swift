@@ -9,6 +9,12 @@ public struct LearnedProfile: Sendable, Codable {
     /// Unique fingerprint identifying the device + environment
     public let fingerprint: MTPDeviceFingerprint
 
+    /// Short hash of the device fingerprint for quick comparison
+    public let fingerprintHash: String
+
+    /// When this profile was created
+    public let created: Date
+
     /// When this profile was last updated
     public let lastUpdated: Date
 
@@ -42,6 +48,8 @@ public struct LearnedProfile: Sendable, Codable {
     /// Creates a new learned profile
     public init(
         fingerprint: MTPDeviceFingerprint,
+        fingerprintHash: String? = nil,
+        created: Date = Date(),
         lastUpdated: Date = Date(),
         sampleCount: Int = 1,
         optimalChunkSize: Int? = nil,
@@ -54,6 +62,8 @@ public struct LearnedProfile: Sendable, Codable {
         hostEnvironment: String = ProcessInfo.processInfo.operatingSystemVersionString
     ) {
         self.fingerprint = fingerprint
+        self.fingerprintHash = fingerprintHash ?? fingerprint.hashString
+        self.created = created
         self.lastUpdated = lastUpdated
         self.sampleCount = sampleCount
         self.optimalChunkSize = optimalChunkSize
@@ -73,6 +83,8 @@ public struct LearnedProfile: Sendable, Codable {
 
         return LearnedProfile(
             fingerprint: fingerprint,
+            fingerprintHash: fingerprintHash,
+            created: created,
             lastUpdated: Date(),
             sampleCount: newSampleCount,
             optimalChunkSize: sessionData.actualChunkSize ?? optimalChunkSize,
@@ -246,15 +258,18 @@ public final class LearnedProfileManager {
     private let storageURL: URL
     private let maxProfiles: Int
     private let ttlDays: Int
+    private let inactivityDays: Int
 
     private var profiles: [String: LearnedProfile] = [:]
     private let queue = DispatchQueue(label: "com.swiftmtp.learned-profiles")
 
-    public init(storageURL: URL, maxProfiles: Int = 1000, ttlDays: Int = 90) {
+    public init(storageURL: URL, maxProfiles: Int = 1000, ttlDays: Int = 90, inactivityDays: Int = 30) {
         self.storageURL = storageURL
         self.maxProfiles = maxProfiles
         self.ttlDays = ttlDays
+        self.inactivityDays = inactivityDays
         loadProfiles()
+        cleanupExpired()
     }
 
     /// Gets the learned profile for a device fingerprint
@@ -271,6 +286,10 @@ public final class LearnedProfileManager {
             let existing = profiles[key]
             let updated = existing?.merged(with: sessionData) ?? LearnedProfile(
                 fingerprint: fingerprint,
+                fingerprintHash: fingerprint.hashString,
+                created: Date(),
+                lastUpdated: Date(),
+                sampleCount: 1,
                 optimalChunkSize: sessionData.actualChunkSize,
                 avgHandshakeMs: sessionData.handshakeTimeMs,
                 optimalIoTimeoutMs: sessionData.effectiveIoTimeoutMs,
@@ -290,12 +309,93 @@ public final class LearnedProfileManager {
         }
     }
 
-    /// Removes expired profiles
+    /// Checks if a profile should be expired due to fingerprint changes
+    public func shouldExpireProfile(_ profile: LearnedProfile, newFingerprint: MTPDeviceFingerprint) -> Bool {
+        // Expire if bcdDevice changed (firmware update)
+        if profile.fingerprint.bcdDevice != newFingerprint.bcdDevice {
+            return true
+        }
+
+        // Expire if fingerprint hash changed (significant device change)
+        if profile.fingerprintHash != newFingerprint.hashString {
+            return true
+        }
+
+        return false
+    }
+
+    /// Gets the learned profile for a device fingerprint, handling expiration
+    public func profile(for fingerprint: MTPDeviceFingerprint, shouldUpdate: Bool = false) -> LearnedProfile? {
+        queue.sync {
+            let key = fingerprint.hashString
+            guard let existing = profiles[key] else { return nil }
+
+            // Check if profile should be expired due to fingerprint changes
+            if shouldExpireProfile(existing, newFingerprint: fingerprint) {
+                profiles.removeValue(forKey: key)
+                saveProfiles()
+                return nil
+            }
+
+            // If shouldUpdate is true, update the lastUpdated timestamp
+            if shouldUpdate {
+                var updated = existing
+                updated = LearnedProfile(
+                    fingerprint: existing.fingerprint,
+                    fingerprintHash: existing.fingerprintHash,
+                    created: existing.created,
+                    lastUpdated: Date(),
+                    sampleCount: existing.sampleCount,
+                    optimalChunkSize: existing.optimalChunkSize,
+                    avgHandshakeMs: existing.avgHandshakeMs,
+                    optimalIoTimeoutMs: existing.optimalIoTimeoutMs,
+                    optimalInactivityTimeoutMs: existing.optimalInactivityTimeoutMs,
+                    p95ReadThroughputMBps: existing.p95ReadThroughputMBps,
+                    p95WriteThroughputMBps: existing.p95WriteThroughputMBps,
+                    successRate: existing.successRate,
+                    hostEnvironment: existing.hostEnvironment
+                )
+                profiles[key] = updated
+                saveProfiles()
+            }
+
+            return existing
+        }
+    }
+
+    /// Removes expired profiles based on TTL and inactivity
     public func cleanupExpired() {
         queue.sync {
-            let cutoff = Date().addingTimeInterval(TimeInterval(-ttlDays * 24 * 60 * 60))
+            let now = Date()
+            let ttlCutoff = now.addingTimeInterval(TimeInterval(-ttlDays * 24 * 60 * 60))
+            let inactivityCutoff = now.addingTimeInterval(TimeInterval(-inactivityDays * 24 * 60 * 60))
+
             profiles = profiles.filter { _, profile in
-                profile.lastUpdated > cutoff
+                // Keep if created within TTL period
+                profile.created > ttlCutoff &&
+                // And accessed within inactivity period
+                profile.lastUpdated > inactivityCutoff
+            }
+            saveProfiles()
+        }
+    }
+
+    /// Expires profiles that match old fingerprint but have changed bcdDevice
+    public func expireProfilesForOldFirmware(oldFingerprint: MTPDeviceFingerprint, newBcdDevice: String?) {
+        queue.sync {
+            profiles = profiles.filter { key, profile in
+                // Keep profiles that don't match the old fingerprint
+                if profile.fingerprint.hashString != oldFingerprint.hashString {
+                    return true
+                }
+
+                // Or if bcdDevice hasn't changed
+                if profile.fingerprint.bcdDevice == newBcdDevice {
+                    return true
+                }
+
+                // Otherwise expire this profile
+                return false
             }
             saveProfiles()
         }

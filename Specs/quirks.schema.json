@@ -1,6 +1,7 @@
 {
   "$id": "https://effortlessmetrics.dev/swiftmtp/quirks.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SwiftMTP Device Quirks",
   "type": "object",
   "required": ["schemaVersion", "version", "entries"],
   "properties": {
@@ -148,8 +149,8 @@
                   "type": "string",
                   "enum": [
                     "postOpenUSB", "postClaimInterface", "postOpenSession",
-                    "beforeGetDeviceInfo", "beforeGetStorageIDs", "beforeTransfer",
-                    "afterTransfer", "onDeviceBusy"
+                    "beforeGetDeviceInfo", "beforeGetStorageIDs", "beforeGetObjectHandles",
+                    "beforeTransfer", "afterTransfer", "onDeviceBusy", "onDetach"
                   ],
                   "description": "Phase in the MTP protocol where the hook applies"
                 },
