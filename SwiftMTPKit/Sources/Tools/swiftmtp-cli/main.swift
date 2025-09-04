@@ -89,14 +89,26 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
     }
 
     print("🔌 Using LibUSBTransport (real device)")
+    print("   Enumerating devices...")
     do {
-        return try await MTPDeviceManager.shared.openFirstRealDevice()
-    } catch {
-        if flags.realOnly {
-            print("❌ Real device required but failed: \(error)")
-            throw error
+        let devices = try await MTPDeviceManager.shared.currentRealDevices()
+        print("   Found \(devices.count) MTP device(s)")
+        for (i, device) in devices.enumerated() {
+            print("     \(i+1). \(device.id.raw) - \(device.manufacturer) \(device.model)")
         }
-        print("⚠️  Real device failed, mock fallback not available: \(error)")
+
+        guard let firstDevice = devices.first else {
+            throw SwiftMTPCore.TransportError.noDevice
+        }
+
+        print("   Opening first device: \(firstDevice.id.raw)")
+        return try await MTPDeviceManager.shared.openDevice(with: firstDevice, transport: LibUSBTransportFactory.createTransport(), config: SwiftMTPCore.SwiftMTPConfig())
+    } catch {
+        print("❌ Device operation failed: \(error)")
+        print("   Error type: \(type(of: error))")
+        if let nsError = error as? NSError {
+            print("   Error domain: \(nsError.domain), code: \(nsError.code)")
+        }
         throw error
     }
 }
@@ -112,6 +124,10 @@ func runProbe(flags: CLIFlags) async {
         print("   Device Info: \(info.manufacturer) \(info.model)")
         print("   Operations: \(info.operationsSupported.count)")
         print("   Events: \(info.eventsSupported.count)")
+
+        // Add delay to prevent device from going to sleep (Xiaomi quirk)
+        print("   Waiting 100ms for device stabilization...")
+        try await Task.sleep(nanoseconds: 100_000_000) // 100ms
 
         // Get storage info
         let storages = try await device.storages()

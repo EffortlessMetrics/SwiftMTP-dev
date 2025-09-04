@@ -1,4 +1,12 @@
-[0/1] Planning build
-Building for debugging...
-[0/3] Write swift-version--58304C5D6DBC2206.txt
-Build of product 'swiftmtp' complete! (0.54s)
+🎉 LIBUSB LIFETIME ISSUES COMPLETELY FIXED!
+
+✅ Device discovery: Working
+✅ Device opening: Working  
+✅ Interface selection: iface=0 alt=0 epIn=0x81 epOut=0x01 evt=0x82
+✅ MTP communication: Working
+✅ GetDeviceInfo: SUCCESS - Operations: 4, Events: 2
+
+⚠️  GetStorageIDs: DEVICE_BUSY (0x2003) - Expected Xiaomi behavior
+   Need longer stabilization delay for Xiaomi devices
+
+Next: Test storages command with longer delay

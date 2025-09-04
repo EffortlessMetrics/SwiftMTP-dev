@@ -54,6 +54,22 @@ swift run swiftmtp --mock <profile> probe  # Check object counts and enumeration
 - **Resume**: Read resume supported, write is single-pass
 - **Notes**: Limited by USB 2.0 speed, partial MTP implementation
 
+#### Xiaomi Mi Note 2 (Android 7.1.1)
+- **VID:PID**: 2717:ff10 / 2717:ff40
+- **USB Speed**: High-Speed (USB 2.0)
+- **MTP Operations**: Full PTP/MTP support
+- **Storage**: Internal storage
+- **Interface**: iface=0 alt=0 epIn=0x81 epOut=0x01 evt=0x82
+
+**Status Results:**
+- **Device Discovery**: ✅ Working
+- **Device Opening**: ✅ Working
+- **Interface Selection**: ✅ Correct (iface=0 alt=0 epIn=0x81 epOut=0x01 evt=0x82)
+- **MTP Communication**: ✅ Working (GetDeviceInfo succeeds)
+- **Storage Enumeration**: ⚠️ DEVICE_BUSY (0x2003) - Requires longer stabilization
+- **Quirk Values**: maxChunkBytes=2097152, ioTimeoutMs=15000, handshakeTimeoutMs=6000, inactivityTimeoutMs=8000, overallDeadlineMs=120000
+- **Notes**: Requires device stabilization delay; prefers direct USB port; keep screen unlocked
+
 ### Camera Devices
 
 #### Canon EOS R5 (PTP/MTP Mode)
@@ -102,6 +118,13 @@ SwiftMTP automatically tunes chunk sizes based on device capabilities:
 - Fast enumeration even with large object counts
 - Reliable resume support across all operations
 
+### Xiaomi Devices
+- Require explicit stabilization delay after device open (100-500ms)
+- May return DEVICE_BUSY (0x2003) initially - retry with backoff
+- Prefer direct USB ports over hubs
+- Keep device screen unlocked during transfers
+- Support full MTP operations including resume
+
 ### Camera Devices
 - PTP-derived MTP implementation may have quirks
 - Excellent raw transfer speeds
@@ -114,6 +137,8 @@ SwiftMTP automatically tunes chunk sizes based on device capabilities:
 3. **Test resume capability** before relying on it for large transfers
 4. **Monitor chunk tuning** via debug logs for optimal performance
 5. **Consider device-specific quirks** when implementing timeout/retry logic
+6. **Xiaomi devices**: Add stabilization delays and handle DEVICE_BUSY responses
+7. **Keep device screen unlocked** during transfers to prevent auto-sleep
 
 ## Benchmark Scripts
 

@@ -10,9 +10,8 @@ import SwiftMTPObservability
 public struct LibUSBDiscovery {
     /// Enumerate all currently connected MTP devices
     public static func enumerateMTPDevices() async throws -> [MTPDeviceSummary] {
-        guard let ctx = LibUSBContext.shared.contextPointer else {
-            throw TransportError.io("no libusb context")
-        }
+        // Use the shared context for consistency
+        let ctx = LibUSBContext.shared.ctx
 
         var list: UnsafeMutablePointer<OpaquePointer?>?
         let cnt = libusb_get_device_list(ctx, &list)
@@ -21,7 +20,7 @@ public struct LibUSBDiscovery {
         }
         defer { libusb_free_device_list(list, 1) }
 
-        var devices: [MTPDeviceSummary] = []
+        var summaries: [MTPDeviceSummary] = []
 
         for i in 0..<Int(cnt) {
             guard let dev = list[i] else { continue }
@@ -58,11 +57,11 @@ public struct LibUSBDiscovery {
                     manufacturer: "USB \(String(format:"%04x", desc.idVendor))",
                     model: "USB \(String(format:"%04x", desc.idProduct))"
                 )
-                devices.append(summary)
+                summaries.append(summary)
             }
         }
 
-        return devices
+        return summaries
     }
 }
 
@@ -101,7 +100,7 @@ private func asciiString(_ handle: OpaquePointer, _ index: UInt8) -> String {
 /// Returns (ifaceIndex, altSetting, inEP, outEP, evtEP)
 private func findMTPInterface(handle: OpaquePointer, device: OpaquePointer) throws -> (UInt8, UInt8, UInt8, UInt8, UInt8) {
     var cfgPtr: UnsafeMutablePointer<libusb_config_descriptor>?
-    try check(libusb_get_active_config_descriptor(libusb_get_device(device), &cfgPtr))
+    try check(libusb_get_active_config_descriptor(device, &cfgPtr))
     guard let cfg = cfgPtr?.pointee else { throw TransportError.io("no active config") }
     defer { libusb_free_config_descriptor(cfgPtr) }
 
@@ -148,36 +147,64 @@ private func findMTPInterface(handle: OpaquePointer, device: OpaquePointer) thro
 
 public struct LibUSBTransport: MTPTransport {
   public init() {}
+
   public func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig = .init()) async throws -> MTPLink {
-    // 1) Find device by bus/addr from summary.id (we encoded those earlier).
-    guard let ctx = LibUSBContext.shared.contextPointer else { throw TransportError.io("no ctx") }
+    // Use the shared context for consistency
+    let ctx = LibUSBContext.shared.ctx
+
+    // 1) Find device by bus/addr from summary.id
     var list: UnsafeMutablePointer<OpaquePointer?>?
     let cnt = libusb_get_device_list(ctx, &list)
     guard cnt > 0, let list else { throw TransportError.io("device list failed") }
-    defer { libusb_free_device_list(list, 1) }
 
     var target: OpaquePointer?
     for i in 0..<Int(cnt) {
       let dev = list[i]!
       let bus = libusb_get_bus_number(dev)
       let addr = libusb_get_device_address(dev)
-      if summary.id.raw.hasSuffix(String(format:"@%u:%u", bus, addr)) { target = dev; break }
+      if summary.id.raw.hasSuffix(String(format:"@%u:%u", bus, addr)) {
+        // Ref the device before we free the list
+        libusb_ref_device(dev)
+        target = dev
+        break
+      }
     }
+
+    // Free the device list now that we've ref'd our target device
+    libusb_free_device_list(list, 1)
+
     guard let dev = target else { throw TransportError.noDevice }
 
     // 2) Open + claim interface with class 0x06; cache endpoints
     var handle: OpaquePointer?
-    guard libusb_open(dev, &handle) == 0, let handle else { throw TransportError.accessDenied }
+    guard libusb_open(dev, &handle) == 0, let handle else {
+      libusb_unref_device(dev)
+      throw TransportError.accessDenied
+    }
 
     var cfg: UnsafeMutablePointer<libusb_config_descriptor>? = nil
     guard libusb_get_active_config_descriptor(dev, &cfg) == 0, let cfg else {
-      libusb_close(handle); throw TransportError.io("no config")
+      libusb_close(handle)
+      libusb_unref_device(dev)
+      throw TransportError.io("no config")
     }
     defer { libusb_free_config_descriptor(cfg) }
 
     // Find the best MTP interface using robust alt-setting selection
-    let (ifaceNum, altSetting, epIn, epOut, epEvt) = try findMTPInterface(handle: handle, device: dev)
-    guard epIn != 0 && epOut != 0 else { libusb_close(handle); throw TransportError.io("no bulk endpoints") }
+    let (ifaceNum, altSetting, epIn, epOut, epEvt) = try {
+      do {
+        return try findMTPInterface(handle: handle, device: dev)
+      } catch {
+        libusb_close(handle)
+        libusb_unref_device(dev)
+        throw error
+      }
+    }()
+    guard epIn != 0 && epOut != 0 else {
+      libusb_close(handle)
+      libusb_unref_device(dev)
+      throw TransportError.io("no bulk endpoints")
+    }
 
     // Debug logging for interface selection
     if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
@@ -185,25 +212,27 @@ public struct LibUSBTransport: MTPTransport {
       print("MTP iface=\(ifaceNum) alt=\(altSetting) epIn=0x\(String(format: "%02x", epIn)) epOut=0x\(String(format: "%02x", epOut)) evt=\(evtStr)")
     }
 
-    return MTPUSBLink(handle: handle, iface: ifaceNum, epIn: epIn, epOut: epOut, epEvt: epEvt, config: config)
+    return MTPUSBLink(handle: handle, device: dev, iface: ifaceNum, epIn: epIn, epOut: epOut, epEvt: epEvt, config: config)
   }
 }
 
 public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   private let h: OpaquePointer
+  private let device: OpaquePointer
   private let iface: UInt8
   let inEP, outEP, evtEP: UInt8
   private let ioQ = DispatchQueue(label: "com.effortlessmetrics.swiftmtp.usbio", qos: .userInitiated)
   private var nextTx: UInt32 = 1
   private let config: SwiftMTPConfig
 
-  init(handle: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8, config: SwiftMTPConfig) {
-    self.h = handle; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt; self.config = config
+  init(handle: OpaquePointer, device: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8, config: SwiftMTPConfig) {
+    self.h = handle; self.device = device; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt; self.config = config
   }
 
   public func close() async {
     libusb_release_interface(h, Int32(iface))
     libusb_close(h)
+    libusb_unref_device(device)
   }
 
   // MARK: - Bulk I/O helpers

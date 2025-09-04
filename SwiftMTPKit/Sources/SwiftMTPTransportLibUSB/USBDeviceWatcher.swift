@@ -73,7 +73,7 @@ public enum USBDeviceWatcher {
     public static func start(onAttach: @escaping (MTPDeviceSummary)->Void,
                               onDetach: @escaping (MTPDeviceID)->Void) {
         _ = LibUSBContext.shared // ensure ctx + event loop
-        guard let ctx = LibUSBContext.shared.contextPointer else { return }
+        let ctx = LibUSBContext.shared.contextPointer
         let flags: Int32 = Int32(LIBUSB_HOTPLUG_ENUMERATE.rawValue)
         var cb: Int32 = 0
         let box = Unmanaged.passRetained(Box(onAttach, onDetach)).toOpaque()
