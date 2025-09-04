@@ -1,34 +1,27 @@
-#!/bin/bash
-# SwiftMTP Device Benchmark Script
-# Usage: ./benchmark-device.sh <device-name> [--real|--mock <profile>]
+#!/usr/bin/env bash
+# SwiftMTP Device Benchmark Script (v2)
+# Usage: ./benchmark-device.sh <device-name>
 
-set -e
+set -euo pipefail
 
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-OUTPUT_DIR="$PROJECT_ROOT/Docs/benchmarks"
+OUTPUT_DIR="$PROJECT_ROOT/benches"
+PROBES_DIR="$PROJECT_ROOT/probes"
+LOGS_DIR="$PROJECT_ROOT/logs"
 TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
 
 # Default values
-USE_REAL=false
-MOCK_PROFILE=""
 DEVICE_NAME=""
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
   case $1 in
-    --real)
-      USE_REAL=true
-      shift
-      ;;
-    --mock)
-      MOCK_PROFILE="$2"
-      shift 2
-      ;;
     -*)
       echo "Unknown option: $1"
-      echo "Usage: $0 <device-name> [--real|--mock <profile>]"
+      echo "Usage: $0 <device-name>"
+      echo "Note: This script now uses real devices only (--real-only)"
       exit 1
       ;;
     *)
@@ -36,7 +29,7 @@ while [[ $# -gt 0 ]]; do
         DEVICE_NAME="$1"
       else
         echo "Too many arguments. Expected device name only."
-        echo "Usage: $0 <device-name> [--real|--mock <profile>]"
+        echo "Usage: $0 <device-name>"
         exit 1
       fi
       shift
@@ -46,90 +39,68 @@ done
 
 if [[ -z "$DEVICE_NAME" ]]; then
   echo "Device name is required."
-  echo "Usage: $0 <device-name> [--real|--mock <profile>]"
+  echo "Usage: $0 <device-name>"
+  echo "Note: This script uses real devices only (--real-only)"
   exit 1
 fi
 
-if [[ "$USE_REAL" == false && -z "$MOCK_PROFILE" ]]; then
-  echo "Must specify either --real or --mock <profile>"
-  echo "Usage: $0 <device-name> [--real|--mock <profile>]"
-  exit 1
-fi
+# Create output directories
+mkdir -p "$OUTPUT_DIR/$DEVICE_NAME" "$PROBES_DIR" "$LOGS_DIR"
 
-# Create output directory
-DEVICE_DIR="$OUTPUT_DIR/$DEVICE_NAME"
-RUN_DIR="$DEVICE_DIR/$TIMESTAMP"
-mkdir -p "$RUN_DIR"
+echo "== $DEVICE_NAME =="
+echo "📁 Output: $OUTPUT_DIR/$DEVICE_NAME/"
+echo "📁 Probes: $PROBES_DIR/"
+echo "📁 Logs: $LOGS_DIR/"
 
-echo "🧪 Starting SwiftMTP benchmark for: $DEVICE_NAME"
-echo "📁 Output directory: $RUN_DIR"
-
-# Build CLI if needed
+# Build CLI
 cd "$PROJECT_ROOT/SwiftMTPKit"
-if [[ "$USE_REAL" == true ]]; then
-  echo "🔨 Building SwiftMTP CLI..."
-  swift build --configuration release
-fi
+echo "🔨 Building SwiftMTP CLI..."
+swift build --configuration release
 
-# Function to run command with timing
-run_cmd() {
-  local cmd="$1"
-  local output_file="$2"
-  local description="$3"
+# Function to run benchmark with p50/p95 calculation
+run_bench() {
+  local size="$1"
+  local csv_file="$OUTPUT_DIR/$DEVICE_NAME/bench-${size}.csv"
+  local desc="${size} transfer benchmark"
 
-  echo "🏃 $description..."
-  echo "Command: $cmd"
+  echo "🏃 $desc..."
 
-  # Ensure we're in the SwiftMTPKit directory
-  cd "$PROJECT_ROOT/SwiftMTPKit"
+  # Run benchmark with CSV output
+  if swift run swiftmtp --real-only bench "$size" --repeat 3 --out "$csv_file"; then
+    echo "✅ $desc completed"
 
-  if [[ -n "$output_file" ]]; then
-    if eval "$cmd" > "$output_file" 2>&1; then
-      echo "✅ $description completed"
-    else
-      echo "❌ $description failed"
-      return 1
-    fi
+    # Calculate p50/p95 from passes 2-3 (ignore first pass warmup)
+    awk -F, 'NR==1{next} {print $0}' "$csv_file" \
+      | tail -n +2 \
+      | awk -F, 'NR>=2 && NR<=3 {sum+=$NF; cnt++; if(min==""||$NF<min)min=$NF; if($NF>max)max=$NF} END {if(cnt>0) printf("  %s: p50≈%.2f MB/s  p95≈%.2f MB/s\n", "'"$size"'", sum/cnt, max)}'
   else
-    if eval "$cmd"; then
-      echo "✅ $description completed"
-    else
-      echo "❌ $description failed"
-      return 1
-    fi
+    echo "❌ $desc failed"
+    return 1
   fi
 }
 
-# Prepare CLI command prefix
-if [[ "$USE_REAL" == true ]]; then
-  CLI_CMD="swift run swiftmtp"
-else
-  CLI_CMD="swift run swiftmtp --mock $MOCK_PROFILE"
-fi
-
 # Run probe
-run_cmd "$CLI_CMD probe" "$RUN_DIR/probe.txt" "Device capability probe"
+echo "🔍 Running device probe..."
+if swift run swiftmtp --real-only probe | tee "$PROBES_DIR/${DEVICE_NAME}-probe.txt"; then
+  echo "✅ Device probe completed"
+else
+  echo "❌ Device probe failed"
+  exit 1
+fi
 
 # Run benchmark suite
 echo "📊 Running transfer benchmarks..."
 
-# Large file benchmark (1GB)
-run_cmd "$CLI_CMD bench 1G --repeat 3" "$RUN_DIR/bench-1g.txt" "1GB transfer benchmark"
+run_bench 100M
+run_bench 500M
+run_bench 1G
 
-# Medium file benchmark (500MB)
-run_cmd "$CLI_CMD bench 500M --repeat 3" "$RUN_DIR/bench-500m.txt" "500MB transfer benchmark"
-
-# Small file benchmark (100MB)
-run_cmd "$CLI_CMD bench 100M --repeat 3" "$RUN_DIR/bench-100m.txt" "100MB transfer benchmark"
-
-# Test mirror functionality (if device has content)
+# Test mirror functionality (optional)
 echo "🔄 Testing mirror functionality..."
-if [[ "$USE_REAL" == true ]]; then
-  # For real devices, mirror a small directory
-  run_cmd "$CLI_CMD mirror /tmp/swiftmtp-test-mirror --include \"*.jpg\" --max-files 5" "$RUN_DIR/mirror-test.txt" "Mirror test (first 5 JPG files)"
+if swift run swiftmtp --real-only mirror ~/PhoneBackup --include "DCIM/**" --out "$LOGS_DIR/${DEVICE_NAME}-mirror.log" 2>&1; then
+  echo "✅ Mirror test completed"
 else
-  # For mock devices, mirror everything (it's fast)
-  run_cmd "$CLI_CMD mirror /tmp/swiftmtp-test-mirror" "$RUN_DIR/mirror-test.txt" "Mirror test (all files)"
+  echo "⚠️  Mirror test failed (may be expected if no DCIM or PhoneBackup)"
 fi
 
 # Generate summary report
@@ -138,55 +109,54 @@ echo "📋 Generating summary report..."
   echo "# SwiftMTP Benchmark Report"
   echo "Device: $DEVICE_NAME"
   echo "Timestamp: $(date)"
-  echo "Mode: $(if [[ "$USE_REAL" == true ]]; then echo "Real Hardware"; else echo "Mock ($MOCK_PROFILE)"; fi)"
+  echo "Mode: Real Hardware (--real-only)"
+  echo "SwiftMTP Commit: $(git rev-parse --short HEAD 2>/dev/null || echo 'unknown')"
   echo ""
 
-  if [[ -f "$RUN_DIR/probe.txt" ]]; then
+  if [[ -f "$PROBES_DIR/${DEVICE_NAME}-probe.txt" ]]; then
     echo "## Device Information"
     echo '```'
-    cat "$RUN_DIR/probe.txt"
+    cat "$PROBES_DIR/${DEVICE_NAME}-probe.txt"
     echo '```'
     echo ""
   fi
 
-  echo "## Benchmark Results"
-  for bench_file in "$RUN_DIR"/bench-*.txt; do
-    if [[ -f "$bench_file" ]]; then
-      bench_size=$(basename "$bench_file" | sed 's/bench-\(.*\)\.txt/\1/')
+  echo "## Benchmark Results (p50/p95 from passes 2-3)"
+  for csv_file in "$OUTPUT_DIR/$DEVICE_NAME"/bench-*.csv; do
+    if [[ -f "$csv_file" ]]; then
+      bench_size=$(basename "$csv_file" | sed 's/bench-\(.*\)\.csv/\1/')
       echo "### $bench_size Transfer"
+      echo '```csv'
+      cat "$csv_file"
       echo '```'
-      cat "$bench_file"
-      echo '```'
+      echo ""
+
+      # Show p50/p95 summary
+      awk -F, 'NR==1{next} {print $0}' "$csv_file" \
+        | tail -n +2 \
+        | awk -F, 'NR>=2 && NR<=3 {sum+=$NF; cnt++; if(min==""||$NF<min)min=$NF; if($NF>max)max=$NF} END {if(cnt>0) printf("- **p50**: %.2f MB/s\n- **p95**: %.2f MB/s\n", sum/cnt, max)}'
       echo ""
     fi
   done
 
-  if [[ -f "$RUN_DIR/mirror-test.txt" ]]; then
+  if [[ -f "$LOGS_DIR/${DEVICE_NAME}-mirror.log" ]]; then
     echo "## Mirror Test"
     echo '```'
-    tail -20 "$RUN_DIR/mirror-test.txt"
+    tail -20 "$LOGS_DIR/${DEVICE_NAME}-mirror.log"
     echo '```'
   fi
 
-} > "$RUN_DIR/benchmark-report.md"
+} > "$OUTPUT_DIR/$DEVICE_NAME/benchmark-report.md"
 
 echo "✅ Benchmark complete!"
-echo "📊 Results saved to: $RUN_DIR/"
-echo "📄 Summary report: $RUN_DIR/benchmark-report.md"
-
-# Clean up temp files
-if [[ -d "/tmp/swiftmtp-test-mirror" ]]; then
-  rm -rf "/tmp/swiftmtp-test-mirror"
-fi
+echo "📊 Results saved to: $OUTPUT_DIR/$DEVICE_NAME/"
+echo "📁 Probes: $PROBES_DIR/"
+echo "📁 Logs: $LOGS_DIR/"
+echo "📄 Summary report: $OUTPUT_DIR/$DEVICE_NAME/benchmark-report.md"
 
 echo ""
 echo "🎯 Next steps:"
-echo "1. Review the benchmark report: $RUN_DIR/benchmark-report.md"
-echo "2. Add results to Docs/benchmarks.md"
+echo "1. Review the benchmark report: $OUTPUT_DIR/$DEVICE_NAME/benchmark-report.md"
+echo "2. Add p50/p95 results to Docs/benchmarks.md"
 echo "3. Test resume scenarios manually if needed"
-
-# Create symlink to latest run
-cd "$DEVICE_DIR"
-rm -f latest
-ln -s "$TIMESTAMP" latest
-echo "🔗 Latest results linked: $DEVICE_DIR/latest"
+echo "4. Commit artifacts: probes/, benches/, logs/"

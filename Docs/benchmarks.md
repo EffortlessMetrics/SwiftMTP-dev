@@ -1,27 +1,39 @@
 # SwiftMTP Performance Benchmarks
 
-This document contains performance benchmarks for SwiftMTP across various MTP-compliant devices and scenarios.
+This document captures **repeatable** performance results for SwiftMTP across MTP/PTP devices.
 
-## Benchmark Methodology
+## Methodology (Reproducible)
 
-All benchmarks are run using the `swift run swiftmtp bench` command with a 1GB test file unless otherwise noted. Three runs are performed and the best result is recorded to account for initial USB warmup.
+* **Runs:** 3 per test size. Ignore run #1 (USB warmup). Report **p50** and **p95** from runs #2–#3.
+* **Sizes:** `100M`, `500M`, `1G` (at least one large run).
+* **Mode:** **Real devices only.** Use `--real-only` to prevent mock fallback.
+* **Chunk Tuning:** Start from device quirk ceiling; auto‑tuner may adjust within that ceiling.
+* **Stabilization:** After opening a device, wait `stabilize_ms` (Xiaomi: 250–500 ms) before enumeration.
 
 ### Test Environment
-- **Host**: macOS Sequoia on Apple Silicon
-- **USB**: Direct connection (no hubs)
-- **SwiftMTP**: Current main branch
+
+* **Host:** macOS Sequoia (Apple Silicon)
+* **SwiftMTP:** main (commit: `<short SHA>`)
+* **Connection:** Prefer **direct USB port** (note cable & any hubs)
+* **CLI Config:** `maxChunkBytes`, `ioTimeoutMs`, `handshakeTimeoutMs`, `inactivityTimeoutMs`, `overallDeadlineMs`
 
 ### Commands Used
 
 ```bash
-# Probe device capabilities
-swift run swiftmtp --mock <profile> probe > probes/<device>.txt
+# Real device, no fallback
+./scripts/swiftmtp.sh --real-only probe  > probes/<device>.txt
 
-# Benchmark transfer performance
-swift run swiftmtp --mock <profile> bench 1G --repeat 3 --out benches/<device>.csv
+# Benchmark (reports CSV)
+./scripts/swiftmtp.sh --real-only bench 1G --repeat 3 --out benches/<device>-1g.csv
+./scripts/swiftmtp.sh --real-only bench 500M --repeat 3 --out benches/<device>-500m.csv
+./scripts/swiftmtp.sh --real-only bench 100M --repeat 3 --out benches/<device>-100m.csv
 
-# Test enumeration performance
-swift run swiftmtp --mock <profile> probe  # Check object counts and enumeration times
+# Optional enumeration timing (printed in probe)
+./scripts/swiftmtp.sh --real-only probe  > probes/<device>-probe.txt
+
+# Optional mirror smoke
+./scripts/swiftmtp.sh --real-only mirror ~/PhoneBackup --include "DCIM/**" \
+  --out logs/<device>-mirror.log
 ```
 
 ## Device Matrix Results
@@ -55,20 +67,28 @@ swift run swiftmtp --mock <profile> probe  # Check object counts and enumeration
 - **Notes**: Limited by USB 2.0 speed, partial MTP implementation
 
 #### Xiaomi Mi Note 2 (Android 7.1.1)
-- **VID:PID**: 2717:ff10 / 2717:ff40
-- **USB Speed**: High-Speed (USB 2.0)
-- **MTP Operations**: Full PTP/MTP support
-- **Storage**: Internal storage
-- **Interface**: iface=0 alt=0 epIn=0x81 epOut=0x01 evt=0x82
 
-**Status Results:**
-- **Device Discovery**: ✅ Working
-- **Device Opening**: ✅ Working
-- **Interface Selection**: ✅ Correct (iface=0 alt=0 epIn=0x81 epOut=0x01 evt=0x82)
-- **MTP Communication**: ✅ Working (GetDeviceInfo succeeds)
-- **Storage Enumeration**: ⚠️ DEVICE_BUSY (0x2003) - Requires longer stabilization
-- **Quirk Values**: maxChunkBytes=2097152, ioTimeoutMs=15000, handshakeTimeoutMs=6000, inactivityTimeoutMs=8000, overallDeadlineMs=120000
-- **Notes**: Requires device stabilization delay; prefers direct USB port; keep screen unlocked
+* **VID\:PID:** `2717:ff10` (variant: `2717:ff40`)
+* **USB:** High‑Speed (USB 2.0)
+* **Iface/Alt/EPs:** `iface=0 alt=0 in=0x81 out=0x01 evt=0x82` (PTP class, MTP extensions)
+* **MTP Ops:** Full PTP/MTP extensions (session + storage ops confirmed)
+* **Storage:** Internal
+
+**Status (bring‑up results)**
+
+* **Device Discovery:** ✅
+* **Open + DeviceInfo:** ✅
+* **Storage Enumeration:** ⚠️ `DEVICE_BUSY (0x2003)` on first attempt; succeeds with stabilization/backoff
+* **Quirk/Config:**
+
+  * `maxChunkBytes: 2 MiB`
+  * `ioTimeoutMs: 15000`
+  * `handshakeTimeoutMs: 6000`
+  * `inactivityTimeoutMs: 8000`
+  * `overallDeadlineMs: 120000`
+  * `stabilize_ms: 250–500` (post‑open)
+* **Notes:** Prefer direct port; keep screen unlocked. Start event polling only after session open.
+* **Next:** Record 100 M / 1 G read/write speeds (see runner below).
 
 ### Camera Devices
 
@@ -140,39 +160,74 @@ SwiftMTP automatically tunes chunk sizes based on device capabilities:
 6. **Xiaomi devices**: Add stabilization delays and handle DEVICE_BUSY responses
 7. **Keep device screen unlocked** during transfers to prevent auto-sleep
 
-## Benchmark Scripts
+## Automated Benchmark Runner (v2)
 
-### Automated Benchmark Runner
+Replaces the earlier script; ensures real‑only, captures probe + CSVs, and summarizes p50/p95 from passes 2–3.
+
 ```bash
-#!/bin/bash
-# benchmark-device.sh
+#!/usr/bin/env bash
+set -euo pipefail
 
-DEVICE=$1
-OUTPUT_DIR="benches/$DEVICE"
+DEVICE="${1:-unknown}"
+OUT="benches/${DEVICE}"
+mkdir -p "$OUT" probes logs
 
-mkdir -p "$OUTPUT_DIR"
+echo "== $DEVICE =="
+./scripts/swiftmtp.sh --real-only probe | tee "probes/${DEVICE}-probe.txt"
 
-echo "Benchmarking $DEVICE..."
+run_bench() {
+  local size="$1"
+  ./scripts/swiftmtp.sh --real-only bench "$size" --repeat 3 --out "${OUT}/bench-${size}.csv"
+  # summarize passes 2 & 3
+  awk -F, 'NR==1{next} {print $0}' "${OUT}/bench-${size}.csv" \
+    | tail -n +2 \
+    | awk -F, 'NR>=2 && NR<=3 {sum+=$NF; cnt++; if(min==""||$NF<min)min=$NF; if($NF>max)max=$NF} END {if(cnt>0) printf("  %s: p50≈%.2f MB/s  p95≈%.2f MB/s\n", "'"$size"'", sum/cnt, max)}'
+}
 
-# Probe device
-swift run swiftmtp probe > "$OUTPUT_DIR/probe.txt"
+run_bench 100M
+run_bench 500M
+run_bench 1G
 
-# Run benchmarks (3 iterations)
-swift run swiftmtp bench 1G --repeat 3 --out "$OUTPUT_DIR/bench-1g.csv"
-swift run swiftmtp bench 500M --repeat 3 --out "$OUTPUT_DIR/bench-500m.csv"
-swift run swiftmtp bench 100M --repeat 3 --out "$OUTPUT_DIR/bench-100m.csv"
-
-echo "Benchmark complete. Results in $OUTPUT_DIR/"
+echo "Artifacts in ${OUT}/ and probes/${DEVICE}-probe.txt"
 ```
 
-### Usage Example
+**Usage**
+
 ```bash
-# Benchmark a Pixel 7
 ./benchmark-device.sh pixel7
-
-# Benchmark a Samsung device
 ./benchmark-device.sh samsung-s21
+./benchmark-device.sh mi-note2
 ```
+
+---
+
+## Data Hygiene
+
+Commit these per device:
+
+```
+probes/<device>-probe.txt
+benches/<device>-100m.csv
+benches/<device>-500m.csv
+benches/<device>-1g.csv
+logs/<device>-mirror.log   (if run)
+Specs/quirks.json          (if updated)
+```
+
+Include at top of the doc:
+
+* SwiftMTP commit SHA
+* USB path (direct vs hub, cable)
+* CLI config snapshot (chunk ceiling + timeouts)
+
+---
+
+## Known Quirks (Actionable)
+
+* **Samsung (04e8:6860):** Often USB 2.0; explicit MTP mode; occasional enumeration timeout >10k objects.
+* **Pixel series:** Clean MTP; fast enumeration; robust resume.
+* **Xiaomi (2717\:ff10/ff40):** Needs 250–500 ms stabilizing delay after open; initial `DEVICE_BUSY` → backoff retry (`200 ms`, `400 ms`, `800 ms`). Prefer direct port. Keep screen unlocked.
+* **Cameras:** PTP‑heavy; great read speeds; limited MTP extensions.
 
 ---
 

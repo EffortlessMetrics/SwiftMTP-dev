@@ -209,6 +209,12 @@ public struct SwiftMTPConfig: Sendable {
   /// Default: 60 seconds
   public var overallDeadlineMs   = 60_000
 
+  /// Post-open stabilization delay in milliseconds.
+  ///
+  /// Time to wait after opening a device session before first storage operation.
+  /// Some devices (e.g., Xiaomi) need this delay to become ready. Default: 0
+  public var stabilizeMs         = 0
+
   /// Enable resumable transfers when device supports partial operations.
   ///
   /// When disabled, all transfers restart from beginning on interruption. Default: true
