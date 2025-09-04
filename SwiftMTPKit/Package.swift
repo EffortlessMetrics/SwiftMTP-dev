@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2025 Effortless Metrics, Inc.
+
 // swift-tools-version: 6.0
 import PackageDescription
 
@@ -59,6 +62,7 @@ let package = Package(
     .executableTarget(name: "swiftmtp-cli",
                       dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPSync"],
                       path: "Sources/Tools/swiftmtp-cli",
+                      resources: [.copy("../../legal/licenses/THIRD-PARTY-NOTICES.md")],
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .executableTarget(name: "simple-probe",
