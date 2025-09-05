@@ -93,3 +93,4 @@ public struct EffectiveTuningBuilder: Sendable {
     t.stabilizeMs = min(max(t.stabilizeMs, 0), 5000)
   }
 }
+

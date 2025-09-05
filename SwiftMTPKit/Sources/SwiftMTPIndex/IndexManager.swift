@@ -16,6 +16,6 @@ public struct MTPIndexManager {
     let directory = (dbPath as NSString).deletingLastPathComponent
     try FileManager.default.createDirectory(atPath: directory, withIntermediateDirectories: true)
 
-    return try DefaultTransferJournal(dbPath: dbPath)
+    return try TransferJournal(dbPath: dbPath)
   }
 }

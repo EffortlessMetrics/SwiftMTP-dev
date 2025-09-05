@@ -14,11 +14,11 @@ let package = Package(
     // .executable(name: "learn-promote", targets: ["learn-promote"]),
   ],
   dependencies: [
-    // Temporarily removed external dependencies to fix compatibility issues
+    // SQLite3 via system library
   ],
   targets: [
-    // SQLite3 via system library (commented out for now)
-    // .systemLibrary(name: "CSQLite", path: "Sources/CSQLite", providers: [.apt(["libsqlite3-dev"]), .brew(["sqlite"])]),
+    // SQLite3 via system library
+    .systemLibrary(name: "CSQLite", path: "Sources/CSQLite", providers: [.apt(["libsqlite3-dev"]), .brew(["sqlite"])]),
 
     // libusb via Homebrew for dev (dynamic)
     .systemLibrary(name: "CLibusb", path: "Sources/CLibusb", pkgConfig: "libusb-1.0", providers: [.brew(["libusb"])]),
@@ -26,18 +26,19 @@ let package = Package(
     // Core MTP functionality
     .target(name: "SwiftMTPCore",
             dependencies: [],
-            path: "Sources/SwiftMTPCore"),
+            path: "Sources/SwiftMTPCore",
+            sources: ["Internal", "Public", "CLI"]),
 
     // Transport layer for libusb
     .target(name: "SwiftMTPTransportLibUSB",
             dependencies: ["SwiftMTPCore", "CLibusb"],
             path: "Sources/SwiftMTPTransportLibUSB"),
 
-    // Index and snapshot functionality (commented out due to SQLite.swift dependency issues)
-    // .target(name: "SwiftMTPIndex",
-    //         dependencies: ["SwiftMTPCore"],
-    //         path: "Sources/SwiftMTPIndex",
-    //         exclude: ["Schema.sql"]),
+    // Index and snapshot functionality
+    .target(name: "SwiftMTPIndex",
+            dependencies: ["SwiftMTPCore", "CSQLite"],
+            path: "Sources/SwiftMTPIndex",
+            exclude: ["Schema.sql"]),
 
     // Sync and mirror functionality (excluded for now due to SwiftMTPIndex dependency)
     // .target(name: "SwiftMTPSync",

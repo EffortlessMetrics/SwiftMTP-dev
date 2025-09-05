@@ -17,6 +17,12 @@ import struct SwiftMTPCore.EndpointAddresses
 import struct SwiftMTPCore.ProbedCapabilities
 import struct SwiftMTPCore.UserOverride
 
+// Import CLI infrastructure
+import SwiftMTPCore.CLI.Exit
+import SwiftMTPCore.CLI.JSONIO
+import SwiftMTPCore.CLI.Spinner
+import SwiftMTPCore.CLI.DeviceFilter
+
 struct CLIFlags {
     let realOnly: Bool
     let useMock: Bool
@@ -27,29 +33,14 @@ struct CLIFlags {
     let strict: Bool
     let safe: Bool
     let traceUSBDetails: Bool
+    let targetVID: String?
+    let targetPID: String?
+    let targetBus: Int?
+    let targetAddress: Int?
 }
 
 func printJSON<T: Encodable>(_ value: T, type: String) {
-    let encoder = JSONEncoder()
-    encoder.outputFormatting = [.withoutEscapingSlashes, .sortedKeys] // Deterministic key ordering
-    encoder.dateEncodingStrategy = .iso8601
-    do {
-        let data = try encoder.encode(value)
-        FileHandle.standardOutput.write(data)
-        FileHandle.standardOutput.write("\n".data(using: .utf8)!)
-    } catch {
-        // Fall back: emit a minimal JSON error on stdout
-        let fallback: [String: Any] = [
-            "schemaVersion": "1.0.0",
-            "type": "error",
-            "error": "encoding_failed",
-            "detail": "\(error)"
-        ]
-        let data = try! JSONSerialization.data(withJSONObject: fallback, options: [.sortedKeys])
-        FileHandle.standardOutput.write(data)
-        FileHandle.standardOutput.write("\n".data(using: .utf8)!)
-        exit(70) // internal error
-    }
+    printJSON(value)
 }
 
 func printJSON(_ dict: [String: Any], type: String) {
@@ -58,21 +49,21 @@ func printJSON(_ dict: [String: Any], type: String) {
     outputDict["type"] = type
     outputDict["timestamp"] = ISO8601DateFormatter().string(from: Date())
 
-    do {
-        let data = try JSONSerialization.data(withJSONObject: outputDict, options: [.sortedKeys])
+    // Use JSONSerialization safely
+    if let data = try? JSONSerialization.data(withJSONObject: outputDict, options: [.sortedKeys]) {
         FileHandle.standardOutput.write(data)
         FileHandle.standardOutput.write("\n".data(using: .utf8)!)
-    } catch {
-        // Fall back: emit a minimal JSON error on stdout
+    } else {
+        // Fallback error
         let fallback: [String: Any] = [
             "schemaVersion": "1.0.0",
             "type": "error",
-            "error": "encoding_failed",
-            "detail": "\(error)"
+            "error": "encoding_failed"
         ]
-        let data = try! JSONSerialization.data(withJSONObject: fallback, options: [.sortedKeys])
-        FileHandle.standardOutput.write(data)
-        FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+        if let data = try? JSONSerialization.data(withJSONObject: fallback, options: [.sortedKeys]) {
+            FileHandle.standardOutput.write(data)
+            FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+        }
         exit(70) // internal error
     }
 }
@@ -94,6 +85,10 @@ var traceUSB = false
 var traceUSBDetails = false
 var strict = false
 var safe = false
+var targetVID: String?
+var targetPID: String?
+var targetBus: Int?
+var targetAddress: Int?
 var filteredArgs = [String]()
 
 for arg in args.dropFirst() { // Skip executable name
@@ -116,6 +111,42 @@ for arg in args.dropFirst() { // Skip executable name
         strict = true
     } else if arg == "--safe" {
         safe = true
+    } else if arg == "--vid" {
+        // Next arg should be the VID
+        if let nextIndex = args.dropFirst().firstIndex(of: arg),
+           nextIndex + 1 < args.count {
+            targetVID = args[nextIndex + 1]
+        }
+    } else if arg.hasPrefix("--vid=") {
+        targetVID = String(arg.dropFirst("--vid=".count))
+    } else if arg == "--pid" {
+        // Next arg should be the PID
+        if let nextIndex = args.dropFirst().firstIndex(of: arg),
+           nextIndex + 1 < args.count {
+            targetPID = args[nextIndex + 1]
+        }
+    } else if arg.hasPrefix("--pid=") {
+        targetPID = String(arg.dropFirst("--pid=".count))
+    } else if arg == "--bus" {
+        // Next arg should be the bus number
+        if let nextIndex = args.dropFirst().firstIndex(of: arg),
+           nextIndex + 1 < args.count,
+           let bus = Int(args[nextIndex + 1]) {
+            targetBus = bus
+        }
+    } else if arg.hasPrefix("--bus=") {
+        let busStr = String(arg.dropFirst("--bus=".count))
+        targetBus = Int(busStr)
+    } else if arg == "--address" {
+        // Next arg should be the device address
+        if let nextIndex = args.dropFirst().firstIndex(of: arg),
+           nextIndex + 1 < args.count,
+           let address = Int(args[nextIndex + 1]) {
+            targetAddress = address
+        }
+    } else if arg.hasPrefix("--address=") {
+        let addressStr = String(arg.dropFirst("--address=".count))
+        targetAddress = Int(addressStr)
     } else {
         filteredArgs.append(arg)
     }
@@ -148,6 +179,9 @@ if filteredArgs.isEmpty {
     print("  quirks --explain - Show active device quirk configuration")
     print("  health    - Verify libusb availability and permissions")
     print("  collect   - Collect device data for submission (see collect --help)")
+    print("  delete <handle> [--recursive] - Delete file/directory")
+    print("  move <handle> <new-parent> - Move file/directory")
+    print("  events [seconds] - Monitor device events")
     print("  learn-promote - Promote learned profiles to quirks (see learn-promote --help)")
     print("")
     print("Exit codes:")
@@ -164,25 +198,46 @@ let remainingArgs = Array(filteredArgs.dropFirst())
 
 switch command {
 case "probe":
-    await runProbe(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails))
+    await runProbe(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
 case "usb-dump":
     await runUSBDump()
 case "diag":
-    await runDiag(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails))
+    await runDiag(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
 case "storages":
-    await runStorages(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails))
+    await runStorages(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
 case "ls":
-    await runList(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails), args: remainingArgs)
+    await runList(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "pull":
-    await runPull(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails), args: remainingArgs)
+    await runPull(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "bench":
-    await runBench(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails), args: remainingArgs)
+    await runBench(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "mirror":
-    await runMirror(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails), args: remainingArgs)
+    await runMirror(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "quirks":
     await runQuirks(args: remainingArgs)
 case "health":
     await runHealth()
+case "delete":
+    var args = remainingArgs
+    let filter = DeviceFilterParse.parse(from: &args)
+    let json = args.contains("--json")
+    let noninteractive = args.contains("--noninteractive")
+    let exitCode = await runDeleteCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
+    exit(exitCode.rawValue)
+case "move":
+    var args = remainingArgs
+    let filter = DeviceFilterParse.parse(from: &args)
+    let json = args.contains("--json")
+    let noninteractive = args.contains("--noninteractive")
+    let exitCode = await runMoveCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
+    exit(exitCode.rawValue)
+case "events":
+    var args = remainingArgs
+    let filter = DeviceFilterParse.parse(from: &args)
+    let json = args.contains("--json")
+    let noninteractive = args.contains("--noninteractive")
+    let exitCode = await runEventsCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
+    exit(exitCode.rawValue)
 case "collect":
     if remainingArgs.contains("--help") || remainingArgs.contains("-h") {
         printCollectHelp()
@@ -197,7 +252,7 @@ case "learn-promote":
     await runLearnPromote()
 default:
     print("Unknown command: \(command)")
-    print("Available: probe, usb-dump, diag, storages, ls, pull, bench, mirror, quirks, health, collect, learn-promote")
+    print("Available: probe, usb-dump, diag, storages, ls, pull, bench, mirror, quirks, health, collect, delete, move, events, learn-promote")
     exit(64) // usage error
 }
 
@@ -295,6 +350,86 @@ func runLearnPromote() async {
     }
 }
 
+// Global helper for opening filtered devices
+func openFilteredDevice(filter: DeviceFilter, noninteractive: Bool, json: Bool) async throws -> any MTPDevice {
+    let devices = try await MTPDeviceManager.shared.currentRealDevices()
+
+    switch selectDevice(devices, filter: filter, noninteractive: noninteractive) {
+    case .none:
+        if json {
+            printJSONErrorAndExit("no_matching_device", code: .unavailable)
+        }
+        fputs("No devices match the filter.\n", stderr)
+        exitNow(.unavailable)
+
+    case .multiple(let many) where noninteractive:
+        if json {
+            printJSONErrorAndExit("ambiguous_selection", code: .usage,
+                details: ["count":"\(many.count)"])
+        }
+        fputs("Multiple devices match; specify --vid/--pid/--bus/--address.\n", stderr)
+        exitNow(.usage)
+
+    case .multiple(let many):
+        // Interactive prompt (simplified - in real implementation you'd prompt user)
+        if json {
+            printJSONErrorAndExit("ambiguous_selection", code: .usage,
+                details: ["count":"\(many.count)"])
+        }
+        fputs("Multiple devices match; specify --vid/--pid/--bus/--address.\n", stderr)
+        exitNow(.usage)
+
+    case .selected(let one):
+        return try await MTPDeviceManager.shared.openDevice(with: one, transport: LibUSBTransportFactory.createTransport(), config: SwiftMTPConfig())
+    }
+}
+
+func selectDevice(devices: [MTPDeviceSummary], flags: CLIFlags) throws -> MTPDeviceSummary {
+    // Filter devices based on targeting flags
+    var filteredDevices = devices
+
+    if let targetVID = flags.targetVID {
+        let targetVIDNum = UInt16(targetVID, radix: 16) ?? UInt16(targetVID) ?? 0
+        filteredDevices = filteredDevices.filter { $0.vendorID == targetVIDNum }
+    }
+
+    if let targetPID = flags.targetPID {
+        let targetPIDNum = UInt16(targetPID, radix: 16) ?? UInt16(targetPID) ?? 0
+        filteredDevices = filteredDevices.filter { $0.productID == targetPIDNum }
+    }
+
+    if let targetBus = flags.targetBus {
+        filteredDevices = filteredDevices.filter { $0.bus == UInt8(targetBus) }
+    }
+
+    if let targetAddress = flags.targetAddress {
+        filteredDevices = filteredDevices.filter { $0.address == UInt8(targetAddress) }
+    }
+
+    // Check results
+    if filteredDevices.isEmpty {
+        if devices.isEmpty {
+            throw SwiftMTPCore.TransportError.noDevice
+        } else {
+            // No devices match the filter
+            exit(69) // EX_UNAVAILABLE
+        }
+    } else if filteredDevices.count > 1 {
+        // Multiple devices match - in noninteractive mode, this is an error
+        if flags.jsonOutput {
+            fputs("{\"schemaVersion\":\"1.0\",\"type\":\"error\",\"error\":\"multiple_devices_match\"}\n", stderr)
+        } else {
+            log("❌ Multiple devices match the specified criteria:")
+            for device in filteredDevices {
+                log("   \(device.id.raw) - \(device.manufacturer) \(device.model)")
+            }
+        }
+        exit(64) // EX_USAGE - user needs to be more specific
+    }
+
+    return filteredDevices[0]
+}
+
 func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
     if flags.useMock {
         print("🔧 Mock transport not yet implemented")
@@ -317,21 +452,21 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
             log("     \(i+1). \(device.id.raw) - \(device.manufacturer) \(device.model)")
         }
 
-        guard let firstDevice = devices.first else {
-            throw SwiftMTPCore.TransportError.noDevice
-        }
-
-        log("   Opening first device: \(firstDevice.id.raw)")
+        // Select device based on targeting flags
+        let selectedDevice = try selectDevice(devices: devices, flags: flags)
+        log("   Opening device: \(selectedDevice.id.raw)")
 
         // USB tracing: log device details if requested
         if flags.traceUSB || flags.traceUSBDetails {
             log("   USB Details:")
-            log("     Device: \(firstDevice.id.raw)")
-            log("     Manufacturer: \(firstDevice.manufacturer)")
-            log("     Model: \(firstDevice.model)")
+            log("     Device: \(selectedDevice.id.raw)")
+            log("     Manufacturer: \(selectedDevice.manufacturer)")
+            log("     Model: \(selectedDevice.model)")
             log("     Serial: none") // MTPDeviceSummary doesn't have serialNumber
             if flags.traceUSBDetails {
-                log("     USB VID:PID: 2717:ff10") // Would be extracted from actual USB descriptors
+                let vid = selectedDevice.vendorID.map { String(format: "%04x", $0) } ?? "????"
+                let pid = selectedDevice.productID.map { String(format: "%04x", $0) } ?? "????"
+                log("     USB VID:PID: \(vid):\(pid)")
                 log("     Interface: 06/01/01 (Image/MTP)")
                 log("     Endpoints: IN=0x81, OUT=0x01, EVT=0x82")
                 log("     Max packet size: 512 bytes")
@@ -357,7 +492,8 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
             let endpointAddresses = try JSONDecoder().decode(EndpointAddresses.self, from: endpointAddressesData)
 
             let fingerprint = MTPDeviceFingerprint(
-                vid: "2717", pid: "ff10",
+                vid: String(format: "%04x", selectedDevice.vendorID ?? 0),
+                pid: String(format: "%04x", selectedDevice.productID ?? 0),
                 interfaceTriple: interfaceTriple,
                 endpointAddresses: endpointAddresses
             )
@@ -426,7 +562,7 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
         // Convert to SwiftMTPConfig for use with existing code
         let config = finalTuning.toConfig()
 
-        return try await MTPDeviceManager.shared.openDevice(with: firstDevice, transport: LibUSBTransportFactory.createTransport(), config: config)
+        return try await MTPDeviceManager.shared.openDevice(with: selectedDevice, transport: LibUSBTransportFactory.createTransport(), config: config)
     } catch {
         log("❌ Device operation failed: \(error)")
         log("   Error type: \(type(of: error))")
@@ -559,8 +695,8 @@ func runProbeJSON(flags: CLIFlags) async {
         // Create structured output with proper schema versioning
         let output = ProbeOutput(
             fingerprint: DeviceFingerprint(
-                vid: "0x2717", // TODO: Extract from actual USB descriptor
-                pid: "0xff10", // TODO: Extract from actual USB descriptor
+                vid: String(format: "0x%04x", firstDevice.vendorID ?? 0),
+                pid: String(format: "0x%04x", firstDevice.productID ?? 0),
                 bcdDevice: "0x0318", // TODO: Extract from actual USB descriptor
                 iface: InterfaceDescriptor(class: "0x06", subclass: "0x01", protocol: "0x01"),
                 endpoints: EndpointDescriptor(input: "0x81", output: "0x01", event: "0x82"),

@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct LearnedProfile: Codable, Sendable {
+public struct StoredLearnedProfile: Codable, Sendable {
   public var key: String             // e.g., "2717:ff10:06-01-01" (vid:pid:iface triplet)
   public var lastSeen: Date
   public var firstSeen: Date
@@ -26,17 +26,17 @@ public enum LearnedStore {
     #endif
   }
 
-  public static func load(key: String) -> LearnedProfile? {
+  public static func load(key: String) -> StoredLearnedProfile? {
     let path = baseDir().appendingPathComponent("\(key).json")
     guard FileManager.default.fileExists(atPath: path.path) else { return nil }
     guard let data = try? Data(contentsOf: path) else { return nil }
-    guard let p = try? JSONDecoder().decode(LearnedProfile.self, from: data) else { return nil }
+    guard let p = try? JSONDecoder().decode(StoredLearnedProfile.self, from: data) else { return nil }
     // TTL 90 days
     if Date().timeIntervalSince(p.lastSeen) > 90*24*3600 { return nil }
     return p
   }
 
-  public static func save(_ p: LearnedProfile) {
+  public static func save(_ p: StoredLearnedProfile) {
     let dir = baseDir()
     try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
     let path = dir.appendingPathComponent("\(p.key).json")
@@ -45,7 +45,7 @@ public enum LearnedStore {
 
   /// Simple EMA smoothing on successful observation; clamp to safe bounds
   public static func update(key: String, obs: EffectiveTuning) {
-    var cur = load(key: key) ?? LearnedProfile(
+    var cur = load(key: key) ?? StoredLearnedProfile(
       key: key, lastSeen: Date(), firstSeen: Date(), samples: 0,
       maxChunkBytes: obs.maxChunkBytes, ioTimeoutMs: obs.ioTimeoutMs,
       handshakeTimeoutMs: obs.handshakeTimeoutMs, inactivityTimeoutMs: obs.inactivityTimeoutMs,
@@ -63,3 +63,4 @@ public enum LearnedStore {
     save(cur)
   }
 }
+
