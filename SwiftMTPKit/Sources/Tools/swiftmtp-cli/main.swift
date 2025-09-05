@@ -17,11 +17,8 @@ import struct SwiftMTPCore.EndpointAddresses
 import struct SwiftMTPCore.ProbedCapabilities
 import struct SwiftMTPCore.UserOverride
 
-// Import CLI infrastructure
-import SwiftMTPCore.CLI.Exit
-import SwiftMTPCore.CLI.JSONIO
-import SwiftMTPCore.CLI.Spinner
-import SwiftMTPCore.CLI.DeviceFilter
+// CLI infrastructure is available through SwiftMTPCore module
+// Command implementations are in the same target
 
 struct CLIFlags {
     let realOnly: Bool
@@ -219,21 +216,21 @@ case "health":
     await runHealth()
 case "delete":
     var args = remainingArgs
-    let filter = DeviceFilterParse.parse(from: &args)
+    let filter = SwiftMTPCore.CLI.DeviceFilterParse.parse(from: &args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
     let exitCode = await runDeleteCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
     exit(exitCode.rawValue)
 case "move":
     var args = remainingArgs
-    let filter = DeviceFilterParse.parse(from: &args)
+    let filter = SwiftMTPCore.CLI.DeviceFilterParse.parse(from: &args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
     let exitCode = await runMoveCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
     exit(exitCode.rawValue)
 case "events":
     var args = remainingArgs
-    let filter = DeviceFilterParse.parse(from: &args)
+    let filter = SwiftMTPCore.CLI.DeviceFilterParse.parse(from: &args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
     let exitCode = await runEventsCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
@@ -351,7 +348,7 @@ func runLearnPromote() async {
 }
 
 // Global helper for opening filtered devices
-func openFilteredDevice(filter: DeviceFilter, noninteractive: Bool, json: Bool) async throws -> any MTPDevice {
+func openFilteredDevice(filter: SwiftMTPCore.CLI.DeviceFilter, noninteractive: Bool, json: Bool) async throws -> any MTPDevice {
     let devices = try await MTPDeviceManager.shared.currentRealDevices()
 
     switch selectDevice(devices, filter: filter, noninteractive: noninteractive) {
@@ -384,50 +381,17 @@ func openFilteredDevice(filter: DeviceFilter, noninteractive: Bool, json: Bool) 
     }
 }
 
-func selectDevice(devices: [MTPDeviceSummary], flags: CLIFlags) throws -> MTPDeviceSummary {
-    // Filter devices based on targeting flags
-    var filteredDevices = devices
-
-    if let targetVID = flags.targetVID {
-        let targetVIDNum = UInt16(targetVID, radix: 16) ?? UInt16(targetVID) ?? 0
-        filteredDevices = filteredDevices.filter { $0.vendorID == targetVIDNum }
+func selectDevice(_ devices: [MTPDeviceSummary], filter: SwiftMTPCore.CLI.DeviceFilter, noninteractive: Bool) -> SwiftMTPCore.CLI.SelectionOutcome {
+    let filtered = devices.filter { d in
+        if let v = filter.vid, d.vendorID != v { return false }
+        if let p = filter.pid, d.productID != p { return false }
+        if let b = filter.bus, let db = d.bus, b != db { return false }
+        if let a = filter.address, let da = d.address, a != da { return false }
+        return true
     }
-
-    if let targetPID = flags.targetPID {
-        let targetPIDNum = UInt16(targetPID, radix: 16) ?? UInt16(targetPID) ?? 0
-        filteredDevices = filteredDevices.filter { $0.productID == targetPIDNum }
-    }
-
-    if let targetBus = flags.targetBus {
-        filteredDevices = filteredDevices.filter { $0.bus == UInt8(targetBus) }
-    }
-
-    if let targetAddress = flags.targetAddress {
-        filteredDevices = filteredDevices.filter { $0.address == UInt8(targetAddress) }
-    }
-
-    // Check results
-    if filteredDevices.isEmpty {
-        if devices.isEmpty {
-            throw SwiftMTPCore.TransportError.noDevice
-        } else {
-            // No devices match the filter
-            exit(69) // EX_UNAVAILABLE
-        }
-    } else if filteredDevices.count > 1 {
-        // Multiple devices match - in noninteractive mode, this is an error
-        if flags.jsonOutput {
-            fputs("{\"schemaVersion\":\"1.0\",\"type\":\"error\",\"error\":\"multiple_devices_match\"}\n", stderr)
-        } else {
-            log("❌ Multiple devices match the specified criteria:")
-            for device in filteredDevices {
-                log("   \(device.id.raw) - \(device.manufacturer) \(device.model)")
-            }
-        }
-        exit(64) // EX_USAGE - user needs to be more specific
-    }
-
-    return filteredDevices[0]
+    if filtered.isEmpty { return .none }
+    if filtered.count == 1 { return .selected(filtered[0]) }
+    return noninteractive ? .multiple(filtered) : .multiple(filtered) // in interactive, you prompt
 }
 
 func openDevice(flags: CLIFlags) async throws -> any MTPDevice {

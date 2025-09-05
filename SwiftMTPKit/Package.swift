@@ -34,11 +34,11 @@ let package = Package(
             dependencies: ["SwiftMTPCore", "CLibusb"],
             path: "Sources/SwiftMTPTransportLibUSB"),
 
-    // Index and snapshot functionality
-    .target(name: "SwiftMTPIndex",
-            dependencies: ["SwiftMTPCore", "CSQLite"],
-            path: "Sources/SwiftMTPIndex",
-            exclude: ["Schema.sql"]),
+    // Index and snapshot functionality (disabled - needs SQLite setup)
+    // .target(name: "SwiftMTPIndex",
+    //         dependencies: ["SwiftMTPCore", "CSQLite"],
+    //         path: "Sources/SwiftMTPIndex",
+    //         exclude: ["Schema.sql"]),
 
     // Sync and mirror functionality (excluded for now due to SwiftMTPIndex dependency)
     // .target(name: "SwiftMTPSync",
