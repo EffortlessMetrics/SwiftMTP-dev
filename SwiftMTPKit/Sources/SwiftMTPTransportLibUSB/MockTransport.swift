@@ -502,6 +502,22 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
 
         return nil
     }
+
+    public func deleteObject(handle: MTPObjectHandle) async throws {
+        // Simulate delete operation
+        try await Task.sleep(nanoseconds: 50_000_000) // 50ms delay
+
+        // In a real implementation, this would remove the object from the mock data
+        // For now, just succeed
+    }
+
+    public func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?) async throws {
+        // Simulate move operation
+        try await Task.sleep(nanoseconds: 100_000_000) // 100ms delay
+
+        // In a real implementation, this would update the object's parent/storage in the mock data
+        // For now, just succeed
+    }
 }
 
 // Extend MockMTPLink to implement the MTP protocol simulation

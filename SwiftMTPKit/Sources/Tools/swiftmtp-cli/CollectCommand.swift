@@ -7,24 +7,167 @@ import SwiftMTPTransportLibUSB
 import CLibusb
 import CommonCrypto
 
+// MARK: - Shared Utilities
+
+enum ExitCode: Int32 {
+    case ok = 0
+    case usage = 64          // EX_USAGE
+    case unavailable = 69    // EX_UNAVAILABLE
+    case software = 70       // EX_SOFTWARE
+    case tempfail = 75       // EX_TEMPFAIL
+}
+
+@inline(__always) func exitNow(_ code: ExitCode) -> Never { exit(code.rawValue) }
+
+enum StepTimeout: Error { case timedOut(String) }
+
+@discardableResult
+func withTimeout<T: Sendable>(
+    seconds: TimeInterval,
+    stepName: String,
+    _ op: @escaping @Sendable () async throws -> T
+) async throws -> T {
+    try await withThrowingTaskGroup(of: T.self) { g in
+        g.addTask { try await op() }
+        g.addTask {
+            try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+            throw StepTimeout.timedOut(stepName)
+        }
+        let v = try await g.next()!
+        g.cancelAll()
+        return v
+    }
+}
+
+final class Spinner {
+    private let frames = ["⠋","⠙","⠹","⠸","⠼","⠴","⠦","⠧","⠇","⠏"]
+    private var idx = 0
+    private var timer: DispatchSourceTimer?
+    private let message: String
+    private let isTTY: Bool
+    private let jsonMode: Bool
+
+    init(_ message: String, jsonMode: Bool) {
+        self.message = message
+        self.jsonMode = jsonMode
+        #if canImport(Darwin)
+        self.isTTY = isatty(STDERR_FILENO) == 1
+        #else
+        self.isTTY = true
+        #endif
+    }
+
+    func start() {
+        guard isTTY, !jsonMode else { return }
+        fputs("  \(frames[idx]) \(message)\r", stderr)
+        let t = DispatchSource.makeTimerSource(queue: .global())
+        t.schedule(deadline: .now(), repeating: .milliseconds(80))
+        t.setEventHandler { [weak self] in
+            guard let self = self else { return }
+            self.idx = (self.idx + 1) % self.frames.count
+            fputs("  \(self.frames[self.idx]) \(self.message)\r", stderr)
+            fflush(stderr)
+        }
+        t.resume()
+        timer = t
+    }
+
+    func succeed(_ final: String) {
+        stop()
+        if isTTY, !jsonMode { fputs("  ✓ \(final)\n", stderr) }
+    }
+
+    func fail(_ final: String) {
+        stop()
+        if isTTY, !jsonMode { fputs("  ✗ \(final)\n", stderr) }
+    }
+
+    private func stop() {
+        timer?.cancel()
+        timer = nil
+        if isTTY, !jsonMode { fputs("\r", stderr) }
+    }
+}
+
 struct CollectCommand {
     struct Flags {
-        let deviceName: String?
-        let runBench: [String]  // e.g., ["100M", "1G"]
-        let noBench: Bool
-        let openPR: Bool
-        let nonInteractive: Bool
-        let realOnly: Bool
-        let strict: Bool
-        let safe: Bool
-        let traceUSB: Bool
-        let traceUSBDetails: Bool
-        let targetVID: String?
-        let targetPID: String?
-        let targetBus: Int?
-        let targetAddress: Int?
-        let jsonOutput: Bool
-        let bundlePath: String?
+        var deviceName: String? = nil
+        var runBench: [String] = []  // e.g., ["100M", "1G"] - empty by default (no benchmarks)
+        var openPR: Bool = false
+        var nonInteractive: Bool = false
+        var strict: Bool = true      // safety default
+        var allowQuirks: Bool = false
+        var outputDir: URL? = nil
+        var targetVID: String? = nil
+        var targetPID: String? = nil
+        var targetBus: Int? = nil
+        var targetAddress: Int? = nil
+        var jsonOutput: Bool = false
+        var bundlePath: String? = nil
+
+        // Designated initializer with all parameters
+        init(
+            deviceName: String? = nil,
+            runBench: [String] = [],
+            openPR: Bool = false,
+            nonInteractive: Bool = false,
+            strict: Bool = true,
+            allowQuirks: Bool = false,
+            outputDir: URL? = nil,
+            targetVID: String? = nil,
+            targetPID: String? = nil,
+            targetBus: Int? = nil,
+            targetAddress: Int? = nil,
+            jsonOutput: Bool = false,
+            bundlePath: String? = nil
+        ) {
+            self.deviceName = deviceName
+            self.runBench = runBench
+            self.openPR = openPR
+            self.nonInteractive = nonInteractive
+            self.strict = strict
+            self.allowQuirks = allowQuirks
+            self.outputDir = outputDir
+            self.targetVID = targetVID
+            self.targetPID = targetPID
+            self.targetBus = targetBus
+            self.targetAddress = targetAddress
+            self.jsonOutput = jsonOutput
+            self.bundlePath = bundlePath
+        }
+
+        // Backward-compatible initializer (deprecated)
+        @available(*, deprecated, message: "Add jsonOutput: or rely on the designated initializer's default")
+        init(
+            deviceName: String? = nil,
+            runBench: [String] = [],
+            openPR: Bool = false,
+            nonInteractive: Bool = false,
+            strict: Bool = true,
+            allowQuirks: Bool = false,
+            outputDir: URL? = nil,
+            targetVID: String? = nil,
+            targetPID: String? = nil,
+            targetBus: Int? = nil,
+            targetAddress: Int? = nil,
+            bundlePath: String? = nil
+        ) {
+            self.init(
+                deviceName: deviceName,
+                runBench: runBench,
+                openPR: openPR,
+                nonInteractive: nonInteractive,
+                strict: strict,
+                allowQuirks: allowQuirks,
+                outputDir: outputDir,
+                targetVID: targetVID,
+                targetPID: targetPID,
+                targetBus: targetBus,
+                targetAddress: targetAddress,
+                jsonOutput: false,
+                bundlePath: bundlePath
+            )
+        }
     }
 
     struct SubmissionBundle {
@@ -132,6 +275,22 @@ struct CollectCommand {
         }
     }
 
+    struct ErrorOutput: Codable {
+        let schemaVersion: String
+        let type: String
+        let error: String
+        let detail: String
+        let timestamp: String
+
+        init(schemaVersion: String, type: String, error: String, detail: String) {
+            self.schemaVersion = schemaVersion
+            self.type = type
+            self.error = error
+            self.detail = detail
+            self.timestamp = ISO8601DateFormatter().string(from: Date())
+        }
+    }
+
     struct AnyCodable: Codable {
         let value: Any
 
@@ -167,91 +326,183 @@ struct CollectCommand {
         }
     }
 
-    func run(flags: Flags) async throws {
-        print("🔍 SwiftMTP Device Submission Collector")
-        print("=====================================")
+    static func run(flags: Flags) async -> ExitCode {
+        let json = flags.jsonOutput
 
-        // Step 1: Consent and validation
-        try await handleConsent(flags: flags)
+        do {
+            print("🔍 SwiftMTP Device Submission Collector")
+            print("=====================================")
 
-        // Step 2: Discover and validate device
-        let device = try await discoverDevice(flags: flags)
+            // Step 1: Consent and validation
+            let spin1 = Spinner("Getting consent", jsonMode: json); spin1.start()
+            try await handleConsent(flags: flags)
+            spin1.succeed("Consent obtained")
 
-        // Step 3: Generate salt for redaction
-        let salt = Redaction.generateSalt(count: 32)
+            // Step 2: Discover and validate device
+            let spin2 = Spinner("Discovering device", jsonMode: json); spin2.start()
+            let (device, deviceSummary) = try await withTimeout(seconds: 90, stepName: "device discovery") {
+                try await discoverDeviceWithSummary(flags: flags)
+            }
+            spin2.succeed("Device discovered: \(deviceSummary.manufacturer) \(deviceSummary.model)")
 
-        // Step 4: Collect probe data
-        print("\n📊 Collecting probe data...")
-        let probeData = try await collectProbeData(device: device, flags: flags, salt: salt)
+            // Step 3: Generate salt for redaction
+            let salt = Redaction.generateSalt(count: 32)
 
-        // Step 5: Collect USB dump
-        print("\n🔌 Collecting USB dump...")
-        let usbDump = try await collectUSBDump()
+            // Step 4: Collect probe data
+            let spin3 = Spinner("Collecting probe data", jsonMode: json); spin3.start()
+            let probeData = try await withTimeout(seconds: 90, stepName: "probe collection") {
+                try await collectProbeData(device: device, flags: flags, salt: salt)
+            }
+            spin3.succeed("Probe data collected")
 
-        // Step 6: Run benchmarks (if requested)
-        print("\n🏃 Running benchmarks...")
-        let benchResults = try await runBenchmarks(device: device, flags: flags)
+            // Step 5: Collect USB dump
+            let spin4 = Spinner("Collecting USB dump", jsonMode: json); spin4.start()
+            let usbDump = try await withTimeout(seconds: 90, stepName: "USB dump") {
+                try await collectUSBDump()
+            }
+            spin4.succeed("USB dump collected")
 
-        // Step 7: Generate quirk suggestion
-        print("\n🧠 Generating quirk suggestion...")
-        let quirkSuggestion = try await generateQuirkSuggestion(device: device, effectiveTuning: probeData.effectiveTuning)
-
-        // Step 8: Create submission bundle
-        print("\n📦 Creating submission bundle...")
-        let bundle = try await createSubmissionBundle(
-            device: device,
-            flags: flags,
-            probeData: probeData,
-            usbDump: usbDump,
-            benchResults: benchResults,
-            quirkSuggestion: quirkSuggestion,
-            salt: salt
-        )
-
-        // Step 9: Validate bundle
-        print("\n✅ Validating submission bundle...")
-        try await validateBundle(bundle: bundle)
-
-        // Step 10: Handle output format
-        if flags.jsonOutput {
-            // Emit JSON summary to stdout
-            let jsonSummary = [
-                "schemaVersion": "1.0.0",
-                "type": "collectionSummary",
-                "timestamp": ISO8601DateFormatter().string(from: Date()),
-                "bundlePath": bundle.bundleDir.path,
-                "device": [
-                    "vendor": bundle.manifest.device.vendor,
-                    "model": bundle.manifest.device.model,
-                    "vendorId": bundle.manifest.device.vendorId,
-                    "productId": bundle.manifest.device.productId,
-                    "fingerprintHash": bundle.manifest.device.fingerprintHash
-                ],
-                "artifacts": [
-                    "probe": bundle.manifest.artifacts.probe != nil,
-                    "usbDump": bundle.manifest.artifacts.usbDump,
-                    "benchmarks": bundle.manifest.artifacts.bench?.count ?? 0,
-                    "quirkSuggestion": true
-                ],
-                "consent": [
-                    "anonymizeSerial": bundle.manifest.consent.anonymizeSerial,
-                    "allowBench": bundle.manifest.consent.allowBench
-                ]
-            ] as [String: Any]
-
-            let jsonData = try JSONSerialization.data(withJSONObject: jsonSummary, options: [.sortedKeys])
-            FileHandle.standardOutput.write(jsonData)
-            FileHandle.standardOutput.write("\n".data(using: .utf8)!)
-        } else {
-            // Step 11: Handle PR creation or manual submission
-            if flags.openPR {
-                try await createPullRequest(bundle: bundle)
-            } else {
-                printManualSubmissionInstructions(bundle: bundle)
+            // Step 6: Run benchmarks (if requested)
+            var benchResults = [String: URL]()
+            if !flags.runBench.isEmpty {
+                let spin5 = Spinner("Running benchmarks", jsonMode: json); spin5.start()
+                benchResults = try await withTimeout(seconds: 90, stepName: "benchmarks") {
+                    try await runBenchmarks(device: device, flags: flags)
+                }
+                spin5.succeed("Benchmarks completed")
             }
 
-            print("\n🎉 Device submission collection complete!")
-            print("Bundle saved to: \(bundle.bundleDir.path)")
+            // Step 7: Generate quirk suggestion
+            let spin6 = Spinner("Generating quirk suggestion", jsonMode: json); spin6.start()
+            let quirkSuggestion = try await generateQuirkSuggestion(device: device, effectiveTuning: probeData.effectiveTuning)
+            spin6.succeed("Quirk suggestion generated")
+
+            // Step 8: Create submission bundle
+            let spin7 = Spinner("Creating submission bundle", jsonMode: json); spin7.start()
+            let bundle = try await createSubmissionBundle(
+                device: device,
+                flags: flags,
+                probeData: probeData,
+                usbDump: usbDump,
+                benchResults: benchResults,
+                quirkSuggestion: quirkSuggestion,
+                salt: salt
+            )
+            spin7.succeed("Bundle created")
+
+            // Step 9: Validate bundle
+            let spin8 = Spinner("Validating bundle", jsonMode: json); spin8.start()
+            try await validateBundle(bundle: bundle)
+            spin8.succeed("Bundle validated")
+
+            // Step 10: Handle output format
+            if json {
+                // Emit JSON summary to stdout
+                let jsonSummary = [
+                    "schemaVersion": "1.0.0",
+                    "type": "collectionSummary",
+                    "timestamp": ISO8601DateFormatter().string(from: Date()),
+                    "bundlePath": bundle.bundleDir.path,
+                    "device": [
+                        "vendor": bundle.manifest.device.vendor,
+                        "model": bundle.manifest.device.model,
+                        "vendorId": bundle.manifest.device.vendorId,
+                        "productId": bundle.manifest.device.productId,
+                        "fingerprintHash": bundle.manifest.device.fingerprintHash
+                    ],
+                    "artifacts": [
+                        "probe": bundle.manifest.artifacts.probe != nil,
+                        "usbDump": bundle.manifest.artifacts.usbDump,
+                        "benchmarks": bundle.manifest.artifacts.bench?.count ?? 0,
+                        "quirkSuggestion": true
+                    ],
+                    "consent": [
+                        "anonymizeSerial": bundle.manifest.consent.anonymizeSerial,
+                        "allowBench": bundle.manifest.consent.allowBench
+                    ]
+                ] as [String: Any]
+
+                let encoder = JSONEncoder()
+                encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+                let jsonData = try encoder.encode(jsonSummary)
+                FileHandle.standardOutput.write(jsonData)
+                FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+            } else {
+                // Step 11: Handle PR creation or manual submission
+                if flags.openPR {
+                    try await createPullRequest(bundle: bundle)
+                } else {
+                    printManualSubmissionInstructions(bundle: bundle)
+                }
+
+                print("\n🎉 Device submission collection complete!")
+                print("Bundle saved to: \(bundle.bundleDir.path)")
+            }
+
+            return .ok
+        } catch StepTimeout.timedOut(let step) {
+            if json {
+                let errorOutput = ErrorOutput(
+                    schemaVersion: "1.0.0",
+                    type: "error",
+                    error: "timeout",
+                    detail: "Operation timed out during \(step)"
+                )
+                do {
+                    let encoder = JSONEncoder()
+                    encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+                    let data = try encoder.encode(errorOutput)
+                    FileHandle.standardOutput.write(data)
+                    FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+                } catch {
+                    fputs("JSON-encode-error: \(error)\n", stderr)
+                }
+            } else {
+                fputs("❌ Timeout during \(step)\n", stderr)
+            }
+            return .tempfail
+        } catch MTPError.notSupported(let msg) {
+            if json {
+                let errorOutput = ErrorOutput(
+                    schemaVersion: "1.0.0",
+                    type: "error",
+                    error: "device_error",
+                    detail: msg
+                )
+                do {
+                    let encoder = JSONEncoder()
+                    encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+                    let data = try encoder.encode(errorOutput)
+                    FileHandle.standardOutput.write(data)
+                    FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+                } catch {
+                    fputs("JSON-encode-error: \(error)\n", stderr)
+                }
+            } else {
+                fputs("❌ \(msg)\n", stderr)
+            }
+            return .unavailable
+        } catch {
+            if json {
+                let errorOutput = ErrorOutput(
+                    schemaVersion: "1.0.0",
+                    type: "error",
+                    error: "internal_error",
+                    detail: error.localizedDescription
+                )
+                do {
+                    let encoder = JSONEncoder()
+                    encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+                    let data = try encoder.encode(errorOutput)
+                    FileHandle.standardOutput.write(data)
+                    FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+                } catch {
+                    fputs("JSON-encode-error: \(error)\n", stderr)
+                }
+            } else {
+                fputs("❌ Internal error: \(error)\n", stderr)
+            }
+            return .software
         }
     }
 
@@ -266,7 +517,7 @@ struct CollectCommand {
         print("This tool will collect the following data:")
         print("• Device probe information (capabilities, operations, storage)")
         print("• USB interface details (vendor ID, product ID, endpoints)")
-        if !flags.noBench && !flags.runBench.isEmpty {
+        if !flags.runBench.isEmpty {
             print("• Performance benchmarks (\(flags.runBench.joined(separator: ", ")))")
         }
         print("• Serial numbers will be redacted using HMAC-SHA256")
@@ -284,7 +535,7 @@ struct CollectCommand {
             exit(1)
         }
 
-        if !flags.noBench && !flags.runBench.isEmpty {
+        if !flags.runBench.isEmpty {
             print("\nDo you consent to running performance benchmarks? (y/N): ", terminator: "")
             fflush(stdout)
 
@@ -296,7 +547,7 @@ struct CollectCommand {
         }
     }
 
-    private func discoverDevice(flags: Flags) async throws -> any MTPDevice {
+    private func discoverDeviceWithSummary(flags: Flags) async throws -> (any MTPDevice, MTPDeviceSummary) {
         print("\n🔍 Discovering MTP devices...")
 
         let devices = try await MTPDeviceManager.shared.currentRealDevices()
@@ -377,7 +628,7 @@ struct CollectCommand {
             // Multiple matches - prompt user or use first one in non-interactive mode
             print("Multiple devices match criteria:")
             for (i, device) in filteredDevices.enumerated() {
-                print("  \(i+1). \(device.manufacturer) \(device.model) (\(String(format: "%04x:%04x", device.id.raw >> 16, device.id.raw & 0xFFFF)))")
+                print("  \(i+1). \(device.manufacturer) \(device.model) (\(device.id.raw))")
             }
 
             if flags.nonInteractive {
@@ -428,7 +679,7 @@ struct CollectCommand {
 
         // Use the device as-is for now (reopening with different config is complex)
 
-        return device
+        return (device, selectedDevice)
     }
 
     private func buildEffectiveTuning(for deviceInfo: MTPDeviceInfo, flags: Flags) async throws -> EffectiveTuning {
@@ -460,7 +711,7 @@ struct CollectCommand {
             fingerprint: fingerprint,
             capabilities: capabilities,
             strict: flags.strict,
-            safe: flags.safe
+            safe: !flags.strict
         )
     }
 
@@ -545,26 +796,6 @@ struct CollectCommand {
         }
     }
 
-    /// Helper function to add timeout to async operations
-    private func withTimeout<T>(seconds: UInt64, operation: @escaping () async throws -> T) async throws -> T {
-        try await withThrowingTaskGroup(of: T.self) { group in
-            // Add timeout task
-            group.addTask {
-                try await Task.sleep(nanoseconds: seconds * 1_000_000_000)
-                throw MTPError.preconditionFailed("Operation timed out after \(seconds) seconds")
-            }
-
-            // Add main operation task
-            group.addTask {
-                try await operation()
-            }
-
-            // Wait for first completion and cancel the other
-            let result = try await group.next()!
-            group.cancelAll()
-            return result
-        }
-    }
 
     private func collectUSBDump() async throws -> String {
         // Add 90s timeout to prevent hangs during USB enumeration
@@ -588,28 +819,55 @@ struct CollectCommand {
 
             // Sanitize the USB dump for privacy with comprehensive patterns
             let patterns: [(String, String)] = [
-                // Serial numbers in various formats
+                // Serial numbers in various formats - expanded coverage
                 (#"(?im)^(\s*Serial Number:\s*)(\S+)$"#, "$1<redacted>"),
                 (#"(?im)^(\s*iSerial\s+)(\S+)$"#, "$1<redacted>"),
                 (#"(?im)^(\s*Serial:\s*)(\S+)$"#, "$1<redacted>"),
+                (#"(?im)^(\s*SN[:=]\s*)(\S+)$"#, "$1<redacted>"),
+                (#"(?im)\b(iSerialNumber|iSerial)\s*[=:]\s*([A-Za-z0-9:_\-.]+)"#, "iSerial: <redacted>"),
 
-                // Device-friendly names that may contain personal info
+                // UDID patterns
+                (#"(?im)\bUDID\s*[=:]\s*([A-Fa-f0-9-]+)"#, "UDID: <redacted>"),
+
+                // Device-friendly names that may contain personal info - expanded
                 (#"(?im)^(\s*(Product|Manufacturer|Device Name|Model|Friendly Name):\s+)(.+)$"#, "$1<redacted>"),
+                (#"(?im)^(\s*Product:\s+)(.+)$"#, "$1<redacted>"),
+                (#"(?im)^(\s*Manufacturer:\s+)(.+)$"#, "$1<redacted>"),
+
+                // Hostnames and computer names - expanded patterns
+                (#"(?i)\b(Hostname|Computer Name|Machine Name|Host Name):\s+(.+)$"#, "$1: <redacted>"),
+                (#"(?i)\b(ComputerName|HostName|MachineName):\s+(.+)$"#, "$1: <redacted>"),
+                (#"[A-Za-z0-9_-]+'s\s+[A-Za-z0-9 _-]+"#, "<hostname-redacted>"), // "Steven's Mac mini"
+
+                // User names and owners - expanded
+                (#"(?i)\b(User Name|Owner|Author|Creator|User):\s+(.+)$"#, "$1: <redacted>"),
+                (#"(?i)\b(UserName|OwnerName|AuthorName):\s+(.+)$"#, "$1: <redacted>"),
 
                 // Absolute user paths - comprehensive coverage
                 (#"/Users/[^/\s]+"#, "/Users/<redacted>"),
                 (#"(?i)C:\\Users\\[^\\[:space:]]+"#, "C:\\Users\\<redacted>"),
                 (#"(?i)/home/[^/[:space:]]+"#, "/home/<redacted>"),
-
-                // Additional privacy-sensitive patterns
-                (#"(?i)\b(Hostname|Computer Name|Machine Name):\s+(.+)$"#, "$1: <redacted>"),
-                (#"(?i)\b(User Name|Owner|Author):\s+(.+)$"#, "$1: <redacted>"),
+                (#"(?i)/usr/home/[^/[:space:]]+"#, "/usr/home/<redacted>"),
 
                 // Network-related identifiers that might leak personal info
-                (#"(?i)\b(MAC Address|Ethernet ID|WiFi Address):\s+([0-9A-Fa-f:-]+)"#, "$1: <redacted>"),
+                (#"(?i)\b(MAC Address|Ethernet ID|WiFi Address|Bluetooth Address):\s+([0-9A-Fa-f:-]+)"#, "$1: <redacted>"),
+                (#"(?i)\b(MAC|Ethernet|WiFi|Bluetooth)[-_ ](Address|ID):\s+([0-9A-Fa-f:-]+)"#, "$1$2: <redacted>"),
 
-                // UUIDs that might be device-specific
-                (#"(?i)\b(UUID|GUID):\s+([0-9A-Fa-f-]+)"#, "$1: <redacted>")
+                // IP addresses
+                (#"\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"#, "<ip-redacted>"),
+
+                // Email addresses
+                (#"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"#, "<email-redacted>"),
+
+                // UUIDs and GUIDs - expanded
+                (#"(?i)\b(UUID|GUID|UUIDString):\s+([0-9A-Fa-f-]+)"#, "$1: <redacted>"),
+                (#"(?i)\b(uuid|guid)\s*[=:]\s*([0-9A-Fa-f-]+)"#, "$1: <redacted>"),
+
+                // Device-specific identifiers
+                (#"(?i)\b(DeviceID|HardwareID|SystemID):\s+([A-Za-z0-9_-]+)"#, "$1: <redacted>"),
+
+                // Personal device names
+                (#"(?i)\b(Device Name|Phone Name|iPhone Name|iPad Name):\s+(.+)$"#, "$1: <redacted>")
             ]
 
             // Apply all patterns
@@ -626,7 +884,7 @@ struct CollectCommand {
     }
 
     private func runBenchmarks(device: any MTPDevice, flags: Flags) async throws -> [String: URL] {
-        guard !flags.noBench && !flags.runBench.isEmpty else {
+        guard !flags.runBench.isEmpty else {
             return [:]
         }
 
@@ -813,7 +1071,7 @@ struct CollectCommand {
             ),
             consent: SubmissionManifest.ConsentInfo(
                 anonymizeSerial: true,
-                allowBench: !flags.noBench && !flags.runBench.isEmpty
+                allowBench: !flags.runBench.isEmpty
             )
         )
 

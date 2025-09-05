@@ -1445,13 +1445,8 @@ func runCollect() async {
         )
     }
 
-    do {
-        let collectCommand = CollectCommand()
-        try await collectCommand.run(flags: collectFlags)
-    } catch {
-        print("❌ Collect command failed: \(error)")
-        exit(75) // temp failure
-    }
+    let exitCode = await CollectCommand.run(flags: collectFlags)
+    exit(exitCode.rawValue)
 }
 
 func runHealth() async {
