@@ -802,6 +802,32 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     // Return data if we collected any
     return hasDataPhase ? dataInCollector.finish() : nil
   }
+
+  public func deleteObject(handle: MTPObjectHandle) async throws {
+    let command = PTPContainer(
+      length: 16,
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.deleteObject.rawValue,
+      txid: nextTx,
+      params: [handle, 0]  // handle, format code (0 = delete object regardless of format)
+    )
+    nextTx &+= 1
+
+    _ = try executeCommand(command)
+  }
+
+  public func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?) async throws {
+    let command = PTPContainer(
+      length: 20,
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.moveObject.rawValue,
+      txid: nextTx,
+      params: [handle, storage.raw, parent ?? 0xFFFFFFFF]
+    )
+    nextTx &+= 1
+
+    _ = try executeCommand(command)
+  }
 }
 
 // MARK: - Simple Data collector

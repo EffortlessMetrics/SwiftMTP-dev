@@ -87,18 +87,91 @@ public actor MTPDeviceActor: MTPDevice {
     // Note: read/write methods are implemented in DeviceActor+Transfer.swift
 
     public func delete(_ handle: MTPObjectHandle, recursive: Bool) async throws {
-        // TODO: Implement object deletion
-        throw MTPError.notSupported("Object deletion not implemented")
+        try await openIfNeeded()
+        let link = try await getMTPLink()
+
+        // Get object info to check if it's a directory
+        let objectInfo = try await link.getObjectInfos([handle])[0]
+
+        // Check if it's a directory (format code 0x3001 = Association/Directory)
+        let isDirectory = objectInfo.formatCode == 0x3001
+
+        if isDirectory && recursive {
+            // Recursively delete directory contents first
+            let contents = try await link.getObjectHandles(storage: objectInfo.storage, parent: handle)
+            for childHandle in contents {
+                try await delete(childHandle, recursive: true)
+            }
+        }
+
+        // Delete the object itself
+        try await BusyBackoff.onDeviceBusy {
+            try await link.deleteObject(handle: handle)
+        }
     }
 
     public func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {
-        // TODO: Implement object moving
-        throw MTPError.notSupported("Object moving not implemented")
+        try await openIfNeeded()
+        let link = try await getMTPLink()
+
+        // Get object info to determine storage
+        let objectInfo = try await link.getObjectInfos([handle])[0]
+
+        // Move the object
+        try await BusyBackoff.onDeviceBusy {
+            try await link.moveObject(handle: handle, to: objectInfo.storage, parent: newParent)
+        }
     }
 
     public nonisolated var events: AsyncStream<MTPEvent> {
-        // TODO: Implement event stream
-        return AsyncStream { _ in }
+        AsyncStream { continuation in
+            Task {
+                await self.startEventPolling(continuation: continuation)
+            }
+        }
+    }
+
+    private func startEventPolling(continuation: AsyncStream<MTPEvent>.Continuation) async {
+        // Only poll events if we have an event endpoint
+        guard await getMTPLinkIfAvailable() != nil else {
+            continuation.finish()
+            return
+        }
+
+        // Check if device supports events
+        do {
+            let deviceInfo = try await self.info
+            guard !deviceInfo.eventsSupported.isEmpty else {
+                continuation.finish()
+                return
+            }
+        } catch {
+            continuation.finish()
+            return
+        }
+
+        // Start polling loop
+        while !Task.isCancelled {
+            do {
+                // Poll for events (this is a simplified implementation)
+                // In a real implementation, you'd read from the event endpoint
+                try await Task.sleep(nanoseconds: 1_000_000_000) // Poll every second
+
+                // For now, we don't yield any events since event reading isn't fully implemented
+                // This would need to be implemented in the USB transport layer
+            } catch {
+                break
+            }
+        }
+
+        continuation.finish()
+    }
+
+    private func getMTPLinkIfAvailable() async -> (any MTPLink)? {
+        if let link = mtpLink {
+            return link
+        }
+        return nil
     }
 
     // MARK: - Session Management
