@@ -155,83 +155,37 @@ final class Spinner {
 }
 
 struct CollectCommand {
-    struct Flags {
-        var deviceName: String? = nil
-        var runBench: [String] = []  // e.g., ["100M", "1G"] - empty by default (no benchmarks)
-        var openPR: Bool = false
-        var nonInteractive: Bool = false
-        var strict: Bool = true      // safety default
-        var allowQuirks: Bool = false
-        var outputDir: URL? = nil
-        var targetVID: String? = nil
-        var targetPID: String? = nil
-        var targetBus: Int? = nil
-        var targetAddress: Int? = nil
-        var jsonOutput: Bool = false
-        var bundlePath: String? = nil
+    struct CollectFlags: Sendable {
+        public var strict: Bool = true           // default strict on
+        public var runBench: [String] = []       // default no bench
+        public var json: Bool = false            // --json
+        public var noninteractive: Bool = false  // --noninteractive
+        public var bundlePath: String?           // --bundle
+        public var vid: UInt16?
+        public var pid: UInt16?
+        public var bus: Int?
+        public var address: Int?
 
-        // Designated initializer with all parameters
-        init(
-            deviceName: String? = nil,
-            runBench: [String] = [],
-            openPR: Bool = false,
-            nonInteractive: Bool = false,
+        public init(
             strict: Bool = true,
-            allowQuirks: Bool = false,
-            outputDir: URL? = nil,
-            targetVID: String? = nil,
-            targetPID: String? = nil,
-            targetBus: Int? = nil,
-            targetAddress: Int? = nil,
-            jsonOutput: Bool = false,
-            bundlePath: String? = nil
+            runBench: [String] = [],
+            json: Bool = false,
+            noninteractive: Bool = false,
+            bundlePath: String? = nil,
+            vid: UInt16? = nil, pid: UInt16? = nil, bus: Int? = nil, address: Int? = nil
         ) {
-            self.deviceName = deviceName
-            self.runBench = runBench
-            self.openPR = openPR
-            self.nonInteractive = nonInteractive
             self.strict = strict
-            self.allowQuirks = allowQuirks
-            self.outputDir = outputDir
-            self.targetVID = targetVID
-            self.targetPID = targetPID
-            self.targetBus = targetBus
-            self.targetAddress = targetAddress
-            self.jsonOutput = jsonOutput
+            self.runBench = runBench
+            self.json = json
+            self.noninteractive = noninteractive
             self.bundlePath = bundlePath
+            self.vid = vid; self.pid = pid; self.bus = bus; self.address = address
         }
 
-        // Backward-compatible initializer (deprecated)
-        @available(*, deprecated, message: "Add jsonOutput: or rely on the designated initializer's default")
-        init(
-            deviceName: String? = nil,
-            runBench: [String] = [],
-            openPR: Bool = false,
-            nonInteractive: Bool = false,
-            strict: Bool = true,
-            allowQuirks: Bool = false,
-            outputDir: URL? = nil,
-            targetVID: String? = nil,
-            targetPID: String? = nil,
-            targetBus: Int? = nil,
-            targetAddress: Int? = nil,
-            bundlePath: String? = nil
-        ) {
-            self.init(
-                deviceName: deviceName,
-                runBench: runBench,
-                openPR: openPR,
-                nonInteractive: nonInteractive,
-                strict: strict,
-                allowQuirks: allowQuirks,
-                outputDir: outputDir,
-                targetVID: targetVID,
-                targetPID: targetPID,
-                targetBus: targetBus,
-                targetAddress: targetAddress,
-                jsonOutput: false,
-                bundlePath: bundlePath
-            )
+        // Backward-compat initializer (no json parameter)
+        @available(*, deprecated, message: "Use newer initializer that includes json/noninteractive/bundlePath/IDs")
+        public init(strict: Bool = true, runBench: [String] = []) {
+            self.init(strict: strict, runBench: runBench, json: false, noninteractive: false, bundlePath: nil)
         }
     }
 
@@ -391,8 +345,8 @@ struct CollectCommand {
         }
     }
 
-    static func run(flags: Flags) async -> ExitCode {
-        let json = flags.jsonOutput
+    static func run(flags: CollectFlags) async -> ExitCode {
+        let json = flags.json
 
         do {
             print("🔍 SwiftMTP Device Submission Collector")
@@ -487,11 +441,15 @@ struct CollectCommand {
                     ]
                 ] as [String: Any]
 
-                let encoder = JSONEncoder()
-                encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
-                let jsonData = try encoder.encode(jsonSummary)
-                FileHandle.standardOutput.write(jsonData)
-                FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+                do {
+                    let encoder = JSONEncoder()
+                    encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+                    let jsonData = try encoder.encode(jsonSummary)
+                    FileHandle.standardOutput.write(jsonData)
+                    FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+                } catch {
+                    fputs("{\"schemaVersion\":\"1.0\",\"type\":\"error\",\"error\":\"encoding_failed\"}\n", stderr)
+                }
             } else {
                 // Step 11: Handle PR creation or manual submission
                 if flags.openPR {
@@ -572,7 +530,7 @@ struct CollectCommand {
     }
 
     private func handleConsent(flags: Flags) async throws {
-        if flags.nonInteractive {
+        if flags.noninteractive {
             print("ℹ️  Running in non-interactive mode with default consent")
             return
         }
@@ -621,7 +579,7 @@ struct CollectCommand {
         // Filter devices based on targeting criteria
         let filteredDevices = devices.filter { device in
             // Check VID match - device.id.raw is typically in format like "0x2717:0xff10"
-            if let targetVID = flags.targetVID {
+            if let targetVID = flags.vid {
                 let parts = device.id.raw.split(separator: ":")
                 if parts.count >= 2, let deviceVID = parts.first?.dropFirst(2) { // Remove "0x" prefix
                     if deviceVID.lowercased() != targetVID.lowercased() {
@@ -631,7 +589,7 @@ struct CollectCommand {
             }
 
             // Check PID match
-            if let targetPID = flags.targetPID {
+            if let targetPID = flags.pid {
                 let parts = device.id.raw.split(separator: ":")
                 if parts.count >= 2, let devicePID = parts.last?.dropFirst(2) { // Remove "0x" prefix
                     if devicePID.lowercased() != targetPID.lowercased() {
@@ -649,9 +607,9 @@ struct CollectCommand {
 
         guard !filteredDevices.isEmpty else {
             if devices.isEmpty {
-                if flags.nonInteractive {
+                if flags.noninteractive {
                     // Exit with code 69 (unavailable) for noninteractive mode
-                    if flags.jsonOutput {
+                    if flags.json {
                         let errorOutput = [
                             "schemaVersion": "1.0.0",
                             "type": "error",
@@ -666,9 +624,9 @@ struct CollectCommand {
                 }
                 throw MTPError.notSupported("No MTP devices found. Please connect your device and ensure it's unlocked.")
             } else {
-                if flags.nonInteractive {
+                if flags.noninteractive {
                     // Exit with code 69 (unavailable) for noninteractive mode
-                    if flags.jsonOutput {
+                    if flags.json {
                         let errorOutput = [
                             "schemaVersion": "1.0.0",
                             "type": "error",
@@ -696,10 +654,10 @@ struct CollectCommand {
                 print("  \(i+1). \(device.manufacturer) \(device.model) (\(device.id.raw))")
             }
 
-            if flags.nonInteractive {
+            if flags.noninteractive {
                 if filteredDevices.count > 1 {
                     // Exit with code 64 (usage error) when multiple devices found in noninteractive mode
-                    if flags.jsonOutput {
+                    if flags.json {
                         let errorOutput = [
                             "schemaVersion": "1.0.0",
                             "type": "error",

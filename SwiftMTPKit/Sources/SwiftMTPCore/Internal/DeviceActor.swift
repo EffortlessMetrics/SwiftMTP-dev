@@ -4,15 +4,34 @@
 import Foundation
 import OSLog
 
+// Placeholder types - these should be implemented elsewhere
+struct EventPump {
+    func startIfAvailable(on link: any MTPLink) throws {
+        // Implementation needed
+    }
+}
+
+struct QuirkHooks {
+    static func execute(_ phase: String, tuning: Any, link: any MTPLink) async throws {
+        // Implementation needed
+    }
+}
+
+struct UserOverrides {
+    static nonisolated(unsafe) var current: [String: String] = [:]
+}
+
 public actor MTPDeviceActor: MTPDevice {
     public let id: MTPDeviceID
     private let transport: any MTPTransport
     private let summary: MTPDeviceSummary
-    private let config: SwiftMTPConfig
+    private var config: SwiftMTPConfig
     private var deviceInfo: MTPDeviceInfo?
     private var mtpLink: (any MTPLink)?
     private var sessionOpen = false
     let transferJournal: (any TransferJournal)?
+    private var probedCapabilities: [String: Bool] = [:]
+    private var eventPump: EventPump = EventPump()
 
     public init(id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport, config: SwiftMTPConfig = .init(), transferJournal: (any TransferJournal)? = nil) {
         self.id = id
@@ -183,97 +202,53 @@ public actor MTPDeviceActor: MTPDevice {
     internal func openIfNeeded() async throws {
         guard !sessionOpen else { return }
         let link = try await getMTPLink()
-
-        // Extract USB IDs for fingerprinting
-        let usbIDs = try await extractUSBIDs(link: link)
-
-        // Load and apply effective tuning
-        let effectiveTuning = try await buildEffectiveTuning(usbIDs: usbIDs)
-
-        // Update config with effective tuning
-        var updatedConfig = config
-        updatedConfig.transferChunkBytes = effectiveTuning.maxChunkBytes
-        updatedConfig.ioTimeoutMs = effectiveTuning.ioTimeoutMs
-        updatedConfig.handshakeTimeoutMs = effectiveTuning.handshakeTimeoutMs
-        updatedConfig.inactivityTimeoutMs = effectiveTuning.inactivityTimeoutMs
-        updatedConfig.overallDeadlineMs = effectiveTuning.overallDeadlineMs
-        updatedConfig.stabilizeMs = effectiveTuning.stabilizeMs
-
-        try await link.openUSBIfNeeded()
-        try await link.openSession(id: 1)
+        try await applyTuningAndOpenSession(link: link)
         sessionOpen = true
-
-        // Apply stabilization delay if configured
-        if effectiveTuning.stabilizeMs > 0 {
-            let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
-            if debugEnabled {
-                print("⏱️  Waiting \(effectiveTuning.stabilizeMs)ms for device stabilization…")
-            }
-            try? await Task.sleep(nanoseconds: UInt64(effectiveTuning.stabilizeMs) * 1_000_000)
-        }
-
-        // Honor quirk hooks
-        for hook in effectiveTuning.hooks where hook.phase == .postOpenSession {
-            if let delayMs = hook.delayMs {
-                try await Task.sleep(nanoseconds: UInt64(delayMs) * 1_000_000)
-            }
-        }
-
-        // TODO: Update learned profile with successful tuning
-        // LearnedStore.update(key: usbIDs.key, obs: effectiveTuning)
     }
 
-    private func extractUSBIDs(link: any MTPLink) async throws -> (vid: UInt16, pid: UInt16, bcdDevice: UInt16?, ifaceClass: UInt8?, ifaceSubclass: UInt8?, ifaceProtocol: UInt8?, key: String) {
-        // Extract USB IDs from device summary if available
-        if let vid = summary.vendorID, let pid = summary.productID {
-            // Use interface defaults for MTP (class 0x06, subclass 0x01, protocol 0x01)
-            let key = String(format: "%04x:%04x:06-01-01", vid, pid)
-            return (vid, pid, nil, 0x06, 0x01, 0x01, key)
-        }
+    private func applyTuningAndOpenSession(link: any MTPLink) async throws {
+      // 1) fingerprint (from discovery summary populated with USBIDs)
+      let fp = self.summary.fingerprint // includes vid/pid/bcd/iface triple
 
-        // Fallback for other transports
-        return (0, 0, nil, nil, nil, nil, "unknown")
+      // 2) load databases
+      let quirks = try QuirkDatabase.load()
+      let learned = LearnedStore.load(key: fp)
+
+      // 3) capability probe (you likely already computed)
+      let caps = self.probedCapabilities
+
+      // 4) merge to effective tuning
+      let tuning = EffectiveTuningBuilder.build(
+        capabilities: caps,
+        learned: learned,
+        quirk: quirks.match(fingerprint: fp),
+        overrides: UserOverrides.current // from env
+      )
+
+      // 5) apply to config (timeouts, chunk sizes, flags)
+      self.config.apply(tuning)
+
+      // 6) pre‑open hooks that run before OpenSession if any
+      try await QuirkHooks.execute(.postOpenUSB, tuning: tuning, link: link)
+
+      // 7) open session
+      try link.openSession(sessionID: 1)
+
+      // 8) post‑open stabilization
+      if self.config.stabilizeMs > 0 {
+        try await Task.sleep(nanoseconds: UInt64(self.config.stabilizeMs) * 1_000_000)
+      }
+
+      // 9) hooks that must run after OpenSession
+      try await QuirkHooks.execute(.postOpenSession, tuning: tuning, link: link)
+
+      // 10) event pump (start only after session — avoids Xiaomi wedge)
+      try self.eventPump.startIfAvailable(on: link)
+
+      // 11) successful session → update learned profile
+      try await LearnedProfileStore.shared.recordSuccess(for: fp, using: tuning)
     }
 
-    private func buildEffectiveTuning(usbIDs: (vid: UInt16, pid: UInt16, bcdDevice: UInt16?, ifaceClass: UInt8?, ifaceSubclass: UInt8?, ifaceProtocol: UInt8?, key: String)) async throws -> EffectiveTuning {
-        // Load capabilities (simplified - in practice this would probe the device)
-        let capabilities: [String: Bool] = ["partialRead": true, "partialWrite": true]
-
-        // TODO: Load learned profile
-        let learned: EffectiveTuning? = nil // LearnedStore.load(key: usbIDs.key).map { ... }
-
-        // Load static quirk
-        let db = try? QuirkDatabase.load()
-        let quirk = db?.match(
-            vid: usbIDs.vid,
-            pid: usbIDs.pid,
-            bcdDevice: usbIDs.bcdDevice,
-            ifaceClass: usbIDs.ifaceClass,
-            ifaceSubclass: usbIDs.ifaceSubclass,
-            ifaceProtocol: usbIDs.ifaceProtocol
-        )
-
-        // Parse user overrides from environment
-        let overrides = ProcessInfo.processInfo.environment["SWIFTMTP_OVERRIDES"]
-            .flatMap { parseOverrides($0) }
-
-        // Build effective tuning
-        return EffectiveTuningBuilder.build(
-            capabilities: capabilities,
-            learned: learned,
-            quirk: quirk,
-            overrides: overrides
-        )
-    }
-
-    private func parseOverrides(_ s: String) -> [String: String] {
-        var out: [String: String] = [:]
-        for pair in s.split(separator: ",") {
-            let kv = pair.split(separator: "=", maxSplits: 1).map(String.init)
-            if kv.count == 2 { out[kv[0]] = kv[1] }
-        }
-        return out
-    }
 
     // MARK: - Helper Methods
 
@@ -287,4 +262,28 @@ public actor MTPDeviceActor: MTPDevice {
         return link
     }
 
+}
+
+extension MTPDeviceActor {
+  public func delete(handle: MTPObjectHandle, recursive: Bool) async throws {
+    try await openIfNeeded()
+    if recursive, let children = try? await listAllChildren(of: handle) {
+      for kid in children { try await delete(handle: kid, recursive: true) }
+    }
+    let link = try await getMTPLink()
+    try await link.deleteObject(handle) // wraps opcode 0x100B
+  }
+
+  public func move(handle: MTPObjectHandle, to parent: MTPObjectHandle?, storage: MTPStorageID?) async throws {
+    try await openIfNeeded()
+    let link = try await getMTPLink()
+    // MoveObject (0x1019): params = [handle, parent?, storage?]
+    try await link.moveObject(handle: handle, newParent: parent ?? 0xFFFFFFFF, newStorage: storage ?? 0xFFFFFFFF)
+  }
+
+
+  private func listAllChildren(of parent: MTPObjectHandle) async throws -> [MTPObjectHandle] {
+    let infos = try await self.list(parent: parent, in: 0xFFFFFFFF).collect() // adapt to your stream API
+    return infos.map { $0.handle }
+  }
 }

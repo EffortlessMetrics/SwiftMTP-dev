@@ -22,6 +22,12 @@ public struct MTPDeviceSummary: Sendable {
   /// USB Device address
   public let address: UInt8?
 
+  /// Device fingerprint for quirk matching
+  public var fingerprint: String {
+    guard let vid = vendorID, let pid = productID else { return "unknown" }
+    return String(format: "%04x:%04x", vid, pid)
+  }
+
   /// Creates a new device summary.
   /// - Parameters:
   ///   - id: Unique device identifier
@@ -284,6 +290,12 @@ public struct SwiftMTPConfig: Sendable {
 
   /// Creates a default configuration.
   public init() {}
+
+  /// Apply effective tuning parameters to this configuration
+  mutating func apply(_ tuning: Any) {
+    // Implementation needed - apply tuning parameters to config
+    // This should update transferChunkBytes, timeouts, stabilizeMs, etc.
+  }
 }
 /// Central manager for MTP device discovery and lifecycle management.
 ///

@@ -6,6 +6,32 @@ import CLibusb
 import SwiftMTPCore
 
 /// Discovery utilities for LibUSB MTP devices
+public struct USBIDs: Sendable {
+  public let vendorID: UInt16
+  public let productID: UInt16
+  public let bcdDevice: UInt16
+  public let ifaceClass: UInt8
+  public let ifaceSubclass: UInt8
+  public let ifaceProtocol: UInt8
+}
+
+extension LibUSBDiscovery {
+  static func readIDs(device: OpaquePointer, iface: libusb_interface_descriptor) throws -> USBIDs {
+    var desc = libusb_device_descriptor()
+    guard libusb_get_device_descriptor(device, &desc) == 0 else {
+      throw NSError(domain: "LibUSB", code: -1, userInfo: [NSLocalizedDescriptionKey: "get_device_descriptor failed"])
+    }
+    return USBIDs(
+      vendorID: desc.idVendor,
+      productID: desc.idProduct,
+      bcdDevice: desc.bcdDevice,
+      ifaceClass: iface.bInterfaceClass,
+      ifaceSubclass: iface.bInterfaceSubClass,
+      ifaceProtocol: iface.bInterfaceProtocol
+    )
+  }
+}
+
 public struct LibUSBDiscovery {
     public struct USBDeviceIDs: Sendable {
       let vid: UInt16
