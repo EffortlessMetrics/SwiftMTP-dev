@@ -23,8 +23,7 @@ do {
     let profiles: [String: LearnedProfile] = [:]
 
     // Load current quirks
-    let quirksURL = URL(fileURLWithPath: quirksPath)
-    let quirkDB = try QuirkDatabase(from: quirksURL)
+    let quirkDB = try QuirkDatabase.load(pathEnv: quirksPath)
 
     // Filter profiles if specific fingerprint requested
     let profilesToAnalyze = targetFingerprint.map { fp in
@@ -41,24 +40,25 @@ do {
         print("  Last Updated: \(profile.lastUpdated.ISO8601Format())")
 
         if profile.successRate > 0.8 && profile.sampleCount >= 3 {
-            // Check if there's an existing quirk
-            if let existingQuirk = quirkDB.match(for: profile.fingerprint) {
-                print("  Existing Quirk: \(existingQuirk.id) (\(existingQuirk.status))")
+            // TODO: Check if there's an existing quirk
+            // if let existingQuirk = quirkDB.match(for: profile.fingerprint) {
+            //     print("  Existing Quirk: \(existingQuirk.id) (\(existingQuirk.status))")
 
                 // Compare learned values with quirk values
                 var suggestions = [String]()
 
-                if let learnedChunk = profile.optimalChunkSize,
-                   let quirkChunk = existingQuirk.tuning.maxChunkBytes,
-                   abs(learnedChunk - quirkChunk) > quirkChunk / 4 { // 25% difference
-                    suggestions.append("maxChunkBytes: \(quirkChunk) -> \(learnedChunk)")
-                }
+                // TODO: Compare with existing quirks
+                // if let learnedChunk = profile.optimalChunkSize,
+                //    let quirkChunk = existingQuirk.tuning.maxChunkBytes,
+                //    abs(learnedChunk - quirkChunk) > quirkChunk / 4 { // 25% difference
+                //     suggestions.append("maxChunkBytes: \(quirkChunk) -> \(learnedChunk)")
+                // }
 
-                if let learnedIO = profile.optimalIoTimeoutMs,
-                   let quirkIO = existingQuirk.tuning.ioTimeoutMs,
-                   abs(learnedIO - quirkIO) > quirkIO / 4 {
-                    suggestions.append("ioTimeoutMs: \(quirkIO) -> \(learnedIO)")
-                }
+                // if let learnedIO = profile.optimalIoTimeoutMs,
+                //    let quirkIO = existingQuirk.tuning.ioTimeoutMs,
+                //    abs(learnedIO - quirkIO) > quirkIO / 4 {
+                //     suggestions.append("ioTimeoutMs: \(quirkIO) -> \(learnedIO)")
+                // }
 
                 if !suggestions.isEmpty {
                     print("  📈 Suggestions:")

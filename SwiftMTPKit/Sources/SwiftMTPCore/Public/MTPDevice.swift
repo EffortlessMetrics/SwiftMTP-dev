@@ -13,16 +13,32 @@ public struct MTPDeviceSummary: Sendable {
   public let manufacturer: String
   /// Device model name
   public let model: String
+  /// USB Vendor ID
+  public let vendorID: UInt16?
+  /// USB Product ID
+  public let productID: UInt16?
+  /// USB Bus number
+  public let bus: UInt8?
+  /// USB Device address
+  public let address: UInt8?
 
   /// Creates a new device summary.
   /// - Parameters:
   ///   - id: Unique device identifier
   ///   - manufacturer: Device manufacturer name
   ///   - model: Device model name
-  public init(id: MTPDeviceID, manufacturer: String, model: String) {
+  ///   - vendorID: USB Vendor ID
+  ///   - productID: USB Product ID
+  ///   - bus: USB Bus number
+  ///   - address: USB Device address
+  public init(id: MTPDeviceID, manufacturer: String, model: String, vendorID: UInt16? = nil, productID: UInt16? = nil, bus: UInt8? = nil, address: UInt8? = nil) {
     self.id = id
     self.manufacturer = manufacturer
     self.model = model
+    self.vendorID = vendorID
+    self.productID = productID
+    self.bus = bus
+    self.address = address
   }
 }
 /// Events that can be emitted by an MTP device during operation.
@@ -36,6 +52,32 @@ public enum MTPEvent: Sendable {
   case objectRemoved(MTPObjectHandle)
   /// Storage information changed (capacity, free space, etc.)
   case storageInfoChanged(MTPStorageID)
+
+  /// Parse MTP event from raw PTP/MTP event container data
+  public static func fromRaw(_ data: Data) -> MTPEvent? {
+    guard data.count >= 12 else { return nil }
+    // PTP/MTP Event container: [len(4) type(2)=4 code(2) txid(4) params...]
+    let code = data.withUnsafeBytes { $0.load(fromByteOffset: 6, as: UInt16.self).littleEndian }
+    let params = data.withUnsafeBytes { ptr in
+      (0..<((data.count - 12) / 4)).map { i in
+        ptr.load(fromByteOffset: 12 + i * 4, as: UInt32.self).littleEndian
+      }
+    }
+
+    switch code {
+    case 0x4002: // ObjectAdded
+      guard let handle = params.first else { return nil }
+      return .objectAdded(handle)
+    case 0x4003: // ObjectRemoved
+      guard let handle = params.first else { return nil }
+      return .objectRemoved(handle)
+    case 0x400C: // StorageInfoChanged
+      guard let storageIdRaw = params.first else { return nil }
+      return .storageInfoChanged(MTPStorageID(raw: storageIdRaw))
+    default:
+      return nil
+    }
+  }
 }
 /// Protocol defining the interface for interacting with MTP devices.
 ///

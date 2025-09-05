@@ -11,7 +11,7 @@ let package = Package(
   products: [
     .executable(name: "simple-probe", targets: ["simple-probe"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
-    .executable(name: "learn-promote", targets: ["learn-promote"]),
+    // .executable(name: "learn-promote", targets: ["learn-promote"]),
   ],
   dependencies: [
     // Temporarily removed external dependencies to fix compatibility issues
@@ -83,9 +83,9 @@ let package = Package(
                       path: "Sources/Tools/swiftmtp-cli",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
-    .executableTarget(name: "learn-promote",
-                      dependencies: ["SwiftMTPCore"],
-                      path: "Sources/Tools/learn-promote",
-                      swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+    // .executableTarget(name: "learn-promote",
+    //                   dependencies: ["SwiftMTPCore"],
+    //                   path: "Sources/Tools/learn-promote",
+    //                   swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
   ]
 )

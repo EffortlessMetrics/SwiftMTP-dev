@@ -7,6 +7,41 @@ import SwiftMTPCore
 
 /// Discovery utilities for LibUSB MTP devices
 public struct LibUSBDiscovery {
+    public struct USBDeviceIDs: Sendable {
+      let vid: UInt16
+      let pid: UInt16
+      let bcdDevice: UInt16
+      let ifaceClass: UInt8
+      let ifaceSubclass: UInt8
+      let ifaceProtocol: UInt8
+      let bus: UInt8
+      let address: UInt8
+    }
+
+    public static func readIDs(_ dev: OpaquePointer, ifaceIndex: UInt8) throws -> USBDeviceIDs {
+      var desc = libusb_device_descriptor()
+      guard libusb_get_device_descriptor(dev, &desc) == 0 else {
+        throw NSError(domain: "LibUSB", code: 2, userInfo: [NSLocalizedDescriptionKey: "get_device_descriptor failed"])
+      }
+
+      var configDescPtr: UnsafeMutablePointer<libusb_config_descriptor>?
+      guard libusb_get_active_config_descriptor(dev, &configDescPtr) == 0, let cfg = configDescPtr?.pointee else {
+        throw NSError(domain: "LibUSB", code: 3, userInfo: [NSLocalizedDescriptionKey: "get_active_config_descriptor failed"])
+      }
+      defer { libusb_free_config_descriptor(configDescPtr) }
+
+      let iface = cfg.interface.advanced(by: Int(ifaceIndex)).pointee
+      let alt = iface.altsetting.pointee
+      let bus = libusb_get_bus_number(dev)
+      let addr = libusb_get_device_address(dev)
+
+      return USBDeviceIDs(
+        vid: desc.idVendor, pid: desc.idProduct, bcdDevice: desc.bcdDevice,
+        ifaceClass: alt.bInterfaceClass, ifaceSubclass: alt.bInterfaceSubClass, ifaceProtocol: alt.bInterfaceProtocol,
+        bus: bus, address: addr
+      )
+    }
+
     /// Enumerate all currently connected MTP devices
     public static func enumerateMTPDevices() async throws -> [MTPDeviceSummary] {
         // Use the shared context for consistency
@@ -54,7 +89,11 @@ public struct LibUSBDiscovery {
                 let summary = MTPDeviceSummary(
                     id: id,
                     manufacturer: "USB \(String(format:"%04x", desc.idVendor))",
-                    model: "USB \(String(format:"%04x", desc.idProduct))"
+                    model: "USB \(String(format:"%04x", desc.idProduct))",
+                    vendorID: desc.idVendor,
+                    productID: desc.idProduct,
+                    bus: bus,
+                    address: addr
                 )
                 summaries.append(summary)
             }
@@ -224,14 +263,59 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   private var nextTx: UInt32 = 1
   private let config: SwiftMTPConfig
 
+  // Event streaming
+  private var eventContinuation: AsyncStream<Data>.Continuation?
+  private var eventPumpTask: Task<Void, Never>?
+
+  /// Get USB device IDs for fingerprinting
+  public func getUSBIDs(ifaceIndex: UInt8 = 0) throws -> LibUSBDiscovery.USBDeviceIDs {
+    return try LibUSBDiscovery.readIDs(device, ifaceIndex: ifaceIndex)
+  }
+
   init(handle: OpaquePointer, device: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8, config: SwiftMTPConfig) {
     self.h = handle; self.device = device; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt; self.config = config
   }
 
   public func close() async {
+    // Stop event pump
+    eventPumpTask?.cancel()
+    eventPumpTask = nil
+    eventContinuation?.finish()
+    eventContinuation = nil
+
     libusb_release_interface(h, Int32(iface))
     libusb_close(h)
     libusb_unref_device(device)
+  }
+
+  /// Start event pump for interrupt IN endpoint
+  public func startEventPump() {
+    guard evtEP != 0 else { return } // No event endpoint available
+
+    let stream = AsyncStream<Data> { continuation in
+      self.eventContinuation = continuation
+    }
+
+    eventPumpTask = Task {
+      await withTaskCancellationHandler {
+        // Event pump loop
+        while !Task.isCancelled {
+          do {
+            var buf = [UInt8](repeating: 0, count: 64 * 1024) // Large enough for event data
+            let got = try bulkReadOnce(evtEP, into: &buf, max: buf.count, timeout: 1000) // 1s timeout for events
+            if got > 0 {
+              let data = Data(bytes: &buf, count: got)
+              eventContinuation?.yield(data)
+            }
+          } catch {
+            // Event read failed, but don't crash - just continue
+            try? await Task.sleep(nanoseconds: 100_000_000) // 100ms backoff
+          }
+        }
+      } onCancel: {
+        eventContinuation?.finish()
+      }
+    }
   }
 
   // MARK: - Protocol Implementation

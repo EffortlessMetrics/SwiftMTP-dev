@@ -150,17 +150,20 @@ public actor MTPDeviceActor: MTPDevice {
             return
         }
 
-        // Start polling loop
-        while !Task.isCancelled {
-            do {
-                // Poll for events (this is a simplified implementation)
-                // In a real implementation, you'd read from the event endpoint
-                try await Task.sleep(nanoseconds: 1_000_000_000) // Poll every second
+        // Start event pump in the transport layer
+        // Note: Event pump will be started when the transport is opened
+        // if it supports event streaming
 
-                // For now, we don't yield any events since event reading isn't fully implemented
-                // This would need to be implemented in the USB transport layer
-            } catch {
-                break
+        // Process events from the transport
+        let eventStream = AsyncStream<Data> { cont in
+            // This would be connected to the transport's event stream
+            // For now, we'll use a placeholder
+        }
+
+        // Process incoming events
+        for await eventData in eventStream {
+            if let event = MTPEvent.fromRaw(eventData) {
+                continuation.yield(event)
             }
         }
 
@@ -180,18 +183,96 @@ public actor MTPDeviceActor: MTPDevice {
     internal func openIfNeeded() async throws {
         guard !sessionOpen else { return }
         let link = try await getMTPLink()
+
+        // Extract USB IDs for fingerprinting
+        let usbIDs = try await extractUSBIDs(link: link)
+
+        // Load and apply effective tuning
+        let effectiveTuning = try await buildEffectiveTuning(usbIDs: usbIDs)
+
+        // Update config with effective tuning
+        var updatedConfig = config
+        updatedConfig.transferChunkBytes = effectiveTuning.maxChunkBytes
+        updatedConfig.ioTimeoutMs = effectiveTuning.ioTimeoutMs
+        updatedConfig.handshakeTimeoutMs = effectiveTuning.handshakeTimeoutMs
+        updatedConfig.inactivityTimeoutMs = effectiveTuning.inactivityTimeoutMs
+        updatedConfig.overallDeadlineMs = effectiveTuning.overallDeadlineMs
+        updatedConfig.stabilizeMs = effectiveTuning.stabilizeMs
+
         try await link.openUSBIfNeeded()
         try await link.openSession(id: 1)
         sessionOpen = true
 
-        // Apply stabilization delay if configured (e.g., for Xiaomi devices)
-        if config.stabilizeMs > 0 {
+        // Apply stabilization delay if configured
+        if effectiveTuning.stabilizeMs > 0 {
             let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
             if debugEnabled {
-                print("⏱️  Waiting \(config.stabilizeMs)ms for device stabilization…")
+                print("⏱️  Waiting \(effectiveTuning.stabilizeMs)ms for device stabilization…")
             }
-            try? await Task.sleep(nanoseconds: UInt64(config.stabilizeMs) * 1_000_000)
+            try? await Task.sleep(nanoseconds: UInt64(effectiveTuning.stabilizeMs) * 1_000_000)
         }
+
+        // Honor quirk hooks
+        for hook in effectiveTuning.hooks where hook.phase == .postOpenSession {
+            if let delayMs = hook.delayMs {
+                try await Task.sleep(nanoseconds: UInt64(delayMs) * 1_000_000)
+            }
+        }
+
+        // TODO: Update learned profile with successful tuning
+        // LearnedStore.update(key: usbIDs.key, obs: effectiveTuning)
+    }
+
+    private func extractUSBIDs(link: any MTPLink) async throws -> (vid: UInt16, pid: UInt16, bcdDevice: UInt16?, ifaceClass: UInt8?, ifaceSubclass: UInt8?, ifaceProtocol: UInt8?, key: String) {
+        // Extract USB IDs from device summary if available
+        if let vid = summary.vendorID, let pid = summary.productID {
+            // Use interface defaults for MTP (class 0x06, subclass 0x01, protocol 0x01)
+            let key = String(format: "%04x:%04x:06-01-01", vid, pid)
+            return (vid, pid, nil, 0x06, 0x01, 0x01, key)
+        }
+
+        // Fallback for other transports
+        return (0, 0, nil, nil, nil, nil, "unknown")
+    }
+
+    private func buildEffectiveTuning(usbIDs: (vid: UInt16, pid: UInt16, bcdDevice: UInt16?, ifaceClass: UInt8?, ifaceSubclass: UInt8?, ifaceProtocol: UInt8?, key: String)) async throws -> EffectiveTuning {
+        // Load capabilities (simplified - in practice this would probe the device)
+        let capabilities: [String: Bool] = ["partialRead": true, "partialWrite": true]
+
+        // TODO: Load learned profile
+        let learned: EffectiveTuning? = nil // LearnedStore.load(key: usbIDs.key).map { ... }
+
+        // Load static quirk
+        let db = try? QuirkDatabase.load()
+        let quirk = db?.match(
+            vid: usbIDs.vid,
+            pid: usbIDs.pid,
+            bcdDevice: usbIDs.bcdDevice,
+            ifaceClass: usbIDs.ifaceClass,
+            ifaceSubclass: usbIDs.ifaceSubclass,
+            ifaceProtocol: usbIDs.ifaceProtocol
+        )
+
+        // Parse user overrides from environment
+        let overrides = ProcessInfo.processInfo.environment["SWIFTMTP_OVERRIDES"]
+            .flatMap { parseOverrides($0) }
+
+        // Build effective tuning
+        return EffectiveTuningBuilder.build(
+            capabilities: capabilities,
+            learned: learned,
+            quirk: quirk,
+            overrides: overrides
+        )
+    }
+
+    private func parseOverrides(_ s: String) -> [String: String] {
+        var out: [String: String] = [:]
+        for pair in s.split(separator: ",") {
+            let kv = pair.split(separator: "=", maxSplits: 1).map(String.init)
+            if kv.count == 2 { out[kv[0]] = kv[1] }
+        }
+        return out
     }
 
     // MARK: - Helper Methods
