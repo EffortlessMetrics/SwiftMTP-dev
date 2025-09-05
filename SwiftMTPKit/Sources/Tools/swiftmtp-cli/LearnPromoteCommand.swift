@@ -73,6 +73,34 @@ struct LearnPromoteCommand {
             guard quirkSuggestion.benchGates.readMBps > 0 && quirkSuggestion.benchGates.writeMBps > 0 else {
                 throw MTPError.preconditionFailed("Bench gates must be positive values when benchmarks are present")
             }
+
+            // Require bench gates satisfied for --apply (safety rail)
+            if flags.apply {
+                // Check if benchmark files exist and contain data
+                var allBenchmarksValid = true
+                for benchFile in benchFiles {
+                    let benchURL = submissionURL.appendingPathComponent(benchFile)
+                    if !FileManager.default.fileExists(atPath: benchURL.path) {
+                        throw MTPError.preconditionFailed("Benchmark file missing: \(benchFile)")
+                    }
+
+                    // Basic validation that file has data
+                    let benchData = try String(contentsOf: benchURL)
+                    let lines = benchData.split(separator: "\n")
+                    if lines.count < 2 { // Header + at least one data row
+                        throw MTPError.preconditionFailed("Benchmark file has no data: \(benchFile)")
+                    }
+                }
+
+                print("✅ Benchmark evidence validated for promotion")
+            }
+        } else if flags.apply {
+            // No benchmarks present - require explicit override for safety
+            let maintainerOverride = ProcessInfo.processInfo.environment["MAINTAINER_OVERRIDE"]
+            if maintainerOverride != "true" {
+                throw MTPError.preconditionFailed("Cannot promote without benchmark evidence. Set MAINTAINER_OVERRIDE=true to override.")
+            }
+            print("⚠️  Promoting without benchmark evidence (MAINTAINER_OVERRIDE set)")
         }
 
         print("📦 Processing submission: \(manifest.device.vendor) \(manifest.device.model)")
@@ -224,6 +252,12 @@ struct LearnPromoteCommand {
             print("   Device: \(manifest.device.vendor) \(manifest.device.model)")
             print("   Status: experimental (can be promoted to stable after testing)")
             print("   File: \(toPath)")
+
+            // Automatic DocC regeneration (safety rail)
+            print("\n📚 Regenerating device documentation...")
+            try await regenerateDeviceDocs()
+
+            print("✅ Device documentation updated")
         } else {
             print("\n📋 Preview mode - use --apply to commit changes or --dry-run for full preview")
 
@@ -235,6 +269,35 @@ struct LearnPromoteCommand {
         }
 
         print("\n🎉 Learn-promote operation complete!")
+    }
+
+    private func regenerateDeviceDocs() async throws {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+        process.arguments = ["bash", "-c", "cd SwiftMTPKit/Sources/Tools && chmod +x docc-generator && ./docc-generator ../../../Specs/quirks.json ../../../Docs/SwiftMTP.docc/Devices"]
+
+        try process.run()
+        process.waitUntilExit()
+
+        if process.terminationStatus != 0 {
+            throw MTPError.internalError("DocC regeneration failed with exit code \(process.terminationStatus)")
+        }
+
+        // Verify no uncommitted changes
+        let gitProcess = Process()
+        gitProcess.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+        gitProcess.arguments = ["git", "diff", "--exit-code", "Docs/SwiftMTP.docc/Devices"]
+
+        do {
+            try gitProcess.run()
+            gitProcess.waitUntilExit()
+            if gitProcess.terminationStatus != 0 {
+                throw MTPError.internalError("DocC pages out of date after regeneration. Run docc-generator manually.")
+            }
+        } catch {
+            // If git diff fails, the docs are likely out of date
+            throw MTPError.internalError("Failed to verify DocC regeneration: \(error)")
+        }
     }
 
     static func printHelp() {

@@ -21,14 +21,11 @@ Ensure your MTP device is:
 The easiest way to contribute is using our automated collection tool:
 
 ```bash
-# Basic collection (no benchmarks)
-swift run swiftmtp collect --device-name "Samsung Galaxy S21"
+# 1) Strict, no write ops, noninteractive, JSON summary:
+swift run swiftmtp collect --noninteractive --strict --no-bench --json
 
-# With benchmarks for better optimization
-swift run swiftmtp collect --device-name "Samsung Galaxy S21" --run-bench 100M,1G
-
-# Automated PR creation (requires GitHub CLI)
-swift run swiftmtp collect --device-name "Samsung Galaxy S21" --run-bench 100M,1G --open-pr
+# 2) With benchmarks:
+swift run swiftmtp collect --noninteractive --strict --run-bench 100M,1G --json
 ```
 
 ### 3. Review and Submit
@@ -107,6 +104,11 @@ This will check:
 - ✅ Required files present
 - ✅ Benchmark data integrity
 - ✅ Privacy redaction applied
+
+**Privacy checklist:**
+- [ ] No personal paths, hostnames, or emails in USB dumps/logs
+- [ ] No `.salt` in commits
+- [ ] Bundle validated locally: `./scripts/validate-submission.sh Contrib/submissions/<bundle>`
 
 #### Step 5: Submit
 
@@ -295,6 +297,14 @@ swift run swiftmtp collect --trace-usb-details --device-name "Your Device"
 # Check for missing dependencies
 python3 -c "import jsonschema"  # For schema validation
 ```
+
+### Exit Codes
+
+The collect command uses standard exit codes for reliable scripting:
+
+- **0**: Success - device found and collection completed
+- **64**: Usage error - invalid arguments or conflicting selectors
+- **69**: Unavailable - no device found or device inaccessible
 
 ## Advanced Usage
 
