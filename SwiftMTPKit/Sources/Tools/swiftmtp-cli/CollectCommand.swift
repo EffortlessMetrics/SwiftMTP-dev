@@ -24,6 +24,7 @@ struct CollectCommand {
         let targetBus: Int?
         let targetAddress: Int?
         let jsonOutput: Bool
+        let bundlePath: String?
     }
 
     struct SubmissionBundle {
@@ -332,8 +333,38 @@ struct CollectCommand {
 
         guard !filteredDevices.isEmpty else {
             if devices.isEmpty {
+                if flags.nonInteractive {
+                    // Exit with code 69 (unavailable) for noninteractive mode
+                    if flags.jsonOutput {
+                        let errorOutput = [
+                            "schemaVersion": "1.0.0",
+                            "type": "error",
+                            "error": "no_devices_found",
+                            "detail": "No MTP devices found. Please connect your device and ensure it's unlocked."
+                        ] as [String: Any]
+                        let data = try JSONSerialization.data(withJSONObject: errorOutput, options: [.sortedKeys])
+                        FileHandle.standardOutput.write(data)
+                        FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+                    }
+                    exit(69) // unavailable
+                }
                 throw MTPError.notSupported("No MTP devices found. Please connect your device and ensure it's unlocked.")
             } else {
+                if flags.nonInteractive {
+                    // Exit with code 69 (unavailable) for noninteractive mode
+                    if flags.jsonOutput {
+                        let errorOutput = [
+                            "schemaVersion": "1.0.0",
+                            "type": "error",
+                            "error": "no_matching_devices",
+                            "detail": "No devices match the specified targeting criteria."
+                        ] as [String: Any]
+                        let data = try JSONSerialization.data(withJSONObject: errorOutput, options: [.sortedKeys])
+                        FileHandle.standardOutput.write(data)
+                        FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+                    }
+                    exit(69) // unavailable
+                }
                 throw MTPError.notSupported("No devices match the specified targeting criteria.")
             }
         }
@@ -350,6 +381,26 @@ struct CollectCommand {
             }
 
             if flags.nonInteractive {
+                if filteredDevices.count > 1 {
+                    // Exit with code 64 (usage error) when multiple devices found in noninteractive mode
+                    if flags.jsonOutput {
+                        let errorOutput = [
+                            "schemaVersion": "1.0.0",
+                            "type": "error",
+                            "error": "multiple_devices_noninteractive",
+                            "detail": "Multiple devices match criteria in noninteractive mode. Use --vid/--pid/--bus/--address to target specific device.",
+                            "availableDevices": filteredDevices.map { [
+                                "manufacturer": $0.manufacturer,
+                                "model": $0.model,
+                                "id": $0.id.raw
+                            ]}
+                        ] as [String: Any]
+                        let data = try JSONSerialization.data(withJSONObject: errorOutput, options: [.sortedKeys])
+                        FileHandle.standardOutput.write(data)
+                        FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+                    }
+                    exit(64) // usage error
+                }
                 selectedDevice = filteredDevices[0]
                 print("Selected first device (non-interactive mode)")
             } else {
@@ -421,121 +472,157 @@ struct CollectCommand {
     }
 
     private func collectProbeData(device: any MTPDevice, flags: Flags, salt: Data) async throws -> ProbeData {
-        let deviceInfo = try await device.info
-        let storages = try await device.storages()
+        // Add 90s timeout to prevent hangs
+        return try await withTimeout(seconds: 90) {
+            print("   📊 Gathering device information...")
+            let deviceInfo = try await device.info
+            print("   💾 Enumerating storage devices...")
+            let storages = try await device.storages()
 
-        // Create JSON probe output (similar to existing runProbeJSON)
-        let probeOutput = [
-            "schemaVersion": "1.0.0",
-            "type": "probeResult",
-            "timestamp": ISO8601DateFormatter().string(from: Date()),
-            "fingerprint": [
-                "vid": "0x2717", // TODO: Extract from actual USB descriptor
-                "pid": "0xff10", // TODO: Extract from actual USB descriptor
-                "bcdDevice": "0x0318", // TODO: Extract from actual USB descriptor
-                "iface": [
-                    "class": "0x06",
-                    "subclass": "0x01",
-                    "protocol": "0x01"
+            // Create JSON probe output (similar to existing runProbeJSON)
+            let probeOutput = [
+                "schemaVersion": "1.0.0",
+                "type": "probeResult",
+                "timestamp": ISO8601DateFormatter().string(from: Date()),
+                "fingerprint": [
+                    "vid": "0x2717", // TODO: Extract from actual USB descriptor
+                    "pid": "0xff10", // TODO: Extract from actual USB descriptor
+                    "bcdDevice": "0x0318", // TODO: Extract from actual USB descriptor
+                    "iface": [
+                        "class": "0x06",
+                        "subclass": "0x01",
+                        "protocol": "0x01"
+                    ],
+                    "endpoints": [
+                        "input": "0x81",
+                        "output": "0x01",
+                        "event": "0x82"
+                    ],
+                    "deviceInfo": [
+                        "manufacturer": deviceInfo.manufacturer,
+                        "model": deviceInfo.model,
+                        "version": "7.1.1" // TODO: Extract from device info
+                    ]
                 ],
-                "endpoints": [
-                    "input": "0x81",
-                    "output": "0x01",
-                    "event": "0x82"
+                "capabilities": [
+                    "partialRead": true,
+                    "partialWrite": true,
+                    "operations": deviceInfo.operationsSupported.map { String(format: "0x%04X", $0) },
+                    "events": deviceInfo.eventsSupported.map { String(format: "0x%04X", $0) },
+                    "storages": storages.map { [
+                        "id": String($0.id.raw),
+                        "description": $0.description,
+                        "capacityBytes": $0.capacityBytes,
+                        "freeBytes": $0.freeBytes
+                    ]}
                 ],
-                "deviceInfo": [
-                    "manufacturer": deviceInfo.manufacturer,
-                    "model": deviceInfo.model,
-                    "version": "7.1.1" // TODO: Extract from device info
-                ]
-            ],
-            "capabilities": [
-                "partialRead": true,
-                "partialWrite": true,
-                "operations": deviceInfo.operationsSupported.map { String(format: "0x%04X", $0) },
-                "events": deviceInfo.eventsSupported.map { String(format: "0x%04X", $0) },
-                "storages": storages.map { [
-                    "id": String($0.id.raw),
-                    "description": $0.description,
-                    "capacityBytes": $0.capacityBytes,
-                    "freeBytes": $0.freeBytes
-                ]}
-            ],
-            "effective": [
-                "maxChunkBytes": 2097152,
-                "ioTimeoutMs": 15000,
-                "handshakeTimeoutMs": 6000,
-                "inactivityTimeoutMs": 8000,
-                "overallDeadlineMs": 120000,
-                "stabilizeMs": 400
-            ],
-            "hooks": ["postOpenSession(+400ms)", "beforeGetStorageIDs(backoff 3×200ms, jitter 0.2)"],
-            "quirks": [[
-                "id": "detected-device",
-                "status": "experimental",
-                "confidence": "low",
-                "changes": ["maxChunkBytes": "2097152", "stabilizeMs": "400"]
-            ]],
-            "error": nil
-        ] as [String: Any?]
+                "effective": [
+                    "maxChunkBytes": 2097152,
+                    "ioTimeoutMs": 15000,
+                    "handshakeTimeoutMs": 6000,
+                    "inactivityTimeoutMs": 8000,
+                    "overallDeadlineMs": 120000,
+                    "stabilizeMs": 400
+                ],
+                "hooks": ["postOpenSession(+400ms)", "beforeGetStorageIDs(backoff 3×200ms, jitter 0.2)"],
+                "quirks": [[
+                    "id": "detected-device",
+                    "status": "experimental",
+                    "confidence": "low",
+                    "changes": ["maxChunkBytes": "2097152", "stabilizeMs": "400"]
+                ]],
+                "error": nil
+            ] as [String: Any?]
 
-        let jsonData = try JSONSerialization.data(withJSONObject: probeOutput, options: [.sortedKeys])
+            let jsonData = try JSONSerialization.data(withJSONObject: probeOutput, options: [.sortedKeys])
 
-        return ProbeData(
-            jsonData: jsonData,
-            effectiveTuning: try await buildEffectiveTuning(for: deviceInfo, flags: flags),
-            deviceInfo: deviceInfo,
-            storages: storages
-        )
+            return ProbeData(
+                jsonData: jsonData,
+                effectiveTuning: try await buildEffectiveTuning(for: deviceInfo, flags: flags),
+                deviceInfo: deviceInfo,
+                storages: storages
+            )
+        }
+    }
+
+    /// Helper function to add timeout to async operations
+    private func withTimeout<T>(seconds: UInt64, operation: @escaping () async throws -> T) async throws -> T {
+        try await withThrowingTaskGroup(of: T.self) { group in
+            // Add timeout task
+            group.addTask {
+                try await Task.sleep(nanoseconds: seconds * 1_000_000_000)
+                throw MTPError.preconditionFailed("Operation timed out after \(seconds) seconds")
+            }
+
+            // Add main operation task
+            group.addTask {
+                try await operation()
+            }
+
+            // Wait for first completion and cancel the other
+            let result = try await group.next()!
+            group.cancelAll()
+            return result
+        }
     }
 
     private func collectUSBDump() async throws -> String {
-        let usbDumper = USBDumper()
-        // Capture output by redirecting stdout temporarily
-        let pipe = Pipe()
-        let oldStdout = dup(STDOUT_FILENO)
+        // Add 90s timeout to prevent hangs during USB enumeration
+        return try await withTimeout(seconds: 90) {
+            print("   🔍 Scanning USB devices...")
+            let usbDumper = USBDumper()
+            // Capture output by redirecting stdout temporarily
+            let pipe = Pipe()
+            let oldStdout = dup(STDOUT_FILENO)
 
-        dup2(pipe.fileHandleForWriting.fileDescriptor, STDOUT_FILENO)
-        try pipe.fileHandleForWriting.close()
+            dup2(pipe.fileHandleForWriting.fileDescriptor, STDOUT_FILENO)
+            try pipe.fileHandleForWriting.close()
 
-        try await usbDumper.run()
+            try await usbDumper.run()
 
-        dup2(oldStdout, STDOUT_FILENO)
-        close(oldStdout)
+            dup2(oldStdout, STDOUT_FILENO)
+            close(oldStdout)
 
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        var usbDumpText = String(data: data, encoding: .utf8) ?? ""
+            let data = pipe.fileHandleForReading.readDataToEndOfFile()
+            var usbDumpText = String(data: data, encoding: .utf8) ?? ""
 
-        // Sanitize the USB dump for privacy
-        let patterns = [
-            // Serial numbers in various formats
-            (#"(?i)\b(Serial Number:\s*)(\S+)"#, "$1<redacted>"),
-            (#"(?i)\b(iSerial\s*)(\S+)"#, "$1<redacted>"),
-            (#"(?i)\b(Serial:\s*)(\S+)"#, "$1<redacted>"),
+            // Sanitize the USB dump for privacy with comprehensive patterns
+            let patterns: [(String, String)] = [
+                // Serial numbers in various formats
+                (#"(?im)^(\s*Serial Number:\s*)(\S+)$"#, "$1<redacted>"),
+                (#"(?im)^(\s*iSerial\s+)(\S+)$"#, "$1<redacted>"),
+                (#"(?im)^(\s*Serial:\s*)(\S+)$"#, "$1<redacted>"),
 
-            // Device-friendly names that may contain personal info
-            (#"(?i)\b(Product|Manufacturer|Device Name|Model):\s+(.+)$"#, "$1: <redacted>"),
+                // Device-friendly names that may contain personal info
+                (#"(?im)^(\s*(Product|Manufacturer|Device Name|Model|Friendly Name):\s+)(.+)$"#, "$1<redacted>"),
 
-            // Absolute user paths
-            (#"/Users/[^/[:space:]]+"#, "/Users/<redacted>"),
+                // Absolute user paths - comprehensive coverage
+                (#"/Users/[^/\s]+"#, "/Users/<redacted>"),
+                (#"(?i)C:\\Users\\[^\\[:space:]]+"#, "C:\\Users\\<redacted>"),
+                (#"(?i)/home/[^/[:space:]]+"#, "/home/<redacted>"),
 
-            // Windows user paths
-            (#"(?i)C:\\Users\\[^\\[:space:]]+"#, "C:\\Users\\<redacted>"),
+                // Additional privacy-sensitive patterns
+                (#"(?i)\b(Hostname|Computer Name|Machine Name):\s+(.+)$"#, "$1: <redacted>"),
+                (#"(?i)\b(User Name|Owner|Author):\s+(.+)$"#, "$1: <redacted>"),
 
-            // Linux home paths
-            (#"(?i)/home/[^/[:space:]]+"#, "/home/<redacted>")
-        ]
+                // Network-related identifiers that might leak personal info
+                (#"(?i)\b(MAC Address|Ethernet ID|WiFi Address):\s+([0-9A-Fa-f:-]+)"#, "$1: <redacted>"),
 
-        // Apply all patterns
-        for (pattern, replacement) in patterns {
-            usbDumpText = usbDumpText.replacingOccurrences(
-                of: pattern,
-                with: replacement,
-                options: .regularExpression
-            )
+                // UUIDs that might be device-specific
+                (#"(?i)\b(UUID|GUID):\s+([0-9A-Fa-f-]+)"#, "$1: <redacted>")
+            ]
+
+            // Apply all patterns
+            for (pattern, replacement) in patterns {
+                usbDumpText = usbDumpText.replacingOccurrences(
+                    of: pattern,
+                    with: replacement,
+                    options: .regularExpression
+                )
+            }
+
+            return usbDumpText
         }
-
-        return usbDumpText
     }
 
     private func runBenchmarks(device: any MTPDevice, flags: Flags) async throws -> [String: URL] {
@@ -545,10 +632,11 @@ struct CollectCommand {
 
         var results = [String: URL]()
 
-        for sizeStr in flags.runBench {
-            print("Running \(sizeStr) benchmark...")
+        for (index, sizeStr) in flags.runBench.enumerated() {
+            print("   🏃 Running \(sizeStr) benchmark (\(index + 1)/\(flags.runBench.count))...")
             let csvURL = try await runSingleBenchmark(device: device, size: sizeStr)
             results[sizeStr] = csvURL
+            print("   ✅ \(sizeStr) benchmark completed")
         }
 
         return results
@@ -642,39 +730,54 @@ struct CollectCommand {
         quirkSuggestion: QuirkSuggestion,
         salt: Data
     ) async throws -> SubmissionBundle {
-        // Create bundle directory
-        let contribDir = URL(fileURLWithPath: "Contrib/submissions")
-        try FileManager.default.createDirectory(at: contribDir, withIntermediateDirectories: true)
-
-        let deviceSlug = "generated-\(Int(Date().timeIntervalSince1970))"
-        let bundleDir = contribDir.appendingPathComponent(deviceSlug)
+        // Create bundle directory - use custom path if provided
+        let bundleDir: URL
+        if let customPath = flags.bundlePath {
+            bundleDir = URL(fileURLWithPath: customPath)
+        } else {
+            let contribDir = URL(fileURLWithPath: "Contrib/submissions")
+            try FileManager.default.createDirectory(at: contribDir, withIntermediateDirectories: true)
+            let deviceSlug = "generated-\(Int(Date().timeIntervalSince1970))"
+            bundleDir = contribDir.appendingPathComponent(deviceSlug)
+        }
         try FileManager.default.createDirectory(at: bundleDir, withIntermediateDirectories: true)
 
         // Write artifacts
+        print("   📄 Writing probe data...")
         let probeURL = bundleDir.appendingPathComponent("probe.json")
         try probeData.jsonData.write(to: probeURL)
 
+        print("   🔌 Writing USB dump...")
         let usbDumpURL = bundleDir.appendingPathComponent("usb-dump.txt")
         try usbDump.write(to: usbDumpURL, atomically: true, encoding: .utf8)
 
         // Copy benchmark results
         var benchFiles = [String]()
-        for (size, csvURL) in benchResults {
-            let destURL = bundleDir.appendingPathComponent("bench-\(size.lowercased()).csv")
-            try FileManager.default.copyItem(at: csvURL, to: destURL)
-            benchFiles.append("bench-\(size.lowercased()).csv")
+        if !benchResults.isEmpty {
+            print("   📊 Copying benchmark results...")
+            for (size, csvURL) in benchResults {
+                let destURL = bundleDir.appendingPathComponent("bench-\(size.lowercased()).csv")
+                try FileManager.default.copyItem(at: csvURL, to: destURL)
+                benchFiles.append("bench-\(size.lowercased()).csv")
+            }
         }
 
         // Write quirk suggestion
+        print("   🧠 Writing quirk suggestion...")
         let quirkURL = bundleDir.appendingPathComponent("quirk-suggestion.json")
         let quirkData = try JSONEncoder().encode(quirkSuggestion)
         try quirkData.write(to: quirkURL)
 
-        // Write salt
-        let saltURL = bundleDir.appendingPathComponent(".salt")
-        try salt.write(to: saltURL)
+        // Write salt to local file (never committed to git for privacy)
+        print("   🔐 Securing redaction salt...")
+        let localSaltURL = URL(fileURLWithPath: ".salt.local")
+        try salt.write(to: localSaltURL)
+
+        // Note: Salt is NOT written to bundle - it must never be committed
+        // The bundle only contains redacted data derived using the salt
 
         // Create manifest
+        print("   📋 Creating submission manifest...")
         let manifest = SubmissionManifest(
             tool: SubmissionManifest.ToolInfo(
                 version: "1.0.0-rc1", // TODO: Get from build
@@ -715,6 +818,7 @@ struct CollectCommand {
         )
 
         // Write manifest
+        print("   💾 Writing submission manifest...")
         let manifestURL = bundleDir.appendingPathComponent("submission.json")
         let manifestData = try JSONEncoder().encode(manifest)
         try manifestData.write(to: manifestURL)

@@ -28,15 +28,52 @@ struct LearnPromoteCommand {
             throw MTPError.preconditionFailed("Submission bundle not found: \(fromPath)")
         }
 
+        // Validate submission bundle structure
+        guard FileManager.default.fileExists(atPath: submissionURL.appendingPathComponent("submission.json").path) else {
+            throw MTPError.preconditionFailed("Missing submission.json in bundle")
+        }
+        guard FileManager.default.fileExists(atPath: submissionURL.appendingPathComponent("probe.json").path) else {
+            throw MTPError.preconditionFailed("Missing probe.json in bundle")
+        }
+        guard FileManager.default.fileExists(atPath: submissionURL.appendingPathComponent("quirk-suggestion.json").path) else {
+            throw MTPError.preconditionFailed("Missing quirk-suggestion.json in bundle")
+        }
+
         // Load submission manifest
         let manifestURL = submissionURL.appendingPathComponent("submission.json")
         let manifestData = try Data(contentsOf: manifestURL)
         let manifest = try JSONDecoder().decode(CollectCommand.SubmissionManifest.self, from: manifestData)
 
+        // Validate manifest structure
+        guard manifest.device.fingerprintHash.hasPrefix("sha256:") else {
+            throw MTPError.preconditionFailed("Invalid fingerprint hash format")
+        }
+        guard manifest.consent.anonymizeSerial else {
+            throw MTPError.preconditionFailed("Serial numbers must be anonymized for promotion")
+        }
+
         // Load quirk suggestion
         let quirkURL = submissionURL.appendingPathComponent("quirk-suggestion.json")
         let quirkData = try Data(contentsOf: quirkURL)
         let quirkSuggestion = try JSONDecoder().decode(CollectCommand.QuirkSuggestion.self, from: quirkData)
+
+        // Validate quirk suggestion structure
+        guard quirkSuggestion.match.vidPid.contains(":") else {
+            throw MTPError.preconditionFailed("Invalid VID:PID format in quirk suggestion")
+        }
+        guard quirkSuggestion.status == "experimental" else {
+            throw MTPError.preconditionFailed("Only experimental quirks can be promoted")
+        }
+        guard quirkSuggestion.confidence == "low" || quirkSuggestion.confidence == "medium" || quirkSuggestion.confidence == "high" else {
+            throw MTPError.preconditionFailed("Invalid confidence level: \(quirkSuggestion.confidence)")
+        }
+
+        // Validate bench gates if present
+        if let benchFiles = manifest.artifacts.bench, !benchFiles.isEmpty {
+            guard quirkSuggestion.benchGates.readMBps > 0 && quirkSuggestion.benchGates.writeMBps > 0 else {
+                throw MTPError.preconditionFailed("Bench gates must be positive values when benchmarks are present")
+            }
+        }
 
         print("📦 Processing submission: \(manifest.device.vendor) \(manifest.device.model)")
         print("   VID:PID: \(manifest.device.vendorId):\(manifest.device.productId)")
@@ -116,6 +153,22 @@ struct LearnPromoteCommand {
                 "source": "learn-promote from \(fromPath)"
             ]
         ]
+
+        // Validate quirks database structure
+        if let existingQuirks = currentQuirks["quirks"] as? [[String: Any]] {
+            // Check for duplicate VID:PID entries
+            for existingQuirk in existingQuirks {
+                if let existingMatch = existingQuirk["match"] as? [String: Any],
+                   let existingVidPid = existingMatch["vidPid"] as? String,
+                   existingVidPid == vidPidKey {
+                    if flags.apply {
+                        print("⚠️  Warning: Replacing existing quirk for \(vidPidKey)")
+                    } else {
+                        print("ℹ️  Note: Existing quirk for \(vidPidKey) will be replaced")
+                    }
+                }
+            }
+        }
 
         // Update quirks database
         var updatedQuirks = currentQuirks

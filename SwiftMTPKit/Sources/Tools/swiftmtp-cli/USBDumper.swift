@@ -9,24 +9,30 @@ struct USBDumper {
   static func sanitizeTextFile(_ url: URL) throws {
       var text = String(decoding: try Data(contentsOf: url), as: UTF8.self)
 
-      // Define patterns to redact
-      let patterns = [
+      // Define comprehensive patterns to redact for privacy protection
+      let patterns: [(String, String)] = [
           // Serial numbers in various formats
-          (#"(?i)\b(Serial Number:\s*)(\S+)"#, "$1<redacted>"),
-          (#"(?i)\b(iSerial\s*)(\S+)"#, "$1<redacted>"),
-          (#"(?i)\b(Serial:\s*)(\S+)"#, "$1<redacted>"),
+          (#"(?im)^(\s*Serial Number:\s*)(\S+)$"#, "$1<redacted>"),
+          (#"(?im)^(\s*iSerial\s+)(\S+)$"#, "$1<redacted>"),
+          (#"(?im)^(\s*Serial:\s*)(\S+)$"#, "$1<redacted>"),
 
           // Device-friendly names that may contain personal info
-          (#"(?i)\b(Product|Manufacturer|Device Name|Model):\s+(.+)$"#, "$1: <redacted>"),
+          (#"(?im)^(\s*(Product|Manufacturer|Device Name|Model|Friendly Name):\s+)(.+)$"#, "$1<redacted>"),
 
-          // Absolute user paths
-          (#"/Users/[^/[:space:]]+"#, "/Users/<redacted>"),
-
-          // Windows user paths
+          // Absolute user paths - comprehensive coverage
+          (#"/Users/[^/\s]+"#, "/Users/<redacted>"),
           (#"(?i)C:\\Users\\[^\\[:space:]]+"#, "C:\\Users\\<redacted>"),
+          (#"(?i)/home/[^/[:space:]]+"#, "/home/<redacted>"),
 
-          // Linux home paths
-          (#"(?i)/home/[^/[:space:]]+"#, "/home/<redacted>")
+          // Additional privacy-sensitive patterns
+          (#"(?i)\b(Hostname|Computer Name|Machine Name):\s+(.+)$"#, "$1: <redacted>"),
+          (#"(?i)\b(User Name|Owner|Author):\s+(.+)$"#, "$1: <redacted>"),
+
+          // Network-related identifiers that might leak personal info
+          (#"(?i)\b(MAC Address|Ethernet ID|WiFi Address):\s+([0-9A-Fa-f:-]+)"#, "$1: <redacted>"),
+
+          // UUIDs that might be device-specific
+          (#"(?i)\b(UUID|GUID):\s+([0-9A-Fa-f-]+)"#, "$1: <redacted>")
       ]
 
       // Apply all patterns
