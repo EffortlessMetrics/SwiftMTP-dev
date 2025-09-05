@@ -9,6 +9,71 @@ import CommonCrypto
 
 // MARK: - Shared Utilities
 
+struct DeviceFilter: Sendable {
+  var vid: UInt16?
+  var pid: UInt16?
+  var bus: UInt8?
+  var address: UInt8?
+}
+
+func parseDeviceFilter(_ args: inout [String]) -> DeviceFilter {
+  func take(_ name: String) -> String? {
+    guard let i = args.firstIndex(of: name), i+1 < args.count else { return nil }
+    let v = args[i+1]; args.removeSubrange(i...i+1); return v
+  }
+  var f = DeviceFilter()
+  if let s = take("--vid")     { f.vid = UInt16(s, radix: 16) ?? UInt16(s) }
+  if let s = take("--pid")     { f.pid = UInt16(s, radix: 16) ?? UInt16(s) }
+  if let s = take("--bus")     { f.bus = UInt8(s) }
+  if let s = take("--address") { f.address = UInt8(s) }
+  return f
+}
+
+func selectDevice(using filter: DeviceFilter, from all: [MTPDeviceSummary], noninteractive: Bool) throws -> MTPDeviceSummary {
+  let filtered = all.filter { s in
+    if let v = filter.vid, s.vendorID != v { return false }
+    if let p = filter.pid, s.productID != p { return false }
+    if let b = filter.bus, s.bus != b { return false }
+    if let a = filter.address, s.address != a { return false }
+    return true
+  }
+  if filtered.isEmpty {
+    print("No device matches filter", to: .stderr)
+    throw Exit.unavailable // 69
+  }
+  if filtered.count > 1 && noninteractive {
+    print("Multiple devices match filter; refine selectors (use --bus/--address)", to: .stderr)
+    throw Exit.usage // 64
+  }
+  return filtered.count == 1 ? filtered[0] : interactivePick(filtered)
+}
+
+func interactivePick(_ devices: [MTPDeviceSummary]) -> MTPDeviceSummary {
+  print("\nMultiple devices match criteria:")
+  for (i, device) in devices.enumerated() {
+    print("  \(i+1). \(device.manufacturer) \(device.model)")
+    if let vid = device.vendorID, let pid = device.productID {
+      print("      VID:PID = \(String(format: "%04x:%04x", vid, pid))")
+    }
+    if let bus = device.bus, let addr = device.address {
+      print("      Bus:Address = \(bus):\(addr)")
+    }
+  }
+  print("\nEnter device number (1-\(devices.count)): ", terminator: "")
+  fflush(stdout)
+
+  while let input = readLine(),
+        let choice = Int(input),
+        choice >= 1 && choice <= devices.count {
+    let selected = devices[choice - 1]
+    print("Selected device \(choice): \(selected.manufacturer) \(selected.model)")
+    return selected
+  }
+
+  print("Invalid selection", to: .stderr)
+  exit(64) // usage error
+}
+
 enum ExitCode: Int32 {
     case ok = 0
     case usage = 64          // EX_USAGE
