@@ -67,3 +67,14 @@ fastlane/test_output
 Contrib/submissions/**/.salt
 Contrib/submissions/**/.salt.*
 Contrib/submissions/**/.salt.local
+
+# Device contribution ephemeral
+Contrib/submissions/**/.salt
+Contrib/submissions/**/tmp/
+Contrib/submissions/**/work/
+Contrib/submissions/**/raw-*        # if you keep pre-sanitized artifacts temporarily
+
+# Local caches / learned profiles
+.var/
+.cache/
+profiles/learned/*.json
