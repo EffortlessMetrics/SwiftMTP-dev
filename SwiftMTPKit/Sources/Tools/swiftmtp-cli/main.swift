@@ -1011,6 +1011,7 @@ func printCollectHelp() {
     print("  --pid <id>             - Target specific device by Product ID (hex)")
     print("  --bus <num>            - Target device on specific USB bus")
     print("  --address <num>        - Target device at specific USB address")
+    print("  --bundle <path>        - Custom output location for submission bundle")
     print("  --json                 - Output collection summary as JSON to stdout")
     print("")
     print("Examples:")
@@ -1053,7 +1054,8 @@ func runCollect() async {
         targetPID: nil,
         targetBus: nil,
         targetAddress: nil,
-        jsonOutput: jsonOutput
+        jsonOutput: jsonOutput,
+        bundlePath: nil
     )
 
     // Apply safety defaults: strict mode and no benchmarks unless explicitly requested
@@ -1378,6 +1380,49 @@ func runCollect() async {
                     targetAddress: address
                 )
             }
+        case "--bundle":
+            // Next arg should be the bundle path
+            if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
+               nextIndex + 1 < filteredArgs.count {
+                collectFlags = CollectCommand.Flags(
+                    deviceName: collectFlags.deviceName,
+                    runBench: collectFlags.runBench,
+                    noBench: collectFlags.noBench,
+                    openPR: collectFlags.openPR,
+                    nonInteractive: collectFlags.nonInteractive,
+                    realOnly: collectFlags.realOnly,
+                    strict: collectFlags.strict,
+                    safe: collectFlags.safe,
+                    traceUSB: collectFlags.traceUSB,
+                    traceUSBDetails: collectFlags.traceUSBDetails,
+                    targetVID: collectFlags.targetVID,
+                    targetPID: collectFlags.targetPID,
+                    targetBus: collectFlags.targetBus,
+                    targetAddress: collectFlags.targetAddress,
+                    jsonOutput: collectFlags.jsonOutput,
+                    bundlePath: filteredArgs[nextIndex + 1]
+                )
+            }
+        case let arg where arg.hasPrefix("--bundle="):
+            let bundlePath = String(arg.dropFirst("--bundle=".count))
+            collectFlags = CollectCommand.Flags(
+                deviceName: collectFlags.deviceName,
+                runBench: collectFlags.runBench,
+                noBench: collectFlags.noBench,
+                openPR: collectFlags.openPR,
+                nonInteractive: collectFlags.nonInteractive,
+                realOnly: collectFlags.realOnly,
+                strict: collectFlags.strict,
+                safe: collectFlags.safe,
+                traceUSB: collectFlags.traceUSB,
+                traceUSBDetails: collectFlags.traceUSBDetails,
+                targetVID: collectFlags.targetVID,
+                targetPID: collectFlags.targetPID,
+                targetBus: collectFlags.targetBus,
+                targetAddress: collectFlags.targetAddress,
+                jsonOutput: collectFlags.jsonOutput,
+                bundlePath: bundlePath
+            )
         default:
             remainingArgs.append(arg)
         }

@@ -225,6 +225,22 @@ validate_privacy_redaction() {
         fi
     fi
 
+    # Check for unredacted iSerial entries
+    if grep -Eqi 'iSerial[[:space:]]*[A-Za-z0-9_-]+' "$usb_file"; then
+        if ! grep -qi 'iSerial[[:space:]]*<redacted>' "$usb_file"; then
+            echo -e "${RED}❌ USB dump contains unredacted iSerial entries${NC}"
+            return 1
+        fi
+    fi
+
+    # Check for unredacted Serial entries
+    if grep -Eqi '\bSerial:[[:space:]]*[A-Za-z0-9_-]+' "$usb_file"; then
+        if ! grep -qi '\bSerial:[[:space:]]*<redacted>' "$usb_file"; then
+            echo -e "${RED}❌ USB dump contains unredacted Serial entries${NC}"
+            return 1
+        fi
+    fi
+
     # Check for absolute user paths
     if grep -Eq '/Users/[^/[:space:]]+' "$usb_file"; then
         echo -e "${RED}❌ USB dump leaks local username paths${NC}"
@@ -241,6 +257,38 @@ validate_privacy_redaction() {
     if grep -Eqi '/home/[^/[:space:]]+' "$usb_file"; then
         echo -e "${RED}❌ USB dump leaks Linux username paths${NC}"
         return 1
+    fi
+
+    # Check for unredacted hostnames/computer names
+    if grep -Eqi '\b(Hostname|Computer Name|Machine Name):[[:space:]]*[A-Za-z0-9_-]+' "$usb_file"; then
+        if ! grep -qi '\b(Hostname|Computer Name|Machine Name):[[:space:]]*<redacted>' "$usb_file"; then
+            echo -e "${RED}❌ USB dump contains unredacted hostnames${NC}"
+            return 1
+        fi
+    fi
+
+    # Check for unredacted user names
+    if grep -Eqi '\b(User Name|Owner|Author):[[:space:]]*[A-Za-z0-9_-]+' "$usb_file"; then
+        if ! grep -qi '\b(User Name|Owner|Author):[[:space:]]*<redacted>' "$usb_file"; then
+            echo -e "${RED}❌ USB dump contains unredacted user names${NC}"
+            return 1
+        fi
+    fi
+
+    # Check for unredacted MAC addresses
+    if grep -Eqi '\b(MAC Address|Ethernet ID|WiFi Address):[[:space:]]*[0-9A-Fa-f:-]+' "$usb_file"; then
+        if ! grep -qi '\b(MAC Address|Ethernet ID|WiFi Address):[[:space:]]*<redacted>' "$usb_file"; then
+            echo -e "${RED}❌ USB dump contains unredacted MAC addresses${NC}"
+            return 1
+        fi
+    fi
+
+    # Check for unredacted UUIDs/GUIDs
+    if grep -Eqi '\b(UUID|GUID):[[:space:]]*[0-9A-Fa-f-]+' "$usb_file"; then
+        if ! grep -qi '\b(UUID|GUID):[[:space:]]*<redacted>' "$usb_file"; then
+            echo -e "${RED}❌ USB dump contains unredacted UUIDs/GUIDs${NC}"
+            return 1
+        fi
     fi
 
     echo -e "${GREEN}✅ Privacy redaction validated${NC}"
@@ -347,11 +395,20 @@ validate_submission() {
         done
     fi
 
-    # Check salt file
+    # Check salt file - ensure it exists but will NEVER be committed
     if [ ! -f "$salt_file" ]; then
-        echo -e "${YELLOW}⚠️  Salt file not found (used for serial redaction)${NC}"
+        echo -e "${RED}❌ Salt file not found${NC}"
+        echo -e "${RED}   Salt files are required for serial redaction but must never be committed${NC}"
+        exit 1
     else
         echo -e "${GREEN}✅ Salt file present for redaction${NC}"
+
+        # Verify salt file is not committed (privacy-critical check)
+        if git ls-files --error-unmatch "$salt_file" >/dev/null 2>&1; then
+            echo -e "${RED}❌ Salt file is committed to git - this weakens privacy guarantees${NC}"
+            echo -e "${RED}   Salt files must never be committed. Remove from git and add to .gitignore${NC}"
+            exit 1
+        fi
     fi
 
     # Validate privacy redaction in USB dump
