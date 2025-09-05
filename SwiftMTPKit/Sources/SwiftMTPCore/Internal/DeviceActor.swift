@@ -218,35 +218,39 @@ public actor MTPDeviceActor: MTPDevice {
       let caps = self.probedCapabilities
 
       // 4) merge to effective tuning
+      let learnedTuning = learned.map { EffectiveTuning(
+        maxChunkBytes: $0.maxChunkBytes,
+        ioTimeoutMs: $0.ioTimeoutMs,
+        handshakeTimeoutMs: $0.handshakeTimeoutMs,
+        inactivityTimeoutMs: $0.inactivityTimeoutMs,
+        overallDeadlineMs: $0.overallDeadlineMs,
+        stabilizeMs: 0, // StoredLearnedProfile doesn't have this
+        operations: [:],
+        hooks: []
+      )}
       let tuning = EffectiveTuningBuilder.build(
         capabilities: caps,
-        learned: learned,
-        quirk: quirks.match(fingerprint: fp),
+        learned: learnedTuning,
+        quirk: quirks.match(vid: summary.vendorID ?? 0, pid: summary.productID ?? 0, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil),
         overrides: UserOverrides.current // from env
       )
 
       // 5) apply to config (timeouts, chunk sizes, flags)
       self.config.apply(tuning)
 
-      // 6) pre‑open hooks that run before OpenSession if any
-      try await QuirkHooks.execute(.postOpenUSB, tuning: tuning, link: link)
+      // 6) open session
+      try await link.openSession(id: 1)
 
-      // 7) open session
-      try link.openSession(sessionID: 1)
-
-      // 8) post‑open stabilization
+      // 7) post‑open stabilization
       if self.config.stabilizeMs > 0 {
         try await Task.sleep(nanoseconds: UInt64(self.config.stabilizeMs) * 1_000_000)
       }
-
-      // 9) hooks that must run after OpenSession
-      try await QuirkHooks.execute(.postOpenSession, tuning: tuning, link: link)
 
       // 10) event pump (start only after session — avoids Xiaomi wedge)
       try self.eventPump.startIfAvailable(on: link)
 
       // 11) successful session → update learned profile
-      try await LearnedProfileStore.shared.recordSuccess(for: fp, using: tuning)
+      LearnedStore.update(key: fp, obs: tuning)
     }
 
 
@@ -271,19 +275,23 @@ extension MTPDeviceActor {
       for kid in children { try await delete(handle: kid, recursive: true) }
     }
     let link = try await getMTPLink()
-    try await link.deleteObject(handle) // wraps opcode 0x100B
+    try await link.deleteObject(handle: handle) // wraps opcode 0x100B
   }
 
   public func move(handle: MTPObjectHandle, to parent: MTPObjectHandle?, storage: MTPStorageID?) async throws {
     try await openIfNeeded()
     let link = try await getMTPLink()
-    // MoveObject (0x1019): params = [handle, parent?, storage?]
-    try await link.moveObject(handle: handle, newParent: parent ?? 0xFFFFFFFF, newStorage: storage ?? 0xFFFFFFFF)
+    // MoveObject (0x1019): params = [handle, storage, parent?]
+    try await link.moveObject(handle: handle, to: storage ?? MTPStorageID(raw: 0xFFFFFFFF), parent: parent)
   }
 
 
   private func listAllChildren(of parent: MTPObjectHandle) async throws -> [MTPObjectHandle] {
-    let infos = try await self.list(parent: parent, in: 0xFFFFFFFF).collect() // adapt to your stream API
-    return infos.map { $0.handle }
+    let storageID = MTPStorageID(raw: 0xFFFFFFFF) // Use all storages
+    var allInfos: [MTPObjectInfo] = []
+    for try await batch in self.list(parent: parent, in: storageID) {
+      allInfos.append(contentsOf: batch)
+    }
+    return allInfos.map { $0.handle }
   }
 }
