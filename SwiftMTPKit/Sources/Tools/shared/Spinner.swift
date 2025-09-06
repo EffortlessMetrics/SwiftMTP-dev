@@ -12,7 +12,7 @@ final class Spinner {
         self.message = message
         self.enabled = enabled
         #if canImport(Darwin)
-        self.isTTY = isatty(STDERR_FILENO) == 1
+        self.isTTY = isatty(STDOUT_FILENO) == 1
         #else
         self.isTTY = true
         #endif
@@ -24,7 +24,7 @@ final class Spinner {
         self.message = message
         self.enabled = !jsonMode
         #if canImport(Darwin)
-        self.isTTY = isatty(STDERR_FILENO) == 1
+        self.isTTY = isatty(STDOUT_FILENO) == 1
         #else
         self.isTTY = true
         #endif

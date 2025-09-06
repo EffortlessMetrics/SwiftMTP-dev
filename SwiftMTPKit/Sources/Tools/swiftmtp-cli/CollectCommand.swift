@@ -4,8 +4,9 @@ import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPQuirks
 
-// Import ExitCode from SwiftMTPCore
+// Import ExitCode and exitNow from SwiftMTPCore
 import enum SwiftMTPCore.ExitCode
+import func SwiftMTPCore.exitNow
 
 // Import CLI utilities
 func printJSONErrorAndExit(_ error: any Error) -> Never {
@@ -224,7 +225,7 @@ public enum CollectCommand {
             fputs("  \(i+1). \(candidate.vid):\(candidate.pid) @ \(candidate.bus):\(candidate.address) - \(candidate.manufacturer) \(candidate.model)\n", stderr)
           }
         }
-        exit(69)
+        exitNow(.unavailable)
       }
       // never returns
     case 1:
@@ -241,7 +242,7 @@ public enum CollectCommand {
             let candidate = DeviceCandidate(from: device)
             fputs("  \(i+1). \(candidate.vid):\(candidate.pid) @ \(candidate.bus):\(candidate.address) - \(candidate.manufacturer) \(candidate.model)\n", stderr)
           }
-          exit(64)
+          exitNow(.usage)
         }
       }
       // Simple interactive choose-first fallback
