@@ -220,24 +220,24 @@ case "health":
     await runHealth()
 case "delete":
     var args = remainingArgs
-    let filter = DeviceFilterParse.parse(from: &args)
+    let filter = parseDeviceFilter(&args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
-    let exitCode = await runDeleteCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
+    let exitCode = await runDeleteCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter)
     exit(exitCode.rawValue)
 case "move":
     var args = remainingArgs
-    let filter = DeviceFilterParse.parse(from: &args)
+    let filter = parseDeviceFilter(&args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
-    let exitCode = await runMoveCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
+    let exitCode = await runMoveCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter)
     exit(exitCode.rawValue)
 case "events":
     var args = remainingArgs
-    let filter = DeviceFilterParse.parse(from: &args)
+    let filter = parseDeviceFilter(&args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
-    let exitCode = await runEventsCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
+    let exitCode = await runEventsCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter)
     exit(exitCode.rawValue)
 case "collect":
     if remainingArgs.contains("--help") || remainingArgs.contains("-h") {
@@ -268,15 +268,18 @@ func runLearnPromote() async {
     )
 
     var remainingArgs = [String]()
+    let filteredArgsCopy = filteredArgs
 
-    for arg in filteredArgs.dropFirst() { // Skip "learn-promote"
+    let argsToProcess = filteredArgsCopy.dropFirst()
+    for arg in argsToProcess { // Skip "learn-promote"
         switch arg {
         case "--from":
             // Next arg should be the from path
-            if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
-               nextIndex + 1 < filteredArgs.count {
+            let droppedArgs = filteredArgsCopy.dropFirst()
+            if let nextIndex = droppedArgs.firstIndex(of: arg),
+               nextIndex + 1 < filteredArgsCopy.count {
                 learnPromoteFlags = LearnPromoteCommand.Flags(
-                    fromPath: filteredArgs[nextIndex + 1],
+                    fromPath: filteredArgsCopy[nextIndex + 1],
                     toPath: learnPromoteFlags.toPath,
                     dryRun: learnPromoteFlags.dryRun,
                     apply: learnPromoteFlags.apply,
@@ -294,11 +297,12 @@ func runLearnPromote() async {
             )
         case "--to":
             // Next arg should be the to path
-            if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
-               nextIndex + 1 < filteredArgs.count {
+            let droppedArgs = filteredArgsCopy.dropFirst()
+            if let nextIndex = droppedArgs.firstIndex(of: arg),
+               nextIndex + 1 < filteredArgsCopy.count {
                 learnPromoteFlags = LearnPromoteCommand.Flags(
                     fromPath: learnPromoteFlags.fromPath,
-                    toPath: filteredArgs[nextIndex + 1],
+                    toPath: filteredArgsCopy[nextIndex + 1],
                     dryRun: learnPromoteFlags.dryRun,
                     apply: learnPromoteFlags.apply,
                     verbose: learnPromoteFlags.verbose
@@ -421,7 +425,16 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
         }
 
         // Select device based on targeting flags
-        let selectedDevice = try selectDevice(devices: devices, filter: DeviceFilter(vid: flags.targetVID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, pid: flags.targetPID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, bus: flags.targetBus.map { UInt8($0) }, address: flags.targetAddress.map { UInt8($0) }), noninteractive: false)
+        let selection = try selectDevice(devices, filter: DeviceFilter(vid: flags.targetVID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, pid: flags.targetPID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, bus: flags.targetBus.map { UInt8($0) }, address: flags.targetAddress.map { UInt8($0) }), noninteractive: false)
+        let selectedDevice: MTPDeviceSummary
+        switch selection {
+        case .selected(let device):
+            selectedDevice = device
+        case .none:
+            throw MTPError.notSupported("No device matches filter")
+        case .multiple:
+            throw MTPError.notSupported("Multiple devices match filter")
+        }
         log("   Opening device: \(selectedDevice.id.raw)")
 
         // USB tracing: log device details if requested
@@ -1113,10 +1126,13 @@ func printCollectHelp() {
 
 func runCollect() async {
     // Parse collect-specific flags with safety defaults
+    let strictValue = strict
+    let jsonValue = json
+    let filteredArgsCopy = filteredArgs
     var collectFlags = CollectCommand.CollectFlags(
-        strict: strict,
+        strict: strictValue,
         runBench: [],
-        json: json,
+        json: jsonValue,
         noninteractive: false,
         bundlePath: nil
     )

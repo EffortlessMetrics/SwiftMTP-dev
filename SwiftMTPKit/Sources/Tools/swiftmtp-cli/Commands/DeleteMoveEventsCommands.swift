@@ -17,14 +17,14 @@ public func runDeleteCommand(args: inout [String], json: Bool, noninteractive: B
     fputs("usage: swiftmtp delete <handle> [--recursive]\n", stderr); return .usage
   }
   let recursive = args.contains("--recursive")
-  let spinner = Spinner(enabled: !json); spinner.start("Deleting …")
+  let spinner = Spinner("Deleting …", enabled: !json); spinner.start()
   do {
     let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
     try await device.delete(handle, recursive: recursive)
     spinner.stopAndClear("✅ Deleted")
     return .ok
   } catch {
-    spinner.stopAndClear(nil)
+    spinner.stopAndClear("")
     if json { printJSONErrorAndExit("delete_failed", code: .software, details: ["error":"\(error)"]) }
     fputs("❌ delete failed: \(error)\n", stderr)
     return .software
@@ -39,14 +39,14 @@ public func runMoveCommand(args: inout [String], json: Bool, noninteractive: Boo
     if json { printJSONErrorAndExit("missing_args", code: .usage) }
     fputs("usage: swiftmtp move <handle> <new-parent-handle>\n", stderr); return .usage
   }
-  let spinner = Spinner(enabled: !json); spinner.start("Moving …")
+  let spinner = Spinner("Moving …", enabled: !json); spinner.start()
   do {
     let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
     try await device.move(handle, to: parent)
     spinner.stopAndClear("✅ Moved")
     return .ok
   } catch {
-    spinner.stopAndClear(nil)
+    spinner.stopAndClear("")
     if json { printJSONErrorAndExit("move_failed", code: .software, details: ["error":"\(error)"]) }
     fputs("❌ move failed: \(error)\n", stderr)
     return .software
@@ -56,7 +56,7 @@ public func runMoveCommand(args: inout [String], json: Bool, noninteractive: Boo
 // EVENTS (prints lines or JSONL)
 public func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter) async -> ExitCode {
   let seconds = (args.first.flatMap { Int($0) }) ?? 30
-  let spinner = Spinner(enabled: !json); spinner.start("Subscribing to events …")
+  let spinner = Spinner("Subscribing to events …", enabled: !json); spinner.start()
   do {
     let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
     spinner.stopAndClear("🔔 Listening …")
@@ -73,7 +73,7 @@ public func runEventsCommand(args: inout [String], json: Bool, noninteractive: B
     }
     return .ok
   } catch {
-    spinner.stopAndClear(nil)
+    spinner.stopAndClear("")
     if json { printJSONErrorAndExit("events_failed", code: .software, details: ["error":"\(error)"]) }
     fputs("❌ events failed: \(error)\n", stderr)
     return .software
