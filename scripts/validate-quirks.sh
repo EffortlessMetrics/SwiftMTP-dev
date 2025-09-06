@@ -91,7 +91,7 @@ echo "✅ All entry IDs are unique"
 
 # Validate bench gates against actual benchmark results
 echo "🔍 Validating bench gates..."
-jq -r '.entries[] | select(.benchGates) | {id: .id, readMin: (.benchGates.readMBpsMin // 0), writeMin: (.benchGates.writeMBpsMin // 0)}' "$QUIRKS_FILE" | while read -r entry; do
+jq -c '.entries[] | select(.benchGates) | {id: .id, readMin: (.benchGates.readMBpsMin // 0), writeMin: (.benchGates.writeMBpsMin // 0)}' "$QUIRKS_FILE" | while read -r entry; do
     id=$(echo "$entry" | jq -r '.id')
     read_min=$(echo "$entry" | jq -r '.readMin')
     write_min=$(echo "$entry" | jq -r '.writeMin')
