@@ -7,12 +7,14 @@ public struct CLIErrorEnvelope: Codable, Sendable {
   public let error: String
   public let timestamp: String
   public let details: [String:String]?
-  public init(_ error: String, details: [String:String]? = nil) {
+  public let mode: String?
+  public init(_ error: String, details: [String:String]? = nil, mode: String? = nil) {
     self.schemaVersion = "1.0"
     self.type = "error"
     self.error = error
     self.timestamp = ISO8601DateFormatter().string(from: Date())
     self.details = details
+    self.mode = mode
   }
 }
 
@@ -34,7 +36,7 @@ public func printJSON<T: Encodable>(_ value: T) {
 }
 
 @inline(__always)
-public func printJSONErrorAndExit(_ message: String, code: ExitCode = .software, details: [String:String]? = nil) -> Never {
-  printJSON(CLIErrorEnvelope(message, details: details))
+public func printJSONErrorAndExit(_ message: String, code: ExitCode = .software, details: [String:String]? = nil, mode: String? = nil) -> Never {
+  printJSON(CLIErrorEnvelope(message, details: details, mode: mode))
   exitNow(code)
 }
