@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import Foundation
 
+// Import ExitCode and exitNow from SwiftMTPCore
+import enum SwiftMTPCore.ExitCode
+import func SwiftMTPCore.exitNow
+
 public struct JSONErrorEnvelope: Codable {
   public let type = "error"
   public let schemaVersion = "1.0"
@@ -17,5 +21,28 @@ public func printJSONErrorAndExit(_ message: String) -> Never {
   } else {
     fputs("{\"type\":\"error\",\"schemaVersion\":\"1.0\",\"message\":\"encoding failed\"}\n", stderr)
   }
-  exit(70) // software error
+  exitNow(.software)
+}
+
+public func printJSONErrorAndExit(_ message: String, code: ExitCode, details: [String: String]? = nil) -> Never {
+  var errorDict: [String: Any] = [
+    "type": "error",
+    "schemaVersion": "1.0",
+    "message": message,
+    "timestamp": ISO8601DateFormatter().string(from: Date()),
+    "exitCode": code.rawValue
+  ]
+
+  if let details = details {
+    errorDict["details"] = details
+  }
+
+  let enc = JSONEncoder(); enc.outputFormatting = [.sortedKeys]
+  if let data = try? JSONSerialization.data(withJSONObject: errorDict, options: [.sortedKeys]) {
+    FileHandle.standardOutput.write(data)
+    FileHandle.standardOutput.write("\n".data(using: .utf8)!)
+  } else {
+    fputs("{\"type\":\"error\",\"schemaVersion\":\"1.0\",\"message\":\"encoding failed\"}\n", stderr)
+  }
+  exit(code.rawValue)
 }

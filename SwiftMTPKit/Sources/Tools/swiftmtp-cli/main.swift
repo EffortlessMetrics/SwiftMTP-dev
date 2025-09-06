@@ -17,6 +17,9 @@ import struct SwiftMTPCore.EndpointAddresses
 import struct SwiftMTPCore.ProbedCapabilities
 import struct SwiftMTPCore.UserOverride
 
+// Import exit code enum
+import enum SwiftMTPCore.ExitCode
+
 // CLI infrastructure is available through SwiftMTPCore module
 // Command implementations are in the same target
 
@@ -78,7 +81,7 @@ func printJSON(_ dict: [String: Any], type: String) async {
             FileHandle.standardOutput.write(data)
             FileHandle.standardOutput.write("\n".data(using: .utf8)!)
         }
-        exit(70) // internal error
+        exitNow(.software)
     }
 }
 
@@ -204,7 +207,7 @@ if filteredArgs.isEmpty {
     print("  69 - Unavailable (device not found, permission denied)")
     print("  70 - Internal error (unexpected failure)")
     print("  75 - Temporary failure (device busy/timeout)")
-    exit(0)
+    exitNow(.ok)
 }
 
 let command = filteredArgs[0]
@@ -255,19 +258,19 @@ case "events":
 case "collect":
     if remainingArgs.contains("--help") || remainingArgs.contains("-h") {
         printCollectHelp()
-        exit(0)
+        exitNow(.ok)
     }
     await runCollect()
 case "learn-promote":
     if remainingArgs.contains("--help") || remainingArgs.contains("-h") {
         LearnPromoteCommand.printHelp()
-        exit(0)
+        exitNow(.ok)
     }
     await runLearnPromote()
 default:
     print("Unknown command: \(command)")
     print("Available: probe, usb-dump, diag, storages, ls, pull, bench, mirror, quirks, health, collect, delete, move, events, learn-promote")
-    exit(64) // usage error
+    exitNow(.usage)
 }
 
 func runLearnPromote() async {
@@ -364,7 +367,7 @@ func runLearnPromote() async {
         try await learnPromoteCommand.run(flags: learnPromoteFlags)
     } catch {
         print("❌ Learn-promote command failed: \(error)")
-        exit(75) // temp failure
+        exitNow(.tempfail)
     }
 }
 
@@ -567,7 +570,7 @@ func runProbe(flags: CLIFlags) async {
         if let nsError = error as? NSError {
             log("   Error domain: \(nsError.domain), code: \(nsError.code)")
         }
-        exit(75) // temp failure
+        exitNow(.tempfail)
     }
 }
 
@@ -747,6 +750,11 @@ func runDiag(flags: CLIFlags) async {
     }
 
 func runStorages(flags: CLIFlags) async {
+    if flags.json {
+        await runStoragesJSON(flags: flags)
+        return
+    }
+
     print("📁 Getting storage devices...")
 
     do {
@@ -765,6 +773,44 @@ func runStorages(flags: CLIFlags) async {
         }
     } catch {
         print("❌ Failed to get storages: \(error)")
+        exitNow(.tempfail)
+    }
+}
+
+func runStoragesJSON(flags: CLIFlags) async {
+    struct StorageInfo: Codable {
+        let id: String
+        let description: String
+        let capacityBytes: UInt64
+        let freeBytes: UInt64
+        let usedBytes: UInt64
+        let usedPercent: Double
+    }
+
+    do {
+        let device = try await openDevice(flags: flags)
+        let storages = try await device.storages()
+
+        let storageInfos = storages.map { storage in
+            let usedBytes = storage.capacityBytes - storage.freeBytes
+            let usedPercent = Double(usedBytes) / Double(storage.capacityBytes) * 100
+            return StorageInfo(
+                id: String(storage.id.raw),
+                description: storage.description,
+                capacityBytes: storage.capacityBytes,
+                freeBytes: storage.freeBytes,
+                usedBytes: usedBytes,
+                usedPercent: usedPercent
+            )
+        }
+
+        let output = ["storages": storageInfos] as [String: Any]
+        await printJSON(output, type: "storagesResult")
+
+    } catch {
+        let errorOutput = ["error": "storages_failed", "detail": error.localizedDescription]
+        await printJSON(errorOutput, type: "storagesResult")
+        exitNow(.tempfail)
     }
 }
 
@@ -773,11 +819,11 @@ func runList(flags: CLIFlags, args: [String]) async {
         if flags.json || flags.jsonlOutput {
             let errorOutput = ["error": "usage_error", "detail": "Usage: ls <storage_handle>"]
             await printJSON(errorOutput, type: "listResult")
-            exit(64) // usage error
+            exitNow(.usage)
         } else {
             print("❌ Usage: ls <storage_handle>")
             print("   Get storage handle from 'storages' command")
-            exit(64) // usage error
+            exitNow(.usage)
         }
     }
 
@@ -810,7 +856,7 @@ func runList(flags: CLIFlags, args: [String]) async {
         print("\nTotal: \(objects.count) items")
     } catch {
         print("❌ Failed to list directory: \(error)")
-        exit(75) // temp failure
+        exitNow(.tempfail)
     }
 }
 
@@ -867,7 +913,7 @@ func runListJSON(flags: CLIFlags, storageHandle: UInt32) async {
     } catch {
         let errorOutput = ["error": "list_failed", "detail": error.localizedDescription]
         await printJSON(errorOutput, type: "listResult")
-        exit(75) // temp failure
+        exitNow(.tempfail)
     }
 }
 
@@ -995,7 +1041,7 @@ func runQuirks(args: [String]) async {
         } else {
             print("❌ Usage: quirks <subcommand>")
             print("   --explain - Show active device quirk configuration")
-            exit(64) // usage error
+            exitNow(.usage)
         }
     }
 
@@ -1008,7 +1054,7 @@ func runQuirks(args: [String]) async {
         } else {
             print("❌ Unknown quirks subcommand: \(subcommand)")
             print("   Available: --explain")
-            exit(64) // usage error
+            exitNow(.usage)
         }
     }
 }
@@ -1364,11 +1410,11 @@ func runHealth() async {
     print("")
     if allHealthy {
         print("🎉 All health checks passed!")
-        exit(0)
+        exitNow(.ok)
     } else {
         print("❌ Some health checks failed")
         print("   Check permissions, USB access, and library installation")
-        exit(69) // unavailable
+        exitNow(.unavailable)
     }
 }
 
