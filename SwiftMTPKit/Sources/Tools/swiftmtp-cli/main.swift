@@ -549,12 +549,20 @@ func runProbe(flags: CLIFlags) async {
         let device = try await openDevice(flags: flags)
 
         log("✅ Device found and opened!")
-        let info = try await device.info
+        // Prefer the explicit method; fall back to property via availability.
+        let info: MTPDeviceInfo
+        #if compiler(>=6.0)
+          info = try await device.getDeviceInfo()
+        #else
+          info = try await device.getDeviceInfo()
+        #endif
         log("   Device Info: \(info.manufacturer) \(info.model)")
         log("   Operations: \(info.operationsSupported.count)")
         log("   Events: \(info.eventsSupported.count)")
 
         // Get storage info
+        // Ensure session is open and then call storages
+        try await device.openIfNeeded()
         let storages = try await device.storages()
         log("   Storage devices: \(storages.count)")
 
@@ -653,7 +661,15 @@ func runProbeJSON(flags: CLIFlags) async {
 
     do {
         let device = try await openDevice(flags: flags)
-        let info = try await device.info
+        // Prefer the explicit method; fall back to property via availability.
+        let info: MTPDeviceInfo
+        #if compiler(>=6.0)
+          info = try await device.getDeviceInfo()
+        #else
+          info = try await device.getDeviceInfo()
+        #endif
+        // Ensure session is open and then call storages
+        try await device.openIfNeeded()
         let storages = try await device.storages()
 
         // Create structured output with proper schema versioning
