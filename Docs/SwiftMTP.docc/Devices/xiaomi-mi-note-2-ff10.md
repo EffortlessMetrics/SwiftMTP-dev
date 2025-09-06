@@ -24,6 +24,8 @@ Device-specific configuration for Xiaomi Mi Note 2 Ff10 MTP implementation.
 | Class | 0x06 |
 | Subclass | 0x01 |
 | Protocol | 0x01 |
+## Endpoints
+
 | Property | Value |
 |----------|-------|
 | Input Endpoint | 0x81 |

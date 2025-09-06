@@ -996,7 +996,10 @@ func runQuirksExplain() async {
 
     // Try to load actual quirks database and show real layers
     do {
-        let quirksURL = Bundle.main.url(forResource: "quirks", withExtension: "json")
+        // Try to find Specs/quirks.json relative to the current working directory
+        let currentDir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+        let specsURL = currentDir.appendingPathComponent("Specs/quirks.json")
+        let quirksURL = FileManager.default.fileExists(atPath: specsURL.path) ? specsURL : nil
         if let quirksURL = quirksURL {
             print("Loading quirks from: \(quirksURL.path)")
             print("")
