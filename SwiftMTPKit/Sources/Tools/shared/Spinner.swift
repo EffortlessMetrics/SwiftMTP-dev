@@ -6,11 +6,23 @@ final class Spinner {
     private var timer: DispatchSourceTimer?
     private let message: String
     private let isTTY: Bool
-    private let jsonMode: Bool
+    private let enabled: Bool
 
+    init(_ message: String, enabled: Bool = true) {
+        self.message = message
+        self.enabled = enabled
+        #if canImport(Darwin)
+        self.isTTY = isatty(STDERR_FILENO) == 1
+        #else
+        self.isTTY = true
+        #endif
+    }
+
+    // Back-compat initializer
+    @available(*, deprecated, message: "Use init(_:enabled:) instead")
     init(_ message: String, jsonMode: Bool) {
         self.message = message
-        self.jsonMode = jsonMode
+        self.enabled = !jsonMode
         #if canImport(Darwin)
         self.isTTY = isatty(STDERR_FILENO) == 1
         #else
@@ -19,7 +31,7 @@ final class Spinner {
     }
 
     func start() {
-        guard isTTY, !jsonMode else { return }
+        guard isTTY, enabled else { return }
         fputs("  \(frames[idx]) \(message)\r", stderr)
         let t = DispatchSource.makeTimerSource(queue: .global())
         t.schedule(deadline: .now(), repeating: .milliseconds(80))
@@ -35,17 +47,17 @@ final class Spinner {
 
     func succeed(_ final: String) {
         stop()
-        if isTTY, !jsonMode { fputs("  ✓ \(final)\n", stderr) }
+        if isTTY, enabled { fputs("  ✓ \(final)\n", stderr) }
     }
 
     func fail(_ final: String) {
         stop()
-        if isTTY, !jsonMode { fputs("  ✗ \(final)\n", stderr) }
+        if isTTY, enabled { fputs("  ✗ \(final)\n", stderr) }
     }
 
     private func stop() {
         timer?.cancel()
         timer = nil
-        if isTTY, !jsonMode { fputs("\r", stderr) }
+        if isTTY, enabled { fputs("\r", stderr) }
     }
 }
