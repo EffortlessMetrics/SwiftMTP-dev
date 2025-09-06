@@ -4,6 +4,7 @@
 import Foundation
 import SwiftMTPCore
 import SwiftMTPIndex
+import SwiftMTPObservability
 
 /// Result of a mirror operation
 public struct MTPSyncReport: Sendable {
@@ -30,10 +31,10 @@ public struct MTPSyncReport: Sendable {
 public final class MirrorEngine {
     private let snapshotter: Snapshotter
     private let diffEngine: DiffEngine
-    private let journal: TransferJournal
+    private let journal: SwiftMTPIndex.TransferJournal
     private let log = MTPLog.sync
 
-    public init(snapshotter: Snapshotter, diffEngine: DiffEngine, journal: TransferJournal) {
+    public init(snapshotter: Snapshotter, diffEngine: DiffEngine, journal: SwiftMTPIndex.TransferJournal) {
         self.snapshotter = snapshotter
         self.diffEngine = diffEngine
         self.journal = journal

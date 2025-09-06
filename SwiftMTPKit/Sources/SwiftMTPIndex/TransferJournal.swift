@@ -4,6 +4,9 @@
 import Foundation
 import SQLite3
 
+// SQLite constants that might not be available in all environments
+private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+
 public struct TransferRecord: Sendable {
   public let id: String
   public let deviceId: String
@@ -158,21 +161,21 @@ public final class TransferJournal: @unchecked Sendable {
     (id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt)
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?, 'active', NULL, ?)
     """
-    try exec(sql) { s in
+    try exec(sql) { [self] s in
       sqlite3_bind_text(s, 1, id, -1, SQLITE_TRANSIENT)
       sqlite3_bind_text(s, 2, deviceId, -1, SQLITE_TRANSIENT)
       sqlite3_bind_text(s, 3, kind, -1, SQLITE_TRANSIENT)
-      bindOptInt64(s, 4, handle)
-      bindOptInt64(s, 5, parentHandle)
-      bindOptText(s, 6, pathKey)
-      bindOptText(s, 7, name)
-      bindOptInt64(s, 8, totalBytes)
+      self.bindOptInt64(s, 4, handle)
+      self.bindOptInt64(s, 5, parentHandle)
+      self.bindOptText(s, 6, pathKey)
+      self.bindOptText(s, 7, name)
+      self.bindOptInt64(s, 8, totalBytes)
       sqlite3_bind_int64(s, 9, 0)
       sqlite3_bind_int(s, 10, supportsPartial ? 1 : 0)
       sqlite3_bind_null(s, 11)
       sqlite3_bind_null(s, 12)
-      bindOptText(s, 13, localTempPath)
-      bindOptText(s, 14, finalPath)
+      self.bindOptText(s, 13, localTempPath)
+      self.bindOptText(s, 14, finalPath)
       sqlite3_bind_int64(s, 15, now)
     }
   }
