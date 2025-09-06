@@ -1,32 +1,28 @@
-name: release
+name: Release
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Version tag (v1.0.0)'
-        required: true
+  push:
+    tags:
+      - "v*"
+
 jobs:
-  cut:
-    runs-on: macos-latest
+  build-macos:
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
-      - run: ./scripts/build-libusb-xcframework.sh
-      - run: ./scripts/prepare-release.sh
-      - name: Commit XCFramework and tag
+      - name: Build
+        run: swift build -c release --package-path SwiftMTPKit --product swiftmtp
+      - name: Package
         run: |
-          git config user.name "ci"
-          git config user.email "ci@example.com"
-          git add ThirdParty/CLibusb.xcframework SwiftMTPKit/Package.swift
-          git commit -m "chore(release): bundle libusb XCFramework"
-          git tag ${{ inputs.tag }}
-          git push --follow-tags
-      - name: Generate SBOM
-        uses: anchore/sbom-action@v0
-        with:
-          { path: ., format: spdx-json, output-file: sbom.spdx.json }
-      - name: Create GitHub Release
+          BIN="$(swift build -c release --package-path SwiftMTPKit --product swiftmtp --show-bin-path)/swiftmtp"
+          mkdir -p dist/${GITHUB_REF_NAME}
+          tar -C "$(dirname "$BIN")" -czf dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz swiftmtp
+          shasum -a 256 dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz > dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz.sha256
+      - name: Create draft release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ inputs.tag }}
+          draft: true
           files: |
-            sbom.spdx.json
+            dist/${{ github.ref_name }}/swiftmtp-macos-arm64.tar.gz
+            dist/${{ github.ref_name }}/swiftmtp-macos-arm64.tar.gz.sha256
+
+  # Optional: add a linux job building and attaching a linux artifact
