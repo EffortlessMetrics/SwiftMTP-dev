@@ -50,6 +50,7 @@ let package = Package(
             dependencies: ["SwiftMTPCore"],
             path: "Sources/SwiftMTPObservability"),
 
+
     // File Provider extension (excluded for now due to SwiftMTPXPC dependency)
     // .target(name: "SwiftMTPFileProvider",
     //         dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB"],
@@ -79,6 +80,7 @@ let package = Package(
                       dependencies: [
                         "SwiftMTPCore",
                         "SwiftMTPTransportLibUSB",
+                        "SwiftMTPIndex",
                         "CLibusb"
                       ],
                       path: "Sources/Tools/swiftmtp-cli",

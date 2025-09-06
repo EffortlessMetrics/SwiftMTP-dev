@@ -9,14 +9,14 @@ import CommonCrypto
 
 // MARK: - Shared Utilities
 
-struct DeviceFilter: Sendable {
+public struct DeviceFilter: Sendable {
   var vid: UInt16?
   var pid: UInt16?
   var bus: UInt8?
   var address: UInt8?
 }
 
-func parseDeviceFilter(_ args: inout [String]) -> DeviceFilter {
+public func parseDeviceFilter(_ args: inout [String]) -> DeviceFilter {
   func take(_ name: String) -> String? {
     guard let i = args.firstIndex(of: name), i+1 < args.count else { return nil }
     let v = args[i+1]; args.removeSubrange(i...i+1); return v
@@ -29,7 +29,7 @@ func parseDeviceFilter(_ args: inout [String]) -> DeviceFilter {
   return f
 }
 
-func selectDevice(using filter: DeviceFilter, from all: [MTPDeviceSummary], noninteractive: Bool) throws -> MTPDeviceSummary {
+public func selectDevice(using filter: DeviceFilter, from all: [MTPDeviceSummary], noninteractive: Bool) throws -> MTPDeviceSummary {
   let filtered = all.filter { s in
     if let v = filter.vid, s.vendorID != v { return false }
     if let p = filter.pid, s.productID != p { return false }
@@ -186,6 +186,21 @@ struct CollectCommand {
         @available(*, deprecated, message: "Use newer initializer that includes json/noninteractive/bundlePath/IDs")
         public init(strict: Bool = true, runBench: [String] = []) {
             self.init(strict: strict, runBench: runBench, json: false, noninteractive: false, bundlePath: nil)
+        }
+
+        // Backward‑compat initializer: older call‑sites used `jsonOutput`
+        @available(*, deprecated, message: "Use init(strict:runBench:json:noninteractive:bundlePath:vid:pid:bus:address:) instead.")
+        public init(jsonOutput: Bool,
+                    noninteractive: Bool = false,
+                    strict: Bool = true,
+                    runBench: [String] = [],
+                    bundlePath: String? = nil) {
+            self.init(strict: strict,
+                      runBench: runBench,
+                      json: jsonOutput,
+                      noninteractive: noninteractive,
+                      bundlePath: bundlePath,
+                      vid: nil, pid: nil, bus: nil, address: nil)
         }
     }
 

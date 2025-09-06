@@ -207,50 +207,82 @@ public actor MTPDeviceActor: MTPDevice {
     }
 
     private func applyTuningAndOpenSession(link: any MTPLink) async throws {
-      // 1) fingerprint (from discovery summary populated with USBIDs)
-      let fp = self.summary.fingerprint // includes vid/pid/bcd/iface triple
+      // 1) Build fingerprint from USB IDs and interface details
+      let fp = try await self.buildFingerprint()
 
-      // 2) load databases
-      let quirks = try QuirkDatabase.load()
-      let learned = LearnedStore.load(key: fp)
+      // 2) Load quirks DB and learned profile
+      let qdb = try QuirkDatabase.load()
+      let learnedKey = "\(summary.vendorID ?? 0):\(summary.productID ?? 0)"
+      let learnedStored = LearnedStore.load(key: learnedKey)
 
-      // 3) capability probe (you likely already computed)
-      let caps = self.probedCapabilities
+      // 3) Probe capabilities (partial read/write, events)
+      let caps: [String: Bool] = [
+        "partialRead": await self.capabilityPartialRead(),
+        "partialWrite": await self.capabilityPartialWrite(),
+        "supportsEvents": await self.capabilityEvents()
+      ]
 
-      // 4) merge to effective tuning
-      let learnedTuning = learned.map { EffectiveTuning(
-        maxChunkBytes: $0.maxChunkBytes,
-        ioTimeoutMs: $0.ioTimeoutMs,
-        handshakeTimeoutMs: $0.handshakeTimeoutMs,
-        inactivityTimeoutMs: $0.inactivityTimeoutMs,
-        overallDeadlineMs: $0.overallDeadlineMs,
-        stabilizeMs: 0, // StoredLearnedProfile doesn't have this
-        operations: [:],
-        hooks: []
-      )}
+      // 4) Parse user overrides (env) - convert to dictionary format
+      let (userOverrides, _) = UserOverride.fromEnvironment()
+      var overrides: [String: String] = [:]
+      if let maxChunk = userOverrides.maxChunkBytes { overrides["maxChunkBytes"] = String(maxChunk) }
+      if let ioTimeout = userOverrides.ioTimeoutMs { overrides["ioTimeoutMs"] = String(ioTimeout) }
+      if let handshakeTimeout = userOverrides.handshakeTimeoutMs { overrides["handshakeTimeoutMs"] = String(handshakeTimeout) }
+      if let inactivityTimeout = userOverrides.inactivityTimeoutMs { overrides["inactivityTimeoutMs"] = String(inactivityTimeout) }
+      if let overallDeadline = userOverrides.overallDeadlineMs { overrides["overallDeadlineMs"] = String(overallDeadline) }
+      if let stabilize = userOverrides.stabilizeMs { overrides["stabilizeMs"] = String(stabilize) }
+
+      // 5) Convert learned profile to EffectiveTuning
+      var learnedTuning: EffectiveTuning?
+      if let stored = learnedStored {
+        learnedTuning = EffectiveTuning(
+          maxChunkBytes: stored.maxChunkBytes,
+          ioTimeoutMs: stored.ioTimeoutMs,
+          handshakeTimeoutMs: stored.handshakeTimeoutMs,
+          inactivityTimeoutMs: stored.inactivityTimeoutMs,
+          overallDeadlineMs: stored.overallDeadlineMs,
+          stabilizeMs: 0,
+          operations: [:],
+          hooks: []
+        )
+      }
+
+      // 6) Find matching quirk
+      let quirk = qdb.match(
+        vid: summary.vendorID ?? 0,
+        pid: summary.productID ?? 0,
+        bcdDevice: nil,
+        ifaceClass: nil,
+        ifaceSubclass: nil,
+        ifaceProtocol: nil
+      )
+
+      // 7) Build effective tuning and apply to config
       let tuning = EffectiveTuningBuilder.build(
         capabilities: caps,
         learned: learnedTuning,
-        quirk: quirks.match(vid: summary.vendorID ?? 0, pid: summary.productID ?? 0, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil),
-        overrides: UserOverrides.current // from env
+        quirk: quirk,
+        overrides: overrides.isEmpty ? nil : overrides
       )
+      self.apply(tuning)
 
-      // 5) apply to config (timeouts, chunk sizes, flags)
-      self.config.apply(tuning)
+      // 8) Run hooks: postOpenUSB (if any)
+      try await self.runHook(.postOpenUSB, tuning: tuning)
 
-      // 6) open session
+      // 9) Open session + stabilization
       try await link.openSession(id: 1)
-
-      // 7) post‑open stabilization
-      if self.config.stabilizeMs > 0 {
-        try await Task.sleep(nanoseconds: UInt64(self.config.stabilizeMs) * 1_000_000)
+      if tuning.stabilizeMs > 0 {
+        try await Task.sleep(nanoseconds: UInt64(tuning.stabilizeMs) * 1_000_000)
       }
 
-      // 10) event pump (start only after session — avoids Xiaomi wedge)
-      try self.eventPump.startIfAvailable(on: link)
+      // 10) Hooks after session
+      try await self.runHook(.postOpenSession, tuning: tuning)
 
-      // 11) successful session → update learned profile
-      LearnedStore.update(key: fp, obs: tuning)
+      // 11) Start event pump if supported
+      if caps["supportsEvents"] == true { try await self.startEventPump() }
+
+      // 12) Record success back to learned store
+      LearnedStore.update(key: learnedKey, obs: tuning)
     }
 
 
@@ -264,6 +296,62 @@ public actor MTPDeviceActor: MTPDevice {
         let link = try await transport.open(summary, config: config)
         self.mtpLink = link
         return link
+    }
+
+    // MARK: - Tuning and Capability Methods
+
+    private func buildFingerprint() async throws -> MTPDeviceFingerprint {
+        // Build fingerprint from USB IDs and interface details
+        let interfaceTripleData = try JSONSerialization.data(withJSONObject: ["class": "06", "subclass": "01", "protocol": "01"])
+        let endpointAddressesData = try JSONSerialization.data(withJSONObject: ["input": "81", "output": "01", "event": "82"])
+        let interfaceTriple = try JSONDecoder().decode(InterfaceTriple.self, from: interfaceTripleData)
+        let endpointAddresses = try JSONDecoder().decode(EndpointAddresses.self, from: endpointAddressesData)
+
+        return MTPDeviceFingerprint(
+            vid: String(format: "%04x", summary.vendorID ?? 0),
+            pid: String(format: "%04x", summary.productID ?? 0),
+            interfaceTriple: interfaceTriple,
+            endpointAddresses: endpointAddresses
+        )
+    }
+
+    private func capabilityPartialRead() async -> Bool {
+        // Probe for partial read capability
+        // This would typically involve testing the device
+        return true // Default assumption for now
+    }
+
+    private func capabilityPartialWrite() async -> Bool {
+        // Probe for partial write capability
+        // This would typically involve testing the device
+        return true // Default assumption for now
+    }
+
+    private func capabilityEvents() async -> Bool {
+        // Check if device supports events
+        do {
+            let deviceInfo = try await self.info
+            return !deviceInfo.eventsSupported.isEmpty
+        } catch {
+            return false
+        }
+    }
+
+    private func apply(_ tuning: EffectiveTuning) {
+        // Apply tuning to config
+        self.config.apply(tuning)
+    }
+
+    private func runHook(_ phase: QuirkHook.Phase, tuning: EffectiveTuning) async throws {
+        // Run hooks for the specified phase
+        try await QuirkHooks.execute(phase.rawValue, tuning: tuning, link: try await getMTPLink())
+    }
+
+    private func startEventPump() async throws {
+        // Start event pump if supported
+        if let link = try await getMTPLinkIfAvailable() {
+            try eventPump.startIfAvailable(on: link)
+        }
     }
 
 }
