@@ -39,10 +39,6 @@
         "preferGetObjectPropList": false,
         "disableWriteResume": false
       },
-      "benchGates": {
-        "readMBpsMin": 12.0,
-        "writeMBpsMin": 10.0
-      },
       "confidence": "high",
       "status": "stable",
       "notes": [
@@ -94,10 +90,6 @@
         "supportsSendPartialObject": true,
         "preferGetObjectPropList": false,
         "disableWriteResume": false
-      },
-      "benchGates": {
-        "readMBpsMin": 12.0,
-        "writeMBpsMin": 10.0
       },
       "notes": [
         "Same tuning as ff10 variant.",

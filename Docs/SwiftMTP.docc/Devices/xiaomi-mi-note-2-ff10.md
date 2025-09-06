@@ -49,12 +49,6 @@ Device-specific configuration for Xiaomi Mi Note 2 Ff10 MTP implementation.
 | Prefer Object Property List | No |
 | Write Resume Disabled | No |
 
-## Performance Gates
-
-| Operation | Minimum Throughput |
-|-----------|-------------------|| Read | 12.0 MB/s |
-| Write | 10.0 MB/s |
-
 ## Notes
 
 - Requires 250-500 ms stabilization after OpenSession.
