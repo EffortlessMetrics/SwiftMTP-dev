@@ -4,49 +4,68 @@
 import Foundation
 import SwiftMTPCore
 import OSLog
+import SQLite3
 
 /// Captures device object graph into SQLite for offline browsing and diffing
 public final class Snapshotter {
-    private let db: Connection
+    private let db: SQLiteDB
     private let log = Logger(subsystem: "SwiftMTP", category: "index")
 
-    // Table definitions
-    private let devices = Table("devices")
-    private let storages = Table("storages")
-    private let objects = Table("objects")
-    private let snapshots = Table("snapshots")
+    public init(dbPath: String) throws {
+        self.db = try SQLiteDB(path: dbPath)
+        try setupSchema()
+    }
 
-    // Column expressions
-    private let deviceId = Expression<String>("id")
-    private let deviceModel = Expression<String?>("model")
-    private let deviceLastSeenAt = Expression<Int64?>("lastSeenAt")
+    private func setupSchema() throws {
+        // Devices table
+        try db.exec("""
+            CREATE TABLE IF NOT EXISTS devices(
+                id TEXT PRIMARY KEY,
+                model TEXT,
+                lastSeenAt INTEGER
+            )
+        """)
 
-    private let storageId = Expression<Int64>("id")
-    private let storageDeviceId = Expression<String>("deviceId")
-    private let storageDescription = Expression<String?>("description")
-    private let storageCapacity = Expression<Int64?>("capacity")
-    private let storageFree = Expression<Int64?>("free")
-    private let storageReadOnly = Expression<Int64?>("readOnly")
-    private let storageLastIndexedAt = Expression<Int64?>("lastIndexedAt")
+        // Storages table
+        try db.exec("""
+            CREATE TABLE IF NOT EXISTS storages(
+                id INTEGER PRIMARY KEY,
+                deviceId TEXT NOT NULL,
+                description TEXT,
+                capacity INTEGER,
+                free INTEGER,
+                readOnly INTEGER,
+                lastIndexedAt INTEGER
+            )
+        """)
 
-    private let objectDeviceId = Expression<String>("deviceId")
-    private let objectStorageId = Expression<Int64>("storageId")
-    private let objectHandle = Expression<Int64>("handle")
-    private let objectParentHandle = Expression<Int64?>("parentHandle")
-    private let objectName = Expression<String>("name")
-    private let objectPathKey = Expression<String>("pathKey")
-    private let objectSize = Expression<Int64?>("size")
-    private let objectMtime = Expression<Int64?>("mtime")
-    private let objectFormat = Expression<Int64>("format")
-    private let objectGen = Expression<Int64>("gen")
-    private let objectTombstone = Expression<Int64>("tombstone")
+        // Objects table with generation support
+        try db.exec("""
+            CREATE TABLE IF NOT EXISTS objects(
+                deviceId TEXT NOT NULL,
+                storageId INTEGER NOT NULL,
+                handle INTEGER NOT NULL,
+                parentHandle INTEGER,
+                name TEXT NOT NULL,
+                pathKey TEXT NOT NULL,
+                size INTEGER,
+                mtime INTEGER,
+                format INTEGER NOT NULL,
+                gen INTEGER NOT NULL,
+                tombstone INTEGER NOT NULL DEFAULT 0,
+                PRIMARY KEY(deviceId, handle, gen)
+            )
+        """)
 
-    private let snapshotDeviceId = Expression<String>("deviceId")
-    private let snapshotGen = Expression<Int64>("gen")
-    private let snapshotCreatedAt = Expression<Int64>("createdAt")
-
-    public init(db: Connection) {
-        self.db = db
+        // Snapshots table
+        try db.exec("""
+            CREATE TABLE IF NOT EXISTS snapshots(
+                deviceId TEXT NOT NULL,
+                gen INTEGER NOT NULL,
+                createdAt INTEGER NOT NULL,
+                PRIMARY KEY(deviceId, gen)
+            )
+        """)
     }
 
     /// Capture a complete snapshot of the device
@@ -85,23 +104,25 @@ public final class Snapshotter {
     private func captureDeviceInfo(device: any MTPDevice, deviceId: MTPDeviceID, timestamp: Date) async throws {
         let info = try await device.info
 
-        try db.run(devices.insert(or: .replace,
-            self.deviceId <- deviceId.raw,
-            deviceModel <- info.model,
-            deviceLastSeenAt <- Int64(timestamp.timeIntervalSince1970)
-        ))
+        try db.withStatement("INSERT OR REPLACE INTO devices(id, model, lastSeenAt) VALUES(?,?,?)") { stmt in
+            try db.bind(stmt, 1, deviceId.raw)
+            try db.bind(stmt, 2, info.model)
+            try db.bind(stmt, 3, Int64(timestamp.timeIntervalSince1970))
+            _ = try db.step(stmt)
+        }
     }
 
     private func captureStorageInfo(storage: MTPStorageInfo, deviceId: MTPDeviceID, timestamp: Date) async throws {
-        try db.run(storages.insert(or: .replace,
-            storageId <- Int64(storage.id.raw),
-            storageDeviceId <- deviceId.raw,
-            storageDescription <- storage.description,
-            storageCapacity <- Int64(storage.capacityBytes),
-            storageFree <- Int64(storage.freeBytes),
-            storageReadOnly <- storage.isReadOnly ? 1 : 0,
-            storageLastIndexedAt <- Int64(timestamp.timeIntervalSince1970)
-        ))
+        try db.withStatement("INSERT OR REPLACE INTO storages(id, deviceId, description, capacity, free, readOnly, lastIndexedAt) VALUES(?,?,?,?,?,?,?)") { stmt in
+            try db.bind(stmt, 1, Int64(storage.id.raw))
+            try db.bind(stmt, 2, deviceId.raw)
+            try db.bind(stmt, 3, storage.description)
+            try db.bind(stmt, 4, Int64(storage.capacityBytes))
+            try db.bind(stmt, 5, Int64(storage.freeBytes))
+            try db.bind(stmt, 6, Int64(storage.isReadOnly ? 1 : 0))
+            try db.bind(stmt, 7, Int64(timestamp.timeIntervalSince1970))
+            _ = try db.step(stmt)
+        }
     }
 
     private func captureObjects(device: any MTPDevice, storage: MTPStorageInfo, deviceId: MTPDeviceID, gen: Int) async throws {
@@ -143,24 +164,26 @@ public final class Snapshotter {
 
     private func processObjectBatch(_ objects: [MTPObjectInfo], storage: MTPStorageInfo, deviceId: MTPDeviceID, gen: Int,
                                    parentMap: [UInt32: UInt32], nameMap: [UInt32: String]) throws {
-        try db.transaction {
-            for object in objects {
-                let pathComponents = buildPathComponents(for: object.handle, parentMap: parentMap, nameMap: nameMap)
-                let pathKey = PathKey.normalize(storage: storage.id.raw, components: pathComponents)
+        for object in objects {
+            let pathComponents = buildPathComponents(for: object.handle, parentMap: parentMap, nameMap: nameMap)
+            let pathKey = PathKey.normalize(storage: storage.id.raw, components: pathComponents)
 
-                try db.run(self.objects.insert(or: .replace,
-                    objectDeviceId <- deviceId.raw,
-                    objectStorageId <- Int64(storage.id.raw),
-                    objectHandle <- Int64(object.handle),
-                    objectParentHandle <- object.parent.map { Int64($0) },
-                    objectName <- object.name,
-                    objectPathKey <- pathKey,
-                    objectSize <- object.sizeBytes.map { Int64($0) },
-                    objectMtime <- object.modified.map { Int64($0.timeIntervalSince1970) },
-                    objectFormat <- Int64(object.formatCode),
-                    objectGen <- Int64(gen),
-                    objectTombstone <- 0
-                ))
+            try db.withStatement("""
+                INSERT OR REPLACE INTO objects(deviceId, storageId, handle, parentHandle, name, pathKey, size, mtime, format, gen, tombstone)
+                VALUES(?,?,?,?,?,?,?,?,?,?,?)
+            """) { stmt in
+                try db.bind(stmt, 1, deviceId.raw)
+                try db.bind(stmt, 2, Int64(storage.id.raw))
+                try db.bind(stmt, 3, Int64(object.handle))
+                try db.bind(stmt, 4, object.parent.map { Int64($0) })
+                try db.bind(stmt, 5, object.name)
+                try db.bind(stmt, 6, pathKey)
+                try db.bind(stmt, 7, object.sizeBytes.map { Int64($0) })
+                try db.bind(stmt, 8, object.modified.map { Int64($0.timeIntervalSince1970) })
+                try db.bind(stmt, 9, Int64(object.formatCode))
+                try db.bind(stmt, 10, Int64(gen))
+                try db.bind(stmt, 11, Int64(0))
+                _ = try db.step(stmt)
             }
         }
     }
@@ -195,33 +218,31 @@ public final class Snapshotter {
     }
 
     private func markPreviousGenerationTombstoned(deviceId: MTPDeviceID, currentGen: Int) throws {
-        let previousObjects = objects.filter(
-            objectDeviceId == deviceId.raw &&
-            objectGen < Int64(currentGen) &&
-            objectTombstone == 0
-        )
-
-        try db.run(previousObjects.update(objectTombstone <- 1))
+        try db.withStatement("UPDATE objects SET tombstone = 1 WHERE deviceId = ? AND gen < ? AND tombstone = 0") { stmt in
+            try db.bind(stmt, 1, deviceId.raw)
+            try db.bind(stmt, 2, Int64(currentGen))
+            _ = try db.step(stmt)
+        }
     }
 
     private func recordSnapshot(deviceId: MTPDeviceID, gen: Int, timestamp: Date) throws {
-        try db.run(self.snapshots.insert(
-            snapshotDeviceId <- deviceId.raw,
-            snapshotGen <- Int64(gen),
-            snapshotCreatedAt <- Int64(timestamp.timeIntervalSince1970)
-        ))
+        try db.withStatement("INSERT INTO snapshots(deviceId, gen, createdAt) VALUES(?,?,?)") { stmt in
+            try db.bind(stmt, 1, deviceId.raw)
+            try db.bind(stmt, 2, Int64(gen))
+            try db.bind(stmt, 3, Int64(timestamp.timeIntervalSince1970))
+            _ = try db.step(stmt)
+        }
     }
 
     /// Get the latest snapshot generation for a device
     /// - Parameter deviceId: Device identifier
     /// - Returns: Latest generation number, or nil if no snapshots exist
     public func latestGeneration(for deviceId: MTPDeviceID) throws -> Int? {
-        let query = snapshots.filter(snapshotDeviceId == deviceId.raw)
-            .order(snapshotGen.desc)
-            .limit(1)
-
-        guard let row = try db.pluck(query) else { return nil }
-        return Int(row[snapshotGen])
+        let result = try db.withStatement("SELECT gen FROM snapshots WHERE deviceId = ? ORDER BY gen DESC LIMIT 1") { stmt -> Int64? in
+            try db.bind(stmt, 1, deviceId.raw)
+            return try db.step(stmt) ? db.colInt64(stmt, 0) : nil
+        }
+        return result.map { Int($0) }
     }
 
     /// Get the previous generation before the specified one
@@ -230,12 +251,11 @@ public final class Snapshotter {
     ///   - currentGen: Current generation
     /// - Returns: Previous generation, or nil if none exists
     public func previousGeneration(for deviceId: MTPDeviceID, before currentGen: Int) throws -> Int? {
-        let query = snapshots.filter(
-            snapshotDeviceId == deviceId.raw &&
-            snapshotGen < Int64(currentGen)
-        ).order(snapshotGen.desc).limit(1)
-
-        guard let row = try db.pluck(query) else { return nil }
-        return Int(row[snapshotGen])
+        let result = try db.withStatement("SELECT gen FROM snapshots WHERE deviceId = ? AND gen < ? ORDER BY gen DESC LIMIT 1") { stmt -> Int64? in
+            try db.bind(stmt, 1, deviceId.raw)
+            try db.bind(stmt, 2, Int64(currentGen))
+            return try db.step(stmt) ? db.colInt64(stmt, 0) : nil
+        }
+        return result.map { Int($0) }
     }
 }

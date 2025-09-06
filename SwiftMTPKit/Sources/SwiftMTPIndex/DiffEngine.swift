@@ -4,6 +4,7 @@
 import Foundation
 import SwiftMTPCore
 import OSLog
+import SQLite3
 
 /// Represents the differences between two device snapshots
 public struct MTPDiff: Sendable {
@@ -46,24 +47,11 @@ public struct MTPDiff: Sendable {
 
 /// Engine for computing differences between device snapshots
 public final class DiffEngine {
-    private let db: Connection
+    private let db: SQLiteDB
     private let log = Logger(subsystem: "SwiftMTP", category: "index")
 
-    // Table definitions
-    private let objects = Table("objects")
-
-    // Column expressions
-    private let objectDeviceId = Expression<String>("deviceId")
-    private let objectStorageId = Expression<Int64>("storageId")
-    private let objectHandle = Expression<Int64>("handle")
-    private let objectPathKey = Expression<String>("pathKey")
-    private let objectSize = Expression<Int64?>("size")
-    private let objectMtime = Expression<Int64?>("mtime")
-    private let objectFormat = Expression<Int64>("format")
-    private let objectGen = Expression<Int64>("gen")
-
-    public init(db: Connection) {
-        self.db = db
+    public init(dbPath: String) throws {
+        self.db = try SQLiteDB(path: dbPath)
     }
 
     /// Compute the differences between two snapshots
@@ -113,25 +101,25 @@ public final class DiffEngine {
     private func loadObjects(deviceId: MTPDeviceID, gen: Int?) throws -> [String: ObjectRecord] {
         guard let gen = gen else { return [:] }
 
-        let query = objects.filter(
-            objectDeviceId == deviceId.raw &&
-            objectGen == Int64(gen)
-        )
-
         var result = [String: ObjectRecord]()
 
-        for row in try db.prepare(query) {
-            let storageId = UInt32(row[objectStorageId])
-            let handle = UInt32(row[objectHandle])
-            let pathKey = String(row[objectPathKey])
-            let size = row[objectSize].map { UInt64($0) }
-            let mtime = row[objectMtime].map { Date(timeIntervalSince1970: TimeInterval($0)) }
-            let format = UInt16(row[objectFormat])
+        try db.withStatement("SELECT storageId, handle, pathKey, size, mtime, format FROM objects WHERE deviceId = ? AND gen = ?") { stmt in
+            try db.bind(stmt, 1, deviceId.raw)
+            try db.bind(stmt, 2, Int64(gen))
 
-            let row = MTPDiff.Row(handle: handle, storage: storageId, pathKey: pathKey,
-                                size: size, mtime: mtime, format: format)
-            let record = ObjectRecord(row: row, size: size, mtime: mtime)
-            result[pathKey] = record
+            while try db.step(stmt) {
+                let storageId = UInt32(db.colInt64(stmt, 0) ?? 0)
+                let handle = UInt32(db.colInt64(stmt, 1) ?? 0)
+                let pathKey = db.colText(stmt, 2) ?? ""
+                let size = db.colInt64(stmt, 3).map { UInt64($0) }
+                let mtime = db.colInt64(stmt, 4).map { Date(timeIntervalSince1970: TimeInterval($0)) }
+                let format = UInt16(db.colInt64(stmt, 5) ?? 0)
+
+                let row = MTPDiff.Row(handle: handle, storage: storageId, pathKey: pathKey,
+                                    size: size, mtime: mtime, format: format)
+                let record = ObjectRecord(row: row, size: size, mtime: mtime)
+                result[pathKey] = record
+            }
         }
 
         return result
