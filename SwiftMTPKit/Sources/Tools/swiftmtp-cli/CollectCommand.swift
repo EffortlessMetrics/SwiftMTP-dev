@@ -8,6 +8,8 @@ import SwiftMTPQuirks
 import CLibusb
 import CommonCrypto
 
+// Import CLI components for Exit enum and other utilities
+
 // MARK: - Shared Utilities
 
 public struct DeviceFilter: Sendable {
@@ -39,12 +41,12 @@ public func selectDevice(using filter: DeviceFilter, from all: [MTPDeviceSummary
     return true
   }
   if filtered.isEmpty {
-    print("No device matches filter", to: .stderr)
-    throw Exit.unavailable // 69
+    fputs("No device matches filter\n", stderr)
+    exit(69) // unavailable
   }
   if filtered.count > 1 && noninteractive {
-    print("Multiple devices match filter; refine selectors (use --bus/--address)", to: .stderr)
-    throw Exit.usage // 64
+    fputs("Multiple devices match filter; refine selectors (use --bus/--address)\n", stderr)
+    exit(64) // usage
   }
   return filtered.count == 1 ? filtered[0] : interactivePick(filtered)
 }
@@ -71,7 +73,7 @@ func interactivePick(_ devices: [MTPDeviceSummary]) -> MTPDeviceSummary {
     return selected
   }
 
-  print("Invalid selection", to: .stderr)
+  fputs("Invalid selection\n", stderr)
   exit(64) // usage error
 }
 
@@ -108,6 +110,8 @@ func withTimeout<T: Sendable>(
 // Spinner class removed - using CLISpinner from SpinnerCompat.swift
 
 struct CollectCommand {
+    typealias Flags = CollectFlags
+
     struct CollectFlags: Sendable {
         public var strict: Bool = true           // default strict on
         public var runBench: [String] = []       // default no bench
@@ -118,6 +122,7 @@ struct CollectCommand {
         public var pid: UInt16?
         public var bus: Int?
         public var address: Int?
+        public var openPR: Bool = false
 
         public init(
             strict: Bool = true,
@@ -125,14 +130,15 @@ struct CollectCommand {
             json: Bool = false,
             noninteractive: Bool = false,
             bundlePath: String? = nil,
-            vid: UInt16? = nil, pid: UInt16? = nil, bus: Int? = nil, address: Int? = nil
+            vid: UInt16? = nil, pid: UInt16? = nil, bus: Int? = nil, address: Int? = nil,
+            openPR: Bool = false
         ) {
             self.strict = strict
             self.runBench = runBench
             self.json = json
             self.noninteractive = noninteractive
             self.bundlePath = bundlePath
-            self.vid = vid; self.pid = pid; self.bus = bus; self.address = address
+            self.vid = vid; self.pid = pid; self.bus = bus; self.address = address; self.openPR = openPR
         }
 
         // Backward-compat initializer (no json parameter)
@@ -321,14 +327,14 @@ struct CollectCommand {
             print("=====================================")
 
             // Step 1: Consent and validation
-            let spin1 = Spinner("Getting consent", enabled: !json); spin1.start()
-            try await handleConsent(flags: flags)
+            var spin1 = Spinner("Getting consent", enabled: !json); spin1.start()
+            try await CollectCommand.handleConsent(flags: flags)
             spin1.succeed("Consent obtained")
 
             // Step 2: Discover and validate device
-            let spin2 = Spinner("Discovering device", enabled: !json); spin2.start()
+            var spin2 = Spinner("Discovering device", enabled: !json); spin2.start()
             let (device, deviceSummary) = try await withTimeout(seconds: 90, stepName: "device discovery") {
-                try await discoverDeviceWithSummary(flags: flags)
+                try await CollectCommand.discoverDeviceWithSummary(flags: flags)
             }
             spin2.succeed("Device discovered: \(deviceSummary.manufacturer) \(deviceSummary.model)")
 
@@ -336,37 +342,37 @@ struct CollectCommand {
             let salt = Redaction.generateSalt(count: 32)
 
             // Step 4: Collect probe data
-            let spin3 = Spinner("Collecting probe data", enabled: !json); spin3.start()
+            var spin3 = Spinner("Collecting probe data", enabled: !json); spin3.start()
             let probeData = try await withTimeout(seconds: 90, stepName: "probe collection") {
-                try await collectProbeData(device: device, flags: flags, salt: salt)
+                try await CollectCommand.collectProbeData(device: device, flags: flags, salt: salt)
             }
             spin3.succeed("Probe data collected")
 
             // Step 5: Collect USB dump
-            let spin4 = Spinner("Collecting USB dump", enabled: !json); spin4.start()
+            var spin4 = Spinner("Collecting USB dump", enabled: !json); spin4.start()
             let usbDump = try await withTimeout(seconds: 90, stepName: "USB dump") {
-                try await collectUSBDump()
+                try await CollectCommand.collectUSBDump()
             }
             spin4.succeed("USB dump collected")
 
             // Step 6: Run benchmarks (if requested)
             var benchResults = [String: URL]()
             if !flags.runBench.isEmpty {
-                let spin5 = Spinner("Running benchmarks", enabled: !json); spin5.start()
+                var spin5 = Spinner("Running benchmarks", enabled: !json); spin5.start()
                 benchResults = try await withTimeout(seconds: 90, stepName: "benchmarks") {
-                    try await runBenchmarks(device: device, flags: flags)
+                    try await CollectCommand.runBenchmarks(device: device, flags: flags)
                 }
                 spin5.succeed("Benchmarks completed")
             }
 
             // Step 7: Generate quirk suggestion
-            let spin6 = Spinner("Generating quirk suggestion", enabled: !json); spin6.start()
-            let quirkSuggestion = try await generateQuirkSuggestion(device: device, effectiveTuning: probeData.effectiveTuning)
+            var spin6 = Spinner("Generating quirk suggestion", enabled: !json); spin6.start()
+            let quirkSuggestion = try await CollectCommand.generateQuirkSuggestion(device: device, effectiveTuning: probeData.effectiveTuning)
             spin6.succeed("Quirk suggestion generated")
 
             // Step 8: Create submission bundle
-            let spin7 = Spinner("Creating submission bundle", enabled: !json); spin7.start()
-            let bundle = try await createSubmissionBundle(
+            var spin7 = Spinner("Creating submission bundle", enabled: !json); spin7.start()
+            let bundle = try await CollectCommand.createSubmissionBundle(
                 device: device,
                 flags: flags,
                 probeData: probeData,
@@ -378,8 +384,8 @@ struct CollectCommand {
             spin7.succeed("Bundle created")
 
             // Step 9: Validate bundle
-            let spin8 = Spinner("Validating bundle", enabled: !json); spin8.start()
-            try await validateBundle(bundle: bundle)
+            var spin8 = Spinner("Validating bundle", enabled: !json); spin8.start()
+            try await CollectCommand.validateBundle(bundle: bundle)
             spin8.succeed("Bundle validated")
 
             // Step 10: Handle output format
@@ -398,7 +404,7 @@ struct CollectCommand {
                         "fingerprintHash": bundle.manifest.device.fingerprintHash
                     ],
                     "artifacts": [
-                        "probe": bundle.manifest.artifacts.probe != nil,
+                        "probe": bundle.manifest.artifacts.probe != "",
                         "usbDump": bundle.manifest.artifacts.usbDump,
                         "benchmarks": bundle.manifest.artifacts.bench?.count ?? 0,
                         "quirkSuggestion": true
@@ -410,9 +416,7 @@ struct CollectCommand {
                 ] as [String: Any]
 
                 do {
-                    let encoder = JSONEncoder()
-                    encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
-                    let jsonData = try encoder.encode(jsonSummary)
+                    let jsonData = try JSONSerialization.data(withJSONObject: jsonSummary, options: [.sortedKeys])
                     FileHandle.standardOutput.write(jsonData)
                     FileHandle.standardOutput.write("\n".data(using: .utf8)!)
                 } catch {
@@ -421,9 +425,9 @@ struct CollectCommand {
             } else {
                 // Step 11: Handle PR creation or manual submission
                 if flags.openPR {
-                    try await createPullRequest(bundle: bundle)
+                    try await CollectCommand.createPullRequest(bundle: bundle)
                 } else {
-                    printManualSubmissionInstructions(bundle: bundle)
+                    CollectCommand.printManualSubmissionInstructions(bundle: bundle)
                 }
 
                 print("\n🎉 Device submission collection complete!")
@@ -497,7 +501,7 @@ struct CollectCommand {
         }
     }
 
-    private func handleConsent(flags: Flags) async throws {
+    private static func handleConsent(flags: Flags) async throws {
         if flags.noninteractive {
             print("ℹ️  Running in non-interactive mode with default consent")
             return
@@ -538,7 +542,7 @@ struct CollectCommand {
         }
     }
 
-    private func discoverDeviceWithSummary(flags: Flags) async throws -> (any MTPDevice, MTPDeviceSummary) {
+    private static func discoverDeviceWithSummary(flags: Flags) async throws -> (any MTPDevice, MTPDeviceSummary) {
         print("\n🔍 Discovering MTP devices...")
 
         let devices = try await MTPDeviceManager.shared.currentRealDevices()
@@ -550,7 +554,7 @@ struct CollectCommand {
             if let targetVID = flags.vid {
                 let parts = device.id.raw.split(separator: ":")
                 if parts.count >= 2, let deviceVID = parts.first?.dropFirst(2) { // Remove "0x" prefix
-                    if deviceVID.lowercased() != targetVID.lowercased() {
+                    if deviceVID != String(targetVID) {
                         return false
                     }
                 }
@@ -560,7 +564,7 @@ struct CollectCommand {
             if let targetPID = flags.pid {
                 let parts = device.id.raw.split(separator: ":")
                 if parts.count >= 2, let devicePID = parts.last?.dropFirst(2) { // Remove "0x" prefix
-                    if devicePID.lowercased() != targetPID.lowercased() {
+                    if devicePID != String(targetPID) {
                         return false
                     }
                 }
@@ -673,7 +677,7 @@ struct CollectCommand {
         return (device, selectedDevice)
     }
 
-    private func buildEffectiveTuning(for deviceInfo: MTPDeviceInfo, flags: Flags) async throws -> EffectiveTuning {
+    private static func buildEffectiveTuning(for deviceInfo: MTPDeviceInfo, flags: Flags) async throws -> EffectiveTuning {
         // Create fingerprint from device info
         let interfaceTripleData = try JSONSerialization.data(withJSONObject: ["class": "06", "subclass": "01", "protocol": "01"])
         let endpointAddressesData = try JSONSerialization.data(withJSONObject: ["input": "81", "output": "01", "event": "82"])
@@ -688,16 +692,14 @@ struct CollectCommand {
         )
 
         // Create basic capabilities
-        let capabilities = ProbedCapabilities(
-            supportsLargeTransfers: true,
-            supportsGetPartialObject64: true,
-            supportsSendPartialObject: true,
-            isSlowDevice: false,
-            needsStabilization: false
+        let capabilities = SwiftMTPCore.ProbedCapabilities(
+            partialRead: true,
+            partialWrite: true,
+            supportsEvents: true
         )
 
         // Build effective tuning
-        let builder = EffectiveTuningBuilder(deniedQuirks: nil)
+        let builder = SwiftMTPCore.EffectiveTuningBuilder()
         return builder.buildEffectiveTuning(
             fingerprint: fingerprint,
             capabilities: capabilities,
@@ -713,9 +715,9 @@ struct CollectCommand {
         let storages: [MTPStorageInfo]
     }
 
-    private func collectProbeData(device: any MTPDevice, flags: Flags, salt: Data) async throws -> ProbeData {
+    private static func collectProbeData(device: any MTPDevice, flags: Flags, salt: Data) async throws -> ProbeData {
         // Add 90s timeout to prevent hangs
-        return try await withTimeout(seconds: 90) {
+        return try await withTimeout(seconds: 90, stepName: "probe collection") {
             print("   📊 Gathering device information...")
             let deviceInfo = try await device.getDeviceInfo()
             print("   💾 Enumerating storage devices...")
@@ -788,9 +790,9 @@ struct CollectCommand {
     }
 
 
-    private func collectUSBDump() async throws -> String {
+    private static func collectUSBDump() async throws -> String {
         // Add 90s timeout to prevent hangs during USB enumeration
-        return try await withTimeout(seconds: 90) {
+        return try await withTimeout(seconds: 90, stepName: "USB dump") {
             print("   🔍 Scanning USB devices...")
             let usbDumper = USBDumper()
             // Capture output by redirecting stdout temporarily
@@ -874,7 +876,7 @@ struct CollectCommand {
         }
     }
 
-    private func runBenchmarks(device: any MTPDevice, flags: Flags) async throws -> [String: URL] {
+    private static func runBenchmarks(device: any MTPDevice, flags: Flags) async throws -> [String: URL] {
         guard !flags.runBench.isEmpty else {
             return [:]
         }
@@ -891,7 +893,7 @@ struct CollectCommand {
         return results
     }
 
-    private func runSingleBenchmark(device: any MTPDevice, size: String) async throws -> URL {
+    private static func runSingleBenchmark(device: any MTPDevice, size: String) async throws -> URL {
         let sizeBytes = parseSize(size)
         guard sizeBytes > 0 else {
             throw MTPError.preconditionFailed("Invalid benchmark size: \(size)")
@@ -934,7 +936,7 @@ struct CollectCommand {
         return csvURL
     }
 
-    private func generateQuirkSuggestion(device: any MTPDevice, effectiveTuning: EffectiveTuning) async throws -> QuirkSuggestion {
+    private static func generateQuirkSuggestion(device: any MTPDevice, effectiveTuning: EffectiveTuning) async throws -> QuirkSuggestion {
         let deviceInfo = try? await device.getDeviceInfo()
         let vidPid = "0x2717:0xff10" // TODO: Extract from actual device
 
@@ -970,7 +972,7 @@ struct CollectCommand {
         return suggestion
     }
 
-    private func createSubmissionBundle(
+    private static func createSubmissionBundle(
         device: any MTPDevice,
         flags: Flags,
         probeData: ProbeData,
@@ -1083,7 +1085,7 @@ struct CollectCommand {
         )
     }
 
-    private func validateBundle(bundle: SubmissionBundle) async throws {
+    private static func validateBundle(bundle: SubmissionBundle) async throws {
         // Basic validation - check that referenced files exist
         let probeURL = bundle.bundleDir.appendingPathComponent("probe.json")
         let usbDumpURL = bundle.bundleDir.appendingPathComponent("usb-dump.txt")
@@ -1107,7 +1109,7 @@ struct CollectCommand {
         print("✅ Bundle validation passed")
     }
 
-    private func createPullRequest(bundle: SubmissionBundle) async throws {
+    private static func createPullRequest(bundle: SubmissionBundle) async throws {
         print("\n📤 Creating GitHub pull request...")
 
         // Check if gh CLI is available
@@ -1160,7 +1162,7 @@ struct CollectCommand {
         print("✅ Pull request created successfully!")
     }
 
-    private func printManualSubmissionInstructions(bundle: SubmissionBundle) {
+    private static func printManualSubmissionInstructions(bundle: SubmissionBundle) {
         print("\n📋 Manual Submission Instructions")
         print("-------------------------------")
         print("To submit your device data manually:")
@@ -1182,7 +1184,7 @@ struct CollectCommand {
         print("Bundle location: \(bundle.bundleDir.path)")
     }
 
-    private func generatePRBody(bundle: SubmissionBundle) -> String {
+    private static func generatePRBody(bundle: SubmissionBundle) -> String {
         var body = """
         ## Device Submission
 
@@ -1228,7 +1230,7 @@ struct CollectCommand {
     }
 
     // Helper functions
-    private func parseSize(_ str: String) -> UInt64 {
+    private static func parseSize(_ str: String) -> UInt64 {
         let multipliers: [Character: UInt64] = ["K": 1024, "M": 1024*1024, "G": 1024*1024*1024]
         let numStr = str.filter { $0.isNumber }
         let suffix = str.last(where: { multipliers.keys.contains($0.uppercased().first!) })
@@ -1240,7 +1242,7 @@ struct CollectCommand {
         return num * multiplier
     }
 
-    private func getArchitecture() -> String {
+    private static func getArchitecture() -> String {
         #if arch(x86_64)
         return "x86_64"
         #elseif arch(arm64)
@@ -1250,19 +1252,19 @@ struct CollectCommand {
         #endif
     }
 
-    private func generateFingerprintHash(device: MTPDeviceInfo) throws -> String {
+    private static func generateFingerprintHash(device: MTPDeviceInfo) throws -> String {
         let fingerprint = "\(device.manufacturer)|\(device.model)|\(device.serialNumber ?? "")"
         let data = fingerprint.data(using: .utf8) ?? Data()
         return "sha256:" + sha256Hex(data)
     }
 
-    private func redactSerial(_ serial: String, salt: Data) throws -> String {
+    private static func redactSerial(_ serial: String, salt: Data) throws -> String {
         let data = (serial + String(data: salt, encoding: .utf8)!).data(using: .utf8) ?? Data()
         let hmac = hmacSHA256(data: data, key: salt)
         return "hmacsha256:" + hmac.map { String(format: "%02x", $0) }.joined()
     }
 
-    private func hmacSHA256(data: Data, key: Data) -> Data {
+    private static func hmacSHA256(data: Data, key: Data) -> Data {
         var hmac = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         key.withUnsafeBytes { keyBuffer in
             data.withUnsafeBytes { dataBuffer in
@@ -1272,7 +1274,7 @@ struct CollectCommand {
         return Data(hmac)
     }
 
-    private func sha256Hex(_ data: Data) -> String {
+    private static func sha256Hex(_ data: Data) -> String {
         var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         data.withUnsafeBytes { buffer in
             _ = CC_SHA256(buffer.baseAddress, CC_LONG(data.count), &hash)
@@ -1280,7 +1282,7 @@ struct CollectCommand {
         return hash.map { String(format: "%02x", $0) }.joined()
     }
 
-    private func getGitCommit() async throws -> String? {
+    private static func getGitCommit() async throws -> String? {
         do {
             let result = try await runCommand("git", arguments: ["rev-parse", "HEAD"])
             return result.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -1290,7 +1292,7 @@ struct CollectCommand {
     }
 
 
-    private func runCommand(_ command: String, arguments: [String]) async throws -> String {
+    private static func runCommand(_ command: String, arguments: [String]) async throws -> String {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/\(command)")
         process.arguments = arguments
