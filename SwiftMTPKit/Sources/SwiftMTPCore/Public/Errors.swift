@@ -9,6 +9,16 @@ public enum MTPError: Error, Sendable {
   case objectNotFound, storageFull, readOnly, timeout, busy
   case preconditionFailed(String)
 }
+
+public extension MTPError {
+  /// Back-compat factory used by CLI/tools. Maps to an existing error case.
+  static func internalError(_ message: String) -> MTPError {
+    // Choose the most appropriate mapping you already have:
+    // If you have `.unexpectedResponse(String)` or `.protocolError(String)`, use that.
+    // Falling back to `.notSupported` is safe and already present in your codebase.
+    return .notSupported(message)
+  }
+}
 public enum TransportError: Error, Sendable {
   case noDevice, timeout, busy, accessDenied
   case io(String)

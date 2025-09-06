@@ -17,7 +17,7 @@ func runDeleteCommand(args: inout [String], json: Bool, noninteractive: Bool, fi
     fputs("usage: swiftmtp delete <handle> [--recursive]\n", stderr); return .usage
   }
   let recursive = args.contains("--recursive")
-  let spinner = Spinner("Deleting …", enabled: !json); spinner.start()
+  var spinner = Spinner("Deleting …", enabled: !json); spinner.start()
   do {
     let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
     try await device.delete(handle, recursive: recursive)
@@ -39,7 +39,7 @@ func runMoveCommand(args: inout [String], json: Bool, noninteractive: Bool, filt
     if json { printJSONErrorAndExit("missing_args", code: .usage) }
     fputs("usage: swiftmtp move <handle> <new-parent-handle>\n", stderr); return .usage
   }
-  let spinner = Spinner("Moving …", enabled: !json); spinner.start()
+  var spinner = Spinner("Moving …", enabled: !json); spinner.start()
   do {
     let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
     try await device.move(handle, to: parent)
@@ -73,7 +73,7 @@ func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, fi
     }
     return .ok
   } catch {
-    spinner.stopAndClear("")
+    spinner.stopAndClear()
     if json { printJSONErrorAndExit("events_failed", code: .software, details: ["error":"\(error)"]) }
     fputs("❌ events failed: \(error)\n", stderr)
     return .software

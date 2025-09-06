@@ -268,7 +268,7 @@ func runLearnPromote() async {
     )
 
     var remainingArgs = [String]()
-    let filteredArgsCopy = filteredArgs
+    let filteredArgsCopy = await filteredArgs
 
     let argsToProcess = filteredArgsCopy.dropFirst()
     for arg in argsToProcess { // Skip "learn-promote"
@@ -1126,9 +1126,9 @@ func printCollectHelp() {
 
 func runCollect() async {
     // Parse collect-specific flags with safety defaults
-    let strictValue = strict
-    let jsonValue = json
-    let filteredArgsCopy = filteredArgs
+    let strictValue = await strict
+    let jsonValue = await json
+    let filteredArgsCopy = await filteredArgs
     var collectFlags = CollectCommand.CollectFlags(
         strict: strictValue,
         runBench: [],
