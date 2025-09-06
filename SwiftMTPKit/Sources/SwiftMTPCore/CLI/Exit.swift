@@ -1,7 +1,7 @@
 // Exit.swift
 import Foundation
 
-public enum ExitCode: Int32 {
+public enum ExitCode: Int32, Sendable {
   case ok = 0
   case usage = 64        // EX_USAGE
   case unavailable = 69  // EX_UNAVAILABLE

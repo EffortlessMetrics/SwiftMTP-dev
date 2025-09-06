@@ -1225,6 +1225,27 @@ func formatBytes(_ bytes: UInt64) -> String {
             unitIndex += 1
         }
 
-        return String(format: "%.1f %@", value, units[unitIndex])
+    return String(format: "%.1f %@", value, units[unitIndex])
+}
+
+// Device filtering utilities
+public struct DeviceFilter: Sendable {
+    var vid: UInt16?
+    var pid: UInt16?
+    var bus: UInt8?
+    var address: UInt8?
+}
+
+public func parseDeviceFilter(_ args: inout [String]) -> DeviceFilter {
+    func take(_ name: String) -> String? {
+        guard let i = args.firstIndex(of: name), i+1 < args.count else { return nil }
+        let v = args[i+1]; args.removeSubrange(i...i+1); return v
     }
+    var f = DeviceFilter()
+    if let s = take("--vid")     { f.vid = UInt16(s, radix: 16) ?? UInt16(s) }
+    if let s = take("--pid")     { f.pid = UInt16(s, radix: 16) ?? UInt16(s) }
+    if let s = take("--bus")     { f.bus = UInt8(s) }
+    if let s = take("--address") { f.address = UInt8(s) }
+    return f
+}
 
