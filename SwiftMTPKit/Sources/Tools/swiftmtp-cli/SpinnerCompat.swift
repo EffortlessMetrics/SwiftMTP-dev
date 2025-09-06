@@ -2,28 +2,41 @@
 import Foundation
 
 public struct CLISpinner {
-  private let enabled: Bool
-  private var text: String
+  public let enabled: Bool
+  private var message: String
 
-  public init(_ text: String = "", enabled: Bool = true) {
+  // Preferred initializer
+  public init(_ message: String = "", enabled: Bool = true) {
     self.enabled = enabled
-    self.text = text
-    if enabled && !text.isEmpty { fputs("\(text)…\n", stderr) }
+    self.message = message
+    if enabled, !message.isEmpty { Self.printStart(message) }
   }
-  public mutating func update(_ t: String) {
-    guard enabled else { return }
-    text = t
-    fputs("\(t)…\n", stderr)
+
+  // Back-compat initializer some call-sites still use
+  @available(*, deprecated, message: "Use Spinner(\"message\", enabled:)")
+  public init(message: String, enabled: Bool) {
+    self.init(message, enabled: enabled)
   }
-  public func succeed(_ t: String? = nil) {
-    guard enabled else { return }
-    if let t = t, !t.isEmpty { fputs("✅ \(t)\n", stderr) }
+
+  // Convenience used when call-site only toggles JSON mode
+  public init(enabled: Bool) {
+    self.init("", enabled: enabled)
   }
-  public func fail(_ t: String? = nil) {
+
+  public mutating func start(_ msg: String? = nil) {
     guard enabled else { return }
-    if let t = t, !t.isEmpty { fputs("❌ \(t)\n", stderr) }
+    if let m = msg { message = m; Self.printStart(m) }
+  }
+  public func succeed(_ msg: String? = nil) { guard enabled else { return }; Self.printDone(msg ?? message, ok: true) }
+  public func fail(_ msg: String? = nil)    { guard enabled else { return }; Self.printDone(msg ?? message, ok: false) }
+  public func stopAndClear()                 { /* no-op for simple TTY spinner; left for API compat */ }
+
+  // --- tiny TTY helpers (stdout is fine for progress; JSON is suppressed via enabled=false) ---
+  private static func printStart(_ s: String) { fputs("⏳ \(s)\n", stderr) }
+  private static func printDone(_ s: String, ok: Bool) {
+    fputs("\(ok ? "✅" : "❌") \(s)\n", stderr)
   }
 }
 
-// Note: CollectCommand defines its own Spinner class
-// CLI code should use CLISpinner directly or the existing Spinner class
+// Make CLI use `Spinner` type name
+public typealias Spinner = CLISpinner

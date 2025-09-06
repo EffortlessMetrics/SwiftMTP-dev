@@ -83,7 +83,7 @@ import CLibusb
             print("\n📱 Getting device information...")
 
             // Get device info
-            let info = try await mtpDevice.info
+            let info = try await mtpDevice.getDeviceInfo()
             print("✅ Device Info Retrieved:")
             print("   Manufacturer: \(info.manufacturer)")
             print("   Model: \(info.model)")

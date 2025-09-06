@@ -11,7 +11,7 @@ func openFilteredDevice(filter: DeviceFilter, noninteractive: Bool, json: Bool) 
 }
 
 // DELETE
-public func runDeleteCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter) async -> ExitCode {
+func runDeleteCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter) async -> ExitCode {
   guard args.count >= 1, let handle = UInt32(args.removeFirst(), radix: 0) else {
     if json { printJSONErrorAndExit("missing_handle", code: .usage) }
     fputs("usage: swiftmtp delete <handle> [--recursive]\n", stderr); return .usage
@@ -21,18 +21,18 @@ public func runDeleteCommand(args: inout [String], json: Bool, noninteractive: B
   do {
     let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
     try await device.delete(handle, recursive: recursive)
-    spinner.stopAndClear("✅ Deleted")
+    spinner.succeed("Deleted")
     return .ok
   } catch {
-    spinner.stopAndClear("")
-    if json { printJSONErrorAndExit("delete_failed", code: .software, details: ["error":"\(error)"]) }
+    spinner.fail("Delete failed")
+    if json { printJSONErrorAndExit("delete_failed") }
     fputs("❌ delete failed: \(error)\n", stderr)
     return .software
   }
 }
 
 // MOVE
-public func runMoveCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter) async -> ExitCode {
+func runMoveCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter) async -> ExitCode {
   guard args.count >= 2,
         let handle = UInt32(args.removeFirst(), radix: 0),
         let parent = UInt32(args.removeFirst(), radix: 0) else {
@@ -43,23 +43,23 @@ public func runMoveCommand(args: inout [String], json: Bool, noninteractive: Boo
   do {
     let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
     try await device.move(handle, to: parent)
-    spinner.stopAndClear("✅ Moved")
+    spinner.succeed("Moved")
     return .ok
   } catch {
-    spinner.stopAndClear("")
-    if json { printJSONErrorAndExit("move_failed", code: .software, details: ["error":"\(error)"]) }
+    spinner.fail("Move failed")
+    if json { printJSONErrorAndExit("move_failed") }
     fputs("❌ move failed: \(error)\n", stderr)
     return .software
   }
 }
 
 // EVENTS (prints lines or JSONL)
-public func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter) async -> ExitCode {
+func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter) async -> ExitCode {
   let seconds = (args.first.flatMap { Int($0) }) ?? 30
-  let spinner = Spinner("Subscribing to events …", enabled: !json); spinner.start()
+  var spinner = Spinner("Subscribing to events …", enabled: !json); spinner.start()
   do {
     let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
-    spinner.stopAndClear("🔔 Listening …")
+    spinner.succeed("Listening …")
     let stream = device.events
     let deadline = Date().addingTimeInterval(TimeInterval(seconds))
     for await ev in stream {
