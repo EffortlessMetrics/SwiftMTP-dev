@@ -1,37 +1,29 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import Foundation
 
-/// Minimal spinner that never emits anything when disabled (e.g. --json)
-public final class CLISpinner {
+public struct CLISpinner {
   private let enabled: Bool
-  private var prefix: String
+  private var text: String
 
   public init(_ text: String = "", enabled: Bool = true) {
     self.enabled = enabled
-    self.prefix = text
+    self.text = text
+    if enabled && !text.isEmpty { fputs("\(text)…\n", stderr) }
   }
-
-  public func start() {
-    guard enabled, !prefix.isEmpty else { return }
-    fputs("\(prefix)…\n", stderr)
-  }
-
-  public func succeed(_ text: String) {
+  public mutating func update(_ t: String) {
     guard enabled else { return }
-    fputs("✅ \(text)\n", stderr)
+    text = t
+    fputs("\(t)…\n", stderr)
   }
-
-  public func fail(_ text: String) {
+  public func succeed(_ t: String? = nil) {
     guard enabled else { return }
-    fputs("❌ \(text)\n", stderr)
+    if let t = t, !t.isEmpty { fputs("✅ \(t)\n", stderr) }
   }
-
-  public func stopAndClear(_ text: String?) {
+  public func fail(_ t: String? = nil) {
     guard enabled else { return }
-    if let t = text, !t.isEmpty {
-      fputs("\(t)\n", stderr)
-    }
+    if let t = t, !t.isEmpty { fputs("❌ \(t)\n", stderr) }
   }
 }
 
-// Use the existing Spinner from CollectCommand instead
+// Note: CollectCommand defines its own Spinner class
+// CLI code should use CLISpinner directly or the existing Spinner class

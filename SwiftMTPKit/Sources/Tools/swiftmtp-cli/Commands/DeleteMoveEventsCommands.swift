@@ -20,7 +20,7 @@ public func runDeleteCommand(args: inout [String], json: Bool, noninteractive: B
   let spinner = Spinner(enabled: !json); spinner.start("Deleting …")
   do {
     let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
-    try await device.delete(handle: handle, recursive: recursive)
+    try await device.delete(handle, recursive: recursive)
     spinner.stopAndClear("✅ Deleted")
     return .ok
   } catch {
@@ -42,7 +42,7 @@ public func runMoveCommand(args: inout [String], json: Bool, noninteractive: Boo
   let spinner = Spinner(enabled: !json); spinner.start("Moving …")
   do {
     let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
-    try await device.move(handle: handle, to: parent, storage: nil)
+    try await device.move(handle, to: parent)
     spinner.stopAndClear("✅ Moved")
     return .ok
   } catch {
@@ -60,7 +60,7 @@ public func runEventsCommand(args: inout [String], json: Bool, noninteractive: B
   do {
     let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
     spinner.stopAndClear("🔔 Listening …")
-    let stream = device.events()
+    let stream = device.events
     let deadline = Date().addingTimeInterval(TimeInterval(seconds))
     for await ev in stream {
       if json {
