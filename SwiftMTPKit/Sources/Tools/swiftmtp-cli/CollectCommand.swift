@@ -110,11 +110,23 @@ final class Spinner {
     private var timer: DispatchSourceTimer?
     private let message: String
     private let isTTY: Bool
-    private let jsonMode: Bool
+    private let enabled: Bool
 
+    init(_ message: String, enabled: Bool = true) {
+        self.message = message
+        self.enabled = enabled
+        #if canImport(Darwin)
+        self.isTTY = isatty(STDERR_FILENO) == 1
+        #else
+        self.isTTY = true
+        #endif
+    }
+
+    // Back-compat initializer
+    @available(*, deprecated, message: "Use init(_:enabled:) instead")
     init(_ message: String, jsonMode: Bool) {
         self.message = message
-        self.jsonMode = jsonMode
+        self.enabled = !jsonMode
         #if canImport(Darwin)
         self.isTTY = isatty(STDERR_FILENO) == 1
         #else
@@ -123,7 +135,7 @@ final class Spinner {
     }
 
     func start() {
-        guard isTTY, !jsonMode else { return }
+        guard isTTY, enabled else { return }
         fputs("  \(frames[idx]) \(message)\r", stderr)
         let t = DispatchSource.makeTimerSource(queue: .global())
         t.schedule(deadline: .now(), repeating: .milliseconds(80))
@@ -139,18 +151,18 @@ final class Spinner {
 
     func succeed(_ final: String) {
         stop()
-        if isTTY, !jsonMode { fputs("  ✓ \(final)\n", stderr) }
+        if isTTY, enabled { fputs("  ✓ \(final)\n", stderr) }
     }
 
     func fail(_ final: String) {
         stop()
-        if isTTY, !jsonMode { fputs("  ✗ \(final)\n", stderr) }
+        if isTTY, enabled { fputs("  ✗ \(final)\n", stderr) }
     }
 
     private func stop() {
         timer?.cancel()
         timer = nil
-        if isTTY, !jsonMode { fputs("\r", stderr) }
+        if isTTY, enabled { fputs("\r", stderr) }
     }
 }
 
@@ -368,12 +380,12 @@ struct CollectCommand {
             print("=====================================")
 
             // Step 1: Consent and validation
-            let spin1 = Spinner("Getting consent", jsonMode: json); spin1.start()
+            let spin1 = Spinner("Getting consent", enabled: !json); spin1.start()
             try await handleConsent(flags: flags)
             spin1.succeed("Consent obtained")
 
             // Step 2: Discover and validate device
-            let spin2 = Spinner("Discovering device", jsonMode: json); spin2.start()
+            let spin2 = Spinner("Discovering device", enabled: !json); spin2.start()
             let (device, deviceSummary) = try await withTimeout(seconds: 90, stepName: "device discovery") {
                 try await discoverDeviceWithSummary(flags: flags)
             }
@@ -383,14 +395,14 @@ struct CollectCommand {
             let salt = Redaction.generateSalt(count: 32)
 
             // Step 4: Collect probe data
-            let spin3 = Spinner("Collecting probe data", jsonMode: json); spin3.start()
+            let spin3 = Spinner("Collecting probe data", enabled: !json); spin3.start()
             let probeData = try await withTimeout(seconds: 90, stepName: "probe collection") {
                 try await collectProbeData(device: device, flags: flags, salt: salt)
             }
             spin3.succeed("Probe data collected")
 
             // Step 5: Collect USB dump
-            let spin4 = Spinner("Collecting USB dump", jsonMode: json); spin4.start()
+            let spin4 = Spinner("Collecting USB dump", enabled: !json); spin4.start()
             let usbDump = try await withTimeout(seconds: 90, stepName: "USB dump") {
                 try await collectUSBDump()
             }
@@ -399,7 +411,7 @@ struct CollectCommand {
             // Step 6: Run benchmarks (if requested)
             var benchResults = [String: URL]()
             if !flags.runBench.isEmpty {
-                let spin5 = Spinner("Running benchmarks", jsonMode: json); spin5.start()
+                let spin5 = Spinner("Running benchmarks", enabled: !json); spin5.start()
                 benchResults = try await withTimeout(seconds: 90, stepName: "benchmarks") {
                     try await runBenchmarks(device: device, flags: flags)
                 }
@@ -407,12 +419,12 @@ struct CollectCommand {
             }
 
             // Step 7: Generate quirk suggestion
-            let spin6 = Spinner("Generating quirk suggestion", jsonMode: json); spin6.start()
+            let spin6 = Spinner("Generating quirk suggestion", enabled: !json); spin6.start()
             let quirkSuggestion = try await generateQuirkSuggestion(device: device, effectiveTuning: probeData.effectiveTuning)
             spin6.succeed("Quirk suggestion generated")
 
             // Step 8: Create submission bundle
-            let spin7 = Spinner("Creating submission bundle", jsonMode: json); spin7.start()
+            let spin7 = Spinner("Creating submission bundle", enabled: !json); spin7.start()
             let bundle = try await createSubmissionBundle(
                 device: device,
                 flags: flags,
@@ -425,7 +437,7 @@ struct CollectCommand {
             spin7.succeed("Bundle created")
 
             // Step 9: Validate bundle
-            let spin8 = Spinner("Validating bundle", jsonMode: json); spin8.start()
+            let spin8 = Spinner("Validating bundle", enabled: !json); spin8.start()
             try await validateBundle(bundle: bundle)
             spin8.succeed("Bundle validated")
 

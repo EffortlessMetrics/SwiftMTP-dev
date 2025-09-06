@@ -2,4 +2,5 @@
 import Foundation
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
-import SwiftMTPIndex   // snapshot/diff/journal if used by commands
+import SwiftMTPIndex          // snapshot/diff/journal
+import SwiftMTPQuirks         // quirk DB + tuning types by commands

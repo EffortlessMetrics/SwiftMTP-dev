@@ -11,6 +11,7 @@ let package = Package(
   products: [
     .executable(name: "simple-probe", targets: ["simple-probe"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
+    .library(name: "SwiftMTPQuirks", targets: ["SwiftMTPQuirks"]),
     // .executable(name: "learn-promote", targets: ["learn-promote"]),
   ],
   dependencies: [
@@ -50,6 +51,10 @@ let package = Package(
             dependencies: ["SwiftMTPCore"],
             path: "Sources/SwiftMTPObservability"),
 
+    // Device quirks and tuning database
+    .target(name: "SwiftMTPQuirks",
+            dependencies: ["SwiftMTPCore"],
+            path: "Sources/SwiftMTPQuirks"),
 
     // File Provider extension (excluded for now due to SwiftMTPXPC dependency)
     // .target(name: "SwiftMTPFileProvider",
@@ -81,6 +86,7 @@ let package = Package(
                         "SwiftMTPCore",
                         "SwiftMTPTransportLibUSB",
                         "SwiftMTPIndex",
+                        "SwiftMTPQuirks",
                         "CLibusb"
                       ],
                       path: "Sources/Tools/swiftmtp-cli",

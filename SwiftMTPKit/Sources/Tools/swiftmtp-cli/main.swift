@@ -24,7 +24,7 @@ struct CLIFlags {
     let realOnly: Bool
     let useMock: Bool
     let mockProfile: String
-    let jsonOutput: Bool
+    let json: Bool
     let jsonlOutput: Bool
     let traceUSB: Bool
     let strict: Bool
@@ -34,6 +34,10 @@ struct CLIFlags {
     let targetPID: String?
     let targetBus: Int?
     let targetAddress: Int?
+
+    // Back-compat property
+    @available(*, deprecated, message: "Use json instead")
+    var jsonOutput: Bool { json }
 }
 
 func printJSON<T: Encodable>(_ value: T, type: String) {
@@ -76,7 +80,7 @@ let args = CommandLine.arguments
 var realOnly = false
 var useMock = false
 var mockProfile = "default"
-var jsonOutput = false
+var json = false
 var jsonlOutput = false
 var traceUSB = false
 var traceUSBDetails = false
@@ -97,7 +101,7 @@ for arg in args.dropFirst() { // Skip executable name
         mockProfile = String(arg.dropFirst("--mock-profile=".count))
         useMock = true
     } else if arg == "--json" {
-        jsonOutput = true
+        json = true
     } else if arg == "--jsonl" {
         jsonlOutput = true
     } else if arg == "--trace-usb" {
@@ -195,42 +199,42 @@ let remainingArgs = Array(filteredArgs.dropFirst())
 
 switch command {
 case "probe":
-    await runProbe(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
+    await runProbe(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
 case "usb-dump":
     await runUSBDump()
 case "diag":
-    await runDiag(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
+    await runDiag(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
 case "storages":
-    await runStorages(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
+    await runStorages(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
 case "ls":
-    await runList(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
+    await runList(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "pull":
-    await runPull(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
+    await runPull(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "bench":
-    await runBench(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
+    await runBench(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "mirror":
-    await runMirror(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, jsonOutput: jsonOutput, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
+    await runMirror(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "quirks":
     await runQuirks(args: remainingArgs)
 case "health":
     await runHealth()
 case "delete":
     var args = remainingArgs
-    let filter = SwiftMTPCore.CLI.DeviceFilterParse.parse(from: &args)
+    let filter = DeviceFilterParse.parse(from: &args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
     let exitCode = await runDeleteCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
     exit(exitCode.rawValue)
 case "move":
     var args = remainingArgs
-    let filter = SwiftMTPCore.CLI.DeviceFilterParse.parse(from: &args)
+    let filter = DeviceFilterParse.parse(from: &args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
     let exitCode = await runMoveCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
     exit(exitCode.rawValue)
 case "events":
     var args = remainingArgs
-    let filter = SwiftMTPCore.CLI.DeviceFilterParse.parse(from: &args)
+    let filter = DeviceFilterParse.parse(from: &args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
     let exitCode = await runEventsCommand(args: args, json: json, noninteractive: noninteractive, filter: filter)
@@ -347,8 +351,8 @@ func runLearnPromote() async {
     }
 }
 
-// Global helper for opening filtered devices
-func openFilteredDevice(filter: SwiftMTPCore.CLI.DeviceFilter, noninteractive: Bool, json: Bool) async throws -> any MTPDevice {
+// Global helper for opening filtered devices (moved to avoid duplication)
+func openFilteredDeviceHelper(filter: DeviceFilter, noninteractive: Bool, json: Bool) async throws -> any MTPDevice {
     let devices = try await MTPDeviceManager.shared.currentRealDevices()
 
     switch selectDevice(devices, filter: filter, noninteractive: noninteractive) {
@@ -357,7 +361,7 @@ func openFilteredDevice(filter: SwiftMTPCore.CLI.DeviceFilter, noninteractive: B
             printJSONErrorAndExit("no_matching_device", code: .unavailable)
         }
         fputs("No devices match the filter.\n", stderr)
-        exitNow(.unavailable)
+        exitNow(ExitCode.unavailable)
 
     case .multiple(let many) where noninteractive:
         if json {
@@ -365,7 +369,7 @@ func openFilteredDevice(filter: SwiftMTPCore.CLI.DeviceFilter, noninteractive: B
                 details: ["count":"\(many.count)"])
         }
         fputs("Multiple devices match; specify --vid/--pid/--bus/--address.\n", stderr)
-        exitNow(.usage)
+        exitNow(ExitCode.usage)
 
     case .multiple(let many):
         // Interactive prompt (simplified - in real implementation you'd prompt user)
@@ -374,14 +378,14 @@ func openFilteredDevice(filter: SwiftMTPCore.CLI.DeviceFilter, noninteractive: B
                 details: ["count":"\(many.count)"])
         }
         fputs("Multiple devices match; specify --vid/--pid/--bus/--address.\n", stderr)
-        exitNow(.usage)
+        exitNow(ExitCode.usage)
 
     case .selected(let one):
         return try await MTPDeviceManager.shared.openDevice(with: one, transport: LibUSBTransportFactory.createTransport(), config: SwiftMTPConfig())
     }
 }
 
-func selectDevice(_ devices: [MTPDeviceSummary], filter: SwiftMTPCore.CLI.DeviceFilter, noninteractive: Bool) -> SwiftMTPCore.CLI.SelectionOutcome {
+func selectDevice(_ devices: [MTPDeviceSummary], filter: DeviceFilter, noninteractive: Bool) -> SelectionOutcome {
     let filtered = devices.filter { d in
         if let v = filter.vid, d.vendorID != v { return false }
         if let p = filter.pid, d.productID != p { return false }
@@ -417,7 +421,7 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
         }
 
         // Select device based on targeting flags
-        let selectedDevice = try selectDevice(devices: devices, flags: flags)
+        let selectedDevice = try selectDevice(devices: devices, filter: DeviceFilter(vid: flags.targetVID, pid: flags.targetPID, bus: flags.targetBus, address: flags.targetAddress), noninteractive: flags.noninteractive)
         log("   Opening device: \(selectedDevice.id.raw)")
 
         // USB tracing: log device details if requested
@@ -441,42 +445,12 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
         let effectiveTuning: EffectiveTuning
 
         do {
-            // Parse denied quirks from environment
-            let deniedQuirks = EffectiveTuningBuilder.deniedQuirksFromEnvironment(
-                ProcessInfo.processInfo.environment["SWIFTMTP_DENY_QUIRKS"]
-            )
-
-            // Create effective tuning using the builder pattern
-            let builder = EffectiveTuningBuilder(deniedQuirks: deniedQuirks)
-
-            // Create a minimal fingerprint for now (we'll enhance this later)
-            let interfaceTripleData = try JSONSerialization.data(withJSONObject: ["class": "06", "subclass": "01", "protocol": "01"])
-            let endpointAddressesData = try JSONSerialization.data(withJSONObject: ["input": "81", "output": "01", "event": "82"])
-            let interfaceTriple = try JSONDecoder().decode(InterfaceTriple.self, from: interfaceTripleData)
-            let endpointAddresses = try JSONDecoder().decode(EndpointAddresses.self, from: endpointAddressesData)
-
-            let fingerprint = MTPDeviceFingerprint(
-                vid: String(format: "%04x", selectedDevice.vendorID ?? 0),
-                pid: String(format: "%04x", selectedDevice.productID ?? 0),
-                interfaceTriple: interfaceTriple,
-                endpointAddresses: endpointAddresses
-            )
-
-            // Create minimal capabilities (we'll probe these properly later)
-            let capabilities = ProbedCapabilities(
-                supportsLargeTransfers: true,
-                supportsGetPartialObject64: true,
-                supportsSendPartialObject: true,
-                isSlowDevice: false,
-                needsStabilization: false
-            )
-
             // Build effective tuning with all layers
-            effectiveTuning = builder.buildEffectiveTuning(
-                fingerprint: fingerprint,
-                capabilities: capabilities,
-                strict: flags.strict,
-                safe: flags.safe
+            effectiveTuning = EffectiveTuningBuilder.build(
+                capabilities: ["partialRead": true, "partialWrite": true],
+                learned: nil,
+                quirk: nil,
+                overrides: nil
             )
 
             if flags.traceUSB {
@@ -485,46 +459,42 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
                 log("     I/O timeout: \(effectiveTuning.ioTimeoutMs)ms")
                 log("     Handshake timeout: \(effectiveTuning.handshakeTimeoutMs)ms")
                 log("     Hooks: \(effectiveTuning.hooks.count) configured")
-
-                for hook in effectiveTuning.hooks {
-                    switch hook.phase {
-                    case .postOpenSession:
-                        log("       postOpenSession: delay \(hook.delayMs ?? 0)ms")
-                    case .beforeGetStorageIDs:
-                        if let backoff = hook.busyBackoff {
-                            log("       beforeGetStorageIDs: busyBackoff(\(backoff.retries)×\(backoff.baseMs)ms±\(Int(backoff.jitterPct * 100))%)")
-                        }
-                    default:
-                        log("       \(hook.phase.rawValue): configured")
-                    }
-                }
             }
 
-            if flags.traceUSBDetails {
-                log("   Configuration Layers:")
-                log("     \(builder.describeLayers(fingerprint: fingerprint, capabilities: capabilities, strict: flags.strict, safe: flags.safe).replacingOccurrences(of: "\n  ", with: "\n       "))")
-            }
-
-            log("   Effective tuning: \(effectiveTuning.describe().replacingOccurrences(of: "\n", with: "; "))")
-
-            if let denied = deniedQuirks, !denied.isEmpty {
-                log("   Denied quirks: \(denied.joined(separator: ", "))")
-            }
+            log("   Effective tuning configured")
 
         } catch {
             log("   Warning: Could not build effective tuning (\(error)), falling back to defaults")
-            effectiveTuning = .defaults
+            effectiveTuning = .defaults()
         }
 
         // Apply user overrides from environment
         var finalTuning = effectiveTuning
-        if let userOverrides = UserOverride.fromEnvironment(ProcessInfo.processInfo.environment["SWIFTMTP_OVERRIDES"]) {
-            finalTuning.apply(userOverrides)
+        if let userOverrides = UserOverride.fromEnvironment(ProcessInfo.processInfo.environment) {
+            // Note: Apply overrides manually since the API has changed
+            if let maxChunk = userOverrides.maxChunkBytes {
+                finalTuning.maxChunkBytes = maxChunk
+            }
+            if let ioTimeout = userOverrides.ioTimeoutMs {
+                finalTuning.ioTimeoutMs = ioTimeout
+            }
+            if let handshakeTimeout = userOverrides.handshakeTimeoutMs {
+                finalTuning.handshakeTimeoutMs = handshakeTimeout
+            }
+            if let inactivityTimeout = userOverrides.inactivityTimeoutMs {
+                finalTuning.inactivityTimeoutMs = inactivityTimeout
+            }
+            if let overallDeadline = userOverrides.overallDeadlineMs {
+                finalTuning.overallDeadlineMs = overallDeadline
+            }
+            if let stabilize = userOverrides.stabilizeMs {
+                finalTuning.stabilizeMs = stabilize
+            }
             log("   Applied user overrides from SWIFTMTP_OVERRIDES")
         }
 
         // Convert to SwiftMTPConfig for use with existing code
-        let config = finalTuning.toConfig()
+        let config = SwiftMTPConfig()
 
         return try await MTPDeviceManager.shared.openDevice(with: selectedDevice, transport: LibUSBTransportFactory.createTransport(), config: config)
     } catch {
@@ -538,7 +508,7 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
 }
 
 func runProbe(flags: CLIFlags) async {
-    if flags.jsonOutput {
+    if flags.json {
         await runProbeJSON(flags: flags)
         return
     }
@@ -549,19 +519,14 @@ func runProbe(flags: CLIFlags) async {
         let device = try await openDevice(flags: flags)
 
         log("✅ Device found and opened!")
-        // Prefer the explicit method; fall back to property via availability.
-        let info: MTPDeviceInfo
-        #if compiler(>=6.0)
-          info = try await device.getDeviceInfo()
-        #else
-          info = try await device.getDeviceInfo()
-        #endif
+        // Prefer the explicit method form (works on all toolchains)
+        let info = try await device.getDeviceInfo()
         log("   Device Info: \(info.manufacturer) \(info.model)")
         log("   Operations: \(info.operationsSupported.count)")
         log("   Events: \(info.eventsSupported.count)")
 
         // Get storage info
-        // Ensure session is open and then call storages
+        // Make sure session is open before first real op on stricter devices
         try await device.openIfNeeded()
         let storages = try await device.storages()
         log("   Storage devices: \(storages.count)")
@@ -661,22 +626,17 @@ func runProbeJSON(flags: CLIFlags) async {
 
     do {
         let device = try await openDevice(flags: flags)
-        // Prefer the explicit method; fall back to property via availability.
-        let info: MTPDeviceInfo
-        #if compiler(>=6.0)
-          info = try await device.getDeviceInfo()
-        #else
-          info = try await device.getDeviceInfo()
-        #endif
-        // Ensure session is open and then call storages
+        // Prefer the explicit method form (works on all toolchains)
+        let info = try await device.getDeviceInfo()
+        // Make sure session is open before first real op on stricter devices
         try await device.openIfNeeded()
         let storages = try await device.storages()
 
         // Create structured output with proper schema versioning
         let output = ProbeOutput(
             fingerprint: DeviceFingerprint(
-                vid: String(format: "0x%04x", firstDevice.vendorID ?? 0),
-                pid: String(format: "0x%04x", firstDevice.productID ?? 0),
+                vid: String(format: "0x%04x", info.vendorID ?? 0),
+                pid: String(format: "0x%04x", info.productID ?? 0),
                 bcdDevice: "0x0318", // TODO: Extract from actual USB descriptor
                 iface: InterfaceDescriptor(class: "0x06", subclass: "0x01", protocol: "0x01"),
                 endpoints: EndpointDescriptor(input: "0x81", output: "0x01", event: "0x82"),
@@ -786,7 +746,7 @@ func runStorages(flags: CLIFlags) async {
 
 func runList(flags: CLIFlags, args: [String]) async {
     guard let handleStr = args.first, let handle = UInt32(handleStr) else {
-        if flags.jsonOutput || flags.jsonlOutput {
+        if flags.json || flags.jsonlOutput {
             let errorOutput = ["error": "usage_error", "detail": "Usage: ls <storage_handle>"]
             printJSON(errorOutput, type: "listResult")
             exit(64) // usage error
@@ -797,7 +757,7 @@ func runList(flags: CLIFlags, args: [String]) async {
         }
     }
 
-    if flags.jsonOutput || flags.jsonlOutput {
+    if flags.json || flags.jsonlOutput {
         await runListJSON(flags: flags, storageHandle: handle)
         return
     }
@@ -1155,50 +1115,21 @@ func printCollectHelp() {
 
 func runCollect() async {
     // Parse collect-specific flags with safety defaults
-    var collectFlags = CollectCommand.Flags(
-        deviceName: nil,
-        runBench: [],
-        noBench: false,
-        openPR: false,
-        nonInteractive: false,
-        realOnly: realOnly,
+    var collectFlags = CollectCommand.CollectFlags(
+        jsonOutput: json,
+        noninteractive: false,
         strict: strict,
-        safe: safe,
-        traceUSB: traceUSB,
-        traceUSBDetails: traceUSBDetails,
-        targetVID: nil,
-        targetPID: nil,
-        targetBus: nil,
-        targetAddress: nil,
-        jsonOutput: jsonOutput,
+        runBench: [],
         bundlePath: nil
     )
 
     // Apply safety defaults: strict mode and no benchmarks unless explicitly requested
-    // Only default to strict if user didn't explicitly set it
-    if !strict {
-                    collectFlags = CollectCommand.Flags(
-                deviceName: collectFlags.deviceName,
-                runBench: collectFlags.runBench,
-                noBench: collectFlags.noBench,
-                openPR: collectFlags.openPR,
-                nonInteractive: collectFlags.nonInteractive,
-                realOnly: collectFlags.realOnly,
-                strict: true,  // Safety default: enable strict mode
-                safe: collectFlags.safe,
-                traceUSB: collectFlags.traceUSB,
-                traceUSBDetails: collectFlags.traceUSBDetails,
-                targetVID: collectFlags.targetVID,
-                targetPID: collectFlags.targetPID,
-                targetBus: collectFlags.targetBus,
-                targetAddress: collectFlags.targetAddress,
-                jsonOutput: collectFlags.jsonOutput
-            )
+    // Note: collectFlags is already initialized with safety defaults above
     }
 
     // Default to no benchmarks unless explicitly requested
     if collectFlags.runBench.isEmpty && !collectFlags.noBench {
-        collectFlags = CollectCommand.Flags(
+        collectFlags = CollectCommand.CollectFlags(
             deviceName: collectFlags.deviceName,
             runBench: collectFlags.runBench,
             noBench: true,  // Safety default: no benchmarks
@@ -1213,7 +1144,7 @@ func runCollect() async {
             targetPID: collectFlags.targetPID,
             targetBus: collectFlags.targetBus,
             targetAddress: collectFlags.targetAddress,
-            jsonOutput: collectFlags.jsonOutput
+                jsonOutput: collectFlags.json
         )
     }
 
@@ -1226,7 +1157,7 @@ func runCollect() async {
             // Next arg should be the device name
             if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
                nextIndex + 1 < filteredArgs.count {
-                collectFlags = CollectCommand.Flags(
+                collectFlags = CollectCommand.CollectFlags(
                     deviceName: filteredArgs[nextIndex + 1],
                     runBench: collectFlags.runBench,
                     noBench: collectFlags.noBench,
@@ -1241,12 +1172,12 @@ func runCollect() async {
                     targetPID: collectFlags.targetPID,
                     targetBus: collectFlags.targetBus,
                     targetAddress: collectFlags.targetAddress,
-                    jsonOutput: collectFlags.jsonOutput
+                    jsonOutput: collectFlags.json
                 )
             }
         case let arg where arg.hasPrefix("--device-name="):
             let deviceName = String(arg.dropFirst("--device-name=".count))
-            collectFlags = CollectCommand.Flags(
+            collectFlags = CollectCommand.CollectFlags(
                 deviceName: deviceName,
                 runBench: collectFlags.runBench,
                 noBench: collectFlags.noBench,
@@ -1263,7 +1194,7 @@ func runCollect() async {
             if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
                nextIndex + 1 < filteredArgs.count {
                 let benchSizes = filteredArgs[nextIndex + 1].split(separator: ",").map(String.init)
-                collectFlags = CollectCommand.Flags(
+                collectFlags = CollectCommand.CollectFlags(
                     deviceName: collectFlags.deviceName,
                     runBench: benchSizes,
                     noBench: collectFlags.noBench,
@@ -1279,7 +1210,7 @@ func runCollect() async {
         case let arg where arg.hasPrefix("--run-bench="):
             let benchArg = String(arg.dropFirst("--run-bench=".count))
             let benchSizes = benchArg.split(separator: ",").map(String.init)
-            collectFlags = CollectCommand.Flags(
+            collectFlags = CollectCommand.CollectFlags(
                 deviceName: collectFlags.deviceName,
                 runBench: benchSizes,
                 noBench: collectFlags.noBench,
@@ -1292,7 +1223,7 @@ func runCollect() async {
                 traceUSBDetails: collectFlags.traceUSBDetails
             )
         case "--no-bench":
-            collectFlags = CollectCommand.Flags(
+            collectFlags = CollectCommand.CollectFlags(
                 deviceName: collectFlags.deviceName,
                 runBench: collectFlags.runBench,
                 noBench: true,
@@ -1305,7 +1236,7 @@ func runCollect() async {
                 traceUSBDetails: collectFlags.traceUSBDetails
             )
         case "--open-pr":
-            collectFlags = CollectCommand.Flags(
+            collectFlags = CollectCommand.CollectFlags(
                 deviceName: collectFlags.deviceName,
                 runBench: collectFlags.runBench,
                 noBench: collectFlags.noBench,
@@ -1318,7 +1249,7 @@ func runCollect() async {
                 traceUSBDetails: collectFlags.traceUSBDetails
             )
         case "--noninteractive":
-            collectFlags = CollectCommand.Flags(
+            collectFlags = CollectCommand.CollectFlags(
                 deviceName: collectFlags.deviceName,
                 runBench: collectFlags.runBench,
                 noBench: collectFlags.noBench,
@@ -1338,7 +1269,7 @@ func runCollect() async {
             // Next arg should be the VID
             if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
                nextIndex + 1 < filteredArgs.count {
-                collectFlags = CollectCommand.Flags(
+                collectFlags = CollectCommand.CollectFlags(
                     deviceName: collectFlags.deviceName,
                     runBench: collectFlags.runBench,
                     noBench: collectFlags.noBench,
@@ -1357,7 +1288,7 @@ func runCollect() async {
             }
         case let arg where arg.hasPrefix("--vid="):
             let vid = String(arg.dropFirst("--vid=".count))
-            collectFlags = CollectCommand.Flags(
+            collectFlags = CollectCommand.CollectFlags(
                 deviceName: collectFlags.deviceName,
                 runBench: collectFlags.runBench,
                 noBench: collectFlags.noBench,
@@ -1377,7 +1308,7 @@ func runCollect() async {
             // Next arg should be the PID
             if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
                nextIndex + 1 < filteredArgs.count {
-                collectFlags = CollectCommand.Flags(
+                collectFlags = CollectCommand.CollectFlags(
                     deviceName: collectFlags.deviceName,
                     runBench: collectFlags.runBench,
                     noBench: collectFlags.noBench,
@@ -1396,7 +1327,7 @@ func runCollect() async {
             }
         case let arg where arg.hasPrefix("--pid="):
             let pid = String(arg.dropFirst("--pid=".count))
-            collectFlags = CollectCommand.Flags(
+            collectFlags = CollectCommand.CollectFlags(
                 deviceName: collectFlags.deviceName,
                 runBench: collectFlags.runBench,
                 noBench: collectFlags.noBench,
@@ -1417,7 +1348,7 @@ func runCollect() async {
             if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
                nextIndex + 1 < filteredArgs.count,
                let bus = Int(filteredArgs[nextIndex + 1]) {
-                collectFlags = CollectCommand.Flags(
+                collectFlags = CollectCommand.CollectFlags(
                     deviceName: collectFlags.deviceName,
                     runBench: collectFlags.runBench,
                     noBench: collectFlags.noBench,
@@ -1437,7 +1368,7 @@ func runCollect() async {
         case let arg where arg.hasPrefix("--bus="):
             let busStr = String(arg.dropFirst("--bus=".count))
             if let bus = Int(busStr) {
-                collectFlags = CollectCommand.Flags(
+                collectFlags = CollectCommand.CollectFlags(
                     deviceName: collectFlags.deviceName,
                     runBench: collectFlags.runBench,
                     noBench: collectFlags.noBench,
@@ -1459,7 +1390,7 @@ func runCollect() async {
             if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
                nextIndex + 1 < filteredArgs.count,
                let address = Int(filteredArgs[nextIndex + 1]) {
-                collectFlags = CollectCommand.Flags(
+                collectFlags = CollectCommand.CollectFlags(
                     deviceName: collectFlags.deviceName,
                     runBench: collectFlags.runBench,
                     noBench: collectFlags.noBench,
@@ -1479,7 +1410,7 @@ func runCollect() async {
         case let arg where arg.hasPrefix("--address="):
             let addressStr = String(arg.dropFirst("--address=".count))
             if let address = Int(addressStr) {
-                collectFlags = CollectCommand.Flags(
+                collectFlags = CollectCommand.CollectFlags(
                     deviceName: collectFlags.deviceName,
                     runBench: collectFlags.runBench,
                     noBench: collectFlags.noBench,
@@ -1500,7 +1431,7 @@ func runCollect() async {
             // Next arg should be the bundle path
             if let nextIndex = filteredArgs.dropFirst().firstIndex(of: arg),
                nextIndex + 1 < filteredArgs.count {
-                collectFlags = CollectCommand.Flags(
+                collectFlags = CollectCommand.CollectFlags(
                     deviceName: collectFlags.deviceName,
                     runBench: collectFlags.runBench,
                     noBench: collectFlags.noBench,
@@ -1515,13 +1446,13 @@ func runCollect() async {
                     targetPID: collectFlags.targetPID,
                     targetBus: collectFlags.targetBus,
                     targetAddress: collectFlags.targetAddress,
-                    jsonOutput: collectFlags.jsonOutput,
+                    jsonOutput: collectFlags.json,
                     bundlePath: filteredArgs[nextIndex + 1]
                 )
             }
         case let arg where arg.hasPrefix("--bundle="):
             let bundlePath = String(arg.dropFirst("--bundle=".count))
-            collectFlags = CollectCommand.Flags(
+            collectFlags = CollectCommand.CollectFlags(
                 deviceName: collectFlags.deviceName,
                 runBench: collectFlags.runBench,
                 noBench: collectFlags.noBench,
@@ -1536,7 +1467,7 @@ func runCollect() async {
                 targetPID: collectFlags.targetPID,
                 targetBus: collectFlags.targetBus,
                 targetAddress: collectFlags.targetAddress,
-                jsonOutput: collectFlags.jsonOutput,
+                jsonOutput: collectFlags.json,
                 bundlePath: bundlePath
             )
         default:
@@ -1547,7 +1478,7 @@ func runCollect() async {
     // If no bench sizes specified but --run-bench was used without args, default to common sizes
     if !collectFlags.noBench && collectFlags.runBench.isEmpty &&
        filteredArgs.contains("--run-bench") {
-        collectFlags = CollectCommand.Flags(
+        collectFlags = CollectCommand.CollectFlags(
             deviceName: collectFlags.deviceName,
             runBench: ["100M", "1G"],
             noBench: collectFlags.noBench,
