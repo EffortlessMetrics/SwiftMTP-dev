@@ -57,6 +57,23 @@ swift run swiftmtp probe
 ./scripts/swiftmtp.sh pull <handle> <output-path>
 ```
 
+### Submit my device
+
+Help improve SwiftMTP by submitting device data for your MTP device. This enables better compatibility and performance optimizations.
+
+```bash
+# Safe, read-only by default:
+swift run swiftmtp collect --noninteractive --strict --json \
+  --vid <hex> --pid <hex> --bundle Contrib/submissions/vendor-model-<date>
+./scripts/validate-submission.sh Contrib/submissions/vendor-model-<date>
+
+# (Optional) open a PR with your bundle; CI will validate privacy & schema.
+```
+
+**Privacy**: Serial numbers are redacted using HMAC-SHA256; no personal data or device contents are collected.
+
+**Exit codes**: `0=ok`, `64=usage`, `69=unavailable`, `70=software`, `75=tempfail`.
+
 ## Legal Compliance
 
 This project includes third-party components. See `/legal/licenses/THIRD-PARTY-NOTICES.md` for details.

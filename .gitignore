@@ -78,3 +78,6 @@ Contrib/submissions/**/raw-*        # if you keep pre-sanitized artifacts tempor
 .var/
 .cache/
 profiles/learned/*.json
+
+# Test logs
+logs/

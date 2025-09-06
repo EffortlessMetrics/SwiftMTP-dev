@@ -7,9 +7,15 @@ public struct CLISpinner {
 
   // Preferred initializer
   public init(_ message: String = "", enabled: Bool = true) {
-    self.enabled = enabled
+    // Disable spinner if stdout is not a TTY (e.g., when output is piped or redirected)
+    #if canImport(Darwin)
+    let isStdoutTTY = isatty(STDOUT_FILENO) == 1
+    #else
+    let isStdoutTTY = true
+    #endif
+    self.enabled = enabled && isStdoutTTY
     self.message = message
-    if enabled, !message.isEmpty { Self.printStart(message) }
+    if self.enabled, !message.isEmpty { Self.printStart(message) }
   }
 
   // Back-compat initializer some call-sites still use

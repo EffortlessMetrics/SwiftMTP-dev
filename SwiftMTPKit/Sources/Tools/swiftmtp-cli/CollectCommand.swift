@@ -12,6 +12,39 @@ func printJSONErrorAndExit(_ error: any Error) -> Never {
   printJSONErrorAndExit("\(error)")
 }
 
+func printJSONErrorAndExit(_ error: any Error, flags: CollectCommand.CollectFlags) -> Never {
+  let mode: String
+  if flags.safe {
+    mode = "safe"
+  } else if flags.strict {
+    mode = "strict"
+  } else {
+    mode = "normal"
+  }
+
+  // Extract candidates from CollectError if available
+  var details: [String: String] = [:]
+  if let collectError = error as? CollectCommand.CollectError {
+    switch collectError {
+    case .noDeviceMatched(let candidates):
+      details["availableDevices"] = candidates.isEmpty ? "none" : "\(candidates.count)"
+      if !candidates.isEmpty {
+        // Add first few candidates as examples
+        let examples = candidates.prefix(3).map { "\($0.vid):\($0.pid)@\($0.bus):\($0.address)" }
+        details["examples"] = examples.joined(separator: ", ")
+      }
+    case .ambiguousSelection(let count, let candidates):
+      details["matchingDevices"] = "\(count)"
+      let examples = candidates.prefix(3).map { "\($0.vid):\($0.pid)@\($0.bus):\($0.address)" }
+      details["examples"] = examples.joined(separator: ", ")
+    case .timeout:
+      break
+    }
+  }
+
+  printJSONErrorAndExit("\(error)", details: details.isEmpty ? nil : details, mode: mode)
+}
+
 // Spinner & JSON/Exit helpers are expected from your CLI shared utilities:
 // - Spinner (aka CLISpinner) with init(message:enabled:) / start / succeed / fail
 // - printJSON(_:)
@@ -26,6 +59,7 @@ public enum CollectCommand {
   // MARK: - Flags structure for back-compatibility
   public struct CollectFlags: Sendable {
     public var strict: Bool = true           // default strict on
+    public var safe: Bool = false            // --safe
     public var runBench: [String] = []       // default no bench
     public var json: Bool = false            // --json
     public var noninteractive: Bool = false  // --noninteractive
@@ -37,6 +71,7 @@ public enum CollectCommand {
 
     public init(
       strict: Bool = true,
+      safe: Bool = false,
       runBench: [String] = [],
       json: Bool = false,
       noninteractive: Bool = false,
@@ -44,6 +79,7 @@ public enum CollectCommand {
       vid: UInt16? = nil, pid: UInt16? = nil, bus: Int? = nil, address: Int? = nil
     ) {
       self.strict = strict
+      self.safe = safe
       self.runBench = runBench
       self.json = json
       self.noninteractive = noninteractive
@@ -133,12 +169,22 @@ public enum CollectCommand {
 
       // 8) Emit JSON summary for CI if requested
       if jsonMode {
+        let mode: String
+        if flags.safe {
+          mode = "safe"
+        } else if flags.strict {
+          mode = "strict"
+        } else {
+          mode = "normal"
+        }
+
         let out = CollectionOutput(
           schemaVersion: "1.0.0",
           timestamp: ISO8601DateFormatter().string(from: Date()),
           bundlePath: bundleURL.path,
           deviceVID: summary.vendorID ?? 0, devicePID: summary.productID ?? 0,
-          bus: Int(summary.bus ?? 0), address: Int(summary.address ?? 0)
+          bus: Int(summary.bus ?? 0), address: Int(summary.address ?? 0),
+          mode: mode
         )
         printJSON(out)
       }
@@ -146,7 +192,7 @@ public enum CollectCommand {
       return .ok
 
     } catch {
-      if jsonMode { printJSONErrorAndExit(error) }
+      if jsonMode { printJSONErrorAndExit(error, flags: flags) }
       fputs("❌ collect failed: \(error)\n", stderr)
       return .software
     }
@@ -163,13 +209,21 @@ public enum CollectCommand {
       return true
     }
 
+    let candidates = devs.map { DeviceCandidate(from: $0) }
+
     switch matches.count {
     case 0:
       // 69 = unavailable
       if flags.json {
-        printJSONErrorAndExit(CollectError.noDeviceMatched)
+        printJSONErrorAndExit(CollectError.noDeviceMatched(candidates: candidates), flags: flags)
       } else {
         fputs("No devices matched the provided filter.\n", stderr)
+        if !devs.isEmpty {
+          fputs("Available devices:\n", stderr)
+          for (i, candidate) in candidates.enumerated() {
+            fputs("  \(i+1). \(candidate.vid):\(candidate.pid) @ \(candidate.bus):\(candidate.address) - \(candidate.manufacturer) \(candidate.model)\n", stderr)
+          }
+        }
         exit(69)
       }
       // never returns
@@ -179,9 +233,14 @@ public enum CollectCommand {
       // If interactive, you could prompt; for noninteractive we must exit(64).
       if flags.noninteractive {
         if flags.json {
-          printJSONErrorAndExit(CollectError.ambiguousSelection(count: matches.count))
+          printJSONErrorAndExit(CollectError.ambiguousSelection(count: matches.count, candidates: candidates), flags: flags)
         } else {
           fputs("Multiple devices matched the filter; refine selection.\n", stderr)
+          fputs("Matching devices:\n", stderr)
+          for (i, device) in matches.enumerated() {
+            let candidate = DeviceCandidate(from: device)
+            fputs("  \(i+1). \(candidate.vid):\(candidate.pid) @ \(candidate.bus):\(candidate.address) - \(candidate.manufacturer) \(candidate.model)\n", stderr)
+          }
           exit(64)
         }
       }
@@ -326,17 +385,35 @@ public enum CollectCommand {
 
   // MARK: - Models
 
-  private enum CollectError: LocalizedError {
-    case noDeviceMatched
-    case ambiguousSelection(count: Int)
+  enum CollectError: LocalizedError {
+    case noDeviceMatched(candidates: [CollectCommand.DeviceCandidate])
+    case ambiguousSelection(count: Int, candidates: [CollectCommand.DeviceCandidate])
     case timeout(Int)
 
     var errorDescription: String? {
       switch self {
       case .noDeviceMatched: return "No device matched the provided filter."
-      case .ambiguousSelection(let n): return "Multiple devices matched the filter (\(n))."
+      case .ambiguousSelection(let n, _): return "Multiple devices matched the filter (\(n))."
       case .timeout(let ms): return "Step exceeded deadline (\(ms) ms)."
       }
+    }
+  }
+
+  struct DeviceCandidate: Codable, Sendable {
+    let vid: String
+    let pid: String
+    let bus: Int
+    let address: Int
+    let manufacturer: String
+    let model: String
+
+    init(from summary: MTPDeviceSummary) {
+      self.vid = String(format: "%04x", summary.vendorID ?? 0)
+      self.pid = String(format: "%04x", summary.productID ?? 0)
+      self.bus = Int(summary.bus ?? 0)
+      self.address = Int(summary.address ?? 0)
+      self.manufacturer = summary.manufacturer
+      self.model = summary.model
     }
   }
 
@@ -367,6 +444,7 @@ public enum CollectCommand {
     let devicePID: UInt16
     let bus: Int
     let address: Int
+    let mode: String
   }
 
   // MARK: - Public types for external consumption (e.g., LearnPromoteCommand)

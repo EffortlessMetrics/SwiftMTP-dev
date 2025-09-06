@@ -44,11 +44,24 @@ func printJSON<T: Encodable>(_ value: T, type: String) {
     printJSON(value)
 }
 
-func printJSON(_ dict: [String: Any], type: String) {
+func printJSON(_ dict: [String: Any], type: String) async {
     var outputDict = dict
     outputDict["schemaVersion"] = "1.0.0"
     outputDict["type"] = type
     outputDict["timestamp"] = ISO8601DateFormatter().string(from: Date())
+
+    // Add mode field based on current flags
+    let safeMode = await safe
+    let strictMode = await strict
+    let mode: String
+    if safeMode {
+        mode = "safe"
+    } else if strictMode {
+        mode = "strict"
+    } else {
+        mode = "normal"
+    }
+    outputDict["mode"] = mode
 
     // Use JSONSerialization safely
     if let data = try? JSONSerialization.data(withJSONObject: outputDict, options: [.sortedKeys]) {
@@ -683,7 +696,7 @@ func runProbeJSON(flags: CLIFlags) async {
             error: nil
         )
 
-        printJSON(output, type: "probeResult")
+        await printJSON(output, type: "probeResult")
 
     } catch {
         let errorOutput = ProbeOutput(
@@ -708,7 +721,7 @@ func runProbeJSON(flags: CLIFlags) async {
             learnedProfile: nil,
             error: error.localizedDescription
         )
-        printJSON(errorOutput, type: "probeResult")
+        await printJSON(errorOutput, type: "probeResult")
     }
 }
 
@@ -759,7 +772,7 @@ func runList(flags: CLIFlags, args: [String]) async {
     guard let handleStr = args.first, let handle = UInt32(handleStr) else {
         if flags.json || flags.jsonlOutput {
             let errorOutput = ["error": "usage_error", "detail": "Usage: ls <storage_handle>"]
-            printJSON(errorOutput, type: "listResult")
+            await printJSON(errorOutput, type: "listResult")
             exit(64) // usage error
         } else {
             print("❌ Usage: ls <storage_handle>")
@@ -848,12 +861,12 @@ func runListJSON(flags: CLIFlags, storageHandle: UInt32) async {
             }
 
             let output = ["items": items] as [String: Any]
-            printJSON(output, type: "listResult")
+            await printJSON(output, type: "listResult")
         }
 
     } catch {
         let errorOutput = ["error": "list_failed", "detail": error.localizedDescription]
-        printJSON(errorOutput, type: "listResult")
+        await printJSON(errorOutput, type: "listResult")
         exit(75) // temp failure
     }
 }
@@ -975,22 +988,39 @@ func parseSize(_ str: String) -> UInt64 {
 }
 
 func runQuirks(args: [String]) async {
+    let jsonMode = await json
     guard let subcommand = args.first else {
-        print("❌ Usage: quirks <subcommand>")
-        print("   --explain - Show active device quirk configuration")
-        return
+        if jsonMode {
+            printJSONErrorAndExit("usage_error", code: .usage)
+        } else {
+            print("❌ Usage: quirks <subcommand>")
+            print("   --explain - Show active device quirk configuration")
+            exit(64) // usage error
+        }
     }
 
     switch subcommand {
     case "--explain":
         await runQuirksExplain()
     default:
-        print("❌ Unknown quirks subcommand: \(subcommand)")
-        print("   Available: --explain")
+        if jsonMode {
+            printJSONErrorAndExit("unknown_subcommand", code: .usage)
+        } else {
+            print("❌ Unknown quirks subcommand: \(subcommand)")
+            print("   Available: --explain")
+            exit(64) // usage error
+        }
     }
 }
 
 func runQuirksExplain() async {
+    // Check if JSON output is requested
+    let jsonMode = await json
+    if jsonMode {
+        await runQuirksExplainJSON()
+        return
+    }
+
     print("🔧 Device Configuration Layers (Merge Order)")
     print("===========================================")
 
@@ -1074,6 +1104,130 @@ func runQuirksExplain() async {
     print("  --safe      : Conservative settings (128KiB chunks, long timeouts)")
     print("  SWIFTMTP_OVERRIDES=maxChunkBytes=1048576,ioTimeoutMs=8000")
     print("  SWIFTMTP_DENY_QUIRKS=xiaomi-mi-note-2-ff10")
+}
+
+func runQuirksExplainJSON() async {
+    struct LayerInfo: Codable {
+        let source: String
+        let description: String
+        let changes: [String: String]?
+    }
+
+    struct AppliedQuirk: Codable {
+        let id: String
+        let source: String
+        let status: String
+        let confidence: String
+        let changes: [String: String]
+        let benchGates: [String: Double]?
+        let provenance: String?
+    }
+
+    struct QuirksExplainOutput: Codable {
+        let schemaVersion: String = "1.0.0"
+        let timestamp: String
+        let layers: [LayerInfo]
+        let effective: [String: CollectCommand.AnyCodable]
+        let appliedQuirks: [AppliedQuirk]
+        let capabilities: [String: Bool]
+        let hooks: [String]
+    }
+
+    // Create mock data for now - in real implementation, this would be loaded from actual sources
+    let layers: [LayerInfo] = [
+        LayerInfo(
+            source: "defaults",
+            description: "Built-in conservative defaults",
+            changes: [
+                "maxChunkBytes": "1048576",
+                "ioTimeoutMs": "10000",
+                "handshakeTimeoutMs": "6000",
+                "inactivityTimeoutMs": "8000",
+                "overallDeadlineMs": "120000",
+                "stabilizeMs": "0"
+            ]
+        ),
+        LayerInfo(
+            source: "capabilities",
+            description: "Probed device capabilities",
+            changes: [
+                "partialRead": "true",
+                "partialWrite": "true",
+                "largeTransfers": "true"
+            ]
+        ),
+        LayerInfo(
+            source: "learned",
+            description: "Learned from device behavior",
+            changes: [
+                "maxChunkBytes": "2097152",
+                "ioTimeoutMs": "15000"
+            ]
+        ),
+        LayerInfo(
+            source: "quirk:xiaomi-mi-note-2-ff10",
+            description: "Static quirk for Xiaomi Mi Note 2",
+            changes: [
+                "stabilizeMs": "400",
+                "hooks": "postOpenSession,beforeGetStorageIDs"
+            ]
+        ),
+        LayerInfo(
+            source: "override",
+            description: "User environment overrides",
+            changes: nil
+        )
+    ]
+
+    let appliedQuirks: [AppliedQuirk] = [
+        AppliedQuirk(
+            id: "xiaomi-mi-note-2-ff10",
+            source: "static",
+            status: "stable",
+            confidence: "high",
+            changes: [
+                "maxChunkBytes": "1048576→2097152",
+                "stabilizeMs": "0→400",
+                "hooks": "+postOpenSession(delay=400ms),+beforeGetStorageIDs(busyBackoff=3×200ms±20%)"
+            ],
+            benchGates: [
+                "readMBps": 12.0,
+                "writeMBps": 10.0
+            ],
+            provenance: "Steven Zimmerman, 2025-01-09"
+        )
+    ]
+
+    let effective: [String: CollectCommand.AnyCodable] = [
+        "maxChunkBytes": CollectCommand.AnyCodable(2_097_152),
+        "ioTimeoutMs": CollectCommand.AnyCodable(15_000),
+        "handshakeTimeoutMs": CollectCommand.AnyCodable(6_000),
+        "inactivityTimeoutMs": CollectCommand.AnyCodable(8_000),
+        "overallDeadlineMs": CollectCommand.AnyCodable(120_000),
+        "stabilizeMs": CollectCommand.AnyCodable(400)
+    ]
+
+    let capabilities: [String: Bool] = [
+        "partialRead": true,
+        "partialWrite": true,
+        "resumeSupport": true
+    ]
+
+    let hooks = [
+        "postOpenSession(delay=400ms)",
+        "beforeGetStorageIDs(busyBackoff=3×200ms±20%)"
+    ]
+
+    let output = QuirksExplainOutput(
+        timestamp: ISO8601DateFormatter().string(from: Date()),
+        layers: layers,
+        effective: effective,
+        appliedQuirks: appliedQuirks,
+        capabilities: capabilities,
+        hooks: hooks
+    )
+
+    await printJSON(output, type: "quirksExplain")
 }
 
 func printCollectHelp() {
