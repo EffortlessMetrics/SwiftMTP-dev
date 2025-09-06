@@ -4,6 +4,7 @@
 import Foundation
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
+import SwiftMTPQuirks
 import CLibusb
 import CommonCrypto
 
@@ -157,6 +158,13 @@ final class Spinner {
     func fail(_ final: String) {
         stop()
         if isTTY, enabled { fputs("  ✗ \(final)\n", stderr) }
+    }
+
+    func stopAndClear(_ final: String?) {
+        stop()
+        if enabled, let final = final, !final.isEmpty {
+            fputs("\(final)\n", stderr)
+        }
     }
 
     private func stop() {
@@ -724,7 +732,7 @@ struct CollectCommand {
         let device = try await MTPDeviceManager.shared.openDevice(with: selectedDevice, transport: transport, config: SwiftMTPConfig())
 
         // Get device info and build effective tuning
-        let deviceInfo = try await device.info
+        let deviceInfo = try await device.getDeviceInfo()
         let effectiveTuning = try await buildEffectiveTuning(for: deviceInfo, flags: flags)
 
         // Use the device as-is for now (reopening with different config is complex)
@@ -776,7 +784,7 @@ struct CollectCommand {
         // Add 90s timeout to prevent hangs
         return try await withTimeout(seconds: 90) {
             print("   📊 Gathering device information...")
-            let deviceInfo = try await device.info
+            let deviceInfo = try await device.getDeviceInfo()
             print("   💾 Enumerating storage devices...")
             let storages = try await device.storages()
 
@@ -994,7 +1002,7 @@ struct CollectCommand {
     }
 
     private func generateQuirkSuggestion(device: any MTPDevice, effectiveTuning: EffectiveTuning) async throws -> QuirkSuggestion {
-        let deviceInfo = try? await device.info
+        let deviceInfo = try? await device.getDeviceInfo()
         let vidPid = "0x2717:0xff10" // TODO: Extract from actual device
 
         let suggestion = QuirkSuggestion(
