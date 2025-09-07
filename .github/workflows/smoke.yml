@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# Copyright (c) 2025 Effortless Metrics, Inc.
+
+name: Smoke
+on: [push, pull_request]
+jobs:
+  macos-smoke:
+    runs-on: macos-14
+    env:
+      CI: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 16
+        uses: maxim-lobanov/setup-xcode@v1
+        with: { xcode-version: "16" }
+      - name: Swift version
+        run: swift --version
+      - name: Build CLI
+        run: swift build -c debug --package-path SwiftMTPKit --product swiftmtp
+      - name: Run smoke tests (no hardware)
+        run: ./scripts/smoke.sh

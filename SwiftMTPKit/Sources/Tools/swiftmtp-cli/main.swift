@@ -424,20 +424,24 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
         throw MTPError.notSupported("Mock transport not available")
     }
 
-    log("🔌 Using LibUSBTransport (real device)")
-    if flags.strict {
-        log("   Strict mode: quirks and learned profiles disabled")
-    }
-    if flags.safe {
-        log("   Safe mode: conservative transfer settings")
-    }
+    if !flags.json {
+        log("🔌 Using LibUSBTransport (real device)")
+        if flags.strict {
+            log("   Strict mode: quirks and learned profiles disabled")
+        }
+        if flags.safe {
+            log("   Safe mode: conservative transfer settings")
+        }
 
-    log("   Enumerating devices...")
+        log("   Enumerating devices...")
+    }
     do {
         let devices = try await MTPDeviceManager.shared.currentRealDevices()
-        log("   Found \(devices.count) MTP device(s)")
-        for (i, device) in devices.enumerated() {
-            log("     \(i+1). \(device.id.raw) - \(device.manufacturer) \(device.model)")
+        if !flags.json {
+            log("   Found \(devices.count) MTP device(s)")
+            for (i, device) in devices.enumerated() {
+                log("     \(i+1). \(device.id.raw) - \(device.manufacturer) \(device.model)")
+            }
         }
 
         // Select device based on targeting flags
@@ -451,10 +455,12 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
         case .multiple:
             throw MTPError.notSupported("Multiple devices match filter")
         }
-        log("   Opening device: \(selectedDevice.id.raw)")
+        if !flags.json {
+            log("   Opening device: \(selectedDevice.id.raw)")
+        }
 
-        // USB tracing: log device details if requested
-        if flags.traceUSB || flags.traceUSBDetails {
+        // USB tracing: log device details if requested (only in non-JSON mode)
+        if (flags.traceUSB || flags.traceUSBDetails) && !flags.json {
             log("   USB Details:")
             log("     Device: \(selectedDevice.id.raw)")
             log("     Manufacturer: \(selectedDevice.manufacturer)")
@@ -482,7 +488,7 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
                 overrides: nil
             )
 
-            if flags.traceUSB {
+            if flags.traceUSB && !flags.json {
                 log("   USB Protocol Configuration:")
                 log("     Chunk size: \(effectiveTuning.maxChunkBytes) bytes")
                 log("     I/O timeout: \(effectiveTuning.ioTimeoutMs)ms")
@@ -490,7 +496,9 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
                 log("     Hooks: \(effectiveTuning.hooks.count) configured")
             }
 
-            log("   Effective tuning configured")
+            if !flags.json {
+                log("   Effective tuning configured")
+            }
 
         } catch {
             log("   Warning: Could not build effective tuning (\(error)), falling back to defaults")
@@ -517,7 +525,9 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
             if let overallDeadline = userOverrides.overallDeadlineMs {
                 finalTuning.overallDeadlineMs = overallDeadline
             }
-            log("   Applied user overrides from SWIFTMTP_OVERRIDES")
+            if !flags.json {
+                log("   Applied user overrides from SWIFTMTP_OVERRIDES")
+            }
         }
 
         // Convert to SwiftMTPConfig for use with existing code
@@ -525,10 +535,12 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
 
         return try await MTPDeviceManager.shared.openDevice(with: selectedDevice, transport: LibUSBTransportFactory.createTransport(), config: config)
     } catch {
-        log("❌ Device operation failed: \(error)")
-        log("   Error type: \(type(of: error))")
-        if let nsError = error as? NSError {
-            log("   Error domain: \(nsError.domain), code: \(nsError.code)")
+        if !flags.json {
+            log("❌ Device operation failed: \(error)")
+            log("   Error type: \(type(of: error))")
+            if let nsError = error as? NSError {
+                log("   Error domain: \(nsError.domain), code: \(nsError.code)")
+            }
         }
         throw error
     }
@@ -540,37 +552,55 @@ func runProbe(flags: CLIFlags) async {
         return
     }
 
-    log("🔍 Probing for MTP devices...")
+    if !flags.json {
+        log("🔍 Probing for MTP devices...")
+    }
 
     do {
         let device = try await openDevice(flags: flags)
 
-        log("✅ Device found and opened!")
+        if !flags.json {
+            log("✅ Device found and opened!")
+        }
         // Prefer the explicit method form (works on all toolchains)
         let info = try await device.getDeviceInfo()
-        log("   Device Info: \(info.manufacturer) \(info.model)")
-        log("   Operations: \(info.operationsSupported.count)")
-        log("   Events: \(info.eventsSupported.count)")
-
         // Get storage info
         // Make sure session is open before first real op on stricter devices
         try await device.openIfNeeded()
         let storages = try await device.storages()
-        log("   Storage devices: \(storages.count)")
 
-        for storage in storages {
-            let usedBytes = storage.capacityBytes - storage.freeBytes
-            let usedPercent = Double(usedBytes) / Double(storage.capacityBytes) * 100
-            log("     - \(storage.description): \(formatBytes(storage.capacityBytes)) total, \(formatBytes(storage.freeBytes)) free (\(String(format: "%.1f", usedPercent))% used)")
+        if !flags.json {
+            log("   Device Info: \(info.manufacturer) \(info.model)")
+            log("   Operations: \(info.operationsSupported.count)")
+            log("   Events: \(info.eventsSupported.count)")
+            log("   Storage devices: \(storages.count)")
+
+            for storage in storages {
+                let usedBytes = storage.capacityBytes - storage.freeBytes
+                let usedPercent = Double(usedBytes) / Double(storage.capacityBytes) * 100
+                log("     - \(storage.description): \(formatBytes(storage.capacityBytes)) total, \(formatBytes(storage.freeBytes)) free (\(String(format: "%.1f", usedPercent))% used)")
+            }
         }
 
     } catch {
-        log("❌ Probe failed: \(error)")
-        log("   Error type: \(type(of: error))")
-        if let nsError = error as? NSError {
-            log("   Error domain: \(nsError.domain), code: \(nsError.code)")
+        if !flags.json {
+            log("❌ Probe failed: \(error)")
+            log("   Error type: \(type(of: error))")
+            if let nsError = error as? NSError {
+                log("   Error domain: \(nsError.domain), code: \(nsError.code)")
+            }
         }
-        exitNow(.tempfail)
+        // Use unavailable exit code when device is not found
+        if let mtpError = error as? MTPError {
+            switch mtpError {
+            case .notSupported:
+                exitNow(.unavailable)
+            default:
+                exitNow(.tempfail)
+            }
+        } else {
+            exitNow(.tempfail)
+        }
     }
 }
 
@@ -725,6 +755,18 @@ func runProbeJSON(flags: CLIFlags) async {
             error: error.localizedDescription
         )
         await printJSON(errorOutput, type: "probeResult")
+
+        // Set appropriate exit code based on error type
+        if let mtpError = error as? MTPError {
+            switch mtpError {
+            case .notSupported:
+                exitNow(.unavailable)
+            default:
+                exitNow(.tempfail)
+            }
+        } else {
+            exitNow(.tempfail)
+        }
     }
 }
 
@@ -1171,12 +1213,25 @@ func runQuirksExplainJSON() async {
 
     struct QuirksExplainOutput: Codable {
         let schemaVersion: String = "1.0.0"
+        let mode: String
         let timestamp: String
         let layers: [LayerInfo]
         let effective: [String: CollectCommand.AnyCodable]
         let appliedQuirks: [AppliedQuirk]
         let capabilities: [String: Bool]
         let hooks: [String]
+    }
+
+    // Determine mode based on global flags
+    let safeMode = await safe
+    let strictMode = await strict
+    let mode: String
+    if safeMode {
+        mode = "safe"
+    } else if strictMode {
+        mode = "strict"
+    } else {
+        mode = "normal"
     }
 
     // Create mock data for now - in real implementation, this would be loaded from actual sources
@@ -1265,6 +1320,7 @@ func runQuirksExplainJSON() async {
     ]
 
     let output = QuirksExplainOutput(
+        mode: mode,
         timestamp: ISO8601DateFormatter().string(from: Date()),
         layers: layers,
         effective: effective,
