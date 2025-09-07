@@ -19,6 +19,22 @@ jobs:
           mkdir -p dist/${GITHUB_REF_NAME}
           tar -C "$(dirname "$BIN")" -czf dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz swiftmtp
           shasum -a 256 dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz > dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz.sha256
+      - name: Validate macOS artifact
+        run: |
+          # Verify tarball contents
+          tar -tzf dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz | grep -q '^swiftmtp$' || {
+            echo "❌ swiftmtp binary not found in tarball"
+            tar -tzf dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz
+            exit 1
+          }
+
+          # Verify SHA256 checksum
+          shasum -a 256 -c dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz.sha256 || {
+            echo "❌ SHA256 checksum verification failed"
+            exit 1
+          }
+
+          echo "✅ macOS artifact validation passed"
       - name: Generate SBOM
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b . v1.17.0
@@ -47,6 +63,22 @@ jobs:
           cp .build/release/swiftmtp dist/swiftmtp
           tar -C dist -czf dist/swiftmtp-linux-x86_64-${{ github.ref_name }}.tar.gz swiftmtp
           sha256sum dist/swiftmtp-linux-x86_64-${{ github.ref_name }}.tar.gz > dist/SHA256SUMS.txt
+      - name: Validate Linux artifact
+        run: |
+          # Verify tarball contents
+          tar -tzf dist/swiftmtp-linux-x86_64-${{ github.ref_name }}.tar.gz | grep -q '^swiftmtp$' || {
+            echo "❌ swiftmtp binary not found in tarball"
+            tar -tzf dist/swiftmtp-linux-x86_64-${{ github.ref_name }}.tar.gz
+            exit 1
+          }
+
+          # Verify SHA256 checksum
+          sha256sum -c dist/SHA256SUMS.txt || {
+            echo "❌ SHA256 checksum verification failed"
+            exit 1
+          }
+
+          echo "✅ Linux artifact validation passed"
       - uses: actions/upload-artifact@v4
         with:
           name: swiftmtp-linux
