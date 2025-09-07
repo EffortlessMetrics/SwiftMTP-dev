@@ -20,6 +20,16 @@ swift build --package-path "$PKG_PATH" -c debug >"$LOGS_DIR/build.log" 2>&1 || {
   echo "❌ build failed"; exit 70;
 }
 
+# ---------- version validation ----------
+echo "🏷️ Version validation"
+if ! swift run --package-path "$PKG_PATH" swiftmtp version --json \
+     1> "$LOGS_DIR/version.json" 2> "$LOGS_DIR/version-stderr.log"; then
+  echo "❌ version command failed"; exit 70;
+fi
+cat "$LOGS_DIR/version.json" | json_ok || { echo "❌ version JSON invalid"; exit 70; }
+# Structure validation guards
+jq -e 'has("version") and has("git") and has("schemaVersion")' "$LOGS_DIR/version.json" >/dev/null || { echo "❌ version JSON missing required fields"; exit 70; }
+
 # ---------- quirks explain ----------
 echo "🧩 Quirks (explain)"
 if ! swift run --package-path "$PKG_PATH" swiftmtp quirks --explain --json \

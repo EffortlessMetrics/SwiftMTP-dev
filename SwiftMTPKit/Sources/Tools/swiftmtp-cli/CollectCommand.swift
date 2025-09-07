@@ -316,14 +316,40 @@ public enum CollectCommand {
   }
 
   private static func sanitizeDump(_ s: String) -> String {
-    // Minimal redaction; your validation script performs deep checks.
+    // Comprehensive privacy sanitization for USB dumps and device information
     var t = s
-    // Redact /Users/<name>/...
+
+    // User paths (macOS, Linux, Windows)
     t = t.replacingOccurrences(of: #"/Users/[^/\n]+"#, with: "/Users/<redacted>", options: .regularExpression)
-    // Redact "Serial Number: <anything>"
+    t = t.replacingOccurrences(of: #"/home/[^/\n]+"#, with: "/home/<redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(of: #"/var/[^/\n]+"#, with: "/var/<redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(of: #"/etc/[^/\n]+"#, with: "/etc/<redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(of: #"([A-Za-z]:\\Users\\)[^\\]+"#, with: "$1<redacted>", options: .regularExpression)
+
+    // Host/computer names
+    t = t.replacingOccurrences(of: #"(?i)(Host\s*Name|Hostname|Computer\s*Name)\s*:\s*.*"#, with: "$1: <redacted>", options: .regularExpression)
+
+    // Emails
+    t = t.replacingOccurrences(of: #"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}"#, with: "<redacted-email>", options: [.regularExpression, .caseInsensitive])
+
+    // IP addresses (IPv4 and IPv6)
+    t = t.replacingOccurrences(of: #"\b(\d{1,3}\.){3}\d{1,3}\b"#, with: "<redacted-ipv4>", options: .regularExpression)
+    t = t.replacingOccurrences(of: #"\b([0-9A-Fa-f]{0,4}:){2,7}[0-9A-Fa-f]{0,4}\b"#, with: "<redacted-ipv6>", options: [.regularExpression, .caseInsensitive])
+
+    // MAC addresses
+    t = t.replacingOccurrences(of: #"\b([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b"#, with: "<redacted-mac>", options: [.regularExpression, .caseInsensitive])
+
+    // Serial numbers and device IDs
+    t = t.replacingOccurrences(of: #"(?i)(UDID|Serial\s*(?:Number)?|iSerial)\b[:\s]+(\S+)"#, with: "$1: <redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(of: #"\b([0-9a-f]{16,64})\b(?=.*\b(udid|serial|device|sn|id)\b)"#, with: "<redacted-hex>", options: [.regularExpression, .caseInsensitive])
+
+    // Possessive device names (e.g., "Steven's iPhone" → "iPhone")
+    t = t.replacingOccurrences(of: #"\b[\p{L}\p{N}._%+-]+'s\s+"#, with: "", options: [.regularExpression, .caseInsensitive])
+
+    // Legacy patterns for backward compatibility
     t = t.replacingOccurrences(of: #"Serial\s+Number:\s+[^\s]+"#, with: "Serial Number: <redacted>", options: .regularExpression)
-    // Redact hostnames (best-effort)
     t = t.replacingOccurrences(of: #"\b[A-Za-z0-9._-]+\.local\b"#, with: "<redacted>.local", options: .regularExpression)
+
     return t
   }
 
