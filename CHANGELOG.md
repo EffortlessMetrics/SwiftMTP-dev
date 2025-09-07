@@ -5,53 +5,68 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2025-01-09
+
+### Added
+- **Privacy-safe `collect`**: Read-only device data collection with strict defaults; JSON-first CLI.
+- **Device quirks system**: Learned profiles and static quirks for device-specific handling; `quirks --explain`.
+- **Targeting flags**: `--vid/--pid/--bus/--address` for precise device selection.
+- **Core operations**: `probe`, `storages`, `ls`, `events`, `delete`, `move` with comprehensive error handling.
+- **Version command**: `--version [--json]` with build info, git SHA, and schema version.
+- **Cross-platform support**: macOS (Intel/Apple Silicon) and Linux builds.
+- **Homebrew tap**: Easy installation via `brew install swiftmtp`.
+- **SBOM generation**: Supply chain transparency with SPDX SBOM files.
+- **Comprehensive test suite**: Unit, integration, and scenario tests with CI validation.
+- **DocC documentation**: Device-specific tuning guides and API documentation.
+
+### Reliability
+- **Layered timeouts**: I/O, handshake, and inactivity timeouts with device-specific tuning.
+- **Xiaomi stabilization**: Backoff and retry logic for Xiaomi device compatibility.
+- **TTY guard**: Spinner UI that gracefully handles non-interactive environments.
+- **Exit codes**: Standardized exit codes (0=ok, 64=usage, 69=unavailable, 70=software, 75=tempfail).
+
+### Docs & CI
+- **DocC device pages**: Generated from `Specs/quirks.json` with device-specific tuning information.
+- **CI pipeline**: smoke tests, quirks validation, multi-platform builds, and release automation.
+- **Evidence gates**: Bench gates ensure reliability before quirk application (≥12.0 MB/s read, ≥10.0 MB/s write).
+
+### Security
+- **HMAC-SHA256 redaction**: Serial numbers and sensitive data are redacted using cryptographic hashing.
+- **Input validation**: All device communications validated against schemas.
+- **Atomic operations**: File operations prevent partial writes and race conditions.
+- **Path traversal protection**: Safe handling of device file system paths.
+
+### Changed
+- **API stabilization**: Implementation details made internal for v1.0 stability.
+- **JSON schema versioning**: All outputs include `schemaVersion: "1.0.0"` and structured metadata.
+- **Build system**: Integrated build info generation with auto-generated `BuildInfo.swift`.
+
+### Fixed
+- N/A (initial stable release)
+
+### Security
+- **No personal data collection**: Device submissions contain only technical compatibility data.
+- **Safe defaults**: All operations default to conservative, privacy-preserving settings.
+- **Transparent provenance**: Full SBOM and build attestation for supply chain security.
+
 ## [Unreleased]
 
 ### Added
-- Initial public release of SwiftMTP
-- MTP (Media Transfer Protocol) support for USB devices
-- Device discovery and enumeration
-- File transfer capabilities with resume support
-- Index-based device browsing and synchronization
-- CLI tool (`swiftmtp`) for command-line operations
-- Comprehensive test suite with Core, Index, Transport, and Scenario tests
-- Thread sanitizer support for race condition detection
-- SBOM generation for security transparency
-- **File Provider tech preview**: XPC service and File Provider extension for Finder integration (macOS)
-
-### Changed
-- **API Freeze**: Made implementation details internal for v1.0 stability
-  - `DeviceTuningCache`, `DeviceFingerprint`, `DeviceTuningSettings` → internal
-  - `ChunkTuner`, `ChunkTunerStats` → internal
-  - `TransportDiscoveryProtocol`, `TransportDiscovery` → internal
-- Thread sanitizer now only runs Core/Index/Scenario tests (Transport excluded due to _AtomicsShims)
-
-### Fixed
-- N/A (initial release)
-
-### Security
-- Atomic file operations to prevent partial writes
-- Bounded buffer sizes for memory safety
-- Path traversal protection in device file systems
-
-## [1.0.0-rc1] - 2024-XX-XX
-
-### Added
-- Core MTP protocol implementation
-- LibUSB-based USB transport layer
-- Device quirk registry for compatibility
+- File Provider tech preview: XPC service and File Provider extension for Finder integration (macOS)
 - Transfer journaling for resumable operations
-- SQLite-based index for device contents
-- Mirror and sync operations
-- Benchmarking capabilities
-- Comprehensive documentation
+- Mirror and sync operations with conflict resolution
+- Benchmarking capabilities with performance profiling
 
 ### Changed
-- N/A (initial release)
+- Thread sanitizer now only runs Core/Index/Scenario tests (Transport excluded due to _AtomicsShims)
+- Enhanced error reporting with structured JSON envelopes
 
 ### Fixed
-- N/A (initial release)
+- Race conditions in concurrent device operations
+- Memory leaks in long-running transfer operations
+- USB timeout handling for slow devices
 
 ### Security
-- Input validation for all device communications
-- Safe handling of untrusted device data
+- Additional input validation for device communications
+- Enhanced path traversal protection
+- Buffer size bounds checking

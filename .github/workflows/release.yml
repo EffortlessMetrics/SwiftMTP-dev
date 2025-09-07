@@ -9,6 +9,8 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
+      - name: Generate build info
+        run: ./scripts/gen-build-info.sh SwiftMTPKit/Sources/Tools/swiftmtp-cli/Autogen/BuildInfo.swift
       - name: Build
         run: swift build -c release --package-path SwiftMTPKit --product swiftmtp
       - name: Package
@@ -17,12 +19,55 @@ jobs:
           mkdir -p dist/${GITHUB_REF_NAME}
           tar -C "$(dirname "$BIN")" -czf dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz swiftmtp
           shasum -a 256 dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz > dist/${GITHUB_REF_NAME}/swiftmtp-macos-arm64.tar.gz.sha256
-      - name: Create draft release
+      - name: Generate SBOM
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b . v1.17.0
+          ./syft packages dir:SwiftMTPKit -o spdx-json > dist/${GITHUB_REF_NAME}/swiftmtp-sbom.spdx.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: swiftmtp-macos
+          path: |
+            dist/${{ github.ref_name }}/swiftmtp-macos-arm64.tar.gz*
+            dist/${{ github.ref_name }}/swiftmtp-sbom.spdx.json
+
+  linux-build:
+    name: Linux (Ubuntu 22.04) build
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install -y libusb-1.0-0-dev jq
+      - name: Generate build info
+        run: ./scripts/gen-build-info.sh SwiftMTPKit/Sources/Tools/swiftmtp-cli/Autogen/BuildInfo.swift
+      - name: Build
+        run: swift build -c release --package-path SwiftMTPKit --product swiftmtp
+      - name: Package
+        run: |
+          mkdir -p dist
+          cp .build/release/swiftmtp dist/swiftmtp
+          tar -C dist -czf dist/swiftmtp-linux-x86_64-${{ github.ref_name }}.tar.gz swiftmtp
+          sha256sum dist/swiftmtp-linux-x86_64-${{ github.ref_name }}.tar.gz > dist/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: swiftmtp-linux
+          path: dist/*
+
+  create-release:
+    needs: [build-macos, linux-build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Create release
         uses: softprops/action-gh-release@v2
         with:
           draft: true
           files: |
-            dist/${{ github.ref_name }}/swiftmtp-macos-arm64.tar.gz
-            dist/${{ github.ref_name }}/swiftmtp-macos-arm64.tar.gz.sha256
-
-  # Optional: add a linux job building and attaching a linux artifact
+            artifacts/swiftmtp-macos/swiftmtp-macos-arm64.tar.gz
+            artifacts/swiftmtp-macos/swiftmtp-macos-arm64.tar.gz.sha256
+            artifacts/swiftmtp-macos/swiftmtp-sbom.spdx.json
+            artifacts/swiftmtp-linux/swiftmtp-linux-x86_64-${{ github.ref_name }}.tar.gz
+            artifacts/swiftmtp-linux/SHA256SUMS.txt
