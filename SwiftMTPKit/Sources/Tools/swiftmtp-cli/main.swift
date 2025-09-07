@@ -242,21 +242,21 @@ case "delete":
     let filter = parseDeviceFilter(&args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
-    let exitCode = await runDeleteCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter)
+    let exitCode = await runDeleteCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter, strict: strict, safe: safe)
     exit(exitCode.rawValue)
 case "move":
     var args = remainingArgs
     let filter = parseDeviceFilter(&args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
-    let exitCode = await runMoveCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter)
+    let exitCode = await runMoveCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter, strict: strict, safe: safe)
     exit(exitCode.rawValue)
 case "events":
     var args = remainingArgs
     let filter = parseDeviceFilter(&args)
     let json = args.contains("--json")
     let noninteractive = args.contains("--noninteractive")
-    let exitCode = await runEventsCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter)
+    let exitCode = await runEventsCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter, strict: strict, safe: safe)
     exit(exitCode.rawValue)
 case "collect":
     if remainingArgs.contains("--help") || remainingArgs.contains("-h") {
