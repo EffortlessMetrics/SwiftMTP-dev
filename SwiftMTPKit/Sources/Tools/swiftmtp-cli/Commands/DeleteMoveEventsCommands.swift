@@ -1,81 +1,237 @@
 // DeleteMoveEventsCommands.swift
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import Foundation
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
+import SwiftMTPQuirks
 
-// Placeholder - this should be implemented to use DeviceFilter selection
-func openFilteredDevice(filter: DeviceFilter, noninteractive: Bool, json: Bool) async throws -> any MTPDevice {
-  // Implementation needed - use MTPDeviceManager.shared to discover devices
-  // and select using DeviceFilter logic
-  fatalError("openFilteredDevice not implemented")
-}
 
 // DELETE
-func runDeleteCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter) async -> ExitCode {
+func runDeleteCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter, strict: Bool, safe: Bool) async -> ExitCode {
   guard args.count >= 1, let handle = UInt32(args.removeFirst(), radix: 0) else {
     if json { printJSONErrorAndExit("missing_handle", code: .usage) }
     fputs("usage: swiftmtp delete <handle> [--recursive]\n", stderr); return .usage
   }
   let recursive = args.contains("--recursive")
-  var spinner = Spinner("Deleting …", enabled: !json); spinner.start()
+
+  // Check if we're in a TTY for spinner
+  let isTTY = isatty(STDOUT_FILENO) != 0
+  var spinner = Spinner("Deleting …", enabled: !json && isTTY)
+  if !json && isTTY { spinner.start() }
+
   do {
-    let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
-    try await device.delete(handle, recursive: recursive)
-    spinner.succeed("Deleted")
+    let opened = try await openFilteredDevice(
+      filter: filter,
+      noninteractive: noninteractive,
+      strict: strict,
+      safe: safe
+    )
+
+    try await opened.device.delete(handle, recursive: recursive)
+    if !json && isTTY { spinner.succeed("Deleted") }
     return .ok
+
+  } catch let DeviceOpenError.noneMatched(available) {
+    if !json && isTTY { spinner.fail() }
+    if json {
+      printJSONErrorAndExit(
+        "No device matched the provided filter.",
+        code: .unavailable,
+        details: [
+          "availableDevices": "\(available.count)",
+          "examples": available.prefix(3).map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
+        ]
+      )
+    } else {
+      fputs("No device matched the provided filter.\n", stderr)
+      return .unavailable
+    }
+
+  } catch let DeviceOpenError.ambiguous(matches) {
+    if !json && isTTY { spinner.fail() }
+    if json {
+      printJSONErrorAndExit(
+        "Multiple devices match the filter; refine with --bus/--address.",
+        code: .usage,
+        details: [
+           "matches": matches.map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
+        ]
+      )
+    } else {
+      fputs("Multiple devices match; refine with --bus/--address.\n", stderr)
+      return .usage
+    }
+
   } catch {
-    spinner.fail("Delete failed")
-    if json { printJSONErrorAndExit("delete_failed") }
-    fputs("❌ delete failed: \(error)\n", stderr)
-    return .software
+    if !json && isTTY { spinner.fail() }
+    if json {
+      printJSONErrorAndExit(error.localizedDescription, code: .software)
+    } else {
+      fputs("❌ delete failed: \(error)\n", stderr)
+      return .software
+    }
   }
 }
 
 // MOVE
-func runMoveCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter) async -> ExitCode {
+func runMoveCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter, strict: Bool, safe: Bool) async -> ExitCode {
   guard args.count >= 2,
         let handle = UInt32(args.removeFirst(), radix: 0),
         let parent = UInt32(args.removeFirst(), radix: 0) else {
     if json { printJSONErrorAndExit("missing_args", code: .usage) }
     fputs("usage: swiftmtp move <handle> <new-parent-handle>\n", stderr); return .usage
   }
-  var spinner = Spinner("Moving …", enabled: !json); spinner.start()
+
+  // Check if we're in a TTY for spinner
+  let isTTY = isatty(STDOUT_FILENO) != 0
+  var spinner = Spinner("Moving …", enabled: !json && isTTY)
+  if !json && isTTY { spinner.start() }
+
   do {
-    let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
-    try await device.move(handle, to: parent)
-    spinner.succeed("Moved")
+    let opened = try await openFilteredDevice(
+      filter: filter,
+      noninteractive: noninteractive,
+      strict: strict,
+      safe: safe
+    )
+
+    try await opened.device.move(handle, to: parent)
+    if !json && isTTY { spinner.succeed("Moved") }
     return .ok
+
+  } catch let DeviceOpenError.noneMatched(available) {
+    if !json && isTTY { spinner.fail() }
+    if json {
+      printJSONErrorAndExit(
+        "No device matched the provided filter.",
+        code: .unavailable,
+        details: [
+          "availableDevices": "\(available.count)",
+          "examples": available.prefix(3).map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
+        ]
+      )
+    } else {
+      fputs("No device matched the provided filter.\n", stderr)
+      return .unavailable
+    }
+
+  } catch let DeviceOpenError.ambiguous(matches) {
+    if !json && isTTY { spinner.fail() }
+    if json {
+      printJSONErrorAndExit(
+        "Multiple devices match the filter; refine with --bus/--address.",
+        code: .usage,
+        details: [
+           "matches": matches.map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
+        ]
+      )
+    } else {
+      fputs("Multiple devices match; refine with --bus/--address.\n", stderr)
+      return .usage
+    }
+
   } catch {
-    spinner.fail("Move failed")
-    if json { printJSONErrorAndExit("move_failed") }
-    fputs("❌ move failed: \(error)\n", stderr)
-    return .software
+    if !json && isTTY { spinner.fail() }
+    if json {
+      printJSONErrorAndExit(error.localizedDescription, code: .software)
+    } else {
+      fputs("❌ move failed: \(error)\n", stderr)
+      return .software
+    }
   }
 }
 
 // EVENTS (prints lines or JSONL)
-func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter) async -> ExitCode {
+func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter, strict: Bool, safe: Bool) async -> ExitCode {
   let seconds = (args.first.flatMap { Int($0) }) ?? 30
-  var spinner = Spinner("Subscribing to events …", enabled: !json); spinner.start()
+
+  // Check if we're in a TTY for spinner
+  let isTTY = isatty(STDOUT_FILENO) != 0
+  var spinner = Spinner("Listening for events (\(seconds)s)…", enabled: !json && isTTY)
+  if !json && isTTY { spinner.start() }
+
   do {
-    let device = try await openFilteredDevice(filter: filter, noninteractive: noninteractive, json: json)
-    spinner.succeed("Listening …")
-    let stream = device.events
-    let deadline = Date().addingTimeInterval(TimeInterval(seconds))
-    for await ev in stream {
+    let opened = try await openFilteredDevice(
+      filter: filter,
+      noninteractive: noninteractive,
+      strict: strict,
+      safe: safe
+    )
+
+    if !json && isTTY { spinner.succeed("Connected") }
+
+    // Stream events for the requested duration.
+    let deadline = DispatchTime.now().uptimeNanoseconds
+                 + UInt64(seconds) * 1_000_000_000
+
+    var out: [EventOut] = []
+    let iso = ISO8601DateFormatter()
+
+    // Your DeviceActor exposes an AsyncStream<MTPEvent>
+    for await ev in opened.device.events {
+      let e = EventOut(
+        ts: iso.string(from: Date()),
+        code: ev.code,            // UInt16 on your MTPEvent
+        params: ev.parameters     // [UInt32] on your MTPEvent
+      )
       if json {
-        struct J: Codable { let schemaVersion = "1.0"; let type = "event"; let t = ISO8601DateFormatter().string(from: Date()); let event: String }
-        printJSON(J(event: "\(ev)"))
+        out.append(e)
       } else {
-        print("• \(ev)")
+        print(String(format: "0x%04X  params=%@", e.code, "\(e.params)"))
       }
-      if Date() >= deadline { break }
+      if DispatchTime.now().uptimeNanoseconds >= deadline { break }
     }
+
+    if !json && isTTY { spinner.succeed("Complete") }
+    if json { printJSON(out) }
     return .ok
+
+  } catch let DeviceOpenError.noneMatched(available) {
+    if !json && isTTY { spinner.fail() }
+    if json {
+      printJSONErrorAndExit(
+        "No device matched the provided filter.",
+        code: .unavailable,
+        details: [
+          "availableDevices": "\(available.count)",
+          "examples": available.prefix(3).map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
+        ]
+      )
+    } else {
+      fputs("No device matched the provided filter.\n", stderr)
+      return .unavailable
+    }
+
+  } catch let DeviceOpenError.ambiguous(matches) {
+    if !json && isTTY { spinner.fail() }
+    if json {
+      printJSONErrorAndExit(
+        "Multiple devices match the filter; refine with --bus/--address.",
+        code: .usage,
+        details: [
+           "matches": matches.map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
+        ]
+      )
+    } else {
+      fputs("Multiple devices match; refine with --bus/--address.\n", stderr)
+      return .usage
+    }
+
   } catch {
-    spinner.stopAndClear()
-    if json { printJSONErrorAndExit("events_failed", code: .software, details: ["error":"\(error)"]) }
-    fputs("❌ events failed: \(error)\n", stderr)
-    return .software
+    if !json && isTTY { spinner.fail() }
+    if json {
+      printJSONErrorAndExit(error.localizedDescription, code: .software)
+    } else {
+      fputs("events failed: \(error)\n", stderr)
+      return .software
+    }
   }
+}
+
+// Helper struct for JSON output
+private struct EventOut: Codable {
+  let ts: String
+  let code: UInt16
+  let params: [UInt32]
 }

@@ -101,14 +101,16 @@ swift run --package-path "$PKG_PATH" swiftmtp events 5 \
   1> "$LOGS_DIR/events.json" 2> "$LOGS_DIR/events-stderr.log"
 code=$?
 set -e  # Re-enable exit on error
-if [ $code -ne 0 ] && [ $code -ne 75 ] && [ $code -lt 128 ]; then
+if [ $code -ne 0 ] && [ $code -ne 69 ] && [ $code -ne 75 ] && [ $code -lt 128 ]; then
   echo "❌ events failed with exit $code"
   exit $code
 fi
-if [ $code -eq 75 ]; then
-  echo "ℹ️ events failed with exit 75 (expected: no device connected)"
+if [ $code -eq 69 ]; then
+  echo "ℹ️ events failed with exit 69 (expected: no device connected)"
+elif [ $code -eq 75 ]; then
+  echo "ℹ️ events failed with exit 75 (expected: device busy/timeout)"
 elif [ $code -ge 128 ]; then
-  echo "ℹ️ events crashed with exit $code (expected: no device connected)"
+  echo "ℹ️ events crashed with exit $code (unexpected)"
 fi
 cat "$LOGS_DIR/events.json" | json_ok || { echo "❌ events JSON invalid"; exit 70; }
 # Structure validation guards
