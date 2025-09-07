@@ -16,6 +16,9 @@ git push origin "$VER"
 
 mkdir -p "$OUT"
 
+echo "🔧 Generating build info…"
+scripts/gen-build-info.sh "SwiftMTPKit/Sources/Tools/swiftmtp-cli/Autogen/BuildInfo.swift"
+
 echo "🧱 Building macOS (arm64, release)…"
 swift build -c release --package-path "$PKG" --product "$PROD"
 BIN="$(swift build -c release --package-path "$PKG" --product "$PROD" --show-bin-path)/$PROD"

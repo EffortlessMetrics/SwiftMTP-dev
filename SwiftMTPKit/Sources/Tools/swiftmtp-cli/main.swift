@@ -5,6 +5,8 @@ import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import Foundation
 
+// BuildInfo is auto-generated in the same target
+
 // Import the LibUSB transport to get the extended MTPDeviceManager methods
 import struct SwiftMTPTransportLibUSB.LibUSBTransportFactory
 
@@ -200,6 +202,7 @@ if filteredArgs.isEmpty {
     print("  move <handle> <new-parent> - Move file/directory")
     print("  events [seconds] - Monitor device events")
     print("  learn-promote - Promote learned profiles to quirks (see learn-promote --help)")
+    print("  version [--json] - Show version information")
     print("")
     print("Exit codes:")
     print("  0  - Success")
@@ -267,9 +270,11 @@ case "learn-promote":
         exitNow(.ok)
     }
     await runLearnPromote()
+case "version":
+    await runVersion(json: json, args: remainingArgs)
 default:
     print("Unknown command: \(command)")
-    print("Available: probe, usb-dump, diag, storages, ls, pull, bench, mirror, quirks, health, collect, delete, move, events, learn-promote")
+    print("Available: probe, usb-dump, diag, storages, ls, pull, bench, mirror, quirks, health, collect, delete, move, events, learn-promote, version")
     exitNow(.usage)
 }
 
@@ -1471,6 +1476,30 @@ func runHealth() async {
         print("❌ Some health checks failed")
         print("   Check permissions, USB access, and library installation")
         exitNow(.unavailable)
+    }
+}
+
+func runVersion(json: Bool, args: [String]) async {
+    struct VersionOutput: Codable {
+        let version: String
+        let git: String
+        let builtAt: String
+        let schemaVersion: String
+    }
+
+    let output = VersionOutput(
+        version: BuildInfo.version,
+        git: BuildInfo.git,
+        builtAt: BuildInfo.builtAt,
+        schemaVersion: BuildInfo.schemaVersion
+    )
+
+    if json {
+        await printJSON(output, type: "version")
+    } else {
+        print("SwiftMTP \(output.version) (\(output.git))")
+        print("Built at: \(output.builtAt)")
+        print("Schema version: \(output.schemaVersion)")
     }
 }
 
