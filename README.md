@@ -15,7 +15,7 @@ swiftmtp --version
 ### Manual Install
 ```bash
 # Download the latest release
-curl -LO https://github.com/your-org/SwiftMTP/releases/download/v1.0.1/swiftmtp-macos-arm64.tar.gz
+curl -LO https://github.com/your-org/SwiftMTP/releases/download/v1.0.2/swiftmtp-macos-arm64.tar.gz
 
 # Verify checksum
 shasum -a 256 swiftmtp-macos-arm64.tar.gz
@@ -28,7 +28,7 @@ tar -xzf swiftmtp-macos-arm64.tar.gz
 ### Linux
 ```bash
 # Download Linux build
-curl -LO https://github.com/your-org/SwiftMTP/releases/download/v1.0.1/swiftmtp-linux-x86_64-v1.0.1.tar.gz
+curl -LO https://github.com/your-org/SwiftMTP/releases/download/v1.0.2/swiftmtp-linux-x86_64-v1.0.2.tar.gz
 tar -xzf swiftmtp-linux-x86_64-v1.0.1.tar.gz
 ./swiftmtp --version
 ```
