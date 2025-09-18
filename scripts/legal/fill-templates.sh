@@ -17,6 +17,18 @@ find legal -type f -name "*.md" -print0 | xargs -0 sed -i '' \
   -e "s/<<SECURITY_EMAIL>>/${SECURITY_EMAIL}/g" \
   -e "s/<<SUPPORT_EMAIL>>/${SUPPORT_EMAIL}/g"
 
+# Also process NOTICE (non-Markdown) explicitly
+if [ -f legal/ops/NOTICE ]; then
+  sed -i '' \
+    -e "s/<<LICENSOR>>/${LICENSOR//\//\\/}/g" \
+    -e "s/<<GOVERNING_LAW>>/${LAW}/g" \
+    -e "s/<<VENUE>>/${VENUE}/g" \
+    -e "s/<<LICENSING_EMAIL>>/${LICENSING_EMAIL}/g" \
+    -e "s/<<SECURITY_EMAIL>>/${SECURITY_EMAIL}/g" \
+    -e "s/<<SUPPORT_EMAIL>>/${SUPPORT_EMAIL}/g" \
+    legal/ops/NOTICE
+fi
+
 echo "Legal templates filled with:"
 echo "  Licensor: $LICENSOR"
 echo "  Governing Law: $LAW"
