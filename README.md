@@ -15,7 +15,7 @@ swiftmtp --version
 ### Manual Install
 ```bash
 # Download the latest release
-curl -LO https://github.com/your-org/SwiftMTP/releases/download/v1.0.0/swiftmtp-macos-arm64.tar.gz
+curl -LO https://github.com/your-org/SwiftMTP/releases/download/v1.0.1/swiftmtp-macos-arm64.tar.gz
 
 # Verify checksum
 shasum -a 256 swiftmtp-macos-arm64.tar.gz
@@ -28,8 +28,8 @@ tar -xzf swiftmtp-macos-arm64.tar.gz
 ### Linux
 ```bash
 # Download Linux build
-curl -LO https://github.com/your-org/SwiftMTP/releases/download/v1.0.0/swiftmtp-linux-x86_64-v1.0.0.tar.gz
-tar -xzf swiftmtp-linux-x86_64-v1.0.0.tar.gz
+curl -LO https://github.com/your-org/SwiftMTP/releases/download/v1.0.1/swiftmtp-linux-x86_64-v1.0.1.tar.gz
+tar -xzf swiftmtp-linux-x86_64-v1.0.1.tar.gz
 ./swiftmtp --version
 ```
 
@@ -48,6 +48,18 @@ swiftmtp storages
 
 # Show device configuration layers
 swiftmtp quirks --explain
+```
+
+### JSON output example (events)
+```json
+{
+  "schemaVersion": "1.0.0",
+  "timestamp": "2025-09-03T13:19:20Z",
+  "event": {
+    "code": "ObjectAdded",
+    "parameters": {"handle": 123456}
+  }
+}
 ```
 
 ### Device Targeting
