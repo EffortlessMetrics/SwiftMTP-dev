@@ -90,6 +90,10 @@ private func claimMTPInterface(handle: OpaquePointer, device: OpaquePointer) thr
         }
     }
     guard let sel = best, sel.score >= 60 else { throw TransportError.io("no MTP interface") }
+    
+    // Detach kernel driver before claiming (if supported)
+    _ = libusb_detach_kernel_driver(handle, Int32(sel.iface))
+    
     try check(libusb_claim_interface(handle, Int32(sel.iface)))
     if sel.alt > 0 { try check(libusb_set_interface_alt_setting(handle, Int32(sel.iface), Int32(sel.alt))) }
     return (sel.iface, sel.alt, sel.inEP, sel.outEP, sel.evt)
@@ -112,12 +116,19 @@ public struct LibUSBTransport: MTPTransport {
     guard let dev = target else { throw TransportError.noDevice }
     var h: OpaquePointer?
     guard libusb_open(dev, &h) == 0, let handle = h else { libusb_unref_device(dev); throw TransportError.accessDenied }
-    _ = libusb_reset_device(handle)
-    try? await Task.sleep(nanoseconds: 500_000_000)
+    
+    if config.resetOnOpen {
+        _ = libusb_reset_device(handle)
+        try? await Task.sleep(nanoseconds: 500_000_000)
+    }
+    
     let (iface, _, epIn, epOut, epEvt) = try { do { return try claimMTPInterface(handle: handle, device: dev) } catch { libusb_close(handle); libusb_unref_device(dev); throw error } }()
+    
     _ = libusb_clear_halt(handle, epIn); _ = libusb_clear_halt(handle, epOut)
-    var drain = [UInt8](repeating: 0, count: 512), got: Int32 = 0
-    while libusb_bulk_transfer(handle, epIn, &drain, 512, &got, 50) == 0 && got > 0 {}
+    var drain = [UInt8](repeating: 0, count: 4096), got: Int32 = 0
+    // Drain until empty with short timeout
+    while libusb_bulk_transfer(handle, epIn, &drain, Int32(drain.count), &got, 10) == 0 && got > 0 {}
+    
     return MTPUSBLink(handle: handle, device: dev, iface: iface, epIn: epIn, epOut: epOut, epEvt: epEvt, config: config, manufacturer: summary.manufacturer, model: summary.model)
   }
 }
@@ -198,9 +209,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       let responseData = collector.data
       if debug {
           print("   [USB] ObjectInfo for handle \(h): \(responseData.count) bytes")
-          if responseData.count >= 16 {
-              print("   [USB] Data hex: \(responseData.prefix(64).map { String(format: "%02x", $0) }.joined(separator: " "))")
-          }
+          print("   [USB] Data hex: \(responseData.map { String(format: "%02x", $0) }.joined(separator: " "))")
       }
       var r = PTPReader(data: responseData)
       guard let sid = r.u32(), let fmt = r.u16() else { 
@@ -222,7 +231,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       _ = r.u32() // SequenceNumber
       let name = r.string() ?? "Unknown"
       if debug { print("   [USB] Parsed: name=\(name) size=\(String(describing: size)) parent=\(String(describing: par))") }
-      out.append(MTPObjectInfo(handle: h, storage: MTPStorageID(raw: sid), parent: par == 0 ? nil : par, name: name, sizeBytes: (size == nil || size == 0xFFFFFFFF) ? nil : UInt64(size!), modified: nil, formatCode: fmt, properties: [:]))
+      out.append(MTPObjectInfo(handle: h, storage: MTPStorageID(raw: sid), parent: par == 0 ? nil : par, name: name, sizeBytes: (size == nil || size == 0xFFFFFFFF) ? nil : UInt64(size!), modified: nil as Date?, formatCode: fmt, properties: [:]))
     }
     return out
   }
@@ -293,9 +302,10 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     if dataInHandler != nil {
       if debug { print(String(format: "   [USB] op=0x%04x tx=%u phase=DATA-IN", command.code, txid)) }
       var first = [UInt8](repeating: 0, count: 64*1024), got = 0, start = DispatchTime.now().uptimeNanoseconds
+      let budget = UInt64(config.handshakeTimeoutMs) * 1_000_000
       while got == 0 {
         got = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: 500)
-        if got == 0 && DispatchTime.now().uptimeNanoseconds - start > 3_000_000_000 { throw MTPError.timeout }
+        if got == 0 && DispatchTime.now().uptimeNanoseconds - start > budget { throw MTPError.timeout }
       }
       let hdr = first.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
       if hdr.type == 3 { firstChunk = Data(first[0..<got]) }

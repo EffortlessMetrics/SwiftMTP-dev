@@ -37,16 +37,18 @@ public enum ProtoTransfer {
                                  ioTimeoutMs: Int) async throws {
         let parentParam = parent ?? 0x00000000
         let targetStorage = (storageID == 0 || storageID == 0xFFFFFFFF) ? 0xFFFFFFFF : storageID
+        let formatCode: UInt16 = 0x3000 // Undefined
         
         let sendObjectInfoCommand = PTPContainer(
-            length: 20,
+            length: 20, // 12 + 2 * 4
             type: PTPContainer.Kind.command.rawValue,
             code: PTPOp.sendObjectInfo.rawValue,
             txid: 0,
-            params: [targetStorage, parentParam]
+            params: [0, parentParam] // 0 for default storage
         )
 
-        let dataset = PTPObjectInfoDataset.encode(storageID: targetStorage, parentHandle: parentParam, format: 0x3000, size: size, name: name)
+        // Some devices prefer storageID=0 in the dataset to mean "current/default"
+        let dataset = PTPObjectInfoDataset.encode(storageID: 0, parentHandle: parentParam, format: formatCode, size: size, name: name)
         if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
             print("   [USB] SendObjectInfo dataset length: \(dataset.count) bytes")
         }

@@ -127,7 +127,8 @@
         "ioTimeoutMs": 30000,
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 120000,
-        "stabilizeMs": 1000
+        "stabilizeMs": 1000,
+        "resetOnOpen": true
       },
       "hooks": [
         { "phase": "postOpenSession", "delayMs": 1000 }
@@ -136,7 +137,40 @@
       "status": "experimental",
       "notes": [
         "OnePlus 3T (2a70:f003) fails OpenSession without significant stabilization delay.",
-        "Added 1000ms stabilization and post-OpenSession delay."
+        "Added 1000ms stabilization and post-OpenSession delay.",
+        "Requires resetOnOpen to recover from previous session hangs."
+      ],
+      "provenance": {
+        "author": "Gemini CLI",
+        "date": "2026-02-06"
+      }
+    },
+    {
+      "id": "google-pixel-7-4ee1",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ee1",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 10000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 2000,
+        "resetOnOpen": false
+      },
+      "confidence": "medium",
+      "status": "stable",
+      "notes": [
+        "Google Pixel 7 (18d1:4ee1) general Android MTP stack.",
+        "Disabled resetOnOpen as it causes re-enumeration and may revert to 'Charging only' mode.",
+        "Increased stabilization delay to 2000ms."
       ],
       "provenance": {
         "author": "Gemini CLI",

@@ -203,6 +203,7 @@ if filteredArgs.isEmpty {
     print("  move <handle> <new-parent> - Move file/directory")
     print("  events [seconds] - Monitor device events")
     print("  bdd       - Run BDD scenarios for validation")
+    print("  snapshot  - Capture device state snapshot")
     print("  storybook - Run interactive end-to-end demo using simulated device")
     print("  learn-promote - Promote learned profiles to quirks (see learn-promote --help)")
     print("  version [--json] - Show version information")
@@ -218,6 +219,42 @@ if filteredArgs.isEmpty {
 
 let command = filteredArgs[0]
 let remainingArgs = Array(filteredArgs.dropFirst())
+
+func runSnapshot(flags: CLIFlags, args: [String]) async {
+    print("📸 Capturing device snapshot...")
+    do {
+        let device = try await openDevice(flags: flags)
+        try await device.openIfNeeded()
+        
+        let info = try await device.info
+        let storages = try await device.storages()
+        
+        var allObjects: [MTPObjectInfo] = []
+        for storage in storages {
+            let stream = device.list(parent: nil, in: storage.id)
+            for try await batch in stream {
+                allObjects.append(contentsOf: batch)
+            }
+        }
+        
+        let snapshot = MTPSnapshot(
+            timestamp: Date(),
+            deviceInfo: info,
+            storages: storages,
+            objects: allObjects
+        )
+        
+        let jsonString = try snapshot.jsonString()
+        let filename = "snapshot-\(info.manufacturer)-\(info.model).json".replacingOccurrences(of: " ", with: "_")
+        try jsonString.write(toFile: filename, atomically: true, encoding: .utf8)
+        
+        print("✅ Snapshot captured: \(filename)")
+        print("   (\(storages.count) storages, \(allObjects.count) objects)")
+    } catch {
+        print("❌ Snapshot failed: \(error)")
+        exitNow(.tempfail)
+    }
+}
 
 func runBDD(flags: CLIFlags) async {
     print("🚀 Initializing BDD Test Runner...")
@@ -309,6 +346,8 @@ case "learn-promote":
     await runLearnPromote()
 case "bdd":
     await runBDD(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
+case "snapshot":
+    await runSnapshot(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "version":
     await runVersion(json: json, args: remainingArgs)
 default:

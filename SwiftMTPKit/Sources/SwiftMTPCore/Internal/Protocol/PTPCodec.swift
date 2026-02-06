@@ -240,6 +240,18 @@ public struct PTPObjectInfoDataset {
         var data = Data()
         func put32(_ v: UInt32) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
         func put16(_ v: UInt16) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
+        func putPTPString(_ s: String) {
+            if s.isEmpty { data.append(0); return }
+            let utf16 = Array(s.utf16)
+            let charCount = UInt8(min(255, utf16.count + 1))
+            data.append(charCount)
+            for cu in utf16.prefix(Int(charCount) - 1) {
+                put16(UInt16(cu))
+            }
+            put16(0) // Null terminator
+            // No padding inside the dataset for PTP strings usually, 
+            // but some devices are picky about the total dataset alignment.
+        }
         
         put32(storageID)
         put16(format)
@@ -256,10 +268,11 @@ public struct PTPObjectInfoDataset {
         put16(0) // AssociationType
         put32(0) // AssociationDesc
         put32(0) // SequenceNumber
-        data.append(PTPString.encode(name))
-        data.append(PTPString.encode("")) // CaptureDate
-        data.append(PTPString.encode("")) // ModificationDate
-        data.append(PTPString.encode("")) // Keywords
+        putPTPString(name)
+        // OnePlus 3T observation shows 20180101T000505 format
+        putPTPString("20250101T000000") // CaptureDate
+        putPTPString("20250101T000000") // ModificationDate
+        putPTPString("") // Keywords
         
         return data
     }

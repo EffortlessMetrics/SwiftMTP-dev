@@ -319,6 +319,14 @@ public struct SwiftMTPConfig: Sendable {
   /// Some devices (e.g., Xiaomi) need this delay to become ready. Default: 0
   public var stabilizeMs         = 0
 
+  /// Whether to call libusb_reset_device after opening the device handle.
+  /// Defaults to false.
+  public var resetOnOpen         = false
+
+  /// Whether to temporarily disable the interrupt event pump.
+  /// Defaults to false.
+  public var disableEventPump    = false
+
   /// Enable resumable transfers when device supports partial operations.
   ///
   /// When disabled, all transfers restart from beginning on interruption. Default: true
@@ -355,6 +363,8 @@ public struct SwiftMTPConfig: Sendable {
     self.inactivityTimeoutMs = tuning.inactivityTimeoutMs
     self.overallDeadlineMs = tuning.overallDeadlineMs
     self.stabilizeMs = tuning.stabilizeMs
+    self.resetOnOpen = tuning.resetOnOpen
+    self.disableEventPump = tuning.disableEventPump
   }
 }
 /// Central manager for MTP device discovery and lifecycle management.

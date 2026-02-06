@@ -37,14 +37,18 @@ public struct UploadScenario: BDDScenario {
         let testData = "BDD Test Data".data(using: .utf8)!
         context.step("Given a test file of \(testData.count) bytes")
         
-        context.step("When I attempt to upload to storage 0x00010001")
-        // Note: Using a hardcoded storage ID for scenario demonstration
-        // In real use, this would be fetched from the context/link
+        let storages = try await context.link.getStorageIDs()
+        guard let storageID = storages.first else {
+            context.step("Then I should fail because no storage is available")
+            return
+        }
+        
+        context.step("When I attempt to upload to storage \(storageID.raw) parent 9")
         
         do {
             try await ProtoTransfer.writeWholeObject(
-                storageID: 0x00010001,
-                parent: nil as UInt32?,
+                storageID: storageID.raw,
+                parent: 9 as UInt32?,
                 name: "bdd_test.txt",
                 size: UInt64(testData.count),
                 dataHandler: { buf in

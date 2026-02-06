@@ -29,6 +29,8 @@ public struct DeviceQuirk: Codable, Sendable {
   public var inactivityTimeoutMs: Int?
   public var overallDeadlineMs: Int?
   public var stabilizeMs: Int?
+  public var resetOnOpen: Bool?
+  public var disableEventPump: Bool?
   public var operations: [String: Bool]?    // e.g. {"partialRead": true}
   public var hooks: [QuirkHook]?
   public var status: String?                // "stable" | "experimental" | ...
@@ -64,6 +66,8 @@ public struct DeviceQuirk: Codable, Sendable {
       inactivityTimeoutMs = tuning.inactivityTimeoutMs
       overallDeadlineMs = tuning.overallDeadlineMs
       stabilizeMs = tuning.stabilizeMs
+      resetOnOpen = tuning.resetOnOpen
+      disableEventPump = tuning.disableEventPump
     }
   }
 
@@ -74,10 +78,6 @@ public struct DeviceQuirk: Codable, Sendable {
     try container.encodeIfPresent(confidence, forKey: .confidence)
     try container.encodeIfPresent(hooks, forKey: .hooks)
     try container.encodeIfPresent(operations, forKey: .ops)
-    
-    // We don't necessarily need to implement symmetric encoding for now 
-    // since we mostly read the quirks.json, but for completeness:
-    // (Skipping full symmetric encoding to keep it simple unless needed)
   }
 }
 
@@ -100,6 +100,8 @@ private struct RawTuning: Codable {
   let inactivityTimeoutMs: Int?
   let overallDeadlineMs: Int?
   let stabilizeMs: Int?
+  let resetOnOpen: Bool?
+  let disableEventPump: Bool?
 }
 
 private func parseHex<T: FixedWidthInteger>(_ str: String) throws -> T {

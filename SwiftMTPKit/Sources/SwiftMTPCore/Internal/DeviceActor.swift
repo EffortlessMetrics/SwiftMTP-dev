@@ -242,6 +242,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
           inactivityTimeoutMs: stored.inactivityTimeoutMs,
           overallDeadlineMs: stored.overallDeadlineMs,
           stabilizeMs: 0,
+          resetOnOpen: false,
+          disableEventPump: false,
           operations: [:],
           hooks: []
         )

@@ -12,6 +12,7 @@ struct MTPFuzzTool {
         
         print("🧪 Starting MTP Substrate Fuzzer (\(iters) iterations)...")
         
+        var crashes = 0
         for i in 1...iters {
             if i % 100 == 0 { print("   Progress: \(i)/\(iters)...") }
             
@@ -42,6 +43,6 @@ struct MTPFuzzTool {
             _ = r2.string()
         }
         
-        print("✅ Fuzzing complete. No crashes detected.")
+        print("✅ Fuzzing complete. Crashes: \(crashes)")
     }
 }
