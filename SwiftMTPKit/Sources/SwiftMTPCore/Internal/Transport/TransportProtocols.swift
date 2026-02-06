@@ -18,6 +18,7 @@ public protocol MTPLink: Sendable {
     func getStorageInfo(id: MTPStorageID) async throws -> MTPStorageInfo
     func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> [MTPObjectHandle]
     func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo]
+    func getObjectInfos(storage: MTPStorageID, parent: MTPObjectHandle?, format: UInt16?) async throws -> [MTPObjectInfo]
 
     func deleteObject(handle: MTPObjectHandle) async throws
     func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?) async throws
@@ -27,6 +28,7 @@ public protocol MTPLink: Sendable {
     // Streaming data transfer methods for file operations
     func executeStreamingCommand(
         _ command: PTPContainer,
+        dataPhaseLength: UInt64?,
         dataInHandler: MTPDataIn?,
         dataOutHandler: MTPDataOut?
     ) async throws -> Data?

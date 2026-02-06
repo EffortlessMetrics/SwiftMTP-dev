@@ -150,6 +150,11 @@ public final class MockMTPLink: @unchecked Sendable, MTPLink {
         return result
     }
 
+    public func getObjectInfos(storage: MTPStorageID, parent: MTPObjectHandle?, format: UInt16?) async throws -> [MTPObjectInfo] {
+        let handles = try await getObjectHandles(storage: storage, parent: parent)
+        return try await getObjectInfos(handles)
+    }
+
     /// Handle MTP command execution
     public func executeCommand(_ command: PTPContainer) throws -> Data? {
         switch command.code {
@@ -174,6 +179,7 @@ public final class MockMTPLink: @unchecked Sendable, MTPLink {
     /// Handle streaming MTP command execution for file transfers
     public func executeStreamingCommand(
         _ command: PTPContainer,
+        dataPhaseLength: UInt64? = nil,
         dataInHandler: MTPDataIn?,
         dataOutHandler: MTPDataOut?
     ) async throws -> Data? {

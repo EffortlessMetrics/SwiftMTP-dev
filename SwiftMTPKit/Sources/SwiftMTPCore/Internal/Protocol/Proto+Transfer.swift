@@ -18,40 +18,48 @@ enum ProtoTransfer {
             params: [handle]
         )
 
-        _ = try await link.executeStreamingCommand(command, dataInHandler: dataHandler, dataOutHandler: nil)
+        _ = try await link.executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: dataHandler, dataOutHandler: nil)
     }
 
     /// Whole-object write: SendObjectInfo → SendObject (single pass).
-    static func writeWholeObject(parent: UInt32?, name: String, size: UInt64,
+    static func writeWholeObject(storageID: UInt32, parent: UInt32?, name: String, size: UInt64,
                                  dataHandler: @escaping MTPDataOut,
                                  on link: MTPLink,
                                  ioTimeoutMs: Int) async throws {
-        let parentParam = parent ?? 0
-        // SendObjectInfo: pack minimal fields (name, size, parent)
+        let parentParam = parent ?? 0x00000000
+        let targetStorage = (parentParam == 0x00000000) ? 0xFFFFFFFF : storageID
+        
+        // SendObjectInfo (0x100C): params = [storageID, parentHandle]
         let sendObjectInfoCommand = PTPContainer(
-            length: 16,
+            length: 20,
             type: PTPContainer.Kind.command.rawValue,
             code: PTPOp.sendObjectInfo.rawValue,
-            txid: 3,
-            params: [parentParam, 0, 0] // storage filled by parent; keep simple in v1
+            txid: 0,
+            params: [targetStorage, parentParam]
         )
 
-        _ = try await link.executeStreamingCommand(sendObjectInfoCommand, dataInHandler: nil, dataOutHandler: { buf in
-            // For SendObjectInfo, we need to encode the ObjectInfo dataset
-            // This is a simplified implementation - in practice you'd encode the full ObjectInfo dataset
-            return 0 // No data to send in this simplified version
+        let dataset = PTPObjectInfoDataset.encode(storageID: targetStorage, parentHandle: parentParam, format: 0x3000, size: size, name: name)
+        
+        _ = try await link.executeStreamingCommand(sendObjectInfoCommand, dataPhaseLength: UInt64(dataset.count), dataInHandler: nil, dataOutHandler: { buf in
+            let toCopy = min(buf.count, dataset.count)
+            dataset.copyBytes(to: buf, from: 0..<toCopy)
+            return toCopy
         })
 
-        // SendObject: stream out the bytes
+        // Stabilization delay between Info and Data
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        // SendObject (0x100D): stream out the bytes
+        // Note: txid will be handled by executeStreamingCommand
         let sendObjectCommand = PTPContainer(
             length: 12,
             type: PTPContainer.Kind.command.rawValue,
             code: PTPOp.sendObject.rawValue,
-            txid: 4,
+            txid: 0,
             params: []
         )
 
-        _ = try await link.executeStreamingCommand(sendObjectCommand, dataInHandler: nil, dataOutHandler: dataHandler)
+        _ = try await link.executeStreamingCommand(sendObjectCommand, dataPhaseLength: size, dataInHandler: nil, dataOutHandler: dataHandler)
     }
 }
 

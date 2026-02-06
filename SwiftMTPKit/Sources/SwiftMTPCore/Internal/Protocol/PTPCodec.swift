@@ -52,13 +52,51 @@ public struct PTPString {
         let utf16Chars = string.utf16.map { UInt16($0).littleEndian }
 
         // Write length (number of characters)
-        data.append(UInt8(utf16Chars.count))
+        // PTP/MTP allows up to 255 characters. Length includes null terminator.
+        let len = min(utf16Chars.count + 1, 255)
+        data.append(UInt8(len))
 
         // Write UTF-16LE bytes
-        for char in utf16Chars {
+        for i in 0..<len-1 {
+            let char = utf16Chars[i]
             data.append(contentsOf: [UInt8(char & 0xFF), UInt8(char >> 8)])
         }
+        
+        // Null terminator
+        data.append(contentsOf: [0, 0])
 
+        return data
+    }
+}
+
+public struct PTPObjectInfoDataset {
+    public static func encode(storageID: UInt32, parentHandle: UInt32, format: UInt16, size: UInt64, name: String) -> Data {
+        var data = Data()
+        
+        func put32(_ v: UInt32) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
+        func put16(_ v: UInt16) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
+        
+        // PTP Spec: storageID can be 0 to use the "primary" or "default" storage
+        put32(storageID)
+        put16(format)
+        put16(0) // ProtectionStatus
+        put32(UInt32(min(size, UInt64(0xFFFFFFFF)))) // ObjectCompressedSize
+        put16(0) // ThumbFormat
+        put32(0) // ThumbCompressedSize
+        put32(0) // ThumbPixWidth
+        put32(0) // ThumbPixHeight
+        put32(0) // ImagePixWidth
+        put32(0) // ImagePixHeight
+        put32(0) // ImageBitDepth
+        put32(parentHandle)
+        put16(0) // AssociationType
+        put32(0) // AssociationDesc
+        put32(0) // SequenceNumber
+        data.append(PTPString.encode(name))
+        data.append(PTPString.encode("")) // CaptureDate
+        data.append(PTPString.encode("")) // ModificationDate
+        data.append(PTPString.encode("")) // Keywords
+        
         return data
     }
 }
@@ -159,5 +197,93 @@ public struct PTPDeviceInfo {
             deviceVersion: deviceVersion,
             serialNumber: serialNumber
         )
+    }
+}
+
+// GetObjectPropList dataset parser
+public struct PTPPropEntry {
+    public let handle: UInt32
+    public let propertyCode: UInt16
+    public let dataType: UInt16
+    public var value: Any?
+}
+
+public struct PTPPropList {
+    public let entries: [PTPPropEntry]
+
+    public static func parse(from data: Data) -> PTPPropList? {
+        var offset = 0
+        
+        func read16() -> UInt16? {
+            guard offset + 2 <= data.count else { return nil }
+            var v: UInt16 = 0
+            _ = withUnsafeMutableBytes(of: &v) { ptr in
+                data.copyBytes(to: ptr, from: offset..<offset+2)
+            }
+            offset += 2
+            return v.littleEndian
+        }
+
+        func read32() -> UInt32? {
+            guard offset + 4 <= data.count else { return nil }
+            var v: UInt32 = 0
+            _ = withUnsafeMutableBytes(of: &v) { ptr in
+                data.copyBytes(to: ptr, from: offset..<offset+4)
+            }
+            offset += 4
+            return v.littleEndian
+        }
+        
+        func read64() -> UInt64? {
+            guard offset + 8 <= data.count else { return nil }
+            var v: UInt64 = 0
+            _ = withUnsafeMutableBytes(of: &v) { ptr in
+                data.copyBytes(to: ptr, from: offset..<offset+8)
+            }
+            offset += 8
+            return v.littleEndian
+        }
+
+        func readString() -> String? {
+            return PTPString.parse(from: data, at: &offset)
+        }
+
+        guard let count = read32() else { return nil }
+        var entries = [PTPPropEntry]()
+        
+        for _ in 0..<count {
+            guard let handle = read32(),
+                  let propCode = read16(),
+                  let dataType = read16() else { break }
+            
+            var value: Any? = nil
+            switch dataType {
+            case 0x0002: // Int8
+                value = Int8(bitPattern: data[offset]); offset += 1
+            case 0x0001: // UInt8
+                value = data[offset]; offset += 1
+            case 0x0004: // Int16
+                value = Int16(bitPattern: read16() ?? 0)
+            case 0x0003: // UInt16
+                value = read16()
+            case 0x0006: // Int32
+                value = Int32(bitPattern: read32() ?? 0)
+            case 0x0005: // UInt32
+                value = read32()
+            case 0x0008: // Int64
+                value = Int64(bitPattern: read64() ?? 0)
+            case 0x0007: // UInt64
+                value = read64()
+            case 0xFFFF: // String
+                value = readString()
+            default:
+                // Skip unknown types (this is simplified, should handle more types)
+                break
+            }
+            
+            entries.append(PTPPropEntry(handle: handle, propertyCode: propCode, dataType: dataType, value: value))
+        }
+        
+        return PTPPropList(entries: entries)
     }
 }

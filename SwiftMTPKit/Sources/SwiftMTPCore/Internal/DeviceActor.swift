@@ -54,10 +54,6 @@ public actor MTPDeviceActor: MTPDevice {
             }
 
             let link = try await self.getMTPLink()
-            // Make sure session is open for real devices if needed
-            // Some devices allow GetDeviceInfo outside session, but safer to open first
-            // try await openIfNeeded() 
-            
             let realInfo = try await link.getDeviceInfo()
             self.deviceInfo = realInfo
             return realInfo
@@ -86,8 +82,7 @@ public actor MTPDeviceActor: MTPDevice {
                     try await openIfNeeded()
                     let items: [MTPObjectInfo] = try await BusyBackoff.onDeviceBusy {
                         let link = try await self.getMTPLink()
-                        let handles = try await link.getObjectHandles(storage: storage, parent: parent)
-                        return try await link.getObjectInfos(handles)
+                        return try await link.getObjectInfos(storage: storage, parent: parent, format: nil)
                     }
                     continuation.yield(items)
                     continuation.finish()
@@ -208,22 +203,22 @@ public actor MTPDeviceActor: MTPDevice {
     }
 
     private func applyTuningAndOpenSession(link: any MTPLink) async throws {
+      let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+      if debugEnabled { print("   [Actor] applyTuningAndOpenSession starting...") }
+
       // 1) Build fingerprint from USB IDs and interface details
       _ = try await self.buildFingerprint()
 
       // 2) Load quirks DB and learned profile
+      if debugEnabled { print("   [Actor] Loading quirks DB...") }
       let qdb = try QuirkDatabase.load()
       let learnedKey = "\(summary.vendorID ?? 0):\(summary.productID ?? 0)"
       let learnedStored = LearnedStore.load(key: learnedKey)
 
-      // 3) Probe capabilities (partial read/write, events)
-      let caps: [String: Bool] = [
-        "partialRead": await self.capabilityPartialRead(),
-        "partialWrite": await self.capabilityPartialWrite(),
-        "supportsEvents": await self.capabilityEvents()
-      ]
+      // 3) Probing capabilities (deferred until after OpenSession)
+      let caps: [String: Bool] = [:] // Default until open
 
-      // 4) Parse user overrides (env) - convert to dictionary format
+      // 4) Parse user overrides (env)
       let (userOverrides, _) = UserOverride.fromEnvironment()
       var overrides: [String: String] = [:]
       if let maxChunk = userOverrides.maxChunkBytes { overrides["maxChunkBytes"] = String(maxChunk) }
@@ -233,7 +228,7 @@ public actor MTPDeviceActor: MTPDevice {
       if let overallDeadline = userOverrides.overallDeadlineMs { overrides["overallDeadlineMs"] = String(overallDeadline) }
       if let stabilize = userOverrides.stabilizeMs { overrides["stabilizeMs"] = String(stabilize) }
 
-      // 5) Convert learned profile to EffectiveTuning
+      // 5) Convert learned profile
       var learnedTuning: EffectiveTuning?
       if let stored = learnedStored {
         learnedTuning = EffectiveTuning(
@@ -257,33 +252,59 @@ public actor MTPDeviceActor: MTPDevice {
         ifaceSubclass: nil,
         ifaceProtocol: nil
       )
+      if debugEnabled, let q = quirk { print("   [Actor] Matched quirk: \(q.id)") }
 
-      // 7) Build effective tuning and apply to config
-      let tuning = EffectiveTuningBuilder.build(
-        capabilities: caps,
+      // 7) Build initial effective tuning
+      let initialTuning = EffectiveTuningBuilder.build(
+        capabilities: [:],
         learned: learnedTuning,
         quirk: quirk,
         overrides: overrides.isEmpty ? nil : overrides
       )
-      self.apply(tuning)
+      self.apply(initialTuning)
 
-      // 8) Run hooks: postOpenUSB (if any)
-      try await self.runHook(.postOpenUSB, tuning: tuning)
+      // 8) Run hooks: postOpenUSB
+      if debugEnabled { print("   [Actor] Running postOpenUSB hooks...") }
+      try await self.runHook(.postOpenUSB, tuning: initialTuning)
 
       // 9) Open session + stabilization
+      if debugEnabled { print("   [Actor] Opening MTP session...") }
       try await link.openSession(id: 1)
-      if tuning.stabilizeMs > 0 {
-        try await Task.sleep(nanoseconds: UInt64(tuning.stabilizeMs) * 1_000_000)
+      if initialTuning.stabilizeMs > 0 {
+        if debugEnabled { print("   [Actor] Stabilizing for \(initialTuning.stabilizeMs)ms...") }
+        try await Task.sleep(nanoseconds: UInt64(initialTuning.stabilizeMs) * 1_000_000)
       }
 
       // 10) Hooks after session
-      try await self.runHook(.postOpenSession, tuning: tuning)
+      if debugEnabled { print("   [Actor] Running postOpenSession hooks...") }
+      try await self.runHook(.postOpenSession, tuning: initialTuning)
 
-      // 11) Start event pump if supported
-      if caps["supportsEvents"] == true { try await self.startEventPump() }
+      // 11) Probe capabilities NOW that session is open
+      if debugEnabled { print("   [Actor] Probing capabilities (post-open)...") }
+      let realCaps: [String: Bool] = [
+        "partialRead": await self.capabilityPartialRead(),
+        "partialWrite": await self.capabilityPartialWrite(),
+        "supportsEvents": await self.capabilityEvents()
+      ]
+      
+      // Re-build tuning with real capabilities
+      let finalTuning = EffectiveTuningBuilder.build(
+        capabilities: realCaps,
+        learned: learnedTuning,
+        quirk: quirk,
+        overrides: overrides.isEmpty ? nil : overrides
+      )
+      self.apply(finalTuning)
 
-      // 12) Record success back to learned store
-      LearnedStore.update(key: learnedKey, obs: tuning)
+      // 12) Start event pump
+      if realCaps["supportsEvents"] == true { 
+        if debugEnabled { print("   [Actor] Starting event pump...") }
+        try await self.startEventPump() 
+      }
+
+      // 13) Record success
+      LearnedStore.update(key: learnedKey, obs: finalTuning)
+      if debugEnabled { print("   [Actor] applyTuningAndOpenSession complete.") }
     }
 
 

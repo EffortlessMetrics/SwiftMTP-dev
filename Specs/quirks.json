@@ -123,14 +123,13 @@
       },
       "tuning": {
         "maxChunkBytes": 1048576,
-        "handshakeTimeoutMs": 10000,
-        "ioTimeoutMs": 15000,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 120000,
         "stabilizeMs": 1000
       },
       "hooks": [
-        { "phase": "postOpenUSB", "delayMs": 500 },
         { "phase": "postOpenSession", "delayMs": 1000 }
       ],
       "confidence": "medium",

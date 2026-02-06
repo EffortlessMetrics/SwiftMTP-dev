@@ -193,6 +193,7 @@ if filteredArgs.isEmpty {
     print("  storages  - List storage devices")
     print("  ls <handle> - List files in directory")
     print("  pull <handle> <dest> - Download file")
+    print("  push <src> <parent-handle> - Upload file")
     print("  bench <size> - Benchmark transfer speed")
     print("  mirror <dest> - Mirror device contents")
     print("  quirks --explain - Show active device quirk configuration")
@@ -232,6 +233,8 @@ case "ls":
     await runList(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "pull":
     await runPull(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
+case "push":
+    await runPush(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "bench":
     await runBench(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "mirror":
@@ -588,16 +591,22 @@ func runProbe(flags: CLIFlags) async {
         if !flags.json {
             log("✅ Device found and opened!")
         }
+
+        // Make sure session is open before first real op on stricter devices
+        try await device.openIfNeeded()
+
         // Prefer the explicit method form (works on all toolchains)
         let info = try await device.getDeviceInfo()
         // Get storage info
-        // Make sure session is open before first real op on stricter devices
-        try await device.openIfNeeded()
         let storages = try await device.storages()
 
         if !flags.json {
             log("   Device Info: \(info.manufacturer) \(info.model)")
             log("   Operations: \(info.operationsSupported.count)")
+            if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
+                let ops = info.operationsSupported.sorted().map { String(format: "0x%04X", $0) }.joined(separator: ", ")
+                log("     Codes: \(ops)")
+            }
             log("   Events: \(info.eventsSupported.count)")
             log("   Storage devices: \(storages.count)")
 
@@ -1009,6 +1018,43 @@ func runPull(flags: CLIFlags, args: [String]) async {
         print("✅ Downloaded \(formatBytes(fileSize ?? 0)) to \(destPath)")
     } catch {
         print("❌ Failed to download: \(error)")
+    }
+}
+
+func runPush(flags: CLIFlags, args: [String]) async {
+    guard args.count >= 2 else {
+        print("❌ Usage: push <source> <parent-handle>")
+        return
+    }
+
+    let srcPath = args[0]
+    let parentHandleStr = args[1]
+    let parentHandle = UInt32(parentHandleStr, radix: 16) ?? UInt32(parentHandleStr) ?? 0
+    
+    let srcURL = URL(fileURLWithPath: srcPath)
+    guard FileManager.default.fileExists(atPath: srcPath) else {
+        print("❌ Source file not found: \(srcPath)")
+        return
+    }
+    
+    let attrs = try? FileManager.default.attributesOfItem(atPath: srcPath)
+    let size = attrs?[.size] as? UInt64 ?? 0
+    let name = srcURL.lastPathComponent
+
+    print("⬆️  Uploading \(srcPath) (\(formatBytes(size))) to parent \(parentHandle)...")
+
+    do {
+        let device = try await openDevice(flags: flags)
+        let progress = try await device.write(parent: parentHandle == 0 ? nil : parentHandle, name: name, size: size, from: srcURL)
+
+        // Wait for completion (simple polling approach)
+        while !progress.isFinished {
+            try await Task.sleep(nanoseconds: 100_000_000) // 100ms
+        }
+
+        print("✅ Uploaded \(name) successfully")
+    } catch {
+        print("❌ Failed to upload: \(error)")
     }
 }
 
