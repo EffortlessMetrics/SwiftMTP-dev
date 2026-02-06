@@ -82,6 +82,13 @@ public final class QuirkDatabase: @unchecked Sendable {
         return try QuirkDatabase(data: data)
     }
 
+    // Fallback for package root execution
+    let smkSpecsURL = cwdURL.appendingPathComponent("SwiftMTPKit/Specs/quirks.json")
+    if FileManager.default.fileExists(atPath: smkSpecsURL.path) {
+        let data = try Data(contentsOf: smkSpecsURL)
+        return try QuirkDatabase(data: data)
+    }
+
     throw NSError(domain: "QuirkDatabase", code: 1, userInfo: [NSLocalizedDescriptionKey: "quirks.json not found in \(targetBundle.bundlePath) or local paths"])
   }
 

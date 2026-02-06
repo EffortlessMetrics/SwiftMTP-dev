@@ -41,6 +41,7 @@ public struct QuirkDatabase: Codable, Sendable {
       pathEnv.flatMap { URL(fileURLWithPath: $0) },
       URL(fileURLWithPath: "Specs/quirks.json"),
       URL(fileURLWithPath: "../Specs/quirks.json"),
+      URL(fileURLWithPath: "SwiftMTPKit/Specs/quirks.json"),
     ].compactMap { $0 }
     guard let url = candidates.first(where: { fm.fileExists(atPath: $0.path) }) else {
       throw NSError(domain: "QuirkDatabase", code: 1, userInfo: [NSLocalizedDescriptionKey: "quirks.json not found"])

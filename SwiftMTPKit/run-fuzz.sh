@@ -3,10 +3,10 @@ set -e
 
 # Build the fuzzer
 echo "Building SwiftMTPFuzz..."
-swift build -c release --product SwiftMTPFuzz
+swift build --product SwiftMTPFuzz
 
 # Location of the binary
-BIN=$(swift build -c release --show-bin-path)/SwiftMTPFuzz
+BIN=$(swift build --show-bin-path)/SwiftMTPFuzz
 
 # Create a dummy input if none provided
 INPUT=$1
