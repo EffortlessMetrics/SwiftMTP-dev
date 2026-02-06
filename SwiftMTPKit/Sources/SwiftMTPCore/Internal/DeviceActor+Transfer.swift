@@ -173,24 +173,12 @@ extension MTPDeviceActor {
             // Use thread-safe progress tracking
             let progressTracker = AtomicProgressTracker()
 
-            // Determine storage ID
-            let targetStorage: MTPStorageID
-            if let p = parent {
-                let parentInfo = try await link.getObjectInfos([p])[0]
-                targetStorage = parentInfo.storage
-            } else {
-                let storages = try await self.storages()
-                guard let first = storages.first else {
-                    throw MTPError.notSupported("No storage available for write")
-                }
-                targetStorage = first.id
-            }
-
-            try await ProtoTransfer.writeWholeObject(storageID: targetStorage.raw, parent: parent, name: name, size: size, dataHandler: { buf in
+            // Pass parent handle directly to avoid unnecessary info lookup that might fail
+            try await ProtoTransfer.writeWholeObject(storageID: 0xFFFFFFFF, parent: parent, name: name, size: size, dataHandler: { buf in
                 let produced = sourceAdapter.produce(buf)
-                let totalBytes = progressTracker.add(produced)
+                let totalBytes = progressTracker.add(Int(produced))
                 progress.completedUnitCount = Int64(totalBytes)
-                return produced
+                return Int(produced)
             }, on: link, ioTimeoutMs: timeout)
 
             let bytesRead = progressTracker.total

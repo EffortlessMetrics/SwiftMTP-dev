@@ -5,6 +5,23 @@ import Foundation
 
 enum TransferMode { case whole, partial }
 
+final class BoxedOffset: @unchecked Sendable {
+    var value: Int = 0
+    private let lock = NSLock()
+    func getAndAdd(_ n: Int) -> Int {
+        lock.lock()
+        defer { lock.unlock() }
+        let old = value
+        value += n
+        return old
+    }
+    func get() -> Int {
+        lock.lock()
+        defer { lock.unlock() }
+        return value
+    }
+}
+
 enum ProtoTransfer {
     /// Whole-object read: GetObject, stream data-in into a sink.
     static func readWholeObject(handle: UInt32, on link: MTPLink,
@@ -18,7 +35,7 @@ enum ProtoTransfer {
             params: [handle]
         )
 
-        _ = try await link.executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: dataHandler, dataOutHandler: nil)
+        _ = try await link.executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: dataHandler, dataOutHandler: nil as MTPDataOut?)
     }
 
     /// Whole-object write: SendObjectInfo → SendObject (single pass).
@@ -40,11 +57,23 @@ enum ProtoTransfer {
 
         let dataset = PTPObjectInfoDataset.encode(storageID: targetStorage, parentHandle: parentParam, format: 0x3000, size: size, name: name)
         
-        _ = try await link.executeStreamingCommand(sendObjectInfoCommand, dataPhaseLength: UInt64(dataset.count), dataInHandler: nil, dataOutHandler: { buf in
-            let toCopy = min(buf.count, dataset.count)
-            dataset.copyBytes(to: buf, from: 0..<toCopy)
+        let infoOffset = BoxedOffset()
+        let responseData = try await link.executeStreamingCommand(sendObjectInfoCommand, dataPhaseLength: UInt64(dataset.count), dataInHandler: nil as MTPDataIn?, dataOutHandler: { buf in
+            let off = infoOffset.get()
+            let remaining = dataset.count - off
+            guard remaining > 0 else { return 0 }
+            let toCopy = min(buf.count, remaining)
+            dataset.copyBytes(to: buf, from: off..<off+toCopy)
+            _ = infoOffset.getAndAdd(toCopy)
             return toCopy
         })
+
+        // SendObjectInfo returns the handle in the response parameters
+        guard let handleData = responseData, handleData.count >= 4 else {
+            throw MTPError.protocolError(code: 0, message: "SendObjectInfo did not return a handle")
+        }
+        
+        let _ = handleData.withUnsafeBytes { $0.load(as: UInt32.self).littleEndian }
 
         // Stabilization delay between Info and Data
         try await Task.sleep(nanoseconds: 100_000_000)
@@ -59,7 +88,7 @@ enum ProtoTransfer {
             params: []
         )
 
-        _ = try await link.executeStreamingCommand(sendObjectCommand, dataPhaseLength: size, dataInHandler: nil, dataOutHandler: dataHandler)
+        _ = try await link.executeStreamingCommand(sendObjectCommand, dataPhaseLength: size, dataInHandler: nil as MTPDataIn?, dataOutHandler: dataHandler)
     }
 }
 
