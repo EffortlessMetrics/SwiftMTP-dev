@@ -113,7 +113,7 @@ public enum CollectCommand {
   // MARK: - Public entry point used by main.swift
   public static func run(flags: Flags) async -> ExitCode {
     let jsonMode = flags.json
-    var spinner = Spinner(message: "Collecting device evidence…", enabled: !jsonMode)
+    var spinner = Spinner("Collecting device evidence…", enabled: !jsonMode)
 
     do {
       // 1) Resolve device (VID/PID/bus/address filtering + exit codes)
@@ -126,7 +126,7 @@ public enum CollectCommand {
 
       // 2) Open device with LibUSB transport and default config (strict behavior is handled inside DeviceActor)
       spinner.start("Opening device…")
-      let (device, config) = try await openDevice(summary: summary, strict: flags.strict)
+      let (device, _) = try await openDevice(summary: summary, strict: flags.strict)
       spinner.succeed("Device opened (strict=\(flags.strict))")
 
       // 3) Create bundle path
@@ -445,7 +445,7 @@ public enum CollectCommand {
   }
 
   private struct SubmissionSummary: Codable, Sendable {
-    let schemaVersion = "1.0.0"
+    var schemaVersion = "1.0.0"
     let createdAt: String
     let vendorID: UInt16
     let productID: UInt16
@@ -477,7 +477,7 @@ public enum CollectCommand {
   // MARK: - Public types for external consumption (e.g., LearnPromoteCommand)
 
   public struct SubmissionManifest: Codable {
-    let schemaVersion: String = "1.0.0"
+    var schemaVersion: String = "1.0.0"
     let tool: ToolInfo
     let host: HostInfo
     let timestamp: Date
@@ -487,7 +487,7 @@ public enum CollectCommand {
     let consent: ConsentInfo
 
     public struct ToolInfo: Codable {
-      let name: String = "swiftmtp"
+      var name: String = "swiftmtp"
       let version: String
       let commit: String?
     }
@@ -534,11 +534,11 @@ public enum CollectCommand {
   }
 
   public struct QuirkSuggestion: Codable {
-    let schemaVersion: String = "1.0.0"
+    var schemaVersion: String = "1.0.0"
     let id: String
     let match: MatchCriteria
-    let status: String = "experimental"
-    let confidence: String = "low"
+    var status: String = "experimental"
+    var confidence: String = "low"
     let overrides: [String: AnyCodable]
     let hooks: [Hook]
     let benchGates: BenchGates

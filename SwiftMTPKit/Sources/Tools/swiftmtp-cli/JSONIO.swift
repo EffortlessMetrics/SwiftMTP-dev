@@ -6,8 +6,8 @@ import enum SwiftMTPCore.ExitCode
 import func SwiftMTPCore.exitNow
 
 public struct JSONErrorEnvelope: Codable {
-  public let type = "error"
-  public let schemaVersion = "1.0"
+  public var type = "error"
+  public var schemaVersion = "1.0"
   public let message: String
   public let timestamp: String
 }

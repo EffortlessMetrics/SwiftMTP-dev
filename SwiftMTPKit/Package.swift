@@ -16,6 +16,9 @@ let package = Package(
   ],
   dependencies: [
     // SQLite3 via system library
+    .package(url: "https://github.com/Tyler-Keith-Thompson/CucumberSwift", from: "5.0.0"),
+    .package(url: "https://github.com/typelift/SwiftCheck", from: "0.12.0"),
+    .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.10.0"),
   ],
   targets: [
     // SQLite3 via system library
@@ -91,10 +94,33 @@ let package = Package(
                       ],
                       path: "Sources/Tools/swiftmtp-cli",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+                      
+    .executableTarget(name: "SwiftMTPFuzz",
+                      dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB"],
+                      path: "Sources/Tools/SwiftMTPFuzz"),
 
     // .executableTarget(name: "learn-promote",
     //                   dependencies: ["SwiftMTPCore"],
     //                   path: "Sources/Tools/learn-promote",
     //                   swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+
+    // Tests
+    .testTarget(name: "BDDTests",
+                dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", .product(name: "CucumberSwift", package: "CucumberSwift")],
+                path: "Tests/BDDTests",
+                resources: [.copy("Features")]),
+                
+    .testTarget(name: "PropertyTests",
+                dependencies: ["SwiftMTPCore", "SwiftCheck"],
+                path: "Tests/PropertyTests"),
+                
+    .testTarget(name: "SnapshotTests",
+                dependencies: [
+                    "SwiftMTPCore", 
+                    "SwiftMTPIndex",
+                    .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+                ],
+                path: "Tests/SnapshotTests",
+                exclude: ["__Snapshots__"]),
   ]
 )

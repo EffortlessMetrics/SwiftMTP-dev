@@ -85,7 +85,7 @@ struct LearnPromoteCommand {
                     }
 
                     // Basic validation that file has data
-                    let benchData = try String(contentsOf: benchURL)
+                    let benchData = try String(contentsOf: benchURL, encoding: .utf8)
                     let lines = benchData.split(separator: "\n")
                     if lines.count < 2 { // Header + at least one data row
                         throw MTPError.preconditionFailed("Benchmark file has no data: \(benchFile)")

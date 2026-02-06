@@ -734,7 +734,7 @@ func runProbeJSON(flags: CLIFlags) async {
             error: nil
         )
 
-        await printJSON(output, type: "probeResult")
+        printJSON(output, type: "probeResult")
 
     } catch {
         let errorOutput = ProbeOutput(
@@ -759,7 +759,7 @@ func runProbeJSON(flags: CLIFlags) async {
             learnedProfile: nil,
             error: error.localizedDescription
         )
-        await printJSON(errorOutput, type: "probeResult")
+        printJSON(errorOutput, type: "probeResult")
 
         // Set appropriate exit code based on error type
         if let mtpError = error as? MTPError {
@@ -1217,7 +1217,7 @@ func runQuirksExplainJSON() async {
     }
 
     struct QuirksExplainOutput: Codable {
-        let schemaVersion: String = "1.0.0"
+        var schemaVersion: String = "1.0.0"
         let mode: String
         let timestamp: String
         let layers: [LayerInfo]
@@ -1334,7 +1334,7 @@ func runQuirksExplainJSON() async {
         hooks: hooks
     )
 
-    await printJSON(output, type: "quirksExplain")
+    printJSON(output, type: "quirksExplain")
 }
 
 func printCollectHelp() {
@@ -1495,7 +1495,7 @@ func runVersion(json: Bool, args: [String]) async {
     )
 
     if json {
-        await printJSON(output, type: "version")
+        printJSON(output, type: "version")
     } else {
         print("SwiftMTP \(output.version) (\(output.git))")
         print("Built at: \(output.builtAt)")

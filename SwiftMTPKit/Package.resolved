@@ -1,0 +1,96 @@
+{
+  "originHash" : "6a501f07ffc4a857f09084a1daf83ef97a070e839ab682477482af9bd9782c13",
+  "pins" : [
+    {
+      "identity" : "chalk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mxcl/Chalk.git",
+      "state" : {
+        "revision" : "a7f58e47a08ca5a84f73acc4bcf6c2c19d990609",
+        "version" : "0.5.0"
+      }
+    },
+    {
+      "identity" : "cucumberswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Tyler-Keith-Thompson/CucumberSwift",
+      "state" : {
+        "revision" : "2f99f447173efa014c56bf38585e84bf6400d83e",
+        "version" : "5.0.5"
+      }
+    },
+    {
+      "identity" : "cucumberswiftexpressions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Tyler-Keith-Thompson/CucumberSwiftExpressions.git",
+      "state" : {
+        "revision" : "5200dc2c5d7cd31f07a13f030ab0027224d2dbea",
+        "version" : "0.0.8"
+      }
+    },
+    {
+      "identity" : "filecheck",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/llvm-swift/FileCheck.git",
+      "state" : {
+        "revision" : "f7c5f1a9479b33a876a6f5632ca2b92a7ce4b667",
+        "version" : "0.2.6"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "c5d11a805e765f52ba34ec7284bd4fcd6ba68615",
+        "version" : "1.7.0"
+      }
+    },
+    {
+      "identity" : "swift-custom-dump",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-custom-dump",
+      "state" : {
+        "revision" : "2a2a938798236b8fa0bc57c453ee9de9f9ec3ab0",
+        "version" : "1.4.1"
+      }
+    },
+    {
+      "identity" : "swift-snapshot-testing",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-snapshot-testing",
+      "state" : {
+        "revision" : "bf8d8c27f0f0c6d5e77bff0db76ab68f2050d15d",
+        "version" : "1.18.9"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax",
+      "state" : {
+        "revision" : "4799286537280063c85a32f09884cfbca301b1a1",
+        "version" : "602.0.0"
+      }
+    },
+    {
+      "identity" : "swiftcheck",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/typelift/SwiftCheck",
+      "state" : {
+        "revision" : "077c096c3ddfc38db223ac8e525ad16ffb987138",
+        "version" : "0.12.0"
+      }
+    },
+    {
+      "identity" : "xctest-dynamic-overlay",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
+      "state" : {
+        "revision" : "34e463e98ab8541c604af706c99bed7160f5ec70",
+        "version" : "1.8.1"
+      }
+    }
+  ],
+  "version" : 3
+}
