@@ -51,36 +51,52 @@ public final class MockTransport: @unchecked Sendable, MTPTransport {
 }
 
 /// Mock MTP link that simulates USB bulk transfers
-final class MockMTPLink: @unchecked Sendable, MTPLink {
+public final class MockMTPLink: @unchecked Sendable, MTPLink {
     private let deviceData: MockDeviceData
     private weak var transport: MockTransport?
     private var sessionID: UInt32?
+    private var eventContinuation: AsyncStream<Data>.Continuation?
 
     init(deviceData: MockDeviceData, transport: MockTransport) {
         self.deviceData = deviceData
         self.transport = transport
     }
 
-    func close() async {
-        // Simulate cleanup
+    public func close() async {
+        eventContinuation?.finish()
         transport = nil
+    }
+
+    public var events: AsyncStream<Data> {
+        AsyncStream { continuation in
+            self.eventContinuation = continuation
+        }
+    }
+
+    public func startEventPump() {
+        // Mock implementation - events are triggered manually for testing/demo
+    }
+    
+    /// Internal helper to simulate an MTP event
+    public func simulateEvent(_ data: Data) {
+        eventContinuation?.yield(data)
     }
 
     // MARK: - Protocol Implementation
 
-    func openUSBIfNeeded() async throws {
+    public func openUSBIfNeeded() async throws {
         // Mock implementation - already "opened" when created
     }
 
-    func openSession(id: UInt32) async throws {
+    public func openSession(id: UInt32) async throws {
         sessionID = id
     }
 
-    func closeSession() async throws {
+    public func closeSession() async throws {
         sessionID = nil
     }
 
-    func getDeviceInfo() async throws -> MTPDeviceInfo {
+    public func getDeviceInfo() async throws -> MTPDeviceInfo {
         // Simplified mock device info
         return MTPDeviceInfo(
             manufacturer: deviceData.deviceSummary.manufacturer,
@@ -92,18 +108,18 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
         )
     }
 
-    func getStorageIDs() async throws -> [MTPStorageID] {
+    public func getStorageIDs() async throws -> [MTPStorageID] {
         return deviceData.storages.map { $0.id }
     }
 
-    func getStorageInfo(id: MTPStorageID) async throws -> MTPStorageInfo {
+    public func getStorageInfo(id: MTPStorageID) async throws -> MTPStorageInfo {
         guard let storage = deviceData.storages.first(where: { $0.id == id }) else {
             throw MTPError.objectNotFound
         }
         return storage
     }
 
-    func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> [MTPObjectHandle] {
+    public func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> [MTPObjectHandle] {
         guard deviceData.storages.contains(where: { $0.id == storage }) else {
             throw MTPError.objectNotFound
         }
@@ -114,7 +130,7 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
         return objects.map { $0.handle }
     }
 
-    func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo] {
+    public func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo] {
         var result = [MTPObjectInfo]()
         for handle in handles {
             if let object = deviceData.objects.first(where: { $0.handle == handle }) {
@@ -135,7 +151,7 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
     }
 
     /// Handle MTP command execution
-    func executeCommand(_ command: PTPContainer) throws -> Data? {
+    public func executeCommand(_ command: PTPContainer) throws -> Data? {
         switch command.code {
         case PTPOp.getDeviceInfo.rawValue:
             return try handleGetDeviceInfo()
@@ -156,7 +172,7 @@ final class MockMTPLink: @unchecked Sendable, MTPLink {
     }
 
     /// Handle streaming MTP command execution for file transfers
-    func executeStreamingCommand(
+    public func executeStreamingCommand(
         _ command: PTPContainer,
         dataInHandler: MTPDataIn?,
         dataOutHandler: MTPDataOut?

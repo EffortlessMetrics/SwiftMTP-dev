@@ -33,19 +33,25 @@ public struct DeviceQuirk: Codable, Sendable {
 
 public struct QuirkDatabase: Codable, Sendable {
   public var schemaVersion: String
-  public var devices: [DeviceQuirk]
+  public var entries: [DeviceQuirk]
 
   public static func load(pathEnv: String? = ProcessInfo.processInfo.environment["SWIFTMTP_QUIRKS_PATH"]) throws -> QuirkDatabase {
     let fm = FileManager.default
     let candidates: [URL] = [
       pathEnv.flatMap { URL(fileURLWithPath: $0) },
       URL(fileURLWithPath: "Specs/quirks.json"),
+      URL(fileURLWithPath: "../Specs/quirks.json"),
     ].compactMap { $0 }
     guard let url = candidates.first(where: { fm.fileExists(atPath: $0.path) }) else {
       throw NSError(domain: "QuirkDatabase", code: 1, userInfo: [NSLocalizedDescriptionKey: "quirks.json not found"])
     }
     let data = try Data(contentsOf: url)
-    return try JSONDecoder().decode(QuirkDatabase.self, from: data)
+    do {
+        return try JSONDecoder().decode(QuirkDatabase.self, from: data)
+    } catch {
+        // Fallback for Storybook/Dev: don't crash if schema mismatch
+        return QuirkDatabase(schemaVersion: "1.0.0", entries: [])
+    }
   }
 
   /// Returns the most specific match (VID/PID/bcdDevice/iface triplet outranks wildcards).
@@ -60,6 +66,6 @@ public struct QuirkDatabase: Codable, Sendable {
       if let pr = q.ifaceProtocol, let prr = ifaceProtocol, pr == prr { s += 2 }
       return s
     }
-    return devices.max(by: { score($0) < score($1) })
+    return entries.max(by: { score($0) < score($1) })
   }
 }

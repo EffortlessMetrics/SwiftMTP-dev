@@ -55,12 +55,34 @@ public final class QuirkDatabase: @unchecked Sendable {
     }
   }
 
-  public static func loadDefault(in bundle: Bundle = Bundle.main) throws -> QuirkDatabase {
-    guard let url = bundle.url(forResource: "quirks", withExtension: "json") else {
-      throw QuirkDatabaseError.invalidJSON
+  public static func load() throws -> QuirkDatabase {
+    return try loadDefault()
+  }
+
+  public static func loadDefault(in bundle: Bundle? = nil) throws -> QuirkDatabase {
+    let targetBundle = bundle ?? Bundle.module
+    
+    if let url = targetBundle.url(forResource: "quirks", withExtension: "json") {
+        let data = try Data(contentsOf: url)
+        return try QuirkDatabase(data: data)
     }
-    let data = try Data(contentsOf: url)
-    return try QuirkDatabase(data: data)
+    
+    // Fallback: Check current directory (for CLI development/test)
+    let cwdURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+    let localURL = cwdURL.appendingPathComponent("Specs/quirks.json")
+    if FileManager.default.fileExists(atPath: localURL.path) {
+        let data = try Data(contentsOf: localURL)
+        return try QuirkDatabase(data: data)
+    }
+    
+    // Fallback for package root execution
+    let parentSpecsURL = cwdURL.appendingPathComponent("../Specs/quirks.json")
+    if FileManager.default.fileExists(atPath: parentSpecsURL.path) {
+        let data = try Data(contentsOf: parentSpecsURL)
+        return try QuirkDatabase(data: data)
+    }
+
+    throw NSError(domain: "QuirkDatabase", code: 1, userInfo: [NSLocalizedDescriptionKey: "quirks.json not found in \(targetBundle.bundlePath) or local paths"])
   }
 
   /// Returns the best quirk for a device fingerprint, or nil if none matches.

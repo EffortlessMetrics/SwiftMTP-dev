@@ -201,6 +201,7 @@ if filteredArgs.isEmpty {
     print("  delete <handle> [--recursive] - Delete file/directory")
     print("  move <handle> <new-parent> - Move file/directory")
     print("  events [seconds] - Monitor device events")
+    print("  storybook - Run interactive end-to-end demo using simulated device")
     print("  learn-promote - Promote learned profiles to quirks (see learn-promote --help)")
     print("  version [--json] - Show version information")
     print("")
@@ -217,6 +218,8 @@ let command = filteredArgs[0]
 let remainingArgs = Array(filteredArgs.dropFirst())
 
 switch command {
+case "storybook":
+    await StorybookCommand.run()
 case "probe":
     await runProbe(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
 case "usb-dump":

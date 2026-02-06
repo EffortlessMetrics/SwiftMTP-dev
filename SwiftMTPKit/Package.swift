@@ -57,7 +57,8 @@ let package = Package(
     // Device quirks and tuning database
     .target(name: "SwiftMTPQuirks",
             dependencies: ["SwiftMTPCore"],
-            path: "Sources/SwiftMTPQuirks"),
+            path: "Sources/SwiftMTPQuirks",
+            resources: [.process("Resources")]),
 
     // File Provider extension (excluded for now due to SwiftMTPXPC dependency)
     // .target(name: "SwiftMTPFileProvider",
@@ -90,6 +91,7 @@ let package = Package(
                         "SwiftMTPTransportLibUSB",
                         "SwiftMTPIndex",
                         "SwiftMTPQuirks",
+                        "SwiftMTPObservability",
                         "CLibusb"
                       ],
                       path: "Sources/Tools/swiftmtp-cli",

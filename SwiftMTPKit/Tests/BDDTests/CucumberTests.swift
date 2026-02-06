@@ -5,79 +5,92 @@ import SwiftMTPTransportLibUSB
 
 final class BDDRunner: CucumberTest {}
 
-// Global state container
-final class BDDState: @unchecked Sendable {
+/// Actor-isolated per-scenario state.
+/// Global is a `let`, so it’s concurrency-safe.
+/// All mutation happens behind actor isolation.
+actor BDDWorld {
     var transport: MockTransport?
     var summary: MTPDeviceSummary?
     var device: MTPDevice?
+
+    func reset() {
+        transport = nil
+        summary = nil
+        device = nil
+    }
+
+    func setupConnectedDevice() {
+        let mockData = MockDeviceData.androidPixel7
+        let transport = MockTransport(deviceData: mockData)
+        self.transport = transport
+
+        self.summary = MTPDeviceSummary(
+            id: mockData.deviceSummary.id,
+            manufacturer: mockData.deviceSummary.manufacturer,
+            model: mockData.deviceSummary.model,
+            vendorID: mockData.deviceSummary.vendorID,
+            productID: mockData.deviceSummary.productID
+        )
+    }
+
+    func openDevice() async throws {
+        guard let summary, let transport else {
+            throw MTPError.preconditionFailed("Setup failed")
+        }
+        let device = try await MTPDeviceManager.shared.openDevice(with: summary, transport: transport)
+        _ = try await device.info
+        self.device = device
+    }
+
+    func assertSessionActive() async throws {
+        guard let device else {
+            throw MTPError.preconditionFailed("Device not open")
+        }
+        let info = try await device.info
+        XCTAssertEqual(info.model, "Pixel 7")
+    }
 }
-nonisolated(unsafe) var state = BDDState()
+
+private let world = BDDWorld()
+
+private func runAsync(
+    _ step: Step,
+    timeout: TimeInterval = 5.0,
+    _ body: @escaping @Sendable () async throws -> Void
+) {
+    guard let testCase = step.testCase else { return }
+    let exp = testCase.expectation(description: "BDD async step")
+
+    Task {
+        do { try await body() }
+        catch { XCTFail("Error: \(error)") }
+        exp.fulfill()
+    }
+
+    testCase.wait(for: [exp], timeout: timeout)
+}
 
 extension Cucumber: StepImplementation {
-    public var bundle: Bundle { return Bundle.module }
+    public var bundle: Bundle { Bundle.module }
 
     public func setupSteps() {
-        Given("a connected MTP device") { match, step in
-            state = BDDState() // Reset state
-            
-            let mockData = MockDeviceData.androidPixel7
-            let transport = MockTransport(deviceData: mockData)
-            state.transport = transport
-            
-            state.summary = MTPDeviceSummary(
-                id: MTPDeviceID(raw: "mock"),
-                manufacturer: mockData.deviceSummary.manufacturer,
-                model: mockData.deviceSummary.model,
-                vendorID: mockData.deviceSummary.vendorID,
-                productID: mockData.deviceSummary.productID
-            )
-        }
-        
-        When("I request to open the device") { match, step in
-            guard let testCase = step.testCase else { return }
-            let exp = testCase.expectation(description: "Open device")
-            
-            Task {
-                do {
-                    guard let summary = state.summary,
-                          let transport = state.transport else {
-                        XCTFail("Setup failed")
-                        exp.fulfill()
-                        return
-                    }
-                    
-                    let device = try await MTPDeviceManager.shared.openDevice(with: summary, transport: transport)
-                    let _ = try await device.info
-                    state.device = device
-                } catch {
-                    XCTFail("Error: \(error)")
-                }
-                exp.fulfill()
+        Given("a connected MTP device") { _, step in
+            runAsync(step) {
+                await world.reset()
+                await world.setupConnectedDevice()
             }
-            
-            testCase.wait(for: [exp], timeout: 5.0)
         }
-        
-        Then("the session should be active") { match, step in
-            guard let testCase = step.testCase else { return }
-            let exp = testCase.expectation(description: "Verify session")
-            
-            Task {
-                do {
-                    guard let device = state.device else {
-                        XCTFail("Device not open")
-                        exp.fulfill()
-                        return
-                    }
-                    let info = try await device.info
-                    XCTAssertEqual(info.model, "Pixel 7")
-                } catch {
-                     XCTFail("Error: \(error)")
-                }
-                exp.fulfill()
+
+        When("I request to open the device") { _, step in
+            runAsync(step) {
+                try await world.openDevice()
             }
-            
-            testCase.wait(for: [exp], timeout: 5.0)
+        }
+
+        Then("the session should be active") { _, step in
+            runAsync(step) {
+                try await world.assertSessionActive()
+            }
         }
     }
 }

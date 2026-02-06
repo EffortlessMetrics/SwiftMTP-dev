@@ -288,7 +288,7 @@ public actor MTPDeviceActor: MTPDevice {
 
     // MARK: - Helper Methods
 
-    internal func getMTPLink() async throws -> any MTPLink {
+    public func getMTPLink() async throws -> any MTPLink {
         if let link = mtpLink {
             return link
         }

@@ -346,6 +346,23 @@ public actor MTPDeviceManager {
 
     // Start USB transport discovery
     await startTransportDiscovery()
+    
+    // DEMO MODE: Automatically yield a mock device
+    if FeatureFlags.shared.useMockTransport {
+        let profile = FeatureFlags.shared.mockProfile
+        let summary: MTPDeviceSummary
+        switch profile.lowercased() {
+        case "s21", "galaxy":
+            summary = MTPDeviceSummary(id: MTPDeviceID(raw: "04e8:6860@1:3"), manufacturer: "Samsung (Demo)", model: "Galaxy S21", vendorID: 0x04e8, productID: 0x6860, bus: 1, address: 3)
+        case "iphone", "ios":
+            summary = MTPDeviceSummary(id: MTPDeviceID(raw: "05ac:12a8@1:4"), manufacturer: "Apple (Demo)", model: "iPhone", vendorID: 0x05ac, productID: 0x12a8, bus: 1, address: 4)
+        case "canon", "camera":
+            summary = MTPDeviceSummary(id: MTPDeviceID(raw: "04a9:317a@1:5"), manufacturer: "Canon (Demo)", model: "EOS R5", vendorID: 0x04a9, productID: 0x317a, bus: 1, address: 5)
+        default:
+            summary = MTPDeviceSummary(id: MTPDeviceID(raw: "18d1:4ee1@1:2"), manufacturer: "Google (Demo)", model: "Pixel 7", vendorID: 0x18d1, productID: 0x4ee1, bus: 1, address: 2)
+        }
+        await yieldAttached(summary)
+    }
   }
 
   private func startTransportDiscovery() async {
