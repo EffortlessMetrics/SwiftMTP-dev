@@ -47,84 +47,137 @@ public enum PTPOp: UInt16 {
     case deleteObject = 0x100B
     case sendObjectInfo = 0x100C
     case sendObject = 0x100D
-    case moveObject = 0x100E  // MoveObject operation
+    case moveObject = 0x100E
     case getDevicePropDesc = 0x1014
     case getDevicePropValue = 0x1015
     case setDevicePropValue = 0x1016
     case resetDevicePropValue = 0x1017
     case getPartialObject = 0x101B
-    // Optional (resume on capable devices):
-    case getPartialObject64 = 0x95C4  // common Android vendor opcode
-    case sendPartialObject = 0x95C1  // ditto
+    case getPartialObject64 = 0x95C4
+    case sendPartialObject = 0x95C1
 }
 
 // PTP/MTP Unicode String format: count-prefixed UTF-16LE
 public struct PTPString {
     public static func parse(from data: Data, at offset: inout Int) -> String? {
-        guard offset + 1 <= data.count else { return nil }
-
-        // Read string length (number of Unicode characters, not bytes)
-        let length = Int(data[offset])
+        guard offset < data.count else { return nil }
+        let charCount = Int(data[offset])
         offset += 1
-
-        if length == 0 {
-            return ""
-        }
-
-        // Each Unicode character is 2 bytes (UTF-16LE)
-        let stringByteLength = length * 2
-        guard offset + stringByteLength <= data.count else { return nil }
-
-        let stringData = data[offset..<offset + stringByteLength]
-        offset += stringByteLength
-
-        // Convert UTF-16LE to String
-        let utf16Data = stringData.withUnsafeBytes { ptr in
-            ptr.bindMemory(to: UInt16.self)
-        }
-
-        var utf16Array = [UInt16]()
-        for i in 0..<length {
-            let char = UInt16(littleEndian: utf16Data[i])
-            // Skip null terminator if present
+        if charCount == 0 { return "" }
+        if charCount == 0xFF { return nil }
+        
+        let byteCount = charCount * 2
+        guard offset + byteCount <= data.count else { return nil }
+        
+        var utf16Chars = [UInt16]()
+        utf16Chars.reserveCapacity(charCount)
+        
+        for _ in 0..<charCount {
+            let low = UInt16(data[offset])
+            let high = UInt16(data[offset + 1])
+            let char = low | (high << 8)
             if char != 0 {
-                utf16Array.append(char)
+                utf16Chars.append(char)
             }
+            offset += 2
         }
-
-        return String(utf16CodeUnits: utf16Array, count: utf16Array.count)
+        
+        return String(utf16CodeUnits: utf16Chars, count: utf16Chars.count)
     }
 
     public static func encode(_ string: String) -> Data {
         var data = Data()
-
-        if string.isEmpty {
-            data.append(0) // Empty string
-            return data
-        }
-
-        // Convert string to UTF-16LE
+        if string.isEmpty { data.append(0); return data }
         let utf16Chars = string.utf16.map { UInt16($0).littleEndian }
-
-        // Write length (number of characters)
-        // PTP/MTP allows up to 255 characters. Length includes null terminator.
         let len = min(utf16Chars.count + 1, 255)
         data.append(UInt8(len))
-
-        // Write UTF-16LE bytes
         for i in 0..<len-1 {
             let char = utf16Chars[i]
             data.append(contentsOf: [UInt8(char & 0xFF), UInt8(char >> 8)])
         }
-        
-        // Null terminator
         data.append(contentsOf: [0, 0])
-
         return data
     }
 }
 
-// DeviceInfo dataset parser
+public enum PTPValue: Sendable {
+    case int8(Int8), uint8(UInt8)
+    case int16(Int16), uint16(UInt16)
+    case int32(Int32), uint32(UInt32)
+    case int64(Int64), uint64(UInt64)
+    case int128(Data), uint128(Data)
+    case string(String)
+    case bytes(Data)
+    case array([PTPValue])
+}
+
+public struct PTPReader {
+    public let data: Data
+    public var o: Int = 0
+    public init(data: Data) { self.data = data }
+
+    public mutating func u8() -> UInt8? {
+        guard o + 1 <= data.count else { return nil }
+        defer { o += 1 }
+        return data[o]
+    }
+    
+    public mutating func u16() -> UInt16? {
+        guard o + 2 <= data.count else { return nil }
+        var v: UInt16 = 0
+        withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+2)) }
+        defer { o += 2 }
+        return v.littleEndian
+    }
+    
+    public mutating func u32() -> UInt32? {
+        guard o + 4 <= data.count else { return nil }
+        var v: UInt32 = 0
+        withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+4)) }
+        defer { o += 4 }
+        return v.littleEndian
+    }
+    
+    public mutating func u64() -> UInt64? {
+        guard o + 8 <= data.count else { return nil }
+        var v: UInt64 = 0
+        withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+8)) }
+        defer { o += 8 }
+        return v.littleEndian
+    }
+
+    public mutating func bytes(_ n: Int) -> Data? { guard o+n <= data.count else { return nil }; defer { o += n }; return data.subdata(in: o..<(o+n)) }
+    public mutating func string() -> String? { PTPString.parse(from: data, at: &o) }
+
+    public mutating func value(dt: UInt16) -> PTPValue? {
+        if (dt & 0x4000) != 0 {
+            let base = dt & ~0x4000
+            guard let count = u32() else { return nil }
+            var out: [PTPValue] = []
+            out.reserveCapacity(Int(count))
+            for _ in 0..<count {
+                guard let v = value(dt: base) else { return nil }
+                out.append(v)
+            }
+            return .array(out)
+        }
+        switch dt {
+        case 0x0001: guard let b = u8() else { return nil }; return .int8(Int8(bitPattern: b))
+        case 0x0002: guard let b = u8() else { return nil }; return .uint8(b)
+        case 0x0003: guard let v = u16() else { return nil }; return .int16(Int16(bitPattern: v))
+        case 0x0004: guard let v = u16() else { return nil }; return .uint16(v)
+        case 0x0005: guard let v = u32() else { return nil }; return .int32(Int32(bitPattern: v))
+        case 0x0006: guard let v = u32() else { return nil }; return .uint32(v)
+        case 0x0007: guard let v = u64() else { return nil }; return .int64(Int64(bitPattern: v))
+        case 0x0008: guard let v = u64() else { return nil }; return .uint64(v)
+        case 0x0009: guard let d = bytes(16) else { return nil }; return .int128(d)
+        case 0x000A: guard let d = bytes(16) else { return nil }; return .uint128(d)
+        case 0xFFFF: guard let s = string() else { return nil }; return .string(s)
+        default: return nil
+        }
+    }
+}
+
 public struct PTPDeviceInfo {
     public let standardVersion: UInt16
     public let vendorExtensionID: UInt32
@@ -143,107 +196,19 @@ public struct PTPDeviceInfo {
 
     public static func parse(from data: Data) -> PTPDeviceInfo? {
         var r = PTPReader(data: data)
-
         func readArray16() -> [UInt16]? {
             guard let count = r.u32() else { return nil }
             var array = [UInt16]()
-            for _ in 0..<count {
-                guard let value = r.u16() else { return nil }
-                array.append(value)
-            }
+            for _ in 0..<count { guard let value = r.u16() else { return nil }; array.append(value) }
             return array
         }
-
-        guard let standardVersion = r.u16(),
-              let vendorExtensionID = r.u32(),
-              let vendorExtensionVersion = r.u16(),
-              let vendorExtensionDesc = r.string(),
-              let functionalMode = r.u16(),
-              let operationsSupported = readArray16(),
-              let eventsSupported = readArray16(),
-              let devicePropertiesSupported = readArray16(),
-              let captureFormats = readArray16(),
-              let playbackFormats = readArray16(),
-              let manufacturer = r.string(),
-              let model = r.string(),
-              let deviceVersion = r.string(),
-              let serialNumber = r.string() else {
-            return nil
-        }
-
-        return PTPDeviceInfo(
-            standardVersion: standardVersion,
-            vendorExtensionID: vendorExtensionID,
-            vendorExtensionVersion: vendorExtensionVersion,
-            vendorExtensionDesc: vendorExtensionDesc,
-            functionalMode: functionalMode,
-            operationsSupported: operationsSupported,
-            eventsSupported: eventsSupported,
-            devicePropertiesSupported: devicePropertiesSupported,
-            captureFormats: captureFormats,
-            playbackFormats: playbackFormats,
-            manufacturer: manufacturer,
-            model: model,
-            deviceVersion: deviceVersion,
-            serialNumber: serialNumber
-        )
-    }
-}
-
-public enum PTPValue: Sendable {
-    case int8(Int8), uint8(UInt8)
-    case int16(Int16), uint16(UInt16)
-    case int32(Int32), uint32(UInt32)
-    case int64(Int64), uint64(UInt64)
-    case int128(Data), uint128(Data) // keep raw 16 bytes
-    case string(String)
-    case bytes(Data)                 // fallback for unknown
-    case array([PTPValue])
-}
-
-public struct PTPReader {
-    public let data: Data
-    public var o: Int = 0
-
-    public init(data: Data) { self.data = data }
-
-    public mutating func u8() -> UInt8? { guard o+1 <= data.count else { return nil }; defer { o += 1 }; return data[o] }
-    public mutating func u16() -> UInt16? { guard o+2 <= data.count else { return nil }; var v: UInt16 = 0; withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+2)) }; o += 2; return v.littleEndian }
-    public mutating func u32() -> UInt32? { guard o+4 <= data.count else { return nil }; var v: UInt32 = 0; withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+4)) }; o += 4; return v.littleEndian }
-    public mutating func u64() -> UInt64? { guard o+8 <= data.count else { return nil }; var v: UInt64 = 0; withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+8)) }; o += 8; return v.littleEndian }
-
-    public mutating func bytes(_ n: Int) -> Data? { guard o+n <= data.count else { return nil }; defer { o += n }; return data.subdata(in: o..<(o+n)) }
-    public mutating func string() -> String? { PTPString.parse(from: data, at: &o) }
-
-    public mutating func value(dt: UInt16) -> PTPValue? {
-        // arrays
-        if (dt & 0x4000) != 0 {
-            let base = dt & ~0x4000
-            guard let count = u32() else { return nil }
-            var out: [PTPValue] = []
-            out.reserveCapacity(Int(count))
-            for _ in 0..<count {
-                guard let v = value(dt: base) else { return nil }
-                out.append(v)
-            }
-            return .array(out)
-        }
-
-        switch dt {
-        case 0x0001: guard let b = u8() else { return nil }; return .int8(Int8(bitPattern: b))
-        case 0x0002: guard let b = u8() else { return nil }; return .uint8(b)
-        case 0x0003: guard let v = u16() else { return nil }; return .int16(Int16(bitPattern: v))
-        case 0x0004: guard let v = u16() else { return nil }; return .uint16(v)
-        case 0x0005: guard let v = u32() else { return nil }; return .int32(Int32(bitPattern: v))
-        case 0x0006: guard let v = u32() else { return nil }; return .uint32(v)
-        case 0x0007: guard let v = u64() else { return nil }; return .int64(Int64(bitPattern: v))
-        case 0x0008: guard let v = u64() else { return nil }; return .uint64(v)
-        case 0x0009: guard let d = bytes(16) else { return nil }; return .int128(d)
-        case 0x000A: guard let d = bytes(16) else { return nil }; return .uint128(d)
-        case 0xFFFF: guard let s = string() else { return nil }; return .string(s)
-        default:
-            return nil
-        }
+        guard let standardVersion = r.u16(), let vendorExtensionID = r.u32(), let vendorExtensionVersion = r.u16(),
+              let vendorExtensionDesc = r.string(), let functionalMode = r.u16(), let operationsSupported = readArray16(),
+              let eventsSupported = readArray16(), let devicePropertiesSupported = readArray16(),
+              let captureFormats = readArray16(), let playbackFormats = readArray16(),
+              let manufacturer = r.string(), let model = r.string(), let deviceVersion = r.string(),
+              let serialNumber = r.string() else { return nil }
+        return PTPDeviceInfo(standardVersion: standardVersion, vendorExtensionID: vendorExtensionID, vendorExtensionVersion: vendorExtensionVersion, vendorExtensionDesc: vendorExtensionDesc, functionalMode: functionalMode, operationsSupported: operationsSupported, eventsSupported: eventsSupported, devicePropertiesSupported: devicePropertiesSupported, captureFormats: captureFormats, playbackFormats: playbackFormats, manufacturer: manufacturer, model: model, deviceVersion: deviceVersion, serialNumber: serialNumber)
     }
 }
 
@@ -256,18 +221,13 @@ public struct PTPPropEntry: Sendable {
 
 public struct PTPPropList: Sendable {
     public let entries: [PTPPropEntry]
-
     public static func parse(from data: Data) -> PTPPropList? {
         var r = PTPReader(data: data)
         guard let n = r.u32() else { return nil }
         var out: [PTPPropEntry] = []
         out.reserveCapacity(Int(n))
         for _ in 0..<n {
-            guard
-                let h = r.u32(),
-                let pc = r.u16(),
-                let dt = r.u16(),
-                let v = r.value(dt: dt)
+            guard let h = r.u32(), let pc = r.u16(), let dt = r.u16(), let v = r.value(dt: dt)
             else { return nil }
             out.append(.init(handle: h, propertyCode: pc, dataType: dt, value: v))
         }
@@ -278,11 +238,9 @@ public struct PTPPropList: Sendable {
 public struct PTPObjectInfoDataset {
     public static func encode(storageID: UInt32, parentHandle: UInt32, format: UInt16, size: UInt64, name: String) -> Data {
         var data = Data()
-        
         func put32(_ v: UInt32) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
         func put16(_ v: UInt16) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
         
-        // PTP Spec: storageID can be 0 to use the "primary" or "default" storage
         put32(storageID)
         put16(format)
         put16(0) // ProtectionStatus

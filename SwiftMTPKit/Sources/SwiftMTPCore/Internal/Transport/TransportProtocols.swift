@@ -3,6 +3,22 @@
 
 import Foundation
 
+public struct PTPResponseResult: Sendable {
+    public let code: UInt16
+    public let txid: UInt32
+    public let params: [UInt32]
+    public let data: Data?
+    
+    public init(code: UInt16, txid: UInt32, params: [UInt32] = [], data: Data? = nil) {
+        self.code = code
+        self.txid = txid
+        self.params = params
+        self.data = data
+    }
+    
+    public var isOK: Bool { code == 0x2001 }
+}
+
 public protocol MTPTransport: Sendable {
     func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig) async throws -> MTPLink
 }
@@ -23,7 +39,7 @@ public protocol MTPLink: Sendable {
     func deleteObject(handle: MTPObjectHandle) async throws
     func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?) async throws
 
-    func executeCommand(_ command: PTPContainer) throws -> Data?
+    func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult
 
     // Streaming data transfer methods for file operations
     func executeStreamingCommand(
@@ -31,7 +47,7 @@ public protocol MTPLink: Sendable {
         dataPhaseLength: UInt64?,
         dataInHandler: MTPDataIn?,
         dataOutHandler: MTPDataOut?
-    ) async throws -> Data?
+    ) async throws -> PTPResponseResult
 }
 
 public protocol TransportFactory {

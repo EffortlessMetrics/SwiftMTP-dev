@@ -5,16 +5,6 @@ import Foundation
 import CLibusb
 import SwiftMTPCore
 
-/// Discovery utilities for LibUSB MTP devices
-public struct USBIDs: Sendable {
-  public let vendorID: UInt16
-  public let productID: UInt16
-  public let bcdDevice: UInt16
-  public let ifaceClass: UInt8
-  public let ifaceSubclass: UInt8
-  public let ifaceProtocol: UInt8
-}
-
 public struct LibUSBDiscovery {
     public struct USBDeviceIDs: Sendable {
       let vid: UInt16
@@ -27,37 +17,11 @@ public struct LibUSBDiscovery {
       let address: UInt8
     }
 
-    public static func readIDs(_ dev: OpaquePointer, ifaceIndex: UInt8) throws -> USBDeviceIDs {
-      var desc = libusb_device_descriptor()
-      guard libusb_get_device_descriptor(dev, &desc) == 0 else {
-        throw NSError(domain: "LibUSB", code: 2, userInfo: [NSLocalizedDescriptionKey: "get_device_descriptor failed"])
-      }
-
-      var configDescPtr: UnsafeMutablePointer<libusb_config_descriptor>?
-      guard libusb_get_active_config_descriptor(dev, &configDescPtr) == 0, let cfg = configDescPtr?.pointee else {
-        throw NSError(domain: "LibUSB", code: 3, userInfo: [NSLocalizedDescriptionKey: "get_active_config_descriptor failed"])
-      }
-      defer { libusb_free_config_descriptor(configDescPtr) }
-
-      let iface = cfg.interface.advanced(by: Int(ifaceIndex)).pointee
-      let alt = iface.altsetting.pointee
-      let bus = libusb_get_bus_number(dev)
-      let addr = libusb_get_device_address(dev)
-
-      return USBDeviceIDs(
-        vid: desc.idVendor, pid: desc.idProduct, bcdDevice: desc.bcdDevice,
-        ifaceClass: alt.bInterfaceClass, ifaceSubclass: alt.bInterfaceSubClass, ifaceProtocol: alt.bInterfaceProtocol,
-        bus: bus, address: addr
-      )
-    }
-
     public static func enumerateMTPDevices() async throws -> [MTPDeviceSummary] {
         let ctx = LibUSBContext.shared.ctx
         var list: UnsafeMutablePointer<OpaquePointer?>?
         let cnt = libusb_get_device_list(ctx, &list)
-        guard cnt > 0, let list else {
-            throw TransportError.io("device list failed")
-        }
+        guard cnt > 0, let list else { throw TransportError.io("device list failed") }
         defer { libusb_free_device_list(list, 1) }
 
         var summaries: [MTPDeviceSummary] = []
@@ -65,565 +29,341 @@ public struct LibUSBDiscovery {
             guard let dev = list[i] else { continue }
             var desc = libusb_device_descriptor()
             guard libusb_get_device_descriptor(dev, &desc) == 0 else { continue }
-
-            var cfg: UnsafeMutablePointer<libusb_config_descriptor>? = nil
-            guard libusb_get_active_config_descriptor(dev, &cfg) == 0, let cfg else { continue }
+            var cfgPtr: UnsafeMutablePointer<libusb_config_descriptor>? = nil
+            guard libusb_get_active_config_descriptor(dev, &cfgPtr) == 0, let cfg = cfgPtr else { continue }
             defer { libusb_free_config_descriptor(cfg) }
-
             var isMTP = false
             for j in 0..<cfg.pointee.bNumInterfaces {
                 let iface = cfg.pointee.interface[Int(j)]
                 for a in 0..<iface.num_altsetting {
                     let alt = iface.altsetting[Int(a)]
-                    if alt.bInterfaceClass == 0x06 { 
-                        isMTP = true
-                        break
-                    }
+                    if alt.bInterfaceClass == 0x06 { isMTP = true; break }
                 }
                 if isMTP { break }
             }
-
             if isMTP {
-                let bus = libusb_get_bus_number(dev)
-                let addr = libusb_get_device_address(dev)
-                let id = MTPDeviceID(raw: String(format:"%04x:%04x@%u:%u",
-                                                 desc.idVendor, desc.idProduct, bus, addr))
-
-                let summary = MTPDeviceSummary(
-                    id: id,
-                    manufacturer: "USB \(String(format:"%04x", desc.idVendor))",
-                    model: "USB \(String(format:"%04x", desc.idProduct))",
-                    vendorID: desc.idVendor,
-                    productID: desc.idProduct,
-                    bus: bus,
-                    address: addr
-                )
-                summaries.append(summary)
+                let bus = libusb_get_bus_number(dev), addr = libusb_get_device_address(dev)
+                summaries.append(MTPDeviceSummary(id: MTPDeviceID(raw: String(format:"%04x:%04x@%u:%u", desc.idVendor, desc.idProduct, bus, addr)), manufacturer: "USB \(String(format:"%04x", desc.idVendor))", model: "USB \(String(format:"%04x", desc.idProduct))", vendorID: desc.idVendor, productID: desc.idProduct, bus: bus, address: addr))
             }
         }
         return summaries
     }
 }
 
-private struct EPCandidates {
-    var bulkIn: UInt8 = 0
-    var bulkOut: UInt8 = 0
-    var evtIn: UInt8 = 0
-}
-
-private func endpoints(_ alt: libusb_interface_descriptor) -> EPCandidates {
+private struct EPCandidates { var bulkIn: UInt8 = 0; var bulkOut: UInt8 = 0; var evtIn: UInt8 = 0 }
+private func findEndpoints(_ alt: libusb_interface_descriptor) -> EPCandidates {
     var eps = EPCandidates()
     for i in 0..<Int(alt.bNumEndpoints) {
         let ed = alt.endpoint[i]
-        let addr = ed.bEndpointAddress
-        let dirIn = (addr & 0x80) != 0
-        let attr = ed.bmAttributes & 0x03
-        if attr == 2 { // LIBUSB_TRANSFER_TYPE_BULK
-            if dirIn { eps.bulkIn = addr } else { eps.bulkOut = addr }
-        } else if attr == 3, dirIn { // LIBUSB_TRANSFER_TYPE_INTERRUPT
-            eps.evtIn = addr
-        }
+        let addr = ed.bEndpointAddress, dirIn = (addr & 0x80) != 0, attr = ed.bmAttributes & 0x03
+        if attr == 2 { if dirIn { eps.bulkIn = addr } else { eps.bulkOut = addr } }
+        else if attr == 3, dirIn { eps.evtIn = addr }
     }
     return eps
 }
 
-private func asciiString(_ handle: OpaquePointer, _ index: UInt8) -> String {
-    guard index != 0 else { return "" }
+private func getAsciiString(_ handle: OpaquePointer, _ index: UInt8) -> String {
+    if index == 0 { return "" }
     var buf = [UInt8](repeating: 0, count: 128)
     let n = libusb_get_string_descriptor_ascii(handle, index, &buf, Int32(buf.count))
-    if n > 0 { return String(cString: &buf) }
-    return ""
+    return n > 0 ? String(cString: &buf) : ""
 }
 
-private func findMTPInterface(handle: OpaquePointer, device: OpaquePointer) throws -> (UInt8, UInt8, UInt8, UInt8, UInt8) {
+private func claimMTPInterface(handle: OpaquePointer, device: OpaquePointer) throws -> (UInt8, UInt8, UInt8, UInt8, UInt8) {
     var cfgPtr: UnsafeMutablePointer<libusb_config_descriptor>?
     try check(libusb_get_active_config_descriptor(device, &cfgPtr))
     guard let cfg = cfgPtr?.pointee else { throw TransportError.io("no active config") }
     defer { libusb_free_config_descriptor(cfgPtr) }
-
     var best: (iface: UInt8, alt: UInt8, inEP: UInt8, outEP: UInt8, evt: UInt8, score: Int)? = nil
     for i in 0..<Int(cfg.bNumInterfaces) {
         let ifc = cfg.interface[i]
         for a in 0..<Int(ifc.num_altsetting) {
-            let alt = ifc.altsetting[Int(a)]
-            let cls = alt.bInterfaceClass
-            let sub = alt.bInterfaceSubClass
-            let eps = endpoints(alt)
+            let alt = ifc.altsetting[Int(a)], eps = findEndpoints(alt)
             if eps.bulkIn == 0 || eps.bulkOut == 0 { continue }
-
             var score = 0
-            if cls == 0x06 && sub == 0x01 { score += 100 }
-            let name = asciiString(handle, alt.iInterface).lowercased()
-            if (cls == 0xFF && sub == 0x42) || name.contains("adb") { score -= 200 }
-            if cls == 0xFF && (name.contains("mtp") || name.contains("ptp")) { score += 60 }
+            if alt.bInterfaceClass == 0x06 && alt.bInterfaceSubClass == 0x01 { score += 100 }
+            let name = getAsciiString(handle, alt.iInterface).lowercased()
+            if (alt.bInterfaceClass == 0xFF && alt.bInterfaceSubClass == 0x42) || name.contains("adb") { score -= 200 }
+            if alt.bInterfaceClass == 0xFF && (name.contains("mtp") || name.contains("ptp")) { score += 60 }
             if eps.evtIn != 0 { score += 5 }
-
-            if score > (best?.score ?? -1) {
-                best = (UInt8(i), alt.bAlternateSetting, eps.bulkIn, eps.bulkOut, eps.evtIn, score)
-            }
+            if score > (best?.score ?? -1) { best = (UInt8(i), alt.bAlternateSetting, eps.bulkIn, eps.bulkOut, eps.evtIn, score) }
         }
     }
-
-    guard let sel = best, sel.score >= 60 else {
-        throw TransportError.io("no MTP-like interface (scan failed)")
-    }
-
+    guard let sel = best, sel.score >= 60 else { throw TransportError.io("no MTP interface") }
     try check(libusb_claim_interface(handle, Int32(sel.iface)))
-    if sel.alt > 0 {
-        try check(libusb_set_interface_alt_setting(handle, Int32(sel.iface), Int32(sel.alt)))
-    }
+    if sel.alt > 0 { try check(libusb_set_interface_alt_setting(handle, Int32(sel.iface), Int32(sel.alt))) }
     return (sel.iface, sel.alt, sel.inEP, sel.outEP, sel.evt)
 }
 
 public struct LibUSBTransport: MTPTransport {
   public init() {}
-
-  public func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig = .init()) async throws -> MTPLink {
+  public func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig) async throws -> MTPLink {
     let ctx = LibUSBContext.shared.ctx
     var list: UnsafeMutablePointer<OpaquePointer?>?
     let cnt = libusb_get_device_list(ctx, &list)
     guard cnt > 0, let list else { throw TransportError.io("device list failed") }
-
     var target: OpaquePointer?
     for i in 0..<Int(cnt) {
       let dev = list[i]!
-      let bus = libusb_get_bus_number(dev)
-      let addr = libusb_get_device_address(dev)
-      if summary.id.raw.hasSuffix(String(format:"@%u:%u", bus, addr)) {
-        libusb_ref_device(dev)
-        target = dev
-        break
-      }
+      let bus = libusb_get_bus_number(dev), addr = libusb_get_device_address(dev)
+      if summary.id.raw.hasSuffix(String(format:"@%u:%u", bus, addr)) { libusb_ref_device(dev); target = dev; break }
     }
     libusb_free_device_list(list, 1)
-
     guard let dev = target else { throw TransportError.noDevice }
-
-    var handle: OpaquePointer?
-    guard libusb_open(dev, &handle) == 0, let handle else {
-      libusb_unref_device(dev)
-      throw TransportError.accessDenied
-    }
-
+    var h: OpaquePointer?
+    guard libusb_open(dev, &h) == 0, let handle = h else { libusb_unref_device(dev); throw TransportError.accessDenied }
     _ = libusb_reset_device(handle)
     try? await Task.sleep(nanoseconds: 500_000_000)
-
-    var cfg: UnsafeMutablePointer<libusb_config_descriptor>? = nil
-    guard libusb_get_active_config_descriptor(dev, &cfg) == 0, let cfg else {
-      libusb_close(handle)
-      libusb_unref_device(dev)
-      throw TransportError.io("no config")
-    }
-    defer { libusb_free_config_descriptor(cfg) }
-
-    let (ifaceNum, altSetting, epIn, epOut, epEvt) = try {
-      do { return try findMTPInterface(handle: handle, device: dev) }
-      catch { libusb_close(handle); libusb_unref_device(dev); throw error }
-    }()
-
-    if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
-      let evtStr = epEvt != 0 ? String(format: "0x%02x", epEvt) : "none"
-      print("MTP iface=\(ifaceNum) alt=\(altSetting) epIn=0x\(String(format: "%02x", epIn)) epOut=0x\(String(format: "%02x", epOut)) evt=\(evtStr)")
-    }
-
-    _ = libusb_clear_halt(handle, epIn)
-    _ = libusb_clear_halt(handle, epOut)
-    var drainBuf = [UInt8](repeating: 0, count: 512)
-    var got: Int32 = 0
-    while libusb_bulk_transfer(handle, epIn, &drainBuf, 512, &got, 50) == 0 && got > 0 {}
-
-    return MTPUSBLink(handle: handle, device: dev, iface: ifaceNum, epIn: epIn, epOut: epOut, epEvt: epEvt, config: config, manufacturer: summary.manufacturer, model: summary.model)
+    let (iface, _, epIn, epOut, epEvt) = try { do { return try claimMTPInterface(handle: handle, device: dev) } catch { libusb_close(handle); libusb_unref_device(dev); throw error } }()
+    _ = libusb_clear_halt(handle, epIn); _ = libusb_clear_halt(handle, epOut)
+    var drain = [UInt8](repeating: 0, count: 512), got: Int32 = 0
+    while libusb_bulk_transfer(handle, epIn, &drain, 512, &got, 50) == 0 && got > 0 {}
+    return MTPUSBLink(handle: handle, device: dev, iface: iface, epIn: epIn, epOut: epOut, epEvt: epEvt, config: config, manufacturer: summary.manufacturer, model: summary.model)
   }
 }
 
 public final class MTPUSBLink: @unchecked Sendable, MTPLink {
-  private let h: OpaquePointer
-  private let device: OpaquePointer
-  private let iface: UInt8
-  let inEP, outEP, evtEP: UInt8
+  private let h: OpaquePointer, dev: OpaquePointer, iface: UInt8, inEP, outEP, evtEP: UInt8
   private let ioQ = DispatchQueue(label: "com.effortlessmetrics.swiftmtp.usbio", qos: .userInitiated)
   private var nextTx: UInt32 = 1
-  private let config: SwiftMTPConfig
-  private let manufacturer: String
-  private let model: String
-
-  private var eventContinuation: AsyncStream<Data>.Continuation?
-  private var eventPumpTask: Task<Void, Never>?
+  private let config: SwiftMTPConfig, manufacturer: String, model: String
+  private var eventContinuation: AsyncStream<Data>.Continuation?, eventPumpTask: Task<Void, Never>?
 
   init(handle: OpaquePointer, device: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8, config: SwiftMTPConfig, manufacturer: String, model: String) {
-    self.h = handle; self.device = device; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt; self.config = config
-    self.manufacturer = manufacturer; self.model = model
+    self.h = handle; self.dev = device; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt; self.config = config; self.manufacturer = manufacturer; self.model = model
   }
 
-  public func close() async {
-    eventPumpTask?.cancel()
-    eventPumpTask = nil
-    eventContinuation?.finish()
-    eventContinuation = nil
-    libusb_release_interface(h, Int32(iface))
-    libusb_close(h)
-    libusb_unref_device(device)
-  }
-
+  public func close() async { eventPumpTask?.cancel(); eventContinuation?.finish(); libusb_release_interface(h, Int32(iface)); libusb_close(h); libusb_unref_device(dev) }
   public func startEventPump() {
     guard evtEP != 0 else { return }
-    let _ = AsyncStream<Data> { continuation in
-      self.eventContinuation = continuation
-    }
+    let _ = AsyncStream<Data> { self.eventContinuation = $0 }
     eventPumpTask = Task {
       while !Task.isCancelled {
-        do {
-          var buf = [UInt8](repeating: 0, count: 64 * 1024)
-          let got = try bulkReadOnce(evtEP, into: &buf, max: buf.count, timeout: 1000)
-          if got > 0 { eventContinuation?.yield(Data(bytes: &buf, count: got)) }
-        } catch {
-          try? await Task.sleep(nanoseconds: 100_000_000)
-        }
+        var buf = [UInt8](repeating: 0, count: 1024)
+        if let got = try? bulkReadOnce(evtEP, into: &buf, max: 1024, timeout: 1000), got > 0 { eventContinuation?.yield(Data(buf[0..<got])) }
       }
     }
   }
 
   public func openUSBIfNeeded() async throws {}
-
-  public func openSession(id: UInt32) async throws {
-    let command = PTPContainer(length: 16, type: PTPContainer.Kind.command.rawValue, code: PTPOp.openSession.rawValue, txid: nextTx, params: [id])
-    _ = try await executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil)
-  }
-
-  public func closeSession() async throws {
-    let command = PTPContainer(length: 12, type: PTPContainer.Kind.command.rawValue, code: PTPOp.closeSession.rawValue, txid: nextTx, params: [])
-    _ = try await executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil)
-  }
+  public func openSession(id: UInt32) async throws { try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1002, txid: 0, params: [id]), dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil).checkOK() }
+  public func closeSession() async throws { try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1003, txid: 0, params: []), dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil).checkOK() }
 
   public func getDeviceInfo() async throws -> MTPDeviceInfo {
-    let command = PTPContainer(length: 12, type: PTPContainer.Kind.command.rawValue, code: PTPOp.getDeviceInfo.rawValue, txid: 0, params: [])
     let collector = SimpleCollector()
-    _ = try await executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: { chunk in
-        collector.append(chunk)
-        return chunk.count
-    }, dataOutHandler: nil)
-
-    if let ptpInfo = PTPDeviceInfo.parse(from: collector.data) {
-        return MTPDeviceInfo(manufacturer: ptpInfo.manufacturer, model: ptpInfo.model, version: ptpInfo.deviceVersion, serialNumber: ptpInfo.serialNumber, operationsSupported: Set(ptpInfo.operationsSupported), eventsSupported: Set(ptpInfo.eventsSupported))
+    let res = try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1001, txid: 0, params: []), dataPhaseLength: nil, dataInHandler: { collector.append($0); return $0.count }, dataOutHandler: nil)
+    if res.isOK, let info = PTPDeviceInfo.parse(from: collector.data) {
+        return MTPDeviceInfo(manufacturer: info.manufacturer, model: info.model, version: info.deviceVersion, serialNumber: info.serialNumber, operationsSupported: Set(info.operationsSupported), eventsSupported: Set(info.eventsSupported))
     }
-    return MTPDeviceInfo(manufacturer: manufacturer, model: model, version: "1.0", serialNumber: "Unknown", operationsSupported: Set(), eventsSupported: Set())
+    return MTPDeviceInfo(manufacturer: manufacturer, model: model, version: "1.0", serialNumber: "Unknown", operationsSupported: [], eventsSupported: [])
   }
 
   public func getStorageIDs() async throws -> [MTPStorageID] {
-    let command = PTPContainer(length: 12, type: PTPContainer.Kind.command.rawValue, code: PTPOp.getStorageIDs.rawValue, txid: 0, params: [])
     let collector = SimpleCollector()
-    _ = try await executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: { chunk in
-        collector.append(chunk)
-        return chunk.count
-    }, dataOutHandler: nil)
-
-    let collectedData = collector.data
-    guard collectedData.count >= 4 else { return [] }
-    let count = collectedData.withUnsafeBytes { $0.load(fromByteOffset: 0, as: UInt32.self).littleEndian }
-    guard collectedData.count >= 4 + Int(count) * 4 else { return [] }
-    var storageIDs = [MTPStorageID]()
-    for i in 0..<Int(count) {
-      let storageIDRaw = collectedData.withUnsafeBytes { $0.load(fromByteOffset: 4 + i * 4, as: UInt32.self).littleEndian }
-      storageIDs.append(MTPStorageID(raw: storageIDRaw))
-    }
-    return storageIDs
+    let res = try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1004, txid: 0, params: []), dataPhaseLength: nil, dataInHandler: { collector.append($0); return $0.count }, dataOutHandler: nil)
+    if !res.isOK || collector.data.count < 4 { return [] }
+    let count = collector.data.withUnsafeBytes { $0.load(as: UInt32.self).littleEndian }
+    var ids = [MTPStorageID]()
+    for i in 0..<Int(count) { ids.append(MTPStorageID(raw: collector.data.withUnsafeBytes { $0.load(fromByteOffset: 4+i*4, as: UInt32.self).littleEndian })) }
+    return ids
   }
 
   public func getStorageInfo(id: MTPStorageID) async throws -> MTPStorageInfo {
-    let command = PTPContainer(length: 16, type: PTPContainer.Kind.command.rawValue, code: PTPOp.getStorageInfo.rawValue, txid: 0, params: [id.raw])
     let collector = SimpleCollector()
-    _ = try await executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: { chunk in
-        collector.append(chunk)
-        return chunk.count
-    }, dataOutHandler: nil)
-
-    let responseData = collector.data
-    var offset = 0
-    func read16() -> UInt16 { var v: UInt16 = 0; _ = withUnsafeMutableBytes(of: &v) { responseData.copyBytes(to: $0, from: offset..<offset+2) }; offset += 2; return v.littleEndian }
-    func read32() -> UInt32 { var v: UInt32 = 0; _ = withUnsafeMutableBytes(of: &v) { responseData.copyBytes(to: $0, from: offset..<offset+4) }; offset += 4; return v.littleEndian }
-    func read64() -> UInt64 { var v: UInt64 = 0; _ = withUnsafeMutableBytes(of: &v) { responseData.copyBytes(to: $0, from: offset..<offset+8) }; offset += 8; return v.littleEndian }
-    func readString() -> String { guard let s = PTPString.parse(from: responseData, at: &offset) else { return "Unknown" }; return s }
-
-    guard responseData.count >= 22 else { throw MTPError.protocolError(code: 0, message: "Storage info response too short") }
-    _ = read16(); _ = read16()
-    let accessCapability = read16()
-    let maxCapacity = read64()
-    let freeSpace = read64()
-    _ = read32()
-    let description = readString()
-    return MTPStorageInfo(id: id, description: description, capacityBytes: maxCapacity, freeBytes: freeSpace, isReadOnly: accessCapability == 0x0001)
+    let res = try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1005, txid: 0, params: [id.raw]), dataPhaseLength: nil, dataInHandler: { collector.append($0); return $0.count }, dataOutHandler: nil)
+    try res.checkOK()
+    var r = PTPReader(data: collector.data)
+    _ = r.u16(); _ = r.u16(); let cap = r.u16(), max = r.u64(), free = r.u64(); _ = r.u32(); let desc = r.string() ?? ""
+    return MTPStorageInfo(id: id, description: desc, capacityBytes: max ?? 0, freeBytes: free ?? 0, isReadOnly: cap == 0x0001)
   }
 
   public func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> [MTPObjectHandle] {
-    let parentHandle = parent ?? 0x00000000
-    let command = PTPContainer(length: 24, type: PTPContainer.Kind.command.rawValue, code: PTPOp.getObjectHandles.rawValue, txid: 0, params: [storage.raw, 0, parentHandle])
     let collector = SimpleCollector()
-    _ = try await executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: { chunk in
-        collector.append(chunk)
-        return chunk.count
-    }, dataOutHandler: nil)
-
-    let collectedData = collector.data
-    guard collectedData.count >= 4 else { return [] }
-    let count = collectedData.withUnsafeBytes { $0.load(fromByteOffset: 0, as: UInt32.self).littleEndian }
-    guard collectedData.count >= 4 + Int(count) * 4 else { return [] }
-    var objectHandles = [MTPObjectHandle]()
-    for i in 0..<Int(count) {
-      let handle = collectedData.withUnsafeBytes { $0.load(fromByteOffset: 4 + i * 4, as: UInt32.self).littleEndian }
-      objectHandles.append(handle)
-    }
-    return objectHandles
+    let res = try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1007, txid: 0, params: [storage.raw, 0, parent ?? 0x00000000]), dataPhaseLength: nil, dataInHandler: { collector.append($0); return $0.count }, dataOutHandler: nil)
+    try res.checkOK()
+    if collector.data.count < 4 { return [] }
+    let count = collector.data.withUnsafeBytes { $0.load(as: UInt32.self).littleEndian }
+    var handles = [MTPObjectHandle]()
+    for i in 0..<Int(count) { handles.append(collector.data.withUnsafeBytes { $0.load(fromByteOffset: 4+i*4, as: UInt32.self).littleEndian }) }
+    return handles
   }
 
   public func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo] {
-    var objectInfos = [MTPObjectInfo]()
-    for handle in handles {
-      let command = PTPContainer(length: 16, type: PTPContainer.Kind.command.rawValue, code: PTPOp.getObjectInfo.rawValue, txid: 0, params: [handle])
+    var out = [MTPObjectInfo]()
+    let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+    for h in handles {
       let collector = SimpleCollector()
-      _ = try await executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: { chunk in
-          collector.append(chunk)
-          return chunk.count
-      }, dataOutHandler: nil)
-
+      let res = try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1008, txid: 0, params: [h]), dataPhaseLength: nil, dataInHandler: { collector.append($0); return $0.count }, dataOutHandler: nil)
+      if !res.isOK { continue }
       let responseData = collector.data
-      var offset = 0
-      func read16() -> UInt16 { var v: UInt16 = 0; _ = withUnsafeMutableBytes(of: &v) { responseData.copyBytes(to: $0, from: offset..<offset+2) }; offset += 2; return v.littleEndian }
-      func read32() -> UInt32 { var v: UInt32 = 0; _ = withUnsafeMutableBytes(of: &v) { responseData.copyBytes(to: $0, from: offset..<offset+4) }; offset += 4; return v.littleEndian }
-      func readString() -> String { guard let s = PTPString.parse(from: responseData, at: &offset) else { return "Unknown" }; return s }
-
-      if responseData.count < 52 { continue }
-      let storageIDRaw = read32()
-      let formatCode = read16()
-      _ = read16()
-      let compressedSize = read32()
-      _ = read16(); _ = read32(); _ = read32(); _ = read32(); _ = read32(); _ = read32(); _ = read32()
-      let parentObject = read32()
-      _ = read16(); _ = read32(); _ = read32()
-      let filename = readString()
-      objectInfos.append(MTPObjectInfo(handle: handle, storage: MTPStorageID(raw: storageIDRaw), parent: parentObject == 0 ? nil : parentObject, name: filename, sizeBytes: compressedSize == 0xFFFFFFFF ? nil : UInt64(compressedSize), modified: nil, formatCode: formatCode, properties: [:]))
+      if debug {
+          print("   [USB] ObjectInfo for handle \(h): \(responseData.count) bytes")
+          if responseData.count >= 16 {
+              print("   [USB] Data hex: \(responseData.prefix(64).map { String(format: "%02x", $0) }.joined(separator: " "))")
+          }
+      }
+      var r = PTPReader(data: responseData)
+      guard let sid = r.u32(), let fmt = r.u16() else { 
+          if debug { print("   [USB] Failed to parse sid/fmt for handle \(h)") }
+          continue 
+      }
+      _ = r.u16() // ProtectionStatus
+      let size = r.u32()
+      _ = r.u16() // ThumbFormat
+      _ = r.u32() // ThumbCompressedSize
+      _ = r.u32() // ThumbPixWidth
+      _ = r.u32() // ThumbPixHeight
+      _ = r.u32() // ImagePixWidth
+      _ = r.u32() // ImagePixHeight
+      _ = r.u32() // ImageBitDepth
+      let par = r.u32()
+      _ = r.u16() // AssociationType
+      _ = r.u32() // AssociationDesc
+      _ = r.u32() // SequenceNumber
+      let name = r.string() ?? "Unknown"
+      if debug { print("   [USB] Parsed: name=\(name) size=\(String(describing: size)) parent=\(String(describing: par))") }
+      out.append(MTPObjectInfo(handle: h, storage: MTPStorageID(raw: sid), parent: par == 0 ? nil : par, name: name, sizeBytes: (size == nil || size == 0xFFFFFFFF) ? nil : UInt64(size!), modified: nil, formatCode: fmt, properties: [:]))
     }
-    return objectInfos
+    return out
   }
 
   public func getObjectInfos(storage: MTPStorageID, parent: MTPObjectHandle?, format: UInt16?) async throws -> [MTPObjectInfo] {
-    let parentHandle = parent ?? 0x00000000
-    let formatCode = format ?? 0x00000000
-    let command = PTPContainer(length: 32, type: PTPContainer.Kind.command.rawValue, code: 0x9805, txid: 0, params: [parentHandle, 0xFFFFFFFF, UInt32(formatCode), storage.raw, 1])
-    let collector = SimpleCollector()
-    let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
-    do {
-        _ = try await executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: { chunk in
-            collector.append(chunk)
-            return chunk.count
-        }, dataOutHandler: nil)
-    } catch {
-        if debugEnabled { print("   [USB] GetObjectPropList failed: \(error), falling back to slow path") }
-        let handles = try await getObjectHandles(storage: storage, parent: parent)
-        return try await getObjectInfos(handles)
-    }
-
-    guard let propList = PTPPropList.parse(from: collector.data) else {
-        if debugEnabled { print("   [USB] PTPPropList.parse failed (data size: \(collector.data.count)), falling back to slow path") }
-        let handles = try await getObjectHandles(storage: storage, parent: parent)
-        return try await getObjectInfos(handles)
-    }
-
-    if debugEnabled { print("   [USB] GetObjectPropList returned \(propList.entries.count) property entries") }
-    var grouped = [UInt32: [UInt16: Any]]()
-    for entry in propList.entries {
-        if grouped[entry.handle] == nil { grouped[entry.handle] = [:] }
-        if let val = entry.value { grouped[entry.handle]![entry.propertyCode] = val }
-    }
-
-    return grouped.map { handle, props in
-        let storageID = (props[0xDC01] as? UInt32).map { MTPStorageID(raw: $0) } ?? storage
-        let parentID = props[0xDC0B] as? UInt32
-        let name = (props[0xDC07] as? String) ?? "Unknown"
-        let size = (props[0xDC04] as? UInt64)
-        let format = (props[0xDC02] as? UInt16) ?? 0
-        return MTPObjectInfo(handle: handle, storage: storageID, parent: parentID == 0 ? nil : parentID, name: name, sizeBytes: size, modified: nil, formatCode: format, properties: [:])
-    }
-  }
-
-  public func deleteObject(handle: MTPObjectHandle) async throws {
-    let command = PTPContainer(length: 16, type: PTPContainer.Kind.command.rawValue, code: PTPOp.deleteObject.rawValue, txid: 0, params: [handle, 0])
-    _ = try await executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil)
-  }
-
-  public func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?) async throws {
-    let command = PTPContainer(length: 20, type: PTPContainer.Kind.command.rawValue, code: PTPOp.moveObject.rawValue, txid: 0, params: [handle, storage.raw, parent ?? 0xFFFFFFFF])
-    _ = try await executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil)
-  }
-
-  @inline(__always)
-  func bulkWriteAll(_ ep: UInt8, from ptr: UnsafeRawPointer, count: Int, timeout: UInt32) throws {
-    var sentTotal = 0
-    while sentTotal < count {
-      var sent: Int32 = 0
-      let rc = libusb_bulk_transfer(h, ep, UnsafeMutablePointer<UInt8>(mutating: ptr.advanced(by: sentTotal).assumingMemoryBound(to: UInt8.self)), Int32(count - sentTotal), &sent, timeout)
-      if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }
-      sentTotal += Int(sent)
-    }
-  }
-
-  @inline(__always)
-  func bulkReadOnce(_ ep: UInt8, into buf: UnsafeMutableRawPointer, max: Int, timeout: UInt32) throws -> Int {
-    var got: Int32 = 0
-    if max < 512 {
-        var tmp = [UInt8](repeating: 0, count: 512)
-        let rc = libusb_bulk_transfer(h, ep, &tmp, 512, &got, timeout)
-        if rc == Int32(LIBUSB_ERROR_TIMEOUT.rawValue) { return 0 }
-        if rc != 0 && rc != Int32(LIBUSB_ERROR_OVERFLOW.rawValue) { throw MTPError.transport(mapLibusb(rc)) }
-        let actualToCopy = min(Int(got), max)
-        if actualToCopy > 0 { memcpy(buf, tmp, actualToCopy) }
-        return actualToCopy
-    }
-    let rc = libusb_bulk_transfer(h, ep, buf.assumingMemoryBound(to: UInt8.self), Int32(max), &got, timeout)
-    if rc == Int32(LIBUSB_ERROR_TIMEOUT.rawValue) { return 0 }
-    if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }
-    return Int(got)
-  }
-
-  func bulkReadExact(_ ep: UInt8, into dst: UnsafeMutableRawPointer, need: Int, timeout: UInt32, firstChunk: UnsafeRawBufferPointer? = nil) throws {
-    var copied = 0
-    if let first = firstChunk, first.count > 0 {
-      let toCopy = min(first.count, need); memcpy(dst, first.baseAddress!, toCopy); copied += toCopy
-    }
-    let startNs = DispatchTime.now().uptimeNanoseconds
-    let budgetNs = UInt64(timeout) * 1_000_000
-    while copied < need {
-      var tmp = [UInt8](repeating: 0, count: min(64 * 1024, need - copied))
-      let got = try bulkReadOnce(ep, into: &tmp, max: tmp.count, timeout: 1000)
-      if got > 0 { memcpy(dst.advanced(by: copied), &tmp, got); copied += got }
-      else if DispatchTime.now().uptimeNanoseconds - startNs > budgetNs { throw MTPError.timeout }
-    }
-  }
-
-  public func executeCommand(_ command: PTPContainer) throws -> Data? {
-    // This synchronous method is deprecated in favor of executeStreamingCommand
-    // For now, it fails if called from outside our internal async context
-    fatalError("executeCommand sync called directly")
-  }
-
-  public func executeStreamingCommand(_ command: PTPContainer, dataPhaseLength: UInt64? = nil, dataInHandler: MTPDataIn?, dataOutHandler: MTPDataOut?) async throws -> Data? {
-    return try await withCheckedThrowingContinuation { cont in
-      ioQ.async {
-        Task {
-            do {
-                let res = try await self.executeCommandAsync(command: command, dataPhaseLength: dataPhaseLength, dataInHandler: dataInHandler, dataOutHandler: dataOutHandler)
-                cont.resume(returning: res)
-            } catch {
-                cont.resume(throwing: error)
-            }
+    let parentHandle = parent ?? 0x00000000, formatCode = format ?? 0x00000000
+    let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+    
+    func tryPropList(params: [UInt32]) async throws -> [MTPObjectInfo]? {
+        let collector = SimpleCollector()
+        let res = try await executeStreamingCommand(PTPContainer(type: 1, code: 0x9805, txid: 0, params: params), dataPhaseLength: nil, dataInHandler: { collector.append($0); return $0.count }, dataOutHandler: nil)
+        if !res.isOK { return nil }
+        guard let pl = PTPPropList.parse(from: collector.data) else { return nil }
+        var grouped = [UInt32: [UInt16: PTPValue]]()
+        for e in pl.entries { if grouped[e.handle] == nil { grouped[e.handle] = [:] }; if let v = e.value { grouped[e.handle]![e.propertyCode] = v } }
+        return grouped.map { h, p in
+            var name = "Unknown"; if case .string(let s) = p[0xDC07] { name = s }
+            var size: UInt64? = nil; if let v = p[0xDC04] { if case .uint64(let u) = v { size = u } else if case .uint32(let u) = v { size = UInt64(u) } }
+            var fmt: UInt16 = 0; if case .uint16(let u) = p[0xDC02] { fmt = u }
+            var par: UInt32? = nil; if case .uint32(let u) = p[0xDC0B] { par = u }
+            return MTPObjectInfo(handle: h, storage: storage, parent: par == 0 ? nil : par, name: name, sizeBytes: size, modified: nil, formatCode: fmt, properties: [:])
         }
-      }
+    }
+
+    if MTPFeatureFlags.shared.isEnabled(.propListFastPath) {
+        if let res = try? await tryPropList(params: [parentHandle, 0xFFFFFFFF, UInt32(formatCode), storage.raw, 1]) { return res }
+        if let res = try? await tryPropList(params: [parentHandle, 0x00000000, UInt32(formatCode)]) { return res }
+    }
+
+    let handles = try await getObjectHandles(storage: storage, parent: parent)
+    return try await getObjectInfos(handles)
+  }
+
+  public func deleteObject(handle: MTPObjectHandle) async throws { try await executeStreamingCommand(PTPContainer(type: 1, code: 0x100B, txid: 0, params: [handle, 0]), dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil).checkOK() }
+  public func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?) async throws { try await executeStreamingCommand(PTPContainer(type: 1, code: 0x100E, txid: 0, params: [handle, storage.raw, parent ?? 0xFFFFFFFF]), dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil).checkOK() }
+
+  public func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult { try await executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil) }
+
+  public func executeStreamingCommand(_ command: PTPContainer, dataPhaseLength: UInt64? = nil, dataInHandler: MTPDataIn?, dataOutHandler: MTPDataOut?) async throws -> PTPResponseResult {
+    try await withCheckedThrowingContinuation { cont in
+      ioQ.async { Task { do { cont.resume(returning: try await self.executeCommandAsync(command: command, dataPhaseLength: dataPhaseLength, dataInHandler: dataInHandler, dataOutHandler: dataOutHandler)) } catch { cont.resume(throwing: error) } } }
     }
   }
 
-  private func executeCommandAsync(command: PTPContainer, dataPhaseLength: UInt64? = nil, dataInHandler: MTPDataIn?, dataOutHandler: MTPDataOut?) async throws -> Data? {
-    let txid: UInt32 = (command.code == 0x1002) ? 0 : { let t = nextTx; nextTx = (nextTx == 0xFFFFFFFF) ? 1 : nextTx + 1; return t }()
-    let opStartNs = DispatchTime.now().uptimeNanoseconds
-    let opBudgetNs = UInt64(config.overallDeadlineMs) * 1_000_000
-    @inline(__always) func checkDeadline() throws { if DispatchTime.now().uptimeNanoseconds - opStartNs > opBudgetNs { throw MTPError.timeout } }
-    let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
-    if debugEnabled { print(String(format: "   [USB] op=0x%04x tx=%u phase=COMMAND", command.code, txid)) }
-
+  private func executeCommandAsync(command: PTPContainer, dataPhaseLength: UInt64? = nil, dataInHandler: MTPDataIn?, dataOutHandler: MTPDataOut?) async throws -> PTPResponseResult {
+    let txid = (command.code == 0x1002) ? 0 : { () -> UInt32 in let t = nextTx; nextTx = (nextTx == 0xFFFFFFFF) ? 1 : nextTx + 1; return t }()
+    let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+    if debug { print(String(format: "   [USB] op=0x%04x tx=%u phase=COMMAND", command.code, txid)) }
     let cmdBytes = makePTPCommand(opcode: command.code, txid: txid, params: command.params)
     try cmdBytes.withUnsafeBytes { try bulkWriteAll(outEP, from: $0.baseAddress!, count: $0.count, timeout: UInt32(config.ioTimeoutMs)) }
-    try checkDeadline()
 
     if let produce = dataOutHandler {
-      if debugEnabled { print(String(format: "   [USB] op=0x%04x tx=%u phase=DATA-OUT", command.code, txid)) }
-      if let length = dataPhaseLength {
-        let hdrBytes = makePTPDataContainer(length: UInt32(PTPHeader.size + Int(min(length, UInt64(UInt32.max - 12)))), code: command.code, txid: txid)
-        try hdrBytes.withUnsafeBytes { try bulkWriteAll(outEP, from: $0.baseAddress!, count: $0.count, timeout: UInt32(config.ioTimeoutMs)) }
-        var sent = 0; var scratch = [UInt8](repeating: 0, count: 64 * 1024)
-        while true {
-          let wrote = scratch.withUnsafeMutableBytes { produce($0) }
-          if wrote == 0 { break }
-          try scratch.withUnsafeBytes { try bulkWriteAll(outEP, from: $0.baseAddress!, count: wrote, timeout: UInt32(config.ioTimeoutMs)) }
-          sent += wrote
-        }
-        if sent % 512 == 0 { var dummy: UInt8 = 0; _ = libusb_bulk_transfer(h, outEP, &dummy, 0, nil, 100) }
-      } else {
-        var collected = Data(); var scratch = [UInt8](repeating: 0, count: 64 * 1024)
-        while true { let wrote = scratch.withUnsafeMutableBytes { produce($0) }; if wrote == 0 { break }; collected.append(contentsOf: scratch[0..<wrote]) }
-        let hdrBytes = makePTPDataContainer(length: UInt32(PTPHeader.size + collected.count), code: command.code, txid: txid)
-        try hdrBytes.withUnsafeBytes { try bulkWriteAll(outEP, from: $0.baseAddress!, count: $0.count, timeout: UInt32(config.ioTimeoutMs)) }
-        
-        if !collected.isEmpty {
-            try? await Task.sleep(nanoseconds: 10_000_000)
-            try collected.withUnsafeBytes { try bulkWriteAll(outEP, from: $0.baseAddress!, count: $0.count, timeout: UInt32(config.ioTimeoutMs)) }
-        }
-        if collected.count % 512 == 0 { var dummy: UInt8 = 0; _ = libusb_bulk_transfer(h, outEP, &dummy, 0, nil, 100) }
+      if debug { print(String(format: "   [USB] op=0x%04x tx=%u phase=DATA-OUT", command.code, txid)) }
+      let len = dataPhaseLength ?? 0
+      let hdr = makePTPDataContainer(length: UInt32(PTPHeader.size + Int(min(len, UInt64(UInt32.max - 12)))), code: command.code, txid: txid)
+      try hdr.withUnsafeBytes { try bulkWriteAll(outEP, from: $0.baseAddress!, count: $0.count, timeout: UInt32(config.ioTimeoutMs)) }
+      var sent = 0, scratch = [UInt8](repeating: 0, count: 64*1024)
+      while true {
+        let wrote = scratch.withUnsafeMutableBytes { produce($0) }
+        if wrote == 0 { break }
+        try scratch.withUnsafeBytes { try bulkWriteAll(outEP, from: $0.baseAddress!, count: wrote, timeout: UInt32(config.ioTimeoutMs)) }
+        sent += wrote
       }
-      try checkDeadline()
+      if sent % 512 == 0 { var dummy: UInt8 = 0; _ = libusb_bulk_transfer(h, outEP, &dummy, 0, nil, 100) }
     }
 
-    var hasDataPhase = false; let collector = SimpleCollector(); var firstChunkForResponse: Data? = nil
+    var firstChunk: Data? = nil
     if dataInHandler != nil {
-      if debugEnabled { print(String(format: "   [USB] op=0x%04x tx=%u phase=DATA-IN", command.code, txid)) }
-      let startNs = DispatchTime.now().uptimeNanoseconds; let handshakeBudgetNs = UInt64(max(config.handshakeTimeoutMs, 3000)) * 1_000_000
-      var gotFirst = 0; var first = [UInt8](repeating: 0, count: max(PTPHeader.size, 64 * 1024))
-      while gotFirst == 0 {
-        gotFirst = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: 500)
-        if gotFirst == 0 {
-          if DispatchTime.now().uptimeNanoseconds - startNs > handshakeBudgetNs { throw MTPError.timeout }
-          try checkDeadline(); continue
-        }
+      if debug { print(String(format: "   [USB] op=0x%04x tx=%u phase=DATA-IN", command.code, txid)) }
+      var first = [UInt8](repeating: 0, count: 64*1024), got = 0, start = DispatchTime.now().uptimeNanoseconds
+      while got == 0 {
+        got = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: 500)
+        if got == 0 && DispatchTime.now().uptimeNanoseconds - start > 3_000_000_000 { throw MTPError.timeout }
       }
-      let dataHeader = first.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
-      if dataHeader.type == PTPContainer.Kind.response.rawValue { 
-          if debugEnabled { print(String(format: "   [USB] op=0x%04x tx=%u skipped data phase, got response 0x%04x", command.code, txid, dataHeader.code)) }
-          firstChunkForResponse = Data(first[0..<gotFirst]) 
-      }
+      let hdr = first.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
+      if hdr.type == 3 { firstChunk = Data(first[0..<got]) }
       else {
-        guard dataHeader.type == PTPContainer.Kind.data.rawValue, dataHeader.code == command.code, dataHeader.txid == txid else { throw MTPError.transport(.io("unexpected data header type=\(dataHeader.type) code=0x\(String(format: "%04x", dataHeader.code)) tx=\(dataHeader.txid)")) }
-        hasDataPhase = true; let payloadLen = Int(dataHeader.length) - PTPHeader.size; let rem = gotFirst - PTPHeader.size
-        if rem > 0 { first.withUnsafeBytes { _ = dataInHandler!(UnsafeRawBufferPointer(start: $0.baseAddress!.advanced(by: PTPHeader.size), count: rem)) } }
-        var left = payloadLen - max(0, rem); var lastProgressNs = DispatchTime.now().uptimeNanoseconds; let stallNs = UInt64(config.inactivityTimeoutMs) * 1_000_000
+        let payload = Int(hdr.length) - PTPHeader.size, rem = got - PTPHeader.size
+        if rem > 0 { _ = first.withUnsafeBytes { dataInHandler!(UnsafeRawBufferPointer(start: $0.baseAddress!.advanced(by: PTPHeader.size), count: rem)) } }
+        var left = payload - max(0, rem)
         while left > 0 {
-          var buf = [UInt8](repeating: 0, count: min(left, 1 << 20))
-          let got = try bulkReadOnce(inEP, into: &buf, max: buf.count, timeout: 1000)
-          if got == 0 { if DispatchTime.now().uptimeNanoseconds - lastProgressNs > stallNs { throw MTPError.timeout }; try checkDeadline(); continue }
-          lastProgressNs = DispatchTime.now().uptimeNanoseconds; buf.withUnsafeBytes { _ = dataInHandler!($0) }; left -= got
+          var buf = [UInt8](repeating: 0, count: min(left, 1<<20))
+          let g = try bulkReadOnce(inEP, into: &buf, max: buf.count, timeout: 1000)
+          if g == 0 { throw MTPError.timeout }
+          _ = buf.withUnsafeBytes { dataInHandler!($0) }; left -= g
         }
       }
-      try checkDeadline()
     }
 
-    if debugEnabled { print(String(format: "   [USB] op=0x%04x tx=%u phase=RESPONSE", command.code, txid)) }
-    let rHdr: PTPHeader; var respParamBytes = 0; var params: [UInt32] = []
-    if let first = firstChunkForResponse {
-        rHdr = first.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
-        respParamBytes = Int(rHdr.length) - PTPHeader.size
-        if respParamBytes > 0 {
-            let available = first.count - PTPHeader.size; let toProcess = min(available, respParamBytes)
-            params = first.withUnsafeBytes { raw in var p = [UInt32](); var off = PTPHeader.size; while off < PTPHeader.size + toProcess { p.append(raw.load(fromByteOffset: off, as: UInt32.self).littleEndian); off += 4 }; return p }
-            respParamBytes -= toProcess
-        }
-    } else {
-        var respHdrBuf = [UInt8](repeating: 0, count: PTPHeader.size)
-        try bulkReadExact(inEP, into: &respHdrBuf, need: PTPHeader.size, timeout: UInt32(config.ioTimeoutMs))
-        rHdr = respHdrBuf.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
-        respParamBytes = Int(rHdr.length) - PTPHeader.size
+    if debug { print(String(format: "   [USB] op=0x%04x tx=%u phase=RESPONSE", command.code, txid)) }
+    let rHdr: PTPHeader, available: Int, initial: Data
+    if let f = firstChunk { rHdr = f.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }; available = f.count - PTPHeader.size; initial = f.subdata(in: PTPHeader.size..<f.count) }
+    else {
+      var hBuf = [UInt8](repeating: 0, count: PTPHeader.size)
+      try bulkReadExact(inEP, into: &hBuf, need: PTPHeader.size, timeout: UInt32(config.ioTimeoutMs))
+      rHdr = hBuf.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }; available = 0; initial = Data()
     }
-    guard rHdr.type == PTPContainer.Kind.response.rawValue, rHdr.txid == txid else { throw MTPError.transport(.io("unexpected response container: type=\(rHdr.type) tx=\(rHdr.txid)")) }
-    if respParamBytes > 0 {
-      var buf = [UInt8](repeating: 0, count: respParamBytes)
-      try bulkReadExact(inEP, into: &buf, need: buf.count, timeout: UInt32(config.ioTimeoutMs))
-      buf.withUnsafeBytes { raw in var off = 0; while off < respParamBytes { params.append(raw.load(fromByteOffset: off, as: UInt32.self).littleEndian); off += 4 } }
+    var pCount = (Int(rHdr.length) - PTPHeader.size) / 4, params = [UInt32]()
+    var pData = initial
+    if pData.count < pCount * 4 {
+      var extra = [UInt8](repeating: 0, count: pCount * 4 - pData.count)
+      try bulkReadExact(inEP, into: &extra, need: extra.count, timeout: UInt32(config.ioTimeoutMs))
+      pData.append(contentsOf: extra)
     }
-    try mapResponse(PTPResponse(code: rHdr.code, txid: rHdr.txid, params: params))
-    if command.code == 0x100C && !params.isEmpty { var handleData = Data(); withUnsafeBytes(of: params[0].littleEndian) { handleData.append(contentsOf: $0) }; return handleData }
-    return hasDataPhase ? collector.data : nil
+    for i in 0..<pCount { params.append(pData.withUnsafeBytes { $0.load(fromByteOffset: i*4, as: UInt32.self).littleEndian }) }
+    return PTPResponseResult(code: rHdr.code, txid: rHdr.txid, params: params)
+  }
+
+  @inline(__always) func bulkWriteAll(_ ep: UInt8, from ptr: UnsafeRawPointer, count: Int, timeout: UInt32) throws {
+    var sent = 0
+    while sent < count {
+      var s: Int32 = 0
+      let rc = libusb_bulk_transfer(h, ep, UnsafeMutablePointer<UInt8>(mutating: ptr.advanced(by: sent).assumingMemoryBound(to: UInt8.self)), Int32(count - sent), &s, timeout)
+      if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }; sent += Int(s)
+    }
+  }
+  @inline(__always) func bulkReadOnce(_ ep: UInt8, into buf: UnsafeMutableRawPointer, max: Int, timeout: UInt32) throws -> Int {
+    var g: Int32 = 0
+    if max < 512 {
+      var tmp = [UInt8](repeating: 0, count: 512)
+      let rc = libusb_bulk_transfer(h, ep, &tmp, 512, &g, timeout)
+      if rc == -7 { return 0 }; if rc != 0 && rc != -8 { throw MTPError.transport(mapLibusb(rc)) }
+      let c = min(Int(g), max); if c > 0 { memcpy(buf, tmp, c) }; return c
+    }
+    let rc = libusb_bulk_transfer(h, ep, buf.assumingMemoryBound(to: UInt8.self), Int32(max), &g, timeout)
+    if rc == -7 { return 0 }; if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }
+    return Int(g)
+  }
+  func bulkReadExact(_ ep: UInt8, into dst: UnsafeMutableRawPointer, need: Int, timeout: UInt32) throws {
+    var got = 0
+    while got < need {
+      var tmp = [UInt8](repeating: 0, count: need - got)
+      let g = try bulkReadOnce(ep, into: &tmp, max: tmp.count, timeout: timeout)
+      if g == 0 { throw MTPError.timeout }; memcpy(dst.advanced(by: got), &tmp, g); got += g
+    }
   }
 }
 
+extension PTPResponseResult { func checkOK() throws { if !isOK { throw MTPError.protocolError(code: code, message: nil) } } }
 final class SimpleCollector: @unchecked Sendable {
-    var data = Data()
-    private let lock = NSLock()
-    func append(_ chunk: UnsafeRawBufferPointer) {
-        lock.lock(); defer { lock.unlock() }; data.append(Data(bytes: chunk.baseAddress!, count: chunk.count))
-    }
+    var data = Data(); private let lock = NSLock()
+    func append(_ chunk: UnsafeRawBufferPointer) { lock.lock(); defer { lock.unlock() }; data.append(chunk) }
 }
+extension Data { mutating func append(_ buf: UnsafeRawBufferPointer) { append(buf.baseAddress!.assumingMemoryBound(to: UInt8.self), count: buf.count) } }

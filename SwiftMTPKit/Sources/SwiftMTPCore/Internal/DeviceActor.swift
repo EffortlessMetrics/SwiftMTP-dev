@@ -27,7 +27,7 @@ struct UserOverrides {
     static nonisolated(unsafe) var current: [String: String] = [:]
 }
 
-public actor MTPDeviceActor: MTPDevice {
+public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     public let id: MTPDeviceID
     private let transport: any MTPTransport
     private let summary: MTPDeviceSummary
@@ -45,6 +45,10 @@ public actor MTPDeviceActor: MTPDevice {
         self.transport = transport
         self.config = config
         self.transferJournal = transferJournal
+    }
+
+    public func getMTPLinkIfAvailable() -> (any MTPLink)? {
+        return mtpLink
     }
 
     public var info: MTPDeviceInfo {

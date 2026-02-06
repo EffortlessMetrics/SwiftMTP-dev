@@ -170,11 +170,22 @@ extension MTPDeviceActor {
             // Create Sendable adapter to avoid capturing non-Sendable source
             let sourceAdapter = SendableSourceAdapter(source)
 
+            // Determine storage ID
+            var targetStorageRaw: UInt32 = 0xFFFFFFFF
+            if let p = parent {
+                if let parentInfos = try? await link.getObjectInfos([p]), let parentInfo = parentInfos.first {
+                    targetStorageRaw = parentInfo.storage.raw
+                }
+            } else {
+                if let storages = try? await self.storages(), let first = storages.first {
+                    targetStorageRaw = first.id.raw
+                }
+            }
+
             // Use thread-safe progress tracking
             let progressTracker = AtomicProgressTracker()
 
-            // Pass parent handle directly to avoid unnecessary info lookup that might fail
-            try await ProtoTransfer.writeWholeObject(storageID: 0xFFFFFFFF, parent: parent, name: name, size: size, dataHandler: { buf in
+            try await ProtoTransfer.writeWholeObject(storageID: targetStorageRaw, parent: parent, name: name, size: size, dataHandler: { buf in
                 let produced = sourceAdapter.produce(buf)
                 let totalBytes = progressTracker.add(Int(produced))
                 progress.completedUnitCount = Int64(totalBytes)

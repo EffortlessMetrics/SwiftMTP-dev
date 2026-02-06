@@ -9,20 +9,13 @@ final class BoxedOffset: @unchecked Sendable {
     var value: Int = 0
     private let lock = NSLock()
     func getAndAdd(_ n: Int) -> Int {
-        lock.lock()
-        defer { lock.unlock() }
-        let old = value
-        value += n
-        return old
+        lock.lock(); defer { lock.unlock() }
+        let old = value; value += n; return old
     }
-    func get() -> Int {
-        lock.lock()
-        defer { lock.unlock() }
-        return value
-    }
+    func get() -> Int { lock.lock(); defer { lock.unlock() }; return value }
 }
 
-enum ProtoTransfer {
+public enum ProtoTransfer {
     /// Whole-object read: GetObject, stream data-in into a sink.
     static func readWholeObject(handle: UInt32, on link: MTPLink,
                                 dataHandler: @escaping MTPDataIn,
@@ -34,19 +27,17 @@ enum ProtoTransfer {
             txid: 1,
             params: [handle]
         )
-
-        _ = try await link.executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: dataHandler, dataOutHandler: nil as MTPDataOut?)
+        try await link.executeStreamingCommand(command, dataPhaseLength: nil, dataInHandler: dataHandler, dataOutHandler: nil).checkOK()
     }
 
     /// Whole-object write: SendObjectInfo → SendObject (single pass).
-    static func writeWholeObject(storageID: UInt32, parent: UInt32?, name: String, size: UInt64,
+    public static func writeWholeObject(storageID: UInt32, parent: UInt32?, name: String, size: UInt64,
                                  dataHandler: @escaping MTPDataOut,
                                  on link: MTPLink,
                                  ioTimeoutMs: Int) async throws {
         let parentParam = parent ?? 0x00000000
-        let targetStorage = (parentParam == 0x00000000) ? 0xFFFFFFFF : storageID
+        let targetStorage = (storageID == 0 || storageID == 0xFFFFFFFF) ? 0xFFFFFFFF : storageID
         
-        // SendObjectInfo (0x100C): params = [storageID, parentHandle]
         let sendObjectInfoCommand = PTPContainer(
             length: 20,
             type: PTPContainer.Kind.command.rawValue,
@@ -56,9 +47,12 @@ enum ProtoTransfer {
         )
 
         let dataset = PTPObjectInfoDataset.encode(storageID: targetStorage, parentHandle: parentParam, format: 0x3000, size: size, name: name)
+        if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
+            print("   [USB] SendObjectInfo dataset length: \(dataset.count) bytes")
+        }
         
         let infoOffset = BoxedOffset()
-        let responseData = try await link.executeStreamingCommand(sendObjectInfoCommand, dataPhaseLength: UInt64(dataset.count), dataInHandler: nil as MTPDataIn?, dataOutHandler: { buf in
+        let infoRes = try await link.executeStreamingCommand(sendObjectInfoCommand, dataPhaseLength: UInt64(dataset.count), dataInHandler: nil, dataOutHandler: { buf in
             let off = infoOffset.get()
             let remaining = dataset.count - off
             guard remaining > 0 else { return 0 }
@@ -67,19 +61,13 @@ enum ProtoTransfer {
             _ = infoOffset.getAndAdd(toCopy)
             return toCopy
         })
+        try infoRes.checkOK()
 
-        // SendObjectInfo returns the handle in the response parameters
-        guard let handleData = responseData, handleData.count >= 4 else {
-            throw MTPError.protocolError(code: 0, message: "SendObjectInfo did not return a handle")
-        }
-        
-        let _ = handleData.withUnsafeBytes { $0.load(as: UInt32.self).littleEndian }
+        // Capture assigned handle if present in response params
+        let _ = infoRes.params.first ?? 0
 
-        // Stabilization delay between Info and Data
         try await Task.sleep(nanoseconds: 100_000_000)
 
-        // SendObject (0x100D): stream out the bytes
-        // Note: txid will be handled by executeStreamingCommand
         let sendObjectCommand = PTPContainer(
             length: 12,
             type: PTPContainer.Kind.command.rawValue,
@@ -87,8 +75,15 @@ enum ProtoTransfer {
             txid: 0,
             params: []
         )
+        try await link.executeStreamingCommand(sendObjectCommand, dataPhaseLength: size, dataInHandler: nil, dataOutHandler: dataHandler).checkOK()
+    }
+}
 
-        _ = try await link.executeStreamingCommand(sendObjectCommand, dataPhaseLength: size, dataInHandler: nil as MTPDataIn?, dataOutHandler: dataHandler)
+extension PTPResponseResult {
+    public func checkOK() throws {
+        if !isOK {
+            throw MTPError.protocolError(code: code, message: "PTP Response Error 0x\(String(format: "%04x", code))")
+        }
     }
 }
 

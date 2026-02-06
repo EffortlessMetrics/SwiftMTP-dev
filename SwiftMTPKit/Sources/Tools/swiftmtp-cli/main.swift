@@ -202,6 +202,7 @@ if filteredArgs.isEmpty {
     print("  delete <handle> [--recursive] - Delete file/directory")
     print("  move <handle> <new-parent> - Move file/directory")
     print("  events [seconds] - Monitor device events")
+    print("  bdd       - Run BDD scenarios for validation")
     print("  storybook - Run interactive end-to-end demo using simulated device")
     print("  learn-promote - Promote learned profiles to quirks (see learn-promote --help)")
     print("  version [--json] - Show version information")
@@ -217,6 +218,36 @@ if filteredArgs.isEmpty {
 
 let command = filteredArgs[0]
 let remainingArgs = Array(filteredArgs.dropFirst())
+
+func runBDD(flags: CLIFlags) async {
+    print("🚀 Initializing BDD Test Runner...")
+    do {
+        let device = try await openDevice(flags: flags)
+        try await device.openIfNeeded()
+        
+        if let actor = device as? MTPDeviceActor, 
+           let link = await actor.getMTPLinkIfAvailable() {
+            let context = BDDContext(link: link)
+            let scenarios: [BDDScenario] = [
+                DiscoveryScenario(),
+                ListingScenario(),
+                UploadScenario()
+            ]
+            
+            for scenario in scenarios {
+                print("\n🏃 Scenario: \(scenario.name)")
+                try await scenario.execute(context: context)
+            }
+            
+            print("\n✅ All BDD scenarios completed successfully!")
+        } else {
+            print("❌ BDD requires a direct device link")
+        }
+    } catch {
+        print("\n❌ BDD scenario failed: \(error)")
+        exitNow(.tempfail)
+    }
+}
 
 switch command {
 case "storybook":
@@ -276,6 +307,8 @@ case "learn-promote":
         exitNow(.ok)
     }
     await runLearnPromote()
+case "bdd":
+    await runBDD(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress))
 case "version":
     await runVersion(json: json, args: remainingArgs)
 default:
