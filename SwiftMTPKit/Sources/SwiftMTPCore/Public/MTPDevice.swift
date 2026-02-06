@@ -429,6 +429,11 @@ public actor MTPDeviceManager {
   /// This stream yields the `MTPDeviceID` of devices that have been disconnected
   /// from the system. Use this to clean up resources associated with disconnected devices.
   public private(set) var deviceDetached: AsyncStream<MTPDeviceID> = AsyncStream { _ in }
+
+  /// Access to device streams for non-isolated contexts (like ViewModels)
+  public var attachedStream: AsyncStream<MTPDeviceSummary> { deviceAttached }
+  public var detachedStream: AsyncStream<MTPDeviceID> { deviceDetached }
+
   /// Open a device by its ID (not yet implemented).
   ///
   /// This method is reserved for future implementation when the device manager

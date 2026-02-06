@@ -60,6 +60,11 @@ let package = Package(
             path: "Sources/SwiftMTPQuirks",
             resources: [.process("Resources")]),
 
+    // UI Components (SwiftUI)
+    .target(name: "SwiftMTPUI",
+            dependencies: ["SwiftMTPCore", "SwiftMTPSync", "SwiftMTPTransportLibUSB", "SwiftMTPObservability", "CLibusb"],
+            path: "Sources/SwiftMTPUI"),
+
     // File Provider extension (excluded for now due to SwiftMTPXPC dependency)
     // .target(name: "SwiftMTPFileProvider",
     //         dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB"],
@@ -95,6 +100,11 @@ let package = Package(
                         "CLibusb"
                       ],
                       path: "Sources/Tools/swiftmtp-cli",
+                      swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+                      
+    .executableTarget(name: "SwiftMTPApp",
+                      dependencies: ["SwiftMTPUI"],
+                      path: "Sources/Tools/SwiftMTPApp",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
                       
     .executableTarget(name: "SwiftMTPFuzz",
