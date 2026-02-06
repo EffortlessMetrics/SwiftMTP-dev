@@ -64,41 +64,48 @@ public struct PTPString {
 }
 
 // DeviceInfo dataset parser
-struct PTPDeviceInfo {
-    let standardVersion: UInt16
-    let vendorExtensionID: UInt32
-    let vendorExtensionVersion: UInt16
-    let vendorExtensionDesc: String
-    let functionalMode: UInt16
-    let operationsSupported: [UInt16]
-    let eventsSupported: [UInt16]
-    let devicePropertiesSupported: [UInt16]
-    let captureFormats: [UInt16]
-    let playbackFormats: [UInt16]
-    let manufacturer: String
-    let model: String
-    let deviceVersion: String
-    let serialNumber: String?
+public struct PTPDeviceInfo {
+    public let standardVersion: UInt16
+    public let vendorExtensionID: UInt32
+    public let vendorExtensionVersion: UInt16
+    public let vendorExtensionDesc: String
+    public let functionalMode: UInt16
+    public let operationsSupported: [UInt16]
+    public let eventsSupported: [UInt16]
+    public let devicePropertiesSupported: [UInt16]
+    public let captureFormats: [UInt16]
+    public let playbackFormats: [UInt16]
+    public let manufacturer: String
+    public let model: String
+    public let deviceVersion: String
+    public let serialNumber: String?
 
-    static func parse(from data: Data) -> PTPDeviceInfo? {
+    public static func parse(from data: Data) -> PTPDeviceInfo? {
         var offset = 0
 
-        // Skip container header (12 bytes) and dataset length (4 bytes) to get to actual data
-        guard data.count >= 16 else { return nil }
-        offset = 16
+        // PTP/MTP DeviceInfo dataset starts immediately in the data phase payload.
+        // It does NOT have a separate length prefix within the payload.
+        guard data.count >= 8 else { return nil }
+        offset = 0
 
         func read16() -> UInt16? {
             guard offset + 2 <= data.count else { return nil }
-            let value = data[offset..<offset+2].withUnsafeBytes { $0.load(as: UInt16.self).littleEndian }
+            var v: UInt16 = 0
+            _ = withUnsafeMutableBytes(of: &v) { ptr in
+                data.copyBytes(to: ptr, from: offset..<offset+2)
+            }
             offset += 2
-            return value
+            return v.littleEndian
         }
 
         func read32() -> UInt32? {
             guard offset + 4 <= data.count else { return nil }
-            let value = data[offset..<offset+4].withUnsafeBytes { $0.load(as: UInt32.self).littleEndian }
+            var v: UInt32 = 0
+            _ = withUnsafeMutableBytes(of: &v) { ptr in
+                data.copyBytes(to: ptr, from: offset..<offset+4)
+            }
             offset += 4
-            return value
+            return v.littleEndian
         }
 
         func readString() -> String? {

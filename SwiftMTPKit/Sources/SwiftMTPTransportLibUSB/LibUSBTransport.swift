@@ -205,7 +205,9 @@ private func findMTPInterface(handle: OpaquePointer, device: OpaquePointer) thro
 
     // Claim interface and set the selected alt
     try check(libusb_claim_interface(handle, Int32(sel.iface)))
-    try check(libusb_set_interface_alt_setting(handle, Int32(sel.iface), Int32(sel.alt)))
+    if sel.alt > 0 {
+        try check(libusb_set_interface_alt_setting(handle, Int32(sel.iface), Int32(sel.alt)))
+    }
     return (sel.iface, sel.alt, sel.inEP, sel.outEP, sel.evt)
 }
 
@@ -276,7 +278,14 @@ public struct LibUSBTransport: MTPTransport {
       print("MTP iface=\(ifaceNum) alt=\(altSetting) epIn=0x\(String(format: "%02x", epIn)) epOut=0x\(String(format: "%02x", epOut)) evt=\(evtStr)")
     }
 
-    return MTPUSBLink(handle: handle, device: dev, iface: ifaceNum, epIn: epIn, epOut: epOut, epEvt: epEvt, config: config)
+    // Reset and drain endpoints to ensure clean state
+    _ = libusb_clear_halt(handle, epIn)
+    _ = libusb_clear_halt(handle, epOut)
+    var drainBuf = [UInt8](repeating: 0, count: 512)
+    var got: Int32 = 0
+    while libusb_bulk_transfer(handle, epIn, &drainBuf, 512, &got, 50) == 0 && got > 0 {}
+
+    return MTPUSBLink(handle: handle, device: dev, iface: ifaceNum, epIn: epIn, epOut: epOut, epEvt: epEvt, config: config, manufacturer: summary.manufacturer, model: summary.model)
   }
 }
 
@@ -288,6 +297,8 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   private let ioQ = DispatchQueue(label: "com.effortlessmetrics.swiftmtp.usbio", qos: .userInitiated)
   private var nextTx: UInt32 = 1
   private let config: SwiftMTPConfig
+  private let manufacturer: String
+  private let model: String
 
   // Event streaming
   private var eventContinuation: AsyncStream<Data>.Continuation?
@@ -298,8 +309,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     return try LibUSBDiscovery.readIDs(device, ifaceIndex: ifaceIndex)
   }
 
-  init(handle: OpaquePointer, device: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8, config: SwiftMTPConfig) {
+  init(handle: OpaquePointer, device: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8, config: SwiftMTPConfig, manufacturer: String, model: String) {
     self.h = handle; self.device = device; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt; self.config = config
+    self.manufacturer = manufacturer; self.model = model
   }
 
   public func close() async {
@@ -359,23 +371,8 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       txid: nextTx,
       params: [id]
     )
-    nextTx &+= 1
-
-    guard let response = try executeCommand(command) else {
-      throw MTPError.protocolError(code: 0, message: "OpenSession command failed")
-    }
-
-    guard response.count >= 12 else {
-      throw MTPError.protocolError(code: 0, message: "OpenSession response too short")
-    }
-
-    let responseCode = response.withUnsafeBytes {
-      $0.load(fromByteOffset: 6, as: UInt16.self).littleEndian
-    }
-
-    guard responseCode == 0x2001 else {
-      throw MTPError.protocolError(code: responseCode, message: "OpenSession failed")
-    }
+    // Note: executeCommand will use txid=0 for OpenSession and handle response code mapping
+    _ = try await executeStreamingCommand(command, dataInHandler: nil, dataOutHandler: nil)
   }
 
   public func closeSession() async throws {
@@ -396,19 +393,32 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       length: 12,
       type: PTPContainer.Kind.command.rawValue,
       code: PTPOp.getDeviceInfo.rawValue,
-      txid: nextTx,
+      txid: 0, // Will be overridden by executeCommand
       params: []
     )
-    nextTx &+= 1
 
-    guard try executeCommand(command) != nil else {
-      throw MTPError.protocolError(code: 0, message: "No device info response")
+    let collector = SimpleCollector()
+    _ = try await executeStreamingCommand(command, dataInHandler: { chunk in
+        collector.append(chunk)
+        return chunk.count
+    }, dataOutHandler: nil)
+
+    // Parse DeviceInfo dataset
+    if let ptpInfo = PTPDeviceInfo.parse(from: collector.data) {
+        return MTPDeviceInfo(
+          manufacturer: ptpInfo.manufacturer,
+          model: ptpInfo.model,
+          version: ptpInfo.deviceVersion,
+          serialNumber: ptpInfo.serialNumber,
+          operationsSupported: Set(ptpInfo.operationsSupported),
+          eventsSupported: Set(ptpInfo.eventsSupported)
+        )
     }
 
-    // Parse DeviceInfo dataset - simplified implementation
+    // Fallback if parsing fails
     return MTPDeviceInfo(
-      manufacturer: "Unknown",
-      model: "Unknown",
+      manufacturer: manufacturer,
+      model: model,
       version: "1.0",
       serialNumber: "Unknown",
       operationsSupported: Set(),
@@ -421,27 +431,29 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       length: 12,
       type: PTPContainer.Kind.command.rawValue,
       code: PTPOp.getStorageIDs.rawValue,
-      txid: nextTx,
+      txid: 0,
       params: []
     )
-    nextTx &+= 1
 
-    guard let responseData = try executeCommand(command) else {
-      return []
-    }
+    let collector = SimpleCollector()
+    _ = try await executeStreamingCommand(command, dataInHandler: { chunk in
+        collector.append(chunk)
+        return chunk.count
+    }, dataOutHandler: nil)
 
-    guard responseData.count >= 4 else { return [] }
+    let collectedData = collector.data
+    guard collectedData.count >= 4 else { return [] }
 
-    let count = responseData.withUnsafeBytes { ptr in
+    let count = collectedData.withUnsafeBytes { ptr in
       ptr.load(fromByteOffset: 0, as: UInt32.self).littleEndian
     }
 
-    guard responseData.count >= 4 + Int(count) * 4 else { return [] }
+    guard collectedData.count >= 4 + Int(count) * 4 else { return [] }
 
     var storageIDs = [MTPStorageID]()
     for i in 0..<Int(count) {
       let offset = 4 + i * 4
-      let storageIDRaw = responseData.withUnsafeBytes { ptr in
+      let storageIDRaw = collectedData.withUnsafeBytes { ptr in
         ptr.load(fromByteOffset: offset, as: UInt32.self).littleEndian
       }
       storageIDs.append(MTPStorageID(raw: storageIDRaw))
@@ -455,15 +467,17 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       length: 16,
       type: PTPContainer.Kind.command.rawValue,
       code: PTPOp.getStorageInfo.rawValue,
-      txid: nextTx,
+      txid: 0,
       params: [id.raw]
     )
-    nextTx &+= 1
 
-    guard let responseData = try executeCommand(command) else {
-      throw MTPError.protocolError(code: 0, message: "No storage info response")
-    }
+    let collector = SimpleCollector()
+    _ = try await executeStreamingCommand(command, dataInHandler: { chunk in
+        collector.append(chunk)
+        return chunk.count
+    }, dataOutHandler: nil)
 
+    let responseData = collector.data
     // Simplified parsing - full implementation would parse the complete StorageInfo dataset
     var offset = 0
 
@@ -543,27 +557,29 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       length: 20,
       type: PTPContainer.Kind.command.rawValue,
       code: PTPOp.getObjectHandles.rawValue,
-      txid: nextTx,
+      txid: 0,
       params: [storage.raw, parentHandle]
     )
-    nextTx &+= 1
 
-    guard let responseData = try executeCommand(command) else {
-      return []
-    }
+    let collector = SimpleCollector()
+    _ = try await executeStreamingCommand(command, dataInHandler: { chunk in
+        collector.append(chunk)
+        return chunk.count
+    }, dataOutHandler: nil)
 
-    guard responseData.count >= 4 else { return [] }
+    let collectedData = collector.data
+    guard collectedData.count >= 4 else { return [] }
 
-    let count = responseData.withUnsafeBytes { ptr in
+    let count = collectedData.withUnsafeBytes { ptr in
       ptr.load(fromByteOffset: 0, as: UInt32.self).littleEndian
     }
 
-    guard responseData.count >= 4 + Int(count) * 4 else { return [] }
+    guard collectedData.count >= 4 + Int(count) * 4 else { return [] }
 
     var objectHandles = [MTPObjectHandle]()
     for i in 0..<Int(count) {
       let offset = 4 + i * 4
-      let handle = responseData.withUnsafeBytes { ptr in
+      let handle = collectedData.withUnsafeBytes { ptr in
         ptr.load(fromByteOffset: offset, as: UInt32.self).littleEndian
       }
       objectHandles.append(handle)
@@ -580,15 +596,17 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
         length: 16,
         type: PTPContainer.Kind.command.rawValue,
         code: PTPOp.getObjectInfo.rawValue,
-        txid: nextTx,
+        txid: 0,
         params: [handle]
       )
-      nextTx &+= 1
 
-      guard let responseData = try executeCommand(command) else {
-        continue
-      }
+      let collector = SimpleCollector()
+      _ = try await executeStreamingCommand(command, dataInHandler: { chunk in
+          collector.append(chunk)
+          return chunk.count
+      }, dataOutHandler: nil)
 
+      let responseData = collector.data
       // Simplified parsing - full implementation would parse complete ObjectInfo dataset
       var offset = 0
 
@@ -683,6 +701,22 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   @inline(__always)
   func bulkReadOnce(_ ep: UInt8, into buf: UnsafeMutableRawPointer, max: Int, timeout: UInt32) throws -> Int {
     var got: Int32 = 0
+    
+    // USB standard: always read in multiples of max packet size (usually 512) to avoid overflow
+    if max < 512 {
+        var tmp = [UInt8](repeating: 0, count: 512)
+        let rc = libusb_bulk_transfer(h, ep, &tmp, 512, &got, timeout)
+        if rc == Int32(LIBUSB_ERROR_TIMEOUT.rawValue) { return 0 }
+        if rc != 0 && rc != Int32(LIBUSB_ERROR_OVERFLOW.rawValue) { 
+            throw MTPError.transport(mapLibusb(rc)) 
+        }
+        let actualToCopy = min(Int(got), max)
+        if actualToCopy > 0 {
+            memcpy(buf, tmp, actualToCopy)
+        }
+        return actualToCopy
+    }
+
     let rc = libusb_bulk_transfer(h, ep, buf.assumingMemoryBound(to: UInt8.self), Int32(max), &got, timeout)
     if rc == Int32(LIBUSB_ERROR_TIMEOUT.rawValue) { return 0 } // non-fatal; caller loop decides
     if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }
@@ -693,15 +727,25 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   func bulkReadExact(_ ep: UInt8, into dst: UnsafeMutableRawPointer, need: Int, timeout: UInt32, firstChunk: UnsafeRawBufferPointer? = nil) throws {
     var copied = 0
     if let first = firstChunk, first.count > 0 {
-      memcpy(dst, first.baseAddress!, first.count)
-      copied += first.count
+      let toCopy = min(first.count, need)
+      memcpy(dst, first.baseAddress!, toCopy)
+      copied += toCopy
     }
+    
+    let startNs = DispatchTime.now().uptimeNanoseconds
+    let budgetNs = UInt64(timeout) * 1_000_000
+    
     while copied < need {
       var tmp = [UInt8](repeating: 0, count: min(64 * 1024, need - copied))
-      let got = try bulkReadOnce(ep, into: &tmp, max: tmp.count, timeout: timeout)
-      if got == 0 { continue }
-      memcpy(dst.advanced(by: copied), &tmp, got)
-      copied += got
+      let got = try bulkReadOnce(ep, into: &tmp, max: tmp.count, timeout: 1000) // 1s slice
+      if got > 0 {
+        memcpy(dst.advanced(by: copied), &tmp, got)
+        copied += got
+      } else {
+        if DispatchTime.now().uptimeNanoseconds - startNs > budgetNs {
+          throw MTPError.timeout
+        }
+      }
     }
   }
 
@@ -735,8 +779,16 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     dataInHandler: MTPDataIn?,
     dataOutHandler: MTPDataOut?
   ) throws -> Data? {
-    let txid = nextTx &- 0 == 0 ? 1 : nextTx
-    nextTx &+= 1
+    // PTP Spec: OpenSession (0x1002) MUST use TransactionID 0.
+    // All other commands use a monotonically increasing ID starting at 1.
+    let txid: UInt32
+    if command.code == 0x1002 {
+        txid = 0
+    } else {
+        txid = nextTx
+        nextTx &+= 1
+        if nextTx == 0 { nextTx = 1 } // Avoid rolling over to 0
+    }
 
     // Overall operation deadline
     let opStartNs = DispatchTime.now().uptimeNanoseconds
@@ -750,7 +802,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     // Debug logging
     let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
     if debugEnabled {
-      print(String(format: "MTP op=0x%04x tx=%u phase=command", command.code, txid))
+      print(String(format: "   [USB] op=0x%04x tx=%u phase=COMMAND", command.code, txid))
     }
 
     // 1) COMMAND container
@@ -763,7 +815,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     // 2) Optional DATA OUT phase (host -> device)
     if let produce = dataOutHandler {
       if debugEnabled {
-        print(String(format: "MTP op=0x%04x tx=%u phase=data-out", command.code, txid))
+        print(String(format: "   [USB] op=0x%04x tx=%u phase=DATA-OUT", command.code, txid))
       }
 
       var sent = 0
@@ -797,13 +849,12 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     }
 
     // 3) Optional DATA IN phase (device -> host)
-    var dataInCollector = DataCollector()
     var hasDataPhase = false
-    var dataHeader: PTPHeader?
+    let collector = SimpleCollector()
 
     if dataInHandler != nil {
       if debugEnabled {
-        print(String(format: "MTP op=0x%04x tx=%u phase=data-in", command.code, txid))
+        print(String(format: "   [USB] op=0x%04x tx=%u phase=DATA-IN", command.code, txid))
       }
 
       // Handshake timeout for first DATA-IN packet
@@ -813,16 +864,16 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       var first = [UInt8](repeating: 0, count: max(PTPHeader.size, 64 * 1024))
 
       while gotFirst == 0 {
-        gotFirst = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: UInt32(config.ioTimeoutMs))
+        gotFirst = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: 500)
         if gotFirst == 0 {
           let elapsed = DispatchTime.now().uptimeNanoseconds - startNs
           if elapsed > handshakeBudgetNs {
             if debugEnabled {
-              print(String(format: "MTP op=0x%04x tx=%u phase=handshake-in timeout after %d ms",
-                          command.code, txid, Int(elapsed / 1_000_000)))
+              print(String(format: "   [USB] op=0x%04x tx=%u handshake timeout", command.code, txid))
             }
             throw MTPError.timeout
           }
+          try checkDeadline()
           continue
         }
       }
@@ -831,55 +882,50 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
         throw MTPError.transport(.io("short data header"))
       }
 
-      dataHeader = first.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
-      guard dataHeader?.type == PTPContainer.Kind.data.rawValue,
-            dataHeader?.code == command.code,
-            dataHeader?.txid == txid else {
-        throw MTPError.transport(.io("unexpected data header type/code/tx"))
+      let dataHeader = first.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
+      guard dataHeader.type == PTPContainer.Kind.data.rawValue,
+            dataHeader.code == command.code,
+            dataHeader.txid == txid else {
+        throw MTPError.transport(.io("unexpected data header type=\(dataHeader.type) code=0x\(String(format: "%04x", dataHeader.code)) tx=\(dataHeader.txid)"))
       }
 
-      if dataHeader?.type == PTPContainer.Kind.data.rawValue {
-        hasDataPhase = true
-        let payloadLen = Int(dataHeader!.length) - PTPHeader.size
-        let rem = gotFirst - PTPHeader.size
-        if rem > 0 {
-          first.withUnsafeBytes { raw in
-            let chunk = UnsafeRawBufferPointer(start: raw.baseAddress!.advanced(by: PTPHeader.size), count: rem)
-            _ = dataInHandler!(chunk)
-          }
+      hasDataPhase = true
+      let payloadLen = Int(dataHeader.length) - PTPHeader.size
+      let rem = gotFirst - PTPHeader.size
+      if rem > 0 {
+        first.withUnsafeBytes { raw in
+          let chunk = UnsafeRawBufferPointer(start: raw.baseAddress!.advanced(by: PTPHeader.size), count: rem)
+          _ = dataInHandler!(chunk)
         }
+      }
 
-        // Read the rest with inactivity timeout protection
-        var left = payloadLen - max(0, rem)
-        var lastProgressNs = DispatchTime.now().uptimeNanoseconds
-        let stallNs = UInt64(config.inactivityTimeoutMs) * 1_000_000
+      // Read the rest with inactivity timeout protection
+      var left = payloadLen - max(0, rem)
+      var lastProgressNs = DispatchTime.now().uptimeNanoseconds
+      let stallNs = UInt64(config.inactivityTimeoutMs) * 1_000_000
 
-        while left > 0 {
-          var buf = [UInt8](repeating: 0, count: min(left, 1 << 20))
-          let got = try bulkReadOnce(inEP, into: &buf, max: buf.count, timeout: UInt32(config.ioTimeoutMs))
-          if got == 0 {
-            if DispatchTime.now().uptimeNanoseconds - lastProgressNs > stallNs {
-              if debugEnabled {
-                print(String(format: "MTP op=0x%04x tx=%u phase=data-in timeout after %lld bytes",
-                            command.code, txid, Int64(payloadLen - left)))
-              }
-              throw MTPError.timeout
-            }
-            continue
+      while left > 0 {
+        var buf = [UInt8](repeating: 0, count: min(left, 1 << 20))
+        let got = try bulkReadOnce(inEP, into: &buf, max: buf.count, timeout: 1000)
+        if got == 0 {
+          if DispatchTime.now().uptimeNanoseconds - lastProgressNs > stallNs {
+            throw MTPError.timeout
           }
-          lastProgressNs = DispatchTime.now().uptimeNanoseconds
-          buf.withUnsafeBytes { raw in
-            _ = dataInHandler!(UnsafeRawBufferPointer(start: raw.baseAddress!, count: got))
-          }
-          left -= got
+          try checkDeadline()
+          continue
         }
+        lastProgressNs = DispatchTime.now().uptimeNanoseconds
+        buf.withUnsafeBytes { raw in
+          _ = dataInHandler!(UnsafeRawBufferPointer(start: raw.baseAddress!, count: got))
+        }
+        left -= got
       }
       try checkDeadline()
     }
 
     // 4) RESPONSE phase
     if debugEnabled {
-      print(String(format: "MTP op=0x%04x tx=%u phase=response", command.code, txid))
+      print(String(format: "   [USB] op=0x%04x tx=%u phase=RESPONSE", command.code, txid))
     }
 
     var respHdrBuf = [UInt8](repeating: 0, count: PTPHeader.size)
@@ -909,8 +955,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let response = PTPResponse(code: rHdr.code, txid: rHdr.txid, params: params)
     try mapResponse(response)
 
-    // Return data if we collected any
-    return hasDataPhase ? dataInCollector.finish() : nil
+    return hasDataPhase ? collector.data : nil
   }
 
   public func deleteObject(handle: MTPObjectHandle) async throws {
@@ -956,6 +1001,16 @@ private struct DataCollector {
     total = 0
     return out
   }
+}
+
+final class SimpleCollector: @unchecked Sendable {
+    var data = Data()
+    private let lock = NSLock()
+    func append(_ chunk: UnsafeRawBufferPointer) {
+        lock.lock()
+        defer { lock.unlock() }
+        data.append(Data(bytes: chunk.baseAddress!, count: chunk.count))
+    }
 }
 
 // MTPTransport and MTPLink protocols are defined in SwiftMTPCore

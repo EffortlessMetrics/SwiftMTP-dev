@@ -488,11 +488,28 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
         let effectiveTuning: EffectiveTuning
 
         do {
+            // (1) Load quirks database
+            let db = (try? QuirkDatabase.load())
+            
+            // (2) Match device
+            let matchedQuirk = db?.match(
+                vid: selectedDevice.vendorID ?? 0,
+                pid: selectedDevice.productID ?? 0,
+                bcdDevice: nil,
+                ifaceClass: 0x06,
+                ifaceSubclass: 0x01,
+                ifaceProtocol: 0x01
+            )
+            
+            if let quirk = matchedQuirk, !flags.json {
+                log("   Matched quirk: \(quirk.id)")
+            }
+
             // Build effective tuning with all layers
             effectiveTuning = EffectiveTuningBuilder.build(
                 capabilities: ["partialRead": true, "partialWrite": true],
                 learned: nil,
-                quirk: nil,
+                quirk: matchedQuirk,
                 overrides: nil
             )
 
@@ -501,6 +518,7 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
                 log("     Chunk size: \(effectiveTuning.maxChunkBytes) bytes")
                 log("     I/O timeout: \(effectiveTuning.ioTimeoutMs)ms")
                 log("     Handshake timeout: \(effectiveTuning.handshakeTimeoutMs)ms")
+                log("     Stabilize delay: \(effectiveTuning.stabilizeMs)ms")
                 log("     Hooks: \(effectiveTuning.hooks.count) configured")
             }
 
@@ -515,31 +533,31 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
 
         // Apply user overrides from environment
         var finalTuning = effectiveTuning
-        let (userOverrides, source) = UserOverride.fromEnvironment(ProcessInfo.processInfo.environment)
-        if source != .none {
-            // Note: Apply overrides manually since the API has changed
-            if let maxChunk = userOverrides.maxChunkBytes {
-                finalTuning.maxChunkBytes = maxChunk
-            }
-            if let ioTimeout = userOverrides.ioTimeoutMs {
-                finalTuning.ioTimeoutMs = ioTimeout
-            }
-            if let handshakeTimeout = userOverrides.handshakeTimeoutMs {
-                finalTuning.handshakeTimeoutMs = handshakeTimeout
-            }
-            if let inactivityTimeout = userOverrides.inactivityTimeoutMs {
-                finalTuning.inactivityTimeoutMs = inactivityTimeout
-            }
-            if let overallDeadline = userOverrides.overallDeadlineMs {
-                finalTuning.overallDeadlineMs = overallDeadline
-            }
-            if !flags.json {
-                log("   Applied user overrides from SWIFTMTP_OVERRIDES")
-            }
+        let (userOverrides, _) = UserOverride.fromEnvironment(ProcessInfo.processInfo.environment)
+        
+        // Note: Apply overrides manually since the API has changed
+        if let maxChunk = userOverrides.maxChunkBytes {
+            finalTuning.maxChunkBytes = maxChunk
+        }
+        if let ioTimeout = userOverrides.ioTimeoutMs {
+            finalTuning.ioTimeoutMs = ioTimeout
+        }
+        if let handshakeTimeout = userOverrides.handshakeTimeoutMs {
+            finalTuning.handshakeTimeoutMs = handshakeTimeout
+        }
+        if let inactivityTimeout = userOverrides.inactivityTimeoutMs {
+            finalTuning.inactivityTimeoutMs = inactivityTimeout
+        }
+        if let overallDeadline = userOverrides.overallDeadlineMs {
+            finalTuning.overallDeadlineMs = overallDeadline
+        }
+        if !flags.json && userOverrides.maxChunkBytes != nil {
+            log("   Applied user overrides from SWIFTMTP_OVERRIDES")
         }
 
         // Convert to SwiftMTPConfig for use with existing code
-        let config = SwiftMTPConfig()
+        var config = SwiftMTPConfig()
+        config.apply(finalTuning)
 
         return try await MTPDeviceManager.shared.openDevice(with: selectedDevice, transport: LibUSBTransportFactory.createTransport(), config: config)
     } catch {

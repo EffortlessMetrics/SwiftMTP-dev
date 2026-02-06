@@ -12,8 +12,14 @@ struct EventPump {
 }
 
 struct QuirkHooks {
-    static func execute(_ phase: String, tuning: Any, link: any MTPLink) async throws {
-        // Implementation needed
+    static func execute(_ phase: String, tuning: EffectiveTuning, link: any MTPLink) async throws {
+        for hook in tuning.hooks {
+            if hook.phase.rawValue == phase {
+                if let delay = hook.delayMs, delay > 0 {
+                    try await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000)
+                }
+            }
+        }
     }
 }
 
@@ -47,19 +53,14 @@ public actor MTPDeviceActor: MTPDevice {
                 return deviceInfo
             }
 
-            // For mock devices, return the mock device info
-            // For real devices, this would parse the actual MTP DeviceInfo response
-            let mtpDeviceInfo = MTPDeviceInfo(
-                manufacturer: summary.manufacturer,
-                model: summary.model,
-                version: "Mock Version 1.0",
-                serialNumber: "MOCK123456",
-                operationsSupported: Set([0x1001, 0x1002, 0x1004, 0x1005]), // Basic operations
-                eventsSupported: Set([0x4002, 0x4003]) // Basic events
-            )
-
-            self.deviceInfo = mtpDeviceInfo
-            return mtpDeviceInfo
+            let link = try await self.getMTPLink()
+            // Make sure session is open for real devices if needed
+            // Some devices allow GetDeviceInfo outside session, but safer to open first
+            // try await openIfNeeded() 
+            
+            let realInfo = try await link.getDeviceInfo()
+            self.deviceInfo = realInfo
+            return realInfo
         }
     }
 
@@ -208,7 +209,7 @@ public actor MTPDeviceActor: MTPDevice {
 
     private func applyTuningAndOpenSession(link: any MTPLink) async throws {
       // 1) Build fingerprint from USB IDs and interface details
-      let fp = try await self.buildFingerprint()
+      _ = try await self.buildFingerprint()
 
       // 2) Load quirks DB and learned profile
       let qdb = try QuirkDatabase.load()

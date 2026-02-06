@@ -109,6 +109,40 @@
         }
       },
       "status": "stable"
+    },
+    {
+      "id": "oneplus-3t-f003",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 10000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 1000
+      },
+      "hooks": [
+        { "phase": "postOpenUSB", "delayMs": 500 },
+        { "phase": "postOpenSession", "delayMs": 1000 }
+      ],
+      "confidence": "medium",
+      "status": "experimental",
+      "notes": [
+        "OnePlus 3T (2a70:f003) fails OpenSession without significant stabilization delay.",
+        "Added 1000ms stabilization and post-OpenSession delay."
+      ],
+      "provenance": {
+        "author": "Gemini CLI",
+        "date": "2026-02-06"
+      }
     }
   ]
 }

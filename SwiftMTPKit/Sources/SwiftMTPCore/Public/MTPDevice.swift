@@ -292,9 +292,13 @@ public struct SwiftMTPConfig: Sendable {
   public init() {}
 
   /// Apply effective tuning parameters to this configuration
-  mutating func apply(_ tuning: Any) {
-    // Implementation needed - apply tuning parameters to config
-    // This should update transferChunkBytes, timeouts, stabilizeMs, etc.
+  public mutating func apply(_ tuning: EffectiveTuning) {
+    self.transferChunkBytes = tuning.maxChunkBytes
+    self.ioTimeoutMs = tuning.ioTimeoutMs
+    self.handshakeTimeoutMs = tuning.handshakeTimeoutMs
+    self.inactivityTimeoutMs = tuning.inactivityTimeoutMs
+    self.overallDeadlineMs = tuning.overallDeadlineMs
+    self.stabilizeMs = tuning.stabilizeMs
   }
 }
 /// Central manager for MTP device discovery and lifecycle management.
