@@ -35,6 +35,23 @@ public final class SQLiteDB: @unchecked Sendable {
     try exec("PRAGMA synchronous=NORMAL;")
   }
 
+  /// Open a database in read-only mode (for cross-process WAL readers).
+  public init(path: String, readOnly: Bool) throws {
+    self.path = path
+    var db: OpaquePointer?
+    let flags: Int32 = readOnly
+      ? (SQLITE_OPEN_READONLY | SQLITE_OPEN_FULLMUTEX)
+      : (SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX)
+    if sqlite3_open_v2(path, &db, flags, nil) != SQLITE_OK {
+      throw DBError.open(String(cString: sqlite3_errmsg(db)))
+    }
+    self.handle = db
+    if !readOnly {
+      try exec("PRAGMA journal_mode=WAL;")
+      try exec("PRAGMA synchronous=NORMAL;")
+    }
+  }
+
   deinit { if let db = handle { sqlite3_close(db) } }
 
   @inline(__always) private func err() -> String {

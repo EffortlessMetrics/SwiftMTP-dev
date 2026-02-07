@@ -12,11 +12,18 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
     private let deviceManager: MTPDeviceManager
     private let tempDirectory: URL
 
+    /// Optional device service registry for priority-based operations.
+    public var registry: DeviceServiceRegistry?
+
+    /// Optional callback to resolve a DeviceIndexOrchestrator from the registry.
+    /// Set by the host app since XPC module doesn't import SwiftMTPIndex.
+    public var crawlBoostHandler: ((_ deviceId: String, _ storageId: UInt32, _ parentHandle: UInt32?) async -> Bool)?
+
     public init(deviceManager: MTPDeviceManager = .shared) {
         self.deviceManager = deviceManager
 
         // Use app group container for temp files that File Provider can access
-        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.example.SwiftMTP")
+        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.effortlessmetrics.swiftmtp")
         self.tempDirectory = containerURL?.appendingPathComponent("FileProviderTemp") ?? FileManager.default.temporaryDirectory.appendingPathComponent("SwiftMTP-FP")
 
         super.init()
@@ -152,6 +159,32 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
     private func findDevice(with deviceId: MTPDeviceID) async throws -> MTPDevice? {
         let devices = try await deviceManager.currentRealDevices()
         return devices.first { $0.summary.id == deviceId }
+    }
+
+    // MARK: - Cache-First API
+
+    public func requestCrawl(_ request: CrawlTriggerRequest, withReply reply: @escaping (CrawlTriggerResponse) -> Void) {
+        Task {
+            if let handler = crawlBoostHandler {
+                let accepted = await handler(request.deviceId, request.storageId, request.parentHandle)
+                reply(CrawlTriggerResponse(accepted: accepted))
+            } else {
+                reply(CrawlTriggerResponse(accepted: false, errorMessage: "Crawl service not configured"))
+            }
+        }
+    }
+
+    public func deviceStatus(_ request: DeviceStatusRequest, withReply reply: @escaping (DeviceStatusResponse) -> Void) {
+        Task {
+            let deviceId = MTPDeviceID(raw: request.deviceId)
+
+            if let registry = registry, let svc = await registry.service(for: deviceId) {
+                let connected = await !svc.underlyingDevice.id.raw.isEmpty // Always true if service exists
+                reply(DeviceStatusResponse(connected: connected, sessionOpen: true))
+            } else {
+                reply(DeviceStatusResponse(connected: false, sessionOpen: false))
+            }
+        }
     }
 
     /// Clean up old temp files to prevent disk space issues
