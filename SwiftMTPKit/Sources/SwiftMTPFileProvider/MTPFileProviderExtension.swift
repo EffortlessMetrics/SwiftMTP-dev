@@ -35,7 +35,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
 
     public func item(for identifier: NSFileProviderItemIdentifier, request: NSFileProviderRequest, completionHandler: @escaping (NSFileProviderItem?, Error?) -> Void) -> Progress {
         let progress = Progress(totalUnitCount: 1)
-        
+
         guard let xpcService = getXPCService(),
               let components = MTPFileProviderItem.parseItemIdentifier(identifier) else {
             completionHandler(nil, NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.noSuchItem.rawValue))
@@ -51,13 +51,13 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
                 progress.completedUnitCount = 1
             }
         }
-        
+
         return progress
     }
 
     public func fetchContents(for itemIdentifier: NSFileProviderItemIdentifier, version requestedVersion: NSFileProviderItemVersion?, request: NSFileProviderRequest, completionHandler: @escaping (URL?, NSFileProviderItem?, Error?) -> Void) -> Progress {
         let progress = Progress(totalUnitCount: 1)
-        
+
         guard let xpcService = getXPCService(),
               let components = MTPFileProviderItem.parseItemIdentifier(itemIdentifier),
               let objectHandle = components.objectHandle else {
@@ -67,7 +67,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
         }
 
         let readRequest = ReadRequest(deviceId: components.deviceId, objectHandle: objectHandle)
-        
+
         Task { @MainActor in
             xpcService.readObject(readRequest) { response in
                 if response.success, let tempFileURL = response.tempFileURL {
@@ -87,7 +87,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
                 progress.completedUnitCount = 1
             }
         }
-        
+
         return progress
     }
 

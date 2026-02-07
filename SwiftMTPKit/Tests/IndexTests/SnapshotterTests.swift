@@ -115,6 +115,18 @@ private class MockDevice: MTPDevice, @unchecked Sendable {
     var probedCapabilities: [String: Bool] { get async { [:] } }
     var effectiveTuning: EffectiveTuning { get async { .defaults() } }
 
+    func openIfNeeded() async throws {}
+
+    func devClose() async throws {}
+    func devGetDeviceInfoUncached() async throws -> MTPDeviceInfo {
+        try await info
+    }
+    func devGetStorageIDsUncached() async throws -> [MTPStorageID] { [] }
+    func devGetRootHandlesUncached(storage: MTPStorageID) async throws -> [MTPObjectHandle] { [] }
+    func devGetObjectInfoUncached(handle: MTPObjectHandle) async throws -> MTPObjectInfo {
+        throw MTPError.notSupported("Mock implementation")
+    }
+
     var events: AsyncStream<MTPEvent> {
         AsyncStream { continuation in
             continuation.finish()

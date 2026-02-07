@@ -33,18 +33,16 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator {
     }
 
     public func enumerateItems(for observer: NSFileProviderEnumerationObserver, startingAt page: NSFileProviderPage) {
-        // Access xpcService on MainActor
         Task { @MainActor in
-            guard let xpcService = xpcConnection.remoteObjectProxy as? MTPXPCService else {
+            guard let xpcService = self.xpcConnection.remoteObjectProxy as? MTPXPCService else {
                 observer.finishEnumerating(upTo: nil)
                 return
             }
 
-            var items: [NSFileProviderItem] = []
-
-            if storageId == nil {
-                let request = StorageListRequest(deviceId: deviceId)
+            if self.storageId == nil {
+                let request = StorageListRequest(deviceId: self.deviceId)
                 xpcService.listStorages(request) { response in
+                    var items: [NSFileProviderItem] = []
                     if response.success, let storages = response.storages {
                         for storage in storages {
                             let item = MTPFileProviderItem(
@@ -64,12 +62,13 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator {
                 }
             } else {
                 let request = ObjectListRequest(
-                    deviceId: deviceId,
-                    storageId: storageId!,
-                    parentHandle: parentHandle
+                    deviceId: self.deviceId,
+                    storageId: self.storageId!,
+                    parentHandle: self.parentHandle
                 )
 
                 xpcService.listObjects(request) { response in
+                    var items: [NSFileProviderItem] = []
                     if response.success, let objects = response.objects {
                         for object in objects {
                             let item = MTPFileProviderItem(

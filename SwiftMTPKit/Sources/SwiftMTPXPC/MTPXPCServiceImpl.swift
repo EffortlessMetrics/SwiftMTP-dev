@@ -46,11 +46,7 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
 
                 // Read the object to temp file
                 _ = try await device.read(handle: request.objectHandle, range: nil, to: tempURL)
-                
-                // Wait for the download by polling progress or using a better sync mechanism
-                // For simplicity in this refactor, we wait a bit or check file existence
-                // In real implementation, the device.read returns a MTPProgress which we can await
-                
+
                 // Get file size
                 let attributes = try FileManager.default.attributesOfItem(atPath: tempURL.path)
                 let fileSize = attributes[.size] as? UInt64

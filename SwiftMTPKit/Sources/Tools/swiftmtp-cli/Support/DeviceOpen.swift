@@ -7,8 +7,8 @@ import SwiftMTPQuirks
 import Foundation
 
 extension MTPDeviceManager {
-    /// Get the current real devices, excluding mocks
-    public func currentRealDevices() async throws -> [MTPDeviceSummary] {
+    /// Get the current real device summaries, excluding mocks
+    func currentRealDeviceSummaries() async throws -> [MTPDeviceSummary] {
         let allDevices = await devices
         return allDevices.filter { summary in
             // Filter out common mock patterns if needed
@@ -32,7 +32,7 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
         return try await manager.openDevice(with: mock, transport: LibUSBTransportFactory.createTransport())
     }
 
-    let devices = try await manager.currentRealDevices()
+    let devices = try await manager.currentRealDeviceSummaries()
     if devices.isEmpty {
         throw MTPError.transport(.noDevice)
     }

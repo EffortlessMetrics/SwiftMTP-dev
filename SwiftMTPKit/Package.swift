@@ -67,10 +67,12 @@ let package = Package(
             resources: [.process("Resources")]),
 
     .target(name: "SwiftMTPXPC",
-            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB"]),
+            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB"],
+            swiftSettings: [.swiftLanguageMode(.v5)]),
 
     .target(name: "SwiftMTPFileProvider",
-            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPStore", "SwiftMTPXPC"]),
+            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPStore", "SwiftMTPXPC"],
+            swiftSettings: [.swiftLanguageMode(.v5)]),
 
     .plugin(name: "SwiftMTPBuildTool",
             capability: .command(
