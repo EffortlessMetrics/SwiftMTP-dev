@@ -6,15 +6,15 @@ import Foundation
 public protocol TransferJournal: Sendable {
   func beginRead(device: MTPDeviceID, handle: UInt32, name: String,
                  size: UInt64?, supportsPartial: Bool,
-                 tempURL: URL, finalURL: URL?, etag: (size: UInt64?, mtime: Date?)) throws -> String // returns id
+                 tempURL: URL, finalURL: URL?, etag: (size: UInt64?, mtime: Date?)) async throws -> String // returns id
   func beginWrite(device: MTPDeviceID, parent: UInt32, name: String,
                   size: UInt64, supportsPartial: Bool,
-                  tempURL: URL, sourceURL: URL?) throws -> String
-  func updateProgress(id: String, committed: UInt64) throws
-  func fail(id: String, error: Error) throws
-  func complete(id: String) throws
-  func loadResumables(for device: MTPDeviceID) throws -> [TransferRecord]
-  func clearStaleTemps(olderThan: TimeInterval) throws
+                  tempURL: URL, sourceURL: URL?) async throws -> String
+  func updateProgress(id: String, committed: UInt64) async throws
+  func fail(id: String, error: Error) async throws
+  func complete(id: String) async throws
+  func loadResumables(for device: MTPDeviceID) async throws -> [TransferRecord]
+  func clearStaleTemps(olderThan: TimeInterval) async throws
 }
 
 public struct TransferRecord: Sendable {

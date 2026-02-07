@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
-// swift-tools-version: 6.1
+// swift-tools-version: 6.0
 import PackageDescription
 
 let package = Package(
@@ -9,92 +9,79 @@ let package = Package(
   defaultLocalization: "en",
   platforms: [ .macOS(.v15), .iOS(.v18) ],
   products: [
-    .executable(name: "simple-probe", targets: ["simple-probe"]),
-    .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
+    .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
+    .library(name: "SwiftMTPTransportLibUSB", targets: ["SwiftMTPTransportLibUSB"]),
+    .library(name: "SwiftMTPIndex", targets: ["SwiftMTPIndex"]),
+    .library(name: "SwiftMTPSync", targets: ["SwiftMTPSync"]),
+    .library(name: "SwiftMTPObservability", targets: ["SwiftMTPObservability"]),
     .library(name: "SwiftMTPQuirks", targets: ["SwiftMTPQuirks"]),
-    // .executable(name: "learn-promote", targets: ["learn-promote"]),
+    .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
+    .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
   ],
   dependencies: [
-    // SQLite3 via system library
+    .package(url: "https://github.com/apple/swift-async-algorithms.git", exact: "1.0.1"),
+    .package(url: "https://github.com/apple/swift-collections.git", exact: "1.1.1"),
+    .package(url: "https://github.com/stephencelis/SQLite.swift.git", exact: "0.15.3"),
+    .package(url: "https://github.com/Tyler-Keith-Thompson/CucumberSwift", from: "5.0.0"),
+    .package(url: "https://github.com/typelift/SwiftCheck", from: "0.12.0"),
+    .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.10.0"),
   ],
   targets: [
-    // SQLite3 via system library
-    .systemLibrary(name: "CSQLite", path: "Sources/CSQLite", providers: [.apt(["libsqlite3-dev"]), .brew(["sqlite"])]),
+    .target(name: "SwiftMTPObservability",
+            swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+
+    .target(name: "SwiftMTPCore",
+            dependencies: [
+              "SwiftMTPObservability",
+              "SwiftMTPQuirks",
+              .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+              .product(name: "Collections", package: "swift-collections")
+            ]),
+
+    .target(name: "SwiftMTPStore",
+            dependencies: ["SwiftMTPCore"],
+            swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     // libusb via Homebrew for dev (dynamic)
     .systemLibrary(name: "CLibusb", path: "Sources/CLibusb", pkgConfig: "libusb-1.0", providers: [.brew(["libusb"])]),
 
-    // Core MTP functionality
-    .target(name: "SwiftMTPCore",
-            dependencies: [],
-            path: "Sources/SwiftMTPCore",
-            sources: ["Internal", "Public", "CLI"]),
-
-    // Transport layer for libusb
     .target(name: "SwiftMTPTransportLibUSB",
-            dependencies: ["SwiftMTPCore", "CLibusb"],
-            path: "Sources/SwiftMTPTransportLibUSB"),
+            dependencies: [
+              "SwiftMTPCore", "SwiftMTPObservability", "CLibusb"
+            ]),
 
-    // Index and snapshot functionality
     .target(name: "SwiftMTPIndex",
-            dependencies: ["SwiftMTPCore", "CSQLite"],
-            path: "Sources/SwiftMTPIndex",
-            exclude: ["Schema.sql"]),
+            dependencies: ["SwiftMTPCore", "SwiftMTPStore", .product(name: "Collections", package: "swift-collections"), .product(name: "SQLite", package: "SQLite.swift")],
+            resources: [.copy("Schema.sql")],
+            swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
-    // Sync and mirror functionality
     .target(name: "SwiftMTPSync",
-            dependencies: ["SwiftMTPCore", "SwiftMTPIndex"],
-            path: "Sources/SwiftMTPSync"),
+            dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPObservability", "SwiftMTPStore", .product(name: "SQLite", package: "SQLite.swift")],
+            swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
-    // Observability utilities
-    .target(name: "SwiftMTPObservability",
-            dependencies: ["SwiftMTPCore"],
-            path: "Sources/SwiftMTPObservability"),
-
-    // Device quirks and tuning database
     .target(name: "SwiftMTPQuirks",
-            dependencies: ["SwiftMTPCore"],
-            path: "Sources/SwiftMTPQuirks"),
-
-    // File Provider extension (excluded for now due to SwiftMTPXPC dependency)
-    // .target(name: "SwiftMTPFileProvider",
-    //         dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB"],
-    //         path: "Sources/SwiftMTPFileProvider"),
-
-    // XPC service (excluded for now due to @objc compatibility issues)
-    // .target(name: "SwiftMTPXPC",
-    //         dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB"],
-    //         path: "Sources/SwiftMTPXPC"),
-
-    .executableTarget(name: "simple-probe",
-                      dependencies: ["CLibusb"],
-                      path: "Sources/Tools/simple-probe",
-                      swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
-
-    .executableTarget(name: "test-xiaomi",
-                      dependencies: [
-                        "SwiftMTPCore",
-                        "SwiftMTPTransportLibUSB",
-                        "SwiftMTPObservability",
-                        "CLibusb"
-                      ],
-                      path: "Sources/Tools/test-xiaomi",
-                      swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+            dependencies: [],
+            resources: [.process("Resources")]),
 
     .executableTarget(name: "swiftmtp-cli",
-                      dependencies: [
-                        "SwiftMTPCore",
-                        "SwiftMTPTransportLibUSB",
-                        "SwiftMTPIndex",
-                        "SwiftMTPQuirks",
-                        "CLibusb"
-                      ],
+                      dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPSync", "SwiftMTPObservability", "SwiftMTPQuirks", "SwiftMTPStore"],
                       path: "Sources/Tools/swiftmtp-cli",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
-    // .executableTarget(name: "learn-promote",
-    //                   dependencies: ["SwiftMTPCore"],
-    //                   path: "Sources/Tools/learn-promote",
-    //                   swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+    .testTarget(name: "CoreTests", dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks"]),
+    .testTarget(name: "IndexTests", dependencies: ["SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPSync", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks"]),
+    .testTarget(name: "TransportTests", dependencies: ["SwiftMTPTransportLibUSB", "CLibusb"]),
+    .testTarget(name: "BDDTests",
+                dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", .product(name: "CucumberSwift", package: "CucumberSwift")],
+                resources: [.copy("Features")]),
+    .testTarget(name: "PropertyTests",
+                dependencies: ["SwiftMTPCore", "SwiftCheck"]),
+    .testTarget(name: "SnapshotTests",
+                dependencies: [
+                    "SwiftMTPCore", 
+                    "SwiftMTPIndex",
+                    .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+                ],
+                exclude: ["__Snapshots__"]),
   ]
 )

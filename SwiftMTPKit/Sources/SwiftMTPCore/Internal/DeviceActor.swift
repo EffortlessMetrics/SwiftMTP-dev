@@ -3,6 +3,7 @@
 
 import Foundation
 import OSLog
+import SwiftMTPQuirks
 
 // Placeholder types - these should be implemented elsewhere
 struct EventPump {
@@ -12,8 +13,14 @@ struct EventPump {
 }
 
 struct QuirkHooks {
-    static func execute(_ phase: String, tuning: Any, link: any MTPLink) async throws {
-        // Implementation needed
+    static func execute(_ phase: String, tuning: EffectiveTuning, link: any MTPLink) async throws {
+        for hook in tuning.hooks {
+            if hook.phase.rawValue == phase {
+                if let delay = hook.delayMs, delay > 0 {
+                    try await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000)
+                }
+            }
+        }
     }
 }
 
@@ -21,7 +28,7 @@ struct UserOverrides {
     static nonisolated(unsafe) var current: [String: String] = [:]
 }
 
-public actor MTPDeviceActor: MTPDevice {
+public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     public let id: MTPDeviceID
     private let transport: any MTPTransport
     private let summary: MTPDeviceSummary
@@ -30,7 +37,9 @@ public actor MTPDeviceActor: MTPDevice {
     private var mtpLink: (any MTPLink)?
     private var sessionOpen = false
     let transferJournal: (any TransferJournal)?
-    private var probedCapabilities: [String: Bool] = [:]
+    public var probedCapabilities: [String: Bool] = [:]
+    private var currentTuning: EffectiveTuning = .defaults()
+    public var effectiveTuning: EffectiveTuning { get async { currentTuning } }
     private var eventPump: EventPump = EventPump()
 
     public init(id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport, config: SwiftMTPConfig = .init(), transferJournal: (any TransferJournal)? = nil) {
@@ -41,25 +50,20 @@ public actor MTPDeviceActor: MTPDevice {
         self.transferJournal = transferJournal
     }
 
+    public func getMTPLinkIfAvailable() -> (any MTPLink)? {
+        return mtpLink
+    }
+
     public var info: MTPDeviceInfo {
         get async throws {
             if let deviceInfo {
                 return deviceInfo
             }
 
-            // For mock devices, return the mock device info
-            // For real devices, this would parse the actual MTP DeviceInfo response
-            let mtpDeviceInfo = MTPDeviceInfo(
-                manufacturer: summary.manufacturer,
-                model: summary.model,
-                version: "Mock Version 1.0",
-                serialNumber: "MOCK123456",
-                operationsSupported: Set([0x1001, 0x1002, 0x1004, 0x1005]), // Basic operations
-                eventsSupported: Set([0x4002, 0x4003]) // Basic events
-            )
-
-            self.deviceInfo = mtpDeviceInfo
-            return mtpDeviceInfo
+            let link = try await self.getMTPLink()
+            let realInfo = try await link.getDeviceInfo()
+            self.deviceInfo = realInfo
+            return realInfo
         }
     }
 
@@ -85,8 +89,7 @@ public actor MTPDeviceActor: MTPDevice {
                     try await openIfNeeded()
                     let items: [MTPObjectInfo] = try await BusyBackoff.onDeviceBusy {
                         let link = try await self.getMTPLink()
-                        let handles = try await link.getObjectHandles(storage: storage, parent: parent)
-                        return try await link.getObjectInfos(handles)
+                        return try await link.getObjectInfos(storage: storage, parent: parent, format: nil)
                     }
                     continuation.yield(items)
                     continuation.finish()
@@ -100,7 +103,11 @@ public actor MTPDeviceActor: MTPDevice {
     public func getInfo(handle: MTPObjectHandle) async throws -> MTPObjectInfo {
         try await openIfNeeded()
         let link = try await getMTPLink()
-        return try await link.getObjectInfos([handle])[0]
+        let infos = try await link.getObjectInfos([handle])
+        guard let info = infos.first else {
+            throw MTPError.objectNotFound
+        }
+        return info
     }
 
     // Note: read/write methods are implemented in DeviceActor+Transfer.swift
@@ -109,15 +116,10 @@ public actor MTPDeviceActor: MTPDevice {
         try await openIfNeeded()
         let link = try await getMTPLink()
 
-        // Get object info to check if it's a directory
-        let objectInfo = try await link.getObjectInfos([handle])[0]
-
-        // Check if it's a directory (format code 0x3001 = Association/Directory)
-        let isDirectory = objectInfo.formatCode == 0x3001
-
-        if isDirectory && recursive {
+        if recursive {
             // Recursively delete directory contents first
-            let contents = try await link.getObjectHandles(storage: objectInfo.storage, parent: handle)
+            // We use 0xFFFFFFFF to search across all storages if needed
+            let contents = try await listAllChildren(of: handle)
             for childHandle in contents {
                 try await delete(childHandle, recursive: true)
             }
@@ -130,15 +132,17 @@ public actor MTPDeviceActor: MTPDevice {
     }
 
     public func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {
+        // Default to current storage
+        let info = try await getInfo(handle: handle)
+        try await move(handle, to: newParent, storage: info.storage)
+    }
+
+    public func move(_ handle: MTPObjectHandle, to parent: MTPObjectHandle?, storage: MTPStorageID) async throws {
         try await openIfNeeded()
         let link = try await getMTPLink()
-
-        // Get object info to determine storage
-        let objectInfo = try await link.getObjectInfos([handle])[0]
-
-        // Move the object
+        // MoveObject (0x1019): params = [handle, storage, parent?]
         try await BusyBackoff.onDeviceBusy {
-            try await link.moveObject(handle: handle, to: objectInfo.storage, parent: newParent)
+            try await link.moveObject(handle: handle, to: storage, parent: parent)
         }
     }
 
@@ -169,23 +173,7 @@ public actor MTPDeviceActor: MTPDevice {
             return
         }
 
-        // Start event pump in the transport layer
-        // Note: Event pump will be started when the transport is opened
-        // if it supports event streaming
-
-        // Process events from the transport
-        let eventStream = AsyncStream<Data> { cont in
-            // This would be connected to the transport's event stream
-            // For now, we'll use a placeholder
-        }
-
-        // Process incoming events
-        for await eventData in eventStream {
-            if let event = MTPEvent.fromRaw(eventData) {
-                continuation.yield(event)
-            }
-        }
-
+        // Process incoming events (Stub for now)
         continuation.finish()
     }
 
@@ -207,22 +195,20 @@ public actor MTPDeviceActor: MTPDevice {
     }
 
     private func applyTuningAndOpenSession(link: any MTPLink) async throws {
+      let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+      if debugEnabled { print("   [Actor] applyTuningAndOpenSession starting...") }
+
       // 1) Build fingerprint from USB IDs and interface details
-      let fp = try await self.buildFingerprint()
+      let fingerprint = try await self.buildFingerprint()
 
       // 2) Load quirks DB and learned profile
+      if debugEnabled { print("   [Actor] Loading quirks DB...") }
       let qdb = try QuirkDatabase.load()
-      let learnedKey = "\(summary.vendorID ?? 0):\(summary.productID ?? 0)"
-      let learnedStored = LearnedStore.load(key: learnedKey)
+      
+      let persistence = await MTPDeviceManager.shared.persistence
+      let learnedProfile = try await persistence.learnedProfiles.loadProfile(for: fingerprint)
 
-      // 3) Probe capabilities (partial read/write, events)
-      let caps: [String: Bool] = [
-        "partialRead": await self.capabilityPartialRead(),
-        "partialWrite": await self.capabilityPartialWrite(),
-        "supportsEvents": await self.capabilityEvents()
-      ]
-
-      // 4) Parse user overrides (env) - convert to dictionary format
+      // 4) Parse user overrides (env)
       let (userOverrides, _) = UserOverride.fromEnvironment()
       var overrides: [String: String] = [:]
       if let maxChunk = userOverrides.maxChunkBytes { overrides["maxChunkBytes"] = String(maxChunk) }
@@ -232,16 +218,18 @@ public actor MTPDeviceActor: MTPDevice {
       if let overallDeadline = userOverrides.overallDeadlineMs { overrides["overallDeadlineMs"] = String(overallDeadline) }
       if let stabilize = userOverrides.stabilizeMs { overrides["stabilizeMs"] = String(stabilize) }
 
-      // 5) Convert learned profile to EffectiveTuning
+      // 5) Convert learned profile
       var learnedTuning: EffectiveTuning?
-      if let stored = learnedStored {
+      if let profile = learnedProfile {
         learnedTuning = EffectiveTuning(
-          maxChunkBytes: stored.maxChunkBytes,
-          ioTimeoutMs: stored.ioTimeoutMs,
-          handshakeTimeoutMs: stored.handshakeTimeoutMs,
-          inactivityTimeoutMs: stored.inactivityTimeoutMs,
-          overallDeadlineMs: stored.overallDeadlineMs,
+          maxChunkBytes: profile.optimalChunkSize ?? 2 * 1024 * 1024,
+          ioTimeoutMs: profile.optimalIoTimeoutMs ?? 10_000,
+          handshakeTimeoutMs: profile.avgHandshakeMs ?? 6_000,
+          inactivityTimeoutMs: profile.optimalInactivityTimeoutMs ?? 8_000,
+          overallDeadlineMs: 60_000,
           stabilizeMs: 0,
+          resetOnOpen: false,
+          disableEventPump: false,
           operations: [:],
           hooks: []
         )
@@ -256,39 +244,76 @@ public actor MTPDeviceActor: MTPDevice {
         ifaceSubclass: nil,
         ifaceProtocol: nil
       )
+      if debugEnabled, let q = quirk { print("   [Actor] Matched quirk: \(q.id)") }
 
-      // 7) Build effective tuning and apply to config
-      let tuning = EffectiveTuningBuilder.build(
-        capabilities: caps,
+      // 7) Build initial effective tuning
+      let initialTuning = EffectiveTuningBuilder.build(
+        capabilities: [:],
         learned: learnedTuning,
         quirk: quirk,
         overrides: overrides.isEmpty ? nil : overrides
       )
-      self.apply(tuning)
+      self.currentTuning = initialTuning
+      self.apply(initialTuning)
 
-      // 8) Run hooks: postOpenUSB (if any)
-      try await self.runHook(.postOpenUSB, tuning: tuning)
+      // 8) Run hooks: postOpenUSB
+      if debugEnabled { print("   [Actor] Running postOpenUSB hooks...") }
+      try await self.runHook(.postOpenUSB, tuning: initialTuning)
 
       // 9) Open session + stabilization
+      if debugEnabled { print("   [Actor] Opening MTP session...") }
       try await link.openSession(id: 1)
-      if tuning.stabilizeMs > 0 {
-        try await Task.sleep(nanoseconds: UInt64(tuning.stabilizeMs) * 1_000_000)
+      if initialTuning.stabilizeMs > 0 {
+        if debugEnabled { print("   [Actor] Stabilizing for \(initialTuning.stabilizeMs)ms...") }
+        try await Task.sleep(nanoseconds: UInt64(initialTuning.stabilizeMs) * 1_000_000)
       }
 
       // 10) Hooks after session
-      try await self.runHook(.postOpenSession, tuning: tuning)
+      if debugEnabled { print("   [Actor] Running postOpenSession hooks...") }
+      try await self.runHook(.postOpenSession, tuning: initialTuning)
 
-      // 11) Start event pump if supported
-      if caps["supportsEvents"] == true { try await self.startEventPump() }
+      // 11) Probe capabilities NOW that session is open
+      if debugEnabled { print("   [Actor] Probing capabilities (post-open)...") }
+      let realCaps: [String: Bool] = [
+        "partialRead": await self.capabilityPartialRead(),
+        "partialWrite": await self.capabilityPartialWrite(),
+        "supportsEvents": await self.capabilityEvents()
+      ]
+      self.probedCapabilities = realCaps
+      
+      // Re-build tuning with real capabilities
+      let finalTuning = EffectiveTuningBuilder.build(
+        capabilities: realCaps,
+        learned: learnedTuning,
+        quirk: quirk,
+        overrides: overrides.isEmpty ? nil : overrides
+      )
+      self.currentTuning = finalTuning
+      self.apply(finalTuning)
 
-      // 12) Record success back to learned store
-      LearnedStore.update(key: learnedKey, obs: tuning)
+      // 12) Start event pump
+      if realCaps["supportsEvents"] == true { 
+        if debugEnabled { print("   [Actor] Starting event pump...") }
+        try await self.startEventPump() 
+      }
+
+      // 13) Record success
+      let updatedProfile = (learnedProfile ?? LearnedProfile(fingerprint: fingerprint)).merged(with: SessionData(
+        actualChunkSize: finalTuning.maxChunkBytes,
+        handshakeTimeMs: finalTuning.handshakeTimeoutMs,
+        effectiveIoTimeoutMs: finalTuning.ioTimeoutMs,
+        effectiveInactivityTimeoutMs: finalTuning.inactivityTimeoutMs,
+        wasSuccessful: true
+      ))
+      try await persistence.learnedProfiles.saveProfile(updatedProfile, for: self.id)
+      
+      if debugEnabled { print("   [Actor] applyTuningAndOpenSession complete.") }
     }
 
 
     // MARK: - Helper Methods
 
-    internal func getMTPLink() async throws -> any MTPLink {
+    public func getMTPLink() async throws -> any MTPLink {
         if let link = mtpLink {
             return link
         }
@@ -349,37 +374,17 @@ public actor MTPDeviceActor: MTPDevice {
 
     private func startEventPump() async throws {
         // Start event pump if supported
-        if let link = try await getMTPLinkIfAvailable() {
+        if let link = await getMTPLinkIfAvailable() {
             try eventPump.startIfAvailable(on: link)
         }
     }
 
-}
-
-extension MTPDeviceActor {
-  public func delete(handle: MTPObjectHandle, recursive: Bool) async throws {
-    try await openIfNeeded()
-    if recursive, let children = try? await listAllChildren(of: handle) {
-      for kid in children { try await delete(handle: kid, recursive: true) }
+    private func listAllChildren(of parent: MTPObjectHandle) async throws -> [MTPObjectHandle] {
+        let storageID = MTPStorageID(raw: 0xFFFFFFFF) // Use all storages
+        var allInfos: [MTPObjectInfo] = []
+        for try await batch in self.list(parent: parent, in: storageID) {
+            allInfos.append(contentsOf: batch)
+        }
+        return allInfos.map { $0.handle }
     }
-    let link = try await getMTPLink()
-    try await link.deleteObject(handle: handle) // wraps opcode 0x100B
-  }
-
-  public func move(handle: MTPObjectHandle, to parent: MTPObjectHandle?, storage: MTPStorageID?) async throws {
-    try await openIfNeeded()
-    let link = try await getMTPLink()
-    // MoveObject (0x1019): params = [handle, storage, parent?]
-    try await link.moveObject(handle: handle, to: storage ?? MTPStorageID(raw: 0xFFFFFFFF), parent: parent)
-  }
-
-
-  private func listAllChildren(of parent: MTPObjectHandle) async throws -> [MTPObjectHandle] {
-    let storageID = MTPStorageID(raw: 0xFFFFFFFF) // Use all storages
-    var allInfos: [MTPObjectInfo] = []
-    for try await batch in self.list(parent: parent, in: storageID) {
-      allInfos.append(contentsOf: batch)
-    }
-    return allInfos.map { $0.handle }
-  }
 }

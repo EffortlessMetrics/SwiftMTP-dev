@@ -28,7 +28,7 @@ extension MTPDeviceActor {
         // Try to resume if we have a journal
         if let journal = transferJournal {
             do {
-                let resumables = try journal.loadResumables(for: id)
+                let resumables = try await journal.loadResumables(for: id)
                 if let existing = resumables.first(where: { $0.handle == handle && $0.kind == "read" }) {
                     // Resume from existing temp file
                     if FileManager.default.fileExists(atPath: existing.localTempURL.path) {
@@ -38,7 +38,7 @@ extension MTPDeviceActor {
                     } else {
                         // Temp file missing, start fresh
                         sink = try FileSink(url: temp)
-                        journalTransferId = try journal.beginRead(
+                        journalTransferId = try await journal.beginRead(
                             device: id,
                             handle: handle,
                             name: info.name,
@@ -52,7 +52,7 @@ extension MTPDeviceActor {
                 } else {
                     // New transfer
                     sink = try FileSink(url: temp)
-                                            journalTransferId = try journal.beginRead(
+                                            journalTransferId = try await journal.beginRead(
                         device: id,
                         handle: handle,
                         name: info.name,
@@ -93,14 +93,14 @@ extension MTPDeviceActor {
 
             // Update journal after transfer completes
             if let journal = transferJournal, let transferId = journalTransferId {
-                try journal.updateProgress(id: transferId, committed: bytesWritten)
+                try await journal.updateProgress(id: transferId, committed: bytesWritten)
             }
 
             try sink.close()
 
             // Mark as complete in journal
             if let journal = transferJournal, let transferId = journalTransferId {
-                try journal.complete(id: transferId)
+                try await journal.complete(id: transferId)
             }
 
             try atomicReplace(temp: temp, final: url)
@@ -121,7 +121,7 @@ extension MTPDeviceActor {
 
             // Mark as failed in journal
             if let journal = transferJournal, let transferId = journalTransferId {
-                try? journal.fail(id: transferId, error: error)
+                try? await journal.fail(id: transferId, error: error)
             }
 
             throw error
@@ -142,13 +142,13 @@ extension MTPDeviceActor {
         let supportsPartial = deviceInfo.operationsSupported.contains(0x95C1) // SendPartialObject
 
         var journalTransferId: String?
-        var source: any ByteSource = try FileSource(url: url)
+        let source: any ByteSource = try FileSource(url: url)
         let timeout = 10_000 // 10 seconds
 
         // Initialize transfer journal if available
         if let journal = transferJournal {
             do {
-                journalTransferId = try journal.beginWrite(
+                journalTransferId = try await journal.beginWrite(
                     device: id,
                     parent: parent ?? 0,
                     name: name,
@@ -170,21 +170,33 @@ extension MTPDeviceActor {
             // Create Sendable adapter to avoid capturing non-Sendable source
             let sourceAdapter = SendableSourceAdapter(source)
 
+            // Determine storage ID
+            var targetStorageRaw: UInt32 = 0xFFFFFFFF
+            if let p = parent {
+                if let parentInfos = try? await link.getObjectInfos([p]), let parentInfo = parentInfos.first {
+                    targetStorageRaw = parentInfo.storage.raw
+                }
+            } else {
+                if let storages = try? await self.storages(), let first = storages.first {
+                    targetStorageRaw = first.id.raw
+                }
+            }
+
             // Use thread-safe progress tracking
             let progressTracker = AtomicProgressTracker()
 
-            try await ProtoTransfer.writeWholeObject(parent: parent, name: name, size: size, dataHandler: { buf in
+            try await ProtoTransfer.writeWholeObject(storageID: targetStorageRaw, parent: parent, name: name, size: size, dataHandler: { buf in
                 let produced = sourceAdapter.produce(buf)
-                let totalBytes = progressTracker.add(produced)
+                let totalBytes = progressTracker.add(Int(produced))
                 progress.completedUnitCount = Int64(totalBytes)
-                return produced
+                return Int(produced)
             }, on: link, ioTimeoutMs: timeout)
 
             let bytesRead = progressTracker.total
 
             // Update journal after transfer completes
             if let journal = transferJournal, let transferId = journalTransferId {
-                try journal.updateProgress(id: transferId, committed: bytesRead)
+                try await journal.updateProgress(id: transferId, committed: bytesRead)
             }
 
             progress.completedUnitCount = total
@@ -192,7 +204,7 @@ extension MTPDeviceActor {
 
             // Mark as complete in journal
             if let journal = transferJournal, let transferId = journalTransferId {
-                try journal.complete(id: transferId)
+                try await journal.complete(id: transferId)
             }
 
             // Performance logging: end transfer (success)
@@ -210,7 +222,7 @@ extension MTPDeviceActor {
 
             // Mark as failed in journal
             if let journal = transferJournal, let transferId = journalTransferId {
-                try? journal.fail(id: transferId, error: error)
+                try? await journal.fail(id: transferId, error: error)
             }
 
             throw error

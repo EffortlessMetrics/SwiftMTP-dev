@@ -13,3 +13,7 @@
 ## Resume not working
 
 - Your device may not advertise `GetPartialObject64`; reads restart by design.
+
+## `events` exits with code 69
+
+- No matching device present or filter did not match. Ensure device is connected and set to **File Transfer (MTP)**, or specify targeting flags like `--vid/--pid`.

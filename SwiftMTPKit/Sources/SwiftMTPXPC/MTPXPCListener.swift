@@ -2,15 +2,17 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import SwiftMTPCore
 
 /// XPC listener that serves the MTP XPC service
 /// This should be started by the host app when it launches
-public final class MTPXPCListener {
+public final class MTPXPCListener: NSObject {
     private var listener: NSXPCListener?
     private let serviceImpl: MTPXPCServiceImpl
 
     public init(serviceImpl: MTPXPCServiceImpl = MTPXPCServiceImpl()) {
         self.serviceImpl = serviceImpl
+        super.init()
         self.listener = NSXPCListener(machServiceName: MTPXPCServiceName)
         self.listener?.delegate = self
     }

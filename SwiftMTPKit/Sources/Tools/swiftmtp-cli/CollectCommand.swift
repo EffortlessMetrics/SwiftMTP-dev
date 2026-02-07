@@ -113,7 +113,7 @@ public enum CollectCommand {
   // MARK: - Public entry point used by main.swift
   public static func run(flags: Flags) async -> ExitCode {
     let jsonMode = flags.json
-    var spinner = Spinner(message: "Collecting device evidence…", enabled: !jsonMode)
+    var spinner = Spinner("Collecting device evidence…", enabled: !jsonMode)
 
     do {
       // 1) Resolve device (VID/PID/bus/address filtering + exit codes)
@@ -126,7 +126,7 @@ public enum CollectCommand {
 
       // 2) Open device with LibUSB transport and default config (strict behavior is handled inside DeviceActor)
       spinner.start("Opening device…")
-      let (device, config) = try await openDevice(summary: summary, strict: flags.strict)
+      let (device, _) = try await openDevice(summary: summary, strict: flags.strict)
       spinner.succeed("Device opened (strict=\(flags.strict))")
 
       // 3) Create bundle path
@@ -165,10 +165,19 @@ public enum CollectCommand {
       // 7) submission.json (summary manifest)
       spinner.start("Writing submission.json…")
       let manifest = SubmissionSummary.make(from: summary, bundle: bundleURL)
-      try writeJSONFile(manifest, to: bundleURL.appendingPathComponent("submission.json"))
-      spinner.succeed("submission.json saved")
-
-      // 8) Emit JSON summary for CI if requested
+              try writeJSONFile(manifest, to: bundleURL.appendingPathComponent("submission.json"))
+              spinner.succeed("submission.json saved")
+              
+              // Record submission in persistence
+              Task {
+                  let persistence = await MTPDeviceManager.shared.persistence
+                  try? await persistence.submissions.recordSubmission(
+                      id: bundleURL.lastPathComponent,
+                      deviceId: summary.id,
+                      path: bundleURL.path
+                  )
+              }
+            // 8) Emit JSON summary for CI if requested
       if jsonMode {
         let mode: String
         if flags.safe {
@@ -194,6 +203,21 @@ public enum CollectCommand {
 
     } catch {
       if jsonMode { printJSONErrorAndExit(error, flags: flags) }
+      
+      if let collectError = error as? CollectError {
+        switch collectError {
+        case .noDeviceMatched:
+          fputs("❌ collect failed: \(error)\n", stderr)
+          return .unavailable
+        case .ambiguousSelection:
+          fputs("❌ collect failed: \(error)\n", stderr)
+          return .usage
+        case .timeout:
+          fputs("❌ collect failed: \(error)\n", stderr)
+          return .tempfail
+        }
+      }
+      
       fputs("❌ collect failed: \(error)\n", stderr)
       return .software
     }
@@ -316,14 +340,40 @@ public enum CollectCommand {
   }
 
   private static func sanitizeDump(_ s: String) -> String {
-    // Minimal redaction; your validation script performs deep checks.
+    // Comprehensive privacy sanitization for USB dumps and device information
     var t = s
-    // Redact /Users/<name>/...
+
+    // User paths (macOS, Linux, Windows)
     t = t.replacingOccurrences(of: #"/Users/[^/\n]+"#, with: "/Users/<redacted>", options: .regularExpression)
-    // Redact "Serial Number: <anything>"
+    t = t.replacingOccurrences(of: #"/home/[^/\n]+"#, with: "/home/<redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(of: #"/var/[^/\n]+"#, with: "/var/<redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(of: #"/etc/[^/\n]+"#, with: "/etc/<redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(of: #"([A-Za-z]:\\Users\\)[^\\]+"#, with: "$1<redacted>", options: .regularExpression)
+
+    // Host/computer names
+    t = t.replacingOccurrences(of: #"(?i)(Host\s*Name|Hostname|Computer\s*Name)\s*:\s*.*"#, with: "$1: <redacted>", options: .regularExpression)
+
+    // Emails
+    t = t.replacingOccurrences(of: #"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}"#, with: "<redacted-email>", options: [.regularExpression, .caseInsensitive])
+
+    // IP addresses (IPv4 and IPv6)
+    t = t.replacingOccurrences(of: #"\b(\d{1,3}\.){3}\d{1,3}\b"#, with: "<redacted-ipv4>", options: .regularExpression)
+    t = t.replacingOccurrences(of: #"\b([0-9A-Fa-f]{0,4}:){2,7}[0-9A-Fa-f]{0,4}\b"#, with: "<redacted-ipv6>", options: [.regularExpression, .caseInsensitive])
+
+    // MAC addresses
+    t = t.replacingOccurrences(of: #"\b([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b"#, with: "<redacted-mac>", options: [.regularExpression, .caseInsensitive])
+
+    // Serial numbers and device IDs
+    t = t.replacingOccurrences(of: #"(?i)(UDID|Serial\s*(?:Number)?|iSerial)\b[:\s]+(\S+)"#, with: "$1: <redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(of: #"\b([0-9a-f]{16,64})\b(?=.*\b(udid|serial|device|sn|id)\b)"#, with: "<redacted-hex>", options: [.regularExpression, .caseInsensitive])
+
+    // Possessive device names (e.g., "Steven's iPhone" → "iPhone")
+    t = t.replacingOccurrences(of: #"\b[\p{L}\p{N}._%+-]+'s\s+"#, with: "", options: [.regularExpression, .caseInsensitive])
+
+    // Legacy patterns for backward compatibility
     t = t.replacingOccurrences(of: #"Serial\s+Number:\s+[^\s]+"#, with: "Serial Number: <redacted>", options: .regularExpression)
-    // Redact hostnames (best-effort)
     t = t.replacingOccurrences(of: #"\b[A-Za-z0-9._-]+\.local\b"#, with: "<redacted>.local", options: .regularExpression)
+
     return t
   }
 
@@ -419,7 +469,7 @@ public enum CollectCommand {
   }
 
   private struct SubmissionSummary: Codable, Sendable {
-    let schemaVersion = "1.0.0"
+    var schemaVersion = "1.0.0"
     let createdAt: String
     let vendorID: UInt16
     let productID: UInt16
@@ -451,7 +501,7 @@ public enum CollectCommand {
   // MARK: - Public types for external consumption (e.g., LearnPromoteCommand)
 
   public struct SubmissionManifest: Codable {
-    let schemaVersion: String = "1.0.0"
+    var schemaVersion: String = "1.0.0"
     let tool: ToolInfo
     let host: HostInfo
     let timestamp: Date
@@ -461,7 +511,7 @@ public enum CollectCommand {
     let consent: ConsentInfo
 
     public struct ToolInfo: Codable {
-      let name: String = "swiftmtp"
+      var name: String = "swiftmtp"
       let version: String
       let commit: String?
     }
@@ -508,11 +558,11 @@ public enum CollectCommand {
   }
 
   public struct QuirkSuggestion: Codable {
-    let schemaVersion: String = "1.0.0"
+    var schemaVersion: String = "1.0.0"
     let id: String
     let match: MatchCriteria
-    let status: String = "experimental"
-    let confidence: String = "low"
+    var status: String = "experimental"
+    var confidence: String = "low"
     let overrides: [String: AnyCodable]
     let hooks: [Hook]
     let benchGates: BenchGates

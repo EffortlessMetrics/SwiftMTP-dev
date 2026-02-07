@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.0.2] – 2025-09-07
+
+### Fixed
+- Packaging/CLI: Ensures `events/delete/move` use shared `DeviceOpen.swift`. `events` correctly exits `69` when no device is present (no crash).
+
+### Notes
+- Supersedes v1.0.1 artifacts; no API changes.
+
+## [v1.0.1] – 2025-09-03
+
+### Fixed
+- `events`: crash on invocation resolved. Implements proper device enumeration, filtering, and event stream.
+- Unified device open across `delete`, `move`, `events` using `DeviceOpen.swift`. Consistent error handling & spinner behavior.
+
+### Behavior
+- Standardized exit codes: `64` (usage), `69` (unavailable/no matching device), `70` (software error).
+- JSON outputs include `schemaVersion`, `timestamp`, `event.code`, `event.parameters`.
+
+### Compatibility
+- No API changes; patch release is safe to adopt.
+
 ## [1.0.0] - 2025-01-09
 
 ### Added

@@ -20,7 +20,7 @@ public enum DBError: Error, CustomStringConvertible {
   }
 }
 
-public final class SQLiteDB {
+public final class SQLiteDB: @unchecked Sendable {
   public let path: String
   private var handle: OpaquePointer?
 

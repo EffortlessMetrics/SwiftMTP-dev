@@ -19,3 +19,40 @@ jobs:
         run: swift build -c debug --package-path SwiftMTPKit --product swiftmtp
       - name: Run smoke tests (no hardware)
         run: ./scripts/smoke.sh
+      - name: Learned store hygiene check
+        run: |
+          # Verify learned store is outside repo
+          REPO_ROOT="$(pwd)"
+          LEARNED_DIR="$HOME/Library/Application Support/SwiftMTP/learned"
+
+          # Check that learned store is NOT inside the repo
+          if [[ "$LEARNED_DIR" == "$REPO_ROOT"* ]]; then
+            echo "❌ Learned store is inside repository: $LEARNED_DIR"
+            exit 1
+          fi
+
+          # Verify no learned files accidentally committed to repo
+          if find "$REPO_ROOT" -name "*.json" -path "*/learned/*" | grep -q .; then
+            echo "❌ Found learned profile files in repository"
+            find "$REPO_ROOT" -name "*.json" -path "*/learned/*"
+            exit 1
+          fi
+
+          # Test that learned store directory can be created and accessed
+          mkdir -p "$LEARNED_DIR"
+          if [[ ! -d "$LEARNED_DIR" ]]; then
+            echo "❌ Cannot create learned store directory: $LEARNED_DIR"
+            exit 1
+          fi
+
+          # Test writing a sample file
+          echo '{"test": "data"}' > "$LEARNED_DIR/test.json"
+          if [[ ! -f "$LEARNED_DIR/test.json" ]]; then
+            echo "❌ Cannot write to learned store directory"
+            exit 1
+          fi
+
+          # Clean up test file
+          rm "$LEARNED_DIR/test.json"
+
+          echo "✅ Learned store hygiene check passed"
