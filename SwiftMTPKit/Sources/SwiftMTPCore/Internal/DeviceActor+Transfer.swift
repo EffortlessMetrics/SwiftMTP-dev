@@ -142,7 +142,7 @@ extension MTPDeviceActor {
         let supportsPartial = deviceInfo.operationsSupported.contains(0x95C1) // SendPartialObject
 
         var journalTransferId: String?
-        var source: any ByteSource = try FileSource(url: url)
+        let source: any ByteSource = try FileSource(url: url)
         let timeout = 10_000 // 10 seconds
 
         // Initialize transfer journal if available

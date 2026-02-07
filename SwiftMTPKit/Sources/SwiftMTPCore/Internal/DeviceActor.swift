@@ -100,7 +100,11 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     public func getInfo(handle: MTPObjectHandle) async throws -> MTPObjectInfo {
         try await openIfNeeded()
         let link = try await getMTPLink()
-        return try await link.getObjectInfos([handle])[0]
+        let infos = try await link.getObjectInfos([handle])
+        guard let info = infos.first else {
+            throw MTPError.objectNotFound
+        }
+        return info
     }
 
     // Note: read/write methods are implemented in DeviceActor+Transfer.swift
@@ -109,15 +113,10 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         try await openIfNeeded()
         let link = try await getMTPLink()
 
-        // Get object info to check if it's a directory
-        let objectInfo = try await link.getObjectInfos([handle])[0]
-
-        // Check if it's a directory (format code 0x3001 = Association/Directory)
-        let isDirectory = objectInfo.formatCode == 0x3001
-
-        if isDirectory && recursive {
+        if recursive {
             // Recursively delete directory contents first
-            let contents = try await link.getObjectHandles(storage: objectInfo.storage, parent: handle)
+            // We use 0xFFFFFFFF to search across all storages if needed
+            let contents = try await listAllChildren(of: handle)
             for childHandle in contents {
                 try await delete(childHandle, recursive: true)
             }
@@ -130,15 +129,17 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     }
 
     public func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {
+        // Default to current storage
+        let info = try await getInfo(handle: handle)
+        try await move(handle, to: newParent, storage: info.storage)
+    }
+
+    public func move(_ handle: MTPObjectHandle, to parent: MTPObjectHandle?, storage: MTPStorageID) async throws {
         try await openIfNeeded()
         let link = try await getMTPLink()
-
-        // Get object info to determine storage
-        let objectInfo = try await link.getObjectInfos([handle])[0]
-
-        // Move the object
+        // MoveObject (0x1019): params = [handle, storage, parent?]
         try await BusyBackoff.onDeviceBusy {
-            try await link.moveObject(handle: handle, to: objectInfo.storage, parent: newParent)
+            try await link.moveObject(handle: handle, to: storage, parent: parent)
         }
     }
 
@@ -169,23 +170,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
             return
         }
 
-        // Start event pump in the transport layer
-        // Note: Event pump will be started when the transport is opened
-        // if it supports event streaming
-
-        // Process events from the transport
-        let eventStream = AsyncStream<Data> { cont in
-            // This would be connected to the transport's event stream
-            // For now, we'll use a placeholder
-        }
-
-        // Process incoming events
-        for await eventData in eventStream {
-            if let event = MTPEvent.fromRaw(eventData) {
-                continuation.yield(event)
-            }
-        }
-
+        // Process incoming events (Stub for now)
         continuation.finish()
     }
 
@@ -218,9 +203,6 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       let qdb = try QuirkDatabase.load()
       let learnedKey = "\(summary.vendorID ?? 0):\(summary.productID ?? 0)"
       let learnedStored = LearnedStore.load(key: learnedKey)
-
-      // 3) Probing capabilities (deferred until after OpenSession)
-      let caps: [String: Bool] = [:] // Default until open
 
       // 4) Parse user overrides (env)
       let (userOverrides, _) = UserOverride.fromEnvironment()
@@ -377,37 +359,17 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
     private func startEventPump() async throws {
         // Start event pump if supported
-        if let link = try await getMTPLinkIfAvailable() {
+        if let link = await getMTPLinkIfAvailable() {
             try eventPump.startIfAvailable(on: link)
         }
     }
 
-}
-
-extension MTPDeviceActor {
-  public func delete(handle: MTPObjectHandle, recursive: Bool) async throws {
-    try await openIfNeeded()
-    if recursive, let children = try? await listAllChildren(of: handle) {
-      for kid in children { try await delete(handle: kid, recursive: true) }
+    private func listAllChildren(of parent: MTPObjectHandle) async throws -> [MTPObjectHandle] {
+        let storageID = MTPStorageID(raw: 0xFFFFFFFF) // Use all storages
+        var allInfos: [MTPObjectInfo] = []
+        for try await batch in self.list(parent: parent, in: storageID) {
+            allInfos.append(contentsOf: batch)
+        }
+        return allInfos.map { $0.handle }
     }
-    let link = try await getMTPLink()
-    try await link.deleteObject(handle: handle) // wraps opcode 0x100B
-  }
-
-  public func move(handle: MTPObjectHandle, to parent: MTPObjectHandle?, storage: MTPStorageID?) async throws {
-    try await openIfNeeded()
-    let link = try await getMTPLink()
-    // MoveObject (0x1019): params = [handle, storage, parent?]
-    try await link.moveObject(handle: handle, to: storage ?? MTPStorageID(raw: 0xFFFFFFFF), parent: parent)
-  }
-
-
-  private func listAllChildren(of parent: MTPObjectHandle) async throws -> [MTPObjectHandle] {
-    let storageID = MTPStorageID(raw: 0xFFFFFFFF) // Use all storages
-    var allInfos: [MTPObjectInfo] = []
-    for try await batch in self.list(parent: parent, in: storageID) {
-      allInfos.append(contentsOf: batch)
-    }
-    return allInfos.map { $0.handle }
-  }
 }

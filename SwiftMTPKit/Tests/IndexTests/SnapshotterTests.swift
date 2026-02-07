@@ -12,8 +12,7 @@ struct SnapshotterTests {
 
     @Test("Initialize snapshotter")
     func testSnapshotterInitialization() throws {
-        let snapshotter = try Snapshotter(dbPath: ":memory:")
-        #expect(snapshotter != nil)
+        _ = try Snapshotter(dbPath: ":memory:")
     }
 
     @Test("Capture device info")

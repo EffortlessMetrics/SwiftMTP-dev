@@ -201,19 +201,13 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
 
   public func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo] {
     var out = [MTPObjectInfo]()
-    let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
     for h in handles {
       let collector = SimpleCollector()
       let res = try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1008, txid: 0, params: [h]), dataPhaseLength: nil, dataInHandler: { collector.append($0); return $0.count }, dataOutHandler: nil)
       if !res.isOK { continue }
       let responseData = collector.data
-      if debug {
-          print("   [USB] ObjectInfo for handle \(h): \(responseData.count) bytes")
-          print("   [USB] Data hex: \(responseData.map { String(format: "%02x", $0) }.joined(separator: " "))")
-      }
       var r = PTPReader(data: responseData)
       guard let sid = r.u32(), let fmt = r.u16() else { 
-          if debug { print("   [USB] Failed to parse sid/fmt for handle \(h)") }
           continue 
       }
       _ = r.u16() // ProtectionStatus
@@ -230,7 +224,6 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       _ = r.u32() // AssociationDesc
       _ = r.u32() // SequenceNumber
       let name = r.string() ?? "Unknown"
-      if debug { print("   [USB] Parsed: name=\(name) size=\(String(describing: size)) parent=\(String(describing: par))") }
       out.append(MTPObjectInfo(handle: h, storage: MTPStorageID(raw: sid), parent: par == 0 ? nil : par, name: name, sizeBytes: (size == nil || size == 0xFFFFFFFF) ? nil : UInt64(size!), modified: nil as Date?, formatCode: fmt, properties: [:]))
     }
     return out
@@ -323,12 +316,12 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     }
 
     if debug { print(String(format: "   [USB] op=0x%04x tx=%u phase=RESPONSE", command.code, txid)) }
-    let rHdr: PTPHeader, available: Int, initial: Data
-    if let f = firstChunk { rHdr = f.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }; available = f.count - PTPHeader.size; initial = f.subdata(in: PTPHeader.size..<f.count) }
+    let rHdr: PTPHeader, initial: Data
+    if let f = firstChunk { rHdr = f.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }; initial = f.subdata(in: PTPHeader.size..<f.count) }
     else {
       var hBuf = [UInt8](repeating: 0, count: PTPHeader.size)
       try bulkReadExact(inEP, into: &hBuf, need: PTPHeader.size, timeout: UInt32(config.ioTimeoutMs))
-      rHdr = hBuf.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }; available = 0; initial = Data()
+      rHdr = hBuf.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }; initial = Data()
     }
     var pCount = (Int(rHdr.length) - PTPHeader.size) / 4, params = [UInt32]()
     var pData = initial

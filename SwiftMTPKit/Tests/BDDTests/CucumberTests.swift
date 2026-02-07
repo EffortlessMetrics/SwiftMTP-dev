@@ -70,7 +70,7 @@ private func runAsync(
     testCase.wait(for: [exp], timeout: timeout)
 }
 
-extension Cucumber: StepImplementation {
+extension Cucumber: @retroactive StepImplementation {
     public var bundle: Bundle { Bundle.module }
 
     public func setupSteps() {

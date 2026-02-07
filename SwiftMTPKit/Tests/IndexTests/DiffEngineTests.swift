@@ -12,37 +12,36 @@ struct DiffEngineTests {
 
     @Test("Initialize diff engine")
     func testDiffEngineInitialization() throws {
-        let diffEngine = try DiffEngine(dbPath: ":memory:")
-        #expect(diffEngine != nil)
+        _ = try DiffEngine(dbPath: ":memory:")
     }
 
     @Test("Compute diff with no previous generation")
     func testDiffNoPreviousGeneration() throws {
-        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        _ = try DiffEngine(dbPath: ":memory:")
         // Simplified test to check compilation
     }
 
     @Test("Compute diff with added files")
     func testDiffWithAddedFiles() throws {
-        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        _ = try DiffEngine(dbPath: ":memory:")
         // Simplified test to check compilation
     }
 
     @Test("Compute diff with removed files")
     func testDiffWithRemovedFiles() throws {
-        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        _ = try DiffEngine(dbPath: ":memory:")
         // Simplified test to check compilation
     }
 
     @Test("Compute diff with modified files")
     func testDiffWithModifiedFiles() throws {
-        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        _ = try DiffEngine(dbPath: ":memory:")
         // Simplified test to check compilation
     }
 
     @Test("Compute diff with no changes")
     func testDiffWithNoChanges() throws {
-        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        _ = try DiffEngine(dbPath: ":memory:")
         // Simplified test to check compilation
     }
 

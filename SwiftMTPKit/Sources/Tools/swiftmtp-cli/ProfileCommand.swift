@@ -48,7 +48,7 @@ struct ProfileCommand {
                 for _ in 1...iterations {
                     _ = try await profiler.measure("ListRootHandles") {
                         var objects: [MTPObjectInfo] = []
-                        let stream = device.list(parent: nil, in: storage.id)
+                        let stream = device.list(parent: nil as MTPObjectHandle?, in: storage.id)
                         for try await batch in stream {
                             objects.append(contentsOf: batch)
                         }
@@ -58,7 +58,7 @@ struct ProfileCommand {
                 
                 // 4. Individual ObjectInfo Latency (Sample 10 objects)
                 var objects: [MTPObjectInfo] = []
-                let stream = device.list(parent: nil, in: storage.id)
+                let stream = device.list(parent: nil as MTPObjectHandle?, in: storage.id)
                 for try await batch in stream {
                     objects.append(contentsOf: batch)
                     if objects.count >= 10 { break }
