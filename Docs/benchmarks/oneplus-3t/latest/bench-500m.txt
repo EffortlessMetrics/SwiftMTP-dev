@@ -1,17 +1,18 @@
-# Pixel 7 500MB Benchmark
-# Device: google-pixel-7-4ee1
+# OnePlus 3T 500MB Benchmark
+# Device: oneplus-3t-f003
 # Timestamp: Fri Feb  7 04:22:00 EST 2026
 
 🏃 Benchmarking with 500.0 MB...
 ❌ Benchmark failed: transport(SwiftMTPCore.TransportError.noDevice)
 
 ## USB Device Information (from successful usb-dump)
-Device 18d1:4ee1 (Google Pixel 7)
+Device 2a70:f003 (OnePlus 3T)
   iface=0 alt=0 class=0x06 sub=0x01 proto=0x01 in=0x81 out=0x01 evt=0x82 name="MTP"
+  iface=1 alt=0 class=0x08 sub=0x06 proto=0x50 in=0x83 out=0x02 evt=0x00 name="Mass Storage"
 
 ## Device Details
-- Vendor ID: 6353 (0x18D1)
-- Product ID: 20193 (0x4EE1)
+- Vendor ID: 10864 (0x2A70)
+- Product ID: 61443 (0xF003)
 - Serial: REDACTED
 - USB Speed: SuperSpeed
 

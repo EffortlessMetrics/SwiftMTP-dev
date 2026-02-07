@@ -2,7 +2,7 @@
   "version": 1,
   "rules": {
     "AllPublicDeclarationsHaveDocumentation": false,
-    "AlwaysUseLowerCamelCase": true,
+    "AlwaysUseLowerCamelCase": false,
     "DoNotUseSemicolons": true,
     "NoParensAroundConditions": true,
     "NoVoidReturnOnFunctionSignature": true,

@@ -1,21 +1,22 @@
-# Google Pixel 7 Probe Results
-# Device: google-pixel-7-4ee1
+# OnePlus 3T Probe Results
+# Device: oneplus-3t-f003
 # Generated: Fri Feb  7 04:22:00 EST 2026
 # Method: USB enumeration via libusb
 
 ## USB Device Information
 USB Dump:
-Device 18d1:4ee1 (Google Pixel 7)
+Device 2a70:f003 (OnePlus 3T)
   iface=0 alt=0 class=0x06 sub=0x01 proto=0x01 in=0x81 out=0x01 evt=0x82 name="MTP"
+  iface=1 alt=0 class=0x08 sub=0x06 proto=0x50 in=0x83 out=0x02 evt=0x00 name="Mass Storage"
 
 ## Device Details (from ioreg)
-- Vendor ID: 6353 (0x18D1)
-- Product ID: 20193 (0x4EE1)
+- Vendor ID: 10864 (0x2A70)
+- Product ID: 61443 (0xF003)
 - Serial Number: REDACTED
 - USB Speed: SuperSpeed (USB 3.2 Gen 1)
-- bcdUSB: 528 (USB 3.2)
-- Manufacturer: Google
-- Product: Pixel 7
+- bcdUSB: 512 (USB 2.0)
+- Manufacturer: Android
+- Product: Android (OnePlus 3T)
 
 ## MTP Interface Configuration
 - Interface Class: 0x06 (Still Image)
@@ -24,6 +25,13 @@ Device 18d1:4ee1 (Google Pixel 7)
 - Input Endpoint: 0x81
 - Output Endpoint: 0x01
 - Event Endpoint: 0x82
+
+## Secondary Interface (Mass Storage)
+- Interface Class: 0x08 (Mass Storage)
+- Interface Subclass: 0x06
+- Interface Protocol: 0x50
+- Input Endpoint: 0x83
+- Output Endpoint: 0x02
 
 ## Status
 ⚠️ Device detected via USB enumeration but SwiftMTP cannot establish MTP session.
@@ -34,17 +42,20 @@ This may require:
 
 ## Quirk Configuration (from Specs/quirks.json)
 {
-  "id": "google-pixel-7-4ee1",
-  "match": { "vid": "0x18d1", "pid": "0x4ee1" },
+  "id": "oneplus-3t-f003",
+  "match": { "vid": "0x2a70", "pid": "0xf003" },
   "tuning": {
-    "maxChunkBytes": 2097152,
-    "handshakeTimeoutMs": 20000,
+    "maxChunkBytes": 1048576,
+    "handshakeTimeoutMs": 15000,
     "ioTimeoutMs": 30000,
     "inactivityTimeoutMs": 10000,
-    "overallDeadlineMs": 180000,
-    "stabilizeMs": 2000,
-    "resetOnOpen": false
+    "overallDeadlineMs": 120000,
+    "stabilizeMs": 1000,
+    "resetOnOpen": true
   },
+  "hooks": [
+    { "phase": "postOpenSession", "delayMs": 1000 }
+  ],
   "confidence": "medium",
-  "status": "stable"
+  "status": "experimental"
 }
