@@ -14,6 +14,11 @@ mkdir -p "$LOGS_DIR" "$BUNDLE_ROOT"
 # JSON validator
 json_ok() { jq . >/dev/null 2>&1; }
 
+# Helper function to run swiftmtp commands
+run_swiftmtp() {
+  swift run --package-path "$PKG_PATH" swiftmtp "$@"
+}
+
 # ---------- build ----------
 echo "🔧 Building CLI…"
 swift build --package-path "$PKG_PATH" -c debug >"$LOGS_DIR/build.log" 2>&1 || {
@@ -43,21 +48,25 @@ jq -e 'has("schemaVersion") and has("mode") and has("layers") and has("effective
 # ---------- probe (targeted) ----------
 echo "🔎 Probe (VID=$VID PID=$PID)"
 set +e  # Temporarily disable exit on error for hardware-dependent commands
-"$SWIFTMTP" probe \
+run_swiftmtp probe \
       --noninteractive --vid "$VID" --pid "$PID" --json \
       1> "$LOGS_DIR/probe.json" 2> "$LOGS_DIR/probe-stderr.log"
 code=$?
 set -e  # Re-enable exit on error
 echo "ℹ️ probe exited with code $code"
 # Handle "no device" scenario - exit code 69 (unavailable) is expected in CI without hardware
-if [ $code -eq 69 ]; then
-  echo "ℹ️ Device unavailable (code 69) - this is expected without hardware"
-  # Continue with other tests - they will also fail with 69/75 which is expected
+# Exit codes 0, 69, 75 are acceptable for "no device" scenarios
+if [ $code -eq 69 ] || [ $code -eq 75 ]; then
+  echo "ℹ️ Device unavailable (code $code) - this is expected without hardware"
 fi
-# Check if we got valid JSON even if device was unavailable
-if [ -f "$LOGS_DIR/probe.json" ]; then
-  cat "$LOGS_DIR/probe.json" | json_ok || { echo "❌ probe JSON invalid"; exit 70; }
-  jq -e 'has("capabilities") and has("effective")' "$LOGS_DIR/probe.json" >/dev/null || { echo "❌ probe JSON missing required fields"; exit 70; }
+# Check if we got valid JSON only on success
+if [ $code -eq 0 ]; then
+  if [ -f "$LOGS_DIR/probe.json" ]; then
+    cat "$LOGS_DIR/probe.json" | json_ok || { echo "❌ probe JSON invalid"; exit 70; }
+    jq -e 'has("capabilities") and has("effective")' "$LOGS_DIR/probe.json" >/dev/null || { echo "❌ probe JSON missing required fields"; exit 70; }
+  else
+    echo "❌ probe.json not created on success"; exit 70;
+  fi
 else
   echo "ℹ️ probe.json not created (expected when no device)"
 fi
@@ -88,21 +97,26 @@ fi
 # ---------- ls (top level only) ----------
 echo "📂 List"
 set +e  # Temporarily disable exit on error
-swift run --package-path "$PKG_PATH" swiftmtp ls \
+run_swiftmtp ls 0 \
   --vid "$VID" --pid "$PID" --json \
   1> "$LOGS_DIR/ls.json" 2> "$LOGS_DIR/ls-stderr.log"
 code=$?
 set -e  # Re-enable exit on error
-if [ $code -ne 0 ] && [ $code -ne 75 ]; then
+# Exit codes 0, 69, 75 are acceptable for "no device" scenarios
+if [ $code -ne 0 ] && [ $code -ne 69 ] && [ $code -ne 75 ]; then
   echo "❌ ls failed with exit $code"
   exit $code
 fi
-if [ $code -eq 75 ] || [ $code -eq 69 ]; then
+if [ $code -eq 69 ] || [ $code -eq 75 ]; then
   echo "ℹ️ ls failed with exit $code (expected: no device connected)"
 fi
-# Validate JSON only if file exists
-if [ -f "$LOGS_DIR/ls.json" ]; then
-  cat "$LOGS_DIR/ls.json" | json_ok || { echo "❌ ls JSON invalid"; exit 70; }
+# Validate JSON only on success
+if [ $code -eq 0 ]; then
+  if [ -f "$LOGS_DIR/ls.json" ]; then
+    cat "$LOGS_DIR/ls.json" | json_ok || { echo "❌ ls JSON invalid"; exit 70; }
+  else
+    echo "❌ ls.json not created on success"; exit 70;
+  fi
 else
   echo "ℹ️ ls.json not created (expected when no device)"
 fi
