@@ -17,7 +17,7 @@ final class BoxedOffset: @unchecked Sendable {
 
 public enum ProtoTransfer {
     /// Whole-object read: GetObject, stream data-in into a sink.
-    static func readWholeObject(handle: UInt32, on link: MTPLink,
+    public static func readWholeObject(handle: UInt32, on link: MTPLink,
                                 dataHandler: @escaping MTPDataIn,
                                 ioTimeoutMs: Int) async throws {
         let command = PTPContainer(
@@ -35,20 +35,23 @@ public enum ProtoTransfer {
                                  dataHandler: @escaping MTPDataOut,
                                  on link: MTPLink,
                                  ioTimeoutMs: Int) async throws {
-        let parentParam = parent ?? 0x00000000
+        // PTP Spec: SendObjectInfo command parameters are [StorageID, ParentHandle]
+        // Try using 0xFFFFFFFF for storageID in both places for some devices,
+        // but real ID is usually better. 
+        let parentParam = parent ?? 0xFFFFFFFF
         let targetStorage = (storageID == 0 || storageID == 0xFFFFFFFF) ? 0xFFFFFFFF : storageID
-        let formatCode: UInt16 = 0x3000 // Undefined
+        let formatCode = PTPObjectFormat.forFilename(name)
         
         let sendObjectInfoCommand = PTPContainer(
             length: 20, // 12 + 2 * 4
             type: PTPContainer.Kind.command.rawValue,
             code: PTPOp.sendObjectInfo.rawValue,
             txid: 0,
-            params: [0, parentParam] // 0 for default storage
+            params: [targetStorage, parentParam]
         )
 
-        // Some devices prefer storageID=0 in the dataset to mean "current/default"
-        let dataset = PTPObjectInfoDataset.encode(storageID: 0, parentHandle: parentParam, format: formatCode, size: size, name: name)
+        let dataset = PTPObjectInfoDataset.encode(storageID: targetStorage, parentHandle: parentParam, format: formatCode, size: size, name: name)
+        
         if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
             print("   [USB] SendObjectInfo dataset length: \(dataset.count) bytes")
         }
@@ -64,9 +67,6 @@ public enum ProtoTransfer {
             return toCopy
         })
         try infoRes.checkOK()
-
-        // Capture assigned handle if present in response params
-        let _ = infoRes.params.first ?? 0
 
         try await Task.sleep(nanoseconds: 100_000_000)
 

@@ -195,6 +195,7 @@ if filteredArgs.isEmpty {
     print("  pull <handle> <dest> - Download file")
     print("  push <src> <parent-handle> - Upload file")
     print("  bench <size> - Benchmark transfer speed")
+    print("  profile [--iterations <n>] - Run detailed performance profiling")
     print("  mirror <dest> - Mirror device contents")
     print("  quirks --explain - Show active device quirk configuration")
     print("  health    - Verify libusb availability and permissions")
@@ -305,6 +306,12 @@ case "push":
     await runPush(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "bench":
     await runBench(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
+case "profile":
+    var iter = 3
+    if let idx = remainingArgs.firstIndex(of: "--iterations"), idx + 1 < remainingArgs.count {
+        iter = Int(remainingArgs[idx+1]) ?? 3
+    }
+    await ProfileCommand.run(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), iterations: iter)
 case "mirror":
     await runMirror(flags: CLIFlags(realOnly: realOnly, useMock: useMock, mockProfile: mockProfile, json: json, jsonlOutput: jsonlOutput, traceUSB: traceUSB, strict: strict, safe: safe, traceUSBDetails: traceUSBDetails, targetVID: targetVID, targetPID: targetPID, targetBus: targetBus, targetAddress: targetAddress), args: remainingArgs)
 case "quirks":

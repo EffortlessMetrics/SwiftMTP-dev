@@ -235,6 +235,19 @@ public struct PTPPropList: Sendable {
     }
 }
 
+public enum PTPObjectFormat {
+    public static func forFilename(_ name: String) -> UInt16 {
+        let lower = name.lowercased()
+        if lower.hasSuffix(".txt") { return 0x3004 } // Text
+        if lower.hasSuffix(".jpg") || lower.hasSuffix(".jpeg") { return 0x3801 } // EXIF/JPEG
+        if lower.hasSuffix(".png") { return 0x380b } // PNG
+        if lower.hasSuffix(".mp4") { return 0x300b } // MP4
+        if lower.hasSuffix(".mp3") { return 0x3009 } // MP3
+        if lower.hasSuffix(".aac") { return 0xb903 } // AAC
+        return 0x3000 // Undefined
+    }
+}
+
 public struct PTPObjectInfoDataset {
     public static func encode(storageID: UInt32, parentHandle: UInt32, format: UInt16, size: UInt64, name: String) -> Data {
         var data = Data()
@@ -269,6 +282,7 @@ public struct PTPObjectInfoDataset {
         put32(0) // AssociationDesc
         put32(0) // SequenceNumber
         putPTPString(name)
+        // Many Android devices expect a non-empty date or at least a specific format
         // OnePlus 3T observation shows 20180101T000505 format
         putPTPString("20250101T000000") // CaptureDate
         putPTPString("20250101T000000") // ModificationDate
