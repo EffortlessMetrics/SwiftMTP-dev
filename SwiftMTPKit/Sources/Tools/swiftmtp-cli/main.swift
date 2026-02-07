@@ -200,6 +200,7 @@ if filteredArgs.isEmpty {
     print("  quirks --explain - Show active device quirk configuration")
     print("  health    - Verify libusb availability and permissions")
     print("  collect   - Collect device data for submission (see collect --help)")
+    print("  submit <bundle> [--gh] - Submit a collected bundle to the project")
     print("  delete <handle> [--recursive] - Delete file/directory")
     print("  move <handle> <new-parent> - Move file/directory")
     print("  events [seconds] - Monitor device events")
@@ -345,6 +346,14 @@ case "collect":
         exitNow(.ok)
     }
     await runCollect()
+case "submit":
+    guard let bundlePath = remainingArgs.first else {
+        print("❌ Usage: submit <bundle-path> [--gh]")
+        exitNow(.usage)
+    }
+    let gh = remainingArgs.contains("--gh")
+    let exitCode = await SubmitCommand.run(bundlePath: bundlePath, gh: gh)
+    exit(exitCode.rawValue)
 case "learn-promote":
     if remainingArgs.contains("--help") || remainingArgs.contains("-h") {
         LearnPromoteCommand.printHelp()

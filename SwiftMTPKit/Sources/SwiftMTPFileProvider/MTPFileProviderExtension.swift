@@ -22,19 +22,67 @@ public final class MTPFileProviderExtension: NSFileProviderReplicatedExtension {
             return
         }
 
-        // For tech preview, create a basic item based on the identifier
-        // In full implementation, you'd query the device for current metadata
-        let item = MTPFileProviderItem(
-            deviceId: components.deviceId,
-            storageId: components.storageId,
-            objectHandle: components.objectHandle,
-            name: components.objectHandle != nil ? "Object \(components.objectHandle!)" : (components.storageId != nil ? "Storage \(components.storageId!)" : "Device \(components.deviceId)"),
-            size: nil, // Would query device
-            isDirectory: components.objectHandle == nil, // Simplified assumption
-            modifiedDate: nil
-        )
+        // Ensure we have an XPC connection
+        ensureXPCConnection()
 
-        completionHandler(item, nil)
+        guard let xpcService = xpcConnection?.remoteObjectProxy as? MTPXPCService else {
+            completionHandler(nil, NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.serverUnreachable.rawValue))
+            return
+        }
+
+        if let objectHandle = components.objectHandle {
+            // Fetch real object metadata via XPC
+            let listRequest = ObjectListRequest(deviceId: components.deviceId, storageId: components.storageId ?? 0, parentHandle: nil)
+            xpcService.listObjects(listRequest) { response in
+                if response.success, let objects = response.objects,
+                   let object = objects.first(where: { $0.handle == objectHandle }) {
+                    let item = MTPFileProviderItem(
+                        deviceId: components.deviceId,
+                        storageId: components.storageId,
+                        objectHandle: object.handle,
+                        name: object.name,
+                        size: object.sizeBytes,
+                        isDirectory: object.isDirectory,
+                        modifiedDate: object.modifiedDate
+                    )
+                    completionHandler(item, nil)
+                } else {
+                    completionHandler(nil, NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.noSuchItem.rawValue))
+                }
+            }
+        } else if let storageId = components.storageId {
+            // Fetch storage metadata
+            let storageRequest = StorageListRequest(deviceId: components.deviceId)
+            xpcService.listStorages(storageRequest) { response in
+                if response.success, let storages = response.storages,
+                   let storage = storages.first(where: { $0.storageId == storageId }) {
+                    let item = MTPFileProviderItem(
+                        deviceId: components.deviceId,
+                        storageId: storage.storageId,
+                        objectHandle: nil,
+                        name: storage.description,
+                        size: storage.capacityBytes,
+                        isDirectory: true,
+                        modifiedDate: nil
+                    )
+                    completionHandler(item, nil)
+                } else {
+                    completionHandler(nil, NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.noSuchItem.rawValue))
+                }
+            }
+        } else {
+            // Root device item
+            let item = MTPFileProviderItem(
+                deviceId: components.deviceId,
+                storageId: nil,
+                objectHandle: nil,
+                name: "MTP Device \(components.deviceId)",
+                size: nil,
+                isDirectory: true,
+                modifiedDate: nil
+            )
+            completionHandler(item, nil)
+        }
     }
 
     public override func urlForItem(withPersistentIdentifier identifier: NSFileProviderItemIdentifier, completionHandler: @escaping (URL?, Error?) -> Void) {
