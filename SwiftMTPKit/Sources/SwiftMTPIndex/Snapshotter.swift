@@ -92,8 +92,14 @@ public final class Snapshotter: Sendable {
         // Mark previous generation objects as tombstoned
         try markPreviousGenerationTombstoned(deviceId: deviceId, currentGen: gen)
 
-        // Record snapshot
+        // Record snapshot in SQLite
         try recordSnapshot(deviceId: deviceId, gen: gen, timestamp: start)
+        
+        // Record snapshot in modern persistence provider
+        Task {
+            let persistence = await MTPDeviceManager.shared.persistence
+            try? await persistence.snapshots.recordSnapshot(deviceId: deviceId, generation: gen, path: nil, hash: nil)
+        }
 
         let duration = Date().timeIntervalSince(start)
         log.info("Snapshot capture completed for device \(deviceId.raw), generation \(gen), duration \(duration)s")

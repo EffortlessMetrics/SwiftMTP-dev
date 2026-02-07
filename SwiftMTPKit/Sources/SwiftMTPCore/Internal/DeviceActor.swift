@@ -196,13 +196,14 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       if debugEnabled { print("   [Actor] applyTuningAndOpenSession starting...") }
 
       // 1) Build fingerprint from USB IDs and interface details
-      _ = try await self.buildFingerprint()
+      let fingerprint = try await self.buildFingerprint()
 
       // 2) Load quirks DB and learned profile
       if debugEnabled { print("   [Actor] Loading quirks DB...") }
       let qdb = try QuirkDatabase.load()
-      let learnedKey = "\(summary.vendorID ?? 0):\(summary.productID ?? 0)"
-      let learnedStored = LearnedStore.load(key: learnedKey)
+      
+      let persistence = await MTPDeviceManager.shared.persistence
+      let learnedProfile = try await persistence.learnedProfiles.loadProfile(for: fingerprint)
 
       // 4) Parse user overrides (env)
       let (userOverrides, _) = UserOverride.fromEnvironment()
@@ -216,13 +217,13 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
       // 5) Convert learned profile
       var learnedTuning: EffectiveTuning?
-      if let stored = learnedStored {
+      if let profile = learnedProfile {
         learnedTuning = EffectiveTuning(
-          maxChunkBytes: stored.maxChunkBytes,
-          ioTimeoutMs: stored.ioTimeoutMs,
-          handshakeTimeoutMs: stored.handshakeTimeoutMs,
-          inactivityTimeoutMs: stored.inactivityTimeoutMs,
-          overallDeadlineMs: stored.overallDeadlineMs,
+          maxChunkBytes: profile.optimalChunkSize ?? 2 * 1024 * 1024,
+          ioTimeoutMs: profile.optimalIoTimeoutMs ?? 10_000,
+          handshakeTimeoutMs: profile.avgHandshakeMs ?? 6_000,
+          inactivityTimeoutMs: profile.optimalInactivityTimeoutMs ?? 8_000,
+          overallDeadlineMs: 60_000,
           stabilizeMs: 0,
           resetOnOpen: false,
           disableEventPump: false,
@@ -291,7 +292,15 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       }
 
       // 13) Record success
-      LearnedStore.update(key: learnedKey, obs: finalTuning)
+      let updatedProfile = (learnedProfile ?? LearnedProfile(fingerprint: fingerprint)).merged(with: SessionData(
+        actualChunkSize: finalTuning.maxChunkBytes,
+        handshakeTimeMs: finalTuning.handshakeTimeoutMs,
+        effectiveIoTimeoutMs: finalTuning.ioTimeoutMs,
+        effectiveInactivityTimeoutMs: finalTuning.inactivityTimeoutMs,
+        wasSuccessful: true
+      ))
+      try await persistence.learnedProfiles.saveProfile(updatedProfile, for: self.id)
+      
       if debugEnabled { print("   [Actor] applyTuningAndOpenSession complete.") }
     }
 

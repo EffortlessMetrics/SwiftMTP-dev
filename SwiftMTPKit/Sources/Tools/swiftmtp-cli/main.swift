@@ -3,6 +3,7 @@
 
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
+import SwiftMTPStore
 import Foundation
 
 @MainActor
@@ -84,6 +85,9 @@ struct SwiftMTPCLI {
     func run() async {
         var mutableSelf = self
         mutableSelf.parseArgs()
+
+        // Initialize persistence
+        await MTPDeviceManager.shared.setPersistence(SwiftMTPStoreAdapter())
 
         if mutableSelf.filteredArgs.isEmpty {
             printHelp()

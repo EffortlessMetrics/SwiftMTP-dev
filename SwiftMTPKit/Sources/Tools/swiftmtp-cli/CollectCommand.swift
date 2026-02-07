@@ -165,10 +165,19 @@ public enum CollectCommand {
       // 7) submission.json (summary manifest)
       spinner.start("Writing submission.json…")
       let manifest = SubmissionSummary.make(from: summary, bundle: bundleURL)
-      try writeJSONFile(manifest, to: bundleURL.appendingPathComponent("submission.json"))
-      spinner.succeed("submission.json saved")
-
-      // 8) Emit JSON summary for CI if requested
+              try writeJSONFile(manifest, to: bundleURL.appendingPathComponent("submission.json"))
+              spinner.succeed("submission.json saved")
+              
+              // Record submission in persistence
+              Task {
+                  let persistence = await MTPDeviceManager.shared.persistence
+                  try? await persistence.submissions.recordSubmission(
+                      id: bundleURL.lastPathComponent,
+                      deviceId: summary.id,
+                      path: bundleURL.path
+                  )
+              }
+            // 8) Emit JSON summary for CI if requested
       if jsonMode {
         let mode: String
         if flags.safe {

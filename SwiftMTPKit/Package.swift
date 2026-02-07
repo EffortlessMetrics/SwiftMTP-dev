@@ -15,6 +15,7 @@ let package = Package(
     .library(name: "SwiftMTPSync", targets: ["SwiftMTPSync"]),
     .library(name: "SwiftMTPObservability", targets: ["SwiftMTPObservability"]),
     .library(name: "SwiftMTPQuirks", targets: ["SwiftMTPQuirks"]),
+    .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
   ],
   dependencies: [
@@ -35,6 +36,10 @@ let package = Package(
               .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
               .product(name: "Collections", package: "swift-collections")
             ]),
+
+    .target(name: "SwiftMTPStore",
+            dependencies: ["SwiftMTPCore"],
+            swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     // libusb via Homebrew for dev (dynamic)
     .systemLibrary(name: "CLibusb", path: "Sources/CLibusb", pkgConfig: "libusb-1.0", providers: [.brew(["libusb"])]),
@@ -58,7 +63,7 @@ let package = Package(
             resources: [.process("Resources")]),
 
     .executableTarget(name: "swiftmtp-cli",
-                      dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPSync", "SwiftMTPObservability", "SwiftMTPQuirks"],
+                      dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPSync", "SwiftMTPObservability", "SwiftMTPQuirks", "SwiftMTPStore"],
                       path: "Sources/Tools/swiftmtp-cli",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 

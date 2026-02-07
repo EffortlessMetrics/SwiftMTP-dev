@@ -86,4 +86,10 @@ public actor ProfilingManager {
             metrics: metrics.sorted { $0.operation < $1.operation }
         )
     }
+    
+    public func saveReport(info: MTPDeviceInfo, deviceId: MTPDeviceID) async throws {
+        let profile = report(info: info)
+        let persistence = await MTPDeviceManager.shared.persistence
+        try await persistence.profiling.recordProfile(profile, for: deviceId)
+    }
 }

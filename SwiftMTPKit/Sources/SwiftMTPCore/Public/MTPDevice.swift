@@ -386,6 +386,14 @@ public struct SwiftMTPConfig: Sendable {
 public actor MTPDeviceManager {
   /// Shared instance for device management
   public static let shared = MTPDeviceManager()
+  
+  /// Persistence provider for learned profiles, profiling runs, etc.
+  public var persistence: any MTPPersistenceProvider = NullPersistenceProvider()
+  
+  public func setPersistence(_ provider: any MTPPersistenceProvider) {
+    self.persistence = provider
+  }
+  
   private var attachedContinuation: AsyncStream<MTPDeviceSummary>.Continuation?
   private var detachedContinuation: AsyncStream<MTPDeviceID>.Continuation?
   private var currentDevices: [MTPDeviceSummary] = []
@@ -542,7 +550,8 @@ public actor MTPDeviceManager {
   /// }
   /// ```
   public func openDevice(with summary: MTPDeviceSummary, transport: any MTPTransport, config: SwiftMTPConfig = .init()) async throws -> MTPDevice {
-    return MTPDeviceActor(id: summary.id, summary: summary, transport: transport, config: config)
+    let journal = self.persistence.transferJournal
+    return MTPDeviceActor(id: summary.id, summary: summary, transport: transport, config: config, transferJournal: journal)
   }
 
   /// Get the current configuration used by this device manager.
