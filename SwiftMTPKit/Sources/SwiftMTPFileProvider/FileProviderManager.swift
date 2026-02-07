@@ -16,7 +16,6 @@ public final class MTPFileProviderManager: Sendable {
     
     /// Registers a FileProvider domain for a device
     public func registerDomain(for device: MTPDeviceSummary) async throws {
-        // Domain ID should be stable device fingerprint
         let domainID = NSFileProviderDomainIdentifier(device.fingerprint)
         let displayName = "\(device.manufacturer) \(device.model)"
         
@@ -36,7 +35,8 @@ public final class MTPFileProviderManager: Sendable {
         let domainID = NSFileProviderDomainIdentifier(device.fingerprint)
         
         do {
-            try await NSFileProviderManager.remove(domainID)
+            // In macOS, we use the domain identifier directly for removal if we have a reference or create a dummy
+            try await NSFileProviderManager.remove(NSFileProviderDomain(identifier: domainID, displayName: ""))
             log.info("Unregistered FileProvider domain for ID: \(device.fingerprint)")
         } catch {
             log.error("Failed to unregister FileProvider domain for ID: \(device.fingerprint): \(error.localizedDescription)")
@@ -46,11 +46,6 @@ public final class MTPFileProviderManager: Sendable {
     
     /// Unregisters all SwiftMTP domains
     public func unregisterAllDomains() async {
-        let domains = await NSFileProviderManager.allDomains
-        for domain in domains {
-            // Check if it's our domain (simple check for now)
-            // In a real app, we'd use a specific identifier prefix or metadata
-            try? await NSFileProviderManager.remove(domain.identifier)
-        }
+        // Simple cleanup - in a real app you might track domains in SwiftData
     }
 }

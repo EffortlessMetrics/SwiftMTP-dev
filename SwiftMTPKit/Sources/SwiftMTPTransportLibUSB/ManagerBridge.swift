@@ -3,6 +3,7 @@
 
 import SwiftMTPCore
 import CLibusb
+import Foundation
 
 // Extend the core TransportDiscovery to provide the libusb implementation
 extension SwiftMTPCore.TransportDiscovery {
@@ -14,19 +15,29 @@ extension SwiftMTPCore.TransportDiscovery {
 
 // Extend MTPDeviceManager to provide LibUSB-specific implementations
 extension SwiftMTPCore.MTPDeviceManager {
-    /// Get a snapshot of currently connected real MTP devices using LibUSB.
-    public func currentRealDevices() async throws -> [SwiftMTPCore.MTPDeviceSummary] {
-        try await LibUSBDiscovery.enumerateMTPDevices()
+    
+    public func currentRealDevices() async throws -> [MTPDevice] {
+        let summaries = try await LibUSBDiscovery.enumerateMTPDevices()
+        var devices: [MTPDevice] = []
+        
+        for summary in summaries {
+            // We use the shared transport and current config
+            let transport = LibUSBTransport()
+            if let device = try? await openDevice(with: summary, transport: transport, config: getConfig()) {
+                devices.append(device)
+            }
+        }
+        return devices
     }
 
     /// Open the first available real MTP device using LibUSB transport.
     public func openFirstRealDevice() async throws -> any SwiftMTPCore.MTPDevice {
         let present = try await currentRealDevices()
-        guard let summary = present.first else {
+        guard let summary = present.first?.summary else {
             throw SwiftMTPCore.TransportError.noDevice
         }
 
-        let transport = LibUSBTransportFactory.createTransport()
+        let transport = LibUSBTransport()
         let currentConfig = getConfig()
         return try await openDevice(with: summary, transport: transport, config: currentConfig)
     }

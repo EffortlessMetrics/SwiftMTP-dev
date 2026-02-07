@@ -4,11 +4,11 @@
 import Foundation
 
 /// Request/Response types for XPC communication
-/// These must be classes conforming to NSSecureCoding to be used in @objc XPC protocols
+/// These must be classes conforming to NSSecureCoding and Sendable to be used in @objc XPC protocols
 
 @objc(ReadRequest)
-public final class ReadRequest: NSObject, NSSecureCoding {
-    public static var supportsSecureCoding: Bool = true
+public final class ReadRequest: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
     
     public let deviceId: String
     public let objectHandle: UInt32
@@ -36,8 +36,8 @@ public final class ReadRequest: NSObject, NSSecureCoding {
 }
 
 @objc(ReadResponse)
-public final class ReadResponse: NSObject, NSSecureCoding {
-    public static var supportsSecureCoding: Bool = true
+public final class ReadResponse: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
     
     public let success: Bool
     public let errorMessage: String?
@@ -72,8 +72,8 @@ public final class ReadResponse: NSObject, NSSecureCoding {
 }
 
 @objc(StorageInfo)
-public final class StorageInfo: NSObject, NSSecureCoding {
-    public static var supportsSecureCoding: Bool = true
+public final class StorageInfo: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
     
     public let storageId: UInt32
     public let storageDescription: String
@@ -105,8 +105,8 @@ public final class StorageInfo: NSObject, NSSecureCoding {
 }
 
 @objc(StorageListRequest)
-public final class StorageListRequest: NSObject, NSSecureCoding {
-    public static var supportsSecureCoding: Bool = true
+public final class StorageListRequest: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
     public let deviceId: String
     public init(deviceId: String) { self.deviceId = deviceId; super.init() }
     public func encode(with coder: NSCoder) { coder.encode(deviceId, forKey: "deviceId") }
@@ -117,8 +117,8 @@ public final class StorageListRequest: NSObject, NSSecureCoding {
 }
 
 @objc(StorageListResponse)
-public final class StorageListResponse: NSObject, NSSecureCoding {
-    public static var supportsSecureCoding: Bool = true
+public final class StorageListResponse: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
     public let success: Bool
     public let errorMessage: String?
     public let storages: [StorageInfo]?
@@ -144,8 +144,8 @@ public final class StorageListResponse: NSObject, NSSecureCoding {
 }
 
 @objc(ObjectInfo)
-public final class ObjectInfo: NSObject, NSSecureCoding {
-    public static var supportsSecureCoding: Bool = true
+public final class ObjectInfo: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
     public let handle: UInt32
     public let name: String
     public let sizeBytes: UInt64?
@@ -180,8 +180,8 @@ public final class ObjectInfo: NSObject, NSSecureCoding {
 }
 
 @objc(ObjectListRequest)
-public final class ObjectListRequest: NSObject, NSSecureCoding {
-    public static var supportsSecureCoding: Bool = true
+public final class ObjectListRequest: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
     public let deviceId: String
     public let storageId: UInt32
     public let parentHandle: UInt32?
@@ -208,8 +208,8 @@ public final class ObjectListRequest: NSObject, NSSecureCoding {
 }
 
 @objc(ObjectListResponse)
-public final class ObjectListResponse: NSObject, NSSecureCoding {
-    public static var supportsSecureCoding: Bool = true
+public final class ObjectListResponse: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
     public let success: Bool
     public let errorMessage: String?
     public let objects: [ObjectInfo]?
@@ -235,6 +235,7 @@ public final class ObjectListResponse: NSObject, NSSecureCoding {
 }
 
 /// XPC service protocol that the File Provider extension calls
+@MainActor
 @objc public protocol MTPXPCService {
     func ping(reply: @escaping (String) -> Void)
     func readObject(_ request: ReadRequest, withReply reply: @escaping (ReadResponse) -> Void)

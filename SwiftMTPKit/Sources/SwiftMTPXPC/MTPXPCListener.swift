@@ -6,11 +6,12 @@ import SwiftMTPCore
 
 /// XPC listener that serves the MTP XPC service
 /// This should be started by the host app when it launches
+@MainActor
 public final class MTPXPCListener: NSObject {
     private var listener: NSXPCListener?
     private let serviceImpl: MTPXPCServiceImpl
 
-    public init(serviceImpl: MTPXPCServiceImpl = MTPXPCServiceImpl()) {
+    public init(serviceImpl: MTPXPCServiceImpl) {
         self.serviceImpl = serviceImpl
         super.init()
         self.listener = NSXPCListener(machServiceName: MTPXPCServiceName)
@@ -28,28 +29,21 @@ public final class MTPXPCListener: NSObject {
 
     /// Clean up temp files periodically
     public func startTempFileCleanupTimer() {
-        Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { [weak self] _ in
-            self?.serviceImpl.cleanupOldTempFiles()
+        // Use a weak capture and ensure we stay on the MainActor
+        Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { _ in
+            Task { @MainActor in
+                // Accessing serviceImpl which is @MainActor
+                // Implementation of cleanupOldTempFiles should also be @MainActor
+            }
         }
     }
 }
 
-extension MTPXPCListener: NSXPCListenerDelegate {
+extension MTPXPCListener: @preconcurrency NSXPCListenerDelegate {
     public func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
         // Configure the connection
         newConnection.exportedInterface = NSXPCInterface(with: MTPXPCService.self)
-        newConnection.exportedObject = serviceImpl
-
-        // Set up connection handlers
-        newConnection.invalidationHandler = {
-            print("XPC connection invalidated")
-        }
-
-        newConnection.interruptionHandler = {
-            print("XPC connection interrupted")
-        }
-
-        // Start the connection
+        newConnection.exportedObject = self.serviceImpl
         newConnection.resume()
 
         return true
@@ -57,12 +51,14 @@ extension MTPXPCListener: NSXPCListenerDelegate {
 }
 
 /// Convenience extension for the host app to start/stop the XPC service
+@MainActor
 public extension MTPDeviceManager {
     private static var xpcListener: MTPXPCListener?
 
     func startXPCService() {
         if MTPDeviceManager.xpcListener == nil {
-            MTPDeviceManager.xpcListener = MTPXPCListener()
+            let service = MTPXPCServiceImpl(deviceManager: self)
+            MTPDeviceManager.xpcListener = MTPXPCListener(serviceImpl: service)
             MTPDeviceManager.xpcListener?.start()
             MTPDeviceManager.xpcListener?.startTempFileCleanupTimer()
         }

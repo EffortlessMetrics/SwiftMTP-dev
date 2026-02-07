@@ -67,7 +67,7 @@ let package = Package(
             resources: [.process("Resources")]),
 
     .target(name: "SwiftMTPXPC",
-            dependencies: ["SwiftMTPCore"]),
+            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB"]),
 
     .target(name: "SwiftMTPFileProvider",
             dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPStore", "SwiftMTPXPC"]),

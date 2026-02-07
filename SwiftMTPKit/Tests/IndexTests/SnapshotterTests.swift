@@ -67,6 +67,7 @@ struct SnapshotterTests {
 // Mock device for testing
 private class MockDevice: MTPDevice, @unchecked Sendable {
     var id: MTPDeviceID { MTPDeviceID(raw: "mock-device") }
+    var summary: MTPDeviceSummary { MTPDeviceSummary(id: id, manufacturer: "Mock", model: "Device") }
 
     var info: MTPDeviceInfo {
         get async throws {

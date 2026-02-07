@@ -167,6 +167,9 @@ public protocol MTPDevice: Sendable {
   /// Unique identifier for this device instance
   var id: MTPDeviceID { get }
 
+  /// Device summary information
+  var summary: MTPDeviceSummary { get }
+
   /// Detailed information about the device and its capabilities.
   ///
   /// This includes manufacturer, model, version, supported operations,

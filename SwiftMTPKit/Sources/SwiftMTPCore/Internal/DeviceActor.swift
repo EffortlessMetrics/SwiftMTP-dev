@@ -31,8 +31,8 @@ struct UserOverrides {
 
 public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     public let id: MTPDeviceID
+    public let summary: MTPDeviceSummary
     private let transport: any MTPTransport
-    private let summary: MTPDeviceSummary
     private var config: SwiftMTPConfig
     private var deviceInfo: MTPDeviceInfo?
     private var mtpLink: (any MTPLink)?
