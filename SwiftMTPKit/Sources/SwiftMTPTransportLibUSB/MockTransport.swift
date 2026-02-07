@@ -30,6 +30,10 @@ public final class MockTransport: @unchecked Sendable, MTPTransport {
         isConnected = true
         return MockMTPLink(deviceData: deviceData, transport: self)
     }
+
+    public func close() async throws {
+        isConnected = false
+    }
 }
 
 /// Mock MTP link that simulates USB bulk transfers

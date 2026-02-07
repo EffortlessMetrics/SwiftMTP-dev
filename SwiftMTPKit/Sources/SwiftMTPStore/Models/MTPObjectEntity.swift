@@ -17,8 +17,9 @@ public final class MTPObjectEntity {
     public var modifiedAt: Date?
     public var formatCode: Int
     public var generation: Int
-    public var isTombstoned: Bool
+    public var tombstone: Int = 0
     
+    public var device: DeviceEntity?
     public var storage: MTPStorageEntity?
 
     public init(
@@ -32,7 +33,7 @@ public final class MTPObjectEntity {
         modifiedAt: Date? = nil,
         formatCode: Int,
         generation: Int,
-        isTombstoned: Bool = false
+        tombstone: Int = 0
     ) {
         self.compoundId = "\(deviceId):\(storageId):\(handle)"
         self.deviceId = deviceId
@@ -45,6 +46,6 @@ public final class MTPObjectEntity {
         self.modifiedAt = modifiedAt
         self.formatCode = formatCode
         self.generation = generation
-        self.isTombstoned = isTombstoned
+        self.tombstone = tombstone
     }
 }

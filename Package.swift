@@ -28,7 +28,7 @@ let package = Package(
 
     // Core MTP functionality
     .target(name: "SwiftMTPCore",
-            dependencies: [],
+            dependencies: ["SwiftMTPQuirks", "SwiftMTPObservability"],
             path: "SwiftMTPKit/Sources/SwiftMTPCore",
             sources: ["Internal", "Public", "CLI"]),
 
@@ -50,14 +50,19 @@ let package = Package(
 
     // Observability utilities
     .target(name: "SwiftMTPObservability",
-            dependencies: ["SwiftMTPCore"],
+            dependencies: [],
             path: "SwiftMTPKit/Sources/SwiftMTPObservability"),
 
     // Device quirks and tuning database
     .target(name: "SwiftMTPQuirks",
-            dependencies: ["SwiftMTPCore"],
+            dependencies: [],
             path: "SwiftMTPKit/Sources/SwiftMTPQuirks",
             resources: [.process("Resources")]),
+
+    // Persistence and data storage
+    .target(name: "SwiftMTPStore",
+            dependencies: ["SwiftMTPCore", "CSQLite"],
+            path: "SwiftMTPKit/Sources/SwiftMTPStore"),
 
     // UI Components (SwiftUI)
     .target(name: "SwiftMTPUI",
@@ -86,6 +91,7 @@ let package = Package(
                         "SwiftMTPIndex",
                         "SwiftMTPQuirks",
                         "SwiftMTPObservability",
+                        "SwiftMTPStore",
                         "CLibusb"
                       ],
                       path: "SwiftMTPKit/Sources/Tools/swiftmtp-cli",

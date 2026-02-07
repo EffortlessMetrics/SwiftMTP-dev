@@ -17,5 +17,10 @@ public enum MTPLog {
     public static let transfer = Logger(subsystem: subsystem, category: "transfer")
     public static let resume = Logger(subsystem: subsystem, category: "resume")
     public static let chunk = Logger(subsystem: subsystem, category: "chunk")
+    
+    public static let enumerateSignposter = OSSignposter(logger: enumerate)
+    public static let transferSignposter = OSSignposter(logger: transfer)
+    public static let resumeSignposter = OSSignposter(logger: resume)
+    public static let chunkSignposter = OSSignposter(logger: chunk)
   }
 }

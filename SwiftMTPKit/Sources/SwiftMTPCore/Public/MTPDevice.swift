@@ -167,6 +167,9 @@ public protocol MTPDevice: Sendable {
   /// Unique identifier for this device instance
   var id: MTPDeviceID { get }
 
+  /// Device summary information
+  var summary: MTPDeviceSummary { get }
+
   /// Detailed information about the device and its capabilities.
   ///
   /// This includes manufacturer, model, version, supported operations,
@@ -259,6 +262,19 @@ public protocol MTPDevice: Sendable {
 
   /// Current effective tuning of the device
   var effectiveTuning: EffectiveTuning { get async }
+
+  /// Ensure the device session is open, opening it if necessary.
+  func openIfNeeded() async throws
+
+  /// Close the device session and release all underlying transport resources.
+  /// Used for clean lifecycle management during profiling or shutdown.
+  @_spi(Dev)
+  func devClose() async throws
+
+  @_spi(Dev) func devGetDeviceInfoUncached() async throws -> MTPDeviceInfo
+  @_spi(Dev) func devGetStorageIDsUncached() async throws -> [MTPStorageID]
+  @_spi(Dev) func devGetRootHandlesUncached(storage: MTPStorageID) async throws -> [MTPObjectHandle]
+  @_spi(Dev) func devGetObjectInfoUncached(handle: MTPObjectHandle) async throws -> MTPObjectInfo
 
   /// Stream of events from the device.
   ///
