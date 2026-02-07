@@ -19,7 +19,12 @@ public struct LibUSBDiscovery {
     }
 
     public static func enumerateMTPDevices() async throws -> [MTPDeviceSummary] {
-        let ctx = LibUSBContext.shared.ctx
+        // Use a standalone libusb context to avoid initializing the shared
+        // context (and its persistent event loop thread) during discovery.
+        var ctx: OpaquePointer?
+        guard libusb_init(&ctx) == 0, let ctx else { throw TransportError.io("libusb_init failed") }
+        defer { libusb_exit(ctx) }
+
         var list: UnsafeMutablePointer<OpaquePointer?>?
         let cnt = libusb_get_device_list(ctx, &list)
         guard cnt > 0, let list else { throw TransportError.io("device list failed") }
@@ -44,7 +49,34 @@ public struct LibUSBDiscovery {
             }
             if isMTP {
                 let bus = libusb_get_bus_number(dev), addr = libusb_get_device_address(dev)
-                summaries.append(MTPDeviceSummary(id: MTPDeviceID(raw: String(format:"%04x:%04x@%u:%u", desc.idVendor, desc.idProduct, bus, addr)), manufacturer: "USB \(String(format:"%04x", desc.idVendor))", model: "USB \(String(format:"%04x", desc.idProduct))", vendorID: desc.idVendor, productID: desc.idProduct, bus: bus, address: addr))
+
+                // Try to read USB string descriptors for better names
+                var manufacturer = "USB \(String(format: "%04x", desc.idVendor))"
+                var model = "USB \(String(format: "%04x", desc.idProduct))"
+                var handle: OpaquePointer?
+                if libusb_open(dev, &handle) == 0, let h = handle {
+                    defer { libusb_close(h) }
+                    if desc.iManufacturer != 0 {
+                        var buf = [UInt8](repeating: 0, count: 128)
+                        let n = libusb_get_string_descriptor_ascii(h, desc.iManufacturer, &buf, Int32(buf.count))
+                        if n > 0 { manufacturer = String(cString: &buf) }
+                    }
+                    if desc.iProduct != 0 {
+                        var buf = [UInt8](repeating: 0, count: 128)
+                        let n = libusb_get_string_descriptor_ascii(h, desc.iProduct, &buf, Int32(buf.count))
+                        if n > 0 { model = String(cString: &buf) }
+                    }
+                }
+
+                summaries.append(MTPDeviceSummary(
+                    id: MTPDeviceID(raw: String(format: "%04x:%04x@%u:%u", desc.idVendor, desc.idProduct, bus, addr)),
+                    manufacturer: manufacturer,
+                    model: model,
+                    vendorID: desc.idVendor,
+                    productID: desc.idProduct,
+                    bus: bus,
+                    address: addr
+                ))
             }
         }
         return summaries

@@ -6,22 +6,11 @@ import SwiftMTPTransportLibUSB
 import SwiftMTPQuirks
 import Foundation
 
-extension MTPDeviceManager {
-    /// Get the current real device summaries, excluding mocks
-    func currentRealDeviceSummaries() async throws -> [MTPDeviceSummary] {
-        let allDevices = await devices
-        return allDevices.filter { summary in
-            // Filter out common mock patterns if needed
-            !summary.manufacturer.contains("(Demo)")
-        }
-    }
-}
-
 /// Helper to find and open a device based on CLI flags
 @MainActor
 func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
     let manager = MTPDeviceManager.shared
-    
+
     if flags.useMock {
         // Mock is handled by MTPDeviceManager yielding it during discovery
         try await manager.startDiscovery()
@@ -32,20 +21,42 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
         return try await manager.openDevice(with: mock, transport: LibUSBTransportFactory.createTransport())
     }
 
-    let devices = try await manager.currentRealDeviceSummaries()
+    // Enumerate MTP devices directly via libusb (avoids hotplug-based discovery)
+    let devices = try await LibUSBDiscovery.enumerateMTPDevices()
     if devices.isEmpty {
         throw MTPError.transport(.noDevice)
     }
 
     let selectedDevice: MTPDeviceSummary
-    if let vid = flags.targetVID, let pid = flags.targetPID {
-        guard let found = devices.first(where: { 
-            String(format: "%04x", $0.vendorID ?? 0) == vid.lowercased() && 
-            String(format: "%04x", $0.productID ?? 0) == pid.lowercased() 
+    let hasVIDPID = flags.targetVID != nil && flags.targetPID != nil
+    let hasBusAddr = flags.targetBus != nil && flags.targetAddress != nil
+
+    if hasVIDPID {
+        guard let found = devices.first(where: {
+            String(format: "%04x", $0.vendorID ?? 0) == flags.targetVID!.lowercased() &&
+            String(format: "%04x", $0.productID ?? 0) == flags.targetPID!.lowercased()
         }) else {
             throw MTPError.transport(.noDevice)
         }
         selectedDevice = found
+    } else if hasBusAddr {
+        guard let found = devices.first(where: {
+            Int($0.bus ?? 0) == flags.targetBus! &&
+            Int($0.address ?? 0) == flags.targetAddress!
+        }) else {
+            throw MTPError.transport(.noDevice)
+        }
+        selectedDevice = found
+    } else if devices.count > 1 {
+        log("Found \(devices.count) MTP devices:")
+        for (i, dev) in devices.enumerated() {
+            let vid = String(format: "%04x", dev.vendorID ?? 0)
+            let pid = String(format: "%04x", dev.productID ?? 0)
+            let busAddr = "\(dev.bus ?? 0):\(dev.address ?? 0)"
+            log("  [\(i + 1)] \(dev.manufacturer) \(dev.model)  vid:pid=\(vid):\(pid)  bus:addr=\(busAddr)")
+        }
+        log("Using device [1]. Specify --vid/--pid or --bus/--address to select another.")
+        selectedDevice = devices[0]
     } else {
         selectedDevice = devices[0]
     }

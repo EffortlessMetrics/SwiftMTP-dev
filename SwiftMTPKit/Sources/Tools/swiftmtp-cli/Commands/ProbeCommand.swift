@@ -34,9 +34,13 @@ struct ProbeCommand {
             if let mtpError = error as? MTPError {
                 switch mtpError {
                 case .notSupported:
+                    log("❌ No MTP-capable device found.")
                     exitNow(.unavailable)
                 case .transport(let te):
-                    if case .noDevice = te { exitNow(.unavailable) }
+                    if case .noDevice = te {
+                        log("❌ No MTP device connected. Check USB connection and MTP mode.")
+                        exitNow(.unavailable)
+                    }
                 default:
                     break
                 }
@@ -81,13 +85,18 @@ struct ProbeCommand {
             if let mtpError = error as? MTPError {
                 switch mtpError {
                 case .notSupported:
+                    log("❌ No MTP-capable device found.")
                     exitNow(.unavailable)
                 case .transport(let te):
-                    if case .noDevice = te { exitNow(.unavailable) }
+                    if case .noDevice = te {
+                        log("❌ No MTP device connected. Check USB connection and MTP mode.")
+                        exitNow(.unavailable)
+                    }
                 default:
                     break
                 }
             }
+            log("❌ Probe failed: \(error)")
             exitNow(.tempfail)
         }
     }
