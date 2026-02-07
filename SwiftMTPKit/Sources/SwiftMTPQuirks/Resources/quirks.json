@@ -237,6 +237,12 @@
         "stabilizeMs": 3000,
         "resetOnOpen": false
       },
+      "flags": {
+        "resetOnOpen": true,
+        "needsLongerOpenTimeout": true,
+        "stallOnLargeReads": true,
+        "requireStabilization": true
+      },
       "confidence": "medium",
       "status": "stable",
       "notes": [
