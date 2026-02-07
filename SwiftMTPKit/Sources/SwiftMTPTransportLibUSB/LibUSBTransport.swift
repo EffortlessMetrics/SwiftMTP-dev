@@ -27,7 +27,8 @@ public struct LibUSBDiscovery {
 
         var list: UnsafeMutablePointer<OpaquePointer?>?
         let cnt = libusb_get_device_list(ctx, &list)
-        guard cnt > 0, let list else { throw TransportError.io("device list failed") }
+        guard cnt >= 0 else { throw TransportError.io("libusb_get_device_list failed (rc=\(cnt))") }
+        guard cnt > 0, let list else { return [] }
         defer { libusb_free_device_list(list, 1) }
 
         var summaries: [MTPDeviceSummary] = []
@@ -59,12 +60,12 @@ public struct LibUSBDiscovery {
                     if desc.iManufacturer != 0 {
                         var buf = [UInt8](repeating: 0, count: 128)
                         let n = libusb_get_string_descriptor_ascii(h, desc.iManufacturer, &buf, Int32(buf.count))
-                        if n > 0 { manufacturer = String(cString: &buf) }
+                        if n > 0 { manufacturer = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
                     }
                     if desc.iProduct != 0 {
                         var buf = [UInt8](repeating: 0, count: 128)
                         let n = libusb_get_string_descriptor_ascii(h, desc.iProduct, &buf, Int32(buf.count))
-                        if n > 0 { model = String(cString: &buf) }
+                        if n > 0 { model = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
                     }
                 }
 
@@ -99,7 +100,7 @@ private func getAsciiString(_ handle: OpaquePointer, _ index: UInt8) -> String {
     if index == 0 { return "" }
     var buf = [UInt8](repeating: 0, count: 128)
     let n = libusb_get_string_descriptor_ascii(handle, index, &buf, Int32(buf.count))
-    return n > 0 ? String(cString: &buf) : ""
+    return n > 0 ? String(decoding: buf.prefix(Int(n)), as: UTF8.self) : ""
 }
 
 private func claimMTPInterface(handle: OpaquePointer, device: OpaquePointer) throws -> (UInt8, UInt8, UInt8, UInt8, UInt8) {
@@ -141,7 +142,8 @@ public actor LibUSBTransport: MTPTransport {
     let ctx = LibUSBContext.shared.ctx
     var list: UnsafeMutablePointer<OpaquePointer?>?
     let cnt = libusb_get_device_list(ctx, &list)
-    guard cnt > 0, let list else { throw TransportError.io("device list failed") }
+    guard cnt >= 0 else { throw TransportError.io("libusb_get_device_list failed (rc=\(cnt))") }
+    guard cnt > 0, let list else { throw TransportError.noDevice }
     var target: OpaquePointer?
     for i in 0..<Int(cnt) {
       let dev = list[i]!
@@ -161,6 +163,12 @@ public actor LibUSBTransport: MTPTransport {
     let (iface, _, epIn, epOut, epEvt) = try { do { return try claimMTPInterface(handle: handle, device: dev) } catch { libusb_close(handle); libusb_unref_device(dev); throw error } }()
     
     _ = libusb_clear_halt(handle, epIn); _ = libusb_clear_halt(handle, epOut)
+
+    // Send PTP Device Reset (class-specific, bRequest=0x66) to clear any stale session
+    // held by the macOS kernel driver. This is lightweight — no USB re-enumeration.
+    _ = libusb_control_transfer(handle, 0x21, 0x66, 0, UInt16(iface), nil, 0, 5000)
+    try? await Task.sleep(nanoseconds: 200_000_000) // 200ms stabilization
+
     var drain = [UInt8](repeating: 0, count: 4096), got: Int32 = 0
     // Drain until empty with short timeout
     while libusb_bulk_transfer(handle, epIn, &drain, Int32(drain.count), &got, 10) == 0 && got > 0 {}
@@ -194,6 +202,14 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   }
 
   public func close() async { eventPumpTask?.cancel(); eventContinuation?.finish(); libusb_release_interface(h, Int32(iface)); libusb_close(h); libusb_unref_device(dev) }
+
+  public func resetDevice() async throws {
+    let rc = libusb_reset_device(h)
+    // NOT_FOUND means device re-enumerated (expected on some Android devices)
+    if rc != 0 && rc != Int32(LIBUSB_ERROR_NOT_FOUND.rawValue) {
+      throw MTPError.transport(mapLibusb(rc))
+    }
+  }
   public func startEventPump() {
     guard evtEP != 0 else { return }
     let _ = AsyncStream<Data> { self.eventContinuation = $0 }

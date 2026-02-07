@@ -37,6 +37,8 @@ public protocol MTPLink: Sendable {
     func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo]
     func getObjectInfos(storage: MTPStorageID, parent: MTPObjectHandle?, format: UInt16?) async throws -> [MTPObjectInfo]
 
+    func resetDevice() async throws
+
     func deleteObject(handle: MTPObjectHandle) async throws
     func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?) async throws
 

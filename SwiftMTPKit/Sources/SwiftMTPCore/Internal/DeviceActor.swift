@@ -305,9 +305,29 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       if debugEnabled { print("   [Actor] Running postOpenUSB hooks...") }
       try await self.runHook(.postOpenUSB, tuning: initialTuning)
 
-      // 9) Open session + stabilization
+      // 9) Open session + stabilization (with retry on timeout/IO error)
       if debugEnabled { print("   [Actor] Opening MTP session...") }
-      try await link.openSession(id: 1)
+      do {
+          try await link.openSession(id: 1)
+      } catch {
+          guard isTimeoutOrIOError(error) else { throw error }
+          if debugEnabled { print("   [Actor] OpenSession failed (\(error)), retrying with USB reset...") }
+
+          // Close current link, re-open with resetOnOpen forced
+          await link.close()
+          self.mtpLink = nil
+          self.config.resetOnOpen = true
+          let newLink = try await transport.open(summary, config: config)
+          self.mtpLink = newLink
+
+          // Stabilize after USB reset
+          try await Task.sleep(nanoseconds: 500_000_000)
+
+          // Retry OpenSession
+          try await newLink.openSession(id: 1)
+          if debugEnabled { print("   [Actor] OpenSession succeeded after USB reset.") }
+      }
+
       if initialTuning.stabilizeMs > 0 {
         if debugEnabled { print("   [Actor] Stabilizing for \(initialTuning.stabilizeMs)ms...") }
         try await Task.sleep(nanoseconds: UInt64(initialTuning.stabilizeMs) * 1_000_000)
@@ -405,6 +425,15 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         } catch {
             return false
         }
+    }
+
+    private func isTimeoutOrIOError(_ error: Error) -> Bool {
+        if case .timeout = error as? MTPError { return true }
+        if let mtpErr = error as? MTPError, case .transport(let te) = mtpErr {
+            if case .timeout = te { return true }
+            if case .io = te { return true }
+        }
+        return false
     }
 
     private func apply(_ tuning: EffectiveTuning) {
