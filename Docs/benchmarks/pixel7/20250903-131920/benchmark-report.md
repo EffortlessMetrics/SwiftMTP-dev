@@ -1,7 +1,26 @@
+# ⚠️ MOCK DATA - FOR TESTING ONLY ⚠️
+
+> **This benchmark report contains MOCK data generated from a simulated Pixel 7 device.**
+> **DO NOT use these metrics for production performance evaluations.**
+
+The device serial number is `MOCK123456` - this indicates synthetic test data.
+
+---
+
 # SwiftMTP Benchmark Report
-Device: pixel7
+Device: pixel7 (Mock/Simulated)
 Timestamp: Wed Sep  3 13:29:30 EDT 2025
 Mode: Mock (pixel7)
+
+## 🚨 Important Notice
+> **This report contains SYNTHETIC/SIMULATED benchmark data.**
+> Real device benchmarks are needed for:
+> - Production performance characterization
+> - Comparative device analysis
+> - Performance regression tracking
+> - Customer-facing performance specifications
+
+The performance metrics below reflect simulated transfers and should not be used for any production purposes.
 
 ## Device Information
 ```
@@ -45,8 +64,10 @@ Build of product 'swiftmtp' complete! (1.02s)
 ✅ Probe complete
 ```
 
-## Benchmark Results
-### 100m Transfer
+## Benchmark Results (Synthetic/Simulated Metrics)
+> ⚠️ **WARNING:** The following transfer speeds are MOCK values and do not represent actual device performance.
+
+### 100m Transfer (Simulated)
 ```
 warning: 'swiftmtpkit': Source files for target TransportTests should be located under 'Tests/TransportTests', or a custom sources path can be set with the 'path' property in Package.swift
 Building for debugging...
@@ -61,7 +82,7 @@ Build of product 'swiftmtp' complete! (0.13s)
 ❌ Could not find uploaded test file
 ```
 
-### 1g Transfer
+### 1g Transfer (Simulated)
 ```
 warning: 'swiftmtpkit': Source files for target TransportTests should be located under 'Tests/TransportTests', or a custom sources path can be set with the 'path' property in Package.swift
 Building for debugging...
@@ -76,7 +97,7 @@ Build of product 'swiftmtp' complete! (0.14s)
 ❌ Could not find uploaded test file
 ```
 
-### 500m Transfer
+### 500m Transfer (Simulated)
 ```
 warning: 'swiftmtpkit': Source files for target TransportTests should be located under 'Tests/TransportTests', or a custom sources path can be set with the 'path' property in Package.swift
 Building for debugging...
@@ -91,7 +112,7 @@ Build of product 'swiftmtp' complete! (0.14s)
 ❌ Could not find uploaded test file
 ```
 
-## Mirror Test
+## Mirror Test (Simulated)
 ```
 warning: 'swiftmtpkit': Source files for target TransportTests should be located under 'Tests/TransportTests', or a custom sources path can be set with the 'path' property in Package.swift
 Building for debugging...
