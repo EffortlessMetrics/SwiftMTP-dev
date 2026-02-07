@@ -37,7 +37,9 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     private var mtpLink: (any MTPLink)?
     private var sessionOpen = false
     let transferJournal: (any TransferJournal)?
-    private var probedCapabilities: [String: Bool] = [:]
+    public var probedCapabilities: [String: Bool] = [:]
+    private var currentTuning: EffectiveTuning = .defaults()
+    public var effectiveTuning: EffectiveTuning { get async { currentTuning } }
     private var eventPump: EventPump = EventPump()
 
     public init(id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport, config: SwiftMTPConfig = .init(), transferJournal: (any TransferJournal)? = nil) {
@@ -251,6 +253,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         quirk: quirk,
         overrides: overrides.isEmpty ? nil : overrides
       )
+      self.currentTuning = initialTuning
       self.apply(initialTuning)
 
       // 8) Run hooks: postOpenUSB
@@ -276,6 +279,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         "partialWrite": await self.capabilityPartialWrite(),
         "supportsEvents": await self.capabilityEvents()
       ]
+      self.probedCapabilities = realCaps
       
       // Re-build tuning with real capabilities
       let finalTuning = EffectiveTuningBuilder.build(
@@ -284,6 +288,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         quirk: quirk,
         overrides: overrides.isEmpty ? nil : overrides
       )
+      self.currentTuning = finalTuning
       self.apply(finalTuning)
 
       // 12) Start event pump

@@ -10,6 +10,7 @@ public enum MTPFeature: String, CaseIterable, Sendable {
     case chunkedTransfer = "CHUNKED_TRANSFER"
     case extendedObjectInfo = "EXTENDED_OBJECTINFO"
     case backgroundEventPump = "BACKGROUND_EVENTPUMP"
+    case learnPromote = "LEARN_PROMOTE"
 }
 
 public final class MTPFeatureFlags: @unchecked Sendable {

@@ -6,6 +6,7 @@ import Testing
 @testable import SwiftMTPCore
 @testable import SwiftMTPIndex
 @preconcurrency import SQLite
+import SwiftMTPQuirks
 
 @Suite("Snapshotter Tests")
 struct SnapshotterTests {
@@ -109,6 +110,9 @@ private class MockDevice: MTPDevice, @unchecked Sendable {
     func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {
         throw MTPError.notSupported("Mock implementation")
     }
+
+    var probedCapabilities: [String: Bool] { get async { [:] } }
+    var effectiveTuning: EffectiveTuning { get async { .defaults() } }
 
     var events: AsyncStream<MTPEvent> {
         AsyncStream { continuation in

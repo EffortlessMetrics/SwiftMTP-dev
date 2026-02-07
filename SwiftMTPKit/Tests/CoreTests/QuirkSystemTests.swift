@@ -3,6 +3,7 @@
 
 import XCTest
 @testable import SwiftMTPCore
+import SwiftMTPQuirks
 
 final class QuirkSystemTests: XCTestCase {
 

@@ -18,9 +18,9 @@ let quirksPath = args[2]
 let targetFingerprint = args.count > 3 ? args[3] : nil
 
 do {
-    // TODO: Load learned profiles when LearnedProfile becomes Codable again
-    // For now, use empty profiles
-    let profiles: [String: LearnedProfile] = [:]
+    // Load learned profiles
+    let learnedData = try Data(contentsOf: URL(fileURLWithPath: learnedProfilesPath))
+    let profiles = try JSONDecoder().decode([String: LearnedProfile].self, from: learnedData)
 
     // Load current quirks
     let quirkDB = try QuirkDatabase.load(pathEnv: quirksPath)
@@ -40,25 +40,35 @@ do {
         print("  Last Updated: \(profile.lastUpdated.ISO8601Format())")
 
         if profile.successRate > 0.8 && profile.sampleCount >= 3 {
-            // TODO: Check if there's an existing quirk
-            // if let existingQuirk = quirkDB.match(for: profile.fingerprint) {
-            //     print("  Existing Quirk: \(existingQuirk.id) (\(existingQuirk.status))")
+            // Check if there's an existing quirk
+            let fp = DeviceFingerprint(
+                vid: UInt16(profile.fingerprint.vid, radix: 16) ?? 0,
+                pid: UInt16(profile.fingerprint.pid, radix: 16) ?? 0,
+                bcdDevice: profile.fingerprint.bcdDevice.flatMap { UInt16($0, radix: 16) },
+                ifaceClass: UInt8(profile.fingerprint.interfaceTriple.class, radix: 16),
+                ifaceSubClass: UInt8(profile.fingerprint.interfaceTriple.subclass, radix: 16),
+                ifaceProtocol: UInt8(profile.fingerprint.interfaceTriple.protocol, radix: 16)
+            )
+            
+            if let existingQuirk = quirkDB.bestMatch(for: fp) {
+                print("  Existing Quirk: \(existingQuirk.id) (\(existingQuirk.status))")
 
                 // Compare learned values with quirk values
                 var suggestions = [String]()
 
-                // TODO: Compare with existing quirks
-                // if let learnedChunk = profile.optimalChunkSize,
-                //    let quirkChunk = existingQuirk.tuning.maxChunkBytes,
-                //    abs(learnedChunk - quirkChunk) > quirkChunk / 4 { // 25% difference
-                //     suggestions.append("maxChunkBytes: \(quirkChunk) -> \(learnedChunk)")
-                // }
+                if let learnedChunk = profile.optimalChunkSize {
+                    let quirkChunk = existingQuirk.overrides.maxChunkBytes ?? 1048576
+                    if abs(learnedChunk - quirkChunk) > quirkChunk / 4 { // 25% difference
+                        suggestions.append("maxChunkBytes: \(quirkChunk) -> \(learnedChunk)")
+                    }
+                }
 
-                // if let learnedIO = profile.optimalIoTimeoutMs,
-                //    let quirkIO = existingQuirk.tuning.ioTimeoutMs,
-                //    abs(learnedIO - quirkIO) > quirkIO / 4 {
-                //     suggestions.append("ioTimeoutMs: \(quirkIO) -> \(learnedIO)")
-                // }
+                if let learnedIO = profile.optimalIoTimeoutMs {
+                    let quirkIO = existingQuirk.overrides.ioTimeoutMs ?? 8000
+                    if abs(learnedIO - quirkIO) > quirkIO / 4 {
+                        suggestions.append("ioTimeoutMs: \(quirkIO) -> \(learnedIO)")
+                    }
+                }
 
                 if !suggestions.isEmpty {
                     print("  📈 Suggestions:")

@@ -29,8 +29,15 @@ struct StorageListCommands {
             } else {
                 print("❌ Storages failed: \(error)")
             }
-            if let mtpError = error as? MTPError, case .notSupported = mtpError {
-                exitNow(.unavailable)
+            if let mtpError = error as? MTPError {
+                switch mtpError {
+                case .notSupported:
+                    exitNow(.unavailable)
+                case .transport(let te):
+                    if case .noDevice = te { exitNow(.unavailable) }
+                default:
+                    break
+                }
             }
             exitNow(.tempfail)
         }
@@ -75,8 +82,15 @@ struct StorageListCommands {
             } else {
                 print("❌ List failed: \(error)")
             }
-            if let mtpError = error as? MTPError, case .notSupported = mtpError {
-                exitNow(.unavailable)
+            if let mtpError = error as? MTPError {
+                switch mtpError {
+                case .notSupported:
+                    exitNow(.unavailable)
+                case .transport(let te):
+                    if case .noDevice = te { exitNow(.unavailable) }
+                default:
+                    break
+                }
             }
             exitNow(.tempfail)
         }

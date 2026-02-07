@@ -35,6 +35,8 @@ struct ProbeCommand {
                 switch mtpError {
                 case .notSupported:
                     exitNow(.unavailable)
+                case .transport(let te):
+                    if case .noDevice = te { exitNow(.unavailable) }
                 default:
                     break
                 }
@@ -50,14 +52,23 @@ struct ProbeCommand {
             try await device.openIfNeeded()
             let info = try await device.getDeviceInfo()
             let storages = try await device.storages()
+            let capabilities = await device.probedCapabilities
+            let tuning = await device.effectiveTuning
             
             let output: [String: Any] = [
                 "manufacturer": info.manufacturer,
                 "model": info.model,
                 "operations": info.operationsSupported.map { String(format: "0x%04X", $0) },
                 "storages": storages.map { ["id": $0.id.raw, "description": $0.description] },
-                "capabilities": ["partialRead": true, "partialWrite": true],
-                "effective": ["maxChunkBytes": 1048576, "ioTimeoutMs": 10000]
+                "capabilities": capabilities,
+                "effective": [
+                    "maxChunkBytes": tuning.maxChunkBytes,
+                    "ioTimeoutMs": tuning.ioTimeoutMs,
+                    "handshakeTimeoutMs": tuning.handshakeTimeoutMs,
+                    "inactivityTimeoutMs": tuning.inactivityTimeoutMs,
+                    "overallDeadlineMs": tuning.overallDeadlineMs,
+                    "stabilizeMs": tuning.stabilizeMs
+                ]
             ]
             printJSON(output, type: "probeResult")
         } catch {
@@ -67,8 +78,15 @@ struct ProbeCommand {
                 "effective": [:]
             ]
             printJSON(errorOutput, type: "probeResult")
-            if let mtpError = error as? MTPError, case .notSupported = mtpError {
-                exitNow(.unavailable)
+            if let mtpError = error as? MTPError {
+                switch mtpError {
+                case .notSupported:
+                    exitNow(.unavailable)
+                case .transport(let te):
+                    if case .noDevice = te { exitNow(.unavailable) }
+                default:
+                    break
+                }
             }
             exitNow(.tempfail)
         }

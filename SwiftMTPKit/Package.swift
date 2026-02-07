@@ -68,8 +68,8 @@ let package = Package(
                       path: "Sources/Tools/swiftmtp-cli",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
-    .testTarget(name: "CoreTests", dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb"]),
-    .testTarget(name: "IndexTests", dependencies: ["SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPSync", "SwiftMTPTransportLibUSB", "CLibusb"]),
+    .testTarget(name: "CoreTests", dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks"]),
+    .testTarget(name: "IndexTests", dependencies: ["SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPSync", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks"]),
     .testTarget(name: "TransportTests", dependencies: ["SwiftMTPTransportLibUSB", "CLibusb"]),
     .testTarget(name: "BDDTests",
                 dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", .product(name: "CucumberSwift", package: "CucumberSwift")],

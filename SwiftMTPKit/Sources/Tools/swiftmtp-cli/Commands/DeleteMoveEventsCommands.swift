@@ -41,12 +41,24 @@ func runDeleteCommand(args: inout [String], json: Bool, noninteractive: Bool, fi
   } catch {
     if !json && isTTY { spinner.fail() }
     
-    if let mtpError = error as? MTPError, case .notSupported = mtpError {
-        if json {
-            printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
-        } else {
-            fputs("No device matched the provided filter.\n", stderr)
-            return .unavailable
+    if let mtpError = error as? MTPError {
+        switch mtpError {
+        case .notSupported:
+            if json {
+                printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+            } else {
+                fputs("No device matched the provided filter.\n", stderr)
+                return .unavailable
+            }
+        case .transport(let te) where te == .noDevice:
+            if json {
+                printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+            } else {
+                fputs("No device matched the provided filter.\n", stderr)
+                return .unavailable
+            }
+        default:
+            break
         }
     }
     
@@ -94,12 +106,24 @@ func runMoveCommand(args: inout [String], json: Bool, noninteractive: Bool, filt
   } catch {
     if !json && isTTY { spinner.fail() }
     
-    if let mtpError = error as? MTPError, case .notSupported = mtpError {
-        if json {
-            printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
-        } else {
-            fputs("No device matched the provided filter.\n", stderr)
-            return .unavailable
+    if let mtpError = error as? MTPError {
+        switch mtpError {
+        case .notSupported:
+            if json {
+                printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+            } else {
+                fputs("No device matched the provided filter.\n", stderr)
+                return .unavailable
+            }
+        case .transport(let te) where te == .noDevice:
+            if json {
+                printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+            } else {
+                fputs("No device matched the provided filter.\n", stderr)
+                return .unavailable
+            }
+        default:
+            break
         }
     }
     
@@ -181,12 +205,24 @@ func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, fi
   } catch {
     if !json && isTTY { spinner.fail() }
     
-    if let mtpError = error as? MTPError, case .notSupported = mtpError {
-        if json {
-            printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
-        } else {
-            fputs("No device matched the provided filter.\n", stderr)
-            return .unavailable
+    if let mtpError = error as? MTPError {
+        switch mtpError {
+        case .notSupported:
+            if json {
+                printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+            } else {
+                fputs("No device matched the provided filter.\n", stderr)
+                return .unavailable
+            }
+        case .transport(let te) where te == .noDevice:
+            if json {
+                printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+            } else {
+                fputs("No device matched the provided filter.\n", stderr)
+                return .unavailable
+            }
+        default:
+            break
         }
     }
     

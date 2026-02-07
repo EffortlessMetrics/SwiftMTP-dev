@@ -23,6 +23,16 @@ struct TransferCommands {
             print("✅ Downloaded successfully")
         } catch {
             print("❌ Failed to download: \(error)")
+            if let mtpError = error as? MTPError {
+                switch mtpError {
+                case .notSupported:
+                    exitNow(.unavailable)
+                case .transport(let te):
+                    if case .noDevice = te { exitNow(.unavailable) }
+                default:
+                    break
+                }
+            }
             exitNow(.tempfail)
         }
     }
@@ -54,6 +64,16 @@ struct TransferCommands {
             print("✅ Uploaded successfully")
         } catch {
             print("❌ Failed to upload: \(error)")
+            if let mtpError = error as? MTPError {
+                switch mtpError {
+                case .notSupported:
+                    exitNow(.unavailable)
+                case .transport(let te):
+                    if case .noDevice = te { exitNow(.unavailable) }
+                default:
+                    break
+                }
+            }
             exitNow(.tempfail)
         }
     }
@@ -103,6 +123,16 @@ struct TransferCommands {
             try? FileManager.default.removeItem(at: tempURL)
         } catch {
             print("❌ Benchmark failed: \(error)")
+            if let mtpError = error as? MTPError {
+                switch mtpError {
+                case .notSupported:
+                    exitNow(.unavailable)
+                case .transport(let te):
+                    if case .noDevice = te { exitNow(.unavailable) }
+                default:
+                    break
+                }
+            }
             exitNow(.tempfail)
         }
     }
@@ -128,6 +158,16 @@ struct TransferCommands {
             print("✅ Found \(count) items in root.")
         } catch {
             print("❌ Mirror failed: \(error)")
+            if let mtpError = error as? MTPError {
+                switch mtpError {
+                case .notSupported:
+                    exitNow(.unavailable)
+                case .transport(let te):
+                    if case .noDevice = te { exitNow(.unavailable) }
+                default:
+                    break
+                }
+            }
             exitNow(.tempfail)
         }
     }

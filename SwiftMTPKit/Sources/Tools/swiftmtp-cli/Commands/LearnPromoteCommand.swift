@@ -3,14 +3,58 @@
 
 import Foundation
 import SwiftMTPCore
+import SwiftMTPQuirks
 
+@MainActor
 struct LearnPromoteCommand {
-    struct Flags {
+    struct Flags: Sendable {
         let fromPath: String?
         let toPath: String?
         let dryRun: Bool
         let apply: Bool
         let verbose: Bool
+    }
+
+    static func runCLI(args: [String]) async {
+        // Parse learn-promote specific flags
+        var learnPromoteFlags = Flags(
+            fromPath: nil,
+            toPath: nil,
+            dryRun: false,
+            apply: false,
+            verbose: false
+        )
+
+        var i = 0
+        while i < args.count {
+            let arg = args[i]
+            if arg == "--from" && i + 1 < args.count {
+                learnPromoteFlags = Flags(fromPath: args[i+1], toPath: learnPromoteFlags.toPath, dryRun: learnPromoteFlags.dryRun, apply: learnPromoteFlags.apply, verbose: learnPromoteFlags.verbose)
+                i += 1
+            } else if arg.hasPrefix("--from=") {
+                learnPromoteFlags = Flags(fromPath: String(arg.dropFirst("--from=".count)), toPath: learnPromoteFlags.toPath, dryRun: learnPromoteFlags.dryRun, apply: learnPromoteFlags.apply, verbose: learnPromoteFlags.verbose)
+            } else if arg == "--to" && i + 1 < args.count {
+                learnPromoteFlags = Flags(fromPath: learnPromoteFlags.fromPath, toPath: args[i+1], dryRun: learnPromoteFlags.dryRun, apply: learnPromoteFlags.apply, verbose: learnPromoteFlags.verbose)
+                i += 1
+            } else if arg.hasPrefix("--to=") {
+                learnPromoteFlags = Flags(fromPath: learnPromoteFlags.fromPath, toPath: String(arg.dropFirst("--to=".count)), dryRun: learnPromoteFlags.dryRun, apply: learnPromoteFlags.apply, verbose: learnPromoteFlags.verbose)
+            } else if arg == "--dry-run" {
+                learnPromoteFlags = Flags(fromPath: learnPromoteFlags.fromPath, toPath: learnPromoteFlags.toPath, dryRun: true, apply: learnPromoteFlags.apply, verbose: learnPromoteFlags.verbose)
+            } else if arg == "--apply" {
+                learnPromoteFlags = Flags(fromPath: learnPromoteFlags.fromPath, toPath: learnPromoteFlags.toPath, dryRun: learnPromoteFlags.dryRun, apply: true, verbose: learnPromoteFlags.verbose)
+            } else if arg == "--verbose" {
+                learnPromoteFlags = Flags(fromPath: learnPromoteFlags.fromPath, toPath: learnPromoteFlags.toPath, dryRun: learnPromoteFlags.dryRun, apply: learnPromoteFlags.apply, verbose: true)
+            }
+            i += 1
+        }
+
+        do {
+            let cmd = LearnPromoteCommand()
+            try await cmd.run(flags: learnPromoteFlags)
+        } catch {
+            print("❌ Learn-promote failed: \(error)")
+            exitNow(.tempfail)
+        }
     }
 
     func run(flags: Flags) async throws {
@@ -180,22 +224,6 @@ struct LearnPromoteCommand {
                 "source": "learn-promote from \(fromPath)"
             ]
         ]
-
-        // Validate quirks database structure
-        if let existingQuirks = currentQuirks["quirks"] as? [[String: Any]] {
-            // Check for duplicate VID:PID entries
-            for existingQuirk in existingQuirks {
-                if let existingMatch = existingQuirk["match"] as? [String: Any],
-                   let existingVidPid = existingMatch["vidPid"] as? String,
-                   existingVidPid == vidPidKey {
-                    if flags.apply {
-                        print("⚠️  Warning: Replacing existing quirk for \(vidPidKey)")
-                    } else {
-                        print("ℹ️  Note: Existing quirk for \(vidPidKey) will be replaced")
-                    }
-                }
-            }
-        }
 
         // Update quirks database
         var updatedQuirks = currentQuirks

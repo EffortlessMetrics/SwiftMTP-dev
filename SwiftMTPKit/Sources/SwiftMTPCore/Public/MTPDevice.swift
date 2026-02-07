@@ -254,6 +254,12 @@ public protocol MTPDevice: Sendable {
   ///   - newParent: New parent directory handle, or `nil` for root
   func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws
 
+  /// Probed capabilities of the device
+  var probedCapabilities: [String: Bool] { get async }
+
+  /// Current effective tuning of the device
+  var effectiveTuning: EffectiveTuning { get async }
+
   /// Stream of events from the device.
   ///
   /// Listen to this stream to be notified of changes to the device's

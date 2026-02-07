@@ -80,6 +80,10 @@ public func parseSize(_ str: String) -> UInt64 {
     return num
 }
 
+public func log(_ message: String) {
+    FileHandle.standardError.write((message + "\n").data(using: .utf8)!)
+}
+
 @MainActor
 public func printJSON(_ value: Any, type: String) {
     var envelope: [String: Any] = [

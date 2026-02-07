@@ -175,10 +175,10 @@ struct SwiftMTPCLI {
             exitNow(exitCode)
         case "collect":
             if remainingArgs.contains("--help") || remainingArgs.contains("-h") {
-                printCollectHelp()
+                CollectCLICommand.printHelp()
                 exitNow(.ok)
             }
-            await runCollect(flags: flags)
+            await CollectCLICommand.run(args: remainingArgs, flags: flags)
         case "submit":
             guard let bundlePath = remainingArgs.first else {
                 print("❌ Usage: submit <bundle-path> [--gh]")
@@ -188,15 +188,20 @@ struct SwiftMTPCLI {
             let exitCode = await SubmitCommand.run(bundlePath: bundlePath, gh: gh)
             exitNow(exitCode)
         case "learn-promote":
+            guard MTPFeatureFlags.shared.isEnabled(.learnPromote) else {
+                print("❌ Experimental 'learn-promote' feature is disabled.")
+                print("   Enable with SWIFTMTP_FEATURE_LEARN_PROMOTE=1")
+                exitNow(.unavailable)
+            }
             if remainingArgs.contains("--help") || remainingArgs.contains("-h") {
                 LearnPromoteCommand.printHelp()
                 exitNow(.ok)
             }
-            await runLearnPromote()
+            await LearnPromoteCommand.runCLI(args: remainingArgs)
         case "bdd":
-            await runBDD(flags: flags)
+            await BDDCommand.run(flags: flags)
         case "snapshot":
-            await runSnapshot(flags: flags, args: remainingArgs)
+            await SnapshotCommand.run(flags: flags, args: remainingArgs)
         case "version":
             await SystemCommands.runVersion(flags: flags, args: remainingArgs)
         default:
@@ -211,42 +216,6 @@ struct SwiftMTPCLI {
         print("")
         print("Commands: probe, usb-dump, diag, storages, ls, pull, push, bench, mirror, quirks, health, collect, delete, move, events, learn-promote, bdd, snapshot, version")
     }
-
-    func runCollect(flags: CLIFlags) async {
-        let collectFlags = CollectCommand.CollectFlags(
-            strict: flags.strict,
-            runBench: [],
-            json: flags.json,
-            noninteractive: false,
-            bundlePath: nil
-        )
-        let exitCode = await CollectCommand.run(flags: collectFlags)
-        exitNow(exitCode)
-    }
-
-    func runLearnPromote() async {
-        print("Learn-Promote integration pending...")
-    }
-
-    func runSnapshot(flags: CLIFlags, args: [String]) async {
-        print("Snapshot integration pending...")
-    }
-
-    func runBDD(flags: CLIFlags) async {
-        print("BDD integration pending...")
-    }
-
-    func printCollectHelp() {
-        print("Collect Help...")
-    }
-}
-
-func log(_ message: String) {
-    FileHandle.standardError.write((message + "\n").data(using: .utf8)!)
-}
-
-func exitNow(_ code: ExitCode) -> Never {
-    Darwin.exit(Int32(code.rawValue))
 }
 
 // Global actor entry point
