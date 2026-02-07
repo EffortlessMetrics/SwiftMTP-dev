@@ -35,6 +35,47 @@ public struct DeviceQuirk: Codable, Sendable {
   public var hooks: [QuirkHook]?
   public var status: String?                // "stable" | "experimental" | ...
   public var confidence: String?            // "low" | "medium" | "high"
+  public init(
+    id: String,
+    vid: UInt16,
+    pid: UInt16,
+    bcdDevice: UInt16? = nil,
+    ifaceClass: UInt8? = nil,
+    ifaceSubclass: UInt8? = nil,
+    ifaceProtocol: UInt8? = nil,
+    maxChunkBytes: Int? = nil,
+    ioTimeoutMs: Int? = nil,
+    handshakeTimeoutMs: Int? = nil,
+    inactivityTimeoutMs: Int? = nil,
+    overallDeadlineMs: Int? = nil,
+    stabilizeMs: Int? = nil,
+    resetOnOpen: Bool? = nil,
+    disableEventPump: Bool? = nil,
+    operations: [String: Bool]? = nil,
+    hooks: [QuirkHook]? = nil,
+    status: String? = nil,
+    confidence: String? = nil
+  ) {
+    self.id = id
+    self.vid = vid
+    self.pid = pid
+    self.bcdDevice = bcdDevice
+    self.ifaceClass = ifaceClass
+    self.ifaceSubclass = ifaceSubclass
+    self.ifaceProtocol = ifaceProtocol
+    self.maxChunkBytes = maxChunkBytes
+    self.ioTimeoutMs = ioTimeoutMs
+    self.handshakeTimeoutMs = handshakeTimeoutMs
+    self.inactivityTimeoutMs = inactivityTimeoutMs
+    self.overallDeadlineMs = overallDeadlineMs
+    self.stabilizeMs = stabilizeMs
+    self.resetOnOpen = resetOnOpen
+    self.disableEventPump = disableEventPump
+    self.operations = operations
+    self.hooks = hooks
+    self.status = status
+    self.confidence = confidence
+  }
 
   // Internal decoding helpers
   private enum CodingKeys: String, CodingKey {

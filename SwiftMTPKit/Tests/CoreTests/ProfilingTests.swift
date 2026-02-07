@@ -10,20 +10,12 @@ final class ProfilingTests: XCTestCase {
         
         // Mock device info
         let info = MTPDeviceInfo(
-            standardVersion: 100,
-            vendorExtensionID: 6,
-            vendorExtensionVersion: 100,
-            vendorExtensionDesc: "MTP 1.0",
-            functionalMode: 0,
-            operationsSupported: [],
-            eventsSupported: [],
-            devicePropertiesSupported: [],
-            captureFormats: [],
-            playbackFormats: [],
             manufacturer: "Test",
             model: "Unit",
-            deviceVersion: "1.0",
-            serialNumber: "SN123"
+            version: "1.0",
+            serialNumber: "SN123",
+            operationsSupported: [],
+            eventsSupported: []
         )
         
         // Measure a dummy operation
@@ -42,20 +34,12 @@ final class ProfilingTests: XCTestCase {
     func testProfilingManagerStats() async throws {
         let profiler = ProfilingManager()
         let info = MTPDeviceInfo(
-            standardVersion: 100,
-            vendorExtensionID: 6,
-            vendorExtensionVersion: 100,
-            vendorExtensionDesc: "MTP 1.0",
-            functionalMode: 0,
-            operationsSupported: [],
-            eventsSupported: [],
-            devicePropertiesSupported: [],
-            captureFormats: [],
-            playbackFormats: [],
             manufacturer: "Test",
             model: "Unit",
-            deviceVersion: "1.0",
-            serialNumber: "SN123"
+            version: "1.0",
+            serialNumber: "SN123",
+            operationsSupported: [],
+            eventsSupported: []
         )
         
         // Measure multiple iterations

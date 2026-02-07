@@ -29,34 +29,44 @@ public actor ProfilingManager {
     
     public init() {}
     
-    public func measure<T>(_ name: String, bytes: Int? = nil, body: () async throws -> T) async throws -> T {
-        let start = DispatchTime.now()
-        let result = try await body()
-        let end = DispatchTime.now()
-        
-        let nanoseconds = end.uptimeNanoseconds - start.uptimeNanoseconds
-        let milliseconds = Double(nanoseconds) / 1_000_000.0
-        
-        results[name, default: []].append(milliseconds)
+    // Actor-isolated state update
+    private func record(_ name: String, ms: Double, bytes: Int?) {
+        results[name, default: []].append(ms)
         if let b = bytes {
-            let mbps = (Double(b) / 1_000_000.0) / (milliseconds / 1000.0)
+            let mbps = (Double(b) / 1_000_000.0) / (ms / 1000.0)
             throughputs[name, default: []].append(mbps)
         }
-        
-        return result
     }
     
-    public func report(info: MTPDeviceInfo) async -> MTPDeviceProfile {
+    /// Measures an async operation in the caller's context, then hops into the actor to record metrics.
+    @discardableResult
+    public nonisolated func measure<T>(
+        _ name: String,
+        bytes: Int? = nil,
+        body: () async throws -> T
+    ) async rethrows -> T {
+        let start = DispatchTime.now()
+        let value = try await body()
+        let end = DispatchTime.now()
+        
+        let ns = end.uptimeNanoseconds - start.uptimeNanoseconds
+        let ms = Double(ns) / 1_000_000.0
+        
+        await self.record(name, ms: ms, bytes: bytes)
+        return value
+    }
+    
+    public func report(info: MTPDeviceInfo) -> MTPDeviceProfile {
         let metrics = results.map { name, values -> MTPProfileMetric in
             let sorted = values.sorted()
             let count = sorted.count
             let minVal = sorted.first ?? 0
             let maxVal = sorted.last ?? 0
-            let avg = sorted.reduce(0, +) / Double(count)
-            let p95Index = Int(Double(count) * 0.95)
-            let p95 = sorted[min(p95Index, count - 1)]
+            let avg = count > 0 ? (sorted.reduce(0, +) / Double(count)) : 0
+            let p95Index = max(0, min(count - 1, Int(Double(count) * 0.95)))
+            let p95 = count > 0 ? sorted[p95Index] : 0
             
-            let tp = throughputs[name]?.sorted()
+            let tp = throughputs[name]
             let avgTp = tp.map { $0.reduce(0, +) / Double($0.count) }
             
             return MTPProfileMetric(

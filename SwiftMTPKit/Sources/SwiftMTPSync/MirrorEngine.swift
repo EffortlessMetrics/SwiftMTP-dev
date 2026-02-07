@@ -31,10 +31,10 @@ public struct MTPSyncReport: Sendable {
 public final class MirrorEngine {
     private let snapshotter: Snapshotter
     private let diffEngine: DiffEngine
-    private let journal: SwiftMTPIndex.TransferJournal
+    private let journal: SQLiteTransferJournal
     private let log = MTPLog.sync
 
-    public init(snapshotter: Snapshotter, diffEngine: DiffEngine, journal: SwiftMTPIndex.TransferJournal) {
+    public init(snapshotter: Snapshotter, diffEngine: DiffEngine, journal: SQLiteTransferJournal) {
         self.snapshotter = snapshotter
         self.diffEngine = diffEngine
         self.journal = journal

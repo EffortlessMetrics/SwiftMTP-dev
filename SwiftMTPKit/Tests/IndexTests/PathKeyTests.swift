@@ -16,7 +16,7 @@ struct PathKeyTests {
 
     @Test("Normalize component with control characters")
     func testNormalizeComponentWithControlChars() {
-        #expect(PathKey.normalizeComponent("file\x00.txt") == "file.txt")
+        #expect(PathKey.normalizeComponent("file\u{00}.txt") == "file.txt")
         #expect(PathKey.normalizeComponent("file\n.txt") == "file.txt")
     }
 
@@ -37,7 +37,7 @@ struct PathKeyTests {
     @Test("Normalize component empty result")
     func testNormalizeComponentEmpty() {
         #expect(PathKey.normalizeComponent("") == "_")
-        #expect(PathKey.normalizeComponent("\x00\x01\x02") == "_")
+        #expect(PathKey.normalizeComponent("\u{00}\u{01}\u{02}") == "_")
     }
 
     @Test("Normalize path with components")
