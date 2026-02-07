@@ -21,6 +21,7 @@ public struct PTPResponseResult: Sendable {
 
 public protocol MTPTransport: Sendable {
     func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig) async throws -> MTPLink
+    func close() async throws
 }
 
 public protocol MTPLink: Sendable {

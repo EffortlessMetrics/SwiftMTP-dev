@@ -263,6 +263,19 @@ public protocol MTPDevice: Sendable {
   /// Current effective tuning of the device
   var effectiveTuning: EffectiveTuning { get async }
 
+  /// Ensure the device session is open, opening it if necessary.
+  func openIfNeeded() async throws
+
+  /// Close the device session and release all underlying transport resources.
+  /// Used for clean lifecycle management during profiling or shutdown.
+  @_spi(Dev)
+  func devClose() async throws
+
+  @_spi(Dev) func devGetDeviceInfoUncached() async throws -> MTPDeviceInfo
+  @_spi(Dev) func devGetStorageIDsUncached() async throws -> [MTPStorageID]
+  @_spi(Dev) func devGetRootHandlesUncached(storage: MTPStorageID) async throws -> [MTPObjectHandle]
+  @_spi(Dev) func devGetObjectInfoUncached(handle: MTPObjectHandle) async throws -> MTPObjectInfo
+
   /// Stream of events from the device.
   ///
   /// Listen to this stream to be notified of changes to the device's

@@ -158,10 +158,10 @@
       },
       "tuning": {
         "maxChunkBytes": 2097152,
-        "handshakeTimeoutMs": 10000,
-        "ioTimeoutMs": 20000,
+        "handshakeTimeoutMs": 20000,
+        "ioTimeoutMs": 30000,
         "inactivityTimeoutMs": 10000,
-        "overallDeadlineMs": 120000,
+        "overallDeadlineMs": 180000,
         "stabilizeMs": 2000,
         "resetOnOpen": false
       },

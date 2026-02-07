@@ -100,8 +100,11 @@ private func claimMTPInterface(handle: OpaquePointer, device: OpaquePointer) thr
     return (sel.iface, sel.alt, sel.inEP, sel.outEP, sel.evt)
 }
 
-public struct LibUSBTransport: MTPTransport {
+public actor LibUSBTransport: MTPTransport {
+  private var activeLinks: [MTPUSBLink] = []
+
   public init() {}
+  
   public func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig) async throws -> MTPLink {
     let ctx = LibUSBContext.shared.ctx
     var list: UnsafeMutablePointer<OpaquePointer?>?
@@ -130,7 +133,20 @@ public struct LibUSBTransport: MTPTransport {
     // Drain until empty with short timeout
     while libusb_bulk_transfer(handle, epIn, &drain, Int32(drain.count), &got, 10) == 0 && got > 0 {}
     
-    return MTPUSBLink(handle: handle, device: dev, iface: iface, epIn: epIn, epOut: epOut, epEvt: epEvt, config: config, manufacturer: summary.manufacturer, model: summary.model)
+    let link = MTPUSBLink(handle: handle, device: dev, iface: iface, epIn: epIn, epOut: epOut, epEvt: epEvt, config: config, manufacturer: summary.manufacturer, model: summary.model)
+    
+    activeLinks.append(link)
+    
+    return link
+  }
+
+  public func close() async throws {
+    let links = activeLinks
+    activeLinks.removeAll()
+    
+    for link in links {
+        await link.close()
+    }
   }
 }
 
