@@ -4,10 +4,13 @@
 import Foundation
 import OSLog
 import SwiftMTPQuirks
+import SwiftMTPObservability
 
-// Placeholder types - these should be implemented elsewhere
 struct EventPump {
     func startIfAvailable(on link: any MTPLink) throws {
+        // Implementation needed
+    }
+    func stop() {
         // Implementation needed
     }
 }
@@ -30,8 +33,8 @@ struct UserOverrides {
 
 public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     public let id: MTPDeviceID
+    public let summary: MTPDeviceSummary
     private let transport: any MTPTransport
-    private let summary: MTPDeviceSummary
     private var config: SwiftMTPConfig
     private var deviceInfo: MTPDeviceInfo?
     private var mtpLink: (any MTPLink)?
@@ -187,14 +190,56 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     // MARK: - Session Management
 
     /// Open device session if not already open, with optional stabilization delay.
-    internal func openIfNeeded() async throws {
+    public func openIfNeeded() async throws {
         guard !sessionOpen else { return }
         let link = try await getMTPLink()
         try await applyTuningAndOpenSession(link: link)
         sessionOpen = true
     }
 
+    /// Close the device session and release all underlying transport resources.
+    public func devClose() async throws {
+        eventPump.stop()
+        
+        if sessionOpen, let link = mtpLink {
+            // Attempt to close session, but ignore errors if it fails
+            try? await link.closeSession()
+        }
+        
+        // Always close transport to release interface and handles
+        try await transport.close()
+        
+        mtpLink = nil
+        sessionOpen = false
+    }
+
+    public func devGetDeviceInfoUncached() async throws -> MTPDeviceInfo {
+        let link = try await getMTPLink()
+        return try await link.getDeviceInfo()
+    }
+
+    public func devGetStorageIDsUncached() async throws -> [MTPStorageID] {
+        let link = try await getMTPLink()
+        return try await link.getStorageIDs()
+    }
+
+    public func devGetRootHandlesUncached(storage: MTPStorageID) async throws -> [MTPObjectHandle] {
+        let link = try await getMTPLink()
+        return try await link.getObjectHandles(storage: storage, parent: nil)
+    }
+
+    public func devGetObjectInfoUncached(handle: MTPObjectHandle) async throws -> MTPObjectInfo {
+        let link = try await getMTPLink()
+        let infos = try await link.getObjectInfos([handle])
+        guard let info = infos.first else { throw MTPError.objectNotFound }
+        return info
+    }
+
     private func applyTuningAndOpenSession(link: any MTPLink) async throws {
+      let signposter = MTPLog.Signpost.enumerateSignposter
+      let totalState = signposter.beginInterval("applyTuningAndOpenSession", id: signposter.makeSignpostID())
+      defer { signposter.endInterval("applyTuningAndOpenSession", totalState) }
+
       let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
       if debugEnabled { print("   [Actor] applyTuningAndOpenSession starting...") }
 

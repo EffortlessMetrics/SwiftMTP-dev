@@ -23,6 +23,7 @@ public protocol SubmissionStore: Sendable {
 public protocol ObjectCatalogStore: Sendable {
     func recordStorage(deviceId: MTPDeviceID, storage: MTPStorageInfo) async throws
     func recordObject(deviceId: MTPDeviceID, object: MTPObjectInfo, pathKey: String, generation: Int) async throws
+    func recordObjects(deviceId: MTPDeviceID, objects: [(object: MTPObjectInfo, pathKey: String)], generation: Int) async throws
     func finalizeIndexing(deviceId: MTPDeviceID, generation: Int) async throws
     func fetchObjects(deviceId: MTPDeviceID, generation: Int) async throws -> [MTPObjectRecord]
 }
@@ -81,6 +82,7 @@ public final class NullPersistenceProvider: MTPPersistenceProvider, LearnedProfi
     // ObjectCatalogStore (Null)
     public func recordStorage(deviceId: MTPDeviceID, storage: MTPStorageInfo) async throws {}
     public func recordObject(deviceId: MTPDeviceID, object: MTPObjectInfo, pathKey: String, generation: Int) async throws {}
+    public func recordObjects(deviceId: MTPDeviceID, objects: [(object: MTPObjectInfo, pathKey: String)], generation: Int) async throws {}
     public func finalizeIndexing(deviceId: MTPDeviceID, generation: Int) async throws {}
     public func fetchObjects(deviceId: MTPDeviceID, generation: Int) async throws -> [MTPObjectRecord] { [] }
 }

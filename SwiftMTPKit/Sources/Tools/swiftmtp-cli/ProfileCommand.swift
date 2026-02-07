@@ -2,7 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
-import SwiftMTPCore
+@_spi(Dev) import SwiftMTPCore
 
 struct ProfileCommand {
     static func run(flags: CLIFlags, iterations: Int = 3) async {
@@ -11,66 +11,43 @@ struct ProfileCommand {
         do {
             let profiler = ProfilingManager()
             
-            // 1. Connection & Session Latency
-            for i in 1...iterations {
-                print("   Iteration \(i)/\(iterations)...")
-                
-                do {
-                    try await profiler.measure("OpenSession") {
-                        let device = try await openDevice(flags: flags)
-                        try await device.openIfNeeded()
-                        // Stabilization delay
-                        try await Task.sleep(nanoseconds: 1_000_000_000)
-                    }
-                } catch {
-                    print("   ⚠️ Iteration \(i) failed: \(error)")
-                }
+            // 1. Connection & Session Latency (measured once for base)
+            let device = try await openDevice(flags: flags)
+            try await profiler.measure("OpenSession") {
+                try await device.openIfNeeded()
             }
             
             // 2. Metadata Throughput
-            let device = try await openDevice(flags: flags)
-            try await device.openIfNeeded()
-            let info = try await device.getDeviceInfo()
+            let info = try await device.info
             
-            for _ in 1...iterations {
+            for i in 1...iterations {
+                print("   Iteration \(i)/\(iterations)...")
+                
                 _ = try await profiler.measure("GetDeviceInfo") {
-                    _ = try await device.getDeviceInfo()
+                    _ = try await device.devGetDeviceInfoUncached()
                 }
                 
                 _ = try await profiler.measure("GetStorageIDs") {
-                    _ = try await device.storages()
+                    _ = try await device.devGetStorageIDsUncached()
+                }
+                
+                // 3. Object Listing (Root)
+                let storages = try await device.storages()
+                if let storage = storages.first {
+                    let handles = try await profiler.measure("ListRootHandles") {
+                        return try await device.devGetRootHandlesUncached(storage: storage.id)
+                    }
+                    
+                    // 4. Individual ObjectInfo Latency (Sample first 10 objects)
+                    for h in handles.prefix(10) {
+                        _ = try await profiler.measure("GetObjectInfo") {
+                            return try await device.devGetObjectInfoUncached(handle: h)
+                        }
+                    }
                 }
             }
             
-            // 3. Object Listing (Root)
-            let storages = try await device.storages()
-            if let storage = storages.first {
-                for _ in 1...iterations {
-                    _ = try await profiler.measure("ListRootHandles") {
-                        var objects: [MTPObjectInfo] = []
-                        let stream = device.list(parent: nil as MTPObjectHandle?, in: storage.id)
-                        for try await batch in stream {
-                            objects.append(contentsOf: batch)
-                        }
-                        return objects
-                    }
-                }
-                
-                // 4. Individual ObjectInfo Latency (Sample 10 objects)
-                var objects: [MTPObjectInfo] = []
-                let stream = device.list(parent: nil as MTPObjectHandle?, in: storage.id)
-                for try await batch in stream {
-                    objects.append(contentsOf: batch)
-                    if objects.count >= 10 { break }
-                }
-                
-                for _ in objects.prefix(10) {
-                    _ = try await profiler.measure("GetObjectInfo") {
-                        // Dummy storage call for now to keep structure until SPI is available
-                        return try await device.storages()
-                    }
-                }
-            }
+            try await device.devClose()
             
             let profile = await profiler.report(info: info)
             

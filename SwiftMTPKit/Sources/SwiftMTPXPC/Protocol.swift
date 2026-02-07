@@ -3,10 +3,13 @@
 
 import Foundation
 
-/// Codable request/response types for XPC communication
-/// These are used by the File Provider extension to communicate with the host app
+/// Request/Response types for XPC communication
+/// These must be classes conforming to NSSecureCoding and Sendable to be used in @objc XPC protocols
 
-public struct ReadRequest: Codable, Sendable {
+@objc(ReadRequest)
+public final class ReadRequest: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
+    
     public let deviceId: String
     public let objectHandle: UInt32
     public let bookmark: Data?
@@ -15,10 +18,27 @@ public struct ReadRequest: Codable, Sendable {
         self.deviceId = deviceId
         self.objectHandle = objectHandle
         self.bookmark = bookmark
+        super.init()
+    }
+    
+    public func encode(with coder: NSCoder) {
+        coder.encode(deviceId, forKey: "deviceId")
+        coder.encode(Int64(objectHandle), forKey: "objectHandle")
+        coder.encode(bookmark, forKey: "bookmark")
+    }
+    
+    public init?(coder: NSCoder) {
+        guard let deviceId = coder.decodeObject(of: NSString.self, forKey: "deviceId") as String? else { return nil }
+        self.deviceId = deviceId
+        self.objectHandle = UInt32(coder.decodeInt64(forKey: "objectHandle"))
+        self.bookmark = coder.decodeObject(of: NSData.self, forKey: "bookmark") as Data?
     }
 }
 
-public struct ReadResponse: Codable, Sendable {
+@objc(ReadResponse)
+public final class ReadResponse: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
+    
     public let success: Bool
     public let errorMessage: String?
     public let tempFileURL: URL?
@@ -29,32 +49,76 @@ public struct ReadResponse: Codable, Sendable {
         self.errorMessage = errorMessage
         self.tempFileURL = tempFileURL
         self.fileSize = fileSize
+        super.init()
+    }
+    
+    public func encode(with coder: NSCoder) {
+        coder.encode(success, forKey: "success")
+        coder.encode(errorMessage, forKey: "errorMessage")
+        coder.encode(tempFileURL, forKey: "tempFileURL")
+        if let fileSize = fileSize { coder.encode(Int64(fileSize), forKey: "fileSize") }
+    }
+    
+    public init?(coder: NSCoder) {
+        self.success = coder.decodeBool(forKey: "success")
+        self.errorMessage = coder.decodeObject(of: NSString.self, forKey: "errorMessage") as String?
+        self.tempFileURL = coder.decodeObject(of: NSURL.self, forKey: "tempFileURL") as URL?
+        if coder.containsValue(forKey: "fileSize") {
+            self.fileSize = UInt64(coder.decodeInt64(forKey: "fileSize"))
+        } else {
+            self.fileSize = nil
+        }
     }
 }
 
-public struct StorageListRequest: Codable, Sendable {
-    public let deviceId: String
-
-    public init(deviceId: String) {
-        self.deviceId = deviceId
-    }
-}
-
-public struct StorageInfo: Codable, Sendable {
+@objc(StorageInfo)
+public final class StorageInfo: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
+    
     public let storageId: UInt32
-    public let description: String
+    public let storageDescription: String
     public let capacityBytes: UInt64
     public let freeBytes: UInt64
 
     public init(storageId: UInt32, description: String, capacityBytes: UInt64, freeBytes: UInt64) {
         self.storageId = storageId
-        self.description = description
+        self.storageDescription = description
         self.capacityBytes = capacityBytes
         self.freeBytes = freeBytes
+        super.init()
+    }
+    
+    public func encode(with coder: NSCoder) {
+        coder.encode(Int64(storageId), forKey: "storageId")
+        coder.encode(storageDescription, forKey: "storageDescription")
+        coder.encode(Int64(capacityBytes), forKey: "capacityBytes")
+        coder.encode(Int64(freeBytes), forKey: "freeBytes")
+    }
+    
+    public init?(coder: NSCoder) {
+        self.storageId = UInt32(coder.decodeInt64(forKey: "storageId"))
+        guard let description = coder.decodeObject(of: NSString.self, forKey: "storageDescription") as String? else { return nil }
+        self.storageDescription = description
+        self.capacityBytes = UInt64(coder.decodeInt64(forKey: "capacityBytes"))
+        self.freeBytes = UInt64(coder.decodeInt64(forKey: "freeBytes"))
     }
 }
 
-public struct StorageListResponse: Codable, Sendable {
+@objc(StorageListRequest)
+public final class StorageListRequest: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
+    public let deviceId: String
+    public init(deviceId: String) { self.deviceId = deviceId; super.init() }
+    public func encode(with coder: NSCoder) { coder.encode(deviceId, forKey: "deviceId") }
+    public init?(coder: NSCoder) {
+        guard let deviceId = coder.decodeObject(of: NSString.self, forKey: "deviceId") as String? else { return nil }
+        self.deviceId = deviceId
+    }
+}
+
+@objc(StorageListResponse)
+public final class StorageListResponse: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
     public let success: Bool
     public let errorMessage: String?
     public let storages: [StorageInfo]?
@@ -63,22 +127,25 @@ public struct StorageListResponse: Codable, Sendable {
         self.success = success
         self.errorMessage = errorMessage
         self.storages = storages
+        super.init()
+    }
+    
+    public func encode(with coder: NSCoder) {
+        coder.encode(success, forKey: "success")
+        coder.encode(errorMessage, forKey: "errorMessage")
+        coder.encode(storages, forKey: "storages")
+    }
+    
+    public init?(coder: NSCoder) {
+        self.success = coder.decodeBool(forKey: "success")
+        self.errorMessage = coder.decodeObject(of: NSString.self, forKey: "errorMessage") as String?
+        self.storages = coder.decodeObject(of: [NSArray.self, StorageInfo.self], forKey: "storages") as? [StorageInfo]
     }
 }
 
-public struct ObjectListRequest: Codable, Sendable {
-    public let deviceId: String
-    public let storageId: UInt32
-    public let parentHandle: UInt32?
-
-    public init(deviceId: String, storageId: UInt32, parentHandle: UInt32? = nil) {
-        self.deviceId = deviceId
-        self.storageId = storageId
-        self.parentHandle = parentHandle
-    }
-}
-
-public struct ObjectInfo: Codable, Sendable {
+@objc(ObjectInfo)
+public final class ObjectInfo: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
     public let handle: UInt32
     public let name: String
     public let sizeBytes: UInt64?
@@ -91,10 +158,58 @@ public struct ObjectInfo: Codable, Sendable {
         self.sizeBytes = sizeBytes
         self.isDirectory = isDirectory
         self.modifiedDate = modifiedDate
+        super.init()
+    }
+    
+    public func encode(with coder: NSCoder) {
+        coder.encode(Int64(handle), forKey: "handle")
+        coder.encode(name, forKey: "name")
+        if let sizeBytes = sizeBytes { coder.encode(Int64(sizeBytes), forKey: "sizeBytes") }
+        coder.encode(isDirectory, forKey: "isDirectory")
+        coder.encode(modifiedDate, forKey: "modifiedDate")
+    }
+    
+    public init?(coder: NSCoder) {
+        self.handle = UInt32(coder.decodeInt64(forKey: "handle"))
+        guard let name = coder.decodeObject(of: NSString.self, forKey: "name") as String? else { return nil }
+        self.name = name
+        if coder.containsValue(forKey: "sizeBytes") { self.sizeBytes = UInt64(coder.decodeInt64(forKey: "sizeBytes")) } else { self.sizeBytes = nil }
+        self.isDirectory = coder.decodeBool(forKey: "isDirectory")
+        self.modifiedDate = coder.decodeObject(of: NSDate.self, forKey: "modifiedDate") as Date?
     }
 }
 
-public struct ObjectListResponse: Codable, Sendable {
+@objc(ObjectListRequest)
+public final class ObjectListRequest: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
+    public let deviceId: String
+    public let storageId: UInt32
+    public let parentHandle: UInt32?
+
+    public init(deviceId: String, storageId: UInt32, parentHandle: UInt32? = nil) {
+        self.deviceId = deviceId
+        self.storageId = storageId
+        self.parentHandle = parentHandle
+        super.init()
+    }
+    
+    public func encode(with coder: NSCoder) {
+        coder.encode(deviceId, forKey: "deviceId")
+        coder.encode(Int64(storageId), forKey: "storageId")
+        if let parentHandle = parentHandle { coder.encode(Int64(parentHandle), forKey: "parentHandle") }
+    }
+    
+    public init?(coder: NSCoder) {
+        guard let deviceId = coder.decodeObject(of: NSString.self, forKey: "deviceId") as String? else { return nil }
+        self.deviceId = deviceId
+        self.storageId = UInt32(coder.decodeInt64(forKey: "storageId"))
+        if coder.containsValue(forKey: "parentHandle") { self.parentHandle = UInt32(coder.decodeInt64(forKey: "parentHandle")) } else { self.parentHandle = nil }
+    }
+}
+
+@objc(ObjectListResponse)
+public final class ObjectListResponse: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
     public let success: Bool
     public let errorMessage: String?
     public let objects: [ObjectInfo]?
@@ -103,22 +218,31 @@ public struct ObjectListResponse: Codable, Sendable {
         self.success = success
         self.errorMessage = errorMessage
         self.objects = objects
+        super.init()
+    }
+    
+    public func encode(with coder: NSCoder) {
+        coder.encode(success, forKey: "success")
+        coder.encode(errorMessage, forKey: "errorMessage")
+        coder.encode(objects, forKey: "objects")
+    }
+    
+    public init?(coder: NSCoder) {
+        self.success = coder.decodeBool(forKey: "success")
+        self.errorMessage = coder.decodeObject(of: NSString.self, forKey: "errorMessage") as String?
+        self.objects = coder.decodeObject(of: [NSArray.self, ObjectInfo.self], forKey: "objects") as? [ObjectInfo]
     }
 }
 
 /// XPC service protocol that the File Provider extension calls
-/// This is the main interface for Finder integration
+@MainActor
 @objc public protocol MTPXPCService {
     func ping(reply: @escaping (String) -> Void)
-
     func readObject(_ request: ReadRequest, withReply reply: @escaping (ReadResponse) -> Void)
-
     func listStorages(_ request: StorageListRequest, withReply reply: @escaping (StorageListResponse) -> Void)
-
     func listObjects(_ request: ObjectListRequest, withReply reply: @escaping (ObjectListResponse) -> Void)
-
     func getObjectInfo(deviceId: String, storageId: UInt32, objectHandle: UInt32, withReply reply: @escaping (ReadResponse) -> Void)
 }
 
 /// XPC service name for the host app
-public let MTPXPCServiceName = "com.example.SwiftMTP.MTPXPCService"
+public let MTPXPCServiceName = "com.effortlessmetrics.swiftmtp.xpc"
