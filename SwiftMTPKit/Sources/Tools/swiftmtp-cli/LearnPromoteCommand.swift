@@ -77,7 +77,6 @@ struct LearnPromoteCommand {
             // Require bench gates satisfied for --apply (safety rail)
             if flags.apply {
                 // Check if benchmark files exist and contain data
-                var allBenchmarksValid = true
                 for benchFile in benchFiles {
                     let benchURL = submissionURL.appendingPathComponent(benchFile)
                     if !FileManager.default.fileExists(atPath: benchURL.path) {

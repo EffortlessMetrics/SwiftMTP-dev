@@ -125,7 +125,7 @@ public struct PTPReader {
     public mutating func u16() -> UInt16? {
         guard o + 2 <= data.count else { return nil }
         var v: UInt16 = 0
-        withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+2)) }
+        _ = withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+2)) }
         defer { o += 2 }
         return v.littleEndian
     }
@@ -133,7 +133,7 @@ public struct PTPReader {
     public mutating func u32() -> UInt32? {
         guard o + 4 <= data.count else { return nil }
         var v: UInt32 = 0
-        withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+4)) }
+        _ = withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+4)) }
         defer { o += 4 }
         return v.littleEndian
     }
@@ -141,7 +141,7 @@ public struct PTPReader {
     public mutating func u64() -> UInt64? {
         guard o + 8 <= data.count else { return nil }
         var v: UInt64 = 0
-        withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+8)) }
+        _ = withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o+8)) }
         defer { o += 8 }
         return v.littleEndian
     }

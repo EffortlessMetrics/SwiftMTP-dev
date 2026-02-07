@@ -12,12 +12,6 @@ final class QuirkSystemTests: XCTestCase {
 
         let capabilities: [String: Bool] = ["supportsLargeTransfers": true]
         
-        let fingerprint = MTPDeviceFingerprint(
-            vid: "2717", pid: "ff10",
-            interfaceTriple: InterfaceTriple(class: "06", subclass: "01", protocol: "01"),
-            endpointAddresses: EndpointAddresses(input: "81", output: "01", event: "82")
-        )
-
         // Create mock learned profile (as EffectiveTuning)
         var learned = EffectiveTuning.defaults()
         learned.maxChunkBytes = 4_194_304 // 4MB
