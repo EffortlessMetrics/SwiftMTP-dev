@@ -6,9 +6,8 @@ import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPQuirks
 
-
-// DELETE
-func runDeleteCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter, strict: Bool, safe: Bool) async -> ExitCode {
+@MainActor
+func runDeleteCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: SwiftMTPCore.DeviceFilter, strict: Bool, safe: Bool) async -> ExitCode {
   guard args.count >= 1, let handle = UInt32(args.removeFirst(), radix: 0) else {
     if json { printJSONErrorAndExit("missing_handle", code: .usage) }
     fputs("usage: swiftmtp delete <handle> [--recursive]\n", stderr); return .usage
@@ -21,50 +20,36 @@ func runDeleteCommand(args: inout [String], json: Bool, noninteractive: Bool, fi
   if !json && isTTY { spinner.start() }
 
   do {
-    let opened = try await openFilteredDevice(
-      filter: filter,
-      noninteractive: noninteractive,
-      strict: strict,
-      safe: safe
+    // Construct CLIFlags for openDevice
+    let flags = CLIFlags(
+        realOnly: true, useMock: false, mockProfile: "", 
+        json: json, jsonlOutput: false, traceUSB: false, 
+        strict: strict, safe: safe, traceUSBDetails: false, 
+        targetVID: filter.vid.map { String(format: "%04x", $0) }, 
+        targetPID: filter.pid.map { String(format: "%04x", $0) }, 
+        targetBus: filter.bus, 
+        targetAddress: filter.address
     )
+    
+    let device = try await openDevice(flags: flags)
+    try await device.openIfNeeded()
 
-    try await opened.device.delete(handle, recursive: recursive)
+    try await device.delete(handle, recursive: recursive)
     if !json && isTTY { spinner.succeed("Deleted") }
     return .ok
 
-  } catch let DeviceOpenError.noneMatched(available) {
-    if !json && isTTY { spinner.fail() }
-    if json {
-      printJSONErrorAndExit(
-        "No device matched the provided filter.",
-        code: .unavailable,
-        details: [
-          "availableDevices": "\(available.count)",
-          "examples": available.prefix(3).map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
-        ]
-      )
-    } else {
-      fputs("No device matched the provided filter.\n", stderr)
-      return .unavailable
-    }
-
-  } catch let DeviceOpenError.ambiguous(matches) {
-    if !json && isTTY { spinner.fail() }
-    if json {
-      printJSONErrorAndExit(
-        "Multiple devices match the filter; refine with --bus/--address.",
-        code: .usage,
-        details: [
-           "matches": matches.map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
-        ]
-      )
-    } else {
-      fputs("Multiple devices match; refine with --bus/--address.\n", stderr)
-      return .usage
-    }
-
   } catch {
     if !json && isTTY { spinner.fail() }
+    
+    if let mtpError = error as? MTPError, case .notSupported = mtpError {
+        if json {
+            printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+        } else {
+            fputs("No device matched the provided filter.\n", stderr)
+            return .unavailable
+        }
+    }
+    
     if json {
       printJSONErrorAndExit(error.localizedDescription, code: .software)
     } else {
@@ -74,8 +59,8 @@ func runDeleteCommand(args: inout [String], json: Bool, noninteractive: Bool, fi
   }
 }
 
-// MOVE
-func runMoveCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter, strict: Bool, safe: Bool) async -> ExitCode {
+@MainActor
+func runMoveCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: SwiftMTPCore.DeviceFilter, strict: Bool, safe: Bool) async -> ExitCode {
   guard args.count >= 2,
         let handle = UInt32(args.removeFirst(), radix: 0),
         let parent = UInt32(args.removeFirst(), radix: 0) else {
@@ -89,49 +74,35 @@ func runMoveCommand(args: inout [String], json: Bool, noninteractive: Bool, filt
   if !json && isTTY { spinner.start() }
 
   do {
-    let opened = try await openFilteredDevice(
-      filter: filter,
-      noninteractive: noninteractive,
-      strict: strict,
-      safe: safe
+    let flags = CLIFlags(
+        realOnly: true, useMock: false, mockProfile: "", 
+        json: json, jsonlOutput: false, traceUSB: false, 
+        strict: strict, safe: safe, traceUSBDetails: false, 
+        targetVID: filter.vid.map { String(format: "%04x", $0) }, 
+        targetPID: filter.pid.map { String(format: "%04x", $0) }, 
+        targetBus: filter.bus, 
+        targetAddress: filter.address
     )
+    
+    let device = try await openDevice(flags: flags)
+    try await device.openIfNeeded()
 
-    try await opened.device.move(handle, to: parent)
+    try await device.move(handle, to: parent)
     if !json && isTTY { spinner.succeed("Moved") }
     return .ok
 
-  } catch let DeviceOpenError.noneMatched(available) {
-    if !json && isTTY { spinner.fail() }
-    if json {
-      printJSONErrorAndExit(
-        "No device matched the provided filter.",
-        code: .unavailable,
-        details: [
-          "availableDevices": "\(available.count)"
-        ]
-      )
-    } else {
-      fputs("No device matched the provided filter.\n", stderr)
-      return .unavailable
-    }
-
-  } catch let DeviceOpenError.ambiguous(matches) {
-    if !json && isTTY { spinner.fail() }
-    if json {
-      printJSONErrorAndExit(
-        "Multiple devices match the filter; refine with --bus/--address.",
-        code: .usage,
-        details: [
-           "matches": matches.map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
-        ]
-      )
-    } else {
-      fputs("Multiple devices match; refine with --bus/--address.\n", stderr)
-      return .usage
-    }
-
   } catch {
     if !json && isTTY { spinner.fail() }
+    
+    if let mtpError = error as? MTPError, case .notSupported = mtpError {
+        if json {
+            printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+        } else {
+            fputs("No device matched the provided filter.\n", stderr)
+            return .unavailable
+        }
+    }
+    
     if json {
       printJSONErrorAndExit(error.localizedDescription, code: .software)
     } else {
@@ -141,8 +112,8 @@ func runMoveCommand(args: inout [String], json: Bool, noninteractive: Bool, filt
   }
 }
 
-// EVENTS (prints lines or JSONL)
-func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter, strict: Bool, safe: Bool) async -> ExitCode {
+@MainActor
+func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, filter: SwiftMTPCore.DeviceFilter, strict: Bool, safe: Bool) async -> ExitCode {
   let seconds = (args.first.flatMap { Int($0) }) ?? 30
 
   // Check if we're in a TTY for spinner
@@ -151,12 +122,18 @@ func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, fi
   if !json && isTTY { spinner.start() }
 
   do {
-    let opened = try await openFilteredDevice(
-      filter: filter,
-      noninteractive: noninteractive,
-      strict: strict,
-      safe: safe
+    let flags = CLIFlags(
+        realOnly: true, useMock: false, mockProfile: "", 
+        json: json, jsonlOutput: false, traceUSB: false, 
+        strict: strict, safe: safe, traceUSBDetails: false, 
+        targetVID: filter.vid.map { String(format: "%04x", $0) }, 
+        targetPID: filter.pid.map { String(format: "%04x", $0) }, 
+        targetBus: filter.bus, 
+        targetAddress: filter.address
     )
+    
+    let device = try await openDevice(flags: flags)
+    try await device.openIfNeeded()
 
     if !json && isTTY { spinner.succeed("Connected") }
 
@@ -168,11 +145,26 @@ func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, fi
     let iso = ISO8601DateFormatter()
 
     // Your DeviceActor exposes an AsyncStream<MTPEvent>
-    for await ev in opened.device.events {
+    for await ev in device.events {
+      let code: UInt16
+      let params: [UInt32]
+      
+      switch ev {
+      case .objectAdded(let handle):
+          code = 0x4002
+          params = [handle]
+      case .objectRemoved(let handle):
+          code = 0x4003
+          params = [handle]
+      case .storageInfoChanged(let storageId):
+          code = 0x400C
+          params = [storageId.raw]
+      }
+      
       let e = EventOut(
         ts: iso.string(from: Date()),
-        code: ev.code,            // UInt16 on your MTPEvent
-        params: ev.parameters     // [UInt32] on your MTPEvent
+        code: code,
+        params: params
       )
       if json {
         out.append(e)
@@ -183,41 +175,21 @@ func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, fi
     }
 
     if !json && isTTY { spinner.succeed("Complete") }
-    if json { printJSON(out) }
+    if json { printJSON(out, type: "events") }
     return .ok
-
-  } catch let DeviceOpenError.noneMatched(available) {
-    if !json && isTTY { spinner.fail() }
-    if json {
-      printJSONErrorAndExit(
-        "No device matched the provided filter.",
-        code: .unavailable,
-        details: [
-          "availableDevices": "\(available.count)"
-        ]
-      )
-    } else {
-      fputs("No device matched the provided filter.\n", stderr)
-      return .unavailable
-    }
-
-  } catch let DeviceOpenError.ambiguous(matches) {
-    if !json && isTTY { spinner.fail() }
-    if json {
-      printJSONErrorAndExit(
-        "Multiple devices match the filter; refine with --bus/--address.",
-        code: .usage,
-        details: [
-           "matches": matches.map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
-        ]
-      )
-    } else {
-      fputs("Multiple devices match; refine with --bus/--address.\n", stderr)
-      return .usage
-    }
 
   } catch {
     if !json && isTTY { spinner.fail() }
+    
+    if let mtpError = error as? MTPError, case .notSupported = mtpError {
+        if json {
+            printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+        } else {
+            fputs("No device matched the provided filter.\n", stderr)
+            return .unavailable
+        }
+    }
+    
     if json {
       printJSONErrorAndExit(error.localizedDescription, code: .software)
     } else {

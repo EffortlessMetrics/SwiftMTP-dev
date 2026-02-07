@@ -231,7 +231,6 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
 
   public func getObjectInfos(storage: MTPStorageID, parent: MTPObjectHandle?, format: UInt16?) async throws -> [MTPObjectInfo] {
     let parentHandle = parent ?? 0x00000000, formatCode = format ?? 0x00000000
-    let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
     
     func tryPropList(params: [UInt32]) async throws -> [MTPObjectInfo]? {
         let collector = SimpleCollector()
