@@ -34,9 +34,13 @@ struct ProbeCommand {
             if let mtpError = error as? MTPError {
                 switch mtpError {
                 case .notSupported:
+                    log("❌ No MTP-capable device found.")
                     exitNow(.unavailable)
                 case .transport(let te):
-                    if case .noDevice = te { exitNow(.unavailable) }
+                    if case .noDevice = te {
+                        log("❌ No MTP device connected. Check USB connection and MTP mode.")
+                        exitNow(.unavailable)
+                    }
                 default:
                     break
                 }
@@ -50,11 +54,23 @@ struct ProbeCommand {
         do {
             let device = try await openDevice(flags: flags)
             try await device.openIfNeeded()
-            let info = try await device.getDeviceInfo()
+
+            // Prefer structured ProbeReceipt if available
+            if let receipt = await device.probeReceipt {
+                let encoder = JSONEncoder()
+                encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+                encoder.dateEncodingStrategy = .iso8601
+                let data = try encoder.encode(receipt)
+                print(String(data: data, encoding: .utf8) ?? "{}")
+                return
+            }
+
+            // Fallback to ad-hoc output
+            let info = try await device.info
             let storages = try await device.storages()
             let capabilities = await device.probedCapabilities
             let tuning = await device.effectiveTuning
-            
+
             let output: [String: Any] = [
                 "manufacturer": info.manufacturer,
                 "model": info.model,
@@ -81,13 +97,18 @@ struct ProbeCommand {
             if let mtpError = error as? MTPError {
                 switch mtpError {
                 case .notSupported:
+                    log("❌ No MTP-capable device found.")
                     exitNow(.unavailable)
                 case .transport(let te):
-                    if case .noDevice = te { exitNow(.unavailable) }
+                    if case .noDevice = te {
+                        log("❌ No MTP device connected. Check USB connection and MTP mode.")
+                        exitNow(.unavailable)
+                    }
                 default:
                     break
                 }
             }
+            log("❌ Probe failed: \(error)")
             exitNow(.tempfail)
         }
     }

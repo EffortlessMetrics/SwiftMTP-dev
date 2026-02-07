@@ -127,18 +127,17 @@
         "ioTimeoutMs": 30000,
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 120000,
-        "stabilizeMs": 1000,
+        "stabilizeMs": 500,
         "resetOnOpen": true
       },
       "hooks": [
-        { "phase": "postOpenSession", "delayMs": 1000 }
+        { "phase": "postOpenSession", "delayMs": 500 }
       ],
       "confidence": "medium",
       "status": "experimental",
       "notes": [
-        "OnePlus 3T (2a70:f003) fails OpenSession without significant stabilization delay.",
-        "Added 1000ms stabilization and post-OpenSession delay.",
-        "Requires resetOnOpen to recover from previous session hangs."
+        "OnePlus 3T (2a70:f003) requires resetOnOpen to recover from previous session hangs.",
+        "PTP Device Reset (0x66) clears stale kernel sessions before OpenSession."
       ],
       "provenance": {
         "author": "Gemini CLI",
@@ -162,15 +161,15 @@
         "ioTimeoutMs": 30000,
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 180000,
-        "stabilizeMs": 2000,
-        "resetOnOpen": false
+        "stabilizeMs": 500,
+        "resetOnOpen": true
       },
       "confidence": "medium",
       "status": "stable",
       "notes": [
-        "Google Pixel 7 (18d1:4ee1) general Android MTP stack.",
-        "Disabled resetOnOpen as it causes re-enumeration and may revert to 'Charging only' mode.",
-        "Increased stabilization delay to 2000ms."
+        "macOS IOKit PTP driver holds an active session that blocks OpenSession.",
+        "PTP Device Reset (0x66) clears this in most cases.",
+        "resetOnOpen + stabilizeMs as fallback if PTP reset alone is insufficient."
       ],
       "provenance": {
         "author": "Gemini CLI",

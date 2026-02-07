@@ -263,6 +263,14 @@ public protocol MTPDevice: Sendable {
   /// Current effective tuning of the device
   var effectiveTuning: EffectiveTuning { get async }
 
+  /// Resolved device policy (tuning + flags + fallbacks + provenance).
+  /// Default: `nil` (not yet probed).
+  var devicePolicy: DevicePolicy? { get async }
+
+  /// Structured diagnostic record from the most recent probe/open cycle.
+  /// Default: `nil` (not yet probed).
+  var probeReceipt: ProbeReceipt? { get async }
+
   /// Ensure the device session is open, opening it if necessary.
   func openIfNeeded() async throws
 
@@ -296,6 +304,13 @@ public protocol MTPDevice: Sendable {
   /// ```
   var events: AsyncStream<MTPEvent> { get }
 }
+
+/// Default implementations for optional MTPDevice properties.
+public extension MTPDevice {
+  var devicePolicy: DevicePolicy? { get async { nil } }
+  var probeReceipt: ProbeReceipt? { get async { nil } }
+}
+
 /// Configuration options for SwiftMTP behavior and performance tuning.
 ///
 /// Use this structure to customize the library's behavior for your specific use case.

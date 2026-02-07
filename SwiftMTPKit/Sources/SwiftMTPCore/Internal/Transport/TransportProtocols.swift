@@ -25,6 +25,9 @@ public protocol MTPTransport: Sendable {
 }
 
 public protocol MTPLink: Sendable {
+    /// Raw device-info bytes cached during interface probing. Default: nil.
+    var cachedDeviceInfo: MTPDeviceInfo? { get }
+
     func openUSBIfNeeded() async throws
     func openSession(id: UInt32) async throws
     func closeSession() async throws
@@ -36,6 +39,8 @@ public protocol MTPLink: Sendable {
     func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> [MTPObjectHandle]
     func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo]
     func getObjectInfos(storage: MTPStorageID, parent: MTPObjectHandle?, format: UInt16?) async throws -> [MTPObjectInfo]
+
+    func resetDevice() async throws
 
     func deleteObject(handle: MTPObjectHandle) async throws
     func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?) async throws
@@ -49,6 +54,11 @@ public protocol MTPLink: Sendable {
         dataInHandler: MTPDataIn?,
         dataOutHandler: MTPDataOut?
     ) async throws -> PTPResponseResult
+}
+
+/// Default implementations for optional MTPLink properties.
+public extension MTPLink {
+  var cachedDeviceInfo: MTPDeviceInfo? { nil }
 }
 
 public protocol TransportFactory {

@@ -3,6 +3,7 @@
 
 import Foundation
 import SwiftMTPCore
+import SwiftMTPTransportLibUSB
 import SwiftMTPQuirks
 
 @MainActor
@@ -78,7 +79,7 @@ struct SystemCommands {
     static func runHealth() async {
         print("🏥 SwiftMTP Health Check")
         do {
-            let devices = try await MTPDeviceManager.shared.currentRealDeviceSummaries()
+            let devices = try await LibUSBDiscovery.enumerateMTPDevices()
             print("✅ Found \(devices.count) MTP device(s)")
         } catch {
             print("❌ Health check failed: \(error)")
