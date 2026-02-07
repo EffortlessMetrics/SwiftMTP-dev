@@ -3,6 +3,7 @@
 
 import Foundation
 import OSLog
+import SwiftMTPQuirks
 
 // Placeholder types - these should be implemented elsewhere
 struct EventPump {

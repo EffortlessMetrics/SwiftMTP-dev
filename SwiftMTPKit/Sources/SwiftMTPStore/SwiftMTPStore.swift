@@ -21,7 +21,9 @@ public final class SwiftMTPStore: Sendable {
                 ProfilingMetricEntity.self,
                 SnapshotEntity.self,
                 SubmissionEntity.self,
-                TransferEntity.self
+                TransferEntity.self,
+                MTPStorageEntity.self,
+                MTPObjectEntity.self
             ])
             let config = ModelConfiguration("SwiftMTP", schema: schema, isStoredInMemoryOnly: useInMemory)
             container = try ModelContainer(for: schema, configurations: [config])

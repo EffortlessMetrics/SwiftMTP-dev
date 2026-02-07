@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import SwiftMTPQuirks
 
 public struct MTPDeviceID: Hashable, Sendable, Codable {
     public let raw: String

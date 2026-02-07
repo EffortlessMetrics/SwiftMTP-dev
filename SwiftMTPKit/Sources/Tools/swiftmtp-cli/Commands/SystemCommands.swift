@@ -39,7 +39,7 @@ struct SystemCommands {
         print("🔧 Device Configuration Explain")
         print("==============================")
         print("Mode: \(flags.safe ? "safe" : (flags.strict ? "strict" : "normal"))")
-        let defaults = SwiftMTPCore.EffectiveTuning.defaults()
+        let defaults = EffectiveTuning.defaults()
         print("\nLayers:")
         print("  1. defaults           -> chunk=\(formatBytes(UInt64(defaults.maxChunkBytes))), timeout=\(defaults.ioTimeoutMs)ms")
         do {

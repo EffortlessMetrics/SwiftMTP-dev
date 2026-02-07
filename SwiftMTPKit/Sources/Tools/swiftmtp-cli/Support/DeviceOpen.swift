@@ -1,58 +1,74 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
-import Foundation
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPQuirks
+import Foundation
 
-// Import the LibUSB transport to get the extended MTPDeviceManager methods
-import struct SwiftMTPTransportLibUSB.LibUSBTransportFactory
+extension MTPDeviceManager {
+    /// Get the current real devices, excluding mocks
+    public func currentRealDevices() async throws -> [MTPDeviceSummary] {
+        let allDevices = await devices
+        return allDevices.filter { summary in
+            // Filter out common mock patterns if needed
+            !summary.manufacturer.contains("(Demo)")
+        }
+    }
+}
 
+/// Helper to find and open a device based on CLI flags
 @MainActor
-public func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
+func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
+    let manager = MTPDeviceManager.shared
+    
     if flags.useMock {
-        throw MTPError.notSupported("Mock transport not available")
+        // Mock is handled by MTPDeviceManager yielding it during discovery
+        try await manager.startDiscovery()
+        let devices = await manager.devices
+        guard let mock = devices.first(where: { $0.manufacturer.contains("(Demo)") }) else {
+            throw MTPError.transport(.noDevice)
+        }
+        return try await manager.openDevice(with: mock, transport: LibUSBTransportFactory.createTransport())
     }
 
-    let devices = try await MTPDeviceManager.shared.currentRealDevices()
-    let filter = DeviceFilter(
-        vid: flags.targetVID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) },
-        pid: flags.targetPID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) },
-        bus: flags.targetBus,
-        address: flags.targetAddress
-    )
-    let selection = selectDevice(devices, filter: filter, noninteractive: false)
+    let devices = try await manager.currentRealDevices()
+    if devices.isEmpty {
+        throw MTPError.transport(.noDevice)
+    }
+
     let selectedDevice: MTPDeviceSummary
-    switch selection {
-    case .selected(let device):
-        selectedDevice = device
-    case .none:
-        throw MTPError.notSupported("No device matches filter")
-    case .multiple:
-        throw MTPError.notSupported("Multiple devices match filter")
+    if let vid = flags.targetVID, let pid = flags.targetPID {
+        guard let found = devices.first(where: { 
+            String(format: "%04x", $0.vendorID ?? 0) == vid.lowercased() && 
+            String(format: "%04x", $0.productID ?? 0) == pid.lowercased() 
+        }) else {
+            throw MTPError.transport(.noDevice)
+        }
+        selectedDevice = found
+    } else {
+        selectedDevice = devices[0]
     }
 
     let db = (try? QuirkDatabase.load())
-    let fp = DeviceFingerprint(
+    let quirk = db?.match(
         vid: selectedDevice.vendorID ?? 0,
         pid: selectedDevice.productID ?? 0,
-        bcdDevice: nil as UInt16?,
+        bcdDevice: nil,
         ifaceClass: 0x06,
-        ifaceSubClass: 0x01,
+        ifaceSubclass: 0x01,
         ifaceProtocol: 0x01
     )
-    _ = db?.bestMatch(for: fp)
 
-    let effectiveTuning = SwiftMTPCore.EffectiveTuningBuilder.build(
+    let effectiveTuning = EffectiveTuningBuilder.build(
         capabilities: ["partialRead": true, "partialWrite": true],
         learned: nil,
-        quirk: nil, // TODO: Properly map QuirkEntry to DeviceQuirk
+        quirk: quirk,
         overrides: nil
     )
 
     var finalTuning = effectiveTuning
-    let (userOverrides, _) = SwiftMTPCore.UserOverride.fromEnvironment(ProcessInfo.processInfo.environment)
+    let (userOverrides, _) = UserOverride.fromEnvironment(ProcessInfo.processInfo.environment)
     if let maxChunk = userOverrides.maxChunkBytes { finalTuning.maxChunkBytes = maxChunk }
     if let ioTimeout = userOverrides.ioTimeoutMs { finalTuning.ioTimeoutMs = ioTimeout }
     if let handshakeTimeout = userOverrides.handshakeTimeoutMs { finalTuning.handshakeTimeoutMs = handshakeTimeout }
@@ -62,5 +78,5 @@ public func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
     var config = SwiftMTPConfig()
     config.apply(finalTuning)
 
-    return try await MTPDeviceManager.shared.openDevice(with: selectedDevice, transport: LibUSBTransportFactory.createTransport(), config: config)
+    return try await manager.openDevice(with: selectedDevice, transport: LibUSBTransportFactory.createTransport(), config: config)
 }

@@ -28,7 +28,7 @@ extension MTPDeviceActor {
         // Try to resume if we have a journal
         if let journal = transferJournal {
             do {
-                let resumables = try journal.loadResumables(for: id)
+                let resumables = try await journal.loadResumables(for: id)
                 if let existing = resumables.first(where: { $0.handle == handle && $0.kind == "read" }) {
                     // Resume from existing temp file
                     if FileManager.default.fileExists(atPath: existing.localTempURL.path) {
@@ -38,7 +38,7 @@ extension MTPDeviceActor {
                     } else {
                         // Temp file missing, start fresh
                         sink = try FileSink(url: temp)
-                        journalTransferId = try journal.beginRead(
+                        journalTransferId = try await journal.beginRead(
                             device: id,
                             handle: handle,
                             name: info.name,
@@ -52,7 +52,7 @@ extension MTPDeviceActor {
                 } else {
                     // New transfer
                     sink = try FileSink(url: temp)
-                                            journalTransferId = try journal.beginRead(
+                                            journalTransferId = try await journal.beginRead(
                         device: id,
                         handle: handle,
                         name: info.name,
@@ -93,14 +93,14 @@ extension MTPDeviceActor {
 
             // Update journal after transfer completes
             if let journal = transferJournal, let transferId = journalTransferId {
-                try journal.updateProgress(id: transferId, committed: bytesWritten)
+                try await journal.updateProgress(id: transferId, committed: bytesWritten)
             }
 
             try sink.close()
 
             // Mark as complete in journal
             if let journal = transferJournal, let transferId = journalTransferId {
-                try journal.complete(id: transferId)
+                try await journal.complete(id: transferId)
             }
 
             try atomicReplace(temp: temp, final: url)
@@ -121,7 +121,7 @@ extension MTPDeviceActor {
 
             // Mark as failed in journal
             if let journal = transferJournal, let transferId = journalTransferId {
-                try? journal.fail(id: transferId, error: error)
+                try? await journal.fail(id: transferId, error: error)
             }
 
             throw error
@@ -148,7 +148,7 @@ extension MTPDeviceActor {
         // Initialize transfer journal if available
         if let journal = transferJournal {
             do {
-                journalTransferId = try journal.beginWrite(
+                journalTransferId = try await journal.beginWrite(
                     device: id,
                     parent: parent ?? 0,
                     name: name,
@@ -196,7 +196,7 @@ extension MTPDeviceActor {
 
             // Update journal after transfer completes
             if let journal = transferJournal, let transferId = journalTransferId {
-                try journal.updateProgress(id: transferId, committed: bytesRead)
+                try await journal.updateProgress(id: transferId, committed: bytesRead)
             }
 
             progress.completedUnitCount = total
@@ -204,7 +204,7 @@ extension MTPDeviceActor {
 
             // Mark as complete in journal
             if let journal = transferJournal, let transferId = journalTransferId {
-                try journal.complete(id: transferId)
+                try await journal.complete(id: transferId)
             }
 
             // Performance logging: end transfer (success)
@@ -222,7 +222,7 @@ extension MTPDeviceActor {
 
             // Mark as failed in journal
             if let journal = transferJournal, let transferId = journalTransferId {
-                try? journal.fail(id: transferId, error: error)
+                try? await journal.fail(id: transferId, error: error)
             }
 
             throw error

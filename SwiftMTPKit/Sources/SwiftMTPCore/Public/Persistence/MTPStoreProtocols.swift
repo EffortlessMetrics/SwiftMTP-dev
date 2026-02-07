@@ -20,21 +20,29 @@ public protocol SubmissionStore: Sendable {
     func recordSubmission(id: String, deviceId: MTPDeviceID, path: String) async throws
 }
 
+public protocol ObjectCatalogStore: Sendable {
+    func recordStorage(deviceId: MTPDeviceID, storage: MTPStorageInfo) async throws
+    func recordObject(deviceId: MTPDeviceID, object: MTPObjectInfo, pathKey: String, generation: Int) async throws
+    func finalizeIndexing(deviceId: MTPDeviceID, generation: Int) async throws
+}
+
 public protocol MTPPersistenceProvider: Sendable {
     var learnedProfiles: any LearnedProfileStore { get }
     var profiling: any ProfilingStore { get }
     var snapshots: any SnapshotStore { get }
     var submissions: any SubmissionStore { get }
     var transferJournal: any TransferJournal { get }
+    var objectCatalog: any ObjectCatalogStore { get }
 }
 
-public final class NullPersistenceProvider: MTPPersistenceProvider, LearnedProfileStore, ProfilingStore, SnapshotStore, SubmissionStore, TransferJournal {
+public final class NullPersistenceProvider: MTPPersistenceProvider, LearnedProfileStore, ProfilingStore, SnapshotStore, SubmissionStore, TransferJournal, ObjectCatalogStore {
     public init() {}
     public var learnedProfiles: any LearnedProfileStore { self }
     public var profiling: any ProfilingStore { self }
     public var snapshots: any SnapshotStore { self }
     public var submissions: any SubmissionStore { self }
     public var transferJournal: any TransferJournal { self }
+    public var objectCatalog: any ObjectCatalogStore { self }
     
     public func loadProfile(for fingerprint: MTPDeviceFingerprint) async throws -> LearnedProfile? { nil }
     public func saveProfile(_ profile: LearnedProfile, for deviceId: MTPDeviceID) async throws {}
@@ -43,11 +51,16 @@ public final class NullPersistenceProvider: MTPPersistenceProvider, LearnedProfi
     public func recordSubmission(id: String, deviceId: MTPDeviceID, path: String) async throws {}
 
     // TransferJournal (Null)
-    public func beginRead(device: MTPDeviceID, handle: UInt32, name: String, size: UInt64?, supportsPartial: Bool, tempURL: URL, finalURL: URL?, etag: (size: UInt64?, mtime: Date?)) throws -> String { UUID().uuidString }
-    public func beginWrite(device: MTPDeviceID, parent: UInt32, name: String, size: UInt64, supportsPartial: Bool, tempURL: URL, sourceURL: URL?) throws -> String { UUID().uuidString }
-    public func updateProgress(id: String, committed: UInt64) throws {}
-    public func fail(id: String, error: Error) throws {}
-    public func complete(id: String) throws {}
-    public func loadResumables(for device: MTPDeviceID) throws -> [TransferRecord] { [] }
-    public func clearStaleTemps(olderThan: TimeInterval) throws {}
+    public func beginRead(device: MTPDeviceID, handle: UInt32, name: String, size: UInt64?, supportsPartial: Bool, tempURL: URL, finalURL: URL?, etag: (size: UInt64?, mtime: Date?)) async throws -> String { UUID().uuidString }
+    public func beginWrite(device: MTPDeviceID, parent: UInt32, name: String, size: UInt64, supportsPartial: Bool, tempURL: URL, sourceURL: URL?) async throws -> String { UUID().uuidString }
+    public func updateProgress(id: String, committed: UInt64) async throws {}
+    public func fail(id: String, error: Error) async throws {}
+    public func complete(id: String) async throws {}
+    public func loadResumables(for device: MTPDeviceID) async throws -> [TransferRecord] { [] }
+    public func clearStaleTemps(olderThan: TimeInterval) async throws {}
+
+    // ObjectCatalogStore (Null)
+    public func recordStorage(deviceId: MTPDeviceID, storage: MTPStorageInfo) async throws {}
+    public func recordObject(deviceId: MTPDeviceID, object: MTPObjectInfo, pathKey: String, generation: Int) async throws {}
+    public func finalizeIndexing(deviceId: MTPDeviceID, generation: Int) async throws {}
 }

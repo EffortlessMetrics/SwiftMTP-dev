@@ -726,7 +726,7 @@ public actor StoreActor {
         
                 
         
-                            return entities.map { entity in
+                                    return entities.map { entity in
         
                 
         
@@ -734,7 +734,7 @@ public actor StoreActor {
         
                 
         
-                                TransferRecord(
+                            
         
                 
         
@@ -742,7 +742,7 @@ public actor StoreActor {
         
                 
         
-                                    id: entity.id,
+                                        TransferRecord(
         
                 
         
@@ -750,7 +750,7 @@ public actor StoreActor {
         
                 
         
-                                    deviceId: MTPDeviceID(raw: entity.deviceId),
+                            
         
                 
         
@@ -758,7 +758,7 @@ public actor StoreActor {
         
                 
         
-                                    kind: entity.kind,
+                                            id: entity.id,
         
                 
         
@@ -766,7 +766,7 @@ public actor StoreActor {
         
                 
         
-                                    handle: entity.handle,
+                            
         
                 
         
@@ -774,7 +774,7 @@ public actor StoreActor {
         
                 
         
-                                    parentHandle: entity.parentHandle,
+                                            deviceId: MTPDeviceID(raw: entity.deviceId),
         
                 
         
@@ -782,7 +782,7 @@ public actor StoreActor {
         
                 
         
-                                    name: entity.name,
+                            
         
                 
         
@@ -790,7 +790,7 @@ public actor StoreActor {
         
                 
         
-                                    totalBytes: entity.totalBytes,
+                                            kind: entity.kind,
         
                 
         
@@ -798,7 +798,7 @@ public actor StoreActor {
         
                 
         
-                                    committedBytes: entity.committedBytes,
+                            
         
                 
         
@@ -806,7 +806,7 @@ public actor StoreActor {
         
                 
         
-                                    supportsPartial: entity.supportsPartial,
+                                            handle: entity.handle,
         
                 
         
@@ -814,7 +814,7 @@ public actor StoreActor {
         
                 
         
-                                    localTempURL: URL(fileURLWithPath: entity.localTempURL),
+                            
         
                 
         
@@ -822,7 +822,7 @@ public actor StoreActor {
         
                 
         
-                                    finalURL: entity.finalURL.map { URL(fileURLWithPath: $0) },
+                                            parentHandle: entity.parentHandle,
         
                 
         
@@ -830,7 +830,7 @@ public actor StoreActor {
         
                 
         
-                                    state: entity.state,
+                            
         
                 
         
@@ -838,7 +838,7 @@ public actor StoreActor {
         
                 
         
-                                    updatedAt: entity.updatedAt
+                                            name: entity.name,
         
                 
         
@@ -846,7 +846,1735 @@ public actor StoreActor {
         
                 
         
-                                )
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            totalBytes: entity.totalBytes,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            committedBytes: entity.committedBytes,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            supportsPartial: entity.supportsPartial,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            localTempURL: URL(fileURLWithPath: entity.localTempURL),
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            finalURL: entity.finalURL.map { URL(fileURLWithPath: $0) },
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            state: entity.state,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            updatedAt: entity.updatedAt
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        )
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                // MARK: - Object Catalog
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                public func upsertStorage(
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    deviceId: String,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    storageId: Int,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    description: String,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    capacity: Int64,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    free: Int64,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    readOnly: Bool
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                ) throws {
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    let compoundId = "\(deviceId):\(storageId)"
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    let predicate = #Predicate<MTPStorageEntity> { $0.compoundId == compoundId }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    let existing = try modelContext.fetch(FetchDescriptor<MTPStorageEntity>(predicate: predicate)).first
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    if let storage = existing {
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        storage.storageDescription = description
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        storage.capacityBytes = capacity
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        storage.freeBytes = free
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        storage.isReadOnly = readOnly
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        storage.lastIndexedAt = Date()
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    } else {
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        let storage = MTPStorageEntity(
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            deviceId: deviceId,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            storageId: storageId,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            storageDescription: description,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            capacityBytes: capacity,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            freeBytes: free,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            isReadOnly: readOnly
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        )
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        // Link to device
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        let devicePredicate = #Predicate<DeviceEntity> { $0.id == deviceId }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        storage.device = try modelContext.fetch(FetchDescriptor<DeviceEntity>(predicate: devicePredicate)).first
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        modelContext.insert(storage)
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    try modelContext.save()
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                public func upsertObject(
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    deviceId: String,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    storageId: Int,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    handle: Int,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    parentHandle: Int?,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    name: String,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    pathKey: String,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    size: Int64?,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    mtime: Date?,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    format: Int,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    generation: Int
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                ) throws {
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    let compoundId = "\(deviceId):\(storageId):\(handle)"
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    let predicate = #Predicate<MTPObjectEntity> { $0.compoundId == compoundId }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    let existing = try modelContext.fetch(FetchDescriptor<MTPObjectEntity>(predicate: predicate)).first
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    if let object = existing {
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        object.parentHandle = parentHandle
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        object.name = name
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        object.pathKey = pathKey
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        object.sizeBytes = size
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        object.modifiedAt = mtime
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        object.formatCode = format
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        object.generation = generation
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        object.isTombstoned = false
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    } else {
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        let object = MTPObjectEntity(
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            deviceId: deviceId,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            storageId: storageId,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            handle: handle,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            parentHandle: parentHandle,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            name: name,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            pathKey: pathKey,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            sizeBytes: size,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            modifiedAt: mtime,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            formatCode: format,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            generation: generation
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        )
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        // Link to storage
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        let storageCompoundId = "\(deviceId):\(storageId)"
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        let storagePredicate = #Predicate<MTPStorageEntity> { $0.compoundId == storageCompoundId }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        object.storage = try modelContext.fetch(FetchDescriptor<MTPStorageEntity>(predicate: storagePredicate)).first
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        modelContext.insert(object)
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    // NOTE: We usually save in batches for performance during indexing
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                public func saveContext() throws {
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    try modelContext.save()
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                public func markPreviousGenerationTombstoned(deviceId: String, currentGen: Int) throws {
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    let predicate = #Predicate<MTPObjectEntity> { $0.deviceId == deviceId && $0.generation < currentGen && !$0.isTombstoned }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    let descriptor = FetchDescriptor<MTPObjectEntity>(predicate: predicate)
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    let objects = try modelContext.fetch(descriptor)
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    for object in objects {
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        object.isTombstoned = true
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    try modelContext.save()
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                }
+        
+                
+        
+                    
+        
+                
+        
+                            
         
                 
         
@@ -862,7 +2590,7 @@ public actor StoreActor {
         
                 
         
-                        }
+                            
         
                 
         
@@ -870,7 +2598,7 @@ public actor StoreActor {
         
                 
         
-                    }
+                            
         
                 
         

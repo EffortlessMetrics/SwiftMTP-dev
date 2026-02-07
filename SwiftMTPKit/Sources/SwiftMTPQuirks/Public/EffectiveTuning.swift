@@ -15,6 +15,30 @@ public struct EffectiveTuning: Sendable {
   public var operations: [String: Bool]
   public var hooks: [QuirkHook]
 
+  public init(
+    maxChunkBytes: Int,
+    ioTimeoutMs: Int,
+    handshakeTimeoutMs: Int,
+    inactivityTimeoutMs: Int,
+    overallDeadlineMs: Int,
+    stabilizeMs: Int,
+    resetOnOpen: Bool,
+    disableEventPump: Bool,
+    operations: [String: Bool],
+    hooks: [QuirkHook]
+  ) {
+    self.maxChunkBytes = maxChunkBytes
+    self.ioTimeoutMs = ioTimeoutMs
+    self.handshakeTimeoutMs = handshakeTimeoutMs
+    self.inactivityTimeoutMs = inactivityTimeoutMs
+    self.overallDeadlineMs = overallDeadlineMs
+    self.stabilizeMs = stabilizeMs
+    self.resetOnOpen = resetOnOpen
+    self.disableEventPump = disableEventPump
+    self.operations = operations
+    self.hooks = hooks
+  }
+
   public static func defaults() -> EffectiveTuning {
     .init(
       maxChunkBytes: 1<<20,     // 1 MiB

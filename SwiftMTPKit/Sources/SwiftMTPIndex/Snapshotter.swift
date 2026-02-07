@@ -98,6 +98,7 @@ public final class Snapshotter: Sendable {
         // Record snapshot in modern persistence provider
         Task {
             let persistence = await MTPDeviceManager.shared.persistence
+            try? await persistence.objectCatalog.finalizeIndexing(deviceId: deviceId, generation: gen)
             try? await persistence.snapshots.recordSnapshot(deviceId: deviceId, generation: gen, path: nil, hash: nil)
         }
 
@@ -129,6 +130,9 @@ public final class Snapshotter: Sendable {
             try db.bind(stmt, 7, Int64(timestamp.timeIntervalSince1970))
             _ = try db.step(stmt)
         }
+        
+        let persistence = await MTPDeviceManager.shared.persistence
+        try? await persistence.objectCatalog.recordStorage(deviceId: deviceId, storage: storage)
     }
 
     private func captureObjects(device: any MTPDevice, storage: MTPStorageInfo, deviceId: MTPDeviceID, gen: Int) async throws {
@@ -190,6 +194,12 @@ public final class Snapshotter: Sendable {
                 try db.bind(stmt, 10, Int64(gen))
                 try db.bind(stmt, 11, Int64(0))
                 _ = try db.step(stmt)
+            }
+            
+            // Record in modern persistence
+            Task {
+                let persistence = await MTPDeviceManager.shared.persistence
+                try? await persistence.objectCatalog.recordObject(deviceId: deviceId, object: object, pathKey: pathKey, generation: gen)
             }
         }
     }

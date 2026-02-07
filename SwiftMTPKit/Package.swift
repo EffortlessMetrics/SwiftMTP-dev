@@ -33,6 +33,7 @@ let package = Package(
     .target(name: "SwiftMTPCore",
             dependencies: [
               "SwiftMTPObservability",
+              "SwiftMTPQuirks",
               .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
               .product(name: "Collections", package: "swift-collections")
             ]),
@@ -59,7 +60,7 @@ let package = Package(
             swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .target(name: "SwiftMTPQuirks",
-            dependencies: ["SwiftMTPCore"],
+            dependencies: [],
             resources: [.process("Resources")]),
 
     .executableTarget(name: "swiftmtp-cli",
