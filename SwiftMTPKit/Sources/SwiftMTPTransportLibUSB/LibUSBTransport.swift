@@ -70,28 +70,22 @@ public struct LibUSBDiscovery {
             }
             guard isMTP else { continue }
 
-            let bus = libusb_get_bus_number(dev)
-            let addr = libusb_get_device_address(dev)
-
-            var manufacturer = "USB \(String(format: "%04x", desc.idVendor))"
-            var model = "USB \(String(format: "%04x", desc.idProduct))"
-            var serial: String? = nil
-
-            if let h = handle {
-                if desc.iManufacturer != 0 {
-                    var buf = [UInt8](repeating: 0, count: 128)
-                    let n = libusb_get_string_descriptor_ascii(h, desc.iManufacturer, &buf, Int32(buf.count))
-                    if n > 0 { manufacturer = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
-                }
-                if desc.iProduct != 0 {
-                    var buf = [UInt8](repeating: 0, count: 128)
-                    let n = libusb_get_string_descriptor_ascii(h, desc.iProduct, &buf, Int32(buf.count))
-                    if n > 0 { model = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
-                }
-                if desc.iSerialNumber != 0 {
-                    var buf = [UInt8](repeating: 0, count: 128)
-                    let n = libusb_get_string_descriptor_ascii(h, desc.iSerialNumber, &buf, Int32(buf.count))
-                    if n > 0 { serial = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
+                // Try to read USB string descriptors for better names
+                var manufacturer = "USB \(String(format: "%04x", desc.idVendor))"
+                var model = "USB \(String(format: "%04x", desc.idProduct))"
+                var handle: OpaquePointer?
+                if libusb_open(dev, &handle) == 0, let h = handle {
+                    defer { libusb_close(h) }
+                    if desc.iManufacturer != 0 {
+                        var buf = [UInt8](repeating: 0, count: 128)
+                        let n = libusb_get_string_descriptor_ascii(h, desc.iManufacturer, &buf, Int32(buf.count))
+                        if n > 0 { manufacturer = String(cString: &buf) }
+                    }
+                    if desc.iProduct != 0 {
+                        var buf = [UInt8](repeating: 0, count: 128)
+                        let n = libusb_get_string_descriptor_ascii(h, desc.iProduct, &buf, Int32(buf.count))
+                        if n > 0 { model = String(cString: &buf) }
+                    }
                 }
             }
 
