@@ -1,28 +1,35 @@
 # SwiftMTP Benchmark Report
-Device: pixel7 (google-pixel-7-4ee1)
+Device: oneplus-3t (ONEPLUS A3010)
 Timestamp: Fri Feb  7 04:22:00 EST 2026
 Mode: Real Device (USB Enumeration)
 
 ## Device Information
 ```
 📱 Device Information:
-   Manufacturer: Google
-   Model: Pixel 7
-   Vendor ID: 0x18D1 (6353)
-   Product ID: 0x4EE1 (20193)
-   Serial Number: 2A221FDH200G2Q
+   Manufacturer: OnePlus
+   Model: ONEPLUS A3010
+   Vendor ID: 0x2A70 (10864)
+   Product ID: 0xF003 (61443)
+   Serial Number: 5dfe2dc2
    USB Speed: SuperSpeed (USB 3.2 Gen 1)
 ```
 
 ## MTP Interface Configuration
 ```
-Interface: MTP
+Interface 0: MTP
    Class: 0x06 (Still Image)
    Subclass: 0x01
    Protocol: 0x01
    Input Endpoint: 0x81
    Output Endpoint: 0x01
    Event Endpoint: 0x82
+
+Interface 1: Mass Storage
+   Class: 0x08 (Mass Storage)
+   Subclass: 0x06
+   Protocol: 0x50
+   Input Endpoint: 0x83
+   Output Endpoint: 0x02
 ```
 
 ## USB Enumeration Status
@@ -39,19 +46,22 @@ The device is connected and visible to the system, but SwiftMTP cannot establish
 From `Specs/quirks.json`:
 ```json
 {
-  "id": "google-pixel-7-4ee1",
-  "match": { "vid": "0x18d1", "pid": "0x4ee1" },
+  "id": "oneplus-3t-f003",
+  "match": { "vid": "0x2a70", "pid": "0xf003" },
   "tuning": {
-    "maxChunkBytes": 2097152,
-    "handshakeTimeoutMs": 20000,
+    "maxChunkBytes": 1048576,
+    "handshakeTimeoutMs": 15000,
     "ioTimeoutMs": 30000,
     "inactivityTimeoutMs": 10000,
-    "overallDeadlineMs": 180000,
-    "stabilizeMs": 2000,
-    "resetOnOpen": false
+    "overallDeadlineMs": 120000,
+    "stabilizeMs": 1000,
+    "resetOnOpen": true
   },
+  "hooks": [
+    { "phase": "postOpenSession", "delayMs": 1000 }
+  ],
   "confidence": "medium",
-  "status": "stable"
+  "status": "experimental"
 }
 ```
 
@@ -76,7 +86,7 @@ From `Specs/quirks.json`:
 
 ## Resolution Steps
 To complete real device benchmarks:
-1. Unlock the Pixel 7 device
+1. Unlock the OnePlus 3T device
 2. Accept "Trust this computer" prompt if shown
 3. Ensure macOS has granted USB access to terminal/VSCode
 4. Re-run benchmark commands
