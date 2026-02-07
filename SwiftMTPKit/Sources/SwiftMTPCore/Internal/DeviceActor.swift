@@ -323,32 +323,11 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
       // 9) Open session + stabilization (with retry on timeout/IO error)
       if debugEnabled { print("   [Actor] Opening MTP session...") }
-      var sessionResult = SessionProbeResult()
-      let sessionStart = DispatchTime.now()
-
-      // Preemptive CloseSession to clear any stale session from a previous crash
-      if debugEnabled { print("   [Actor] Preemptive CloseSession (clear stale)...") }
-      try? await link.closeSession()
-
       do {
           try await link.openSession(id: 1)
-          sessionResult.succeeded = true
-      } catch let error as MTPError where error.isSessionAlreadyOpen {
-          // Session already open — close it and retry
-          if debugEnabled { print("   [Actor] SessionAlreadyOpen (0x201E), closing and retrying...") }
-          sessionResult.requiredRetry = true
-          try? await link.closeSession()
-          try await link.openSession(id: 1)
-          sessionResult.succeeded = true
-          if debugEnabled { print("   [Actor] OpenSession succeeded after close+retry.") }
       } catch {
-          guard isTimeoutOrIOError(error) else {
-              sessionResult.error = "\(error)"
-              receipt.sessionEstablishment = sessionResult
-              throw error
-          }
+          guard isTimeoutOrIOError(error) else { throw error }
           if debugEnabled { print("   [Actor] OpenSession failed (\(error)), retrying with USB reset...") }
-          sessionResult.requiredRetry = true
 
           // Close current link, re-open with resetOnOpen forced
           await link.close()
@@ -362,11 +341,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
           // Retry OpenSession
           try await newLink.openSession(id: 1)
-          sessionResult.succeeded = true
           if debugEnabled { print("   [Actor] OpenSession succeeded after USB reset.") }
       }
-      sessionResult.durationMs = Int((DispatchTime.now().uptimeNanoseconds - sessionStart.uptimeNanoseconds) / 1_000_000)
-      receipt.sessionEstablishment = sessionResult
 
       if initialTuning.stabilizeMs > 0 {
         if debugEnabled { print("   [Actor] Stabilizing for \(initialTuning.stabilizeMs)ms...") }
@@ -497,42 +473,6 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         } catch {
             return false
         }
-    }
-
-    /// Determine which strategies to use for enumeration, read, and write
-    /// based on the device's advertised operation support.
-    private func determineFallbackSelections() async -> FallbackSelections {
-        var sel = FallbackSelections()
-        do {
-            let di = try await self.info
-            let ops = di.operationsSupported
-
-            // Read strategy
-            if ops.contains(PTPOp.getPartialObject64.rawValue) {
-                sel.read = .partial64
-            } else if ops.contains(PTPOp.getPartialObject.rawValue) {
-                sel.read = .partial32
-            } else {
-                sel.read = .wholeObject
-            }
-
-            // Write strategy
-            if ops.contains(PTPOp.sendPartialObject.rawValue) {
-                sel.write = .partial
-            } else {
-                sel.write = .wholeObject
-            }
-
-            // Enumeration strategy — prefer propList if supported
-            if ops.contains(0x9805) { // GetObjectPropList
-                sel.enumeration = .propList5
-            } else {
-                sel.enumeration = .handlesThenInfo
-            }
-        } catch {
-            // Leave as .unknown
-        }
-        return sel
     }
 
     private func isTimeoutOrIOError(_ error: Error) -> Bool {

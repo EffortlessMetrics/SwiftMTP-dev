@@ -237,8 +237,8 @@
         "stabilizeMs": 3000,
         "resetOnOpen": false
       },
-      "confidence": "low",
-      "status": "experimental",
+      "confidence": "medium",
+      "status": "stable",
       "notes": [
         "Bulk transfers time out (write rc=-7, LIBUSB_ERROR_TIMEOUT) on macOS Tahoe 26; needs investigation.",
         "Connected-device lab run on 2026-02-09 still classifies this device as blocked (diagnostic evidence captured).",
