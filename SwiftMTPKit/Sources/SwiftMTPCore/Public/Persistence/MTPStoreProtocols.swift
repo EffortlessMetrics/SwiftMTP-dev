@@ -24,6 +24,25 @@ public protocol ObjectCatalogStore: Sendable {
     func recordStorage(deviceId: MTPDeviceID, storage: MTPStorageInfo) async throws
     func recordObject(deviceId: MTPDeviceID, object: MTPObjectInfo, pathKey: String, generation: Int) async throws
     func finalizeIndexing(deviceId: MTPDeviceID, generation: Int) async throws
+    func fetchObjects(deviceId: MTPDeviceID, generation: Int) async throws -> [MTPObjectRecord]
+}
+
+public struct MTPObjectRecord: Sendable {
+    public let handle: UInt32
+    public let storage: UInt32
+    public let pathKey: String
+    public let size: UInt64?
+    public let mtime: Date?
+    public let format: UInt16
+    
+    public init(handle: UInt32, storage: UInt32, pathKey: String, size: UInt64?, mtime: Date?, format: UInt16) {
+        self.handle = handle
+        self.storage = storage
+        self.pathKey = pathKey
+        self.size = size
+        self.mtime = mtime
+        self.format = format
+    }
 }
 
 public protocol MTPPersistenceProvider: Sendable {
@@ -63,4 +82,5 @@ public final class NullPersistenceProvider: MTPPersistenceProvider, LearnedProfi
     public func recordStorage(deviceId: MTPDeviceID, storage: MTPStorageInfo) async throws {}
     public func recordObject(deviceId: MTPDeviceID, object: MTPObjectInfo, pathKey: String, generation: Int) async throws {}
     public func finalizeIndexing(deviceId: MTPDeviceID, generation: Int) async throws {}
+    public func fetchObjects(deviceId: MTPDeviceID, generation: Int) async throws -> [MTPObjectRecord] { [] }
 }

@@ -48,10 +48,12 @@ public struct MTPDiff: Sendable {
 /// Engine for computing differences between device snapshots
 public final class DiffEngine: Sendable {
     private let db: SQLiteDB
+    private let persistence: (any MTPPersistenceProvider)?
     private let log = Logger(subsystem: "SwiftMTP", category: "index")
 
-    public init(dbPath: String) throws {
+    public init(dbPath: String, persistence: (any MTPPersistenceProvider)? = nil) throws {
         self.db = try SQLiteDB(path: dbPath)
+        self.persistence = persistence
     }
 
     /// Compute the differences between two snapshots
@@ -60,14 +62,14 @@ public final class DiffEngine: Sendable {
     ///   - oldGen: Previous snapshot generation (nil means compare to empty)
     ///   - newGen: New snapshot generation
     /// - Returns: Diff containing added, removed, and modified objects
-    public func diff(deviceId: MTPDeviceID, oldGen: Int?, newGen: Int) throws -> MTPDiff {
+    public func diff(deviceId: MTPDeviceID, oldGen: Int?, newGen: Int) async throws -> MTPDiff {
         log.info("Computing diff for device \(deviceId.raw) between generations \(oldGen ?? -1) and \(newGen)")
 
         let startTime = Date()
 
         // Load objects from both generations
-        let oldObjects = try loadObjects(deviceId: deviceId, gen: oldGen)
-        let newObjects = try loadObjects(deviceId: deviceId, gen: newGen)
+        let oldObjects = try await loadObjects(deviceId: deviceId, gen: oldGen)
+        let newObjects = try await loadObjects(deviceId: deviceId, gen: newGen)
 
         var diff = MTPDiff()
         var matchedPaths = Set<String>()
@@ -98,11 +100,27 @@ public final class DiffEngine: Sendable {
     }
 
     /// Load all objects for a specific generation
-    private func loadObjects(deviceId: MTPDeviceID, gen: Int?) throws -> [String: ObjectRecord] {
+    private func loadObjects(deviceId: MTPDeviceID, gen: Int?) async throws -> [String: ObjectRecord] {
         guard let gen = gen else { return [:] }
 
         var result = [String: ObjectRecord]()
 
+        // Try modern persistence first
+        if let persistence = self.persistence {
+            let records = try await persistence.objectCatalog.fetchObjects(deviceId: deviceId, generation: gen)
+            
+            if !records.isEmpty {
+                for record in records {
+                    let row = MTPDiff.Row(handle: record.handle, storage: record.storage, pathKey: record.pathKey,
+                                        size: record.size, mtime: record.mtime, format: record.format)
+                    let objectRecord = ObjectRecord(row: row, size: record.size, mtime: record.mtime)
+                    result[record.pathKey] = objectRecord
+                }
+                return result
+            }
+        }
+
+        // Fallback to SQLite
         try db.withStatement("SELECT storageId, handle, pathKey, size, mtime, format FROM objects WHERE deviceId = ? AND gen = ?") { stmt in
             try db.bind(stmt, 1, deviceId.raw)
             try db.bind(stmt, 2, Int64(gen))

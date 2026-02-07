@@ -2438,7 +2438,7 @@ public actor StoreActor {
         
                 
         
-                                public func markPreviousGenerationTombstoned(deviceId: String, currentGen: Int) throws {
+                                    public func markPreviousGenerationTombstoned(deviceId: String, currentGen: Int) throws {
         
                 
         
@@ -2454,7 +2454,7 @@ public actor StoreActor {
         
                 
         
-                                    let predicate = #Predicate<MTPObjectEntity> { $0.deviceId == deviceId && $0.generation < currentGen && !$0.isTombstoned }
+                                
         
                 
         
@@ -2470,7 +2470,7 @@ public actor StoreActor {
         
                 
         
-                                    let descriptor = FetchDescriptor<MTPObjectEntity>(predicate: predicate)
+                                        let predicate = #Predicate<MTPObjectEntity> { $0.deviceId == deviceId && $0.generation < currentGen && !$0.isTombstoned }
         
                 
         
@@ -2486,7 +2486,7 @@ public actor StoreActor {
         
                 
         
-                                    let objects = try modelContext.fetch(descriptor)
+                                
         
                 
         
@@ -2502,7 +2502,7 @@ public actor StoreActor {
         
                 
         
-                                    for object in objects {
+                                        let descriptor = FetchDescriptor<MTPObjectEntity>(predicate: predicate)
         
                 
         
@@ -2518,7 +2518,167 @@ public actor StoreActor {
         
                 
         
-                                        object.isTombstoned = true
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        let objects = try modelContext.fetch(descriptor)
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        for object in objects {
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            object.isTombstoned = true
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        try modelContext.save()
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
         
                 
         
@@ -2550,7 +2710,551 @@ public actor StoreActor {
         
                 
         
-                                    try modelContext.save()
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    public func fetchObjects(deviceId: String, generation: Int) throws -> [MTPObjectRecord] {
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        let predicate = #Predicate<MTPObjectEntity> { $0.deviceId == deviceId && $0.generation == generation && !$0.isTombstoned }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        let descriptor = FetchDescriptor<MTPObjectEntity>(predicate: predicate)
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        let entities = try modelContext.fetch(descriptor)
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        return entities.map { entity in
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            MTPObjectRecord(
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                                handle: UInt32(entity.handle),
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                                storage: UInt32(entity.storageId),
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                                pathKey: entity.pathKey,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                                size: entity.sizeBytes.map { UInt64($0) },
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                                mtime: entity.modifiedAt,
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                                format: UInt16(entity.formatCode)
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                            )
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                        }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                    }
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
         
                 
         
@@ -2582,7 +3286,23 @@ public actor StoreActor {
         
                 
         
-                            }
+                                
+        
+                
+        
+                    
+        
+                
+        
+                            
+        
+                
+        
+                    
+        
+                
+        
+                                
         
                 
         

@@ -51,12 +51,12 @@ let package = Package(
             ]),
 
     .target(name: "SwiftMTPIndex",
-            dependencies: ["SwiftMTPCore", .product(name: "Collections", package: "swift-collections"), .product(name: "SQLite", package: "SQLite.swift")],
+            dependencies: ["SwiftMTPCore", "SwiftMTPStore", .product(name: "Collections", package: "swift-collections"), .product(name: "SQLite", package: "SQLite.swift")],
             resources: [.copy("Schema.sql")],
             swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .target(name: "SwiftMTPSync",
-            dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPObservability", .product(name: "SQLite", package: "SQLite.swift")],
+            dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPObservability", "SwiftMTPStore", .product(name: "SQLite", package: "SQLite.swift")],
             swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .target(name: "SwiftMTPQuirks",

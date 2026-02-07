@@ -31,10 +31,10 @@ public struct MTPSyncReport: Sendable {
 public final class MirrorEngine: Sendable {
     private let snapshotter: Snapshotter
     private let diffEngine: DiffEngine
-    private let journal: SQLiteTransferJournal
+    private let journal: any TransferJournal
     private let log = MTPLog.sync
 
-    public init(snapshotter: Snapshotter, diffEngine: DiffEngine, journal: SQLiteTransferJournal) {
+    public init(snapshotter: Snapshotter, diffEngine: DiffEngine, journal: any TransferJournal) {
         self.snapshotter = snapshotter
         self.diffEngine = diffEngine
         self.journal = journal
@@ -61,7 +61,7 @@ public final class MirrorEngine: Sendable {
         let prevGen = try snapshotter.previousGeneration(for: deviceId, before: newGen)
 
         // Compute differences
-        let delta = try diffEngine.diff(deviceId: deviceId, oldGen: prevGen, newGen: newGen)
+        let delta = try await diffEngine.diff(deviceId: deviceId, oldGen: prevGen, newGen: newGen)
 
         log.info("Mirror diff computed for device \(deviceId.raw): +\(delta.added.count) -\(delta.removed.count) ~\(delta.modified.count)")
 

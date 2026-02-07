@@ -167,9 +167,26 @@ public final class SwiftMTPStoreAdapter: MTPPersistenceProvider, LearnedProfileS
         )
     }
 
-    public func finalizeIndexing(deviceId: MTPDeviceID, generation: Int) async throws {
-        let actor = store.createActor()
-        try await actor.markPreviousGenerationTombstoned(deviceId: deviceId.raw, currentGen: generation)
-        try await actor.saveContext()
+        public func finalizeIndexing(deviceId: MTPDeviceID, generation: Int) async throws {
+
+            let actor = store.createActor()
+
+            try await actor.markPreviousGenerationTombstoned(deviceId: deviceId.raw, currentGen: generation)
+
+            try await actor.saveContext()
+
+        }
+
+        
+
+        public func fetchObjects(deviceId: MTPDeviceID, generation: Int) async throws -> [MTPObjectRecord] {
+
+            let actor = store.createActor()
+
+            return try await actor.fetchObjects(deviceId: deviceId.raw, generation: generation)
+
+        }
+
     }
-}
+
+    
