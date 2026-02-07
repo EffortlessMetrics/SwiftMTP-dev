@@ -79,4 +79,25 @@ struct ProfileCommand {
             print("❌ Profiling failed: \(error)")
         }
     }
+
+    /// Run the device lab harness to characterize capabilities.
+    /// Produces a DeviceLabReport as JSON.
+    static func runCollect(flags: CLIFlags) async {
+        print("🔬 Running device lab harness...")
+        do {
+            let device = try await openDevice(flags: flags)
+            let harness = DeviceLabHarness()
+            let report = try await harness.collect(device: device)
+
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+            encoder.dateEncodingStrategy = .iso8601
+            let data = try encoder.encode(report)
+            print(String(data: data, encoding: .utf8) ?? "{}")
+
+            try await device.devClose()
+        } catch {
+            print("❌ Device lab harness failed: \(error)")
+        }
+    }
 }

@@ -43,6 +43,10 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     public var probedCapabilities: [String: Bool] = [:]
     private var currentTuning: EffectiveTuning = .defaults()
     public var effectiveTuning: EffectiveTuning { get async { currentTuning } }
+    private var currentPolicy: DevicePolicy?
+    public var devicePolicy: DevicePolicy? { get async { currentPolicy } }
+    private var currentProbeReceipt: ProbeReceipt?
+    public var probeReceipt: ProbeReceipt? { get async { currentProbeReceipt } }
     private var eventPump: EventPump = EventPump()
 
     public init(id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport, config: SwiftMTPConfig = .init(), transferJournal: (any TransferJournal)? = nil) {
@@ -241,10 +245,17 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       defer { signposter.endInterval("applyTuningAndOpenSession", totalState) }
 
       let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+      let probeStart = DispatchTime.now()
       if debugEnabled { print("   [Actor] applyTuningAndOpenSession starting...") }
 
       // 1) Build fingerprint from USB IDs and interface details
       let fingerprint = try await self.buildFingerprint()
+
+      // Initialize probe receipt
+      var receipt = ProbeReceipt(
+        deviceSummary: ReceiptDeviceSummary(from: summary),
+        fingerprint: fingerprint
+      )
 
       // 2) Load quirks DB and learned profile
       if debugEnabled { print("   [Actor] Loading quirks DB...") }
@@ -291,14 +302,16 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       )
       if debugEnabled, let q = quirk { print("   [Actor] Matched quirk: \(q.id)") }
 
-      // 7) Build initial effective tuning
-      let initialTuning = EffectiveTuningBuilder.build(
+      // 7) Build initial effective tuning + policy
+      let initialPolicy = EffectiveTuningBuilder.buildPolicy(
         capabilities: [:],
         learned: learnedTuning,
         quirk: quirk,
         overrides: overrides.isEmpty ? nil : overrides
       )
+      let initialTuning = initialPolicy.tuning
       self.currentTuning = initialTuning
+      self.currentPolicy = initialPolicy
       self.apply(initialTuning)
 
       // 8) Run hooks: postOpenUSB
@@ -307,11 +320,19 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
       // 9) Open session + stabilization (with retry on timeout/IO error)
       if debugEnabled { print("   [Actor] Opening MTP session...") }
+      var sessionResult = SessionProbeResult()
+      let sessionStart = DispatchTime.now()
       do {
           try await link.openSession(id: 1)
+          sessionResult.succeeded = true
       } catch {
-          guard isTimeoutOrIOError(error) else { throw error }
+          guard isTimeoutOrIOError(error) else {
+              sessionResult.error = "\(error)"
+              receipt.sessionEstablishment = sessionResult
+              throw error
+          }
           if debugEnabled { print("   [Actor] OpenSession failed (\(error)), retrying with USB reset...") }
+          sessionResult.requiredRetry = true
 
           // Close current link, re-open with resetOnOpen forced
           await link.close()
@@ -325,8 +346,11 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
           // Retry OpenSession
           try await newLink.openSession(id: 1)
+          sessionResult.succeeded = true
           if debugEnabled { print("   [Actor] OpenSession succeeded after USB reset.") }
       }
+      sessionResult.durationMs = Int((DispatchTime.now().uptimeNanoseconds - sessionStart.uptimeNanoseconds) / 1_000_000)
+      receipt.sessionEstablishment = sessionResult
 
       if initialTuning.stabilizeMs > 0 {
         if debugEnabled { print("   [Actor] Stabilizing for \(initialTuning.stabilizeMs)ms...") }
@@ -345,22 +369,40 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         "supportsEvents": await self.capabilityEvents()
       ]
       self.probedCapabilities = realCaps
-      
-      // Re-build tuning with real capabilities
-      let finalTuning = EffectiveTuningBuilder.build(
+
+      // Determine fallback selections from device capabilities
+      let fallbacks = await self.determineFallbackSelections()
+      if debugEnabled { print("   [Actor] Fallbacks: enum=\(fallbacks.enumeration) read=\(fallbacks.read) write=\(fallbacks.write)") }
+
+      // Re-build tuning + policy with real capabilities
+      var finalPolicy = EffectiveTuningBuilder.buildPolicy(
         capabilities: realCaps,
         learned: learnedTuning,
         quirk: quirk,
         overrides: overrides.isEmpty ? nil : overrides
       )
+      finalPolicy.fallbacks = fallbacks
+      let finalTuning = finalPolicy.tuning
       self.currentTuning = finalTuning
+      self.currentPolicy = finalPolicy
       self.apply(finalTuning)
 
       // 12) Start event pump
-      if realCaps["supportsEvents"] == true { 
+      if realCaps["supportsEvents"] == true {
         if debugEnabled { print("   [Actor] Starting event pump...") }
-        try await self.startEventPump() 
+        try await self.startEventPump()
       }
+
+      // 12b) Finalize probe receipt
+      receipt.capabilities = realCaps
+      receipt.fallbackResults = [
+        "enumeration": fallbacks.enumeration.rawValue,
+        "read": fallbacks.read.rawValue,
+        "write": fallbacks.write.rawValue,
+      ]
+      receipt.resolvedPolicy = PolicySummary(from: finalPolicy)
+      receipt.totalProbeTimeMs = Int((DispatchTime.now().uptimeNanoseconds - probeStart.uptimeNanoseconds) / 1_000_000)
+      self.currentProbeReceipt = receipt
 
       // 13) Record success
       let updatedProfile = (learnedProfile ?? LearnedProfile(fingerprint: fingerprint)).merged(with: SessionData(
@@ -406,25 +448,67 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     }
 
     private func capabilityPartialRead() async -> Bool {
-        // Probe for partial read capability
-        // This would typically involve testing the device
-        return true // Default assumption for now
+        do {
+            let deviceInfo = try await self.info
+            return deviceInfo.operationsSupported.contains(PTPOp.getPartialObject64.rawValue)
+                || deviceInfo.operationsSupported.contains(PTPOp.getPartialObject.rawValue)
+        } catch {
+            return true // Default assumption if device info unavailable
+        }
     }
 
     private func capabilityPartialWrite() async -> Bool {
-        // Probe for partial write capability
-        // This would typically involve testing the device
-        return true // Default assumption for now
+        do {
+            let deviceInfo = try await self.info
+            return deviceInfo.operationsSupported.contains(PTPOp.sendPartialObject.rawValue)
+        } catch {
+            return true
+        }
     }
 
     private func capabilityEvents() async -> Bool {
-        // Check if device supports events
         do {
             let deviceInfo = try await self.info
             return !deviceInfo.eventsSupported.isEmpty
         } catch {
             return false
         }
+    }
+
+    /// Determine which strategies to use for enumeration, read, and write
+    /// based on the device's advertised operation support.
+    private func determineFallbackSelections() async -> FallbackSelections {
+        var sel = FallbackSelections()
+        do {
+            let di = try await self.info
+            let ops = di.operationsSupported
+
+            // Read strategy
+            if ops.contains(PTPOp.getPartialObject64.rawValue) {
+                sel.read = .partial64
+            } else if ops.contains(PTPOp.getPartialObject.rawValue) {
+                sel.read = .partial32
+            } else {
+                sel.read = .wholeObject
+            }
+
+            // Write strategy
+            if ops.contains(PTPOp.sendPartialObject.rawValue) {
+                sel.write = .partial
+            } else {
+                sel.write = .wholeObject
+            }
+
+            // Enumeration strategy — prefer propList if supported
+            if ops.contains(0x9805) { // GetObjectPropList
+                sel.enumeration = .propList5
+            } else {
+                sel.enumeration = .handlesThenInfo
+            }
+        } catch {
+            // Leave as .unknown
+        }
+        return sel
     }
 
     private func isTimeoutOrIOError(_ error: Error) -> Bool {

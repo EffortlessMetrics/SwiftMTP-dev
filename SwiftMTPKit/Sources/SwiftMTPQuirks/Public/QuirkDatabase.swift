@@ -49,9 +49,10 @@ public struct DeviceQuirk: Codable, Sendable {
   public var disableEventPump: Bool?
   public var operations: [String: Bool]?    // e.g. {"partialRead": true}
   public var hooks: [QuirkHook]?
+  public var flags: QuirkFlags?             // Typed behavioral flags
   public var status: String?                // "stable" | "experimental" | ...
   public var confidence: String?            // "low" | "medium" | "high"
-  
+
   public init(
     id: String,
     vid: UInt16,
@@ -70,6 +71,7 @@ public struct DeviceQuirk: Codable, Sendable {
     disableEventPump: Bool? = nil,
     operations: [String: Bool]? = nil,
     hooks: [QuirkHook]? = nil,
+    flags: QuirkFlags? = nil,
     status: String? = nil,
     confidence: String? = nil
   ) {
@@ -90,12 +92,30 @@ public struct DeviceQuirk: Codable, Sendable {
     self.disableEventPump = disableEventPump
     self.operations = operations
     self.hooks = hooks
+    self.flags = flags
     self.status = status
     self.confidence = confidence
   }
 
+  /// Resolve typed QuirkFlags, synthesizing from `operations` map if
+  /// the entry uses the legacy `ops` format instead of typed `flags`.
+  public func resolvedFlags() -> QuirkFlags {
+    if let f = flags { return f }
+    var f = QuirkFlags()
+    // Translate legacy ops → typed flags
+    if let ops = operations {
+      if let v = ops["supportsGetPartialObject64"] { f.supportsPartialRead64 = v }
+      if let v = ops["supportsSendPartialObject"]  { f.supportsPartialWrite = v }
+      if let v = ops["preferGetObjectPropList"]     { f.prefersPropListEnumeration = v }
+    }
+    if let v = resetOnOpen     { f.resetOnOpen = v }
+    if let v = disableEventPump { f.disableEventPump = v }
+    if let s = stabilizeMs, s > 0 { f.requireStabilization = true }
+    return f
+  }
+
   private enum CodingKeys: String, CodingKey {
-    case id, match, tuning, hooks, ops, status, confidence
+    case id, match, tuning, hooks, ops, flags, status, confidence
   }
 
   public init(from decoder: Decoder) throws {
@@ -105,6 +125,7 @@ public struct DeviceQuirk: Codable, Sendable {
     confidence = try container.decodeIfPresent(String.self, forKey: .confidence)
     hooks = try container.decodeIfPresent([QuirkHook].self, forKey: .hooks)
     operations = try container.decodeIfPresent([String: Bool].self, forKey: .ops)
+    flags = try container.decodeIfPresent(QuirkFlags.self, forKey: .flags)
 
     // Decode 'match' object
     let match = try container.decode(RawMatch.self, forKey: .match)

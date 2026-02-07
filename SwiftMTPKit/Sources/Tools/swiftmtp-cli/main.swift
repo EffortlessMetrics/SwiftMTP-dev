@@ -132,11 +132,15 @@ struct SwiftMTPCLI {
         case "bench":
             await TransferCommands.runBench(flags: flags, args: remainingArgs)
         case "profile":
-            var iter = 3
-            if let idx = remainingArgs.firstIndex(of: "--iterations"), idx + 1 < remainingArgs.count {
-                iter = Int(remainingArgs[idx+1]) ?? 3
+            if remainingArgs.contains("--collect") {
+                await ProfileCommand.runCollect(flags: flags)
+            } else {
+                var iter = 3
+                if let idx = remainingArgs.firstIndex(of: "--iterations"), idx + 1 < remainingArgs.count {
+                    iter = Int(remainingArgs[idx+1]) ?? 3
+                }
+                await ProfileCommand.run(flags: flags, iterations: iter)
             }
-            await ProfileCommand.run(flags: flags, iterations: iter)
         case "mirror":
             await TransferCommands.runMirror(flags: flags, args: remainingArgs)
         case "quirks":

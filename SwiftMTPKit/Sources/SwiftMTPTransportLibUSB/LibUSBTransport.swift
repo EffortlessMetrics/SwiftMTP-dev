@@ -84,8 +84,8 @@ public struct LibUSBDiscovery {
     }
 }
 
-private struct EPCandidates { var bulkIn: UInt8 = 0; var bulkOut: UInt8 = 0; var evtIn: UInt8 = 0 }
-private func findEndpoints(_ alt: libusb_interface_descriptor) -> EPCandidates {
+struct EPCandidates { var bulkIn: UInt8 = 0; var bulkOut: UInt8 = 0; var evtIn: UInt8 = 0 }
+func findEndpoints(_ alt: libusb_interface_descriptor) -> EPCandidates {
     var eps = EPCandidates()
     for i in 0..<Int(alt.bNumEndpoints) {
         let ed = alt.endpoint[i]
@@ -96,41 +96,11 @@ private func findEndpoints(_ alt: libusb_interface_descriptor) -> EPCandidates {
     return eps
 }
 
-private func getAsciiString(_ handle: OpaquePointer, _ index: UInt8) -> String {
+func getAsciiString(_ handle: OpaquePointer, _ index: UInt8) -> String {
     if index == 0 { return "" }
     var buf = [UInt8](repeating: 0, count: 128)
     let n = libusb_get_string_descriptor_ascii(handle, index, &buf, Int32(buf.count))
     return n > 0 ? String(decoding: buf.prefix(Int(n)), as: UTF8.self) : ""
-}
-
-private func claimMTPInterface(handle: OpaquePointer, device: OpaquePointer) throws -> (UInt8, UInt8, UInt8, UInt8, UInt8) {
-    var cfgPtr: UnsafeMutablePointer<libusb_config_descriptor>?
-    try check(libusb_get_active_config_descriptor(device, &cfgPtr))
-    guard let cfg = cfgPtr?.pointee else { throw TransportError.io("no active config") }
-    defer { libusb_free_config_descriptor(cfgPtr) }
-    var best: (iface: UInt8, alt: UInt8, inEP: UInt8, outEP: UInt8, evt: UInt8, score: Int)? = nil
-    for i in 0..<Int(cfg.bNumInterfaces) {
-        let ifc = cfg.interface[i]
-        for a in 0..<Int(ifc.num_altsetting) {
-            let alt = ifc.altsetting[Int(a)], eps = findEndpoints(alt)
-            if eps.bulkIn == 0 || eps.bulkOut == 0 { continue }
-            var score = 0
-            if alt.bInterfaceClass == 0x06 && alt.bInterfaceSubClass == 0x01 { score += 100 }
-            let name = getAsciiString(handle, alt.iInterface).lowercased()
-            if (alt.bInterfaceClass == 0xFF && alt.bInterfaceSubClass == 0x42) || name.contains("adb") { score -= 200 }
-            if alt.bInterfaceClass == 0xFF && (name.contains("mtp") || name.contains("ptp")) { score += 60 }
-            if eps.evtIn != 0 { score += 5 }
-            if score > (best?.score ?? -1) { best = (UInt8(i), alt.bAlternateSetting, eps.bulkIn, eps.bulkOut, eps.evtIn, score) }
-        }
-    }
-    guard let sel = best, sel.score >= 60 else { throw TransportError.io("no MTP interface") }
-    
-    // Detach kernel driver before claiming (if supported)
-    _ = libusb_detach_kernel_driver(handle, Int32(sel.iface))
-    
-    try check(libusb_claim_interface(handle, Int32(sel.iface)))
-    if sel.alt > 0 { try check(libusb_set_interface_alt_setting(handle, Int32(sel.iface), Int32(sel.alt))) }
-    return (sel.iface, sel.alt, sel.inEP, sel.outEP, sel.evt)
 }
 
 public actor LibUSBTransport: MTPTransport {
@@ -139,6 +109,7 @@ public actor LibUSBTransport: MTPTransport {
   public init() {}
   
   public func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig) async throws -> MTPLink {
+    let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
     let ctx = LibUSBContext.shared.ctx
     var list: UnsafeMutablePointer<OpaquePointer?>?
     let cnt = libusb_get_device_list(ctx, &list)
@@ -154,29 +125,76 @@ public actor LibUSBTransport: MTPTransport {
     guard let dev = target else { throw TransportError.noDevice }
     var h: OpaquePointer?
     guard libusb_open(dev, &h) == 0, let handle = h else { libusb_unref_device(dev); throw TransportError.accessDenied }
-    
+
     if config.resetOnOpen {
         _ = libusb_reset_device(handle)
         try? await Task.sleep(nanoseconds: 500_000_000)
     }
-    
-    let (iface, _, epIn, epOut, epEvt) = try { do { return try claimMTPInterface(handle: handle, device: dev) } catch { libusb_close(handle); libusb_unref_device(dev); throw error } }()
-    
-    _ = libusb_clear_halt(handle, epIn); _ = libusb_clear_halt(handle, epOut)
 
-    // Send PTP Device Reset (class-specific, bRequest=0x66) to clear any stale session
-    // held by the macOS kernel driver. This is lightweight — no USB re-enumeration.
-    _ = libusb_control_transfer(handle, 0x21, 0x66, 0, UInt16(iface), nil, 0, 5000)
-    try? await Task.sleep(nanoseconds: 200_000_000) // 200ms stabilization
+    // Phase 1: Rank → Claim → Probe interface candidates
+    let candidates: [InterfaceCandidate]
+    do {
+      candidates = try rankMTPInterfaces(handle: handle, device: dev)
+    } catch {
+      libusb_close(handle); libusb_unref_device(dev); throw error
+    }
+    guard !candidates.isEmpty else {
+      libusb_close(handle); libusb_unref_device(dev)
+      throw TransportError.io("no MTP interface")
+    }
 
+    var selectedCandidate: InterfaceCandidate?
+    var cachedDeviceInfo: Data?
+
+    for (idx, candidate) in candidates.enumerated() {
+      let start = DispatchTime.now()
+      if debug {
+        print(String(format: "   [Probe] Trying interface %d (score=%d, class=0x%02x)", candidate.ifaceNumber, candidate.score, candidate.ifaceClass))
+      }
+
+      do {
+        try claimCandidate(handle: handle, candidate)
+      } catch {
+        if debug { print("   [Probe] Claim failed: \(error)") }
+        continue
+      }
+
+      let (probeOK, infoData) = probeCandidate(handle: handle, candidate, timeoutMs: 2000)
+      let elapsed = Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
+
+      if probeOK {
+        if debug { print("   [Probe] Interface \(candidate.ifaceNumber) OK (\(elapsed)ms)") }
+        selectedCandidate = candidate
+        cachedDeviceInfo = infoData
+        break
+      } else {
+        if debug { print("   [Probe] Interface \(candidate.ifaceNumber) failed (\(elapsed)ms), trying next...") }
+        releaseCandidate(handle: handle, candidate)
+      }
+    }
+
+    guard let sel = selectedCandidate else {
+      libusb_close(handle); libusb_unref_device(dev)
+      throw TransportError.io("no MTP interface responded to probe")
+    }
+
+    // PTP Device Reset to clear stale sessions
+    _ = libusb_control_transfer(handle, 0x21, 0x66, 0, UInt16(sel.ifaceNumber), nil, 0, 5000)
+    try? await Task.sleep(nanoseconds: 200_000_000)
+
+    // Drain stale data
     var drain = [UInt8](repeating: 0, count: 4096), got: Int32 = 0
-    // Drain until empty with short timeout
-    while libusb_bulk_transfer(handle, epIn, &drain, Int32(drain.count), &got, 10) == 0 && got > 0 {}
-    
-    let link = MTPUSBLink(handle: handle, device: dev, iface: iface, epIn: epIn, epOut: epOut, epEvt: epEvt, config: config, manufacturer: summary.manufacturer, model: summary.model)
-    
+    while libusb_bulk_transfer(handle, sel.bulkIn, &drain, Int32(drain.count), &got, 10) == 0 && got > 0 {}
+
+    let link = MTPUSBLink(
+      handle: handle, device: dev,
+      iface: sel.ifaceNumber, epIn: sel.bulkIn, epOut: sel.bulkOut, epEvt: sel.eventIn,
+      config: config, manufacturer: summary.manufacturer, model: summary.model,
+      cachedDeviceInfoData: cachedDeviceInfo
+    )
+
     activeLinks.append(link)
-    
+
     return link
   }
 
@@ -196,9 +214,11 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   private var nextTx: UInt32 = 1
   private let config: SwiftMTPConfig, manufacturer: String, model: String
   private var eventContinuation: AsyncStream<Data>.Continuation?, eventPumpTask: Task<Void, Never>?
+  /// Raw device-info bytes cached from the interface probe (avoids redundant GetDeviceInfo).
+  private let cachedDeviceInfoData: Data?
 
-  init(handle: OpaquePointer, device: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8, config: SwiftMTPConfig, manufacturer: String, model: String) {
-    self.h = handle; self.dev = device; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt; self.config = config; self.manufacturer = manufacturer; self.model = model
+  init(handle: OpaquePointer, device: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8, config: SwiftMTPConfig, manufacturer: String, model: String, cachedDeviceInfoData: Data? = nil) {
+    self.h = handle; self.dev = device; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt; self.config = config; self.manufacturer = manufacturer; self.model = model; self.cachedDeviceInfoData = cachedDeviceInfoData
   }
 
   public func close() async { eventPumpTask?.cancel(); eventContinuation?.finish(); libusb_release_interface(h, Int32(iface)); libusb_close(h); libusb_unref_device(dev) }
@@ -226,6 +246,10 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   public func closeSession() async throws { try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1003, txid: 0, params: []), dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil).checkOK() }
 
   public func getDeviceInfo() async throws -> MTPDeviceInfo {
+    // Use cached probe data if available (avoids redundant USB round-trip)
+    if let cached = cachedDeviceInfoData, let info = PTPDeviceInfo.parse(from: cached) {
+      return MTPDeviceInfo(manufacturer: info.manufacturer, model: info.model, version: info.deviceVersion, serialNumber: info.serialNumber, operationsSupported: Set(info.operationsSupported), eventsSupported: Set(info.eventsSupported))
+    }
     let collector = SimpleCollector()
     let res = try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1001, txid: 0, params: []), dataPhaseLength: nil, dataInHandler: { collector.append($0); return $0.count }, dataOutHandler: nil)
     if res.isOK, let info = PTPDeviceInfo.parse(from: collector.data) {

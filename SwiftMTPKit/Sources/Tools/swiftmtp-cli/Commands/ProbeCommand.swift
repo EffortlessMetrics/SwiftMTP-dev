@@ -54,11 +54,23 @@ struct ProbeCommand {
         do {
             let device = try await openDevice(flags: flags)
             try await device.openIfNeeded()
-            let info = try await device.getDeviceInfo()
+
+            // Prefer structured ProbeReceipt if available
+            if let receipt = await device.probeReceipt {
+                let encoder = JSONEncoder()
+                encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+                encoder.dateEncodingStrategy = .iso8601
+                let data = try encoder.encode(receipt)
+                print(String(data: data, encoding: .utf8) ?? "{}")
+                return
+            }
+
+            // Fallback to ad-hoc output
+            let info = try await device.info
             let storages = try await device.storages()
             let capabilities = await device.probedCapabilities
             let tuning = await device.effectiveTuning
-            
+
             let output: [String: Any] = [
                 "manufacturer": info.manufacturer,
                 "model": info.model,

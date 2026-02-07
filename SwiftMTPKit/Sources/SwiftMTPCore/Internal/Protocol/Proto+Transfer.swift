@@ -81,6 +81,47 @@ public enum ProtoTransfer {
     }
 }
 
+// MARK: - Partial Read/Write
+
+extension ProtoTransfer {
+
+  /// GetPartialObject64 (0x95C4): 64-bit offset partial read.
+  public static func readPartialObject64(
+    handle: UInt32, offset: UInt64, maxBytes: UInt32,
+    on link: MTPLink, dataHandler: @escaping MTPDataIn
+  ) async throws {
+    let offsetLo = UInt32(offset & 0xFFFFFFFF)
+    let offsetHi = UInt32(offset >> 32)
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.getPartialObject64.rawValue,
+      txid: 0,
+      params: [handle, offsetLo, offsetHi, maxBytes]
+    )
+    try await link.executeStreamingCommand(
+      command, dataPhaseLength: nil,
+      dataInHandler: dataHandler, dataOutHandler: nil
+    ).checkOK()
+  }
+
+  /// GetPartialObject (0x101B): 32-bit offset partial read.
+  public static func readPartialObject32(
+    handle: UInt32, offset: UInt32, maxBytes: UInt32,
+    on link: MTPLink, dataHandler: @escaping MTPDataIn
+  ) async throws {
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.getPartialObject.rawValue,
+      txid: 0,
+      params: [handle, offset, maxBytes]
+    )
+    try await link.executeStreamingCommand(
+      command, dataPhaseLength: nil,
+      dataInHandler: dataHandler, dataOutHandler: nil
+    ).checkOK()
+  }
+}
+
 extension PTPResponseResult {
     public func checkOK() throws {
         if !isOK {
