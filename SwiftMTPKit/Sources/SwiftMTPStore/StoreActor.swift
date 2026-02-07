@@ -325,9 +325,7 @@ public actor StoreActor {
         return entities.map { entity in
             MTPObjectRecord(
                 handle: UInt32(entity.handle),
-                storage: MTPStorageID(raw: UInt32(entity.storageId)),
-                parent: entity.parentHandle.map { UInt32($0) },
-                name: entity.name,
+                storage: UInt32(entity.storageId),
                 pathKey: entity.pathKey,
                 size: entity.sizeBytes.map { UInt64($0) },
                 mtime: entity.modifiedAt,

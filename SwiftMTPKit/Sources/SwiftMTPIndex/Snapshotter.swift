@@ -167,7 +167,7 @@ public final class Snapshotter: Sendable {
         for batchStart in stride(from: 0, to: allObjects.count, by: batchSize) {
             let batchEnd = min(batchStart + batchSize, allObjects.count)
             let batch = Array(allObjects[batchStart..<batchEnd])
-            try processObjectBatch(batch, storage: storage, deviceId: deviceId, gen: gen,
+            try await processObjectBatch(batch, storage: storage, deviceId: deviceId, gen: gen,
                                  parentMap: parentMap, nameMap: nameMap)
         }
     }

@@ -16,6 +16,7 @@ let package = Package(
     .library(name: "SwiftMTPObservability", targets: ["SwiftMTPObservability"]),
     .library(name: "SwiftMTPQuirks", targets: ["SwiftMTPQuirks"]),
     .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
+    .library(name: "SwiftMTPXPC", targets: ["SwiftMTPXPC"]),
     .library(name: "SwiftMTPFileProvider", targets: ["SwiftMTPFileProvider"]),
     .plugin(name: "SwiftMTPBuildTool", targets: ["SwiftMTPBuildTool"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
@@ -65,8 +66,11 @@ let package = Package(
             dependencies: [],
             resources: [.process("Resources")]),
 
+    .target(name: "SwiftMTPXPC",
+            dependencies: ["SwiftMTPCore"]),
+
     .target(name: "SwiftMTPFileProvider",
-            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPStore"]),
+            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPStore", "SwiftMTPXPC"]),
 
     .plugin(name: "SwiftMTPBuildTool",
             capability: .command(
@@ -75,7 +79,7 @@ let package = Package(
             )),
 
     .executableTarget(name: "swiftmtp-cli",
-                      dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPSync", "SwiftMTPObservability", "SwiftMTPQuirks", "SwiftMTPStore"],
+                      dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPSync", "SwiftMTPObservability", "SwiftMTPQuirks", "SwiftMTPStore", "SwiftMTPXPC"],
                       path: "Sources/Tools/swiftmtp-cli",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
