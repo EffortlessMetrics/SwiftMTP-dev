@@ -4,6 +4,7 @@
 import Foundation
 import CLibusb
 import SwiftMTPCore
+import SwiftMTPObservability
 
 public struct LibUSBDiscovery {
     public struct USBDeviceIDs: Sendable {
@@ -269,6 +270,10 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   }
 
   private func executeCommandAsync(command: PTPContainer, dataPhaseLength: UInt64? = nil, dataInHandler: MTPDataIn?, dataOutHandler: MTPDataOut?) async throws -> PTPResponseResult {
+    let signposter = MTPLog.Signpost.enumerateSignposter
+    let state = signposter.beginInterval("executeCommand", id: signposter.makeSignpostID(), "\(String(format: "0x%04x", command.code))")
+    defer { signposter.endInterval("executeCommand", state) }
+
     let txid = (command.code == 0x1002) ? 0 : { () -> UInt32 in let t = nextTx; nextTx = (nextTx == 0xFFFFFFFF) ? 1 : nextTx + 1; return t }()
     let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
     if debug { print(String(format: "   [USB] op=0x%04x tx=%u phase=COMMAND", command.code, txid)) }
@@ -284,7 +289,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       while true {
         let wrote = scratch.withUnsafeMutableBytes { produce($0) }
         if wrote == 0 { break }
+        let chunkState = MTPLog.Signpost.chunkSignposter.beginInterval("writeChunk", id: MTPLog.Signpost.chunkSignposter.makeSignpostID(), "\(wrote) bytes")
         try scratch.withUnsafeBytes { try bulkWriteAll(outEP, from: $0.baseAddress!, count: wrote, timeout: UInt32(config.ioTimeoutMs)) }
+        MTPLog.Signpost.chunkSignposter.endInterval("writeChunk", chunkState)
         sent += wrote
       }
       if sent % 512 == 0 { var dummy: UInt8 = 0; _ = libusb_bulk_transfer(h, outEP, &dummy, 0, nil, 100) }
@@ -307,7 +314,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
         var left = payload - max(0, rem)
         while left > 0 {
           var buf = [UInt8](repeating: 0, count: min(left, 1<<20))
+          let chunkState = MTPLog.Signpost.chunkSignposter.beginInterval("readChunk", id: MTPLog.Signpost.chunkSignposter.makeSignpostID(), "\(buf.count) bytes")
           let g = try bulkReadOnce(inEP, into: &buf, max: buf.count, timeout: 1000)
+          MTPLog.Signpost.chunkSignposter.endInterval("readChunk", chunkState)
           if g == 0 { throw MTPError.timeout }
           _ = buf.withUnsafeBytes { dataInHandler!($0) }; left -= g
         }

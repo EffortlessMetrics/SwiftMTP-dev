@@ -16,6 +16,8 @@ let package = Package(
     .library(name: "SwiftMTPObservability", targets: ["SwiftMTPObservability"]),
     .library(name: "SwiftMTPQuirks", targets: ["SwiftMTPQuirks"]),
     .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
+    .library(name: "SwiftMTPFileProvider", targets: ["SwiftMTPFileProvider"]),
+    .plugin(name: "SwiftMTPBuildTool", targets: ["SwiftMTPBuildTool"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
   ],
   dependencies: [
@@ -62,6 +64,15 @@ let package = Package(
     .target(name: "SwiftMTPQuirks",
             dependencies: [],
             resources: [.process("Resources")]),
+
+    .target(name: "SwiftMTPFileProvider",
+            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPStore"]),
+
+    .plugin(name: "SwiftMTPBuildTool",
+            capability: .command(
+                intent: .custom(verb: "generate-docs", description: "Regenerate device documentation from quirks.json"),
+                permissions: [.writeToPackageDirectory(reason: "Update device documentation pages")]
+            )),
 
     .executableTarget(name: "swiftmtp-cli",
                       dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPSync", "SwiftMTPObservability", "SwiftMTPQuirks", "SwiftMTPStore"],

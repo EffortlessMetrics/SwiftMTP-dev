@@ -4,6 +4,7 @@
 import Foundation
 import OSLog
 import SwiftMTPQuirks
+import SwiftMTPObservability
 
 // Placeholder types - these should be implemented elsewhere
 struct EventPump {
@@ -195,6 +196,10 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     }
 
     private func applyTuningAndOpenSession(link: any MTPLink) async throws {
+      let signposter = MTPLog.Signpost.enumerateSignposter
+      let totalState = signposter.beginInterval("applyTuningAndOpenSession", id: signposter.makeSignpostID())
+      defer { signposter.endInterval("applyTuningAndOpenSession", totalState) }
+
       let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
       if debugEnabled { print("   [Actor] applyTuningAndOpenSession starting...") }
 

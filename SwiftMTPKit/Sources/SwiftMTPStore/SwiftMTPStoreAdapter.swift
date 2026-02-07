@@ -167,6 +167,22 @@ public final class SwiftMTPStoreAdapter: MTPPersistenceProvider, LearnedProfileS
         )
     }
 
+    public func recordObjects(deviceId: MTPDeviceID, objects: [(object: MTPObjectInfo, pathKey: String)], generation: Int) async throws {
+        let actor = store.createActor()
+        let dtos = objects.map { (
+            storageId: Int($0.object.storage.raw),
+            handle: Int($0.object.handle),
+            parentHandle: $0.object.parent.map { Int($0) },
+            name: $0.object.name,
+            pathKey: $0.pathKey,
+            size: $0.object.sizeBytes.map { Int64($0) },
+            mtime: $0.object.modified,
+            format: Int($0.object.formatCode),
+            generation: generation
+        ) }
+        try await actor.upsertObjects(deviceId: deviceId.raw, objects: dtos)
+    }
+
         public func finalizeIndexing(deviceId: MTPDeviceID, generation: Int) async throws {
 
             let actor = store.createActor()

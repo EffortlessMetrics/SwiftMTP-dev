@@ -173,7 +173,9 @@ public final class Snapshotter: Sendable {
     }
 
     private func processObjectBatch(_ objects: [MTPObjectInfo], storage: MTPStorageInfo, deviceId: MTPDeviceID, gen: Int,
-                                   parentMap: [UInt32: UInt32], nameMap: [UInt32: String]) throws {
+                                   parentMap: [UInt32: UInt32], nameMap: [UInt32: String]) async throws {
+        var batchToRecord: [(object: MTPObjectInfo, pathKey: String)] = []
+        
         for object in objects {
             let pathComponents = buildPathComponents(for: object.handle, parentMap: parentMap, nameMap: nameMap)
             let pathKey = PathKey.normalize(storage: storage.id.raw, components: pathComponents)
@@ -196,12 +198,12 @@ public final class Snapshotter: Sendable {
                 _ = try db.step(stmt)
             }
             
-            // Record in modern persistence
-            Task {
-                let persistence = await MTPDeviceManager.shared.persistence
-                try? await persistence.objectCatalog.recordObject(deviceId: deviceId, object: object, pathKey: pathKey, generation: gen)
-            }
+            batchToRecord.append((object: object, pathKey: pathKey))
         }
+        
+        // Record in modern persistence (Batch)
+        let persistence = await MTPDeviceManager.shared.persistence
+        try? await persistence.objectCatalog.recordObjects(deviceId: deviceId, objects: batchToRecord, generation: gen)
     }
 
     internal func buildPathComponents(for handle: UInt32, parentMap: [UInt32: UInt32], nameMap: [UInt32: String]) -> [String] {
