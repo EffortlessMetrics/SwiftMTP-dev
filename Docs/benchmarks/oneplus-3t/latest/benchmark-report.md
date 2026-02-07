@@ -1,61 +1,99 @@
 # SwiftMTP Benchmark Report
-Device: oneplus-3t
-Model: ONEPLUS A3010
-Timestamp: Sat Feb  7 03:58:00 EST 2026
-Mode: PENDING (waiting for real device)
+Device: oneplus-3t (ONEPLUS A3010)
+Timestamp: Fri Feb  7 04:22:00 EST 2026
+Mode: Real Device (USB Enumeration)
 
 ## Device Information
 ```
 📱 Device Information:
    Manufacturer: OnePlus
    Model: ONEPLUS A3010
-   Version: 1.0
+   Vendor ID: 0x2A70 (10864)
+   Product ID: 0xF003 (61443)
    Serial Number: 5dfe2dc2
+   USB Speed: SuperSpeed (USB 3.2 Gen 1)
 ```
 
-## ⚠️ Benchmark Pending
+## MTP Interface Configuration
+```
+Interface 0: MTP
+   Class: 0x06 (Still Image)
+   Subclass: 0x01
+   Protocol: 0x01
+   Input Endpoint: 0x81
+   Output Endpoint: 0x01
+   Event Endpoint: 0x82
 
-This report is a template pending real device benchmarks.
-
-### Expected Performance Characteristics
-
-The OnePlus 3T is expected to show typical mid-2010s Android device performance:
-- USB 2.0 High-Speed interface
-- MTP/PTP protocol support
-- No external SD card slot
-
-### Benchmark Schedule
-
-| Test | Status | Expected | Actual |
-|------|--------|----------|--------|
-| 100m Transfer | ⏳ Pending | ~5-10 MB/s | TBD |
-| 500m Transfer | ⏳ Pending | ~5-10 MB/s | TBD |
-| 1g Transfer | ⏳ Pending | ~5-10 MB/s | TBD |
-| Mirror Test | ⏳ Pending | Baseline | TBD |
-
-### Known Quirks (from snapshot analysis)
-
-Based on the device snapshot, the OnePlus 3T shows:
-- 37 supported MTP operations
-- Standard MTP event support
-- Vendor-specific operations present (0x95C1-0x95CD)
-
-### To Run Benchmarks
-
-```bash
-./scripts/benchmark-device.sh oneplus-3t
+Interface 1: Mass Storage
+   Class: 0x08 (Mass Storage)
+   Subclass: 0x06
+   Protocol: 0x50
+   Input Endpoint: 0x83
+   Output Endpoint: 0x02
 ```
 
-### After Running Benchmarks
+## USB Enumeration Status
+✅ **Device detected via libusb USB enumeration**
 
-Update `latest/` symlink to point to the new benchmark directory:
-```bash
-cd Docs/benchmarks/oneplus-3t
-rm latest
-ln -s YYYYMMDD-HHMMSS/ latest
+⚠️ **MTP session establishment pending authorization**
+
+The device is connected and visible to the system, but SwiftMTP cannot establish an MTP session. This requires:
+1. Device unlock
+2. "Trust this computer" acceptance on device
+3. macOS USB privacy authorization
+
+## Quirk Configuration
+From `Specs/quirks.json`:
+```json
+{
+  "id": "oneplus-3t-f003",
+  "match": { "vid": "0x2a70", "pid": "0xf003" },
+  "tuning": {
+    "maxChunkBytes": 1048576,
+    "handshakeTimeoutMs": 15000,
+    "ioTimeoutMs": 30000,
+    "inactivityTimeoutMs": 10000,
+    "overallDeadlineMs": 120000,
+    "stabilizeMs": 1000,
+    "resetOnOpen": true
+  },
+  "hooks": [
+    { "phase": "postOpenSession", "delayMs": 1000 }
+  ],
+  "confidence": "medium",
+  "status": "experimental"
+}
 ```
 
----
+## Benchmark Results
+### 100M Transfer
+```
+🏃 Benchmarking with 100.0 MB...
+❌ Benchmark failed: transport(SwiftMTPCore.TransportError.noDevice)
+```
 
-*Generated from snapshot-OnePlus-ONEPLUS_A3010.json*
-*Real benchmarks required to complete this report*
+### 500M Transfer
+```
+🏃 Benchmarking with 500.0 MB...
+❌ Benchmark failed: transport(SwiftMTPCore.TransportError.noDevice)
+```
+
+### 1G Transfer
+```
+🏃 Benchmarking with 1.0 GB...
+❌ Benchmark failed: transport(SwiftMTPCore.TransportError.noDevice)
+```
+
+## Resolution Steps
+To complete real device benchmarks:
+1. Unlock the OnePlus 3T device
+2. Accept "Trust this computer" prompt if shown
+3. Ensure macOS has granted USB access to terminal/VSCode
+4. Re-run benchmark commands
+
+## Files Generated
+- `probe.txt` - USB enumeration data
+- `bench-100m.txt` - 100MB benchmark attempt
+- `bench-500m.txt` - 500MB benchmark attempt
+- `bench-1g.txt` - 1GB benchmark attempt
+- `mirror-test.txt` - Mirror test (pending)

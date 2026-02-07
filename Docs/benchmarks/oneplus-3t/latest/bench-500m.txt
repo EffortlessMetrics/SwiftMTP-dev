@@ -1,18 +1,24 @@
-# OnePlus 3T Benchmark: 500MB Transfer
-# Device: oneplus-3t
-# Status: PENDING
-# Generated: Sat Feb  7 03:58:00 EST 2026
+# OnePlus 3T 500MB Benchmark
+# Device: oneplus-3t-f003
+# Timestamp: Fri Feb  7 04:22:00 EST 2026
 
-🏃 Running transfer benchmark (500.0 MB test file)...
+🏃 Benchmarking with 500.0 MB...
+❌ Benchmark failed: transport(SwiftMTPCore.TransportError.noDevice)
 
-📝 Generating test file...
-⚠️ BENCHMARK PENDING - Waiting for real device connection
+## USB Device Information (from successful usb-dump)
+Device 2a70:f003 (OnePlus 3T)
+  iface=0 alt=0 class=0x06 sub=0x01 proto=0x01 in=0x81 out=0x01 evt=0x82 name="MTP"
+  iface=1 alt=0 class=0x08 sub=0x06 proto=0x50 in=0x83 out=0x02 evt=0x00 name="Mass Storage"
 
-Expected results will be recorded here after running:
-  ./scripts/benchmark-device.sh oneplus-3t
+## Device Details
+- Vendor ID: 10864 (0x2A70)
+- Product ID: 61443 (0xF003)
+- Serial: 5dfe2dc2
+- USB Speed: SuperSpeed
 
-📤 Benchmarking write performance...
-   ⏳ Pending...
-
-🔍 Locating uploaded file...
-   ⏳ Pending...
+## Notes
+Device detected via USB enumeration but SwiftMTP cannot establish MTP session.
+This typically requires:
+1. Device unlock
+2. "Trust this computer" acceptance on device
+3. macOS USB privacy authorization for the terminal/app

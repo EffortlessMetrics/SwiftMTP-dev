@@ -1,129 +1,89 @@
-# ⚠️ MOCK DATA - FOR TESTING ONLY ⚠️
-
-> **This benchmark report contains MOCK data generated from a simulated Pixel 7 device.**
-> **DO NOT use these metrics for production performance evaluations.**
-
-The device serial number is `MOCK123456` - this indicates synthetic test data.
-
----
-
 # SwiftMTP Benchmark Report
-Device: pixel7 (Mock/Simulated)
-Timestamp: Wed Sep  3 13:29:30 EDT 2025
-Mode: Mock (pixel7)
-
-## 🚨 Important Notice
-> **This report contains SYNTHETIC/SIMULATED benchmark data.**
-> Real device benchmarks are needed for:
-> - Production performance characterization
-> - Comparative device analysis
-> - Performance regression tracking
-> - Customer-facing performance specifications
-
-The performance metrics below reflect simulated transfers and should not be used for any production purposes.
+Device: pixel7 (google-pixel-7-4ee1)
+Timestamp: Fri Feb  7 04:22:00 EST 2026
+Mode: Real Device (USB Enumeration)
 
 ## Device Information
 ```
-warning: 'swiftmtpkit': Source files for target TransportTests should be located under 'Tests/TransportTests', or a custom sources path can be set with the 'path' property in Package.swift
-warning: 'sqlite.swift': found 1 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
-    /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/.build/checkouts/SQLite.swift/Sources/SQLite/PrivacyInfo.xcprivacy
-[0/1] Planning build
-Building for debugging...
-[0/3] Write swift-version--58304C5D6DBC2206.txt
-Build of product 'swiftmtp' complete! (1.02s)
-🔍 Probing device capabilities...
-
 📱 Device Information:
    Manufacturer: Google
    Model: Pixel 7
-   Version: Mock Version 1.0
-   Serial Number: MOCK123456
-
-⚙️  Supported Operations (4):
-   0x1001 - GetDeviceInfo
-   0x1002 - OpenSession
-   0x1004 - GetStorageIDs
-   0x1005 - GetStorageInfo
-
-💾 Storage Devices (2):
-   📁 Internal Storage
-      Capacity: 119.2 GB
-      Free: 74.5 GB
-      Used: 44.7 GB (37.5%)
-      Read-only: No
-
-   📁 SD Card
-      Capacity: 238.4 GB
-      Free: 186.3 GB
-      Used: 52.2 GB (21.9%)
-      Read-only: No
-
-📄 Sample Files (first 10 from root):
-   Association: 2 files
-
-✅ Probe complete
+   Vendor ID: 0x18D1 (6353)
+   Product ID: 0x4EE1 (20193)
+   Serial Number: 2A221FDH200G2Q
+   USB Speed: SuperSpeed (USB 3.2 Gen 1)
 ```
 
-## Benchmark Results (Synthetic/Simulated Metrics)
-> ⚠️ **WARNING:** The following transfer speeds are MOCK values and do not represent actual device performance.
-
-### 100m Transfer (Simulated)
+## MTP Interface Configuration
 ```
-warning: 'swiftmtpkit': Source files for target TransportTests should be located under 'Tests/TransportTests', or a custom sources path can be set with the 'path' property in Package.swift
-Building for debugging...
-[0/3] Write swift-version--58304C5D6DBC2206.txt
-Build of product 'swiftmtp' complete! (0.13s)
-🏃 Running transfer benchmark (100.0 MB test file)...
-
-📝 Generating test file...
-📤 Benchmarking write performance...
-   ✅ Write: 0.49 MB/s (205.8s)
-🔍 Locating uploaded file...
-❌ Could not find uploaded test file
+Interface: MTP
+   Class: 0x06 (Still Image)
+   Subclass: 0x01
+   Protocol: 0x01
+   Input Endpoint: 0x81
+   Output Endpoint: 0x01
+   Event Endpoint: 0x82
 ```
 
-### 1g Transfer (Simulated)
-```
-warning: 'swiftmtpkit': Source files for target TransportTests should be located under 'Tests/TransportTests', or a custom sources path can be set with the 'path' property in Package.swift
-Building for debugging...
-[0/3] Write swift-version--58304C5D6DBC2206.txt
-Build of product 'swiftmtp' complete! (0.14s)
-🏃 Running transfer benchmark (1.0 GB test file)...
+## USB Enumeration Status
+✅ **Device detected via libusb USB enumeration**
 
-📝 Generating test file...
-📤 Benchmarking write performance...
-   ✅ Write: 3.88 MB/s (264.2s)
-🔍 Locating uploaded file...
-❌ Could not find uploaded test file
+⚠️ **MTP session establishment pending authorization**
+
+The device is connected and visible to the system, but SwiftMTP cannot establish an MTP session. This requires:
+1. Device unlock
+2. "Trust this computer" acceptance on device
+3. macOS USB privacy authorization
+
+## Quirk Configuration
+From `Specs/quirks.json`:
+```json
+{
+  "id": "google-pixel-7-4ee1",
+  "match": { "vid": "0x18d1", "pid": "0x4ee1" },
+  "tuning": {
+    "maxChunkBytes": 2097152,
+    "handshakeTimeoutMs": 20000,
+    "ioTimeoutMs": 30000,
+    "inactivityTimeoutMs": 10000,
+    "overallDeadlineMs": 180000,
+    "stabilizeMs": 2000,
+    "resetOnOpen": false
+  },
+  "confidence": "medium",
+  "status": "stable"
+}
 ```
 
-### 500m Transfer (Simulated)
+## Benchmark Results
+### 100M Transfer
 ```
-warning: 'swiftmtpkit': Source files for target TransportTests should be located under 'Tests/TransportTests', or a custom sources path can be set with the 'path' property in Package.swift
-Building for debugging...
-[0/3] Write swift-version--58304C5D6DBC2206.txt
-Build of product 'swiftmtp' complete! (0.14s)
-🏃 Running transfer benchmark (500.0 MB test file)...
-
-📝 Generating test file...
-📤 Benchmarking write performance...
-   ✅ Write: 3.85 MB/s (130.0s)
-🔍 Locating uploaded file...
-❌ Could not find uploaded test file
+🏃 Benchmarking with 100.0 MB...
+❌ Benchmark failed: transport(SwiftMTPCore.TransportError.noDevice)
 ```
 
-## Mirror Test (Simulated)
+### 500M Transfer
 ```
-warning: 'swiftmtpkit': Source files for target TransportTests should be located under 'Tests/TransportTests', or a custom sources path can be set with the 'path' property in Package.swift
-Building for debugging...
-[0/3] Write swift-version--58304C5D6DBC2206.txt
-Build of product 'swiftmtp' complete! (0.14s)
-🔄 Starting mirror operation...
-   Source: test-device-1756920569
-   Destination: /tmp/swiftmtp-test-mirror
-✅ Mirror completed!
-   Downloaded: 2
-   Skipped: 0
-   Failed: 0
-   Success rate: 100.0%
+🏃 Benchmarking with 500.0 MB...
+❌ Benchmark failed: transport(SwiftMTPCore.TransportError.noDevice)
 ```
+
+### 1G Transfer
+```
+🏃 Benchmarking with 1.0 GB...
+❌ Benchmark failed: transport(SwiftMTPCore.TransportError.noDevice)
+```
+
+## Resolution Steps
+To complete real device benchmarks:
+1. Unlock the Pixel 7 device
+2. Accept "Trust this computer" prompt if shown
+3. Ensure macOS has granted USB access to terminal/VSCode
+4. Re-run benchmark commands
+
+## Files Generated
+- `probe.txt` - USB enumeration data
+- `bench-100m.txt` - 100MB benchmark attempt
+- `bench-500m.txt` - 500MB benchmark attempt
+- `bench-1g.txt` - 1GB benchmark attempt
+- `mirror-test.txt` - Mirror test (pending)

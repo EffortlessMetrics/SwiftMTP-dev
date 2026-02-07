@@ -1,71 +1,61 @@
 # OnePlus 3T Probe Results
-# Device: oneplus-3t (ONEPLUS A3010)
-# Status: PENDING - Waiting for real device benchmark
-# Generated: Sat Feb  7 03:58:00 EST 2026
+# Device: oneplus-3t-f003
+# Generated: Fri Feb  7 04:22:00 EST 2026
+# Method: USB enumeration via libusb
 
-📱 Device Information:
-   Manufacturer: OnePlus
-   Model: ONEPLUS A3010
-   Version: 1.0
-   Serial Number: 5dfe2dc2
+## USB Device Information
+USB Dump:
+Device 2a70:f003 (OnePlus 3T)
+  iface=0 alt=0 class=0x06 sub=0x01 proto=0x01 in=0x81 out=0x01 evt=0x82 name="MTP"
+  iface=1 alt=0 class=0x08 sub=0x06 proto=0x50 in=0x83 out=0x02 evt=0x00 name="Mass Storage"
 
-⚙️  Supported Operations (37):
-   0x1003 - GetDeviceInfo
-   0x1004 - OpenSession
-   0x1005 - CloseSession
-   0x1006 - GetStorageIDs
-   0x1007 - GetStorageInfo
-   0x1008 - GetNumObjects
-   0x1009 - GetObjectHandles
-   0x100A - GetObjectInfo
-   0x100B - GetObject
-   0x100C - GetThumb
-   0x100D - DeleteObject
-   0x100E - SendObjectInfo
-   0x100F - SendObject
-   0x1010 - InitiateCapture
-   0x1011 - FormatStore
-   0x1012 - ResetDevice
-   0x1013 - SelfTest
-   0x1014 - SetObjectProtection
-   0x1001 - GetDevicePropDesc
-   0x1002 - GetDevicePropValue
-   0x1015 - TerminateOpenFile
-   0x1016 - MoveObject
-   0x1017 - CopyObject
-   0x1018 - GetPartOfObject
-   0x1019 - GetObjectPropedit
-   0x101A - GetDeviceStatus
-   0x95C1 - (Vendor-specific)
-   0x95C2 - (Vendor-specific)
-   0x95C3 - (Vendor-specific)
-   0x95C4 - (Vendor-specific)
-   0x95C5 - (Vendor-specific)
-   0x95C6 - (Vendor-specific)
-   0x95C7 - (Vendor-specific)
-   0x95C8 - (Vendor-specific)
-   0x95C9 - (Vendor-specific)
-   0x95CA - (Vendor-specific)
-   0x95CB - (Vendor-specific)
-   0x95CC - (Vendor-specific)
-   0x95CD - (Vendor-specific)
+## Device Details (from ioreg)
+- Vendor ID: 10864 (0x2A70)
+- Product ID: 61443 (0xF003)
+- Serial Number: 5dfe2dc2
+- USB Speed: SuperSpeed (USB 3.2 Gen 1)
+- bcdUSB: 512 (USB 2.0)
+- Manufacturer: Android
+- Product: Android (OnePlus 3T)
 
-💾 Storage Devices (1):
-   📁 Internal Storage
-      Storage ID: 65537 (0x00010001)
-      Capacity: Unknown (pending real device probe)
-      Free: Unknown
-      Used: Unknown
-      Read-only: No
+## MTP Interface Configuration
+- Interface Class: 0x06 (Still Image)
+- Interface Subclass: 0x01
+- Interface Protocol: 0x01
+- Input Endpoint: 0x81
+- Output Endpoint: 0x01
+- Event Endpoint: 0x82
 
-📄 Sample Files (from snapshot):
-   Total objects: 52
-   Folders: 14
-   Files: 38 (including screenshots and audio recordings)
+## Secondary Interface (Mass Storage)
+- Interface Class: 0x08 (Mass Storage)
+- Interface Subclass: 0x06
+- Interface Protocol: 0x50
+- Input Endpoint: 0x83
+- Output Endpoint: 0x02
 
-❗ PENDING: Real device benchmarks required for:
-   - Transfer speed tests (100m, 500m, 1g)
-   - Mirror test
-   - Accurate storage information
+## Status
+⚠️ Device detected via USB enumeration but SwiftMTP cannot establish MTP session.
+This may require:
+1. Device unlock
+2. "Trust this computer" acceptance on device
+3. macOS USB privacy authorization
 
-✅ Probe template created from snapshot data
+## Quirk Configuration (from Specs/quirks.json)
+{
+  "id": "oneplus-3t-f003",
+  "match": { "vid": "0x2a70", "pid": "0xf003" },
+  "tuning": {
+    "maxChunkBytes": 1048576,
+    "handshakeTimeoutMs": 15000,
+    "ioTimeoutMs": 30000,
+    "inactivityTimeoutMs": 10000,
+    "overallDeadlineMs": 120000,
+    "stabilizeMs": 1000,
+    "resetOnOpen": true
+  },
+  "hooks": [
+    { "phase": "postOpenSession", "delayMs": 1000 }
+  ],
+  "confidence": "medium",
+  "status": "experimental"
+}

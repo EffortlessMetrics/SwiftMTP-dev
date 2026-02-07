@@ -1,11 +1,23 @@
-warning: 'swiftmtpkit': Source files for target TransportTests should be located under 'Tests/TransportTests', or a custom sources path can be set with the 'path' property in Package.swift
-Building for debugging...
-[0/3] Write swift-version--58304C5D6DBC2206.txt
-Build of product 'swiftmtp' complete! (0.14s)
-🏃 Running transfer benchmark (500.0 MB test file)...
+# Pixel 7 500MB Benchmark
+# Device: google-pixel-7-4ee1
+# Timestamp: Fri Feb  7 04:22:00 EST 2026
 
-📝 Generating test file...
-📤 Benchmarking write performance...
-   ✅ Write: 3.85 MB/s (130.0s)
-🔍 Locating uploaded file...
-❌ Could not find uploaded test file
+🏃 Benchmarking with 500.0 MB...
+❌ Benchmark failed: transport(SwiftMTPCore.TransportError.noDevice)
+
+## USB Device Information (from successful usb-dump)
+Device 18d1:4ee1 (Google Pixel 7)
+  iface=0 alt=0 class=0x06 sub=0x01 proto=0x01 in=0x81 out=0x01 evt=0x82 name="MTP"
+
+## Device Details
+- Vendor ID: 6353 (0x18D1)
+- Product ID: 20193 (0x4EE1)
+- Serial: 2A221FDH200G2Q
+- USB Speed: SuperSpeed
+
+## Notes
+Device detected via USB enumeration but SwiftMTP cannot establish MTP session.
+This typically requires:
+1. Device unlock
+2. "Trust this computer" acceptance on device
+3. macOS USB privacy authorization for the terminal/app

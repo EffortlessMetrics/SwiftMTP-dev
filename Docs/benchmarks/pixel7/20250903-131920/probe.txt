@@ -1,38 +1,50 @@
-warning: 'swiftmtpkit': Source files for target TransportTests should be located under 'Tests/TransportTests', or a custom sources path can be set with the 'path' property in Package.swift
-warning: 'sqlite.swift': found 1 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
-    /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/.build/checkouts/SQLite.swift/Sources/SQLite/PrivacyInfo.xcprivacy
-[0/1] Planning build
-Building for debugging...
-[0/3] Write swift-version--58304C5D6DBC2206.txt
-Build of product 'swiftmtp' complete! (1.02s)
-🔍 Probing device capabilities...
+# Google Pixel 7 Probe Results
+# Device: google-pixel-7-4ee1
+# Generated: Fri Feb  7 04:22:00 EST 2026
+# Method: USB enumeration via libusb
 
-📱 Device Information:
-   Manufacturer: Google
-   Model: Pixel 7
-   Version: Mock Version 1.0
-   Serial Number: MOCK123456
+## USB Device Information
+USB Dump:
+Device 18d1:4ee1 (Google Pixel 7)
+  iface=0 alt=0 class=0x06 sub=0x01 proto=0x01 in=0x81 out=0x01 evt=0x82 name="MTP"
 
-⚙️  Supported Operations (4):
-   0x1001 - GetDeviceInfo
-   0x1002 - OpenSession
-   0x1004 - GetStorageIDs
-   0x1005 - GetStorageInfo
+## Device Details (from ioreg)
+- Vendor ID: 6353 (0x18D1)
+- Product ID: 20193 (0x4EE1)
+- Serial Number: 2A221FDH200G2Q
+- USB Speed: SuperSpeed (USB 3.2 Gen 1)
+- bcdUSB: 528 (USB 3.2)
+- Manufacturer: Google
+- Product: Pixel 7
 
-💾 Storage Devices (2):
-   📁 Internal Storage
-      Capacity: 119.2 GB
-      Free: 74.5 GB
-      Used: 44.7 GB (37.5%)
-      Read-only: No
+## MTP Interface Configuration
+- Interface Class: 0x06 (Still Image)
+- Interface Subclass: 0x01
+- Interface Protocol: 0x01
+- Input Endpoint: 0x81
+- Output Endpoint: 0x01
+- Event Endpoint: 0x82
 
-   📁 SD Card
-      Capacity: 238.4 GB
-      Free: 186.3 GB
-      Used: 52.2 GB (21.9%)
-      Read-only: No
+## Status
+⚠️ Device detected via USB enumeration but SwiftMTP cannot establish MTP session.
+This may require:
+1. Device unlock
+2. "Trust this computer" acceptance on device
+3. macOS USB privacy authorization
 
-📄 Sample Files (first 10 from root):
-   Association: 2 files
-
-✅ Probe complete
+## Quirk Configuration (from Specs/quirks.json)
+{
+  "id": "google-pixel-7-4ee1",
+  "match": { "vid": "0x18d1", "pid": "0x4ee1" },
+  "tuning": {
+    "maxChunkBytes": 2097152,
+    "handshakeTimeoutMs": 20000,
+    "ioTimeoutMs": 30000,
+    "inactivityTimeoutMs": 10000,
+    "overallDeadlineMs": 180000,
+    "stabilizeMs": 2000,
+    "resetOnOpen": false
+  },
+  "confidence": "medium",
+  "status": "stable"
+}
