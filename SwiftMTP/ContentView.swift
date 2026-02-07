@@ -6,16 +6,12 @@
 //
 
 import SwiftUI
+import SwiftMTPUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, SwiftMTP!")
-        }
-        .padding()
+        DeviceBrowserView()
+            .frame(minWidth: 800, minHeight: 500)
     }
 }
 

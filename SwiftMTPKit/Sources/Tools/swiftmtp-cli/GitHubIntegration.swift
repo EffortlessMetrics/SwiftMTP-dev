@@ -41,23 +41,23 @@ struct GitHubIntegration {
 
     /// Create a branch for the device submission
     static func createBranch(name: String) async throws {
-        try await runCommand("git", arguments: ["checkout", "-b", name])
+        _ = try await runCommand("git", arguments: ["checkout", "-b", name])
     }
 
     /// Add files to git
     static func addFiles(paths: [String]) async throws {
         let args = ["add"] + paths
-        try await runCommand("git", arguments: args)
+        _ = try await runCommand("git", arguments: args)
     }
 
     /// Commit changes
     static func commitChanges(message: String) async throws {
-        try await runCommand("git", arguments: ["commit", "-s", "-m", message])
+        _ = try await runCommand("git", arguments: ["commit", "-s", "-m", message])
     }
 
     /// Push branch to remote
     static func pushBranch(branchName: String) async throws {
-        try await runCommand("git", arguments: ["push", "-u", "origin", branchName])
+        _ = try await runCommand("git", arguments: ["push", "-u", "origin", branchName])
     }
 
     /// Create a pull request
@@ -66,7 +66,7 @@ struct GitHubIntegration {
         if fill {
             args.append("--fill")
         }
-        try await runCommand("gh", arguments: args)
+        _ = try await runCommand("gh", arguments: args)
     }
 
     /// Generate a PR body for device submission

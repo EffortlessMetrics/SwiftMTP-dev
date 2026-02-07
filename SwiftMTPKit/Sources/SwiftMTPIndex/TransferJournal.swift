@@ -3,11 +3,12 @@
 
 import Foundation
 import SQLite3
+import SwiftMTPCore
 
 // SQLite constants that might not be available in all environments
 private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
-public struct TransferRecord: Sendable {
+public struct SQLiteTransferRecord: Sendable {
   public let id: String
   public let deviceId: String
   public let kind: String   // "read" | "write"
@@ -27,7 +28,7 @@ public struct TransferRecord: Sendable {
   public let updatedAt: Int64
 }
 
-public final class TransferJournal: @unchecked Sendable {
+public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @unchecked Sendable {
   private var db: OpaquePointer?
 
   public init(dbPath: String) throws {
@@ -65,45 +66,87 @@ public final class TransferJournal: @unchecked Sendable {
     try exec(sql)
   }
 
-  // MARK: - Public API
+  // MARK: - Public API (TransferJournal Conformance)
 
   public func beginRead(
-    transferId: String,
-    deviceId: String,
-    handle: Int64,
-    name: String?,
-    size: Int64?,
+    device: MTPDeviceID,
+    handle: UInt32,
+    name: String,
+    size: UInt64?,
     supportsPartial: Bool,
     tempURL: URL,
-    finalURL: URL?
-  ) throws {
+    finalURL: URL?,
+    etag: (size: UInt64?, mtime: Date?)
+  ) throws -> String {
+    let transferId = UUID().uuidString
     try insertTransfer(
-      id: transferId, deviceId: deviceId, kind: "read",
-      handle: handle, parentHandle: nil, pathKey: nil, name: name,
-      totalBytes: size, supportsPartial: supportsPartial,
+      id: transferId, deviceId: device.raw, kind: "read",
+      handle: Int64(handle), parentHandle: nil, pathKey: nil, name: name,
+      totalBytes: size.map { Int64($0) }, supportsPartial: supportsPartial,
       localTempPath: tempURL.path, finalPath: finalURL?.path
     )
+    return transferId
   }
 
   public func beginWrite(
-    transferId: String,
-    deviceId: String,
-    parent: Int64,
+    device: MTPDeviceID,
+    parent: UInt32,
     name: String,
-    size: Int64,
+    size: UInt64,
     supportsPartial: Bool,
     tempURL: URL,
     sourceURL: URL?
-  ) throws {
+  ) throws -> String {
+    let transferId = UUID().uuidString
     try insertTransfer(
-      id: transferId, deviceId: deviceId, kind: "write",
-      handle: nil, parentHandle: parent, pathKey: nil, name: name,
-      totalBytes: size, supportsPartial: supportsPartial,
+      id: transferId, deviceId: device.raw, kind: "write",
+      handle: nil, parentHandle: Int64(parent), pathKey: nil, name: name,
+      totalBytes: Int64(size), supportsPartial: supportsPartial,
       localTempPath: tempURL.path, finalPath: sourceURL?.path
     )
+    return transferId
   }
 
-  public func updateCommitted(id: String, committed: Int64) throws {
+  public func updateProgress(id: String, committed: UInt64) throws {
+    try updateCommitted(id: id, committed: Int64(committed))
+  }
+
+  public func fail(id: String, error: Error) throws {
+    try markFailed(id: id, error: error)
+  }
+
+  public func complete(id: String) throws {
+    try markDone(id: id)
+  }
+
+  public func loadResumables(for device: MTPDeviceID) throws -> [SwiftMTPCore.TransferRecord] {
+    let active = try listActive()
+    return active.map { row in
+        SwiftMTPCore.TransferRecord(
+            id: row.id,
+            deviceId: MTPDeviceID(raw: row.deviceId),
+            kind: row.kind,
+            handle: row.handle.map { UInt32($0) },
+            parentHandle: row.parentHandle.map { UInt32($0) },
+            name: row.name ?? "",
+            totalBytes: row.totalBytes.map { UInt64($0) },
+            committedBytes: UInt64(row.committedBytes),
+            supportsPartial: row.supportsPartial,
+            localTempURL: URL(fileURLWithPath: row.localTempURL ?? ""),
+            finalURL: row.finalURL.map { URL(fileURLWithPath: $0) },
+            state: row.state,
+            updatedAt: Date(timeIntervalSince1970: TimeInterval(row.updatedAt))
+        )
+    }
+  }
+
+  public func clearStaleTemps(olderThan: TimeInterval) throws {
+    // Implementation for clearing stale temps
+  }
+
+  // MARK: - Internal implementations
+
+  private func updateCommitted(id: String, committed: Int64) throws {
     let now = nowSec()
     try exec(
       "UPDATE transfers SET committedBytes = ?, updatedAt = ? WHERE id = ?",
@@ -115,7 +158,7 @@ public final class TransferJournal: @unchecked Sendable {
     )
   }
 
-  public func markFailed(id: String, error: Error) throws {
+  private func markFailed(id: String, error: Error) throws {
     let now = nowSec()
     try exec(
       "UPDATE transfers SET state = 'failed', lastError = ?, updatedAt = ? WHERE id = ?",
@@ -128,7 +171,7 @@ public final class TransferJournal: @unchecked Sendable {
     )
   }
 
-  public func markDone(id: String) throws {
+  private func markDone(id: String) throws {
     let now = nowSec()
     try exec(
       "UPDATE transfers SET state = 'done', updatedAt = ? WHERE id = ?",
@@ -139,8 +182,8 @@ public final class TransferJournal: @unchecked Sendable {
     )
   }
 
-  public func listActive() throws -> [TransferRecord] {
-    var out: [TransferRecord] = []
+  public func listActive() throws -> [SQLiteTransferRecord] {
+    var out: [SQLiteTransferRecord] = []
     try query("SELECT id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt FROM transfers WHERE state='active' ORDER BY updatedAt DESC") { row in
       out.append(row)
     }
@@ -190,13 +233,13 @@ public final class TransferJournal: @unchecked Sendable {
     guard sqlite3_step(stmt) == SQLITE_DONE else { throw makeError("step") }
   }
 
-  private func query(_ sql: String, bind: ((OpaquePointer) -> Void)? = nil, row: (TransferRecord) -> Void) throws {
+  private func query(_ sql: String, bind: ((OpaquePointer) -> Void)? = nil, row: (SQLiteTransferRecord) -> Void) throws {
     var stmt: OpaquePointer?
     guard sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK else { throw makeError("prepare") }
     defer { sqlite3_finalize(stmt) }
     if let b = bind { b(stmt!) }
     while sqlite3_step(stmt) == SQLITE_ROW {
-      row(TransferRecord(
+      row(SQLiteTransferRecord(
         id: getText(stmt!, 0),
         deviceId: getText(stmt!, 1),
         kind: getText(stmt!, 2),

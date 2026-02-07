@@ -1,0 +1,11 @@
+▿ MTPDeviceInfo
+  ▿ eventsSupported: 1 member
+    - 16385
+  - manufacturer: "TestMfg"
+  - model: "TestModel"
+  ▿ operationsSupported: 2 members
+    - 4097
+    - 4098
+  ▿ serialNumber: Optional<String>
+    - some: "SN123456"
+  - version: "1.0"

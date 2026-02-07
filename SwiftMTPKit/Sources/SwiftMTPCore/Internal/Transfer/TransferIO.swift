@@ -3,67 +3,84 @@
 
 import Foundation
 
-protocol ByteSink {
-    mutating func write(_ chunk: UnsafeRawBufferPointer) throws
-    mutating func close() throws
+public protocol ByteSink: Sendable {
+    func write(_ buf: UnsafeRawBufferPointer) throws
+    func close() throws
 }
 
-protocol ByteSource {
-    mutating func read(into buffer: UnsafeMutableRawBufferPointer) throws -> Int
-    mutating func close() throws
+public protocol ByteSource: Sendable {
+    func read(into buf: UnsafeMutableRawBufferPointer) throws -> Int
+    func close() throws
     var fileSize: UInt64? { get }
 }
 
-// --- File sink/source (atomic host semantics)
+public final class FileSink: ByteSink, @unchecked Sendable {
+    private let handle: FileHandle
+    private let url: URL
+    private let lock = NSLock()
 
-struct FileSink: ByteSink {
-    private var fh: FileHandle
-    init(url: URL, truncate: Bool = true) throws {
-        let dir = url.deletingLastPathComponent()
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        if truncate { FileManager.default.createFile(atPath: url.path, contents: nil) }
-        fh = try FileHandle(forWritingTo: url)
-    }
-    init(url: URL, append: Bool) throws {
-        let dir = url.deletingLastPathComponent()
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        if !FileManager.default.fileExists(atPath: url.path) {
-            FileManager.default.createFile(atPath: url.path, contents: nil)
+    public init(url: URL, append: Bool = false) throws {
+        self.url = url
+        if !append {
+            if !FileManager.default.fileExists(atPath: url.path) {
+                FileManager.default.createFile(atPath: url.path, contents: nil)
+            } else {
+                try "".write(to: url, atomically: true, encoding: .utf8)
+            }
         }
-        fh = try FileHandle(forUpdating: url)
+        self.handle = try FileHandle(forWritingTo: url)
         if append {
-            try fh.seekToEnd()
+            try handle.seekToEnd()
         }
     }
-    mutating func write(_ chunk: UnsafeRawBufferPointer) throws {
-        try fh.write(contentsOf: Data(bytes: chunk.baseAddress!, count: chunk.count))
+
+    public func write(_ buf: UnsafeRawBufferPointer) throws {
+        lock.lock()
+        defer { lock.unlock() }
+        let data = Data(bytes: buf.baseAddress!, count: buf.count)
+        try handle.write(contentsOf: data)
     }
-    mutating func close() throws {
-        try fh.synchronize()
-        try fh.close()
+
+    public func close() throws {
+        lock.lock()
+        defer { lock.unlock() }
+        try handle.close()
     }
 }
 
-struct FileSource: ByteSource {
-    private var fh: FileHandle
-    let fileSize: UInt64?
-    init(url: URL) throws {
-        let attr = try FileManager.default.attributesOfItem(atPath: url.path)
-        self.fileSize = (attr[.size] as? NSNumber).map { $0.uint64Value }
-        fh = try FileHandle(forReadingFrom: url)
+public final class FileSource: ByteSource, @unchecked Sendable {
+    private let handle: FileHandle
+    private let url: URL
+    private let lock = NSLock()
+    public let fileSize: UInt64?
+
+    public init(url: URL) throws {
+        self.url = url
+        self.handle = try FileHandle(forReadingFrom: url)
+        let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
+        self.fileSize = attrs[.size] as? UInt64
     }
-    mutating func read(into buffer: UnsafeMutableRawBufferPointer) throws -> Int {
-        let data = try fh.read(upToCount: buffer.count) ?? Data()
-        guard !data.isEmpty else { return 0 }
-        data.copyBytes(to: buffer)
+
+    public func read(into buf: UnsafeMutableRawBufferPointer) throws -> Int {
+        lock.lock()
+        defer { lock.unlock() }
+        let data = try handle.read(upToCount: buf.count) ?? Data()
+        if data.isEmpty { return 0 }
+        data.copyBytes(to: buf)
         return data.count
     }
-    mutating func close() throws {
-        try fh.close()
+
+    public func close() throws {
+        lock.lock()
+        defer { lock.unlock() }
+        try handle.close()
     }
 }
 
-// --- Atomic commit (temp → replace)
-func atomicReplace(temp: URL, final: URL) throws {
-    _ = try FileManager.default.replaceItemAt(final, withItemAt: temp, backupItemName: nil, options: [])
+public func atomicReplace(temp: URL, final: URL) throws {
+    if FileManager.default.fileExists(atPath: final.path) {
+        _ = try FileManager.default.replaceItemAt(final, withItemAt: temp)
+    } else {
+        try FileManager.default.moveItem(at: temp, to: final)
+    }
 }

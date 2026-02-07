@@ -13,10 +13,9 @@ struct MirrorEngineTests {
 
     @Test("Initialize mirror engine")
     func testMirrorEngineInitialization() throws {
-        let db = try createInMemoryDatabase()
-        let snapshotter = Snapshotter(db: db)
-        let diffEngine = DiffEngine(db: db)
-        let journal = try MockTransferJournal()
+        let snapshotter = try Snapshotter(dbPath: ":memory:")
+        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        let journal = try SQLiteTransferJournal(dbPath: ":memory:")
 
         let mirrorEngine = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
         #expect(mirrorEngine != nil)
@@ -24,10 +23,9 @@ struct MirrorEngineTests {
 
     @Test("Path key to local URL conversion")
     func testPathKeyToLocalURL() throws {
-        let db = try createInMemoryDatabase()
-        let snapshotter = Snapshotter(db: db)
-        let diffEngine = DiffEngine(db: db)
-        let journal = try MockTransferJournal()
+        let snapshotter = try Snapshotter(dbPath: ":memory:")
+        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        let journal = try SQLiteTransferJournal(dbPath: ":memory:")
         let mirrorEngine = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
 
         let rootURL = URL(fileURLWithPath: "/tmp/mirror")
@@ -40,15 +38,14 @@ struct MirrorEngineTests {
 
     @Test("Skip download when file exists and is current")
     func testShouldSkipDownload() throws {
-        let db = try createInMemoryDatabase()
-        let snapshotter = Snapshotter(db: db)
-        let diffEngine = DiffEngine(db: db)
-        let journal = try MockTransferJournal()
+        let snapshotter = try Snapshotter(dbPath: ":memory:")
+        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        let journal = try SQLiteTransferJournal(dbPath: ":memory:")
         let mirrorEngine = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
 
         // Create a temporary file
         let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("test_file.txt")
-        try "test content".write(to: tempURL, atomically: true)
+        try "test content".write(to: tempURL, atomically: true, encoding: .utf8)
         defer { try? FileManager.default.removeItem(at: tempURL) }
 
         let file = MTPDiff.Row(
@@ -66,10 +63,9 @@ struct MirrorEngineTests {
 
     @Test("Download when file doesn't exist")
     func testShouldDownloadWhenFileDoesntExist() throws {
-        let db = try createInMemoryDatabase()
-        let snapshotter = Snapshotter(db: db)
-        let diffEngine = DiffEngine(db: db)
-        let journal = try MockTransferJournal()
+        let snapshotter = try Snapshotter(dbPath: ":memory:")
+        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        let journal = try SQLiteTransferJournal(dbPath: ":memory:")
         let mirrorEngine = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
 
         let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("nonexistent_file.txt")
@@ -89,15 +85,14 @@ struct MirrorEngineTests {
 
     @Test("Download when file size differs")
     func testShouldDownloadWhenSizeDiffers() throws {
-        let db = try createInMemoryDatabase()
-        let snapshotter = Snapshotter(db: db)
-        let diffEngine = DiffEngine(db: db)
-        let journal = try MockTransferJournal()
+        let snapshotter = try Snapshotter(dbPath: ":memory:")
+        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        let journal = try SQLiteTransferJournal(dbPath: ":memory:")
         let mirrorEngine = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
 
         // Create a temporary file with different size
         let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("test_file.txt")
-        try "short".write(to: tempURL, atomically: true)
+        try "short".write(to: tempURL, atomically: true, encoding: .utf8)
         defer { try? FileManager.default.removeItem(at: tempURL) }
 
         let file = MTPDiff.Row(
@@ -115,35 +110,33 @@ struct MirrorEngineTests {
 
     @Test("Pattern matching")
     func testPatternMatching() throws {
-        let db = try createInMemoryDatabase()
-        let snapshotter = Snapshotter(db: db)
-        let diffEngine = DiffEngine(db: db)
-        let journal = try MockTransferJournal()
+        let snapshotter = try Snapshotter(dbPath: ":memory:")
+        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        let journal = try SQLiteTransferJournal(dbPath: ":memory:")
         let mirrorEngine = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
 
         // Test exact match
-        #expect(mirrorEngine.matchesPattern("DCIM/photo.jpg", pattern: "DCIM/photo.jpg"))
+        #expect(mirrorEngine.matchesPattern("00010001/DCIM/photo.jpg", pattern: "DCIM/photo.jpg"))
 
         // Test wildcard match
-        #expect(mirrorEngine.matchesPattern("DCIM/photo.jpg", pattern: "DCIM/*.jpg"))
+        #expect(mirrorEngine.matchesPattern("00010001/DCIM/photo.jpg", pattern: "DCIM/*.jpg"))
 
         // Test directory match
-        #expect(mirrorEngine.matchesPattern("DCIM/folder/photo.jpg", pattern: "DCIM/**"))
+        #expect(mirrorEngine.matchesPattern("00010001/DCIM/folder/photo.jpg", pattern: "DCIM/**"))
 
         // Test no match
-        #expect(!mirrorEngine.matchesPattern("DCIM/photo.jpg", pattern: "Pictures/*.jpg"))
+        #expect(!mirrorEngine.matchesPattern("00010001/DCIM/photo.jpg", pattern: "Pictures/*.jpg"))
     }
 
     @Test("Invalid pattern handling")
     func testInvalidPattern() throws {
-        let db = try createInMemoryDatabase()
-        let snapshotter = Snapshotter(db: db)
-        let diffEngine = DiffEngine(db: db)
-        let journal = try MockTransferJournal()
+        let snapshotter = try Snapshotter(dbPath: ":memory:")
+        let diffEngine = try DiffEngine(dbPath: ":memory:")
+        let journal = try SQLiteTransferJournal(dbPath: ":memory:")
         let mirrorEngine = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
 
         // Invalid regex pattern should return false
-        #expect(!mirrorEngine.matchesPattern("test", pattern: "[invalid"))
+        #expect(!mirrorEngine.matchesPattern("00010001/test", pattern: "[invalid"))
     }
 
 
@@ -163,7 +156,7 @@ struct MirrorEngineTests {
 }
 
 // Mock transfer journal for testing
-private class MockTransferJournal: TransferJournal {
+private final class MockTransferJournal: SwiftMTPCore.TransferJournal, @unchecked Sendable {
     func beginRead(device: MTPDeviceID, handle: UInt32, name: String, size: UInt64?, supportsPartial: Bool, tempURL: URL, finalURL: URL?, etag: (size: UInt64?, mtime: Date?)) throws -> String {
         "mock-transfer-id"
     }

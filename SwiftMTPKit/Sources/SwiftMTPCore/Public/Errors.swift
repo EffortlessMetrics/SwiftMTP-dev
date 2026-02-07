@@ -19,7 +19,7 @@ public extension MTPError {
     return .notSupported(message)
   }
 }
-public enum TransportError: Error, Sendable {
+public enum TransportError: Error, Sendable, Equatable {
   case noDevice, timeout, busy, accessDenied
   case io(String)
 }
