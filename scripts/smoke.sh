@@ -27,7 +27,7 @@ swift build --package-path "$PKG_PATH" -c debug >"$LOGS_DIR/build.log" 2>&1 || {
 
 # ---------- version validation ----------
 echo "🏷️ Version validation"
-if ! swift run --package-path "$PKG_PATH" swiftmtp version --json \
+if ! run_swiftmtp version --json \
      1> "$LOGS_DIR/version.json" 2> "$LOGS_DIR/version-stderr.log"; then
   echo "❌ version command failed"; exit 70;
 fi
@@ -37,7 +37,7 @@ jq -e 'has("version") and has("git") and has("schemaVersion")' "$LOGS_DIR/versio
 
 # ---------- quirks explain ----------
 echo "🧩 Quirks (explain)"
-if ! swift run --package-path "$PKG_PATH" swiftmtp quirks --explain --json \
+if ! run_swiftmtp quirks --explain --json \
      1> "$LOGS_DIR/quirks.json" 2> "$LOGS_DIR/quirks-stderr.log"; then
   echo "❌ quirks --explain failed"; exit 70;
 fi
@@ -74,12 +74,12 @@ fi
 # ---------- storages ----------
 echo "💾 Storages"
 set +e  # Temporarily disable exit on error
-swift run --package-path "$PKG_PATH" swiftmtp storages \
+run_swiftmtp storages \
   --vid "$VID" --pid "$PID" --json \
   1> "$LOGS_DIR/storages.json" 2> "$LOGS_DIR/storages-stderr.log"
 code=$?
 set -e  # Re-enable exit on error
-if [ $code -ne 0 ] && [ $code -ne 75 ]; then
+if [ $code -ne 0 ] && [ $code -ne 69 ] && [ $code -ne 75 ]; then
   echo "❌ storages failed with exit $code"
   exit $code
 fi
@@ -124,7 +124,7 @@ fi
 # ---------- events (5s) ----------
 echo "📡 Events (5s)"
 set +e  # Temporarily disable exit on error
-swift run --package-path "$PKG_PATH" swiftmtp events 5 \
+run_swiftmtp events 5 \
   --vid "$VID" --pid "$PID" --json \
   1> "$LOGS_DIR/events.json" 2> "$LOGS_DIR/events-stderr.log"
 code=$?
@@ -146,13 +146,13 @@ fi
 # ---------- collect (strict, read‑only) ----------
 echo "🗂️ Collect bundle → $BUNDLE"
 set +e  # Temporarily disable exit on error
-swift run --package-path "$PKG_PATH" swiftmtp collect \
+run_swiftmtp collect \
   --noninteractive --strict --json \
   --vid "$VID" --pid "$PID" --bundle "$BUNDLE" \
   1> "$LOGS_DIR/collect.json" 2> "$LOGS_DIR/collect-stderr.log"
 code=$?
 set -e  # Re-enable exit on error
-if [ $code -ne 0 ] && [ $code -ne 75 ] && [ $code -ne 70 ] && [ $code -lt 128 ]; then
+if [ $code -ne 0 ] && [ $code -ne 69 ] && [ $code -ne 75 ] && [ $code -ne 70 ] && [ $code -lt 128 ]; then
   echo "❌ collect failed with exit $code"
   exit $code
 fi
