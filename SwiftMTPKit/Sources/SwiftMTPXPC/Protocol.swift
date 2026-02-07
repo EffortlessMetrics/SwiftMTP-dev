@@ -242,7 +242,108 @@ public final class ObjectListResponse: NSObject, NSSecureCoding, Sendable {
     func listStorages(_ request: StorageListRequest, withReply reply: @escaping (StorageListResponse) -> Void)
     func listObjects(_ request: ObjectListRequest, withReply reply: @escaping (ObjectListResponse) -> Void)
     func getObjectInfo(deviceId: String, storageId: UInt32, objectHandle: UInt32, withReply reply: @escaping (ReadResponse) -> Void)
+
+    // Cache-first API (Phase 3)
+    func requestCrawl(_ request: CrawlTriggerRequest, withReply reply: @escaping (CrawlTriggerResponse) -> Void)
+    func deviceStatus(_ request: DeviceStatusRequest, withReply reply: @escaping (DeviceStatusResponse) -> Void)
 }
 
 /// XPC service name for the host app
 public let MTPXPCServiceName = "com.effortlessmetrics.swiftmtp.xpc"
+
+// MARK: - Crawl Trigger Request/Response
+
+@objc(CrawlTriggerRequest)
+public final class CrawlTriggerRequest: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
+
+    public let deviceId: String
+    public let storageId: UInt32
+    public let parentHandle: UInt32?
+
+    public init(deviceId: String, storageId: UInt32, parentHandle: UInt32? = nil) {
+        self.deviceId = deviceId; self.storageId = storageId; self.parentHandle = parentHandle
+        super.init()
+    }
+
+    public func encode(with coder: NSCoder) {
+        coder.encode(deviceId, forKey: "deviceId")
+        coder.encode(Int64(storageId), forKey: "storageId")
+        if let ph = parentHandle { coder.encode(Int64(ph), forKey: "parentHandle") }
+    }
+
+    public init?(coder: NSCoder) {
+        guard let deviceId = coder.decodeObject(of: NSString.self, forKey: "deviceId") as String? else { return nil }
+        self.deviceId = deviceId
+        self.storageId = UInt32(coder.decodeInt64(forKey: "storageId"))
+        self.parentHandle = coder.containsValue(forKey: "parentHandle") ? UInt32(coder.decodeInt64(forKey: "parentHandle")) : nil
+    }
+}
+
+@objc(CrawlTriggerResponse)
+public final class CrawlTriggerResponse: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
+
+    public let accepted: Bool
+    public let errorMessage: String?
+
+    public init(accepted: Bool, errorMessage: String? = nil) {
+        self.accepted = accepted; self.errorMessage = errorMessage
+        super.init()
+    }
+
+    public func encode(with coder: NSCoder) {
+        coder.encode(accepted, forKey: "accepted")
+        coder.encode(errorMessage, forKey: "errorMessage")
+    }
+
+    public init?(coder: NSCoder) {
+        self.accepted = coder.decodeBool(forKey: "accepted")
+        self.errorMessage = coder.decodeObject(of: NSString.self, forKey: "errorMessage") as String?
+    }
+}
+
+// MARK: - Device Status Request/Response
+
+@objc(DeviceStatusRequest)
+public final class DeviceStatusRequest: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
+
+    public let deviceId: String
+
+    public init(deviceId: String) { self.deviceId = deviceId; super.init() }
+
+    public func encode(with coder: NSCoder) { coder.encode(deviceId, forKey: "deviceId") }
+
+    public init?(coder: NSCoder) {
+        guard let deviceId = coder.decodeObject(of: NSString.self, forKey: "deviceId") as String? else { return nil }
+        self.deviceId = deviceId
+    }
+}
+
+@objc(DeviceStatusResponse)
+public final class DeviceStatusResponse: NSObject, NSSecureCoding, Sendable {
+    public static let supportsSecureCoding: Bool = true
+
+    public let connected: Bool
+    public let sessionOpen: Bool
+    public let lastCrawlTimestamp: Int64
+
+    public init(connected: Bool, sessionOpen: Bool, lastCrawlTimestamp: Int64 = 0) {
+        self.connected = connected; self.sessionOpen = sessionOpen
+        self.lastCrawlTimestamp = lastCrawlTimestamp
+        super.init()
+    }
+
+    public func encode(with coder: NSCoder) {
+        coder.encode(connected, forKey: "connected")
+        coder.encode(sessionOpen, forKey: "sessionOpen")
+        coder.encode(lastCrawlTimestamp, forKey: "lastCrawlTimestamp")
+    }
+
+    public init?(coder: NSCoder) {
+        self.connected = coder.decodeBool(forKey: "connected")
+        self.sessionOpen = coder.decodeBool(forKey: "sessionOpen")
+        self.lastCrawlTimestamp = coder.decodeInt64(forKey: "lastCrawlTimestamp")
+    }
+}

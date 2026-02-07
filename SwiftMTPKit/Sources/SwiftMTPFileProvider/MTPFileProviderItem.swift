@@ -10,15 +10,17 @@ public final class MTPFileProviderItem: NSObject, NSFileProviderItem {
     private let deviceId: String
     private let storageId: UInt32?
     private let objectHandle: UInt32?
+    private let _parentHandle: UInt32?
     private let name: String
     private let size: UInt64?
     private let isDirectory: Bool
     private let modifiedDate: Date?
 
-    public init(deviceId: String, storageId: UInt32?, objectHandle: UInt32?, name: String, size: UInt64?, isDirectory: Bool, modifiedDate: Date?) {
+    public init(deviceId: String, storageId: UInt32?, objectHandle: UInt32?, parentHandle: UInt32? = nil, name: String, size: UInt64?, isDirectory: Bool, modifiedDate: Date?) {
         self.deviceId = deviceId
         self.storageId = storageId
         self.objectHandle = objectHandle
+        self._parentHandle = parentHandle
         self.name = name
         self.size = size
         self.isDirectory = isDirectory
@@ -38,13 +40,18 @@ public final class MTPFileProviderItem: NSObject, NSFileProviderItem {
 
     public var parentItemIdentifier: NSFileProviderItemIdentifier {
         if let _ = objectHandle, let sid = storageId {
-            // File item - for tech preview, parent is the storage root
-            return NSFileProviderItemIdentifier("\(deviceId):\(sid)")
+            if let ph = _parentHandle {
+                // File/folder inside a subdirectory
+                return NSFileProviderItemIdentifier("\(deviceId):\(sid):\(ph)")
+            } else {
+                // Object at storage root
+                return NSFileProviderItemIdentifier("\(deviceId):\(sid)")
+            }
         } else if let _ = storageId {
-            // Storage item - parent is the device root
+            // Storage item — parent is the device root
             return NSFileProviderItemIdentifier(deviceId)
         } else {
-            // Device root - parent is the File Provider root
+            // Device root — parent is the File Provider root
             return .rootContainer
         }
     }

@@ -109,6 +109,78 @@
         }
       },
       "status": "stable"
+    },
+    {
+      "id": "oneplus-3t-f003",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 10000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 500,
+        "resetOnOpen": true
+      },
+      "hooks": [
+        { "phase": "postOpenSession", "delayMs": 500 }
+      ],
+      "confidence": "medium",
+      "status": "experimental",
+      "notes": [
+        "OnePlus 3T (2a70:f003) requires resetOnOpen to recover from previous session hangs.",
+        "PTP Device Reset (0x66) clears stale kernel sessions before OpenSession."
+      ],
+      "provenance": {
+        "author": "Gemini CLI",
+        "date": "2026-02-06"
+      }
+    },
+    {
+      "id": "google-pixel-7-4ee1",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ee1",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 20000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 10000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 500,
+        "resetOnOpen": true
+      },
+      "flags": {
+        "resetOnOpen": true,
+        "needsLongerOpenTimeout": true,
+        "stallOnLargeReads": true,
+        "requireStabilization": true
+      },
+      "confidence": "medium",
+      "status": "stable",
+      "notes": [
+        "macOS IOKit PTP driver holds an active session that blocks OpenSession.",
+        "PTP Device Reset (0x66) clears this in most cases.",
+        "resetOnOpen + stabilizeMs as fallback if PTP reset alone is insufficient."
+      ],
+      "provenance": {
+        "author": "Gemini CLI",
+        "date": "2026-02-06"
+      }
     }
   ]
 }

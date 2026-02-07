@@ -116,6 +116,35 @@ public struct EffectiveTuningBuilder: Sendable {
     return out
   }
 
+  /// Build a full `DevicePolicy` combining tuning, typed flags, and provenance.
+  public static func buildPolicy(
+    capabilities: [String: Bool],
+    learned: EffectiveTuning?,
+    quirk: DeviceQuirk?,
+    overrides: [String: String]?
+  ) -> DevicePolicy {
+    let tuning = build(
+      capabilities: capabilities,
+      learned: learned,
+      quirk: quirk,
+      overrides: overrides
+    )
+    let flags = quirk?.resolvedFlags() ?? QuirkFlags()
+    var sources = PolicySources()
+    if overrides?.isEmpty == false {
+      sources.chunkSizeSource = .userOverride
+      sources.ioTimeoutSource = .userOverride
+    } else if quirk != nil {
+      sources.chunkSizeSource = .quirk
+      sources.ioTimeoutSource = .quirk
+      sources.flagsSource = .quirk
+    } else if learned != nil {
+      sources.chunkSizeSource = .learned
+      sources.ioTimeoutSource = .learned
+    }
+    return DevicePolicy(tuning: tuning, flags: flags, sources: sources)
+  }
+
   private static func clamp(_ t: inout EffectiveTuning) {
     t.maxChunkBytes = min(max(t.maxChunkBytes, 128*1024), 16*1024*1024)
     t.ioTimeoutMs = min(max(t.ioTimeoutMs, 1000), 60000)

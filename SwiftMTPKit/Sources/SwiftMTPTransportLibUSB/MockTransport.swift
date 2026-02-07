@@ -60,6 +60,7 @@ public final class MockMTPLink: @unchecked Sendable, MTPLink {
         eventContinuation?.yield(data)
     }
 
+    public func resetDevice() async throws {}
     public func openUSBIfNeeded() async throws {}
     public func openSession(id: UInt32) async throws { sessionID = id }
     public func closeSession() async throws { sessionID = nil }

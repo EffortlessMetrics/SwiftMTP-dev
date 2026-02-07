@@ -18,6 +18,7 @@ let package = Package(
     .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
     .library(name: "SwiftMTPXPC", targets: ["SwiftMTPXPC"]),
     .library(name: "SwiftMTPFileProvider", targets: ["SwiftMTPFileProvider"]),
+    .library(name: "SwiftMTPTestKit", targets: ["SwiftMTPTestKit"]),
     .plugin(name: "SwiftMTPBuildTool", targets: ["SwiftMTPBuildTool"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
   ],
@@ -55,7 +56,7 @@ let package = Package(
 
     .target(name: "SwiftMTPIndex",
             dependencies: ["SwiftMTPCore", "SwiftMTPStore", .product(name: "Collections", package: "swift-collections"), .product(name: "SQLite", package: "SQLite.swift")],
-            resources: [.copy("Schema.sql")],
+            resources: [.copy("Schema.sql"), .copy("LiveIndex/LiveIndexSchema.sql")],
             swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .target(name: "SwiftMTPSync",
@@ -66,12 +67,15 @@ let package = Package(
             dependencies: [],
             resources: [.process("Resources")]),
 
+    .target(name: "SwiftMTPTestKit",
+            dependencies: ["SwiftMTPCore", "SwiftMTPQuirks"]),
+
     .target(name: "SwiftMTPXPC",
-            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB"],
+            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex"],
             swiftSettings: [.swiftLanguageMode(.v5)]),
 
     .target(name: "SwiftMTPFileProvider",
-            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPStore", "SwiftMTPXPC"],
+            dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPStore", "SwiftMTPXPC"],
             swiftSettings: [.swiftLanguageMode(.v5)]),
 
     .plugin(name: "SwiftMTPBuildTool",
@@ -95,10 +99,14 @@ let package = Package(
                 dependencies: ["SwiftMTPCore", "SwiftCheck"]),
     .testTarget(name: "SnapshotTests",
                 dependencies: [
-                    "SwiftMTPCore", 
+                    "SwiftMTPCore",
                     "SwiftMTPIndex",
                     .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
                 ],
                 exclude: ["__Snapshots__"]),
+    .testTarget(name: "TestKitTests",
+                dependencies: ["SwiftMTPTestKit", "SwiftMTPCore"]),
+    .testTarget(name: "FileProviderTests",
+                dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore"]),
   ]
 )
