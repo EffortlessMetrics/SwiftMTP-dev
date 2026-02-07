@@ -60,12 +60,12 @@ public struct LibUSBDiscovery {
                     if desc.iManufacturer != 0 {
                         var buf = [UInt8](repeating: 0, count: 128)
                         let n = libusb_get_string_descriptor_ascii(h, desc.iManufacturer, &buf, Int32(buf.count))
-                        if n > 0 { manufacturer = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
+                        if n > 0 { manufacturer = String(cString: &buf) }
                     }
                     if desc.iProduct != 0 {
                         var buf = [UInt8](repeating: 0, count: 128)
                         let n = libusb_get_string_descriptor_ascii(h, desc.iProduct, &buf, Int32(buf.count))
-                        if n > 0 { model = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
+                        if n > 0 { model = String(cString: &buf) }
                     }
                 }
 
