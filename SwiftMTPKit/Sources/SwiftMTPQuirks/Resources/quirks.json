@@ -164,12 +164,6 @@
         "stabilizeMs": 500,
         "resetOnOpen": true
       },
-      "flags": {
-        "resetOnOpen": true,
-        "needsLongerOpenTimeout": true,
-        "stallOnLargeReads": true,
-        "requireStabilization": true
-      },
       "confidence": "medium",
       "status": "stable",
       "notes": [
