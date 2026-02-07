@@ -91,6 +91,11 @@ func log(_ message: String) {
     FileHandle.standardError.write((message + "\n").data(using: .utf8)!)
 }
 
+/// Force exit with specific status code
+func exitNow(_ code: ExitCode) -> Never {
+    Darwin.exit(Int32(code.rawValue))
+}
+
 // Script-style entry point without @main
 let args = CommandLine.arguments
 
@@ -110,7 +115,9 @@ var targetBus: Int?
 var targetAddress: Int?
 var filteredArgs = [String]()
 
-for arg in args.dropFirst() { // Skip executable name
+var i = 1
+while i < args.count {
+    let arg = args[i]
     if arg == "--real-only" {
         realOnly = true
     } else if arg == "--mock" {
@@ -131,44 +138,37 @@ for arg in args.dropFirst() { // Skip executable name
     } else if arg == "--safe" {
         safe = true
     } else if arg == "--vid" {
-        // Next arg should be the VID
-        if let nextIndex = args.dropFirst().firstIndex(of: arg),
-           nextIndex + 1 < args.count {
-            targetVID = args[nextIndex + 1]
+        if i + 1 < args.count {
+            targetVID = args[i + 1]
+            i += 1
         }
     } else if arg.hasPrefix("--vid=") {
         targetVID = String(arg.dropFirst("--vid=".count))
     } else if arg == "--pid" {
-        // Next arg should be the PID
-        if let nextIndex = args.dropFirst().firstIndex(of: arg),
-           nextIndex + 1 < args.count {
-            targetPID = args[nextIndex + 1]
+        if i + 1 < args.count {
+            targetPID = args[i + 1]
+            i += 1
         }
     } else if arg.hasPrefix("--pid=") {
         targetPID = String(arg.dropFirst("--pid=".count))
     } else if arg == "--bus" {
-        // Next arg should be the bus number
-        if let nextIndex = args.dropFirst().firstIndex(of: arg),
-           nextIndex + 1 < args.count,
-           let bus = Int(args[nextIndex + 1]) {
+        if i + 1 < args.count, let bus = Int(args[i + 1]) {
             targetBus = bus
+            i += 1
         }
     } else if arg.hasPrefix("--bus=") {
-        let busStr = String(arg.dropFirst("--bus=".count))
-        targetBus = Int(busStr)
+        targetBus = Int(arg.dropFirst("--bus=".count))
     } else if arg == "--address" {
-        // Next arg should be the device address
-        if let nextIndex = args.dropFirst().firstIndex(of: arg),
-           nextIndex + 1 < args.count,
-           let address = Int(args[nextIndex + 1]) {
+        if i + 1 < args.count, let address = Int(args[i + 1]) {
             targetAddress = address
+            i += 1
         }
     } else if arg.hasPrefix("--address=") {
-        let addressStr = String(arg.dropFirst("--address=".count))
-        targetAddress = Int(addressStr)
+        targetAddress = Int(arg.dropFirst("--address=".count))
     } else {
         filteredArgs.append(arg)
     }
+    i += 1
 }
 
 if filteredArgs.isEmpty {
@@ -320,25 +320,19 @@ case "quirks":
 case "health":
     await runHealth()
 case "delete":
-    var args = remainingArgs
-    let filter = parseDeviceFilter(&args)
-    let json = args.contains("--json")
-    let noninteractive = args.contains("--noninteractive")
-    let exitCode = await runDeleteCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter, strict: strict, safe: safe)
+    let filter = DeviceFilter(vid: targetVID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, pid: targetPID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, bus: targetBus.map { UInt8($0) }, address: targetAddress.map { UInt8($0) })
+    var cmdArgs = remainingArgs
+    let exitCode = await runDeleteCommand(args: &cmdArgs, json: json, noninteractive: true, filter: filter, strict: strict, safe: safe)
     exit(exitCode.rawValue)
 case "move":
-    var args = remainingArgs
-    let filter = parseDeviceFilter(&args)
-    let json = args.contains("--json")
-    let noninteractive = args.contains("--noninteractive")
-    let exitCode = await runMoveCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter, strict: strict, safe: safe)
+    let filter = DeviceFilter(vid: targetVID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, pid: targetPID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, bus: targetBus.map { UInt8($0) }, address: targetAddress.map { UInt8($0) })
+    var cmdArgs = remainingArgs
+    let exitCode = await runMoveCommand(args: &cmdArgs, json: json, noninteractive: true, filter: filter, strict: strict, safe: safe)
     exit(exitCode.rawValue)
 case "events":
-    var args = remainingArgs
-    let filter = parseDeviceFilter(&args)
-    let json = args.contains("--json")
-    let noninteractive = args.contains("--noninteractive")
-    let exitCode = await runEventsCommand(args: &args, json: json, noninteractive: noninteractive, filter: filter, strict: strict, safe: safe)
+    let filter = DeviceFilter(vid: targetVID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, pid: targetPID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, bus: targetBus.map { UInt8($0) }, address: targetAddress.map { UInt8($0) })
+    var cmdArgs = remainingArgs
+    let exitCode = await runEventsCommand(args: &cmdArgs, json: json, noninteractive: true, filter: filter, strict: strict, safe: safe)
     exit(exitCode.rawValue)
 case "collect":
     if remainingArgs.contains("--help") || remainingArgs.contains("-h") {
@@ -480,7 +474,7 @@ func openFilteredDeviceHelper(filter: DeviceFilter, noninteractive: Bool, json: 
             printJSONErrorAndExit("no_matching_device", code: .unavailable)
         }
         fputs("No devices match the filter.\n", stderr)
-        exitNow(ExitCode.unavailable)
+        exitNow(.unavailable)
 
     case .multiple(let many) where noninteractive:
         if json {
@@ -708,10 +702,6 @@ func runProbe(flags: CLIFlags) async {
     } catch {
         if !flags.json {
             log("❌ Probe failed: \(error)")
-            log("   Error type: \(type(of: error))")
-            if let nsError = error as? NSError {
-                log("   Error domain: \(nsError.domain), code: \(nsError.code)")
-            }
         }
         // Use unavailable exit code when device is not found
         if let mtpError = error as? MTPError {
@@ -1680,15 +1670,45 @@ public struct DeviceFilter: Sendable {
 }
 
 public func parseDeviceFilter(_ args: inout [String]) -> DeviceFilter {
-    func take(_ name: String) -> String? {
-        guard let i = args.firstIndex(of: name), i+1 < args.count else { return nil }
-        let v = args[i+1]; args.removeSubrange(i...i+1); return v
-    }
     var f = DeviceFilter()
-    if let s = take("--vid")     { f.vid = UInt16(s, radix: 16) ?? UInt16(s) }
-    if let s = take("--pid")     { f.pid = UInt16(s, radix: 16) ?? UInt16(s) }
-    if let s = take("--bus")     { f.bus = UInt8(s) }
-    if let s = take("--address") { f.address = UInt8(s) }
+    var i = 0
+    while i < args.count {
+        let arg = args[i]
+        if arg == "--vid" && i + 1 < args.count {
+            f.vid = UInt16(args[i + 1], radix: 16) ?? UInt16(args[i + 1])
+            args.removeSubrange(i...i+1)
+            continue
+        } else if arg.hasPrefix("--vid=") {
+            f.vid = UInt16(arg.dropFirst("--vid=".count), radix: 16) ?? UInt16(arg.dropFirst("--vid=".count))
+            args.remove(at: i)
+            continue
+        } else if arg == "--pid" && i + 1 < args.count {
+            f.pid = UInt16(args[i + 1], radix: 16) ?? UInt16(args[i + 1])
+            args.removeSubrange(i...i+1)
+            continue
+        } else if arg.hasPrefix("--pid=") {
+            f.pid = UInt16(arg.dropFirst("--pid=".count), radix: 16) ?? UInt16(arg.dropFirst("--pid=".count))
+            args.remove(at: i)
+            continue
+        } else if arg == "--bus" && i + 1 < args.count {
+            f.bus = UInt8(args[i + 1])
+            args.removeSubrange(i...i+1)
+            continue
+        } else if arg.hasPrefix("--bus=") {
+            f.bus = UInt8(arg.dropFirst("--bus=".count))
+            args.remove(at: i)
+            continue
+        } else if arg == "--address" && i + 1 < args.count {
+            f.address = UInt8(args[i + 1])
+            args.removeSubrange(i...i+1)
+            continue
+        } else if arg.hasPrefix("--address=") {
+            f.address = UInt8(arg.dropFirst("--address=".count))
+            args.remove(at: i)
+            continue
+        }
+        i += 1
+    }
     return f
 }
 

@@ -107,8 +107,7 @@ func runMoveCommand(args: inout [String], json: Bool, noninteractive: Bool, filt
         "No device matched the provided filter.",
         code: .unavailable,
         details: [
-          "availableDevices": "\(available.count)",
-          "examples": available.prefix(3).map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
+          "availableDevices": "\(available.count)"
         ]
       )
     } else {
@@ -194,8 +193,7 @@ func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, fi
         "No device matched the provided filter.",
         code: .unavailable,
         details: [
-          "availableDevices": "\(available.count)",
-          "examples": available.prefix(3).map { "\(String(format: "%04x", $0.vendorID ?? 0)):\(String(format: "%04x", $0.productID ?? 0))@\($0.bus ?? 0):\($0.address ?? 0)" }.joined(separator: ", ")
+          "availableDevices": "\(available.count)"
         ]
       )
     } else {

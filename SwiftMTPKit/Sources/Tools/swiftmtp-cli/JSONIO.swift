@@ -37,12 +37,11 @@ public func printJSONErrorAndExit(_ message: String, code: ExitCode, details: [S
     errorDict["details"] = details
   }
 
-  let enc = JSONEncoder(); enc.outputFormatting = [.sortedKeys]
   if let data = try? JSONSerialization.data(withJSONObject: errorDict, options: [.sortedKeys]) {
     FileHandle.standardOutput.write(data)
     FileHandle.standardOutput.write("\n".data(using: .utf8)!)
   } else {
     fputs("{\"type\":\"error\",\"schemaVersion\":\"1.0\",\"message\":\"encoding failed\"}\n", stderr)
   }
-  exit(code.rawValue)
+  exitNow(code)
 }

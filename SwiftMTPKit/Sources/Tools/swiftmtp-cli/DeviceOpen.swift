@@ -108,21 +108,3 @@ func selectDevice(from candidates: [MTPDeviceSummary], filter: DeviceFilter, non
     if filtered.count == 1 { return .selected(filtered[0]) }
     return noninteractive ? .multiple(filtered) : .multiple(filtered) // in interactive, you prompt
 }
-
-// Helper functions for JSON error output
-func printJSONErrorAndExit(_ message: String, code exitCode: ExitCode, details: [String: Any]? = nil) -> Never {
-    var errorDict: [String: Any] = [
-        "schemaVersion": "1.0.0",
-        "type": "error",
-        "error": message,
-        "timestamp": ISO8601DateFormatter().string(from: Date())
-    ]
-    if let details = details {
-        errorDict["details"] = details
-    }
-    if let data = try? JSONSerialization.data(withJSONObject: errorDict, options: [.sortedKeys]) {
-        FileHandle.standardOutput.write(data)
-        FileHandle.standardOutput.write("\n".data(using: .utf8)!)
-    }
-    exit(exitCode.rawValue)
-}

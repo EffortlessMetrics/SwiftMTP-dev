@@ -194,6 +194,21 @@ public enum CollectCommand {
 
     } catch {
       if jsonMode { printJSONErrorAndExit(error, flags: flags) }
+      
+      if let collectError = error as? CollectError {
+        switch collectError {
+        case .noDeviceMatched:
+          fputs("❌ collect failed: \(error)\n", stderr)
+          return .unavailable
+        case .ambiguousSelection:
+          fputs("❌ collect failed: \(error)\n", stderr)
+          return .usage
+        case .timeout:
+          fputs("❌ collect failed: \(error)\n", stderr)
+          return .tempfail
+        }
+      }
+      
       fputs("❌ collect failed: \(error)\n", stderr)
       return .software
     }

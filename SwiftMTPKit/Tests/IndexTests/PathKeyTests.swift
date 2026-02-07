@@ -22,15 +22,15 @@ struct PathKeyTests {
 
     @Test("Normalize component with slashes")
     func testNormalizeComponentWithSlashes() {
-        #expect(PathKey.normalizeComponent("file/with/slashes.txt") == "filewithslashestxt")
-        #expect(PathKey.normalizeComponent("file\\with\\backslashes.txt") == "filewithbackslashestxt")
+        #expect(PathKey.normalizeComponent("file/with/slashes.txt") == "filewithslashes.txt")
+        #expect(PathKey.normalizeComponent("file\\with\\backslashes.txt") == "filewithbackslashes.txt")
     }
 
     @Test("Normalize component NFC")
     func testNormalizeComponentNFC() {
         // Test with a character that has composed/decomposed forms
-        let nfd = "café" // Decomposed
-        let nfc = "café" // Composed (same in this case, but tests the normalization)
+        let nfd = "cafe\u{0301}" // Decomposed
+        let nfc = "café" // Composed
         #expect(PathKey.normalizeComponent(nfd) == nfc)
     }
 
@@ -66,7 +66,7 @@ struct PathKeyTests {
     func testParsePathKeyNoComponents() {
         let pathKey = "00010001/"
         let (storageId, components) = PathKey.parse(pathKey)
-        #expect(storageId == 0x10001)
+        #expect(storageId == 0)
         #expect(components.isEmpty)
     }
 

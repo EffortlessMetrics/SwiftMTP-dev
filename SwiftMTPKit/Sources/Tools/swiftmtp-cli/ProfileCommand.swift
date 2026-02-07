@@ -64,7 +64,7 @@ struct ProfileCommand {
                     if objects.count >= 10 { break }
                 }
                 
-                for obj in objects.prefix(10) {
+                for _ in objects.prefix(10) {
                     _ = try await profiler.measure("GetObjectInfo") {
                         // Dummy storage call for now to keep structure until SPI is available
                         return try await device.storages()

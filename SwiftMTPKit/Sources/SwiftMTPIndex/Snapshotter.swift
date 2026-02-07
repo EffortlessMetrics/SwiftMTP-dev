@@ -7,7 +7,7 @@ import OSLog
 import SQLite3
 
 /// Captures device object graph into SQLite for offline browsing and diffing
-public final class Snapshotter {
+public final class Snapshotter: Sendable {
     private let db: SQLiteDB
     private let log = Logger(subsystem: "SwiftMTP", category: "index")
 

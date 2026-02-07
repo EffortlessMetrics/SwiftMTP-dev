@@ -28,7 +28,7 @@ public struct MTPSyncReport: Sendable {
 }
 
 /// Engine for mirroring device contents to local filesystem
-public final class MirrorEngine {
+public final class MirrorEngine: Sendable {
     private let snapshotter: Snapshotter
     private let diffEngine: DiffEngine
     private let journal: SQLiteTransferJournal
@@ -48,7 +48,7 @@ public final class MirrorEngine {
     ///   - include: Optional filter function to include/exclude objects
     /// - Returns: Report of the mirror operation
     public func mirror(device: any MTPDevice, deviceId: MTPDeviceID, to root: URL,
-                       include: ((MTPDiff.Row) -> Bool)? = nil) async throws -> MTPSyncReport {
+                       include: (@Sendable (MTPDiff.Row) -> Bool)? = nil) async throws -> MTPSyncReport {
         log.info("Starting mirror operation for device \(deviceId.raw) to \(root.path)")
 
         let startTime = Date()
@@ -108,11 +108,11 @@ public final class MirrorEngine {
         }
 
         // Download the file (this will use resumable transfers automatically via the device actor)
+        // MTPDevice.read returns a Progress object. We must wait for its completion.
         let progress = try await device.read(handle: file.handle, range: nil, to: localURL)
 
-        // Wait for completion
-        _ = progress.completedUnitCount
-
+        // The read call itself returns once the download is complete or failed.
+        // We just need to check the final unit count for logging.
         log.debug("Downloaded file \(file.pathKey) to \(localURL.path) (\(progress.completedUnitCount) bytes)")
     }
 
@@ -162,7 +162,7 @@ public final class MirrorEngine {
     /// - Returns: Report of the mirror operation
     public func mirror(device: any MTPDevice, deviceId: MTPDeviceID, to root: URL,
                        includePattern: String) async throws -> MTPSyncReport {
-        let filter: (MTPDiff.Row) -> Bool = { [self] row in
+        let filter: @Sendable (MTPDiff.Row) -> Bool = { [self] row in
             return self.matchesPattern(row.pathKey, pattern: includePattern)
         }
 
@@ -170,22 +170,66 @@ public final class MirrorEngine {
     }
 
     /// Check if a path matches a glob pattern
-    internal func matchesPattern(_ path: String, pattern: String) -> Bool {
-        // Simple glob matching - could be enhanced with a proper glob library
-        if pattern == "**" { return true }
+    internal func matchesPattern(_ pathKey: String, pattern: String) -> Bool {
+        // 1. Strip storage ID and get components
+        let (_, pathComponents) = PathKey.parse(pathKey)
+        
+        // 2. Normalize pattern and split into components
+        let cleanPattern = pattern.hasPrefix("/") ? String(pattern.dropFirst()) : pattern
+        let patternComponents = cleanPattern.split(separator: "/", omittingEmptySubsequences: false).map(String.init)
 
-        // Convert glob to regex
-        let regexPattern = pattern
-            .replacingOccurrences(of: "**", with: ".*")
-            .replacingOccurrences(of: "*", with: "[^/]*")
+        if pattern == "**" || pattern == "/**" { return true }
 
-        do {
-            let regex = try NSRegularExpression(pattern: "^\(regexPattern)$", options: [])
-            let range = NSRange(location: 0, length: path.utf8.count)
-            return regex.firstMatch(in: path, options: [], range: range) != nil
-        } catch {
-            log.warning("Invalid glob pattern '\(pattern)': \(error.localizedDescription)")
-            return false
+        // Recursive matching function
+        func match(pIdx: Int, cIdx: Int) -> Bool {
+            // Base case: both pattern and path exhausted
+            if pIdx == patternComponents.count {
+                return cIdx == pathComponents.count
+            }
+
+            let pComp = patternComponents[pIdx]
+
+            if pComp == "**" {
+                // ** matches zero or more components
+                // Try matching 0, 1, 2... path components with the rest of the pattern
+                for i in 0...(pathComponents.count - cIdx) {
+                    if match(pIdx: pIdx + 1, cIdx: cIdx + i) {
+                        return true
+                    }
+                }
+                return false
+            } else {
+                // Regular component match (including *)
+                if cIdx >= pathComponents.count { return false }
+                
+                let cComp = pathComponents[cIdx]
+                if matchComponent(pComp, with: cComp) {
+                    return match(pIdx: pIdx + 1, cIdx: cIdx + 1)
+                }
+                return false
+            }
         }
+
+        func matchComponent(_ pattern: String, with component: String) -> Bool {
+            // Escape regex special characters except *
+            let specials = ["\\", ".", "+", "(", ")", "[", "]", "{", "}", "^", "$", "|"]
+            var regexPattern = pattern
+            for char in specials {
+                regexPattern = regexPattern.replacingOccurrences(of: char, with: "\\" + char)
+            }
+            
+            // Convert * to [^/]*
+            regexPattern = regexPattern.replacingOccurrences(of: "*", with: ".*")
+            
+            do {
+                let regex = try NSRegularExpression(pattern: "^\(regexPattern)$", options: [.caseInsensitive])
+                let range = NSRange(location: 0, length: component.utf16.count)
+                return regex.firstMatch(in: component, options: [], range: range) != nil
+            } catch {
+                return false
+            }
+        }
+
+        return match(pIdx: 0, cIdx: 0)
     }
 }

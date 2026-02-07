@@ -46,7 +46,7 @@ public struct MTPDiff: Sendable {
 }
 
 /// Engine for computing differences between device snapshots
-public final class DiffEngine {
+public final class DiffEngine: Sendable {
     private let db: SQLiteDB
     private let log = Logger(subsystem: "SwiftMTP", category: "index")
 

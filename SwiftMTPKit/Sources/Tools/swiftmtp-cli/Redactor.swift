@@ -3,13 +3,17 @@
 
 import Foundation
 import SwiftMTPCore
+import CryptoKit
 
 /// Handles privacy-safe redaction of MTP data while preserving protocol structure
 public struct Redactor {
-    private let bundleKey: String
+    private let bundleKey: SymmetricKey
     
     public init(bundleKey: String = UUID().uuidString) {
-        self.bundleKey = bundleKey
+        // Use SHA256 of the input string to create a consistent 256-bit key
+        let keyData = Data(bundleKey.utf8)
+        let hash = SHA256.hash(data: keyData)
+        self.bundleKey = SymmetricKey(data: hash)
     }
     
     /// Redacts a PTP string by replacing characters with '*' but keeping length and null terminator
@@ -18,10 +22,13 @@ public struct Redactor {
         return String(repeating: "*", count: string.count)
     }
     
-    /// Tokenizes a filename using a stable HMAC-like hash to allow correlation without leaking the name
+    /// Tokenizes a filename using a stable HMAC-SHA256 to allow correlation without leaking the name
     public func tokenizeFilename(_ name: String) -> String {
         let ext = (name as NSString).pathExtension
-        let token = Data("\(bundleKey):\(name)".utf8).sha256().prefix(6).hexEncodedString()
+        let nameData = Data(name.utf8)
+        let authenticationCode = HMAC<SHA256>.authenticationCode(for: nameData, using: bundleKey)
+        let token = Data(authenticationCode).prefix(6).map { String(format: "%02hhx", $0) }.joined()
+        
         if ext.isEmpty {
             return "file_\(token)"
         } else {
@@ -31,39 +38,20 @@ public struct Redactor {
     
     /// Redacts an entire ObjectInfo dataset by redacting its string fields
     public func redactObjectInfo(_ info: MTPObjectInfo) -> MTPObjectInfo {
+        var redactedProps: [UInt16: String] = [:]
+        for (k, v) in info.properties {
+            redactedProps[k] = redactPTPString(v)
+        }
+        
         return MTPObjectInfo(
             handle: info.handle,
-            storageID: info.storageID,
-            formatCode: info.formatCode,
-            protectionStatus: info.protectionStatus,
-            sizeBytes: info.sizeBytes,
-            thumbFormat: info.thumbFormat,
-            thumbSizeBytes: info.thumbSizeBytes,
-            thumbPixWidth: info.thumbPixWidth,
-            thumbPixHeight: info.thumbPixHeight,
-            imagePixWidth: info.imagePixWidth,
-            imagePixHeight: info.imagePixHeight,
-            imageBitDepth: info.imageBitDepth,
-            parentHandle: info.parentHandle,
-            associationType: info.associationType,
-            associationDesc: info.associationDesc,
-            sequenceNumber: info.sequenceNumber,
+            storage: info.storage,
+            parent: info.parent,
             name: tokenizeFilename(info.name),
-            captureDate: info.captureDate != nil ? "20250101T000000" : nil,
-            modificationDate: info.modificationDate != nil ? "20250101T000000" : nil,
-            keywords: info.keywords != nil ? redactPTPString(info.keywords!) : nil
+            sizeBytes: info.sizeBytes,
+            modified: info.modified != nil ? Date(timeIntervalSince1970: 1735689600) : nil, // 2025-01-01
+            formatCode: info.formatCode,
+            properties: redactedProps
         )
-    }
-}
-
-private extension Data {
-    func sha256() -> Data {
-        // Simple placeholder for SHA256 if not using CryptoKit
-        // In a real implementation, use CryptoKit.SHA256
-        return self // Dummy
-    }
-    
-    func hexEncodedString() -> String {
-        return map { String(format: "%02hhx", $0) }.joined()
     }
 }

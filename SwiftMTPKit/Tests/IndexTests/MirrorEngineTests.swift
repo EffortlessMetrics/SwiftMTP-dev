@@ -13,7 +13,6 @@ struct MirrorEngineTests {
 
     @Test("Initialize mirror engine")
     func testMirrorEngineInitialization() throws {
-        let db = try createInMemoryDatabase()
         let snapshotter = try Snapshotter(dbPath: ":memory:")
         let diffEngine = try DiffEngine(dbPath: ":memory:")
         let journal = try SQLiteTransferJournal(dbPath: ":memory:")
@@ -24,7 +23,6 @@ struct MirrorEngineTests {
 
     @Test("Path key to local URL conversion")
     func testPathKeyToLocalURL() throws {
-        let db = try createInMemoryDatabase()
         let snapshotter = try Snapshotter(dbPath: ":memory:")
         let diffEngine = try DiffEngine(dbPath: ":memory:")
         let journal = try SQLiteTransferJournal(dbPath: ":memory:")
@@ -40,7 +38,6 @@ struct MirrorEngineTests {
 
     @Test("Skip download when file exists and is current")
     func testShouldSkipDownload() throws {
-        let db = try createInMemoryDatabase()
         let snapshotter = try Snapshotter(dbPath: ":memory:")
         let diffEngine = try DiffEngine(dbPath: ":memory:")
         let journal = try SQLiteTransferJournal(dbPath: ":memory:")
@@ -66,7 +63,6 @@ struct MirrorEngineTests {
 
     @Test("Download when file doesn't exist")
     func testShouldDownloadWhenFileDoesntExist() throws {
-        let db = try createInMemoryDatabase()
         let snapshotter = try Snapshotter(dbPath: ":memory:")
         let diffEngine = try DiffEngine(dbPath: ":memory:")
         let journal = try SQLiteTransferJournal(dbPath: ":memory:")
@@ -89,7 +85,6 @@ struct MirrorEngineTests {
 
     @Test("Download when file size differs")
     func testShouldDownloadWhenSizeDiffers() throws {
-        let db = try createInMemoryDatabase()
         let snapshotter = try Snapshotter(dbPath: ":memory:")
         let diffEngine = try DiffEngine(dbPath: ":memory:")
         let journal = try SQLiteTransferJournal(dbPath: ":memory:")
@@ -115,35 +110,33 @@ struct MirrorEngineTests {
 
     @Test("Pattern matching")
     func testPatternMatching() throws {
-        let db = try createInMemoryDatabase()
         let snapshotter = try Snapshotter(dbPath: ":memory:")
         let diffEngine = try DiffEngine(dbPath: ":memory:")
         let journal = try SQLiteTransferJournal(dbPath: ":memory:")
         let mirrorEngine = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
 
         // Test exact match
-        #expect(mirrorEngine.matchesPattern("DCIM/photo.jpg", pattern: "DCIM/photo.jpg"))
+        #expect(mirrorEngine.matchesPattern("00010001/DCIM/photo.jpg", pattern: "DCIM/photo.jpg"))
 
         // Test wildcard match
-        #expect(mirrorEngine.matchesPattern("DCIM/photo.jpg", pattern: "DCIM/*.jpg"))
+        #expect(mirrorEngine.matchesPattern("00010001/DCIM/photo.jpg", pattern: "DCIM/*.jpg"))
 
         // Test directory match
-        #expect(mirrorEngine.matchesPattern("DCIM/folder/photo.jpg", pattern: "DCIM/**"))
+        #expect(mirrorEngine.matchesPattern("00010001/DCIM/folder/photo.jpg", pattern: "DCIM/**"))
 
         // Test no match
-        #expect(!mirrorEngine.matchesPattern("DCIM/photo.jpg", pattern: "Pictures/*.jpg"))
+        #expect(!mirrorEngine.matchesPattern("00010001/DCIM/photo.jpg", pattern: "Pictures/*.jpg"))
     }
 
     @Test("Invalid pattern handling")
     func testInvalidPattern() throws {
-        let db = try createInMemoryDatabase()
         let snapshotter = try Snapshotter(dbPath: ":memory:")
         let diffEngine = try DiffEngine(dbPath: ":memory:")
         let journal = try SQLiteTransferJournal(dbPath: ":memory:")
         let mirrorEngine = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
 
         // Invalid regex pattern should return false
-        #expect(!mirrorEngine.matchesPattern("test", pattern: "[invalid"))
+        #expect(!mirrorEngine.matchesPattern("00010001/test", pattern: "[invalid"))
     }
 
 
