@@ -322,9 +322,22 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       if debugEnabled { print("   [Actor] Opening MTP session...") }
       var sessionResult = SessionProbeResult()
       let sessionStart = DispatchTime.now()
+
+      // Preemptive CloseSession to clear any stale session from a previous crash
+      if debugEnabled { print("   [Actor] Preemptive CloseSession (clear stale)...") }
+      try? await link.closeSession()
+
       do {
           try await link.openSession(id: 1)
           sessionResult.succeeded = true
+      } catch let error as MTPError where error.isSessionAlreadyOpen {
+          // Session already open — close it and retry
+          if debugEnabled { print("   [Actor] SessionAlreadyOpen (0x201E), closing and retrying...") }
+          sessionResult.requiredRetry = true
+          try? await link.closeSession()
+          try await link.openSession(id: 1)
+          sessionResult.succeeded = true
+          if debugEnabled { print("   [Actor] OpenSession succeeded after close+retry.") }
       } catch {
           guard isTimeoutOrIOError(error) else {
               sessionResult.error = "\(error)"

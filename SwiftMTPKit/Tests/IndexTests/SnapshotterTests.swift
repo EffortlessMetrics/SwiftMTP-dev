@@ -104,6 +104,10 @@ private class MockDevice: MTPDevice, @unchecked Sendable {
         throw MTPError.notSupported("Mock implementation")
     }
 
+    func createFolder(parent: MTPObjectHandle?, name: String, storage: MTPStorageID) async throws -> MTPObjectHandle {
+        throw MTPError.notSupported("Mock implementation")
+    }
+
     func delete(_ handle: MTPObjectHandle, recursive: Bool) async throws {
         throw MTPError.notSupported("Mock implementation")
     }

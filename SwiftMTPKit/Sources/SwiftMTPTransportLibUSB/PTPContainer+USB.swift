@@ -98,19 +98,3 @@ func check(_ rc: Int32) throws {
     if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }
 }
 
-// MARK: - Response Mapping
-
-@inline(__always)
-func mapResponse(_ r: PTPResponse) throws {
-    guard r.code == 0x2001 /* OK */ else {
-        switch r.code {
-        case 0x2019: throw MTPError.busy
-        case 0x2005: throw MTPError.notSupported("Operation not supported (0x2005)")
-        case 0x2009: throw MTPError.objectNotFound
-        case 0x200D: throw MTPError.storageFull
-        case 0x200E: throw MTPError.readOnly
-        case 0x2012: throw MTPError.timeout
-        default:     throw MTPError.protocolError(code: r.code, message: "")
-        }
-    }
-}

@@ -246,6 +246,15 @@ public protocol MTPDevice: Sendable {
   /// - Returns: Progress object for monitoring transfer progress
   func write(parent: MTPObjectHandle?, name: String, size: UInt64, from url: URL) async throws -> Progress
 
+  /// Create a folder on the device.
+  ///
+  /// - Parameters:
+  ///   - parent: Parent directory handle, or `nil` for root
+  ///   - name: Name for the new folder
+  ///   - storage: Target storage ID
+  /// - Returns: Handle of the newly created folder
+  func createFolder(parent: MTPObjectHandle?, name: String, storage: MTPStorageID) async throws -> MTPObjectHandle
+
   /// Delete an object from the device.
   ///
   /// - Parameters:

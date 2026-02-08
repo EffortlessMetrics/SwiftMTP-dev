@@ -80,28 +80,47 @@ struct TransferCommands {
 
     static func runBench(flags: CLIFlags, args: [String]) async {
         guard let sizeStr = args.first else {
-            print("❌ Usage: bench <size> (e.g., 100M, 1G)")
+            print("Usage: bench <size> [--storage <id>] [--parent <handle>]")
             exitNow(.usage)
         }
 
         let sizeBytes = parseSize(sizeStr)
         guard sizeBytes > 0 else {
-            print("❌ Invalid size format: \(sizeStr)")
+            print("Invalid size format: \(sizeStr)")
             exitNow(.usage)
         }
 
-        print("🏃 Benchmarking with \(formatBytes(sizeBytes))...")
+        // Parse optional --storage and --parent flags
+        var explicitStorage: UInt32? = nil
+        var explicitParent: UInt32? = nil
+        var i = 1
+        while i < args.count {
+            if args[i] == "--storage", i + 1 < args.count {
+                let val = args[i + 1]
+                explicitStorage = UInt32(val, radix: 16) ?? UInt32(val)
+                i += 2
+            } else if args[i] == "--parent", i + 1 < args.count {
+                let val = args[i + 1]
+                explicitParent = UInt32(val, radix: 16) ?? UInt32(val)
+                i += 2
+            } else {
+                i += 1
+            }
+        }
+
+        print("Benchmarking with \(formatBytes(sizeBytes))...")
 
         do {
             let device = try await openDevice(flags: flags)
-            let storages = try await device.storages()
-            guard let storage = storages.first else {
-                print("❌ No storage available")
-                exitNow(.tempfail)
-            }
+            let (storageID, parentHandle) = try await resolveBenchTarget(
+                device: device, explicitStorage: explicitStorage, explicitParent: explicitParent
+            )
 
-            let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("swiftmtp-bench.tmp")
-            let testData = Data(repeating: 0xAA, count: Int(min(sizeBytes, 1024*1024)))
+            let randomSuffix = String(UInt32.random(in: 0...UInt32.max), radix: 16, uppercase: false)
+            let benchFilename = "swiftmtp-bench-\(randomSuffix).tmp"
+
+            let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(benchFilename)
+            let testData = Data(repeating: 0xAA, count: Int(min(sizeBytes, 1024 * 1024)))
             FileManager.default.createFile(atPath: tempURL.path, contents: nil)
             let fileHandle = try FileHandle(forWritingTo: tempURL)
             var written: UInt64 = 0
@@ -112,17 +131,25 @@ struct TransferCommands {
             }
             try fileHandle.close()
 
-            print("   Starting upload...")
+            print("   Target: storage=0x\(String(format: "%08x", storageID.raw)) parent=0x\(String(format: "%08x", parentHandle))")
+            print("   Starting upload of \(benchFilename)...")
             let startTime = Date()
-            let progress = try await device.write(parent: nil, name: "swiftmtp-bench.tmp", size: sizeBytes, from: tempURL)
+            let progress = try await device.write(
+                parent: parentHandle == 0xFFFFFFFF ? nil : parentHandle,
+                name: benchFilename, size: sizeBytes, from: tempURL
+            )
             while !progress.isFinished { try await Task.sleep(nanoseconds: 100_000_000) }
 
             let duration = Date().timeIntervalSince(startTime)
             let speedMBps = Double(sizeBytes) / duration / 1_000_000
-            print(String(format: "✅ Upload: %.2f MB/s (%.2f seconds)", speedMBps, duration))
+            print(String(format: "Upload: %.2f MB/s (%.2f seconds)", speedMBps, duration))
+
+            // Cleanup: find and delete the bench file on device
+            await cleanupBenchFile(device: device, storage: storageID, parent: parentHandle, name: benchFilename)
+
             try? FileManager.default.removeItem(at: tempURL)
         } catch {
-            print("❌ Benchmark failed: \(error)")
+            print("Benchmark failed: \(error)")
             if let mtpError = error as? MTPError {
                 switch mtpError {
                 case .notSupported:
@@ -134,6 +161,97 @@ struct TransferCommands {
                 }
             }
             exitNow(.tempfail)
+        }
+    }
+
+    /// Resolve a safe target folder for benchmark writes.
+    ///
+    /// Strategy: enumerate storages → pick first writable → list root objects →
+    /// find safe folder (Download/Downloads > DCIM > first folder) →
+    /// look for existing SwiftMTPBench subfolder, create if absent.
+    private static func resolveBenchTarget(
+        device: any MTPDevice, explicitStorage: UInt32?, explicitParent: UInt32?
+    ) async throws -> (MTPStorageID, MTPObjectHandle) {
+        // If both explicitly specified, use them directly
+        if let s = explicitStorage, let p = explicitParent {
+            return (MTPStorageID(raw: s), p)
+        }
+
+        let storages = try await device.storages()
+        let targetStorage: MTPStorageInfo
+        if let s = explicitStorage, let match = storages.first(where: { $0.id.raw == s }) {
+            targetStorage = match
+        } else {
+            guard let first = storages.first(where: { !$0.isReadOnly }) ?? storages.first else {
+                throw MTPError.preconditionFailed("No storage available")
+            }
+            targetStorage = first
+        }
+
+        if let p = explicitParent {
+            return (targetStorage.id, p)
+        }
+
+        // List root objects, find a safe folder
+        let rootStream = device.list(parent: nil, in: targetStorage.id)
+        var rootItems: [MTPObjectInfo] = []
+        for try await batch in rootStream {
+            rootItems.append(contentsOf: batch)
+        }
+
+        // Prefer Download/Downloads, then DCIM, then first Association (folder)
+        let folders = rootItems.filter { $0.formatCode == 0x3001 }
+        let preferredNames = ["Download", "Downloads", "DCIM"]
+        var safeFolder: MTPObjectInfo? = nil
+        for name in preferredNames {
+            if let match = folders.first(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame }) {
+                safeFolder = match
+                break
+            }
+        }
+        if safeFolder == nil {
+            safeFolder = folders.first
+        }
+
+        guard let parent = safeFolder else {
+            // No folders found — fall back to root with a warning
+            print("   WARNING: No safe folder found, writing to storage root (may fail on some devices)")
+            return (targetStorage.id, 0xFFFFFFFF)
+        }
+
+        // Look for existing SwiftMTPBench subfolder inside the safe folder
+        let childStream = device.list(parent: parent.handle, in: targetStorage.id)
+        var children: [MTPObjectInfo] = []
+        for try await batch in childStream {
+            children.append(contentsOf: batch)
+        }
+
+        if let benchFolder = children.first(where: { $0.name == "SwiftMTPBench" && $0.formatCode == 0x3001 }) {
+            print("   Using existing SwiftMTPBench folder in \(parent.name)/")
+            return (targetStorage.id, benchFolder.handle)
+        }
+
+        // Create SwiftMTPBench subfolder
+        print("   Creating SwiftMTPBench folder in \(parent.name)/...")
+        let newHandle = try await device.createFolder(parent: parent.handle, name: "SwiftMTPBench", storage: targetStorage.id)
+        return (targetStorage.id, newHandle)
+    }
+
+    /// Enumerate the parent folder and delete the bench file by name.
+    private static func cleanupBenchFile(
+        device: any MTPDevice, storage: MTPStorageID, parent: MTPObjectHandle, name: String
+    ) async {
+        do {
+            let stream = device.list(parent: parent == 0xFFFFFFFF ? nil : parent, in: storage)
+            for try await batch in stream {
+                if let target = batch.first(where: { $0.name == name }) {
+                    try await device.delete(target.handle, recursive: false)
+                    print("   Cleaned up bench file on device")
+                    return
+                }
+            }
+        } catch {
+            print("   Note: could not clean up bench file: \(error)")
         }
     }
 
