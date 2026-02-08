@@ -43,27 +43,67 @@ final class DatabaseErrorTests: XCTestCase {
         XCTAssertEqual(error.description, "UNIQUE constraint failed: objects.handle")
     }
 
-    // MARK: - DBError Equatability
+    // MARK: - DBError Pattern Matching
 
-    func testDBErrorOpenEquatability() {
-        XCTAssertEqual(
-            DBError.open("Test"),
-            DBError.open("Test")
-        )
+    func testDBErrorOpenPatternMatching() {
+        let error: DBError = .open("Test error")
+        switch error {
+        case .open(let message):
+            XCTAssertEqual(message, "Test error")
+        default:
+            XCTFail("Expected .open case")
+        }
     }
 
-    func testDBErrorOpenInequability() {
-        XCTAssertNotEqual(
-            DBError.open("Error A"),
-            DBError.open("Error B")
-        )
+    func testDBErrorPreparePatternMatching() {
+        let error: DBError = .prepare("Test error")
+        switch error {
+        case .prepare(let message):
+            XCTAssertEqual(message, "Test error")
+        default:
+            XCTFail("Expected .prepare case")
+        }
     }
 
-    func testDBErrorDifferentCasesInequatable() {
-        XCTAssertNotEqual(
-            DBError.open("Error"),
-            DBError.prepare("Error")
-        )
+    func testDBErrorStepPatternMatching() {
+        let error: DBError = .step("Test error")
+        switch error {
+        case .step(let message):
+            XCTAssertEqual(message, "Test error")
+        default:
+            XCTFail("Expected .step case")
+        }
+    }
+
+    func testDBErrorBindPatternMatching() {
+        let error: DBError = .bind("Test error")
+        switch error {
+        case .bind(let message):
+            XCTAssertEqual(message, "Test error")
+        default:
+            XCTFail("Expected .bind case")
+        }
+    }
+
+    func testDBErrorNotFoundPatternMatching() {
+        let error: DBError = .notFound
+        switch error {
+        case .notFound:
+            // Success
+            break
+        default:
+            XCTFail("Expected .notFound case")
+        }
+    }
+
+    func testDBErrorConstraintPatternMatching() {
+        let error: DBError = .constraint("Test constraint")
+        switch error {
+        case .constraint(let message):
+            XCTAssertEqual(message, "Test constraint")
+        default:
+            XCTFail("Expected .constraint case")
+        }
     }
 
     // MARK: - SQLite Error Scenarios (Mock)
@@ -209,6 +249,32 @@ final class DatabaseErrorTests: XCTestCase {
         for error in errors {
             XCTAssertFalse(error.description.isEmpty)
             XCTAssertTrue(error.description.count > 0)
+        }
+    }
+
+    // MARK: - Different Error Types Are Distinguishable
+
+    func testDifferentErrorTypesAreDistinguishable() {
+        let openError: DBError = .open("error")
+        let prepareError: DBError = .prepare("error")
+        let stepError: DBError = .step("error")
+
+        // Each error type should be distinguishable
+        XCTAssertFalse(matches(openError, other: prepareError))
+        XCTAssertFalse(matches(prepareError, other: stepError))
+        XCTAssertFalse(matches(openError, other: stepError))
+    }
+
+    private func matches(_ error1: DBError, other: DBError) -> Bool {
+        switch (error1, other) {
+        case (.open, .open): return true
+        case (.prepare, .prepare): return true
+        case (.step, .step): return true
+        case (.bind, .bind): return true
+        case (.column, .column): return true
+        case (.notFound, .notFound): return true
+        case (.constraint, .constraint): return true
+        default: return false
         }
     }
 }
