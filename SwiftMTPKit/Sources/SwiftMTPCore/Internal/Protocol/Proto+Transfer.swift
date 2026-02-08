@@ -203,10 +203,8 @@ extension PTPResponseResult {
             throw MTPError.notSupported("Operation not supported (\(PTPResponseCode.describe(code)))")
         case 0x2009:
             throw MTPError.objectNotFound
-        case 0x200C:
+        case 0x200C, 0x200D:
             throw MTPError.storageFull
-        case 0x200D:
-            throw MTPError.objectWriteProtected
         case 0x200E:
             throw MTPError.readOnly
         case 0x200F:

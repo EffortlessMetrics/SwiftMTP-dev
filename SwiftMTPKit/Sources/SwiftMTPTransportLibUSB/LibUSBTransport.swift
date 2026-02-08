@@ -164,7 +164,7 @@ public actor LibUSBTransport: MTPTransport {
     guard libusb_open(dev, &h) == 0, var handle = h else { libusb_unref_device(dev); throw TransportError.accessDenied }
 
     // Rank MTP interface candidates from USB descriptors
-    let candidates: [InterfaceCandidate]
+    var candidates: [InterfaceCandidate]
     do {
       candidates = try rankMTPInterfaces(handle: handle, device: dev)
     } catch {
@@ -180,7 +180,7 @@ public actor LibUSBTransport: MTPTransport {
     // endpoint pipes, which fixes stale pipe state on most devices.
     if debug { print("   [Open] Pass 1: probing \(candidates.count) candidate(s)") }
     var result = tryProbeAllCandidates(
-      handle: handle, candidates: candidates,
+      handle: handle, device: dev, candidates: candidates,
       handshakeTimeoutMs: config.handshakeTimeoutMs, debug: debug
     )
 
@@ -188,10 +188,65 @@ public actor LibUSBTransport: MTPTransport {
     // do USB reset + MTP readiness poll + re-probe.
     if result.candidate == nil && config.resetOnOpen {
       if debug { print("   [Open] Pass 1 failed, attempting USB reset fallback") }
+
+      // Capture bus + port path before reset (address may change, bus+port won't)
+      let preBus = libusb_get_bus_number(dev)
+      var portPath = [UInt8](repeating: 0, count: 7)
+      let portDepth = libusb_get_port_numbers(dev, &portPath, Int32(portPath.count))
+
       let resetRC = libusb_reset_device(handle)
       if debug { print("   [Open] libusb_reset_device rc=\(resetRC)") }
 
-      if resetRC == 0 {
+      let deviceReenumerated = (resetRC == Int32(LIBUSB_ERROR_NOT_FOUND.rawValue))
+
+      if resetRC == 0 || deviceReenumerated {
+        if deviceReenumerated {
+          // Device re-enumerated after reset — close old handle, find new device
+          if debug { print("   [Open] Device re-enumerated after reset, reopening handle...") }
+          libusb_close(handle)
+          libusb_unref_device(dev)
+
+          // Brief pause for USB enumeration
+          usleep(500_000)
+
+          // Re-enumerate and match by bus + port path
+          var newList: UnsafeMutablePointer<OpaquePointer?>?
+          let newCnt = libusb_get_device_list(ctx, &newList)
+          var newTarget: OpaquePointer?
+          if newCnt > 0, let newList {
+            for i in 0..<Int(newCnt) {
+              guard let d = newList[i] else { continue }
+              let dBus = libusb_get_bus_number(d)
+              guard dBus == preBus else { continue }
+              var dPort = [UInt8](repeating: 0, count: 7)
+              let dDepth = libusb_get_port_numbers(d, &dPort, Int32(dPort.count))
+              if dDepth == portDepth && dPort[0..<Int(dDepth)] == portPath[0..<Int(portDepth)] {
+                libusb_ref_device(d)
+                newTarget = d
+                break
+              }
+            }
+            libusb_free_device_list(newList, 1)
+          }
+
+          guard let nd = newTarget else {
+            if debug { print("   [Open] Could not re-find device after reset") }
+            throw TransportError.noDevice
+          }
+          dev = nd
+
+          var nh: OpaquePointer?
+          guard libusb_open(dev, &nh) == 0, let newHandle = nh else {
+            libusb_unref_device(dev)
+            throw TransportError.accessDenied
+          }
+          handle = newHandle
+
+          // Re-rank candidates with new handle
+          candidates = try rankMTPInterfaces(handle: handle, device: dev)
+          if debug { print("   [Open] Reopened handle, \(candidates.count) candidate(s)") }
+        }
+
         // Poll GetDeviceStatus until MTP stack recovers (budget from stabilizeMs)
         let budget = max(config.stabilizeMs, 3000)
         let ifaceNum = candidates.first.map { UInt16($0.ifaceNumber) } ?? 0
@@ -199,11 +254,10 @@ public actor LibUSBTransport: MTPTransport {
         if debug { print("   [Open] waitForMTPReady → \(ready)") }
 
         // Re-set configuration to reinitialize pipes after reset
-        let setConfigRC = libusb_set_configuration(handle, 1)
-        if debug { print("   [Open] post-reset set_configuration(1) rc=\(setConfigRC)") }
+        setConfigurationIfNeeded(handle: handle, device: dev, force: true, debug: debug)
 
         result = tryProbeAllCandidates(
-          handle: handle, candidates: candidates,
+          handle: handle, device: dev, candidates: candidates,
           handshakeTimeoutMs: config.handshakeTimeoutMs, debug: debug
         )
       } else if debug {

@@ -189,7 +189,7 @@ func setConfigurationIfNeeded(handle: OpaquePointer, device: OpaquePointer, forc
 /// endpoint pipes, clearing stale state from any prior accessor.
 /// `set_interface_alt_setting` after claim activates MTP endpoints at the host
 /// controller level.
-func claimCandidate(handle: OpaquePointer, _ c: InterfaceCandidate) throws {
+func claimCandidate(handle: OpaquePointer, device: OpaquePointer, _ c: InterfaceCandidate) throws {
   let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
   let iface = Int32(c.ifaceNumber)
 
@@ -204,9 +204,8 @@ func claimCandidate(handle: OpaquePointer, _ c: InterfaceCandidate) throws {
     print("   [Claim] detach_kernel_driver rc=\(detachRC) (non-fatal)")
   }
 
-  // Set configuration before claim — reinitializes endpoint pipes at host controller level
-  let setConfigRC = libusb_set_configuration(handle, 1)
-  if debug { print("   [Claim] set_configuration(1) rc=\(setConfigRC)") }
+  // Smart configuration: only set if needed or during recovery
+  setConfigurationIfNeeded(handle: handle, device: device, debug: debug)
 
   try check(libusb_claim_interface(handle, iface))
 
@@ -217,6 +216,29 @@ func claimCandidate(handle: OpaquePointer, _ c: InterfaceCandidate) throws {
   // Brief pause for pipe setup (alt-setting does the real work, so 100ms suffices)
   if debug { print("   [Claim] claimed OK, waiting 100ms for pipe activation") }
   usleep(100_000)
+
+  // Endpoint diagnostics (debug only, non-fatal)
+  if debug {
+    let inMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkIn)
+    let outMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkOut)
+    print(String(format: "   [Claim] maxPacketSize: bulkIn=%d bulkOut=%d", inMax, outMax))
+    if inMax < 0 { print("   [Claim] WARNING: bulkIn max_packet_size negative (bad pipe)") }
+    if outMax < 0 { print("   [Claim] WARNING: bulkOut max_packet_size negative (bad pipe)") }
+
+    // Check for HALT/STALL on bulkOut via USB GET_STATUS
+    var epStatus: UInt16 = 0
+    let statusRC = withUnsafeMutablePointer(to: &epStatus) { ptr in
+      libusb_control_transfer(handle, 0x82, 0x00, 0, UInt16(c.bulkOut), ptr, 2, 500)
+    }
+    if statusRC >= 2 {
+      let halted = (epStatus & 0x0001) != 0
+      print(String(format: "   [Claim] bulkOut GET_STATUS=0x%04x halted=%d", epStatus, halted ? 1 : 0))
+      if halted {
+        let clearRC = libusb_clear_halt(handle, c.bulkOut)
+        print("   [Claim] cleared HALT on bulkOut rc=\(clearRC)")
+      }
+    }
+  }
 }
 
 /// Release a previously claimed candidate.
@@ -262,59 +284,63 @@ func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: U
 
   // Read until we see a Response container (type=3) for our txid.
   // We may get: Data container (type=2) then Response, or just Response.
+  // Use a Data accumulator to handle partial containers across bulk reads.
   var deviceInfoData: Data? = nil
   var sawResponse = false
   var responseOK = false
   let deadline = DispatchTime.now().uptimeNanoseconds + UInt64(timeoutMs) * 1_000_000
-  var buf = [UInt8](repeating: 0, count: 64 * 1024)
+  var readBuf = [UInt8](repeating: 0, count: 64 * 1024)
+  var accumulator = Data()
 
   while !sawResponse && DispatchTime.now().uptimeNanoseconds < deadline {
     var got: Int32 = 0
     let remaining = (deadline - DispatchTime.now().uptimeNanoseconds) / 1_000_000
     let readTimeout = UInt32(min(remaining, UInt64(timeoutMs)))
-    let readRC = libusb_bulk_transfer(handle, c.bulkIn, &buf, Int32(buf.count), &got, readTimeout)
+    let readRC = libusb_bulk_transfer(handle, c.bulkIn, &readBuf, Int32(readBuf.count), &got, readTimeout)
 
     if debug {
-      if got >= PTPHeader.size {
-        let hdr = buf.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
-        print(String(format: "   [Probe] read rc=%d got=%d (type=%d code=0x%04x txid=%u len=%u)",
-                     readRC, got, hdr.type, hdr.code, hdr.txid, hdr.length))
-      } else {
-        print("   [Probe] read rc=\(readRC) got=\(got)")
-      }
+      print("   [Probe] read rc=\(readRC) got=\(got) accum=\(accumulator.count)")
     }
 
-    guard readRC == 0, got >= PTPHeader.size else {
+    guard readRC == 0, got > 0 else {
       // Timeout or error — drain and bail
       drainBulkIn(handle: handle, ep: c.bulkIn)
       return (false, nil)
     }
 
-    // Parse container(s) from this transfer. A single bulk read can contain
-    // one or (rarely) multiple containers back-to-back.
-    var offset = 0
-    while offset + PTPHeader.size <= Int(got) {
-      let hdr = buf.withUnsafeBytes {
-        PTPHeader.decode(from: $0.baseAddress!.advanced(by: offset))
+    accumulator.append(contentsOf: readBuf[0..<Int(got)])
+
+    // Parse complete container(s) from the accumulator.
+    while accumulator.count >= PTPHeader.size {
+      let hdr: PTPHeader = accumulator.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
+      let containerLen = max(Int(hdr.length), PTPHeader.size)
+
+      // Wait for more data if the container isn't fully received yet
+      guard accumulator.count >= containerLen else { break }
+
+      if debug {
+        print(String(format: "   [Probe] container type=%d code=0x%04x txid=%u len=%u",
+                     hdr.type, hdr.code, hdr.txid, hdr.length))
       }
 
-      if hdr.type == 2 {
+      if hdr.type == 2 && hdr.txid == probeTxid {
         // Data container — extract device info payload
-        let payloadStart = offset + PTPHeader.size
-        let payloadEnd = min(offset + Int(hdr.length), Int(got))
+        let payloadStart = PTPHeader.size
+        let payloadEnd = Int(hdr.length)
         if payloadEnd > payloadStart {
-          deviceInfoData = Data(buf[payloadStart..<payloadEnd])
+          deviceInfoData = accumulator.subdata(in: payloadStart..<payloadEnd)
         }
-      } else if hdr.type == 3 {
+      } else if hdr.type == 3 && hdr.txid == probeTxid {
         // Response container — transaction is complete
         sawResponse = true
         responseOK = (hdr.code == 0x2001)
+        accumulator.removeFirst(containerLen)
         break
+      } else if hdr.type == 2 || hdr.type == 3 {
+        if debug { print("   [Probe] skipping stale container type=\(hdr.type) txid=\(hdr.txid)") }
       }
 
-      // Advance past this container
-      let containerLen = max(Int(hdr.length), PTPHeader.size)
-      offset += containerLen
+      accumulator.removeFirst(containerLen)
     }
   }
 
@@ -356,8 +382,9 @@ func waitForMTPReady(handle: OpaquePointer, iface: UInt16, budgetMs: Int) -> Boo
       handle, 0xA1, 0x67, 0, iface, &statusBuf, UInt16(statusBuf.count), 500
     )
     if rc >= 4 {
-      let code = UInt16(statusBuf[0]) | (UInt16(statusBuf[1]) << 8)
-      if debug { print(String(format: "   [Ready] GetDeviceStatus → 0x%04x", code)) }
+      let length = UInt16(statusBuf[0]) | (UInt16(statusBuf[1]) << 8)
+      let code = UInt16(statusBuf[2]) | (UInt16(statusBuf[3]) << 8)
+      if debug { print(String(format: "   [Ready] GetDeviceStatus len=%u → 0x%04x", length, code)) }
       if code == 0x2001 { return true }
     } else if debug {
       print("   [Ready] GetDeviceStatus rc=\(rc)")
@@ -379,6 +406,7 @@ struct ProbeAllResult {
 /// Try to claim and probe each candidate in order. Returns the first that succeeds.
 func tryProbeAllCandidates(
   handle: OpaquePointer,
+  device: OpaquePointer,
   candidates: [InterfaceCandidate],
   handshakeTimeoutMs: Int,
   debug: Bool
@@ -391,7 +419,7 @@ func tryProbeAllCandidates(
     }
 
     do {
-      try claimCandidate(handle: handle, candidate)
+      try claimCandidate(handle: handle, device: device, candidate)
     } catch {
       if debug { print("   [Probe] Claim failed: \(error)") }
       continue
