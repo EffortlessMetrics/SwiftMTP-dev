@@ -11,8 +11,10 @@ public enum PathKey {
     ///   - components: Path components from root to file/folder
     /// - Returns: Normalized path key in format "storageId/component1/component2/..."
     public static func normalize(storage: UInt32, components: [String]) -> String {
+        let prefix = String(format: "%08x", storage)
+        guard !components.isEmpty else { return prefix }
         let normalized = components.map { normalizeComponent($0) }
-        return String(format: "%08x", storage) + "/" + normalized.joined(separator: "/")
+        return prefix + "/" + normalized.joined(separator: "/")
     }
 
     /// Normalize a single path component
@@ -37,13 +39,16 @@ public enum PathKey {
     /// - Parameter pathKey: Normalized path key
     /// - Returns: Tuple of (storageId, components)
     public static func parse(_ pathKey: String) -> (storageId: UInt32, components: [String]) {
-        let parts = pathKey.split(separator: "/", maxSplits: 1)
-        guard parts.count == 2 else {
-            return (0, [])
+        guard let slashIdx = pathKey.firstIndex(of: "/") else {
+            // Bare storage ID with no components (e.g. "00010001")
+            let storageId = UInt32(pathKey, radix: 16) ?? 0
+            return (storageId, [])
         }
 
-        let storageId = UInt32(parts[0], radix: 16) ?? 0
-        let components = parts[1].split(separator: "/").map(String.init)
+        let storageHex = pathKey[pathKey.startIndex..<slashIdx]
+        let storageId = UInt32(storageHex, radix: 16) ?? 0
+        let rest = pathKey[pathKey.index(after: slashIdx)...]
+        let components = rest.split(separator: "/").map(String.init)
 
         return (storageId, components)
     }

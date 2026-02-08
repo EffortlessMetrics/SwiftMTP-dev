@@ -31,7 +31,7 @@ struct PathKeyTests {
     func testNormalizeComponentWithSlashes() {
         #expect(PathKey.normalizeComponent("file/with/slashes.txt") == "filewithslashes.txt")
         #expect(PathKey.normalizeComponent("file\\with\\backslashes.txt") == "filewithbackslashes.txt")
-        #expect(PathKey.normalizeComponent("file/with/mixed\\slashes.txt") == "filewithmixedsla.txt")
+        #expect(PathKey.normalizeComponent("file/with/mixed\\slashes.txt") == "filewithmixedslashes.txt")
     }
     
     @Test("Normalize component NFC")
@@ -58,9 +58,9 @@ struct PathKeyTests {
     
     @Test("Normalize emoji in path")
     func testNormalizeEmoji() {
-        #expect(PathKey.normalizeComponent("📷 photo.jpg") == " photo.jpg")
-        #expect(PathKey.normalizeComponent("file🎉.txt") == "file.txt")
-        #expect(PathKey.normalizeComponent("🎉") == "_")
+        #expect(PathKey.normalizeComponent("📷 photo.jpg") == "📷 photo.jpg")
+        #expect(PathKey.normalizeComponent("file🎉.txt") == "file🎉.txt")
+        #expect(PathKey.normalizeComponent("🎉") == "🎉")
     }
     
     @Test("Normalize accented characters")
@@ -138,7 +138,7 @@ struct PathKeyTests {
     @Test("Normalize whitespace variations")
     func testNormalizeWhitespace() {
         #expect(PathKey.normalizeComponent("file  with  spaces") == "file  with  spaces")
-        #expect(PathKey.normalizeComponent("file\twith\ttabs") == "file\twith\ttabs")
+        #expect(PathKey.normalizeComponent("file\twith\ttabs") == "filewithtabs")
         #expect(PathKey.normalizeComponent("file\nwith\nnewlines") == "filewithnewlines")
     }
     
