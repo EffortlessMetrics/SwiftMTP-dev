@@ -1,14 +1,18 @@
-# macOS Tahoe 26 Guide
+# macOS Tahoe 26 Support
 
 @Metadata {
-    @DisplayName("macOS Tahoe 26")
+    @DisplayName("macOS Tahoe 26 Guide")
     @PageKind(article)
     @Available(macOS, introduced: "26.0")
 }
 
-SwiftMTP on macOS Tahoe 26: native platform integration without compatibility ballast.
+Comprehensive guide to SwiftMTP features and optimizations for macOS Tahoe 26.
 
-## Toolchain Baseline
+## Overview
+
+SwiftMTP supports macOS Tahoe 26 and takes advantage of modern Swift concurrency and macOS security/accessory workflows for USB device access.
+
+## Platform Requirements
 
 ```swift
 // swift-tools-version: 6.2
@@ -18,45 +22,56 @@ let package = Package(
     name: "SwiftMTP",
     platforms: [
         .macOS(.v26),
-        .iOS(.v18)
+        .iOS(.v26)
     ],
-    products: [
-        .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
-        .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
-    ],
-    targets: [
-        // Your targets here
-    ]
+    // ...
 )
 ```
 
-**Requirements:**
-- Xcode 16.0+
-- Swift 6.0+
-- SwiftPM 6.2+
+### System Framework Dependencies
 
-## What SwiftMTP Does on Tahoe 26
+SwiftMTP on macOS Tahoe 26 utilizes:
 
-SwiftMTP is built natively for Tahoe-era platforms. This section describes SwiftMTP's implementation choices and measured behavior—not platform guarantees.
+- **USB-related frameworks**: IOKit, IOUSBLib
+- **Concurrency**: Swift Structured Concurrency (Swift 6.1+)
+- **SwiftUI**: For the built-in GUI application
+- **File System**: FileManager with extended attributes
 
-### Hotplug Latency
+## SwiftMTP Features on macOS Tahoe 26
 
-SwiftMTP's USB hotplug pipeline typically sees attach events in ~50–100ms on our test matrix (USB 3.0 ports, M1/M2 Macs). See [benchmarks](../benchmarks.md) for details.
+### USB Hotplug Handling
 
-### Transfer Progress
-
-SwiftMTP exposes transfers as Foundation `Progress` for SwiftUI integration:
+SwiftMTP provides responsive device discovery with connection notifications:
 
 ```swift
-let progress = try await device.read(handle: fileHandle, to: destinationURL)
+// Device discovery with connection monitoring
+let manager = MTPDeviceManager.shared
+try await manager.startDiscovery()
 
+for await device in manager.deviceAttached {
+    print("Device connected: \(device.manufacturer) \(device.model)")
+}
+```
+
+### Async Transfer Progress
+
+SwiftMTP exposes progress through Foundation's `Progress` type for integration with SwiftUI:
+
+```swift
+let progress = try await device.read(
+    handle: fileHandle,
+    range: nil,
+    to: destinationURL
+)
+
+// SwiftUI integration
 ProgressView(progress)
     .progressViewStyle(.circular)
 ```
 
-### Device Power Telemetry
+### Device Power Information
 
-Some devices expose vendor-specific power telemetry. SwiftMTP surfaces it when available:
+Some devices support vendor-specific power delivery queries:
 
 ```swift
 let info = try await device.info
@@ -66,92 +81,37 @@ if info.operationsSupported.contains(0x9101) {
 }
 ```
 
-## Platform Integration
-
-### USB Access
-
-**Entitlement** (required for sandboxed apps):
-```xml
-<key>com.apple.security.device.usb</key>
-<true/>
-```
-
-Configure in Xcode: App Sandbox → Hardware → USB.
-
-**Framework surface:**
-- `IOUSBHost` — primary framework for custom USB device access
-- `IOUSBLib` — legacy compatibility layer
-
-### Accessory Approval
-
-On Apple silicon Macs, users must approve new USB accessories:
-
-**System Settings → Privacy & Security → "Allow accessories to connect"**
-
-### File Provider Integration
-
-MTP devices appear in Finder via NSFileProviderManager:
-
-```swift
-import FileProvider
-
-let domain = NSFileProviderDomain(
-    identifier: NSFileProviderDomainIdentifier("com.yourorg.swiftmtp.mtp"),
-    displayName: "MTP Devices"
-)
-
-NSFileProviderManager.add(domain) { error in
-    if let error {
-        print("Failed to add domain: \(error)")
-    }
-}
-```
-
-### Spotlight Search
-
-Spotlight routes searches into your provider when you implement `NSFileProviderSearching`:
-
-```swift
-extension MTPFileProviderExtension: NSFileProviderSearching {
-    func search(for itemIdentifier: NSFileProviderItemIdentifier,
-                queryString: String?,
-                request: NSFileProviderRequest,
-                completionHandler: @escaping (Error?) -> Void) -> Progress {
-        // Implement search logic
-        return Progress()
-    }
-}
-```
-
 ## Performance Tuning
 
-SwiftMTP's default chunk sizes are based on throughput testing across our device matrix.
+### Transfer Chunk Configuration
 
-### Configuration
+macOS Tahoe 26 supports larger transfer chunks:
+
+| Setting | Value |
+|---------|-------|
+| Default Chunk Size | 4 MB |
+| Maximum Chunk Size | 16 MB |
+| Minimum Chunk Size | 1 MB |
 
 ```swift
 var config = SwiftMTPConfig()
-
-// Transfer chunk size (default: 4 MiB)
-config.transferChunkBytes = 4 * 1024 * 1024
-
-// Timeouts (milliseconds)
-config.handshakeTimeoutMs = 10_000
-config.ioTimeoutMs = 30_000
+config.transferChunkBytes = 4 * 1024 * 1024 // 4MB chunks
 ```
 
 ### Concurrent Storage Enumeration
 
-```swift
-let storages = try await device.storages()
+SwiftMTP supports parallel storage enumeration:
 
-let objects: [MTPObjectInfo] = try await withThrowingTaskGroup(of: [MTPObjectInfo].self) { group in
+```swift
+// Enumerate multiple storages concurrently
+let storages = try await device.storages()
+let objects = try await withThrowingTaskGroup(of: [MTPObjectInfo].self) { group in
     for storage in storages {
         group.addTask {
             try await collectStorageObjects(device: device, storage: storage)
         }
     }
-    
+
     var all: [MTPObjectInfo] = []
     for try await batch in group {
         all += batch
@@ -160,50 +120,112 @@ let objects: [MTPObjectInfo] = try await withThrowingTaskGroup(of: [MTPObjectInf
 }
 ```
 
-## Device Mirroring
+> **Note**: Concurrent enumeration with a single device connection may have driver-level limitations. Test with your specific devices.
 
-SwiftMTP can mirror device content to a local directory. The mirrored folder can then be included in Time Machine backups like any other filesystem path:
+## System Integration
+
+### File Provider Extension
+
+MTP devices appear in Finder via the File Provider extension:
 
 ```swift
-import SwiftMTPSync
+MTPFileProviderExtension.register(
+    domain: .userDomain,
+    displayName: "MTP Devices"
+)
+```
 
+### Spotlight Integration
+
+Files on connected MTP devices are indexed for Spotlight search:
+
+```swift
+let query = NSMetadataQuery()
+query.searchScopes = [MTPFileProviderExtension.mountPointURL]
+query.predicate = NSPredicate(format: "kMDItemDisplayName CONTAINS %@", "photo")
+```
+
+### Backup Integration
+
+SwiftMTP can mirror device contents to a folder that's included in Time Machine backups:
+
+```swift
 let mirror = MirrorOperation(device: device)
-mirror.localRoot = "/Users/user/Backups/MTP-Device"
-mirror.includeFilters = ["*.jpg", "*.png", "*.mp4"]
-mirror.excludeFilters = ["*.tmp", "*.thumb"]
-
+mirror.localRoot = "/Users/user/MTP-Backup"
 try await mirror.run()
 
-print("Mirrored \(mirror.stats.filesCopied) files")
+// The backup folder can then be included in Time Machine
+```
+
+## Migration from Older Versions
+
+### API Changes
+
+| Old API | New API (macOS Tahoe 26) |
+|--------|-------------------------|
+| `DeviceActor.open()` | `MTPDevice.openIfNeeded()` |
+| `TransferSession.read()` | `MTPDevice.read(handle:range:to:)` |
+| `DeviceList.refresh()` | `deviceAttached` async stream |
+
+### Code Migration Example
+
+```swift
+// Legacy pattern
+let device = try await manager.openDevice(summary: summary)
+let files = try await device.enumerateFiles(storage: storageID)
+
+// macOS Tahoe 26 pattern (recommended)
+let manager = MTPDeviceManager.shared
+try await manager.startDiscovery()
+
+for await summary in manager.deviceAttached {
+    let device = try await manager.openDevice(summary: summary)
+    let stream = device.list(parent: nil, in: storageID)
+    
+    for try await batch in stream {
+        for file in batch {
+            print(file.name)
+        }
+    }
+}
 ```
 
 ## Troubleshooting
 
 ### Device Not Detected
 
-1. **Check cable** — Use a USB data cable (not charge-only)
-2. **Try a different port** — Direct USB-C preferred (avoid hubs)
-3. **Verify MTP mode** — Ensure device is in MTP/PTP mode
-4. **Approve accessory** — System Settings → Privacy & Security → "Allow accessories to connect"
-5. **Check entitlement** — Verify `com.apple.security.device.usb` in entitlements
-6. **Reboot** — Restart the Mac (most reliable for stuck USB state)
+1. **Check accessory approval**: On Apple silicon Macs, approve new accessories in System Settings
+2. **Verify MTP mode**: Ensure the device is in MTP/PTP mode
+3. **Try a different cable**: Use a USB data cable (not charge-only)
+4. **Try a different port**: Direct USB-C port recommended (avoid hubs when possible)
 
-### Transfer Failures
+### Transfer Errors
+
+Enable verbose logging for debugging:
 
 ```swift
-// Enable debug logging
 FeatureFlags.shared.traceUSB = true
 
 // Check device policy
 let policy = await device.devicePolicy
-if let tuning = policy?.effectiveTuning {
-    print("Active tuning: \(tuning)")
-}
+print("Effective tuning: \(policy?.effectiveTuning)")
 ```
+
+### USB Service Issues (Unofficial)
+
+If devices don't appear after trying the above:
+
+```bash
+# Restart USB daemon (may affect keyboard/mouse)
+sudo launchctl stop com.apple.usbd
+sudo launchctl start com.apple.usbd
+```
+
+> **Warning**: This is an unofficial workaround and may affect USB devices. Try hardware solutions first (replug, different port/cable, reboot).
 
 ## Related Documentation
 
 - [Getting Started](SwiftMTP.md)
 - [Device Tuning Guide](DeviceTuningGuide.md)
-- [Device Guides](Devices/index.md)
-- [Benchmarks](../benchmarks.md)
+- [Device-Specific Guides](Devices/index.md)
+- [Benchmark Reports](../benchmarks.md)

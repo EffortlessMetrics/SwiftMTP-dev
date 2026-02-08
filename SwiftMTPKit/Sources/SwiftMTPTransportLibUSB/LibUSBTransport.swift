@@ -196,7 +196,7 @@ public actor LibUSBTransport: MTPTransport {
         continue
       }
 
-      let (probeOK, infoData) = probeCandidate(handle: handle, candidate, timeoutMs: 2000)
+      let (probeOK, infoData) = probeCandidate(handle: handle, candidate, timeoutMs: UInt32(config.handshakeTimeoutMs))
       let elapsed = Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
 
       if probeOK {
