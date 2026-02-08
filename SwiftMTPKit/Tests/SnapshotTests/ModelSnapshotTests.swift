@@ -20,13 +20,9 @@ final class ModelSnapshotTests: XCTestCase {
 
     // MARK: - Test Configuration
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    override func setUp() {
+        super.setUp()
         SnapshotTesting.diffTool = "ksdiff"
-        try XCTSkipUnless(
-            ProcessInfo.processInfo.environment["SWIFTMTP_SNAPSHOT_TESTS"] == "1",
-            "Set SWIFTMTP_SNAPSHOT_TESTS=1 to run snapshot reference assertions (run-all-tests.sh enables this by default)."
-        )
     }
 
     // MARK: - ProbeReceipt Snapshots
@@ -52,7 +48,6 @@ final class ModelSnapshotTests: XCTestCase {
         )
 
         let receipt = ProbeReceipt(
-            timestamp: ISO8601DateFormatter().date(from: "2026-02-08T10:00:00Z")!,
             deviceSummary: ReceiptDeviceSummary(from: summary),
             fingerprint: fingerprint
         )
@@ -99,7 +94,6 @@ final class ModelSnapshotTests: XCTestCase {
                 inactivityTimeoutMs: 10000,
                 overallDeadlineMs: 180000,
                 stabilizeMs: 3000,
-                postClaimStabilizeMs: 3000,
                 resetOnOpen: false,
                 disableEventPump: false,
                 operations: capabilities,
@@ -139,7 +133,6 @@ final class ModelSnapshotTests: XCTestCase {
         )
 
         let receipt = ProbeReceipt(
-            timestamp: ISO8601DateFormatter().date(from: "2026-02-08T10:01:00Z")!,
             deviceSummary: ReceiptDeviceSummary(from: summary),
             fingerprint: fingerprint
         )
@@ -205,7 +198,6 @@ final class ModelSnapshotTests: XCTestCase {
         )
 
         let receipt = ProbeReceipt(
-            timestamp: ISO8601DateFormatter().date(from: "2026-02-08T10:02:00Z")!,
             deviceSummary: ReceiptDeviceSummary(from: summary),
             fingerprint: fingerprint
         )
@@ -286,7 +278,6 @@ final class ModelSnapshotTests: XCTestCase {
         )
 
         let receipt = ProbeReceipt(
-            timestamp: ISO8601DateFormatter().date(from: "2026-02-08T10:03:00Z")!,
             deviceSummary: ReceiptDeviceSummary(from: summary),
             fingerprint: fingerprint
         )
@@ -388,10 +379,7 @@ final class ModelSnapshotTests: XCTestCase {
         let profile = LearnedProfile(
             fingerprint: fingerprint,
             fingerprintHash: fingerprint.hashString,
-            created: ISO8601DateFormatter().date(from: "2025-01-01T00:00:00Z")!,
-            lastUpdated: ISO8601DateFormatter().date(from: "2025-01-01T00:00:00Z")!,
-            sampleCount: 1,
-            hostEnvironment: "macOS 15.0"
+            sampleCount: 1
         )
 
         assertSnapshot(of: profile, as: .json, named: "empty-profile")
@@ -411,16 +399,13 @@ final class ModelSnapshotTests: XCTestCase {
         let profile = LearnedProfile(
             fingerprint: fingerprint,
             fingerprintHash: fingerprint.hashString,
-            created: ISO8601DateFormatter().date(from: "2025-01-02T00:00:00Z")!,
-            lastUpdated: ISO8601DateFormatter().date(from: "2025-01-02T00:00:00Z")!,
             sampleCount: 5,
             optimalChunkSize: 1_048_576,
             avgHandshakeMs: 150,
             optimalIoTimeoutMs: 25_000,
             p95ReadThroughputMBps: 28.5,
             p95WriteThroughputMBps: 15.2,
-            successRate: 0.95,
-            hostEnvironment: "macOS 15.0"
+            successRate: 0.95
         )
 
         assertSnapshot(of: profile, as: .json, named: "partial-profile")
@@ -438,12 +423,11 @@ final class ModelSnapshotTests: XCTestCase {
         )
 
         let createdDate = ISO8601DateFormatter().date(from: "2025-01-01T00:00:00Z")!
-        let lastUpdatedDate = ISO8601DateFormatter().date(from: "2025-02-01T00:00:00Z")!
         let profile = LearnedProfile(
             fingerprint: fingerprint,
             fingerprintHash: fingerprint.hashString,
             created: createdDate,
-            lastUpdated: lastUpdatedDate,
+            lastUpdated: Date(),
             sampleCount: 50,
             optimalChunkSize: 2_097_152,
             avgHandshakeMs: 350,
@@ -472,14 +456,11 @@ final class ModelSnapshotTests: XCTestCase {
         let existingProfile = LearnedProfile(
             fingerprint: fingerprint,
             fingerprintHash: fingerprint.hashString,
-            created: ISO8601DateFormatter().date(from: "2025-01-03T00:00:00Z")!,
-            lastUpdated: ISO8601DateFormatter().date(from: "2025-01-03T00:00:00Z")!,
             sampleCount: 10,
             optimalChunkSize: 1_500_000,
             avgHandshakeMs: 200,
             p95ReadThroughputMBps: 30.0,
-            successRate: 0.90,
-            hostEnvironment: "macOS 15.0"
+            successRate: 0.90
         )
 
         let newSessionData = SessionData(
@@ -491,22 +472,7 @@ final class ModelSnapshotTests: XCTestCase {
             wasSuccessful: true
         )
 
-        let mergedRaw = existingProfile.merged(with: newSessionData)
-        let mergedProfile = LearnedProfile(
-            fingerprint: mergedRaw.fingerprint,
-            fingerprintHash: mergedRaw.fingerprintHash,
-            created: mergedRaw.created,
-            lastUpdated: ISO8601DateFormatter().date(from: "2025-01-04T00:00:00Z")!,
-            sampleCount: mergedRaw.sampleCount,
-            optimalChunkSize: mergedRaw.optimalChunkSize,
-            avgHandshakeMs: mergedRaw.avgHandshakeMs,
-            optimalIoTimeoutMs: mergedRaw.optimalIoTimeoutMs,
-            optimalInactivityTimeoutMs: mergedRaw.optimalInactivityTimeoutMs,
-            p95ReadThroughputMBps: mergedRaw.p95ReadThroughputMBps,
-            p95WriteThroughputMBps: mergedRaw.p95WriteThroughputMBps,
-            successRate: mergedRaw.successRate,
-            hostEnvironment: mergedRaw.hostEnvironment
-        )
+        let mergedProfile = existingProfile.merged(with: newSessionData)
 
         assertSnapshot(of: mergedProfile, as: .json, named: "merged-profile")
     }
@@ -541,21 +507,7 @@ final class ModelSnapshotTests: XCTestCase {
             changeCounter: 1
         )
 
-        let snapshot: [String: Any] = [
-            "deviceId": fileObject.deviceId,
-            "storageId": fileObject.storageId,
-            "handle": fileObject.handle,
-            "parentHandle": fileObject.parentHandle as Any,
-            "name": fileObject.name,
-            "pathKey": fileObject.pathKey,
-            "sizeBytes": fileObject.sizeBytes as Any,
-            "mtime": fileObject.mtime.map { ISO8601DateFormatter().string(from: $0) } as Any,
-            "formatCode": fileObject.formatCode,
-            "isDirectory": fileObject.isDirectory,
-            "changeCounter": fileObject.changeCounter
-        ]
-
-        assertSnapshot(of: snapshot, as: .json, named: "single-file")
+        assertSnapshot(of: fileObject, as: .json, named: "single-file")
     }
 
     /// Device disconnect state (cleanup after detach)
@@ -563,7 +515,7 @@ final class ModelSnapshotTests: XCTestCase {
         let disconnectState: [String: Any] = [
             "event": "deviceDetached",
             "deviceId": "pixel7-4ee1",
-            "timestamp": "2026-02-08T10:00:00Z",
+            "timestamp": ISO8601DateFormatter().string(from: Date()),
             "cleanupActions": [
                 "stopCrawler": true,
                 "stopEventBridge": true,

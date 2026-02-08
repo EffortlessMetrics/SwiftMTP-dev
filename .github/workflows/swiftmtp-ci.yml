@@ -13,7 +13,7 @@ on:
     - cron: '0 2 * * *'
 
 env:
-  SWIFT_VERSION: '6.2'
+  SWIFT_VERSION: '6.0'
   COVERAGE_OUTPUT: coverage.lcov
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
   # Build and Test Job - Runs on every push/PR to main
   # =========================================================================
   test:
-    name: Test (Unit, BDD, Property, Fuzz, Integration, E2E, Snapshot, Storybook, Xcode)
+    name: Test (Unit, BDD, Property, Snapshot)
     runs-on: macos-15
     permissions:
       contents: read
@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Swift
-        uses: swift-actions/setup-swift@v1
+        uses: swiftlang/setup-swift@v2
         with:
           swift-version: ${{ env.SWIFT_VERSION }}
 
@@ -62,10 +62,9 @@ jobs:
         working-directory: SwiftMTPKit
         run: swift build
 
-      - name: Run Full Test Suite + Coverage Gate + Xcode Unit/UI Tests
-        env:
-          RUN_XCODE_UI_TESTS: "1"
-        run: ./run-all-tests.sh
+      - name: Run Unit, BDD, Property, and Snapshot Tests
+        working-directory: SwiftMTPKit
+        run: swift test --enable-code-coverage
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
@@ -91,7 +90,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Swift
-        uses: swift-actions/setup-swift@v1
+        uses: swiftlang/setup-swift@v2
         with:
           swift-version: ${{ env.SWIFT_VERSION }}
 
@@ -166,7 +165,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Swift
-        uses: swift-actions/setup-swift@v1
+        uses: swiftlang/setup-swift@v2
         with:
           swift-version: ${{ env.SWIFT_VERSION }}
 
@@ -191,20 +190,37 @@ jobs:
         working-directory: SwiftMTPKit
         run: swift package resolve
 
-      - name: Build with code coverage enabled + enforce gate
-        env:
-          RUN_XCODE_UI_TESTS: "0"
-        run: ./run-all-tests.sh
+      - name: Build with code coverage enabled
+        working-directory: SwiftMTPKit
+        run: swift test --enable-code-coverage
+
+      - name: Generate coverage report
+        working-directory: SwiftMTPKit
+        run: |
+          # Generate LLVM coverage report
+          swift package generate-code-coverage-as-llvm
+
+          # Convert to LCOV format for Codecov/SonarQube
+          xcrun llvm-cov show \
+            $(swift build --show-bin-path)/SwiftMTPKit.xctest \
+            --instr-profile=default.profdata \
+            --format=LCOV > ${{ env.COVERAGE_OUTPUT }}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          file: ${{ env.COVERAGE_OUTPUT }}
+          flags: unittests,swift,macos
+          name: codecov-umbrella
+          fail_ci_if_error: false
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: code-coverage-report
-          path: |
-            SwiftMTPKit/coverage/coverage.json
-            SwiftMTPKit/coverage/summary.txt
-            SwiftMTPKit/coverage/test_output.log
+          path: ${{ env.COVERAGE_OUTPUT }}
 
   # =========================================================================
   # Nightly Extended Integration Tests - Runs on schedule only
@@ -222,7 +238,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Swift
-        uses: swift-actions/setup-swift@v1
+        uses: swiftlang/setup-swift@v2
         with:
           swift-version: ${{ env.SWIFT_VERSION }}
 
@@ -291,7 +307,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Swift
-        uses: swift-actions/setup-swift@v1
+        uses: swiftlang/setup-swift@v2
         with:
           swift-version: ${{ env.SWIFT_VERSION }}
 

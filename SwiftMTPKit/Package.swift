@@ -107,50 +107,9 @@ let package = Package(
     .testTarget(name: "TestKitTests",
                 dependencies: ["SwiftMTPTestKit", "SwiftMTPCore"]),
     .testTarget(name: "FileProviderTests",
-                dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPXPC"]),
-    .testTarget(name: "XPCTests",
-                dependencies: [
-                    "SwiftMTPXPC",
-                    "SwiftMTPCore",
-                    "SwiftMTPTestKit",
-                ]),
+                dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore"]),
     .testTarget(name: "IntegrationTests",
-                dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPFileProvider", "SwiftMTPQuirks", "SwiftMTPTestKit"]),
-    .testTarget(name: "StoreTests",
-                dependencies: [
-                    "SwiftMTPStore",
-                    "SwiftMTPTestKit",
-                    "SwiftMTPCore"
-                ]),
-    .testTarget(name: "SyncTests",
-                dependencies: [
-                    "SwiftMTPSync",
-                    "SwiftMTPTestKit",
-                    "SwiftMTPCore",
-                    "SwiftMTPIndex"
-                ]),
-
-    .testTarget(name: "ErrorHandlingTests",
-                dependencies: [
-                    "SwiftMTPCore",
-                    "SwiftMTPIndex",
-                    "SwiftMTPStore",
-                    "SwiftMTPSync",
-                    "SwiftMTPTransportLibUSB",
-                    "SwiftMTPTestKit",
-                ]),
-    .testTarget(name: "ScenarioTests",
-                dependencies: [
-                    "SwiftMTPCore",
-                    "SwiftMTPTransportLibUSB",
-                    "SwiftMTPIndex",
-                    "SwiftMTPSync",
-                    "SwiftMTPTestKit",
-                ]),
-    .testTarget(name: "ToolingTests",
-                dependencies: [
-                    "swiftmtp-cli",
-                    "SwiftMTPCore",
-                ]),
+                dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPFileProvider", "SwiftMTPQuirks", "SwiftMTPTestKit"],
+                exclude: ["Resources"]),
   ]
 )

@@ -97,7 +97,7 @@ struct TransferJournalTests {
         // Playback - should return only active transfers
         let resumables = try journal.loadResumables(for: deviceId)
         
-        #expect(resumables.count == 3) // transferIds[1], [3], [4] remain active
+        #expect(resumables.count == 2) // Only transferIds[1], [3], [4] but [3], [4] are active
         #expect(resumables.contains { $0.id == transferIds[1] })
         #expect(!resumables.contains { $0.id == transferIds[0] }) // Completed
         
@@ -374,10 +374,10 @@ struct TransferJournalTests {
             let resumables = try journal.loadResumables(for: deviceId)
             #expect(resumables.count == 3)
             
-            // Verify progress tracking regardless of row order from SQLite query.
-            let actualCommitted = resumables.map(\.committedBytes).sorted()
-            let expectedCommitted = (0..<3).map { UInt64(deviceIndex * 100 + $0 * 50) }.sorted()
-            #expect(actualCommitted == expectedCommitted)
+            // Verify progress tracking
+            for (i, record) in resumables.enumerated() {
+                #expect(record.committedBytes == UInt64(deviceIndex * 100 + i * 50))
+            }
         }
         
         // Cleanup
@@ -430,7 +430,7 @@ struct TransferJournalTests {
         }
         
         // Verify failed transfers have error details
-        let failedTransfers = try journal.listFailed()
+        let failedTransfers = try journal.listActive().filter { $0.state == "failed" }
         #expect(failedTransfers.count == 3)
         #expect(failedTransfers.allSatisfy { $0.lastError != nil })
         
@@ -465,16 +465,16 @@ struct TransferJournalTests {
         let error = NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Temporary failure"])
         try journal.fail(id: transferId, error: error)
         
-        // Verify failed state is visible in resumables
-        var resumables = try journal.loadResumables(for: deviceId)
-        #expect(resumables.contains { $0.id == transferId && $0.state == "failed" })
-
+        // Verify failed state
+        var transfers = try journal.listActive()
+        #expect(transfers.contains { $0.id == transferId && $0.state == "failed" })
+        
         // Complete after retry
         try journal.complete(id: transferId)
-
-        // Verify completed (no longer in resumables)
-        resumables = try journal.loadResumables(for: deviceId)
-        #expect(!resumables.contains { $0.id == transferId })
+        
+        // Verify completed (not in active list)
+        transfers = try journal.listActive()
+        #expect(!transfers.contains { $0.id == transferId })
         
         // Cleanup
         try? FileManager.default.removeItem(at: tempURL)

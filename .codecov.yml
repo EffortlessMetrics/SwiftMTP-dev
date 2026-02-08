@@ -47,6 +47,15 @@ coverage:
 
 # Coverage thresholds (fail if coverage drops below)
 # These apply to PRs - any PR that reduces coverage will fail
+coverage:
+  # Overall coverage threshold
+  global:
+    target: 75%
+    threshold: 5%
+
+  # Per-file coverage threshold
+  per_file:
+    threshold: 10%
 
 # Ignore patterns - files not counted in coverage
 ignore:
