@@ -77,8 +77,14 @@ func rankMTPInterfaces(handle: OpaquePointer, device: OpaquePointer) throws -> [
 
 /// Claim a single interface candidate: detach kernel driver, claim, set alt.
 func claimCandidate(handle: OpaquePointer, _ c: InterfaceCandidate) throws {
-  _ = libusb_detach_kernel_driver(handle, Int32(c.ifaceNumber))
+  let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+  let detachRC = libusb_detach_kernel_driver(handle, Int32(c.ifaceNumber))
+  if debug {
+    print(String(format: "   [Claim] iface=%d alt=%d bulkIn=0x%02x bulkOut=0x%02x evtIn=0x%02x detachKernel=%d",
+                 c.ifaceNumber, c.altSetting, c.bulkIn, c.bulkOut, c.eventIn, detachRC))
+  }
   try check(libusb_claim_interface(handle, Int32(c.ifaceNumber)))
+  if debug { print("   [Claim] claim_interface OK") }
   if c.altSetting > 0 {
     try check(libusb_set_interface_alt_setting(handle, Int32(c.ifaceNumber), Int32(c.altSetting)))
   }
@@ -94,8 +100,26 @@ func releaseCandidate(handle: OpaquePointer, _ c: InterfaceCandidate) {
 /// Send a sessionless GetDeviceInfo (0x1001) to validate the interface works.
 /// Returns (success, cached raw device-info bytes).
 func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32 = 2000) -> (Bool, Data?) {
-  _ = libusb_clear_halt(handle, c.bulkIn)
-  _ = libusb_clear_halt(handle, c.bulkOut)
+  let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+
+  // Send PTP Device Reset (class request 0x66) to clear any stale session
+  // held by the macOS IOKit PTP driver. This is a USB control transfer that
+  // works even when bulk endpoints are blocked by a stale session.
+  let resetRC = libusb_control_transfer(
+    handle,
+    0x21,                        // bmRequestType: host-to-device, class, interface
+    0x66,                        // bRequest: PTP Device Reset
+    0,                           // wValue
+    UInt16(c.ifaceNumber),       // wIndex: interface number
+    nil,                         // no data
+    0,                           // wLength
+    5000                         // 5s timeout
+  )
+  if debug { print("   [Probe] PTP Device Reset (0x66) rc=\(resetRC)") }
+
+  let haltIn = libusb_clear_halt(handle, c.bulkIn)
+  let haltOut = libusb_clear_halt(handle, c.bulkOut)
+  if debug { print("   [Probe] clear_halt in=\(haltIn) out=\(haltOut), timeoutMs=\(timeoutMs)") }
 
   // Build a raw GetDeviceInfo command (txid=0, no session required)
   let cmdBytes = makePTPCommand(opcode: 0x1001, txid: 0, params: [])
@@ -109,12 +133,14 @@ func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: U
       Int32(cmdBytes.count), &sent, timeoutMs
     )
   }
+  if debug { print("   [Probe] write rc=\(writeRC) sent=\(sent)/\(cmdBytes.count)") }
   guard writeRC == 0, sent == cmdBytes.count else { return (false, nil) }
 
   // Read response (data phase + response)
   var buf = [UInt8](repeating: 0, count: 64 * 1024)
   var got: Int32 = 0
   let readRC = libusb_bulk_transfer(handle, c.bulkIn, &buf, Int32(buf.count), &got, timeoutMs)
+  if debug { print("   [Probe] read rc=\(readRC) got=\(got)") }
   guard readRC == 0, got >= PTPHeader.size else { return (false, nil) }
 
   let hdr = buf.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
