@@ -133,5 +133,23 @@ let package = Package(
                     "SwiftMTPTransportLibUSB",
                     "SwiftMTPTestKit",
                 ]),
+    .testTarget(name: "ScenarioTests",
+                dependencies: [
+                    "SwiftMTPCore",
+                    "SwiftMTPTransportLibUSB",
+                    "SwiftMTPIndex",
+                    "SwiftMTPSync",
+                    "SwiftMTPTestKit",
+                ],
+                exclude: [
+                    "FileTransferIntegrationTests.swift",
+                    "PerformanceScenarioTests.swift",
+                    "ResumeScenarioTests.swift",
+                ]),
+    .testTarget(name: "ToolingTests",
+                dependencies: [
+                    "swiftmtp-cli",
+                    "SwiftMTPCore",
+                ]),
   ]
 )

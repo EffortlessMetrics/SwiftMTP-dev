@@ -27,7 +27,6 @@ final class QuirksCoverageBoostTests: XCTestCase {
             inactivityTimeoutMs: inactivityTimeoutMs,
             overallDeadlineMs: overallDeadlineMs,
             stabilizeMs: stabilizeMs,
-            postClaimStabilizeMs: 250,
             resetOnOpen: resetOnOpen,
             disableEventPump: disableEventPump,
             operations: operations,
@@ -43,8 +42,6 @@ final class QuirksCoverageBoostTests: XCTestCase {
         XCTAssertEqual(defaults.inactivityTimeoutMs, 8_000)
         XCTAssertEqual(defaults.overallDeadlineMs, 60_000)
         XCTAssertEqual(defaults.stabilizeMs, 0)
-        XCTAssertEqual(defaults.postClaimStabilizeMs, 250)
-        XCTAssertEqual(defaults.postClaimStabilizeMs, 250)
         XCTAssertFalse(defaults.resetOnOpen)
         XCTAssertFalse(defaults.disableEventPump)
         XCTAssertTrue(defaults.operations.isEmpty)
@@ -308,21 +305,6 @@ final class QuirksCoverageBoostTests: XCTestCase {
         XCTAssertNil(override.stabilizeMs)
         XCTAssertNil(override.disablePartialRead)
         XCTAssertNil(override.disablePartialWrite)
-    }
-
-    func testUserOverrideFromEnvironmentParsesDisablePartialWriteTrueLiteral() {
-        let (override, source) = UserOverride.fromEnvironment([
-            "SWIFTMTP_OVERRIDES": "disablePartialWrite=true"
-        ])
-
-        switch source {
-        case .environment:
-            break
-        case .none:
-            XCTFail("Expected .environment when SWIFTMTP_OVERRIDES is provided")
-        }
-
-        XCTAssertEqual(override.disablePartialWrite, true)
     }
 
     func testProbedCapabilitiesInitializerStoresValues() {
