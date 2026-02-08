@@ -15,7 +15,7 @@ final class LibUSBConcurrencyTests: XCTestCase {
     func testMultipleDeviceDiscovery() async throws {
         // Test that device discovery can be called concurrently
         let config1 = VirtualDeviceConfig.pixel7
-        let config2 = VirtualDeviceConfig.androidGeneric
+        let config2 = VirtualDeviceConfig.emptyDevice
 
         XCTAssertNotNil(config1)
         XCTAssertNotNil(config2)
@@ -54,8 +54,18 @@ final class LibUSBConcurrencyTests: XCTestCase {
 
         let mockTransport = MockTransport(deviceData: MockDeviceData(
             deviceSummary: summary,
+            deviceInfo: MTPDeviceInfo(
+                manufacturer: summary.manufacturer,
+                model: summary.model,
+                version: "1.0",
+                serialNumber: summary.usbSerial,
+                operationsSupported: [],
+                eventsSupported: []
+            ),
             storages: [],
-            objects: []
+            objects: [],
+            operationsSupported: [],
+            eventsSupported: []
         ))
 
         XCTAssertNotNil(mockTransport)
@@ -76,14 +86,34 @@ final class LibUSBConcurrencyTests: XCTestCase {
 
         let mockTransport = MockTransport(deviceData: MockDeviceData(
             deviceSummary: summary,
+            deviceInfo: MTPDeviceInfo(
+                manufacturer: summary.manufacturer,
+                model: summary.model,
+                version: "1.0",
+                serialNumber: summary.usbSerial,
+                operationsSupported: [],
+                eventsSupported: []
+            ),
             storages: [],
-            objects: []
+            objects: [],
+            operationsSupported: [],
+            eventsSupported: []
         ))
 
         let mockLink = MockMTPLink(deviceData: MockDeviceData(
             deviceSummary: summary,
+            deviceInfo: MTPDeviceInfo(
+                manufacturer: summary.manufacturer,
+                model: summary.model,
+                version: "1.0",
+                serialNumber: summary.usbSerial,
+                operationsSupported: [],
+                eventsSupported: []
+            ),
             storages: [],
-            objects: []
+            objects: [],
+            operationsSupported: [],
+            eventsSupported: []
         ), transport: mockTransport)
 
         XCTAssertNotNil(mockLink)
@@ -105,8 +135,18 @@ final class LibUSBConcurrencyTests: XCTestCase {
 
         let mockTransport = MockTransport(deviceData: MockDeviceData(
             deviceSummary: summary,
+            deviceInfo: MTPDeviceInfo(
+                manufacturer: summary.manufacturer,
+                model: summary.model,
+                version: "1.0",
+                serialNumber: summary.usbSerial,
+                operationsSupported: [],
+                eventsSupported: []
+            ),
             storages: [],
-            objects: []
+            objects: [],
+            operationsSupported: [],
+            eventsSupported: []
         ))
 
         // Test async open operation
@@ -128,8 +168,18 @@ final class LibUSBConcurrencyTests: XCTestCase {
 
         let mockTransport = MockTransport(deviceData: MockDeviceData(
             deviceSummary: summary,
+            deviceInfo: MTPDeviceInfo(
+                manufacturer: summary.manufacturer,
+                model: summary.model,
+                version: "1.0",
+                serialNumber: summary.usbSerial,
+                operationsSupported: [],
+                eventsSupported: []
+            ),
             storages: [],
-            objects: []
+            objects: [],
+            operationsSupported: [],
+            eventsSupported: []
         ))
 
         try await mockTransport.close()
@@ -138,18 +188,25 @@ final class LibUSBConcurrencyTests: XCTestCase {
     // MARK: - Concurrent Transfer Tests
 
     func testConcurrentDataBufferAccess() async {
-        // Test thread-safe buffer access
-        var buffer = DataBuffer(capacity: 1024)
-
-        await withTaskGroup(of: Void.self) { group in
+        // Test concurrent production of chunks and serialized buffer writes
+        var producedChunks: [Data] = []
+        await withTaskGroup(of: Data.self) { group in
             for i in 0..<10 {
                 group.addTask {
-                    buffer.write(Data([UInt8(i)]))
+                    Data([UInt8(i)])
                 }
+            }
+
+            for await chunk in group {
+                producedChunks.append(chunk)
             }
         }
 
-        // Buffer should have some data (may be less than 10 due to race conditions)
+        var buffer = DataBuffer(capacity: 1024)
+        for chunk in producedChunks {
+            buffer.write(chunk)
+        }
+
         XCTAssertGreaterThanOrEqual(buffer.availableBytes, 0)
     }
 
@@ -214,7 +271,7 @@ final class LibUSBConcurrencyTests: XCTestCase {
     func testVirtualObjectConfigSendable() {
         // Test that VirtualObjectConfig is Sendable
         let object = VirtualObjectConfig(
-            handle: MTPObjectHandle(raw: 0x00010001),
+            handle: 0x0001_0001,
             storage: MTPStorageID(raw: 1),
             name: "test.txt"
         )

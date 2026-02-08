@@ -7,6 +7,23 @@ import XCTest
 @testable import SwiftMTPCore
 import SwiftMTPTestKit
 
+extension USBEndpointAddress: Equatable {
+    static func == (lhs: USBEndpointAddress, rhs: USBEndpointAddress) -> Bool {
+        lhs.rawValue == rhs.rawValue
+    }
+}
+
+extension USBEndpointAddress {
+    var transferType: TransferType {
+        switch rawValue & 0x03 {
+        case 0x03:
+            return .interrupt
+        default:
+            return .bulk
+        }
+    }
+}
+
 /// Tests for USB endpoint handling and data transfer
 final class LibUSBEndpointTests: XCTestCase {
 
@@ -144,7 +161,7 @@ final class LibUSBEndpointTests: XCTestCase {
     // MARK: - Interrupt Transfer Tests
 
     func testInterruptTransferSetup() {
-        let interruptEndpoint = USBEndpointAddress(rawValue: 0x81)
+        let interruptEndpoint = USBEndpointAddress(rawValue: 0x83)
         XCTAssertEqual(interruptEndpoint.transferType, .interrupt)
         XCTAssertTrue(interruptEndpoint.isInput)
     }

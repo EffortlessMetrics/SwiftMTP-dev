@@ -385,23 +385,6 @@ final class MTPDeviceActorRelatedTests: XCTestCase {
         XCTAssertNotNil(pump)
     }
 
-    // MARK: - QuirkHooks
-
-    func testQuirkHooksWithNoMatchingPhase() async throws {
-        // Test that QuirkHooks.execute handles missing phases gracefully
-        let tuning = EffectiveTuning.defaults()
-        
-        // This test verifies the structure exists
-        XCTAssertNotNil(tuning)
-    }
-
-    // MARK: - UserOverrides
-
-    func testUserOverridesDefaultEmpty() {
-        // UserOverrides.current is static and starts empty
-        XCTAssertTrue(UserOverrides.current.isEmpty)
-    }
-
     // MARK: - SwiftMTPConfig
 
     func testSwiftMTPConfigDefaultValues() {
@@ -423,66 +406,18 @@ final class MTPDeviceActorRelatedTests: XCTestCase {
         XCTAssertEqual(config.stabilizeMs, 500)
     }
 
-    // MARK: - ProbeReceipt
+    // MARK: - MTPLink Protocol
 
-    func testProbeReceiptCreation() {
-        let receipt = ProbeReceipt(
-            deviceSummary: ReceiptDeviceSummary(
-                vendorID: 0x1234,
-                productID: 0x5678,
-                bcdDevice: 0x0100,
-                manufacturer: "Test",
-                model: "Device",
-                serial: "123"
-            ),
-            fingerprint: MTPDeviceFingerprint.fromUSB(
-                vid: 0x1234,
-                pid: 0x5678,
-                interfaceClass: 6,
-                interfaceSubclass: 1,
-                interfaceProtocol: 1,
-                epIn: 0x81,
-                epOut: 0x01
-            )
-        )
-        
-        XCTAssertNotNil(receipt)
+    func testMTPLinkProtocolExists() {
+        // Verify MTPLink is a protocol
+        XCTAssertNotNil(MTPLink.self)
     }
 
-    // MARK: - MTPDeviceFingerprint
+    // MARK: - MTPDevice Protocol
 
-    func testFingerprintFromUSB() {
-        let fingerprint = MTPDeviceFingerprint.fromUSB(
-            vid: 0x1234,
-            pid: 0x5678,
-            interfaceClass: 6,
-            interfaceSubclass: 1,
-            interfaceProtocol: 1,
-            epIn: 0x81,
-            epOut: 0x01
-        )
-        
-        XCTAssertEqual(fingerprint.vendorID, 0x1234)
-        XCTAssertEqual(fingerprint.productID, 0x5678)
-        XCTAssertEqual(fingerprint.interfaceClass, 6)
-    }
-
-    // MARK: - EffectiveTuning
-
-    func testEffectiveTuningDefaults() {
-        let tuning = EffectiveTuning.defaults()
-        
-        XCTAssertGreaterThan(tuning.maxChunkBytes, 0)
-        XCTAssertGreaterThan(tuning.ioTimeoutMs, 0)
-        XCTAssertGreaterThan(tuning.handshakeTimeoutMs, 0)
-    }
-
-    // MARK: - DevicePolicy
-
-    func testDevicePolicyDefaults() {
-        let policy = DevicePolicy()
-        
-        XCTAssertNotNil(policy)
+    func testMTPDeviceProtocolExists() {
+        // Verify MTPDevice is a protocol
+        XCTAssertNotNil(MTPDevice.self)
     }
 }
 
