@@ -28,6 +28,8 @@ public struct MTPDeviceSummary: Sendable {
   public let bus: UInt8?
   /// USB Device address
   public let address: UInt8?
+  /// USB serial number from iSerialNumber descriptor (most reliable identity signal)
+  public let usbSerial: String?
 
   /// Device fingerprint for quirk matching
   public var fingerprint: String {
@@ -44,7 +46,7 @@ public struct MTPDeviceSummary: Sendable {
   ///   - productID: USB Product ID
   ///   - bus: USB Bus number
   ///   - address: USB Device address
-  public init(id: MTPDeviceID, manufacturer: String, model: String, vendorID: UInt16? = nil, productID: UInt16? = nil, bus: UInt8? = nil, address: UInt8? = nil) {
+  public init(id: MTPDeviceID, manufacturer: String, model: String, vendorID: UInt16? = nil, productID: UInt16? = nil, bus: UInt8? = nil, address: UInt8? = nil, usbSerial: String? = nil) {
     self.id = id
     self.manufacturer = manufacturer
     self.model = model
@@ -52,6 +54,7 @@ public struct MTPDeviceSummary: Sendable {
     self.productID = productID
     self.bus = bus
     self.address = address
+    self.usbSerial = usbSerial
   }
 }
 /// Events that can be emitted by an MTP device during operation.

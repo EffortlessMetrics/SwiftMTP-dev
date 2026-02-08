@@ -155,8 +155,16 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
         }
     }
 
-    // Helper method to find a connected device
+    // Helper method to find a connected device.
+    // Supports both stable domainId (UUID) and legacy ephemeral ID lookups.
     private func findDevice(with deviceId: MTPDeviceID) async throws -> MTPDevice? {
+        // First try reverse lookup through registry (domainId → ephemeral ID)
+        if let registry = registry,
+           let ephemeralId = await registry.deviceId(for: deviceId.raw),
+           let svc = await registry.service(for: ephemeralId) {
+            return await svc.underlyingDevice
+        }
+        // Fall back to direct ephemeral ID match
         let devices = try await deviceManager.currentRealDevices()
         return devices.first { $0.summary.id == deviceId }
     }

@@ -78,6 +78,9 @@ public protocol LiveIndexReader: Sendable {
 
     /// Objects changed since a given change counter (for enumerateChanges).
     func changesSince(deviceId: String, anchor: Int64) async throws -> [IndexedObjectChange]
+
+    /// Check when a folder was last crawled (for crawl debounce).
+    func crawlState(deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?) async throws -> Date?
 }
 
 // MARK: - Writer Protocol
@@ -105,4 +108,7 @@ public protocol LiveIndexWriter: Sendable {
 
     /// Purge stale objects (those marked stale but not refreshed by latest crawl).
     func purgeStale(deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?) async throws
+
+    /// Prune old change log entries (keep the log bounded).
+    func pruneChangeLog(deviceId: String, olderThan: Date) async throws
 }

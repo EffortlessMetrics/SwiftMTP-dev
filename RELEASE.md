@@ -86,3 +86,60 @@ git push --tags
 - [ ] XCFramework builds and links correctly
 - [ ] Documentation published and accessible
 - [ ] CHANGELOG.md updated with release notes
+
+---
+
+# SwiftMTP 1.1.0 Release Checklist
+
+## Pre-Release
+- [ ] Finalize File Provider XPC integration testing
+- [ ] Verify transfer journaling works across interruptions
+- [ ] Test mirror/sync conflict resolution
+- [ ] Complete OnePlus 3T quirk validation
+- [ ] Update `Docs/benchmarks.md` with all device results
+- [ ] Run full test suite (BDD, Property, Snapshot, Fuzzing)
+- [ ] Validate CLI storybook mode
+
+## Release Steps
+
+```bash
+# 1. Final audit
+swift test
+swift-format lint -r Sources Tests
+
+# 2. Commit final changes
+git add .
+git commit -m "Release v1.1.0: File Provider, Transfer Journaling, Mirror/Sync"
+
+# 3. Tag release
+git tag v1.1.0
+git push --tags
+
+# 4. Verify CI
+# - Monitor GitHub Actions
+# - Check SBOM generation
+# - Verify XCFramework artifact
+```
+
+## Acceptance Criteria for v1.1.0
+- [ ] File Provider extension builds and loads on macOS
+- [ ] Transfer journal survives app restart
+- [ ] Mirror operations complete without data loss
+- [ ] OnePlus 3T quirk works with device trust flow
+- [ ] All BDD scenarios pass
+- [ ] Thread sanitizer clean on Core/Index tests
+- [ ] Benchmarks documented in `Docs/benchmarks.md`
+- [ ] CHANGELOG.md complete with v1.1.0 entry
+- [ ] README.md reflects new features
+
+## Rollback for v1.1.0
+If issues discovered post-release:
+```bash
+git tag -d v1.1.0
+git push origin :refs/tags/v1.1.0
+
+# Create patch release
+git commit -m "Revert <feature> for v1.1.1"
+git tag v1.1.1
+git push --tags
+```

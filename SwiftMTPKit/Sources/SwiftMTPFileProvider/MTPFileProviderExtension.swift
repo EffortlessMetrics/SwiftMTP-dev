@@ -128,35 +128,37 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
 
         let readRequest = ReadRequest(deviceId: components.deviceId, objectHandle: objectHandle)
 
-        Task { @MainActor in
-            xpcService.readObject(readRequest) { [weak self] response in
-                if response.success, let tempFileURL = response.tempFileURL {
-                    // Try to get metadata from cache
-                    var itemName = tempFileURL.lastPathComponent
-                    var parentHandle: UInt32? = nil
-                    if let reader = self?.indexReader {
-                        let result = _syncAwait { try await reader.object(deviceId: components.deviceId, handle: objectHandle) }
-                        if case .success(let obj) = result, let obj {
-                            itemName = obj.name
-                            parentHandle = obj.parentHandle
-                        }
-                    }
+        // Pre-fetch metadata from cache before XPC call (avoids semaphore deadlock)
+        let capturedReader = indexReader
+        let capturedDeviceId = components.deviceId
+        let capturedStorageId = components.storageId!
+        Task {
+            let cached: (name: String, parent: UInt32?)? = await {
+                guard let reader = capturedReader else { return nil }
+                guard let obj = try? await reader.object(deviceId: capturedDeviceId, handle: objectHandle) else { return nil }
+                return (name: obj.name, parent: obj.parentHandle)
+            }()
 
-                    let item = MTPFileProviderItem(
-                        deviceId: components.deviceId,
-                        storageId: components.storageId!,
-                        objectHandle: objectHandle,
-                        parentHandle: parentHandle,
-                        name: itemName,
-                        size: response.fileSize,
-                        isDirectory: false,
-                        modifiedDate: nil
-                    )
-                    completionHandler(tempFileURL, item, nil)
-                } else {
-                    completionHandler(nil, nil, NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.serverUnreachable.rawValue))
+            await MainActor.run {
+                xpcService.readObject(readRequest) { response in
+                    if response.success, let tempFileURL = response.tempFileURL {
+                        let itemName = cached?.name ?? tempFileURL.lastPathComponent
+                        let item = MTPFileProviderItem(
+                            deviceId: capturedDeviceId,
+                            storageId: capturedStorageId,
+                            objectHandle: objectHandle,
+                            parentHandle: cached?.parent,
+                            name: itemName,
+                            size: response.fileSize,
+                            isDirectory: false,
+                            modifiedDate: nil
+                        )
+                        completionHandler(tempFileURL, item, nil)
+                    } else {
+                        completionHandler(nil, nil, NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.serverUnreachable.rawValue))
+                    }
+                    progress.completedUnitCount = 1
                 }
-                progress.completedUnitCount = 1
             }
         }
 
@@ -199,21 +201,4 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
         progress.completedUnitCount = 1
         return progress
     }
-}
-
-// Helper to bridge async to sync in completion handler context
-private func _syncAwait<T>(_ work: @escaping () async throws -> T) -> Result<T, Error> {
-    let semaphore = DispatchSemaphore(value: 0)
-    var result: Result<T, Error> = .failure(NSError(domain: "SwiftMTP", code: -1))
-    Task {
-        do {
-            let value = try await work()
-            result = .success(value)
-        } catch {
-            result = .failure(error)
-        }
-        semaphore.signal()
-    }
-    semaphore.wait()
-    return result
 }

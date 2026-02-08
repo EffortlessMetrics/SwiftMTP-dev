@@ -54,6 +54,7 @@ public struct LibUSBDiscovery {
                 // Try to read USB string descriptors for better names
                 var manufacturer = "USB \(String(format: "%04x", desc.idVendor))"
                 var model = "USB \(String(format: "%04x", desc.idProduct))"
+                var serial: String? = nil
                 var handle: OpaquePointer?
                 if libusb_open(dev, &handle) == 0, let h = handle {
                     defer { libusb_close(h) }
@@ -67,6 +68,11 @@ public struct LibUSBDiscovery {
                         let n = libusb_get_string_descriptor_ascii(h, desc.iProduct, &buf, Int32(buf.count))
                         if n > 0 { model = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
                     }
+                    if desc.iSerialNumber != 0 {
+                        var buf = [UInt8](repeating: 0, count: 128)
+                        let n = libusb_get_string_descriptor_ascii(h, desc.iSerialNumber, &buf, Int32(buf.count))
+                        if n > 0 { serial = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
+                    }
                 }
 
                 summaries.append(MTPDeviceSummary(
@@ -76,7 +82,8 @@ public struct LibUSBDiscovery {
                     vendorID: desc.idVendor,
                     productID: desc.idProduct,
                     bus: bus,
-                    address: addr
+                    address: addr,
+                    usbSerial: serial
                 ))
             }
         }

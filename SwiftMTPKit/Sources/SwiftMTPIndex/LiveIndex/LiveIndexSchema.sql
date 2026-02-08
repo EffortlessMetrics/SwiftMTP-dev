@@ -46,6 +46,38 @@ CREATE TABLE IF NOT EXISTS device_index_state (
     lastFullCrawl INTEGER
 );
 
+-- Stable device identity mappings (survives live_objects rebuilds).
+CREATE TABLE IF NOT EXISTS device_identities (
+    domainId     TEXT PRIMARY KEY,
+    identityKey  TEXT NOT NULL,
+    displayName  TEXT NOT NULL,
+    vendorId     INTEGER,
+    productId    INTEGER,
+    usbSerial    TEXT,
+    mtpSerial    TEXT,
+    manufacturer TEXT,
+    model        TEXT,
+    createdAt    INTEGER NOT NULL,
+    lastSeenAt   INTEGER NOT NULL
+);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_identity_key ON device_identities(identityKey);
+
+-- Change log for correct sync anchors (deduplication-based).
+CREATE TABLE IF NOT EXISTS live_changes (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    deviceId      TEXT    NOT NULL,
+    changeCounter INTEGER NOT NULL,
+    storageId     INTEGER NOT NULL,
+    handle        INTEGER,
+    parentHandle  INTEGER,
+    kind          TEXT    NOT NULL,  -- 'upsert', 'delete', 'refresh'
+    createdAt     INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_live_changes_device_counter
+    ON live_changes(deviceId, changeCounter);
+CREATE INDEX IF NOT EXISTS idx_live_changes_device_parent
+    ON live_changes(deviceId, storageId, parentHandle, changeCounter);
+
 CREATE TABLE IF NOT EXISTS cached_content (
     deviceId       TEXT    NOT NULL,
     storageId      INTEGER NOT NULL,
