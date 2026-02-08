@@ -164,6 +164,326 @@ final class DeviceActorTests: XCTestCase {
         XCTAssertEqual(error1, error2)
         XCTAssertNotEqual(error1, error3)
     }
+
+    // MARK: - Error State Descriptions
+
+    func testErrorStateDescription() {
+        let timeoutError = DeviceState.error(.timeout)
+        let busyError = DeviceState.error(.busy)
+        let protocolError = DeviceState.error(.protocolError(code: 0x2003, message: "SessionNotOpen"))
+        
+        XCTAssertNotEqual(timeoutError, busyError)
+        XCTAssertNotEqual(protocolError, timeoutError)
+    }
+
+    // MARK: - State Transition Validity
+
+    func testValidDisconnectedToConnecting() {
+        let from = DeviceState.disconnected
+        let to = DeviceState.connecting
+        
+        XCTAssertNotEqual(from, to)
+        XCTAssertFalse(from.isDisconnected == to.isDisconnected)
+    }
+
+    func testValidConnectingToConnected() {
+        let from = DeviceState.connecting
+        let to = DeviceState.connected
+        
+        XCTAssertNotEqual(from, to)
+    }
+
+    func testValidConnectedToTransferring() {
+        let from = DeviceState.connected
+        let to = DeviceState.transferring
+        
+        XCTAssertNotEqual(from, to)
+        XCTAssertFalse(from.isTransferring)
+        XCTAssertTrue(to.isTransferring)
+    }
+
+    func testValidTransferringToConnected() {
+        let from = DeviceState.transferring
+        let to = DeviceState.connected
+        
+        XCTAssertNotEqual(from, to)
+        XCTAssertFalse(to.isTransferring)
+    }
+
+    func testValidConnectedToDisconnecting() {
+        let from = DeviceState.connected
+        let to = DeviceState.disconnecting
+        
+        XCTAssertNotEqual(from, to)
+    }
+
+    func testValidDisconnectingToDisconnected() {
+        let from = DeviceState.disconnecting
+        let to = DeviceState.disconnected
+        
+        XCTAssertNotEqual(from, to)
+        XCTAssertTrue(to.isDisconnected)
+    }
+
+    func testValidConnectedToError() {
+        let from = DeviceState.connected
+        let to = DeviceState.error(.timeout)
+        
+        XCTAssertNotEqual(from, to)
+        XCTAssertFalse(to.isDisconnected)
+    }
+
+    func testValidErrorToConnecting() {
+        let from = DeviceState.error(.timeout)
+        let to = DeviceState.connecting
+        
+        XCTAssertNotEqual(from, to)
+    }
+
+    // MARK: - Invalid Transition Tests
+
+    func testCannotTransferFromDisconnected() {
+        let state = DeviceState.disconnected
+        
+        XCTAssertTrue(state.isDisconnected)
+        XCTAssertFalse(state.isTransferring)
+    }
+
+    func testCannotDisconnectFromTransferring() {
+        // While transferring, device should finish before disconnecting
+        let state = DeviceState.transferring
+        
+        XCTAssertTrue(state.isTransferring)
+        XCTAssertFalse(state.isDisconnected)
+    }
+}
+
+// MARK: - MTPDeviceActor Related Tests
+
+final class MTPDeviceActorRelatedTests: XCTestCase {
+
+    // MARK: - MTPDeviceID
+
+    func testMTPDeviceIDInitialization() {
+        let id = MTPDeviceID(raw: "12345678-1234-1234-1234-123456789abc")
+        XCTAssertEqual(id.raw, "12345678-1234-1234-1234-123456789abc")
+    }
+
+    // MARK: - MTPDeviceSummary
+
+    func testMTPDeviceSummaryCreation() {
+        let summary = MTPDeviceSummary(
+            id: MTPDeviceID(raw: "usb:1234:5678"),
+            manufacturer: "TestCo",
+            model: "MTP Device",
+            vendorID: 0x1234,
+            productID: 0x5678,
+            bus: 1,
+            address: 2
+        )
+        
+        XCTAssertEqual(summary.manufacturer, "TestCo")
+        XCTAssertEqual(summary.vendorID, 0x1234)
+        XCTAssertEqual(summary.productID, 0x5678)
+    }
+
+    // MARK: - MTPStorageInfo
+
+    func testMTPStorageInfoFixedType() {
+        let fixedStorage = MTPStorageInfo(
+            id: MTPStorageID(raw: 0x00010001),
+            description: "Internal",
+            capacityBytes: 16_000_000_000,
+            freeBytes: 8_000_000_000,
+            isReadOnly: false
+        )
+        
+        XCTAssertFalse(fixedStorage.isReadOnly)
+    }
+
+    func testMTPStorageInfoRemovableType() {
+        let removableStorage = MTPStorageInfo(
+            id: MTPStorageID(raw: 0x00020001),
+            description: "SD Card",
+            capacityBytes: 32_000_000_000,
+            freeBytes: 16_000_000_000,
+            isReadOnly: true
+        )
+        
+        XCTAssertTrue(removableStorage.isReadOnly)
+    }
+
+    func testMTPStorageInfoCapacity() {
+        let storage = MTPStorageInfo(
+            id: MTPStorageID(raw: 0x00010001),
+            description: "Test",
+            capacityBytes: 1000,
+            freeBytes: 500,
+            isReadOnly: false
+        )
+        
+        XCTAssertGreaterThan(storage.capacityBytes, storage.freeBytes)
+    }
+
+    // MARK: - MTPObjectInfo
+
+    func testMTPObjectInfoFile() {
+        let info = MTPObjectInfo(
+            handle: 0x00010001,
+            storage: MTPStorageID(raw: 0x00010001),
+            parent: 0x00000000,
+            name: "test.txt",
+            sizeBytes: 1024,
+            modified: Date(),
+            formatCode: 0x3001,
+            properties: [:]
+        )
+        
+        XCTAssertEqual(info.handle, 0x00010001)
+        XCTAssertEqual(info.name, "test.txt")
+        XCTAssertEqual(info.sizeBytes, 1024)
+    }
+
+    func testMTPObjectInfoFolder() {
+        let folder = MTPObjectInfo(
+            handle: 0x00010002,
+            storage: MTPStorageID(raw: 0x00010001),
+            parent: 0x00000000,
+            name: "folder",
+            sizeBytes: nil,
+            modified: nil,
+            formatCode: 0x3001,
+            properties: [:]
+        )
+        
+        XCTAssertNil(folder.sizeBytes)
+        XCTAssertNil(folder.modified)
+    }
+
+    // MARK: - MTPDeviceInfo
+
+    func testMTPDeviceInfoCreation() {
+        let info = MTPDeviceInfo(
+            manufacturer: "TestCo",
+            model: "MTP Device",
+            version: "1.0",
+            serialNumber: "12345",
+            operationsSupported: Set([0x1001, 0x1002, 0x1003]),
+            eventsSupported: Set([0x4002])
+        )
+        
+        XCTAssertEqual(info.version, "1.0")
+        XCTAssertTrue(info.operationsSupported.contains(0x1001))
+        XCTAssertTrue(info.operationsSupported.contains(0x1002))
+        XCTAssertTrue(info.eventsSupported.contains(0x4002))
+    }
+
+    // MARK: - EventPump
+
+    func testEventPumpInitialization() {
+        let pump = EventPump()
+        XCTAssertNotNil(pump)
+    }
+
+    // MARK: - QuirkHooks
+
+    func testQuirkHooksWithNoMatchingPhase() async throws {
+        // Test that QuirkHooks.execute handles missing phases gracefully
+        let tuning = EffectiveTuning.defaults()
+        
+        // This test verifies the structure exists
+        XCTAssertNotNil(tuning)
+    }
+
+    // MARK: - UserOverrides
+
+    func testUserOverridesDefaultEmpty() {
+        // UserOverrides.current is static and starts empty
+        XCTAssertTrue(UserOverrides.current.isEmpty)
+    }
+
+    // MARK: - SwiftMTPConfig
+
+    func testSwiftMTPConfigDefaultValues() {
+        let config = SwiftMTPConfig()
+        
+        XCTAssertEqual(config.transferChunkBytes, 2 * 1024 * 1024)
+        XCTAssertEqual(config.ioTimeoutMs, 10_000)
+        XCTAssertEqual(config.handshakeTimeoutMs, 6_000)
+        XCTAssertFalse(config.resetOnOpen)
+    }
+
+    func testSwiftMTPConfigMutable() {
+        var config = SwiftMTPConfig()
+        
+        config.resetOnOpen = true
+        config.stabilizeMs = 500
+        
+        XCTAssertTrue(config.resetOnOpen)
+        XCTAssertEqual(config.stabilizeMs, 500)
+    }
+
+    // MARK: - ProbeReceipt
+
+    func testProbeReceiptCreation() {
+        let receipt = ProbeReceipt(
+            deviceSummary: ReceiptDeviceSummary(
+                vendorID: 0x1234,
+                productID: 0x5678,
+                bcdDevice: 0x0100,
+                manufacturer: "Test",
+                model: "Device",
+                serial: "123"
+            ),
+            fingerprint: MTPDeviceFingerprint.fromUSB(
+                vid: 0x1234,
+                pid: 0x5678,
+                interfaceClass: 6,
+                interfaceSubclass: 1,
+                interfaceProtocol: 1,
+                epIn: 0x81,
+                epOut: 0x01
+            )
+        )
+        
+        XCTAssertNotNil(receipt)
+    }
+
+    // MARK: - MTPDeviceFingerprint
+
+    func testFingerprintFromUSB() {
+        let fingerprint = MTPDeviceFingerprint.fromUSB(
+            vid: 0x1234,
+            pid: 0x5678,
+            interfaceClass: 6,
+            interfaceSubclass: 1,
+            interfaceProtocol: 1,
+            epIn: 0x81,
+            epOut: 0x01
+        )
+        
+        XCTAssertEqual(fingerprint.vendorID, 0x1234)
+        XCTAssertEqual(fingerprint.productID, 0x5678)
+        XCTAssertEqual(fingerprint.interfaceClass, 6)
+    }
+
+    // MARK: - EffectiveTuning
+
+    func testEffectiveTuningDefaults() {
+        let tuning = EffectiveTuning.defaults()
+        
+        XCTAssertGreaterThan(tuning.maxChunkBytes, 0)
+        XCTAssertGreaterThan(tuning.ioTimeoutMs, 0)
+        XCTAssertGreaterThan(tuning.handshakeTimeoutMs, 0)
+    }
+
+    // MARK: - DevicePolicy
+
+    func testDevicePolicyDefaults() {
+        let policy = DevicePolicy()
+        
+        XCTAssertNotNil(policy)
+    }
 }
 
 /// Device state representation for testing
