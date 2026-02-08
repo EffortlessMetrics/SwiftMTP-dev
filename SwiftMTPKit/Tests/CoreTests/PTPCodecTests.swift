@@ -19,7 +19,10 @@ final class PTPCodecTests: XCTestCase {
         )
 
         var buffer = [UInt8](repeating: 0, count: 64)
-        let bytesWritten = container.encode(into: &buffer)
+        let bytesWritten = buffer.withUnsafeMutableBufferPointer { ptr in
+            guard let base = ptr.baseAddress else { return 0 }
+            return container.encode(into: base)
+        }
 
         // Header: 4 bytes length + 2 bytes type + 2 bytes code + 4 bytes txid = 12
         XCTAssertEqual(bytesWritten, 12)
@@ -27,18 +30,19 @@ final class PTPCodecTests: XCTestCase {
         // Verify little-endian encoding
         XCTAssertEqual(buffer[0], 0x0C) // length = 12 (little-endian)
         XCTAssertEqual(buffer[1], 0x00)
-        XCTAssertEqual(buffer[2], 0x01) // type = command
-        XCTAssertEqual(buffer[3], 0x00)
-        XCTAssertEqual(buffer[4], 0x01) // code = GetDeviceInfo
+        XCTAssertEqual(buffer[4], 0x01) // type = command
         XCTAssertEqual(buffer[5], 0x00)
-        XCTAssertEqual(buffer[6], 0x01) // txid
-        XCTAssertEqual(buffer[7], 0x00)
-        XCTAssertEqual(buffer[8], 0x00)
+        XCTAssertEqual(buffer[6], 0x01) // code = GetDeviceInfo (0x1001)
+        XCTAssertEqual(buffer[7], 0x10)
+        XCTAssertEqual(buffer[8], 0x01) // txid
         XCTAssertEqual(buffer[9], 0x00)
+        XCTAssertEqual(buffer[10], 0x00)
+        XCTAssertEqual(buffer[11], 0x00)
     }
 
     func testCommandContainerWithParams() {
         let container = PTPContainer(
+            length: 24,
             type: PTPContainer.Kind.command.rawValue,
             code: PTPOp.sendObject.rawValue,
             txid: 0x00000005,
@@ -46,7 +50,10 @@ final class PTPCodecTests: XCTestCase {
         )
 
         var buffer = [UInt8](repeating: 0, count: 64)
-        let bytesWritten = container.encode(into: &buffer)
+        let bytesWritten = buffer.withUnsafeMutableBufferPointer { ptr in
+            guard let base = ptr.baseAddress else { return 0 }
+            return container.encode(into: base)
+        }
 
         // 12 header + 3 * 4 params = 24
         XCTAssertEqual(bytesWritten, 24)
@@ -58,6 +65,7 @@ final class PTPCodecTests: XCTestCase {
 
     func testResponseContainerEncoding() {
         let container = PTPContainer(
+            length: 16,
             type: PTPContainer.Kind.response.rawValue,
             code: 0x2001, // OK response
             txid: 0x00000001,
@@ -65,13 +73,16 @@ final class PTPCodecTests: XCTestCase {
         )
 
         var buffer = [UInt8](repeating: 0, count: 64)
-        let bytesWritten = container.encode(into: &buffer)
+        let bytesWritten = buffer.withUnsafeMutableBufferPointer { ptr in
+            guard let base = ptr.baseAddress else { return 0 }
+            return container.encode(into: base)
+        }
 
         XCTAssertEqual(bytesWritten, 16) // 12 + 4 for one param
 
-        XCTAssertEqual(buffer[2], 0x03) // type = response
-        XCTAssertEqual(buffer[4], 0x01) // code low byte
-        XCTAssertEqual(buffer[5], 0x20) // code high byte (0x2001)
+        XCTAssertEqual(buffer[4], 0x03) // type = response
+        XCTAssertEqual(buffer[6], 0x01) // code low byte
+        XCTAssertEqual(buffer[7], 0x20) // code high byte (0x2001)
     }
 
     func testDataContainerEncoding() {
@@ -83,10 +94,13 @@ final class PTPCodecTests: XCTestCase {
         )
 
         var buffer = [UInt8](repeating: 0, count: 64)
-        let bytesWritten = container.encode(into: &buffer)
+        let bytesWritten = buffer.withUnsafeMutableBufferPointer { ptr in
+            guard let base = ptr.baseAddress else { return 0 }
+            return container.encode(into: base)
+        }
 
         XCTAssertEqual(bytesWritten, 12)
-        XCTAssertEqual(buffer[2], 0x02) // type = data
+        XCTAssertEqual(buffer[4], 0x02) // type = data
     }
 
     // MARK: - Container Initialization
@@ -279,11 +293,7 @@ final class PTPCodecTests: XCTestCase {
     func testReadString() {
         let encoded = PTPString.encode("Test")
         var reader = PTPReader(data: encoded)
-        if case .string(let v) = reader.value(dt: 0xFFFF) {
-            XCTAssertEqual(v, "Test")
-        } else {
-            XCTFail("Expected string value")
-        }
+        XCTAssertEqual(reader.string(), "Test")
     }
 
     func testReadArray() {
@@ -413,9 +423,11 @@ final class PTPCodecTests: XCTestCase {
         XCTAssertGreaterThan(data.count, 0)
 
         // Verify parent handle field
-        var offset = 32 // Skip to parent handle
-        let parentHandle = data.withUnsafeBytes { $0.load(fromByteOffset: offset, as: UInt32.self) }.littleEndian
-        XCTAssertEqual(parentHandle, 0x00000001)
+        let parentOffset = 38
+        XCTAssertEqual(data[parentOffset], 0x01)
+        XCTAssertEqual(data[parentOffset + 1], 0x00)
+        XCTAssertEqual(data[parentOffset + 2], 0x00)
+        XCTAssertEqual(data[parentOffset + 3], 0x00)
     }
 
     // MARK: - Edge Cases

@@ -85,9 +85,10 @@ final class StoreErrorHandlingTests: XCTestCase {
 
     func testUpsertObjectWithNilSizeAndMtime() async throws {
         let actor = store.createActor()
+        let deviceId = "device-\(UUID().uuidString)"
         
         try await actor.upsertObject(
-            deviceId: "device-1",
+            deviceId: deviceId,
             storageId: 1,
             handle: 100,
             parentHandle: nil,
@@ -100,7 +101,7 @@ final class StoreErrorHandlingTests: XCTestCase {
         )
         
         // Verify object was created
-        let objects = try await actor.fetchObjects(deviceId: "device-1", generation: 1)
+        let objects = try await actor.fetchObjects(deviceId: deviceId, generation: 1)
         XCTAssertEqual(objects.count, 1)
         XCTAssertNil(objects.first?.size)
         XCTAssertNil(objects.first?.mtime)
@@ -425,6 +426,7 @@ final class StoreErrorHandlingTests: XCTestCase {
 
     func testUnicodeInObjectNames() async throws {
         let actor = store.createActor()
+        let deviceId = "device-\(UUID().uuidString)"
         
         let unicodeNames = [
             "файл.txt",
@@ -436,7 +438,7 @@ final class StoreErrorHandlingTests: XCTestCase {
         
         for (index, name) in unicodeNames.enumerated() {
             try await actor.upsertObject(
-                deviceId: "device-1",
+                deviceId: deviceId,
                 storageId: 1,
                 handle: index,
                 parentHandle: nil,
@@ -449,7 +451,7 @@ final class StoreErrorHandlingTests: XCTestCase {
             )
         }
         
-        let objects = try await actor.fetchObjects(deviceId: "device-1", generation: 1)
+        let objects = try await actor.fetchObjects(deviceId: deviceId, generation: 1)
         XCTAssertEqual(objects.count, unicodeNames.count)
     }
 }

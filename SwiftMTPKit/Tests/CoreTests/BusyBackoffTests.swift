@@ -149,19 +149,29 @@ final class BusyBackoffTests: XCTestCase {
 
     func testSingleRetrySucceeds() async throws {
         let expectation = expectation(description: "Should succeed on retry")
-
-        // First attempt fails, second succeeds
-        _ = try await BusyBackoff.onDeviceBusy(retries: 1, baseMs: 10, jitterPct: 0.0) {
-            throw MTPError.protocolError(code: 0x2003, message: "SessionNotOpen")
+        actor AttemptCounter {
+            private var attempts = 0
+            func next() -> Int {
+                attempts += 1
+                return attempts
+            }
+            func value() -> Int { attempts }
         }
 
-        // Now try again with a successful operation
-        _ = try await BusyBackoff.onDeviceBusy(retries: 1, baseMs: 10, jitterPct: 0.0) {
+        let counter = AttemptCounter()
+        let result: String = try await BusyBackoff.onDeviceBusy(retries: 1, baseMs: 10, jitterPct: 0.0) {
+            let attempt = await counter.next()
+            if attempt == 1 {
+                throw MTPError.protocolError(code: 0x2003, message: "SessionNotOpen")
+            }
             expectation.fulfill()
             return "success"
         }
 
         await fulfillment(of: [expectation], timeout: 2.0)
+        XCTAssertEqual(result, "success")
+        let totalAttempts = await counter.value()
+        XCTAssertEqual(totalAttempts, 2)
     }
 
     // MARK: - Sendable Conformances

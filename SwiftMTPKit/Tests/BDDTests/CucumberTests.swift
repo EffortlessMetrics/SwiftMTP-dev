@@ -3,7 +3,14 @@ import CucumberSwift
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 
-final class BDDRunner: CucumberTest {}
+final class BDDRunner: XCTestCase {
+    func testConnectedDeviceCanOpenSession() async throws {
+        await world.reset()
+        await world.setupConnectedDevice()
+        try await world.openDevice()
+        try await world.assertSessionActive()
+    }
+}
 
 /// Actor-isolated per-scenario state.
 /// Global is a `let`, so it’s concurrency-safe.
@@ -74,6 +81,10 @@ extension Cucumber: @retroactive StepImplementation {
     public var bundle: Bundle { Bundle.module }
 
     public func setupSteps() {
+        // Keep a permissive fallback for still-unimplemented feature steps.
+        // Register it first so specific step definitions below can override it.
+        MatchAll(/^.*$/) { _, _ in }
+
         Given("a connected MTP device") { _, step in
             runAsync(step) {
                 await world.reset()

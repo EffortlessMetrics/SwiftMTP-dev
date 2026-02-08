@@ -138,7 +138,7 @@ final class LibUSBEndpointTests: XCTestCase {
         XCTAssertEqual(chunks.count, 3)
         XCTAssertEqual(chunks[0].count, chunkSize)
         XCTAssertEqual(chunks[1].count, chunkSize)
-        XCTAssertEqual(chunks[2].count, chunkSize)
+        XCTAssertEqual(chunks[2].count, dataSize - (2 * chunkSize))
     }
 
     func testBulkTransferAlignment() {

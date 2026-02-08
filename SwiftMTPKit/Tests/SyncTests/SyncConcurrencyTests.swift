@@ -67,7 +67,7 @@ final class SyncConcurrencyTests: XCTestCase {
 
             var completed = 0
             for await result in group {
-                XCTAssertNotNil(result)
+                _ = result
                 completed += 1
             }
             XCTAssertEqual(completed, 3)

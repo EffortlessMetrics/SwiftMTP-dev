@@ -139,6 +139,7 @@ final class PTPCodecFuzzTests: XCTestCase {
         var validData = Data()
         validData.append(0x02) // length (1 char + null)
         validData.append(contentsOf: [0x41, 0x00]) // 'A' in UTF-16LE
+        validData.append(contentsOf: [0x00, 0x00]) // null terminator
         offset = 0
         XCTAssertEqual(PTPString.parse(from: validData, at: &offset), "A")
         
@@ -220,7 +221,10 @@ final class PTPCodecFuzzTests: XCTestCase {
             // Encode
             let requiredSize = 12 + paramCount * 4
             var buffer = [UInt8](repeating: 0, count: requiredSize)
-            let bytesWritten = container.encode(into: &buffer)
+            let bytesWritten = buffer.withUnsafeMutableBufferPointer { ptr in
+                guard let base = ptr.baseAddress else { return 0 }
+                return container.encode(into: base)
+            }
             
             XCTAssertEqual(bytesWritten, requiredSize)
         }
