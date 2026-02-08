@@ -442,20 +442,9 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     }
 
     public func nextChangeCounter(deviceId: String) async throws -> Int64 {
-        // Ensure device_index_state row exists
-        let ensureSQL = "INSERT OR IGNORE INTO device_index_state (deviceId, changeCounter) VALUES (?, 0)"
-        try db.withStatement(ensureSQL) { stmt in
-            try db.bind(stmt, 1, deviceId)
-            _ = try db.step(stmt)
+        try db.withTransaction {
+            try nextChangeCounterSync(deviceId: deviceId)
         }
-
-        let incrSQL = "UPDATE device_index_state SET changeCounter = changeCounter + 1 WHERE deviceId = ?"
-        try db.withStatement(incrSQL) { stmt in
-            try db.bind(stmt, 1, deviceId)
-            _ = try db.step(stmt)
-        }
-
-        return try await currentChangeCounter(deviceId: deviceId)
     }
 
     public func purgeStale(deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?) async throws {
