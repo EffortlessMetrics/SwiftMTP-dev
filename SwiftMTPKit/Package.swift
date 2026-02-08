@@ -108,5 +108,8 @@ let package = Package(
                 dependencies: ["SwiftMTPTestKit", "SwiftMTPCore"]),
     .testTarget(name: "FileProviderTests",
                 dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore"]),
+    .testTarget(name: "IntegrationTests",
+                dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPFileProvider", "SwiftMTPQuirks", "SwiftMTPTestKit"],
+                exclude: ["Resources"]),
   ]
 )

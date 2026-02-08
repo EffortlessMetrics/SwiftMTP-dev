@@ -1,0 +1,191 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# Copyright (c) 2025 Effortless Metrics, Inc.
+
+# Codecov Configuration for SwiftMTP
+# https://docs.codecov.io/docs/codecov-yaml
+
+# Project identification
+codecov:
+  require_ci_to_pass: true
+  notify:
+    after_n_builds: 1
+    wait_for_ci: true
+
+# Coverage targets and thresholds
+coverage:
+  # Overall project coverage
+  status:
+    project:
+      default:
+        target: 75%
+        threshold: 5%
+        if_no_uploads: error
+        if_not_found: success
+        if_ci_failed: error
+        informational: false
+        flags:
+          - unit
+          - integration
+          - property
+          - snapshot
+
+    # Per-target coverage (SwiftMTPCore, SwiftMTPIndex, etc.)
+    patch:
+      default:
+        target: 75%
+        threshold: 10%
+        if_no_uploads: error
+        informational: false
+        flags:
+          - unit
+          - integration
+
+  # Explicit coverage targets
+  range: 70..90
+  round: nearest
+  precision: 1
+
+# Coverage thresholds (fail if coverage drops below)
+# These apply to PRs - any PR that reduces coverage will fail
+coverage:
+  # Overall coverage threshold
+  global:
+    target: 75%
+    threshold: 5%
+
+  # Per-file coverage threshold
+  per_file:
+    threshold: 10%
+
+# Ignore patterns - files not counted in coverage
+ignore:
+  # Test files and helpers
+  - "SwiftMTPKit/Tests/**"
+  - "**/*_test.swift"
+  - "**/test_*.swift"
+  - "**/TestHelpers/**"
+  - "**/Mock*/**"
+  - "**/Fake*/**"
+  - "**/Stub*/**"
+
+  # Generated code
+  - "**/Generated/**"
+  - "**/*.generated.swift"
+  - "**/Codegen/**"
+
+  # Sample and demo code
+  - "**/Sample*/**"
+  - "**/Example*/**"
+  - "**/Demo*/**"
+
+  # CLI entry points
+  - "**/swiftmtp-cli/**"
+  - "**/main.swift"
+  - "**/SwiftMTPKitApp.swift"
+
+  # Third-party dependencies
+  - "**/CucumberSwift/**"
+  - "**/SwiftCheck/**"
+  - "**/swift-snapshot-testing/**"
+  - "**/SQLite/**"
+
+  # Platform-specific shims
+  - "**/*+UIKit.swift"
+  - "**/*+AppKit.swift"
+
+# Flag coverage by test type
+flags:
+  # Unit test coverage
+  unit:
+    paths:
+      - "SwiftMTPKit/Sources/SwiftMTPCore/**"
+      - "SwiftMTPKit/Sources/SwiftMTPIndex/**"
+      - "SwiftMTPKit/Sources/SwiftMTPObservability/**"
+      - "SwiftMTPKit/Sources/SwiftMTPQuirks/**"
+      - "SwiftMTPKit/Sources/SwiftMTPFileProvider/**"
+    carryforward: true
+    if_no_uploads: error
+
+  # Integration test coverage
+  integration:
+    paths:
+      - "SwiftMTPKit/Sources/SwiftMTPCore/**"
+      - "SwiftMTPKit/Sources/SwiftMTPIndex/**"
+      - "SwiftMTPKit/Sources/SwiftMTPSync/**"
+      - "SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/**"
+    carryforward: true
+    if_no_uploads: error
+
+  # Property-based test coverage
+  property:
+    paths:
+      - "SwiftMTPKit/Sources/SwiftMTPCore/Public/Models/**"
+      - "SwiftMTPKit/Sources/SwiftMTPIndex/DiffEngine.swift"
+      - "SwiftMTPKit/Sources/SwiftMTPCore/Public/Compat/**"
+    carryforward: true
+    if_no_uploads: warn
+
+  # Snapshot test coverage
+  snapshot:
+    paths:
+      - "SwiftMTPKit/Sources/SwiftMTPCore/Public/**"
+      - "SwiftMTPKit/Sources/SwiftMTPIndex/**"
+    carryforward: true
+    if_no_uploads: warn
+
+# Comment settings for PRs
+comment:
+  layout: "header, files, footer"
+  hide_project_coverage: false
+  show_carryforward_flags: true
+  require_changes: false
+  branches: null
+
+  # What to show in comment
+  show_covered: true
+  show_uncovered: true
+  show_partially_covered: true
+  show_flags: true
+
+  # Template for coverage changes
+  after_n_builds: 1
+
+# GitHub notification settings
+github_checks:
+  annotations: true
+  layout: "file"
+
+# Azure Pipelines settings
+azure_pipelines:
+  slug: "effortless-metrics/swiftmtp"
+  token: null
+
+# Custom queries for coverage analysis
+custom_graphs:
+  - name: "Core Coverage"
+    query: "path =~ /SwiftMTPCore/"
+    graph_type: "pie"
+
+  - name: "Index Coverage"
+    query: "path =~ /SwiftMTPIndex/"
+    graph_type: "pie"
+
+  - name: "File Provider Coverage"
+    query: "path =~ /SwiftMTPFileProvider/"
+    graph_type: "pie"
+
+# Slack/notification integrations (configured via Codecov UI)
+# These are example configurations
+# notifications:
+#   slack:
+#     default:
+#       url: "https://hooks.slack.com/services/xxx/yyy/zzz"
+#       threshold: 2%
+#       branches: null
+#       flags: null
+#       paths: null
+
+# Enterprise settings (if using Codecov Enterprise)
+# enterprise:
+#   upload_location: "https://codecov-enterprise.example.com/upload"
+#   allow_enterprise_coverage: true
