@@ -163,9 +163,12 @@ public actor LibUSBTransport: MTPTransport {
     var h: OpaquePointer?
     guard libusb_open(dev, &h) == 0, var handle = h else { libusb_unref_device(dev); throw TransportError.accessDenied }
 
-    if config.resetOnOpen {
-        _ = libusb_reset_device(handle)
-        try? await Task.sleep(nanoseconds: 500_000_000)
+    if config.resetOnOpen && ProcessInfo.processInfo.environment["SWIFTMTP_NO_RESET"] == nil {
+        let resetRC = libusb_reset_device(handle)
+        if debug { print("   [Open] resetOnOpen rc=\(resetRC), stabilizeMs=\(config.stabilizeMs)") }
+        try? await Task.sleep(nanoseconds: UInt64(config.stabilizeMs) * 1_000_000)
+    } else if debug {
+        print("   [Open] resetOnOpen skipped (SWIFTMTP_NO_RESET or disabled)")
     }
 
     // Phase 1: Rank → Claim → Probe interface candidates
