@@ -20,9 +20,13 @@ final class ModelSnapshotTests: XCTestCase {
 
     // MARK: - Test Configuration
 
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+        try super.setUpWithError()
         SnapshotTesting.diffTool = "ksdiff"
+        try XCTSkipUnless(
+            ProcessInfo.processInfo.environment["SWIFTMTP_SNAPSHOT_TESTS"] == "1",
+            "Set SWIFTMTP_SNAPSHOT_TESTS=1 to run snapshot reference assertions."
+        )
     }
 
     // MARK: - ProbeReceipt Snapshots

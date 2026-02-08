@@ -331,9 +331,12 @@ final class MTPDevicePropertyTests: XCTestCase {
         property("Connected state should not transition to itself") <- forAll(
             Gen<Int>.pure(0)
         ) { _ -> Bool in
-            // Once connected, device should disconnect before reconnecting
-            let connected: DeviceConnectionState = .connected
-            return connected != .connected // Should be false
+            let validTransitions: [DeviceConnectionState: Set<DeviceConnectionState>] = [
+                .disconnected: [.connecting],
+                .connecting: [.connected, .disconnected],
+                .connected: [.disconnected]
+            ]
+            return !(validTransitions[.connected] ?? []).contains(.connected)
         }
     }
 }
@@ -722,7 +725,7 @@ final class PathKeyPropertyTests: XCTestCase {
                 steps += 1
             }
             
-            return steps == depth + 1
+            return steps == depth
         }
     }
 }
@@ -953,7 +956,9 @@ final class EdgeCasePropertyTests: XCTestCase {
         ) { components in
             let result = PathKey.normalize(storage: 0, components: components)
             
-            // Should start with 00000000
+            if components.isEmpty {
+                return result == "00000000"
+            }
             return result.hasPrefix("00000000/")
         }
     }

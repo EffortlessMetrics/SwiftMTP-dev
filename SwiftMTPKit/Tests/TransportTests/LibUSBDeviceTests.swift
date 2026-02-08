@@ -126,7 +126,7 @@ final class LibUSBDeviceTests: XCTestCase {
             )
         )
 
-        XCTAssertEqual(withObject.objects.count, 1)
+        XCTAssertEqual(withObject.objects.count, withStorage.objects.count + 1)
     }
 
     // MARK: - Hot-Plug Detection Tests

@@ -60,7 +60,7 @@ final class StoreAdapterTests: XCTestCase {
         
         let profile = LearnedProfile(
             fingerprint: fingerprint,
-            fingerprintHash: "hash123",
+            fingerprintHash: fingerprint.hashString,
             created: Date(),
             lastUpdated: Date(),
             sampleCount: 10,

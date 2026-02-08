@@ -5,6 +5,7 @@ import Foundation
 import Testing
 @testable import SwiftMTPIndex
 @testable import SwiftMTPCore
+import SQLite
 
 // MARK: - Test Helpers
 
@@ -508,20 +509,24 @@ struct SQLiteIndexMigrationTests {
             deviceId TEXT NOT NULL,
             storageId INTEGER NOT NULL,
             handle INTEGER NOT NULL,
+            parentHandle INTEGER,
             name TEXT NOT NULL,
             pathKey TEXT NOT NULL,
             sizeBytes INTEGER,
+            mtime INTEGER,
+            formatCode INTEGER NOT NULL DEFAULT 0x3000,
+            isDirectory INTEGER NOT NULL DEFAULT 0,
+            changeCounter INTEGER NOT NULL DEFAULT 0,
+            crawledAt INTEGER NOT NULL DEFAULT 0,
+            stale INTEGER NOT NULL DEFAULT 0,
             PRIMARY KEY (deviceId, storageId, handle)
         );
         CREATE INDEX IF NOT EXISTS idx_objects_handle ON live_objects(handle);
         """
         
-        // Write legacy schema
-        let dbHandle = try FileHandle(forWritingTo: URL(fileURLWithPath: dbPath))
-        if let data = legacySQL.data(using: .utf8) {
-            dbHandle.write(data)
-        }
-        try dbHandle.close()
+        // Create a real SQLite DB with a legacy table shape.
+        let legacyDB = try Connection(dbPath)
+        try legacyDB.execute(legacySQL)
         
         // Open with new schema - should handle gracefully
         let index = try SQLiteLiveIndex(path: dbPath)

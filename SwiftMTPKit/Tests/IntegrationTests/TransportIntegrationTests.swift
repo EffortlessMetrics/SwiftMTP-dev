@@ -10,11 +10,16 @@ import XCTest
 /// Integration tests for USB transport layer scenarios
 @available(macOS 15.0, *)
 final class TransportIntegrationTests: XCTestCase {
+  private func connectedTransport() async throws -> MockUSBTransport {
+    let transport = MockUSBTransport()
+    try await transport.connect(vid: 0x18D1, pid: 0x4EE1)
+    return transport
+  }
 
   // MARK: - USB Bandwidth Tests
 
   func testUSBBandwidthSaturation() async throws {
-    let transport = MockUSBTransport()
+    let transport = try await connectedTransport()
 
     // Set bandwidth throttling to simulate USB 2.0 HS
     await transport.setBandwidthThrottling(1.0)
@@ -31,7 +36,7 @@ final class TransportIntegrationTests: XCTestCase {
   }
 
   func testBandwidthThrottling() async throws {
-    let transport = MockUSBTransport()
+    let transport = try await connectedTransport()
 
     // Set throttled bandwidth (USB 1.1 LS speed)
     await transport.setBandwidthThrottling(0.1)
@@ -75,7 +80,7 @@ final class TransportIntegrationTests: XCTestCase {
   }
 
   func testIsochronousTransfers() async throws {
-    let transport = MockUSBTransport()
+    let transport = try await connectedTransport()
 
     // Isochronous transfers have different timing characteristics
     await transport.setBandwidthThrottling(0.5)
@@ -92,7 +97,7 @@ final class TransportIntegrationTests: XCTestCase {
   // MARK: - Error Injection Tests
 
   func testCorruptPacketInjection() async throws {
-    let transport = MockUSBTransport()
+    let transport = try await connectedTransport()
 
     await transport.setErrorInjection(.corruptNextPacket)
 
@@ -106,7 +111,7 @@ final class TransportIntegrationTests: XCTestCase {
   }
 
   func testTimeoutInjection() async throws {
-    let transport = MockUSBTransport()
+    let transport = try await connectedTransport()
 
     await transport.setErrorInjection(.timeoutNextRequest)
 
@@ -120,7 +125,7 @@ final class TransportIntegrationTests: XCTestCase {
   }
 
   func testStallInjection() async throws {
-    let transport = MockUSBTransport()
+    let transport = try await connectedTransport()
 
     await transport.setErrorInjection(.stallNextRequest)
 
@@ -134,7 +139,7 @@ final class TransportIntegrationTests: XCTestCase {
   }
 
   func testRandomBitFlips() async throws {
-    let transport = MockUSBTransport()
+    let transport = try await connectedTransport()
 
     await transport.setErrorInjection(.randomBitFlips(probability: 0.01))
 
@@ -159,7 +164,7 @@ final class TransportIntegrationTests: XCTestCase {
   // MARK: - Response Queue Tests
 
   func testResponseQueue() async throws {
-    let transport = MockUSBTransport()
+    let transport = try await connectedTransport()
 
     // Queue responses
     await transport.queueResponse(Data([0x20, 0x00, 0x0A, 0x00])) // Response header
@@ -172,7 +177,7 @@ final class TransportIntegrationTests: XCTestCase {
   }
 
   func testProgrammedDelays() async throws {
-    let transport = MockUSBTransport()
+    let transport = try await connectedTransport()
 
     // Program slow response for GetDeviceInfo
     await transport.programDelay(opcode: 0x1001, delay: 0.1)
@@ -190,9 +195,14 @@ final class TransportIntegrationTests: XCTestCase {
 
 @available(macOS 15.0, *)
 final class RequestLoggingTests: XCTestCase {
+  private func connectedTransport() async throws -> MockUSBTransport {
+    let transport = MockUSBTransport()
+    try await transport.connect(vid: 0x18D1, pid: 0x4EE1)
+    return transport
+  }
 
   func testRequestLogging() async throws {
-    let transport = MockUSBTransport()
+    let transport = try await connectedTransport()
 
     // Clear previous log
     await transport.clearRequests()
@@ -212,7 +222,7 @@ final class RequestLoggingTests: XCTestCase {
   }
 
   func testRequestLogTiming() async throws {
-    let transport = MockUSBTransport()
+    let transport = try await connectedTransport()
     await transport.clearRequests()
 
     let data = Data(repeating: 0xFF, count: 4096)

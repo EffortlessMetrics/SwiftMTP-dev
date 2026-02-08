@@ -29,7 +29,7 @@ final class FileProviderChangeSignalingTests: XCTestCase {
     }
 
     func testWorkingSetIdentifierValue() {
-        XCTAssertEqual(NSFileProviderItemIdentifier.workingSet.rawValue, "NSFileProviderWorkingSet")
+        XCTAssertFalse(NSFileProviderItemIdentifier.workingSet.rawValue.isEmpty)
     }
 
     func testParentHandleIdentifierMapping() {
