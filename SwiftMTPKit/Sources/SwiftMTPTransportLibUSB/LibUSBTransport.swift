@@ -187,7 +187,29 @@ public actor LibUSBTransport: MTPTransport {
     }
 
     // PTP Device Reset to clear stale sessions
-    _ = libusb_control_transfer(handle, 0x21, 0x66, 0, UInt16(sel.ifaceNumber), nil, 0, 5000)
+    let resetRC = libusb_control_transfer(handle, 0x21, 0x66, 0, UInt16(sel.ifaceNumber), nil, 0, 5000)
+    if debug { print("   [Open] PTP Device Reset (0x66) rc=\(resetRC)") }
+
+    if resetRC < 0 {
+      // Device doesn't support PTP Device Reset — send CloseSession (0x1003) via bulk
+      // to clear any stale session from a previous unclean disconnect.
+      let closeCmd = makePTPCommand(opcode: 0x1003, txid: 0, params: [])
+      var sent: Int32 = 0
+      let writeRC = closeCmd.withUnsafeBytes { ptr -> Int32 in
+        libusb_bulk_transfer(
+          handle, sel.bulkOut,
+          UnsafeMutablePointer(mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
+          Int32(closeCmd.count), &sent, 2000
+        )
+      }
+      if debug { print("   [Open] CloseSession fallback write rc=\(writeRC)") }
+      // Drain the response (don't care about result)
+      var respBuf = [UInt8](repeating: 0, count: 512)
+      var got: Int32 = 0
+      _ = libusb_bulk_transfer(handle, sel.bulkIn, &respBuf, Int32(respBuf.count), &got, 1000)
+      if debug { print("   [Open] CloseSession fallback read got=\(got)") }
+    }
+
     try? await Task.sleep(nanoseconds: 200_000_000)
 
     // Drain stale data

@@ -43,11 +43,13 @@ This document captures **repeatable** performance results for SwiftMTP across MT
 #### Google Pixel 7 (Android 14)
 - **VID:PID**: 18d1:4ee1
 - **USB Speed**: SuperSpeed (USB 3.2 Gen 1)
-- **MTP Operations**: Full support including GetPartialObject64, SendPartialObject
+- **MTP Operations**: Unknown (bulk endpoints unresponsive on macOS Tahoe 26)
 - **Storage**: Internal + SD card slot
 - **Quirk ID**: `google-pixel-7-4ee1`
-- **Confidence**: Medium
-- **Status**: Stable
+- **Confidence**: Low
+- **Status**: Experimental
+
+> **macOS Tahoe 26 Issue**: The Pixel 7 is currently non-functional on macOS Tahoe 26. The control plane works (set_configuration, claim_interface, set_alt_setting all succeed), but bulk transfers time out with `rc=-7` (LIBUSB_ERROR_TIMEOUT), `sent=0/12`. Pass 2 with USB reset also fails; `GetDeviceStatus` returns `0x0008` consistently. No MTP session can be established. May work on other macOS versions or with different USB host controllers.
 
 **Quirk Configuration:**
 ```json
@@ -63,46 +65,61 @@ This document captures **repeatable** performance results for SwiftMTP across MT
 ```
 
 **Performance Results:**
-- **Probe**: Device enumeration via libusb successful
-- **Read Speed**: ~38 MB/s (USB 3.0 limited)
-- **Write Speed**: ~32 MB/s (USB 3.0 limited)
-- **Resume**: Full support via GetPartialObject64
-- **Notes**: Excellent performance, full MTP feature set
+- **Probe**: Control plane succeeds, bulk endpoints unresponsive
+- **Read Speed**: N/A (blocked by bulk transfer timeout)
+- **Write Speed**: N/A (blocked by bulk transfer timeout)
+- **Resume**: N/A
+- **Notes**: Previously listed performance data was mock data. Real device testing blocked by macOS Tahoe 26 bulk transfer issue. See `Docs/benchmarks/probes/pixel7-probe-debug.txt`.
 
 #### OnePlus 3T (Android 8.0.0, OxygenOS)
 - **VID:PID**: 2a70:f003
-- **USB Speed**: SuperSpeed (USB 3.2 Gen 1)
-- **MTP Operations**: Full PTP/MTP extensions
-- **Storage**: Internal (128GB)
+- **Manufacturer**: OnePlus
+- **Model**: ONEPLUS A3010
+- **MTP Operations**: 33 operations, 6 events supported
+- **Capabilities**: partialRead, partialWrite, supportsEvents
+- **Fallbacks**: enum=propList5, read=partial64, write=partial
+- **Storage**: 1 internal, 113.1 GB total
 - **Quirk ID**: `oneplus-3t-f003`
-- **Confidence**: Medium
-- **Status**: Experimental
+- **Confidence**: High
+- **Status**: Stable
 
-**Quirk Configuration:**
+**Quirk Configuration (tuned from real device):**
 ```json
 {
   "maxChunkBytes": 1048576,
-  "handshakeTimeoutMs": 15000,
-  "ioTimeoutMs": 30000,
-  "inactivityTimeoutMs": 10000,
-  "overallDeadlineMs": 120000,
-  "stabilizeMs": 1000,
-  "resetOnOpen": true
+  "handshakeTimeoutMs": 6000,
+  "ioTimeoutMs": 8000,
+  "stabilizeMs": 200,
+  "resetOnOpen": false
 }
 ```
 
 **USB Interface:**
 ```
 iface=0 alt=0 class=0x06 sub=0x01 proto=0x01 in=0x81 out=0x01 evt=0x82 name="MTP"
-iface=1 alt=0 class=0x08 sub=0x06 proto=0x50 in=0x83 out=0x02 evt=0x00 name="Mass Storage"
+iface=1 alt=0 class=0x08 sub=0x06 proto=0x50 name="Mass Storage"
 ```
+
+**Session Management:**
+- **resetOnOpen**: false (new claim sequence eliminates need for USB reset)
+- PTP Device Reset (0x66): NOT supported (rc=-9)
+- CloseSession fallback used to clear stale sessions
+- Session establishment: 0ms, no retry needed
+
+**Probe Performance:**
+- Pass 1 probe time: ~115ms
+
+**Benchmark Notes:**
+- `SendObject` returns `0x201D` (`Object_Too_Large`) for bench writes -- needs investigation
+- Write throughput data not yet available due to this issue
 
 **Notes:**
 - Device detected via USB enumeration
-- May require "Trust this computer" acceptance on device
-- macOS USB privacy authorization required for terminal/app
-- Post-open session delay of 1000ms recommended
 - Dual interfaces (MTP + Mass Storage)
+- No USB reset required; CloseSession fallback handles stale session recovery
+- Stabilization delay reduced from 1000ms to 200ms based on real device testing
+- Timeouts reduced from conservative defaults (handshake 15s -> 6s, I/O 30s -> 8s)
+- Evidence: `Docs/benchmarks/probes/oneplus3t-probe-debug.txt`, `oneplus3t-probe.json`, `oneplus3t-ls.txt`
 
 #### Samsung Galaxy S21 (Android 13, One UI 5.1)
 - **VID:PID**: 04e8:6860
@@ -170,7 +187,7 @@ iface=1 alt=0 class=0x08 sub=0x06 proto=0x50 in=0x83 out=0x02 evt=0x00 name="Mas
 
 | Device | GetPartialObject64 | SendPartialObject | Resume Read | Resume Write |
 |--------|-------------------|------------------|-------------|--------------|
-| Pixel 7 | ✅ | ✅ | ✅ Full | ✅ Full |
+| Pixel 7 | N/A (bulk timeout) | N/A (bulk timeout) | N/A | N/A |
 | OnePlus 3T | ✅ | ✅ | ✅ Full | ✅ Full |
 | Galaxy S21 | ✅ | ❌ | ✅ Full | ❌ Single-pass |
 | Xiaomi Mi Note 2 | ✅ | ✅ | ✅ Full | ✅ Full |
@@ -186,9 +203,11 @@ SwiftMTP automatically tunes chunk sizes based on device capabilities:
 
 ### OnePlus Devices
 - Require device trust acceptance on first connection
-- May need post-open stabilization delay (500-1000ms)
-- USB 3.0 support on newer models
-- Some models have dual interfaces (MTP + Mass Storage)
+- OnePlus 3T: stabilization delay 200ms (reduced from initial 1000ms estimate)
+- OnePlus 3T: resetOnOpen=false; CloseSession fallback handles stale sessions
+- OnePlus 3T: PTP Device Reset (0x66) not supported
+- Dual interfaces (MTP + Mass Storage)
+- `SendObject` returns `Object_Too_Large` (0x201D) for benchmark writes -- under investigation
 
 ### Samsung Devices
 - May require explicit MTP mode selection in developer options
@@ -197,10 +216,11 @@ SwiftMTP automatically tunes chunk sizes based on device capabilities:
 - Partial MTP implementation (missing SendPartialObject)
 
 ### Google Pixel Series
-- Excellent MTP compliance
-- Fast enumeration even with large object counts
-- Reliable resume support across all operations
-- Clean USB interface configuration
+- Control plane (set_configuration, claim_interface, set_alt_setting) works on macOS Tahoe 26
+- Bulk transfer endpoints unresponsive on macOS Tahoe 26 (write rc=-7, sent=0/12)
+- No MTP session can be established on current test environment
+- May work on other macOS versions or with different USB host controllers
+- Previous performance claims were based on mock data and have been retracted
 
 ### Xiaomi Devices
 - Require explicit stabilization delay after device open (100-500ms)
@@ -276,13 +296,13 @@ Include at top of the device doc:
 
 | Device | VID:PID | Status | Key Quirks |
 |--------|---------|--------|------------|
-| Google Pixel 7 | 18d1:4ee1 | Stable | Full MTP, fast enumeration |
-| OnePlus 3T | 2a70:f003 | Experimental | Device trust, stabilization delay |
+| Google Pixel 7 | 18d1:4ee1 | Experimental | Bulk transfer timeout on macOS Tahoe 26 |
+| OnePlus 3T | 2a70:f003 | Stable | Dual interface, CloseSession fallback, 200ms stabilize |
 | Xiaomi Mi Note 2 | 2717:ff10 | Known | DEVICE_BUSY, stabilization 250-500ms |
 | Samsung Galaxy S21 | 04e8:6860 | Known | USB 2.0, partial MTP |
 | Canon EOS R5 | 04a9:3196 | Known | PTP-derived, limited MTP |
 
 ---
 
-*Last updated: 2026-02-07*
+*Last updated: 2026-02-08*
 *SwiftMTP Version: 1.1.0*

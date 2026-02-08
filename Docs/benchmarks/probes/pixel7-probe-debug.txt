@@ -1,0 +1,16 @@
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'swiftmtp' complete! (0.15s)
+🔍 Probing for MTP devices...
+✅ Device found and opened!
+❌ Probe failed: io("no MTP interface responded to probe")
+   [Open] Pass 1: probing 1 candidate(s)
+   [Probe] Trying interface 0 (score=105, class=0x06)
+   [Claim] iface=0 bulkIn=0x81 bulkOut=0x01
+   [Claim] detach_kernel_driver rc=-3 (non-fatal)
+   [Claim] set_configuration(1) rc=0
+   [Claim] set_interface_alt_setting(0) rc=0
+   [Claim] claimed OK, waiting 100ms for pipe activation
+   [Probe] sending GetDeviceInfo txid=1, timeoutMs=20000
+   [Probe] write rc=-7 sent=0/12
+   [Probe] Interface 0 failed (20532ms), trying next...

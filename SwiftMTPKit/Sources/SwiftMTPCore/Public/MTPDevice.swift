@@ -473,6 +473,8 @@ public actor MTPDeviceManager {
         switch profile.lowercased() {
         case "s21", "galaxy":
             summary = MTPDeviceSummary(id: MTPDeviceID(raw: "04e8:6860@1:3"), manufacturer: "Samsung (Demo)", model: "Galaxy S21", vendorID: 0x04e8, productID: 0x6860, bus: 1, address: 3)
+        case "oneplus", "oneplus3t":
+            summary = MTPDeviceSummary(id: MTPDeviceID(raw: "2a70:f003@3:2"), manufacturer: "OnePlus (Demo)", model: "ONEPLUS A3010", vendorID: 0x2a70, productID: 0xf003, bus: 3, address: 2)
         case "iphone", "ios":
             summary = MTPDeviceSummary(id: MTPDeviceID(raw: "05ac:12a8@1:4"), manufacturer: "Apple (Demo)", model: "iPhone", vendorID: 0x05ac, productID: 0x12a8, bus: 1, address: 4)
         case "canon", "camera":
