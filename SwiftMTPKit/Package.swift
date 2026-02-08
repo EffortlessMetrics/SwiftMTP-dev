@@ -96,7 +96,7 @@ let package = Package(
                 dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", .product(name: "CucumberSwift", package: "CucumberSwift")],
                 resources: [.copy("Features")]),
     .testTarget(name: "PropertyTests",
-                dependencies: ["SwiftMTPCore", "SwiftCheck"]),
+                dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPObservability", "SwiftMTPStore", "SwiftMTPQuirks", "SwiftCheck"]),
     .testTarget(name: "SnapshotTests",
                 dependencies: [
                     "SwiftMTPCore",
@@ -109,7 +109,6 @@ let package = Package(
     .testTarget(name: "FileProviderTests",
                 dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore"]),
     .testTarget(name: "IntegrationTests",
-                dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPFileProvider", "SwiftMTPQuirks", "SwiftMTPTestKit"],
-                exclude: ["Resources"]),
+                dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPFileProvider", "SwiftMTPQuirks", "SwiftMTPTestKit"]),
   ]
 )

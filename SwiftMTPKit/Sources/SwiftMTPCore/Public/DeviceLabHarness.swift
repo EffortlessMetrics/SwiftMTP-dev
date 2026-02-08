@@ -150,7 +150,7 @@ public actor MockUSBTransport: @unchecked Sendable {
   }
 }
 
-public enum USBTransportError: Error, Sendable {
+public enum USBTransportError: Error, Sendable, Equatable {
   case notConnected
   case noData
   case timeout
@@ -508,12 +508,18 @@ public struct DeviceLabHarness: Sendable {
     try await device.openIfNeeded()
     let info = try await device.info
     let policy = await device.devicePolicy
-    let fingerprint = MTPDeviceFingerprint.fromUSB(
-      vid: device.summary.vendorID ?? 0,
-      pid: device.summary.productID ?? 0,
-      interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
-      epIn: 0x81, epOut: 0x01
-    )
+    // Prefer the real fingerprint from the probe receipt (carries actual USB descriptor data)
+    let fingerprint: MTPDeviceFingerprint
+    if let receipt = await device.probeReceipt {
+      fingerprint = receipt.fingerprint
+    } else {
+      fingerprint = MTPDeviceFingerprint.fromUSB(
+        vid: device.summary.vendorID ?? 0,
+        pid: device.summary.productID ?? 0,
+        interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
+        epIn: 0x81, epOut: 0x01
+      )
+    }
 
     var tests: [CapabilityTestResult] = []
 

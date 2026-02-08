@@ -270,11 +270,22 @@ public actor LibUSBTransport: MTPTransport {
     var drain = [UInt8](repeating: 0, count: 4096), got: Int32 = 0
     while libusb_bulk_transfer(handle, sel.bulkIn, &drain, Int32(drain.count), &got, 10) == 0 && got > 0 {}
 
+    let descriptor = MTPLinkDescriptor(
+      interfaceNumber: sel.ifaceNumber,
+      interfaceClass: sel.ifaceClass,
+      interfaceSubclass: sel.ifaceSubclass,
+      interfaceProtocol: sel.ifaceProtocol,
+      bulkInEndpoint: sel.bulkIn,
+      bulkOutEndpoint: sel.bulkOut,
+      interruptEndpoint: sel.eventIn != 0 ? sel.eventIn : nil
+    )
+
     let link = MTPUSBLink(
       handle: handle, device: dev,
       iface: sel.ifaceNumber, epIn: sel.bulkIn, epOut: sel.bulkOut, epEvt: sel.eventIn,
       config: config, manufacturer: summary.manufacturer, model: summary.model,
-      cachedDeviceInfoData: result.cachedDeviceInfo
+      cachedDeviceInfoData: result.cachedDeviceInfo,
+      linkDescriptor: descriptor
     )
 
     activeLinks.append(link)
@@ -300,9 +311,11 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   private var eventContinuation: AsyncStream<Data>.Continuation?, eventPumpTask: Task<Void, Never>?
   /// Raw device-info bytes cached from the interface probe (avoids redundant GetDeviceInfo).
   private let cachedDeviceInfoData: Data?
+  /// USB interface/endpoint metadata from transport probing.
+  public let linkDescriptor: MTPLinkDescriptor?
 
-  init(handle: OpaquePointer, device: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8, config: SwiftMTPConfig, manufacturer: String, model: String, cachedDeviceInfoData: Data? = nil) {
-    self.h = handle; self.dev = device; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt; self.config = config; self.manufacturer = manufacturer; self.model = model; self.cachedDeviceInfoData = cachedDeviceInfoData
+  init(handle: OpaquePointer, device: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8, epEvt: UInt8, config: SwiftMTPConfig, manufacturer: String, model: String, cachedDeviceInfoData: Data? = nil, linkDescriptor: MTPLinkDescriptor? = nil) {
+    self.h = handle; self.dev = device; self.iface = iface; self.inEP = epIn; self.outEP = epOut; self.evtEP = epEvt; self.config = config; self.manufacturer = manufacturer; self.model = model; self.cachedDeviceInfoData = cachedDeviceInfoData; self.linkDescriptor = linkDescriptor
   }
 
   public func close() async { eventPumpTask?.cancel(); eventContinuation?.finish(); libusb_release_interface(h, Int32(iface)); libusb_close(h); libusb_unref_device(dev) }

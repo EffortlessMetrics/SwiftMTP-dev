@@ -196,6 +196,11 @@ public struct QuirkDatabase: Codable, Sendable {
   public var schemaVersion: String
   public var entries: [DeviceQuirk]
 
+  public init(schemaVersion: String, entries: [DeviceQuirk]) {
+    self.schemaVersion = schemaVersion
+    self.entries = entries
+  }
+
   private enum CodingKeys: String, CodingKey {
     case schemaVersion, version, entries
   }

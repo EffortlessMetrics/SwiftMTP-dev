@@ -183,6 +183,8 @@ struct SwiftMTPCLI {
                 exitNow(.ok)
             }
             await CollectCLICommand.run(args: remainingArgs, flags: flags)
+        case "wizard":
+            await WizardCommand.run(flags: flags, args: remainingArgs)
         case "submit":
             guard let bundlePath = remainingArgs.first else {
                 print("❌ Usage: submit <bundle-path> [--gh]")
@@ -218,7 +220,7 @@ struct SwiftMTPCLI {
         print("SwiftMTP CLI - Modular Refactor")
         print("Usage: swift run swiftmtp [flags] <command>")
         print("")
-        print("Commands: probe, usb-dump, diag, storages, ls, pull, push, bench, mirror, quirks, health, collect, delete, move, events, learn-promote, bdd, snapshot, version")
+        print("Commands: probe, usb-dump, diag, storages, ls, pull, push, bench, mirror, quirks, health, collect, submit, wizard, delete, move, events, learn-promote, bdd, snapshot, version")
     }
 }
 

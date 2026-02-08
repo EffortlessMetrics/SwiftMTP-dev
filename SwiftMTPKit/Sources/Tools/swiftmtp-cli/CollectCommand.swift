@@ -110,6 +110,44 @@ public enum CollectCommand {
     }
   }
 
+  // MARK: - Bundle collection (reusable by WizardCommand)
+
+  /// Collect a device evidence bundle without calling exitNow().
+  /// Returns the bundle URL and optional CI output.
+  public static func collectBundle(flags: Flags) async throws -> (bundleURL: URL, summary: MTPDeviceSummary) {
+    let summary = try await selectDeviceOrExit(flags: flags)
+    let (device, _) = try await openDevice(summary: summary, strict: flags.strict)
+    let bundleURL = try prepareBundlePath(flags: flags, summary: summary)
+
+    // Collect probe.json
+    let probe = try await within(ms: 90_000) {
+      try await collectProbeJSON(device: device, summary: summary)
+    }
+    try writeJSONFile(probe, to: bundleURL.appendingPathComponent("probe.json"))
+
+    // Collect usb-dump.txt
+    let rawDump = try await within(ms: 90_000) { try await generateSimpleUSBDump(summary: summary) }
+    let sanitized = sanitizeDump(rawDump)
+    try sanitized.write(to: bundleURL.appendingPathComponent("usb-dump.txt"), atomically: true, encoding: .utf8)
+
+    // Optional benchmarks
+    if !flags.runBench.isEmpty {
+      let benchResults = try await within(ms: 90_000) {
+        try await runBenches(device: device, sizes: flags.runBench)
+      }
+      for (name, csv) in benchResults {
+        let url = bundleURL.appendingPathComponent("bench-\(name).csv")
+        try csv.write(to: url, atomically: true, encoding: .utf8)
+      }
+    }
+
+    // submission.json
+    let manifest = SubmissionSummary.make(from: summary, bundle: bundleURL)
+    try writeJSONFile(manifest, to: bundleURL.appendingPathComponent("submission.json"))
+
+    return (bundleURL, summary)
+  }
+
   // MARK: - Public entry point used by main.swift
   public static func run(flags: Flags) async -> ExitCode {
     let jsonMode = flags.json
@@ -305,6 +343,12 @@ public enum CollectCommand {
     var address: Int
     var deviceInfo: DeviceInfoJSON
     var storageCount: Int
+    var interfaceClass: String?
+    var interfaceSubclass: String?
+    var interfaceProtocol: String?
+    var bulkInEndpoint: String?
+    var bulkOutEndpoint: String?
+    var interruptEndpoint: String?
   }
 
   private struct DeviceInfoJSON: Codable, Sendable {
@@ -318,15 +362,24 @@ public enum CollectCommand {
                                        summary: MTPDeviceSummary) async throws -> ProbeJSON {
     let info = try await device.getDeviceInfo()
     let storages = try await device.storages()
+    // Populate interface/endpoint fields from probe receipt fingerprint
+    let receipt = await device.probeReceipt
+    let fp = receipt?.fingerprint
     return .init(
       timestamp: ISO8601DateFormatter().string(from: Date()),
       vendorID: summary.vendorID ?? 0, productID: summary.productID ?? 0,
       bus: Int(summary.bus ?? 0), address: Int(summary.address ?? 0),
       deviceInfo: .init(manufacturer: info.manufacturer,
                         model: info.model,
-                        version: "unknown",
+                        version: info.version,
                         serial: info.serialNumber),
-      storageCount: storages.count
+      storageCount: storages.count,
+      interfaceClass: fp?.interfaceTriple.class,
+      interfaceSubclass: fp?.interfaceTriple.subclass,
+      interfaceProtocol: fp?.interfaceTriple.protocol,
+      bulkInEndpoint: fp?.endpointAddresses.input,
+      bulkOutEndpoint: fp?.endpointAddresses.output,
+      interruptEndpoint: fp?.endpointAddresses.event
     )
   }
 
