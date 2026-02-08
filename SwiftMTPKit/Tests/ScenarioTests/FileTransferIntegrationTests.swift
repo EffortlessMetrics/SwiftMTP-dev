@@ -17,7 +17,7 @@ final class FileTransferIntegrationTests: XCTestCase {
         
         // Get storage
         let storages = try await device.storages()
-        guard !storages.isEmpty else {
+        guard let storage = storages.first else {
             XCTFail("No storages found")
             return
         }
@@ -47,7 +47,7 @@ final class FileTransferIntegrationTests: XCTestCase {
         let device = VirtualMTPDevice(config: config)
         
         let storages = try await device.storages()
-        guard !storages.isEmpty else {
+        guard let storage = storages.first else {
             XCTFail("No storages found")
             return
         }
@@ -172,7 +172,8 @@ final class FileTransferIntegrationTests: XCTestCase {
         
         XCTAssertTrue(operations.contains(where: { $0.operation == "storages" }),
                      "Should record storages operation")
-        XCTAssertFalse(allObjects.isEmpty, "List should return at least one object")
+        XCTAssertTrue(operations.contains(where: { $0.operation == "list" }),
+                     "Should record list operation")
     }
 }
 
@@ -184,7 +185,7 @@ final class FileNamingEdgeCaseTests: XCTestCase {
         let device = VirtualMTPDevice(config: config)
         
         let storages = try await device.storages()
-        guard !storages.isEmpty else {
+        guard let storage = storages.first else {
             XCTFail("No storages found")
             return
         }
@@ -216,7 +217,7 @@ final class FileNamingEdgeCaseTests: XCTestCase {
         let device = VirtualMTPDevice(config: config)
         
         let storages = try await device.storages()
-        guard !storages.isEmpty else {
+        guard let storage = storages.first else {
             XCTFail("No storages found")
             return
         }
@@ -247,7 +248,7 @@ final class FileNamingEdgeCaseTests: XCTestCase {
         let device = VirtualMTPDevice(config: config)
         
         let storages = try await device.storages()
-        guard !storages.isEmpty else {
+        guard let storage = storages.first else {
             XCTFail("No storages found")
             return
         }

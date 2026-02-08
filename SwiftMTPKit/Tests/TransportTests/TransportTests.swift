@@ -167,8 +167,7 @@ enum MTPFuzzer {
             }
         case 1: // Insert random byte
             if result.count < 1000 {
-                // Allow insertion into an empty buffer at index 0.
-                let idx = Int.random(in: 0...result.count)
+                let idx = Int.random(in: 0..<result.count)
                 result.insert(UInt8.random(in: 0...255), at: idx)
             }
         case 2: // Delete byte
