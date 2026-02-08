@@ -357,7 +357,7 @@ struct SQLiteIndexConcurrencyTests {
         let index = try SQLiteLiveIndex(path: dbPath)
         defer { try? FileManager.default.removeItem(atPath: dbPath) }
         
-        await withTaskGroup(of: Void.self) { group in
+        try await withThrowingTaskGroup(of: Void.self) { group in
             for i in 0..<5 {
                 group.addTask {
                     let deviceId = "device-\(i)"
@@ -368,9 +368,10 @@ struct SQLiteIndexConcurrencyTests {
                             name: "file\(i)-\(j).txt"
                         )
                     }
-                    try? await index.upsertObjects(objects, deviceId: deviceId)
+                    try await index.upsertObjects(objects, deviceId: deviceId)
                 }
             }
+            try await group.waitForAll()
         }
         
         // Verify data integrity
@@ -397,21 +398,21 @@ struct SQLiteIndexConcurrencyTests {
         try await index.upsertObjects(initial, deviceId: "test-device")
         
         // Concurrent read and write
-        await withTaskGroup(of: Void.self) { group in
+        try await withThrowingTaskGroup(of: Void.self) { group in
             // Reader tasks
             for _ in 0..<3 {
                 group.addTask {
                     for _ in 0..<50 {
-                        let children = try? await index.children(
+                        let children = try await index.children(
                             deviceId: "test-device",
                             storageId: 0x10001,
                             parentHandle: nil
                         )
-                        _ = children?.count
+                        _ = children.count
                     }
                 }
             }
-            
+
             // Writer tasks
             for i in 0..<5 {
                 group.addTask {
@@ -421,9 +422,10 @@ struct SQLiteIndexConcurrencyTests {
                             name: "new\(i)-\(j).txt"
                         )
                     }
-                    try? await index.upsertObjects(objects, deviceId: "test-device")
+                    try await index.upsertObjects(objects, deviceId: "test-device")
                 }
             }
+            try await group.waitForAll()
         }
         
         // Verify all data accessible
