@@ -384,6 +384,115 @@ struct SQLiteIndexConcurrencyTests {
         }
     }
     
+    @Test("Nested transaction commit")
+    func testNestedTransactionCommit() async throws {
+        let tempDir = FileManager.default.temporaryDirectory
+        let dbPath = tempDir.appendingPathComponent("test-nested-commit-\(UUID().uuidString).sqlite").path
+
+        let index = try SQLiteLiveIndex(path: dbPath)
+        let db = index.database
+        defer { try? FileManager.default.removeItem(atPath: dbPath) }
+
+        try db.withTransaction {
+            // Outer insert
+            try db.withStatement(
+                "INSERT INTO live_objects (deviceId, storageId, handle, parentHandle, name, pathKey, sizeBytes, mtime, formatCode, isDirectory, changeCounter, crawledAt, stale) VALUES (?, ?, ?, NULL, ?, ?, ?, ?, ?, 0, 1, ?, 0)"
+            ) { stmt in
+                try db.bind(stmt, 1, "test-device")
+                try db.bind(stmt, 2, Int64(0x10001))
+                try db.bind(stmt, 3, Int64(0x1001))
+                try db.bind(stmt, 4, "outer.txt")
+                try db.bind(stmt, 5, "00010001/outer.txt")
+                try db.bind(stmt, 6, Int64(100))
+                try db.bind(stmt, 7, Int64(Date().timeIntervalSince1970))
+                try db.bind(stmt, 8, Int64(0x3004))
+                try db.bind(stmt, 9, Int64(Date().timeIntervalSince1970))
+                _ = try db.step(stmt)
+            }
+
+            // Nested transaction
+            try db.withTransaction {
+                try db.withStatement(
+                    "INSERT INTO live_objects (deviceId, storageId, handle, parentHandle, name, pathKey, sizeBytes, mtime, formatCode, isDirectory, changeCounter, crawledAt, stale) VALUES (?, ?, ?, NULL, ?, ?, ?, ?, ?, 0, 1, ?, 0)"
+                ) { stmt in
+                    try db.bind(stmt, 1, "test-device")
+                    try db.bind(stmt, 2, Int64(0x10001))
+                    try db.bind(stmt, 3, Int64(0x1002))
+                    try db.bind(stmt, 4, "inner.txt")
+                    try db.bind(stmt, 5, "00010001/inner.txt")
+                    try db.bind(stmt, 6, Int64(200))
+                    try db.bind(stmt, 7, Int64(Date().timeIntervalSince1970))
+                    try db.bind(stmt, 8, Int64(0x3004))
+                    try db.bind(stmt, 9, Int64(Date().timeIntervalSince1970))
+                    _ = try db.step(stmt)
+                }
+            }
+        }
+
+        let outer = try await index.object(deviceId: "test-device", handle: 0x1001)
+        let inner = try await index.object(deviceId: "test-device", handle: 0x1002)
+        #expect(outer != nil, "Outer transaction insert should survive")
+        #expect(inner != nil, "Inner (nested) transaction insert should survive")
+    }
+
+    @Test("Nested transaction rollback isolates inner failure")
+    func testNestedTransactionRollback() async throws {
+        let tempDir = FileManager.default.temporaryDirectory
+        let dbPath = tempDir.appendingPathComponent("test-nested-rollback-\(UUID().uuidString).sqlite").path
+
+        let index = try SQLiteLiveIndex(path: dbPath)
+        let db = index.database
+        defer { try? FileManager.default.removeItem(atPath: dbPath) }
+
+        struct InnerError: Error {}
+
+        try db.withTransaction {
+            // Outer insert
+            try db.withStatement(
+                "INSERT INTO live_objects (deviceId, storageId, handle, parentHandle, name, pathKey, sizeBytes, mtime, formatCode, isDirectory, changeCounter, crawledAt, stale) VALUES (?, ?, ?, NULL, ?, ?, ?, ?, ?, 0, 1, ?, 0)"
+            ) { stmt in
+                try db.bind(stmt, 1, "test-device")
+                try db.bind(stmt, 2, Int64(0x10001))
+                try db.bind(stmt, 3, Int64(0x2001))
+                try db.bind(stmt, 4, "outer.txt")
+                try db.bind(stmt, 5, "00010001/outer.txt")
+                try db.bind(stmt, 6, Int64(100))
+                try db.bind(stmt, 7, Int64(Date().timeIntervalSince1970))
+                try db.bind(stmt, 8, Int64(0x3004))
+                try db.bind(stmt, 9, Int64(Date().timeIntervalSince1970))
+                _ = try db.step(stmt)
+            }
+
+            // Inner transaction throws — should be rolled back
+            do {
+                try db.withTransaction {
+                    try db.withStatement(
+                        "INSERT INTO live_objects (deviceId, storageId, handle, parentHandle, name, pathKey, sizeBytes, mtime, formatCode, isDirectory, changeCounter, crawledAt, stale) VALUES (?, ?, ?, NULL, ?, ?, ?, ?, ?, 0, 1, ?, 0)"
+                    ) { stmt in
+                        try db.bind(stmt, 1, "test-device")
+                        try db.bind(stmt, 2, Int64(0x10001))
+                        try db.bind(stmt, 3, Int64(0x2002))
+                        try db.bind(stmt, 4, "inner.txt")
+                        try db.bind(stmt, 5, "00010001/inner.txt")
+                        try db.bind(stmt, 6, Int64(200))
+                        try db.bind(stmt, 7, Int64(Date().timeIntervalSince1970))
+                        try db.bind(stmt, 8, Int64(0x3004))
+                        try db.bind(stmt, 9, Int64(Date().timeIntervalSince1970))
+                        _ = try db.step(stmt)
+                    }
+                    throw InnerError()
+                }
+            } catch is InnerError {
+                // Expected — inner rolled back, outer continues
+            }
+        }
+
+        let outer = try await index.object(deviceId: "test-device", handle: 0x2001)
+        let inner = try await index.object(deviceId: "test-device", handle: 0x2002)
+        #expect(outer != nil, "Outer transaction insert should survive")
+        #expect(inner == nil, "Inner transaction insert should be rolled back")
+    }
+
     @Test("Concurrent read and write")
     func testConcurrentReadWrite() async throws {
         let tempDir = FileManager.default.temporaryDirectory

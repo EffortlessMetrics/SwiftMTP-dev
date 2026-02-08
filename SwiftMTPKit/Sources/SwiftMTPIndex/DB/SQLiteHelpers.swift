@@ -27,17 +27,34 @@ public final class SQLiteDB: @unchecked Sendable {
 
   /// Execute a block inside an exclusive transaction.
   /// Serializes concurrent callers so only one transaction is active at a time.
+  /// Supports nesting: if already inside a transaction, uses SAVEPOINT instead.
   public func withTransaction<R>(_ body: () throws -> R) throws -> R {
     dbLock.lock()
     defer { dbLock.unlock() }
-    try exec("BEGIN IMMEDIATE TRANSACTION")
-    do {
-      let result = try body()
-      try exec("COMMIT")
-      return result
-    } catch {
-      try? exec("ROLLBACK")
-      throw error
+
+    let nested = sqlite3_get_autocommit(handle) == 0
+    if nested {
+      let sp = "sp_\(UInt64.random(in: 0...UInt64.max))"
+      try exec("SAVEPOINT \(sp)")
+      do {
+        let result = try body()
+        try exec("RELEASE SAVEPOINT \(sp)")
+        return result
+      } catch {
+        try? exec("ROLLBACK TO SAVEPOINT \(sp)")
+        try? exec("RELEASE SAVEPOINT \(sp)")
+        throw error
+      }
+    } else {
+      try exec("BEGIN IMMEDIATE TRANSACTION")
+      do {
+        let result = try body()
+        try exec("COMMIT")
+        return result
+      } catch {
+        try? exec("ROLLBACK")
+        throw error
+      }
     }
   }
 
