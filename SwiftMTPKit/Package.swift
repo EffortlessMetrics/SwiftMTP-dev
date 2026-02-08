@@ -23,9 +23,9 @@ let package = Package(
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-async-algorithms.git", exact: "1.0.1"),
-    .package(url: "https://github.com/apple/swift-collections.git", exact: "1.1.1"),
-    .package(url: "https://github.com/stephencelis/SQLite.swift.git", exact: "0.15.3"),
+    .package(url: "https://github.com/apple/swift-async-algorithms.git", exact: "1.1.1"),
+    .package(url: "https://github.com/apple/swift-collections.git", exact: "1.3.0"),
+    .package(url: "https://github.com/stephencelis/SQLite.swift.git", exact: "0.15.5"),
     .package(url: "https://github.com/Tyler-Keith-Thompson/CucumberSwift", from: "5.0.0"),
     .package(url: "https://github.com/typelift/SwiftCheck", from: "0.12.0"),
     .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.10.0"),
