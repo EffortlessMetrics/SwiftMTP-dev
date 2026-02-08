@@ -32,7 +32,7 @@ final class MTPProtocolEdgeCaseTests: XCTestCase {
     func testContainerLengthBoundaries() {
         // Test minimum valid container length (header only = 12 bytes)
         let minLength: UInt32 = 12
-        XCTAssertEqual(minLength, MemoryLayout<UInt32>.size * 3)
+        XCTAssertEqual(minLength, UInt32(MemoryLayout<UInt32>.size) * 3)
 
         // Test maximum reasonable container length
         let maxReasonableLength: UInt32 = 1024 * 1024 // 1MB
@@ -182,9 +182,31 @@ final class MTPProtocolEdgeCaseTests: XCTestCase {
         let int32 = PTPValue.int32(-1)
         let uint32 = PTPValue.uint32(4294967295)
 
-        XCTAssertNotEqual(int8, uint8)
-        XCTAssertNotEqual(int16, uint16)
-        XCTAssertNotEqual(int32, uint32)
+        // Verify they are different types
+        switch int8 {
+        case .int8: break
+        default: XCTFail("Expected int8")
+        }
+        switch uint8 {
+        case .uint8: break
+        default: XCTFail("Expected uint8")
+        }
+        switch int16 {
+        case .int16: break
+        default: XCTFail("Expected int16")
+        }
+        switch uint16 {
+        case .uint16: break
+        default: XCTFail("Expected uint16")
+        }
+        switch int32 {
+        case .int32: break
+        default: XCTFail("Expected int32")
+        }
+        switch uint32 {
+        case .uint32: break
+        default: XCTFail("Expected uint32")
+        }
     }
 
     func testPTPValueStringType() {

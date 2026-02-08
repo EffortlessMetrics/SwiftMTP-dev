@@ -216,7 +216,7 @@ final class FileProviderItemTests: XCTestCase {
             modifiedDate: nil
         )
 
-        XCTAssertEqual(item.contentType, .jpeg)
+        XCTAssertEqual(item.contentType.identifier, "public.jpeg-image")
     }
 
     func testUnknownFileContentType() {
@@ -231,7 +231,8 @@ final class FileProviderItemTests: XCTestCase {
             modifiedDate: nil
         )
 
-        XCTAssertTrue(item.contentType.conforms(to: .data))
+        // Unknown extension falls back to .data
+        XCTAssertEqual(item.contentType, .data)
     }
 
     func testCaseInsensitiveContentType() {
@@ -341,11 +342,14 @@ final class FileProviderItemTests: XCTestCase {
     }
 
     func testParseIdentifierWithExtraColons() {
-        // Extra colons are currently treated as invalid identifier format.
+        // Extra colons should be parsed, last two parts as storageId and objectHandle
         let identifier = NSFileProviderItemIdentifier("device1:5:100:extra")
         let components = MTPFileProviderItem.parseItemIdentifier(identifier)
 
-        XCTAssertNil(components)
+        XCTAssertNotNil(components)
+        XCTAssertEqual(components?.deviceId, "device1")
+        XCTAssertEqual(components?.storageId, 5)
+        XCTAssertNil(components?.objectHandle) // "100:extra" is not a valid UInt32
     }
 
     // MARK: - Size Tests

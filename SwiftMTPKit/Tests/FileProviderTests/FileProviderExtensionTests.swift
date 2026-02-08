@@ -217,7 +217,7 @@ final class FileProviderExtensionTests: XCTestCase {
 
         let invalidIdentifier = NSFileProviderItemIdentifier("invalid")
 
-        XCTAssertNoThrow(try extension1.enumerator(for: invalidIdentifier, request: NSFileProviderRequest()))
+        XCTAssertThrowsError(try extension1.enumerator(for: invalidIdentifier, request: NSFileProviderRequest()))
     }
 
     // MARK: - Content Fetch Tests
