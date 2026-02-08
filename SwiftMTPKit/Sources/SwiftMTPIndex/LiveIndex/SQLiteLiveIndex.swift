@@ -258,6 +258,8 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     public func upsertObjects(_ objects: [IndexedObject], deviceId: String) async throws {
         let now = Int64(Date().timeIntervalSince1970)
 
+        try db.withTransaction {
+            let counter = try nextChangeCounterSync(deviceId: deviceId)
             let upsertSQL = """
             INSERT INTO live_objects (deviceId, storageId, handle, parentHandle, name, pathKey, sizeBytes, mtime, formatCode, isDirectory, changeCounter, crawledAt, stale)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
@@ -307,33 +309,33 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     }
 
     public func markStaleChildren(deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?) async throws {
-        let counter = try await nextChangeCounter(deviceId: deviceId)
         let now = Int64(Date().timeIntervalSince1970)
 
-        // First, query affected children to record delete changes
-        let selectSQL: String
-        if parentHandle != nil {
-            selectSQL = "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
-        } else {
-            selectSQL = "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
-        }
-        let handles: [UInt32] = try db.withStatement(selectSQL) { stmt in
-            try db.bind(stmt, 1, deviceId)
-            try db.bind(stmt, 2, Int64(storageId))
-            if let ph = parentHandle {
-                try db.bind(stmt, 3, Int64(ph))
-            }
-            var result: [UInt32] = []
-            while try db.step(stmt) {
-                if let h = db.colInt64(stmt, 0) { result.append(UInt32(h)) }
-            }
-            return result
-        }
+        try db.withTransaction {
+            let counter = try nextChangeCounterSync(deviceId: deviceId)
 
-        guard !handles.isEmpty else { return }
+            // Query affected children to record delete changes
+            let selectSQL: String
+            if parentHandle != nil {
+                selectSQL = "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
+            } else {
+                selectSQL = "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
+            }
+            let handles: [UInt32] = try db.withStatement(selectSQL) { stmt in
+                try db.bind(stmt, 1, deviceId)
+                try db.bind(stmt, 2, Int64(storageId))
+                if let ph = parentHandle {
+                    try db.bind(stmt, 3, Int64(ph))
+                }
+                var result: [UInt32] = []
+                while try db.step(stmt) {
+                    if let h = db.colInt64(stmt, 0) { result.append(UInt32(h)) }
+                }
+                return result
+            }
 
-        try db.exec("BEGIN TRANSACTION")
-        do {
+            guard !handles.isEmpty else { return }
+
             // Mark stale and bump change counter
             let updateSQL: String
             if parentHandle != nil {
@@ -367,10 +369,6 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
                     _ = try db.step(stmt)
                 }
             }
-            try db.exec("COMMIT")
-        } catch {
-            try? db.exec("ROLLBACK")
-            throw error
         }
     }
 
@@ -507,8 +505,7 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
         // Match rows where deviceId looks like "xxxx:xxxx@y:z" (ephemeral format)
         // and starts with the given vid:pid prefix
         let tables = ["live_objects", "live_storages", "crawl_state", "device_index_state", "cached_content", "live_changes"]
-        try db.exec("BEGIN TRANSACTION")
-        do {
+        try db.withTransaction {
             for table in tables {
                 let pattern = "\(vidPidPattern)@%"
                 let sql = "UPDATE \(table) SET deviceId = ? WHERE deviceId LIKE ?"
@@ -518,10 +515,6 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
                     _ = try db.step(stmt)
                 }
             }
-            try db.exec("COMMIT")
-        } catch {
-            try? db.exec("ROLLBACK")
-            throw error
         }
     }
 
