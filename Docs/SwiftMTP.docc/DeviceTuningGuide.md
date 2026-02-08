@@ -1,9 +1,9 @@
 # Device Tuning Guide
 
 @Metadata {
-    @DisplayName: "Device Tuning Guide"
-    @PageKind: article
-    @Available: iOS 15.0, macOS 12.0
+    @DisplayName("Device Tuning Guide")
+    @PageKind(article)
+    @Available(macOS, introduced: "26.0")
 }
 
 Comprehensive guide to device-specific tuning and quirks in SwiftMTP.
