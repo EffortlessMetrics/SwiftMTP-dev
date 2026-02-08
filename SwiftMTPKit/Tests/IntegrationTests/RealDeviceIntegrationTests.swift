@@ -2,47 +2,52 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
-import SwiftMTPTransportLibUSB
-import SwiftMTPCore
-import SwiftMTPQuirks
-import Testing
+import XCTest
+@testable import SwiftMTPTransportLibUSB
+@testable import SwiftMTPCore
+@testable import SwiftMTPQuirks
 
-/// Integration tests for real device scenarios using libusb
-/// These tests require actual hardware and are conditionally compiled
+/// Integration tests for real device scenarios using libusb.
+/// These tests require actual hardware and are gated behind
+/// the SWIFTMTP_LIVE_DEVICE_TESTS=1 environment variable.
 @available(macOS 15.0, *)
-@Suite(.tags(.realDevice, .integration))
-struct RealDeviceIntegrationTests {
-  
+final class RealDeviceIntegrationTests: XCTestCase {
+
   // MARK: - Device Probing Tests
-  
-  @Test("Device probing discovers connected Android device")
+
   func testDeviceProbing() async throws {
-    #continue("This test requires a real Android device connected via USB")
-    #expect(false) // Skip unless hardware is available
+    try XCTSkipUnless(
+      ProcessInfo.processInfo.environment["SWIFTMTP_LIVE_DEVICE_TESTS"] == "1",
+      "Requires real Android device connected via USB"
+    )
   }
-  
-  @Test("Full file transfer lifecycle with real Android device")
+
   func testFullFileTransferLifecycle() async throws {
-    #continue("This test requires a real Android device with MTP support")
-    #expect(false) // Skip unless hardware is available
+    try XCTSkipUnless(
+      ProcessInfo.processInfo.environment["SWIFTMTP_LIVE_DEVICE_TESTS"] == "1",
+      "Requires real Android device with MTP support"
+    )
   }
-  
-  @Test("Concurrent multi-device scenarios")
+
   func testConcurrentMultiDevice() async throws {
-    #continue("This test requires multiple real Android devices")
-    #expect(false) // Skip unless hardware is available
+    try XCTSkipUnless(
+      ProcessInfo.processInfo.environment["SWIFTMTP_LIVE_DEVICE_TESTS"] == "1",
+      "Requires multiple real Android devices"
+    )
   }
-  
-  @Test("Hot-plug detection and recovery")
+
   func testHotPlugDetection() async throws {
-    #continue("This test requires hot-plug capability with a real device")
-    #expect(false) // Skip unless hardware is available
+    try XCTSkipUnless(
+      ProcessInfo.processInfo.environment["SWIFTMTP_LIVE_DEVICE_TESTS"] == "1",
+      "Requires hot-plug capability with a real device"
+    )
   }
-  
-  @Test("Long-running stability tests")
+
   func testLongRunningStability() async throws {
-    #continue("This test runs for extended period with a real device")
-    #expect(false) // Skip unless hardware is available
+    try XCTSkipUnless(
+      ProcessInfo.processInfo.environment["SWIFTMTP_LIVE_DEVICE_TESTS"] == "1",
+      "Runs for extended period with a real device"
+    )
   }
 }
 
@@ -59,7 +64,7 @@ enum USBHardwareChecker {
     // For CI environments, this typically returns false
     return false
   }
-  
+
   static func getConnectedDeviceCount() -> Int {
     // Count connected USB MTP devices
     return 0
@@ -71,56 +76,47 @@ enum USBHardwareChecker {
 // MARK: - Mock-Based Real Device Tests (Fallback)
 
 @available(macOS 15.0, *)
-@Suite(.tags(.mockDevice, .integration))
-struct MockRealDeviceIntegrationTests {
-  
-  @Test("Virtual device probing with mock transport")
+final class MockRealDeviceIntegrationTests: XCTestCase {
+
   func testVirtualDeviceProbing() async throws {
-    let harness = DeviceLabHarness()
-    let transport = MockUSBTransport()
-    
-    // Setup virtual device response
     let profile = VirtualDeviceProfiles.pixel7
-    
+
     // Verify profile setup
-    #expect(profile.name == "pixel7")
-    #expect(profile.vendorID == 0x18D1)
-    #expect(profile.supportedOperations.contains(0x1001))
+    XCTAssertEqual(profile.name, "pixel7")
+    XCTAssertEqual(profile.vendorID, 0x18D1)
+    XCTAssertTrue(profile.supportedOperations.contains(0x1001))
   }
-  
-  @Test("Virtual device file transfer simulation")
+
   func testVirtualFileTransfer() async throws {
     let transport = MockUSBTransport()
-    
+
     // Simulate transfer
     try await transport.connect(vid: 0x18D1, pid: 0x4EE1)
-    
+
     // Verify connection
     let isConnected = await transport.isConnected
-    #expect(isConnected == true)
+    XCTAssertTrue(isConnected)
   }
-  
-  @Test("Programmable response patterns")
+
   func testProgrammableResponses() async throws {
     let transport = MockUSBTransport()
-    
+
     // Program slow response
     await transport.programDelay(opcode: 0x1001, delay: 0.5)
-    
+
     // Program error injection
     await transport.setErrorInjection(.timeoutNextRequest)
-    
+
     // Verify setup
     await transport.programDelay(opcode: 0x1007, delay: 0.1)
   }
-  
-  @Test("Traffic recording and replay")
+
   func testTrafficRecording() async throws {
     let recorder = TrafficRecorder()
-    
+
     // Start recording session
     await recorder.startSession(profile: "pixel7")
-    
+
     // Record some entries
     let entry = TrafficRecorder.TrafficEntry(
       timestamp: Date(),
@@ -130,29 +126,30 @@ struct MockRealDeviceIntegrationTests {
       responseTimeMs: 50
     )
     await recorder.record(entry: entry)
-    
+
     // End session
     let session = await recorder.endSession()
-    
+
     // Verify recording
-    #expect(session != nil)
-    #expect(session?.deviceProfile == "pixel7")
-    #expect(session?.entries.count == 1)
+    XCTAssertNotNil(session)
+    XCTAssertEqual(session?.deviceProfile, "pixel7")
+    XCTAssertEqual(session?.entries.count, 1)
   }
-  
-  @Test("Multi-virtual device concurrent operations")
+
   func testMultiVirtualDeviceConcurrency() async throws {
     let pixel7Transport = MockUSBTransport()
     let onePlusTransport = MockUSBTransport()
-    
+
     // Connect both devices concurrently
-    async let connectPixel7 = pixel7Transport.connect(vid: 0x18D1, pid: 0x4EE1)
-    async let connectOnePlus = onePlusTransport.connect(vid: 0x2A70, pid: 0x9038)
-    
-    let (pixelResult, onePlusResult) = try await (connectPixel7, connectOnePlus)
-    
+    async let connectPixel7: Void = pixel7Transport.connect(vid: 0x18D1, pid: 0x4EE1)
+    async let connectOnePlus: Void = onePlusTransport.connect(vid: 0x2A70, pid: 0x9038)
+
+    _ = try await (connectPixel7, connectOnePlus)
+
     // Verify both connected
-    #expect(await pixel7Transport.isConnected)
-    #expect(await onePlusTransport.isConnected)
+    let p7Connected = await pixel7Transport.isConnected
+    let opConnected = await onePlusTransport.isConnected
+    XCTAssertTrue(p7Connected)
+    XCTAssertTrue(opConnected)
   }
 }

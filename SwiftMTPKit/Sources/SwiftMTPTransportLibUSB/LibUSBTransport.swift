@@ -314,7 +314,8 @@ public actor LibUSBTransport: MTPTransport {
       handle: handle, device: dev,
       iface: sel.ifaceNumber, epIn: sel.bulkIn, epOut: sel.bulkOut, epEvt: sel.eventIn,
       config: config, manufacturer: summary.manufacturer, model: summary.model,
-      cachedDeviceInfoData: result.cachedDeviceInfo
+      cachedDeviceInfoData: result.cachedDeviceInfo,
+      linkDescriptor: descriptor
     )
 
     activeLinks.append(link)

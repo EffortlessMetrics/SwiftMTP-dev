@@ -150,7 +150,7 @@ public actor MockUSBTransport: @unchecked Sendable {
   }
 }
 
-public enum USBTransportError: Error, Sendable {
+public enum USBTransportError: Error, Sendable, Equatable {
   case notConnected
   case noData
   case timeout

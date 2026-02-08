@@ -222,7 +222,7 @@ struct SwiftMTPCLI {
         print("SwiftMTP CLI - Modular Refactor")
         print("Usage: swift run swiftmtp [flags] <command>")
         print("")
-        print("Commands: probe, usb-dump, device-lab, diag, storages, ls, pull, push, bench, mirror, quirks, health, collect, submit, wizard, delete, move, events, learn-promote, bdd, snapshot, version")
+        print("Commands: probe, usb-dump, diag, storages, ls, pull, push, bench, mirror, quirks, health, collect, submit, wizard, delete, move, events, learn-promote, bdd, snapshot, version")
     }
 }
 
