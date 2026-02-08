@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
-public enum MTPError: Error, Sendable {
+public enum MTPError: Error, Sendable, Equatable {
   case deviceDisconnected, permissionDenied
   case notSupported(String)
   case transport(TransportError)
