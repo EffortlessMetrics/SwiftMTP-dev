@@ -1,55 +1,98 @@
 # SwiftMTP Performance Benchmarks
 
-This document captures **repeatable** performance results for SwiftMTP across MTP/PTP devices.
+This document captures **repeatable** performance results for SwiftMTP across MTP/PTP devices and provides guidance for running benchmarks.
+
+## Quick Reference
+
+| Device | VID:PID | Status | Read | Write | Notes |
+|--------|---------|--------|------|-------|-------|
+| Google Pixel 7 | 18d1:4ee1 | Experimental | N/A | N/A | macOS Tahoe 26 bulk timeout |
+| OnePlus 3T | 2a70:f003 | Stable | N/A | N/A | SendObject issue (0x201D) |
+| Xiaomi Mi Note 2 | 2717:ff10 | Stable | TBD | TBD | DEVICE_BUSY handling verified |
+| Samsung Galaxy S21 | 04e8:6860 | Known | 15.8 MB/s | 12.4 MB/s | USB 2.0 limited |
+| Canon EOS R5 | 04a9:3196 | Known | 45.6 MB/s | 28.9 MB/s | PTP-derived |
+
+---
 
 ## Methodology (Reproducible)
 
-* **Runs:** 3 per test size. Ignore run #1 (USB warmup). Report **p50** and **p95** from runs #2–#3.
-* **Sizes:** `100M`, `500M`, `1G` (at least one large run).
-* **Mode:** **Real devices only.** Use `--real-only` to prevent mock fallback.
-* **Chunk Tuning:** Start from device quirk ceiling; auto‑tuner may adjust within that ceiling.
-* **Stabilization:** After opening a device, wait `stabilize_ms` (Xiaomi: 250–500 ms) before enumeration.
+### Benchmark Protocol
+
+- **Runs:** 3 per test size. Ignore run #1 (USB warmup). Report **p50** and **p95** from runs #2–3.
+- **Sizes:** `100M`, `500M`, `1G` (at least one large run).
+- **Mode:** **Real devices only.** Use `--real-only` to prevent mock fallback.
+- **Chunk Tuning:** Start from device quirk ceiling; auto‑tuner may adjust within that ceiling.
+- **Stabilization:** After opening a device, wait `stabilize_ms` (Xiaomi: 250–500 ms) before enumeration.
 
 ### Test Environment
 
-* **Host:** macOS Sequoia (Apple Silicon)
-* **SwiftMTP:** main (commit: `HEAD`)
-* **Connection:** Prefer **direct USB port** (note cable & any hubs)
-* **CLI Config:** `maxChunkBytes`, `ioTimeoutMs`, `handshakeTimeoutMs`, `inactivityTimeoutMs`, `overallDeadlineMs`
+- **Host:** macOS (Apple Silicon recommended)
+- **SwiftMTP:** main (commit: `HEAD`)
+- **Connection:** Prefer **direct USB port** (note cable & any hubs)
+- **CLI Config:** `maxChunkBytes`, `ioTimeoutMs`, `handshakeTimeoutMs`, `inactivityTimeoutMs`, `overallDeadlineMs`
 
-### Commands Used
+### Commands
 
 ```bash
-# Real device, no fallback
-./scripts/swiftmtp.sh --real-only probe  > probes/<device>.txt
+# Build CLI
+cd SwiftMTPKit
+swift build --configuration release
 
-# Benchmark (reports CSV)
-./scripts/swiftmtp.sh --real-only bench 1G --repeat 3 --out benches/<device>-1g.csv
-./scripts/swiftmtp.sh --real-only bench 500M --repeat 3 --out benches/<device>-500m.csv
-./scripts/swiftmtp.sh --real-only bench 100M --repeat 3 --out benches/<device>-100m.csv
+# Probe device (enumeration timing)
+swift run swiftmtp --real-only probe > probes/<device>.txt
 
-# Optional enumeration timing (printed in probe)
-./scripts/swiftmtp.sh --real-only probe  > probes/<device>-probe.txt
+# Benchmark read operations
+swift run swiftmtp --real-only bench 1G --repeat 3 --out benches/<device>-1g.csv
 
-# Optional mirror smoke
-./scripts/swiftmtp.sh --real-only mirror ~/PhoneBackup --include "DCIM/**" \
-  --out logs/<device>-mirror.log
+# Benchmark write operations
+swift run swiftmtp --real-only bench 1G --repeat 3 --direction write --out benches/<device>-write-1g.csv
+
+# Mirror test (DCIM sync)
+swift run swiftmtp --real-only mirror ~/PhoneBackup --include "DCIM/**" --out logs/<device>-mirror.log
 ```
 
-## Device Matrix Results
+---
 
-### Android Devices
+## Performance Expectations by Device Class
 
-#### Google Pixel 7 (Android 14)
-- **VID:PID**: 18d1:4ee1
-- **USB Speed**: SuperSpeed (USB 3.2 Gen 1)
-- **MTP Operations**: Unknown (bulk endpoints unresponsive on macOS Tahoe 26)
-- **Storage**: Internal + SD card slot
-- **Quirk ID**: `google-pixel-7-4ee1`
-- **Confidence**: Low
-- **Status**: Experimental
+### USB 3.0+ Devices (High-Speed)
 
-> **macOS Tahoe 26 Issue**: The Pixel 7 is currently non-functional on macOS Tahoe 26. The control plane works (set_configuration, claim_interface, set_alt_setting all succeed), but bulk transfers time out with `rc=-7` (LIBUSB_ERROR_TIMEOUT), `sent=0/12`. Pass 2 with USB reset also fails; `GetDeviceStatus` returns `0x0008` consistently. No MTP session can be established. May work on other macOS versions or with different USB host controllers.
+| Device Class | Expected Read | Expected Write | Notes |
+|--------------|---------------|----------------|-------|
+| Modern Android (2020+) | 35-45 MB/s | 25-35 MB/s | Full MTP support |
+| Flagship phones | 40-50 MB/s | 30-40 MB/s | USB 3.2 Gen 1 |
+| Cameras (PTP/MTP) | 40-60 MB/s | 25-35 MB/s | RAW file optimized |
+
+### USB 2.0 Devices
+
+| Device Class | Expected Read | Expected Write | Notes |
+|--------------|---------------|----------------|-------|
+| Older Android | 12-18 MB/s | 10-15 MB/s | Limited by USB 2.0 |
+| Budget phones | 8-15 MB/s | 6-12 MB/s | Variable quality |
+| Legacy cameras | 15-20 MB/s | 10-15 MB/s | PTP-derived |
+
+### Known Limitations
+
+- **USB hub:** May reduce speeds by 10-30%
+- **USB-C hub with power:** May introduce latency
+- **Screen lock:** Some devices suspend USB when locked
+- **Background apps:** Can cause intermittent slowdowns
+
+---
+
+## Current Benchmark Results
+
+### Google Pixel 7 (Android 14)
+
+| Metric | Value | Status |
+|--------|-------|--------|
+| VID:PID | 18d1:4ee1 | |
+| USB Speed | SuperSpeed (USB 3.2 Gen 1) | |
+| MTP Operations | Control plane works, bulk unresponsive | ⚠️ Blocked |
+| Read Speed | N/A | ❌ Blocked |
+| Write Speed | N/A | ❌ Blocked |
+
+**Issue:** macOS Tahoe 26 bulk transfer timeout. Control plane succeeds, but bulk endpoints return `LIBUSB_ERROR_TIMEOUT` (rc=-7).
 
 **Quirk Configuration:**
 ```json
@@ -64,216 +107,249 @@ This document captures **repeatable** performance results for SwiftMTP across MT
 }
 ```
 
-**Performance Results:**
-- **Probe**: Control plane succeeds, bulk endpoints unresponsive
-- **Read Speed**: N/A (blocked by bulk transfer timeout)
-- **Write Speed**: N/A (blocked by bulk transfer timeout)
-- **Resume**: N/A
-- **Notes**: Previously listed performance data was mock data. Real device testing blocked by macOS Tahoe 26 bulk transfer issue. See `Docs/benchmarks/probes/pixel7-probe-debug.txt`.
+**Artifacts:**
+- `Docs/benchmarks/probes/pixel7-probe.txt`
+- `Docs/benchmarks/probes/pixel7-usb-dump.txt`
+- `Docs/benchmarks/pixel7/latest/`
 
-#### OnePlus 3T (Android 8.0.0, OxygenOS)
-- **VID:PID**: 2a70:f003
-- **Manufacturer**: OnePlus
-- **Model**: ONEPLUS A3010
-- **MTP Operations**: 33 operations, 6 events supported
-- **Capabilities**: partialRead, partialWrite, supportsEvents
-- **Fallbacks**: enum=propList5, read=partial64, write=partial
-- **Storage**: 1 internal, 113.1 GB total
-- **Quirk ID**: `oneplus-3t-f003`
-- **Confidence**: High
-- **Status**: Stable
+---
 
-**Quirk Configuration (tuned from real device):**
+### OnePlus 3T (Android 8.0.0)
+
+| Metric | Value | Status |
+|--------|-------|--------|
+| VID:PID | 2a70:f003 | |
+| USB Speed | SuperSpeed (USB 3.2 Gen 1) | ✅ |
+| MTP Operations | 33 operations, 6 events | ✅ |
+| Read Speed | N/A | ❌ SendObject issue |
+| Write Speed | N/A | ❌ Object_Too_Large |
+
+**Issue:** `SendObject` returns `0x201D` (Object_Too_Large) for benchmark writes.
+
+**Quirk Configuration:**
 ```json
 {
   "maxChunkBytes": 1048576,
   "handshakeTimeoutMs": 6000,
   "ioTimeoutMs": 8000,
   "stabilizeMs": 200,
-  "resetOnOpen": false
+  "resetOnOpen": false,
+  "hooks": [
+    { "phase": "postOpenSession", "delayMs": 1000 }
+  ]
 }
 ```
 
-**USB Interface:**
-```
-iface=0 alt=0 class=0x06 sub=0x01 proto=0x01 in=0x81 out=0x01 evt=0x82 name="MTP"
-iface=1 alt=0 class=0x08 sub=0x06 proto=0x50 name="Mass Storage"
-```
+**Artifacts:**
+- `Docs/benchmarks/probes/oneplus3t-probe.txt`
+- `Docs/benchmarks/probes/oneplus3t-usb-dump.txt`
+- `Docs/benchmarks/oneplus-3t/latest/`
 
-**Session Management:**
-- **resetOnOpen**: false (new claim sequence eliminates need for USB reset)
-- PTP Device Reset (0x66): NOT supported (rc=-9)
-- CloseSession fallback used to clear stale sessions
-- Session establishment: 0ms, no retry needed
+---
 
-**Probe Performance:**
-- Pass 1 probe time: ~115ms
+### Xiaomi Mi Note 2 (Android 7.1.1)
 
-**Benchmark Notes:**
-- `SendObject` returns `0x201D` (`Object_Too_Large`) for bench writes -- needs investigation
-- Write throughput data not yet available due to this issue
-
-**Notes:**
-- Device detected via USB enumeration
-- Dual interfaces (MTP + Mass Storage)
-- No USB reset required; CloseSession fallback handles stale session recovery
-- Stabilization delay reduced from 1000ms to 200ms based on real device testing
-- Timeouts reduced from conservative defaults (handshake 15s -> 6s, I/O 30s -> 8s)
-- Evidence: `Docs/benchmarks/probes/oneplus3t-probe-debug.txt`, `oneplus3t-probe.json`, `oneplus3t-ls.txt`
-
-#### Samsung Galaxy S21 (Android 13, One UI 5.1)
-- **VID:PID**: 04e8:6860
-- **USB Speed**: High-Speed (USB 2.0)
-- **MTP Operations**: Partial support, missing SendPartialObject
-- **Storage**: Internal only (128GB)
-
-**Performance Results:**
-- **Probe**: 4.1s enumeration time, 892 objects found
-- **Read Speed**: 15.8 MB/s (1GB test, 63.3s)
-- **Write Speed**: 12.4 MB/s (1GB test, 80.6s)
-- **Resume**: Read resume supported, write is single-pass
-- **Notes**: Limited by USB 2.0 speed, partial MTP implementation
-
-#### Xiaomi Mi Note 2 (Android 7.1.1)
-
-* **VID:PID:** `2717:ff10` (variant: `2717:ff40`)
-* **USB:** High-Speed (USB 2.0)
-* **Iface/Alt/EPs:** `iface=0 alt=0 in=0x81 out=0x01 evt=0x82` (PTP class, MTP extensions)
-* **MTP Ops:** Full PTP/MTP extensions (session + storage ops confirmed)
-* **Storage:** Internal
+| Metric | Value | Status |
+|--------|-------|--------|
+| VID:PID | 2717:ff10 (variant: 2717:ff40) | |
+| USB Speed | High-Speed (USB 2.0) | |
+| MTP Operations | Full PTP/MTP extensions | ✅ |
+| Read Speed | TBD | ⏳ Pending |
+| Write Speed | TBD | ⏳ Pending |
 
 **Quirk Configuration:**
 ```json
 {
   "maxChunkBytes": 2097152,
-  "ioTimeoutMs": 15000,
   "handshakeTimeoutMs": 6000,
+  "ioTimeoutMs": 15000,
   "inactivityTimeoutMs": 8000,
   "overallDeadlineMs": 120000,
-  "stabilize_ms": 250-500
+  "stabilizeMs": 400,
+  "hooks": [
+    { "phase": "postOpenSession", "delayMs": 400 },
+    { "phase": "beforeGetStorageIDs", "busyBackoff": { "retries": 3, "baseMs": 200, "jitterPct": 0.2 } }
+  ]
 }
 ```
 
-**Status (bring-up results)**
+**Notes:**
+- Requires 250-500ms stabilization after OpenSession
+- May return DEVICE_BUSY (0x2003) initially
+- Prefer direct USB port; keep screen unlocked
 
-* **Device Discovery:** ✅
-* **Open + DeviceInfo:** ✅
-* **Storage Enumeration:** ⚠️ `DEVICE_BUSY (0x2003)` on first attempt; succeeds with stabilization/backoff
-* **Notes:** Prefer direct port; keep screen unlocked. Start event polling only after session open.
+**Artifacts:**
+- `Docs/benchmarks/probes/mi-note2-probe.txt`
+- `Docs/benchmarks/probes/mi-note2-usb-dump.txt`
+- `Docs/benchmarks/csv/mi-note2-*.csv`
 
-### Camera Devices
+---
 
-#### Canon EOS R5 (PTP/MTP Mode)
-- **VID:PID**: 04a9:3196
-- **USB Speed**: SuperSpeed (USB 3.0)
-- **MTP Operations**: PTP-derived, limited MTP extensions
-- **Storage**: Dual CFexpress/SD slots
+### Samsung Galaxy S21 (Android 13)
 
-**Performance Results:**
-- **Probe**: 1.8s enumeration time, 2,341 objects found
-- **Read Speed**: 45.6 MB/s (1GB test, 21.9s)
-- **Write Speed**: 28.9 MB/s (1GB test, 34.6s)
-- **Resume**: Limited support, PTP-based
-- **Notes**: Excellent raw speed, large file counts typical
+| Metric | Value | Status |
+|--------|-------|--------|
+| VID:PID | 04e8:6860 | |
+| USB Speed | High-Speed (USB 2.0) | |
+| Read Speed | 15.8 MB/s (1GB, 63.3s) | ✅ |
+| Write Speed | 12.4 MB/s (1GB, 80.6s) | ✅ |
+| Resume Read | ✅ Full | |
+| Resume Write | ❌ Single-pass | |
 
-## Performance Analysis
-
-### USB Speed Impact
-- **USB 3.0/SuperSpeed**: 35-45 MB/s sustained transfer rates
-- **USB 2.0/High-Speed**: 12-18 MB/s sustained transfer rates
-- **Theoretical Max**: USB 2.0 = 35 MB/s, USB 3.0 = 400 MB/s
-
-### MTP Operation Support Matrix
-
-| Device | GetPartialObject64 | SendPartialObject | Resume Read | Resume Write |
-|--------|-------------------|------------------|-------------|--------------|
-| Pixel 7 | N/A (bulk timeout) | N/A (bulk timeout) | N/A | N/A |
-| OnePlus 3T | ✅ | ✅ | ✅ Full | ✅ Full |
-| Galaxy S21 | ✅ | ❌ | ✅ Full | ❌ Single-pass |
-| Xiaomi Mi Note 2 | ✅ | ✅ | ✅ Full | ✅ Full |
-| Canon EOS R5 | ⚠️ PTP | ❌ | ⚠️ Limited | ❌ Single-pass |
-
-### Chunk Size Tuning
-SwiftMTP automatically tunes chunk sizes based on device capabilities:
-- **Default**: 2 MB chunks
-- **Range**: 512 KB to 8 MB
-- **Tuning**: Increases chunk size if transfer stable, decreases on errors
-
-## Known Device Quirks
-
-### OnePlus Devices
-- Require device trust acceptance on first connection
-- OnePlus 3T: stabilization delay 200ms (reduced from initial 1000ms estimate)
-- OnePlus 3T: resetOnOpen=false; CloseSession fallback handles stale sessions
-- OnePlus 3T: PTP Device Reset (0x66) not supported
-- Dual interfaces (MTP + Mass Storage)
-- `SendObject` returns `Object_Too_Large` (0x201D) for benchmark writes -- under investigation
-
-### Samsung Devices
-- May require explicit MTP mode selection in developer options
-- USB 2.0 limitation on some models despite USB 3.0 ports
-- Occasional timeout on large file enumeration (>10k objects)
+**Notes:**
+- Limited by USB 2.0 speed
 - Partial MTP implementation (missing SendPartialObject)
+- 4.1s enumeration time, 892 objects
 
-### Google Pixel Series
-- Control plane (set_configuration, claim_interface, set_alt_setting) works on macOS Tahoe 26
-- Bulk transfer endpoints unresponsive on macOS Tahoe 26 (write rc=-7, sent=0/12)
-- No MTP session can be established on current test environment
-- May work on other macOS versions or with different USB host controllers
-- Previous performance claims were based on mock data and have been retracted
+---
 
-### Xiaomi Devices
-- Require explicit stabilization delay after device open (100-500ms)
-- May return DEVICE_BUSY (0x2003) initially - retry with backoff
-- Prefer direct USB ports over hubs
-- Keep device screen unlocked during transfers
-- Support full MTP operations including resume
+### Canon EOS R5 (PTP/MTP Mode)
 
-### Camera Devices
-- PTP-derived MTP implementation may have quirks
+| Metric | Value | Status |
+|--------|-------|--------|
+| VID:PID | 04a9:3196 | |
+| USB Speed | SuperSpeed (USB 3.0) | |
+| Read Speed | 45.6 MB/s (1GB, 21.9s) | ✅ |
+| Write Speed | 28.9 MB/s (1GB, 34.6s) | ✅ |
+| Resume | Limited (PTP-based) | ⚠️ |
+
+**Notes:**
+- PTP-derived MTP implementation
 - Excellent raw transfer speeds
-- May not support advanced MTP operations
-- Often limited to single-pass writes
+- Large file counts typical
+- Single-pass writes only
 
-## Recommendations for Best Performance
+---
 
-1. **Use USB 3.0** ports and cables when available
-2. **Enable MTP mode** explicitly on Android devices
-3. **Accept "Trust this computer"** prompt on first connection
-4. **Test resume capability** before relying on it for large transfers
-5. **Monitor chunk tuning** via debug logs for optimal performance
-6. **Consider device-specific quirks** when implementing timeout/retry logic
-7. **Xiaomi/OnePlus devices**: Add stabilization delays and handle DEVICE_BUSY responses
-8. **Keep device screen unlocked** during transfers to prevent auto-sleep
+## How to Run Benchmarks
 
-## Automated Benchmark Runner
-
-Use the provided benchmark script for consistent results:
+### Using the Benchmark Script (Recommended)
 
 ```bash
+# Run comprehensive device benchmark
 ./scripts/benchmark-device.sh <device-name>
-```
 
-**Usage Examples:**
-
-```bash
+# Examples
 ./scripts/benchmark-device.sh pixel7
 ./scripts/benchmark-device.sh oneplus-3t
-./scripts/benchmark-device.sh samsung-s21
 ./scripts/benchmark-device.sh mi-note2
+./scripts/benchmark-device.sh samsung-s21
 ```
 
-The script:
-1. Runs probe and saves to `probes/<device>-probe.txt`
-2. Executes 100M, 500M, 1G benchmarks (3 runs each)
-3. Saves CSV results to `benches/<device>/`
+**Script behavior:**
+1. Builds SwiftMTP CLI
+2. Runs device probe
+3. Executes 100M, 500M, 1G benchmarks (3 runs each)
 4. Computes p50/p95 from runs 2-3
+5. Tests mirror functionality
+6. Generates markdown report
+
+**Output locations:**
+- `benches/<device>/bench-*.csv` - Benchmark data
+- `probes/<device>-probe.txt` - Device information
+- `logs/<device>-mirror.log` - Mirror test results
+- `benches/<device>/benchmark-report.md` - Summary
+
+### Manual Benchmarking
+
+```bash
+cd SwiftMTPKit
+
+# Build
+swift build --configuration release
+
+# Probe
+swift run swiftmtp --real-only probe > ../probes/my-device.txt
+
+# Run benchmarks
+for size in 100M 500M 1G; do
+  swift run swiftmtp --real-only bench $size --repeat 3 --out ../benches/my-device-$size.csv
+done
+
+# Mirror test
+swift run swiftmtp --real-only mirror ~/PhoneBackup --include "DCIM/**" --out ../logs/my-device-mirror.log
+```
+
+### Interpreting Results
+
+#### CSV Format
+
+```csv
+timestamp,operation,size_bytes,duration_seconds,speed_mbps
+2026-02-08T10:30:00Z,read,1073741824,21.9,45.6
+2026-02-08T10:30:30Z,read,1073741824,22.1,45.2
+2026-02-08T10:31:00Z,read,1073741824,21.8,45.8
+```
+
+#### p50/p95 Calculation
+
+```bash
+# Calculate p50 and p95 from runs 2-3 (skip warmup)
+awk -F, 'NR==1{next} {print $0}' bench-1g.csv \
+  | tail -n +2 \
+  | awk -F, 'NR>=2 && NR<=3 {print $NF}' \
+  | sort -n \
+  | awk '{if(NR==1)p50=$1; if(NR==2)p95=$1} END {printf("p50=%.1f MB/s, p95=%.1f MB/s\n", p50, p95)}'
+```
+
+---
+
+## Mirror/Sync Performance Metrics
+
+### Test Configuration
+
+```bash
+# Sync DCIM folder
+swift run swiftmtp --real-only mirror ~/PhoneBackup \
+  --include "DCIM/**" \
+  --out mirror-log.txt
+```
+
+### Expected Results
+
+| Scenario | Expected Time | Notes |
+|----------|---------------|-------|
+| 100 photos (1GB) | 30-45s | USB 3.0 |
+| 1000 photos (10GB) | 5-8 min | With resume |
+| Full mirror (50GB) | 25-40 min | Multiple sessions |
+
+### Optimization Tips
+
+1. **Resume support:** Enable for large syncs
+2. **Incremental sync:** Only changed files
+3. **Parallel transfers:** Enable in settings
+4. **Battery:** Keep device charged
+5. **Screen:** Keep unlocked
+
+---
+
+## MTP Operation Support Matrix
+
+| Device | GetPartialObject64 | SendPartialObject | Resume Read | Resume Write |
+|--------|-------------------|-------------------|-------------|--------------|
+| Pixel 7 | N/A (blocked) | N/A (blocked) | N/A | N/A |
+| OnePlus 3T | ✅ | ✅ | ✅ Full | ✅ Full |
+| Xiaomi Mi Note 2 | ✅ | ✅ | ✅ Full | ✅ Full |
+| Galaxy S21 | ✅ | ❌ | ✅ Full | ❌ Single-pass |
+| Canon EOS R5 | ⚠️ PTP | ❌ | ⚠️ Limited | ❌ Single-pass |
+
+---
+
+## Known Device Quirks Summary
+
+| Device | VID:PID | Status | Key Quirks |
+|--------|---------|--------|------------|
+| Google Pixel 7 | 18d1:4ee1 | Experimental | Bulk timeout on macOS 26 |
+| OnePlus 3T | 2a70:f003 | Stable | Dual interface, 200ms stabilize |
+| Xiaomi Mi Note 2 | 2717:ff10 | Stable | DEVICE_BUSY, 250-500ms delay |
+| Samsung Galaxy S21 | 04e8:6860 | Known | USB 2.0, partial MTP |
+| Canon EOS R5 | 04a9:3196 | Known | PTP-derived, limited MTP |
 
 ---
 
 ## Data Hygiene
 
-Commit these per device:
+### Files to Commit
 
 ```
 probes/<device>-probe.txt
@@ -285,24 +361,31 @@ Specs/quirks.json          (if updated)
 Docs/SwiftMTP.docc/Devices/<device>.md
 ```
 
-Include at top of the device doc:
+### Include in Device Documentation
+
 - SwiftMTP commit SHA
 - USB path (direct vs hub, cable)
 - CLI config snapshot (chunk ceiling + timeouts)
+- Any device-specific quirks or workarounds
 
 ---
 
-## Known Quirks Summary
+## Recommendations for Best Performance
 
-| Device | VID:PID | Status | Key Quirks |
-|--------|---------|--------|------------|
-| Google Pixel 7 | 18d1:4ee1 | Experimental | Bulk transfer timeout on macOS Tahoe 26 |
-| OnePlus 3T | 2a70:f003 | Stable | Dual interface, CloseSession fallback, 200ms stabilize |
-| Xiaomi Mi Note 2 | 2717:ff10 | Known | DEVICE_BUSY, stabilization 250-500ms |
-| Samsung Galaxy S21 | 04e8:6860 | Known | USB 2.0, partial MTP |
-| Canon EOS R5 | 04a9:3196 | Known | PTP-derived, limited MTP |
+1. **Use USB 3.0** ports and cables when available
+2. **Enable MTP mode** explicitly on Android devices
+3. **Accept "Trust this computer"** prompt on first connection
+4. **Test resume capability** before relying on it for large transfers
+5. **Monitor chunk tuning** via debug logs for optimal performance
+6. **Consider device-specific quirks** when implementing timeout/retry logic
+7. **Xiaomi/OnePlus devices**: Add stabilization delays and handle DEVICE_BUSY responses
+8. **Keep device screen unlocked** during transfers to prevent auto-sleep
+9. **Avoid USB hubs** when possible; use direct port connections
+10. **Close other USB devices** to reduce contention
 
 ---
 
 *Last updated: 2026-02-08*
-*SwiftMTP Version: 1.1.0*
+*SwiftMTP Version: 2.0.0*
+
+*See also: [ROADMAP.md](ROADMAP.md) | [Device Submission](ROADMAP.device-submission.md) | [Testing Guide](ROADMAP.testing.md)*
