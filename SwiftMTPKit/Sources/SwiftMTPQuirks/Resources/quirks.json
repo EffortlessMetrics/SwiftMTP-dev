@@ -237,28 +237,16 @@
         "stabilizeMs": 3000,
         "resetOnOpen": false
       },
-      "flags": {
-        "resetOnOpen": true,
-        "needsLongerOpenTimeout": true,
-        "stallOnLargeReads": true,
-        "requireStabilization": true
-      },
       "confidence": "medium",
       "status": "stable",
       "notes": [
-        "Bulk transfers time out (write rc=-7, LIBUSB_ERROR_TIMEOUT) on macOS Tahoe 26; needs investigation.",
-        "Connected-device lab run on 2026-02-09 still classifies this device as blocked (diagnostic evidence captured).",
         "libmtp-aligned claim (set_configuration + set_alt_setting) reinitializes pipes without USB reset.",
         "Fallback USB reset uses stabilizeMs=3000 as poll budget for waitForMTPReady.",
         "Bulk transfer failures often caused by Chrome/WebUSB holding the device — quit Chromium apps and replug."
       ],
       "provenance": {
         "author": "Steven Zimmerman",
-        "date": "2026-02-07",
-        "artifacts": {
-          "probe": "Docs/benchmarks/probes/pixel7-probe.txt",
-          "usbDump": "Docs/benchmarks/probes/pixel7-usb-dump.txt"
-        }
+        "date": "2026-02-07"
       }
     }
   ]

@@ -264,9 +264,7 @@
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 180000,
         "stabilizeMs": 3000,
-        "postClaimStabilizeMs": 3000,
-        "resetOnOpen": false,
-        "requiresKernelDetach": true
+        "resetOnOpen": false
       },
       "warnings": [
         {
@@ -278,19 +276,13 @@
       "confidence": "medium",
       "status": "experimental",
       "notes": [
-        "Bulk transfers time out (write rc=-7, LIBUSB_ERROR_TIMEOUT) on macOS when Chrome holds device.",
-        "Use requiresKernelDetach=true to attempt releasing from Chrome/WebUSB.",
         "libmtp-aligned claim (set_configuration + set_alt_setting) reinitializes pipes without USB reset.",
         "Fallback USB reset uses stabilizeMs=3000 as poll budget for waitForMTPReady.",
-        "If kernel detach fails, user must manually quit Chrome and replug device."
+        "Bulk transfer failures often caused by Chrome/WebUSB holding the device — quit Chromium apps and replug."
       ],
       "provenance": {
         "author": "Steven Zimmerman",
-        "date": "2026-02-07",
-        "artifacts": {
-          "probe": "Docs/benchmarks/probes/pixel7-probe.txt",
-          "usbDump": "Docs/benchmarks/probes/pixel7-usb-dump.txt"
-        }
+        "date": "2026-02-07"
       }
     }
   ]
