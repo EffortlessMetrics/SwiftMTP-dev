@@ -77,7 +77,9 @@ public enum USBDeviceWatcher {
             var manufacturer = "USB \(String(format:"%04x", desc.idVendor))"
             var model = "USB \(String(format:"%04x", desc.idProduct))"
             var serial: String? = nil
-            if let h = usbHandle {
+            var usbHandle: OpaquePointer?
+            if libusb_open(dev, &usbHandle) == 0, let h = usbHandle {
+                defer { libusb_close(h) }
                 if desc.iManufacturer != 0 {
                     var buf = [UInt8](repeating: 0, count: 128)
                     let n = libusb_get_string_descriptor_ascii(h, desc.iManufacturer, &buf, Int32(buf.count))

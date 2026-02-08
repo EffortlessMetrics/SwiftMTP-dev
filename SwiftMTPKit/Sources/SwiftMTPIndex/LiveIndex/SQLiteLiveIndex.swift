@@ -258,8 +258,6 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     public func upsertObjects(_ objects: [IndexedObject], deviceId: String) async throws {
         let now = Int64(Date().timeIntervalSince1970)
 
-        try db.withTransaction {
-            let counter = try nextChangeCounterSync(deviceId: deviceId)
             let upsertSQL = """
             INSERT INTO live_objects (deviceId, storageId, handle, parentHandle, name, pathKey, sizeBytes, mtime, formatCode, isDirectory, changeCounter, crawledAt, stale)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
@@ -281,7 +279,7 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
             """
             for obj in objects {
                 try db.withStatement(upsertSQL) { stmt in
-                    try db.bind(stmt, 1, deviceId)
+                    try db.bind(stmt, 1, obj.deviceId)
                     try db.bind(stmt, 2, Int64(obj.storageId))
                     try db.bind(stmt, 3, Int64(obj.handle))
                     try db.bind(stmt, 4, obj.parentHandle.map { Int64($0) })
@@ -296,7 +294,7 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
                     _ = try db.step(stmt)
                 }
                 try db.withStatement(changeSQL) { stmt in
-                    try db.bind(stmt, 1, deviceId)
+                    try db.bind(stmt, 1, obj.deviceId)
                     try db.bind(stmt, 2, counter)
                     try db.bind(stmt, 3, Int64(obj.storageId))
                     try db.bind(stmt, 4, Int64(obj.handle))
@@ -309,33 +307,33 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     }
 
     public func markStaleChildren(deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?) async throws {
+        let counter = try await nextChangeCounter(deviceId: deviceId)
         let now = Int64(Date().timeIntervalSince1970)
 
-        try db.withTransaction {
-            // Query affected children to record delete changes
-            let selectSQL: String
-            if parentHandle != nil {
-                selectSQL = "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
-            } else {
-                selectSQL = "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
+        // First, query affected children to record delete changes
+        let selectSQL: String
+        if parentHandle != nil {
+            selectSQL = "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
+        } else {
+            selectSQL = "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
+        }
+        let handles: [UInt32] = try db.withStatement(selectSQL) { stmt in
+            try db.bind(stmt, 1, deviceId)
+            try db.bind(stmt, 2, Int64(storageId))
+            if let ph = parentHandle {
+                try db.bind(stmt, 3, Int64(ph))
             }
-            let handles: [UInt32] = try db.withStatement(selectSQL) { stmt in
-                try db.bind(stmt, 1, deviceId)
-                try db.bind(stmt, 2, Int64(storageId))
-                if let ph = parentHandle {
-                    try db.bind(stmt, 3, Int64(ph))
-                }
-                var result: [UInt32] = []
-                while try db.step(stmt) {
-                    if let h = db.colInt64(stmt, 0) { result.append(UInt32(h)) }
-                }
-                return result
+            var result: [UInt32] = []
+            while try db.step(stmt) {
+                if let h = db.colInt64(stmt, 0) { result.append(UInt32(h)) }
             }
+            return result
+        }
 
-            guard !handles.isEmpty else { return }
+        guard !handles.isEmpty else { return }
 
-            let counter = try nextChangeCounterSync(deviceId: deviceId)
-
+        try db.exec("BEGIN TRANSACTION")
+        do {
             // Mark stale and bump change counter
             let updateSQL: String
             if parentHandle != nil {
@@ -369,50 +367,51 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
                     _ = try db.step(stmt)
                 }
             }
+            try db.exec("COMMIT")
+        } catch {
+            try? db.exec("ROLLBACK")
+            throw error
         }
     }
 
     public func removeObject(deviceId: String, storageId: UInt32, handle: MTPObjectHandle) async throws {
+        let counter = try await nextChangeCounter(deviceId: deviceId)
         let now = Int64(Date().timeIntervalSince1970)
 
-        try db.withTransaction {
-            let counter = try nextChangeCounterSync(deviceId: deviceId)
+        // Get parent handle for the change record
+        let parentHandle: Int64? = try db.withStatement(
+            "SELECT parentHandle FROM live_objects WHERE deviceId = ? AND storageId = ? AND handle = ?"
+        ) { stmt in
+            try db.bind(stmt, 1, deviceId)
+            try db.bind(stmt, 2, Int64(storageId))
+            try db.bind(stmt, 3, Int64(handle))
+            if try db.step(stmt) { return db.colInt64(stmt, 0) }
+            return nil
+        }
 
-            // Get parent handle for the change record
-            let parentHandle: Int64? = try db.withStatement(
-                "SELECT parentHandle FROM live_objects WHERE deviceId = ? AND storageId = ? AND handle = ?"
-            ) { stmt in
-                try db.bind(stmt, 1, deviceId)
-                try db.bind(stmt, 2, Int64(storageId))
-                try db.bind(stmt, 3, Int64(handle))
-                if try db.step(stmt) { return db.colInt64(stmt, 0) }
-                return nil
-            }
+        // Mark as stale with updated change counter
+        let sql = "UPDATE live_objects SET stale = 1, changeCounter = ? WHERE deviceId = ? AND storageId = ? AND handle = ?"
+        try db.withStatement(sql) { stmt in
+            try db.bind(stmt, 1, counter)
+            try db.bind(stmt, 2, deviceId)
+            try db.bind(stmt, 3, Int64(storageId))
+            try db.bind(stmt, 4, Int64(handle))
+            _ = try db.step(stmt)
+        }
 
-            // Mark as stale with updated change counter
-            let sql = "UPDATE live_objects SET stale = 1, changeCounter = ? WHERE deviceId = ? AND storageId = ? AND handle = ?"
-            try db.withStatement(sql) { stmt in
-                try db.bind(stmt, 1, counter)
-                try db.bind(stmt, 2, deviceId)
-                try db.bind(stmt, 3, Int64(storageId))
-                try db.bind(stmt, 4, Int64(handle))
-                _ = try db.step(stmt)
-            }
-
-            // Insert delete change record
-            let changeSQL = """
-            INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, createdAt)
-            VALUES (?, ?, ?, ?, ?, 'delete', ?)
-            """
-            try db.withStatement(changeSQL) { stmt in
-                try db.bind(stmt, 1, deviceId)
-                try db.bind(stmt, 2, counter)
-                try db.bind(stmt, 3, Int64(storageId))
-                try db.bind(stmt, 4, Int64(handle))
-                try db.bind(stmt, 5, parentHandle)
-                try db.bind(stmt, 6, now)
-                _ = try db.step(stmt)
-            }
+        // Insert delete change record
+        let changeSQL = """
+        INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, createdAt)
+        VALUES (?, ?, ?, ?, ?, 'delete', ?)
+        """
+        try db.withStatement(changeSQL) { stmt in
+            try db.bind(stmt, 1, deviceId)
+            try db.bind(stmt, 2, counter)
+            try db.bind(stmt, 3, Int64(storageId))
+            try db.bind(stmt, 4, Int64(handle))
+            try db.bind(stmt, 5, parentHandle)
+            try db.bind(stmt, 6, now)
+            _ = try db.step(stmt)
         }
     }
 
@@ -508,7 +507,8 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
         // Match rows where deviceId looks like "xxxx:xxxx@y:z" (ephemeral format)
         // and starts with the given vid:pid prefix
         let tables = ["live_objects", "live_storages", "crawl_state", "device_index_state", "cached_content", "live_changes"]
-        try db.withTransaction {
+        try db.exec("BEGIN TRANSACTION")
+        do {
             for table in tables {
                 let pattern = "\(vidPidPattern)@%"
                 let sql = "UPDATE \(table) SET deviceId = ? WHERE deviceId LIKE ?"
@@ -518,6 +518,10 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
                     _ = try db.step(stmt)
                 }
             }
+            try db.exec("COMMIT")
+        } catch {
+            try? db.exec("ROLLBACK")
+            throw error
         }
     }
 
@@ -575,61 +579,59 @@ extension SQLiteLiveIndex: DeviceIdentityStore {
         let key = signals.identityKey()
         let now = Int64(Date().timeIntervalSince1970)
 
-        return try db.withTransaction {
-            // Try to find existing identity by key
-            let selectSQL = "SELECT domainId, displayName, createdAt, lastSeenAt FROM device_identities WHERE identityKey = ?"
-            let existing: StableDeviceIdentity? = try db.withStatement(selectSQL) { stmt in
-                try db.bind(stmt, 1, key)
-                if try db.step(stmt) {
-                    let domainId = db.colText(stmt, 0) ?? ""
-                    let displayName = db.colText(stmt, 1) ?? ""
-                    let createdAt = db.colInt64(stmt, 2).map { Date(timeIntervalSince1970: TimeInterval($0)) } ?? Date()
-                    let lastSeenAt = db.colInt64(stmt, 3).map { Date(timeIntervalSince1970: TimeInterval($0)) } ?? Date()
-                    return StableDeviceIdentity(domainId: domainId, displayName: displayName, createdAt: createdAt, lastSeenAt: lastSeenAt)
-                }
-                return nil
+        // Try to find existing identity by key
+        let selectSQL = "SELECT domainId, displayName, createdAt, lastSeenAt FROM device_identities WHERE identityKey = ?"
+        let existing: StableDeviceIdentity? = try db.withStatement(selectSQL) { stmt in
+            try db.bind(stmt, 1, key)
+            if try db.step(stmt) {
+                let domainId = db.colText(stmt, 0) ?? ""
+                let displayName = db.colText(stmt, 1) ?? ""
+                let createdAt = db.colInt64(stmt, 2).map { Date(timeIntervalSince1970: TimeInterval($0)) } ?? Date()
+                let lastSeenAt = db.colInt64(stmt, 3).map { Date(timeIntervalSince1970: TimeInterval($0)) } ?? Date()
+                return StableDeviceIdentity(domainId: domainId, displayName: displayName, createdAt: createdAt, lastSeenAt: lastSeenAt)
             }
+            return nil
+        }
 
-            if let identity = existing {
-                // Update lastSeenAt
-                let updateSQL = "UPDATE device_identities SET lastSeenAt = ? WHERE domainId = ?"
-                try db.withStatement(updateSQL) { stmt in
-                    try db.bind(stmt, 1, now)
-                    try db.bind(stmt, 2, identity.domainId)
-                    _ = try db.step(stmt)
-                }
-                return StableDeviceIdentity(
-                    domainId: identity.domainId,
-                    displayName: identity.displayName,
-                    createdAt: identity.createdAt,
-                    lastSeenAt: Date()
-                )
-            }
-
-            // Create new identity
-            let domainId = UUID().uuidString
-            let displayName = signals.displayName()
-            let insertSQL = """
-            INSERT INTO device_identities (domainId, identityKey, displayName, vendorId, productId, usbSerial, mtpSerial, manufacturer, model, createdAt, lastSeenAt)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """
-            try db.withStatement(insertSQL) { stmt in
-                try db.bind(stmt, 1, domainId)
-                try db.bind(stmt, 2, key)
-                try db.bind(stmt, 3, displayName)
-                try db.bind(stmt, 4, signals.vendorId.map { Int64($0) })
-                try db.bind(stmt, 5, signals.productId.map { Int64($0) })
-                try db.bind(stmt, 6, signals.usbSerial)
-                try db.bind(stmt, 7, signals.mtpSerial)
-                try db.bind(stmt, 8, signals.manufacturer)
-                try db.bind(stmt, 9, signals.model)
-                try db.bind(stmt, 10, now)
-                try db.bind(stmt, 11, now)
+        if let identity = existing {
+            // Update lastSeenAt
+            let updateSQL = "UPDATE device_identities SET lastSeenAt = ? WHERE domainId = ?"
+            try db.withStatement(updateSQL) { stmt in
+                try db.bind(stmt, 1, now)
+                try db.bind(stmt, 2, identity.domainId)
                 _ = try db.step(stmt)
             }
-
-            return StableDeviceIdentity(domainId: domainId, displayName: displayName, createdAt: Date(), lastSeenAt: Date())
+            return StableDeviceIdentity(
+                domainId: identity.domainId,
+                displayName: identity.displayName,
+                createdAt: identity.createdAt,
+                lastSeenAt: Date()
+            )
         }
+
+        // Create new identity
+        let domainId = UUID().uuidString
+        let displayName = signals.displayName()
+        let insertSQL = """
+        INSERT INTO device_identities (domainId, identityKey, displayName, vendorId, productId, usbSerial, mtpSerial, manufacturer, model, createdAt, lastSeenAt)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """
+        try db.withStatement(insertSQL) { stmt in
+            try db.bind(stmt, 1, domainId)
+            try db.bind(stmt, 2, key)
+            try db.bind(stmt, 3, displayName)
+            try db.bind(stmt, 4, signals.vendorId.map { Int64($0) })
+            try db.bind(stmt, 5, signals.productId.map { Int64($0) })
+            try db.bind(stmt, 6, signals.usbSerial)
+            try db.bind(stmt, 7, signals.mtpSerial)
+            try db.bind(stmt, 8, signals.manufacturer)
+            try db.bind(stmt, 9, signals.model)
+            try db.bind(stmt, 10, now)
+            try db.bind(stmt, 11, now)
+            _ = try db.step(stmt)
+        }
+
+        return StableDeviceIdentity(domainId: domainId, displayName: displayName, createdAt: Date(), lastSeenAt: Date())
     }
 
     public func identity(for domainId: String) async throws -> StableDeviceIdentity? {
@@ -649,47 +651,45 @@ extension SQLiteLiveIndex: DeviceIdentityStore {
     }
 
     public func updateMTPSerial(domainId: String, mtpSerial: String) async throws {
-        try db.withTransaction {
-            // First get the current identity key
-            let selectSQL = "SELECT identityKey, vendorId, productId, manufacturer, model FROM device_identities WHERE domainId = ?"
-            let row: (key: String, vid: Int64?, pid: Int64?, mfr: String?, mdl: String?)? = try db.withStatement(selectSQL) { stmt in
-                try db.bind(stmt, 1, domainId)
-                if try db.step(stmt) {
-                    return (
-                        key: db.colText(stmt, 0) ?? "",
-                        vid: db.colInt64(stmt, 1),
-                        pid: db.colInt64(stmt, 2),
-                        mfr: db.colText(stmt, 3),
-                        mdl: db.colText(stmt, 4)
-                    )
-                }
-                return nil
+        // First get the current identity key
+        let selectSQL = "SELECT identityKey, vendorId, productId, manufacturer, model FROM device_identities WHERE domainId = ?"
+        let row: (key: String, vid: Int64?, pid: Int64?, mfr: String?, mdl: String?)? = try db.withStatement(selectSQL) { stmt in
+            try db.bind(stmt, 1, domainId)
+            if try db.step(stmt) {
+                return (
+                    key: db.colText(stmt, 0) ?? "",
+                    vid: db.colInt64(stmt, 1),
+                    pid: db.colInt64(stmt, 2),
+                    mfr: db.colText(stmt, 3),
+                    mdl: db.colText(stmt, 4)
+                )
             }
-            guard let row else { return }
+            return nil
+        }
+        guard let row else { return }
 
-            // Only upgrade identity key if it was a type hash (weakest signal)
-            let newKey: String?
-            if row.key.hasPrefix("type:") {
-                newKey = "mtp:\(mtpSerial)"
-            } else {
-                newKey = nil
+        // Only upgrade identity key if it was a type hash (weakest signal)
+        let newKey: String?
+        if row.key.hasPrefix("type:") {
+            newKey = "mtp:\(mtpSerial)"
+        } else {
+            newKey = nil
+        }
+
+        if let newKey {
+            let updateSQL = "UPDATE device_identities SET mtpSerial = ?, identityKey = ? WHERE domainId = ?"
+            try db.withStatement(updateSQL) { stmt in
+                try db.bind(stmt, 1, mtpSerial)
+                try db.bind(stmt, 2, newKey)
+                try db.bind(stmt, 3, domainId)
+                _ = try db.step(stmt)
             }
-
-            if let newKey {
-                let updateSQL = "UPDATE device_identities SET mtpSerial = ?, identityKey = ? WHERE domainId = ?"
-                try db.withStatement(updateSQL) { stmt in
-                    try db.bind(stmt, 1, mtpSerial)
-                    try db.bind(stmt, 2, newKey)
-                    try db.bind(stmt, 3, domainId)
-                    _ = try db.step(stmt)
-                }
-            } else {
-                let updateSQL = "UPDATE device_identities SET mtpSerial = ? WHERE domainId = ?"
-                try db.withStatement(updateSQL) { stmt in
-                    try db.bind(stmt, 1, mtpSerial)
-                    try db.bind(stmt, 2, domainId)
-                    _ = try db.step(stmt)
-                }
+        } else {
+            let updateSQL = "UPDATE device_identities SET mtpSerial = ? WHERE domainId = ?"
+            try db.withStatement(updateSQL) { stmt in
+                try db.bind(stmt, 1, mtpSerial)
+                try db.bind(stmt, 2, domainId)
+                _ = try db.step(stmt)
             }
         }
     }

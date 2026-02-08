@@ -164,14 +164,9 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
            let svc = await registry.service(for: ephemeralId) {
             return await svc.underlyingDevice
         }
-        // Fall back to opening the specific connected device by ephemeral ID.
-        do {
-            return try await deviceManager.openRealDevice(id: deviceId)
-        } catch MTPError.transport(.noDevice) {
-            return nil
-        } catch TransportError.noDevice {
-            return nil
-        }
+        // Fall back to direct ephemeral ID match
+        let devices = try await deviceManager.currentRealDevices()
+        return devices.first { $0.summary.id == deviceId }
     }
 
     // MARK: - Cache-First API

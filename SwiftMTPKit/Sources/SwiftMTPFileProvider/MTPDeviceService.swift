@@ -28,11 +28,6 @@ public actor MTPDeviceService {
         self.fpManager = fpManager
     }
 
-    /// Override the absence threshold, primarily for deterministic tests.
-    public func setExtendedAbsenceThreshold(_ threshold: TimeInterval) {
-        extendedAbsenceThreshold = threshold
-    }
-
     /// Handle device attachment with stable identity.
     public func deviceAttached(identity: StableDeviceIdentity) async {
         lastSeen[identity.domainId] = Date()
