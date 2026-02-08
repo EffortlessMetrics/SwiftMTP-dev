@@ -175,11 +175,7 @@ final class TransportErrorTests: XCTestCase {
 
         let result = schedule.check(operation: .openSession, callIndex: 0, byteOffset: nil)
         XCTAssertNotNil(result)
-        if case .timeout = result {
-            // Success
-        } else {
-            XCTFail("Expected timeout error")
-        }
+        XCTAssertEqual(result, .timeout)
     }
 
     func testFaultScheduleDoesNotMatchDifferentOperation() {
@@ -275,11 +271,7 @@ final class TransportErrorTests: XCTestCase {
 
     func testPipeStallPattern() {
         let fault = ScheduledFault.pipeStall(on: .executeCommand)
-        if case .onOperation(let op) = fault.trigger {
-            XCTAssertEqual(op, .executeCommand)
-        } else {
-            XCTFail("Expected onOperation trigger")
-        }
+        XCTAssertEqual(fault.trigger, .onOperation(.executeCommand))
         if case .io(let message) = fault.error {
             XCTAssertEqual(message, "USB pipe stall")
         } else {
@@ -290,47 +282,23 @@ final class TransportErrorTests: XCTestCase {
 
     func testDisconnectAtOffsetPattern() {
         let fault = ScheduledFault.disconnectAtOffset(2048)
-        if case .atByteOffset(let offset) = fault.trigger {
-            XCTAssertEqual(offset, 2048)
-        } else {
-            XCTFail("Expected atByteOffset trigger")
-        }
-        if case .disconnected = fault.error {
-            // Success
-        } else {
-            XCTFail("Expected disconnected error")
-        }
+        XCTAssertEqual(fault.trigger, .atByteOffset(2048))
+        XCTAssertEqual(fault.error, .disconnected)
         XCTAssertEqual(fault.label, "disconnect@2048")
     }
 
     func testBusyForRetriesPattern() {
         let fault = ScheduledFault.busyForRetries(5)
-        if case .onOperation(let op) = fault.trigger {
-            XCTAssertEqual(op, .executeCommand)
-        } else {
-            XCTFail("Expected onOperation trigger")
-        }
-        if case .busy = fault.error {
-            // Success
-        } else {
-            XCTFail("Expected busy error")
-        }
+        XCTAssertEqual(fault.trigger, .onOperation(.executeCommand))
+        XCTAssertEqual(fault.error, .busy)
         XCTAssertEqual(fault.repeatCount, 5)
         XCTAssertEqual(fault.label, "busy×5")
     }
 
     func testTimeoutOncePattern() {
         let fault = ScheduledFault.timeoutOnce(on: .getObjectInfos)
-        if case .onOperation(let op) = fault.trigger {
-            XCTAssertEqual(op, .getObjectInfos)
-        } else {
-            XCTFail("Expected onOperation trigger")
-        }
-        if case .timeout = fault.error {
-            // Success
-        } else {
-            XCTFail("Expected timeout error")
-        }
+        XCTAssertEqual(fault.trigger, .onOperation(.getObjectInfos))
+        XCTAssertEqual(fault.error, .timeout)
         XCTAssertEqual(fault.repeatCount, 1)
     }
 

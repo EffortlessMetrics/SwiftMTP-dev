@@ -392,11 +392,10 @@ final class StoreConcurrencyTests: XCTestCase {
 
     func testFetchObjectsWithGenerationIsolation() async throws {
         let actor = store.createActor()
-        let deviceId = "device-\(UUID().uuidString)"
         
         // Insert objects in generation 1
         try await actor.upsertObject(
-            deviceId: deviceId,
+            deviceId: "device-1",
             storageId: 1,
             handle: 100,
             parentHandle: nil,
@@ -409,11 +408,11 @@ final class StoreConcurrencyTests: XCTestCase {
         )
         
         // Fetch objects from generation 1
-        let gen1Objects = try await actor.fetchObjects(deviceId: deviceId, generation: 1)
+        let gen1Objects = try await actor.fetchObjects(deviceId: "device-1", generation: 1)
         XCTAssertEqual(gen1Objects.count, 1)
         
         // Fetch objects from generation 2 (should be empty)
-        let gen2Objects = try await actor.fetchObjects(deviceId: deviceId, generation: 2)
+        let gen2Objects = try await actor.fetchObjects(deviceId: "device-1", generation: 2)
         XCTAssertEqual(gen2Objects.count, 0)
     }
 }

@@ -21,32 +21,20 @@ final class SyncErrorTests: XCTestCase {
     func testConflictDetectionBothModified() {
         // Test conflict when both local and remote are modified
         let error = SyncConflictError.bothModified(localPath: "/test.txt", remotePath: "/test.txt")
-        if case .bothModified(let localPath, let remotePath) = error {
-            XCTAssertEqual(localPath, "/test.txt")
-            XCTAssertEqual(remotePath, "/test.txt")
-        } else {
-            XCTFail("Expected bothModified case")
-        }
+        XCTAssertEqual(error.localPath, "/test.txt")
+        XCTAssertEqual(error.remotePath, "/test.txt")
     }
 
     func testConflictDetectionLocalDeleted() {
         // Test conflict when local is deleted but remote is modified
         let error = SyncConflictError.localDeleted(remotePath: "/test.txt")
-        if case .localDeleted(let remotePath) = error {
-            XCTAssertEqual(remotePath, "/test.txt")
-        } else {
-            XCTFail("Expected localDeleted case")
-        }
+        XCTAssertEqual(error.remotePath, "/test.txt")
     }
 
     func testConflictDetectionRemoteDeleted() {
         // Test conflict when remote is deleted but local is modified
         let error = SyncConflictError.remoteDeleted(localPath: "/test.txt")
-        if case .remoteDeleted(let localPath) = error {
-            XCTAssertEqual(localPath, "/test.txt")
-        } else {
-            XCTFail("Expected remoteDeleted case")
-        }
+        XCTAssertEqual(error.localPath, "/test.txt")
     }
 
     // MARK: - Partial Sync Failures
@@ -175,11 +163,7 @@ final class SyncErrorTests: XCTestCase {
     func testMergeConflictResolution() {
         // Test merge conflict resolution
         let error = SyncConflictError.bothModified(localPath: "/photo.jpg", remotePath: "/photo.jpg")
-        if case .bothModified(let localPath, let remotePath) = error {
-            XCTAssertEqual(localPath, remotePath)
-        } else {
-            XCTFail("Expected bothModified case")
-        }
+        XCTAssertEqual(error.localPath, error.remotePath)
     }
 
     func testMergeWithAncestor() {

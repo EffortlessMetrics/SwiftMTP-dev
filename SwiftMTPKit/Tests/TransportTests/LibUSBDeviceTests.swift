@@ -71,21 +71,8 @@ final class LibUSBDeviceTests: XCTestCase {
         let virtualDevice = VirtualMTPDevice(config: config)
         let mockDeviceData = MockDeviceData(
             deviceSummary: config.summary,
-            deviceInfo: config.info,
-            storages: config.storages.map { $0.toStorageInfo() },
-            objects: config.objects.map {
-                MockObjectData(
-                    handle: $0.handle,
-                    storage: $0.storage,
-                    parent: $0.parent,
-                    name: $0.name,
-                    size: $0.sizeBytes,
-                    formatCode: $0.formatCode,
-                    data: $0.data
-                )
-            },
-            operationsSupported: Array(config.info.operationsSupported),
-            eventsSupported: Array(config.info.eventsSupported)
+            storages: config.storages.map { MockStorage(id: $0.id, info: $0.toStorageInfo()) },
+            objects: config.objects.map { MockObject(handle: $0.handle, data: $0) }
         )
 
         // Test that mock device data can be created successfully
@@ -99,8 +86,8 @@ final class LibUSBDeviceTests: XCTestCase {
         XCTAssertTrue(pixel7.summary.model.contains("Pixel"))
         XCTAssertFalse(pixel7.storages.isEmpty)
 
-        // Test empty-device preset
-        let android = VirtualDeviceConfig.emptyDevice
+        // Test Android generic preset
+        let android = VirtualDeviceConfig.androidGeneric
         XCTAssertNotNil(android)
     }
 
@@ -119,14 +106,14 @@ final class LibUSBDeviceTests: XCTestCase {
 
         let withObject = withStorage.withObject(
             VirtualObjectConfig(
-                handle: 0x0001_0001,
+                handle: MTPObjectHandle(raw: 0x00010001),
                 storage: MTPStorageID(raw: 1),
                 name: "TestFile.txt",
                 formatCode: 0x3000
             )
         )
 
-        XCTAssertEqual(withObject.objects.count, withStorage.objects.count + 1)
+        XCTAssertEqual(withObject.objects.count, 1)
     }
 
     // MARK: - Hot-Plug Detection Tests
@@ -198,38 +185,32 @@ final class LibUSBDeviceTests: XCTestCase {
             usbSerial: "MOCK001"
         )
 
-        let storage = MTPStorageInfo(
+        let storage = MockStorage(
             id: MTPStorageID(raw: 1),
-            description: "Internal Storage",
-            capacityBytes: 64 * 1024 * 1024 * 1024,
-            freeBytes: 32 * 1024 * 1024 * 1024,
-            isReadOnly: false
+            info: MTPStorageInfo(
+                id: MTPStorageID(raw: 1),
+                description: "Internal Storage",
+                capacityBytes: 64 * 1024 * 1024 * 1024,
+                freeBytes: 32 * 1024 * 1024 * 1024,
+                isReadOnly: false
+            )
         )
 
-        let mockObject = MockObjectData(
-            handle: 0x0001_0001,
-            storage: MTPStorageID(raw: 1),
-            parent: nil,
-            name: "test.txt",
-            size: 1024,
-            formatCode: 0x3000,
-            data: nil
+        let mockObject = MockObject(
+            handle: MTPObjectHandle(raw: 0x00010001),
+            data: VirtualObjectConfig(
+                handle: MTPObjectHandle(raw: 0x00010001),
+                storage: MTPStorageID(raw: 1),
+                name: "test.txt",
+                sizeBytes: 1024,
+                formatCode: 0x3000
+            )
         )
 
         let deviceData = MockDeviceData(
             deviceSummary: summary,
-            deviceInfo: MTPDeviceInfo(
-                manufacturer: summary.manufacturer,
-                model: summary.model,
-                version: "1.0",
-                serialNumber: summary.usbSerial,
-                operationsSupported: [],
-                eventsSupported: []
-            ),
             storages: [storage],
-            objects: [mockObject],
-            operationsSupported: [],
-            eventsSupported: []
+            objects: [mockObject]
         )
 
         XCTAssertEqual(deviceData.storages.count, 1)
@@ -243,7 +224,7 @@ final class LibUSBDeviceTests: XCTestCase {
             .busy,
             .accessDenied,
             .deviceDisconnected,
-            .protocolError(code: 0x2001)
+            .protocolError
         ]
 
         XCTAssertEqual(failureModes.count, 5)
