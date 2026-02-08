@@ -62,9 +62,9 @@ jobs:
         working-directory: SwiftMTPKit
         run: swift build
 
-      - name: Run Unit, BDD, Property, and Snapshot Tests
+      - name: Run Full Test Suite + Coverage Gate
         working-directory: SwiftMTPKit
-        run: swift test --enable-code-coverage
+        run: ./run-all-tests.sh
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
@@ -190,37 +190,19 @@ jobs:
         working-directory: SwiftMTPKit
         run: swift package resolve
 
-      - name: Build with code coverage enabled
+      - name: Build with code coverage enabled + enforce gate
         working-directory: SwiftMTPKit
-        run: swift test --enable-code-coverage
-
-      - name: Generate coverage report
-        working-directory: SwiftMTPKit
-        run: |
-          # Generate LLVM coverage report
-          swift package generate-code-coverage-as-llvm
-
-          # Convert to LCOV format for Codecov/SonarQube
-          xcrun llvm-cov show \
-            $(swift build --show-bin-path)/SwiftMTPKit.xctest \
-            --instr-profile=default.profdata \
-            --format=LCOV > ${{ env.COVERAGE_OUTPUT }}
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        if: always()
-        with:
-          file: ${{ env.COVERAGE_OUTPUT }}
-          flags: unittests,swift,macos
-          name: codecov-umbrella
-          fail_ci_if_error: false
+        run: ./run-all-tests.sh
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: code-coverage-report
-          path: ${{ env.COVERAGE_OUTPUT }}
+          path: |
+            SwiftMTPKit/coverage/coverage.json
+            SwiftMTPKit/coverage/summary.txt
+            SwiftMTPKit/coverage/test_output.log
 
   # =========================================================================
   # Nightly Extended Integration Tests - Runs on schedule only

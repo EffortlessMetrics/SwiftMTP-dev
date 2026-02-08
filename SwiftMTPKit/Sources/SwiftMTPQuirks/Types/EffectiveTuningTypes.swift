@@ -34,7 +34,16 @@ public struct UserOverride: Sendable, Equatable {
               overallDeadlineMs: Int? = nil,
               stabilizeMs: Int? = nil,
               disablePartialRead: Bool? = nil,
-              disablePartialWrite: Bool? = nil) {}
+              disablePartialWrite: Bool? = nil) {
+    self.maxChunkBytes = maxChunkBytes
+    self.ioTimeoutMs = ioTimeoutMs
+    self.handshakeTimeoutMs = handshakeTimeoutMs
+    self.inactivityTimeoutMs = inactivityTimeoutMs
+    self.overallDeadlineMs = overallDeadlineMs
+    self.stabilizeMs = stabilizeMs
+    self.disablePartialRead = disablePartialRead
+    self.disablePartialWrite = disablePartialWrite
+  }
 }
 
 public enum UserOverrideSource {

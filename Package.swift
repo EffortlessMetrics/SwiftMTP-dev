@@ -140,7 +140,14 @@ let package = Package(
                 resources: [.copy("Features")]),
                 
     .testTarget(name: "PropertyTests",
-                dependencies: ["SwiftMTPCore", "SwiftCheck"],
+                dependencies: [
+                    "SwiftMTPCore",
+                    "SwiftMTPIndex",
+                    "SwiftMTPObservability",
+                    "SwiftMTPStore",
+                    "SwiftMTPQuirks",
+                    "SwiftCheck",
+                ],
                 path: "SwiftMTPKit/Tests/PropertyTests"),
                 
     .testTarget(name: "SnapshotTests",

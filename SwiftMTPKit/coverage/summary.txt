@@ -1,0 +1,33 @@
+SwiftMTP Filtered Coverage
+==========================
+Threshold: 90.00%
+Overall:   91.62% (1159/1265)
+Status:    PASS
+
+Module Coverage:
+  - SwiftMTPQuirks: 92.84% (337/363)
+  - SwiftMTPStore: 94.75% (559/590)
+  - SwiftMTPSync: 85.49% (218/255)
+  - SwiftMTPObservability: 78.95% (45/57)
+
+Worst 20 Files:
+  -  78.95%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPObservability/Throughput.swift
+  -  85.43%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/MirrorEngine.swift
+  -  86.34%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkDatabase.swift
+  -  92.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStore.swift
+  -  92.20%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/StoreActor.swift
+  -  96.59%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStoreAdapter.swift
+  -  97.50%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Types/EffectiveTuningTypes.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/SyncEngine.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/FallbackSelections.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/ProfilingRunEntity.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/SnapshotEntity.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/SubmissionEntity.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/ProfilingMetricEntity.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/DevicePolicy.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/MTPStorageEntity.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/DeviceEntity.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/LearnedProfileEntity.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkFlags.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/MTPObjectEntity.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/TransferEntity.swift

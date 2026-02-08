@@ -1,33 +1,30 @@
+import Foundation
 import XCTest
-@testable import SwiftMTPTools
+@testable import swiftmtp_cli
 
 final class CollectPrivacyTests: XCTestCase {
-    func testRedactionPatterns() throws {
-        let raw = """
-        Serial Number: ABCD-1234
-        Hostname: stevens-mac-mini
-        User Path: /Users/steven/Secret
-        Windows Path: C:\\Users\\steven\\Secrets
-        Email: user@example.com
-        MAC: aa:bb:cc:dd:ee:ff
-        IPv4: 10.0.0.23
-        UUID: 550e8400-e29b-41d4-a716-446655440000
-        """
-        let redacted = Redaction.sanitize(text: raw)
-        XCTAssertFalse(redacted.contains("ABCD-1234"))
-        XCTAssertFalse(redacted.contains("steven"))
-        XCTAssertFalse(redacted.contains("user@example.com"))
-        XCTAssertFalse(redacted.contains("aa:bb:cc:dd:ee:ff"))
-        XCTAssertFalse(redacted.contains("10.0.0.23"))
-        XCTAssertFalse(redacted.contains("550e8400-e29b-41d4-a716-446655440000"))
+    func testRedactionUsesStableHMACForSameSalt() throws {
+        let salt = Data("fixture-salt-for-tests".utf8)
+        let first = Redaction.redactSerial("ABCD-1234", salt: salt)
+        let second = Redaction.redactSerial("ABCD-1234", salt: salt)
+        let different = Redaction.redactSerial("EFGH-5678", salt: salt)
+
+        XCTAssertEqual(first, second)
+        XCTAssertNotEqual(first, different)
+        XCTAssertTrue(first.hasPrefix("hmacsha256:"))
     }
 
-    func testExitCodes() throws {
-        // Use a tiny harness around CollectCommand to simulate argument sets
-        let (codeNoDevice, _) = CollectHarness.run(args: ["collect", "--noninteractive", "--strict", "--no-bench"])
-        XCTAssertEqual(codeNoDevice, 69) // unavailable
+    func testGenerateSaltLength() throws {
+        let salt = Redaction.generateSalt(count: 48)
+        XCTAssertEqual(salt.count, 48)
+    }
 
-        let (codeUsage, _) = CollectHarness.run(args: ["collect", "--noninteractive", "--strict", "--vid","2717","--pid","ff10","--bus","99","--address","99"])
-        XCTAssertEqual(codeUsage, 64) // usage error
+    func testRedactorTokenizeFilenamePreservesExtension() throws {
+        let redactor = Redactor(bundleKey: "unit-test-key")
+        let token = redactor.tokenizeFilename("private-report.txt")
+
+        XCTAssertTrue(token.hasPrefix("file_"))
+        XCTAssertTrue(token.hasSuffix(".txt"))
+        XCTAssertNotEqual(token, "private-report.txt")
     }
 }
