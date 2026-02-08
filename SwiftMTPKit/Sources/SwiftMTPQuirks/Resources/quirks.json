@@ -161,25 +161,19 @@
         "ioTimeoutMs": 30000,
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 180000,
-        "stabilizeMs": 500,
-        "resetOnOpen": true
-      },
-      "flags": {
-        "resetOnOpen": true,
-        "needsLongerOpenTimeout": true,
-        "stallOnLargeReads": true,
-        "requireStabilization": true
+        "stabilizeMs": 3000,
+        "resetOnOpen": false
       },
       "confidence": "medium",
       "status": "stable",
       "notes": [
-        "macOS IOKit PTP driver holds an active session that blocks OpenSession.",
-        "PTP Device Reset (0x66) clears this in most cases.",
-        "resetOnOpen + stabilizeMs as fallback if PTP reset alone is insufficient."
+        "libmtp-aligned claim (set_configuration + set_alt_setting) reinitializes pipes without USB reset.",
+        "Fallback USB reset uses stabilizeMs=3000 as poll budget for waitForMTPReady.",
+        "Bulk transfer failures often caused by Chrome/WebUSB holding the device — quit Chromium apps and replug."
       ],
       "provenance": {
-        "author": "Gemini CLI",
-        "date": "2026-02-06"
+        "author": "Steven Zimmerman",
+        "date": "2026-02-07"
       }
     }
   ]

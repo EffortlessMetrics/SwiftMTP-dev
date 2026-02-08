@@ -133,18 +133,7 @@ public actor LibUSBTransport: MTPTransport {
     var h: OpaquePointer?
     guard libusb_open(dev, &h) == 0, let handle = h else { libusb_unref_device(dev); throw TransportError.accessDenied }
 
-    if config.resetOnOpen && ProcessInfo.processInfo.environment["SWIFTMTP_NO_RESET"] == nil {
-        let resetRC = libusb_reset_device(handle)
-        if debug { print("   [Open] resetOnOpen rc=\(resetRC), stabilizeMs=\(config.stabilizeMs)") }
-        try? await Task.sleep(nanoseconds: UInt64(config.stabilizeMs) * 1_000_000)
-        // Re-set configuration after USB reset to re-activate endpoints
-        let setConfigRC = libusb_set_configuration(handle, 1)
-        if debug { print("   [Open] set_configuration(1) rc=\(setConfigRC)") }
-    } else if debug {
-        print("   [Open] resetOnOpen skipped (SWIFTMTP_NO_RESET or disabled)")
-    }
-
-    // Phase 1: Rank → Claim → Probe interface candidates
+    // Rank MTP interface candidates from USB descriptors
     let candidates: [InterfaceCandidate]
     do {
       candidates = try rankMTPInterfaces(handle: handle, device: dev)
@@ -156,37 +145,43 @@ public actor LibUSBTransport: MTPTransport {
       throw TransportError.io("no MTP interface")
     }
 
-    var selectedCandidate: InterfaceCandidate?
-    var cachedDeviceInfo: Data?
+    // Pass 1: Normal probe (no USB reset).
+    // claimCandidate uses set_configuration + set_alt_setting to reinitialize
+    // endpoint pipes, which fixes stale pipe state on most devices.
+    if debug { print("   [Open] Pass 1: probing \(candidates.count) candidate(s)") }
+    var result = tryProbeAllCandidates(
+      handle: handle, candidates: candidates,
+      handshakeTimeoutMs: config.handshakeTimeoutMs, debug: debug
+    )
 
-    for (idx, candidate) in candidates.enumerated() {
-      let start = DispatchTime.now()
-      if debug {
-        print(String(format: "   [Probe] Trying interface %d (score=%d, class=0x%02x)", candidate.ifaceNumber, candidate.score, candidate.ifaceClass))
-      }
+    // Pass 2 (fallback): If pass 1 failed entirely and resetOnOpen is enabled,
+    // do USB reset + MTP readiness poll + re-probe.
+    if result.candidate == nil && config.resetOnOpen {
+      if debug { print("   [Open] Pass 1 failed, attempting USB reset fallback") }
+      let resetRC = libusb_reset_device(handle)
+      if debug { print("   [Open] libusb_reset_device rc=\(resetRC)") }
 
-      do {
-        try claimCandidate(handle: handle, candidate)
-      } catch {
-        if debug { print("   [Probe] Claim failed: \(error)") }
-        continue
-      }
+      if resetRC == 0 {
+        // Poll GetDeviceStatus until MTP stack recovers (budget from stabilizeMs)
+        let budget = max(config.stabilizeMs, 3000)
+        let ifaceNum = candidates.first.map { UInt16($0.ifaceNumber) } ?? 0
+        let ready = waitForMTPReady(handle: handle, iface: ifaceNum, budgetMs: budget)
+        if debug { print("   [Open] waitForMTPReady → \(ready)") }
 
-      let (probeOK, infoData) = probeCandidate(handle: handle, candidate, timeoutMs: UInt32(config.handshakeTimeoutMs))
-      let elapsed = Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
+        // Re-set configuration to reinitialize pipes after reset
+        let setConfigRC = libusb_set_configuration(handle, 1)
+        if debug { print("   [Open] post-reset set_configuration(1) rc=\(setConfigRC)") }
 
-      if probeOK {
-        if debug { print("   [Probe] Interface \(candidate.ifaceNumber) OK (\(elapsed)ms)") }
-        selectedCandidate = candidate
-        cachedDeviceInfo = infoData
-        break
-      } else {
-        if debug { print("   [Probe] Interface \(candidate.ifaceNumber) failed (\(elapsed)ms), trying next...") }
-        releaseCandidate(handle: handle, candidate)
+        result = tryProbeAllCandidates(
+          handle: handle, candidates: candidates,
+          handshakeTimeoutMs: config.handshakeTimeoutMs, debug: debug
+        )
+      } else if debug {
+        print("   [Open] USB reset failed (rc=\(resetRC)), skipping pass 2")
       }
     }
 
-    guard let sel = selectedCandidate else {
+    guard let sel = result.candidate else {
       libusb_close(handle); libusb_unref_device(dev)
       throw TransportError.io("no MTP interface responded to probe")
     }
@@ -203,7 +198,7 @@ public actor LibUSBTransport: MTPTransport {
       handle: handle, device: dev,
       iface: sel.ifaceNumber, epIn: sel.bulkIn, epOut: sel.bulkOut, epEvt: sel.eventIn,
       config: config, manufacturer: summary.manufacturer, model: summary.model,
-      cachedDeviceInfoData: cachedDeviceInfo
+      cachedDeviceInfoData: result.cachedDeviceInfo
     )
 
     activeLinks.append(link)
