@@ -1,0 +1,40 @@
+[0/1] Planning build
+Test Suite 'Selected tests' started at 2026-02-08 10:35:54.476.
+Test Suite 'SwiftMTPKitPackageTests.xctest' started at 2026-02-08 10:35:54.476.
+Test Suite 'PTPCodecFuzzTests' started at 2026-02-08 10:35:54.476.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPContainerEncodeDecodeFuzz]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPContainerEncodeDecodeFuzz]' passed (0.002 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPDeviceInfoParseFuzz]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPDeviceInfoParseFuzz]' passed (0.080 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPObjectFormatDetection]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPObjectFormatDetection]' passed (0.000 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPPropListParseFuzz]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPPropListParseFuzz]' passed (0.119 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderBytesFuzz]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderBytesFuzz]' passed (0.028 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderU16Fuzz]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderU16Fuzz]' passed (0.005 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderU32Fuzz]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderU32Fuzz]' passed (0.010 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderU64Fuzz]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderU64Fuzz]' passed (0.018 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderU8Fuzz]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderU8Fuzz]' passed (0.002 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderValueFuzz]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPReaderValueFuzz]' passed (0.116 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPStringEncodeFuzz]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPStringEncodeFuzz]' passed (0.011 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPStringParseBoundaryConditions]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPStringParseBoundaryConditions]' passed (0.000 seconds).
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPStringParseFuzz]' started.
+Test Case '-[PropertyTests.PTPCodecFuzzTests testPTPStringParseFuzz]' passed (0.010 seconds).
+Test Suite 'PTPCodecFuzzTests' passed at 2026-02-08 10:35:54.879.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.401 (0.402) seconds
+Test Suite 'SwiftMTPKitPackageTests.xctest' passed at 2026-02-08 10:35:54.879.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.401 (0.402) seconds
+Test Suite 'Selected tests' passed at 2026-02-08 10:35:54.879.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.401 (0.403) seconds
+◇ Test run started.
+↳ Testing Library Version: 1501
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

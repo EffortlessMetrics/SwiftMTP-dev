@@ -1,0 +1,66 @@
+{
+  "capabilities" : {
+    "requiresStabilization" : true,
+    "supportsGetPartialObject64" : true,
+    "supportsSendPartialObject" : true
+  },
+  "deviceSummary" : {
+    "id" : "mi-note2-ff10-abc123",
+    "manufacturer" : "Xiaomi",
+    "model" : "Mi Note 2",
+    "productID" : "0xff10",
+    "vendorID" : "0x2717"
+  },
+  "fallbackResults" : {
+    "enumeration" : "propList5",
+    "read" : "partial64",
+    "write" : "partial"
+  },
+  "fingerprint" : {
+    "bcdDevice" : "0100",
+    "deviceInfoHash" : "xiaomi-mi-note-2-ff10-hash",
+    "endpointAddresses" : {
+      "event" : "82",
+      "input" : "81",
+      "output" : "01"
+    },
+    "interfaceTriple" : {
+      "class" : "06",
+      "protocol" : "01",
+      "subclass" : "01"
+    },
+    "pid" : "ff10",
+    "vid" : "2717"
+  },
+  "interfaceProbe" : {
+    "attempts" : [
+      {
+        "durationMs" : 250,
+        "interfaceNumber" : 0,
+        "score" : 10,
+        "succeeded" : true
+      }
+    ],
+    "candidatesEvaluated" : 1,
+    "deviceInfoCached" : false,
+    "selectedInterface" : 0,
+    "selectedScore" : 10
+  },
+  "resolvedPolicy" : {
+    "disableEventPump" : false,
+    "enumerationStrategy" : "unknown",
+    "handshakeTimeoutMs" : 6000,
+    "ioTimeoutMs" : 8000,
+    "maxChunkBytes" : 1048576,
+    "readStrategy" : "unknown",
+    "resetOnOpen" : false,
+    "writeStrategy" : "unknown"
+  },
+  "sessionEstablishment" : {
+    "durationMs" : 450,
+    "requiredRetry" : true,
+    "succeeded" : true
+  },
+  "timestamp" : 792237720,
+  "totalProbeTimeMs" : 850
+}

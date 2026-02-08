@@ -1,0 +1,56 @@
+{
+  "capabilities" : {
+    "supportsEvents" : false,
+    "supportsGetPartialObject64" : true,
+    "supportsSendPartialObject" : true
+  },
+  "deviceSummary" : {
+    "id" : "mock-device-12345678",
+    "manufacturer" : "MockMfg",
+    "model" : "MockDevice",
+    "productID" : "0x5678",
+    "vendorID" : "0x1234"
+  },
+  "fallbackResults" : {
+    "enumeration" : "propList5",
+    "read" : "partial64",
+    "write" : "wholeObject"
+  },
+  "fingerprint" : {
+    "bcdDevice" : "0100",
+    "deviceInfoHash" : "mock-device-1234-hash",
+    "endpointAddresses" : {
+      "event" : "82",
+      "input" : "81",
+      "output" : "01"
+    },
+    "interfaceTriple" : {
+      "class" : "06",
+      "protocol" : "01",
+      "subclass" : "01"
+    },
+    "pid" : "5678",
+    "vid" : "1234"
+  },
+  "interfaceProbe" : {
+    "attempts" : [
+      {
+        "durationMs" : 10,
+        "interfaceNumber" : 0,
+        "score" : 10,
+        "succeeded" : true
+      }
+    ],
+    "candidatesEvaluated" : 1,
+    "deviceInfoCached" : false,
+    "selectedInterface" : 0,
+    "selectedScore" : 10
+  },
+  "sessionEstablishment" : {
+    "durationMs" : 5,
+    "requiredRetry" : false,
+    "succeeded" : true
+  },
+  "timestamp" : 792237780,
+  "totalProbeTimeMs" : 25
+}

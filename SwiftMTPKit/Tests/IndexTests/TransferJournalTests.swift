@@ -374,10 +374,10 @@ struct TransferJournalTests {
             let resumables = try journal.loadResumables(for: deviceId)
             #expect(resumables.count == 3)
             
-            // Verify progress tracking
-            for (i, record) in resumables.enumerated() {
-                #expect(record.committedBytes == UInt64(deviceIndex * 100 + i * 50))
-            }
+            // Verify progress tracking regardless of row order from SQLite query.
+            let actualCommitted = resumables.map(\.committedBytes).sorted()
+            let expectedCommitted = (0..<3).map { UInt64(deviceIndex * 100 + $0 * 50) }.sorted()
+            #expect(actualCommitted == expectedCommitted)
         }
         
         // Cleanup

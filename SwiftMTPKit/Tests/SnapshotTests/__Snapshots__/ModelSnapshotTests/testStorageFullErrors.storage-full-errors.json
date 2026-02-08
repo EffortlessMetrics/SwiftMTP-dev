@@ -1,0 +1,28 @@
+{
+  "errors" : [
+    {
+      "capacityBytes" : 128000000000,
+      "description" : "Device storage is full",
+      "freeBytes" : 0,
+      "mtpCode" : 8204,
+      "name" : "StorageFull",
+      "recovery" : "userActionRequired",
+      "storageId" : 65537
+    },
+    {
+      "description" : "Storage is read-only",
+      "mtpCode" : 8205,
+      "name" : "ReadOnly",
+      "recovery" : "useDifferentStorage",
+      "storageId" : 65538
+    }
+  ],
+  "userNotification" : {
+    "actions" : [
+      "openDeviceSettings",
+      "eject"
+    ],
+    "message" : "Free up space on your device to continue transfers",
+    "title" : "Device Storage Full"
+  }
+}

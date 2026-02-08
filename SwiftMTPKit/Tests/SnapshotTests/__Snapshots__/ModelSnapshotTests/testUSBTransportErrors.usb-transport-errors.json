@@ -1,0 +1,39 @@
+{
+  "errors" : [
+    {
+      "code" : -1,
+      "description" : "Input\/output error during USB transfer",
+      "libusbError" : "LIBUSB_ERROR_IO",
+      "name" : "InputOutputError"
+    },
+    {
+      "code" : -4,
+      "description" : "Transfer was interrupted by system",
+      "libusbError" : "LIBUSB_ERROR_INTERRUPTED",
+      "name" : "TransferInterrupted"
+    },
+    {
+      "code" : -7,
+      "description" : "USB transfer timed out",
+      "libusbError" : "LIBUSB_ERROR_TIMEOUT",
+      "name" : "TransferTimeout"
+    },
+    {
+      "code" : -9,
+      "description" : "Endpoint pipe stalled or control request not supported",
+      "libusbError" : "LIBUSB_ERROR_PIPE",
+      "name" : "PipeError"
+    },
+    {
+      "code" : -12,
+      "description" : "Device was disconnected during transfer",
+      "libusbError" : "LIBUSB_ERROR_NO_DEVICE",
+      "name" : "NoDevice"
+    }
+  ],
+  "recoveryStrategies" : {
+    "reconfigureDevice" : true,
+    "resetUSBPort" : true,
+    "retry" : true
+  }
+}
