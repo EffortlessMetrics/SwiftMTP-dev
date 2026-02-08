@@ -110,5 +110,28 @@ let package = Package(
                 dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore"]),
     .testTarget(name: "IntegrationTests",
                 dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPFileProvider", "SwiftMTPQuirks", "SwiftMTPTestKit"]),
+    .testTarget(name: "StoreTests",
+                dependencies: [
+                    "SwiftMTPStore",
+                    "SwiftMTPTestKit",
+                    "SwiftMTPCore"
+                ]),
+    .testTarget(name: "SyncTests",
+                dependencies: [
+                    "SwiftMTPSync",
+                    "SwiftMTPTestKit",
+                    "SwiftMTPCore",
+                    "SwiftMTPIndex"
+                ]),
+
+    .testTarget(name: "ErrorHandlingTests",
+                dependencies: [
+                    "SwiftMTPCore",
+                    "SwiftMTPIndex",
+                    "SwiftMTPStore",
+                    "SwiftMTPSync",
+                    "SwiftMTPTransportLibUSB",
+                    "SwiftMTPTestKit",
+                ]),
   ]
 )
