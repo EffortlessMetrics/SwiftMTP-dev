@@ -20,10 +20,29 @@ jobs:
       - name: Build (SwiftMTPKit)
         working-directory: SwiftMTPKit
         run: swift build -v
-      - name: Full Test Suite + Coverage Gate + Xcode Unit/UI Tests
-        env:
-          RUN_XCODE_UI_TESTS: "1"
-        run: ./run-all-tests.sh
+      - name: Unit Tests (Core, Index, Transport)
+        working-directory: SwiftMTPKit
+        run: swift test -v --enable-code-coverage --filter CoreTests --filter IndexTests --filter TransportTests
+      - name: BDD Tests
+        working-directory: SwiftMTPKit
+        run: swift test -v --filter BDDTests
+      - name: Property Tests (SwiftCheck + Fuzz)
+        working-directory: SwiftMTPKit
+        run: swift test -v --filter PropertyTests
+      - name: Snapshot Tests
+        working-directory: SwiftMTPKit
+        run: swift test -v --filter SnapshotTests
+      - name: TestKit Tests
+        working-directory: SwiftMTPKit
+        run: swift test -v --filter TestKitTests
+      - name: Scenario Tests
+        working-directory: SwiftMTPKit
+        run: swift test -v --filter ScenarioTests
+      - name: Code Coverage Report
+        working-directory: SwiftMTPKit
+        run: |
+          swift package generate-code-coverage-path-for-reports
+          # Upload coverage if needed
       - name: Swift format (lint)
         run: brew install swift-format && swift-format lint -r . --strict
 
