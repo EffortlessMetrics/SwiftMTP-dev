@@ -360,13 +360,15 @@ struct SQLiteIndexConcurrencyTests {
         await withTaskGroup(of: Void.self) { group in
             for i in 0..<5 {
                 group.addTask {
+                    let deviceId = "device-\(i)"
                     let objects = (0..<100).map { j in
                         IndexedObject.testObject(
+                            deviceId: deviceId,
                             handle: UInt32(i * 100 + j),
                             name: "file\(i)-\(j).txt"
                         )
                     }
-                    try? await index.upsertObjects(objects, deviceId: "device-\(i)")
+                    try? await index.upsertObjects(objects, deviceId: deviceId)
                 }
             }
         }

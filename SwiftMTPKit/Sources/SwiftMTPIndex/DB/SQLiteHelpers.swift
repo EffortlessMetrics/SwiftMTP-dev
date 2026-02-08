@@ -23,6 +23,23 @@ public enum DBError: Error, CustomStringConvertible {
 public final class SQLiteDB: @unchecked Sendable {
   public let path: String
   private var handle: OpaquePointer?
+  private let writeLock = NSLock()
+
+  /// Execute a block inside an exclusive transaction.
+  /// Serializes concurrent callers so only one transaction is active at a time.
+  public func withTransaction<R>(_ body: () throws -> R) throws -> R {
+    writeLock.lock()
+    defer { writeLock.unlock() }
+    try exec("BEGIN TRANSACTION")
+    do {
+      let result = try body()
+      try exec("COMMIT")
+      return result
+    } catch {
+      try? exec("ROLLBACK")
+      throw error
+    }
+  }
 
   public init(path: String) throws {
     self.path = path
