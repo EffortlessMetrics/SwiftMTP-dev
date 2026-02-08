@@ -63,6 +63,10 @@ SwiftMTP utilizes a multi-layered verification strategy:
 ./run-all-tests.sh
 ```
 
+By default this runs:
+- SwiftMTPKit matrix (BDD + property + fuzz + integration + unit + e2e + snapshot + storybook)
+- Xcode app + unit tests (UI automation tests are skipped unless `RUN_XCODE_UI_TESTS=1`)
+
 ### BDD Scenarios (CucumberSwift)
 ```bash
 swift test --filter BDDTests
