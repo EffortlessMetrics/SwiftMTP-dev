@@ -5,11 +5,15 @@ import SwiftUI
 import SwiftMTPCore
 
 public struct DeviceBrowserView: View {
-    @State private var viewModel = DeviceViewModel()
+    private let coordinator: DeviceLifecycleCoordinator
+    @State private var viewModel: DeviceViewModel
     @State private var isDemoMode = FeatureFlags.shared.useMockTransport
-    
-    public init() {}
-    
+
+    public init(coordinator: DeviceLifecycleCoordinator) {
+        self.coordinator = coordinator
+        self._viewModel = State(initialValue: DeviceViewModel(coordinator: coordinator))
+    }
+
     public var body: some View {
         NavigationSplitView {
             DeviceListView(viewModel: viewModel)
@@ -18,7 +22,6 @@ public struct DeviceBrowserView: View {
                         Button(action: {
                             isDemoMode.toggle()
                             FeatureFlags.shared.useMockTransport = isDemoMode
-                            // Restart discovery to pick up/remove mock
                             Task {
                                 try? await viewModel.startDiscovery()
                             }

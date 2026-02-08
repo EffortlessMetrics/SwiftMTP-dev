@@ -11,6 +11,9 @@ import SwiftMTPCore
 public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked Sendable {
     private let db: SQLiteDB
 
+    /// Expose the underlying database handle for sharing with `ContentCache`.
+    public var database: SQLiteDB { db }
+
     /// Open (or create) the live index database at `path`.
     /// - Parameters:
     ///   - path: Path to the SQLite database file.

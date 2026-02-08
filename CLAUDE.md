@@ -148,6 +148,7 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 
 ## Documentation
 - Main docs: `Docs/SwiftMTP.docc/SwiftMTP.md`
+- macOS 26 Guide: `Docs/SwiftMTP.docc/macOS26.md`
 - Device guides: `Docs/SwiftMTP.docc/Devices/`
 - Benchmarks: `Docs/benchmarks.md`
 - Contribution: `Docs/ContributionGuide.md`

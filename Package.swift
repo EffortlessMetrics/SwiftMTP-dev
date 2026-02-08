@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
-// swift-tools-version: 6.0
+// swift-tools-version: 6.2
 import PackageDescription
 
 let package = Package(
   name: "SwiftMTP",
   defaultLocalization: "en",
-  platforms: [ .macOS(.v15), .iOS(.v18) ],
+  platforms: [
+    .macOS(.v26),
+    .iOS(.v26)
+  ],
   products: [
     .executable(name: "simple-probe", targets: ["simple-probe"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
@@ -15,6 +18,7 @@ let package = Package(
     .executable(name: "SwiftMTPApp", targets: ["SwiftMTPApp"]),
   ],
   dependencies: [
+    .package(url: "https://github.com/apple/swift-collections.git", exact: "1.1.1"),
     .package(url: "https://github.com/Tyler-Keith-Thompson/CucumberSwift", from: "5.0.0"),
     .package(url: "https://github.com/typelift/SwiftCheck", from: "0.12.0"),
     .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.10.0"),
@@ -28,7 +32,10 @@ let package = Package(
 
     // Core MTP functionality
     .target(name: "SwiftMTPCore",
-            dependencies: ["SwiftMTPQuirks", "SwiftMTPObservability"],
+            dependencies: [
+                "SwiftMTPQuirks", "SwiftMTPObservability",
+                .product(name: "Collections", package: "swift-collections"),
+            ],
             path: "SwiftMTPKit/Sources/SwiftMTPCore",
             sources: ["Internal", "Public", "CLI"]),
 
@@ -64,9 +71,29 @@ let package = Package(
             dependencies: ["SwiftMTPCore", "CSQLite"],
             path: "SwiftMTPKit/Sources/SwiftMTPStore"),
 
+    // XPC service for File Provider extension
+    .target(name: "SwiftMTPXPC",
+            dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex"],
+            path: "SwiftMTPKit/Sources/SwiftMTPXPC",
+            swiftSettings: [.swiftLanguageMode(.v5)]),
+
+    // File Provider extension bridge
+    .target(name: "SwiftMTPFileProvider",
+            dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPStore", "SwiftMTPXPC"],
+            path: "SwiftMTPKit/Sources/SwiftMTPFileProvider",
+            swiftSettings: [.swiftLanguageMode(.v5)]),
+
     // UI Components (SwiftUI)
     .target(name: "SwiftMTPUI",
-            dependencies: ["SwiftMTPCore", "SwiftMTPSync", "SwiftMTPTransportLibUSB", "SwiftMTPObservability", "CLibusb"],
+            dependencies: [
+                "SwiftMTPCore", "SwiftMTPSync", "SwiftMTPTransportLibUSB",
+                "SwiftMTPObservability", "CLibusb",
+                "SwiftMTPIndex",
+                "SwiftMTPQuirks",
+                "SwiftMTPXPC",
+                "SwiftMTPFileProvider",
+                "SwiftMTPStore",
+            ],
             path: "SwiftMTPKit/Sources/SwiftMTPUI"),
 
     .executableTarget(name: "simple-probe",
