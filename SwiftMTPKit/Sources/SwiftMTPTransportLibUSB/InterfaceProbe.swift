@@ -185,16 +185,30 @@ func setConfigurationIfNeeded(handle: OpaquePointer, device: OpaquePointer, forc
 /// Claim a single interface candidate: detach kernel driver, claim, set alt.
 func claimCandidate(handle: OpaquePointer, _ c: InterfaceCandidate) throws {
   let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
-  let detachRC = libusb_detach_kernel_driver(handle, Int32(c.ifaceNumber))
+
   if debug {
-    print(String(format: "   [Claim] iface=%d alt=%d bulkIn=0x%02x bulkOut=0x%02x evtIn=0x%02x detachKernel=%d",
-                 c.ifaceNumber, c.altSetting, c.bulkIn, c.bulkOut, c.eventIn, detachRC))
+    let drvActive = libusb_kernel_driver_active(handle, Int32(c.ifaceNumber))
+    // Pre-claim GetDeviceStatus to verify MTP service is alive
+    var devStatusBuf = [UInt8](repeating: 0, count: 12)
+    let devStatusRC = libusb_control_transfer(
+      handle, 0xA1, 0x67, 0, UInt16(c.ifaceNumber), &devStatusBuf, UInt16(devStatusBuf.count), 2000
+    )
+    let statusCode: String
+    if devStatusRC >= 4 {
+      let code = UInt16(devStatusBuf[2]) | (UInt16(devStatusBuf[3]) << 8)
+      statusCode = String(format: "0x%04x", code)
+    } else {
+      statusCode = "rc=\(devStatusRC)"
+    }
+    print(String(format: "   [Claim] iface=%d bulkIn=0x%02x bulkOut=0x%02x driver=%d devStatus=%@",
+                 c.ifaceNumber, c.bulkIn, c.bulkOut, drvActive, statusCode as NSString))
   }
+
+  // Use auto-detach rather than manual detach — uses different IOKit code path on macOS
+  _ = libusb_set_auto_detach_kernel_driver(handle, 1)
   try check(libusb_claim_interface(handle, Int32(c.ifaceNumber)))
-  if debug { print("   [Claim] claim_interface OK") }
-  if c.altSetting > 0 {
-    try check(libusb_set_interface_alt_setting(handle, Int32(c.ifaceNumber), Int32(c.altSetting)))
-  }
+  if debug { print("   [Claim] claimed OK, waiting 500ms for pipe setup...") }
+  usleep(500_000)
 }
 
 /// Release a previously claimed candidate.
@@ -209,24 +223,10 @@ func releaseCandidate(handle: OpaquePointer, _ c: InterfaceCandidate) {
 func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32 = 2000) -> (Bool, Data?) {
   let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
 
-  // Send PTP Device Reset (class request 0x66) to clear any stale session
-  // held by the macOS IOKit PTP driver. This is a USB control transfer that
-  // works even when bulk endpoints are blocked by a stale session.
-  let resetRC = libusb_control_transfer(
-    handle,
-    0x21,                        // bmRequestType: host-to-device, class, interface
-    0x66,                        // bRequest: PTP Device Reset
-    0,                           // wValue
-    UInt16(c.ifaceNumber),       // wIndex: interface number
-    nil,                         // no data
-    0,                           // wLength
-    5000                         // 5s timeout
-  )
-  if debug { print("   [Probe] PTP Device Reset (0x66) rc=\(resetRC)") }
+  _ = libusb_clear_halt(handle, c.bulkIn)
+  _ = libusb_clear_halt(handle, c.bulkOut)
 
-  let haltIn = libusb_clear_halt(handle, c.bulkIn)
-  let haltOut = libusb_clear_halt(handle, c.bulkOut)
-  if debug { print("   [Probe] clear_halt in=\(haltIn) out=\(haltOut), timeoutMs=\(timeoutMs)") }
+  if debug { print("   [Probe] sending GetDeviceInfo, timeoutMs=\(timeoutMs)") }
 
 /// Probe ladder: try sessionless GetDeviceInfo, then OpenSession+GetDeviceInfo, then GetStorageIDs.
 /// Returns (success, cached raw device-info bytes) and which step succeeded.

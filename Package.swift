@@ -18,7 +18,7 @@ let package = Package(
     .executable(name: "SwiftMTPApp", targets: ["SwiftMTPApp"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-collections.git", exact: "1.1.1"),
+    .package(url: "https://github.com/apple/swift-collections.git", exact: "1.3.0"),
     .package(url: "https://github.com/Tyler-Keith-Thompson/CucumberSwift", from: "5.0.0"),
     .package(url: "https://github.com/typelift/SwiftCheck", from: "0.12.0"),
     .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.10.0"),

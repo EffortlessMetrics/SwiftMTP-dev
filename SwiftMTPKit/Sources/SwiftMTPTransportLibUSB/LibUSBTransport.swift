@@ -167,6 +167,9 @@ public actor LibUSBTransport: MTPTransport {
         let resetRC = libusb_reset_device(handle)
         if debug { print("   [Open] resetOnOpen rc=\(resetRC), stabilizeMs=\(config.stabilizeMs)") }
         try? await Task.sleep(nanoseconds: UInt64(config.stabilizeMs) * 1_000_000)
+        // Re-set configuration after USB reset to re-activate endpoints
+        let setConfigRC = libusb_set_configuration(handle, 1)
+        if debug { print("   [Open] set_configuration(1) rc=\(setConfigRC)") }
     } else if debug {
         print("   [Open] resetOnOpen skipped (SWIFTMTP_NO_RESET or disabled)")
     }
