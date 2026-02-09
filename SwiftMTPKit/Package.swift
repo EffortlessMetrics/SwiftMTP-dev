@@ -107,7 +107,13 @@ let package = Package(
     .testTarget(name: "TestKitTests",
                 dependencies: ["SwiftMTPTestKit", "SwiftMTPCore"]),
     .testTarget(name: "FileProviderTests",
-                dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore"]),
+                dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPXPC"]),
+    .testTarget(name: "XPCTests",
+                dependencies: [
+                    "SwiftMTPXPC",
+                    "SwiftMTPCore",
+                    "SwiftMTPTestKit",
+                ]),
     .testTarget(name: "IntegrationTests",
                 dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPFileProvider", "SwiftMTPQuirks", "SwiftMTPTestKit"]),
     .testTarget(name: "StoreTests",
@@ -140,11 +146,6 @@ let package = Package(
                     "SwiftMTPIndex",
                     "SwiftMTPSync",
                     "SwiftMTPTestKit",
-                ],
-                exclude: [
-                    "FileTransferIntegrationTests.swift",
-                    "PerformanceScenarioTests.swift",
-                    "ResumeScenarioTests.swift",
                 ]),
     .testTarget(name: "ToolingTests",
                 dependencies: [

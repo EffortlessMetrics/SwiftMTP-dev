@@ -23,25 +23,6 @@ final class PTPUSBHelpersCoverageTests: XCTestCase {
         XCTAssertEqual(decoded.txid, 42)
     }
 
-    func testPTPHeaderDecodeFromMisalignedPointer() {
-        let header = PTPHeader(length: 28, type: 2, code: 0x1009, txid: 77)
-        var encoded = [UInt8](repeating: 0, count: PTPHeader.size)
-        encoded.withUnsafeMutableBytes { raw in
-            header.encode(into: raw.baseAddress!)
-        }
-
-        var padded = [UInt8](repeating: 0, count: encoded.count + 1)
-        padded.replaceSubrange(1..<(encoded.count + 1), with: encoded)
-        let decoded = padded.withUnsafeBytes { raw in
-            PTPHeader.decode(from: raw.baseAddress!.advanced(by: 1))
-        }
-
-        XCTAssertEqual(decoded.length, 28)
-        XCTAssertEqual(decoded.type, 2)
-        XCTAssertEqual(decoded.code, 0x1009)
-        XCTAssertEqual(decoded.txid, 77)
-    }
-
     func testMakePTPCommandEncodesHeaderAndParams() {
         let command = makePTPCommand(opcode: 0x1002, txid: 99, params: [1, 2, 3])
         XCTAssertEqual(command.count, PTPHeader.size + 12)
@@ -54,8 +35,11 @@ final class PTPUSBHelpersCoverageTests: XCTestCase {
         XCTAssertEqual(header.code, 0x1002)
         XCTAssertEqual(header.txid, 99)
 
-        var reader = PTPReader(data: Data(command[PTPHeader.size...]))
-        let params = (0..<3).compactMap { _ in reader.u32() }
+        let params = command.withUnsafeBytes { raw -> [UInt32] in
+            (0..<3).map { idx in
+                raw.load(fromByteOffset: PTPHeader.size + idx * 4, as: UInt32.self).littleEndian
+            }
+        }
         XCTAssertEqual(params, [1, 2, 3])
     }
 

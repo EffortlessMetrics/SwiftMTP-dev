@@ -1,1 +1,40 @@
-error: failed to load coverage: '.build/arm64-apple-macosx/debug/codecov/XCTest668369772092876284_0.15721.profraw': invalid instrumentation profile data (bad magic)
+SwiftMTP Filtered Coverage
+==========================
+Threshold: 0.00%
+Overall:   75.79% (8407/11092)
+Status:    PASS
+
+Module Coverage:
+  - SwiftMTPCore: 66.53% (2119/3185)
+  - SwiftMTPFileProvider: 75.63% (633/837)
+  - SwiftMTPIndex: 93.89% (2614/2784)
+  - SwiftMTPObservability: 100.00% (57/57)
+  - SwiftMTPQuirks: 100.00% (363/363)
+  - SwiftMTPStore: 100.00% (585/585)
+  - SwiftMTPSync: 100.00% (239/239)
+  - SwiftMTPTestKit: 82.74% (935/1130)
+  - SwiftMTPTransportLibUSB: 23.39% (317/1355)
+  - SwiftMTPUI: 0.00% (0/0)
+  - SwiftMTPXPC: 97.85% (545/557)
+
+Worst 20 Files:
+  -   0.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/CLI/Exit.swift
+  -   0.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/USBDeviceWatcher.swift
+  -   0.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/InterfaceProbe.swift
+  -   8.57%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPFileProvider/ChangeSignaler.swift
+  -  12.27%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/LibUSBTransport.swift
+  -  14.29%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Protocol/PTPLayer.swift
+  -  25.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Tools/SubstrateHardening.swift
+  -  36.90%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Protocol/Proto+Transfer.swift
+  -  41.67%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/LearnedProfile.swift
+  -  44.44%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Transport/TransportProtocols.swift
+  -  45.30%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTestKit/TranscriptRecorder.swift
+  -  50.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/ManagerBridge.swift
+  -  52.21%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/DeviceActor+Transfer.swift
+  -  53.16%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/MockTransport.swift
+  -  53.58%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/DeviceLabHarness.swift
+  -  57.89%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Transfer/SendableAdapters.swift
+  -  58.67%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/DeviceActor.swift
+  -  58.92%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPFileProvider/MTPFileProviderExtension.swift
+  -  59.38%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/Persistence/MTPStoreProtocols.swift
+  -  64.04%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTestKit/FaultInjectingLink.swift

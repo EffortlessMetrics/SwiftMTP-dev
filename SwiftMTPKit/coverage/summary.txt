@@ -1,22 +1,16 @@
 SwiftMTP Filtered Coverage
 ==========================
-Threshold: 95.00%
-Overall:   96.68% (1223/1265)
+Threshold: 100.00%
+Overall:   100.00% (1244/1244)
 Status:    PASS
 
 Module Coverage:
-  - SwiftMTPQuirks: 99.45% (361/363)
-  - SwiftMTPStore: 94.75% (559/590)
-  - SwiftMTPSync: 96.47% (246/255)
+  - SwiftMTPQuirks: 100.00% (363/363)
+  - SwiftMTPStore: 100.00% (585/585)
+  - SwiftMTPSync: 100.00% (239/239)
   - SwiftMTPObservability: 100.00% (57/57)
 
 Worst 20 Files:
-  -  92.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStore.swift
-  -  92.20%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/StoreActor.swift
-  -  96.46%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/MirrorEngine.swift
-  -  96.59%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStoreAdapter.swift
-  -  97.50%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Types/EffectiveTuningTypes.swift
-  -  99.45%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkDatabase.swift
   - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/SyncEngine.swift
   - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/FallbackSelections.swift
   - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/ProfilingRunEntity.swift
@@ -30,4 +24,10 @@ Worst 20 Files:
   - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkFlags.swift
   - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/MTPObjectEntity.swift
   - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/TransferEntity.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStore.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Types/EffectiveTuningTypes.swift
   - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPObservability/Throughput.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/EffectiveTuning.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStoreAdapter.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkDatabase.swift
+  - 100.00%  /Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/MirrorEngine.swift

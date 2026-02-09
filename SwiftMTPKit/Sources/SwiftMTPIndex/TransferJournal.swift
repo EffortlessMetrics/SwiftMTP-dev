@@ -225,6 +225,19 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
     return out
   }
 
+  private func listCleanupCandidates(cutoff: Int64) throws -> [SQLiteTransferRecord] {
+    var out: [SQLiteTransferRecord] = []
+    try query(
+      "SELECT id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt FROM transfers WHERE state != 'active' AND updatedAt <= ? ORDER BY updatedAt ASC",
+      bind: { s in
+        sqlite3_bind_int64(s, 1, cutoff)
+      }
+    ) { row in
+      out.append(row)
+    }
+    return out
+  }
+
   // MARK: - Internals
 
   private func insertTransfer(

@@ -21,7 +21,7 @@ jobs:
   # Build and Test Job - Runs on every push/PR to main
   # =========================================================================
   test:
-    name: Test (Unit, BDD, Property, Snapshot)
+    name: Test (Unit, BDD, Property, Fuzz, Integration, E2E, Snapshot, Storybook, Xcode)
     runs-on: macos-15
     permissions:
       contents: read
@@ -62,8 +62,9 @@ jobs:
         working-directory: SwiftMTPKit
         run: swift build
 
-      - name: Run Full Test Suite + Coverage Gate
-        working-directory: SwiftMTPKit
+      - name: Run Full Test Suite + Coverage Gate + Xcode Unit/UI Tests
+        env:
+          RUN_XCODE_UI_TESTS: "1"
         run: ./run-all-tests.sh
 
       - name: Upload test results
@@ -191,7 +192,8 @@ jobs:
         run: swift package resolve
 
       - name: Build with code coverage enabled + enforce gate
-        working-directory: SwiftMTPKit
+        env:
+          RUN_XCODE_UI_TESTS: "0"
         run: ./run-all-tests.sh
 
       - name: Upload coverage artifact

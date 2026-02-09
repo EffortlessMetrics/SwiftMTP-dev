@@ -307,6 +307,21 @@ final class QuirksCoverageBoostTests: XCTestCase {
         XCTAssertNil(override.disablePartialWrite)
     }
 
+    func testUserOverrideFromEnvironmentParsesDisablePartialWriteTrueLiteral() {
+        let (override, source) = UserOverride.fromEnvironment([
+            "SWIFTMTP_OVERRIDES": "disablePartialWrite=true"
+        ])
+
+        switch source {
+        case .environment:
+            break
+        case .none:
+            XCTFail("Expected .environment when SWIFTMTP_OVERRIDES is provided")
+        }
+
+        XCTAssertEqual(override.disablePartialWrite, true)
+    }
+
     func testProbedCapabilitiesInitializerStoresValues() {
         let capabilities = ProbedCapabilities(
             partialRead: true,

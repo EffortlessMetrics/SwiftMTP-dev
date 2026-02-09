@@ -1,27 +1,27 @@
 {
-  "timestamp": "2026-02-08T15:35:53.238444+00:00",
-  "threshold": 95.0,
+  "timestamp": "2026-02-08T21:36:53.552807+00:00",
+  "threshold": 100.0,
   "status": "pass",
   "overall": {
-    "covered": 1223,
-    "count": 1265,
-    "percent": 96.6798418972332
+    "covered": 1244,
+    "count": 1244,
+    "percent": 100.0
   },
   "modules": {
     "SwiftMTPQuirks": {
-      "covered": 361,
+      "covered": 363,
       "count": 363,
-      "percent": 99.44903581267218
+      "percent": 100.0
     },
     "SwiftMTPStore": {
-      "covered": 559,
-      "count": 590,
-      "percent": 94.74576271186442
+      "covered": 585,
+      "count": 585,
+      "percent": 100.0
     },
     "SwiftMTPSync": {
-      "covered": 246,
-      "count": 255,
-      "percent": 96.47058823529412
+      "covered": 239,
+      "count": 239,
+      "percent": 100.0
     },
     "SwiftMTPObservability": {
       "covered": 57,
@@ -30,48 +30,6 @@
     }
   },
   "files": [
-    {
-      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStore.swift",
-      "module": "SwiftMTPStore",
-      "covered": 23,
-      "count": 25,
-      "percent": 92.0
-    },
-    {
-      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/StoreActor.swift",
-      "module": "SwiftMTPStore",
-      "covered": 272,
-      "count": 295,
-      "percent": 92.20338983050847
-    },
-    {
-      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/MirrorEngine.swift",
-      "module": "SwiftMTPSync",
-      "covered": 245,
-      "count": 254,
-      "percent": 96.45669291338582
-    },
-    {
-      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStoreAdapter.swift",
-      "module": "SwiftMTPStore",
-      "covered": 170,
-      "count": 176,
-      "percent": 96.5909090909091
-    },
-    {
-      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Types/EffectiveTuningTypes.swift",
-      "module": "SwiftMTPQuirks",
-      "covered": 39,
-      "count": 40,
-      "percent": 97.5
-    },
-    {
-      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkDatabase.swift",
-      "module": "SwiftMTPQuirks",
-      "covered": 182,
-      "count": 183,
-      "percent": 99.4535519125683
-    },
     {
       "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/SyncEngine.swift",
       "module": "SwiftMTPSync",
@@ -164,6 +122,20 @@
       "percent": 100.0
     },
     {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStore.swift",
+      "module": "SwiftMTPStore",
+      "covered": 20,
+      "count": 20,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Types/EffectiveTuningTypes.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 40,
+      "count": 40,
+      "percent": 100.0
+    },
+    {
       "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPObservability/Throughput.swift",
       "module": "SwiftMTPObservability",
       "covered": 57,
@@ -175,6 +147,34 @@
       "module": "SwiftMTPQuirks",
       "covered": 110,
       "count": 110,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStoreAdapter.swift",
+      "module": "SwiftMTPStore",
+      "covered": 176,
+      "count": 176,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkDatabase.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 183,
+      "count": 183,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/MirrorEngine.swift",
+      "module": "SwiftMTPSync",
+      "covered": 238,
+      "count": 238,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/StoreActor.swift",
+      "module": "SwiftMTPStore",
+      "covered": 295,
+      "count": 295,
       "percent": 100.0
     }
   ]

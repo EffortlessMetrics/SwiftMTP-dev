@@ -6,32 +6,25 @@ This document covers testing infrastructure, coverage status, and guidelines for
 
 ### Current Coverage Metrics (as of 2026-02-08)
 
-| Target | Current | Target | Status |
+The CI gate enforces filtered line coverage for:
+`SwiftMTPQuirks`, `SwiftMTPStore`, `SwiftMTPSync`, `SwiftMTPObservability`.
+
+| Target (Filtered Gate) | Current | Target | Status |
 |--------|---------|--------|--------|
-| **SwiftMTPCore** | ~80% | ≥80% | ✅ Pass |
-| **SwiftMTPIndex** | ~75% | ≥75% | ✅ Pass |
-| **SwiftMTPObservability** | N/A | ≥70% | ⏳ Pending |
-| **SwiftMTPQuirks** | N/A | ≥70% | ⏳ Pending |
-| **SwiftMTPFileProvider** | N/A | ≥65% | ⏳ Pending |
-| **Overall** | ~75% | ≥75% | ✅ Pass |
+| **SwiftMTPQuirks** | 100.00% | tracked | ✅ Pass |
+| **SwiftMTPStore** | 100.00% | tracked | ✅ Pass |
+| **SwiftMTPSync** | 100.00% | tracked | ✅ Pass |
+| **SwiftMTPObservability** | 100.00% | tracked | ✅ Pass |
+| **Overall (filtered)** | **100.00%** | **≥100%** | ✅ Pass |
 
 ### Coverage by Component
 
 ```
-SwiftMTPKit/Sources/
-├── SwiftMTPCore/              ~80%
-│   ├── CLI/                   90%
-│   ├── Internal/              75%
-│   └── Public/                85%
-├── SwiftMTPIndex/             ~75%
-│   ├── Cache/                 70%
-│   ├── Crawler/               80%
-│   ├── DB/                    75%
-│   └── LiveIndex/             70%
-├── SwiftMTPFileProvider/      ~65%
-│   ├── DomainEnumerator/      60%
-│   └── FileProviderManager/   70%
-└── SwiftMTPCLI/               N/A
+SwiftMTPKit/Sources/ (coverage-gated modules)
+├── SwiftMTPQuirks/           100.00%
+├── SwiftMTPStore/            100.00%
+├── SwiftMTPSync/             100.00%
+└── SwiftMTPObservability/    100.00%
 ```
 
 ## Running Tests
@@ -43,11 +36,15 @@ SwiftMTPKit/Sources/
 cd SwiftMTPKit
 ./run-all-tests.sh
 
-# Run with code coverage
+# Run just coverage-producing tests
 swift test --enable-code-coverage
 
-# Run specific test target
-swift test --filter SwiftMTPCore
+# Run specific categories
+swift test --filter BDDTests
+swift test --filter PropertyTests
+swift test --filter ScenarioTests
+swift test --filter IntegrationTests
+swift test --filter SnapshotTests
 
 # Run tests in parallel
 swift test --parallel
@@ -64,15 +61,15 @@ swift test --parallel
 │   ├── Build libusb xcframework                               │
 │   └── Verify toolchain compatibility                        │
 ├─────────────────────────────────────────────────────────────┤
-│ Stage 2: Unit Tests                                          │
+│ Stage 2: Full Matrix                                         │
 │   ├── swift test --enable-code-coverage                     │
-│   ├── Coverage threshold check                              │
-│   └── Per-target coverage validation                        │
+│   ├── BDD + property + integration + unit + e2e + snapshot │
+│   └── Filtered coverage gate (>=100%)                       │
 ├─────────────────────────────────────────────────────────────┤
-│ Stage 3: Integration                                         │
-│   ├── Fuzz testing (smoke run)                              │
-│   ├── Storybook demo                                        │
-│   └── Quirks validation                                     │
+│ Stage 3: Runtime Smokes                                      │
+│   ├── Fuzz testing (PTPCodecFuzzTests + SwiftMTPFuzz)       │
+│   ├── Storybook profiles (pixel7, galaxy, iphone, canon)    │
+│   └── Quirks/schema validation                               │
 ├─────────────────────────────────────────────────────────────┤
 │ Stage 4: Real Device (Manual Trigger)                       │
 │   ├── Device probe tests                                    │
@@ -278,9 +275,8 @@ Coverage thresholds are enforced in CI:
 
 ```bash
 # From run-all-tests.sh
-THRESHOLD_OVERALL=75
-THRESHOLD_SWIFTCORE=80
-THRESHOLD_INDEX=75
+COVERAGE_THRESHOLD=100
+COVERAGE_MODULES=SwiftMTPQuirks,SwiftMTPStore,SwiftMTPSync,SwiftMTPObservability
 ```
 
 If coverage falls below threshold:

@@ -20,8 +20,9 @@ jobs:
       - name: Build (SwiftMTPKit)
         working-directory: SwiftMTPKit
         run: swift build -v
-      - name: Full Test Suite + Coverage Gate
-        working-directory: SwiftMTPKit
+      - name: Full Test Suite + Coverage Gate + Xcode Unit/UI Tests
+        env:
+          RUN_XCODE_UI_TESTS: "1"
         run: ./run-all-tests.sh
       - name: Swift format (lint)
         run: brew install swift-format && swift-format lint -r . --strict

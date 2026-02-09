@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 COVERAGE_DIR="${COVERAGE_DIR:-coverage}"
-COVERAGE_THRESHOLD="${COVERAGE_THRESHOLD:-95}"
+COVERAGE_THRESHOLD="${COVERAGE_THRESHOLD:-100}"
 COVERAGE_MODULES="${COVERAGE_MODULES:-SwiftMTPQuirks,SwiftMTPStore,SwiftMTPSync,SwiftMTPObservability}"
 RUN_FUZZ_SMOKE="${RUN_FUZZ_SMOKE:-1}"
 RUN_STORYBOOK_SMOKE="${RUN_STORYBOOK_SMOKE:-1}"
@@ -16,7 +16,7 @@ STORYBOOK_PROFILES="${STORYBOOK_PROFILES:-$DEFAULT_STORYBOOK_PROFILES}"
 mkdir -p "$COVERAGE_DIR"
 
 printf 'Running full SwiftMTPKit test suite with coverage...\n'
-printf 'Swift test matrix includes: BDD + property + fuzz + integration + unit + e2e + snapshot.\n'
+printf 'Swift test matrix includes: BDD + property + fuzz + integration + unit + e2e + snapshot + storybook.\n'
 if [[ "$RUN_SNAPSHOT_REFERENCE" != "0" ]]; then
   export SWIFTMTP_SNAPSHOT_TESTS=1
   printf 'Snapshot reference assertions: enabled.\n'

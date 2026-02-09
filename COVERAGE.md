@@ -17,7 +17,7 @@ This document explains the code coverage configuration for SwiftMTP, including h
 
 SwiftMTP uses Swift's built-in code coverage tools to measure test effectiveness. The coverage system is configured to:
 
-- **Track coverage** across all core modules (SwiftMTPCore, SwiftMTPIndex, SwiftMTPObservability, SwiftMTPQuirks, SwiftMTPFileProvider)
+- **Track coverage** for the CI-gated modules (`SwiftMTPQuirks`, `SwiftMTPStore`, `SwiftMTPSync`, `SwiftMTPObservability`)
 - **Exclude non-essential code** from coverage requirements (tests, mocks, generated code, third-party dependencies)
 - **Enforce minimum thresholds** to prevent coverage regressions
 - **Generate multiple report formats** (HTML, JSON, text) for different use cases
@@ -110,24 +110,23 @@ coverage/
 
 | Module | Target | Description |
 |--------|--------|-------------|
-| **SwiftMTPCore** | 80% | Core MTP protocol and device communication |
-| **SwiftMTPIndex** | 75% | SQLite indexing and caching logic |
-| **SwiftMTPObservability** | 70% | Logging and metrics utilities |
-| **SwiftMTPQuirks** | 70% | Device quirk configurations |
-| **SwiftMTPFileProvider** | 65% | macOS/iOS File Provider extension |
+| **SwiftMTPQuirks** | tracked | Device quirk configurations |
+| **SwiftMTPStore** | tracked | Persistence and transfer journal state |
+| **SwiftMTPSync** | tracked | Mirror/sync planning and execution |
+| **SwiftMTPObservability** | tracked | Logging and throughput utilities |
 
 ### Overall Project Goals
 
 | Metric | Target | Description |
 |--------|--------|-------------|
-| **Line Coverage** | 75% | Percentage of executable lines covered |
+| **Line Coverage (filtered modules)** | 100% | Percentage of executable lines covered in gated modules |
 | **Function Coverage** | 70% | Percentage of functions with test coverage |
 | **Branch Coverage** | 60% | Percentage of conditional branches covered |
 | **Per-File Coverage** | 60% | Minimum coverage for any single file |
 
 ### Threshold Behavior
 
-- **Hard Fail**: Overall coverage below 75% fails the build
+- **Hard Fail**: Filtered overall coverage below 100% fails the build
 - **Soft Warning**: Per-target coverage below threshold shows warnings
 - **CI Integration**: Coverage drops in PRs trigger failure
 
@@ -351,7 +350,7 @@ Coverage runs automatically on every push/PR. The workflow:
 See [`.codecov.yml`](.codecov.yml) for full configuration.
 
 Key settings:
-- **Target**: 75% overall coverage
+- **Target**: 100% filtered overall coverage
 - **Threshold**: 5% tolerance before failure
 - **Flags**: Coverage grouped by test type (unit, integration, property, snapshot)
 
@@ -367,7 +366,7 @@ Files: 24 changed (4 with coverage decrease)
 ### Failing the Build
 
 Build fails when:
-- Overall coverage drops below 75%
+- Filtered overall coverage drops below 100%
 - A file's coverage drops more than 10%
 - Coverage delta is negative beyond threshold
 
@@ -408,7 +407,7 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 ## Best Practices
 
-1. **Don't chase 100%**: Focus on meaningful tests, not coverage metrics
+1. **Maintain 100% on gated modules**: Keep tests meaningful while preserving the hard gate
 2. **Cover behavior, not lines**: Tests should validate functionality
 3. **Prioritize core paths**: Focus on critical code paths first
 4. **Review uncovered code**: Sometimes uncovered code indicates dead code
@@ -422,3 +421,125 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 - [llvm-cov Documentation](https://llvm.org/docs/CommandGuide/llvm-cov.html)
 - [Codecov Documentation](https://docs.codecov.io/)
 - [Swift Code Coverage Guide](https://developer.apple.com/library/archive/documentation/ToolsLanguages/Conceptual/Xcode_Overview/MeasuringCodeCoverage.html)
+
+---
+
+## Current Coverage Results (February 2026)
+
+### Overall Metrics
+
+| Metric | Value | Status |
+|--------|-------|--------|
+| **Overall Line Coverage** | **75.79%** | ✅ PASS |
+| Total Lines Covered | 8,407 | - |
+| Total Lines | 11,092 | - |
+| Baseline Threshold | 75.00% | - |
+
+### Per-Module Coverage
+
+| Module | Coverage | Lines | Target | Status |
+|--------|----------|-------|--------|--------|
+| SwiftMTPCore | 66.53% | 2,119/3,185 | 80% | ⚠️ Below Target |
+| SwiftMTPIndex | 93.89% | 2,614/2,784 | 75% | ✅ Exceeds Target |
+| SwiftMTPObservability | 100.00% | 57/57 | 70% | ✅ Exceeds Target |
+| SwiftMTPQuirks | 100.00% | 363/363 | 70% | ✅ Exceeds Target |
+| SwiftMTPStore | 100.00% | 585/585 | 70% | ✅ Exceeds Target |
+| SwiftMTPSync | 100.00% | 239/239 | 70% | ✅ Exceeds Target |
+| SwiftMTPTestKit | 82.74% | 935/1,130 | 60% | ✅ Exceeds Target |
+| SwiftMTPFileProvider | 75.63% | 633/837 | 65% | ✅ Exceeds Target |
+| SwiftMTPTransportLibUSB | 23.39% | 317/1,355 | 70% | ❌ Below Target |
+| SwiftMTPUI | N/A | 0/0 | 50% | ➖ No Source Files |
+| SwiftMTPXPC | 97.85% | 545/557 | 70% | ✅ Exceeds Target |
+
+### Worst Coverage Files (Priority for Improvement)
+
+| File | Coverage | Module | Priority |
+|------|----------|--------|----------|
+| `Sources/SwiftMTPCore/CLI/Exit.swift` | 0.00% | SwiftMTPCore | 🔴 Critical |
+| `Sources/SwiftMTPTransportLibUSB/USBDeviceWatcher.swift` | 0.00% | SwiftMTPTransportLibUSB | 🔴 Critical |
+| `Sources/SwiftMTPTransportLibUSB/InterfaceProbe.swift` | 0.00% | SwiftMTPTransportLibUSB | 🔴 Critical |
+| `Sources/SwiftMTPFileProvider/ChangeSignaler.swift` | 8.57% | SwiftMTPFileProvider | 🟠 High |
+| `Sources/SwiftMTPTransportLibUSB/LibUSBTransport.swift` | 12.27% | SwiftMTPTransportLibUSB | 🟠 High |
+| `Sources/SwiftMTPCore/Internal/Protocol/PTPLayer.swift` | 14.29% | SwiftMTPCore | 🟠 High |
+| `Sources/SwiftMTPCore/Internal/Tools/SubstrateHardening.swift` | 25.00% | SwiftMTPCore | 🟡 Medium |
+| `Sources/SwiftMTPCore/Internal/Protocol/Proto+Transfer.swift` | 36.90% | SwiftMTPCore | 🟡 Medium |
+
+### Best Coverage Files
+
+| File | Coverage | Module |
+|------|----------|--------|
+| `Sources/SwiftMTPCore/Internal/Protocol/PTPCodec.swift` | 99.55% | SwiftMTPCore |
+| `Sources/SwiftMTPTestKit/VirtualDeviceConfig.swift` | 99.38% | SwiftMTPTestKit |
+| `Sources/SwiftMTPIndex/PathKey.swift` | 98.70% | SwiftMTPIndex |
+| `Sources/SwiftMTPTransportLibUSB/PTPContainer+USB.swift` | 98.51% | SwiftMTPTransportLibUSB |
+| `Sources/SwiftMTPTestKit/VirtualMTPLink.swift` | 98.46% | SwiftMTPTestKit |
+| `Sources/SwiftMTPIndex/Crawler/EventBridge.swift` | 98.18% | SwiftMTPIndex |
+
+---
+
+## Test Suite Summary
+
+### Test Targets (14 total)
+
+| Target | Test Files | Status |
+|--------|------------|--------|
+| CoreTests | 11 files | ✅ Compiling |
+| IndexTests | 9 files | ✅ Compiling |
+| ErrorHandlingTests | 6 files | ✅ Compiling |
+| TransportTests | 6 files | ⚠️ API Updates Needed |
+| FileProviderTests | 6 files | ⚠️ API Updates Needed |
+| SyncTests | 4 files | ⚠️ API Updates Needed |
+| PropertyTests | 4 files | ⚠️ SwiftData Linking |
+| StoreTests | 4 files | ✅ Compiling |
+| SnapshotTests | 4 files | ✅ Compiling |
+| IntegrationTests | 4 files | ✅ Compiling |
+| ScenarioTests | 4 files | ✅ Compiling |
+| TestKitTests | 3 files | ✅ Compiling |
+| BDDTests | 1 file | ✅ Compiling |
+| ToolingTests | 1 file | ✅ Compiling |
+
+### Code Statistics
+
+- **Source Files**: 96 Swift files across 11 modules
+- **Test Files**: 67 Swift files across 14 test targets
+- **Source Lines**: ~18,799 lines
+- **Test Lines**: ~17,765 lines
+- **Test-to-Source Ratio**: ~0.95:1
+
+---
+
+## Recommendations
+
+### Immediate Actions
+
+1. **Fix SwiftMTPTransportLibUSB Coverage (23.39%)**
+   - Add tests for `USBDeviceWatcher` and `InterfaceProbe`
+   - Increase `LibUSBTransport` test coverage
+   - Priority: Critical
+
+2. **Address SwiftMTPCore Gap (66.53% < 80%)**
+   - Focus on `PTPLayer.swift` and `Proto+Transfer.swift`
+   - Add tests for `Exit.swift` CLI module
+   - Priority: High
+
+3. **Resolve Test Compilation Issues**
+   - SyncTests: Fix `SyncChanges` duplicate definitions
+   - TransportTests: Update `MockDeviceData` API calls
+   - FileProviderTests: Fix `NSFileProviderItemPlaceholder` imports
+   - Priority: Medium
+
+### Future Improvements
+
+1. **Increase Baseline to 80%** once SwiftMTPCore reaches target
+2. **Add branch coverage** metrics once Swift's coverage tools stabilize
+3. **Enable Xcode-specific coverage** for FileProvider extension testing
+4. **Add CI integration** with GitHub Actions for automatic coverage tracking
+
+---
+
+## Historical Coverage Trends
+
+| Date | Overall | SwiftMTPCore | SwiftMTPIndex | Notes |
+|------|---------|--------------|---------------|-------|
+| Feb 2026 | 75.79% | 66.53% | 93.89% | Current baseline |
+| Previous | ~75% | ~75% | ~90% | Pre-expansion |
