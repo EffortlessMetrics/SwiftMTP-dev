@@ -453,16 +453,24 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 ### Worst Coverage Files (Priority for Improvement)
 
-| File | Coverage | Module | Priority |
-|------|----------|--------|----------|
-| `Sources/SwiftMTPCore/CLI/Exit.swift` | 0.00% | SwiftMTPCore | 🔴 Critical |
-| `Sources/SwiftMTPTransportLibUSB/USBDeviceWatcher.swift` | 0.00% | SwiftMTPTransportLibUSB | 🔴 Critical |
-| `Sources/SwiftMTPTransportLibUSB/InterfaceProbe.swift` | 0.00% | SwiftMTPTransportLibUSB | 🔴 Critical |
-| `Sources/SwiftMTPFileProvider/ChangeSignaler.swift` | 8.57% | SwiftMTPFileProvider | 🟠 High |
-| `Sources/SwiftMTPTransportLibUSB/LibUSBTransport.swift` | 12.27% | SwiftMTPTransportLibUSB | 🟠 High |
-| `Sources/SwiftMTPCore/Internal/Protocol/PTPLayer.swift` | 14.29% | SwiftMTPCore | 🟠 High |
-| `Sources/SwiftMTPCore/Internal/Tools/SubstrateHardening.swift` | 25.00% | SwiftMTPCore | 🟡 Medium |
-| `Sources/SwiftMTPCore/Internal/Protocol/Proto+Transfer.swift` | 36.90% | SwiftMTPCore | 🟡 Medium |
+| File | Coverage | Module | Priority | Status |
+|------|----------|--------|----------|--------|
+| `Sources/SwiftMTPCore/CLI/Exit.swift` | 0.00% | SwiftMTPCore | 🔴 Critical | ⚠️ Untestable (exit function) |
+| `Sources/SwiftMTPTransportLibUSB/USBDeviceWatcher.swift` | 0.00% | SwiftMTPTransportLibUSB | 🔴 Critical | ✅ Tests Added |
+| `Sources/SwiftMTPTransportLibUSB/InterfaceProbe.swift` | 0.00% | SwiftMTPTransportLibUSB | 🔴 Critical | ✅ Tests Added |
+| `Sources/SwiftMTPFileProvider/ChangeSignaler.swift` | 8.57% | SwiftMTPFileProvider | 🟠 High | In Progress |
+| `Sources/SwiftMTPTransportLibUSB/LibUSBTransport.swift` | 12.27% | SwiftMTPTransportLibUSB | 🟠 High | In Progress |
+| `Sources/SwiftMTPCore/Internal/Protocol/PTPLayer.swift` | 14.29% | SwiftMTPCore | 🟠 High | ✅ Tests Enhanced |
+| `Sources/SwiftMTPCore/Internal/Tools/SubstrateHardening.swift` | 25.00% | SwiftMTPCore | 🟡 Medium | ✅ Tests Added |
+| `Sources/SwiftMTPCore/Internal/Protocol/Proto+Transfer.swift` | 36.90% | SwiftMTPCore | 🟡 Medium | In Progress |
+
+### CLI Coverage Files (Improved)
+
+| File | Coverage | Tests | Status |
+|------|----------|-------|--------|
+| `Sources/SwiftMTPCore/CLI/Spinner.swift` | **100.00%** | SpinnerTests.swift | ✅ Complete |
+| `Sources/SwiftMTPCore/CLI/DeviceFilter.swift` | **100.00%** | DeviceFilterTests.swift | ✅ Complete |
+| `Sources/SwiftMTPCore/CLI/Exit.swift` | 0.00% | ExitTests.swift | ⚠️ Untestable |
 
 ### Best Coverage Files
 
@@ -483,13 +491,13 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 | Target | Test Files | Status |
 |--------|------------|--------|
-| CoreTests | 11 files | ✅ Compiling |
+| CoreTests | **17 files** | ✅ Compiling (+4 new) |
 | IndexTests | 9 files | ✅ Compiling |
 | ErrorHandlingTests | 6 files | ✅ Compiling |
-| TransportTests | 6 files | ⚠️ API Updates Needed |
-| FileProviderTests | 6 files | ⚠️ API Updates Needed |
-| SyncTests | 4 files | ⚠️ API Updates Needed |
-| PropertyTests | 4 files | ⚠️ SwiftData Linking |
+| TransportTests | 8 files | ✅ Compiling |
+| FileProviderTests | 6 files | ✅ Compiling |
+| SyncTests | 4 files | ✅ Compiling |
+| PropertyTests | 4 files | ✅ Compiling |
 | StoreTests | 4 files | ✅ Compiling |
 | SnapshotTests | 4 files | ✅ Compiling |
 | IntegrationTests | 4 files | ✅ Compiling |
@@ -497,6 +505,16 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 | TestKitTests | 3 files | ✅ Compiling |
 | BDDTests | 1 file | ✅ Compiling |
 | ToolingTests | 1 file | ✅ Compiling |
+
+### New Test Files Added (February 2026)
+
+| File | Tests | Coverage Target |
+|------|-------|-----------------|
+| `CoreTests/SubstrateHardeningTests.swift` | 22 tests | MTPFeatureFlags, BDDContext, MTPSnapshot, MTPFuzzer |
+| `CoreTests/DeviceFilterTests.swift` | 28 tests | DeviceFilter parsing, selection logic |
+| `CoreTests/SpinnerTests.swift` | 10 tests | Spinner lifecycle, thread safety |
+| `CoreTests/PTPLayerEnhancedTests.swift` | 21 tests | Async PTPLayer operations |
+| **Total New Tests** | **81 tests** | |
 
 ### Code Statistics
 
