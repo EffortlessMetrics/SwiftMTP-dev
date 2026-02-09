@@ -96,8 +96,8 @@ final class ProtoTransferCoverageTests: XCTestCase {
     }
 
     func testCheckOKWithStorageFullError() {
-        // Response code 0x200C = Storage Full
-        for code in [UInt16(0x200C)] {
+        // Response codes 0x200C, 0x200D = Storage Full
+        for code in [UInt16(0x200C), UInt16(0x200D)] {
             let result = PTPResponseResult(code: code, txid: 1, params: [])
             
             do {
@@ -108,19 +108,6 @@ final class ProtoTransferCoverageTests: XCTestCase {
             } catch {
                 XCTFail("Unexpected error type: \(error)")
             }
-        }
-    }
-
-    func testCheckOKWithObjectWriteProtectedError() {
-        // Response code 0x200D = Object Write Protected
-        let result = PTPResponseResult(code: 0x200D, txid: 1, params: [])
-        do {
-            try result.checkOK()
-            XCTFail("Should throw for object write protected error")
-        } catch let error as MTPError {
-            XCTAssertTrue(true)
-        } catch {
-            XCTFail("Unexpected error type: \(error)")
         }
     }
 

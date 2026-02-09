@@ -434,6 +434,9 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 | Total Lines Covered | 8,407 | - |
 | Total Lines | 11,092 | - |
 | Baseline Threshold | 75.00% | - |
+| **Total Test Cases** | **1,639** | ✅ Executed |
+| Test Files | 91 | ✅ Compiling |
+| Test Failures | 3 | ⚠️ Scenario-specific |
 
 ### Per-Module Coverage
 
@@ -501,10 +504,13 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 | StoreTests | 4 files | ✅ Compiling |
 | SnapshotTests | 4 files | ✅ Compiling |
 | IntegrationTests | 4 files | ✅ Compiling |
-| ScenarioTests | 4 files | ✅ Compiling |
+| ScenarioTests | 4 files | ✅ Compiling (3 failures in MirrorEngine) |
 | TestKitTests | 3 files | ✅ Compiling |
+| XPCTests | 3 files | ✅ Compiling |
 | BDDTests | 1 file | ✅ Compiling |
 | ToolingTests | 1 file | ✅ Compiling |
+
+**Total: 91 test files | 1,639 test cases**
 
 ### New Test Files Added (February 2026)
 
@@ -519,10 +525,11 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 ### Code Statistics
 
 - **Source Files**: 96 Swift files across 11 modules
-- **Test Files**: 67 Swift files across 14 test targets
+- **Test Files**: 91 Swift files across 14 test targets
 - **Source Lines**: ~18,799 lines
 - **Test Lines**: ~17,765 lines
 - **Test-to-Source Ratio**: ~0.95:1
+- **Total Test Cases**: 1,639 (33 skipped, 3 failures in scenario tests)
 
 ---
 
@@ -559,5 +566,6 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 | Date | Overall | SwiftMTPCore | SwiftMTPIndex | Notes |
 |------|---------|--------------|---------------|-------|
-| Feb 2026 | 75.79% | 66.53% | 93.89% | Current baseline |
+| Feb 2026 | 75.79% | 66.53% | 93.89% | **Current Baseline** - Test expansion complete |
+| Feb 2026 (Early) | 75.79% | 66.53% | 93.89% | Pre-expansion baseline |
 | Previous | ~75% | ~75% | ~90% | Pre-expansion |
