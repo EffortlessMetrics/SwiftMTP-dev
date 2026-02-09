@@ -31,6 +31,68 @@ struct InterfaceProbeAttempt: Sendable {
   let error: String?
 }
 
+struct MTPInterfaceHeuristic: Sendable {
+  let isCandidate: Bool
+  let score: Int
+}
+
+@inline(__always)
+private func nameLooksLikeMTP(_ interfaceName: String) -> Bool {
+  let lower = interfaceName.lowercased()
+  return lower.contains("mtp") || lower.contains("ptp")
+}
+
+@inline(__always)
+private func nameLooksLikeADB(_ interfaceName: String) -> Bool {
+  let lower = interfaceName.lowercased()
+  return lower.contains("adb") || lower.contains("android debug")
+}
+
+/// Shared heuristic used for discovery, hotplug, and interface ranking.
+func evaluateMTPInterfaceCandidate(
+  interfaceClass: UInt8,
+  interfaceSubclass: UInt8,
+  interfaceProtocol: UInt8,
+  endpoints: EPCandidates,
+  interfaceName: String
+) -> MTPInterfaceHeuristic {
+  // Must have a bulk IN/OUT pair for command/data traffic.
+  guard endpoints.bulkIn != 0, endpoints.bulkOut != 0 else {
+    return MTPInterfaceHeuristic(isCandidate: false, score: Int.min)
+  }
+
+  if (interfaceClass == 0xFF && interfaceSubclass == 0x42) || nameLooksLikeADB(interfaceName) {
+    return MTPInterfaceHeuristic(isCandidate: false, score: Int.min)
+  }
+
+  var score = 0
+  let name = interfaceName.lowercased()
+
+  // Canonical MTP/PTP interface.
+  if interfaceClass == 0x06 && interfaceSubclass == 0x01 {
+    score += 100
+  } else if interfaceClass == 0x06 {
+    score += 65
+  }
+
+  // Vendor-specific Android stacks often expose MTP on class 0xFF.
+  if interfaceClass == 0xFF {
+    if nameLooksLikeMTP(name) {
+      score += 80
+    } else if endpoints.evtIn != 0 {
+      // Event endpoint + bulk pair is a strong MTP signal.
+      score += 62
+    }
+  }
+
+  if name.contains("ptp") || name.contains("mtp") { score += 15 }
+  if interfaceProtocol == 0x01 { score += 5 }
+  if endpoints.evtIn != 0 { score += 5 }
+
+  let isCandidate = score >= 60
+  return MTPInterfaceHeuristic(isCandidate: isCandidate, score: score)
+}
+
 // MARK: - Ranking
 
 /// Rank all MTP-capable interfaces on a device, sorted by score descending.
@@ -46,16 +108,15 @@ func rankMTPInterfaces(handle: OpaquePointer, device: OpaquePointer) throws -> [
     for a in 0..<Int(ifc.num_altsetting) {
       let alt = ifc.altsetting[Int(a)]
       let eps = findEndpoints(alt)
-      guard eps.bulkIn != 0, eps.bulkOut != 0 else { continue }
-
-      var score = 0
-      if alt.bInterfaceClass == 0x06 && alt.bInterfaceSubClass == 0x01 { score += 100 }
       let name = getAsciiString(handle, alt.iInterface).lowercased()
-      if (alt.bInterfaceClass == 0xFF && alt.bInterfaceSubClass == 0x42) || name.contains("adb") { score -= 200 }
-      if alt.bInterfaceClass == 0xFF && (name.contains("mtp") || name.contains("ptp")) { score += 60 }
-      if eps.evtIn != 0 { score += 5 }
-
-      guard score >= 60 else { continue }
+      let heuristic = evaluateMTPInterfaceCandidate(
+        interfaceClass: alt.bInterfaceClass,
+        interfaceSubclass: alt.bInterfaceSubClass,
+        interfaceProtocol: alt.bInterfaceProtocol,
+        endpoints: eps,
+        interfaceName: name
+      )
+      guard heuristic.isCandidate else { continue }
 
       candidates.append(InterfaceCandidate(
         ifaceNumber: UInt8(i),
@@ -63,7 +124,7 @@ func rankMTPInterfaces(handle: OpaquePointer, device: OpaquePointer) throws -> [
         bulkIn: eps.bulkIn,
         bulkOut: eps.bulkOut,
         eventIn: eps.evtIn,
-        score: score,
+        score: heuristic.score,
         ifaceClass: alt.bInterfaceClass,
         ifaceSubclass: alt.bInterfaceSubClass,
         ifaceProtocol: alt.bInterfaceProtocol

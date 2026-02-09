@@ -96,13 +96,18 @@ swift test --filter SnapshotTests
 
 | Device | VID:PID | Status | Notes |
 |--------|---------|--------|-------|
-| Google Pixel 7 | 18d1:4ee1 | ✅ Stable | Full MTP, USB 3.0 |
-| OnePlus 3T | 2a70:f003 | ⚠️ Experimental | Requires device trust |
-| Xiaomi Mi Note 2 | 2717:ff10 | ⚠️ Known | Needs stabilization delay |
-| Samsung Galaxy S21 | 04e8:6860 | ⚠️ Known | USB 2.0 limited |
-| Canon EOS R5 | 04a9:3196 | ⚠️ Known | PTP-derived, limited MTP |
+| Google Pixel 7 | 18d1:4ee1 | ⚠️ Experimental | Probe/open blocker on macOS Tahoe 26 (diagnostics captured) |
+| OnePlus 3T | 2a70:f003 | ✅ Stable (probe/read) | Probe hardened for misaligned-buffer crash path |
+| Xiaomi Mi Note 2 | 2717:ff10 / 2717:ff40 | ✅ Stable | ff40 variant uses vendor-specific MTP interface matching |
 
 See [`Docs/SwiftMTP.docc/Devices/`](Docs/SwiftMTP.docc/Devices/) for device-specific tuning guides.
+
+### Connected Device Lab (repeatable host workflow)
+```bash
+swift run --package-path SwiftMTPKit swiftmtp device-lab connected --json
+```
+
+Artifacts are written under `Docs/benchmarks/connected-lab/<timestamp>/` with per-device JSON reports.
 
 ## 🎮 Demo Mode & Simulation
 

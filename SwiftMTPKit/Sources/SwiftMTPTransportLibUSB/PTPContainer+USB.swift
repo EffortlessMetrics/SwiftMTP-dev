@@ -9,6 +9,13 @@ import SwiftMTPCore
 
 import SwiftMTPCore  // Ensure we have access to canonical PTPContainer.Kind
 
+@inline(__always)
+func readUnalignedLittleEndian<T: FixedWidthInteger>(from ptr: UnsafeRawPointer, offset: Int = 0, as: T.Type = T.self) -> T {
+    var value: T = 0
+    memcpy(&value, ptr.advanced(by: offset), MemoryLayout<T>.size)
+    return T(littleEndian: value)
+}
+
 // MARK: - PTP Header Structure
 
 struct PTPHeader {
@@ -32,10 +39,10 @@ struct PTPHeader {
 
     @inline(__always)
     static func decode(from ptr: UnsafeRawPointer) -> PTPHeader {
-        let L = ptr.load(as: UInt32.self).littleEndian
-        let T = ptr.advanced(by: 4).load(as: UInt16.self).littleEndian
-        let C = ptr.advanced(by: 6).load(as: UInt16.self).littleEndian
-        let X = ptr.advanced(by: 8).load(as: UInt32.self).littleEndian
+        let L: UInt32 = readUnalignedLittleEndian(from: ptr, offset: 0)
+        let T: UInt16 = readUnalignedLittleEndian(from: ptr, offset: 4)
+        let C: UInt16 = readUnalignedLittleEndian(from: ptr, offset: 6)
+        let X: UInt32 = readUnalignedLittleEndian(from: ptr, offset: 8)
         return PTPHeader(length: L, type: T, code: C, txid: X)
     }
 }
@@ -97,4 +104,3 @@ func mapLibusb(_ rc: Int32) -> TransportError {
 func check(_ rc: Int32) throws {
     if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }
 }
-

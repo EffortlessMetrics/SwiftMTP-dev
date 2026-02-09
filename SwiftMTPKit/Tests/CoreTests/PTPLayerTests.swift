@@ -300,6 +300,25 @@ final class PTPLayerTests: XCTestCase {
         }
     }
 
+    func testMTPEventParsingFromOffsetBufferDoesNotTrap() {
+        var eventData = Data(count: 16)
+        eventData[0] = 0x10; eventData[1] = 0x00; eventData[2] = 0x00; eventData[3] = 0x00
+        eventData[4] = 0x04; eventData[5] = 0x00
+        eventData[6] = 0x02; eventData[7] = 0x40
+        eventData[8] = 0x01; eventData[9] = 0x00; eventData[10] = 0x00; eventData[11] = 0x00
+        eventData[12] = 0x2A; eventData[13] = 0x00; eventData[14] = 0x00; eventData[15] = 0x00
+
+        let prefixed = Data([0xFF]) + eventData
+        let offsetData = Data(prefixed.dropFirst())
+
+        let event = MTPEvent.fromRaw(offsetData)
+        if case .objectAdded(let handle) = event {
+            XCTAssertEqual(handle, 42)
+        } else {
+            XCTFail("Expected objectAdded event from offset buffer")
+        }
+    }
+
     func testMTPEventInvalidData() {
         // Too short
         let shortData = Data([0x01, 0x02, 0x03])

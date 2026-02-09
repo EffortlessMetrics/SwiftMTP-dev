@@ -32,7 +32,13 @@ public enum USBDeviceWatcher {
             // Debug: Print device info
             Logger(subsystem: "SwiftMTP", category: "transport").info("Device arrived: VID=\(String(format:"%04x", desc.idVendor)), PID=\(String(format:"%04x", desc.idProduct)), bus=\(libusb_get_bus_number(dev)), addr=\(libusb_get_device_address(dev))")
 
-            // Filter for interface class 0x06 (MTP/PTP). Cheap check using config 0.
+            var usbHandle: OpaquePointer?
+            if libusb_open(dev, &usbHandle) != 0 { usbHandle = nil }
+            defer {
+                if let h = usbHandle { libusb_close(h) }
+            }
+
+            // Shared MTP heuristic: canonical class and vendor-specific candidates.
             var cfg: UnsafeMutablePointer<libusb_config_descriptor>? = nil
             if libusb_get_active_config_descriptor(dev, &cfg) == 0, let cfg {
                 defer { libusb_free_config_descriptor(cfg) }
@@ -42,8 +48,17 @@ public enum USBDeviceWatcher {
                     let iface = cfg.pointee.interface[Int(i)]
                     for a in 0..<iface.num_altsetting {
                         let alt = iface.altsetting[Int(a)]
+                        let endpoints = findEndpoints(alt)
+                        let interfaceName = usbHandle.map { getAsciiString($0, alt.iInterface) } ?? ""
+                        let heuristic = evaluateMTPInterfaceCandidate(
+                            interfaceClass: alt.bInterfaceClass,
+                            interfaceSubclass: alt.bInterfaceSubClass,
+                            interfaceProtocol: alt.bInterfaceProtocol,
+                            endpoints: endpoints,
+                            interfaceName: interfaceName
+                        )
                         Logger(subsystem: "SwiftMTP", category: "transport").info("Interface \(i), alt \(a): class=\(alt.bInterfaceClass), subclass=\(alt.bInterfaceSubClass), protocol=\(alt.bInterfaceProtocol)")
-                        if alt.bInterfaceClass == 0x06 {
+                        if heuristic.isCandidate {
                             isMTP = true
                             break
                         }
@@ -62,9 +77,7 @@ public enum USBDeviceWatcher {
             var manufacturer = "USB \(String(format:"%04x", desc.idVendor))"
             var model = "USB \(String(format:"%04x", desc.idProduct))"
             var serial: String? = nil
-            var usbHandle: OpaquePointer?
-            if libusb_open(dev, &usbHandle) == 0, let h = usbHandle {
-                defer { libusb_close(h) }
+            if let h = usbHandle {
                 if desc.iManufacturer != 0 {
                     var buf = [UInt8](repeating: 0, count: 128)
                     let n = libusb_get_string_descriptor_ascii(h, desc.iManufacturer, &buf, Int32(buf.count))

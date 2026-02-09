@@ -1,0 +1,72 @@
+{
+  "address" : 12,
+  "bus" : 1,
+  "id" : "04e8:6860@1:12",
+  "interfaces" : [
+    {
+      "altSetting" : 0,
+      "endpoints" : [
+        {
+          "address" : "0x81",
+          "direction" : "in",
+          "transferType" : "bulk"
+        },
+        {
+          "address" : "0x01",
+          "direction" : "out",
+          "transferType" : "bulk"
+        },
+        {
+          "address" : "0x82",
+          "direction" : "in",
+          "transferType" : "interrupt"
+        }
+      ],
+      "interfaceClass" : "0xff",
+      "interfaceProtocol" : "0x00",
+      "interfaceSubclass" : "0xff",
+      "name" : "MTP",
+      "number" : 0
+    },
+    {
+      "altSetting" : 0,
+      "endpoints" : [
+        {
+          "address" : "0x84",
+          "direction" : "in",
+          "transferType" : "interrupt"
+        }
+      ],
+      "interfaceClass" : "0x02",
+      "interfaceProtocol" : "0x01",
+      "interfaceSubclass" : "0x02",
+      "name" : "CDC Abstract Control Model (ACM)",
+      "number" : 1
+    },
+    {
+      "altSetting" : 0,
+      "endpoints" : [
+        {
+          "address" : "0x83",
+          "direction" : "in",
+          "transferType" : "bulk"
+        },
+        {
+          "address" : "0x02",
+          "direction" : "out",
+          "transferType" : "bulk"
+        }
+      ],
+      "interfaceClass" : "0x0a",
+      "interfaceProtocol" : "0x00",
+      "interfaceSubclass" : "0x00",
+      "name" : "CDC ACM Data",
+      "number" : 2
+    }
+  ],
+  "manufacturer" : "SAMSUNG",
+  "product" : "SAMSUNG_Android",
+  "productID" : "6860",
+  "serial" : "9886734b3530443253",
+  "vendorID" : "04e8"
+}

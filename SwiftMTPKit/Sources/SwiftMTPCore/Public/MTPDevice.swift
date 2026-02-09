@@ -4,6 +4,17 @@
 import Foundation
 import SwiftMTPQuirks
 
+@inline(__always)
+private func decodeLittleEndian<T: FixedWidthInteger>(_ data: Data, at offset: Int, as: T.Type = T.self) -> T? {
+  let width = MemoryLayout<T>.size
+  guard offset >= 0, offset + width <= data.count else { return nil }
+  var value: T = 0
+  _ = withUnsafeMutableBytes(of: &value) { raw in
+    data.copyBytes(to: raw, from: offset..<(offset + width))
+  }
+  return T(littleEndian: value)
+}
+
 public struct MTPDeviceID: Hashable, Sendable, Codable {
     public let raw: String
     public init(raw: String) { self.raw = raw }
@@ -73,11 +84,13 @@ public enum MTPEvent: Sendable {
   public static func fromRaw(_ data: Data) -> MTPEvent? {
     guard data.count >= 12 else { return nil }
     // PTP/MTP Event container: [len(4) type(2)=4 code(2) txid(4) params...]
-    let code = data.withUnsafeBytes { $0.load(fromByteOffset: 6, as: UInt16.self).littleEndian }
-    let params = data.withUnsafeBytes { ptr in
-      (0..<((data.count - 12) / 4)).map { i in
-        ptr.load(fromByteOffset: 12 + i * 4, as: UInt32.self).littleEndian
-      }
+    guard let code: UInt16 = decodeLittleEndian(data, at: 6) else { return nil }
+    let paramCount = (data.count - 12) / 4
+    var params: [UInt32] = []
+    params.reserveCapacity(paramCount)
+    for index in 0..<paramCount {
+      guard let value: UInt32 = decodeLittleEndian(data, at: 12 + index * 4) else { break }
+      params.append(value)
     }
 
     switch code {

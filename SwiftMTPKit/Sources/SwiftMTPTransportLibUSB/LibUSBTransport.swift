@@ -36,56 +36,75 @@ public struct LibUSBDiscovery {
             guard let dev = list[i] else { continue }
             var desc = libusb_device_descriptor()
             guard libusb_get_device_descriptor(dev, &desc) == 0 else { continue }
+
             var cfgPtr: UnsafeMutablePointer<libusb_config_descriptor>? = nil
             guard libusb_get_active_config_descriptor(dev, &cfgPtr) == 0, let cfg = cfgPtr else { continue }
             defer { libusb_free_config_descriptor(cfg) }
+
+            var handle: OpaquePointer?
+            if libusb_open(dev, &handle) != 0 { handle = nil }
+            defer {
+                if let h = handle { libusb_close(h) }
+            }
+
             var isMTP = false
             for j in 0..<cfg.pointee.bNumInterfaces {
                 let iface = cfg.pointee.interface[Int(j)]
                 for a in 0..<iface.num_altsetting {
                     let alt = iface.altsetting[Int(a)]
-                    if alt.bInterfaceClass == 0x06 { isMTP = true; break }
+                    let eps = findEndpoints(alt)
+                    let ifaceName = handle.map { getAsciiString($0, alt.iInterface) } ?? ""
+                    let heuristic = evaluateMTPInterfaceCandidate(
+                        interfaceClass: alt.bInterfaceClass,
+                        interfaceSubclass: alt.bInterfaceSubClass,
+                        interfaceProtocol: alt.bInterfaceProtocol,
+                        endpoints: eps,
+                        interfaceName: ifaceName
+                    )
+                    if heuristic.isCandidate {
+                        isMTP = true
+                        break
+                    }
                 }
                 if isMTP { break }
             }
-            if isMTP {
-                let bus = libusb_get_bus_number(dev), addr = libusb_get_device_address(dev)
+            guard isMTP else { continue }
 
-                // Try to read USB string descriptors for better names
-                var manufacturer = "USB \(String(format: "%04x", desc.idVendor))"
-                var model = "USB \(String(format: "%04x", desc.idProduct))"
-                var serial: String? = nil
-                var handle: OpaquePointer?
-                if libusb_open(dev, &handle) == 0, let h = handle {
-                    defer { libusb_close(h) }
-                    if desc.iManufacturer != 0 {
-                        var buf = [UInt8](repeating: 0, count: 128)
-                        let n = libusb_get_string_descriptor_ascii(h, desc.iManufacturer, &buf, Int32(buf.count))
-                        if n > 0 { manufacturer = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
-                    }
-                    if desc.iProduct != 0 {
-                        var buf = [UInt8](repeating: 0, count: 128)
-                        let n = libusb_get_string_descriptor_ascii(h, desc.iProduct, &buf, Int32(buf.count))
-                        if n > 0 { model = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
-                    }
-                    if desc.iSerialNumber != 0 {
-                        var buf = [UInt8](repeating: 0, count: 128)
-                        let n = libusb_get_string_descriptor_ascii(h, desc.iSerialNumber, &buf, Int32(buf.count))
-                        if n > 0 { serial = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
-                    }
+            let bus = libusb_get_bus_number(dev)
+            let addr = libusb_get_device_address(dev)
+
+            var manufacturer = "USB \(String(format: "%04x", desc.idVendor))"
+            var model = "USB \(String(format: "%04x", desc.idProduct))"
+            var serial: String? = nil
+
+            if let h = handle {
+                if desc.iManufacturer != 0 {
+                    var buf = [UInt8](repeating: 0, count: 128)
+                    let n = libusb_get_string_descriptor_ascii(h, desc.iManufacturer, &buf, Int32(buf.count))
+                    if n > 0 { manufacturer = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
                 }
-
-                summaries.append(MTPDeviceSummary(
-                    id: MTPDeviceID(raw: String(format: "%04x:%04x@%u:%u", desc.idVendor, desc.idProduct, bus, addr)),
-                    manufacturer: manufacturer,
-                    model: model,
-                    vendorID: desc.idVendor,
-                    productID: desc.idProduct,
-                    bus: bus,
-                    address: addr,
-                    usbSerial: serial
-                ))
+                if desc.iProduct != 0 {
+                    var buf = [UInt8](repeating: 0, count: 128)
+                    let n = libusb_get_string_descriptor_ascii(h, desc.iProduct, &buf, Int32(buf.count))
+                    if n > 0 { model = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
+                }
+                if desc.iSerialNumber != 0 {
+                    var buf = [UInt8](repeating: 0, count: 128)
+                    let n = libusb_get_string_descriptor_ascii(h, desc.iSerialNumber, &buf, Int32(buf.count))
+                    if n > 0 { serial = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
+                }
             }
+
+            summaries.append(MTPDeviceSummary(
+                id: MTPDeviceID(raw: String(format: "%04x:%04x@%u:%u", desc.idVendor, desc.idProduct, bus, addr)),
+                manufacturer: manufacturer,
+                model: model,
+                vendorID: desc.idVendor,
+                productID: desc.idProduct,
+                bus: bus,
+                address: addr,
+                usbSerial: serial
+            ))
         }
         return summaries
     }
@@ -359,9 +378,16 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let collector = SimpleCollector()
     let res = try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1004, txid: 0, params: []), dataPhaseLength: nil, dataInHandler: { collector.append($0); return $0.count }, dataOutHandler: nil)
     if !res.isOK || collector.data.count < 4 { return [] }
-    let count = collector.data.withUnsafeBytes { $0.load(as: UInt32.self).littleEndian }
+    var reader = PTPReader(data: collector.data)
+    guard let count = reader.u32() else { return [] }
+    let payloadCount = (collector.data.count - 4) / 4
+    let total = min(Int(count), payloadCount)
     var ids = [MTPStorageID]()
-    for i in 0..<Int(count) { ids.append(MTPStorageID(raw: collector.data.withUnsafeBytes { $0.load(fromByteOffset: 4+i*4, as: UInt32.self).littleEndian })) }
+    ids.reserveCapacity(total)
+    for _ in 0..<total {
+      guard let raw = reader.u32() else { break }
+      ids.append(MTPStorageID(raw: raw))
+    }
     return ids
   }
 
@@ -379,9 +405,16 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let res = try await executeStreamingCommand(PTPContainer(type: 1, code: 0x1007, txid: 0, params: [storage.raw, 0, parent ?? 0x00000000]), dataPhaseLength: nil, dataInHandler: { collector.append($0); return $0.count }, dataOutHandler: nil)
     try res.checkOK()
     if collector.data.count < 4 { return [] }
-    let count = collector.data.withUnsafeBytes { $0.load(as: UInt32.self).littleEndian }
+    var reader = PTPReader(data: collector.data)
+    guard let count = reader.u32() else { return [] }
+    let payloadCount = (collector.data.count - 4) / 4
+    let total = min(Int(count), payloadCount)
     var handles = [MTPObjectHandle]()
-    for i in 0..<Int(count) { handles.append(collector.data.withUnsafeBytes { $0.load(fromByteOffset: 4+i*4, as: UInt32.self).littleEndian }) }
+    handles.reserveCapacity(total)
+    for _ in 0..<total {
+      guard let raw = reader.u32() else { break }
+      handles.append(raw)
+    }
     return handles
   }
 
@@ -516,14 +549,21 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       try bulkReadExact(inEP, into: &hBuf, need: PTPHeader.size, timeout: UInt32(config.ioTimeoutMs))
       rHdr = hBuf.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }; initial = Data()
     }
-    var pCount = (Int(rHdr.length) - PTPHeader.size) / 4, params = [UInt32]()
+    let paramBytes = max(0, Int(rHdr.length) - PTPHeader.size)
+    let pCount = paramBytes / 4
+    var params = [UInt32]()
+    params.reserveCapacity(pCount)
     var pData = initial
     if pData.count < pCount * 4 {
       var extra = [UInt8](repeating: 0, count: pCount * 4 - pData.count)
       try bulkReadExact(inEP, into: &extra, need: extra.count, timeout: UInt32(config.ioTimeoutMs))
       pData.append(contentsOf: extra)
     }
-    for i in 0..<pCount { params.append(pData.withUnsafeBytes { $0.load(fromByteOffset: i*4, as: UInt32.self).littleEndian }) }
+    var paramReader = PTPReader(data: pData)
+    for _ in 0..<pCount {
+      guard let param = paramReader.u32() else { break }
+      params.append(param)
+    }
     return PTPResponseResult(code: rHdr.code, txid: rHdr.txid, params: params)
   }
 
@@ -561,4 +601,9 @@ final class SimpleCollector: @unchecked Sendable {
     var data = Data(); private let lock = NSLock()
     func append(_ chunk: UnsafeRawBufferPointer) { lock.lock(); defer { lock.unlock() }; data.append(chunk) }
 }
-extension Data { mutating func append(_ buf: UnsafeRawBufferPointer) { append(buf.baseAddress!.assumingMemoryBound(to: UInt8.self), count: buf.count) } }
+extension Data {
+  mutating func append(_ buf: UnsafeRawBufferPointer) {
+    guard buf.count > 0, let base = buf.baseAddress else { return }
+    append(base.assumingMemoryBound(to: UInt8.self), count: buf.count)
+  }
+}
