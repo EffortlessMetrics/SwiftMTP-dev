@@ -14,11 +14,13 @@ import SwiftMTPIndex
 public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedExtension {
     private let domain: NSFileProviderDomain
     private var xpcConnection: NSXPCConnection?
+    private let xpcServiceResolver: (() -> MTPXPCService?)?
 
     /// Read-only index reader opened from the shared app group container.
     private var indexReader: (any LiveIndexReader)?
 
     public init(domain: NSFileProviderDomain) {
+        self.xpcServiceResolver = nil
         self.domain = domain
         super.init()
 
@@ -32,11 +34,25 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
         }
     }
 
+    init(
+        domain: NSFileProviderDomain,
+        indexReader: (any LiveIndexReader)?,
+        xpcServiceResolver: (() -> MTPXPCService?)? = nil
+    ) {
+        self.domain = domain
+        self.indexReader = indexReader
+        self.xpcServiceResolver = xpcServiceResolver
+        super.init()
+    }
+
     public func invalidate() {
         xpcConnection?.invalidate()
     }
 
     private func getXPCService() -> MTPXPCService? {
+        if let xpcServiceResolver {
+            return xpcServiceResolver()
+        }
         if xpcConnection == nil {
             let connection = NSXPCConnection(machServiceName: MTPXPCServiceName, options: [])
             connection.remoteObjectInterface = NSXPCInterface(with: MTPXPCService.self)

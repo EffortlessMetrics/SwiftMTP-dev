@@ -36,6 +36,15 @@ final class StoreAdapterTests: XCTestCase {
         XCTAssertNotNil(customAdapter)
     }
 
+    func testProtocolAccessorsReturnAdapterInstance() {
+        XCTAssertTrue((adapter.learnedProfiles as AnyObject) === adapter)
+        XCTAssertTrue((adapter.profiling as AnyObject) === adapter)
+        XCTAssertTrue((adapter.snapshots as AnyObject) === adapter)
+        XCTAssertTrue((adapter.submissions as AnyObject) === adapter)
+        XCTAssertTrue((adapter.transferJournal as AnyObject) === adapter)
+        XCTAssertTrue((adapter.objectCatalog as AnyObject) === adapter)
+    }
+
     // MARK: - Learned Profile Store Tests
 
     func testLoadNonExistentProfileReturnsNil() async throws {

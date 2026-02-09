@@ -9,6 +9,7 @@ import SwiftMTPCore
 @MainActor
 public final class MTPXPCListener: NSObject {
     private var listener: NSXPCListener?
+    private var cleanupTimer: Timer?
     private let serviceImpl: MTPXPCServiceImpl
 
     public init(serviceImpl: MTPXPCServiceImpl) {
@@ -23,17 +24,21 @@ public final class MTPXPCListener: NSObject {
     }
 
     public func stop() {
+        cleanupTimer?.invalidate()
+        cleanupTimer = nil
         listener?.suspend()
         listener = nil
     }
 
     /// Clean up temp files periodically
-    public func startTempFileCleanupTimer() {
-        // Use a weak capture and ensure we stay on the MainActor
-        Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { _ in
+    public func startTempFileCleanupTimer(interval: TimeInterval = 3600) {
+        // Run once immediately so stale files are cleaned even before the first timer fire.
+        serviceImpl.cleanupOldTempFiles()
+
+        cleanupTimer?.invalidate()
+        cleanupTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
             Task { @MainActor in
-                // Accessing serviceImpl which is @MainActor
-                // Implementation of cleanupOldTempFiles should also be @MainActor
+                self?.serviceImpl.cleanupOldTempFiles()
             }
         }
     }

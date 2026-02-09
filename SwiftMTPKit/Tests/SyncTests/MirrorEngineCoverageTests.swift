@@ -90,6 +90,14 @@ final class MirrorEngineCoverageTests: XCTestCase {
         XCTAssertFalse(mirrorEngine.matchesPattern("00010001/DCIM/Camera/photo.jpg", pattern: "**/*.png"))
     }
 
+    func testGlobPatternAcceptsLeadingSlash() {
+        XCTAssertTrue(mirrorEngine.matchesPattern("00010001/DCIM/Camera/photo.jpg", pattern: "/DCIM/**"))
+    }
+
+    func testGlobPatternDoubleStarWithLeadingSlashMatchesEverything() {
+        XCTAssertTrue(mirrorEngine.matchesPattern("00010001/DCIM/Camera/photo.jpg", pattern: "/**"))
+    }
+
     private func makeSingleFileDevice(name: String, bytes: Data) -> VirtualMTPDevice {
         let config = VirtualDeviceConfig.emptyDevice
             .withObject(

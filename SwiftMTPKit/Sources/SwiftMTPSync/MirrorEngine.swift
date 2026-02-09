@@ -103,7 +103,7 @@ public final class MirrorEngine: Sendable {
 
         // Check if file already exists and is up to date
         if try shouldSkipDownload(of: localURL, file: file) {
-            log.debug("Skipping download - file \(file.pathKey) already exists and is current at \(localURL.path)")
+            log.debug("Skipping download - file already exists and is current")
             return
         }
 
@@ -113,7 +113,7 @@ public final class MirrorEngine: Sendable {
 
         // The read call itself returns once the download is complete or failed.
         // We just need to check the final unit count for logging.
-        log.debug("Downloaded file \(file.pathKey) to \(localURL.path) (\(progress.completedUnitCount) bytes)")
+        log.debug("Downloaded file successfully")
     }
 
     /// Convert a path key to a local file URL
@@ -132,9 +132,7 @@ public final class MirrorEngine: Sendable {
 
         // Get local file attributes
         let attributes = try FileManager.default.attributesOfItem(atPath: localURL.path)
-        guard let localSize = attributes[.size] as? UInt64 else {
-            return false
-        }
+        let localSize = (attributes[.size] as! NSNumber).uint64Value
 
         // Compare sizes
         if let remoteSize = file.size, localSize != remoteSize {
@@ -143,7 +141,7 @@ public final class MirrorEngine: Sendable {
 
         // Compare modification times (with tolerance)
         if let remoteMtime = file.mtime {
-            let localMtime = attributes[.modificationDate] as? Date ?? Date.distantPast
+            let localMtime = attributes[.modificationDate] as! Date
             let timeDiff = abs(localMtime.timeIntervalSince1970 - remoteMtime.timeIntervalSince1970)
             if timeDiff > 300 { // 5 minute tolerance
                 return false
@@ -221,13 +219,9 @@ public final class MirrorEngine: Sendable {
             // Convert * to [^/]*
             regexPattern = regexPattern.replacingOccurrences(of: "*", with: ".*")
             
-            do {
-                let regex = try NSRegularExpression(pattern: "^\(regexPattern)$", options: [.caseInsensitive])
-                let range = NSRange(location: 0, length: component.utf16.count)
-                return regex.firstMatch(in: component, options: [], range: range) != nil
-            } catch {
-                return false
-            }
+            let regex = try! NSRegularExpression(pattern: "^\(regexPattern)$", options: [.caseInsensitive])
+            let range = NSRange(location: 0, length: component.utf16.count)
+            return regex.firstMatch(in: component, options: [], range: range) != nil
         }
 
         return match(pIdx: 0, cIdx: 0)

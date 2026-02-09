@@ -89,8 +89,8 @@ let package = Package(
                       path: "Sources/Tools/swiftmtp-cli",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
-    .testTarget(name: "CoreTests", dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks"]),
-    .testTarget(name: "IndexTests", dependencies: ["SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPSync", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks"]),
+    .testTarget(name: "CoreTests", dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks", "SwiftMTPTestKit"]),
+    .testTarget(name: "IndexTests", dependencies: ["SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPSync", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks", "SwiftMTPTestKit"]),
     .testTarget(name: "TransportTests", dependencies: ["SwiftMTPTransportLibUSB", "CLibusb"]),
     .testTarget(name: "BDDTests",
                 dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", .product(name: "CucumberSwift", package: "CucumberSwift")],
@@ -107,7 +107,13 @@ let package = Package(
     .testTarget(name: "TestKitTests",
                 dependencies: ["SwiftMTPTestKit", "SwiftMTPCore"]),
     .testTarget(name: "FileProviderTests",
-                dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore"]),
+                dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPXPC"]),
+    .testTarget(name: "XPCTests",
+                dependencies: [
+                    "SwiftMTPXPC",
+                    "SwiftMTPCore",
+                    "SwiftMTPTestKit",
+                ]),
     .testTarget(name: "IntegrationTests",
                 dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPFileProvider", "SwiftMTPQuirks", "SwiftMTPTestKit"]),
     .testTarget(name: "StoreTests",
@@ -140,11 +146,6 @@ let package = Package(
                     "SwiftMTPIndex",
                     "SwiftMTPSync",
                     "SwiftMTPTestKit",
-                ],
-                exclude: [
-                    "FileTransferIntegrationTests.swift",
-                    "PerformanceScenarioTests.swift",
-                    "ResumeScenarioTests.swift",
                 ]),
     .testTarget(name: "ToolingTests",
                 dependencies: [

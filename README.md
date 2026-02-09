@@ -65,7 +65,7 @@ SwiftMTP utilizes a multi-layered verification strategy:
 
 By default this runs:
 - SwiftMTPKit matrix (BDD + property + fuzz + integration + unit + e2e + snapshot + storybook)
-- Xcode app + unit tests (UI automation tests are skipped unless `RUN_XCODE_UI_TESTS=1`)
+- Xcode app + unit + UI automation tests (set `RUN_XCODE_UI_TESTS=0` to skip UI tests)
 
 ### BDD Scenarios (CucumberSwift)
 ```bash
