@@ -17,9 +17,11 @@ final class SubstrateHardeningTests: XCTestCase {
     }
 
     func testMTPFeatureIsEnabledDefaultFalse() {
-        // Most features should be disabled by default
+        // Reset all features to ensure clean state
         let flags = MTPFeatureFlags.shared
+        flags.resetAllFeatures()
         
+        // Most features should be disabled by default
         // Test each feature - they should be false unless env var is set
         XCTAssertFalse(flags.isEnabled(.propListFastPath))
         XCTAssertFalse(flags.isEnabled(.chunkedTransfer))

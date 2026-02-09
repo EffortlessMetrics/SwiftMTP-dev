@@ -264,18 +264,13 @@ public enum CollectCommand {
   // MARK: - Device selection (no internal helpers)
   private static func selectDeviceOrExit(flags: Flags) async throws -> MTPDeviceSummary {
     let devs = try await enumerateRealMTPDevices()
-    let matches = devs.filter { m in
-      if let vid = flags.vid, m.vendorID != vid { return false }
-      if let pid = flags.pid, m.productID != pid { return false }
-      if let bus = flags.bus, let deviceBus = m.bus, deviceBus != UInt8(bus) { return false }
-      if let addr = flags.address, let deviceAddr = m.address, deviceAddr != UInt8(addr) { return false }
-      return true
-    }
+    let filter = DeviceFilter(vid: flags.vid, pid: flags.pid, bus: flags.bus, address: flags.address)
+    let outcome = selectDevice(devs, filter: filter, noninteractive: flags.noninteractive)
 
     let candidates = devs.map { DeviceCandidate(from: $0) }
 
-    switch matches.count {
-    case 0:
+    switch outcome {
+    case .none:
       // 69 = unavailable
       if flags.json {
         printJSONErrorAndExit(CollectError.noDeviceMatched(candidates: candidates), flags: flags)
@@ -290,9 +285,9 @@ public enum CollectCommand {
         exitNow(.unavailable)
       }
       // never returns
-    case 1:
-      return matches[0]
-    default:
+    case .selected(let selected):
+      return selected
+    case .multiple(let matches):
       // If interactive, you could prompt; for noninteractive we must exit(64).
       if flags.noninteractive {
         if flags.json {

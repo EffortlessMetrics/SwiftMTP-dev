@@ -55,8 +55,14 @@ public func selectDevice(
   let filtered = devices.filter { d in
     if let v = filter.vid, d.vendorID != v { return false }
     if let p = filter.pid, d.productID != p { return false }
-    if let b = filter.bus, let db = d.bus, b != db { return false }
-    if let a = filter.address, let da = d.address, a != da { return false }
+    // If filter specifies bus, device must have the same bus value
+    if let b = filter.bus {
+      guard let db = d.bus, b == db else { return false }
+    }
+    // If filter specifies address, device must have the same address value
+    if let a = filter.address {
+      guard let da = d.address, a == da else { return false }
+    }
     return true
   }
   if filtered.isEmpty { return .none }

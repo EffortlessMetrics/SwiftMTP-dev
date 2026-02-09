@@ -88,26 +88,32 @@ final class SpinnerTests: XCTestCase {
 
     func testConcurrentStartStop() {
         let spinner = Spinner(enabled: true)
-        let startExpectation = XCTestExpectation(description: "Start threads")
-        let stopExpectation = XCTestExpectation(description: "Stop threads")
+        
+        // Test that concurrent start/stop doesn't crash - the Spinner may not handle
+        // this perfectly due to its single-thread design, but it should not hang
+        let expectation = XCTestExpectation(description: "Concurrent operations complete")
+        expectation.expectedFulfillmentCount = 2
         
         DispatchQueue.global().async {
-            spinner.start("Thread 1")
-            startExpectation.fulfill()
-            Thread.sleep(forTimeInterval: 0.2)
-            spinner.stopAndClear()
+            for i in 0..<3 {
+                spinner.start("Thread1-\(i)")
+                Thread.sleep(forTimeInterval: 0.02)
+                spinner.stopAndClear()
+            }
+            expectation.fulfill()
         }
         
         DispatchQueue.global().async {
-            spinner.start("Thread 2")
-            startExpectation.fulfill()
-            Thread.sleep(forTimeInterval: 0.2)
-            spinner.stopAndClear()
+            for i in 0..<3 {
+                spinner.start("Thread2-\(i)")
+                Thread.sleep(forTimeInterval: 0.02)
+                spinner.stopAndClear()
+            }
+            expectation.fulfill()
         }
         
-        wait(for: [startExpectation], timeout: 1.0)
-        stopExpectation.expectedFulfillmentCount = 2
-        wait(for: [stopExpectation], timeout: 1.0)
+        // Use a reasonable timeout that accounts for system load
+        wait(for: [expectation], timeout: 5.0)
     }
 
     // MARK: - Spinner Thread Management

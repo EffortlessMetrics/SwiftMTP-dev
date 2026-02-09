@@ -60,6 +60,9 @@ public final class DeviceLifecycleCoordinator {
         guard !bootstrapped else { return }
         bootstrapped = true
 
+        // Wire manager discovery/opening to the libusb backend.
+        await manager.configureLibUSBSupport()
+
         // 1. Start USB discovery
         try await manager.startDiscovery()
 
