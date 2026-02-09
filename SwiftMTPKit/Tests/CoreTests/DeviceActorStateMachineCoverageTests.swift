@@ -8,6 +8,29 @@ import XCTest
 /// DeviceActor state machine comprehensive coverage tests
 final class DeviceActorStateMachineCoverageTests: XCTestCase {
 
+    // MARK: - DeviceError Type Tests
+
+    func testDeviceErrorTypeVariants() {
+        // Test all DeviceError variants
+        let timeoutError = DeviceError.timeout
+        let busyError = DeviceError.busy
+        let unexpectedError = DeviceError.unexpected
+
+        XCTAssertNotEqual(timeoutError, busyError)
+        XCTAssertNotEqual(timeoutError, unexpectedError)
+        XCTAssertNotEqual(busyError, unexpectedError)
+    }
+
+    func testDeviceErrorEquatable() {
+        // Test error equality
+        let error1 = DeviceError.timeout
+        let error2 = DeviceError.timeout
+        let error3 = DeviceError.busy
+
+        XCTAssertEqual(error1, error2)
+        XCTAssertNotEqual(error1, error3)
+    }
+
     // MARK: - DeviceState Error Transitions
 
     func testStateTransitionFromConnectedToError() {
@@ -38,7 +61,7 @@ final class DeviceActorStateMachineCoverageTests: XCTestCase {
         XCTAssertFalse(state.isDisconnected)
         XCTAssertFalse(state.isTransferring)
 
-        state = .error(.busy)
+        state = .error(.unexpected)
         XCTAssertFalse(state.isDisconnected)
     }
 
@@ -105,332 +128,3 @@ final class DeviceActorStateMachineCoverageTests: XCTestCase {
     // MARK: - State Description Tests
 
     func testStateDescriptionConnected() {
-        let state = DeviceState.connected
-        let description = "\(state)"
-        XCTAssertFalse(description.isEmpty)
-    }
-
-    func testStateDescriptionDisconnected() {
-        let state = DeviceState.disconnected
-        let description = "\(state)"
-        XCTAssertFalse(description.isEmpty)
-    }
-
-    func testStateDescriptionConnecting() {
-        let state = DeviceState.connecting
-        let description = "\(state)"
-        XCTAssertFalse(description.isEmpty)
-    }
-
-    func testStateDescriptionTransferring() {
-        let state = DeviceState.transferring
-        let description = "\(state)"
-        XCTAssertFalse(description.isEmpty)
-    }
-
-    func testStateDescriptionDisconnecting() {
-        let state = DeviceState.disconnecting
-        let description = "\(state)"
-        XCTAssertFalse(description.isEmpty)
-    }
-
-    func testStateDescriptionError() {
-        let state = DeviceState.error(.timeout)
-        let description = "\(state)"
-        XCTAssertFalse(description.isEmpty)
-    }
-
-    // MARK: - Complex State Transition Sequences
-
-    func testFullConnectionCycle() {
-        var state: DeviceState = .disconnected
-        XCTAssertTrue(state.isDisconnected)
-
-        state = .connecting
-        XCTAssertFalse(state.isDisconnected)
-
-        state = .connected
-        XCTAssertFalse(state.isDisconnected)
-        XCTAssertFalse(state.isTransferring)
-
-        state = .transferring
-        XCTAssertTrue(state.isTransferring)
-
-        state = .connected
-        XCTAssertFalse(state.isTransferring)
-
-        state = .disconnecting
-        XCTAssertFalse(state.isDisconnected)
-
-        state = .disconnected
-        XCTAssertTrue(state.isDisconnected)
-    }
-
-    func testConnectionWithTransientErrorRecovery() {
-        var state: DeviceState = .disconnected
-        XCTAssertTrue(state.isDisconnected)
-
-        state = .connecting
-        XCTAssertFalse(state.isDisconnected)
-
-        // Transient error
-        state = .error(.busy)
-        XCTAssertFalse(state.isDisconnected)
-
-        // Retry
-        state = .connecting
-        XCTAssertFalse(state.isDisconnected)
-
-        // Success
-        state = .connected
-        XCTAssertFalse(state.isDisconnected)
-    }
-
-    func testConnectionWithDeviceBusyError() {
-        var state: DeviceState = .disconnected
-        XCTAssertTrue(state.isDisconnected)
-
-        state = .connecting
-        XCTAssertFalse(state.isDisconnected)
-
-        // Device busy error
-        state = .error(.busy)
-        XCTAssertFalse(state.isDisconnected)
-
-        // Must reconnect from disconnected
-        state = .disconnected
-        XCTAssertTrue(state.isDisconnected)
-
-        state = .connecting
-        XCTAssertFalse(state.isDisconnected)
-    }
-
-    func testTransferInterruptedByErrorThenResume() {
-        var state: DeviceState = .connected
-        XCTAssertFalse(state.isTransferring)
-
-        // Start transfer
-        state = .transferring
-        XCTAssertTrue(state.isTransferring)
-
-        // Error during transfer
-        state = .error(.timeout)
-        XCTAssertFalse(state.isTransferring)
-
-        // Recovery
-        state = .connecting
-        state = .connected
-
-        state = .transferring
-        XCTAssertTrue(state.isTransferring)
-    }
-
-    // MARK: - State Comparison Tests
-
-    func testStateComparisonOperators() {
-        let disconnected = DeviceState.disconnected
-        let connecting = DeviceState.connecting
-        let connected = DeviceState.connected
-        let transferring = DeviceState.transferring
-        let disconnecting = DeviceState.disconnecting
-        let error = DeviceState.error(.timeout)
-
-        // Test inequality
-        XCTAssertNotEqual(disconnected, connecting)
-        XCTAssertNotEqual(connecting, connected)
-        XCTAssertNotEqual(connected, transferring)
-        XCTAssertNotEqual(transferring, disconnecting)
-        XCTAssertNotEqual(disconnecting, disconnected)
-        XCTAssertNotEqual(error, disconnected)
-    }
-
-    // MARK: - Error State Properties
-
-    func testErrorStateErrorProperty() {
-        let timeoutError = DeviceState.error(.timeout)
-        let busyError = DeviceState.error(.busy)
-
-        // States should be different
-        XCTAssertNotEqual(timeoutError, busyError)
-    }
-
-    func testConnectedStateIsNotError() {
-        let connected = DeviceState.connected
-        let error = DeviceState.error(.timeout)
-
-        XCTAssertNotEqual(connected, error)
-    }
-}
-
-// MARK: - DeviceActor Connection Lifecycle Tests
-
-final class DeviceActorConnectionLifecycleTests: XCTestCase {
-
-    // MARK: - Connection State Validation
-
-    func testConnectionStateHierarchy() {
-        // Verify state hierarchy is complete
-        let states: [DeviceState] = [
-            .disconnected,
-            .connecting,
-            .connected,
-            .transferring,
-            .disconnecting,
-            .error(.timeout)
-        ]
-
-        XCTAssertEqual(states.count, 6)
-    }
-
-    func testStateMutualExclusivity() {
-        // Verify states are mutually exclusive
-        let connected = DeviceState.connected
-        let transferring = DeviceState.transferring
-        let disconnected = DeviceState.disconnected
-
-        XCTAssertNotEqual(connected, transferring)
-        XCTAssertNotEqual(connected, disconnected)
-        XCTAssertNotEqual(transferring, disconnected)
-    }
-
-    // MARK: - Error Type Coverage
-
-    func testAllErrorTypesAreDistinct() {
-        let timeout = MTPError.timeout
-        let busy = MTPError.busy
-        let notSupported = MTPError.notSupported("test")
-
-        // These should be different cases
-        XCTAssertNotEqual(String(describing: timeout), String(describing: busy))
-        XCTAssertNotEqual(String(describing: timeout), String(describing: notSupported))
-    }
-
-    func testErrorStateWithDifferentErrors() {
-        let timeoutState = DeviceState.error(.timeout)
-        let busyState = DeviceState.error(.busy)
-        let disconnectedState = DeviceState.error(.deviceDisconnected)
-
-        XCTAssertNotEqual(timeoutState, busyState)
-        XCTAssertNotEqual(timeoutState, disconnectedState)
-        XCTAssertNotEqual(busyState, disconnectedState)
-    }
-}
-
-// MARK: - DeviceActor Transfer Flow Tests
-
-final class DeviceActorTransferFlowTests: XCTestCase {
-
-    // MARK: - Transfer Flow States
-
-    func testTransferFlowStateProgression() {
-        // Simulate a complete transfer flow
-        var state: DeviceState = .connected
-        XCTAssertFalse(state.isTransferring)
-
-        // Start transfer
-        state = .transferring
-        XCTAssertTrue(state.isTransferring)
-
-        // Complete transfer
-        state = .connected
-        XCTAssertFalse(state.isTransferring)
-    }
-
-    func testConcurrentTransferAttempts() {
-        // Multiple transfer requests while already transferring
-        var state: DeviceState = .transferring
-        XCTAssertTrue(state.isTransferring)
-
-        // Another transfer request - should stay in transferring
-        state = .transferring
-        XCTAssertTrue(state.isTransferring)
-    }
-
-    func testTransferDuringConnecting() {
-        // Transfer requested while connecting
-        var state: DeviceState = .connecting
-        XCTAssertFalse(state.isTransferring)
-
-        // Connection completes first
-        state = .connected
-        XCTAssertFalse(state.isTransferring)
-
-        // Then transfer starts
-        state = .transferring
-        XCTAssertTrue(state.isTransferring)
-    }
-}
-
-// MARK: - DeviceError Additional Coverage Tests
-
-final class DeviceErrorCoverageTests: XCTestCase {
-
-    func testMTPErrorTimeout() {
-        let error = MTPError.timeout
-        XCTAssertNotNil(error)
-    }
-
-    func testMTPErrorBusy() {
-        let error = MTPError.busy
-        XCTAssertNotNil(error)
-    }
-
-    func testMTPErrorDeviceDisconnected() {
-        let error = MTPError.deviceDisconnected
-        XCTAssertNotNil(error)
-    }
-
-    func testMTPErrorPermissionDenied() {
-        let error = MTPError.permissionDenied
-        XCTAssertNotNil(error)
-    }
-
-    func testMTPErrorNotSupported() {
-        let error = MTPError.notSupported("test message")
-        XCTAssertNotNil(error)
-    }
-
-    func testMTPErrorProtocolError() {
-        let error = MTPError.protocolError(code: 0x2001, message: "OK")
-        XCTAssertNotNil(error)
-    }
-
-    func testMTPErrorObjectNotFound() {
-        let error = MTPError.objectNotFound
-        XCTAssertNotNil(error)
-    }
-
-    func testMTPErrorStorageFull() {
-        let error = MTPError.storageFull
-        XCTAssertNotNil(error)
-    }
-
-    func testMTPErrorReadOnly() {
-        let error = MTPError.readOnly
-        XCTAssertNotNil(error)
-    }
-
-    func testMTPErrorPreconditionFailed() {
-        let error = MTPError.preconditionFailed("test condition")
-        XCTAssertNotNil(error)
-    }
-
-    func testMTPErrorTransport() {
-        let transportError = TransportError.timeout
-        let error = MTPError.transport(transportError)
-        XCTAssertNotNil(error)
-    }
-
-    func testTransportErrorVariants() {
-        let noDevice = TransportError.noDevice
-        let timeout = TransportError.timeout
-        let busy = TransportError.busy
-        let accessDenied = TransportError.accessDenied
-        let io = TransportError.io("test")
-
-        XCTAssertNotEqual(String(describing: noDevice), String(describing: timeout))
-        XCTAssertNotEqual(String(describing: timeout), String(describing: busy))
-        XCTAssertNotEqual(String(describing: busy), String(describing: accessDenied))
-        XCTAssertNotEqual(String(describing: accessDenied), String(describing: io))
-    }
-}

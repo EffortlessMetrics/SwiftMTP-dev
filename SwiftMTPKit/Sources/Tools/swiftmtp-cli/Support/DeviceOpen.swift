@@ -29,8 +29,8 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
     }
 
     let filter = DeviceFilter(
-        vid: parseUSBIdentifier(flags.targetVID),
-        pid: parseUSBIdentifier(flags.targetPID),
+        vid: parseDeviceIdentifier(flags.targetVID),
+        pid: parseDeviceIdentifier(flags.targetPID),
         bus: flags.targetBus,
         address: flags.targetAddress
     )
@@ -93,6 +93,20 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
     config.apply(finalTuning)
 
     return try await manager.openDevice(with: selectedDevice, transport: LibUSBTransportFactory.createTransport(), config: config)
+}
+
+@inline(__always)
+private func parseDeviceIdentifier(_ raw: String?) -> UInt16? {
+    guard let raw else { return nil }
+    let value = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !value.isEmpty else { return nil }
+    if value.hasPrefix("0x") || value.hasPrefix("0X") {
+        return UInt16(value.dropFirst(2), radix: 16)
+    }
+    if value.range(of: "[a-fA-F]", options: .regularExpression) != nil {
+        return UInt16(value, radix: 16)
+    }
+    return UInt16(value, radix: 10) ?? UInt16(value, radix: 16)
 }
 
 private func describeFilter(_ filter: DeviceFilter) -> String {

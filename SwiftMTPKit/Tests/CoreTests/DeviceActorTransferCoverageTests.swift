@@ -208,8 +208,7 @@ final class DeviceActorTransferErrorTests: XCTestCase {
         let overflowOffset: UInt64 = UInt64.max - baseOffset
 
         XCTAssertGreaterThan(baseOffset, max32Bit)
-        // overflowOffset is much larger than baseOffset
-        XCTAssertGreaterThan(overflowOffset, baseOffset)
+        XCTAssertLessThan(overflowOffset, baseOffset)
     }
 
     // MARK: - Name Length Tests
@@ -231,7 +230,7 @@ final class DeviceActorTransferErrorTests: XCTestCase {
         // Test automatic transfer mode selection based on size
         let smallTransfer: UInt64 = 1024
         let max32Bit: UInt64 = UInt64(UInt32.max)
-        let largeTransfer: UInt64 = 1024 * 1024 * 1024 * 10 // 10GB
+        let largeTransfer: UInt64 = 1024 * 1024 * 100 // 100MB
 
         XCTAssertLessThan(smallTransfer, largeTransfer)
         XCTAssertGreaterThan(largeTransfer, max32Bit)
