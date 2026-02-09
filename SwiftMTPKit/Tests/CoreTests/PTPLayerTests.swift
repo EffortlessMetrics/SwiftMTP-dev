@@ -305,4 +305,78 @@ final class PTPLayerTests: XCTestCase {
         let shortData = Data([0x01, 0x02, 0x03])
         XCTAssertNil(MTPEvent.fromRaw(shortData))
     }
+
+    // MARK: - PTPOp Operations
+
+    func testPTPOpValues() {
+        // Verify common PTP operation codes
+        XCTAssertEqual(PTPOp.getDeviceInfo.rawValue, 0x1001)
+        XCTAssertEqual(PTPOp.openSession.rawValue, 0x1002)
+        XCTAssertEqual(PTPOp.closeSession.rawValue, 0x1003)
+        XCTAssertEqual(PTPOp.getStorageIDs.rawValue, 0x1004)
+        XCTAssertEqual(PTPOp.getStorageInfo.rawValue, 0x1005)
+        XCTAssertEqual(PTPOp.getObjectHandles.rawValue, 0x1007)
+    }
+
+    func testPTPOpCategoryAssignments() {
+        // Device operations
+        XCTAssertGreaterThanOrEqual(PTPOp.getDeviceInfo.rawValue, 0x1001)
+        XCTAssertLessThanOrEqual(PTPOp.getDeviceInfo.rawValue, 0x100F)
+        
+        // Storage operations
+        XCTAssertGreaterThanOrEqual(PTPOp.getStorageIDs.rawValue, 0x1004)
+        XCTAssertLessThanOrEqual(PTPOp.getStorageInfo.rawValue, 0x1006)
+    }
+
+    // MARK: - MTPDeviceID
+
+    func testMTPDeviceIDRawValue() {
+        let id = MTPDeviceID(raw: "test-device-123")
+        XCTAssertEqual(id.raw, "test-device-123")
+    }
+
+    func testMTPDeviceIDEquality() {
+        let id1 = MTPDeviceID(raw: "device1")
+        let id2 = MTPDeviceID(raw: "device1")
+        let id3 = MTPDeviceID(raw: "device2")
+        
+        XCTAssertEqual(id1, id2)
+        XCTAssertNotEqual(id1, id3)
+    }
+
+    func testMTPDeviceIDHashable() {
+        let id1 = MTPDeviceID(raw: "device1")
+        let id2 = MTPDeviceID(raw: "device2")
+        
+        let set = Set([id1, id2])
+        XCTAssertEqual(set.count, 2)
+    }
+
+    // MARK: - PTPLayer Type Methods
+
+    func testPTPLayerEnumExists() {
+        // Verify PTPLayer is accessible
+        XCTAssertNotNil(PTPLayer.self)
+    }
+
+    func testPTPLayerSupportsOperationVariants() {
+        // Test with different operation codes
+        let deviceInfo = MTPDeviceInfo(
+            manufacturer: "Test",
+            model: "TestDevice",
+            version: "1.0",
+            serialNumber: nil,
+            operationsSupported: Set([0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1007, 0x1009, 0x100B]),
+            eventsSupported: Set([0x4002, 0x4003, 0x400C])
+        )
+        
+        // Test various operation codes
+        XCTAssertTrue(PTPLayer.supportsOperation(0x1001, deviceInfo: deviceInfo)) // GetDeviceInfo
+        XCTAssertTrue(PTPLayer.supportsOperation(0x1002, deviceInfo: deviceInfo)) // OpenSession
+        XCTAssertTrue(PTPLayer.supportsOperation(0x1004, deviceInfo: deviceInfo)) // GetStorageIDs
+        XCTAssertTrue(PTPLayer.supportsOperation(0x100B, deviceInfo: deviceInfo)) // GetObjectPropDesc
+        
+        // Test unsupported
+        XCTAssertFalse(PTPLayer.supportsOperation(0x9801, deviceInfo: deviceInfo)) // Vendor-specific
+    }
 }

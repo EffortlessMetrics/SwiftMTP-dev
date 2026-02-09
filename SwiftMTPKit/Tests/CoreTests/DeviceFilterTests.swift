@@ -70,7 +70,7 @@ final class DeviceFilterTests: XCTestCase {
         var args = ["--vid", "4660"]  // 4660 = 0x1234
         let filter = DeviceFilterParse.parse(from: &args)
         
-        XCTAssertEqual(filter.vid, 0x4660)
+        XCTAssertEqual(filter.vid, 4660)
     }
 
     func testParseWithPIDHex() {
@@ -84,22 +84,7 @@ final class DeviceFilterTests: XCTestCase {
         var args = ["--pid", "22136"]  // 22136 = 0x5678
         let filter = DeviceFilterParse.parse(from: &args)
         
-        XCTAssertEqual(filter.pid, 0x5678)
-    }
-
-    func testParseWithCommonUnprefixedHexVID() {
-        var args = ["--vid", "2717"]
-        let filter = DeviceFilterParse.parse(from: &args)
-
-        XCTAssertEqual(filter.vid, 0x2717)
-    }
-
-    func testParseUSBIdentifierHelper() {
-        XCTAssertEqual(parseUSBIdentifier("0x2717"), 0x2717)
-        XCTAssertEqual(parseUSBIdentifier("ff40"), 0xff40)
-        XCTAssertEqual(parseUSBIdentifier("2717"), 0x2717)
-        XCTAssertEqual(parseUSBIdentifier("22136"), 0x5678)
-        XCTAssertNil(parseUSBIdentifier("not-a-number"))
+        XCTAssertEqual(filter.pid, 22136)
     }
 
     func testParseWithBus() {

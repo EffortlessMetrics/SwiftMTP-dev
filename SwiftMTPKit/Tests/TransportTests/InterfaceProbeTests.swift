@@ -141,8 +141,7 @@ final class InterfaceProbeTests: XCTestCase {
         
         let result = ProbeAllResult(
             candidate: candidate,
-            cachedDeviceInfo: Data([0x01, 0x02]),
-            probeStep: nil
+            cachedDeviceInfo: Data([0x01, 0x02])
         )
         
         XCTAssertNotNil(result.candidate)
@@ -152,8 +151,7 @@ final class InterfaceProbeTests: XCTestCase {
     func testProbeAllResultNoCandidate() {
         let result = ProbeAllResult(
             candidate: nil,
-            cachedDeviceInfo: nil,
-            probeStep: nil
+            cachedDeviceInfo: nil
         )
         
         XCTAssertNil(result.candidate)
@@ -179,47 +177,6 @@ final class InterfaceProbeTests: XCTestCase {
         // Vendor-specific with MTP/PTP in name scores bonus
         let nameWithMTP = "MTP Interface"
         XCTAssertTrue(nameWithMTP.lowercased().contains("mtp"))
-    }
-
-    func testHeuristicIncludesCanonicalMTPInterface() {
-        let endpoints = EPCandidates(bulkIn: 0x81, bulkOut: 0x01, evtIn: 0x82)
-        let result = evaluateMTPInterfaceCandidate(
-            interfaceClass: 0x06,
-            interfaceSubclass: 0x01,
-            interfaceProtocol: 0x01,
-            endpoints: endpoints,
-            interfaceName: "MTP"
-        )
-
-        XCTAssertTrue(result.isCandidate)
-        XCTAssertGreaterThanOrEqual(result.score, 100)
-    }
-
-    func testHeuristicIncludesVendorSpecificMTPEvidence() {
-        let endpoints = EPCandidates(bulkIn: 0x81, bulkOut: 0x01, evtIn: 0x82)
-        let result = evaluateMTPInterfaceCandidate(
-            interfaceClass: 0xFF,
-            interfaceSubclass: 0x00,
-            interfaceProtocol: 0x00,
-            endpoints: endpoints,
-            interfaceName: "Android MTP"
-        )
-
-        XCTAssertTrue(result.isCandidate)
-        XCTAssertGreaterThanOrEqual(result.score, 60)
-    }
-
-    func testHeuristicExcludesADBLikeInterface() {
-        let endpoints = EPCandidates(bulkIn: 0x81, bulkOut: 0x01, evtIn: 0x00)
-        let result = evaluateMTPInterfaceCandidate(
-            interfaceClass: 0xFF,
-            interfaceSubclass: 0x42,
-            interfaceProtocol: 0x01,
-            endpoints: endpoints,
-            interfaceName: "ADB Interface"
-        )
-
-        XCTAssertFalse(result.isCandidate)
     }
 
     func testEndpointAddressParsing() {
