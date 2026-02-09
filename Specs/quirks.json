@@ -137,11 +137,8 @@
         "ioTimeoutMs": 12000,
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 120000,
-        "stabilizeMs": 500,
-        "resetOnOpen": true,
-        "requiresKernelDetach": true,
-        "alternateInterfaceSelection": true,
-        "postClaimStabilizeMs": 500
+        "stabilizeMs": 300,
+        "resetOnOpen": false
       },
       "ops": {
         "supportsGetPartialObject64": true,
@@ -149,32 +146,16 @@
         "preferGetObjectPropList": true,
         "disableWriteResume": true
       },
-      "probeLadder": {
-        "enabled": true,
-        "steps": [
-          {"method": "sessionlessGetDeviceInfo", "timeoutMs": 5000},
-          {"method": "openSessionThenGetDeviceInfo", "timeoutMs": 5000},
-          {"method": "getStorageIDs", "timeoutMs": 5000}
-        ]
-      },
-      "warnings": [
-        {
-          "condition": "noInterfaceResponded",
-          "message": "Samsung device did not respond on expected MTP interface. Trying alternate interfaces.",
-          "severity": "warning"
-        }
-      ],
-      "confidence": "medium",
+      "confidence": "low",
       "status": "experimental",
       "notes": [
         "Vendor-specific interface class (0xff) discovered by shared MTP heuristic.",
-        "Increased post-claim stabilize to 500ms for Samsung MTP stack readiness.",
-        "Probe ladder tries sessionless GetDeviceInfo, then OpenSession+GetDeviceInfo, then GetStorageIDs.",
-        "Read validation is reliable; write smoke remains best-effort."
+        "Read validation is reliable; write smoke remains best-effort for this class of Samsung devices.",
+        "Use conservative chunking and timeout values until broader Samsung evidence is collected."
       ],
       "provenance": {
         "author": "Steven Zimmerman",
-        "date": "2026-02-10"
+        "date": "2026-02-09"
       }
     },
     {
@@ -263,6 +244,7 @@
       "status": "experimental",
       "notes": [
         "Bulk transfers time out (write rc=-7, LIBUSB_ERROR_TIMEOUT) on macOS Tahoe 26; needs investigation.",
+        "Connected-device lab run on 2026-02-09 still classifies this device as blocked (diagnostic evidence captured).",
         "libmtp-aligned claim (set_configuration + set_alt_setting) reinitializes pipes without USB reset.",
         "Fallback USB reset uses stabilizeMs=3000 as poll budget for waitForMTPReady.",
         "Bulk transfer failures often caused by Chrome/WebUSB holding the device — quit Chromium apps and replug."

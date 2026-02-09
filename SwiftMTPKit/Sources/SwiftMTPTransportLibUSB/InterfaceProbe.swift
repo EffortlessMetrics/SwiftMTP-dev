@@ -61,7 +61,6 @@ func evaluateMTPInterfaceCandidate(
     return MTPInterfaceHeuristic(isCandidate: false, score: Int.min)
   }
 
-  // Hard exclude ADB interfaces (class 0xff with subclass 0x42 or name contains ADB)
   if (interfaceClass == 0xFF && interfaceSubclass == 0x42) || nameLooksLikeADB(interfaceName) {
     return MTPInterfaceHeuristic(isCandidate: false, score: Int.min)
   }
@@ -69,12 +68,7 @@ func evaluateMTPInterfaceCandidate(
   var score = 0
   let name = interfaceName.lowercased()
 
-  // Canonical MTP/PTP interface (class 0x06).
-  // Score hierarchy:
-  // - 0x06/0x01/* = canonical MTP/PTP (highest priority)
-  // - 0x06/*/* = other Still Image or vendor subclasses
-  // - 0xFF/*/* = vendor-specific (lower than canonical)
-  // - 0x08/*/* = mass storage (deprioritized when MTP exists)
+  // Canonical MTP/PTP interface.
   if interfaceClass == 0x06 && interfaceSubclass == 0x01 {
     score += 100
   } else if interfaceClass == 0x06 {
@@ -82,7 +76,6 @@ func evaluateMTPInterfaceCandidate(
   }
 
   // Vendor-specific Android stacks often expose MTP on class 0xFF.
-  // These are acceptable but scored lower than canonical MTP.
   if interfaceClass == 0xFF {
     if nameLooksLikeMTP(name) {
       score += 80
@@ -92,15 +85,6 @@ func evaluateMTPInterfaceCandidate(
     }
   }
 
-  // Deprioritize mass storage interfaces (class 0x08) when MTP exists.
-  // Mass storage is valid for USB storage devices but not for MTP file transfer.
-  if interfaceClass == 0x08 {
-    // Only include as candidate if no better MTP interface is likely available
-    // Mass storage gets a very low score to ensure MTP interfaces win
-    score -= 50
-  }
-
-  // Bonus for MTP/PTP in interface name
   if name.contains("ptp") || name.contains("mtp") { score += 15 }
   if interfaceProtocol == 0x01 { score += 5 }
   if endpoints.evtIn != 0 { score += 5 }

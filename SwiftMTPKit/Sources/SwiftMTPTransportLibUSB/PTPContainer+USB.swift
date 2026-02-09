@@ -104,4 +104,3 @@ func mapLibusb(_ rc: Int32) -> TransportError {
 func check(_ rc: Int32) throws {
     if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }
 }
-

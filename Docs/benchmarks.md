@@ -7,10 +7,23 @@ This document captures **repeatable** performance results for SwiftMTP across MT
 | Device | VID:PID | Status | Read | Write | Notes |
 |--------|---------|--------|------|-------|-------|
 | Google Pixel 7 | 18d1:4ee1 | Experimental | N/A | N/A | macOS Tahoe 26 bulk timeout |
-| OnePlus 3T | 2a70:f003 | Stable | N/A | N/A | SendObject issue (0x201D) |
+| OnePlus 3T | 2a70:f003 | Stable (probe/read) | N/A | N/A | Probe path hardened (no misaligned-pointer trap) |
 | Xiaomi Mi Note 2 | 2717:ff10 | Stable | TBD | TBD | DEVICE_BUSY handling verified |
-| Samsung Galaxy S21 | 04e8:6860 | Known | 15.8 MB/s | 12.4 MB/s | USB 2.0 limited |
+| Samsung Galaxy S21 | 04e8:6860 | Experimental | 15.8 MB/s | 12.4 MB/s | Vendor-specific interface, conservative tuning |
 | Canon EOS R5 | 04a9:3196 | Known | 45.6 MB/s | 28.9 MB/s | PTP-derived |
+
+### Connected Device Lab Run (2026-02-09)
+
+- Aggregate report: `Docs/benchmarks/connected-lab/20260209-055224/connected-lab.md`
+- JSON matrix: `Docs/benchmarks/connected-lab/20260209-055224/connected-lab.json`
+- Per-device artifacts live under `Docs/benchmarks/connected-lab/20260209-055224/devices/`
+
+| VID:PID | Outcome | Notes |
+|--------|---------|-------|
+| 2717:ff40 | Partial | Read path validated; write smoke folder creation returned `0x201D InvalidParameter` |
+| 2a70:f003 | Passed (probe/read) | Probe/open no longer traps on misaligned read path; write smoke folder creation returned `0x201D` |
+| 04e8:6860 | Failed | Discovered with vendor-specific interface, but probe/open did not respond on this run |
+| 18d1:4ee1 | Blocked (expected) | Known probe/open blocker; diagnostics captured without crash |
 
 ---
 
@@ -40,6 +53,9 @@ swift build --configuration release
 
 # Probe device (enumeration timing)
 swift run swiftmtp --real-only probe > probes/<device>.txt
+
+# Connected-device matrix + per-device diagnostics
+swift run swiftmtp device-lab connected --json
 
 # Benchmark read operations
 swift run swiftmtp --real-only bench 1G --repeat 3 --out benches/<device>-1g.csv

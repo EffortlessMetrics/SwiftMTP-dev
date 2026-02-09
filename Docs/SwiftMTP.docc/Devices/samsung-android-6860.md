@@ -39,7 +39,7 @@ Device-specific configuration for Samsung Android 6860 MTP implementation.
 | Handshake Timeout | 8000 | ms |
 | I/O Timeout | 12000 | ms |
 | Inactivity Timeout | 10000 | ms |
-| Overall Deadline | 120000 | ms || Stabilization Delay | 500 | ms |
+| Overall Deadline | 120000 | ms || Stabilization Delay | 300 | ms |
 
 ## Operation Support
 
@@ -52,13 +52,12 @@ Device-specific configuration for Samsung Android 6860 MTP implementation.
 ## Notes
 
 - Vendor-specific interface class (0xff) discovered by shared MTP heuristic.
-- Increased post-claim stabilize to 500ms for Samsung MTP stack readiness.
-- Probe ladder tries sessionless GetDeviceInfo, then OpenSession+GetDeviceInfo, then GetStorageIDs.
-- Read validation is reliable; write smoke remains best-effort.
+- Read validation is reliable; write smoke remains best-effort for this class of Samsung devices.
+- Use conservative chunking and timeout values until broader Samsung evidence is collected.
 ## Provenance
 
 - **Author**: Steven Zimmerman
-- **Date**: 2026-02-10
+- **Date**: 2026-02-09
 - **Commit**: Unknown
 
 ### Evidence Artifacts

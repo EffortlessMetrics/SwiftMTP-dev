@@ -7,11 +7,6 @@ import SwiftMTPTransportLibUSB
 
 @MainActor
 struct DeviceLabCommand {
-  private static var includeSensitiveIdentifiers = false
-  private static func sanitizeIdentifier(_ raw: String) -> String {
-    if includeSensitiveIdentifiers { return raw }
-    return "redacted"
-  }
   private enum ExpectedPolicy: String, Codable, Sendable {
     case fullExercise = "full-exercise"
     case probeNoCrash = "probe-no-crash"
@@ -40,8 +35,6 @@ struct DeviceLabCommand {
   private struct WriteSmoke: Codable, Sendable {
     var attempted = false
     var succeeded = false
-    var skipped = false
-    var reason: String?
     var bytesUploaded = 0
     var remoteFolder: String?
     var remoteFile: String?
@@ -102,7 +95,6 @@ struct DeviceLabCommand {
   ]
 
   static func run(flags: CLIFlags, args: [String]) async {
-    DeviceLabCommand.includeSensitiveIdentifiers = args.contains("--include-sensitive-identifiers")
     guard let mode = args.first, mode == "connected" else {
       printUsage()
       exitNow(.usage)
@@ -150,26 +142,26 @@ struct DeviceLabCommand {
 
         // Persist per-device artifacts.
         let reportURL = deviceDir.appendingPathComponent("device-report.json")
-        result.artifacts.reportJSON = reportURL.lastPathComponent
+        result.artifacts.reportJSON = reportURL.path
         try writeJSON(result, to: reportURL)
 
         if let receipt = result.probeReceipt {
           let receiptURL = deviceDir.appendingPathComponent("probe-receipt.json")
-          result.artifacts.probeReceiptJSON = receiptURL.lastPathComponent
+          result.artifacts.probeReceiptJSON = receiptURL.path
           try writeJSON(receipt, to: receiptURL)
           try writeJSON(result, to: reportURL)
         }
 
         if let capabilityReport = result.capabilityReport {
           let harnessURL = deviceDir.appendingPathComponent("harness-report.json")
-          result.artifacts.harnessReportJSON = harnessURL.lastPathComponent
+          result.artifacts.harnessReportJSON = harnessURL.path
           try writeJSON(capabilityReport, to: harnessURL)
           try writeJSON(result, to: reportURL)
         }
 
         if let usbDevice {
           let usbURL = deviceDir.appendingPathComponent("usb-interface.json")
-          result.artifacts.usbInterfaceJSON = usbURL.lastPathComponent
+          result.artifacts.usbInterfaceJSON = usbURL.path
           try writeJSON(usbDevice, to: usbURL)
           try writeJSON(result, to: reportURL)
         }
@@ -228,7 +220,7 @@ struct DeviceLabCommand {
   ) async -> DeviceResult {
     let vidpid = formatVIDPID(summary)
     var result = DeviceResult(
-      id: sanitizeIdentifier(summary.id.raw),
+      id: summary.id.raw,
       vidpid: vidpid,
       bus: Int(summary.bus ?? 0),
       address: Int(summary.address ?? 0),
@@ -244,8 +236,8 @@ struct DeviceLabCommand {
       probeReceipt: nil,
       usbInterfaceDump: usbDumpDevice,
       artifacts: ArtifactPaths(
-        directory: deviceDir.lastPathComponent,
-        reportJSON: "device-report.json",
+        directory: deviceDir.path,
+        reportJSON: deviceDir.appendingPathComponent("device-report.json").path,
         harnessReportJSON: nil,
         probeReceiptJSON: nil,
         usbInterfaceJSON: nil
@@ -359,56 +351,21 @@ struct DeviceLabCommand {
     return items
   }
 
-  /// Finds an existing writable folder in root (Download, Downloads, Documents).
-  /// Returns (handle, name) or nil if none found.
-  private static func findWritableParent(device: any MTPDevice, storage: MTPStorageID) async -> (MTPObjectHandle, String)? {
-    let preferredFolders = ["Download", "Downloads", "Documents"]
-    let rootItems: [MTPObjectInfo]
-    do {
-      rootItems = try await listObjects(device: device, parent: nil, storage: storage, limit: 256)
-    } catch {
-      return nil
-    }
-
-    for folderName in preferredFolders {
-      if let existing = rootItems.first(where: { $0.formatCode == 0x3001 && $0.name.lowercased() == folderName.lowercased() }) {
-        return (existing.handle, existing.name)
-      }
-    }
-    return nil
-  }
-
   private static func runWriteSmoke(device: any MTPDevice, storage: MTPStorageInfo) async -> WriteSmoke {
     var smoke = WriteSmoke()
     smoke.attempted = true
 
     guard !storage.isReadOnly else {
-      smoke.skipped = true
-      smoke.reason = "storage is read-only"
+      smoke.warning = "storage is read-only; write smoke skipped"
       return smoke
     }
 
-    // Find existing writable parent instead of creating folders
-    if let (parentHandle, parentName) = await findWritableParent(device: device, storage: storage.id) {
-      smoke.remoteFolder = parentName
-      return await writeToParent(device: device, storage: storage, parentHandle: parentHandle, parentName: parentName)
-    }
-
-    // No existing folder found - skip write smoke instead of creating folders
-    smoke.skipped = true
-    smoke.reason = "no writable parent found (Download/Downloads/Documents not present); folder creation skipped"
-    return smoke
-  }
-
-  private static func writeToParent(device: any MTPDevice, storage: MTPStorageInfo, parentHandle: MTPObjectHandle, parentName: String) async -> WriteSmoke {
-    var smoke = WriteSmoke()
-    smoke.attempted = true
-    smoke.remoteFolder = parentName
-
     let fm = FileManager.default
-    let fileName = "swiftmtp-smoke-\(UUID().uuidString.prefix(8)).txt"
+    let folderName = "SwiftMTPDeviceLab-\(pathTimestamp())"
+    let fileName = "swiftmtp-smoke-\(UUID().uuidString.prefix(8)).bin"
     let payloadSize = 16 * 1024
     smoke.bytesUploaded = payloadSize
+    smoke.remoteFolder = folderName
     smoke.remoteFile = fileName
 
     let tempURL = fm.temporaryDirectory.appendingPathComponent(fileName)
@@ -421,46 +378,42 @@ struct DeviceLabCommand {
     }
     defer { try? fm.removeItem(at: tempURL) }
 
+    var folderHandle: MTPObjectHandle?
     do {
-      _ = try await device.write(parent: parentHandle, name: fileName, size: UInt64(payloadSize), from: tempURL)
-      smoke.succeeded = true
-    } catch let error as MTPError {
-      // Check for policy rejection codes (0x201D = InvalidParameter, 0x201E = SessionAlreadyOpen)
-      // These indicate the device rejected the write due to policy, not failure
-      let isPolicyRejection: Bool
-      if case .protocolError(let code, _) = error {
-        isPolicyRejection = code == 0x201D || code == 0x201E
-      } else {
-        isPolicyRejection = false
-      }
-      
-      if isPolicyRejection {
-        let code: UInt16
-        if case .protocolError(let c, _) = error { code = c } else { code = 0 }
-        smoke.skipped = true
-        smoke.reason = "write_policy: device rejected SendObject with 0x\(String(format: "%04X", code)); root write access may be restricted"
-        smoke.error = nil
-      } else {
-        smoke.error = "write to \(parentName) failed: \(error)"
-        smoke.skipped = true
-        smoke.reason = "SendObject rejected by device (\(error)); write smoke skipped"
-      }
-      return smoke
+      folderHandle = try await device.createFolder(parent: nil, name: folderName, storage: storage.id)
     } catch {
-      smoke.error = "write to \(parentName) failed: \(error)"
-      smoke.skipped = true
-      smoke.reason = "SendObject rejected by device (\(error)); write smoke skipped"
+      smoke.error = "createFolder failed: \(error)"
       return smoke
     }
 
-    // Verify and cleanup
     do {
-      let children = try await listObjects(device: device, parent: parentHandle, storage: storage.id, limit: 128)
-      if let uploaded = children.first(where: { $0.name == fileName }) {
-        try? await device.delete(uploaded.handle, recursive: false)
-      }
+      _ = try await device.write(parent: folderHandle, name: fileName, size: UInt64(payloadSize), from: tempURL)
+      smoke.succeeded = true
     } catch {
-      smoke.warning = appendWarning(smoke.warning, "cleanup verification failed: \(error)")
+      smoke.error = "write failed: \(error)"
+      if let folderHandle {
+        try? await device.delete(folderHandle, recursive: true)
+      }
+      return smoke
+    }
+
+    if let folderHandle {
+      do {
+        let children = try await listObjects(device: device, parent: folderHandle, storage: storage.id, limit: 128)
+        if let uploaded = children.first(where: { $0.name == fileName }) {
+          try await device.delete(uploaded.handle, recursive: false)
+        } else {
+          smoke.warning = appendWarning(smoke.warning, "uploaded file not found during cleanup")
+        }
+      } catch {
+        smoke.warning = appendWarning(smoke.warning, "cleanup listing/delete failed: \(error)")
+      }
+
+      do {
+        try await device.delete(folderHandle, recursive: true)
+      } catch {
+        smoke.warning = appendWarning(smoke.warning, "folder cleanup failed: \(error)")
+      }
     }
 
     return smoke

@@ -93,7 +93,6 @@
       },
       "notes": [
         "Same tuning as ff10 variant with vendor-specific (0xff) MTP interface matching.",
-        "Enabled resetOnOpen and requiresKernelDetach for better claim reliability on macOS.",
         "Requires 250-500 ms stabilization after OpenSession.",
         "Prefer direct USB port; keep screen unlocked."
       ],
@@ -113,6 +112,48 @@
     },
     {
       "id": "samsung-android-6860",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6860",
+        "deviceInfoRegex": ".*SAMSUNG.*",
+        "iface": {
+          "class": "0xff"
+        },
+        "endpoints": {
+          "in": "0x81",
+          "out": "0x01",
+          "evt": "0x82"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
+        "inactivityTimeoutMs": 10000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false
+      },
+      "ops": {
+        "supportsGetPartialObject64": true,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": true,
+        "disableWriteResume": true
+      },
+      "confidence": "low",
+      "status": "experimental",
+      "notes": [
+        "Vendor-specific interface class (0xff) discovered by shared MTP heuristic.",
+        "Read validation is reliable; write smoke remains best-effort for this class of Samsung devices.",
+        "Use conservative chunking and timeout values until broader Samsung evidence is collected."
+      ],
+      "provenance": {
+        "author": "Steven Zimmerman",
+        "date": "2026-02-09"
+      }
+    },
+    {
+      "id": "oneplus-3t-f003",
       "match": {
         "vid": "0x2a70",
         "pid": "0xf003",
@@ -197,6 +238,7 @@
       "status": "experimental",
       "notes": [
         "Bulk transfers time out (write rc=-7, LIBUSB_ERROR_TIMEOUT) on macOS Tahoe 26; needs investigation.",
+        "Connected-device lab run on 2026-02-09 still classifies this device as blocked (diagnostic evidence captured).",
         "libmtp-aligned claim (set_configuration + set_alt_setting) reinitializes pipes without USB reset.",
         "Fallback USB reset uses stabilizeMs=3000 as poll budget for waitForMTPReady.",
         "Bulk transfer failures often caused by Chrome/WebUSB holding the device — quit Chromium apps and replug."

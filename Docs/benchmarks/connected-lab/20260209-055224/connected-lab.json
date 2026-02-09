@@ -1,0 +1,662 @@
+{
+  "connectedDeviceCount" : 4,
+  "devices" : [
+    {
+      "address" : 12,
+      "artifacts" : {
+        "directory" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/04e8-6860-b1-a12",
+        "reportJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/04e8-6860-b1-a12/device-report.json",
+        "usbInterfaceJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/04e8-6860-b1-a12/usb-interface.json"
+      },
+      "bus" : 1,
+      "error" : "open failed: io(\"no MTP interface responded to probe\")",
+      "expectation" : "read-best-effort",
+      "id" : "04e8:6860@1:12",
+      "manufacturer" : "SAMSUNG",
+      "model" : "SAMSUNG_Android",
+      "notes" : [
+
+      ],
+      "outcome" : "failed",
+      "read" : {
+        "deviceInfoSucceeded" : false,
+        "error" : "open failed: io(\"no MTP interface responded to probe\")",
+        "openSucceeded" : false,
+        "rootListingSucceeded" : false,
+        "storageCount" : 0,
+        "storagesSucceeded" : false
+      },
+      "usbInterfaceDump" : {
+        "address" : 12,
+        "bus" : 1,
+        "id" : "04e8:6860@1:12",
+        "interfaces" : [
+          {
+            "altSetting" : 0,
+            "endpoints" : [
+              {
+                "address" : "0x81",
+                "direction" : "in",
+                "transferType" : "bulk"
+              },
+              {
+                "address" : "0x01",
+                "direction" : "out",
+                "transferType" : "bulk"
+              },
+              {
+                "address" : "0x82",
+                "direction" : "in",
+                "transferType" : "interrupt"
+              }
+            ],
+            "interfaceClass" : "0xff",
+            "interfaceProtocol" : "0x00",
+            "interfaceSubclass" : "0xff",
+            "name" : "MTP",
+            "number" : 0
+          },
+          {
+            "altSetting" : 0,
+            "endpoints" : [
+              {
+                "address" : "0x84",
+                "direction" : "in",
+                "transferType" : "interrupt"
+              }
+            ],
+            "interfaceClass" : "0x02",
+            "interfaceProtocol" : "0x01",
+            "interfaceSubclass" : "0x02",
+            "name" : "CDC Abstract Control Model (ACM)",
+            "number" : 1
+          },
+          {
+            "altSetting" : 0,
+            "endpoints" : [
+              {
+                "address" : "0x83",
+                "direction" : "in",
+                "transferType" : "bulk"
+              },
+              {
+                "address" : "0x02",
+                "direction" : "out",
+                "transferType" : "bulk"
+              }
+            ],
+            "interfaceClass" : "0x0a",
+            "interfaceProtocol" : "0x00",
+            "interfaceSubclass" : "0x00",
+            "name" : "CDC ACM Data",
+            "number" : 2
+          }
+        ],
+        "manufacturer" : "SAMSUNG",
+        "product" : "SAMSUNG_Android",
+        "productID" : "6860",
+        "serial" : "9886734b3530443253",
+        "vendorID" : "04e8"
+      },
+      "vidpid" : "04e8:6860",
+      "write" : {
+        "attempted" : false,
+        "bytesUploaded" : 0,
+        "succeeded" : false
+      }
+    },
+    {
+      "address" : 3,
+      "artifacts" : {
+        "directory" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/18d1-4ee1-b2-a3",
+        "reportJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/18d1-4ee1-b2-a3/device-report.json",
+        "usbInterfaceJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/18d1-4ee1-b2-a3/usb-interface.json"
+      },
+      "bus" : 2,
+      "error" : "open failed: io(\"no MTP interface responded to probe\")",
+      "expectation" : "blocker-expected",
+      "id" : "18d1:4ee1@2:3",
+      "manufacturer" : "Google",
+      "model" : "Pixel 7",
+      "notes" : [
+        "Expected blocker observed; diagnostics captured without crash."
+      ],
+      "outcome" : "blocked",
+      "read" : {
+        "deviceInfoSucceeded" : false,
+        "error" : "open failed: io(\"no MTP interface responded to probe\")",
+        "openSucceeded" : false,
+        "rootListingSucceeded" : false,
+        "storageCount" : 0,
+        "storagesSucceeded" : false
+      },
+      "usbInterfaceDump" : {
+        "address" : 3,
+        "bus" : 2,
+        "id" : "18d1:4ee1@2:3",
+        "interfaces" : [
+          {
+            "altSetting" : 0,
+            "endpoints" : [
+              {
+                "address" : "0x81",
+                "direction" : "in",
+                "transferType" : "bulk"
+              },
+              {
+                "address" : "0x01",
+                "direction" : "out",
+                "transferType" : "bulk"
+              },
+              {
+                "address" : "0x82",
+                "direction" : "in",
+                "transferType" : "interrupt"
+              }
+            ],
+            "interfaceClass" : "0x06",
+            "interfaceProtocol" : "0x01",
+            "interfaceSubclass" : "0x01",
+            "name" : "MTP",
+            "number" : 0
+          }
+        ],
+        "manufacturer" : "Google",
+        "product" : "Pixel 7",
+        "productID" : "4ee1",
+        "serial" : "2A221FDH200G2Q",
+        "vendorID" : "18d1"
+      },
+      "vidpid" : "18d1:4ee1",
+      "write" : {
+        "attempted" : false,
+        "bytesUploaded" : 0,
+        "succeeded" : false
+      }
+    },
+    {
+      "address" : 4,
+      "artifacts" : {
+        "directory" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/2717-ff40-b2-a4",
+        "harnessReportJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/2717-ff40-b2-a4/harness-report.json",
+        "probeReceiptJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/2717-ff40-b2-a4/probe-receipt.json",
+        "reportJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/2717-ff40-b2-a4/device-report.json",
+        "usbInterfaceJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/2717-ff40-b2-a4/usb-interface.json"
+      },
+      "bus" : 2,
+      "capabilityReport" : {
+        "capabilityTests" : [
+          {
+            "durationMs" : 0,
+            "name" : "GetDeviceInfo",
+            "opcode" : "0x1001",
+            "supported" : true
+          },
+          {
+            "durationMs" : 1,
+            "name" : "GetStorageIDs",
+            "opcode" : "0x1004",
+            "supported" : true
+          },
+          {
+            "durationMs" : 24,
+            "name" : "GetObjectHandles",
+            "opcode" : "0x1007",
+            "supported" : true
+          }
+        ],
+        "eventsSupported" : [
+          "0x4002",
+          "0x4003",
+          "0x4004",
+          "0x4005",
+          "0x4006"
+        ],
+        "fingerprint" : {
+          "endpointAddresses" : {
+            "event" : "82",
+            "input" : "81",
+            "output" : "01"
+          },
+          "interfaceTriple" : {
+            "class" : "ff",
+            "protocol" : "00",
+            "subclass" : "ff"
+          },
+          "pid" : "ff40",
+          "vid" : "2717"
+        },
+        "manufacturer" : "Xiaomi",
+        "model" : "Mi Note 2",
+        "operationsSupported" : [
+          "0x1001",
+          "0x1002",
+          "0x1003",
+          "0x1004",
+          "0x1005",
+          "0x1006",
+          "0x1007",
+          "0x1008",
+          "0x1009",
+          "0x100A",
+          "0x100B",
+          "0x100C",
+          "0x100D",
+          "0x1010",
+          "0x1014",
+          "0x1015",
+          "0x1016",
+          "0x1017",
+          "0x101B",
+          "0x95C1",
+          "0x95C2",
+          "0x95C3",
+          "0x95C4",
+          "0x95C5",
+          "0x9801",
+          "0x9802",
+          "0x9803",
+          "0x9804",
+          "0x9805",
+          "0x9810",
+          "0x9811"
+        ],
+        "serialNumber" : "637b9471",
+        "suggestedFlags" : {
+          "disableEventPump" : false,
+          "needsLongerOpenTimeout" : false,
+          "needsShortReads" : false,
+          "prefersPropListEnumeration" : true,
+          "requireStabilization" : false,
+          "requiresKernelDetach" : true,
+          "requiresSessionBeforeDeviceInfo" : false,
+          "resetOnOpen" : false,
+          "skipPTPReset" : false,
+          "stallOnLargeReads" : false,
+          "supportsPartialRead32" : true,
+          "supportsPartialRead64" : true,
+          "supportsPartialWrite" : true,
+          "transactionIdResetsOnSession" : false
+        },
+        "suggestedTuning" : {
+          "handshakeTimeoutMs" : 6000,
+          "ioTimeoutMs" : 15000,
+          "maxChunkBytes" : 2097152
+        },
+        "timestamp" : "2026-02-09T10:52:54Z"
+      },
+      "expectation" : "full-exercise",
+      "id" : "2717:ff40@2:4",
+      "manufacturer" : "Xiaomi",
+      "model" : "Mi Note 2",
+      "notes" : [
+
+      ],
+      "outcome" : "partial",
+      "probeReceipt" : {
+        "capabilities" : {
+          "partialRead" : true,
+          "partialWrite" : true,
+          "supportsEvents" : true
+        },
+        "deviceSummary" : {
+          "id" : "2717:ff40@2:4",
+          "manufacturer" : "Xiaomi",
+          "model" : "Mi Note 2",
+          "productID" : "0xff40",
+          "vendorID" : "0x2717"
+        },
+        "fallbackResults" : {
+          "enumeration" : "propList5",
+          "read" : "partial64",
+          "write" : "partial"
+        },
+        "fingerprint" : {
+          "endpointAddresses" : {
+            "event" : "82",
+            "input" : "81",
+            "output" : "01"
+          },
+          "interfaceTriple" : {
+            "class" : "ff",
+            "protocol" : "00",
+            "subclass" : "ff"
+          },
+          "pid" : "ff40",
+          "vid" : "2717"
+        },
+        "resolvedPolicy" : {
+          "disableEventPump" : false,
+          "enumerationStrategy" : "propList5",
+          "handshakeTimeoutMs" : 6000,
+          "ioTimeoutMs" : 15000,
+          "maxChunkBytes" : 2097152,
+          "readStrategy" : "partial64",
+          "resetOnOpen" : false,
+          "writeStrategy" : "partial"
+        },
+        "sessionEstablishment" : {
+          "durationMs" : 4,
+          "requiredRetry" : false,
+          "succeeded" : true
+        },
+        "timestamp" : "2026-02-09T10:52:54Z",
+        "totalProbeTimeMs" : 411
+      },
+      "read" : {
+        "deviceInfoSucceeded" : true,
+        "openSucceeded" : true,
+        "rootListingSucceeded" : true,
+        "rootObjectCount" : 416,
+        "storageCount" : 1,
+        "storagesSucceeded" : true
+      },
+      "usbInterfaceDump" : {
+        "address" : 4,
+        "bus" : 2,
+        "id" : "2717:ff40@2:4",
+        "interfaces" : [
+          {
+            "altSetting" : 0,
+            "endpoints" : [
+              {
+                "address" : "0x81",
+                "direction" : "in",
+                "transferType" : "bulk"
+              },
+              {
+                "address" : "0x01",
+                "direction" : "out",
+                "transferType" : "bulk"
+              },
+              {
+                "address" : "0x82",
+                "direction" : "in",
+                "transferType" : "interrupt"
+              }
+            ],
+            "interfaceClass" : "0xff",
+            "interfaceProtocol" : "0x00",
+            "interfaceSubclass" : "0xff",
+            "name" : "MTP",
+            "number" : 0
+          }
+        ],
+        "manufacturer" : "Xiaomi",
+        "product" : "Mi Note 2",
+        "productID" : "ff40",
+        "serial" : "637b9471",
+        "vendorID" : "2717"
+      },
+      "vidpid" : "2717:ff40",
+      "write" : {
+        "attempted" : true,
+        "bytesUploaded" : 16384,
+        "error" : "createFolder failed: protocolError(code: 8221, message: Optional(\"InvalidParameter (0x201d)\"))",
+        "remoteFile" : "swiftmtp-smoke-3305149F.bin",
+        "remoteFolder" : "SwiftMTPDeviceLab-20260209-055301",
+        "succeeded" : false
+      }
+    },
+    {
+      "address" : 2,
+      "artifacts" : {
+        "directory" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/2a70-f003-b3-a2",
+        "harnessReportJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/2a70-f003-b3-a2/harness-report.json",
+        "probeReceiptJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/2a70-f003-b3-a2/probe-receipt.json",
+        "reportJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/2a70-f003-b3-a2/device-report.json",
+        "usbInterfaceJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224/devices/2a70-f003-b3-a2/usb-interface.json"
+      },
+      "bus" : 3,
+      "capabilityReport" : {
+        "capabilityTests" : [
+          {
+            "durationMs" : 0,
+            "name" : "GetDeviceInfo",
+            "opcode" : "0x1001",
+            "supported" : true
+          },
+          {
+            "durationMs" : 1,
+            "name" : "GetStorageIDs",
+            "opcode" : "0x1004",
+            "supported" : true
+          },
+          {
+            "durationMs" : 84,
+            "name" : "GetObjectHandles",
+            "opcode" : "0x1007",
+            "supported" : true
+          }
+        ],
+        "eventsSupported" : [
+          "0x4002",
+          "0x4003",
+          "0x4004",
+          "0x4005",
+          "0x4006",
+          "0xC801"
+        ],
+        "fingerprint" : {
+          "endpointAddresses" : {
+            "event" : "82",
+            "input" : "81",
+            "output" : "01"
+          },
+          "interfaceTriple" : {
+            "class" : "06",
+            "protocol" : "01",
+            "subclass" : "01"
+          },
+          "pid" : "f003",
+          "vid" : "2a70"
+        },
+        "manufacturer" : "OnePlus",
+        "model" : "ONEPLUS A3010",
+        "operationsSupported" : [
+          "0x1001",
+          "0x1002",
+          "0x1003",
+          "0x1004",
+          "0x1005",
+          "0x1006",
+          "0x1007",
+          "0x1008",
+          "0x1009",
+          "0x100A",
+          "0x100B",
+          "0x100C",
+          "0x100D",
+          "0x1010",
+          "0x1014",
+          "0x1015",
+          "0x1016",
+          "0x1017",
+          "0x1019",
+          "0x101A",
+          "0x101B",
+          "0x95C1",
+          "0x95C2",
+          "0x95C3",
+          "0x95C4",
+          "0x95C5",
+          "0x9801",
+          "0x9802",
+          "0x9803",
+          "0x9804",
+          "0x9805",
+          "0x9810",
+          "0x9811"
+        ],
+        "serialNumber" : "5dfe2dc2",
+        "suggestedFlags" : {
+          "disableEventPump" : false,
+          "needsLongerOpenTimeout" : false,
+          "needsShortReads" : false,
+          "prefersPropListEnumeration" : true,
+          "requireStabilization" : false,
+          "requiresKernelDetach" : true,
+          "requiresSessionBeforeDeviceInfo" : false,
+          "resetOnOpen" : false,
+          "skipPTPReset" : false,
+          "stallOnLargeReads" : false,
+          "supportsPartialRead32" : true,
+          "supportsPartialRead64" : true,
+          "supportsPartialWrite" : true,
+          "transactionIdResetsOnSession" : false
+        },
+        "suggestedTuning" : {
+          "handshakeTimeoutMs" : 6000,
+          "ioTimeoutMs" : 8000,
+          "maxChunkBytes" : 1048576
+        },
+        "timestamp" : "2026-02-09T10:53:17Z"
+      },
+      "expectation" : "probe-no-crash",
+      "id" : "2a70:f003@3:2",
+      "manufacturer" : "Android",
+      "model" : "Android",
+      "notes" : [
+
+      ],
+      "outcome" : "passed",
+      "probeReceipt" : {
+        "capabilities" : {
+          "partialRead" : true,
+          "partialWrite" : true,
+          "supportsEvents" : true
+        },
+        "deviceSummary" : {
+          "id" : "2a70:f003@3:2",
+          "manufacturer" : "Android",
+          "model" : "Android",
+          "productID" : "0xf003",
+          "vendorID" : "0x2a70"
+        },
+        "fallbackResults" : {
+          "enumeration" : "propList5",
+          "read" : "partial64",
+          "write" : "partial"
+        },
+        "fingerprint" : {
+          "endpointAddresses" : {
+            "event" : "82",
+            "input" : "81",
+            "output" : "01"
+          },
+          "interfaceTriple" : {
+            "class" : "06",
+            "protocol" : "01",
+            "subclass" : "01"
+          },
+          "pid" : "f003",
+          "vid" : "2a70"
+        },
+        "resolvedPolicy" : {
+          "disableEventPump" : false,
+          "enumerationStrategy" : "propList5",
+          "handshakeTimeoutMs" : 6000,
+          "ioTimeoutMs" : 8000,
+          "maxChunkBytes" : 1048576,
+          "readStrategy" : "partial64",
+          "resetOnOpen" : false,
+          "writeStrategy" : "partial"
+        },
+        "sessionEstablishment" : {
+          "durationMs" : 2,
+          "requiredRetry" : false,
+          "succeeded" : true
+        },
+        "timestamp" : "2026-02-09T10:53:17Z",
+        "totalProbeTimeMs" : 425
+      },
+      "read" : {
+        "deviceInfoSucceeded" : true,
+        "openSucceeded" : true,
+        "rootListingSucceeded" : true,
+        "rootObjectCount" : 105,
+        "storageCount" : 1,
+        "storagesSucceeded" : true
+      },
+      "usbInterfaceDump" : {
+        "address" : 2,
+        "bus" : 3,
+        "id" : "2a70:f003@3:2",
+        "interfaces" : [
+          {
+            "altSetting" : 0,
+            "endpoints" : [
+              {
+                "address" : "0x81",
+                "direction" : "in",
+                "transferType" : "bulk"
+              },
+              {
+                "address" : "0x01",
+                "direction" : "out",
+                "transferType" : "bulk"
+              },
+              {
+                "address" : "0x82",
+                "direction" : "in",
+                "transferType" : "interrupt"
+              }
+            ],
+            "interfaceClass" : "0x06",
+            "interfaceProtocol" : "0x01",
+            "interfaceSubclass" : "0x01",
+            "name" : "MTP",
+            "number" : 0
+          },
+          {
+            "altSetting" : 0,
+            "endpoints" : [
+              {
+                "address" : "0x83",
+                "direction" : "in",
+                "transferType" : "bulk"
+              },
+              {
+                "address" : "0x02",
+                "direction" : "out",
+                "transferType" : "bulk"
+              }
+            ],
+            "interfaceClass" : "0x08",
+            "interfaceProtocol" : "0x50",
+            "interfaceSubclass" : "0x06",
+            "name" : "Mass Storage",
+            "number" : 1
+          }
+        ],
+        "manufacturer" : "Android",
+        "product" : "Android",
+        "productID" : "f003",
+        "serial" : "5dfe2dc2",
+        "vendorID" : "2a70"
+      },
+      "vidpid" : "2a70:f003",
+      "write" : {
+        "attempted" : true,
+        "bytesUploaded" : 16384,
+        "error" : "createFolder failed: protocolError(code: 8221, message: Optional(\"InvalidParameter (0x201d)\"))",
+        "remoteFile" : "swiftmtp-smoke-9D6C8645.bin",
+        "remoteFolder" : "SwiftMTPDeviceLab-20260209-055317",
+        "succeeded" : false
+      }
+    }
+  ],
+  "generatedAt" : "2026-02-09T10:53:26Z",
+  "outputPath" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260209-055224",
+  "schemaVersion" : "1.0.0",
+  "summary" : {
+    "blocked" : 1,
+    "failed" : 1,
+    "missingExpected" : [
+
+    ],
+    "partial" : 1,
+    "passed" : 1,
+    "totalDevices" : 4
+  }
+}
