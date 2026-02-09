@@ -436,13 +436,12 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 | **Total Test Cases** | **1,690** | ✅ Executed |
 | Test Failures | 0 | ✅ All Passing |
 
-### New Coverage Tests Added (February 2026)
+### New Coverage Tests Added (February 2026 - Final Coverage Push)
 
 | Test File | Tests | Purpose | Coverage Target |
 |-----------|-------|---------|----------------|
-| `Tests/CoreTests/DeviceActorTransferCoverageTests.swift` | 13 | SendableAdapters (FileSink, FileSource, AtomicProgressTracker), _Lock, EventPump | SendableAdapters.swift, _Lock.swift |
-| `Tests/CoreTests/FallbackSelectionTests.swift` | 22 | FallbackSelections (EnumerationStrategy, ReadStrategy, WriteStrategy), Codable, equality | FallbackSelections.swift |
-| `Tests/CoreTests/ProbeReceiptTests.swift` | 14 | ProbeReceipt, ReceiptDeviceSummary, InterfaceProbeResult, SessionProbeResult | ProbeReceipt.swift, DeviceLabHarness.swift |
+| `Tests/CoreTests/DeviceActorTransferCoverageTests.swift` | 20+ | Transfer operation parameters (read/write handles, offset variants, size boundaries) | DeviceActor+Transfer.swift |
+| `Tests/CoreTests/DeviceActorStateMachineCoverageTests.swift` | 20+ | DeviceState transitions, error handling, lifecycle, MTPError types | DeviceActor.swift |
 | `Tests/CoreTests/ProtoTransferCoverageTests.swift` | ~10+ | BoxedOffset thread safety, TransferMode, PTPResponseResult.checkOK() | Proto+Transfer.swift |
 
 ### Per-Module Coverage
