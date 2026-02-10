@@ -1,0 +1,37 @@
+{
+  "address" : 5,
+  "bus" : 2,
+  "id" : "2717:ff40@2:5",
+  "interfaces" : [
+    {
+      "altSetting" : 0,
+      "endpoints" : [
+        {
+          "address" : "0x81",
+          "direction" : "in",
+          "transferType" : "bulk"
+        },
+        {
+          "address" : "0x01",
+          "direction" : "out",
+          "transferType" : "bulk"
+        },
+        {
+          "address" : "0x82",
+          "direction" : "in",
+          "transferType" : "interrupt"
+        }
+      ],
+      "interfaceClass" : "0xff",
+      "interfaceProtocol" : "0x00",
+      "interfaceSubclass" : "0xff",
+      "name" : "MTP",
+      "number" : 0
+    }
+  ],
+  "manufacturer" : "Xiaomi",
+  "product" : "Mi Note 2",
+  "productID" : "ff40",
+  "serial" : "637b9471",
+  "vendorID" : "2717"
+}

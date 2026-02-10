@@ -1,0 +1,249 @@
+{
+  "address" : 2,
+  "artifacts" : {
+    "directory" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260210-034118/devices/2a70-f003-b3-a2",
+    "harnessReportJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260210-034118/devices/2a70-f003-b3-a2/harness-report.json",
+    "probeReceiptJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260210-034118/devices/2a70-f003-b3-a2/probe-receipt.json",
+    "reportJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260210-034118/devices/2a70-f003-b3-a2/device-report.json",
+    "usbInterfaceJSON" : "/Users/steven/Code/Mac/Swift/SwiftMTP/Docs/benchmarks/connected-lab/20260210-034118/devices/2a70-f003-b3-a2/usb-interface.json"
+  },
+  "bus" : 3,
+  "capabilityReport" : {
+    "capabilityTests" : [
+      {
+        "durationMs" : 0,
+        "name" : "GetDeviceInfo",
+        "opcode" : "0x1001",
+        "supported" : true
+      },
+      {
+        "durationMs" : 2,
+        "name" : "GetStorageIDs",
+        "opcode" : "0x1004",
+        "supported" : true
+      },
+      {
+        "durationMs" : 67,
+        "name" : "GetObjectHandles",
+        "opcode" : "0x1007",
+        "supported" : true
+      }
+    ],
+    "eventsSupported" : [
+      "0x4002",
+      "0x4003",
+      "0x4004",
+      "0x4005",
+      "0x4006",
+      "0xC801"
+    ],
+    "fingerprint" : {
+      "endpointAddresses" : {
+        "event" : "82",
+        "input" : "81",
+        "output" : "01"
+      },
+      "interfaceTriple" : {
+        "class" : "06",
+        "protocol" : "01",
+        "subclass" : "01"
+      },
+      "pid" : "f003",
+      "vid" : "2a70"
+    },
+    "manufacturer" : "OnePlus",
+    "model" : "ONEPLUS A3010",
+    "operationsSupported" : [
+      "0x1001",
+      "0x1002",
+      "0x1003",
+      "0x1004",
+      "0x1005",
+      "0x1006",
+      "0x1007",
+      "0x1008",
+      "0x1009",
+      "0x100A",
+      "0x100B",
+      "0x100C",
+      "0x100D",
+      "0x1010",
+      "0x1014",
+      "0x1015",
+      "0x1016",
+      "0x1017",
+      "0x1019",
+      "0x101A",
+      "0x101B",
+      "0x95C1",
+      "0x95C2",
+      "0x95C3",
+      "0x95C4",
+      "0x95C5",
+      "0x9801",
+      "0x9802",
+      "0x9803",
+      "0x9804",
+      "0x9805",
+      "0x9810",
+      "0x9811"
+    ],
+    "serialNumber" : "5dfe2dc2",
+    "suggestedFlags" : {
+      "disableEventPump" : false,
+      "needsLongerOpenTimeout" : false,
+      "needsShortReads" : false,
+      "prefersPropListEnumeration" : true,
+      "requireStabilization" : false,
+      "requiresKernelDetach" : true,
+      "requiresSessionBeforeDeviceInfo" : false,
+      "resetOnOpen" : false,
+      "skipPTPReset" : false,
+      "stallOnLargeReads" : false,
+      "supportsPartialRead32" : true,
+      "supportsPartialRead64" : true,
+      "supportsPartialWrite" : true,
+      "transactionIdResetsOnSession" : false
+    },
+    "suggestedTuning" : {
+      "handshakeTimeoutMs" : 6000,
+      "ioTimeoutMs" : 8000,
+      "maxChunkBytes" : 1048576
+    },
+    "timestamp" : "2026-02-10T08:42:36Z"
+  },
+  "expectation" : "probe-no-crash",
+  "id" : "2a70:f003@3:2",
+  "manufacturer" : "Android",
+  "model" : "Android",
+  "notes" : [
+
+  ],
+  "outcome" : "passed",
+  "probeReceipt" : {
+    "capabilities" : {
+      "partialRead" : true,
+      "partialWrite" : true,
+      "supportsEvents" : true
+    },
+    "deviceSummary" : {
+      "id" : "2a70:f003@3:2",
+      "manufacturer" : "Android",
+      "model" : "Android",
+      "productID" : "0xf003",
+      "vendorID" : "0x2a70"
+    },
+    "fallbackResults" : {
+      "enumeration" : "propList5",
+      "read" : "partial64",
+      "write" : "partial"
+    },
+    "fingerprint" : {
+      "endpointAddresses" : {
+        "event" : "82",
+        "input" : "81",
+        "output" : "01"
+      },
+      "interfaceTriple" : {
+        "class" : "06",
+        "protocol" : "01",
+        "subclass" : "01"
+      },
+      "pid" : "f003",
+      "vid" : "2a70"
+    },
+    "resolvedPolicy" : {
+      "disableEventPump" : false,
+      "enumerationStrategy" : "propList5",
+      "handshakeTimeoutMs" : 6000,
+      "ioTimeoutMs" : 8000,
+      "maxChunkBytes" : 1048576,
+      "readStrategy" : "partial64",
+      "resetOnOpen" : false,
+      "writeStrategy" : "partial"
+    },
+    "sessionEstablishment" : {
+      "durationMs" : 2,
+      "requiredRetry" : false,
+      "succeeded" : true
+    },
+    "timestamp" : "2026-02-10T08:42:35Z",
+    "totalProbeTimeMs" : 424
+  },
+  "read" : {
+    "deviceInfoSucceeded" : true,
+    "openSucceeded" : true,
+    "rootListingSucceeded" : true,
+    "rootObjectCount" : 105,
+    "storageCount" : 1,
+    "storagesSucceeded" : true
+  },
+  "usbInterfaceDump" : {
+    "address" : 2,
+    "bus" : 3,
+    "id" : "2a70:f003@3:2",
+    "interfaces" : [
+      {
+        "altSetting" : 0,
+        "endpoints" : [
+          {
+            "address" : "0x81",
+            "direction" : "in",
+            "transferType" : "bulk"
+          },
+          {
+            "address" : "0x01",
+            "direction" : "out",
+            "transferType" : "bulk"
+          },
+          {
+            "address" : "0x82",
+            "direction" : "in",
+            "transferType" : "interrupt"
+          }
+        ],
+        "interfaceClass" : "0x06",
+        "interfaceProtocol" : "0x01",
+        "interfaceSubclass" : "0x01",
+        "name" : "MTP",
+        "number" : 0
+      },
+      {
+        "altSetting" : 0,
+        "endpoints" : [
+          {
+            "address" : "0x83",
+            "direction" : "in",
+            "transferType" : "bulk"
+          },
+          {
+            "address" : "0x02",
+            "direction" : "out",
+            "transferType" : "bulk"
+          }
+        ],
+        "interfaceClass" : "0x08",
+        "interfaceProtocol" : "0x50",
+        "interfaceSubclass" : "0x06",
+        "name" : "Mass Storage",
+        "number" : 1
+      }
+    ],
+    "manufacturer" : "Android",
+    "product" : "Android",
+    "productID" : "f003",
+    "serial" : "5dfe2dc2",
+    "vendorID" : "2a70"
+  },
+  "vidpid" : "2a70:f003",
+  "write" : {
+    "attempted" : true,
+    "bytesUploaded" : 16384,
+    "error" : "write to Download failed: protocolError(code: 8221, message: Optional(\"InvalidParameter (0x201d)\"))",
+    "reason" : "SendObject rejected by device (protocolError(code: 8221, message: Optional(\"InvalidParameter (0x201d)\"))); write smoke skipped",
+    "remoteFile" : "swiftmtp-smoke-C7BA6108.txt",
+    "remoteFolder" : "Download",
+    "skipped" : true,
+    "succeeded" : false
+  }
+}

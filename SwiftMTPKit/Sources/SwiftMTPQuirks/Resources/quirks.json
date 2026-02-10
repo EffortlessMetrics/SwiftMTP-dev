@@ -93,6 +93,7 @@
       },
       "notes": [
         "Same tuning as ff10 variant with vendor-specific (0xff) MTP interface matching.",
+        "Enabled resetOnOpen and requiresKernelDetach for better claim reliability on macOS.",
         "Requires 250-500 ms stabilization after OpenSession.",
         "Prefer direct USB port; keep screen unlocked."
       ],
@@ -132,7 +133,8 @@
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 120000,
         "stabilizeMs": 300,
-        "resetOnOpen": false
+        "resetOnOpen": true,
+        "requiresKernelDetach": true
       },
       "ops": {
         "supportsGetPartialObject64": true,
@@ -140,12 +142,13 @@
         "preferGetObjectPropList": true,
         "disableWriteResume": true
       },
-      "confidence": "low",
+      "confidence": "medium",
       "status": "experimental",
       "notes": [
         "Vendor-specific interface class (0xff) discovered by shared MTP heuristic.",
+        "Enabled resetOnOpen and requiresKernelDetach for better claim reliability on macOS.",
         "Read validation is reliable; write smoke remains best-effort for this class of Samsung devices.",
-        "Use conservative chunking and timeout values until broader Samsung evidence is collected."
+        "Use conservative chunking and timeout values."
       ],
       "provenance": {
         "author": "Steven Zimmerman",

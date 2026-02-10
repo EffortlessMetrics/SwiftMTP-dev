@@ -166,6 +166,15 @@ func setConfigurationIfNeeded(handle: OpaquePointer, device: OpaquePointer, forc
 
 // MARK: - Claim / Release
 
+// libusb error code constants (raw values from libusb.h)
+private let LIBUSB_SUCCESS = Int32(0)
+private let LIBUSB_ERROR_ACCESS_DENIED = Int32(-3)
+private let LIBUSB_ERROR_NO_DEVICE = Int32(-4)
+private let LIBUSB_ERROR_NOT_FOUND = Int32(-5)
+private let LIBUSB_ERROR_BUSY = Int32(-6)
+private let LIBUSB_ERROR_TIMEOUT = Int32(-7)
+private let LIBUSB_ERROR_NOT_SUPPORTED = Int32(-12)
+
 /// Claim a single interface candidate using the libmtp-aligned sequence:
 /// detach kernel driver → set_configuration → claim → set_interface_alt_setting.
 ///
@@ -173,55 +182,113 @@ func setConfigurationIfNeeded(handle: OpaquePointer, device: OpaquePointer, forc
 /// endpoint pipes, clearing stale state from any prior accessor.
 /// `set_interface_alt_setting` after claim activates MTP endpoints at the host
 /// controller level.
-func claimCandidate(handle: OpaquePointer, device: OpaquePointer, _ c: InterfaceCandidate) throws {
+///
+/// Enhanced with retry logic for vendor-specific devices (Samsung, Xiaomi, etc.)
+func claimCandidate(handle: OpaquePointer, device: OpaquePointer, _ c: InterfaceCandidate, retryCount: Int = 2, postClaimStabilizeMs: Int = 250) throws {
   let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
   let iface = Int32(c.ifaceNumber)
 
   if debug {
-    print(String(format: "   [Claim] iface=%d bulkIn=0x%02x bulkOut=0x%02x",
-                 c.ifaceNumber, c.bulkIn, c.bulkOut))
+    print(String(format: "   [Claim] iface=%d bulkIn=0x%02x bulkOut=0x%02x class=0x%02x",
+                 c.ifaceNumber, c.bulkIn, c.bulkOut, c.ifaceClass))
   }
 
-  // Explicitly detach kernel driver (different IOKit code path from auto-detach on macOS)
-  let detachRC = libusb_detach_kernel_driver(handle, iface)
-  if debug && detachRC != 0 && detachRC != Int32(LIBUSB_ERROR_NOT_FOUND.rawValue) {
-    print("   [Claim] detach_kernel_driver rc=\(detachRC) (non-fatal)")
-  }
-
-  // Smart configuration: only set if needed or during recovery
-  setConfigurationIfNeeded(handle: handle, device: device, debug: debug)
-
-  try check(libusb_claim_interface(handle, iface))
-
-  // Set alt setting after claim — activates MTP endpoints
-  let setAltRC = libusb_set_interface_alt_setting(handle, iface, Int32(c.altSetting))
-  if debug { print("   [Claim] set_interface_alt_setting(\(c.altSetting)) rc=\(setAltRC)") }
-
-  // Brief pause for pipe setup (alt-setting does the real work, so 100ms suffices)
-  if debug { print("   [Claim] claimed OK, waiting 100ms for pipe activation") }
-  usleep(100_000)
-
-  // Endpoint diagnostics (debug only, non-fatal)
-  if debug {
-    let inMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkIn)
-    let outMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkOut)
-    print(String(format: "   [Claim] maxPacketSize: bulkIn=%d bulkOut=%d", inMax, outMax))
-    if inMax < 0 { print("   [Claim] WARNING: bulkIn max_packet_size negative (bad pipe)") }
-    if outMax < 0 { print("   [Claim] WARNING: bulkOut max_packet_size negative (bad pipe)") }
-
-    // Check for HALT/STALL on bulkOut via USB GET_STATUS
-    var epStatus: UInt16 = 0
-    let statusRC = withUnsafeMutablePointer(to: &epStatus) { ptr in
-      libusb_control_transfer(handle, 0x82, 0x00, 0, UInt16(c.bulkOut), ptr, 2, 500)
+  // Try claim with optional retry for vendor-specific devices
+  for attempt in 0...retryCount {
+    if attempt > 0 {
+      if debug { print("   [Claim] Retrying claim (attempt \(attempt + 1)/\(retryCount + 1))") }
+      // Brief delay before retry
+      usleep(100_000)
     }
-    if statusRC >= 2 {
-      let halted = (epStatus & 0x0001) != 0
-      print(String(format: "   [Claim] bulkOut GET_STATUS=0x%04x halted=%d", epStatus, halted ? 1 : 0))
-      if halted {
-        let clearRC = libusb_clear_halt(handle, c.bulkOut)
-        print("   [Claim] cleared HALT on bulkOut rc=\(clearRC)")
+
+    // Explicitly detach kernel driver (different IOKit code path from auto-detach on macOS)
+    let detachRC = libusb_detach_kernel_driver(handle, iface)
+    if debug {
+      if detachRC == LIBUSB_SUCCESS {
+        print("   [Claim] detach_kernel_driver: succeeded")
+      } else if detachRC == LIBUSB_ERROR_NOT_FOUND {
+        print("   [Claim] detach_kernel_driver: no kernel driver to detach")
+      } else {
+        print("   [Claim] detach_kernel_driver rc=\(detachRC) (continuing anyway)")
       }
     }
+
+    // Smart configuration: only set if needed or during recovery
+    setConfigurationIfNeeded(handle: handle, device: device, debug: debug)
+
+    // Attempt to claim the interface
+    let claimRC = libusb_claim_interface(handle, iface)
+    if debug {
+      print(String(format: "   [Claim] libusb_claim_interface rc=%d", claimRC))
+    }
+
+    if claimRC == LIBUSB_SUCCESS {
+      // Successfully claimed - proceed with alt setting
+      let setAltRC = libusb_set_interface_alt_setting(handle, iface, Int32(c.altSetting))
+      if debug {
+        print(String(format: "   [Claim] set_interface_alt_setting(%d) rc=%d", c.altSetting, setAltRC))
+      }
+
+      // Brief pause for pipe setup (alt-setting does the real work, but some devices need more time)
+      // Samsung and similar vendor-specific MTP stacks benefit from 250-500ms stabilization
+      if debug { print("   [Claim] claimed OK, waiting \\(postClaimStabilizeMs)ms for pipe activation") }
+      usleep(UInt32(postClaimStabilizeMs) * 1000)
+
+      // Endpoint diagnostics (debug only, non-fatal)
+      if debug {
+        let inMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkIn)
+        let outMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkOut)
+        print(String(format: "   [Claim] maxPacketSize: bulkIn=%d bulkOut=%d", inMax, outMax))
+        if inMax < 0 { print("   [Claim] WARNING: bulkIn max_packet_size negative (bad pipe)") }
+        if outMax < 0 { print("   [Claim] WARNING: bulkOut max_packet_size negative (bad pipe)") }
+
+        // Check for HALT/STALL on bulkOut via USB GET_STATUS
+        var epStatus: UInt16 = 0
+        let statusRC = withUnsafeMutablePointer(to: &epStatus) { ptr in
+          libusb_control_transfer(handle, 0x82, 0x00, 0, UInt16(c.bulkOut), ptr, 2, 500)
+        }
+        if statusRC >= 2 {
+          let halted = (epStatus & 0x0001) != 0
+          print(String(format: "   [Claim] bulkOut GET_STATUS=0x%04x halted=%d", epStatus, halted ? 1 : 0))
+          if halted {
+            let clearRC = libusb_clear_halt(handle, c.bulkOut)
+            print("   [Claim] cleared HALT on bulkOut rc=\(clearRC)")
+          }
+        }
+      }
+
+      return  // Success - exit the retry loop
+    }
+
+    // Claim failed - log the error and retry if we have attempts left
+    if debug {
+      let errorName: String
+      switch claimRC {
+      case LIBUSB_ERROR_ACCESS_DENIED:
+        errorName = "ACCESS_DENIED"
+      case LIBUSB_ERROR_NO_DEVICE:
+        errorName = "NO_DEVICE"
+      case LIBUSB_ERROR_BUSY:
+        errorName = "BUSY"
+      case LIBUSB_ERROR_NOT_FOUND:
+        errorName = "NOT_FOUND"
+      case LIBUSB_ERROR_TIMEOUT:
+        errorName = "TIMEOUT"
+      case LIBUSB_ERROR_NOT_SUPPORTED:
+        errorName = "NOT_SUPPORTED"
+      default:
+        errorName = "UNKNOWN (\(claimRC))"
+      }
+      print("   [Claim] FAILED: \(errorName), attempt \(attempt + 1)/\(retryCount + 1)")
+    }
+
+    // If this was the last attempt, throw the error
+    if attempt == retryCount {
+      throw TransportError.io("libusb_claim_interface failed: rc=\(claimRC)")
+    }
+
+    // Brief delay before retry to allow device to settle
+    usleep(200_000)
   }
 }
 
@@ -231,6 +298,132 @@ func releaseCandidate(handle: OpaquePointer, _ c: InterfaceCandidate) {
 }
 
 // MARK: - Probe
+
+/// Result of probing a single interface candidate with ladder support.
+struct ProbeLadderResult: Sendable {
+  let succeeded: Bool
+  let cachedDeviceInfoData: Data?
+  let stepAttempted: String
+}
+
+/// Probe ladder: try sessionless GetDeviceInfo, then OpenSession+GetDeviceInfo, then GetStorageIDs.
+/// Returns (success, cached raw device-info bytes) and which step succeeded.
+func probeCandidateWithLadder(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32 = 2000, debug: Bool = false) -> ProbeLadderResult {
+  // Step 1: Sessionless GetDeviceInfo (original behavior)
+  if debug { print("   [ProbeLadder] Step 1: sessionless GetDeviceInfo") }
+  let (step1OK, infoData) = probeCandidate(handle: handle, c, timeoutMs: timeoutMs)
+  if step1OK {
+    return ProbeLadderResult(succeeded: true, cachedDeviceInfoData: infoData, stepAttempted: "sessionlessGetDeviceInfo")
+  }
+
+  // Step 2: OpenSession then GetDeviceInfo
+  if debug { print("   [ProbeLadder] Step 2: OpenSession + GetDeviceInfo") }
+  if probeOpenSession(handle: handle, c, timeoutMs: timeoutMs, debug: debug) {
+    let (step2OK, infoData2) = probeCandidate(handle: handle, c, timeoutMs: timeoutMs)
+    if step2OK {
+      return ProbeLadderResult(succeeded: true, cachedDeviceInfoData: infoData2, stepAttempted: "openSessionThenGetDeviceInfo")
+    }
+  }
+
+  // Step 3: GetStorageIDs (some devices respond to this even if DeviceInfo fails)
+  if debug { print("   [ProbeLadder] Step 3: GetStorageIDs") }
+  if probeGetStorageIDs(handle: handle, c, timeoutMs: timeoutMs, debug: debug) {
+    // Even without device info, consider this a successful probe for vendor-specific stacks
+    return ProbeLadderResult(succeeded: true, cachedDeviceInfoData: nil, stepAttempted: "getStorageIDs")
+  }
+
+  return ProbeLadderResult(succeeded: false, cachedDeviceInfoData: nil, stepAttempted: "none")
+}
+
+/// Send OpenSession (0x1002) to establish an MTP session.
+func probeOpenSession(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32, debug: Bool) -> Bool {
+  let txid: UInt32 = 1
+  // OpenSession params: transaction ID (32-bit)
+  let cmdBytes = makePTPCommand(opcode: 0x1002, txid: txid, params: [txid])
+
+  var sent: Int32 = 0
+  let writeRC = cmdBytes.withUnsafeBytes { ptr -> Int32 in
+    libusb_bulk_transfer(
+      handle, c.bulkOut,
+      UnsafeMutablePointer(mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
+      Int32(cmdBytes.count), &sent, timeoutMs
+    )
+  }
+  if writeRC != 0 || sent != cmdBytes.count {
+    if debug { print("   [ProbeLadder] OpenSession write failed: rc=\(writeRC) sent=\(sent)") }
+    drainBulkIn(handle: handle, ep: c.bulkIn)
+    return false
+  }
+
+  // Read response
+  var readBuf = [UInt8](repeating: 0, count: 64)
+  var got: Int32 = 0
+  let readRC = libusb_bulk_transfer(handle, c.bulkIn, &readBuf, Int32(readBuf.count), &got, timeoutMs)
+  if debug { print("   [ProbeLadder] OpenSession read rc=\(readRC) got=\(got)") }
+
+  if readRC == 0 && got >= PTPHeader.size {
+    let hdr = readBuf.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
+    // Response code 0x2001 = OK
+    if hdr.type == 3 && hdr.code == 0x2001 {
+      if debug { print("   [ProbeLadder] OpenSession succeeded") }
+      return true
+    }
+  }
+
+  drainBulkIn(handle: handle, ep: c.bulkIn)
+  return false
+}
+
+/// Send GetStorageIDs (0x1005) to validate the device speaks MTP.
+func probeGetStorageIDs(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32, debug: Bool) -> Bool {
+  let txid: UInt32 = 1
+  let cmdBytes = makePTPCommand(opcode: 0x1005, txid: txid, params: [])
+
+  var sent: Int32 = 0
+  let writeRC = cmdBytes.withUnsafeBytes { ptr -> Int32 in
+    libusb_bulk_transfer(
+      handle, c.bulkOut,
+      UnsafeMutablePointer(mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
+      Int32(cmdBytes.count), &sent, timeoutMs
+    )
+  }
+  if writeRC != 0 || sent != cmdBytes.count {
+    if debug { print("   [ProbeLadder] GetStorageIDs write failed: rc=\(writeRC) sent=\(sent)") }
+    drainBulkIn(handle: handle, ep: c.bulkIn)
+    return false
+  }
+
+  // Read response (we expect Data container with storage IDs, then Response)
+  var readBuf = [UInt8](repeating: 0, count: 1024)
+  var got: Int32 = 0
+  let deadline = DispatchTime.now().uptimeNanoseconds + UInt64(timeoutMs) * 1_000_000
+  var accumulator = Data()
+
+  while DispatchTime.now().uptimeNanoseconds < deadline {
+    let remaining = (deadline - DispatchTime.now().uptimeNanoseconds) / 1_000_000
+    let readRC = libusb_bulk_transfer(handle, c.bulkIn, &readBuf, Int32(readBuf.count), &got, UInt32(min(remaining, UInt64(timeoutMs))))
+
+    if readRC == 0 && got > 0 {
+      accumulator.append(contentsOf: readBuf[0..<Int(got)])
+
+      // Check for Response container
+      if accumulator.count >= PTPHeader.size {
+        let hdr = accumulator.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
+        if hdr.type == 3 {
+          // Response received - check if successful (0x2001) or at least we got a response
+          if debug { print("   [ProbeLadder] GetStorageIDs response code=0x\(String(format: "%04x", hdr.code))") }
+          // Consider it a success if we got any response (some devices return different codes)
+          return hdr.code == 0x2001 || (hdr.code & 0x2000) == 0x2000
+        }
+      }
+    } else {
+      break
+    }
+  }
+
+  drainBulkIn(handle: handle, ep: c.bulkIn)
+  return false
+}
 
 /// Send a sessionless GetDeviceInfo (0x1001) to validate the interface works.
 ///
@@ -385,42 +578,75 @@ func waitForMTPReady(handle: OpaquePointer, iface: UInt16, budgetMs: Int) -> Boo
 struct ProbeAllResult {
   let candidate: InterfaceCandidate?
   let cachedDeviceInfo: Data?
+  let probeStep: String?
 }
 
 /// Try to claim and probe each candidate in order. Returns the first that succeeds.
+/// Uses probe ladder for vendor-specific interfaces (class 0xff like Samsung).
 func tryProbeAllCandidates(
   handle: OpaquePointer,
   device: OpaquePointer,
   candidates: [InterfaceCandidate],
   handshakeTimeoutMs: Int,
+  postClaimStabilizeMs: Int,
   debug: Bool
 ) -> ProbeAllResult {
   for candidate in candidates {
     let start = DispatchTime.now()
+    let isVendorSpecific = candidate.ifaceClass == 0xff
+
     if debug {
-      print(String(format: "   [Probe] Trying interface %d (score=%d, class=0x%02x)",
-                   candidate.ifaceNumber, candidate.score, candidate.ifaceClass))
+      print(String(format: "   [Probe] Trying interface %d (score=%d, class=0x%02x) %@",
+                   candidate.ifaceNumber, candidate.score, candidate.ifaceClass,
+                   isVendorSpecific ? "(vendor-specific, using ladder)" : ""))
     }
 
     do {
-      try claimCandidate(handle: handle, device: device, candidate)
+      try claimCandidate(handle: handle, device: device, candidate, postClaimStabilizeMs: postClaimStabilizeMs)
     } catch {
       if debug { print("   [Probe] Claim failed: \(error)") }
       continue
     }
 
-    let (probeOK, infoData) = probeCandidate(
-      handle: handle, candidate, timeoutMs: UInt32(handshakeTimeoutMs)
-    )
+    let probeResult: ProbeLadderResult
+    if isVendorSpecific {
+      // Use probe ladder for vendor-specific interfaces (Samsung, etc.)
+      probeResult = probeCandidateWithLadder(
+        handle: handle, candidate,
+        timeoutMs: UInt32(handshakeTimeoutMs),
+        debug: debug
+      )
+    } else {
+      // Use standard probe for canonical MTP interfaces
+      let (ok, info) = probeCandidate(
+        handle: handle, candidate, timeoutMs: UInt32(handshakeTimeoutMs)
+      )
+      probeResult = ProbeLadderResult(
+        succeeded: ok,
+        cachedDeviceInfoData: info,
+        stepAttempted: ok ? "sessionlessGetDeviceInfo" : "none"
+      )
+    }
+
     let elapsed = Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
 
-    if probeOK {
-      if debug { print("   [Probe] Interface \(candidate.ifaceNumber) OK (\(elapsed)ms)") }
-      return ProbeAllResult(candidate: candidate, cachedDeviceInfo: infoData)
+    if probeResult.succeeded {
+      if debug {
+        print(String(format: "   [Probe] Interface %d OK (%@) in %dms",
+                     candidate.ifaceNumber, probeResult.stepAttempted, elapsed))
+      }
+      return ProbeAllResult(
+        candidate: candidate,
+        cachedDeviceInfo: probeResult.cachedDeviceInfoData,
+        probeStep: probeResult.stepAttempted
+      )
     } else {
-      if debug { print("   [Probe] Interface \(candidate.ifaceNumber) failed (\(elapsed)ms), trying next...") }
+      if debug {
+        print(String(format: "   [Probe] Interface %d failed (%@) in %dms, trying next...",
+                     candidate.ifaceNumber, probeResult.stepAttempted, elapsed))
+      }
       releaseCandidate(handle: handle, candidate)
     }
   }
-  return ProbeAllResult(candidate: nil, cachedDeviceInfo: nil)
+  return ProbeAllResult(candidate: nil, cachedDeviceInfo: nil, probeStep: nil)
 }

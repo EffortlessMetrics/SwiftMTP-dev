@@ -43,6 +43,7 @@ public struct UserOverride: Sendable, Equatable {
     self.inactivityTimeoutMs = inactivityTimeoutMs
     self.overallDeadlineMs = overallDeadlineMs
     self.stabilizeMs = stabilizeMs
+    self.postClaimStabilizeMs = postClaimStabilizeMs
     self.disablePartialRead = disablePartialRead
     self.disablePartialWrite = disablePartialWrite
   }
