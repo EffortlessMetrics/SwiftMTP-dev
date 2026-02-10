@@ -141,7 +141,8 @@ final class InterfaceProbeTests: XCTestCase {
         
         let result = ProbeAllResult(
             candidate: candidate,
-            cachedDeviceInfo: Data([0x01, 0x02])
+            cachedDeviceInfo: Data([0x01, 0x02]),
+            probeStep: nil
         )
         
         XCTAssertNotNil(result.candidate)
@@ -151,7 +152,8 @@ final class InterfaceProbeTests: XCTestCase {
     func testProbeAllResultNoCandidate() {
         let result = ProbeAllResult(
             candidate: nil,
-            cachedDeviceInfo: nil
+            cachedDeviceInfo: nil,
+            probeStep: nil
         )
         
         XCTAssertNil(result.candidate)

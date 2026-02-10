@@ -48,6 +48,10 @@ public actor DeviceServiceRegistry {
 
     /// Register the mapping from ephemeral device ID to stable domainId.
     public func registerDomainMapping(deviceId: MTPDeviceID, domainId: String) {
+        // If remapping an existing deviceId, clear the old reverse mapping to avoid stale lookups.
+        if let oldDomain = domainMap[deviceId], oldDomain != domainId {
+            reverseDomainMap.removeValue(forKey: oldDomain)
+        }
         domainMap[deviceId] = domainId
         reverseDomainMap[domainId] = deviceId
     }

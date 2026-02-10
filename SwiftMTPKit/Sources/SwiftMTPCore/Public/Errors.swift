@@ -6,7 +6,7 @@ public enum MTPError: Error, Sendable, Equatable {
   case notSupported(String)
   case transport(TransportError)
   case protocolError(code: UInt16, message: String?)
-  case objectNotFound, storageFull, readOnly, timeout, busy
+  case objectNotFound, objectWriteProtected, storageFull, readOnly, timeout, busy
   case preconditionFailed(String)
 }
 

@@ -7,6 +7,11 @@ import SwiftMTPTransportLibUSB
 
 @MainActor
 struct DeviceLabCommand {
+  private static var includeSensitiveIdentifiers = false
+  private static func sanitizeIdentifier(_ raw: String) -> String {
+    if includeSensitiveIdentifiers { return raw }
+    return "redacted"
+  }
   private enum ExpectedPolicy: String, Codable, Sendable {
     case fullExercise = "full-exercise"
     case probeNoCrash = "probe-no-crash"
@@ -97,6 +102,7 @@ struct DeviceLabCommand {
   ]
 
   static func run(flags: CLIFlags, args: [String]) async {
+    DeviceLabCommand.includeSensitiveIdentifiers = args.contains("--include-sensitive-identifiers")
     guard let mode = args.first, mode == "connected" else {
       printUsage()
       exitNow(.usage)
@@ -144,26 +150,26 @@ struct DeviceLabCommand {
 
         // Persist per-device artifacts.
         let reportURL = deviceDir.appendingPathComponent("device-report.json")
-        result.artifacts.reportJSON = reportURL.path
+        result.artifacts.reportJSON = reportURL.lastPathComponent
         try writeJSON(result, to: reportURL)
 
         if let receipt = result.probeReceipt {
           let receiptURL = deviceDir.appendingPathComponent("probe-receipt.json")
-          result.artifacts.probeReceiptJSON = receiptURL.path
+          result.artifacts.probeReceiptJSON = receiptURL.lastPathComponent
           try writeJSON(receipt, to: receiptURL)
           try writeJSON(result, to: reportURL)
         }
 
         if let capabilityReport = result.capabilityReport {
           let harnessURL = deviceDir.appendingPathComponent("harness-report.json")
-          result.artifacts.harnessReportJSON = harnessURL.path
+          result.artifacts.harnessReportJSON = harnessURL.lastPathComponent
           try writeJSON(capabilityReport, to: harnessURL)
           try writeJSON(result, to: reportURL)
         }
 
         if let usbDevice {
           let usbURL = deviceDir.appendingPathComponent("usb-interface.json")
-          result.artifacts.usbInterfaceJSON = usbURL.path
+          result.artifacts.usbInterfaceJSON = usbURL.lastPathComponent
           try writeJSON(usbDevice, to: usbURL)
           try writeJSON(result, to: reportURL)
         }
@@ -222,7 +228,7 @@ struct DeviceLabCommand {
   ) async -> DeviceResult {
     let vidpid = formatVIDPID(summary)
     var result = DeviceResult(
-      id: summary.id.raw,
+      id: sanitizeIdentifier(summary.id.raw),
       vidpid: vidpid,
       bus: Int(summary.bus ?? 0),
       address: Int(summary.address ?? 0),
@@ -238,8 +244,8 @@ struct DeviceLabCommand {
       probeReceipt: nil,
       usbInterfaceDump: usbDumpDevice,
       artifacts: ArtifactPaths(
-        directory: deviceDir.path,
-        reportJSON: deviceDir.appendingPathComponent("device-report.json").path,
+        directory: deviceDir.lastPathComponent,
+        reportJSON: "device-report.json",
         harnessReportJSON: nil,
         probeReceiptJSON: nil,
         usbInterfaceJSON: nil
