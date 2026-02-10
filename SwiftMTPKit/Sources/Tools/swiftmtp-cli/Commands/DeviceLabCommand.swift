@@ -35,6 +35,8 @@ struct DeviceLabCommand {
   private struct WriteSmoke: Codable, Sendable {
     var attempted = false
     var succeeded = false
+    var skipped = false
+    var reason: String?
     var bytesUploaded = 0
     var remoteFolder: String?
     var remoteFile: String?
@@ -351,21 +353,56 @@ struct DeviceLabCommand {
     return items
   }
 
+  /// Finds an existing writable folder in root (Download, Downloads, Documents).
+  /// Returns (handle, name) or nil if none found.
+  private static func findWritableParent(device: any MTPDevice, storage: MTPStorageID) async -> (MTPObjectHandle, String)? {
+    let preferredFolders = ["Download", "Downloads", "Documents"]
+    let rootItems: [MTPObjectInfo]
+    do {
+      rootItems = try await listObjects(device: device, parent: nil, storage: storage, limit: 256)
+    } catch {
+      return nil
+    }
+
+    for folderName in preferredFolders {
+      if let existing = rootItems.first(where: { $0.formatCode == 0x3001 && $0.name.lowercased() == folderName.lowercased() }) {
+        return (existing.handle, existing.name)
+      }
+    }
+    return nil
+  }
+
   private static func runWriteSmoke(device: any MTPDevice, storage: MTPStorageInfo) async -> WriteSmoke {
     var smoke = WriteSmoke()
     smoke.attempted = true
 
     guard !storage.isReadOnly else {
-      smoke.warning = "storage is read-only; write smoke skipped"
+      smoke.skipped = true
+      smoke.reason = "storage is read-only"
       return smoke
     }
 
+    // Find existing writable parent instead of creating folders
+    if let (parentHandle, parentName) = await findWritableParent(device: device, storage: storage.id) {
+      smoke.remoteFolder = parentName
+      return await writeToParent(device: device, storage: storage, parentHandle: parentHandle, parentName: parentName)
+    }
+
+    // No existing folder found - skip write smoke instead of creating folders
+    smoke.skipped = true
+    smoke.reason = "no writable parent found (Download/Downloads/Documents not present); folder creation skipped"
+    return smoke
+  }
+
+  private static func writeToParent(device: any MTPDevice, storage: MTPStorageInfo, parentHandle: MTPObjectHandle, parentName: String) async -> WriteSmoke {
+    var smoke = WriteSmoke()
+    smoke.attempted = true
+    smoke.remoteFolder = parentName
+
     let fm = FileManager.default
-    let folderName = "SwiftMTPDeviceLab-\(pathTimestamp())"
-    let fileName = "swiftmtp-smoke-\(UUID().uuidString.prefix(8)).bin"
+    let fileName = "swiftmtp-smoke-\(UUID().uuidString.prefix(8)).txt"
     let payloadSize = 16 * 1024
     smoke.bytesUploaded = payloadSize
-    smoke.remoteFolder = folderName
     smoke.remoteFile = fileName
 
     let tempURL = fm.temporaryDirectory.appendingPathComponent(fileName)
@@ -378,42 +415,24 @@ struct DeviceLabCommand {
     }
     defer { try? fm.removeItem(at: tempURL) }
 
-    var folderHandle: MTPObjectHandle?
     do {
-      folderHandle = try await device.createFolder(parent: nil, name: folderName, storage: storage.id)
-    } catch {
-      smoke.error = "createFolder failed: \(error)"
-      return smoke
-    }
-
-    do {
-      _ = try await device.write(parent: folderHandle, name: fileName, size: UInt64(payloadSize), from: tempURL)
+      _ = try await device.write(parent: parentHandle, name: fileName, size: UInt64(payloadSize), from: tempURL)
       smoke.succeeded = true
     } catch {
-      smoke.error = "write failed: \(error)"
-      if let folderHandle {
-        try? await device.delete(folderHandle, recursive: true)
-      }
+      smoke.error = "write to \(parentName) failed: \(error)"
+      smoke.skipped = true
+      smoke.reason = "SendObject rejected by device (\(error)); write smoke skipped"
       return smoke
     }
 
-    if let folderHandle {
-      do {
-        let children = try await listObjects(device: device, parent: folderHandle, storage: storage.id, limit: 128)
-        if let uploaded = children.first(where: { $0.name == fileName }) {
-          try await device.delete(uploaded.handle, recursive: false)
-        } else {
-          smoke.warning = appendWarning(smoke.warning, "uploaded file not found during cleanup")
-        }
-      } catch {
-        smoke.warning = appendWarning(smoke.warning, "cleanup listing/delete failed: \(error)")
+    // Verify and cleanup
+    do {
+      let children = try await listObjects(device: device, parent: parentHandle, storage: storage.id, limit: 128)
+      if let uploaded = children.first(where: { $0.name == fileName }) {
+        try? await device.delete(uploaded.handle, recursive: false)
       }
-
-      do {
-        try await device.delete(folderHandle, recursive: true)
-      } catch {
-        smoke.warning = appendWarning(smoke.warning, "folder cleanup failed: \(error)")
-      }
+    } catch {
+      smoke.warning = appendWarning(smoke.warning, "cleanup verification failed: \(error)")
     }
 
     return smoke

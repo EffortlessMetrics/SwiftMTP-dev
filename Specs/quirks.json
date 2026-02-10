@@ -89,6 +89,14 @@
         "preferGetObjectPropList": false,
         "disableWriteResume": false
       },
+      "behaviorLimitations": [
+        {
+          "operation": "SendObject",
+          "errorCode": "0x201D",
+          "description": "Cannot write to storage root (0x00000000). SendObject fails with InvalidParameter when parent handle is 0.",
+          "workaround": "Use first available folder as parent container instead of storage root."
+        }
+      ],
       "notes": [
         "Same tuning as ff10 variant with vendor-specific (0xff) MTP interface matching.",
         "Requires 250-500 ms stabilization after OpenSession.",
@@ -129,8 +137,11 @@
         "ioTimeoutMs": 12000,
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 120000,
-        "stabilizeMs": 300,
-        "resetOnOpen": false
+        "stabilizeMs": 500,
+        "resetOnOpen": true,
+        "requiresKernelDetach": true,
+        "alternateInterfaceSelection": true,
+        "postClaimStabilizeMs": 500
       },
       "ops": {
         "supportsGetPartialObject64": true,
@@ -138,16 +149,32 @@
         "preferGetObjectPropList": true,
         "disableWriteResume": true
       },
-      "confidence": "low",
+      "probeLadder": {
+        "enabled": true,
+        "steps": [
+          {"method": "sessionlessGetDeviceInfo", "timeoutMs": 5000},
+          {"method": "openSessionThenGetDeviceInfo", "timeoutMs": 5000},
+          {"method": "getStorageIDs", "timeoutMs": 5000}
+        ]
+      },
+      "warnings": [
+        {
+          "condition": "noInterfaceResponded",
+          "message": "Samsung device did not respond on expected MTP interface. Trying alternate interfaces.",
+          "severity": "warning"
+        }
+      ],
+      "confidence": "medium",
       "status": "experimental",
       "notes": [
         "Vendor-specific interface class (0xff) discovered by shared MTP heuristic.",
-        "Read validation is reliable; write smoke remains best-effort for this class of Samsung devices.",
-        "Use conservative chunking and timeout values until broader Samsung evidence is collected."
+        "Increased post-claim stabilize to 500ms for Samsung MTP stack readiness.",
+        "Probe ladder tries sessionless GetDeviceInfo, then OpenSession+GetDeviceInfo, then GetStorageIDs.",
+        "Read validation is reliable; write smoke remains best-effort."
       ],
       "provenance": {
         "author": "Steven Zimmerman",
-        "date": "2026-02-09"
+        "date": "2026-02-10"
       }
     },
     {
@@ -155,7 +182,6 @@
       "match": {
         "vid": "0x2a70",
         "pid": "0xf003",
-        "deviceInfoRegex": ".*ONEPLUS A3010.*",
         "iface": {
           "class": "0x06",
           "subclass": "0x01",
@@ -188,6 +214,14 @@
         "supportsEvents": true,
         "disableWriteResume": false
       },
+      "behaviorLimitations": [
+        {
+          "operation": "SendObject",
+          "errorCode": "0x201D",
+          "description": "Cannot write to storage root (0x00000000). SendObject fails with InvalidParameter when parent handle is 0.",
+          "workaround": "Use first available folder as parent container instead of storage root."
+        }
+      ],
       "confidence": "high",
       "status": "stable",
       "notes": [
@@ -230,16 +264,25 @@
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 180000,
         "stabilizeMs": 3000,
-        "resetOnOpen": false
+        "postClaimStabilizeMs": 3000,
+        "resetOnOpen": false,
+        "requiresKernelDetach": true
       },
-      "confidence": "low",
+      "warnings": [
+        {
+          "condition": "chromeWebUSBDetected",
+          "message": "Chrome/WebUSB is holding this device. Quit all Chromium-based browsers (Chrome, Edge, Brave) and unplug/replug the device.",
+          "severity": "error"
+        }
+      ],
+      "confidence": "medium",
       "status": "experimental",
       "notes": [
-        "Bulk transfers time out (write rc=-7, LIBUSB_ERROR_TIMEOUT) on macOS Tahoe 26; needs investigation.",
-        "Connected-device lab run on 2026-02-09 still classifies this device as blocked (diagnostic evidence captured).",
+        "Bulk transfers time out (write rc=-7, LIBUSB_ERROR_TIMEOUT) on macOS when Chrome holds device.",
+        "Use requiresKernelDetach=true to attempt releasing from Chrome/WebUSB.",
         "libmtp-aligned claim (set_configuration + set_alt_setting) reinitializes pipes without USB reset.",
         "Fallback USB reset uses stabilizeMs=3000 as poll budget for waitForMTPReady.",
-        "Bulk transfer failures often caused by Chrome/WebUSB holding the device — quit Chromium apps and replug."
+        "If kernel detach fails, user must manually quit Chrome and replug device."
       ],
       "provenance": {
         "author": "Steven Zimmerman",

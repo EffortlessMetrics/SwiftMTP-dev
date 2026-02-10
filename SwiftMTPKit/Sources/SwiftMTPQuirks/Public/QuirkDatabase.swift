@@ -45,6 +45,7 @@ public struct DeviceQuirk: Codable, Sendable {
   public var inactivityTimeoutMs: Int?
   public var overallDeadlineMs: Int?
   public var stabilizeMs: Int?
+  public var postClaimStabilizeMs: Int?
   public var resetOnOpen: Bool?
   public var disableEventPump: Bool?
   public var operations: [String: Bool]?    // e.g. {"partialRead": true}
@@ -67,6 +68,7 @@ public struct DeviceQuirk: Codable, Sendable {
     inactivityTimeoutMs: Int? = nil,
     overallDeadlineMs: Int? = nil,
     stabilizeMs: Int? = nil,
+    postClaimStabilizeMs: Int? = nil,
     resetOnOpen: Bool? = nil,
     disableEventPump: Bool? = nil,
     operations: [String: Bool]? = nil,
@@ -88,6 +90,7 @@ public struct DeviceQuirk: Codable, Sendable {
     self.inactivityTimeoutMs = inactivityTimeoutMs
     self.overallDeadlineMs = overallDeadlineMs
     self.stabilizeMs = stabilizeMs
+    self.postClaimStabilizeMs = postClaimStabilizeMs
     self.resetOnOpen = resetOnOpen
     self.disableEventPump = disableEventPump
     self.operations = operations
@@ -144,6 +147,7 @@ public struct DeviceQuirk: Codable, Sendable {
       inactivityTimeoutMs = tuning.inactivityTimeoutMs
       overallDeadlineMs = tuning.overallDeadlineMs
       stabilizeMs = tuning.stabilizeMs
+      postClaimStabilizeMs = tuning.postClaimStabilizeMs
       resetOnOpen = tuning.resetOnOpen
       disableEventPump = tuning.disableEventPump
     }
@@ -180,6 +184,7 @@ private struct RawTuning: Codable {
   let inactivityTimeoutMs: Int?
   let overallDeadlineMs: Int?
   let stabilizeMs: Int?
+  let postClaimStabilizeMs: Int?
   let resetOnOpen: Bool?
   let disableEventPump: Bool?
 }

@@ -152,10 +152,27 @@ public actor LibUSBTransport: MTPTransport {
     var h: OpaquePointer?
     guard libusb_open(dev, &h) == 0, var handle = h else { libusb_unref_device(dev); throw TransportError.accessDenied }
 
+    // Get vendor/product IDs for device-specific handling
+    var desc = libusb_device_descriptor()
+    _ = libusb_get_device_descriptor(dev, &desc)
+    let vendorID = desc.idVendor
+    let productID = desc.idProduct
+
+    // Determine if this is a vendor-specific MTP device (class 0xff)
+    // Samsung, Xiaomi, and other Android devices often use vendor-specific interfaces
+    var isVendorSpecificMTP = false
+
     // Rank MTP interface candidates from USB descriptors
     var candidates: [InterfaceCandidate]
     do {
       candidates = try rankMTPInterfaces(handle: handle, device: dev)
+      // Check if any candidate is vendor-specific
+      for candidate in candidates {
+        if candidate.ifaceClass == 0xff {
+          isVendorSpecificMTP = true
+          break
+        }
+      }
     } catch {
       libusb_close(handle); libusb_unref_device(dev); throw error
     }
@@ -164,18 +181,42 @@ public actor LibUSBTransport: MTPTransport {
       throw TransportError.io("no MTP interface")
     }
 
+    // For vendor-specific devices (class 0xff), try USB reset before probing
+    // This helps with Samsung, Xiaomi, and similar devices that have interface claiming issues
+    if isVendorSpecificMTP {
+      if debug {
+        print(String(format: "   [Open] Vendor-specific MTP device (VID=0x%04X PID=0x%04X), attempting pre-claim reset", vendorID, productID))
+      }
+      // Attempt USB reset before claim - helps with stubborn devices
+      let resetRC = libusb_reset_device(handle)
+      if debug {
+        print(String(format: "   [Open] Pre-claim libusb_reset_device rc=%d", resetRC))
+      }
+      // Brief pause after reset for device to stabilize
+      usleep(300_000)
+    }
+
     // Pass 1: Normal probe (no USB reset).
     // claimCandidate uses set_configuration + set_alt_setting to reinitialize
     // endpoint pipes, which fixes stale pipe state on most devices.
     if debug { print("   [Open] Pass 1: probing \(candidates.count) candidate(s)") }
+
+    // Use extended timeout for vendor-specific devices (class 0xff)
+    // Samsung, Xiaomi, and similar devices often respond more slowly
+    let effectiveTimeout = isVendorSpecificMTP ? max(config.handshakeTimeoutMs * 2, 5000) : config.handshakeTimeoutMs
+    if isVendorSpecificMTP && debug {
+      print(String(format: "   [Open] Using extended timeout %dms for vendor-specific device", effectiveTimeout))
+    }
+
     var result = tryProbeAllCandidates(
       handle: handle, device: dev, candidates: candidates,
-      handshakeTimeoutMs: config.handshakeTimeoutMs, debug: debug
+      handshakeTimeoutMs: effectiveTimeout, postClaimStabilizeMs: config.postClaimStabilizeMs, debug: debug
     )
 
     // Pass 2 (fallback): If pass 1 failed entirely and resetOnOpen is enabled,
     // do USB reset + MTP readiness poll + re-probe.
-    if result.candidate == nil && config.resetOnOpen {
+    // Also try Pass 2 for vendor-specific devices even without resetOnOpen
+    if result.candidate == nil && (config.resetOnOpen || isVendorSpecificMTP) {
       if debug { print("   [Open] Pass 1 failed, attempting USB reset fallback") }
 
       // Capture bus + port path before reset (address may change, bus+port won't)
@@ -247,7 +288,7 @@ public actor LibUSBTransport: MTPTransport {
 
         result = tryProbeAllCandidates(
           handle: handle, device: dev, candidates: candidates,
-          handshakeTimeoutMs: config.handshakeTimeoutMs, debug: debug
+          handshakeTimeoutMs: config.handshakeTimeoutMs, postClaimStabilizeMs: config.postClaimStabilizeMs, debug: debug
         )
       } else if debug {
         print("   [Open] USB reset failed (rc=\(resetRC)), skipping pass 2")

@@ -10,6 +10,7 @@ public struct EffectiveTuning: Sendable {
   public var inactivityTimeoutMs: Int
   public var overallDeadlineMs: Int
   public var stabilizeMs: Int
+  public var postClaimStabilizeMs: Int
   public var resetOnOpen: Bool
   public var disableEventPump: Bool
   public var operations: [String: Bool]
@@ -22,6 +23,7 @@ public struct EffectiveTuning: Sendable {
     inactivityTimeoutMs: Int,
     overallDeadlineMs: Int,
     stabilizeMs: Int,
+    postClaimStabilizeMs: Int,
     resetOnOpen: Bool,
     disableEventPump: Bool,
     operations: [String: Bool],
@@ -33,6 +35,7 @@ public struct EffectiveTuning: Sendable {
     self.inactivityTimeoutMs = inactivityTimeoutMs
     self.overallDeadlineMs = overallDeadlineMs
     self.stabilizeMs = stabilizeMs
+    self.postClaimStabilizeMs = postClaimStabilizeMs
     self.resetOnOpen = resetOnOpen
     self.disableEventPump = disableEventPump
     self.operations = operations
@@ -47,6 +50,7 @@ public struct EffectiveTuning: Sendable {
       inactivityTimeoutMs: 8000,
       overallDeadlineMs: 60000,
       stabilizeMs: 0,
+      postClaimStabilizeMs: 250,
       resetOnOpen: false,
       disableEventPump: false,
       operations: [:],
@@ -81,6 +85,7 @@ public struct EffectiveTuningBuilder: Sendable {
       if let v = q.inactivityTimeoutMs { eff.inactivityTimeoutMs = v }
       if let v = q.overallDeadlineMs { eff.overallDeadlineMs = v }
       if let v = q.stabilizeMs { eff.stabilizeMs = v }
+      if let v = q.postClaimStabilizeMs { eff.postClaimStabilizeMs = v }
       if let v = q.resetOnOpen { eff.resetOnOpen = v }
       if let v = q.disableEventPump { eff.disableEventPump = v }
       if let ops = q.operations { for (k,v) in ops { eff.operations[k] = v } }
@@ -109,6 +114,7 @@ public struct EffectiveTuningBuilder: Sendable {
     out.inactivityTimeoutMs = top.inactivityTimeoutMs
     out.overallDeadlineMs = top.overallDeadlineMs
     out.stabilizeMs = top.stabilizeMs
+    out.postClaimStabilizeMs = top.postClaimStabilizeMs
     out.resetOnOpen = top.resetOnOpen
     out.disableEventPump = top.disableEventPump
     for (k,v) in top.operations { out.operations[k] = v }
@@ -152,6 +158,7 @@ public struct EffectiveTuningBuilder: Sendable {
     t.inactivityTimeoutMs = min(max(t.inactivityTimeoutMs, 1000), 60000)
     t.overallDeadlineMs = min(max(t.overallDeadlineMs, 5000), 300000)
     t.stabilizeMs = min(max(t.stabilizeMs, 0), 5000)
+    t.postClaimStabilizeMs = min(max(t.postClaimStabilizeMs, 0), 5000)
   }
 }
 

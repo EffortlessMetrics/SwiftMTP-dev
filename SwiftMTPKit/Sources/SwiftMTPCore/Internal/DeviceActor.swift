@@ -273,6 +273,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       if let inactivityTimeout = userOverrides.inactivityTimeoutMs { overrides["inactivityTimeoutMs"] = String(inactivityTimeout) }
       if let overallDeadline = userOverrides.overallDeadlineMs { overrides["overallDeadlineMs"] = String(overallDeadline) }
       if let stabilize = userOverrides.stabilizeMs { overrides["stabilizeMs"] = String(stabilize) }
+      if config.postClaimStabilizeMs > 0 { overrides["postClaimStabilizeMs"] = String(config.postClaimStabilizeMs) }
 
       // 5) Convert learned profile
       var learnedTuning: EffectiveTuning?
@@ -284,6 +285,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
           inactivityTimeoutMs: profile.optimalInactivityTimeoutMs ?? 8_000,
           overallDeadlineMs: 60_000,
           stabilizeMs: 0,
+          postClaimStabilizeMs: 250,
           resetOnOpen: false,
           disableEventPump: false,
           operations: [:],

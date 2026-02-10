@@ -382,6 +382,13 @@ public struct SwiftMTPConfig: Sendable {
   /// Some devices (e.g., Xiaomi) need this delay to become ready. Default: 0
   public var stabilizeMs         = 0
 
+  /// Post-claim stabilization delay in milliseconds.
+  ///
+  /// Time to wait after claiming the USB interface before sending commands.
+  /// Some devices (e.g., Pixel 7, Samsung) need this delay for MTP stack readiness.
+  /// Default: 250ms
+  public var postClaimStabilizeMs    = 250
+
   /// Whether to call libusb_reset_device after opening the device handle.
   /// Defaults to false.
   public var resetOnOpen         = false

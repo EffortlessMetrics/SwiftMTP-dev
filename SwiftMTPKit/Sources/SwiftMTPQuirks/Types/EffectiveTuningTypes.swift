@@ -24,6 +24,7 @@ public struct UserOverride: Sendable, Equatable {
   public var inactivityTimeoutMs: Int?
   public var overallDeadlineMs: Int?
   public var stabilizeMs: Int?
+  public var postClaimStabilizeMs: Int?
   public var disablePartialRead: Bool?
   public var disablePartialWrite: Bool?
 
@@ -33,6 +34,7 @@ public struct UserOverride: Sendable, Equatable {
               inactivityTimeoutMs: Int? = nil,
               overallDeadlineMs: Int? = nil,
               stabilizeMs: Int? = nil,
+              postClaimStabilizeMs: Int? = nil,
               disablePartialRead: Bool? = nil,
               disablePartialWrite: Bool? = nil) {
     self.maxChunkBytes = maxChunkBytes
@@ -41,6 +43,7 @@ public struct UserOverride: Sendable, Equatable {
     self.inactivityTimeoutMs = inactivityTimeoutMs
     self.overallDeadlineMs = overallDeadlineMs
     self.stabilizeMs = stabilizeMs
+    self.postClaimStabilizeMs = postClaimStabilizeMs
     self.disablePartialRead = disablePartialRead
     self.disablePartialWrite = disablePartialWrite
   }
@@ -69,6 +72,7 @@ public extension UserOverride {
       case "inactivityTimeoutMs":  ov.inactivityTimeoutMs  = Int(v)
       case "overallDeadlineMs":    ov.overallDeadlineMs    = Int(v)
       case "stabilizeMs":          ov.stabilizeMs          = Int(v)
+      case "postClaimStabilizeMs": ov.postClaimStabilizeMs = Int(v)
       case "disablePartialRead":   ov.disablePartialRead   = (v == "1" || v.lowercased() == "true")
       case "disablePartialWrite":  ov.disablePartialWrite  = (v == "1" || v.lowercased() == "true")
       default: break

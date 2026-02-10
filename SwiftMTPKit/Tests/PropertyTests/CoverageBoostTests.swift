@@ -27,6 +27,7 @@ final class QuirksCoverageBoostTests: XCTestCase {
             inactivityTimeoutMs: inactivityTimeoutMs,
             overallDeadlineMs: overallDeadlineMs,
             stabilizeMs: stabilizeMs,
+            postClaimStabilizeMs: 250,
             resetOnOpen: resetOnOpen,
             disableEventPump: disableEventPump,
             operations: operations,
