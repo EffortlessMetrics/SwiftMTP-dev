@@ -32,7 +32,13 @@ public enum USBDeviceWatcher {
             // Debug: Print device info
             Logger(subsystem: "SwiftMTP", category: "transport").info("Device arrived: VID=\(String(format:"%04x", desc.idVendor)), PID=\(String(format:"%04x", desc.idProduct)), bus=\(libusb_get_bus_number(dev)), addr=\(libusb_get_device_address(dev))")
 
-            // Filter for interface class 0x06 (MTP/PTP). Cheap check using config 0.
+            var usbHandle: OpaquePointer?
+            if libusb_open(dev, &usbHandle) != 0 { usbHandle = nil }
+            defer {
+                if let h = usbHandle { libusb_close(h) }
+            }
+
+            // Shared MTP heuristic: canonical class and vendor-specific candidates.
             var cfg: UnsafeMutablePointer<libusb_config_descriptor>? = nil
             if libusb_get_active_config_descriptor(dev, &cfg) == 0, let cfg {
                 defer { libusb_free_config_descriptor(cfg) }
@@ -42,8 +48,17 @@ public enum USBDeviceWatcher {
                     let iface = cfg.pointee.interface[Int(i)]
                     for a in 0..<iface.num_altsetting {
                         let alt = iface.altsetting[Int(a)]
+                        let endpoints = findEndpoints(alt)
+                        let interfaceName = usbHandle.map { getAsciiString($0, alt.iInterface) } ?? ""
+                        let heuristic = evaluateMTPInterfaceCandidate(
+                            interfaceClass: alt.bInterfaceClass,
+                            interfaceSubclass: alt.bInterfaceSubClass,
+                            interfaceProtocol: alt.bInterfaceProtocol,
+                            endpoints: endpoints,
+                            interfaceName: interfaceName
+                        )
                         Logger(subsystem: "SwiftMTP", category: "transport").info("Interface \(i), alt \(a): class=\(alt.bInterfaceClass), subclass=\(alt.bInterfaceSubClass), protocol=\(alt.bInterfaceProtocol)")
-                        if alt.bInterfaceClass == 0x06 {
+                        if heuristic.isCandidate {
                             isMTP = true
                             break
                         }
@@ -58,10 +73,35 @@ public enum USBDeviceWatcher {
                 Logger(subsystem: "SwiftMTP", category: "transport").info("Could not get config descriptor")
                 return 0
             }
-            // Strings from USB descriptor are optional; use placeholders
+            // Read USB string descriptors if possible
+            var manufacturer = "USB \(String(format:"%04x", desc.idVendor))"
+            var model = "USB \(String(format:"%04x", desc.idProduct))"
+            var serial: String? = nil
+            if let h = usbHandle {
+                if desc.iManufacturer != 0 {
+                    var buf = [UInt8](repeating: 0, count: 128)
+                    let n = libusb_get_string_descriptor_ascii(h, desc.iManufacturer, &buf, Int32(buf.count))
+                    if n > 0 { manufacturer = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
+                }
+                if desc.iProduct != 0 {
+                    var buf = [UInt8](repeating: 0, count: 128)
+                    let n = libusb_get_string_descriptor_ascii(h, desc.iProduct, &buf, Int32(buf.count))
+                    if n > 0 { model = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
+                }
+                if desc.iSerialNumber != 0 {
+                    var buf = [UInt8](repeating: 0, count: 128)
+                    let n = libusb_get_string_descriptor_ascii(h, desc.iSerialNumber, &buf, Int32(buf.count))
+                    if n > 0 { serial = String(decoding: buf.prefix(Int(n)), as: UTF8.self) }
+                }
+            }
             let summary = MTPDeviceSummary(id: id,
-                                           manufacturer: "USB \(String(format:"%04x", desc.idVendor))",
-                                           model: "USB \(String(format:"%04x", desc.idProduct))")
+                                           manufacturer: manufacturer,
+                                           model: model,
+                                           vendorID: desc.idVendor,
+                                           productID: desc.idProduct,
+                                           bus: libusb_get_bus_number(dev),
+                                           address: libusb_get_device_address(dev),
+                                           usbSerial: serial)
             box.onAttach(summary)
         } else if event == LIBUSB_HOTPLUG_EVENT_DEVICE_LEFT {
             Logger(subsystem: "SwiftMTP", category: "transport").info("Device left: \(id.raw)")

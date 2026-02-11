@@ -10,6 +10,7 @@ public enum MockTransportFactory {
     public enum DeviceProfile {
         case androidPixel7
         case androidGalaxyS21
+        case androidOnePlus3T
         case iosDevice
         case canonCamera
         case failureTimeout
@@ -31,6 +32,8 @@ public enum MockTransportFactory {
             return MockDeviceData.androidPixel7
         case .androidGalaxyS21:
             return MockDeviceData.androidGalaxyS21
+        case .androidOnePlus3T:
+            return MockDeviceData.androidOnePlus3T
         case .iosDevice:
             return MockDeviceData.iosDevice
         case .canonCamera:

@@ -16,6 +16,11 @@ public actor DeviceServiceRegistry {
     private var orchestratorHandles: [MTPDeviceID: AnyObject] = [:]
     private var monitorTask: Task<Void, Never>?
 
+    /// Maps ephemeral MTPDeviceID → stable domainId (UUID).
+    private var domainMap: [MTPDeviceID: String] = [:]
+    /// Reverse map: domainId → ephemeral MTPDeviceID (for XPC lookups).
+    private var reverseDomainMap: [String: MTPDeviceID] = [:]
+
     public init() {}
 
     /// Get the device service for a given device.
@@ -37,6 +42,28 @@ public actor DeviceServiceRegistry {
     /// Register a device service.
     public func register(deviceId: MTPDeviceID, service: DeviceService) {
         services[deviceId] = service
+    }
+
+    // MARK: - Domain Mapping
+
+    /// Register the mapping from ephemeral device ID to stable domainId.
+    public func registerDomainMapping(deviceId: MTPDeviceID, domainId: String) {
+        // If remapping an existing deviceId, clear the old reverse mapping to avoid stale lookups.
+        if let oldDomain = domainMap[deviceId], oldDomain != domainId {
+            reverseDomainMap.removeValue(forKey: oldDomain)
+        }
+        domainMap[deviceId] = domainId
+        reverseDomainMap[domainId] = deviceId
+    }
+
+    /// Look up the stable domainId for an ephemeral device ID.
+    public func domainId(for deviceId: MTPDeviceID) -> String? {
+        domainMap[deviceId]
+    }
+
+    /// Look up the ephemeral device ID for a stable domainId (used by XPC).
+    public func deviceId(for domainId: String) -> MTPDeviceID? {
+        reverseDomainMap[domainId]
     }
 
     /// Start monitoring device attach/detach events.
@@ -99,5 +126,8 @@ public actor DeviceServiceRegistry {
     public func remove(deviceId: MTPDeviceID) {
         services.removeValue(forKey: deviceId)
         orchestratorHandles.removeValue(forKey: deviceId)
+        if let domainId = domainMap.removeValue(forKey: deviceId) {
+            reverseDomainMap.removeValue(forKey: domainId)
+        }
     }
 }

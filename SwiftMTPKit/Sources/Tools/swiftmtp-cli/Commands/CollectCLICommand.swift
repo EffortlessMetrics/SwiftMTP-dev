@@ -13,8 +13,8 @@ struct CollectCLICommand {
             json: flags.json,
             noninteractive: false,
             bundlePath: nil,
-            vid: flags.targetVID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) },
-            pid: flags.targetPID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) },
+            vid: parseUSBIdentifier(flags.targetVID),
+            pid: parseUSBIdentifier(flags.targetPID),
             bus: flags.targetBus,
             address: flags.targetAddress
         )

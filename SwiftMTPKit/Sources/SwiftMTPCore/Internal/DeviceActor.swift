@@ -273,6 +273,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       if let inactivityTimeout = userOverrides.inactivityTimeoutMs { overrides["inactivityTimeoutMs"] = String(inactivityTimeout) }
       if let overallDeadline = userOverrides.overallDeadlineMs { overrides["overallDeadlineMs"] = String(overallDeadline) }
       if let stabilize = userOverrides.stabilizeMs { overrides["stabilizeMs"] = String(stabilize) }
+      if config.postClaimStabilizeMs > 0 { overrides["postClaimStabilizeMs"] = String(config.postClaimStabilizeMs) }
 
       // 5) Convert learned profile
       var learnedTuning: EffectiveTuning?
@@ -284,6 +285,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
           inactivityTimeoutMs: profile.optimalInactivityTimeoutMs ?? 8_000,
           overallDeadlineMs: 60_000,
           stabilizeMs: 0,
+          postClaimStabilizeMs: 250,
           resetOnOpen: false,
           disableEventPump: false,
           operations: [:],
@@ -291,14 +293,15 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         )
       }
 
-      // 6) Find matching quirk
+      // 6) Find matching quirk — use real interface descriptor when available
+      let linkDesc = mtpLink?.linkDescriptor
       let quirk = qdb.match(
         vid: summary.vendorID ?? 0,
         pid: summary.productID ?? 0,
         bcdDevice: nil,
-        ifaceClass: nil,
-        ifaceSubclass: nil,
-        ifaceProtocol: nil
+        ifaceClass: linkDesc?.interfaceClass,
+        ifaceSubclass: linkDesc?.interfaceSubclass,
+        ifaceProtocol: linkDesc?.interfaceProtocol
       )
       if debugEnabled, let q = quirk { print("   [Actor] Matched quirk: \(q.id)") }
 
@@ -322,9 +325,22 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       if debugEnabled { print("   [Actor] Opening MTP session...") }
       var sessionResult = SessionProbeResult()
       let sessionStart = DispatchTime.now()
+
+      // Preemptive CloseSession to clear any stale session from a previous crash
+      if debugEnabled { print("   [Actor] Preemptive CloseSession (clear stale)...") }
+      try? await link.closeSession()
+
       do {
           try await link.openSession(id: 1)
           sessionResult.succeeded = true
+      } catch let error as MTPError where error.isSessionAlreadyOpen {
+          // Session already open — close it and retry
+          if debugEnabled { print("   [Actor] SessionAlreadyOpen (0x201E), closing and retrying...") }
+          sessionResult.requiredRetry = true
+          try? await link.closeSession()
+          try await link.openSession(id: 1)
+          sessionResult.succeeded = true
+          if debugEnabled { print("   [Actor] OpenSession succeeded after close+retry.") }
       } catch {
           guard isTimeoutOrIOError(error) else {
               sessionResult.error = "\(error)"
@@ -433,17 +449,25 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     // MARK: - Tuning and Capability Methods
 
     private func buildFingerprint() async throws -> MTPDeviceFingerprint {
-        // Build fingerprint from USB IDs and interface details
-        let interfaceTripleData = try JSONSerialization.data(withJSONObject: ["class": "06", "subclass": "01", "protocol": "01"])
-        let endpointAddressesData = try JSONSerialization.data(withJSONObject: ["input": "81", "output": "01", "event": "82"])
-        let interfaceTriple = try JSONDecoder().decode(InterfaceTriple.self, from: interfaceTripleData)
-        let endpointAddresses = try JSONDecoder().decode(EndpointAddresses.self, from: endpointAddressesData)
-
-        return MTPDeviceFingerprint(
-            vid: String(format: "%04x", summary.vendorID ?? 0),
-            pid: String(format: "%04x", summary.productID ?? 0),
-            interfaceTriple: interfaceTriple,
-            endpointAddresses: endpointAddresses
+        // Use real USB descriptor data from transport probing when available
+        if let desc = mtpLink?.linkDescriptor {
+            return MTPDeviceFingerprint.fromUSB(
+                vid: summary.vendorID ?? 0,
+                pid: summary.productID ?? 0,
+                interfaceClass: desc.interfaceClass,
+                interfaceSubclass: desc.interfaceSubclass,
+                interfaceProtocol: desc.interfaceProtocol,
+                epIn: desc.bulkInEndpoint,
+                epOut: desc.bulkOutEndpoint,
+                epEvt: desc.interruptEndpoint
+            )
+        }
+        // Fallback for mock transports without real descriptor data
+        return MTPDeviceFingerprint.fromUSB(
+            vid: summary.vendorID ?? 0,
+            pid: summary.productID ?? 0,
+            interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
+            epIn: 0x81, epOut: 0x01
         )
     }
 

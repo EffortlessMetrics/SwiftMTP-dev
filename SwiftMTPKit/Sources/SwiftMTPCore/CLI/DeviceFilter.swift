@@ -12,11 +12,20 @@ public struct DeviceFilter: Sendable {
   }
 }
 
-// hex or decimal
+// Parse VID/PID values with hex-first semantics.
+// This matches common USB notation where unprefixed values are typically hex.
 @inline(__always)
-private func parseU16(_ s: String) -> UInt16? {
-  if s.hasPrefix("0x") || s.hasPrefix("0X") { return UInt16(s.dropFirst(2), radix: 16) }
-  return UInt16(s, radix: 10)
+public func parseUSBIdentifier(_ raw: String?) -> UInt16? {
+  guard let raw else { return nil }
+  let value = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+  guard !value.isEmpty else { return nil }
+  if value.hasPrefix("0x") || value.hasPrefix("0X") {
+    return UInt16(value.dropFirst(2), radix: 16)
+  }
+  if value.range(of: "[a-fA-F]", options: .regularExpression) != nil {
+    return UInt16(value, radix: 16)
+  }
+  return UInt16(value, radix: 16) ?? UInt16(value, radix: 10)
 }
 
 @inline(__always)
@@ -28,8 +37,8 @@ public struct DeviceFilterParse {
     var i = 0
     while i < args.count {
       switch args[i] {
-      case "--vid":     if i+1 < args.count, let v = parseU16(args[i+1]) { vid = v; args.removeSubrange(i...i+1); continue }
-      case "--pid":     if i+1 < args.count, let v = parseU16(args[i+1]) { pid = v; args.removeSubrange(i...i+1); continue }
+      case "--vid":     if i+1 < args.count, let v = parseUSBIdentifier(args[i+1]) { vid = v; args.removeSubrange(i...i+1); continue }
+      case "--pid":     if i+1 < args.count, let v = parseUSBIdentifier(args[i+1]) { pid = v; args.removeSubrange(i...i+1); continue }
       case "--bus":     if i+1 < args.count, let v = parseInt(args[i+1]) { bus = v; args.removeSubrange(i...i+1); continue }
       case "--address": if i+1 < args.count, let v = parseInt(args[i+1]) { address = v; args.removeSubrange(i...i+1); continue }
       default: break
@@ -55,8 +64,14 @@ public func selectDevice(
   let filtered = devices.filter { d in
     if let v = filter.vid, d.vendorID != v { return false }
     if let p = filter.pid, d.productID != p { return false }
-    if let b = filter.bus, let db = d.bus, b != db { return false }
-    if let a = filter.address, let da = d.address, a != da { return false }
+    // If filter specifies bus, device must have the same bus value
+    if let b = filter.bus {
+      guard let db = d.bus, b == db else { return false }
+    }
+    // If filter specifies address, device must have the same address value
+    if let a = filter.address {
+      guard let da = d.address, a == da else { return false }
+    }
     return true
   }
   if filtered.isEmpty { return .none }

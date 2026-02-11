@@ -24,9 +24,39 @@ public protocol MTPTransport: Sendable {
     func close() async throws
 }
 
+/// Bundles USB interface metadata discovered during transport probing.
+public struct MTPLinkDescriptor: Sendable, Codable, Hashable {
+    public let interfaceNumber: UInt8
+    public let interfaceClass: UInt8
+    public let interfaceSubclass: UInt8
+    public let interfaceProtocol: UInt8
+    public let bulkInEndpoint: UInt8
+    public let bulkOutEndpoint: UInt8
+    public let interruptEndpoint: UInt8?
+
+    public init(interfaceNumber: UInt8, interfaceClass: UInt8, interfaceSubclass: UInt8,
+                interfaceProtocol: UInt8, bulkInEndpoint: UInt8, bulkOutEndpoint: UInt8,
+                interruptEndpoint: UInt8? = nil) {
+        self.interfaceNumber = interfaceNumber
+        self.interfaceClass = interfaceClass
+        self.interfaceSubclass = interfaceSubclass
+        self.interfaceProtocol = interfaceProtocol
+        self.bulkInEndpoint = bulkInEndpoint
+        self.bulkOutEndpoint = bulkOutEndpoint
+        self.interruptEndpoint = interruptEndpoint
+    }
+}
+
 public protocol MTPLink: Sendable {
     /// Raw device-info bytes cached during interface probing. Default: nil.
     var cachedDeviceInfo: MTPDeviceInfo? { get }
+
+    /// USB interface/endpoint metadata from transport probing. Default: nil.
+    var linkDescriptor: MTPLinkDescriptor? { get }
+
+    /// Interface probe result containing selection reason and skipped alternatives.
+    /// Default: nil.
+    var interfaceProbeResult: InterfaceProbeResult? { get }
 
     func openUSBIfNeeded() async throws
     func openSession(id: UInt32) async throws
@@ -59,6 +89,8 @@ public protocol MTPLink: Sendable {
 /// Default implementations for optional MTPLink properties.
 public extension MTPLink {
   var cachedDeviceInfo: MTPDeviceInfo? { nil }
+  var linkDescriptor: MTPLinkDescriptor? { nil }
+  var interfaceProbeResult: InterfaceProbeResult? { nil }
 }
 
 public protocol TransportFactory {

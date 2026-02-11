@@ -1,0 +1,181 @@
+{
+  "timestamp": "2026-02-08T21:36:53.552807+00:00",
+  "threshold": 100.0,
+  "status": "pass",
+  "overall": {
+    "covered": 1244,
+    "count": 1244,
+    "percent": 100.0
+  },
+  "modules": {
+    "SwiftMTPQuirks": {
+      "covered": 363,
+      "count": 363,
+      "percent": 100.0
+    },
+    "SwiftMTPStore": {
+      "covered": 585,
+      "count": 585,
+      "percent": 100.0
+    },
+    "SwiftMTPSync": {
+      "covered": 239,
+      "count": 239,
+      "percent": 100.0
+    },
+    "SwiftMTPObservability": {
+      "covered": 57,
+      "count": 57,
+      "percent": 100.0
+    }
+  },
+  "files": [
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/SyncEngine.swift",
+      "module": "SwiftMTPSync",
+      "covered": 1,
+      "count": 1,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/FallbackSelections.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 4,
+      "count": 4,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/ProfilingRunEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 5,
+      "count": 5,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/SnapshotEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 6,
+      "count": 6,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/SubmissionEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 7,
+      "count": 7,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/ProfilingMetricEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 9,
+      "count": 9,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/DevicePolicy.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 11,
+      "count": 11,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/MTPStorageEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 11,
+      "count": 11,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/DeviceEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 12,
+      "count": 12,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/LearnedProfileEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 14,
+      "count": 14,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkFlags.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 15,
+      "count": 15,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/MTPObjectEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 15,
+      "count": 15,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/TransferEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 15,
+      "count": 15,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStore.swift",
+      "module": "SwiftMTPStore",
+      "covered": 20,
+      "count": 20,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Types/EffectiveTuningTypes.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 40,
+      "count": 40,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPObservability/Throughput.swift",
+      "module": "SwiftMTPObservability",
+      "covered": 57,
+      "count": 57,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/EffectiveTuning.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 110,
+      "count": 110,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStoreAdapter.swift",
+      "module": "SwiftMTPStore",
+      "covered": 176,
+      "count": 176,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkDatabase.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 183,
+      "count": 183,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/MirrorEngine.swift",
+      "module": "SwiftMTPSync",
+      "covered": 238,
+      "count": 238,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/StoreActor.swift",
+      "module": "SwiftMTPStore",
+      "covered": 295,
+      "count": 295,
+      "percent": 100.0
+    }
+  ]
+}

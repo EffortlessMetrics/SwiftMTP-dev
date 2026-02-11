@@ -23,9 +23,9 @@ let package = Package(
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-async-algorithms.git", exact: "1.0.1"),
-    .package(url: "https://github.com/apple/swift-collections.git", exact: "1.1.1"),
-    .package(url: "https://github.com/stephencelis/SQLite.swift.git", exact: "0.15.3"),
+    .package(url: "https://github.com/apple/swift-async-algorithms.git", exact: "1.1.1"),
+    .package(url: "https://github.com/apple/swift-collections.git", exact: "1.3.0"),
+    .package(url: "https://github.com/stephencelis/SQLite.swift.git", exact: "0.15.5"),
     .package(url: "https://github.com/Tyler-Keith-Thompson/CucumberSwift", from: "5.0.0"),
     .package(url: "https://github.com/typelift/SwiftCheck", from: "0.12.0"),
     .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.10.0"),
@@ -89,14 +89,14 @@ let package = Package(
                       path: "Sources/Tools/swiftmtp-cli",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
-    .testTarget(name: "CoreTests", dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks"]),
-    .testTarget(name: "IndexTests", dependencies: ["SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPSync", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks"]),
+    .testTarget(name: "CoreTests", dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks", "SwiftMTPTestKit"]),
+    .testTarget(name: "IndexTests", dependencies: ["SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPSync", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks", "SwiftMTPTestKit"]),
     .testTarget(name: "TransportTests", dependencies: ["SwiftMTPTransportLibUSB", "CLibusb"]),
     .testTarget(name: "BDDTests",
                 dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", .product(name: "CucumberSwift", package: "CucumberSwift")],
                 resources: [.copy("Features")]),
     .testTarget(name: "PropertyTests",
-                dependencies: ["SwiftMTPCore", "SwiftCheck"]),
+                dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPObservability", "SwiftMTPStore", "SwiftMTPQuirks", "SwiftCheck"]),
     .testTarget(name: "SnapshotTests",
                 dependencies: [
                     "SwiftMTPCore",
@@ -107,6 +107,50 @@ let package = Package(
     .testTarget(name: "TestKitTests",
                 dependencies: ["SwiftMTPTestKit", "SwiftMTPCore"]),
     .testTarget(name: "FileProviderTests",
-                dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore"]),
+                dependencies: ["SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPXPC"]),
+    .testTarget(name: "XPCTests",
+                dependencies: [
+                    "SwiftMTPXPC",
+                    "SwiftMTPCore",
+                    "SwiftMTPTestKit",
+                ]),
+    .testTarget(name: "IntegrationTests",
+                dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPFileProvider", "SwiftMTPQuirks", "SwiftMTPTestKit"]),
+    .testTarget(name: "StoreTests",
+                dependencies: [
+                    "SwiftMTPStore",
+                    "SwiftMTPTestKit",
+                    "SwiftMTPCore"
+                ]),
+    .testTarget(name: "SyncTests",
+                dependencies: [
+                    "SwiftMTPSync",
+                    "SwiftMTPTestKit",
+                    "SwiftMTPCore",
+                    "SwiftMTPIndex"
+                ]),
+
+    .testTarget(name: "ErrorHandlingTests",
+                dependencies: [
+                    "SwiftMTPCore",
+                    "SwiftMTPIndex",
+                    "SwiftMTPStore",
+                    "SwiftMTPSync",
+                    "SwiftMTPTransportLibUSB",
+                    "SwiftMTPTestKit",
+                ]),
+    .testTarget(name: "ScenarioTests",
+                dependencies: [
+                    "SwiftMTPCore",
+                    "SwiftMTPTransportLibUSB",
+                    "SwiftMTPIndex",
+                    "SwiftMTPSync",
+                    "SwiftMTPTestKit",
+                ]),
+    .testTarget(name: "ToolingTests",
+                dependencies: [
+                    "swiftmtp-cli",
+                    "SwiftMTPCore",
+                ]),
   ]
 )

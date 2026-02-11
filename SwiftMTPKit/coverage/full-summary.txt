@@ -1,0 +1,1 @@
+error: failed to load coverage: '.build/arm64-apple-macosx/debug/codecov/XCTest668369772092876284_0.15721.profraw': invalid instrumentation profile data (bad magic)

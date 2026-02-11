@@ -15,7 +15,7 @@ Device-specific configuration for Google Pixel 7 4Ee1 MTP implementation.
 | Vendor ID | 0x18d1 |
 | Product ID | 0x4ee1 |
 | Device Info Pattern | `None` |
-| Status | Stable |
+| Status | Experimental |
 
 ## Interface
 
@@ -24,10 +24,14 @@ Device-specific configuration for Google Pixel 7 4Ee1 MTP implementation.
 | Class | 0x06 |
 | Subclass | 0x01 |
 | Protocol | 0x01 |
+## Endpoints
 
+| Property | Value |
+|----------|-------|
+| Input Endpoint | 0x81 |
+| Output Endpoint | 0x01 |
+| Event Endpoint | 0x82 |
 ## Tuning Parameters
-
-> **Note**: These tuning values are sourced from `Specs/quirks.json` (quirk ID: `google-pixel-7-4ee1`).
 
 | Parameter | Value | Unit |
 |-----------|-------|------|
@@ -35,23 +39,21 @@ Device-specific configuration for Google Pixel 7 4Ee1 MTP implementation.
 | Handshake Timeout | 20000 | ms |
 | I/O Timeout | 30000 | ms |
 | Inactivity Timeout | 10000 | ms |
-| Overall Deadline | 180000 | ms |
-| Stabilization Delay | 2000 | ms |
+| Overall Deadline | 180000 | ms || Stabilization Delay | 3000 | ms |
 
 ## Notes
 
-- Google Pixel 7 (18d1:4ee1) general Android MTP stack.
-- Disabled resetOnOpen as it causes re-enumeration and may revert to 'Charging only' mode.
-- Increased stabilization delay to 2000ms.
-
-> **⚠️ Benchmark Data Status**: The benchmark data in `Docs/benchmarks/pixel7/` is currently **MOCK data**. It was generated for testing purposes and has not been validated against a real Google Pixel 7 device. Real device benchmarks are needed for accurate performance characterization.
-
+- Bulk transfers time out (write rc=-7, LIBUSB_ERROR_TIMEOUT) on macOS when Chrome holds device.
+- Use requiresKernelDetach=true to attempt releasing from Chrome/WebUSB.
+- libmtp-aligned claim (set_configuration + set_alt_setting) reinitializes pipes without USB reset.
+- Fallback USB reset uses stabilizeMs=3000 as poll budget for waitForMTPReady.
+- If kernel detach fails, user must manually quit Chrome and replug device.
 ## Provenance
 
-- **Author**: Gemini CLI
-- **Date**: 2026-02-06
+- **Author**: Steven Zimmerman
+- **Date**: 2026-02-07
 - **Commit**: Unknown
 
 ### Evidence Artifacts
-
-- [Benchmarks Directory](Docs/benchmarks/pixel7/) - **Note: Contains mock data, needs real device validation**
+- [Device Probe](Docs/benchmarks/probes/pixel7-probe.txt)
+- [USB Dump](Docs/benchmarks/probes/pixel7-usb-dump.txt)

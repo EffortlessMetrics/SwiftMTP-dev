@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # ---------- config ----------
-VID="${VID:-2717}"
-PID="${PID:-ff10}"
+VID="${VID:-0x2717}"
+PID="${PID:-0xff10}"
 PKG_PATH="${PKG_PATH:-SwiftMTPKit}"   # repo‑root path for swift run --package-path
 BUNDLE_ROOT="Contrib/submissions"
 TS="$(date +%Y%m%d-%H%M%S)"

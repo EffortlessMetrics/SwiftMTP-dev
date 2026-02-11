@@ -5,6 +5,18 @@ import Foundation
 import OSLog
 
 extension MTPDeviceActor {
+    public func createFolder(parent: MTPObjectHandle?, name: String, storage: MTPStorageID) async throws -> MTPObjectHandle {
+        try await openIfNeeded()
+        let link = try await getMTPLink()
+        let parentHandle = parent ?? 0xFFFFFFFF
+        return try await BusyBackoff.onDeviceBusy {
+            try await ProtoTransfer.createFolder(
+                storageID: storage.raw, parent: parentHandle, name: name,
+                on: link, ioTimeoutMs: 10_000
+            )
+        }
+    }
+
     public func read(handle: MTPObjectHandle, range: Range<UInt64>?, to url: URL) async throws -> Progress {
         let link = try await getMTPLink()
         let info = try await link.getObjectInfos([handle])[0]

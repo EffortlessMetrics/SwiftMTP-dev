@@ -20,6 +20,7 @@ struct StorybookCommand {
         let mockData: MockDeviceData
         switch profile.lowercased() {
         case "s21", "galaxy": mockData = MockDeviceData.androidGalaxyS21
+        case "oneplus", "oneplus3t": mockData = MockDeviceData.androidOnePlus3T
         case "iphone", "ios": mockData = MockDeviceData.iosDevice
         case "canon", "camera": mockData = MockDeviceData.canonCamera
         default: mockData = MockDeviceData.androidPixel7

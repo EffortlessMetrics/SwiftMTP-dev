@@ -1,0 +1,28 @@
+{
+  "avgHandshakeMs" : 150,
+  "created" : 757468800,
+  "fingerprint" : {
+    "bcdDevice" : "0200",
+    "endpointAddresses" : {
+      "event" : "82",
+      "input" : "81",
+      "output" : "01"
+    },
+    "interfaceTriple" : {
+      "class" : "06",
+      "protocol" : "01",
+      "subclass" : "01"
+    },
+    "pid" : "f003",
+    "vid" : "2a70"
+  },
+  "fingerprintHash" : "2a70-f003-0200-06-01-01-81-01-82-none",
+  "hostEnvironment" : "macOS 15.0",
+  "lastUpdated" : 757468800,
+  "optimalChunkSize" : 1048576,
+  "optimalIoTimeoutMs" : 25000,
+  "p95ReadThroughputMBps" : 28.5,
+  "p95WriteThroughputMBps" : 15.2,
+  "sampleCount" : 5,
+  "successRate" : 0.95
+}

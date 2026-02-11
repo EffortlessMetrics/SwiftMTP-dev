@@ -81,6 +81,79 @@ public enum ProtoTransfer {
     }
 }
 
+// MARK: - Folder Creation
+
+extension ProtoTransfer {
+    /// Create a folder on the device using SendObjectInfo + zero-length SendObject.
+    ///
+    /// - Parameters:
+    ///   - storageID: Target storage ID
+    ///   - parent: Parent handle (0xFFFFFFFF for root)
+    ///   - name: Folder name
+    ///   - link: MTP link
+    /// - Returns: The handle of the newly created folder
+    public static func createFolder(
+        storageID: UInt32, parent: UInt32, name: String,
+        on link: MTPLink, ioTimeoutMs: Int
+    ) async throws -> MTPObjectHandle {
+        // Build ObjectInfoDataset for an Association (folder)
+        // format=0x3001 (Association), associationType=0x0001 (GenericFolder), size=0
+        let dataset = PTPObjectInfoDataset.encode(
+            storageID: storageID, parentHandle: parent,
+            format: 0x3001, size: 0, name: name,
+            associationType: 0x0001, associationDesc: 0
+        )
+
+        let sendObjectInfoCommand = PTPContainer(
+            length: 20,
+            type: PTPContainer.Kind.command.rawValue,
+            code: PTPOp.sendObjectInfo.rawValue,
+            txid: 0,
+            params: [storageID, parent]
+        )
+
+        let infoOffset = BoxedOffset()
+        let infoRes = try await link.executeStreamingCommand(
+            sendObjectInfoCommand,
+            dataPhaseLength: UInt64(dataset.count),
+            dataInHandler: nil,
+            dataOutHandler: { buf in
+                let off = infoOffset.get()
+                let remaining = dataset.count - off
+                guard remaining > 0 else { return 0 }
+                let toCopy = min(buf.count, remaining)
+                dataset.copyBytes(to: buf, from: off..<off + toCopy)
+                _ = infoOffset.getAndAdd(toCopy)
+                return toCopy
+            }
+        )
+        try infoRes.checkOK()
+
+        // Extract new handle from response params[2] (storage, parent, handle)
+        let newHandle: MTPObjectHandle
+        if infoRes.params.count >= 3 {
+            newHandle = infoRes.params[2]
+        } else {
+            newHandle = infoRes.params.last ?? 0
+        }
+
+        // PTP spec requires a zero-length SendObject after SendObjectInfo
+        let sendObjectCommand = PTPContainer(
+            length: 12,
+            type: PTPContainer.Kind.command.rawValue,
+            code: PTPOp.sendObject.rawValue,
+            txid: 0,
+            params: []
+        )
+        try await link.executeStreamingCommand(
+            sendObjectCommand, dataPhaseLength: 0,
+            dataInHandler: nil, dataOutHandler: { _ in 0 }
+        ).checkOK()
+
+        return newHandle
+    }
+}
+
 // MARK: - Partial Read/Write
 
 extension ProtoTransfer {
@@ -124,8 +197,24 @@ extension ProtoTransfer {
 
 extension PTPResponseResult {
     public func checkOK() throws {
-        if !isOK {
-            throw MTPError.protocolError(code: code, message: "PTP Response Error 0x\(String(format: "%04x", code))")
+        if isOK { return }
+        switch code {
+        case 0x2005:
+            throw MTPError.notSupported("Operation not supported (\(PTPResponseCode.describe(code)))")
+        case 0x2009:
+            throw MTPError.objectNotFound
+        case 0x200C:
+            throw MTPError.storageFull
+        case 0x200D:
+            throw MTPError.objectWriteProtected
+        case 0x200E:
+            throw MTPError.readOnly
+        case 0x200F:
+            throw MTPError.permissionDenied
+        case 0x2019:
+            throw MTPError.busy
+        default:
+            throw MTPError.protocolError(code: code, message: PTPResponseCode.describe(code))
         }
     }
 }

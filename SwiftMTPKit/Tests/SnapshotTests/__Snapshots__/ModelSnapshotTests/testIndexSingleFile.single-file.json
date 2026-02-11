@@ -1,0 +1,13 @@
+{
+  "changeCounter" : 1,
+  "deviceId" : "pixel7-4ee1",
+  "formatCode" : 12289,
+  "handle" : 1,
+  "isDirectory" : false,
+  "mtime" : "2026-02-07T12:00:00Z",
+  "name" : "test.txt",
+  "parentHandle" : null,
+  "pathKey" : "\/test.txt",
+  "sizeBytes" : 1024,
+  "storageId" : 65537
+}

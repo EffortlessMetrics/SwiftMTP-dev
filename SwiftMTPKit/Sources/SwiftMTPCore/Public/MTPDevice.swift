@@ -4,6 +4,17 @@
 import Foundation
 import SwiftMTPQuirks
 
+@inline(__always)
+private func decodeLittleEndian<T: FixedWidthInteger>(_ data: Data, at offset: Int, as: T.Type = T.self) -> T? {
+  let width = MemoryLayout<T>.size
+  guard offset >= 0, offset + width <= data.count else { return nil }
+  var value: T = 0
+  _ = withUnsafeMutableBytes(of: &value) { raw in
+    data.copyBytes(to: raw, from: offset..<(offset + width))
+  }
+  return T(littleEndian: value)
+}
+
 public struct MTPDeviceID: Hashable, Sendable, Codable {
     public let raw: String
     public init(raw: String) { self.raw = raw }
@@ -28,6 +39,8 @@ public struct MTPDeviceSummary: Sendable {
   public let bus: UInt8?
   /// USB Device address
   public let address: UInt8?
+  /// USB serial number from iSerialNumber descriptor (most reliable identity signal)
+  public let usbSerial: String?
 
   /// Device fingerprint for quirk matching
   public var fingerprint: String {
@@ -44,7 +57,7 @@ public struct MTPDeviceSummary: Sendable {
   ///   - productID: USB Product ID
   ///   - bus: USB Bus number
   ///   - address: USB Device address
-  public init(id: MTPDeviceID, manufacturer: String, model: String, vendorID: UInt16? = nil, productID: UInt16? = nil, bus: UInt8? = nil, address: UInt8? = nil) {
+  public init(id: MTPDeviceID, manufacturer: String, model: String, vendorID: UInt16? = nil, productID: UInt16? = nil, bus: UInt8? = nil, address: UInt8? = nil, usbSerial: String? = nil) {
     self.id = id
     self.manufacturer = manufacturer
     self.model = model
@@ -52,6 +65,7 @@ public struct MTPDeviceSummary: Sendable {
     self.productID = productID
     self.bus = bus
     self.address = address
+    self.usbSerial = usbSerial
   }
 }
 /// Events that can be emitted by an MTP device during operation.
@@ -70,11 +84,13 @@ public enum MTPEvent: Sendable {
   public static func fromRaw(_ data: Data) -> MTPEvent? {
     guard data.count >= 12 else { return nil }
     // PTP/MTP Event container: [len(4) type(2)=4 code(2) txid(4) params...]
-    let code = data.withUnsafeBytes { $0.load(fromByteOffset: 6, as: UInt16.self).littleEndian }
-    let params = data.withUnsafeBytes { ptr in
-      (0..<((data.count - 12) / 4)).map { i in
-        ptr.load(fromByteOffset: 12 + i * 4, as: UInt32.self).littleEndian
-      }
+    guard let code: UInt16 = decodeLittleEndian(data, at: 6) else { return nil }
+    let paramCount = (data.count - 12) / 4
+    var params: [UInt32] = []
+    params.reserveCapacity(paramCount)
+    for index in 0..<paramCount {
+      guard let value: UInt32 = decodeLittleEndian(data, at: 12 + index * 4) else { break }
+      params.append(value)
     }
 
     switch code {
@@ -243,6 +259,15 @@ public protocol MTPDevice: Sendable {
   /// - Returns: Progress object for monitoring transfer progress
   func write(parent: MTPObjectHandle?, name: String, size: UInt64, from url: URL) async throws -> Progress
 
+  /// Create a folder on the device.
+  ///
+  /// - Parameters:
+  ///   - parent: Parent directory handle, or `nil` for root
+  ///   - name: Name for the new folder
+  ///   - storage: Target storage ID
+  /// - Returns: Handle of the newly created folder
+  func createFolder(parent: MTPObjectHandle?, name: String, storage: MTPStorageID) async throws -> MTPObjectHandle
+
   /// Delete an object from the device.
   ///
   /// - Parameters:
@@ -357,6 +382,13 @@ public struct SwiftMTPConfig: Sendable {
   /// Some devices (e.g., Xiaomi) need this delay to become ready. Default: 0
   public var stabilizeMs         = 0
 
+  /// Post-claim stabilization delay in milliseconds.
+  ///
+  /// Time to wait after claiming the USB interface before sending commands.
+  /// Some devices (e.g., Pixel 7, Samsung) need this delay for MTP stack readiness.
+  /// Default: 250ms
+  public var postClaimStabilizeMs    = 250
+
   /// Whether to call libusb_reset_device after opening the device handle.
   /// Defaults to false.
   public var resetOnOpen         = false
@@ -435,6 +467,14 @@ public actor MTPDeviceManager {
   private var attachedContinuation: AsyncStream<MTPDeviceSummary>.Continuation?
   private var detachedContinuation: AsyncStream<MTPDeviceID>.Continuation?
   private var currentDevices: [MTPDeviceSummary] = []
+  private var defaultTransportFactory: (@Sendable () -> any MTPTransport)?
+  private var discoverySnapshotProvider: (@Sendable () async throws -> [MTPDeviceSummary])?
+  private var hotplugDiscoveryStarter: (
+    @Sendable (
+      @escaping (MTPDeviceSummary) -> Void,
+      @escaping (MTPDeviceID) -> Void
+    ) -> Void
+  )?
 
   /// Start MTP device discovery with the specified configuration.
   ///
@@ -452,6 +492,10 @@ public actor MTPDeviceManager {
   /// try await MTPDeviceManager.shared.startDiscovery(config: config)
   /// ```
   public func startDiscovery(config: SwiftMTPConfig = .init()) async throws {
+    attachedContinuation?.finish()
+    detachedContinuation?.finish()
+    currentDevices.removeAll(keepingCapacity: true)
+
     self.config = config
     let (attachedStream, attachedCont) = AsyncStream<MTPDeviceSummary>.makeStream()
     let (detachedStream, detachedCont) = AsyncStream<MTPDeviceID>.makeStream()
@@ -462,6 +506,9 @@ public actor MTPDeviceManager {
 
     // Start USB transport discovery
     await startTransportDiscovery()
+
+    // Best-effort refresh for devices that were already connected before discovery started.
+    _ = try? await refreshConnectedDevices()
     
     // DEMO MODE: Automatically yield a mock device
     if FeatureFlags.shared.useMockTransport {
@@ -470,6 +517,8 @@ public actor MTPDeviceManager {
         switch profile.lowercased() {
         case "s21", "galaxy":
             summary = MTPDeviceSummary(id: MTPDeviceID(raw: "04e8:6860@1:3"), manufacturer: "Samsung (Demo)", model: "Galaxy S21", vendorID: 0x04e8, productID: 0x6860, bus: 1, address: 3)
+        case "oneplus", "oneplus3t":
+            summary = MTPDeviceSummary(id: MTPDeviceID(raw: "2a70:f003@3:2"), manufacturer: "OnePlus (Demo)", model: "ONEPLUS A3010", vendorID: 0x2a70, productID: 0xf003, bus: 3, address: 2)
         case "iphone", "ios":
             summary = MTPDeviceSummary(id: MTPDeviceID(raw: "05ac:12a8@1:4"), manufacturer: "Apple (Demo)", model: "iPhone", vendorID: 0x05ac, productID: 0x12a8, bus: 1, address: 4)
         case "canon", "camera":
@@ -482,6 +531,22 @@ public actor MTPDeviceManager {
   }
 
   private func startTransportDiscovery() async {
+    if let starter = hotplugDiscoveryStarter {
+      starter(
+        { [weak self] dev in
+          Task { [weak self] in
+            await self?.yieldAttached(dev)
+          }
+        },
+        { [weak self] id in
+          Task { [weak self] in
+            await self?.yieldDetached(id)
+          }
+        }
+      )
+      return
+    }
+
     TransportDiscovery.start(
       onAttach: { [weak self] dev in
         Task { [weak self] in
@@ -496,14 +561,78 @@ public actor MTPDeviceManager {
     )
   }
 
+  /// Configure the default transport used by `open(_:)`.
+  public func setDefaultTransportFactory(_ factory: @escaping @Sendable () -> any MTPTransport) {
+    defaultTransportFactory = factory
+  }
+
+  /// Configure the snapshot provider used to enumerate currently connected devices.
+  public func setDiscoverySnapshotProvider(_ provider: @escaping @Sendable () async throws -> [MTPDeviceSummary]) {
+    discoverySnapshotProvider = provider
+  }
+
+  /// Configure the hotplug watcher starter used by discovery.
+  public func setHotplugDiscoveryStarter(
+    _ starter: @escaping @Sendable (
+      @escaping (MTPDeviceSummary) -> Void,
+      @escaping (MTPDeviceID) -> Void
+    ) -> Void
+  ) {
+    hotplugDiscoveryStarter = starter
+  }
+
+  /// Refresh the connected-device snapshot from the configured provider.
+  ///
+  /// - Returns: Updated list of connected devices.
+  public func refreshConnectedDevices() async throws -> [MTPDeviceSummary] {
+    guard let provider = discoverySnapshotProvider else { return currentDevices }
+    let snapshot = try await provider()
+    syncConnectedDeviceSnapshot(snapshot)
+    return currentDevices
+  }
+
+  /// Replace current connected-device state with a fresh snapshot.
+  ///
+  /// Emits attach events for newly seen devices and detach events for removed devices.
+  public func syncConnectedDeviceSnapshot(_ snapshot: [MTPDeviceSummary]) {
+    var uniqueSnapshot: [MTPDeviceSummary] = []
+    var latestById: [MTPDeviceID: MTPDeviceSummary] = [:]
+    var orderedIds: [MTPDeviceID] = []
+
+    for device in snapshot {
+      if latestById[device.id] == nil {
+        orderedIds.append(device.id)
+      }
+      latestById[device.id] = device
+    }
+    uniqueSnapshot = orderedIds.compactMap { latestById[$0] }
+
+    let previousIDs = Set(currentDevices.map(\.id))
+    let nextIDs = Set(uniqueSnapshot.map(\.id))
+
+    currentDevices = uniqueSnapshot
+
+    for removedID in previousIDs.subtracting(nextIDs) {
+      detachedContinuation?.yield(removedID)
+    }
+
+    for device in uniqueSnapshot where !previousIDs.contains(device.id) {
+      attachedContinuation?.yield(device)
+    }
+  }
+
   private func yieldAttached(_ dev: MTPDeviceSummary) async {
-    currentDevices.append(dev)
-    attachedContinuation?.yield(dev)
+    let isNewDevice = upsertConnectedDevice(dev)
+    if isNewDevice {
+      attachedContinuation?.yield(dev)
+    }
   }
 
   private func yieldDetached(_ id: MTPDeviceID) async {
-    currentDevices.removeAll { $0.id == id }
-    detachedContinuation?.yield(id)
+    let removed = removeConnectedDevice(id)
+    if removed {
+      detachedContinuation?.yield(id)
+    }
   }
 
   /// Stop MTP device discovery and clean up resources.
@@ -550,18 +679,28 @@ public actor MTPDeviceManager {
   public var attachedStream: AsyncStream<MTPDeviceSummary> { deviceAttached }
   public var detachedStream: AsyncStream<MTPDeviceID> { deviceDetached }
 
-  /// Open a device by its ID (not yet implemented).
+  /// Open a currently connected device by ID.
   ///
-  /// This method is reserved for future implementation when the device manager
-  /// maintains a registry of connected devices.
+  /// The manager first checks its in-memory connected-device registry and then
+  /// falls back to refreshing via the configured discovery snapshot provider.
   ///
   /// - Parameter id: Device identifier
   /// - Returns: Configured device instance
-  /// - Throws: `MTPError.notSupported` - use `openDevice(with:transport:)` instead
+  /// - Throws: `MTPError.transport(.noDevice)` if device is not currently connected
+  ///           or `MTPError.notSupported` when no default transport is configured.
   public func open(_ id: MTPDeviceID) async throws -> MTPDevice {
-    // For now, we need the device summary to create the device
-    // In a real implementation, we'd track connected devices
-    throw MTPError.notSupported("Use openDevice(with:) instead")
+    if let summary = currentDevices.first(where: { $0.id == id }) {
+      return try await openDeviceWithDefaultTransport(summary: summary)
+    }
+
+    if discoverySnapshotProvider != nil {
+      _ = try await refreshConnectedDevices()
+      if let summary = currentDevices.first(where: { $0.id == id }) {
+        return try await openDeviceWithDefaultTransport(summary: summary)
+      }
+    }
+
+    throw MTPError.transport(.noDevice)
   }
 
   /// Open a device using its summary and transport layer.
@@ -595,6 +734,28 @@ public actor MTPDeviceManager {
   /// Get the current configuration used by this device manager.
   public func getConfig() -> SwiftMTPConfig {
     config
+  }
+
+  private func upsertConnectedDevice(_ device: MTPDeviceSummary) -> Bool {
+    guard let existingIndex = currentDevices.firstIndex(where: { $0.id == device.id }) else {
+      currentDevices.append(device)
+      return true
+    }
+    currentDevices[existingIndex] = device
+    return false
+  }
+
+  private func removeConnectedDevice(_ id: MTPDeviceID) -> Bool {
+    let before = currentDevices.count
+    currentDevices.removeAll { $0.id == id }
+    return before != currentDevices.count
+  }
+
+  private func openDeviceWithDefaultTransport(summary: MTPDeviceSummary) async throws -> MTPDevice {
+    guard let factory = defaultTransportFactory else {
+      throw MTPError.notSupported("No default transport factory configured")
+    }
+    return try await openDevice(with: summary, transport: factory(), config: config)
   }
 
   private var config: SwiftMTPConfig = .init()

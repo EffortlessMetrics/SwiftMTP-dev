@@ -12,24 +12,20 @@ public final class SwiftMTPStore: Sendable {
     
     private init() {
         let useInMemory = ProcessInfo.processInfo.environment["SWIFTMTP_STORE_TYPE"] == "memory"
-        
-        do {
-            let schema = Schema([
-                DeviceEntity.self,
-                LearnedProfileEntity.self,
-                ProfilingRunEntity.self,
-                ProfilingMetricEntity.self,
-                SnapshotEntity.self,
-                SubmissionEntity.self,
-                TransferEntity.self,
-                MTPStorageEntity.self,
-                MTPObjectEntity.self
-            ])
-            let config = ModelConfiguration("SwiftMTP", schema: schema, isStoredInMemoryOnly: useInMemory)
-            container = try ModelContainer(for: schema, configurations: [config])
-        } catch {
-            fatalError("Failed to initialize SwiftData container: \(error)")
-        }
+
+        let schema = Schema([
+            DeviceEntity.self,
+            LearnedProfileEntity.self,
+            ProfilingRunEntity.self,
+            ProfilingMetricEntity.self,
+            SnapshotEntity.self,
+            SubmissionEntity.self,
+            TransferEntity.self,
+            MTPStorageEntity.self,
+            MTPObjectEntity.self
+        ])
+        let config = ModelConfiguration("SwiftMTP", schema: schema, isStoredInMemoryOnly: useInMemory)
+        container = try! ModelContainer(for: schema, configurations: [config])
     }
     
     public func createActor() -> StoreActor {

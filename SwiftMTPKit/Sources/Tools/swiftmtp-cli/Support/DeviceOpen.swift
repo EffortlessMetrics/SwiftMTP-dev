@@ -10,6 +10,7 @@ import Foundation
 @MainActor
 func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
     let manager = MTPDeviceManager.shared
+    await manager.configureLibUSBSupport()
 
     if flags.useMock {
         // Mock is handled by MTPDeviceManager yielding it during discovery
@@ -27,42 +28,44 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
         throw MTPError.transport(.noDevice)
     }
 
-    let selectedDevice: MTPDeviceSummary
-    let hasVIDPID = flags.targetVID != nil && flags.targetPID != nil
-    let hasBusAddr = flags.targetBus != nil && flags.targetAddress != nil
+    let filter = DeviceFilter(
+        vid: parseUSBIdentifier(flags.targetVID),
+        pid: parseUSBIdentifier(flags.targetPID),
+        bus: flags.targetBus,
+        address: flags.targetAddress
+    )
+    let hasExplicitFilter = filter.vid != nil || filter.pid != nil || filter.bus != nil || filter.address != nil
 
-    if hasVIDPID {
-        guard let found = devices.first(where: {
-            String(format: "%04x", $0.vendorID ?? 0) == flags.targetVID!.lowercased() &&
-            String(format: "%04x", $0.productID ?? 0) == flags.targetPID!.lowercased()
-        }) else {
-            throw MTPError.transport(.noDevice)
+    let selectedDevice: MTPDeviceSummary
+    switch selectDevice(devices, filter: filter, noninteractive: true) {
+    case .selected(let device):
+        selectedDevice = device
+    case .none:
+        if hasExplicitFilter {
+            log("No connected MTP device matched \(describeFilter(filter)).")
+            logDeviceCandidates(devices)
         }
-        selectedDevice = found
-    } else if hasBusAddr {
-        guard let found = devices.first(where: {
-            Int($0.bus ?? 0) == flags.targetBus! &&
-            Int($0.address ?? 0) == flags.targetAddress!
-        }) else {
-            throw MTPError.transport(.noDevice)
-        }
-        selectedDevice = found
-    } else if devices.count > 1 {
-        log("Found \(devices.count) MTP devices:")
-        for (i, dev) in devices.enumerated() {
-            let vid = String(format: "%04x", dev.vendorID ?? 0)
-            let pid = String(format: "%04x", dev.productID ?? 0)
-            let busAddr = "\(dev.bus ?? 0):\(dev.address ?? 0)"
-            log("  [\(i + 1)] \(dev.manufacturer) \(dev.model)  vid:pid=\(vid):\(pid)  bus:addr=\(busAddr)")
+        throw MTPError.transport(.noDevice)
+    case .multiple(let matches):
+        logDeviceCandidates(matches)
+        if hasExplicitFilter {
+            throw MTPError.preconditionFailed(
+                "multiple devices matched the filter; narrow selection with --bus/--address"
+            )
         }
         log("Using device [1]. Specify --vid/--pid or --bus/--address to select another.")
-        selectedDevice = devices[0]
-    } else {
-        selectedDevice = devices[0]
+        selectedDevice = matches[0]
     }
 
     let db = (try? QuirkDatabase.load())
     let quirk = db?.match(
+        vid: selectedDevice.vendorID ?? 0,
+        pid: selectedDevice.productID ?? 0,
+        bcdDevice: nil,
+        ifaceClass: 0xFF,
+        ifaceSubclass: nil,
+        ifaceProtocol: nil
+    ) ?? db?.match(
         vid: selectedDevice.vendorID ?? 0,
         pid: selectedDevice.productID ?? 0,
         bcdDevice: nil,
@@ -90,4 +93,24 @@ func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
     config.apply(finalTuning)
 
     return try await manager.openDevice(with: selectedDevice, transport: LibUSBTransportFactory.createTransport(), config: config)
+}
+
+private func describeFilter(_ filter: DeviceFilter) -> String {
+    var parts: [String] = []
+    if let vid = filter.vid { parts.append(String(format: "vid=%04x", vid)) }
+    if let pid = filter.pid { parts.append(String(format: "pid=%04x", pid)) }
+    if let bus = filter.bus { parts.append("bus=\(bus)") }
+    if let address = filter.address { parts.append("address=\(address)") }
+    return parts.joined(separator: ", ")
+}
+
+private func logDeviceCandidates(_ devices: [MTPDeviceSummary]) {
+    guard !devices.isEmpty else { return }
+    log("Found \(devices.count) MTP device(s):")
+    for (index, device) in devices.enumerated() {
+        let vid = String(format: "%04x", device.vendorID ?? 0)
+        let pid = String(format: "%04x", device.productID ?? 0)
+        let busAddr = "\(device.bus ?? 0):\(device.address ?? 0)"
+        log("  [\(index + 1)] \(device.manufacturer) \(device.model)  vid:pid=\(vid):\(pid)  bus:addr=\(busAddr)")
+    }
 }

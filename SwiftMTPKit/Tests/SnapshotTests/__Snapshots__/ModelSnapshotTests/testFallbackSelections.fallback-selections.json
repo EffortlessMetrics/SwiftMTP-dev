@@ -1,0 +1,22 @@
+{
+  "legacy" : {
+    "enumeration" : "handlesThenInfo",
+    "read" : "wholeObject",
+    "write" : "wholeObject"
+  },
+  "oneplus3t" : {
+    "enumeration" : "propList5",
+    "read" : "partial64",
+    "write" : "partial"
+  },
+  "pixel7" : {
+    "enumeration" : "propList5",
+    "read" : "partial64",
+    "write" : "partial"
+  },
+  "unknown" : {
+    "enumeration" : "unknown",
+    "read" : "unknown",
+    "write" : "unknown"
+  }
+}

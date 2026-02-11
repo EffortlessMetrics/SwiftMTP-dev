@@ -1,0 +1,692 @@
+{
+  "timestamp": "2026-02-08T21:39:45.739398+00:00",
+  "threshold": 0.0,
+  "status": "pass",
+  "overall": {
+    "covered": 8407,
+    "count": 11092,
+    "percent": 75.7933645870898
+  },
+  "modules": {
+    "SwiftMTPCore": {
+      "covered": 2119,
+      "count": 3185,
+      "percent": 66.53061224489795
+    },
+    "SwiftMTPFileProvider": {
+      "covered": 633,
+      "count": 837,
+      "percent": 75.62724014336918
+    },
+    "SwiftMTPIndex": {
+      "covered": 2614,
+      "count": 2784,
+      "percent": 93.89367816091954
+    },
+    "SwiftMTPObservability": {
+      "covered": 57,
+      "count": 57,
+      "percent": 100.0
+    },
+    "SwiftMTPQuirks": {
+      "covered": 363,
+      "count": 363,
+      "percent": 100.0
+    },
+    "SwiftMTPStore": {
+      "covered": 585,
+      "count": 585,
+      "percent": 100.0
+    },
+    "SwiftMTPSync": {
+      "covered": 239,
+      "count": 239,
+      "percent": 100.0
+    },
+    "SwiftMTPTestKit": {
+      "covered": 935,
+      "count": 1130,
+      "percent": 82.7433628318584
+    },
+    "SwiftMTPTransportLibUSB": {
+      "covered": 317,
+      "count": 1355,
+      "percent": 23.394833948339482
+    },
+    "SwiftMTPUI": {
+      "covered": 0,
+      "count": 0,
+      "percent": 0.0
+    },
+    "SwiftMTPXPC": {
+      "covered": 545,
+      "count": 557,
+      "percent": 97.84560143626571
+    }
+  },
+  "files": [
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/CLI/Exit.swift",
+      "module": "SwiftMTPCore",
+      "covered": 0,
+      "count": 3,
+      "percent": 0.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/USBDeviceWatcher.swift",
+      "module": "SwiftMTPTransportLibUSB",
+      "covered": 0,
+      "count": 113,
+      "percent": 0.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/InterfaceProbe.swift",
+      "module": "SwiftMTPTransportLibUSB",
+      "covered": 0,
+      "count": 300,
+      "percent": 0.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPFileProvider/ChangeSignaler.swift",
+      "module": "SwiftMTPFileProvider",
+      "covered": 3,
+      "count": 35,
+      "percent": 8.571428571428571
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/LibUSBTransport.swift",
+      "module": "SwiftMTPTransportLibUSB",
+      "covered": 73,
+      "count": 595,
+      "percent": 12.26890756302521
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Protocol/PTPLayer.swift",
+      "module": "SwiftMTPCore",
+      "covered": 3,
+      "count": 21,
+      "percent": 14.285714285714285
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Tools/SubstrateHardening.swift",
+      "module": "SwiftMTPCore",
+      "covered": 14,
+      "count": 56,
+      "percent": 25.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Protocol/Proto+Transfer.swift",
+      "module": "SwiftMTPCore",
+      "covered": 69,
+      "count": 187,
+      "percent": 36.898395721925134
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/LearnedProfile.swift",
+      "module": "SwiftMTPCore",
+      "covered": 165,
+      "count": 396,
+      "percent": 41.66666666666667
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Transport/TransportProtocols.swift",
+      "module": "SwiftMTPCore",
+      "covered": 8,
+      "count": 18,
+      "percent": 44.44444444444444
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTestKit/TranscriptRecorder.swift",
+      "module": "SwiftMTPTestKit",
+      "covered": 106,
+      "count": 234,
+      "percent": 45.2991452991453
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/ManagerBridge.swift",
+      "module": "SwiftMTPTransportLibUSB",
+      "covered": 13,
+      "count": 26,
+      "percent": 50.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/DeviceActor+Transfer.swift",
+      "module": "SwiftMTPCore",
+      "covered": 142,
+      "count": 272,
+      "percent": 52.20588235294118
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/MockTransport.swift",
+      "module": "SwiftMTPTransportLibUSB",
+      "covered": 84,
+      "count": 158,
+      "percent": 53.16455696202531
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/DeviceLabHarness.swift",
+      "module": "SwiftMTPCore",
+      "covered": 172,
+      "count": 321,
+      "percent": 53.58255451713395
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Transfer/SendableAdapters.swift",
+      "module": "SwiftMTPCore",
+      "covered": 44,
+      "count": 76,
+      "percent": 57.89473684210527
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/DeviceActor.swift",
+      "module": "SwiftMTPCore",
+      "covered": 335,
+      "count": 571,
+      "percent": 58.66900175131349
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPFileProvider/MTPFileProviderExtension.swift",
+      "module": "SwiftMTPFileProvider",
+      "covered": 175,
+      "count": 297,
+      "percent": 58.92255892255892
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/Persistence/MTPStoreProtocols.swift",
+      "module": "SwiftMTPCore",
+      "covered": 19,
+      "count": 32,
+      "percent": 59.375
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTestKit/FaultInjectingLink.swift",
+      "module": "SwiftMTPTestKit",
+      "covered": 57,
+      "count": 89,
+      "percent": 64.04494382022472
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/MockTransportFactory.swift",
+      "module": "SwiftMTPTransportLibUSB",
+      "covered": 33,
+      "count": 44,
+      "percent": 75.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/MTPDevice.swift",
+      "module": "SwiftMTPCore",
+      "covered": 153,
+      "count": 189,
+      "percent": 80.95238095238095
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Tools/SubstrateProfiling.swift",
+      "module": "SwiftMTPCore",
+      "covered": 72,
+      "count": 86,
+      "percent": 83.72093023255815
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/Persistence/DeviceIdentityResolver.swift",
+      "module": "SwiftMTPCore",
+      "covered": 31,
+      "count": 37,
+      "percent": 83.78378378378379
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/BusyBackoff.swift",
+      "module": "SwiftMTPCore",
+      "covered": 17,
+      "count": 20,
+      "percent": 85.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/CLI/JSONIO.swift",
+      "module": "SwiftMTPCore",
+      "covered": 23,
+      "count": 27,
+      "percent": 85.18518518518519
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPIndex/DiffEngine.swift",
+      "module": "SwiftMTPIndex",
+      "covered": 131,
+      "count": 152,
+      "percent": 86.18421052631578
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPFileProvider/FileProviderManager.swift",
+      "module": "SwiftMTPFileProvider",
+      "covered": 65,
+      "count": 74,
+      "percent": 87.83783783783784
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/QuirkResolver.swift",
+      "module": "SwiftMTPCore",
+      "covered": 23,
+      "count": 26,
+      "percent": 88.46153846153845
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPIndex/DeviceIndexOrchestrator.swift",
+      "module": "SwiftMTPIndex",
+      "covered": 39,
+      "count": 44,
+      "percent": 88.63636363636364
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPFileProvider/DomainEnumerator.swift",
+      "module": "SwiftMTPFileProvider",
+      "covered": 283,
+      "count": 319,
+      "percent": 88.71473354231975
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/LibUSBContext.swift",
+      "module": "SwiftMTPTransportLibUSB",
+      "covered": 33,
+      "count": 37,
+      "percent": 89.1891891891892
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPIndex/DB/SQLiteHelpers.swift",
+      "module": "SwiftMTPIndex",
+      "covered": 123,
+      "count": 136,
+      "percent": 90.44117647058823
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPFileProvider/MTPDeviceService.swift",
+      "module": "SwiftMTPFileProvider",
+      "covered": 42,
+      "count": 46,
+      "percent": 91.30434782608695
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPIndex/Snapshotter.swift",
+      "module": "SwiftMTPIndex",
+      "covered": 285,
+      "count": 311,
+      "percent": 91.63987138263666
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPIndex/Cache/ContentCache.swift",
+      "module": "SwiftMTPIndex",
+      "covered": 209,
+      "count": 228,
+      "percent": 91.66666666666666
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTestKit/VirtualMTPDevice.swift",
+      "module": "SwiftMTPTestKit",
+      "covered": 234,
+      "count": 255,
+      "percent": 91.76470588235294
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPIndex/TransferJournal.swift",
+      "module": "SwiftMTPIndex",
+      "covered": 308,
+      "count": 329,
+      "percent": 93.61702127659575
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTestKit/TranscriptReplayLink.swift",
+      "module": "SwiftMTPTestKit",
+      "covered": 164,
+      "count": 175,
+      "percent": 93.71428571428572
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Transfer/TransferIO.swift",
+      "module": "SwiftMTPCore",
+      "covered": 51,
+      "count": 54,
+      "percent": 94.44444444444444
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPIndex/LiveIndex/SQLiteLiveIndex.swift",
+      "module": "SwiftMTPIndex",
+      "covered": 1187,
+      "count": 1243,
+      "percent": 95.49477071600965
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/DeviceService.swift",
+      "module": "SwiftMTPCore",
+      "covered": 212,
+      "count": 222,
+      "percent": 95.4954954954955
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPXPC/MTPXPCServiceImpl.swift",
+      "module": "SwiftMTPXPC",
+      "covered": 305,
+      "count": 317,
+      "percent": 96.21451104100946
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPIndex/Crawler/CrawlScheduler.swift",
+      "module": "SwiftMTPIndex",
+      "covered": 192,
+      "count": 199,
+      "percent": 96.4824120603015
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/FeatureFlags.swift",
+      "module": "SwiftMTPCore",
+      "covered": 35,
+      "count": 36,
+      "percent": 97.22222222222221
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/DeviceServiceRegistry.swift",
+      "module": "SwiftMTPCore",
+      "covered": 108,
+      "count": 111,
+      "percent": 97.2972972972973
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPIndex/Crawler/EventBridge.swift",
+      "module": "SwiftMTPIndex",
+      "covered": 54,
+      "count": 55,
+      "percent": 98.18181818181819
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTestKit/VirtualMTPLink.swift",
+      "module": "SwiftMTPTestKit",
+      "covered": 128,
+      "count": 130,
+      "percent": 98.46153846153847
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPFileProvider/MTPFileProviderItem.swift",
+      "module": "SwiftMTPFileProvider",
+      "covered": 65,
+      "count": 66,
+      "percent": 98.48484848484848
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/PTPContainer+USB.swift",
+      "module": "SwiftMTPTransportLibUSB",
+      "covered": 66,
+      "count": 67,
+      "percent": 98.50746268656717
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPIndex/PathKey.swift",
+      "module": "SwiftMTPIndex",
+      "covered": 76,
+      "count": 77,
+      "percent": 98.7012987012987
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTestKit/VirtualDeviceConfig.swift",
+      "module": "SwiftMTPTestKit",
+      "covered": 160,
+      "count": 161,
+      "percent": 99.37888198757764
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Protocol/PTPCodec.swift",
+      "module": "SwiftMTPCore",
+      "covered": 223,
+      "count": 224,
+      "percent": 99.55357142857143
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/SyncEngine.swift",
+      "module": "SwiftMTPSync",
+      "covered": 1,
+      "count": 1,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/Protocol/MTPExtensions.swift",
+      "module": "SwiftMTPCore",
+      "covered": 3,
+      "count": 3,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/Transport/TransportDiscovery.swift",
+      "module": "SwiftMTPCore",
+      "covered": 4,
+      "count": 4,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/FallbackSelections.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 4,
+      "count": 4,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/ProfilingRunEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 5,
+      "count": 5,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/SnapshotEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 6,
+      "count": 6,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/Errors.swift",
+      "module": "SwiftMTPCore",
+      "covered": 7,
+      "count": 7,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/SubmissionEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 7,
+      "count": 7,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/ProfilingMetricEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 9,
+      "count": 9,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/Compat/MTPDevice+Compat.swift",
+      "module": "SwiftMTPCore",
+      "covered": 10,
+      "count": 10,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPIndex/IndexManager.swift",
+      "module": "SwiftMTPIndex",
+      "covered": 10,
+      "count": 10,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/DevicePolicy.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 11,
+      "count": 11,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/MTPStorageEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 11,
+      "count": 11,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/DeviceEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 12,
+      "count": 12,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/Persistence/LiveIndexStore.swift",
+      "module": "SwiftMTPCore",
+      "covered": 13,
+      "count": 13,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/LearnedProfileEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 14,
+      "count": 14,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/TransferJournal.swift",
+      "module": "SwiftMTPCore",
+      "covered": 15,
+      "count": 15,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkFlags.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 15,
+      "count": 15,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/MTPObjectEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 15,
+      "count": 15,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/Models/TransferEntity.swift",
+      "module": "SwiftMTPStore",
+      "covered": 15,
+      "count": 15,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/LibUSBTransportFactory.swift",
+      "module": "SwiftMTPTransportLibUSB",
+      "covered": 15,
+      "count": 15,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStore.swift",
+      "module": "SwiftMTPStore",
+      "covered": 20,
+      "count": 20,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Internal/FallbackLadder.swift",
+      "module": "SwiftMTPCore",
+      "covered": 25,
+      "count": 25,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/CLI/Spinner.swift",
+      "module": "SwiftMTPCore",
+      "covered": 38,
+      "count": 38,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Types/EffectiveTuningTypes.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 40,
+      "count": 40,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/Public/ProbeReceipt.swift",
+      "module": "SwiftMTPCore",
+      "covered": 42,
+      "count": 42,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPCore/CLI/DeviceFilter.swift",
+      "module": "SwiftMTPCore",
+      "covered": 43,
+      "count": 43,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPXPC/MTPXPCListener.swift",
+      "module": "SwiftMTPXPC",
+      "covered": 54,
+      "count": 54,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPObservability/Throughput.swift",
+      "module": "SwiftMTPObservability",
+      "covered": 57,
+      "count": 57,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPTestKit/FaultTypes.swift",
+      "module": "SwiftMTPTestKit",
+      "covered": 86,
+      "count": 86,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/EffectiveTuning.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 110,
+      "count": 110,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/SwiftMTPStoreAdapter.swift",
+      "module": "SwiftMTPStore",
+      "covered": 176,
+      "count": 176,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkDatabase.swift",
+      "module": "SwiftMTPQuirks",
+      "covered": 183,
+      "count": 183,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPXPC/Protocol.swift",
+      "module": "SwiftMTPXPC",
+      "covered": 186,
+      "count": 186,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPSync/MirrorEngine.swift",
+      "module": "SwiftMTPSync",
+      "covered": 238,
+      "count": 238,
+      "percent": 100.0
+    },
+    {
+      "path": "/Users/steven/Code/Mac/Swift/SwiftMTP/SwiftMTPKit/Sources/SwiftMTPStore/StoreActor.swift",
+      "module": "SwiftMTPStore",
+      "covered": 295,
+      "count": 295,
+      "percent": 100.0
+    }
+  ]
+}

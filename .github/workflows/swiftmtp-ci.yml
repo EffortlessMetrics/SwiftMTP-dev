@@ -1,0 +1,364 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# Copyright (c) 2025 Effortless Metrics, Inc.
+
+name: SwiftMTP CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Nightly run at 2 AM UTC
+    - cron: '0 2 * * *'
+
+env:
+  SWIFT_VERSION: '6.2'
+  COVERAGE_OUTPUT: coverage.lcov
+
+jobs:
+  # =========================================================================
+  # Build and Test Job - Runs on every push/PR to main
+  # =========================================================================
+  test:
+    name: Test (Unit, BDD, Property, Fuzz, Integration, E2E, Snapshot, Storybook, Xcode)
+    runs-on: macos-15
+    permissions:
+      contents: read
+      checks: write
+      actions: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: ${{ env.SWIFT_VERSION }}
+
+      - name: Cache Homebrew packages
+        uses: actions/cache@v4
+        id: brew-cache
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            /usr/local/Cellar/libusb
+          key: ${{ runner.os }}-brew-libusb-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-brew-libusb-
+
+      - name: Install Homebrew dependencies
+        if: steps.brew-cache.outputs.cache-hit != 'true'
+        run: |
+          brew update
+          brew install libusb
+
+      - name: Resolve Swift dependencies
+        working-directory: SwiftMTPKit
+        run: swift package resolve
+
+      - name: Build SwiftMTPKit package
+        working-directory: SwiftMTPKit
+        run: swift build
+
+      - name: Run Full Test Suite + Coverage Gate + Xcode Unit/UI Tests
+        env:
+          RUN_XCODE_UI_TESTS: "1"
+        run: ./run-all-tests.sh
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: |
+            ~/.swiftpm/xcode/results
+            **/.swiftpm/xcode/logs
+
+  # =========================================================================
+  # Fuzz Testing Job - Runs for 10 minutes on push/PR to main
+  # =========================================================================
+  fuzz:
+    name: Fuzz Testing
+    runs-on: macos-15
+    permissions:
+      contents: read
+      actions: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: ${{ env.SWIFT_VERSION }}
+
+      - name: Cache Homebrew packages
+        uses: actions/cache@v4
+        id: brew-cache-fuzz
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            /usr/local/Cellar/libusb
+          key: ${{ runner.os }}-brew-libusb-fuzz-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-brew-libusb-fuzz-
+
+      - name: Install Homebrew dependencies
+        if: steps.brew-cache-fuzz.outputs.cache-hit != 'true'
+        run: |
+          brew update
+          brew install libusb
+
+      - name: Resolve Swift dependencies
+        working-directory: SwiftMTPKit
+        run: swift package resolve
+
+      - name: Build SwiftMTPFuzz
+        working-directory: SwiftMTPKit
+        run: swift build --product SwiftMTPFuzz
+
+      - name: Run Fuzz Tests (10 minutes)
+        working-directory: SwiftMTPKit
+        timeout-minutes: 15
+        run: |
+          # Create fuzz input if not exists
+          if [ ! -f fuzz_input.bin ]; then
+            head -c 100 /dev/urandom > fuzz_input.bin
+          fi
+
+          # Get binary path
+          BIN=$(swift build --show-bin-path)/SwiftMTPFuzz
+
+          # Run fuzzing for 10 minutes with timeout
+          timeout 600 $BIN fuzz_input.bin || {
+            EXIT_CODE=$?
+            if [ $EXIT_CODE -eq 124 ]; then
+              echo "Fuzzing completed (timeout after 10 min)"
+            else
+              exit $EXIT_CODE
+            fi
+          }
+
+      - name: Upload fuzz results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fuzz-results
+          path: SwiftMTPKit/fuzz_*.log
+
+  # =========================================================================
+  # Code Coverage Job - Generates and uploads coverage report
+  # =========================================================================
+  coverage:
+    name: Code Coverage
+    runs-on: macos-15
+    permissions:
+      contents: read
+      checks: write
+      actions: read
+    needs: test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: ${{ env.SWIFT_VERSION }}
+
+      - name: Cache Homebrew packages
+        uses: actions/cache@v4
+        id: brew-cache-coverage
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            /usr/local/Cellar/libusb
+          key: ${{ runner.os }}-brew-libusb-coverage-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-brew-libusb-coverage-
+
+      - name: Install Homebrew dependencies
+        if: steps.brew-cache-coverage.outputs.cache-hit != 'true'
+        run: |
+          brew update
+          brew install libusb
+
+      - name: Resolve Swift dependencies
+        working-directory: SwiftMTPKit
+        run: swift package resolve
+
+      - name: Build with code coverage enabled + enforce gate
+        env:
+          RUN_XCODE_UI_TESTS: "0"
+        run: ./run-all-tests.sh
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: code-coverage-report
+          path: |
+            SwiftMTPKit/coverage/coverage.json
+            SwiftMTPKit/coverage/summary.txt
+            SwiftMTPKit/coverage/test_output.log
+
+  # =========================================================================
+  # Nightly Extended Integration Tests - Runs on schedule only
+  # =========================================================================
+  nightly-integration:
+    name: Nightly Integration Tests
+    runs-on: macos-15
+    if: github.event_name == 'schedule'
+    permissions:
+      contents: read
+      actions: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: ${{ env.SWIFT_VERSION }}
+
+      - name: Cache Homebrew packages
+        uses: actions/cache@v4
+        id: brew-cache-nightly
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            /usr/local/Cellar/libusb
+          key: ${{ runner.os }}-brew-libusb-nightly-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-brew-libusb-nightly-
+
+      - name: Install Homebrew dependencies
+        if: steps.brew-cache-nightly.outputs.cache-hit != 'true'
+        run: |
+          brew update
+          brew install libusb
+
+      - name: Resolve Swift dependencies
+        working-directory: SwiftMTPKit
+        run: swift package resolve
+
+      - name: Build all products
+        working-directory: SwiftMTPKit
+        run: swift build --product swiftmtp
+
+      - name: Run End-to-End Storybook Tests
+        working-directory: SwiftMTPKit
+        timeout-minutes: 30
+        run: |
+          for profile in pixel7 galaxy iphone canon; do
+            echo "Testing Profile: $profile"
+            export SWIFTMTP_MOCK_PROFILE=$profile
+            swift run swiftmtp storybook
+          done
+
+      - name: Run Extended Integration Tests
+        working-directory: SwiftMTPKit
+        timeout-minutes: 60
+        run: swift test --parallel --enable-code-coverage
+
+      - name: Upload integration test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-integration-results
+          path: |
+            ~/.swiftpm/xcode/results
+            **/.swiftpm/xcode/logs
+
+  # =========================================================================
+  # Nightly Performance Benchmarks - Runs on schedule only
+  # =========================================================================
+  benchmark:
+    name: Performance Benchmarks
+    runs-on: macos-15
+    if: github.event_name == 'schedule'
+    permissions:
+      contents: read
+      actions: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: ${{ env.SWIFT_VERSION }}
+
+      - name: Cache Homebrew packages
+        uses: actions/cache@v4
+        id: brew-cache-bench
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            /usr/local/Cellar/libusb
+          key: ${{ runner.os }}-brew-libusb-bench-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-brew-libusb-bench-
+
+      - name: Install Homebrew dependencies
+        if: steps.brew-cache-bench.outputs.cache-hit != 'true'
+        run: |
+          brew update
+          brew install libusb
+
+      - name: Resolve Swift dependencies
+        working-directory: SwiftMTPKit
+        run: swift package resolve
+
+      - name: Build benchmarks
+        working-directory: SwiftMTPKit
+        run: swift build --product swiftmtp
+
+      - name: Run Performance Benchmarks
+        working-directory: SwiftMTPKit
+        timeout-minutes: 120
+        run: |
+          echo "Running performance benchmarks..."
+          
+          # Create benchmark directory with timestamp
+          BENCH_DIR="benchmark-results-$(date +%Y%m%d-%H%M%S)"
+          mkdir -p $BENCH_DIR
+          
+          # Run multiple benchmark iterations
+          for i in {1..5}; do
+            echo "Benchmark iteration $i..."
+            
+            # Run with mock device for consistent results
+            export SWIFTMTP_MOCK_PROFILE=pixel7
+            
+            # Time a mock operation
+            TIME_START=$(date +%s.%N)
+            swift run swiftmtp storybook --quick 2>/dev/null || true
+            TIME_END=$(date +%s.%N)
+            
+            ELAPSED=$(echo "$TIME_END - $TIME_START" | bc)
+            echo "Iteration $i: ${ELAPSED}s" >> $BENCH_DIR/benchmark.log
+          done
+          
+          # Generate summary
+          echo "Benchmark Summary" >> $BENCH_DIR/summary.md
+          echo "=================" >> $BENCH_DIR/summary.md
+          echo "" >> $BENCH_DIR/summary.md
+          echo "Date: $(date -u)" >> $BENCH_DIR/summary.md
+          echo "Swift Version: ${{ env.SWIFT_VERSION }}" >> $BENCH_DIR/summary.md
+          echo "" >> $BENCH_DIR/summary.md
+          echo "Results:" >> $BENCH_DIR/summary.md
+          cat $BENCH_DIR/benchmark.log >> $BENCH_DIR/summary.md
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: benchmark-results
+          path: benchmark-results-*/

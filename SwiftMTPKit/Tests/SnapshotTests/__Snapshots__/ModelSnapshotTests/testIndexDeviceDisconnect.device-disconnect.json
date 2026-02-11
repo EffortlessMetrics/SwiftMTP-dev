@@ -1,0 +1,15 @@
+{
+  "cleanupActions" : {
+    "closeDeviceHandle" : true,
+    "purgeCache" : true,
+    "stopCrawler" : true,
+    "stopEventBridge" : true
+  },
+  "deviceId" : "pixel7-4ee1",
+  "event" : "deviceDetached",
+  "indexState" : {
+    "preserved" : true,
+    "reason" : "offline-browsing"
+  },
+  "timestamp" : "2026-02-08T10:00:00Z"
+}

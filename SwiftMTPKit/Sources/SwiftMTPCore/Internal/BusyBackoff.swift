@@ -3,11 +3,12 @@
 
 import Foundation
 
-/// Utility for handling DEVICE_BUSY responses with exponential backoff and jitter.
+/// Utility for handling device-not-ready responses with exponential backoff and jitter.
 ///
-/// Some devices (particularly Xiaomi) return DEVICE_BUSY (0x2003) immediately after
-/// session open or when storage operations are first attempted. This utility provides
-/// a standardized way to retry these operations with progressive backoff.
+/// Some devices (particularly Xiaomi) return SessionNotOpen (0x2003) immediately after
+/// session open or when storage operations are first attempted, using it as a "not ready"
+/// signal. DeviceBusy is actually 0x2019. This utility provides a standardized way to
+/// retry these operations with progressive backoff.
 enum BusyBackoff {
     /// Execute an async operation with DEVICE_BUSY retry logic.
     ///

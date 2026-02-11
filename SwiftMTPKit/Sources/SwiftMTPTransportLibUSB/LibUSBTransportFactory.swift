@@ -11,6 +11,7 @@ public struct LibUSBTransportFactory: TransportFactory {
             let data: MockDeviceData
             switch profile.lowercased() {
             case "s21", "galaxy": data = MockDeviceData.androidGalaxyS21
+            case "oneplus", "oneplus3t": data = MockDeviceData.androidOnePlus3T
             case "iphone", "ios": data = MockDeviceData.iosDevice
             case "canon", "camera": data = MockDeviceData.canonCamera
             default: data = MockDeviceData.androidPixel7

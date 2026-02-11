@@ -120,7 +120,7 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
   }
 
   public func loadResumables(for device: MTPDeviceID) throws -> [SwiftMTPCore.TransferRecord] {
-    let active = try listActive()
+    let active = try listResumables(deviceId: device.raw)
     return active.map { row in
         SwiftMTPCore.TransferRecord(
             id: row.id,
@@ -141,7 +141,21 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
   }
 
   public func clearStaleTemps(olderThan: TimeInterval) throws {
-    // Implementation for clearing stale temps
+    let ageSeconds = Int64(max(0, olderThan).rounded(.down))
+    let cutoff = nowSec() - ageSeconds
+
+    let staleRecords = try listCleanupCandidates(cutoff: cutoff)
+    for record in staleRecords {
+      guard let tempPath = record.localTempURL, !tempPath.isEmpty else { continue }
+      try? FileManager.default.removeItem(atPath: tempPath)
+    }
+
+    try exec(
+      "DELETE FROM transfers WHERE state != 'active' AND updatedAt <= ?",
+      bind: { stmt in
+        sqlite3_bind_int64(stmt, 1, cutoff)
+      }
+    )
   }
 
   // MARK: - Internal implementations
@@ -174,7 +188,7 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
   private func markDone(id: String) throws {
     let now = nowSec()
     try exec(
-      "UPDATE transfers SET state = 'done', updatedAt = ? WHERE id = ?",
+      "UPDATE transfers SET state = 'done', lastError = NULL, updatedAt = ? WHERE id = ?",
       bind: { s in
         sqlite3_bind_int64(s, 1, now)
         sqlite3_bind_text(s, 2, id, -1, SQLITE_TRANSIENT)
@@ -185,6 +199,40 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
   public func listActive() throws -> [SQLiteTransferRecord] {
     var out: [SQLiteTransferRecord] = []
     try query("SELECT id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt FROM transfers WHERE state='active' ORDER BY updatedAt DESC") { row in
+      out.append(row)
+    }
+    return out
+  }
+
+  public func listFailed() throws -> [SQLiteTransferRecord] {
+    var out: [SQLiteTransferRecord] = []
+    try query("SELECT id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt FROM transfers WHERE state='failed' ORDER BY updatedAt DESC") { row in
+      out.append(row)
+    }
+    return out
+  }
+
+  private func listResumables(deviceId: String) throws -> [SQLiteTransferRecord] {
+    var out: [SQLiteTransferRecord] = []
+    try query(
+      "SELECT id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt FROM transfers WHERE deviceId = ? AND state IN ('active','failed') ORDER BY updatedAt DESC",
+      bind: { s in
+        sqlite3_bind_text(s, 1, deviceId, -1, SQLITE_TRANSIENT)
+      }
+    ) { row in
+      out.append(row)
+    }
+    return out
+  }
+
+  private func listCleanupCandidates(cutoff: Int64) throws -> [SQLiteTransferRecord] {
+    var out: [SQLiteTransferRecord] = []
+    try query(
+      "SELECT id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt FROM transfers WHERE state != 'active' AND updatedAt <= ? ORDER BY updatedAt ASC",
+      bind: { s in
+        sqlite3_bind_int64(s, 1, cutoff)
+      }
+    ) { row in
       out.append(row)
     }
     return out

@@ -178,13 +178,35 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator {
     private func decodeSyncAnchor(_ anchor: NSFileProviderSyncAnchor) -> Int64 {
         let data = anchor.rawValue
         guard data.count == MemoryLayout<Int64>.size else { return 0 }
-        return data.withUnsafeBytes { $0.load(as: Int64.self) }
+        var value: Int64 = 0
+        _ = withUnsafeMutableBytes(of: &value) { data.copyBytes(to: $0) }
+        return value
     }
 
     // MARK: - Crawl Trigger
 
+    /// Crawl debounce interval: skip crawl if folder was crawled within this window.
+    private static let crawlDebounceSeconds: TimeInterval = 30
+
     /// Fire-and-forget XPC call to trigger a priority crawl for this folder.
     private func triggerCrawl(storageId: UInt32, parentHandle: UInt32?) {
+        // Debounce: skip if folder was crawled recently
+        if let reader = indexReader {
+            Task {
+                if let lastCrawled = try? await reader.crawlState(
+                    deviceId: deviceId, storageId: storageId,
+                    parentHandle: parentHandle
+                ), Date().timeIntervalSince(lastCrawled) < Self.crawlDebounceSeconds {
+                    return
+                }
+                self.fireCrawlRequest(storageId: storageId, parentHandle: parentHandle)
+            }
+        } else {
+            fireCrawlRequest(storageId: storageId, parentHandle: parentHandle)
+        }
+    }
+
+    private func fireCrawlRequest(storageId: UInt32, parentHandle: UInt32?) {
         let connection = getXPCConnection()
         guard let xpcService = connection.remoteObjectProxy as? MTPXPCService else { return }
         let request = CrawlTriggerRequest(deviceId: deviceId, storageId: storageId, parentHandle: parentHandle)
