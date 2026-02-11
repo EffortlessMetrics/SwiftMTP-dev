@@ -235,6 +235,56 @@ public struct PTPPropList: Sendable {
     }
 }
 
+// MARK: - PTP Response Code Lookup
+
+public enum PTPResponseCode {
+    private static let names: [UInt16: String] = [
+        0x2001: "OK",
+        0x2002: "GeneralError",
+        0x2003: "SessionNotOpen",
+        0x2004: "InvalidTransactionID",
+        0x2005: "OperationNotSupported",
+        0x2006: "ParameterNotSupported",
+        0x2007: "IncompleteTransfer",
+        0x2008: "InvalidStorageID",
+        0x2009: "InvalidObjectHandle",
+        0x200A: "DevicePropNotSupported",
+        0x200B: "InvalidObjectFormatCode",
+        0x200C: "StoreFull",
+        0x200D: "ObjectWriteProtected",
+        0x200E: "StoreReadOnly",
+        0x200F: "AccessDenied",
+        0x2010: "NoThumbnailPresent",
+        0x2011: "SelfTestFailed",
+        0x2012: "PartialDeletion",
+        0x2013: "StoreNotAvailable",
+        0x2014: "SpecificationByFormatUnsupported",
+        0x2015: "NoValidObjectInfo",
+        0x2016: "InvalidCodeFormat",
+        0x2017: "UnknownVendorCode",
+        0x2018: "CaptureAlreadyTerminated",
+        0x2019: "DeviceBusy",
+        0x201A: "InvalidParentObject",
+        0x201B: "InvalidDevicePropFormat",
+        0x201C: "InvalidDevicePropValue",
+        0x201D: "InvalidParameter",
+        0x201E: "SessionAlreadyOpen",
+        0x201F: "TransactionCancelled",
+        0x2020: "SpecificationOfDestinationUnsupported",
+    ]
+
+    /// Return the standard PTP name for a response code, or nil if unknown.
+    public static func name(for code: UInt16) -> String? {
+        names[code]
+    }
+
+    /// Human-readable description: `"InvalidParameter (0x201d)"` or `"Unknown (0x201d)"`.
+    public static func describe(_ code: UInt16) -> String {
+        let n = names[code] ?? "Unknown"
+        return "\(n) (0x\(String(format: "%04x", code)))"
+    }
+}
+
 public enum PTPObjectFormat {
     public static func forFilename(_ name: String) -> UInt16 {
         let lower = name.lowercased()
@@ -249,7 +299,10 @@ public enum PTPObjectFormat {
 }
 
 public struct PTPObjectInfoDataset {
-    public static func encode(storageID: UInt32, parentHandle: UInt32, format: UInt16, size: UInt64, name: String) -> Data {
+    public static func encode(
+        storageID: UInt32, parentHandle: UInt32, format: UInt16, size: UInt64, name: String,
+        associationType: UInt16 = 0, associationDesc: UInt32 = 0
+    ) -> Data {
         var data = Data()
         func put32(_ v: UInt32) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
         func put16(_ v: UInt16) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
@@ -262,10 +315,8 @@ public struct PTPObjectInfoDataset {
                 put16(UInt16(cu))
             }
             put16(0) // Null terminator
-            // No padding inside the dataset for PTP strings usually, 
-            // but some devices are picky about the total dataset alignment.
         }
-        
+
         put32(storageID)
         put16(format)
         put16(0) // ProtectionStatus
@@ -278,16 +329,14 @@ public struct PTPObjectInfoDataset {
         put32(0) // ImagePixHeight
         put32(0) // ImageBitDepth
         put32(parentHandle)
-        put16(0) // AssociationType
-        put32(0) // AssociationDesc
+        put16(associationType)
+        put32(associationDesc)
         put32(0) // SequenceNumber
         putPTPString(name)
-        // Many Android devices expect a non-empty date or at least a specific format
-        // OnePlus 3T observation shows 20180101T000505 format
         putPTPString("20250101T000000") // CaptureDate
         putPTPString("20250101T000000") // ModificationDate
         putPTPString("") // Keywords
-        
+
         return data
     }
 }

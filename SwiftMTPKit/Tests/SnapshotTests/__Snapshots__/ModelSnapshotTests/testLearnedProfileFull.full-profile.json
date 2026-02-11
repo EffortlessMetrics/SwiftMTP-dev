@@ -1,0 +1,30 @@
+{
+  "avgHandshakeMs" : 350,
+  "created" : 757382400,
+  "fingerprint" : {
+    "bcdDevice" : "0100",
+    "deviceInfoHash" : "xiaomi-mi-note-2-full-hash",
+    "endpointAddresses" : {
+      "event" : "82",
+      "input" : "81",
+      "output" : "01"
+    },
+    "interfaceTriple" : {
+      "class" : "06",
+      "protocol" : "01",
+      "subclass" : "01"
+    },
+    "pid" : "ff10",
+    "vid" : "2717"
+  },
+  "fingerprintHash" : "2717-ff10-0100-06-01-01-81-01-82-xiaomi-mi-note-2-full-hash",
+  "hostEnvironment" : "macOS 15.0",
+  "lastUpdated" : 760060800,
+  "optimalChunkSize" : 2097152,
+  "optimalInactivityTimeoutMs" : 15000,
+  "optimalIoTimeoutMs" : 20000,
+  "p95ReadThroughputMBps" : 42.8,
+  "p95WriteThroughputMBps" : 22.4,
+  "sampleCount" : 50,
+  "successRate" : 0.98
+}

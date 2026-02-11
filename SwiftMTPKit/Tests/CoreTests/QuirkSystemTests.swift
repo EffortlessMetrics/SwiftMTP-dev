@@ -69,6 +69,69 @@ final class QuirkSystemTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(lowTimeout.ioTimeoutMs, 1_000, "I/O timeout should be clamped to minimum")
     }
 
+    // MARK: - Device-Specific Quirk Match Tests
+
+    func testOnePlus3TQuirkMatch() throws {
+        let db = try QuirkDatabase.load()
+        let quirk = db.match(
+            vid: 0x2a70, pid: 0xf003,
+            bcdDevice: nil,
+            ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01
+        )
+        XCTAssertNotNil(quirk, "OnePlus 3T should match a quirk entry")
+        XCTAssertEqual(quirk?.id, "oneplus-3t-f003")
+    }
+
+    func testPixel7QuirkMatch() throws {
+        let db = try QuirkDatabase.load()
+        let quirk = db.match(
+            vid: 0x18d1, pid: 0x4ee1,
+            bcdDevice: nil,
+            ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01
+        )
+        XCTAssertNotNil(quirk, "Pixel 7 should match a quirk entry")
+        XCTAssertEqual(quirk?.id, "google-pixel-7-4ee1")
+    }
+
+    func testOnePlus3TEffectiveTuning() throws {
+        let db = try QuirkDatabase.load()
+        let quirk = db.match(
+            vid: 0x2a70, pid: 0xf003,
+            bcdDevice: nil,
+            ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01
+        )
+        let tuning = EffectiveTuningBuilder.build(
+            capabilities: ["partialRead": true, "partialWrite": true],
+            learned: nil,
+            quirk: quirk,
+            overrides: nil
+        )
+        XCTAssertEqual(tuning.resetOnOpen, false, "OnePlus 3T should not need resetOnOpen")
+        XCTAssertEqual(tuning.maxChunkBytes, 1_048_576, "OnePlus 3T chunk size should be 1MB")
+        XCTAssertEqual(tuning.handshakeTimeoutMs, 6_000)
+        XCTAssertEqual(tuning.ioTimeoutMs, 8_000)
+        XCTAssertEqual(tuning.stabilizeMs, 200)
+    }
+
+    func testPixel7EffectiveTuning() throws {
+        let db = try QuirkDatabase.load()
+        let quirk = db.match(
+            vid: 0x18d1, pid: 0x4ee1,
+            bcdDevice: nil,
+            ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01
+        )
+        let tuning = EffectiveTuningBuilder.build(
+            capabilities: [:],
+            learned: nil,
+            quirk: quirk,
+            overrides: nil
+        )
+        XCTAssertEqual(tuning.resetOnOpen, false, "Pixel 7 quirk has resetOnOpen=false")
+        XCTAssertEqual(tuning.maxChunkBytes, 2_097_152, "Pixel 7 chunk size should be 2MB")
+        XCTAssertEqual(tuning.handshakeTimeoutMs, 20_000)
+        XCTAssertEqual(tuning.stabilizeMs, 3_000)
+    }
+
     func testLearnedProfileFingerprintEvolution() throws {
         let fingerprint1 = MTPDeviceFingerprint(
             vid: "2717", pid: "ff10", bcdDevice: "0318",

@@ -66,9 +66,7 @@
         "pid": "0xff40",
         "deviceInfoRegex": ".*Mi Note 2.*",
         "iface": {
-          "class": "0x06",
-          "subclass": "0x01",
-          "protocol": "0x01"
+          "class": "0xff"
         },
         "endpoints": {
           "in": "0x81",
@@ -91,8 +89,16 @@
         "preferGetObjectPropList": false,
         "disableWriteResume": false
       },
+      "behaviorLimitations": [
+        {
+          "operation": "SendObject",
+          "errorCode": "0x201D",
+          "description": "Cannot write to storage root (0x00000000). SendObject fails with InvalidParameter when parent handle is 0.",
+          "workaround": "Use first available folder as parent container instead of storage root."
+        }
+      ],
       "notes": [
-        "Same tuning as ff10 variant.",
+        "Same tuning as ff10 variant with vendor-specific (0xff) MTP interface matching.",
         "Requires 250-500 ms stabilization after OpenSession.",
         "Prefer direct USB port; keep screen unlocked."
       ],
@@ -111,6 +117,67 @@
       "status": "stable"
     },
     {
+      "id": "samsung-android-6860",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6860",
+        "deviceInfoRegex": ".*SAMSUNG.*",
+        "iface": {
+          "class": "0xff"
+        },
+        "endpoints": {
+          "in": "0x81",
+          "out": "0x01",
+          "evt": "0x82"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
+        "inactivityTimeoutMs": 10000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 500,
+        "resetOnOpen": true,
+        "requiresKernelDetach": true,
+        "alternateInterfaceSelection": true,
+        "postClaimStabilizeMs": 500
+      },
+      "ops": {
+        "supportsGetPartialObject64": true,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": true,
+        "disableWriteResume": true
+      },
+      "probeLadder": {
+        "enabled": true,
+        "steps": [
+          {"method": "sessionlessGetDeviceInfo", "timeoutMs": 5000},
+          {"method": "openSessionThenGetDeviceInfo", "timeoutMs": 5000},
+          {"method": "getStorageIDs", "timeoutMs": 5000}
+        ]
+      },
+      "warnings": [
+        {
+          "condition": "noInterfaceResponded",
+          "message": "Samsung device did not respond on expected MTP interface. Trying alternate interfaces.",
+          "severity": "warning"
+        }
+      ],
+      "confidence": "medium",
+      "status": "experimental",
+      "notes": [
+        "Vendor-specific interface class (0xff) discovered by shared MTP heuristic.",
+        "Increased post-claim stabilize to 500ms for Samsung MTP stack readiness.",
+        "Probe ladder tries sessionless GetDeviceInfo, then OpenSession+GetDeviceInfo, then GetStorageIDs.",
+        "Read validation is reliable; write smoke remains best-effort."
+      ],
+      "provenance": {
+        "author": "Steven Zimmerman",
+        "date": "2026-02-10"
+      }
+    },
+    {
       "id": "oneplus-3t-f003",
       "match": {
         "vid": "0x2a70",
@@ -119,29 +186,59 @@
           "class": "0x06",
           "subclass": "0x01",
           "protocol": "0x01"
+        },
+        "endpoints": {
+          "in": "0x81",
+          "out": "0x01",
+          "evt": "0x82"
         }
       },
       "tuning": {
         "maxChunkBytes": 1048576,
-        "handshakeTimeoutMs": 15000,
-        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 6000,
+        "ioTimeoutMs": 8000,
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 120000,
-        "stabilizeMs": 500,
-        "resetOnOpen": true
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "skipPTPReset": true,
+        "eventPumpDelayMs": 0
       },
       "hooks": [
-        { "phase": "postOpenSession", "delayMs": 500 }
+        { "phase": "postOpenSession", "delayMs": 200 }
       ],
-      "confidence": "medium",
-      "status": "experimental",
+      "ops": {
+        "supportsGetPartialObject64": true,
+        "supportsSendPartialObject": true,
+        "preferGetObjectPropList": true,
+        "supportsEvents": true,
+        "disableWriteResume": false
+      },
+      "behaviorLimitations": [
+        {
+          "operation": "SendObject",
+          "errorCode": "0x201D",
+          "description": "Cannot write to storage root (0x00000000). SendObject fails with InvalidParameter when parent handle is 0.",
+          "workaround": "Use first available folder as parent container instead of storage root."
+        }
+      ],
+      "confidence": "high",
+      "status": "stable",
       "notes": [
-        "OnePlus 3T (2a70:f003) requires resetOnOpen to recover from previous session hangs.",
-        "PTP Device Reset (0x66) clears stale kernel sessions before OpenSession."
+        "OnePlus 3T (ONEPLUS A3010) probes in ~115 ms; no resetOnOpen needed with new claim sequence.",
+        "PTP Device Reset (0x66) NOT supported (rc=-9, LIBUSB_ERROR_PIPE); skipPTPReset=true.",
+        "Session opens instantly (0 ms), no retry needed.",
+        "SendObject returns 0x201D (InvalidParameter) when writing to storage root; use a subfolder as parent.",
+        "Second USB interface is Mass Storage (class=0x08); ignored by MTP transport.",
+        "Fallback strategies: enum=propList5, read=partial64, write=partial."
       ],
       "provenance": {
-        "author": "Gemini CLI",
-        "date": "2026-02-06"
+        "author": "Steven Zimmerman",
+        "date": "2026-02-07",
+        "artifacts": {
+          "probe": "Docs/benchmarks/probes/oneplus3t-probe.txt",
+          "usbDump": "Docs/benchmarks/probes/oneplus3t-usb-dump.txt"
+        }
       }
     },
     {
@@ -153,6 +250,11 @@
           "class": "0x06",
           "subclass": "0x01",
           "protocol": "0x01"
+        },
+        "endpoints": {
+          "in": "0x81",
+          "out": "0x01",
+          "evt": "0x82"
         }
       },
       "tuning": {
@@ -161,19 +263,34 @@
         "ioTimeoutMs": 30000,
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 180000,
-        "stabilizeMs": 500,
-        "resetOnOpen": true
+        "stabilizeMs": 3000,
+        "postClaimStabilizeMs": 3000,
+        "resetOnOpen": false,
+        "requiresKernelDetach": true
       },
+      "warnings": [
+        {
+          "condition": "chromeWebUSBDetected",
+          "message": "Chrome/WebUSB is holding this device. Quit all Chromium-based browsers (Chrome, Edge, Brave) and unplug/replug the device.",
+          "severity": "error"
+        }
+      ],
       "confidence": "medium",
-      "status": "stable",
+      "status": "experimental",
       "notes": [
-        "macOS IOKit PTP driver holds an active session that blocks OpenSession.",
-        "PTP Device Reset (0x66) clears this in most cases.",
-        "resetOnOpen + stabilizeMs as fallback if PTP reset alone is insufficient."
+        "Bulk transfers time out (write rc=-7, LIBUSB_ERROR_TIMEOUT) on macOS when Chrome holds device.",
+        "Use requiresKernelDetach=true to attempt releasing from Chrome/WebUSB.",
+        "libmtp-aligned claim (set_configuration + set_alt_setting) reinitializes pipes without USB reset.",
+        "Fallback USB reset uses stabilizeMs=3000 as poll budget for waitForMTPReady.",
+        "If kernel detach fails, user must manually quit Chrome and replug device."
       ],
       "provenance": {
-        "author": "Gemini CLI",
-        "date": "2026-02-06"
+        "author": "Steven Zimmerman",
+        "date": "2026-02-07",
+        "artifacts": {
+          "probe": "Docs/benchmarks/probes/pixel7-probe.txt",
+          "usbDump": "Docs/benchmarks/probes/pixel7-usb-dump.txt"
+        }
       }
     }
   ]

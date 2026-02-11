@@ -1,0 +1,29 @@
+{
+  "errors" : [
+    {
+      "code" : 8201,
+      "description" : "MTP device rejected command due to invalid parameter",
+      "name" : "InvalidParameter"
+    },
+    {
+      "code" : 8217,
+      "description" : "Object handle does not exist on device",
+      "name" : "InvalidObjectHandle"
+    },
+    {
+      "code" : 8221,
+      "description" : "Object exceeds device's maximum file size",
+      "name" : "ObjectTooLarge"
+    },
+    {
+      "code" : 8224,
+      "description" : "MTP session is already open",
+      "name" : "SessionAlreadyOpen"
+    }
+  ],
+  "recoveryStrategies" : {
+    "reconnectDevice" : false,
+    "refreshDeviceIndex" : true,
+    "retryWithDifferentParams" : true
+  }
+}

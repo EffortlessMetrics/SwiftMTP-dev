@@ -21,6 +21,7 @@ public final class FaultInjectingLink: MTPLink, @unchecked Sendable {
     private let lock = NSLock()
 
     public var cachedDeviceInfo: MTPDeviceInfo? { inner.cachedDeviceInfo }
+    public var linkDescriptor: MTPLinkDescriptor? { inner.linkDescriptor }
 
     public init(wrapping inner: any MTPLink, schedule: FaultSchedule) {
         self.inner = inner

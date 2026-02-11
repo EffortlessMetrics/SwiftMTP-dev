@@ -70,12 +70,37 @@ public struct InterfaceProbeResult: Sendable, Codable {
   public var selectedInterface: Int?
   /// Score of the selected interface.
   public var selectedScore: Int?
+  /// Class/subclass/protocol of selected interface.
+  public var selectedClass: String?
   /// Whether device-info was cached from probe.
   public var deviceInfoCached: Bool = false
   /// Individual attempt results.
   public var attempts: [InterfaceAttemptResult] = []
+  /// Reason for selecting this interface.
+  public var selectionReason: String?
+  /// Interfaces that were skipped and why.
+  public var skippedAlternatives: [SkippedInterface] = []
 
   public init() {}
+}
+
+/// Record of a skipped interface candidate for diagnostics.
+public struct SkippedInterface: Sendable, Codable {
+  public let interfaceNumber: Int
+  public let interfaceClass: UInt8
+  public let interfaceSubclass: UInt8
+  public let interfaceProtocol: UInt8
+  public let score: Int
+  public let reason: String
+
+  public init(interfaceNumber: Int, interfaceClass: UInt8, interfaceSubclass: UInt8, interfaceProtocol: UInt8, score: Int, reason: String) {
+    self.interfaceNumber = interfaceNumber
+    self.interfaceClass = interfaceClass
+    self.interfaceSubclass = interfaceSubclass
+    self.interfaceProtocol = interfaceProtocol
+    self.score = score
+    self.reason = reason
+  }
 }
 
 /// Per-interface attempt result for diagnostics.

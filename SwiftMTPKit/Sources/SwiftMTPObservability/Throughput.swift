@@ -17,6 +17,7 @@ public struct ThroughputEWMA: Sendable {
     ///   - bytes: Number of bytes transferred
     ///   - dt: Time interval for the transfer
     /// - Returns: Current bytes per second rate (after update)
+    @discardableResult
     public mutating func update(bytes: Int, dt: TimeInterval) -> Double {
         let inst = dt > 0 ? Double(bytes) / dt : 0
         if sampleCount == 0 {

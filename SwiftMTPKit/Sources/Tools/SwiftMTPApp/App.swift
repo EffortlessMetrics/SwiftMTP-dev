@@ -6,9 +6,11 @@ import SwiftMTPUI
 
 @main
 struct SwiftMTPApp: App {
+    @State private var coordinator = DeviceLifecycleCoordinator()
+
     var body: some Scene {
         WindowGroup {
-            DeviceBrowserView()
+            DeviceBrowserView(coordinator: coordinator)
                 .frame(minWidth: 800, minHeight: 500)
         }
         .windowStyle(.hiddenTitleBar)

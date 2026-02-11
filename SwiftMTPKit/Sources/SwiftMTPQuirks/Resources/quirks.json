@@ -66,9 +66,7 @@
         "pid": "0xff40",
         "deviceInfoRegex": ".*Mi Note 2.*",
         "iface": {
-          "class": "0x06",
-          "subclass": "0x01",
-          "protocol": "0x01"
+          "class": "0xff"
         },
         "endpoints": {
           "in": "0x81",
@@ -83,6 +81,8 @@
         "inactivityTimeoutMs": 8000,
         "overallDeadlineMs": 120000,
         "stabilizeMs": 400,
+        "resetOnOpen": true,
+        "requiresKernelDetach": true,
         "eventPumpDelayMs": 0
       },
       "ops": {
@@ -92,7 +92,8 @@
         "disableWriteResume": false
       },
       "notes": [
-        "Same tuning as ff10 variant.",
+        "Same tuning as ff10 variant with vendor-specific (0xff) MTP interface matching.",
+        "Enabled resetOnOpen and requiresKernelDetach for better claim reliability on macOS.",
         "Requires 250-500 ms stabilization after OpenSession.",
         "Prefer direct USB port; keep screen unlocked."
       ],
@@ -111,37 +112,104 @@
       "status": "stable"
     },
     {
-      "id": "oneplus-3t-f003",
+      "id": "samsung-android-6860",
       "match": {
-        "vid": "0x2a70",
-        "pid": "0xf003",
+        "vid": "0x04e8",
+        "pid": "0x6860",
+        "deviceInfoRegex": ".*SAMSUNG.*",
         "iface": {
-          "class": "0x06",
-          "subclass": "0x01",
-          "protocol": "0x01"
+          "class": "0xff"
+        },
+        "endpoints": {
+          "in": "0x81",
+          "out": "0x01",
+          "evt": "0x82"
         }
       },
       "tuning": {
         "maxChunkBytes": 1048576,
-        "handshakeTimeoutMs": 15000,
-        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 120000,
-        "stabilizeMs": 500,
-        "resetOnOpen": true
+        "stabilizeMs": 300,
+        "resetOnOpen": true,
+        "requiresKernelDetach": true
       },
-      "hooks": [
-        { "phase": "postOpenSession", "delayMs": 500 }
-      ],
+      "ops": {
+        "supportsGetPartialObject64": true,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": true,
+        "disableWriteResume": true
+      },
       "confidence": "medium",
       "status": "experimental",
       "notes": [
-        "OnePlus 3T (2a70:f003) requires resetOnOpen to recover from previous session hangs.",
-        "PTP Device Reset (0x66) clears stale kernel sessions before OpenSession."
+        "Vendor-specific interface class (0xff) discovered by shared MTP heuristic.",
+        "Enabled resetOnOpen and requiresKernelDetach for better claim reliability on macOS.",
+        "Read validation is reliable; write smoke remains best-effort for this class of Samsung devices.",
+        "Use conservative chunking and timeout values."
       ],
       "provenance": {
-        "author": "Gemini CLI",
-        "date": "2026-02-06"
+        "author": "Steven Zimmerman",
+        "date": "2026-02-09"
+      }
+    },
+    {
+      "id": "oneplus-3t-f003",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf003",
+        "deviceInfoRegex": ".*ONEPLUS A3010.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        },
+        "endpoints": {
+          "in": "0x81",
+          "out": "0x01",
+          "evt": "0x82"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 6000,
+        "ioTimeoutMs": 8000,
+        "inactivityTimeoutMs": 10000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "skipPTPReset": true,
+        "eventPumpDelayMs": 0
+      },
+      "hooks": [
+        { "phase": "postOpenSession", "delayMs": 200 }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": true,
+        "supportsSendPartialObject": true,
+        "preferGetObjectPropList": true,
+        "supportsEvents": true,
+        "disableWriteResume": false
+      },
+      "confidence": "high",
+      "status": "stable",
+      "notes": [
+        "OnePlus 3T (ONEPLUS A3010) probes in ~115 ms; no resetOnOpen needed with new claim sequence.",
+        "PTP Device Reset (0x66) NOT supported (rc=-9, LIBUSB_ERROR_PIPE); skipPTPReset=true.",
+        "Session opens instantly (0 ms), no retry needed.",
+        "SendObject returns 0x201D (InvalidParameter) when writing to storage root; use a subfolder as parent.",
+        "Second USB interface is Mass Storage (class=0x08); ignored by MTP transport.",
+        "Fallback strategies: enum=propList5, read=partial64, write=partial."
+      ],
+      "provenance": {
+        "author": "Steven Zimmerman",
+        "date": "2026-02-07",
+        "artifacts": {
+          "probe": "Docs/benchmarks/probes/oneplus3t-probe.txt",
+          "usbDump": "Docs/benchmarks/probes/oneplus3t-usb-dump.txt"
+        }
       }
     },
     {
@@ -153,6 +221,11 @@
           "class": "0x06",
           "subclass": "0x01",
           "protocol": "0x01"
+        },
+        "endpoints": {
+          "in": "0x81",
+          "out": "0x01",
+          "evt": "0x82"
         }
       },
       "tuning": {
@@ -161,25 +234,25 @@
         "ioTimeoutMs": 30000,
         "inactivityTimeoutMs": 10000,
         "overallDeadlineMs": 180000,
-        "stabilizeMs": 500,
-        "resetOnOpen": true
+        "stabilizeMs": 3000,
+        "resetOnOpen": false
       },
-      "flags": {
-        "resetOnOpen": true,
-        "needsLongerOpenTimeout": true,
-        "stallOnLargeReads": true,
-        "requireStabilization": true
-      },
-      "confidence": "medium",
-      "status": "stable",
+      "confidence": "low",
+      "status": "experimental",
       "notes": [
-        "macOS IOKit PTP driver holds an active session that blocks OpenSession.",
-        "PTP Device Reset (0x66) clears this in most cases.",
-        "resetOnOpen + stabilizeMs as fallback if PTP reset alone is insufficient."
+        "Bulk transfers time out (write rc=-7, LIBUSB_ERROR_TIMEOUT) on macOS Tahoe 26; needs investigation.",
+        "Connected-device lab run on 2026-02-09 still classifies this device as blocked (diagnostic evidence captured).",
+        "libmtp-aligned claim (set_configuration + set_alt_setting) reinitializes pipes without USB reset.",
+        "Fallback USB reset uses stabilizeMs=3000 as poll budget for waitForMTPReady.",
+        "Bulk transfer failures often caused by Chrome/WebUSB holding the device — quit Chromium apps and replug."
       ],
       "provenance": {
-        "author": "Gemini CLI",
-        "date": "2026-02-06"
+        "author": "Steven Zimmerman",
+        "date": "2026-02-07",
+        "artifacts": {
+          "probe": "Docs/benchmarks/probes/pixel7-probe.txt",
+          "usbDump": "Docs/benchmarks/probes/pixel7-usb-dump.txt"
+        }
       }
     }
   ]

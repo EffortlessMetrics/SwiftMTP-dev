@@ -21,9 +21,9 @@ Device-specific configuration for Xiaomi Mi Note 2 Ff40 MTP implementation.
 
 | Property | Value |
 |----------|-------|
-| Class | 0x06 |
-| Subclass | 0x01 |
-| Protocol | 0x01 |
+| Class | 0xff |
+| Subclass | Unknown |
+| Protocol | Unknown |
 ## Endpoints
 
 | Property | Value |
@@ -51,7 +51,7 @@ Device-specific configuration for Xiaomi Mi Note 2 Ff40 MTP implementation.
 
 ## Notes
 
-- Same tuning as ff10 variant.
+- Same tuning as ff10 variant with vendor-specific (0xff) MTP interface matching.
 - Requires 250-500 ms stabilization after OpenSession.
 - Prefer direct USB port; keep screen unlocked.
 ## Provenance

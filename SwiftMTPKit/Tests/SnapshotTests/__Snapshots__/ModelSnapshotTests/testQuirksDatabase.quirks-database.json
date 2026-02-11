@@ -1,0 +1,63 @@
+{
+  "entries" : [
+    {
+      "confidence" : "high",
+      "hooks" : [
+        {
+          "delayMs" : 400,
+          "phase" : "postOpenSession"
+        },
+        {
+          "busyBackoff" : {
+            "baseMs" : 200,
+            "jitterPct" : 0.2,
+            "retries" : 3
+          },
+          "phase" : "beforeGetStorageIDs"
+        }
+      ],
+      "id" : "xiaomi-mi-note-2-ff10",
+      "ops" : {
+        "disableWriteResume" : false,
+        "preferGetObjectPropList" : false,
+        "supportsGetPartialObject64" : true,
+        "supportsSendPartialObject" : true
+      },
+      "status" : "stable"
+    },
+    {
+      "id" : "xiaomi-mi-note-2-ff40",
+      "ops" : {
+        "disableWriteResume" : false,
+        "preferGetObjectPropList" : false,
+        "supportsGetPartialObject64" : true,
+        "supportsSendPartialObject" : true
+      },
+      "status" : "stable"
+    },
+    {
+      "confidence" : "high",
+      "hooks" : [
+        {
+          "delayMs" : 200,
+          "phase" : "postOpenSession"
+        }
+      ],
+      "id" : "oneplus-3t-f003",
+      "ops" : {
+        "disableWriteResume" : false,
+        "preferGetObjectPropList" : true,
+        "supportsEvents" : true,
+        "supportsGetPartialObject64" : true,
+        "supportsSendPartialObject" : true
+      },
+      "status" : "stable"
+    },
+    {
+      "confidence" : "low",
+      "id" : "google-pixel-7-4ee1",
+      "status" : "experimental"
+    }
+  ],
+  "schemaVersion" : "1.0.0"
+}

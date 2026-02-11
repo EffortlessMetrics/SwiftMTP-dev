@@ -44,16 +44,20 @@ struct MirrorEngineTests {
         let mirrorEngine = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
 
         // Create a temporary file
-        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("test_file.txt")
+        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("test_file_\(UUID().uuidString).txt")
         try "test content".write(to: tempURL, atomically: true, encoding: .utf8)
         defer { try? FileManager.default.removeItem(at: tempURL) }
+
+        // Get actual file attributes to use accurate mtime
+        let attributes = try FileManager.default.attributesOfItem(atPath: tempURL.path)
+        let actualMtime = attributes[.modificationDate] as! Date
 
         let file = MTPDiff.Row(
             handle: 1,
             storage: 0x10001,
             pathKey: "00010001/test_file.txt",
             size: UInt64("test content".count),
-            mtime: Date(),
+            mtime: actualMtime,
             format: 0x3000
         )
 

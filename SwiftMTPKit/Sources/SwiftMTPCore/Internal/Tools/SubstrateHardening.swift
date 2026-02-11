@@ -34,6 +34,14 @@ public final class MTPFeatureFlags: @unchecked Sendable {
         lock.lock(); defer { lock.unlock() }
         flags[feature] = enabled
     }
+    
+    public func resetAllFeatures() {
+        lock.lock(); defer { lock.unlock() }
+        for feature in MTPFeature.allCases {
+            let envVal = ProcessInfo.processInfo.environment["SWIFTMTP_FEATURE_\(feature.rawValue)"]
+            flags[feature] = (envVal == "1" || envVal == "true")
+        }
+    }
 }
 
 // MARK: - BDD Foundation

@@ -1,0 +1,16 @@
+{
+  "project": "SwiftMTPKit",
+  "timestamp": "2026-02-08T12:29:22Z",
+  "version": "d42ae2ba3ee7960af72f0a6437a1bf904f83d1d9",
+  "overall_coverage": ,
+  "thresholds": {
+    "overall": 75,
+    "SwiftMTPCore": 80,
+    "SwiftMTPIndex": 75,
+    "SwiftMTPObservability": 70,
+    "SwiftMTPQuirks": 70,
+    "SwiftMTPFileProvider": 65
+  },
+  "status": "fail",
+  "test_exit_code": 1
+}

@@ -1,0 +1,65 @@
+{
+  "capabilities" : {
+    "preferGetObjectPropList" : true,
+    "skipPTPReset" : true,
+    "supportsEvents" : true,
+    "supportsGetPartialObject64" : true,
+    "supportsSendPartialObject" : true
+  },
+  "deviceSummary" : {
+    "id" : "oneplus3t-f003-REDACTED",
+    "manufacturer" : "OnePlus",
+    "model" : "ONEPLUS A3010",
+    "productID" : "0xf003",
+    "vendorID" : "0x2a70"
+  },
+  "fallbackResults" : {
+    "enumeration" : "propList5",
+    "read" : "partial64",
+    "write" : "partial"
+  },
+  "fingerprint" : {
+    "bcdDevice" : "0200",
+    "deviceInfoHash" : "oneplus-3t-f003-hash",
+    "endpointAddresses" : {
+      "event" : "82",
+      "input" : "81",
+      "output" : "01"
+    },
+    "interfaceTriple" : {
+      "class" : "06",
+      "protocol" : "01",
+      "subclass" : "01"
+    },
+    "pid" : "f003",
+    "vid" : "2a70"
+  },
+  "interfaceProbe" : {
+    "attempts" : [
+      {
+        "durationMs" : 115,
+        "interfaceNumber" : 0,
+        "score" : 12,
+        "succeeded" : true
+      },
+      {
+        "durationMs" : 5,
+        "error" : "Mass Storage interface - ignored",
+        "interfaceNumber" : 1,
+        "score" : 0,
+        "succeeded" : false
+      }
+    ],
+    "candidatesEvaluated" : 2,
+    "deviceInfoCached" : false,
+    "selectedInterface" : 0,
+    "selectedScore" : 12
+  },
+  "sessionEstablishment" : {
+    "durationMs" : 0,
+    "requiredRetry" : false,
+    "succeeded" : true
+  },
+  "timestamp" : 792237660,
+  "totalProbeTimeMs" : 156
+}

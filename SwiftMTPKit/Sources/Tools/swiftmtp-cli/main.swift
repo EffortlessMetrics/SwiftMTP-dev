@@ -119,6 +119,8 @@ struct SwiftMTPCLI {
             await ProbeCommand.runProbe(flags: flags)
         case "usb-dump":
             await ProbeCommand.runUSBDump()
+        case "device-lab":
+            await DeviceLabCommand.run(flags: flags, args: remainingArgs)
         case "diag":
             await ProbeCommand.runDiag(flags: flags)
         case "storages":
@@ -149,8 +151,8 @@ struct SwiftMTPCLI {
             await SystemCommands.runHealth()
         case "delete":
             let filter = SwiftMTPCore.DeviceFilter(
-                vid: flags.targetVID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, 
-                pid: flags.targetPID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, 
+                vid: parseUSBIdentifier(flags.targetVID),
+                pid: parseUSBIdentifier(flags.targetPID),
                 bus: flags.targetBus, 
                 address: flags.targetAddress
             )
@@ -159,8 +161,8 @@ struct SwiftMTPCLI {
             exitNow(exitCode)
         case "move":
             let filter = SwiftMTPCore.DeviceFilter(
-                vid: flags.targetVID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, 
-                pid: flags.targetPID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, 
+                vid: parseUSBIdentifier(flags.targetVID),
+                pid: parseUSBIdentifier(flags.targetPID),
                 bus: flags.targetBus, 
                 address: flags.targetAddress
             )
@@ -169,8 +171,8 @@ struct SwiftMTPCLI {
             exitNow(exitCode)
         case "events":
             let filter = SwiftMTPCore.DeviceFilter(
-                vid: flags.targetVID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, 
-                pid: flags.targetPID.flatMap { UInt16($0, radix: 16) ?? UInt16($0) }, 
+                vid: parseUSBIdentifier(flags.targetVID),
+                pid: parseUSBIdentifier(flags.targetPID),
                 bus: flags.targetBus, 
                 address: flags.targetAddress
             )
@@ -183,6 +185,8 @@ struct SwiftMTPCLI {
                 exitNow(.ok)
             }
             await CollectCLICommand.run(args: remainingArgs, flags: flags)
+        case "wizard":
+            await WizardCommand.run(flags: flags, args: remainingArgs)
         case "submit":
             guard let bundlePath = remainingArgs.first else {
                 print("❌ Usage: submit <bundle-path> [--gh]")
@@ -218,7 +222,7 @@ struct SwiftMTPCLI {
         print("SwiftMTP CLI - Modular Refactor")
         print("Usage: swift run swiftmtp [flags] <command>")
         print("")
-        print("Commands: probe, usb-dump, diag, storages, ls, pull, push, bench, mirror, quirks, health, collect, delete, move, events, learn-promote, bdd, snapshot, version")
+        print("Commands: probe, usb-dump, device-lab, diag, storages, ls, pull, push, bench, mirror, quirks, health, collect, submit, wizard, delete, move, events, learn-promote, bdd, snapshot, version")
     }
 }
 

@@ -23,6 +23,40 @@ public enum DBError: Error, CustomStringConvertible {
 public final class SQLiteDB: @unchecked Sendable {
   public let path: String
   private var handle: OpaquePointer?
+  private let dbLock = NSRecursiveLock()
+
+  /// Execute a block inside an exclusive transaction.
+  /// Serializes concurrent callers so only one transaction is active at a time.
+  /// Supports nesting: if already inside a transaction, uses SAVEPOINT instead.
+  public func withTransaction<R>(_ body: () throws -> R) throws -> R {
+    dbLock.lock()
+    defer { dbLock.unlock() }
+
+    let nested = sqlite3_get_autocommit(handle) == 0
+    if nested {
+      let sp = "sp_\(UInt64.random(in: 0...UInt64.max))"
+      try exec("SAVEPOINT \(sp)")
+      do {
+        let result = try body()
+        try exec("RELEASE SAVEPOINT \(sp)")
+        return result
+      } catch {
+        try? exec("ROLLBACK TO SAVEPOINT \(sp)")
+        try? exec("RELEASE SAVEPOINT \(sp)")
+        throw error
+      }
+    } else {
+      try exec("BEGIN IMMEDIATE TRANSACTION")
+      do {
+        let result = try body()
+        try exec("COMMIT")
+        return result
+      } catch {
+        try? exec("ROLLBACK")
+        throw error
+      }
+    }
+  }
 
   public init(path: String) throws {
     self.path = path
@@ -31,6 +65,7 @@ public final class SQLiteDB: @unchecked Sendable {
       throw DBError.open(String(cString: sqlite3_errmsg(db)))
     }
     self.handle = db
+    sqlite3_busy_timeout(db, 5000)
     try exec("PRAGMA journal_mode=WAL;")
     try exec("PRAGMA synchronous=NORMAL;")
   }
@@ -46,6 +81,7 @@ public final class SQLiteDB: @unchecked Sendable {
       throw DBError.open(String(cString: sqlite3_errmsg(db)))
     }
     self.handle = db
+    sqlite3_busy_timeout(db, 5000)
     if !readOnly {
       try exec("PRAGMA journal_mode=WAL;")
       try exec("PRAGMA synchronous=NORMAL;")
@@ -59,22 +95,30 @@ public final class SQLiteDB: @unchecked Sendable {
   }
 
   public func exec(_ sql: String) throws {
+    dbLock.lock()
+    defer { dbLock.unlock() }
     guard sqlite3_exec(handle, sql, nil, nil, nil) == SQLITE_OK else { throw DBError.step(err()) }
   }
 
   public func prepare(_ sql: String) throws -> OpaquePointer {
+    dbLock.lock()
+    defer { dbLock.unlock() }
     var stmt: OpaquePointer?
     guard sqlite3_prepare_v2(handle, sql, -1, &stmt, nil) == SQLITE_OK else { throw DBError.prepare(err()) }
     return stmt!
   }
 
   public func withStatement<R>(_ sql: String, _ body: (OpaquePointer) throws -> R) throws -> R {
+    dbLock.lock()
+    defer { dbLock.unlock() }
     let stmt = try prepare(sql)
     defer { sqlite3_finalize(stmt) }
     return try body(stmt)
   }
 
   public func bind(_ stmt: OpaquePointer, _ idx: Int32, _ value: Int64?) throws {
+    dbLock.lock()
+    defer { dbLock.unlock() }
     if let v = value {
       guard sqlite3_bind_int64(stmt, idx, v) == SQLITE_OK else { throw DBError.bind(err()) }
     } else {
@@ -83,6 +127,8 @@ public final class SQLiteDB: @unchecked Sendable {
   }
 
   public func bind(_ stmt: OpaquePointer, _ idx: Int32, _ value: Double?) throws {
+    dbLock.lock()
+    defer { dbLock.unlock() }
     if let v = value {
       guard sqlite3_bind_double(stmt, idx, v) == SQLITE_OK else { throw DBError.bind(err()) }
     } else {
@@ -91,6 +137,8 @@ public final class SQLiteDB: @unchecked Sendable {
   }
 
   public func bind(_ stmt: OpaquePointer, _ idx: Int32, _ value: String?) throws {
+    dbLock.lock()
+    defer { dbLock.unlock() }
     if let v = value {
       guard sqlite3_bind_text(stmt, idx, v, -1, SQLITE_TRANSIENT) == SQLITE_OK else { throw DBError.bind(err()) }
     } else {
@@ -99,6 +147,8 @@ public final class SQLiteDB: @unchecked Sendable {
   }
 
   public func step(_ stmt: OpaquePointer) throws -> Bool {
+    dbLock.lock()
+    defer { dbLock.unlock() }
     let rc = sqlite3_step(stmt)
     switch rc {
     case SQLITE_ROW:    return true
@@ -109,9 +159,13 @@ public final class SQLiteDB: @unchecked Sendable {
   }
 
   public func colInt64(_ stmt: OpaquePointer, _ idx: Int32) -> Int64? {
-    sqlite3_column_type(stmt, idx) == SQLITE_NULL ? nil : sqlite3_column_int64(stmt, idx)
+    dbLock.lock()
+    defer { dbLock.unlock() }
+    return sqlite3_column_type(stmt, idx) == SQLITE_NULL ? nil : sqlite3_column_int64(stmt, idx)
   }
   public func colText(_ stmt: OpaquePointer, _ idx: Int32) -> String? {
+    dbLock.lock()
+    defer { dbLock.unlock() }
     guard sqlite3_column_type(stmt, idx) != SQLITE_NULL, let c = sqlite3_column_text(stmt, idx) else { return nil }
     return String(cString: c)
   }

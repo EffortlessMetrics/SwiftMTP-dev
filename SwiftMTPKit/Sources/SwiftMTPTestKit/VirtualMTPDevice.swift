@@ -116,6 +116,30 @@ public actor VirtualMTPDevice: MTPDevice {
         return progress
     }
 
+    public func createFolder(parent: MTPObjectHandle?, name: String, storage: MTPStorageID) async throws -> MTPObjectHandle {
+        record("createFolder", parameters: ["parent": "\(parent ?? 0)", "name": name, "storage": "\(storage.raw)"])
+        let handle = nextHandle
+        nextHandle += 1
+
+        let storageId: MTPStorageID
+        if let parent, let parentObj = objectTree[parent] {
+            storageId = parentObj.storage
+        } else {
+            storageId = storage
+        }
+
+        let obj = VirtualObjectConfig(
+            handle: handle,
+            storage: storageId,
+            parent: parent,
+            name: name,
+            sizeBytes: 0,
+            formatCode: 0x3001 // Association
+        )
+        objectTree[handle] = obj
+        return handle
+    }
+
     public func write(parent: MTPObjectHandle?, name: String, size: UInt64, from url: URL) async throws -> Progress {
         record("write", parameters: ["parent": "\(parent ?? 0)", "name": name, "size": "\(size)"])
         let fileData = try Data(contentsOf: url)

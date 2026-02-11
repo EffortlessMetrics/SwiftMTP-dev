@@ -1,0 +1,140 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# Copyright (c) 2025 Effortless Metrics, Inc.
+
+# Swift Code Coverage Configuration for SwiftMTP
+# This file configures Swift's code coverage reporting
+
+# Coverage targets - which targets to measure coverage for
+coverage_targets:
+  - SwiftMTPCore
+  - SwiftMTPIndex
+  - SwiftMTPObservability
+  - SwiftMTPQuirks
+  - SwiftMTPFileProvider
+
+# Optional: Additional targets for extended coverage
+extended_coverage_targets:
+  - SwiftMTPTransportLibUSB
+  - SwiftMTPSync
+  - SwiftMTPStore
+  - SwiftMTPXPC
+
+# Exclude patterns - files and directories to exclude from coverage
+exclude_patterns:
+  # Test helpers and utilities
+  - "**/Tests/**"
+  - "**/test_*.swift"
+  - "**/*_test.swift"
+  - "**/TestHelpers/**"
+  - "**/Mock*/**"
+  - "**/Fake*/**"
+  - "**/Stub*/**"
+  - "**/Mock/**/*.swift"
+  - "**/Fixtures/**"
+
+  # Generated code
+  - "**/Generated/**"
+  - "**/*.generated.swift"
+  - "**/Codegen/**"
+
+  # Sample/demo code
+  - "**/Sample*/**"
+  - "**/Example*/**"
+  - "**/Demo*/**"
+
+  # Third-party dependencies (already covered by their own projects)
+  - "**/CucumberSwift/**"
+  - "**/SwiftCheck/**"
+  - "**/swift-snapshot-testing/**"
+  - "**/SQLite/**"
+
+  # CLI and main entry points (lower priority for coverage)
+  - "**/swiftmtp-cli/**"
+  - "**/main.swift"
+  - "**/SwiftMTPKitApp.swift"
+
+  # Platform-specific shims with minimal logic
+  - "**/*+UIKit.swift"
+  - "**/*+AppKit.swift"
+
+# Minimum coverage thresholds (percentage)
+thresholds:
+  # Overall project coverage goal
+  overall: 75
+
+  # Per-target coverage thresholds
+  per_target:
+    SwiftMTPCore: 80          # Core functionality - high coverage expected
+    SwiftMTPIndex: 75         # Indexing logic
+    SwiftMTPObservability: 70  # Logging/tracing utilities
+    SwiftMTPQuirks: 70        # Device quirk configurations
+    SwiftMTPFileProvider: 65  # File provider extension
+
+  # Per-file coverage threshold (warn if file coverage is below this)
+  per_file: 60
+
+  # Function coverage threshold
+  function_coverage: 70
+
+  # Branch coverage threshold (if available)
+  branch_coverage: 60
+
+# Output format configuration
+output:
+  # Human-readable format
+  text:
+    format: "detailed"
+    show_missing_lines: true
+    show_function_details: true
+    sort_by: "coverage"
+
+  # JSON output for CI integration
+  json:
+    enabled: true
+    path: "coverage/coverage.json"
+    pretty_print: true
+
+  # HTML report
+  html:
+    enabled: true
+    path: "coverage/report.html"
+    theme: "default"
+    include_source_code: true
+
+  # LLVM profdata format (for tools like xcov)
+  llvm:
+    enabled: true
+    path: "coverage/coverage.profdata"
+
+# Coverage collection options
+collection:
+  # Include test targets in coverage (to see what's being tested)
+  include_test_targets: false
+
+  # Parallel test execution
+  parallel: true
+
+  # Disable incremental compilation for accurate coverage
+  disable_incremental: true
+
+# Filtering options for reporting
+reporting:
+  # Show only files with coverage below threshold
+  highlight_low_coverage: true
+
+  # Minimum coverage delta to show (hide minor changes)
+  min_delta: 1.0
+
+  # Group files by directory in output
+  group_by_directory: true
+
+# Ignored regions (lines that won't affect coverage)
+ignore_regions:
+  - pattern: "// swiftcoverage:ignore"
+    type: "line"
+  - pattern: "#if DEBUG"
+    type: "block"
+  - pattern: "// MARK: - Testing Utilities"
+    type: "block"
+  - pattern: "// MARK: - Legacy Code"
+    type: "block"

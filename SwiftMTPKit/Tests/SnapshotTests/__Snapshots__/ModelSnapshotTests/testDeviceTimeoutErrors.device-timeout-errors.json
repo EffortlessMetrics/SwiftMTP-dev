@@ -1,0 +1,29 @@
+{
+  "errors" : [
+    {
+      "action" : "retryWithBackoff",
+      "description" : "Device failed to respond to OpenSession within timeout",
+      "observedMs" : 25000,
+      "thresholdMs" : 20000,
+      "type" : "handshakeTimeout"
+    },
+    {
+      "action" : "retryWithShorterChunks",
+      "description" : "Data transfer exceeded I\/O timeout",
+      "observedMs" : 35000,
+      "thresholdMs" : 30000,
+      "type" : "ioTimeout"
+    },
+    {
+      "action" : "reopenSession",
+      "description" : "Device went idle beyond allowed inactivity period",
+      "observedMs" : 15000,
+      "thresholdMs" : 10000,
+      "type" : "inactivityTimeout"
+    }
+  ],
+  "mitigation" : {
+    "adaptiveTimeout" : true,
+    "sessionKeepalive" : true
+  }
+}
