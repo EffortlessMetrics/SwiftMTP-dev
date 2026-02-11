@@ -30,8 +30,18 @@
         "eventPumpDelayMs": 0
       },
       "hooks": [
-        { "phase": "postOpenSession", "delayMs": 400 },
-        { "phase": "beforeGetStorageIDs", "busyBackoff": { "retries": 3, "baseMs": 200, "jitterPct": 0.2 } }
+        {
+          "phase": "postOpenSession",
+          "delayMs": 400
+        },
+        {
+          "phase": "beforeGetStorageIDs",
+          "busyBackoff": {
+            "retries": 3,
+            "baseMs": 200,
+            "jitterPct": 0.2
+          }
+        }
       ],
       "ops": {
         "supportsGetPartialObject64": true,
@@ -51,11 +61,9 @@
         "date": "2025-01-09",
         "commit": "<current-commit>",
         "artifacts": {
-          "probe": "Docs/benchmarks/probes/mi-note2-probe.txt",
-          "usbDump": "Docs/benchmarks/probes/mi-note2-usb-dump.txt",
+          "probe": "probes/mi-note2-probe.txt",
           "bench100M": "Docs/benchmarks/csv/mi-note2-100m.csv",
-          "bench1G": "Docs/benchmarks/csv/mi-note2-1g.csv",
-          "mirrorLog": "Docs/benchmarks/logs/mi-note2-mirror.log"
+          "bench1G": "Docs/benchmarks/csv/mi-note2-1g.csv"
         }
       }
     },
@@ -107,11 +115,9 @@
         "date": "2025-01-09",
         "commit": "<current-commit>",
         "artifacts": {
-          "probe": "Docs/benchmarks/probes/mi-note2-probe.txt",
-          "usbDump": "Docs/benchmarks/probes/mi-note2-usb-dump.txt",
+          "probe": "probes/mi-note2-probe.txt",
           "bench100M": "Docs/benchmarks/csv/mi-note2-100m.csv",
-          "bench1G": "Docs/benchmarks/csv/mi-note2-1g.csv",
-          "mirrorLog": "Docs/benchmarks/logs/mi-note2-mirror.log"
+          "bench1G": "Docs/benchmarks/csv/mi-note2-1g.csv"
         }
       },
       "status": "stable"
@@ -152,9 +158,18 @@
       "probeLadder": {
         "enabled": true,
         "steps": [
-          {"method": "sessionlessGetDeviceInfo", "timeoutMs": 5000},
-          {"method": "openSessionThenGetDeviceInfo", "timeoutMs": 5000},
-          {"method": "getStorageIDs", "timeoutMs": 5000}
+          {
+            "method": "sessionlessGetDeviceInfo",
+            "timeoutMs": 5000
+          },
+          {
+            "method": "openSessionThenGetDeviceInfo",
+            "timeoutMs": 5000
+          },
+          {
+            "method": "getStorageIDs",
+            "timeoutMs": 5000
+          }
         ]
       },
       "warnings": [
@@ -205,7 +220,10 @@
         "eventPumpDelayMs": 0
       },
       "hooks": [
-        { "phase": "postOpenSession", "delayMs": 200 }
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
       ],
       "ops": {
         "supportsGetPartialObject64": true,

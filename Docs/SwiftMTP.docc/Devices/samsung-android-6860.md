@@ -58,7 +58,7 @@ Samsung devices use a vendor-specific USB interface class (0xff) that may not re
 
 1. **Sessionless GetDeviceInfo** (0x1001) - Standard probe
 2. **OpenSession + GetDeviceInfo** - Establish session first, then query
-3. **GetStorageIDs** (0x1005) - Fallback for vendor-specific stacks
+3. **GetStorageIDs** (0x1004) - Fallback for vendor-specific stacks
 
 ## Warnings
 
