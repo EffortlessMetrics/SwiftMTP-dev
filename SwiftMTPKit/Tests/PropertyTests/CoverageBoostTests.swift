@@ -44,6 +44,7 @@ final class QuirksCoverageBoostTests: XCTestCase {
         XCTAssertEqual(defaults.overallDeadlineMs, 60_000)
         XCTAssertEqual(defaults.stabilizeMs, 0)
         XCTAssertEqual(defaults.postClaimStabilizeMs, 250)
+        XCTAssertEqual(defaults.postClaimStabilizeMs, 250)
         XCTAssertFalse(defaults.resetOnOpen)
         XCTAssertFalse(defaults.disableEventPump)
         XCTAssertTrue(defaults.operations.isEmpty)

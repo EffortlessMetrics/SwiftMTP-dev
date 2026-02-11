@@ -424,6 +424,28 @@ struct DeviceLabCommand {
     do {
       _ = try await device.write(parent: parentHandle, name: fileName, size: UInt64(payloadSize), from: tempURL)
       smoke.succeeded = true
+    } catch let error as MTPError {
+      // Check for policy rejection codes (0x201D = InvalidParameter, 0x201E = SessionAlreadyOpen)
+      // These indicate the device rejected the write due to policy, not failure
+      let isPolicyRejection: Bool
+      if case .protocolError(let code, _) = error {
+        isPolicyRejection = code == 0x201D || code == 0x201E
+      } else {
+        isPolicyRejection = false
+      }
+      
+      if isPolicyRejection {
+        let code: UInt16
+        if case .protocolError(let c, _) = error { code = c } else { code = 0 }
+        smoke.skipped = true
+        smoke.reason = "write_policy: device rejected SendObject with 0x\(String(format: "%04X", code)); root write access may be restricted"
+        smoke.error = nil
+      } else {
+        smoke.error = "write to \(parentName) failed: \(error)"
+        smoke.skipped = true
+        smoke.reason = "SendObject rejected by device (\(error)); write smoke skipped"
+      }
+      return smoke
     } catch {
       smoke.error = "write to \(parentName) failed: \(error)"
       smoke.skipped = true

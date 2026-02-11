@@ -99,6 +99,7 @@ final class ModelSnapshotTests: XCTestCase {
                 inactivityTimeoutMs: 10000,
                 overallDeadlineMs: 180000,
                 stabilizeMs: 3000,
+                postClaimStabilizeMs: 3000,
                 resetOnOpen: false,
                 disableEventPump: false,
                 operations: capabilities,

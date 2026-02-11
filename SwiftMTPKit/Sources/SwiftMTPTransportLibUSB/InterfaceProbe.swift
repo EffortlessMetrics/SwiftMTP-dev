@@ -61,6 +61,7 @@ func evaluateMTPInterfaceCandidate(
     return MTPInterfaceHeuristic(isCandidate: false, score: Int.min)
   }
 
+  // Hard exclude ADB interfaces (class 0xff with subclass 0x42 or name contains ADB)
   if (interfaceClass == 0xFF && interfaceSubclass == 0x42) || nameLooksLikeADB(interfaceName) {
     return MTPInterfaceHeuristic(isCandidate: false, score: Int.min)
   }
@@ -68,7 +69,12 @@ func evaluateMTPInterfaceCandidate(
   var score = 0
   let name = interfaceName.lowercased()
 
-  // Canonical MTP/PTP interface.
+  // Canonical MTP/PTP interface (class 0x06).
+  // Score hierarchy:
+  // - 0x06/0x01/* = canonical MTP/PTP (highest priority)
+  // - 0x06/*/* = other Still Image or vendor subclasses
+  // - 0xFF/*/* = vendor-specific (lower than canonical)
+  // - 0x08/*/* = mass storage (deprioritized when MTP exists)
   if interfaceClass == 0x06 && interfaceSubclass == 0x01 {
     score += 100
   } else if interfaceClass == 0x06 {
@@ -76,6 +82,7 @@ func evaluateMTPInterfaceCandidate(
   }
 
   // Vendor-specific Android stacks often expose MTP on class 0xFF.
+  // These are acceptable but scored lower than canonical MTP.
   if interfaceClass == 0xFF {
     if nameLooksLikeMTP(name) {
       score += 80
@@ -85,6 +92,15 @@ func evaluateMTPInterfaceCandidate(
     }
   }
 
+  // Deprioritize mass storage interfaces (class 0x08) when MTP exists.
+  // Mass storage is valid for USB storage devices but not for MTP file transfer.
+  if interfaceClass == 0x08 {
+    // Only include as candidate if no better MTP interface is likely available
+    // Mass storage gets a very low score to ensure MTP interfaces win
+    score -= 50
+  }
+
+  // Bonus for MTP/PTP in interface name
   if name.contains("ptp") || name.contains("mtp") { score += 15 }
   if interfaceProtocol == 0x01 { score += 5 }
   if endpoints.evtIn != 0 { score += 5 }
@@ -579,10 +595,13 @@ struct ProbeAllResult {
   let candidate: InterfaceCandidate?
   let cachedDeviceInfo: Data?
   let probeStep: String?
+  let selectionReason: String?
+  let skippedAlternatives: [SkippedInterface]
 }
 
 /// Try to claim and probe each candidate in order. Returns the first that succeeds.
 /// Uses probe ladder for vendor-specific interfaces (class 0xff like Samsung).
+/// Records skipped alternatives and selection reason for diagnostics.
 func tryProbeAllCandidates(
   handle: OpaquePointer,
   device: OpaquePointer,
@@ -591,10 +610,13 @@ func tryProbeAllCandidates(
   postClaimStabilizeMs: Int,
   debug: Bool
 ) -> ProbeAllResult {
+  var skippedAlternatives: [SkippedInterface] = []
+  
   for candidate in candidates {
     let start = DispatchTime.now()
     let isVendorSpecific = candidate.ifaceClass == 0xff
-
+    let isMassStorage = candidate.ifaceClass == 0x08
+    
     if debug {
       print(String(format: "   [Probe] Trying interface %d (score=%d, class=0x%02x) %@",
                    candidate.ifaceNumber, candidate.score, candidate.ifaceClass,
@@ -605,6 +627,15 @@ func tryProbeAllCandidates(
       try claimCandidate(handle: handle, device: device, candidate, postClaimStabilizeMs: postClaimStabilizeMs)
     } catch {
       if debug { print("   [Probe] Claim failed: \(error)") }
+      // Record as skipped due to claim failure
+      skippedAlternatives.append(SkippedInterface(
+        interfaceNumber: Int(candidate.ifaceNumber),
+        interfaceClass: candidate.ifaceClass,
+        interfaceSubclass: candidate.ifaceSubclass,
+        interfaceProtocol: candidate.ifaceProtocol,
+        score: candidate.score,
+        reason: "claim failed: \(error)"
+      ))
       continue
     }
 
@@ -635,18 +666,61 @@ func tryProbeAllCandidates(
         print(String(format: "   [Probe] Interface %d OK (%@) in %dms",
                      candidate.ifaceNumber, probeResult.stepAttempted, elapsed))
       }
+      
+      // Generate selection reason
+      let selectionReason: String
+      if isVendorSpecific {
+        selectionReason = "vendor-specific (class=0xFF) accepted via probe ladder"
+      } else if candidate.ifaceClass == 0x06 && candidate.ifaceSubclass == 0x01 {
+        selectionReason = "canonical MTP/PTP (class=0x06, subclass=0x01)"
+      } else if candidate.ifaceClass == 0x06 {
+        selectionReason = "MTP-like (class=0x06, subclass=0x\(String(format: "%02x", candidate.ifaceSubclass)))"
+      } else {
+        selectionReason = "selected by score (score=\(candidate.score))"
+      }
+      
       return ProbeAllResult(
         candidate: candidate,
         cachedDeviceInfo: probeResult.cachedDeviceInfoData,
-        probeStep: probeResult.stepAttempted
+        probeStep: probeResult.stepAttempted,
+        selectionReason: selectionReason,
+        skippedAlternatives: skippedAlternatives
       )
     } else {
       if debug {
         print(String(format: "   [Probe] Interface %d failed (%@) in %dms, trying next...",
                      candidate.ifaceNumber, probeResult.stepAttempted, elapsed))
       }
+      // Record as skipped due to probe failure
+      skippedAlternatives.append(SkippedInterface(
+        interfaceNumber: Int(candidate.ifaceNumber),
+        interfaceClass: candidate.ifaceClass,
+        interfaceSubclass: candidate.ifaceSubclass,
+        interfaceProtocol: candidate.ifaceProtocol,
+        score: candidate.score,
+        reason: "probe \(probeResult.stepAttempted ?? "unknown") failed"
+      ))
       releaseCandidate(handle: handle, candidate)
     }
   }
-  return ProbeAllResult(candidate: nil, cachedDeviceInfo: nil, probeStep: nil)
+  
+  // Generate reason for why no candidate succeeded
+  let failureReason: String
+  if candidates.isEmpty {
+    failureReason = "no MTP-capable interfaces found"
+  } else if skippedAlternatives.isEmpty {
+    failureReason = "all candidates failed"
+  } else {
+    let vendorSkipped = skippedAlternatives.filter { $0.interfaceClass == 0xff }.count
+    let massSkipped = skippedAlternatives.filter { $0.interfaceClass == 0x08 }.count
+    failureReason = "\(skippedAlternatives.count) candidate(s) failed (\(vendorSkipped) vendor-specific, \(massSkipped) mass storage)"
+  }
+  
+  return ProbeAllResult(
+    candidate: nil,
+    cachedDeviceInfo: nil,
+    probeStep: nil,
+    selectionReason: "failed: \(failureReason)",
+    skippedAlternatives: skippedAlternatives
+  )
 }
