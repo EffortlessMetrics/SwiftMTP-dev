@@ -116,3 +116,51 @@ If all steps fail, the device is likely in PTP mode or has a USB configuration i
 ### Evidence Artifacts
 - [Device Probe](Docs/benchmarks/probes/samsung-probe.txt)
 - [USB Dump](Docs/benchmarks/probes/samsung-usb-dump.txt)
+
+## Lab Test Results (2026-02-11)
+
+### Test Environment
+
+| Property | Value |
+|----------|-------|
+| OS | macOS |
+| USB Mode | File Transfer (MTP) |
+| Device State | Unlocked, screen on |
+| Test Command | `swiftmtp device-lab connected --vid 0x04E8 --pid 0x6860` |
+
+### Test Results
+
+| Metric | Value | Status |
+|--------|-------|--------|
+| Device Detection | VID=0x04E8 PID=0x6860 | ✅ PASSED |
+| Claim Interface | `libusb_claim_interface rc=0` | ✅ PASSED |
+| Storage Enumeration | GetStorageIDs returned storage handles | ✅ PASSED |
+| Probe Ladder | Step 3 successful (GetStorageIDs) | ✅ PASSED |
+| GetStorageIDs Latency | 1003ms (first attempt) | ✅ ACCEPTABLE |
+| Overall Status | **PASSED** | |
+
+### Key Observations
+
+1. **Storage Enumeration**: The device successfully returned storage IDs on the first probe attempt via the probe ladder's Step 3 (GetStorageIDs). The readiness retry logic was not triggered during this test, indicating the MTP stack was responsive.
+
+2. **Vendor-Specific Interface**: The device uses interface class 0xff (vendor-specific) which required the probe ladder to succeed. Standard sessionless GetDeviceInfo (Step 1) returned `code=0x2006` (OperationNotSupported), but the ladder handled this gracefully.
+
+3. **Post-Claim Stabilization**: The 500ms post-claim stabilization delay allowed the USB pipes to activate properly.
+
+4. **PTP Device Reset**: Successfully executed (`rc=0`), indicating the device supports the reset operation.
+
+### Quirks Validation
+
+The following quirks were validated during the test:
+
+| Quirk | Value | Validation |
+|-------|-------|------------|
+| `getStorageIDsReadinessRetries` | 5 | Configured but not triggered |
+| `getStorageIDsReadinessBackoffMs` | [250, 500, 1000, 2000, 3000] | Configured but not triggered |
+| `postOpenSessionStabilizeMs` | 750 | Applied after session open |
+| `alternateInterfaceSelection` | true | Used for vendor-specific iface |
+| `requiresKernelDetach` | true | `detach_kernel_driver rc=-3` handled |
+
+### Recommendations
+
+Based on test results, the current quirk configuration is **working correctly**. No tuning adjustments are required for this device.

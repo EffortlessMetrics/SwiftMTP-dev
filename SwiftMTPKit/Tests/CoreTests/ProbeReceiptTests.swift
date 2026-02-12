@@ -260,6 +260,7 @@ final class ProbeReceiptTests: XCTestCase {
       overallDeadlineMs: 60_000,
       stabilizeMs: 500,
       postClaimStabilizeMs: 100,
+      postProbeStabilizeMs: 0,
       resetOnOpen: true,
       disableEventPump: false,
       operations: [:],

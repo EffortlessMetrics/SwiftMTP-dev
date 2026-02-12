@@ -279,7 +279,9 @@
         "stabilizeMs": 3000,
         "postClaimStabilizeMs": 3000,
         "resetOnOpen": false,
-        "requiresKernelDetach": true
+        "requiresKernelDetach": true,
+        "forceConfigurationNumber": 1,
+        "forceAltSetting": 0
       },
       "warnings": [
         {
@@ -295,7 +297,8 @@
         "Use requiresKernelDetach=true to attempt releasing from Chrome/WebUSB.",
         "libmtp-aligned claim (set_configuration + set_alt_setting) reinitializes pipes without USB reset.",
         "Fallback USB reset uses stabilizeMs=3000 as poll budget for waitForMTPReady.",
-        "If kernel detach fails, user must manually quit Chrome and replug device."
+        "If kernel detach fails, user must manually quit Chrome and replug device.",
+        "forceConfigurationNumber=1 and forceAltSetting=0 ensure proper USB configuration."
       ],
       "provenance": {
         "author": "Steven Zimmerman",

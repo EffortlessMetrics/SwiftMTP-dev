@@ -102,6 +102,7 @@ final class ModelSnapshotTests: XCTestCase {
         overallDeadlineMs: 180000,
         stabilizeMs: 3000,
         postClaimStabilizeMs: 500,
+        postProbeStabilizeMs: 0,
         resetOnOpen: false,
         disableEventPump: false,
         operations: capabilities,

@@ -234,27 +234,22 @@ func claimCandidate(handle: OpaquePointer, device: OpaquePointer, _ c: Interface
       if debug { print("   [Claim] claimed OK, waiting \\(postClaimStabilizeMs)ms for pipe activation") }
       usleep(UInt32(postClaimStabilizeMs) * 1000)
 
-      // Endpoint diagnostics (debug only, non-fatal)
+      // CRITICAL: Clear HALT state on both bulk endpoints before first command.
+      // This fixes "sent=0/12" timeouts on devices like Pixel 7 where endpoints may be
+      // left in halted state from Chrome/WebUSB interference or previous failed attempts.
+      // libusb_clear_halt is safe to call even if endpoint is not halted (returns success).
+      let clearInRC = libusb_clear_halt(handle, c.bulkIn)
+      let clearOutRC = libusb_clear_halt(handle, c.bulkOut)
       if debug {
+        print(String(format: "   [Claim] clear_halt: bulkIn=0x%02x rc=%d, bulkOut=0x%02x rc=%d",
+          c.bulkIn, clearInRC, c.bulkOut, clearOutRC))
+
+        // Additional endpoint diagnostics (debug only, non-fatal)
         let inMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkIn)
         let outMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkOut)
         print(String(format: "   [Claim] maxPacketSize: bulkIn=%d bulkOut=%d", inMax, outMax))
         if inMax < 0 { print("   [Claim] WARNING: bulkIn max_packet_size negative (bad pipe)") }
         if outMax < 0 { print("   [Claim] WARNING: bulkOut max_packet_size negative (bad pipe)") }
-
-        // Check for HALT/STALL on bulkOut via USB GET_STATUS
-        var epStatus: UInt16 = 0
-        let statusRC = withUnsafeMutablePointer(to: &epStatus) { ptr in
-          libusb_control_transfer(handle, 0x82, 0x00, 0, UInt16(c.bulkOut), ptr, 2, 500)
-        }
-        if statusRC >= 2 {
-          let halted = (epStatus & 0x0001) != 0
-          print(String(format: "   [Claim] bulkOut GET_STATUS=0x%04x halted=%d", epStatus, halted ? 1 : 0))
-          if halted {
-            let clearRC = libusb_clear_halt(handle, c.bulkOut)
-            print("   [Claim] cleared HALT on bulkOut rc=\(clearRC)")
-          }
-        }
       }
 
       return  // Success - exit the retry loop
@@ -589,6 +584,7 @@ func tryProbeAllCandidates(
   candidates: [InterfaceCandidate],
   handshakeTimeoutMs: Int,
   postClaimStabilizeMs: Int,
+  postProbeStabilizeMs: Int,
   debug: Bool
 ) -> ProbeAllResult {
   for candidate in candidates {

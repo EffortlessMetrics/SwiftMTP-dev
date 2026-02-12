@@ -119,3 +119,28 @@ If you have USB debugging enabled:
 ### Evidence Artifacts
 - [Device Probe](Docs/benchmarks/probes/pixel7-probe.txt)
 - [USB Dump](Docs/benchmarks/probes/pixel7-usb-dump.txt)
+
+## Lab Test Status
+
+**Test Date:** 2026-02-11  
+**Status:** DEFERRED - Device not connected
+
+The Pixel 7 device was not available for physical tuning during this test session. The device was not detected via `system_profiler SPUSBDataType` or `swiftmtp device-lab connected`.
+
+### Required Actions for Future Testing
+
+1. Connect the Pixel 7 via USB
+2. Ensure USB mode is set to "File Transfer (MTP)"
+3. Quit all Chrome/Chromium processes before testing
+4. Unlock the device and keep screen on
+
+### Expected Test Commands
+
+```bash
+# Kill conflicting processes
+killall PTPCamera 2>/dev/null || true
+osascript -e 'tell app "Google Chrome" to quit' 2>/dev/null || true
+
+# Run device lab test
+SWIFTMTP_DEBUG=1 swiftmtp device-lab connected --vid 0x18D1 --pid 0x4EE1
+```
