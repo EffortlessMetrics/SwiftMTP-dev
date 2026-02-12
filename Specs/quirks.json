@@ -59,12 +59,7 @@
       "provenance": {
         "author": "Steven Zimmerman",
         "date": "2025-01-09",
-        "commit": "<current-commit>",
-        "artifacts": {
-          "probe": "probes/mi-note2-probe.txt",
-          "bench100M": "Docs/benchmarks/csv/mi-note2-100m.csv",
-          "bench1G": "Docs/benchmarks/csv/mi-note2-1g.csv"
-        }
+        "commit": "<current-commit>"
       }
     },
     {
