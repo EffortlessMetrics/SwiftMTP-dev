@@ -27,6 +27,7 @@
         "inactivityTimeoutMs": 8000,
         "overallDeadlineMs": 120000,
         "stabilizeMs": 400,
+        "resetOnOpen": false,
         "eventPumpDelayMs": 0
       },
       "hooks": [
@@ -60,6 +61,11 @@
         "author": "Steven Zimmerman",
         "date": "2025-01-09",
         "commit": "<current-commit>"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": true
       }
     },
     {
@@ -84,6 +90,7 @@
         "inactivityTimeoutMs": 8000,
         "overallDeadlineMs": 120000,
         "stabilizeMs": 400,
+        "resetOnOpen": false,
         "eventPumpDelayMs": 0
       },
       "ops": {
@@ -115,7 +122,14 @@
           "bench1G": "Docs/benchmarks/csv/mi-note2-1g.csv"
         }
       },
-      "status": "stable"
+      "status": "stable",
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "preferredWriteFolder": "Download",
+        "emptyDatesInSendObject": true
+      }
     },
     {
       "id": "samsung-android-6860",
@@ -144,6 +158,20 @@
         "alternateInterfaceSelection": true,
         "postClaimStabilizeMs": 500
       },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 500
+        },
+        {
+          "phase": "beforeGetStorageIDs",
+          "busyBackoff": {
+            "retries": 5,
+            "baseMs": 400,
+            "jitterPct": 0.25
+          }
+        }
+      ],
       "ops": {
         "supportsGetPartialObject64": true,
         "supportsSendPartialObject": false,
@@ -180,11 +208,18 @@
         "Vendor-specific interface class (0xff) discovered by shared MTP heuristic.",
         "Increased post-claim stabilize to 500ms for Samsung MTP stack readiness.",
         "Probe ladder tries sessionless GetDeviceInfo, then OpenSession+GetDeviceInfo, then GetStorageIDs.",
+        "Added beforeGetStorageIDs hook with busy-backoff to wait for storage readiness.",
+        "Storage enumeration now retries up to 5 times with exponential backoff (400ms to 5s).",
         "Read validation is reliable; write smoke remains best-effort."
       ],
       "provenance": {
         "author": "Steven Zimmerman",
         "date": "2026-02-10"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false
       }
     },
     {
@@ -252,6 +287,9 @@
           "probe": "Docs/benchmarks/probes/oneplus3t-probe.txt",
           "usbDump": "Docs/benchmarks/probes/oneplus3t-usb-dump.txt"
         }
+      },
+      "flags": {
+        "writeToSubfolderOnly": true
       }
     },
     {
@@ -285,27 +323,41 @@
       },
       "warnings": [
         {
-          "condition": "chromeWebUSBDetected",
-          "message": "Chrome/WebUSB is holding this device. Quit all Chromium-based browsers (Chrome, Edge, Brave) and unplug/replug the device.",
+          "condition": "probeFailedNoInterfaces",
+          "message": "Pixel 7 not exposing MTP interfaces. Check: 1) USB mode is MTP (adb shell getprop sys.usb.config), 2) Computer is trusted (check Pixel prompt), 3) USB debugging enabled in Developer Options.",
           "severity": "error"
+        },
+        {
+          "condition": "chromeWebUSBDetected",
+          "message": "Chrome/WebUSB may be holding this device. Quit all Chromium-based browsers (Chrome, Edge, Brave) and unplug/replug the device.",
+          "severity": "warning"
         }
       ],
-      "confidence": "medium",
-      "status": "experimental",
+      "behaviorLimitations": [
+        {
+          "operation": "All MTP operations",
+          "errorCode": "LIBUSB_ERROR_TIMEOUT (-7)",
+          "description": "Pixel 7 Still Image class (0x06) interface is not responding. This is a macOS/Pixel USB stack issue where the device is not exposing MTP interfaces properly. See Docs/SwiftMTP.docc/macOS26.md for troubleshooting.",
+          "workaround": "Ensure Pixel is in MTP mode with USB debugging enabled and computer is trusted. Try PTP mode as alternative."
+        }
+      ],
+      "confidence": "low",
+      "status": "blocked",
       "notes": [
-        "Bulk transfers time out (write rc=-7, LIBUSB_ERROR_TIMEOUT) on macOS when Chrome holds device.",
-        "Use requiresKernelDetach=true to attempt releasing from Chrome/WebUSB.",
-        "libmtp-aligned claim (set_configuration + set_alt_setting) reinitializes pipes without USB reset.",
-        "Fallback USB reset uses stabilizeMs=3000 as poll budget for waitForMTPReady.",
-        "If kernel detach fails, user must manually quit Chrome and replug device.",
-        "forceConfigurationNumber=1 and forceAltSetting=0 ensure proper USB configuration."
+        "ROOT CAUSE: Device is not exposing MTP interfaces to macOS (no IOUSBInterface children in ioreg).",
+        "Symptom: Claim succeeds but bulk writes timeout (sent=0/12, rc=-7).",
+        "This is a Pixel 7 / macOS 26.2 USB stack incompatibility, NOT a SwiftMTP bug.",
+        "Required: Enable Developer Options, USB debugging, and trust the computer on the Pixel.",
+        "Alternative: Try PTP mode (adb usb ptp) instead of MTP.",
+        "Samsung and Xiaomi devices work correctly; Pixel 7 Still Image class is not being exposed."
       ],
       "provenance": {
         "author": "Steven Zimmerman",
-        "date": "2026-02-07",
+        "date": "2026-02-12",
         "artifacts": {
-          "probe": "Docs/benchmarks/probes/pixel7-probe.txt",
-          "usbDump": "Docs/benchmarks/probes/pixel7-usb-dump.txt"
+          "ioregDump": "Docs/benchmarks/pixel7/ioreg-dump.txt",
+          "debugReport": "Docs/pixel7-usb-debug-report.md",
+          "macOS26Doc": "Docs/SwiftMTP.docc/macOS26.md"
         }
       }
     }

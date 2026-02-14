@@ -81,7 +81,40 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     try await openIfNeeded()
     return try await BusyBackoff.onDeviceBusy {
       let link = try await self.getMTPLink()
+
+      // Run beforeGetStorageIDs hook for devices that need preparation time
+      try await self.runHook(.beforeGetStorageIDs, tuning: self.currentTuning)
+
       let ids = try await link.getStorageIDs()
+
+      // If zero storages, apply fallback retry logic with escalating backoff
+      if ids.isEmpty {
+        var attempt = 0
+        let maxRetries = 5
+        let backoffMs: [UInt32] = [400, 800, 1600, 3200, 5000]
+
+        while ids.isEmpty && attempt < maxRetries {
+          attempt += 1
+          let delay = backoffMs[min(attempt - 1, backoffMs.count - 1)]
+          try await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000)
+
+          // Retry GetStorageIDs
+          let retryIds = try await link.getStorageIDs()
+          if !retryIds.isEmpty {
+            return try await withThrowingTaskGroup(of: MTPStorageInfo.self) { g in
+              for id in retryIds { g.addTask { try await link.getStorageInfo(id: id) } }
+              var out = [MTPStorageInfo]()
+              out.reserveCapacity(retryIds.count)
+              for try await s in g { out.append(s) }
+              return out
+            }
+          }
+        }
+
+        // All retries exhausted, return empty
+        return []
+      }
+
       return try await withThrowingTaskGroup(of: MTPStorageInfo.self) { g in
         for id in ids { g.addTask { try await link.getStorageInfo(id: id) } }
         var out = [MTPStorageInfo]()

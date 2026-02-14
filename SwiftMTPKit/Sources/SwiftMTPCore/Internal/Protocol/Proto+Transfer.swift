@@ -47,13 +47,20 @@ public enum ProtoTransfer {
     storageID: UInt32, parent: UInt32?, name: String, size: UInt64,
     dataHandler: @escaping MTPDataOut,
     on link: MTPLink,
-    ioTimeoutMs: Int
+    ioTimeoutMs: Int,
+    forceFFFFFFF: Bool = false,
+    useEmptyDates: Bool = false
   ) async throws {
     // PTP Spec: SendObjectInfo command parameters are [StorageID, ParentHandle]
     // Try using 0xFFFFFFFF for storageID in both places for some devices,
     // but real ID is usually better.
     let parentParam = parent ?? 0xFFFFFFFF
-    let targetStorage = (storageID == 0 || storageID == 0xFFFFFFFF) ? 0xFFFFFFFF : storageID
+    let targetStorage: UInt32
+    if forceFFFFFFF {
+      targetStorage = 0xFFFFFFFF
+    } else {
+      targetStorage = (storageID == 0 || storageID == 0xFFFFFFFF) ? 0xFFFFFFFF : storageID
+    }
     let formatCode = PTPObjectFormat.forFilename(name)
 
     let sendObjectInfoCommand = PTPContainer(
@@ -66,10 +73,15 @@ public enum ProtoTransfer {
 
     let dataset = PTPObjectInfoDataset.encode(
       storageID: targetStorage, parentHandle: parentParam, format: formatCode, size: size,
-      name: name)
+      name: name, useEmptyDates: useEmptyDates)
 
     if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
+      print(
+        "   [USB] SendObjectInfo: storage=\(String(format: "0x%08x", targetStorage)) parent=\(String(format: "0x%08x", parentParam)) format=\(String(format: "0x%04x", formatCode)) size=\(size) name=\(name)"
+      )
       print("   [USB] SendObjectInfo dataset length: \(dataset.count) bytes")
+      let hex = dataset.map { String(format: "%02x", $0) }.joined(separator: " ")
+      print("   [USB] Dataset hex: \(hex.prefix(128))\(dataset.count > 64 ? "..." : "")")
     }
 
     let infoOffset = BoxedOffset()
