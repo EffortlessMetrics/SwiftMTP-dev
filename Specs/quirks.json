@@ -316,7 +316,7 @@
         "overallDeadlineMs": 180000,
         "stabilizeMs": 3000,
         "postClaimStabilizeMs": 3000,
-        "resetOnOpen": false,
+        "resetOnOpen": true,
         "requiresKernelDetach": true,
         "forceConfigurationNumber": 1,
         "forceAltSetting": 0
