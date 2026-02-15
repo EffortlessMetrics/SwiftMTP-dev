@@ -1,0 +1,55 @@
+[0/1] Planning build
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+[1/4] Write sources
+[3/6] Emitting module SwiftMTPTransportLibUSB
+[4/6] Compiling SwiftMTPTransportLibUSB InterfaceProbe.swift
+[4/7] Write Objects.LinkFileList
+ld: warning: building for macOS-15.0, but linking with dylib '/opt/homebrew/opt/libusb/lib/libusb-1.0.0.dylib' which was built for newer version 26.0
+[5/7] Linking swiftmtp
+[6/7] Applying swiftmtp
+Build of product 'swiftmtp' complete! (3.00s)
+🔍 Probing for MTP devices...
+✅ Device found and opened!
+❌ Probe failed: io("no MTP interface responded to probe")
+   [Open] Pass 1: probing 1 candidate(s)
+   [Probe] Trying interface 0 (score=105, class=0x06)
+   [Claim] iface=0 bulkIn=0x81 bulkOut=0x01
+   [Claim] set_auto_detach_kernel_driver rc=0
+   [Claim] detach_kernel_driver rc=-3 (non-fatal)
+   [Claim] set_configuration(1) rc=0
+   [Claim] set_interface_alt_setting(0) rc=0
+   [Claim] claimed OK, waiting 100ms for pipe activation
+   [Probe] sending GetDeviceInfo txid=1, timeoutMs=20000
+   [Probe] write rc=-7 sent=0/12
+   [Probe] Interface 0 failed (20409ms), trying next...
+   [Open] Pass 1 failed, attempting USB reset fallback
+   [Open] libusb_reset_device rc=0
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] GetDeviceStatus → 0x0008
+   [Ready] timed out after 3000ms
+   [Open] waitForMTPReady → false
+   [Open] post-reset set_configuration(1) rc=0
+   [Probe] Trying interface 0 (score=105, class=0x06)
+   [Claim] iface=0 bulkIn=0x81 bulkOut=0x01
+   [Claim] set_auto_detach_kernel_driver rc=0
+   [Claim] detach_kernel_driver rc=-3 (non-fatal)
+   [Claim] set_configuration(1) rc=0
+   [Claim] set_interface_alt_setting(0) rc=0
+   [Claim] claimed OK, waiting 100ms for pipe activation
+   [Probe] sending GetDeviceInfo txid=1, timeoutMs=20000
+   [Probe] write rc=-7 sent=0/12
+   [Probe] Interface 0 failed (20518ms), trying next...

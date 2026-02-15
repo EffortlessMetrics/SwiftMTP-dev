@@ -13,8 +13,14 @@ codecov:
 
 # Coverage targets and thresholds
 coverage:
-  # Overall project coverage
+  # Overall project coverage settings
+  range: 70..90
+  round: nearest
+  precision: 1
+
+  # Status configurations
   status:
+    # Overall project coverage
     project:
       default:
         target: 75%
@@ -40,13 +46,15 @@ coverage:
           - unit
           - integration
 
-  # Explicit coverage targets
-  range: 70..90
-  round: nearest
-  precision: 1
+  # Coverage thresholds (fail if coverage drops below)
+  # These apply to PRs - any PR that reduces coverage will fail
+  global:
+    target: 75%
+    threshold: 5%
 
-# Coverage thresholds (fail if coverage drops below)
-# These apply to PRs - any PR that reduces coverage will fail
+  # Per-file coverage threshold
+  per_file:
+    threshold: 10%
 
 # Ignore patterns - files not counted in coverage
 ignore:

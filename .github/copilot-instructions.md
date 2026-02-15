@@ -17,7 +17,7 @@ Note: most package-level commands are intended to be run from the SwiftMTPKit di
 
 - Run CLI (help and common commands):
   - cd SwiftMTPKit && swift run swiftmtp --help
-  - Examples: swift run swiftmtp probe | ls | pull | push | snapshot | mirror | bench | events | quirks
+  - Examples: swift run swiftmtp probe | ls | pull | push | snapshot | mirror | bench | events | quirks | device-lab | wizard
 
 - Run GUI app:
   - cd SwiftMTPKit && swift run SwiftMTPApp
@@ -52,6 +52,9 @@ Note: most package-level commands are intended to be run from the SwiftMTPKit di
   - SwiftMTPQuirks: device quirks database & learned profiles
   - SwiftMTPObservability: structured logging and performance monitoring
   - SwiftMTPStore: persistence (transfer journals, metadata)
+  - SwiftMTPTestKit: test utilities (VirtualMTPDevice, FaultInjectingLink)
+  - SwiftMTPFileProvider: File Provider extension for macOS Finder integration
+  - SwiftMTPXPC: XPC service bridging File Provider and main app
   - Tools/: CLI entrypoints (swiftmtp-cli), demo/test tools, fuzz harnesses
 
 - Concurrency & testability:
@@ -76,7 +79,8 @@ Note: most package-level commands are intended to be run from the SwiftMTPKit di
 - Mocking & demo mode: unit and verification tests use simulated profiles; enable with environment variables:
   - export SWIFTMTP_DEMO_MODE=1
   - export SWIFTMTP_MOCK_PROFILE=pixel7  # options: pixel7, galaxy, iphone, canon
-- Tests are organized by category (BDD, Property, Snapshot). Use --filter to run a single test or category in CI or locally.
+- 15 test targets: CoreTests, TransportTests, IndexTests, FileProviderTests, ErrorHandlingTests, StoreTests, SyncTests, ScenarioTests, TestKitTests, IntegrationTests, XPCTests, ToolingTests, BDDTests, PropertyTests, SnapshotTests. Use --filter to run a single test or category in CI or locally.
+- Coverage gating: `SwiftMTPKit/scripts/coverage_gate.py` enforces minimum thresholds in CI.
 - Device quirks must be declared/edited in Specs/quirks.json (source of truth) and validated by the validate-quirks CI workflow.
 - Formatting is enforced: run swift-format prior to commits; CI expects code to be formatted and lint-free.
 - Use provided scripts for complex verification workflows: run-all-tests.sh, run-fuzz.sh, run-storybook.sh.

@@ -7,11 +7,6 @@ import SwiftMTPTransportLibUSB
 
 @MainActor
 struct DeviceLabCommand {
-  private static var includeSensitiveIdentifiers = false
-  private static func sanitizeIdentifier(_ raw: String) -> String {
-    if includeSensitiveIdentifiers { return raw }
-    return "redacted"
-  }
   private enum ExpectedPolicy: String, Codable, Sendable {
     case fullExercise = "full-exercise"
     case probeNoCrash = "probe-no-crash"
@@ -102,7 +97,6 @@ struct DeviceLabCommand {
   ]
 
   static func run(flags: CLIFlags, args: [String]) async {
-    DeviceLabCommand.includeSensitiveIdentifiers = args.contains("--include-sensitive-identifiers")
     guard let mode = args.first, mode == "connected" else {
       printUsage()
       exitNow(.usage)
@@ -110,7 +104,8 @@ struct DeviceLabCommand {
 
     do {
       let outputDir = try resolveOutputDirectory(args: Array(args.dropFirst()))
-      try FileManager.default.createDirectory(at: outputDir, withIntermediateDirectories: true, attributes: nil)
+      try FileManager.default.createDirectory(
+        at: outputDir, withIntermediateDirectories: true, attributes: nil)
 
       let usbDump = try USBDumper().collect()
       let usbDumpURL = outputDir.appendingPathComponent("usb-dump.json")
@@ -119,7 +114,9 @@ struct DeviceLabCommand {
       let connected = try await LibUSBDiscovery.enumerateMTPDevices()
       if connected.isEmpty {
         if flags.json {
-          let emptySummary = ReportSummary(totalDevices: 0, passed: 0, partial: 0, blocked: 0, failed: 0, missingExpected: Array(expectedPolicies.keys).sorted())
+          let emptySummary = ReportSummary(
+            totalDevices: 0, passed: 0, partial: 0, blocked: 0, failed: 0,
+            missingExpected: Array(expectedPolicies.keys).sorted())
           let emptyReport = ConnectedLabReport(
             schemaVersion: "1.0.0",
             generatedAt: Date(),
@@ -136,17 +133,22 @@ struct DeviceLabCommand {
       }
 
       let devicesRoot = outputDir.appendingPathComponent("devices")
-      try FileManager.default.createDirectory(at: devicesRoot, withIntermediateDirectories: true, attributes: nil)
+      try FileManager.default.createDirectory(
+        at: devicesRoot, withIntermediateDirectories: true, attributes: nil)
 
       var results: [DeviceResult] = []
       for summary in connected.sorted(by: { deviceSortOrder($0, $1) }) {
         let vidpid = formatVIDPID(summary)
-        let slug = "\(vidpid.replacingOccurrences(of: ":", with: "-"))-b\(summary.bus ?? 0)-a\(summary.address ?? 0)"
+        let slug =
+          "\(vidpid.replacingOccurrences(of: ":", with: "-"))-b\(summary.bus ?? 0)-a\(summary.address ?? 0)"
         let deviceDir = devicesRoot.appendingPathComponent(slug)
-        try FileManager.default.createDirectory(at: deviceDir, withIntermediateDirectories: true, attributes: nil)
+        try FileManager.default.createDirectory(
+          at: deviceDir, withIntermediateDirectories: true, attributes: nil)
 
         let usbDevice = findUSBDumpDevice(for: summary, in: usbDump.devices)
-        var result = await runPerDevice(summary: summary, expectation: expectedPolicies[vidpid] ?? .generic, flags: flags, usbDumpDevice: usbDevice, deviceDir: deviceDir)
+        var result = await runPerDevice(
+          summary: summary, expectation: expectedPolicies[vidpid] ?? .generic, flags: flags,
+          usbDumpDevice: usbDevice, deviceDir: deviceDir)
 
         // Persist per-device artifacts.
         let reportURL = deviceDir.appendingPathComponent("device-report.json")
@@ -178,7 +180,8 @@ struct DeviceLabCommand {
       }
 
       let discoveredVIDPIDs = Set(results.map(\.vidpid))
-      let missingExpected = expectedPolicies.keys.sorted().filter { !discoveredVIDPIDs.contains($0) }
+      let missingExpected = expectedPolicies.keys.sorted()
+        .filter { !discoveredVIDPIDs.contains($0) }
 
       let summary = ReportSummary(
         totalDevices: results.count,
@@ -208,7 +211,9 @@ struct DeviceLabCommand {
       } else {
         print("Connected device lab complete.")
         print("Output: \(outputDir.path)")
-        print("Devices: \(summary.totalDevices)  passed=\(summary.passed) partial=\(summary.partial) blocked=\(summary.blocked) failed=\(summary.failed)")
+        print(
+          "Devices: \(summary.totalDevices)  passed=\(summary.passed) partial=\(summary.partial) blocked=\(summary.blocked) failed=\(summary.failed)"
+        )
         if !missingExpected.isEmpty {
           print("Missing expected VID:PID: \(missingExpected.joined(separator: ", "))")
         }
@@ -228,7 +233,7 @@ struct DeviceLabCommand {
   ) async -> DeviceResult {
     let vidpid = formatVIDPID(summary)
     var result = DeviceResult(
-      id: sanitizeIdentifier(summary.id.raw),
+      id: summary.id.raw,
       vidpid: vidpid,
       bus: Int(summary.bus ?? 0),
       address: Int(summary.address ?? 0),
@@ -308,7 +313,8 @@ struct DeviceLabCommand {
 
       if let firstStorage = storages.first {
         do {
-          result.read.rootObjectCount = try await sampleRootListing(device: device, storage: firstStorage.id)
+          result.read.rootObjectCount = try await sampleRootListing(
+            device: device, storage: firstStorage.id)
           result.read.rootListingSucceeded = true
         } catch {
           let message = "root listing failed: \(error)"
@@ -334,7 +340,9 @@ struct DeviceLabCommand {
     return result
   }
 
-  private static func sampleRootListing(device: any MTPDevice, storage: MTPStorageID) async throws -> Int {
+  private static func sampleRootListing(device: any MTPDevice, storage: MTPStorageID) async throws
+    -> Int
+  {
     var count = 0
     let stream = device.list(parent: nil, in: storage)
     for try await batch in stream {
@@ -361,7 +369,9 @@ struct DeviceLabCommand {
 
   /// Finds an existing writable folder in root (Download, Downloads, Documents).
   /// Returns (handle, name) or nil if none found.
-  private static func findWritableParent(device: any MTPDevice, storage: MTPStorageID) async -> (MTPObjectHandle, String)? {
+  private static func findWritableParent(device: any MTPDevice, storage: MTPStorageID) async -> (
+    MTPObjectHandle, String
+  )? {
     let preferredFolders = ["Download", "Downloads", "Documents"]
     let rootItems: [MTPObjectInfo]
     do {
@@ -371,14 +381,18 @@ struct DeviceLabCommand {
     }
 
     for folderName in preferredFolders {
-      if let existing = rootItems.first(where: { $0.formatCode == 0x3001 && $0.name.lowercased() == folderName.lowercased() }) {
+      if let existing = rootItems.first(where: {
+        $0.formatCode == 0x3001 && $0.name.lowercased() == folderName.lowercased()
+      }) {
         return (existing.handle, existing.name)
       }
     }
     return nil
   }
 
-  private static func runWriteSmoke(device: any MTPDevice, storage: MTPStorageInfo) async -> WriteSmoke {
+  private static func runWriteSmoke(device: any MTPDevice, storage: MTPStorageInfo) async
+    -> WriteSmoke
+  {
     var smoke = WriteSmoke()
     smoke.attempted = true
 
@@ -389,18 +403,25 @@ struct DeviceLabCommand {
     }
 
     // Find existing writable parent instead of creating folders
-    if let (parentHandle, parentName) = await findWritableParent(device: device, storage: storage.id) {
+    if let (parentHandle, parentName) = await findWritableParent(
+      device: device, storage: storage.id)
+    {
       smoke.remoteFolder = parentName
-      return await writeToParent(device: device, storage: storage, parentHandle: parentHandle, parentName: parentName)
+      return await writeToParent(
+        device: device, storage: storage, parentHandle: parentHandle, parentName: parentName)
     }
 
     // No existing folder found - skip write smoke instead of creating folders
     smoke.skipped = true
-    smoke.reason = "no writable parent found (Download/Downloads/Documents not present); folder creation skipped"
+    smoke.reason =
+      "no writable parent found (Download/Downloads/Documents not present); folder creation skipped"
     return smoke
   }
 
-  private static func writeToParent(device: any MTPDevice, storage: MTPStorageInfo, parentHandle: MTPObjectHandle, parentName: String) async -> WriteSmoke {
+  private static func writeToParent(
+    device: any MTPDevice, storage: MTPStorageInfo, parentHandle: MTPObjectHandle,
+    parentName: String
+  ) async -> WriteSmoke {
     var smoke = WriteSmoke()
     smoke.attempted = true
     smoke.remoteFolder = parentName
@@ -422,30 +443,9 @@ struct DeviceLabCommand {
     defer { try? fm.removeItem(at: tempURL) }
 
     do {
-      _ = try await device.write(parent: parentHandle, name: fileName, size: UInt64(payloadSize), from: tempURL)
+      _ = try await device.write(
+        parent: parentHandle, name: fileName, size: UInt64(payloadSize), from: tempURL)
       smoke.succeeded = true
-    } catch let error as MTPError {
-      // Check for policy rejection codes (0x201D = InvalidParameter, 0x201E = SessionAlreadyOpen)
-      // These indicate the device rejected the write due to policy, not failure
-      let isPolicyRejection: Bool
-      if case .protocolError(let code, _) = error {
-        isPolicyRejection = code == 0x201D || code == 0x201E
-      } else {
-        isPolicyRejection = false
-      }
-      
-      if isPolicyRejection {
-        let code: UInt16
-        if case .protocolError(let c, _) = error { code = c } else { code = 0 }
-        smoke.skipped = true
-        smoke.reason = "write_policy: device rejected SendObject with 0x\(String(format: "%04X", code)); root write access may be restricted"
-        smoke.error = nil
-      } else {
-        smoke.error = "write to \(parentName) failed: \(error)"
-        smoke.skipped = true
-        smoke.reason = "SendObject rejected by device (\(error)); write smoke skipped"
-      }
-      return smoke
     } catch {
       smoke.error = "write to \(parentName) failed: \(error)"
       smoke.skipped = true
@@ -455,7 +455,8 @@ struct DeviceLabCommand {
 
     // Verify and cleanup
     do {
-      let children = try await listObjects(device: device, parent: parentHandle, storage: storage.id, limit: 128)
+      let children = try await listObjects(
+        device: device, parent: parentHandle, storage: storage.id, limit: 128)
       if let uploaded = children.first(where: { $0.name == fileName }) {
         try? await device.delete(uploaded.handle, recursive: false)
       }
@@ -467,7 +468,8 @@ struct DeviceLabCommand {
   }
 
   private static func finalizeOutcome(_ result: inout DeviceResult) {
-    let readOK = result.read.openSucceeded
+    let readOK =
+      result.read.openSucceeded
       && result.read.deviceInfoSucceeded
       && result.read.storagesSucceeded
       && result.read.rootListingSucceeded
@@ -542,7 +544,8 @@ struct DeviceLabCommand {
     }
 
     let root = detectRepoRoot()
-    return root
+    return
+      root
       .appendingPathComponent("Docs", isDirectory: true)
       .appendingPathComponent("benchmarks", isDirectory: true)
       .appendingPathComponent("connected-lab", isDirectory: true)
@@ -588,7 +591,8 @@ struct DeviceLabCommand {
     encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
     encoder.dateEncodingStrategy = .iso8601
     if let data = try? encoder.encode(value),
-       let text = String(data: data, encoding: .utf8) {
+      let text = String(data: data, encoding: .utf8)
+    {
       print(text)
     } else {
       print("{}")
@@ -601,21 +605,30 @@ struct DeviceLabCommand {
     lines.append("")
     lines.append("- Generated: \(ISO8601DateFormatter().string(from: report.generatedAt))")
     lines.append("- Output: `\(report.outputPath)`")
-    lines.append("- Devices: \(report.summary.totalDevices) (passed: \(report.summary.passed), partial: \(report.summary.partial), blocked: \(report.summary.blocked), failed: \(report.summary.failed))")
+    lines.append(
+      "- Devices: \(report.summary.totalDevices) (passed: \(report.summary.passed), partial: \(report.summary.partial), blocked: \(report.summary.blocked), failed: \(report.summary.failed))"
+    )
     if !report.summary.missingExpected.isEmpty {
-      lines.append("- Missing expected VID:PID: \(report.summary.missingExpected.joined(separator: ", "))")
+      lines.append(
+        "- Missing expected VID:PID: \(report.summary.missingExpected.joined(separator: ", "))")
     }
     lines.append("")
     lines.append("| VID:PID | Device | Expected | Outcome | Read | Write | Notes |")
     lines.append("|---|---|---|---|---|---|---|")
     for device in report.devices {
-      let readState = device.read.openSucceeded && device.read.deviceInfoSucceeded && device.read.storagesSucceeded && device.read.rootListingSucceeded ? "ok" : "partial"
+      let readState =
+        device.read.openSucceeded && device.read.deviceInfoSucceeded
+          && device.read.storagesSucceeded && device.read.rootListingSucceeded ? "ok" : "partial"
       let writeState: String = {
         if !device.write.attempted { return "skipped" }
         return device.write.succeeded ? "ok" : "failed"
       }()
-      let noteText = (device.notes + [device.error, device.write.warning, device.write.error].compactMap { $0 }).joined(separator: "; ")
-      lines.append("| \(device.vidpid) | \(device.manufacturer) \(device.model) | \(device.expectation.rawValue) | \(device.outcome.rawValue) | \(readState) | \(writeState) | \(noteText.isEmpty ? "-" : noteText) |")
+      let noteText =
+        (device.notes + [device.error, device.write.warning, device.write.error].compactMap { $0 })
+        .joined(separator: "; ")
+      lines.append(
+        "| \(device.vidpid) | \(device.manufacturer) \(device.model) | \(device.expectation.rawValue) | \(device.outcome.rawValue) | \(readState) | \(writeState) | \(noteText.isEmpty ? "-" : noteText) |"
+      )
     }
     lines.append("")
     try lines.joined(separator: "\n").write(to: url, atomically: true, encoding: .utf8)
@@ -625,21 +638,23 @@ struct DeviceLabCommand {
     String(format: "%04x:%04x", summary.vendorID ?? 0, summary.productID ?? 0)
   }
 
-  private static func findUSBDumpDevice(for summary: MTPDeviceSummary, in devices: [USBDumper.DumpDevice]) -> USBDumper.DumpDevice? {
+  private static func findUSBDumpDevice(
+    for summary: MTPDeviceSummary, in devices: [USBDumper.DumpDevice]
+  ) -> USBDumper.DumpDevice? {
     let vid = String(format: "%04x", summary.vendorID ?? 0)
     let pid = String(format: "%04x", summary.productID ?? 0)
     let bus = Int(summary.bus ?? 0)
     let address = Int(summary.address ?? 0)
 
     return devices.first {
-      $0.vendorID.caseInsensitiveCompare(vid) == .orderedSame &&
-      $0.productID.caseInsensitiveCompare(pid) == .orderedSame &&
-      $0.bus == bus &&
-      $0.address == address
-    } ?? devices.first {
-      $0.vendorID.caseInsensitiveCompare(vid) == .orderedSame &&
-      $0.productID.caseInsensitiveCompare(pid) == .orderedSame
+      $0.vendorID.caseInsensitiveCompare(vid) == .orderedSame
+        && $0.productID.caseInsensitiveCompare(pid) == .orderedSame && $0.bus == bus
+        && $0.address == address
     }
+      ?? devices.first {
+        $0.vendorID.caseInsensitiveCompare(vid) == .orderedSame
+          && $0.productID.caseInsensitiveCompare(pid) == .orderedSame
+      }
   }
 
   private static func deviceSortOrder(_ lhs: MTPDeviceSummary, _ rhs: MTPDeviceSummary) -> Bool {

@@ -141,7 +141,12 @@ SwiftMTP/
 ├── SwiftMTPIndex/          # SQLite indexing
 ├── SwiftMTPSync/           # Sync & mirror
 ├── SwiftMTPQuirks/         # Device tuning
-└── SwiftMTPUI/             # SwiftUI views
+├── SwiftMTPUI/             # SwiftUI views
+├── SwiftMTPObservability/  # Logging and performance monitoring
+├── SwiftMTPStore/          # Persistence layer
+├── SwiftMTPTestKit/        # Test utilities (VirtualMTPDevice, FaultInjectingLink)
+├── SwiftMTPFileProvider/   # File Provider extension (macOS)
+└── SwiftMTPXPC/            # XPC service for File Provider ↔ app bridge
 ```
 
 ### Key Design Patterns
@@ -247,6 +252,12 @@ swift run swiftmtp events
 
 # Show device quirks
 swift run swiftmtp quirks --explain
+
+# Automated device testing matrix
+swift run swiftmtp device-lab
+
+# Interactive guided device setup
+swift run swiftmtp wizard
 ```
 
 ## Device Quirks

@@ -1,0 +1,40 @@
+[0/1] Planning build
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'swiftmtp' complete! (0.60s)
+🔍 Probing for MTP devices...
+✅ Device found and opened!
+   [Open] Pass 1: probing 1 candidate(s)
+   [Probe] Trying interface 0 (score=105, class=0x06)
+   [Claim] iface=0 bulkIn=0x81 bulkOut=0x01
+   [Claim] detach_kernel_driver rc=-3 (non-fatal)
+   [Claim] set_configuration(1) rc=0
+   [Claim] set_interface_alt_setting(0) rc=0
+   [Claim] claimed OK, waiting 100ms for pipe activation
+   [Probe] sending GetDeviceInfo txid=1, timeoutMs=15000
+   [Probe] write rc=0 sent=12/12
+   [Probe] read rc=0 got=337 (type=2 code=0x1001 txid=1 len=337)
+   [Probe] read rc=0 got=12 (type=3 code=0x2001 txid=1 len=12)
+   [Probe] Interface 0 OK (118ms)
+   [Actor] applyTuningAndOpenSession starting...
+   [Actor] Loading quirks DB...
+   [Actor] Running postOpenUSB hooks...
+   [Actor] Opening MTP session...
+   [USB] op=0x1002 tx=0 phase=COMMAND
+   [USB] op=0x1002 tx=0 phase=RESPONSE
+   [Actor] Running postOpenSession hooks...
+   [Actor] Probing capabilities (post-open)...
+   [Actor] Fallbacks: enum=propList5 read=partial64 write=partial
+   [Actor] Starting event pump...
+   [Actor] applyTuningAndOpenSession complete.
+   [USB] op=0x1004 tx=1 phase=COMMAND
+   [USB] op=0x1004 tx=1 phase=DATA-IN
+   [USB] op=0x1004 tx=1 phase=RESPONSE
+   [USB] op=0x1005 tx=2 phase=COMMAND
+   [USB] op=0x1005 tx=2 phase=DATA-IN
+   [USB] op=0x1005 tx=2 phase=RESPONSE
+Device: OnePlus ONEPLUS A3010
+Operations: 33
+Events: 6
+Storage devices: 1
+  - Internal shared storage: 113.1 GB total, 106.1 GB free (6.2% used)
