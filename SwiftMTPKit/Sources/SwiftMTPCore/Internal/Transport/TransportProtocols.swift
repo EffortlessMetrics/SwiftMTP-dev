@@ -54,10 +54,6 @@ public protocol MTPLink: Sendable {
     /// USB interface/endpoint metadata from transport probing. Default: nil.
     var linkDescriptor: MTPLinkDescriptor? { get }
 
-    /// Interface probe result containing selection reason and skipped alternatives.
-    /// Default: nil.
-    var interfaceProbeResult: InterfaceProbeResult? { get }
-
     func openUSBIfNeeded() async throws
     func openSession(id: UInt32) async throws
     func closeSession() async throws
@@ -90,7 +86,6 @@ public protocol MTPLink: Sendable {
 public extension MTPLink {
   var cachedDeviceInfo: MTPDeviceInfo? { nil }
   var linkDescriptor: MTPLinkDescriptor? { nil }
-  var interfaceProbeResult: InterfaceProbeResult? { nil }
 }
 
 public protocol TransportFactory {

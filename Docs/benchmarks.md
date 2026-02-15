@@ -12,11 +12,13 @@ This document captures **repeatable** performance results for SwiftMTP across MT
 | Samsung Galaxy S21 | 04e8:6860 | Experimental | 15.8 MB/s | 12.4 MB/s | Vendor-specific interface, conservative tuning |
 | Canon EOS R5 | 04a9:3196 | Known | 45.6 MB/s | 28.9 MB/s | PTP-derived |
 
-### Connected Device Lab Run (2026-02-09)
+### Connected Device Lab Runs
 
-- Aggregate report: `Docs/benchmarks/connected-lab/20260209-055224/connected-lab.md`
-- JSON matrix: `Docs/benchmarks/connected-lab/20260209-055224/connected-lab.json`
-- Per-device artifacts live under `Docs/benchmarks/connected-lab/20260209-055224/devices/`
+Lab runs are generated locally via `swift run swiftmtp device-lab connected --json` and saved under `Docs/benchmarks/connected-lab/<timestamp>/`. These directories are gitignored (local-only artifacts).
+
+- Aggregate report: `Docs/benchmarks/connected-lab/<timestamp>/connected-lab.md`
+- JSON matrix: `Docs/benchmarks/connected-lab/<timestamp>/connected-lab.json`
+- Per-device artifacts: `Docs/benchmarks/connected-lab/<timestamp>/devices/`
 
 | VID:PID | Outcome | Notes |
 |--------|---------|-------|
@@ -401,7 +403,7 @@ Docs/SwiftMTP.docc/Devices/<device>.md
 
 ---
 
-*Last updated: 2026-02-08*
+*Last updated: 2026-02-14*
 *SwiftMTP Version: 2.0.0*
 
 *See also: [ROADMAP.md](ROADMAP.md) | [Device Submission](ROADMAP.device-submission.md) | [Testing Guide](ROADMAP.testing.md)*

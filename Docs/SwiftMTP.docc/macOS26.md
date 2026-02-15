@@ -170,7 +170,7 @@ import SwiftMTPSync
 let mirror = MirrorOperation(device: device)
 mirror.localRoot = "/Users/user/Backups/MTP-Device"
 mirror.includeFilters = ["*.jpg", "*.png", "*.mp4"]
-mirror.excludeFilters = ["*.tmp", "*.thumb"]
+mirror.excludeFilters = ["*.tmp", ".thumb"]
 
 try await mirror.run()
 
@@ -200,6 +200,74 @@ if let tuning = policy?.effectiveTuning {
     print("Active tuning: \(tuning)")
 }
 ```
+
+## Known Issues
+
+### Google Pixel 7 (18d1:4ee1) - macOS 26.2+ Compatibility
+
+**Status:** Known Limitation
+
+**Symptom:** Device claim succeeds but all bulk transfers timeout (`write rc=-7 sent=0/12`).
+
+**Root Cause:** The Pixel 7 is not exposing MTP/PTP interfaces to macOS. The device appears in ioreg as `IOUSBHostDevice` with **no child IOUSBInterface** entries. This indicates the Pixel's USB stack is not properly exposing the Still Image class (0x06) interface.
+
+**Diagnostic Steps:**
+
+```bash
+# Check ioreg for interface children
+ioreg -p IOUSB -l -w0 | rg -A30 -B5 "Pixel 7"
+
+# Verify device is in MTP mode
+adb shell getprop sys.usb.config
+# Expected: "mtp" or "mtp,adb"
+
+# Check USB state
+adb shell getprop sys.usb.state
+# Expected: "mtp" or "mtp"
+
+# Verify USB debugging
+adb devices
+# Should show "device" (not "unauthorized")
+```
+
+**Required User Actions:**
+
+1. **Enable Developer Options on Pixel 7:**
+   - Settings → About Phone → Build Number (tap 7 times)
+
+2. **Enable USB Debugging:**
+   - Settings → System → Developer options → USB debugging
+
+3. **Trust the Computer:**
+   - Unlock Pixel 7 and check for "Trust this computer?" prompt
+   - Tap "Trust" and verify
+
+4. **Verify MTP Mode:**
+   - Settings → Connected devices → USB → Select "File transfer (MTP)"
+
+**Alternative Workarounds:**
+
+1. **Use PTP Mode:** Try Picture Transfer Protocol instead of MTP:
+   ```bash
+   adb usb ptp
+   ```
+
+2. **Use Different Port:** Connect directly to Mac USB-C (avoid hubs)
+
+3. **Use Different Cable:** Ensure it's a data-capable USB-C cable
+
+4. **Restart Pixel 7:** Sometimes the USB stack needs a fresh start
+
+**Technical Notes:**
+
+- Samsung devices (04e8:6860) work correctly with vendor-specific interface (class=0xff)
+- Xiaomi Mi Note 2 (2717:ff10) works correctly with vendor-specific interface (class=0xff)
+- Pixel 7's Still Image class (0x06) interface is not being exposed by the device
+- This is a Pixel 7 / macOS USB stack interaction issue, not a SwiftMTP bug
+
+**Related Issues:**
+- [GitHub Issue: Pixel 7 macOS compatibility](https://github.com/example/SwiftMTP/issues/XXX)
+- Android Open Source Project: USB accessory mode documentation
 
 ## Related Documentation
 

@@ -5,7 +5,9 @@ import Foundation
 import SwiftMTPQuirks
 
 @inline(__always)
-private func decodeLittleEndian<T: FixedWidthInteger>(_ data: Data, at offset: Int, as: T.Type = T.self) -> T? {
+private func decodeLittleEndian<T: FixedWidthInteger>(
+  _ data: Data, at offset: Int, as: T.Type = T.self
+) -> T? {
   let width = MemoryLayout<T>.size
   guard offset >= 0, offset + width <= data.count else { return nil }
   var value: T = 0
@@ -16,8 +18,8 @@ private func decodeLittleEndian<T: FixedWidthInteger>(_ data: Data, at offset: I
 }
 
 public struct MTPDeviceID: Hashable, Sendable, Codable {
-    public let raw: String
-    public init(raw: String) { self.raw = raw }
+  public let raw: String
+  public init(raw: String) { self.raw = raw }
 }
 
 /// Summary information about an MTP device discovered on the system.
@@ -57,7 +59,10 @@ public struct MTPDeviceSummary: Sendable {
   ///   - productID: USB Product ID
   ///   - bus: USB Bus number
   ///   - address: USB Device address
-  public init(id: MTPDeviceID, manufacturer: String, model: String, vendorID: UInt16? = nil, productID: UInt16? = nil, bus: UInt8? = nil, address: UInt8? = nil, usbSerial: String? = nil) {
+  public init(
+    id: MTPDeviceID, manufacturer: String, model: String, vendorID: UInt16? = nil,
+    productID: UInt16? = nil, bus: UInt8? = nil, address: UInt8? = nil, usbSerial: String? = nil
+  ) {
     self.id = id
     self.manufacturer = manufacturer
     self.model = model
@@ -94,13 +99,13 @@ public enum MTPEvent: Sendable {
     }
 
     switch code {
-    case 0x4002: // ObjectAdded
+    case 0x4002:  // ObjectAdded
       guard let handle = params.first else { return nil }
       return .objectAdded(handle)
-    case 0x4003: // ObjectRemoved
+    case 0x4003:  // ObjectRemoved
       guard let handle = params.first else { return nil }
       return .objectRemoved(handle)
-    case 0x400C: // StorageInfoChanged
+    case 0x400C:  // StorageInfoChanged
       guard let storageIdRaw = params.first else { return nil }
       return .storageInfoChanged(MTPStorageID(raw: storageIdRaw))
     default:
@@ -110,53 +115,75 @@ public enum MTPEvent: Sendable {
 }
 
 public struct MTPStorageID: Hashable, Sendable, Codable {
-    public let raw: UInt32
-    public init(raw: UInt32) { self.raw = raw }
+  public let raw: UInt32
+  public init(raw: UInt32) { self.raw = raw }
 }
 
 public struct MTPDeviceInfo: Sendable, Codable {
-    public let manufacturer: String
-    public let model: String
-    public let version: String
-    public let serialNumber: String?
-    public let operationsSupported: Set<UInt16>
-    public let eventsSupported: Set<UInt16>
+  public let manufacturer: String
+  public let model: String
+  public let version: String
+  public let serialNumber: String?
+  public let operationsSupported: Set<UInt16>
+  public let eventsSupported: Set<UInt16>
 
-    public init(manufacturer: String, model: String, version: String, serialNumber: String?, operationsSupported: Set<UInt16>, eventsSupported: Set<UInt16>) {
-        self.manufacturer = manufacturer; self.model = model; self.version = version
-        self.serialNumber = serialNumber; self.operationsSupported = operationsSupported; self.eventsSupported = eventsSupported
-    }
+  public init(
+    manufacturer: String, model: String, version: String, serialNumber: String?,
+    operationsSupported: Set<UInt16>, eventsSupported: Set<UInt16>
+  ) {
+    self.manufacturer = manufacturer
+    self.model = model
+    self.version = version
+    self.serialNumber = serialNumber
+    self.operationsSupported = operationsSupported
+    self.eventsSupported = eventsSupported
+  }
 }
 
 public struct MTPStorageInfo: Sendable, Codable {
-    public let id: MTPStorageID
-    public let description: String
-    public let capacityBytes: UInt64
-    public let freeBytes: UInt64
-    public let isReadOnly: Bool
+  public let id: MTPStorageID
+  public let description: String
+  public let capacityBytes: UInt64
+  public let freeBytes: UInt64
+  public let isReadOnly: Bool
 
-    public init(id: MTPStorageID, description: String, capacityBytes: UInt64, freeBytes: UInt64, isReadOnly: Bool) {
-        self.id = id; self.description = description; self.capacityBytes = capacityBytes
-        self.freeBytes = freeBytes; self.isReadOnly = isReadOnly
-    }
+  public init(
+    id: MTPStorageID, description: String, capacityBytes: UInt64, freeBytes: UInt64,
+    isReadOnly: Bool
+  ) {
+    self.id = id
+    self.description = description
+    self.capacityBytes = capacityBytes
+    self.freeBytes = freeBytes
+    self.isReadOnly = isReadOnly
+  }
 }
 
 public typealias MTPObjectHandle = UInt32
 
 public struct MTPObjectInfo: Sendable, Codable {
-    public let handle: MTPObjectHandle
-    public let storage: MTPStorageID
-    public let parent: MTPObjectHandle?
-    public let name: String
-    public let sizeBytes: UInt64?
-    public let modified: Date?
-    public let formatCode: UInt16
-    public let properties: [UInt16: String]
+  public let handle: MTPObjectHandle
+  public let storage: MTPStorageID
+  public let parent: MTPObjectHandle?
+  public let name: String
+  public let sizeBytes: UInt64?
+  public let modified: Date?
+  public let formatCode: UInt16
+  public let properties: [UInt16: String]
 
-    public init(handle: MTPObjectHandle, storage: MTPStorageID, parent: MTPObjectHandle?, name: String, sizeBytes: UInt64?, modified: Date?, formatCode: UInt16, properties: [UInt16: String]) {
-        self.handle = handle; self.storage = storage; self.parent = parent; self.name = name
-        self.sizeBytes = sizeBytes; self.modified = modified; self.formatCode = formatCode; self.properties = properties
-    }
+  public init(
+    handle: MTPObjectHandle, storage: MTPStorageID, parent: MTPObjectHandle?, name: String,
+    sizeBytes: UInt64?, modified: Date?, formatCode: UInt16, properties: [UInt16: String]
+  ) {
+    self.handle = handle
+    self.storage = storage
+    self.parent = parent
+    self.name = name
+    self.sizeBytes = sizeBytes
+    self.modified = modified
+    self.formatCode = formatCode
+    self.properties = properties
+  }
 }
 /// Protocol defining the interface for interacting with MTP devices.
 ///
@@ -219,7 +246,9 @@ public protocol MTPDevice: Sendable {
   ///     }
   /// }
   /// ```
-  func list(parent: MTPObjectHandle?, in storage: MTPStorageID) -> AsyncThrowingStream<[MTPObjectInfo], Error>
+  func list(parent: MTPObjectHandle?, in storage: MTPStorageID) -> AsyncThrowingStream<
+    [MTPObjectInfo], Error
+  >
 
   /// Get detailed information about a specific object.
   ///
@@ -257,7 +286,8 @@ public protocol MTPDevice: Sendable {
   ///   - size: Size of the data to be written
   ///   - url: Local source URL of the data to upload
   /// - Returns: Progress object for monitoring transfer progress
-  func write(parent: MTPObjectHandle?, name: String, size: UInt64, from url: URL) async throws -> Progress
+  func write(parent: MTPObjectHandle?, name: String, size: UInt64, from url: URL) async throws
+    -> Progress
 
   /// Create a folder on the device.
   ///
@@ -266,7 +296,8 @@ public protocol MTPDevice: Sendable {
   ///   - name: Name for the new folder
   ///   - storage: Target storage ID
   /// - Returns: Handle of the newly created folder
-  func createFolder(parent: MTPObjectHandle?, name: String, storage: MTPStorageID) async throws -> MTPObjectHandle
+  func createFolder(parent: MTPObjectHandle?, name: String, storage: MTPStorageID) async throws
+    -> MTPObjectHandle
 
   /// Delete an object from the device.
   ///
@@ -351,18 +382,18 @@ public struct SwiftMTPConfig: Sendable {
   ///
   /// Larger chunks improve throughput but may increase latency for small files.
   /// Auto-tuned based on device capabilities. Default: 2MB
-  public var transferChunkBytes  = 2 * 1024 * 1024
+  public var transferChunkBytes = 2 * 1024 * 1024
 
   /// Timeout for I/O operations in milliseconds.
   ///
   /// Increase for slow devices or unreliable connections. Default: 10 seconds
-  public var ioTimeoutMs         = 10_000
+  public var ioTimeoutMs = 10_000
 
   /// Timeout for handshake phase (waiting for first DATA-IN packet).
   ///
   /// Time budget for the first DATA-IN packet of a command (e.g., GetDeviceInfo).
   /// Default: 6 seconds
-  public var handshakeTimeoutMs  = 6_000
+  public var handshakeTimeoutMs = 6_000
 
   /// Timeout for inactivity during streaming phases.
   ///
@@ -374,33 +405,40 @@ public struct SwiftMTPConfig: Sendable {
   ///
   /// Absolute wall-clock cap for the whole command (command → data → response).
   /// Default: 60 seconds
-  public var overallDeadlineMs   = 60_000
+  public var overallDeadlineMs = 60_000
 
   /// Post-open stabilization delay in milliseconds.
   ///
   /// Time to wait after opening a device session before first storage operation.
   /// Some devices (e.g., Xiaomi) need this delay to become ready. Default: 0
-  public var stabilizeMs         = 0
+  public var stabilizeMs = 0
 
   /// Post-claim stabilization delay in milliseconds.
   ///
   /// Time to wait after claiming the USB interface before sending commands.
   /// Some devices (e.g., Pixel 7, Samsung) need this delay for MTP stack readiness.
   /// Default: 250ms
-  public var postClaimStabilizeMs    = 250
+  public var postClaimStabilizeMs = 250
+
+  /// Post-probe stabilization delay in milliseconds.
+  ///
+  /// Time to wait after successfully probing the MTP interface before proceeding.
+  /// Some devices (e.g., Pixel) need additional time for the MTP stack to become fully ready.
+  /// Default: 0ms
+  public var postProbeStabilizeMs = 0
 
   /// Whether to call libusb_reset_device after opening the device handle.
   /// Defaults to false.
-  public var resetOnOpen         = false
+  public var resetOnOpen = false
 
   /// Whether to temporarily disable the interrupt event pump.
   /// Defaults to false.
-  public var disableEventPump    = false
+  public var disableEventPump = false
 
   /// Enable resumable transfers when device supports partial operations.
   ///
   /// When disabled, all transfers restart from beginning on interruption. Default: true
-  public var resumeEnabled       = true
+  public var resumeEnabled = true
 
   /// Minimum time between progress updates in milliseconds.
   ///
@@ -456,25 +494,26 @@ public struct SwiftMTPConfig: Sendable {
 public actor MTPDeviceManager {
   /// Shared instance for device management
   public static let shared = MTPDeviceManager()
-  
+
   /// Persistence provider for learned profiles, profiling runs, etc.
   public var persistence: any MTPPersistenceProvider = NullPersistenceProvider()
-  
+
   public func setPersistence(_ provider: any MTPPersistenceProvider) {
     self.persistence = provider
   }
-  
+
   private var attachedContinuation: AsyncStream<MTPDeviceSummary>.Continuation?
   private var detachedContinuation: AsyncStream<MTPDeviceID>.Continuation?
   private var currentDevices: [MTPDeviceSummary] = []
   private var defaultTransportFactory: (@Sendable () -> any MTPTransport)?
   private var discoverySnapshotProvider: (@Sendable () async throws -> [MTPDeviceSummary])?
-  private var hotplugDiscoveryStarter: (
-    @Sendable (
-      @escaping (MTPDeviceSummary) -> Void,
-      @escaping (MTPDeviceID) -> Void
-    ) -> Void
-  )?
+  private var hotplugDiscoveryStarter:
+    (
+      @Sendable (
+        @escaping (MTPDeviceSummary) -> Void,
+        @escaping (MTPDeviceID) -> Void
+      ) -> Void
+    )?
 
   /// Start MTP device discovery with the specified configuration.
   ///
@@ -509,24 +548,34 @@ public actor MTPDeviceManager {
 
     // Best-effort refresh for devices that were already connected before discovery started.
     _ = try? await refreshConnectedDevices()
-    
+
     // DEMO MODE: Automatically yield a mock device
     if FeatureFlags.shared.useMockTransport {
-        let profile = FeatureFlags.shared.mockProfile
-        let summary: MTPDeviceSummary
-        switch profile.lowercased() {
-        case "s21", "galaxy":
-            summary = MTPDeviceSummary(id: MTPDeviceID(raw: "04e8:6860@1:3"), manufacturer: "Samsung (Demo)", model: "Galaxy S21", vendorID: 0x04e8, productID: 0x6860, bus: 1, address: 3)
-        case "oneplus", "oneplus3t":
-            summary = MTPDeviceSummary(id: MTPDeviceID(raw: "2a70:f003@3:2"), manufacturer: "OnePlus (Demo)", model: "ONEPLUS A3010", vendorID: 0x2a70, productID: 0xf003, bus: 3, address: 2)
-        case "iphone", "ios":
-            summary = MTPDeviceSummary(id: MTPDeviceID(raw: "05ac:12a8@1:4"), manufacturer: "Apple (Demo)", model: "iPhone", vendorID: 0x05ac, productID: 0x12a8, bus: 1, address: 4)
-        case "canon", "camera":
-            summary = MTPDeviceSummary(id: MTPDeviceID(raw: "04a9:317a@1:5"), manufacturer: "Canon (Demo)", model: "EOS R5", vendorID: 0x04a9, productID: 0x317a, bus: 1, address: 5)
-        default:
-            summary = MTPDeviceSummary(id: MTPDeviceID(raw: "18d1:4ee1@1:2"), manufacturer: "Google (Demo)", model: "Pixel 7", vendorID: 0x18d1, productID: 0x4ee1, bus: 1, address: 2)
-        }
-        await yieldAttached(summary)
+      let profile = FeatureFlags.shared.mockProfile
+      let summary: MTPDeviceSummary
+      switch profile.lowercased() {
+      case "s21", "galaxy":
+        summary = MTPDeviceSummary(
+          id: MTPDeviceID(raw: "04e8:6860@1:3"), manufacturer: "Samsung (Demo)",
+          model: "Galaxy S21", vendorID: 0x04e8, productID: 0x6860, bus: 1, address: 3)
+      case "oneplus", "oneplus3t":
+        summary = MTPDeviceSummary(
+          id: MTPDeviceID(raw: "2a70:f003@3:2"), manufacturer: "OnePlus (Demo)",
+          model: "ONEPLUS A3010", vendorID: 0x2a70, productID: 0xf003, bus: 3, address: 2)
+      case "iphone", "ios":
+        summary = MTPDeviceSummary(
+          id: MTPDeviceID(raw: "05ac:12a8@1:4"), manufacturer: "Apple (Demo)", model: "iPhone",
+          vendorID: 0x05ac, productID: 0x12a8, bus: 1, address: 4)
+      case "canon", "camera":
+        summary = MTPDeviceSummary(
+          id: MTPDeviceID(raw: "04a9:317a@1:5"), manufacturer: "Canon (Demo)", model: "EOS R5",
+          vendorID: 0x04a9, productID: 0x317a, bus: 1, address: 5)
+      default:
+        summary = MTPDeviceSummary(
+          id: MTPDeviceID(raw: "18d1:4ee1@1:2"), manufacturer: "Google (Demo)", model: "Pixel 7",
+          vendorID: 0x18d1, productID: 0x4ee1, bus: 1, address: 2)
+      }
+      await yieldAttached(summary)
     }
   }
 
@@ -567,16 +616,19 @@ public actor MTPDeviceManager {
   }
 
   /// Configure the snapshot provider used to enumerate currently connected devices.
-  public func setDiscoverySnapshotProvider(_ provider: @escaping @Sendable () async throws -> [MTPDeviceSummary]) {
+  public func setDiscoverySnapshotProvider(
+    _ provider: @escaping @Sendable () async throws -> [MTPDeviceSummary]
+  ) {
     discoverySnapshotProvider = provider
   }
 
   /// Configure the hotplug watcher starter used by discovery.
   public func setHotplugDiscoveryStarter(
-    _ starter: @escaping @Sendable (
-      @escaping (MTPDeviceSummary) -> Void,
-      @escaping (MTPDeviceID) -> Void
-    ) -> Void
+    _ starter:
+      @escaping @Sendable (
+        @escaping (MTPDeviceSummary) -> Void,
+        @escaping (MTPDeviceID) -> Void
+      ) -> Void
   ) {
     hotplugDiscoveryStarter = starter
   }
@@ -726,9 +778,13 @@ public actor MTPDeviceManager {
   ///     let storages = try await device.storages()
   /// }
   /// ```
-  public func openDevice(with summary: MTPDeviceSummary, transport: any MTPTransport, config: SwiftMTPConfig = .init()) async throws -> MTPDevice {
+  public func openDevice(
+    with summary: MTPDeviceSummary, transport: any MTPTransport, config: SwiftMTPConfig = .init()
+  ) async throws -> MTPDevice {
     let journal = self.persistence.transferJournal
-    return MTPDeviceActor(id: summary.id, summary: summary, transport: transport, config: config, transferJournal: journal)
+    return MTPDeviceActor(
+      id: summary.id, summary: summary, transport: transport, config: config,
+      transferJournal: journal)
   }
 
   /// Get the current configuration used by this device manager.

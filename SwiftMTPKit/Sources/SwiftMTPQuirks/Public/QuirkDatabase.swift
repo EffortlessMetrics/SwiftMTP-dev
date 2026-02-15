@@ -4,26 +4,26 @@
 import Foundation
 
 public struct QuirkHook: Codable, Sendable {
-  public enum Phase: String, Codable, Sendable { 
-    case postOpenUSB, postClaimInterface, postOpenSession, 
-         beforeGetDeviceInfo, beforeGetStorageIDs, beforeGetObjectHandles,
-         beforeTransfer, afterTransfer, onDeviceBusy, onDetach 
+  public enum Phase: String, Codable, Sendable {
+    case postOpenUSB, postClaimInterface, postOpenSession,
+      beforeGetDeviceInfo, beforeGetStorageIDs, beforeGetObjectHandles,
+      beforeTransfer, afterTransfer, onDeviceBusy, onDetach
   }
   public var phase: Phase
   public var delayMs: Int?
-  public struct BusyBackoff: Codable, Sendable { 
+  public struct BusyBackoff: Codable, Sendable {
     public var retries: Int
     public var baseMs: Int
-    public var jitterPct: Double 
-    
+    public var jitterPct: Double
+
     public init(retries: Int, baseMs: Int, jitterPct: Double) {
-        self.retries = retries
-        self.baseMs = baseMs
-        self.jitterPct = jitterPct
+      self.retries = retries
+      self.baseMs = baseMs
+      self.jitterPct = jitterPct
     }
   }
   public var busyBackoff: BusyBackoff?
-  
+
   public init(phase: Phase, delayMs: Int? = nil, busyBackoff: BusyBackoff? = nil) {
     self.phase = phase
     self.delayMs = delayMs
@@ -32,7 +32,7 @@ public struct QuirkHook: Codable, Sendable {
 }
 
 public struct DeviceQuirk: Codable, Sendable {
-  public var id: String                     // e.g. "xiaomi-mi-note-2-ff10"
+  public var id: String  // e.g. "xiaomi-mi-note-2-ff10"
   public var vid: UInt16
   public var pid: UInt16
   public var bcdDevice: UInt16?
@@ -46,13 +46,14 @@ public struct DeviceQuirk: Codable, Sendable {
   public var overallDeadlineMs: Int?
   public var stabilizeMs: Int?
   public var postClaimStabilizeMs: Int?
+  public var postProbeStabilizeMs: Int?
   public var resetOnOpen: Bool?
   public var disableEventPump: Bool?
-  public var operations: [String: Bool]?    // e.g. {"partialRead": true}
+  public var operations: [String: Bool]?  // e.g. {"partialRead": true}
   public var hooks: [QuirkHook]?
-  public var flags: QuirkFlags?             // Typed behavioral flags
-  public var status: String?                // "stable" | "experimental" | ...
-  public var confidence: String?            // "low" | "medium" | "high"
+  public var flags: QuirkFlags?  // Typed behavioral flags
+  public var status: String?  // "stable" | "experimental" | ...
+  public var confidence: String?  // "low" | "medium" | "high"
 
   public init(
     id: String,
@@ -69,6 +70,7 @@ public struct DeviceQuirk: Codable, Sendable {
     overallDeadlineMs: Int? = nil,
     stabilizeMs: Int? = nil,
     postClaimStabilizeMs: Int? = nil,
+    postProbeStabilizeMs: Int? = nil,
     resetOnOpen: Bool? = nil,
     disableEventPump: Bool? = nil,
     operations: [String: Bool]? = nil,
@@ -91,6 +93,7 @@ public struct DeviceQuirk: Codable, Sendable {
     self.overallDeadlineMs = overallDeadlineMs
     self.stabilizeMs = stabilizeMs
     self.postClaimStabilizeMs = postClaimStabilizeMs
+    self.postProbeStabilizeMs = postProbeStabilizeMs
     self.resetOnOpen = resetOnOpen
     self.disableEventPump = disableEventPump
     self.operations = operations
@@ -108,10 +111,10 @@ public struct DeviceQuirk: Codable, Sendable {
     // Translate legacy ops → typed flags
     if let ops = operations {
       if let v = ops["supportsGetPartialObject64"] { f.supportsPartialRead64 = v }
-      if let v = ops["supportsSendPartialObject"]  { f.supportsPartialWrite = v }
-      if let v = ops["preferGetObjectPropList"]     { f.prefersPropListEnumeration = v }
+      if let v = ops["supportsSendPartialObject"] { f.supportsPartialWrite = v }
+      if let v = ops["preferGetObjectPropList"] { f.prefersPropListEnumeration = v }
     }
-    if let v = resetOnOpen     { f.resetOnOpen = v }
+    if let v = resetOnOpen { f.resetOnOpen = v }
     if let v = disableEventPump { f.disableEventPump = v }
     if let s = stabilizeMs, s > 0 { f.requireStabilization = true }
     return f
@@ -148,6 +151,7 @@ public struct DeviceQuirk: Codable, Sendable {
       overallDeadlineMs = tuning.overallDeadlineMs
       stabilizeMs = tuning.stabilizeMs
       postClaimStabilizeMs = tuning.postClaimStabilizeMs
+      postProbeStabilizeMs = tuning.postProbeStabilizeMs
       resetOnOpen = tuning.resetOnOpen
       disableEventPump = tuning.disableEventPump
     }
@@ -160,7 +164,7 @@ public struct DeviceQuirk: Codable, Sendable {
     try container.encodeIfPresent(confidence, forKey: .confidence)
     try container.encodeIfPresent(hooks, forKey: .hooks)
     try container.encodeIfPresent(operations, forKey: .ops)
-    
+
     // Reverse mapping for 'match' and 'tuning' would go here if needed
   }
 }
@@ -185,6 +189,7 @@ private struct RawTuning: Codable {
   let overallDeadlineMs: Int?
   let stabilizeMs: Int?
   let postClaimStabilizeMs: Int?
+  let postProbeStabilizeMs: Int?
   let resetOnOpen: Bool?
   let disableEventPump: Bool?
 }
@@ -192,7 +197,9 @@ private struct RawTuning: Codable {
 private func parseHex<T: FixedWidthInteger>(_ str: String) throws -> T {
   let clean = str.hasPrefix("0x") ? String(str.dropFirst(2)) : str
   guard let val = T(clean, radix: 16) else {
-    throw NSError(domain: "QuirkParsing", code: 1, userInfo: [NSLocalizedDescriptionKey: "Invalid hex string: \(str)"])
+    throw NSError(
+      domain: "QuirkParsing", code: 1,
+      userInfo: [NSLocalizedDescriptionKey: "Invalid hex string: \(str)"])
   }
   return val
 }
@@ -222,46 +229,60 @@ public struct QuirkDatabase: Codable, Sendable {
     try container.encode(entries, forKey: .entries)
   }
 
-  public static func load(pathEnv: String? = ProcessInfo.processInfo.environment["SWIFTMTP_QUIRKS_PATH"]) throws -> QuirkDatabase {
+  public static func load(
+    pathEnv: String? = ProcessInfo.processInfo.environment["SWIFTMTP_QUIRKS_PATH"]
+  ) throws -> QuirkDatabase {
     let fm = FileManager.default
     let candidates: [URL] = [
       pathEnv.flatMap { URL(fileURLWithPath: $0) },
       URL(fileURLWithPath: "Specs/quirks.json"),
       URL(fileURLWithPath: "../Specs/quirks.json"),
       URL(fileURLWithPath: "SwiftMTPKit/Specs/quirks.json"),
-    ].compactMap { $0 }
+    ]
+    .compactMap { $0 }
     guard let url = candidates.first(where: { fm.fileExists(atPath: $0.path) }) else {
-      throw NSError(domain: "QuirkDatabase", code: 1, userInfo: [NSLocalizedDescriptionKey: "quirks.json not found"])
+      throw NSError(
+        domain: "QuirkDatabase", code: 1,
+        userInfo: [NSLocalizedDescriptionKey: "quirks.json not found"])
     }
     let data = try Data(contentsOf: url)
     return try JSONDecoder().decode(QuirkDatabase.self, from: data)
   }
 
-  public func match(vid: UInt16, pid: UInt16, bcdDevice: UInt16?, ifaceClass: UInt8?, ifaceSubclass: UInt8?, ifaceProtocol: UInt8?) -> DeviceQuirk? {
+  public func match(
+    vid: UInt16, pid: UInt16, bcdDevice: UInt16?, ifaceClass: UInt8?, ifaceSubclass: UInt8?,
+    ifaceProtocol: UInt8?
+  ) -> DeviceQuirk? {
     func score(_ q: DeviceQuirk) -> Int {
       var s = 0
-      if q.vid == vid { s += 4 } else { return -1 } // Must match VID
-      if q.pid == pid { s += 4 } else { return -1 } // Must match PID
-      
+      guard q.vid == vid else { return -1 }  // Must match VID
+      s += 4
+      guard q.pid == pid else { return -1 }  // Must match PID
+      s += 4
+
       if let b = q.bcdDevice {
-        if let bb = bcdDevice, b == bb { s += 3 } else { return -1 }
+        guard let bb = bcdDevice, b == bb else { return -1 }
+        s += 3
       }
-      
+
       if let c = q.ifaceClass {
-        if let cc = ifaceClass, c == cc { s += 2 } else { return -1 }
+        guard let cc = ifaceClass, c == cc else { return -1 }
+        s += 2
       }
-      
+
       if let sc = q.ifaceSubclass {
-        if let scc = ifaceSubclass, sc == scc { s += 2 } else { return -1 }
+        guard let scc = ifaceSubclass, sc == scc else { return -1 }
+        s += 2
       }
-      
+
       if let pr = q.ifaceProtocol {
-        if let prr = ifaceProtocol, pr == prr { s += 2 } else { return -1 }
+        guard let prr = ifaceProtocol, pr == prr else { return -1 }
+        s += 2
       }
-      
+
       return s
     }
-    
+
     let scored = entries.map { (entry: $0, score: score($0)) }
     let valid = scored.filter { $0.score >= 0 }
     return valid.max(by: { $0.score < $1.score })?.entry
