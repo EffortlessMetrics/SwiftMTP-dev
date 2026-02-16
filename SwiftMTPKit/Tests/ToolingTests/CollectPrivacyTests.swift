@@ -19,6 +19,14 @@ final class CollectPrivacyTests: XCTestCase {
         XCTAssertEqual(salt.count, 48)
     }
 
+    func testRedactionWithBinarySaltDoesNotCrash() throws {
+        let salt = Redaction.generateSalt(count: 32)
+        let value = Redaction.redactSerial("ABCD-1234", salt: salt)
+
+        XCTAssertTrue(value.hasPrefix("hmacsha256:"))
+        XCTAssertEqual(value.count, "hmacsha256:".count + 64)
+    }
+
     func testRedactorTokenizeFilenamePreservesExtension() throws {
         let redactor = Redactor(bundleKey: "unit-test-key")
         let token = redactor.tokenizeFilename("private-report.txt")

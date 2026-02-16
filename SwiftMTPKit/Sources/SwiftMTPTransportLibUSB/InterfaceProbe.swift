@@ -335,6 +335,8 @@ func probeCandidateWithLadder(
   debug: Bool = false,
   includeStorageProbe: Bool = true
 ) -> ProbeLadderResult {
+  var lastAttemptedStep = "openSessionThenGetDeviceInfo"
+
   // Step 1: OpenSession FIRST - this is what libmtp does and it handles Pixel 7 better
   // Some devices need a session before they respond to other commands
   if debug { print("   [ProbeLadder] Step 1: OpenSession first (like libmtp)") }
@@ -348,6 +350,7 @@ func probeCandidateWithLadder(
   }
 
   // Step 2: Fallback to sessionless GetDeviceInfo
+  lastAttemptedStep = "sessionlessGetDeviceInfo"
   if debug { print("   [ProbeLadder] Step 2: sessionless GetDeviceInfo fallback") }
   let (step2OK, infoData2) = probeCandidate(handle: handle, c, timeoutMs: timeoutMs)
   if step2OK {
@@ -357,6 +360,7 @@ func probeCandidateWithLadder(
 
   if includeStorageProbe {
     // Step 3: GetStorageIDs (some vendor-specific devices respond to this even if DeviceInfo fails)
+    lastAttemptedStep = "getStorageIDs"
     if debug { print("   [ProbeLadder] Step 3: GetStorageIDs") }
     if probeGetStorageIDs(handle: handle, c, timeoutMs: timeoutMs, debug: debug) {
       // Even without device info, consider this a successful probe for vendor-specific stacks
@@ -365,7 +369,11 @@ func probeCandidateWithLadder(
     }
   }
 
-  return ProbeLadderResult(succeeded: false, cachedDeviceInfoData: nil, stepAttempted: "none")
+  return ProbeLadderResult(
+    succeeded: false,
+    cachedDeviceInfoData: nil,
+    stepAttempted: lastAttemptedStep
+  )
 }
 
 /// Send OpenSession (0x1002) to establish an MTP session.

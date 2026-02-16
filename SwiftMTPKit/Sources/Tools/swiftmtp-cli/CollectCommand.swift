@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import Foundation
+import CryptoKit
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPQuirks
@@ -40,6 +41,8 @@ func printJSONErrorAndExit(_ error: any Error, flags: CollectCommand.CollectFlag
       details["examples"] = examples.joined(separator: ", ")
     case .redactionCheckFailed(let issues):
       details["redactionIssues"] = issues.joined(separator: ", ")
+    case .invalidBenchSize(let size):
+      details["invalidBenchSize"] = size
     case .timeout:
       break
     }
@@ -67,6 +70,8 @@ public enum CollectCommand {
     public var json: Bool = false            // --json
     public var noninteractive: Bool = false  // --noninteractive
     public var bundlePath: String?           // --bundle
+    public var deviceName: String?           // --device-name
+    public var openPR: Bool = false          // --open-pr
     public var vid: UInt16?
     public var pid: UInt16?
     public var bus: Int?
@@ -79,6 +84,8 @@ public enum CollectCommand {
       json: Bool = false,
       noninteractive: Bool = false,
       bundlePath: String? = nil,
+      deviceName: String? = nil,
+      openPR: Bool = false,
       vid: UInt16? = nil, pid: UInt16? = nil, bus: Int? = nil, address: Int? = nil
     ) {
       self.strict = strict
@@ -87,13 +94,23 @@ public enum CollectCommand {
       self.json = json
       self.noninteractive = noninteractive
       self.bundlePath = bundlePath
+      self.deviceName = deviceName
+      self.openPR = openPR
       self.vid = vid; self.pid = pid; self.bus = bus; self.address = address
     }
 
     // Backward-compat initializer (no json parameter)
     @available(*, deprecated, message: "Use newer initializer that includes json/noninteractive/bundlePath/IDs")
     public init(strict: Bool = true, runBench: [String] = []) {
-      self.init(strict: strict, runBench: runBench, json: false, noninteractive: false, bundlePath: nil)
+      self.init(
+        strict: strict,
+        runBench: runBench,
+        json: false,
+        noninteractive: false,
+        bundlePath: nil,
+        deviceName: nil,
+        openPR: false
+      )
     }
 
     // Backward‑compat initializer: older call‑sites used `jsonOutput`
@@ -108,6 +125,8 @@ public enum CollectCommand {
                 json: jsonOutput,
                 noninteractive: noninteractive,
                 bundlePath: bundlePath,
+                deviceName: nil,
+                openPR: false,
                 vid: nil, pid: nil, bus: nil, address: nil)
     }
   }
@@ -118,35 +137,15 @@ public enum CollectCommand {
   /// Returns the bundle URL and optional CI output.
   public static func collectBundle(flags: Flags) async throws -> (bundleURL: URL, summary: MTPDeviceSummary) {
     let summary = try await selectDeviceOrExit(flags: flags)
-    let (device, _) = try await openDevice(summary: summary, strict: flags.strict)
+    let (device, config) = try await openDevice(summary: summary, strict: flags.strict)
     let bundleURL = try prepareBundlePath(flags: flags, summary: summary)
-
-    // Collect probe.json
-    let probe = try await within(ms: 90_000) {
-      try await collectProbeJSON(device: device, summary: summary)
-    }
-    try writeJSONFile(probe, to: bundleURL.appendingPathComponent("probe.json"))
-
-    // Collect usb-dump.txt
-    let rawDump = try await within(ms: 90_000) { try await generateSimpleUSBDump(summary: summary) }
-    let sanitized = sanitizeDump(rawDump)
-    try validateDebugSanitization(sanitized, strict: flags.strict)
-    try sanitized.write(to: bundleURL.appendingPathComponent("usb-dump.txt"), atomically: true, encoding: .utf8)
-
-    // Optional benchmarks
-    if !flags.runBench.isEmpty {
-      let benchResults = try await within(ms: 90_000) {
-        try await runBenches(device: device, sizes: flags.runBench)
-      }
-      for (name, csv) in benchResults {
-        let url = bundleURL.appendingPathComponent("bench-\(name).csv")
-        try csv.write(to: url, atomically: true, encoding: .utf8)
-      }
-    }
-
-    // submission.json
-    let manifest = SubmissionSummary.make(from: summary, bundle: bundleURL)
-    try writeJSONFile(manifest, to: bundleURL.appendingPathComponent("submission.json"))
+    try await collectArtifacts(
+      flags: flags,
+      summary: summary,
+      device: device,
+      config: config,
+      bundleURL: bundleURL
+    )
 
     return (bundleURL, summary)
   }
@@ -157,69 +156,33 @@ public enum CollectCommand {
     var spinner = Spinner("Collecting device evidence…", enabled: !jsonMode)
 
     do {
-      // 1) Resolve device (VID/PID/bus/address filtering + exit codes)
-      spinner.start("Discovering devices…")
-      let summary = try await selectDeviceOrExit(flags: flags)
-      let deviceId = String(format: "%04x:%04x@%d:%d",
-                             summary.vendorID ?? 0, summary.productID ?? 0,
-                             Int(summary.bus ?? 0), Int(summary.address ?? 0))
-      spinner.succeed("Device selected: \(deviceId)")
+      spinner.start("Preparing bundle and collecting artifacts…")
+      let result = try await collectBundle(flags: flags)
+      let bundleURL = result.bundleURL
+      let summary = result.summary
+      spinner.succeed("Bundle ready: \(bundleURL.path)")
 
-      // 2) Open device with LibUSB transport and default config (strict behavior is handled inside DeviceActor)
-      spinner.start("Opening device…")
-      let (device, _) = try await openDevice(summary: summary, strict: flags.strict)
-      spinner.succeed("Device opened (strict=\(flags.strict))")
-
-      // 3) Create bundle path
-      spinner.start("Preparing bundle…")
-      let bundleURL = try prepareBundlePath(flags: flags, summary: summary)
-      spinner.succeed("Bundle: \(bundleURL.path)")
-
-      // 4) Collect probe.json (90s deadline)
-      spinner.start("Collecting probe…")
-      let probe = try await within(ms: 90_000) {
-        try await collectProbeJSON(device: device, summary: summary)
-      }
-      try writeJSONFile(probe, to: bundleURL.appendingPathComponent("probe.json"))
-      spinner.succeed("probe.json saved")
-
-      // 5) Collect usb-dump.txt (90s deadline) — sanitized
-      spinner.start("Capturing USB dump…")
-      let rawDump = try await within(ms: 90_000) { try await generateSimpleUSBDump(summary: summary) }
-      let sanitized = sanitizeDump(rawDump)
-      try validateDebugSanitization(sanitized, strict: flags.strict)
-      try sanitized.write(to: bundleURL.appendingPathComponent("usb-dump.txt"), atomically: true, encoding: .utf8)
-      spinner.succeed("usb-dump.txt saved")
-
-      // 6) Optional benchmarks (still respecting safety defaults; only if user requested)
-      if !flags.runBench.isEmpty {
-        spinner.start("Running benchmarks: \(flags.runBench.joined(separator: ","))…")
-        let benchResults = try await within(ms: 90_000) {
-          try await runBenches(device: device, sizes: flags.runBench)
-        }
-        for (name, csv) in benchResults {
-          let url = bundleURL.appendingPathComponent("bench-\(name).csv")
-          try csv.write(to: url, atomically: true, encoding: .utf8)
-        }
-        spinner.succeed("Benchmarks complete")
+      // Record submission in persistence
+      Task {
+        let persistence = await MTPDeviceManager.shared.persistence
+        try? await persistence.submissions.recordSubmission(
+          id: bundleURL.lastPathComponent,
+          deviceId: summary.id,
+          path: bundleURL.path
+        )
       }
 
-      // 7) submission.json (summary manifest)
-      spinner.start("Writing submission.json…")
-      let manifest = SubmissionSummary.make(from: summary, bundle: bundleURL)
-              try writeJSONFile(manifest, to: bundleURL.appendingPathComponent("submission.json"))
-              spinner.succeed("submission.json saved")
-              
-              // Record submission in persistence
-              Task {
-                  let persistence = await MTPDeviceManager.shared.persistence
-                  try? await persistence.submissions.recordSubmission(
-                      id: bundleURL.lastPathComponent,
-                      deviceId: summary.id,
-                      path: bundleURL.path
-                  )
-              }
-            // 8) Emit JSON summary for CI if requested
+      if flags.openPR {
+        spinner.start("Opening GitHub PR…")
+        let submitExit = await SubmitCommand.run(bundlePath: bundleURL.path, gh: true)
+        guard submitExit == .ok else {
+          spinner.fail("Submission failed")
+          return submitExit
+        }
+        spinner.succeed("GitHub PR opened")
+      }
+
+      // Emit JSON summary for CI if requested
       if jsonMode {
         let mode: String
         if flags.safe {
@@ -260,6 +223,9 @@ public enum CollectCommand {
         case .redactionCheckFailed:
           fputs("❌ collect failed: \(error)\n", stderr)
           return .software
+        case .invalidBenchSize:
+          fputs("❌ collect failed: \(error)\n", stderr)
+          return .usage
         }
       }
       
@@ -335,22 +301,82 @@ public enum CollectCommand {
     return (device, config)
   }
 
+  private static let stepTimeoutMs = 90_000
+
+  private static func collectArtifacts(
+    flags: Flags,
+    summary: MTPDeviceSummary,
+    device: any MTPDevice,
+    config: SwiftMTPConfig,
+    bundleURL: URL
+  ) async throws {
+    let probe = try await within(ms: stepTimeoutMs) {
+      try await collectProbeJSON(device: device, summary: summary)
+    }
+    try writeJSONFile(probe, to: bundleURL.appendingPathComponent("probe.json"))
+
+    let rawDump = try await within(ms: stepTimeoutMs) {
+      try await generateSimpleUSBDump(summary: summary)
+    }
+    let sanitized = sanitizeDump(rawDump)
+    try validateDebugSanitization(sanitized, strict: flags.strict)
+    try sanitized.write(
+      to: bundleURL.appendingPathComponent("usb-dump.txt"),
+      atomically: true,
+      encoding: .utf8
+    )
+
+    var benchResults: [BenchResult] = []
+    if !flags.runBench.isEmpty {
+      benchResults = try await runBenches(device: device, sizes: flags.runBench)
+      for result in benchResults {
+        try result.csv.write(
+          to: bundleURL.appendingPathComponent("bench-\(result.name).csv"),
+          atomically: true,
+          encoding: .utf8
+        )
+      }
+    }
+
+    let salt = Redaction.generateSalt()
+    try (salt.hexString() + "\n").write(
+      to: bundleURL.appendingPathComponent(".salt"),
+      atomically: true,
+      encoding: .utf8
+    )
+
+    let tuning = await device.effectiveTuning
+    let manifest = buildSubmissionManifest(
+      summary: summary,
+      probe: probe,
+      benchResults: benchResults,
+      salt: salt
+    )
+    try writeJSONFile(manifest, to: bundleURL.appendingPathComponent("submission.json"))
+
+    let quirkSuggestion = buildQuirkSuggestion(
+      summary: summary,
+      tuning: tuning,
+      config: config,
+      benchResults: benchResults,
+      submittedBy: manifest.user?.github
+    )
+    try writeJSONFile(quirkSuggestion, to: bundleURL.appendingPathComponent("quirk-suggestion.json"))
+  }
+
   // MARK: - Probe capture
   private struct ProbeJSON: Codable, Sendable {
     var schemaVersion = "1.0.0"
+    var type = "probe"
     var timestamp: String
+    var fingerprint: MTPDeviceFingerprint
+    var capabilities: [String: Bool]
     var vendorID: UInt16
     var productID: UInt16
     var bus: Int
     var address: Int
     var deviceInfo: DeviceInfoJSON
     var storageCount: Int
-    var interfaceClass: String?
-    var interfaceSubclass: String?
-    var interfaceProtocol: String?
-    var bulkInEndpoint: String?
-    var bulkOutEndpoint: String?
-    var interruptEndpoint: String?
   }
 
   private struct DeviceInfoJSON: Codable, Sendable {
@@ -364,24 +390,33 @@ public enum CollectCommand {
                                        summary: MTPDeviceSummary) async throws -> ProbeJSON {
     let info = try await device.getDeviceInfo()
     let storages = try await device.storages()
-    // Populate interface/endpoint fields from probe receipt fingerprint
     let receipt = await device.probeReceipt
-    let fp = receipt?.fingerprint
+    let capabilities = await device.probedCapabilities
+    let fp = receipt?.fingerprint ?? fallbackFingerprint(for: summary)
     return .init(
       timestamp: ISO8601DateFormatter().string(from: Date()),
+      fingerprint: fp,
+      capabilities: capabilities,
       vendorID: summary.vendorID ?? 0, productID: summary.productID ?? 0,
       bus: Int(summary.bus ?? 0), address: Int(summary.address ?? 0),
       deviceInfo: .init(manufacturer: info.manufacturer,
                         model: info.model,
                         version: info.version,
                         serial: info.serialNumber),
-      storageCount: storages.count,
-      interfaceClass: fp?.interfaceTriple.class,
-      interfaceSubclass: fp?.interfaceTriple.subclass,
-      interfaceProtocol: fp?.interfaceTriple.protocol,
-      bulkInEndpoint: fp?.endpointAddresses.input,
-      bulkOutEndpoint: fp?.endpointAddresses.output,
-      interruptEndpoint: fp?.endpointAddresses.event
+      storageCount: storages.count
+    )
+  }
+
+  private static func fallbackFingerprint(for summary: MTPDeviceSummary) -> MTPDeviceFingerprint {
+    MTPDeviceFingerprint.fromUSB(
+      vid: summary.vendorID ?? 0,
+      pid: summary.productID ?? 0,
+      interfaceClass: 0x06,
+      interfaceSubclass: 0x01,
+      interfaceProtocol: 0x01,
+      epIn: 0x81,
+      epOut: 0x01,
+      epEvt: 0x82
     )
   }
 
@@ -459,22 +494,391 @@ public enum CollectCommand {
     }
   }
 
-  // MARK: - Bench (optional, minimal)
-  private static func runBenches(device: any MTPDevice, sizes: [String]) async throws -> [(name: String, csv: String)] {
-    // Keep this minimal; many contributors won't run benches.
-    // Produce a trivial CSV header per requested size.
-    return try await withThrowingTaskGroup(of: (String, String).self) { group in
-      for size in sizes {
-        group.addTask {
-          // Here you could invoke your existing bench command. We stub a CSV with header only.
-          let csv = "size,bytes,duration_s,mbps\n"
-          return (size, csv)
-        }
+  // MARK: - Bench
+  private struct BenchResult: Sendable {
+    let name: String
+    let csv: String
+    let readMBps: Double
+    let writeMBps: Double
+  }
+
+  private static func runBenches(device: any MTPDevice, sizes: [String]) async throws -> [BenchResult] {
+    var results: [BenchResult] = []
+    results.reserveCapacity(sizes.count)
+
+    for requested in sizes {
+      let sizeLabel = try normalizeBenchSizeLabel(requested)
+      let sizeBytes = parseSize(sizeLabel)
+      guard sizeBytes > 0 else { throw CollectError.invalidBenchSize(requested) }
+
+      let bench = try await within(ms: benchTimeoutMs(for: sizeBytes)) {
+        try await runSingleBench(device: device, sizeLabel: sizeLabel, sizeBytes: sizeBytes)
       }
-      var out: [(String, String)] = []
-      for try await item in group { out.append(item) }
-      return out
+      results.append(bench)
     }
+
+    return results
+  }
+
+  private static func normalizeBenchSizeLabel(_ requested: String) throws -> String {
+    let normalized = requested.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+    guard normalized.range(of: #"^\d+[KMG]$"#, options: .regularExpression) != nil else {
+      throw CollectError.invalidBenchSize(requested)
+    }
+    return normalized
+  }
+
+  private static func benchTimeoutMs(for sizeBytes: UInt64) -> Int {
+    let sizeMB = max(1.0, Double(sizeBytes) / 1_000_000.0)
+    let estimatedSeconds = Int(sizeMB / 3.0) + 120
+    return max(estimatedSeconds * 1_000, 240_000)
+  }
+
+  private static func runSingleBench(
+    device: any MTPDevice,
+    sizeLabel: String,
+    sizeBytes: UInt64
+  ) async throws -> BenchResult {
+    let (storageID, parentHandle) = try await resolveCollectBenchTarget(device: device)
+    let randomSuffix = String(UInt32.random(in: 0...UInt32.max), radix: 16, uppercase: false)
+    let benchFilename = "swiftmtp-bench-\(randomSuffix).tmp"
+    let uploadURL = try createTempPayloadFile(name: benchFilename, sizeBytes: sizeBytes)
+    let downloadURL = URL(fileURLWithPath: NSTemporaryDirectory())
+      .appendingPathComponent("swiftmtp-bench-read-\(randomSuffix).tmp")
+
+    defer {
+      try? FileManager.default.removeItem(at: uploadURL)
+      try? FileManager.default.removeItem(at: downloadURL)
+    }
+
+    var uploadedHandle: MTPObjectHandle?
+    do {
+      let writeStart = Date()
+      let writeProgress = try await device.write(
+        parent: parentHandle == 0xFFFFFFFF ? nil : parentHandle,
+        name: benchFilename,
+        size: sizeBytes,
+        from: uploadURL
+      )
+      try await waitForTransfer(writeProgress)
+      let writeDuration = max(Date().timeIntervalSince(writeStart), 0.001)
+      let writeMBps = Double(sizeBytes) / writeDuration / 1_000_000
+
+      let listParent = parentHandle == 0xFFFFFFFF ? nil : parentHandle
+      uploadedHandle = try await findObjectHandle(
+        device: device,
+        storage: storageID,
+        parent: listParent,
+        name: benchFilename
+      )
+
+      let readStart = Date()
+      let readProgress = try await device.read(handle: uploadedHandle!, range: nil, to: downloadURL)
+      try await waitForTransfer(readProgress)
+      let readDuration = max(Date().timeIntervalSince(readStart), 0.001)
+      let readMBps = Double(sizeBytes) / readDuration / 1_000_000
+
+      let iso = ISO8601DateFormatter()
+      var rows = ["timestamp,operation,size_bytes,duration_seconds,speed_mbps"]
+      rows.append(
+        "\(iso.string(from: writeStart)),write,\(sizeBytes),\(String(format: "%.6f", writeDuration)),\(String(format: "%.3f", writeMBps))"
+      )
+      rows.append(
+        "\(iso.string(from: readStart)),read,\(sizeBytes),\(String(format: "%.6f", readDuration)),\(String(format: "%.3f", readMBps))"
+      )
+      let csv = rows.joined(separator: "\n") + "\n"
+
+      if let handle = uploadedHandle {
+        try? await device.delete(handle, recursive: false)
+      }
+
+      return BenchResult(
+        name: sizeLabel,
+        csv: csv,
+        readMBps: readMBps,
+        writeMBps: writeMBps
+      )
+    } catch {
+      if let handle = uploadedHandle {
+        try? await device.delete(handle, recursive: false)
+      }
+      throw error
+    }
+  }
+
+  private static func waitForTransfer(_ progress: Progress) async throws {
+    while !progress.isFinished {
+      try await Task.sleep(nanoseconds: 100_000_000)
+    }
+  }
+
+  private static func createTempPayloadFile(name: String, sizeBytes: UInt64) throws -> URL {
+    let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(name)
+    let testData = Data(repeating: 0xAA, count: Int(min(sizeBytes, 1024 * 1024)))
+    FileManager.default.createFile(atPath: tempURL.path, contents: nil)
+    let fileHandle = try FileHandle(forWritingTo: tempURL)
+    var written: UInt64 = 0
+    while written < sizeBytes {
+      let toWrite = min(UInt64(testData.count), sizeBytes - written)
+      try fileHandle.write(contentsOf: testData.prefix(Int(toWrite)))
+      written += toWrite
+    }
+    try fileHandle.close()
+    return tempURL
+  }
+
+  private static func resolveCollectBenchTarget(
+    device: any MTPDevice
+  ) async throws -> (MTPStorageID, MTPObjectHandle) {
+    let storages = try await device.storages()
+    guard let targetStorage = storages.first(where: { !$0.isReadOnly }) ?? storages.first else {
+      throw MTPError.preconditionFailed("No storage available")
+    }
+
+    let rootStream = device.list(parent: nil, in: targetStorage.id)
+    var rootItems: [MTPObjectInfo] = []
+    for try await batch in rootStream {
+      rootItems.append(contentsOf: batch)
+    }
+
+    let folders = rootItems.filter { $0.formatCode == 0x3001 }
+    let preferredNames = ["Download", "Downloads", "DCIM"]
+    var safeFolder: MTPObjectInfo? = nil
+    for name in preferredNames {
+      if let match = folders.first(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame }) {
+        safeFolder = match
+        break
+      }
+    }
+    if safeFolder == nil {
+      safeFolder = folders.first
+    }
+    guard let parent = safeFolder else { return (targetStorage.id, 0xFFFFFFFF) }
+
+    let childStream = device.list(parent: parent.handle, in: targetStorage.id)
+    var children: [MTPObjectInfo] = []
+    for try await batch in childStream {
+      children.append(contentsOf: batch)
+    }
+
+    if let benchFolder = children.first(where: {
+      $0.name == "SwiftMTPBench" && $0.formatCode == 0x3001
+    }) {
+      return (targetStorage.id, benchFolder.handle)
+    }
+
+    let newHandle = try await device.createFolder(
+      parent: parent.handle,
+      name: "SwiftMTPBench",
+      storage: targetStorage.id
+    )
+    return (targetStorage.id, newHandle)
+  }
+
+  private static func findObjectHandle(
+    device: any MTPDevice,
+    storage: MTPStorageID,
+    parent: MTPObjectHandle?,
+    name: String
+  ) async throws -> MTPObjectHandle {
+    let stream = device.list(parent: parent, in: storage)
+    for try await batch in stream {
+      if let match = batch.first(where: { $0.name == name }) {
+        return match.handle
+      }
+    }
+    throw MTPError.objectNotFound
+  }
+
+  private static func buildSubmissionManifest(
+    summary: MTPDeviceSummary,
+    probe: ProbeJSON,
+    benchResults: [BenchResult],
+    salt: Data
+  ) -> SubmissionManifest {
+    let serialSource = probe.deviceInfo.serial ?? summary.usbSerial ?? "unknown"
+    let serialRedacted = Redaction.redactSerial(serialSource, salt: salt)
+    let submitter = submitterUser()
+
+    let interface = SubmissionManifest.InterfaceInfo(
+      class: toHexByte(probe.fingerprint.interfaceTriple.class),
+      subclass: toHexByte(probe.fingerprint.interfaceTriple.subclass),
+      protocol: toHexByte(probe.fingerprint.interfaceTriple.protocol),
+      in: toHexByte(probe.fingerprint.endpointAddresses.input),
+      out: toHexByte(probe.fingerprint.endpointAddresses.output),
+      evt: probe.fingerprint.endpointAddresses.event.map { toHexByte($0) }
+    )
+
+    let benchFiles = benchResults.map { "bench-\($0.name).csv" }
+
+    return SubmissionManifest(
+      tool: .init(
+        version: normalizedBuildVersion(BuildInfo.version),
+        commit: normalizedCommitHash(BuildInfo.git)
+      ),
+      host: .init(
+        os: ProcessInfo.processInfo.operatingSystemVersionString,
+        arch: hostArch()
+      ),
+      timestamp: ISO8601DateFormatter().string(from: Date()),
+      user: submitter.map { .init(github: $0) },
+      device: .init(
+        vendorId: String(format: "0x%04x", summary.vendorID ?? 0),
+        productId: String(format: "0x%04x", summary.productID ?? 0),
+        bcdDevice: probe.fingerprint.bcdDevice.map { toHexWord($0) },
+        vendor: summary.manufacturer,
+        model: summary.model,
+        interface: interface,
+        fingerprintHash: sha256FingerprintHash(for: probe.fingerprint),
+        serialRedacted: serialRedacted
+      ),
+      artifacts: .init(
+        probe: "probe.json",
+        usbDump: "usb-dump.txt",
+        bench: benchFiles.isEmpty ? nil : benchFiles
+      ),
+      consent: .init(anonymizeSerial: true, allowBench: !benchResults.isEmpty)
+    )
+  }
+
+  private static func buildQuirkSuggestion(
+    summary: MTPDeviceSummary,
+    tuning: EffectiveTuning,
+    config: SwiftMTPConfig,
+    benchResults: [BenchResult],
+    submittedBy: String?
+  ) -> QuirkSuggestion {
+    var overrides: [String: AnyCodable] = [
+      "maxChunkBytes": AnyCodable(tuning.maxChunkBytes),
+      "ioTimeoutMs": AnyCodable(tuning.ioTimeoutMs),
+      "handshakeTimeoutMs": AnyCodable(tuning.handshakeTimeoutMs),
+      "inactivityTimeoutMs": AnyCodable(tuning.inactivityTimeoutMs),
+      "overallDeadlineMs": AnyCodable(tuning.overallDeadlineMs),
+      "stabilizeMs": AnyCodable(tuning.stabilizeMs),
+      "postClaimStabilizeMs": AnyCodable(tuning.postClaimStabilizeMs),
+      "postProbeStabilizeMs": AnyCodable(tuning.postProbeStabilizeMs),
+      "resetOnOpen": AnyCodable(tuning.resetOnOpen),
+      "disableEventPump": AnyCodable(tuning.disableEventPump)
+    ]
+    overrides["resumeEnabled"] = AnyCodable(config.resumeEnabled)
+
+    let hooks: [QuirkSuggestion.Hook] = tuning.hooks.map { hook in
+      .init(
+        phase: hook.phase.rawValue,
+        delayMs: hook.delayMs,
+        busyBackoff: hook.busyBackoff.map {
+          .init(retries: $0.retries, baseMs: $0.baseMs, jitterPct: $0.jitterPct)
+        }
+      )
+    }
+
+    let readGate = benchResults.isEmpty
+      ? 0
+      : benchResults.map(\.readMBps).reduce(0, +) / Double(benchResults.count)
+    let writeGate = benchResults.isEmpty
+      ? 0
+      : benchResults.map(\.writeMBps).reduce(0, +) / Double(benchResults.count)
+
+    return QuirkSuggestion(
+      id: quirkIdentifier(for: summary),
+      match: .init(
+        vidPid: String(format: "0x%04X:0x%04X", summary.vendorID ?? 0, summary.productID ?? 0)
+      ),
+      status: "experimental",
+      confidence: benchResults.isEmpty ? "low" : "medium",
+      overrides: overrides,
+      hooks: hooks,
+      benchGates: .init(
+        readMBps: round(readGate * 100) / 100,
+        writeMBps: round(writeGate * 100) / 100
+      ),
+      provenance: .init(
+        submittedBy: submittedBy,
+        date: utcDateStamp()
+      )
+    )
+  }
+
+  private static func quirkIdentifier(for summary: MTPDeviceSummary) -> String {
+    let base = slugify("\(summary.manufacturer)-\(summary.model)")
+    let pid = String(format: "%04x", summary.productID ?? 0)
+    return "\(base)-\(pid)"
+  }
+
+  private static func sha256FingerprintHash(for fingerprint: MTPDeviceFingerprint) -> String {
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    let data = (try? encoder.encode(fingerprint)) ?? Data(fingerprint.hashString.utf8)
+    let digest = SHA256.hash(data: data)
+    return "sha256:" + digest.compactMap { String(format: "%02x", $0) }.joined()
+  }
+
+  private static func normalizedBuildVersion(_ raw: String) -> String {
+    let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+    if trimmed.range(of: #"^\d+\.\d+\.\d+.*$"#, options: .regularExpression) != nil {
+      return trimmed
+    }
+    if trimmed.hasPrefix("v") || trimmed.hasPrefix("V") {
+      let dropped = String(trimmed.dropFirst())
+      if dropped.range(of: #"^\d+\.\d+\.\d+.*$"#, options: .regularExpression) != nil {
+        return dropped
+      }
+    }
+    return "0.0.0"
+  }
+
+  private static func normalizedCommitHash(_ raw: String) -> String? {
+    let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+    guard trimmed.range(of: #"^[0-9a-f]{7,40}$"#, options: .regularExpression) != nil else {
+      return nil
+    }
+    return trimmed
+  }
+
+  private static func submitterUser() -> String? {
+    let env = ProcessInfo.processInfo.environment
+    return env["GITHUB_USER"] ?? env["GITHUB_ACTOR"] ?? env["USER"]
+  }
+
+  private static func hostArch() -> String {
+#if arch(arm64)
+    return "arm64"
+#elseif arch(x86_64)
+    return "x86_64"
+#elseif arch(i386)
+    return "i386"
+#else
+    return "unknown"
+#endif
+  }
+
+  private static func toHexByte(_ raw: String) -> String {
+    let cleaned = raw.lowercased().hasPrefix("0x") ? String(raw.dropFirst(2)) : raw
+    guard let value = UInt64(cleaned, radix: 16) else { return "0x00" }
+    return String(format: "0x%02llx", value)
+  }
+
+  private static func toHexWord(_ raw: String) -> String {
+    let cleaned = raw.lowercased().hasPrefix("0x") ? String(raw.dropFirst(2)) : raw
+    guard let value = UInt64(cleaned, radix: 16) else { return "0x0000" }
+    return String(format: "0x%04llx", value)
+  }
+
+  private static func utcDateStamp() -> String {
+    let formatter = DateFormatter()
+    formatter.calendar = Calendar(identifier: .gregorian)
+    formatter.locale = Locale(identifier: "en_US_POSIX")
+    formatter.timeZone = TimeZone(secondsFromGMT: 0)
+    formatter.dateFormat = "yyyy-MM-dd"
+    return formatter.string(from: Date())
+  }
+
+  private static func slugify(_ value: String) -> String {
+    let lower = value.lowercased()
+    let slug = lower
+      .replacingOccurrences(of: #"[^a-z0-9]+"#, with: "-", options: .regularExpression)
+      .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+    return slug.isEmpty ? "device" : slug
   }
 
   // MARK: - Common utilities
@@ -494,8 +898,14 @@ public enum CollectCommand {
     } else {
       let root = URL(fileURLWithPath: fm.currentDirectoryPath, isDirectory: true)
       let stamp = ISO8601DateFormatter().string(from: Date()).replacingOccurrences(of: ":", with: "-")
-      let name = String(format: "device-%04x-%04x-%@",
-                        summary.vendorID ?? 0, summary.productID ?? 0, stamp)
+      let namePrefix: String
+      if let customName = flags.deviceName?.trimmingCharacters(in: .whitespacesAndNewlines),
+         !customName.isEmpty {
+        namePrefix = slugify(customName)
+      } else {
+        namePrefix = String(format: "device-%04x-%04x", summary.vendorID ?? 0, summary.productID ?? 0)
+      }
+      let name = "\(namePrefix)-\(stamp)"
       base = root.appendingPathComponent("Contrib/submissions/\(name)", isDirectory: true)
     }
     try fm.createDirectory(at: base, withIntermediateDirectories: true, attributes: nil)
@@ -523,6 +933,7 @@ public enum CollectCommand {
     case ambiguousSelection(count: Int, candidates: [CollectCommand.DeviceCandidate])
     case timeout(Int)
     case redactionCheckFailed([String])
+    case invalidBenchSize(String)
 
     var errorDescription: String? {
       switch self {
@@ -531,6 +942,8 @@ public enum CollectCommand {
       case .timeout(let ms): return "Step exceeded deadline (\(ms) ms)."
       case .redactionCheckFailed(let issues):
         return "Debug-artifact redaction check failed: \(issues.joined(separator: ", "))."
+      case .invalidBenchSize(let size):
+        return "Invalid benchmark size '\(size)'. Expected values like 100M, 500M, or 1G."
       }
     }
   }
@@ -553,25 +966,6 @@ public enum CollectCommand {
     }
   }
 
-  private struct SubmissionSummary: Codable, Sendable {
-    var schemaVersion = "1.0.0"
-    let createdAt: String
-    let vendorID: UInt16
-    let productID: UInt16
-    let bus: Int
-    let address: Int
-    let artifacts: [String]
-
-    static func make(from s: MTPDeviceSummary, bundle: URL) -> SubmissionSummary {
-      return .init(
-        createdAt: ISO8601DateFormatter().string(from: Date()),
-        vendorID: s.vendorID ?? 0, productID: s.productID ?? 0,
-        bus: Int(s.bus ?? 0), address: Int(s.address ?? 0),
-        artifacts: ["probe.json", "usb-dump.txt"]
-      )
-    }
-  }
-
   private struct CollectionOutput: Codable, Sendable {
     let schemaVersion: String
     let timestamp: String
@@ -589,7 +983,7 @@ public enum CollectCommand {
     var schemaVersion: String = "1.0.0"
     let tool: ToolInfo
     let host: HostInfo
-    let timestamp: Date
+    let timestamp: String
     let user: UserInfo?
     let device: DeviceInfo
     let artifacts: ArtifactInfo
