@@ -1,88 +1,300 @@
 # Troubleshooting
 
-## Device not detected
+Comprehensive troubleshooting guide for SwiftMTP operations.
 
-- Unlock device and set USB mode to **File Transfer (MTP)**.
-- Try a different cable/port (avoid unpowered hubs).
+## Table of Contents
 
-## Slow transfers
+1. [Quick Fixes](#quick-fixes)
+2. [Device Detection Issues](#device-detection-issues)
+3. [Transfer Problems](#transfer-problems)
+4. [Performance Issues](#performance-issues)
+5. [Error-Specific Solutions](#error-specific-solutions)
+6. [macOS-Specific Issues](#macos-specific-issues)
+7. [Submission & Benchmark Issues](#submission--benchmark-issues)
+8. [Diagnostic Commands](#diagnostic-commands)
 
-- Check USB2 vs USB3 connection.
-- See `swift run --package-path SwiftMTPKit swiftmtp bench 1G`; tuner should step up chunk size.
+---
 
-## Resume not working
+## Quick Fixes
 
-- Your device may not advertise `GetPartialObject64`; reads restart by design.
+Start here if you're experiencing issues:
 
-## `events` exits with code 69
+1. **Unplug and reconnect** the device
+2. **Unlock** the device screen
+3. **Confirm USB mode** is set to **File Transfer (MTP)** not PTP or charging
+4. **Close competing apps**: Android File Transfer, adb, photo apps, browsers
+5. **Try a different USB cable/port** (avoid unpowered hubs)
 
-- No matching device present or filter did not match. Ensure device is connected and set to **File Transfer (MTP)**, or specify targeting flags like `--vid/--pid`.
-- Prefer explicit hex for targeting flags (for example `--vid 0x2717 --pid 0xff40`).
+---
 
-## Connected-lab diagnostics
+## Device Detection Issues
 
-- Run `swift run --package-path SwiftMTPKit swiftmtp device-lab connected --json` to produce per-device diagnostics.
-- Artifacts are written to `Docs/benchmarks/connected-lab/<timestamp>/`.
-- Use `./scripts/device-bringup.sh --mode <label>` to capture `system_profiler`, `usb-dump`, and `device-lab` artifacts in one run folder.
-- See `Docs/device-bringup.md` for the `(device × mode × operation)` certification matrix and failure taxonomy.
+### No Device Detected
 
-## Troubleshooting decision trees
+**Symptoms:**
+- `swiftmtp probe` returns "No MTP device connected"
+- Device doesn't appear in Finder
 
-### 1) No device is detected
+**Solutions:**
+1. Verify device is in **File Transfer (MTP)** mode
+2. Check USB cable is data-capable (not charge-only)
+3. Try direct USB port (not hub)
+4. Run: `swift run swiftmtp probe`
 
-- Run `swift run --package-path SwiftMTPKit swiftmtp --real-only probe`.
-- If probe output is "No MTP device connected", then:
-  - Keep the device unlocked and on **File Transfer (MTP)**.
-  - Verify USB cable/port and disable hub/charging-only adapters.
-  - Re-run `swift run --package-path SwiftMTPKit swiftmtp device-lab connected --json` to confirm discovery.
-- If it still fails, close competing USB apps (`Android File Transfer`, browser USB stacks, adb), disconnect/replug, then retry.
+### Device Detected But Not Accessible
 
-### 2) `Write`/`push` returns `0x201D` or `Object_Too_Large`
+**Symptoms:**
+- Device appears but operations fail
+- `permissionDenied` error
 
-- Retry the same command with safe folder selection.
-  - For CLI `push`, specify `0` or a folder name rather than a root handle.
-  - For benchmarks, ensure the run logs show `SwiftMTPBench` creation under `Download`/`DCIM`.
-- If `0x201D` repeats:
-  - Capture `swift run --package-path SwiftMTPKit swiftmtp --real-only collect --strict` and confirm `usb-dump.txt` is valid.
-  - Check the target's quirk notes for folder-only write requirements (`WriteTargetLadder`).
+**Solutions:**
+1. Accept any "Trust This Computer" prompt on device
+2. Check USB debugging is disabled (interferes with MTP)
+3. Verify no other app has claimed the device
 
-### 3) `usb-dump`/`collect` contains obvious serial or path data
+### Intermittent Detection
 
-- Re-run with `--strict`.
-- Inspect artifact patterns:
-  - `Serial Number`, `iSerial`, `/Users/<...>`, UUID/mac/IP, email-like tokens.
-- If found, treat as a redaction failure and rerun from scratch on an updated branch.
+**Symptoms:**
+- Device sometimes detected, sometimes not
+- Flaky connections
 
-### 4) Mirror or bench stops after first pass
+**Solutions:**
+1. Use a high-quality USB cable
+2. Connect directly to Mac (not via hub)
+3. Ensure device has sufficient battery
+4. Disable USB power saving: `sudo pmset -a usbpowersleep 0`
 
-- Expect pass #1 to be warmup in bench workflows.
-- Re-run with longer timeout and explicit repeat:
-  - `swift run --package-path SwiftMTPKit swiftmtp --real-only bench 1G --repeat 3 --out benches/<name>-1g.csv`
-- If only second pass fails, compare `swift run ... usb-dump` output around timeout path.
+---
 
-### 5) Pixel 7 Tahoe 26 behavior
+## Transfer Problems
 
-- Known blocker: macOS Tahoe USB stack timing on this hardware path.
-- Keep `stabilizeMs` elevated and treat `LIBUSB_ERROR_TIMEOUT` as a transport layer symptom.
-- Use a direct port and run `swift run --package-path SwiftMTPKit swiftmtp --real-only probe` before benchmarking.
+### Write Fails with 0x201D Error
 
-## collect + benchmark troubleshooting flow
+**Error:** `Protocol error InvalidParameter (0x201D): write request rejected by device`
 
-Use this order whenever debugging a failing submission workflow:
+**Cause:** Device restricts writes to certain folders
 
-1. Run probe: `swift run --package-path SwiftMTPKit swiftmtp --real-only probe`.
-2. Capture evidence: `swift run --package-path SwiftMTPKit swiftmtp collect --strict --json --noninteractive`.
-3. Verify artifacts:
-   - `submission.json` exists.
-   - `usb-dump.txt` contains only redacted placeholders.
-4. Run single-size check: `swift run --package-path SwiftMTPKit swiftmtp --real-only bench 100M --out /tmp/bench-100m.csv`.
-5. If check passes, run `500M` then `1G` with `--repeat 3`.
-6. If either flow fails, attach `probe`, `usb-dump`, and command output to the issue/PR.
+**Solutions:**
+- Write to a writable folder instead of root:
+  - Use `0` or explicit folder name for `push` command
+  - Try: `Download`, `DCIM`, or nested folders
+- Check device quirk notes for folder restrictions
 
-## Sprint issue evidence minimum
+### Storage Full
 
-When opening or updating a sprint issue for transport/submission failures, include:
+**Error:** `MTPError.storageFull`
 
-- failing command and exact exit code
-- one artifact folder path under `Docs/benchmarks/device-bringup/` or `Docs/benchmarks/connected-lab/`
-- one sentence describing expected behavior vs actual behavior
+**Solutions:**
+1. Free space on device
+2. Delete unnecessary files
+3. Check if device has multiple storage partitions
+
+### Object Not Found
+
+**Error:** `MTPError.objectNotFound`
+
+**Solutions:**
+1. Refresh the storage listing
+2. Verify the object handle is still valid
+3. Check if file was deleted externally
+
+### Read-Only Storage
+
+**Error:** `MTPError.readOnly`
+
+**Solutions:**
+1. Check SD card lock switch (if applicable)
+2. Verify USB mode is MTP not PTP
+3. Check device storage settings
+
+---
+
+## Performance Issues
+
+### Slow Transfers
+
+**Symptoms:**
+- Transfer speeds below expectations
+- Operations take unusually long
+
+**Solutions:**
+1. Check USB version (USB2 vs USB3)
+2. Use a direct port (not hub)
+3. Verify cable is USB 3.0 capable
+4. Check for background device operations (indexing, backup)
+
+### Benchmark Tuning
+
+Run benchmarking to find optimal settings:
+```bash
+swift run swiftmtp bench 1G
+```
+
+The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.md) for detailed analysis.
+
+### Resume Not Working
+
+**Cause:** Some devices don't advertise `GetPartialObject64`
+
+**Solutions:**
+- Reads restart by design on unsupported devices
+- Use transfer journaling for write operations
+
+---
+
+## Error-Specific Solutions
+
+### Exit Code 69 - No Device
+
+**Command:** `swiftmtp events` exits with code 69
+
+**Solutions:**
+1. No matching device present or filter didn't match
+2. Ensure device is connected in **File Transfer (MTP)** mode
+3. Use explicit targeting: `--vid 0x2717 --pid 0xff40`
+4. Run `swiftmtp probe` to verify detection
+
+### Timeout Errors
+
+**Error:** `TransportError.timeout` or `MTPError.timeout`
+
+**Solutions:**
+1. Increase timeout: `export SWIFTMTP_IO_TIMEOUT_MS=30000`
+2. Use different USB port/cable
+3. Close other USB applications
+4. Check device is not in low-power mode
+
+### Permission Denied
+
+**Error:** `MTPError.permissionDenied`
+
+**Solutions:**
+1. Verify app entitlements
+2. Check system preferences for USB access
+3. Run without sandbox for development
+
+### Session Already Open (0x201E)
+
+**Error:** `MTPError.protocolError(code: 0x201E, ...)`
+
+**Solutions:**
+1. Close other MTP sessions
+2. Disconnect and reconnect device
+3. Restart the device
+
+---
+
+## macOS-Specific Issues
+
+### Trust Prompt Not Appearing
+
+**Solutions:**
+1. Unlock device and replug USB
+2. Reset USB location: `sudo killall -HUP usbd`
+3. Check device is not locked/encrypted
+
+### Finder Not Showing Device
+
+**Solutions:**
+1. Verify device is in MTP mode
+2. Open Finder → Preferences → Sidebar → Enable CDs, DVDs, and iOS Devices
+3. Restart Finder: `killall Finder`
+
+### Pixel 7 / Tahoe 26 Issues
+
+**Known Issue:** macOS Tahoe 26 USB stack timing on Pixel 7
+
+**Solutions:**
+- Keep `stabilizeMs` elevated
+- Treat `LIBUSB_ERROR_TIMEOUT` as transport layer symptom
+- Use direct port and probe before benchmarking
+
+---
+
+## Submission & Benchmark Issues
+
+### Troubleshooting Flow
+
+Run these commands in order:
+
+```bash
+# 1. Probe device
+swift run swiftmtp probe
+
+# 2. Capture evidence
+swift run swiftmtp collect --strict --json --noninteractive
+
+# 3. Verify artifacts
+# - submission.json exists
+# - usb-dump.txt contains only redacted placeholders
+
+# 4. Single-size check
+swift run swiftmtp bench 100M --out /tmp/bench-100m.csv
+
+# 5. Full benchmark
+swift run swiftmtp bench 500M
+swift run swiftmtp bench 1G --repeat 3
+```
+
+### Device Lab Diagnostics
+
+```bash
+swift run swiftmtp device-lab connected --json
+```
+
+Artifacts written to `Docs/benchmarks/connected-lab/<timestamp>/`.
+
+### USB Dump Analysis
+
+If `usb-dump.txt` contains serial numbers or paths:
+1. Re-run with `--strict`
+2. Check for patterns: `Serial Number`, `iSerial`, `/Users/<...>`, UUIDs
+3. Report redaction failures
+
+---
+
+## Diagnostic Commands
+
+### Basic Probe
+```bash
+swift run swiftmtp probe
+```
+
+### Full Diagnostics
+```bash
+swift run swiftmtp device-lab connected --json
+```
+
+### USB Traffic Capture
+```bash
+swift run swiftmtp usb-dump
+```
+
+### Device Bring-Up
+```bash
+./scripts/device-bringup.sh --mode <label> --vid <vid> --pid <pid>
+```
+
+See [Docs/device-bringup.md](device-bringup.md) for mode options.
+
+---
+
+## Related Documentation
+
+- [Error Codes Reference](ErrorCodes.md)
+- [Migration Guide](MigrationGuide.md)
+- [Benchmarks](benchmarks.md)
+- [Device-Specific Guides](SwiftMTP.docc/Devices/)
+- [Device Bring-Up](device-bringup.md)
+
+---
+
+## Getting Help
+
+When opening issues, include:
+
+1. Failing command and exact exit code
+2. One artifact folder path under `Docs/benchmarks/`
+3. Expected vs actual behavior (one sentence)
+4. macOS version: `sw_vers -productVersion`
+5. SwiftMTP version: `swift run swiftmtp version`

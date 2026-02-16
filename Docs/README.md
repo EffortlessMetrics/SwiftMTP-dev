@@ -65,6 +65,8 @@ brew install swiftmtp
 
 - [Benchmarks](benchmarks.md)
 - [File Provider Tech Preview](FileProvider-TechPreview.md)
+- [Migration Guide](MigrationGuide.md)
+- [Error Codes Reference](ErrorCodes.md)
 - [Notarization Notes](Notarization.md)
 
 ## Change Tracking

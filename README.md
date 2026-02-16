@@ -2,7 +2,7 @@
 
 Swift-native Media Transfer Protocol stack with device quirks, modern SwiftUI implementation, and comprehensive verification suite.
 
-A privacy-safe, evidence-gated MTP implementation for macOS and Linux with adaptive device handling and comprehensive device quirk support.
+A privacy-safe, evidence-gated MTP implementation for macOS and iOS with adaptive device handling and comprehensive device quirk support.
 
 ## Release and roadmap status
 

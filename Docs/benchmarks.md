@@ -449,7 +449,7 @@ Docs/SwiftMTP.docc/Devices/<device>.md
 
 ---
 
-*Last updated: 2026-02-14*
+*Last updated: 2026-02-16*
 *SwiftMTP Version: 2.0.0*
 
 *See also: [ROADMAP.md](ROADMAP.md) | [Device Submission](ROADMAP.device-submission.md) | [Testing Guide](ROADMAP.testing.md)*

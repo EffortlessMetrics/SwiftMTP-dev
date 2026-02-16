@@ -6,6 +6,19 @@ SwiftMTP device certification should be tracked as:
 
 This avoids binary "works/doesn't work" decisions and gives repeatable evidence for each mode.
 
+## Quick Start
+
+```bash
+# Full bring-up with automatic artifact collection
+./scripts/device-bringup.sh --mode mtp-unlocked --vid 0x18d1 --pid 0x4ee1
+
+# Quick smoke test
+swift run swiftmtp --real-only probe
+
+# Run device lab
+swift run swiftmtp device-lab connected --json
+```
+
 ## Modes
 
 Phone minimum modes:
@@ -50,6 +63,17 @@ Artifacts include:
 - `swiftmtp device-lab connected --json` output and per-device artifacts
 - mode metadata and run summary
 
+### Device Collection
+
+For contribution-ready evidence, use the collect command:
+
+```bash
+# Collect device evidence for submission
+swift run swiftmtp collect --strict --noninteractive --bundle ../Contrib/submissions/my-device-bundle
+```
+
+This creates a structured bundle with probe data, USB dump, and metadata suitable for quirk submission.
+
 ## Failure Taxonomy
 
 Connected-lab reports classify failures as:
@@ -58,6 +82,15 @@ Connected-lab reports classify failures as:
 - `class2-claim`: interface present but claim/access denied or busy
 - `class3-handshake`: claimed link but OpenSession/GetDeviceInfo fails
 - `class4-transfer`: read/write/delete fails after handshake succeeds
+
+### Recovery Patterns
+
+| Class | Recovery Strategy |
+|-------|------------------|
+| class1 | Check USB mode on device, try different cable/port |
+| class2 | Unplug/replug, reset USB on host, check sandbox permissions |
+| class3 | Add stabilization delay (postOpenSession hook), handle DEVICE_BUSY |
+| class4 | Adjust timeouts, check quirk settings, try smaller chunk sizes |
 
 ## Device Page Template
 
@@ -80,8 +113,33 @@ Connected-lab reports classify failures as:
 ## Known quirks
 - `resetReopenOnOpenSessionIOError` (if used)
 - `writeTargetLadder` (if used)
+- `stabilizeMs` (if used)
 
 ## Evidence
 - `Docs/benchmarks/device-bringup/<timestamp>-<mode>/`
 - `Docs/benchmarks/connected-lab/<timestamp>/`
+- `Contrib/submissions/<device>-bundle/`
 ```
+
+## Quirks Configuration
+
+When bringing up a new device, you may need to configure quirks in `Specs/quirks.json`:
+
+```json
+{
+  "vid": "0x18d1",
+  "pid": "0x4ee1",
+  "description": "Device name",
+  "quirks": {
+    "maxChunkBytes": 2097152,
+    "handshakeTimeoutMs": 20000,
+    "ioTimeoutMs": 30000,
+    "stabilizeMs": 2000,
+    "hooks": [
+      { "phase": "postOpenSession", "delayMs": 1000 }
+    ]
+  }
+}
+```
+
+See [Device Tuning Guide](SwiftMTP.docc/DeviceTuningGuide.md) for full quirk reference.
