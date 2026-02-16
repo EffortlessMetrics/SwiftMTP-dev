@@ -237,6 +237,12 @@
         "stabilizeMs": 3000,
         "resetOnOpen": false
       },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "resetReopenOnOpenSessionIOError": true,
+        "transactionIdResetsOnSession": true
+      },
       "confidence": "low",
       "status": "experimental",
       "notes": [

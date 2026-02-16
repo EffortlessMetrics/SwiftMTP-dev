@@ -171,7 +171,6 @@ extension MTPDeviceActor {
     let supportsPartial = deviceInfo.operationsSupported.contains(0x95C1)  // SendPartialObject
 
     var journalTransferId: String?
-    let source: any ByteSource = try FileSource(url: url)
     let timeout = 10_000  // 10 seconds
 
     // Initialize transfer journal if available
@@ -197,9 +196,6 @@ extension MTPDeviceActor {
     defer { ProcessInfo.processInfo.endActivity(activity) }
 
     do {
-      // Create Sendable adapter to avoid capturing non-Sendable source
-      let sourceAdapter = SendableSourceAdapter(source)
-
       // Check if device requires subfolder for writes (quirk flag)
       let requiresSubfolder: Bool
       let preferredWriteFolder: String?
@@ -211,7 +207,14 @@ extension MTPDeviceActor {
         preferredWriteFolder = nil
       }
 
+      // Check if device requires 0xFFFFFFFF for storage ID in SendObjectInfo
+      let forceFFFFFFF = (await self.devicePolicy?.flags.forceFFFFFFFForSendObject) ?? false
+      let useEmptyDates = (await self.devicePolicy?.flags.emptyDatesInSendObject) ?? false
+
       // Determine storage ID and parent handle using WriteTargetLadder
+      let availableStorages = try? await self.storages()
+      let rootStorages = availableStorages ?? []
+
       var targetStorageRaw: UInt32 = 0xFFFFFFFF
       var resolvedParent: MTPObjectHandle? = parent
 
@@ -220,54 +223,76 @@ extension MTPDeviceActor {
 
       if let p = effectiveParent {
         // Parent specified - get storage from parent info
-        if let parentInfos = try? await link.getObjectInfos([p]), let parentInfo = parentInfos.first
-        {
+        if let parentInfos = try? await link.getObjectInfos([p]), let parentInfo = parentInfos.first {
           targetStorageRaw = parentInfo.storage.raw
+        } else if let storage = rootStorages.first {
+          targetStorageRaw = storage.id.raw
         }
-      } else {
+      } else if let first = rootStorages.first {
         // No parent or parent=0 with requiresSubfolder - need to resolve target
-        if let storages = try? await self.storages(), let first = storages.first {
-          targetStorageRaw = first.id.raw
-          let target = try await WriteTargetLadder.resolveTarget(
-            device: self,
-            storage: first.id,
-            explicitParent: nil,
-            requiresSubfolder: requiresSubfolder,
-            preferredWriteFolder: preferredWriteFolder
-          )
-          targetStorageRaw = target.0.raw
-          resolvedParent = target.1
+        let target = try await WriteTargetLadder.resolveTarget(
+          device: self,
+          storage: first.id,
+          explicitParent: nil,
+          requiresSubfolder: requiresSubfolder,
+          preferredWriteFolder: preferredWriteFolder
+        )
+        targetStorageRaw = target.0.raw
+        resolvedParent = target.1
 
-          // Log where we're writing to
-          if requiresSubfolder {
-            Logger(subsystem: "SwiftMTP", category: "write")
-              .info(
-                "Device requires subfolder for writes, resolved to parent handle \(resolvedParent!)"
-              )
-          }
+        // Log where we're writing to
+        if requiresSubfolder {
+          Logger(subsystem: "SwiftMTP", category: "write")
+            .info("Device requires subfolder for writes, resolved to parent handle \(resolvedParent!)")
         }
       }
 
-      // Check if device requires 0xFFFFFFFF for storage ID in SendObjectInfo
-      let forceFFFFFFF = (await self.devicePolicy?.flags.forceFFFFFFFForSendObject) ?? false
-      let useEmptyDates = (await self.devicePolicy?.flags.emptyDatesInSendObject) ?? false
-      let sendObjectStorageID = forceFFFFFFF ? 0xFFFFFFFF : targetStorageRaw
+      func performWrite(to parent: MTPObjectHandle?, storageRaw: UInt32) async throws -> Int {
+        let source = try FileSource(url: url)
+        defer { try? source.close() }
 
-      // Use thread-safe progress tracking
-      let progressTracker = AtomicProgressTracker()
+        let sourceAdapter = SendableSourceAdapter(source)
+        let progressTracker = AtomicProgressTracker()
+        let sendObjectStorageID = forceFFFFFFF ? 0xFFFFFFFF : storageRaw
+        try await ProtoTransfer.writeWholeObject(
+          storageID: sendObjectStorageID, parent: parent, name: name, size: size,
+          dataHandler: { buf in
+            let produced = sourceAdapter.produce(buf)
+            let totalBytes = progressTracker.add(Int(produced))
+            progress.completedUnitCount = Int64(totalBytes)
+            return Int(produced)
+          }, on: link, ioTimeoutMs: timeout,
+          forceFFFFFFF: forceFFFFFFF,
+          useEmptyDates: useEmptyDates
+        )
+        return progressTracker.total
+      }
 
-      try await ProtoTransfer.writeWholeObject(
-        storageID: sendObjectStorageID, parent: resolvedParent, name: name, size: size,
-        dataHandler: { buf in
-          let produced = sourceAdapter.produce(buf)
-          let totalBytes = progressTracker.add(Int(produced))
-          progress.completedUnitCount = Int64(totalBytes)
-          return Int(produced)
-        }, on: link, ioTimeoutMs: timeout,
-        forceFFFFFFF: forceFFFFFFF,
-        useEmptyDates: useEmptyDates)
+      var bytesRead: Int
 
-      let bytesRead = progressTracker.total
+      do {
+        bytesRead = try await performWrite(to: resolvedParent, storageRaw: targetStorageRaw)
+      } catch {
+        guard case .protocolError(let code, _) = error as? MTPError, code == 0x201D,
+              requiresSubfolder, resolvedParent == nil,
+              let firstStorage = availableStorages?.first
+        else { throw error }
+
+        Logger(subsystem: "SwiftMTP", category: "write")
+          .warning("Initial SendObject hit 0x201D; retrying with WriteTargetLadder fallback parent")
+
+        let fallback = try await WriteTargetLadder.resolveTarget(
+          device: self,
+          storage: firstStorage.id,
+          explicitParent: nil,
+          requiresSubfolder: true,
+          preferredWriteFolder: preferredWriteFolder
+        )
+        targetStorageRaw = fallback.0.raw
+        resolvedParent = fallback.1
+
+        bytesRead = try await performWrite(to: resolvedParent, storageRaw: targetStorageRaw)
+      }
 
       // Update journal after transfer completes
       if let journal = transferJournal, let transferId = journalTransferId {
@@ -275,7 +300,6 @@ extension MTPDeviceActor {
       }
 
       progress.completedUnitCount = total
-      try source.close()
 
       // Mark as complete in journal
       if let journal = transferJournal, let transferId = journalTransferId {
@@ -292,8 +316,6 @@ extension MTPDeviceActor {
 
       return progress
     } catch {
-      try? source.close()
-
       // Performance logging: end transfer (failure)
       let duration = Date().timeIntervalSince(startTime)
       Logger(subsystem: "SwiftMTP", category: "performance")

@@ -38,6 +38,8 @@ func printJSONErrorAndExit(_ error: any Error, flags: CollectCommand.CollectFlag
       details["matchingDevices"] = "\(count)"
       let examples = candidates.prefix(3).map { "\($0.vid):\($0.pid)@\($0.bus):\($0.address)" }
       details["examples"] = examples.joined(separator: ", ")
+    case .redactionCheckFailed(let issues):
+      details["redactionIssues"] = issues.joined(separator: ", ")
     case .timeout:
       break
     }
@@ -128,6 +130,7 @@ public enum CollectCommand {
     // Collect usb-dump.txt
     let rawDump = try await within(ms: 90_000) { try await generateSimpleUSBDump(summary: summary) }
     let sanitized = sanitizeDump(rawDump)
+    try validateDebugSanitization(sanitized, strict: flags.strict)
     try sanitized.write(to: bundleURL.appendingPathComponent("usb-dump.txt"), atomically: true, encoding: .utf8)
 
     // Optional benchmarks
@@ -184,6 +187,7 @@ public enum CollectCommand {
       spinner.start("Capturing USB dump…")
       let rawDump = try await within(ms: 90_000) { try await generateSimpleUSBDump(summary: summary) }
       let sanitized = sanitizeDump(rawDump)
+      try validateDebugSanitization(sanitized, strict: flags.strict)
       try sanitized.write(to: bundleURL.appendingPathComponent("usb-dump.txt"), atomically: true, encoding: .utf8)
       spinner.succeed("usb-dump.txt saved")
 
@@ -425,6 +429,33 @@ public enum CollectCommand {
     return t
   }
 
+  private static func validateDebugSanitization(_ dump: String, strict: Bool) throws {
+    let issues = redactionIssuesDetected(in: dump)
+    guard !issues.isEmpty else { return }
+    if strict {
+      throw CollectError.redactionCheckFailed(issues)
+    } else {
+      log("⚠️  Potentially sensitive artifacts detected: \(issues.joined(separator: ", ")).")
+    }
+  }
+
+  private static func redactionIssuesDetected(in dump: String) -> [String] {
+    let checks: [(String, String)] = [
+      ("serial", #"(?im)^\s*(Serial|Serial Number|iSerial)\s*[:=]\s*(?!<redacted>)\S+"#),
+      ("hex-serial", #"(?im)\b[0-9A-Fa-f]{16,64}\b(?=.*\b(serial|device|sn|id)\b)"#),
+      ("user-path", #"/Users/(?!<redacted>)[^/\n]+"#),
+      ("home-path", #"/home/(?!<redacted>)[^/\n]+"#),
+      ("hostname", #"(?im)^(Host Name|Hostname|Computer Name)\s*:\s*(?!<redacted>)\S+"#),
+      ("email", #"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}"#),
+      ("ipv4", #"\b(\d{1,3}\.){3}\d{1,3}\b"#),
+      ("mac", #"\b([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b"#)
+    ]
+
+    return checks.compactMap { label, pattern in
+      dump.range(of: pattern, options: .regularExpression) == nil ? nil : label
+    }
+  }
+
   // MARK: - Bench (optional, minimal)
   private static func runBenches(device: any MTPDevice, sizes: [String]) async throws -> [(name: String, csv: String)] {
     // Keep this minimal; many contributors won't run benches.
@@ -488,12 +519,15 @@ public enum CollectCommand {
     case noDeviceMatched(candidates: [CollectCommand.DeviceCandidate])
     case ambiguousSelection(count: Int, candidates: [CollectCommand.DeviceCandidate])
     case timeout(Int)
+    case redactionCheckFailed([String])
 
     var errorDescription: String? {
       switch self {
       case .noDeviceMatched: return "No device matched the provided filter."
       case .ambiguousSelection(let n, _): return "Multiple devices matched the filter (\(n))."
       case .timeout(let ms): return "Step exceeded deadline (\(ms) ms)."
+      case .redactionCheckFailed(let issues):
+        return "Debug-artifact redaction check failed: \(issues.joined(separator: ", "))."
       }
     }
   }

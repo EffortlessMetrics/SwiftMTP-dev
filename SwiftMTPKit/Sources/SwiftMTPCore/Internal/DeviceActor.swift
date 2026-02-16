@@ -371,7 +371,9 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     if debugEnabled { print("   [Actor] Running postOpenUSB hooks...") }
     try await self.runHook(.postOpenUSB, tuning: initialTuning)
 
-    // 9) Open session + stabilization (with retry on timeout/IO error)
+    let enableResetReopenLadder = initialPolicy.flags.resetReopenOnOpenSessionIOError
+
+    // 9) Open session + stabilization (with optional quirk-gated reset/reopen ladder)
     if debugEnabled { print("   [Actor] Opening MTP session...") }
     var sessionResult = SessionProbeResult()
     let sessionStart = DispatchTime.now()
@@ -397,25 +399,46 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         receipt.sessionEstablishment = sessionResult
         throw error
       }
+      sessionResult.firstFailure = "\(error)"
+      guard enableResetReopenLadder else {
+        sessionResult.error = "\(error)"
+        receipt.sessionEstablishment = sessionResult
+        throw error
+      }
       if debugEnabled {
-        print("   [Actor] OpenSession failed (\(error)), retrying with USB reset...")
+        print("   [Actor] OpenSession failed (\(error)), applying quirk reset+reopen ladder...")
       }
       sessionResult.requiredRetry = true
+      sessionResult.recoveryAction = "reset-reopen"
 
-      // Close current link, re-open with resetOnOpen forced
+      // Step 1: Attempt device reset on current handle.
+      sessionResult.resetAttempted = true
+      do {
+        try await link.resetDevice()
+      } catch {
+        sessionResult.resetError = "\(error)"
+      }
+
+      // Step 2: Full teardown before re-opening a fresh handle/interface claim.
+      eventPump.stop()
       await link.close()
       self.mtpLink = nil
-      self.config.resetOnOpen = true
-      let newLink = try await transport.open(summary, config: config)
+      try? await transport.close()
+
+      var reopenConfig = self.config
+      reopenConfig.resetOnOpen = false
+      let newLink = try await transport.open(summary, config: reopenConfig)
       self.mtpLink = newLink
+      self.config = reopenConfig
 
-      // Stabilize after USB reset
-      try await Task.sleep(nanoseconds: 500_000_000)
+      // Step 3: Brief settle time after re-enumeration/re-claim.
+      let settleMs = max(initialTuning.postClaimStabilizeMs, 250)
+      try await Task.sleep(nanoseconds: UInt64(settleMs) * 1_000_000)
 
-      // Retry OpenSession
+      // Step 4: Retry OpenSession once with fresh link state.
       try await newLink.openSession(id: 1)
       sessionResult.succeeded = true
-      if debugEnabled { print("   [Actor] OpenSession succeeded after USB reset.") }
+      if debugEnabled { print("   [Actor] OpenSession succeeded after reset+reopen.") }
     }
     sessionResult.durationMs = Int(
       (DispatchTime.now().uptimeNanoseconds - sessionStart.uptimeNanoseconds) / 1_000_000)

@@ -1,311 +1,179 @@
 # SwiftMTP Testing Guide
 
-This document covers testing infrastructure, coverage status, and guidelines for adding new tests.
+*Last updated: 2026-02-16*
 
-## Coverage Status
+This document defines the test gates used for day-to-day development and for sprint/release readiness.
 
-### Current Coverage Metrics (as of 2026-02-08)
+## Test Gate Baseline
 
-The CI gate enforces filtered line coverage for:
-`SwiftMTPQuirks`, `SwiftMTPStore`, `SwiftMTPSync`, `SwiftMTPObservability`.
+SwiftMTP uses a layered gate model:
 
-| Target (Filtered Gate) | Current | Target | Status |
-|--------|---------|--------|--------|
-| **SwiftMTPQuirks** | 100.00% | tracked | ✅ Pass |
-| **SwiftMTPStore** | 100.00% | tracked | ✅ Pass |
-| **SwiftMTPSync** | 100.00% | tracked | ✅ Pass |
-| **SwiftMTPObservability** | 100.00% | tracked | ✅ Pass |
-| **Overall (filtered)** | **100.00%** | **≥100%** | ✅ Pass |
+1. Local quick confidence (`swift build`, targeted test filters)
+2. Full local matrix (`./run-all-tests.sh`)
+3. CI matrix (build, test, smoke, fuzz, TSAN path)
+4. Real-device validation (manual/bring-up artifacts)
 
-### Coverage by Component
+## Source of Truth Commands
 
-```
-SwiftMTPKit/Sources/ (coverage-gated modules)
-├── SwiftMTPQuirks/           100.00%
-├── SwiftMTPStore/            100.00%
-├── SwiftMTPSync/             100.00%
-└── SwiftMTPObservability/    100.00%
-```
-
-## Running Tests
-
-### Local Testing
+Primary local gate from repo root:
 
 ```bash
-# Run all tests
-cd SwiftMTPKit
+./run-all-tests.sh
+```
+
+This orchestrates:
+
+- `SwiftMTPKit/run-all-tests.sh`
+- Filtered coverage gate for `SwiftMTPQuirks`, `SwiftMTPStore`, `SwiftMTPSync`, `SwiftMTPObservability`
+- Optional fuzz smoke (`PTPCodecFuzzTests`)
+- Optional storybook smoke (default profiles: `pixel7,galaxy,iphone,canon`)
+- Xcode app tests (`RUN_XCODE_UI_TESTS=0` to skip UI tests)
+
+## Local Command Matrix
+
+Run from repository root unless noted.
+
+```bash
+# Build package
+swift build --package-path SwiftMTPKit
+
+# Full package tests + coverage artifacts + smoke slices
+./SwiftMTPKit/run-all-tests.sh
+
+# Full repo gates (package + Xcode)
 ./run-all-tests.sh
 
-# Run just coverage-producing tests
-swift test --enable-code-coverage
+# Focused suites
+swift test --package-path SwiftMTPKit --filter BDDTests
+swift test --package-path SwiftMTPKit --filter PropertyTests
+swift test --package-path SwiftMTPKit --filter SnapshotTests
+swift test --package-path SwiftMTPKit --filter ScenarioTests
+swift test --package-path SwiftMTPKit --filter IntegrationTests
 
-# Run specific categories
-swift test --filter BDDTests
-swift test --filter PropertyTests
-swift test --filter ScenarioTests
-swift test --filter IntegrationTests
-swift test --filter SnapshotTests
+# TSAN focused pass
+swift test --package-path SwiftMTPKit -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
 
-# Run tests in parallel
-swift test --parallel
+# Non-hardware smoke flow
+./scripts/smoke.sh
 ```
 
-### CI Pipeline Overview
+## Coverage Gate
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    SwiftMTP CI Pipeline                      │
-├─────────────────────────────────────────────────────────────┤
-│ Stage 1: Build                                               │
-│   ├── swift build --configuration release                   │
-│   ├── Build libusb xcframework                               │
-│   └── Verify toolchain compatibility                        │
-├─────────────────────────────────────────────────────────────┤
-│ Stage 2: Full Matrix                                         │
-│   ├── swift test --enable-code-coverage                     │
-│   ├── BDD + property + integration + unit + e2e + snapshot │
-│   └── Filtered coverage gate (>=100%)                       │
-├─────────────────────────────────────────────────────────────┤
-│ Stage 3: Runtime Smokes                                      │
-│   ├── Fuzz testing (PTPCodecFuzzTests + SwiftMTPFuzz)       │
-│   ├── Storybook profiles (pixel7, galaxy, iphone, canon)    │
-│   └── Quirks/schema validation                               │
-├─────────────────────────────────────────────────────────────┤
-│ Stage 4: Real Device (Manual Trigger)                       │
-│   ├── Device probe tests                                    │
-│   ├── Benchmark validation                                  │
-│   └── Quirks evidence verification                         │
-└─────────────────────────────────────────────────────────────┘
-```
+`SwiftMTPKit/run-all-tests.sh` enforces a filtered coverage threshold through `SwiftMTPKit/scripts/coverage_gate.py`.
 
-### TSAN Requirements
+Defaults:
 
-Thread Sanitizer (TSAN) is **required** for all new code that uses concurrency.
+- Threshold: `100`
+- Modules: `SwiftMTPQuirks,SwiftMTPStore,SwiftMTPSync,SwiftMTPObservability`
+
+Override knobs:
+
+- `COVERAGE_THRESHOLD`
+- `COVERAGE_MODULES`
+- `RUN_FUZZ_SMOKE`
+- `RUN_STORYBOOK_SMOKE`
+- `RUN_SNAPSHOT_REFERENCE`
+
+Artifacts are emitted under `SwiftMTPKit/coverage/`.
+
+## CI Reality (Current)
+
+The repository currently contains multiple CI workflow definitions. For sprint execution, treat these as the required surfaces to keep healthy:
+
+- `.github/workflows/ci.yml`: build/test, TSAN slice, fuzz quick check, optional tag-time SBOM
+- `.github/workflows/smoke.yml`: no-hardware smoke validation and learned-store hygiene check
+- `.github/workflows/release.yml`: tag-driven artifact packaging/release draft flow
+- `.github/workflows/validate-quirks.yml`: quirks/evidence validator on quirks-related PRs
+- `.github/workflows/validate-submission.yml`: submission bundle validation and privacy checks
+
+`swiftmtp-ci.yml` exists as an expanded matrix variant; sprint 2.1-C includes CI consolidation so docs and required checks stay unambiguous.
+
+Required-for-merge workflow surfaces:
+
+- `ci.yml`
+- `smoke.yml`
+- `validate-quirks.yml` (when quirks/evidence paths change)
+- `validate-submission.yml` (when submission bundles or validation paths change)
+
+Optional/nightly surfaces:
+
+- `swiftmtp-ci.yml` schedule jobs and expanded matrix slices
+
+## Real-Device Validation
+
+Use this sequence when a sprint item touches transport behavior, quirks, or submission flow.
 
 ```bash
-# Run tests with TSAN
-swift test --sanitize thread
+# Probe and baseline
+swift run --package-path SwiftMTPKit swiftmtp --real-only probe
 
-# TSAN requirements:
-# - No data races in SwiftMTPCore
-# - No data races in SwiftMTPIndex
-# - All actors properly isolated
-# - No @Sendable violations
+# Connected device matrix report
+swift run --package-path SwiftMTPKit swiftmtp device-lab connected --json
+
+# Bring-up capture for a concrete mode
+./scripts/device-bringup.sh --mode mtp-unlocked --vid 0x18d1 --pid 0x4ee1
+
+# Collect strict submission bundle
+swift run --package-path SwiftMTPKit swiftmtp collect --strict --noninteractive --json
 ```
 
-**TSAN-specific guidelines:**
+See `Docs/device-bringup.md` and `Docs/Troubleshooting.md` for mode-level failure taxonomy and recovery guidance.
 
-1. **Actor Isolation**: All mutable state in actors
-2. **Sendable**: Mark all cross-actor transfers with `@Sendable`
-3. **Nonisolated**: Use sparingly for truly immutable data
-4. **Testing**: Run TSAN in CI for all PRs
+## Test Requirements for New Changes
 
-### Real-Device Testing Guide
+For code merged into active sprint work:
 
-#### Prerequisites
+- Add or update tests in the most specific suite possible (unit/integration/scenario/property).
+- Cover both success path and at least one failure path.
+- For concurrency-affecting changes, run TSAN-focused suite locally before opening PR.
+- For quirks/transport changes, attach at least one real-device artifact path or state why mock-only validation is sufficient.
 
-```bash
-# Hardware requirements
-- MTP/PTP-compatible device
-- USB cable (data-capable)
-- Device in developer mode with USB debugging
+## Sprint Test Focus (v2.1.0)
 
-# Software requirements
-- SwiftMTP built from source
-- Device connected: swift run swiftmtp --real-only probe
+### Sprint 2.1-A
+
+- Transport write/open regressions (Pixel 7 + OnePlus 3T)
+- Error clarity assertions for user-visible failures
+
+### Sprint 2.1-B
+
+- `collect` strict-mode reliability
+- Submission validator redaction checks
+
+### Sprint 2.1-C
+
+- CI workflow consistency and required check stability
+- Local-to-CI command parity documentation
+
+## Pre-PR Checklist
+
+- [ ] `swift build --package-path SwiftMTPKit`
+- [ ] Targeted tests for touched area
+- [ ] TSAN-focused pass (if concurrency touched)
+- [ ] `./scripts/smoke.sh` for CLI/JSON contract changes
+- [ ] `./run-all-tests.sh` for sprint milestone merges
+- [ ] Docs/changelog updated when behavior or operator flow changed
+
+## Suggested PR Evidence Snippet
+
+Include a short command/result block in the PR body:
+
+```text
+Commands:
+- swift build --package-path SwiftMTPKit
+- swift test --package-path SwiftMTPKit --filter CoreTests
+- ./scripts/smoke.sh
+
+Result:
+- Pass (macOS 15.3, Xcode 16)
+Artifacts:
+- Docs/benchmarks/device-bringup/20260216-101530-mtp-unlocked/
 ```
 
-#### Test Categories
+## Related Docs
 
-##### 1. Connection Tests
-
-```bash
-# Probe device
-swift run swiftmtp --real-only probe
-
-# Expected output:
-# ✅ Device detected
-# ✅ Interface claimed
-# ✅ Session opened
-# ✅ Storage enumerated
-```
-
-##### 2. Transfer Tests
-
-```bash
-# Read benchmark
-swift run swiftmtp --real-only bench 100M --repeat 3
-
-# Write benchmark
-swift run swiftmtp --real-only bench 100M --repeat 3 --direction write
-
-# Expected output:
-# - Read: ~35 MB/s (USB 3.0) or ~15 MB/s (USB 2.0)
-# - Write: ~25 MB/s (USB 3.0) or ~12 MB/s (USB 2.0)
-```
-
-##### 3. Resume Tests
-
-```bash
-# Interrupt and resume
-swift run swiftmtp --real-only bench 500M --interrupt 50 --resume
-```
-
-##### 4. Mirror Tests
-
-```bash
-# Test mirror functionality
-swift run swiftmtp --real-only mirror ~/PhoneBackup \
-  --include "DCIM/**" \
-  --out mirror-log.txt
-```
-
-#### Device-Specific Notes
-
-| Device | Known Issues | Workarounds |
-|--------|--------------|-------------|
-| Pixel 7 | Bulk transfer timeout on macOS 26 | Use older macOS or different hub |
-| OnePlus 3T | SendObject size limit | Split large files |
-| Xiaomi | DEVICE_BUSY on first attempt | Add 250-500ms delay |
-| Samsung | USB 2.0 speed limitation | Direct port connection |
-
-## Adding New Tests
-
-### Test Structure
-
-```
-SwiftMTPKit/Tests/
-├── SwiftMTPCoreTests/
-│   ├── DeviceActorTests.swift
-│   ├── TransferTests.swift
-│   └── ProtocolTests.swift
-├── SwiftMTPIndexTests/
-│   ├── IndexManagerTests.swift
-│   └── DiffEngineTests.swift
-└── SwiftMTPUtilTests/
-    └── QuirkResolverTests.swift
-```
-
-### Example: Adding a Transfer Test
-
-```swift
-import XCTest
-@testable import SwiftMTPCore
-
-final class TransferTests: XCTestCase {
-    
-    func testPartialObjectTransfer() throws {
-        // Given
-        let device = TestDevice.connected()
-        let data = Data(repeating: 0xAA, count: 1024 * 1024) // 1MB
-        
-        // When
-        let receipt = try device.sendObject(data: data)
-        
-        // Then
-        XCTAssertEqual(receipt.status, .success)
-        XCTAssertEqual(receipt.bytesWritten, data.count)
-    }
-    
-    func testLargeFileTransfer() throws {
-        // Given
-        let device = TestDevice.connected()
-        let size = 100 * 1024 * 1024 // 100MB
-        
-        // When
-        let receipt = try device.sendObject(size: size)
-        
-        // Then
-        XCTAssertEqual(receipt.status, .success)
-        XCTAssertGreaterThan(receipt.speedMBps, 10.0)
-    }
-}
-```
-
-### Test Best Practices
-
-1. **Use Test Fixtures**: Reuse common setup code
-2. **Mock External Dependencies**: Use protocols for device interactions
-3. **Isolate Tests**: Each test should be independent
-4. **Test Edge Cases**: Timeouts, interruptions, errors
-5. **Measure Performance**: Include timing assertions
-6. **Document Expectations**: Comment on expected behavior
-
-### Test Coverage Requirements
-
-| Category | Minimum Coverage | Examples |
-|----------|------------------|----------|
-| Error Paths | 100% | All error cases must be tested |
-| Public API | 100% | All public methods/functions |
-| Actors | 90% | All actor methods |
-| Async Operations | 95% | All async functions |
-
-## Continuous Integration
-
-### GitHub Actions Workflow
-
-```yaml
-# .github/workflows/test.yml
-name: Test
-
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: macOS-14
-    steps:
-      - uses: actions/checkout@v4
-      - uses: swiftwasm/setup-swift@v1
-        with:
-          swift-version: "6.0"
-      - name: Build
-        run: swift build
-      - name: Test
-        run: swift test --enable-code-coverage
-      - name: Coverage Report
-        run: ./run-all-tests.sh
-      - name: TSAN
-        if: matrix.sanitize == 'thread'
-        run: swift test --sanitize thread
-```
-
-### Coverage Enforcement
-
-Coverage thresholds are enforced in CI:
-
-```bash
-# From run-all-tests.sh
-COVERAGE_THRESHOLD=100
-COVERAGE_MODULES=SwiftMTPQuirks,SwiftMTPStore,SwiftMTPSync,SwiftMTPObservability
-```
-
-If coverage falls below threshold:
-1. CI job fails
-2. PR cannot be merged
-3. Add tests to increase coverage
-
-## Troubleshooting Tests
-
-### Common Issues
-
-#### "Test timed out"
-- Increase timeout for slow devices
-- Use mock devices for CI
-
-#### "Coverage decreased"
-- Check which lines are now uncovered
-- Add tests for new code paths
-
-#### "TSAN data race"
-- Ensure proper actor isolation
-- Use `@Sendable` annotations
-
-### Getting Help
-
-- See [Troubleshooting](Troubleshooting.md)
-- Search existing tests for similar scenarios
-- Ask in GitHub Discussions
-
----
-
-*See also: [ROADMAP.md](ROADMAP.md) | [Device Submission](ROADMAP.device-submission.md) | [Release Checklist](ROADMAP.release-checklist.md)*
+- [Roadmap](ROADMAP.md)
+- [Sprint Playbook](SPRINT-PLAYBOOK.md)
+- [Release Checklist](ROADMAP.release-checklist.md)
+- [Device Submission Guide](ROADMAP.device-submission.md)
+- [Troubleshooting](Troubleshooting.md)

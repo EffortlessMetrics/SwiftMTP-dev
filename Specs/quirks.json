@@ -316,7 +316,7 @@
         "overallDeadlineMs": 180000,
         "stabilizeMs": 3000,
         "postClaimStabilizeMs": 3000,
-        "resetOnOpen": true,
+        "resetOnOpen": false,
         "requiresKernelDetach": true,
         "forceConfigurationNumber": 1,
         "forceAltSetting": 0
@@ -342,7 +342,13 @@
         }
       ],
       "confidence": "low",
-      "status": "blocked",
+      "status": "experimental",
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "resetReopenOnOpenSessionIOError": true,
+        "transactionIdResetsOnSession": true
+      },
       "notes": [
         "ROOT CAUSE: Device is not exposing MTP interfaces to macOS (no IOUSBInterface children in ioreg).",
         "Symptom: Claim succeeds but bulk writes timeout (sent=0/12, rc=-7).",

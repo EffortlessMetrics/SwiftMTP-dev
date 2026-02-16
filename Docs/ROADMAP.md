@@ -1,207 +1,183 @@
 # SwiftMTP Roadmap
 
-This document outlines the comprehensive release plan for SwiftMTP, including phased milestones, release criteria, and device submission guidelines.
+*Last updated: 2026-02-16*
 
-## Version 2.x - Tahoe Era
+This roadmap is the execution plan for the next implementation sprints in the 2.x release train.
 
-### Phase 1: NOW (Current Focus) 🔴
+## Current Operating Goal
 
-**Focus:** Pixel 7 stabilization, CI fixes, quick wins
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green.
 
-#### Goals
+## Sprint Execution Rules
+
+Use `Docs/SPRINT-PLAYBOOK.md` as the operating policy for all sprint items in this roadmap.
+
+Minimum expectations for each item:
+
+- Definition of Ready (DoR) is satisfied before implementation starts.
+- Definition of Done (DoD) is satisfied before the item is marked complete.
+- Docs + changelog are updated in the same PR as behavior changes.
+- Transport/quirk changes include real-device artifact paths in PR evidence.
+
+## Active Sprint Snapshot
+
+| Sprint | Theme | Current State | Primary Risk | Primary Gate |
+|--------|-------|---------------|--------------|--------------|
+| 2.1-A | Transport stability + error clarity | In progress | Real-device timeout reproduction drift | `./scripts/smoke.sh` + targeted device artifacts |
+| 2.1-B | Submission workflow hardening | Planned | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
+| 2.1-C | CI + verification consolidation | Planned | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
+
+## Implementation Sprint Queue (Next 3)
+
+### Sprint 2.1-A: Transport Stability and Error Clarity
+
+Primary outcome: reduce high-severity real-device failures and make first-line failures actionable.
+
+- [ ] Resolve Pixel 7 Tahoe 26 bulk-transfer timeout path (control-plane succeeds, bulk path times out)
+- [ ] Stabilize OnePlus 3T `SendObject` / `0x201D` large-write behavior
+- [ ] Improve first-line error messages for `probe`, `collect`, and write-path operations
+- [ ] Refresh per-device behavior notes in `Docs/Troubleshooting.md` and device pages
+
+Sprint exit criteria:
+
+- [ ] Reproducible before/after artifacts for Pixel 7 and OnePlus 3T
+- [ ] No regression in `./scripts/smoke.sh`
+- [ ] Documentation includes concrete command-level fallback guidance for both failure classes
+- [ ] Changelog and roadmap status are updated with shipped behavior changes
+
+### Sprint 2.1-B: Submission Workflow Hardening
+
+Primary outcome: contributors can produce valid, redacted submission bundles with less manual intervention.
+
+- [ ] Harden `swiftmtp collect` strict-mode path and validation messaging
+- [ ] Add/expand privacy-redaction assertions for submission artifacts
+- [ ] Tighten `validate-submission` and evidence expectations for PR review
+- [ ] Publish one canonical `collect` + `benchmark` troubleshooting sequence
+
+Sprint exit criteria:
+
+- [ ] New submission bundle validates with `./scripts/validate-submission.sh`
+- [ ] Redaction checks catch known bad patterns without false positives in baseline artifacts
+- [ ] Contribution docs and roadmap docs reference the same workflow and command set
+- [ ] Device submission PR template is aligned with documented command examples
+
+### Sprint 2.1-C: CI and Verification Consolidation
+
+Primary outcome: predictable CI signal and consistent local-to-CI test behavior.
+
+- [ ] Consolidate overlapping CI workflows and document required checks
+- [ ] Ensure TSAN execution path is explicit and repeatable for concurrency-heavy targets
+- [ ] Keep filtered coverage gate stable and documented
+- [ ] Publish a minimal "pre-PR local gate" command sequence
+
+Sprint exit criteria:
+
+- [ ] Single documented CI truth path in docs (including optional/nightly jobs)
+- [ ] TSAN invocation is documented and verified in CI config
+- [ ] Local gate commands mirror CI behavior for core checks
+- [ ] Release checklist references the same required checks and artifact rules
+
+## Dependency and Risk Register (v2.1)
+
+| Item | Type | Owner Lane | Mitigation |
+|------|------|------------|------------|
+| Pixel 7 Tahoe bulk timeout remains intermittent | Technical risk | Core/transport | Capture standardized bring-up artifacts with `scripts/device-bringup.sh`; gate merges on before/after evidence |
+| OnePlus large write behavior differs by folder target | Technical risk | Core/transport + docs | Keep write-target fallback guidance synchronized with troubleshooting and device docs |
+| Redaction validation drift between docs and scripts | Process risk | Device support + tooling | Treat `validate-submission` output as source of truth; update docs and template together |
+| Overlapping CI workflows create unclear required checks | Process risk | Testing/CI | Complete 2.1-C consolidation and document required vs nightly checks |
+| Release metadata/docs drift near tag cut | Process risk | Release/docs | Run checklist mid-sprint and at release cut; enforce changelog/roadmap sync gates |
+
+## 2.x Delivery Plan
+
+### 2.1 Focus: Stabilization and Reliability
+
 - [x] macOS Tahoe 26 native support
-- [x] SwiftPM 6.2+ toolchain
-- [x] IOUSBHost framework adoption
-- [x] Comprehensive macOS Tahoe 26 documentation
-- [x] Swift-DocC metadata fixes
+- [x] SwiftPM 6.2+ tooling alignment
+- [x] IOUSBHost integration as primary USB interface
+- [ ] Pixel 7 and OnePlus write/open-path stabilization complete
+- [ ] Submission and troubleshooting workflow hardening complete
+- [ ] CI/test gate documentation and execution consolidated
 
-#### In Progress
-- [ ] **Pixel 7 bulk transfer fix** - Resolve macOS Tahoe 26 timeout issue
-- [ ] **CI pipeline stabilization** - Fix libusb xcframework builds
-- [ ] **OnePlus 3T SendObject fix** - Resolve `Object_Too_Large` (0x201D) error
+### 2.2 Focus: Testing and Submission Depth
 
-#### Quick Wins (This Sprint)
-- [ ] Update quirk confidence scores based on real device testing
-- [ ] Add stabilization delay recommendations for Xiaomi devices
-- [ ] Document USB privacy authorization steps
-- [ ] Improve error messages for common connection issues
+- [ ] Increase mutation and edge-case coverage for transport error handling
+- [ ] Expand real-device troubleshooting trees for top support issues
+- [ ] Improve benchmark report consistency and release evidence packaging
 
----
+### 2.3 Focus: Growth and Performance
 
-### Phase 2: NEXT (Next Quarter) 🟡
+- [ ] Expand supported device profile coverage (new vendor classes)
+- [ ] Investigate parallel multi-device enumeration
+- [ ] Improve large-file throughput on USB 3.x controllers
+- [ ] Add transfer resume telemetry to benchmark reports
 
-**Focus:** Testing infrastructure, device submission workflow, docs
+### 3.x Exploratory Themes
 
-#### Goals
-- [ ] **Testing Infrastructure**
-  - [ ] TSAN (Thread Sanitizer) integration in CI
-  - [ ] SwiftMTPCore coverage: 85% (currently 80%)
-  - [ ] SwiftMTPIndex coverage: 80% (currently 75%)
-  - [ ] Automated regression testing for device quirks
-
-- [ ] **Device Submission Workflow**
-  - [ ] `swiftmtp collect` command for device data collection
-  - [ ] Automated quirk suggestion generation
-  - [ ] Privacy-redacted USB dump validation
-  - [ ] See [Device Submission Guide](ROADMAP.device-submission.md)
-
-- [ ] **Documentation**
-  - [ ] Complete [Testing Guide](ROADMAP.testing.md)
-  - [ ] Device-specific tuning guides
-  - [ ] Troubleshooting decision trees
-  - [ ] Video tutorial series
-
----
-
-### Phase 3: LATER (Future) 🟢
-
-**Focus:** Device coverage expansion, performance, App Store prep
-
-#### Goals
-- [ ] **Device Coverage Expansion**
-  - [ ] Samsung Galaxy S25 quirk entry
-  - [ ] Sony Xperia device quirks database expansion
-  - [ ] Camera device RAW transfer optimization
-  - [ ] Nintendo Switch MTP support investigation
-  - [ ] iOS device support (requires external helper)
-
-- [ ] **Performance**
-  - [ ] Transfer throughput benchmarks (>100 MB/s on USB 3.2)
-  - [ ] Parallel multi-device enumeration
-  - [ ] Memory-mapped I/O for large files
-  - [ ] GPU-accelerated thumbnail generation
-
-- [ ] **App Store Preparation**
-  - [ ] Sandbox-compatible design
-  - [ ] Notarization workflow documentation
-  - [ ] File Provider Extension for Files app
-  - [ ] See [FileProvider Tech Preview](FileProvider-TechPreview.md)
-
----
-
-## Version 3.x - Future Explorations
-
-### Long-term Goals
-
-- **Network MTP (MTP/IP)**: Support for remote device access over IP
-- **WebUSB Integration**: Browser-based device access via WebUSB
-- **Rust Transport Layer**: Alternative high-performance transport in Rust
-- **Embedded Device Support**: RTOS-based MTP device development kit
-- **Cross-platform USB stack**: libusb 2.0 backend for Linux/Windows
-- **Cloud Device Bridge**: Cloud-based device mirroring
-- **ML-powered Device Detection**: Intelligent device quirk prediction
-- **Plugin Architecture**: Extensible transfer handlers for specialized devices
-
----
+- Network-assisted MTP workflows (MTP/IP)
+- Additional transport backend options
+- Expanded app-platform support for File Provider-like experiences
+- ML-assisted quirk suggestion and risk scoring
 
 ## Release Cadence
 
-| Version | Target | Schedule | Status |
-|---------|--------|----------|--------|
-| v2.0.0 | macOS 26 Core | Q1 2026 | ✅ Released |
-| v2.1.0 | Testing & Docs | Q2 2026 | 🔄 In Progress |
-| v2.2.0 | Performance & Benchmarks | Q3 2026 | ⏳ Planned |
-| v2.3.0 | Device Coverage Expansion | Q4 2026 | ⏳ Planned |
-| v3.0.0 | Cross-platform | 2027 | 🔭 Exploratory |
+| Version | Target window | Goal | Status |
+|---------|---------------|------|--------|
+| v2.0.0  | 2026-02 | Tahoe 26 core + architecture upgrade | Released |
+| v2.1.0  | 2026-Q2 | Stability + submission hardening + docs readiness | In Progress |
+| v2.2.0  | 2026-Q3 | Performance and benchmark reliability | Planned |
+| v2.3.0  | 2026-Q4 | Device coverage expansion | Planned |
+| v3.0.0  | 2027 | Cross-platform and strategic re-architecture | Exploratory |
 
----
+## Minor Release Criteria (2.x)
 
-## Release Criteria
+Any minor release (`v2.x.0`) should satisfy all of the following:
 
-### Current Metrics (as of 2026-02-08)
+- [ ] Full matrix run (`./run-all-tests.sh`) completes without regressions
+- [ ] Filtered coverage gate passes (`SwiftMTPQuirks`, `SwiftMTPStore`, `SwiftMTPSync`, `SwiftMTPObservability`)
+- [ ] TSAN path is clean for required concurrency-heavy targets this cycle
+- [ ] At least one real-device evidence run is attached in release artifacts
+- [ ] `./scripts/validate-quirks.sh` and submission validation checks pass
+- [ ] `CHANGELOG.md`, roadmap docs, and release notes are aligned
 
-| Criterion | Target | Current | Status |
-|-----------|--------|---------|--------|
-| **SwiftMTPCore Coverage** | ≥80% | ~80% | ✅ Pass |
-| **SwiftMTPIndex Coverage** | ≥75% | ~75% | ✅ Pass |
-| **Overall Coverage** | ≥75% | ~75% | ✅ Pass |
-| **Unit Tests** | All passing | All passing | ✅ Pass |
-| **Benchmarks** | ≥1 device | 3 devices | ✅ Pass |
-| **Quirks Validated** | All entries | 3 entries | ✅ Pass |
-| **DocC Fresh** | All current | All current | ✅ Pass |
-| **TSAN Clean** | No warnings | N/A | ⏳ Not Run |
+See `Docs/ROADMAP.release-checklist.md` for operator-level release commands and sequencing.
 
-### Release Requirements
+## Device Profile Submission Fast Path
 
-Before any minor release (v2.x.0), all criteria must be met:
+1. Collect and validate evidence.
 
-- [ ] All unit tests pass (`swift test`)
-- [ ] Coverage thresholds met (see above)
-- [ ] Benchmarks run on at least one real device
-- [ ] quirks.json validation passes (`./scripts/validate-quirks.sh`)
-- [ ] CHANGELOG.md updated
-- [ ] Version bump in Package.swift
-- [ ] Release tag created
-- [ ] DocC documentation current
+```bash
+swift run --package-path SwiftMTPKit swiftmtp --real-only probe > probes/<device>.txt
+./scripts/benchmark-device.sh <device-name>
+./scripts/validate-quirks.sh
+./scripts/validate-submission.sh Contrib/submissions/<device>/
+```
 
----
+2. Commit and push the submission branch.
 
-## Quick-Start: Submitting Device Profiles
+```bash
+git checkout -b device/<device-name>-submission
+git add Contrib/submissions/<device>/ Specs/quirks.json
+git commit -s -m "Add device profile: <device>"
+git push -u origin HEAD
+```
 
-### Prerequisites
+3. Open a PR with benchmark evidence and quirk rationale.
 
-1. **Hardware**: Device with MTP/PTP support
-2. **Software**: SwiftMTP built from source
-3. **Permissions**: USB debugging/developer mode enabled on device
+## Tracking and Labels
 
-### Step-by-Step Guide
+Recommended issue labels:
 
-1. **Collect Device Data**
-   ```bash
-   # Build and run probe
-   swift run swiftmtp --real-only probe > probes/my-device.txt
-   
-   # Run benchmarks
-   ./scripts/benchmark-device.sh my-device
-   ```
+- `enhancement`: new features and enhancements
+- `bug`: crashes and regressions
+- `device-support`: compatibility and quirks
+- `documentation`: docs and operator guidance
+- `testing`: CI, coverage, and reproducibility work
+- `release`: release checklist and milestone items
 
-2. **Validate Submission**
-   ```bash
-   # Check quirks format
-   ./scripts/validate-quirks.sh
-   
-   # Validate submission bundle
-   ./scripts/validate-submission.sh Contrib/submissions/my-device/
-   ```
+## Related Docs
 
-3. **Submit for Review**
-   - Create pull request with:
-     - Updated `Specs/quirks.json`
-     - New benchmark artifacts in `Docs/benchmarks/`
-     - Device documentation in `Docs/SwiftMTP.docc/Devices/`
-
-4. **See Also**
-   - [Device Submission Guide](ROADMAP.device-submission.md)
-   - [Testing Guide](ROADMAP.testing.md)
-   - [Release Checklist](ROADMAP.release-checklist.md)
-
----
-
-## Deprecation Schedule
-
-| Feature | Deprecated | Removed |
-|---------|------------|---------|
-| macOS 15 support | v2.0.0 | v3.0.0 |
-| IOUSBLib (legacy) | v2.0.0 | v3.0.0 |
-| Swift 5 compatibility | v2.0.0 | v2.5.0 |
-
----
-
-## Contributing
-
-See [Contribution Guide](ContributionGuide.md) for how to contribute to the roadmap.
-
-## Issue Tracking
-
-Use GitHub Issues for:
-- **Feature Requests**: Tag with `enhancement`
-- **Bug Reports**: Tag with `bug`
-- **Device Quirks**: Tag with `device-support`
-- **Documentation**: Tag with `documentation`
-- **Testing**: Tag with `testing`
-- **Release**: Tag with `release`
-
----
-
-*Last updated: 2026-02-08*
-*SwiftMTP Version: 2.0.0*
+- [Sprint Playbook](SPRINT-PLAYBOOK.md)
+- [Contribution Guide](ContributionGuide.md)
+- [Testing Guide](ROADMAP.testing.md)
+- [Device Submission Guide](ROADMAP.device-submission.md)
+- [Release Checklist](ROADMAP.release-checklist.md)

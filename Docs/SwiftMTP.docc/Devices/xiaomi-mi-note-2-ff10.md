@@ -61,8 +61,3 @@ Device-specific configuration for Xiaomi Mi Note 2 Ff10 MTP implementation.
 - **Commit**: <current-commit>
 
 ### Evidence Artifacts
-- [Device Probe](Docs/benchmarks/probes/mi-note2-probe.txt)
-- [USB Dump](Docs/benchmarks/probes/mi-note2-usb-dump.txt)
-- [100MB Benchmark](Docs/benchmarks/csv/mi-note2-100m.csv)
-- [1GB Benchmark](Docs/benchmarks/csv/mi-note2-1g.csv)
-- [Mirror Log](Docs/benchmarks/logs/mi-note2-mirror.log)

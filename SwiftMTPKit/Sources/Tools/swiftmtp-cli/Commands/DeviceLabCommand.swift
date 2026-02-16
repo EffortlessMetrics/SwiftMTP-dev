@@ -22,6 +22,13 @@ struct DeviceLabCommand {
     case failed
   }
 
+  private enum FailureClass: String, Codable, Sendable {
+    case enumeration = "class1-enumeration"
+    case claim = "class2-claim"
+    case handshake = "class3-handshake"
+    case transfer = "class4-transfer"
+  }
+
   private struct ReadValidation: Codable, Sendable {
     var openSucceeded = false
     var deviceInfoSucceeded = false
@@ -29,6 +36,18 @@ struct DeviceLabCommand {
     var rootListingSucceeded = false
     var storageCount = 0
     var rootObjectCount: Int?
+    var error: String?
+  }
+
+  private struct ReadSmoke: Codable, Sendable {
+    var attempted = false
+    var succeeded = false
+    var skipped = false
+    var reason: String?
+    var objectHandle: MTPObjectHandle?
+    var objectName: String?
+    var objectSizeBytes: UInt64?
+    var bytesDownloaded = 0
     var error: String?
   }
 
@@ -40,8 +59,21 @@ struct DeviceLabCommand {
     var bytesUploaded = 0
     var remoteFolder: String?
     var remoteFile: String?
+    var uploadedHandle: MTPObjectHandle?
+    var deleteAttempted = false
+    var deleteSucceeded = false
+    var deleteError: String?
     var warning: String?
     var error: String?
+  }
+
+  private struct OperationReceipt: Codable, Sendable {
+    let operation: String
+    let attempted: Bool
+    let succeeded: Bool
+    let durationMs: Int?
+    let details: String?
+    let error: String?
   }
 
   private struct ArtifactPaths: Codable, Sendable {
@@ -61,8 +93,11 @@ struct DeviceLabCommand {
     let model: String
     let expectation: ExpectedPolicy
     var outcome: DeviceOutcome
+    var failureClass: FailureClass?
     var read: ReadValidation
+    var readSmoke: ReadSmoke
     var write: WriteSmoke
+    var operations: [OperationReceipt]
     var notes: [String]
     var error: String?
     var capabilityReport: DeviceLabReport?
@@ -93,7 +128,7 @@ struct DeviceLabCommand {
     "2717:ff40": .fullExercise,
     "2a70:f003": .probeNoCrash,
     "04e8:6860": .readBestEffort,
-    "18d1:4ee1": .blockerExpected,
+    "18d1:4ee1": .readBestEffort,
   ]
 
   static func run(flags: CLIFlags, args: [String]) async {
@@ -103,7 +138,9 @@ struct DeviceLabCommand {
     }
 
     do {
+      let repoRoot = detectRepoRoot()
       let outputDir = try resolveOutputDirectory(args: Array(args.dropFirst()))
+      let portableOutputPath = makePortablePath(outputDir, relativeTo: repoRoot)
       try FileManager.default.createDirectory(
         at: outputDir, withIntermediateDirectories: true, attributes: nil)
 
@@ -118,9 +155,9 @@ struct DeviceLabCommand {
             totalDevices: 0, passed: 0, partial: 0, blocked: 0, failed: 0,
             missingExpected: Array(expectedPolicies.keys).sorted())
           let emptyReport = ConnectedLabReport(
-            schemaVersion: "1.0.0",
+            schemaVersion: "1.1.0",
             generatedAt: Date(),
-            outputPath: outputDir.path,
+            outputPath: portableOutputPath,
             connectedDeviceCount: 0,
             summary: emptySummary,
             devices: []
@@ -193,9 +230,9 @@ struct DeviceLabCommand {
       )
 
       let report = ConnectedLabReport(
-        schemaVersion: "1.0.0",
+        schemaVersion: "1.1.0",
         generatedAt: Date(),
-        outputPath: outputDir.path,
+        outputPath: portableOutputPath,
         connectedDeviceCount: connected.count,
         summary: summary,
         devices: results
@@ -210,7 +247,7 @@ struct DeviceLabCommand {
         printEncodedJSON(report)
       } else {
         print("Connected device lab complete.")
-        print("Output: \(outputDir.path)")
+        print("Output: \(portableOutputPath)")
         print(
           "Devices: \(summary.totalDevices)  passed=\(summary.passed) partial=\(summary.partial) blocked=\(summary.blocked) failed=\(summary.failed)"
         )
@@ -241,8 +278,11 @@ struct DeviceLabCommand {
       model: summary.model,
       expectation: expectation,
       outcome: .failed,
+      failureClass: nil,
       read: ReadValidation(),
+      readSmoke: ReadSmoke(),
       write: WriteSmoke(),
+      operations: [],
       notes: [],
       error: nil,
       capabilityReport: nil,
@@ -276,15 +316,43 @@ struct DeviceLabCommand {
     do {
       let device = try await openDevice(flags: perDeviceFlags)
 
+      func appendOperation(
+        _ operation: String,
+        attempted: Bool = true,
+        succeeded: Bool,
+        durationMs: Int? = nil,
+        details: String? = nil,
+        error: String? = nil
+      ) {
+        result.operations.append(
+          OperationReceipt(
+            operation: operation,
+            attempted: attempted,
+            succeeded: succeeded,
+            durationMs: durationMs,
+            details: details,
+            error: error
+          ))
+      }
+
       do {
+        let startedAt = DispatchTime.now()
         try await device.openIfNeeded()
         result.read.openSucceeded = true
+        appendOperation(
+          "enumerate-and-claim-interface", succeeded: true, durationMs: elapsedMs(since: startedAt))
       } catch {
         let message = "open failed: \(error)"
         result.read.error = message
         result.error = message
+        appendOperation(
+          "enumerate-and-claim-interface",
+          succeeded: false,
+          error: message
+        )
         try? await device.devClose()
         finalizeOutcome(&result)
+        classifyFailure(&result)
         return result
       }
 
@@ -292,51 +360,161 @@ struct DeviceLabCommand {
       result.capabilityReport = try? await DeviceLabHarness().collect(device: device)
 
       do {
+        let startedAt = DispatchTime.now()
         _ = try await device.info
         result.read.deviceInfoSucceeded = true
+        appendOperation(
+          "open-session-and-get-device-info",
+          succeeded: true,
+          durationMs: elapsedMs(since: startedAt)
+        )
       } catch {
         let message = "device info failed: \(error)"
         result.read.error = result.read.error ?? message
         result.error = result.error ?? message
+        appendOperation(
+          "open-session-and-get-device-info",
+          succeeded: false,
+          error: message
+        )
       }
 
       var storages: [MTPStorageInfo] = []
       do {
+        let startedAt = DispatchTime.now()
         storages = try await device.storages()
         result.read.storagesSucceeded = true
         result.read.storageCount = storages.count
+        appendOperation(
+          "storage-discovery",
+          succeeded: true,
+          durationMs: elapsedMs(since: startedAt),
+          details: "storages=\(storages.count)"
+        )
       } catch {
         let message = "storage enumeration failed: \(error)"
         result.read.error = result.read.error ?? message
         result.error = result.error ?? message
+        appendOperation(
+          "storage-discovery",
+          succeeded: false,
+          error: message
+        )
       }
 
       if let firstStorage = storages.first {
         do {
+          let startedAt = DispatchTime.now()
           result.read.rootObjectCount = try await sampleRootListing(
             device: device, storage: firstStorage.id)
           result.read.rootListingSucceeded = true
+          appendOperation(
+            "object-enumeration",
+            succeeded: true,
+            durationMs: elapsedMs(since: startedAt),
+            details: "rootObjects=\(result.read.rootObjectCount ?? 0)"
+          )
         } catch {
           let message = "root listing failed: \(error)"
           result.read.error = result.read.error ?? message
           result.error = result.error ?? message
+          appendOperation(
+            "object-enumeration",
+            succeeded: false,
+            error: message
+          )
         }
 
+        let readSmokeStartedAt = DispatchTime.now()
+        result.readSmoke = await runReadSmoke(device: device, storage: firstStorage)
+        appendOperation(
+          "read-download",
+          attempted: result.readSmoke.attempted,
+          succeeded: result.readSmoke.succeeded,
+          durationMs: elapsedMs(since: readSmokeStartedAt),
+          details: result.readSmoke.reason
+            ?? result.readSmoke.objectName.map { "object=\($0)" },
+          error: result.readSmoke.error
+        )
+
         if expectation != .blockerExpected {
+          let writeSmokeStartedAt = DispatchTime.now()
           result.write = await runWriteSmoke(device: device, storage: firstStorage)
+          appendOperation(
+            "write-upload",
+            attempted: result.write.attempted,
+            succeeded: result.write.succeeded,
+            durationMs: elapsedMs(since: writeSmokeStartedAt),
+            details: result.write.reason
+              ?? result.write.remoteFolder.map { "folder=\($0)" },
+            error: result.write.error
+          )
+          appendOperation(
+            "delete-uploaded-object",
+            attempted: result.write.deleteAttempted,
+            succeeded: result.write.deleteSucceeded,
+            details: result.write.deleteAttempted ? result.write.remoteFile : "not-attempted",
+            error: result.write.deleteError
+          )
         } else {
           result.notes.append("Policy: blocker diagnostics only; write smoke skipped.")
+          appendOperation(
+            "write-upload",
+            attempted: false,
+            succeeded: false,
+            details: "skipped due to blocker-expected policy"
+          )
+          appendOperation(
+            "delete-uploaded-object",
+            attempted: false,
+            succeeded: false,
+            details: "skipped because write stage did not run"
+          )
         }
       } else {
         result.notes.append("No storage exposed by device.")
+        appendOperation(
+          "object-enumeration",
+          attempted: false,
+          succeeded: false,
+          details: "no storage exposed"
+        )
+        appendOperation(
+          "read-download",
+          attempted: false,
+          succeeded: false,
+          details: "no storage exposed"
+        )
+        appendOperation(
+          "write-upload",
+          attempted: false,
+          succeeded: false,
+          details: "no storage exposed"
+        )
+        appendOperation(
+          "delete-uploaded-object",
+          attempted: false,
+          succeeded: false,
+          details: "no uploaded object"
+        )
       }
 
       try? await device.devClose()
     } catch {
       result.error = "openDevice failed: \(error)"
+      result.operations.append(
+        OperationReceipt(
+          operation: "open-device",
+          attempted: true,
+          succeeded: false,
+          durationMs: nil,
+          details: nil,
+          error: result.error
+        ))
     }
 
     finalizeOutcome(&result)
+    classifyFailure(&result)
     return result
   }
 
@@ -365,6 +543,59 @@ struct DeviceLabCommand {
       if items.count >= limit { break }
     }
     return items
+  }
+
+  private static func runReadSmoke(device: any MTPDevice, storage: MTPStorageInfo) async
+    -> ReadSmoke
+  {
+    var smoke = ReadSmoke()
+    smoke.attempted = true
+
+    let rootItems: [MTPObjectInfo]
+    do {
+      rootItems = try await listObjects(device: device, parent: nil, storage: storage.id, limit: 256)
+    } catch {
+      smoke.skipped = true
+      smoke.reason = "root listing unavailable for read smoke"
+      smoke.error = "list failed: \(error)"
+      return smoke
+    }
+
+    guard
+      let candidate = rootItems.first(where: {
+        // Pick a bounded regular file to keep read smoke deterministic.
+        $0.formatCode != 0x3001 && ($0.sizeBytes ?? 0) > 0 && ($0.sizeBytes ?? 0) <= 8 * 1024 * 1024
+      })
+    else {
+      smoke.skipped = true
+      smoke.reason = "no root file <= 8 MiB available for read smoke"
+      return smoke
+    }
+
+    smoke.objectHandle = candidate.handle
+    smoke.objectName = candidate.name
+    smoke.objectSizeBytes = candidate.sizeBytes
+
+    let fm = FileManager.default
+    let tempURL = fm.temporaryDirectory.appendingPathComponent(
+      "swiftmtp-read-smoke-\(UUID().uuidString.prefix(8)).bin")
+    defer { try? fm.removeItem(at: tempURL) }
+
+    do {
+      _ = try await device.read(handle: candidate.handle, range: nil, to: tempURL)
+      if let attrs = try? fm.attributesOfItem(atPath: tempURL.path),
+        let downloaded = attrs[.size] as? NSNumber
+      {
+        smoke.bytesDownloaded = downloaded.intValue
+      } else {
+        smoke.bytesDownloaded = Int(candidate.sizeBytes ?? 0)
+      }
+      smoke.succeeded = true
+      return smoke
+    } catch {
+      smoke.error = "read failed (\(candidate.name)): \(error)"
+      return smoke
+    }
   }
 
   /// Finds an existing writable folder in root (Download, Downloads, Documents).
@@ -458,7 +689,17 @@ struct DeviceLabCommand {
       let children = try await listObjects(
         device: device, parent: parentHandle, storage: storage.id, limit: 128)
       if let uploaded = children.first(where: { $0.name == fileName }) {
-        try? await device.delete(uploaded.handle, recursive: false)
+        smoke.uploadedHandle = uploaded.handle
+        smoke.deleteAttempted = true
+        do {
+          try await device.delete(uploaded.handle, recursive: false)
+          smoke.deleteSucceeded = true
+        } catch {
+          smoke.deleteError = "delete failed: \(error)"
+        }
+      } else {
+        smoke.warning = appendWarning(
+          smoke.warning, "uploaded file not visible for delete verification")
       }
     } catch {
       smoke.warning = appendWarning(smoke.warning, "cleanup verification failed: \(error)")
@@ -473,10 +714,13 @@ struct DeviceLabCommand {
       && result.read.deviceInfoSucceeded
       && result.read.storagesSucceeded
       && result.read.rootListingSucceeded
+    let readSmokeOK = result.readSmoke.succeeded || result.readSmoke.skipped
+    let writeUploadOK = result.write.succeeded || result.write.skipped
+    let deleteOK = !result.write.deleteAttempted || result.write.deleteSucceeded
 
     switch result.expectation {
     case .fullExercise:
-      if readOK && result.write.succeeded {
+      if readOK && result.readSmoke.succeeded && result.write.succeeded && deleteOK {
         result.outcome = .passed
       } else if result.read.openSucceeded {
         result.outcome = .partial
@@ -493,7 +737,7 @@ struct DeviceLabCommand {
         result.outcome = .failed
       }
     case .readBestEffort:
-      if readOK {
+      if readOK && readSmokeOK {
         result.outcome = .passed
       } else if result.read.openSucceeded {
         result.outcome = .partial
@@ -509,7 +753,7 @@ struct DeviceLabCommand {
         result.notes.append("Device opened unexpectedly; blocker was not reproduced.")
       }
     case .generic:
-      if readOK {
+      if readOK && readSmokeOK && writeUploadOK {
         result.outcome = .passed
       } else if result.read.openSucceeded {
         result.outcome = .partial
@@ -517,6 +761,53 @@ struct DeviceLabCommand {
         result.outcome = .failed
       }
     }
+  }
+
+  private static func classifyFailure(_ result: inout DeviceResult) {
+    guard result.outcome != .passed else {
+      result.failureClass = nil
+      return
+    }
+
+    let combinedErrors =
+      [
+        result.error,
+        result.read.error,
+        result.readSmoke.error,
+        result.write.error,
+        result.write.deleteError,
+      ]
+      .compactMap { $0 } + result.operations.compactMap(\.error)
+    let combined = combinedErrors.joined(separator: " ").lowercased()
+
+    if !result.read.openSucceeded {
+      if combined.contains("no mtp") || combined.contains("no device")
+        || combined.contains("no interface")
+      {
+        result.failureClass = .enumeration
+      } else if combined.contains("access denied") || combined.contains("busy")
+        || combined.contains("claim restrictions")
+      {
+        result.failureClass = .claim
+      } else {
+        result.failureClass = .handshake
+      }
+      return
+    }
+
+    if !result.read.deviceInfoSucceeded || !result.read.storagesSucceeded {
+      result.failureClass = .handshake
+      return
+    }
+
+    if result.readSmoke.error != nil || result.write.error != nil || result.write.deleteError != nil {
+      result.failureClass = .transfer
+      return
+    }
+  }
+
+  private static func elapsedMs(since start: DispatchTime) -> Int {
+    Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
   }
 
   private static func resolveOutputDirectory(args: [String]) throws -> URL {
@@ -550,6 +841,19 @@ struct DeviceLabCommand {
       .appendingPathComponent("benchmarks", isDirectory: true)
       .appendingPathComponent("connected-lab", isDirectory: true)
       .appendingPathComponent(pathTimestamp(), isDirectory: true)
+  }
+
+  private static func makePortablePath(_ url: URL, relativeTo root: URL) -> String {
+    let normalizedURL = url.standardizedFileURL.resolvingSymlinksInPath()
+    let normalizedRoot = root.standardizedFileURL.resolvingSymlinksInPath()
+    let rootPath = normalizedRoot.path
+    let outputPath = normalizedURL.path
+    if outputPath == rootPath { return "." }
+    let prefix = rootPath.hasSuffix("/") ? rootPath : rootPath + "/"
+    if outputPath.hasPrefix(prefix) {
+      return String(outputPath.dropFirst(prefix.count))
+    }
+    return normalizedURL.lastPathComponent
   }
 
   private static func detectRepoRoot() -> URL {
@@ -613,21 +917,37 @@ struct DeviceLabCommand {
         "- Missing expected VID:PID: \(report.summary.missingExpected.joined(separator: ", "))")
     }
     lines.append("")
-    lines.append("| VID:PID | Device | Expected | Outcome | Read | Write | Notes |")
-    lines.append("|---|---|---|---|---|---|---|")
+    lines.append(
+      "| VID:PID | Device | Expected | Outcome | Failure Class | Read | Read Smoke | Write | Delete | Notes |"
+    )
+    lines.append("|---|---|---|---|---|---|---|---|---|---|")
     for device in report.devices {
       let readState =
         device.read.openSucceeded && device.read.deviceInfoSucceeded
           && device.read.storagesSucceeded && device.read.rootListingSucceeded ? "ok" : "partial"
+      let readSmokeState: String = {
+        if !device.readSmoke.attempted { return "skipped" }
+        if device.readSmoke.skipped { return "skipped" }
+        return device.readSmoke.succeeded ? "ok" : "failed"
+      }()
       let writeState: String = {
         if !device.write.attempted { return "skipped" }
+        if device.write.skipped { return "skipped" }
         return device.write.succeeded ? "ok" : "failed"
       }()
+      let deleteState: String = {
+        if !device.write.deleteAttempted { return "skipped" }
+        return device.write.deleteSucceeded ? "ok" : "failed"
+      }()
       let noteText =
-        (device.notes + [device.error, device.write.warning, device.write.error].compactMap { $0 })
+        (
+          device.notes
+            + [device.error, device.readSmoke.error, device.write.warning, device.write.error, device.write.deleteError]
+              .compactMap { $0 }
+        )
         .joined(separator: "; ")
       lines.append(
-        "| \(device.vidpid) | \(device.manufacturer) \(device.model) | \(device.expectation.rawValue) | \(device.outcome.rawValue) | \(readState) | \(writeState) | \(noteText.isEmpty ? "-" : noteText) |"
+        "| \(device.vidpid) | \(device.manufacturer) \(device.model) | \(device.expectation.rawValue) | \(device.outcome.rawValue) | \(device.failureClass?.rawValue ?? "-") | \(readState) | \(readSmokeState) | \(writeState) | \(deleteState) | \(noteText.isEmpty ? "-" : noteText) |"
       )
     }
     lines.append("")

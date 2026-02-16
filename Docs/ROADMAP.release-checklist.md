@@ -1,282 +1,110 @@
 # SwiftMTP Release Checklist
 
-This checklist covers all tasks required for a complete release.
+*Last updated: 2026-02-16*
 
-## Pre-Release Checklist
+This checklist is the operational companion to `Docs/ROADMAP.md` and is intended to be used throughout each sprint, not only at tag time.
 
-### Code Quality
+## How to Use This Checklist
 
-- [ ] **All tests pass** (`swift test`)
-- [ ] **Coverage thresholds met**
-  - [ ] Overall ≥75%
-  - [ ] SwiftMTPCore ≥80%
-  - [ ] SwiftMTPIndex ≥75%
-- [ ] **TSAN clean** (`swift test --sanitize thread`)
-- [ ] **No compiler warnings** (`swift build -Xfrontend -warnings-as-errors`)
-- [ ] **Formatting compliance** (`swift-format -i .`)
+- Use **Sprint Checkpoints** during implementation (weekly or at sprint end).
+- Use **Release Cut Gates** when preparing `v2.x.0`/`v2.x.y` tags.
+- Use **Post-Release** after artifacts and notes are published.
+- Use `Docs/SPRINT-PLAYBOOK.md` for DoR/DoD and carry-over rules.
 
-### Documentation
+## Sprint Checkpoints
 
-- [ ] **CHANGELOG.md updated**
-  - [ ] All changes documented
-  - [ ] Breaking changes clearly marked
-  - [ ] New features documented
-  - [ ] Bug fixes listed
-- [ ] **API documentation current** (DocC)
-- [ ] **Device quirks validated** (`./scripts/validate-quirks.sh`)
-- [ ] **Benchmarks run on real device**
-- [ ] **Known issues documented**
+Complete these continuously during the sprint to reduce release-day risk.
 
-### Testing
+### Code Health
 
-- [ ] **Smoke tests pass** (`./scripts/smoke.sh`)
-- [ ] **Storybook demo runs**
-- [ ] **Fuzzer completed** (optional for minor releases)
-- [ ] **Real device tested** (at least one device)
-- [ ] **Performance regression check**
+- [ ] New behavior includes tests for success and failure paths
+- [ ] No unresolved release-blocking TODO/FIXME in touched modules
+- [ ] User-visible errors include actionable first-line guidance
+- [ ] Sprint items marked complete satisfy DoD from `Docs/SPRINT-PLAYBOOK.md`
 
-## Version Bump Procedure
+### Test and CI Health
 
-### 1. Determine Version Type
+- [ ] `swift build --package-path SwiftMTPKit` succeeds locally
+- [ ] Relevant targeted test filters run for touched modules
+- [ ] TSAN-focused run completed for concurrency-affecting changes
+- [ ] `./scripts/smoke.sh` still passes for CLI contract changes
+- [ ] Required workflow surfaces remain green (`ci`, `Smoke`, `validate-quirks`, `validate-submission`)
 
-| Type | Example | When |
-|------|---------|------|
-| **Major** | v1.0.0 → v2.0.0 | Breaking changes |
-| **Minor** | v2.0.0 → v2.1.0 | New features |
-| **Patch** | v2.1.0 → v2.1.1 | Bug fixes only |
+### Docs and Operator Guidance
 
-### 2. Update Version Files
+- [ ] `README.md` and troubleshooting docs reflect changed behavior
+- [ ] Roadmap status in `Docs/ROADMAP.md` is updated for closed/open sprint items
+- [ ] Device-specific notes updated when quirk behavior changes
+- [ ] `CHANGELOG.md` `Unreleased` section reflects merged sprint outcomes
 
-#### Package.swift
+## Release Cut Gates
 
-```swift
-// Before
-let package = Package(
-    name: "SwiftMTP",
-    platforms: [.macOS(.v15)],
-    version: .init("2.0.0"),
-    // ...
-)
+Run these before creating a release tag.
 
-// After
-let package = Package(
-    name: "SwiftMTP",
-    platforms: [.macOS(.v15)],
-    version: .init("2.1.0"),
-    // ...
-)
-```
+### 1) Verification Gates
 
-#### swiftmtp-cli info.plist (if applicable)
+- [ ] `./run-all-tests.sh` passes
+- [ ] Filtered coverage gate passes
+- [ ] Required TSAN checks are green in CI
+- [ ] `./scripts/validate-quirks.sh` passes
+- [ ] `./scripts/validate-submission.sh` passes for any included/new submission bundles
+- [ ] Required GitHub workflow runs are present for release commit
 
-Update `CFBundleShortVersionString` and `CFBundleVersion`.
+### 2) Packaging and Distribution Gates
 
-#### RELEASE.md
+- [ ] `./scripts/build-libusb-xcframework.sh` succeeds on supported hosts
+- [ ] `swift build -c release --package-path SwiftMTPKit --product swiftmtp` succeeds
+- [ ] Release artifact packaging validated (`.tar.gz` contents and checksums)
+- [ ] Homebrew formula updates prepared if the release changes install behavior
 
-Update version and date at the top.
+### 3) Documentation and Metadata Gates
 
-### 3. Tag the Release
+- [ ] `CHANGELOG.md` includes all notable changes and release date
+- [ ] `README.md` and roadmap docs match shipped behavior
+- [ ] DocC/device pages are refreshed for changed quirks or behaviors
+- [ ] `RELEASE.md` sequence is followed and still accurate
+- [ ] `Docs/SPRINT-PLAYBOOK.md` and roadmap sprint state agree on closed/carry-over items
 
-```bash
-# Create tag
-git tag -a v2.1.0 -m "Release v2.1.0"
+### 4) Version and Tagging Gates
 
-# Push tag
-git push origin v2.1.0
-```
+- [ ] Version files reviewed/updated:
+  - `SwiftMTPKit/Sources/Tools/swiftmtp-cli/Autogen/BuildInfo.swift`
+  - `RELEASE.md` metadata references
+  - Any package metadata updated for release train consistency
+- [ ] Release commit created with clear message (for example `chore: prepare v2.1.0`)
+- [ ] Annotated tag created and pushed (for example `v2.1.0`)
 
-### 4. Verify Tag
+## Suggested Validation Commands
 
 ```bash
-# Check tag exists
-git tag -l "v2.1.0"
-
-# Verify commit
-git rev-parse v2.1.0^{commit}
+swift build --package-path SwiftMTPKit
+swift test --package-path SwiftMTPKit --enable-code-coverage
+swift test --package-path SwiftMTPKit -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
+./scripts/smoke.sh
+./scripts/validate-quirks.sh
+./run-all-tests.sh
 ```
 
-## CHANGELOG.md Update Process
+## Minimal Release Artifact Checklist
 
-### Required Sections
+- [ ] Tagged commit in git
+- [ ] Checksums generated and verified
+- [ ] Release notes drafted (GitHub + changelog)
+- [ ] Install path validated (`swift run` or packaged binary)
+- [ ] `CHANGELOG.md` compare links updated
 
-```markdown
-# Changelog
+## Post-Release
 
-All notable changes to this project will be documented here.
+- [ ] Publish/verify GitHub release draft
+- [ ] Upload artifacts (macOS/Linux as applicable)
+- [ ] Confirm follow-up milestone and open carry-over issues
+- [ ] Backport urgent doc fixes if needed
+- [ ] Reset `Unreleased` and update roadmap sprint queue for the next cycle
 
-## [Unreleased]
+## Related Docs
 
-## [v2.1.0] - 2026-02-08
-
-### Added
-- Feature A
-- Feature B
-
-### Changed
-- Changed behavior X
-
-### Deprecated
-- Deprecated feature Y
-
-### Removed
-- Removed feature Z
-
-### Fixed
-- Bug fix A
-- Bug fix B
-
-### Security
-- Security fix A
-
-### Performance
-- Performance improvement A
-
-## [v2.0.0] - 2026-01-01
-// ... previous releases
-```
-
-### Generating Changelog Entries
-
-```bash
-# View commits since last release
-git log --oneline $(git describe --tags --abbrev=0)..HEAD
-
-# View merged PRs
-gh pr list --state merged --base main --since "2026-01-01"
-```
-
-### Changelog Style
-
-- Use imperative mood ("Added" not "Adding")
-- Group by type (Added, Changed, Fixed, etc.)
-- Sort entries alphabetically
-- Reference issues/PRs when relevant
-
-## Release Tag Requirements
-
-### Tag Format
-
-```
-v<MAJOR>.<MINOR>.<PATCH>
-```
-
-Examples:
-- `v2.0.0`
-- `v2.1.0`
-- `v2.1.1`
-
-### Tag Message Format
-
-```markdown
-# Release v2.1.0
-
-## Summary
-Brief description of release
-
-## What's New
-- Feature A
-- Feature B
-
-## Bug Fixes
-- Fix X
-- Fix Y
-
-## Breaking Changes
-- Change Z (migration required)
-
-## Upgrade Notes
-Instructions for upgrading
-
-## Full Changelog
-https://github.com/effortless-metrics/SwiftMTP/compare/v2.0.0...v2.1.0
-```
-
-### Pre-release Tags
-
-For beta/RC releases:
-
-```
-v2.1.0-beta.1
-v2.1.0-rc.1
-```
-
-## Post-Release Tasks
-
-### 1. GitHub Release
-
-```bash
-# Create GitHub release
-gh release create v2.1.0 \
-  --title "SwiftMTP v2.1.0" \
-  --notes "$(cat CHANGELOG.md | head -100)" \
-  --draft
-```
-
-Upload artifacts:
-- [ ] Binary (if applicable)
-- [ ] SHA256 checksums
-- [ ] Signature (if applicable)
-
-### 2. Update Homebrew Tap
-
-```bash
-# Update formula
-# Edit homebrew-tap/Formula/swiftmtp.rb
-
-# Test installation
-brew install --build-from-source ./homebrew-tap/Formula/swiftmtp.rb
-```
-
-### 3. Notify Users
-
-- [ ] Post to GitHub Discussions
-- [ ] Update project website (if applicable)
-- [ ] Send announcement email (for major releases)
-
-### 4. Create Next Milestone
-
-```bash
-# Create next version milestone
-gh milestone create v2.2.0 \
-  --title "v2.2.0" \
-  --due-date "2026-06-01"
-```
-
-### 5. Archive Completed Items
-
-- [ ] Close completed issues
-- [ ] Merge `main` into `develop` (if using Git Flow)
-- [ ] Update documentation links
-
-## Release Checklist Template
-
-```markdown
-## Release v<X>.<Y>.<Z> Checklist
-
-### Pre-Release
-- [ ] All tests passing
-- [ ] Coverage thresholds met
-- [ ] TSAN clean
-- [ ] No warnings
-- [ ] Formatting compliant
-- [ ] CHANGELOG.md updated
-- [ ] DocC generated
-- [ ] Quirks validated
-- [ ] Benchmarks complete
-
-### Version Bump
-- [ ] Package.swift updated
-- [ ] Version tag created
-- [ ] Tag pushed
-
-### Post-Release
-- [ ] GitHub release created
-- [ ] Artifacts uploaded
-- [ ] Homebrew tap updated
-- [ ] Users notified
-- [ ] Next milestone created
-```
-
----
-
-*See also: [ROADMAP.md](ROADMAP.md) | [Testing Guide](ROADMAP.testing.md) | [Device Submission](ROADMAP.device-submission.md)*
+- [Roadmap](ROADMAP.md)
+- [Sprint Playbook](SPRINT-PLAYBOOK.md)
+- [Testing Guide](ROADMAP.testing.md)
+- [Device Submission Guide](ROADMAP.device-submission.md)
+- [Release Runbook](../RELEASE.md)
