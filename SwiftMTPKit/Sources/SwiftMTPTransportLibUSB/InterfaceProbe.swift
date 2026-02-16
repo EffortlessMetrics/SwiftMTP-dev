@@ -326,6 +326,196 @@ struct ProbeLadderResult: Sendable {
   let stepAttempted: String
 }
 
+/// Matches the transport-layer no-progress timeout recovery gate.
+/// A timeout with zero bytes written indicates the endpoint did not accept the command container.
+func probeShouldRecoverNoProgressTimeout(rc: Int32, sent: Int32) -> Bool {
+  rc == Int32(LIBUSB_ERROR_TIMEOUT.rawValue) && sent == 0
+}
+
+private struct ProbeCommandWriteResult: Sendable {
+  let succeeded: Bool
+  let rc: Int32
+  let sent: Int32
+}
+
+private struct ProbeCommandWriteAttempt: Sendable {
+  let rc: Int32
+  let sent: Int32
+  let expected: Int32
+
+  var succeeded: Bool { rc == 0 && sent == expected }
+  var isNoProgressTimeout: Bool {
+    probeShouldRecoverNoProgressTimeout(rc: rc, sent: sent)
+  }
+}
+
+private func probeAttemptCommandWrite(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate,
+  bytes: [UInt8],
+  timeoutMs: UInt32
+) -> ProbeCommandWriteAttempt {
+  var sent: Int32 = 0
+  let rc = bytes.withUnsafeBytes { ptr -> Int32 in
+    libusb_bulk_transfer(
+      handle, candidate.bulkOut,
+      UnsafeMutablePointer(mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
+      Int32(bytes.count), &sent, timeoutMs
+    )
+  }
+  return ProbeCommandWriteAttempt(rc: rc, sent: sent, expected: Int32(bytes.count))
+}
+
+@discardableResult
+private func probePerformNoProgressLightRecovery(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate,
+  opcode: UInt16,
+  txid: UInt32,
+  debug: Bool
+) -> Bool {
+  let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
+  let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
+  let clearEventRC: Int32 =
+    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : Int32(LIBUSB_SUCCESS.rawValue)
+  let classResetRC = libusb_control_transfer(
+    handle, 0x21, 0x66, 0, UInt16(candidate.ifaceNumber), nil, 0, 2000)
+
+  let device = libusb_get_device(handle)
+  setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+  let setAltRC = libusb_set_interface_alt_setting(handle, Int32(candidate.ifaceNumber), 0)
+
+  let clearOutPostRC = libusb_clear_halt(handle, candidate.bulkOut)
+  let clearInPostRC = libusb_clear_halt(handle, candidate.bulkIn)
+  let clearEventPostRC: Int32 =
+    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : Int32(LIBUSB_SUCCESS.rawValue)
+
+  usleep(200_000)
+
+  if debug {
+    print(
+      String(
+        format:
+          "   [Probe][Recover][Light] op=0x%04x tx=%u clear(out=%d in=%d evt=%d) classReset=%d setAlt0=%d postClear(out=%d in=%d evt=%d)",
+        opcode, txid, clearOutRC, clearInRC, clearEventRC, classResetRC, setAltRC,
+        clearOutPostRC, clearInPostRC, clearEventPostRC))
+  }
+  return true
+}
+
+private func probePerformNoProgressHardRecovery(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate,
+  opcode: UInt16,
+  txid: UInt32,
+  debug: Bool
+) -> Bool {
+  let resetRC = libusb_reset_device(handle)
+  if resetRC != 0 {
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover][Hard] op=0x%04x tx=%u reset_device failed rc=%d",
+          opcode, txid, resetRC))
+    }
+    return false
+  }
+
+  usleep(300_000)
+
+  let device = libusb_get_device(handle)
+  setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+  let setAltRC = libusb_set_interface_alt_setting(handle, Int32(candidate.ifaceNumber), 0)
+  let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
+  let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
+  let clearEventRC: Int32 =
+    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : Int32(LIBUSB_SUCCESS.rawValue)
+
+  usleep(200_000)
+
+  if debug {
+    print(
+      String(
+        format:
+          "   [Probe][Recover][Hard] op=0x%04x tx=%u reset_device=0 setAlt0=%d clear(out=%d in=%d evt=%d)",
+        opcode, txid, setAltRC, clearOutRC, clearInRC, clearEventRC))
+  }
+  return true
+}
+
+private func probeWriteCommandWithRecovery(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate,
+  bytes: [UInt8],
+  opcode: UInt16,
+  txid: UInt32,
+  timeoutMs: UInt32,
+  debug: Bool
+) -> ProbeCommandWriteResult {
+  let initialAttempt = probeAttemptCommandWrite(
+    handle: handle, candidate: candidate, bytes: bytes, timeoutMs: timeoutMs)
+  if initialAttempt.succeeded {
+    return ProbeCommandWriteResult(succeeded: true, rc: initialAttempt.rc, sent: initialAttempt.sent)
+  }
+  guard initialAttempt.isNoProgressTimeout else {
+    return ProbeCommandWriteResult(
+      succeeded: false, rc: initialAttempt.rc, sent: initialAttempt.sent)
+  }
+
+  if debug {
+    print(
+      String(
+        format:
+          "   [Probe][Recover] op=0x%04x tx=%u no-progress timeout detected (rc=%d sent=%d), running light rung",
+        opcode, txid, initialAttempt.rc, initialAttempt.sent))
+  }
+  _ = probePerformNoProgressLightRecovery(
+    handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
+  let lightRetry = probeAttemptCommandWrite(
+    handle: handle, candidate: candidate, bytes: bytes, timeoutMs: timeoutMs)
+  if lightRetry.succeeded {
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover] op=0x%04x tx=%u recovered after light rung",
+          opcode, txid))
+    }
+    return ProbeCommandWriteResult(succeeded: true, rc: lightRetry.rc, sent: lightRetry.sent)
+  }
+  guard lightRetry.isNoProgressTimeout else {
+    return ProbeCommandWriteResult(succeeded: false, rc: lightRetry.rc, sent: lightRetry.sent)
+  }
+
+  if debug {
+    print(
+      String(
+        format:
+          "   [Probe][Recover] op=0x%04x tx=%u light rung did not recover (rc=%d sent=%d), running hard rung",
+        opcode, txid, lightRetry.rc, lightRetry.sent))
+  }
+  guard probePerformNoProgressHardRecovery(
+    handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
+  else {
+    return ProbeCommandWriteResult(succeeded: false, rc: lightRetry.rc, sent: lightRetry.sent)
+  }
+
+  let hardRetry = probeAttemptCommandWrite(
+    handle: handle, candidate: candidate, bytes: bytes, timeoutMs: timeoutMs)
+  if hardRetry.succeeded {
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover] op=0x%04x tx=%u recovered after hard rung",
+          opcode, txid))
+    }
+    return ProbeCommandWriteResult(succeeded: true, rc: hardRetry.rc, sent: hardRetry.sent)
+  }
+  return ProbeCommandWriteResult(succeeded: false, rc: hardRetry.rc, sent: hardRetry.sent)
+}
+
 /// Probe ladder: try OpenSession first (like libmtp), then sessionless GetDeviceInfo, then GetStorageIDs.
 /// Returns (success, cached raw device-info bytes) and which step succeeded.
 func probeCandidateWithLadder(
@@ -385,16 +575,17 @@ func probeOpenSession(
   let sessionID: UInt32 = 1
   let cmdBytes = makePTPCommand(opcode: 0x1002, txid: txid, params: [sessionID])
 
-  var sent: Int32 = 0
-  let writeRC = cmdBytes.withUnsafeBytes { ptr -> Int32 in
-    libusb_bulk_transfer(
-      handle, c.bulkOut,
-      UnsafeMutablePointer(mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
-      Int32(cmdBytes.count), &sent, timeoutMs
-    )
-  }
-  if writeRC != 0 || sent != cmdBytes.count {
-    if debug { print("   [ProbeLadder] OpenSession write failed: rc=\(writeRC) sent=\(sent)") }
+  let write = probeWriteCommandWithRecovery(
+    handle: handle,
+    candidate: c,
+    bytes: cmdBytes,
+    opcode: 0x1002,
+    txid: txid,
+    timeoutMs: timeoutMs,
+    debug: debug
+  )
+  if !write.succeeded {
+    if debug { print("   [ProbeLadder] OpenSession write failed: rc=\(write.rc) sent=\(write.sent)") }
     drainBulkIn(handle: handle, ep: c.bulkIn)
     return false
   }
@@ -426,16 +617,17 @@ func probeGetStorageIDs(
   let txid: UInt32 = 1
   let cmdBytes = makePTPCommand(opcode: 0x1004, txid: txid, params: [])
 
-  var sent: Int32 = 0
-  let writeRC = cmdBytes.withUnsafeBytes { ptr -> Int32 in
-    libusb_bulk_transfer(
-      handle, c.bulkOut,
-      UnsafeMutablePointer(mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
-      Int32(cmdBytes.count), &sent, timeoutMs
-    )
-  }
-  if writeRC != 0 || sent != cmdBytes.count {
-    if debug { print("   [ProbeLadder] GetStorageIDs write failed: rc=\(writeRC) sent=\(sent)") }
+  let write = probeWriteCommandWithRecovery(
+    handle: handle,
+    candidate: c,
+    bytes: cmdBytes,
+    opcode: 0x1004,
+    txid: txid,
+    timeoutMs: timeoutMs,
+    debug: debug
+  )
+  if !write.succeeded {
+    if debug { print("   [ProbeLadder] GetStorageIDs write failed: rc=\(write.rc) sent=\(write.sent)") }
     drainBulkIn(handle: handle, ep: c.bulkIn)
     return false
   }
@@ -505,32 +697,21 @@ func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: U
 
   let cmdBytes = makePTPCommand(opcode: 0x1001, txid: probeTxid, params: [])
 
-  // Send command container
-  var sent: Int32 = 0
-  let writeRC = cmdBytes.withUnsafeBytes { ptr -> Int32 in
-    libusb_bulk_transfer(
-      handle, c.bulkOut,
-      UnsafeMutablePointer(mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
-      Int32(cmdBytes.count), &sent, timeoutMs
-    )
+  let write = probeWriteCommandWithRecovery(
+    handle: handle,
+    candidate: c,
+    bytes: cmdBytes,
+    opcode: 0x1001,
+    txid: probeTxid,
+    timeoutMs: timeoutMs,
+    debug: debug
+  )
+  if debug { print("   [Probe] write rc=\(write.rc) sent=\(write.sent)/\(cmdBytes.count)") }
+  if !write.succeeded && probeShouldRecoverNoProgressTimeout(rc: write.rc, sent: write.sent), debug {
+    print("   [Probe] WARNING: sent=0 timeout - endpoint not accepting writes!")
+    print("   [Probe] This may indicate: wrong alt setting, device not ready, or host interference")
   }
-  if debug { print("   [Probe] write rc=\(writeRC) sent=\(sent)/\(cmdBytes.count)") }
-
-  // Special handling for sent=0 timeouts - this indicates the endpoint is not accepting writes
-  // This is a distinct failure mode from partial writes (sent > 0 but < expected)
-  // LIBUSB_ERROR_TIMEOUT = -7
-  if sent == 0 && writeRC == -7 {
-    if debug {
-      print("   [Probe] WARNING: sent=0 timeout - endpoint not accepting writes!")
-      print(
-        "   [Probe] This may indicate: wrong alt setting, device not ready, or host interference")
-    }
-    // Drain any pending data and try to recover
-    drainBulkIn(handle: handle, ep: c.bulkIn)
-    return (false, nil)
-  }
-
-  guard writeRC == 0, sent == cmdBytes.count else {
+  guard write.succeeded else {
     drainBulkIn(handle: handle, ep: c.bulkIn)
     return (false, nil)
   }

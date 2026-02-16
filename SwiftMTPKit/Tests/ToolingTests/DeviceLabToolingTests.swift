@@ -101,6 +101,8 @@ final class DeviceLabToolingTests: XCTestCase {
 
   func testLooksLikeRetryableWriteFailure() {
     XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("protocolError(code=0x201D)"))
+    XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("protocolError(code=0x2008) InvalidStorageID"))
+    XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("ParameterNotSupported from SendObjectInfo"))
     XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("transport(SwiftMTPCore.TransportError.timeout)"))
     XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("device busy"))
     XCTAssertFalse(DeviceLabCommand.looksLikeRetryableWriteFailure("permission denied"))

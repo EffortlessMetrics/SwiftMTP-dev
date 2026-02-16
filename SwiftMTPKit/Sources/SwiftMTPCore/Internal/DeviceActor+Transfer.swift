@@ -5,9 +5,14 @@ import Foundation
 import OSLog
 
 extension MTPDeviceActor {
-  private enum SendObjectRetryClass {
+  enum SendObjectRetryClass: Sendable {
     case invalidParameter
     case transientTransport
+  }
+
+  struct SendObjectRetryParameters: Equatable, Sendable {
+    let forceWildcardStorage: Bool
+    let useEmptyDates: Bool
   }
 
   public func createFolder(parent: MTPObjectHandle?, name: String, storage: MTPStorageID)
@@ -247,15 +252,10 @@ extension MTPDeviceActor {
         }
       }
 
-      struct WriteAttemptParameters: Equatable {
-        let forceWildcardStorage: Bool
-        let useEmptyDates: Bool
-      }
-
       func performWrite(
         to parent: MTPObjectHandle?,
         storageRaw: UInt32,
-        params: WriteAttemptParameters
+        params: SendObjectRetryParameters
       ) async throws -> UInt64 {
         let source = try FileSource(url: url)
         defer { try? source.close() }
@@ -278,7 +278,7 @@ extension MTPDeviceActor {
       }
 
       var bytesRead: UInt64 = 0
-      let primaryParams = WriteAttemptParameters(
+      let primaryParams = SendObjectRetryParameters(
         forceWildcardStorage: forceFFFFFFF,
         useEmptyDates: useEmptyDates
       )
@@ -290,36 +290,37 @@ extension MTPDeviceActor {
           params: primaryParams
         )
       } catch {
-        guard let retryReason = retryableSendObjectFailureReason(error) else {
+        guard let retryReason = Self.retryableSendObjectFailureReason(for: error) else {
           throw error
         }
-        let retryClass = sendObjectRetryClass(for: retryReason)
+        let retryClass = Self.sendObjectRetryClass(for: retryReason)
 
         let configuredStrategy = policy?.fallbacks.write.rawValue ?? "unknown"
         Logger(subsystem: "SwiftMTP", category: "write")
           .warning(
-            "SendObject failed (\(retryReason), strategy=\(configuredStrategy)); retrying with conservative parameters")
+            "SendObject failed (\(retryReason), strategy=\(configuredStrategy)); retrying with fallback parameter ladder")
 
-        let conservativeParams = WriteAttemptParameters(
-          forceWildcardStorage: true,
-          useEmptyDates: true
+        let retryParameters = Self.sendObjectRetryParameters(
+          primary: primaryParams,
+          retryClass: retryClass
         )
         var lastRetryableError: Error = error
         var recovered = false
 
-        // Single conservative retry (whole-object compatible metadata/profile).
-        if conservativeParams != primaryParams {
+        for (index, retryParams) in retryParameters.enumerated() {
           do {
             Logger(subsystem: "SwiftMTP", category: "write")
-              .info("SendObject retry rung=conservative (wildcard storage + empty dates)")
+              .info(
+                "SendObject retry rung=\(Self.describeSendObjectRetryRung(index: index, params: retryParams, primary: primaryParams))")
             bytesRead = try await performWrite(
               to: resolvedParent,
               storageRaw: targetStorageRaw,
-              params: conservativeParams
+              params: retryParams
             )
             recovered = true
+            break
           } catch {
-            guard retryableSendObjectFailureReason(error) != nil else {
+            guard Self.retryableSendObjectFailureReason(for: error) != nil else {
               throw error
             }
             lastRetryableError = error
@@ -327,7 +328,7 @@ extension MTPDeviceActor {
         }
 
         // For InvalidParameter at root, immediately switch target folder after one conservative retry.
-        if !recovered, retryClass == .invalidParameter, (parent == nil || parent == 0),
+        if !recovered, Self.shouldAttemptTargetLadderFallback(parent: parent, retryClass: retryClass),
           let firstStorage = availableStorages?.first
         {
           do {
@@ -345,11 +346,14 @@ extension MTPDeviceActor {
             bytesRead = try await performWrite(
               to: resolvedParent,
               storageRaw: targetStorageRaw,
-              params: conservativeParams
+              params: SendObjectRetryParameters(
+                forceWildcardStorage: true,
+                useEmptyDates: true
+              )
             )
             recovered = true
           } catch {
-            guard retryableSendObjectFailureReason(error) != nil else {
+            guard Self.retryableSendObjectFailureReason(for: error) != nil else {
               throw error
             }
             lastRetryableError = error
@@ -397,11 +401,13 @@ extension MTPDeviceActor {
     }
   }
 
-  private func retryableSendObjectFailureReason(_ error: Error) -> String? {
+  static func retryableSendObjectFailureReason(for error: Error) -> String? {
     guard let mtpError = error as? MTPError else { return nil }
     switch mtpError {
     case .protocolError(let code, _) where code == 0x201D:
       return "invalid-parameter-0x201d"
+    case .protocolError(let code, _) where code == 0x2008:
+      return "invalid-storage-id-0x2008"
     case .busy:
       return "busy"
     case .timeout:
@@ -427,10 +433,80 @@ extension MTPDeviceActor {
     }
   }
 
-  private func sendObjectRetryClass(for retryReason: String) -> SendObjectRetryClass {
-    if retryReason == "invalid-parameter-0x201d" {
+  static func sendObjectRetryClass(for retryReason: String) -> SendObjectRetryClass {
+    switch retryReason {
+    case "invalid-parameter-0x201d", "invalid-storage-id-0x2008":
       return .invalidParameter
+    default:
+      return .transientTransport
     }
-    return .transientTransport
+  }
+
+  static func shouldAttemptTargetLadderFallback(
+    parent: MTPObjectHandle?,
+    retryClass: SendObjectRetryClass
+  ) -> Bool {
+    retryClass == .invalidParameter && (parent == nil || parent == 0)
+  }
+
+  static func sendObjectRetryParameters(
+    primary: SendObjectRetryParameters,
+    retryClass: SendObjectRetryClass
+  ) -> [SendObjectRetryParameters] {
+    var retries: [SendObjectRetryParameters] = []
+
+    func appendRetry(_ params: SendObjectRetryParameters, allowPrimary: Bool = false) {
+      if !allowPrimary && params == primary { return }
+      if retries.contains(params) { return }
+      retries.append(params)
+    }
+
+    switch retryClass {
+    case .invalidParameter:
+      appendRetry(
+        SendObjectRetryParameters(
+          forceWildcardStorage: primary.forceWildcardStorage,
+          useEmptyDates: true
+        ))
+      appendRetry(
+        SendObjectRetryParameters(
+          forceWildcardStorage: true,
+          useEmptyDates: primary.useEmptyDates
+        ))
+      appendRetry(
+        SendObjectRetryParameters(
+          forceWildcardStorage: true,
+          useEmptyDates: true
+        ))
+    case .transientTransport:
+      appendRetry(primary, allowPrimary: true)
+      appendRetry(
+        SendObjectRetryParameters(
+          forceWildcardStorage: true,
+          useEmptyDates: true
+        ))
+    }
+
+    return retries
+  }
+
+  static func describeSendObjectRetryRung(
+    index: Int,
+    params: SendObjectRetryParameters,
+    primary: SendObjectRetryParameters
+  ) -> String {
+    if index == 0 && params == primary {
+      return "retry-same-params"
+    }
+    if params.forceWildcardStorage && params.useEmptyDates {
+      return "wildcard-storage-empty-dates"
+    }
+    if params.forceWildcardStorage {
+      return "wildcard-storage"
+    }
+    if params.useEmptyDates {
+      return "empty-dates"
+    }
+    return "retry-\(index + 1)"
   }
 }

@@ -134,11 +134,27 @@ struct DeviceLabCommand {
 
   private static let expectedPolicies: [String: ExpectedPolicy] = [
     "2717:ff40": .fullExercise,
-    "2a70:f003": .probeNoCrash,
+    "2a70:f003": .fullExercise,
     "04e8:6860": .readBestEffort,
     "18d1:4ee1": .readBestEffort,
   ]
   private static let connectedLabSchemaVersion = "1.2.0"
+  private static let openDeviceTimeoutMs = 120_000
+  private static let operationTimeoutMs = 90_000
+  private static let capabilityReportTimeoutMs = 30_000
+  private static let readSmokeTimeoutMs = 90_000
+  private static let writeSmokeTimeoutMs = 120_000
+
+  private enum DeviceLabTimeoutError: LocalizedError {
+    case exceeded(stage: String, ms: Int)
+
+    var errorDescription: String? {
+      switch self {
+      case .exceeded(let stage, let ms):
+        return "operation '\(stage)' exceeded deadline (\(ms) ms)"
+      }
+    }
+  }
 
   static func run(flags: CLIFlags, args: [String]) async {
     guard let mode = args.first, mode == "connected" else {
@@ -341,7 +357,9 @@ struct DeviceLabCommand {
     )
 
     do {
-      let device = try await openDevice(flags: perDeviceFlags)
+      let device = try await within(ms: openDeviceTimeoutMs, stage: "open-device") {
+        try await openDevice(flags: perDeviceFlags)
+      }
 
       func appendOperation(
         _ operation: String,
@@ -364,7 +382,9 @@ struct DeviceLabCommand {
 
       do {
         let startedAt = DispatchTime.now()
-        try await device.openIfNeeded()
+        try await within(ms: operationTimeoutMs, stage: "enumerate-and-claim-interface") {
+          try await device.openIfNeeded()
+        }
         result.read.openSucceeded = true
         appendOperation(
           "enumerate-and-claim-interface", succeeded: true, durationMs: elapsedMs(since: startedAt))
@@ -377,18 +397,29 @@ struct DeviceLabCommand {
           succeeded: false,
           error: message
         )
-        try? await device.devClose()
+        _ = try? await within(ms: 10_000, stage: "close-after-open-failure") {
+          try await device.devClose()
+          return ()
+        }
         finalizeOutcome(&result)
         classifyFailure(&result)
         return result
       }
 
       result.probeReceipt = await device.probeReceipt
-      result.capabilityReport = try? await DeviceLabHarness().collect(device: device)
+      do {
+        result.capabilityReport = try await within(ms: capabilityReportTimeoutMs, stage: "capability-harness") {
+          try await DeviceLabHarness().collect(device: device)
+        }
+      } catch {
+        result.notes.append("Capability harness unavailable: \(error)")
+      }
 
       do {
         let startedAt = DispatchTime.now()
-        _ = try await device.info
+        _ = try await within(ms: operationTimeoutMs, stage: "open-session-and-get-device-info") {
+          try await device.info
+        }
         result.read.deviceInfoSucceeded = true
         appendOperation(
           "open-session-and-get-device-info",
@@ -409,7 +440,9 @@ struct DeviceLabCommand {
       var storages: [MTPStorageInfo] = []
       do {
         let startedAt = DispatchTime.now()
-        storages = try await device.storages()
+        storages = try await within(ms: operationTimeoutMs, stage: "storage-discovery") {
+          try await device.storages()
+        }
         result.read.storagesSucceeded = true
         result.read.storageCount = storages.count
         appendOperation(
@@ -432,8 +465,9 @@ struct DeviceLabCommand {
       if let firstStorage = storages.first {
         do {
           let startedAt = DispatchTime.now()
-          result.read.rootObjectCount = try await sampleRootListing(
-            device: device, storage: firstStorage.id)
+          result.read.rootObjectCount = try await within(ms: operationTimeoutMs, stage: "object-enumeration") {
+            try await sampleRootListing(device: device, storage: firstStorage.id)
+          }
           result.read.rootListingSucceeded = true
           appendOperation(
             "object-enumeration",
@@ -452,37 +486,78 @@ struct DeviceLabCommand {
           )
         }
 
-        let readSmokeStartedAt = DispatchTime.now()
-        result.readSmoke = await runReadSmoke(device: device, storage: firstStorage)
-        appendOperation(
-          "read-download",
-          attempted: result.readSmoke.attempted,
-          succeeded: result.readSmoke.succeeded,
-          durationMs: elapsedMs(since: readSmokeStartedAt),
-          details: result.readSmoke.reason
-            ?? result.readSmoke.objectName.map { "object=\($0)" },
-          error: result.readSmoke.error
-        )
+        do {
+          let readSmokeStartedAt = DispatchTime.now()
+          result.readSmoke = try await within(ms: readSmokeTimeoutMs, stage: "read-download") {
+            await runReadSmoke(device: device, storage: firstStorage)
+          }
+          appendOperation(
+            "read-download",
+            attempted: result.readSmoke.attempted,
+            succeeded: result.readSmoke.succeeded,
+            durationMs: elapsedMs(since: readSmokeStartedAt),
+            details: result.readSmoke.reason
+              ?? result.readSmoke.objectName.map { "object=\($0)" },
+            error: result.readSmoke.error
+          )
+        } catch {
+          var timedReadSmoke = ReadSmoke()
+          timedReadSmoke.attempted = true
+          timedReadSmoke.reason = "read smoke stage did not complete"
+          timedReadSmoke.error = "read smoke failed: \(error)"
+          result.readSmoke = timedReadSmoke
+          appendOperation(
+            "read-download",
+            attempted: true,
+            succeeded: false,
+            details: timedReadSmoke.reason,
+            error: timedReadSmoke.error
+          )
+        }
 
         if expectation != .blockerExpected {
-          let writeSmokeStartedAt = DispatchTime.now()
-          result.write = await runWriteSmoke(device: device, storage: firstStorage)
-          appendOperation(
-            "write-upload",
-            attempted: result.write.attempted,
-            succeeded: result.write.succeeded,
-            durationMs: elapsedMs(since: writeSmokeStartedAt),
-            details: result.write.reason
-              ?? result.write.remoteFolder.map { "folder=\($0)" },
-            error: result.write.error
-          )
-          appendOperation(
-            "delete-uploaded-object",
-            attempted: result.write.deleteAttempted,
-            succeeded: result.write.deleteSucceeded,
-            details: result.write.deleteAttempted ? result.write.remoteFile : "not-attempted",
-            error: result.write.deleteError
-          )
+          do {
+            let writeSmokeStartedAt = DispatchTime.now()
+            result.write = try await within(ms: writeSmokeTimeoutMs, stage: "write-upload") {
+              await runWriteSmoke(device: device, storage: firstStorage)
+            }
+            appendOperation(
+              "write-upload",
+              attempted: result.write.attempted,
+              succeeded: result.write.succeeded,
+              durationMs: elapsedMs(since: writeSmokeStartedAt),
+              details: result.write.reason
+                ?? result.write.remoteFolder.map { "folder=\($0)" },
+              error: result.write.error
+            )
+            appendOperation(
+              "delete-uploaded-object",
+              attempted: result.write.deleteAttempted,
+              succeeded: result.write.deleteSucceeded,
+              details: result.write.deleteAttempted ? result.write.remoteFile : "not-attempted",
+              error: result.write.deleteError
+            )
+          } catch {
+            var timedWriteSmoke = WriteSmoke()
+            timedWriteSmoke.attempted = true
+            timedWriteSmoke.reason = "write smoke stage did not complete"
+            timedWriteSmoke.strategyRung = "timed-timeout"
+            timedWriteSmoke.error = "write smoke failed: \(error)"
+            result.write = timedWriteSmoke
+            appendOperation(
+              "write-upload",
+              attempted: result.write.attempted,
+              succeeded: false,
+              details: result.write.reason,
+              error: result.write.error
+            )
+            appendOperation(
+              "delete-uploaded-object",
+              attempted: false,
+              succeeded: false,
+              details: "skipped because write stage did not complete"
+            )
+          }
         } else {
           result.notes.append("Policy: blocker diagnostics only; write smoke skipped.")
           appendOperation(
@@ -531,7 +606,10 @@ struct DeviceLabCommand {
         )
       }
 
-      try? await device.devClose()
+      _ = try? await within(ms: 10_000, stage: "device-close") {
+        try await device.devClose()
+        return ()
+      }
     } catch {
       result.error = "openDevice failed: \(error)"
       result.operations.append(
@@ -695,7 +773,7 @@ struct DeviceLabCommand {
     var attempts: [String] = []
     var lastFailure: WriteSmoke?
     // Keep target climb bounded so one device cannot stall an entire bring-up cycle.
-    let maxRetryableTargetAttempts = 3
+    let maxRetryableTargetAttempts = 6
 
     for (parentHandle, parentName) in writableParents {
       attempts.append(parentName)
@@ -874,7 +952,10 @@ struct DeviceLabCommand {
   static func looksLikeRetryableWriteFailure(_ message: String?) -> Bool {
     guard let lowered = message?.lowercased() else { return false }
     return lowered.contains("0x201d")
+      || lowered.contains("0x2008")
       || lowered.contains("invalidparameter")
+      || lowered.contains("invalidstorageid")
+      || lowered.contains("parameternotsupported")
       || lowered.contains("timeout")
       || lowered.contains("timed out")
       || lowered.contains("busy")
@@ -1037,6 +1118,26 @@ struct DeviceLabCommand {
 
   private static func elapsedMs(since start: DispatchTime) -> Int {
     Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
+  }
+
+  /// Execute an operation with a wall-clock timeout and fail the stage deterministically.
+  private static func within<T: Sendable>(
+    ms: Int,
+    stage: String,
+    _ operation: @escaping @Sendable () async throws -> T
+  ) async throws -> T {
+    try await withThrowingTaskGroup(of: T.self) { group in
+      group.addTask {
+        try await operation()
+      }
+      group.addTask {
+        try await Task.sleep(nanoseconds: UInt64(ms) * 1_000_000)
+        throw DeviceLabTimeoutError.exceeded(stage: stage, ms: ms)
+      }
+      let result = try await group.next()!
+      group.cancelAll()
+      return result
+    }
   }
 
   private static func resolveOutputDirectory(args: [String]) throws -> URL {
