@@ -253,7 +253,7 @@ func claimCandidate(
       // Brief pause for pipe setup (alt-setting does the real work, but some devices need more time)
       // Samsung and similar vendor-specific MTP stacks benefit from 250-500ms stabilization
       if debug {
-        print("   [Claim] claimed OK, waiting \\(postClaimStabilizeMs)ms for pipe activation")
+        print("   [Claim] claimed OK, waiting \(postClaimStabilizeMs)ms for pipe activation")
       }
       usleep(UInt32(postClaimStabilizeMs) * 1000)
 
@@ -329,7 +329,11 @@ struct ProbeLadderResult: Sendable {
 /// Probe ladder: try OpenSession first (like libmtp), then sessionless GetDeviceInfo, then GetStorageIDs.
 /// Returns (success, cached raw device-info bytes) and which step succeeded.
 func probeCandidateWithLadder(
-  handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32 = 2000, debug: Bool = false
+  handle: OpaquePointer,
+  _ c: InterfaceCandidate,
+  timeoutMs: UInt32 = 2000,
+  debug: Bool = false,
+  includeStorageProbe: Bool = true
 ) -> ProbeLadderResult {
   // Step 1: OpenSession FIRST - this is what libmtp does and it handles Pixel 7 better
   // Some devices need a session before they respond to other commands
@@ -351,12 +355,14 @@ func probeCandidateWithLadder(
       succeeded: true, cachedDeviceInfoData: infoData2, stepAttempted: "sessionlessGetDeviceInfo")
   }
 
-  // Step 3: GetStorageIDs (some devices respond to this even if DeviceInfo fails)
-  if debug { print("   [ProbeLadder] Step 3: GetStorageIDs") }
-  if probeGetStorageIDs(handle: handle, c, timeoutMs: timeoutMs, debug: debug) {
-    // Even without device info, consider this a successful probe for vendor-specific stacks
-    return ProbeLadderResult(
-      succeeded: true, cachedDeviceInfoData: nil, stepAttempted: "getStorageIDs")
+  if includeStorageProbe {
+    // Step 3: GetStorageIDs (some vendor-specific devices respond to this even if DeviceInfo fails)
+    if debug { print("   [ProbeLadder] Step 3: GetStorageIDs") }
+    if probeGetStorageIDs(handle: handle, c, timeoutMs: timeoutMs, debug: debug) {
+      // Even without device info, consider this a successful probe for vendor-specific stacks
+      return ProbeLadderResult(
+        succeeded: true, cachedDeviceInfoData: nil, stepAttempted: "getStorageIDs")
+    }
   }
 
   return ProbeLadderResult(succeeded: false, cachedDeviceInfoData: nil, stepAttempted: "none")
@@ -685,7 +691,8 @@ func tryProbeAllCandidates(
     let probeResult = probeCandidateWithLadder(
       handle: handle, candidate,
       timeoutMs: UInt32(handshakeTimeoutMs),
-      debug: debug
+      debug: debug,
+      includeStorageProbe: isVendorSpecific
     )
     lastProbeStep = probeResult.stepAttempted
 

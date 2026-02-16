@@ -174,6 +174,17 @@ Recommended issue labels:
 - `testing`: CI, coverage, and reproducibility work
 - `release`: release checklist and milestone items
 
+## Common Issues Quick Reference
+
+| Issue | Likely Cause | First Action |
+|-------|--------------|--------------|
+| Device not detected | USB debugging off, wrong mode | Check MTP/PTP mode, enable USB debugging |
+| Bulk transfer timeout | Quirks not tuned, cable/port issue | Run `swiftmtp probe` and check quirk overrides |
+| "Trust this computer" prompt | macOS security | Unlock device, accept trust prompt |
+| Collect validation fails | Missing files, privacy redaction | Run `./scripts/validate-submission.sh` for details |
+| CI mismatch local | Environment difference | Run `./run-all-tests.sh` locally first |
+| TSAN failures | Concurrency regression | Run `-sanitize=thread` on affected targets |
+
 ## Related Docs
 
 - [Sprint Playbook](SPRINT-PLAYBOOK.md)
