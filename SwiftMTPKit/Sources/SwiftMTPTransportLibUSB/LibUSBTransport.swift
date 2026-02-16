@@ -243,10 +243,9 @@ public actor LibUSBTransport: MTPTransport {
       postProbeStabilizeMs: config.postProbeStabilizeMs, debug: debug
     )
 
-    // Pass 2 (fallback): If pass 1 failed entirely and resetOnOpen is enabled,
-    // do USB reset + MTP readiness poll + re-probe.
-    // Also try Pass 2 for vendor-specific devices even without resetOnOpen
-    if result.candidate == nil && (config.resetOnOpen || isVendorSpecificMTP) {
+    // Pass 2 (fallback): if pass 1 fails, do USB reset + teardown + fresh reopen + re-probe.
+    // This mirrors the libmtp-style recovery rung used by Pixel/OnePlus-class handshakes.
+    if result.candidate == nil {
       if debug { print("   [Open] Pass 1 failed, attempting USB reset fallback") }
 
       // Capture bus + port path before reset (address may change, bus+port won't)
@@ -260,52 +259,51 @@ public actor LibUSBTransport: MTPTransport {
       let deviceReenumerated = (resetRC == Int32(LIBUSB_ERROR_NOT_FOUND.rawValue))
 
       if resetRC == 0 || deviceReenumerated {
-        if deviceReenumerated {
-          // Device re-enumerated after reset — close old handle, find new device
-          if debug { print("   [Open] Device re-enumerated after reset, reopening handle...") }
-          libusb_close(handle)
-          libusb_unref_device(dev)
-
-          // Brief pause for USB enumeration
-          usleep(500_000)
-
-          // Re-enumerate and match by bus + port path
-          var newList: UnsafeMutablePointer<OpaquePointer?>?
-          let newCnt = libusb_get_device_list(ctx, &newList)
-          var newTarget: OpaquePointer?
-          if newCnt > 0, let newList {
-            for i in 0..<Int(newCnt) {
-              guard let d = newList[i] else { continue }
-              let dBus = libusb_get_bus_number(d)
-              guard dBus == preBus else { continue }
-              var dPort = [UInt8](repeating: 0, count: 7)
-              let dDepth = libusb_get_port_numbers(d, &dPort, Int32(dPort.count))
-              if dDepth == portDepth && dPort[0..<Int(dDepth)] == portPath[0..<Int(portDepth)] {
-                libusb_ref_device(d)
-                newTarget = d
-                break
-              }
-            }
-            libusb_free_device_list(newList, 1)
-          }
-
-          guard let nd = newTarget else {
-            if debug { print("   [Open] Could not re-find device after reset") }
-            throw TransportError.noDevice
-          }
-          dev = nd
-
-          var nh: OpaquePointer?
-          guard libusb_open(dev, &nh) == 0, let newHandle = nh else {
-            libusb_unref_device(dev)
-            throw TransportError.accessDenied
-          }
-          handle = newHandle
-
-          // Re-rank candidates with new handle
-          candidates = try rankMTPInterfaces(handle: handle, device: dev)
-          if debug { print("   [Open] Reopened handle, \(candidates.count) candidate(s)") }
+        // Always teardown and reopen a fresh handle after reset.
+        if debug {
+          let kind = deviceReenumerated ? "re-enumerated" : "same address"
+          print("   [Open] Reset succeeded (\(kind)); reopening fresh handle...")
         }
+        libusb_close(handle)
+        libusb_unref_device(dev)
+        usleep(350_000)
+
+        // Re-enumerate and match by bus + port path.
+        var newList: UnsafeMutablePointer<OpaquePointer?>?
+        let newCnt = libusb_get_device_list(ctx, &newList)
+        var newTarget: OpaquePointer?
+        if newCnt > 0, let newList {
+          for i in 0..<Int(newCnt) {
+            guard let d = newList[i] else { continue }
+            let dBus = libusb_get_bus_number(d)
+            guard dBus == preBus else { continue }
+            var dPort = [UInt8](repeating: 0, count: 7)
+            let dDepth = libusb_get_port_numbers(d, &dPort, Int32(dPort.count))
+            if dDepth == portDepth && dPort[0..<Int(dDepth)] == portPath[0..<Int(portDepth)] {
+              libusb_ref_device(d)
+              newTarget = d
+              break
+            }
+          }
+          libusb_free_device_list(newList, 1)
+        }
+
+        guard let nd = newTarget else {
+          if debug { print("   [Open] Could not re-find device after reset") }
+          throw TransportError.noDevice
+        }
+        dev = nd
+
+        var nh: OpaquePointer?
+        guard libusb_open(dev, &nh) == 0, let newHandle = nh else {
+          libusb_unref_device(dev)
+          throw TransportError.accessDenied
+        }
+        handle = newHandle
+
+        // Re-rank candidates with new handle.
+        candidates = try rankMTPInterfaces(handle: handle, device: dev)
+        if debug { print("   [Open] Reopened handle, \(candidates.count) candidate(s)") }
 
         // Poll GetDeviceStatus until MTP stack recovers (budget from stabilizeMs)
         let budget = max(config.stabilizeMs, 3000)
@@ -331,37 +329,13 @@ public actor LibUSBTransport: MTPTransport {
     guard let sel = result.candidate else {
       libusb_close(handle)
       libusb_unref_device(dev)
-      // Determine if this is a claim failure vs probe failure
-      var failureGuidance = ""
       if result.probeStep == nil {
-        // Claim succeeded but no probe response - device not responding to MTP commands
-        // This is a TIMEOUT situation: device is claimed but not responding
-        failureGuidance = """
-
-          The USB interface was claimed successfully, but the device did not respond to MTP commands.
-          This typically indicates:
-          - Device is in PTP mode instead of MTP mode (check phone USB settings)
-          - USB cable is charge-only (no data lines)
-          - Device screen is locked or in sleep mode
-          - USB hub or port issue
-
-          Try:
-          1. On the device, verify "File Transfer (MTP)" mode is selected in USB preferences
-          2. Unlock the device screen
-          3. Try a different USB cable (must support data, not just charging)
-          4. Try a different USB port (directly on Mac, not through hub)
-          5. Check if ioreg shows the device with idProduct=0x4EE1 (MTP mode)
-          """
-      } else {
-        // Some probe steps worked but final candidate selection failed
-        failureGuidance = """
-
-          The probe ladder completed some steps but failed to establish a working session.
-          This may indicate a device-specific quirk or timing issue.
-          """
+        throw TransportError.io(
+          "mtp interface claim failed across \(candidates.count) candidate(s). Close competing USB apps (Android File Transfer, adb, browsers) and retry."
+        )
       }
       throw TransportError.io(
-        "no suitable MTP interface found: last probe step=\(result.probeStep ?? "none")\(failureGuidance)"
+        "mtp handshake failed after interface claim: last probe step=\(result.probeStep ?? "none"). Device claimed but did not complete MTP command exchange; unlock/authorize the phone and replug."
       )
     }
 

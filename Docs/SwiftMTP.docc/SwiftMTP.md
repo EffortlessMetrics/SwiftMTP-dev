@@ -120,14 +120,27 @@ print("Upload progress: \(progress.fractionCompleted * 100)%")
 
 ```swift
 import SwiftMTPSync
+import SwiftMTPIndex
 
-let mirror = MirrorOperation(device: device)
-mirror.localRoot = "/Users/user/MTP-Backup"
-mirror.includeFilters = ["*.jpg", "*.png", "*.mp4"]
-mirror.excludeFilters = ["*.tmp", "*.log"]
+// Create mirror engine with required dependencies
+let snapshotter = Snapshotter(persistence: persistence)
+let diffEngine = DiffEngine()
+let journal: any TransferJournal = FileTransferJournal()
 
-try await mirror.run()
-print("Mirror complete!")
+let mirror = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
+
+let report = try await mirror.mirror(
+    device: device,
+    deviceId: deviceId,
+    to: URL(fileURLWithPath: "/Users/user/MTP-Backup"),
+    include: { row in
+        // Filter: include only media files
+        let ext = (row.name as NSString).pathExtension.lowercased()
+        return ["jpg", "png", "mp4", "mov"].contains(ext)
+    }
+)
+
+print("Mirror complete! Downloaded: \(report.downloaded), Skipped: \(report.skipped), Failed: \(report.failed)")
 ```
 
 ## Architecture

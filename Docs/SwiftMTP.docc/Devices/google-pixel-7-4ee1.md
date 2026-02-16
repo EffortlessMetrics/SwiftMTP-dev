@@ -1,9 +1,8 @@
 # Google Pixel 7 4Ee1
 
 @Metadata {
-    @DisplayName: "Google Pixel 7 4Ee1"
-    @PageKind: article
-    @Available: iOS 15.0, macOS 12.0
+    @DisplayName("Google Pixel 7")
+    @PageKind(article)
 }
 
 Device-specific configuration for Google Pixel 7 4Ee1 MTP implementation.
@@ -53,6 +52,6 @@ Device-specific configuration for Google Pixel 7 4Ee1 MTP implementation.
 
 - **Author**: Steven Zimmerman
 - **Date**: 2026-02-12
-- **Commit**: Unknown
+- **Commit**: (See git history for this device file)
 
 ### Evidence Artifacts

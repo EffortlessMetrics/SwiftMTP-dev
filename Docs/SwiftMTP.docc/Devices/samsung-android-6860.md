@@ -1,9 +1,8 @@
 # Samsung Android 6860
 
 @Metadata {
-    @DisplayName: "Samsung Android 6860"
-    @PageKind: article
-    @Available: iOS 15.0, macOS 12.0
+    @DisplayName("Samsung Android")
+    @PageKind(article)
 }
 
 Device-specific configuration for Samsung Android 6860 MTP implementation.
@@ -61,6 +60,6 @@ Device-specific configuration for Samsung Android 6860 MTP implementation.
 
 - **Author**: Steven Zimmerman
 - **Date**: 2026-02-10
-- **Commit**: Unknown
+- **Commit**: (See git history for this device file)
 
 ### Evidence Artifacts

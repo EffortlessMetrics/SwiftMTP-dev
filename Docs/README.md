@@ -1,8 +1,50 @@
-# SwiftMTP Docs Index
+# SwiftMTP Documentation Index
 
 *Last updated: 2026-02-16*
 
-Use this page as the entry point for sprint planning, delivery, and release operations.
+Welcome to SwiftMTP documentation. Use this page as the entry point for finding the right documentation for your needs.
+
+## Quick Links
+
+| What you need... | Go to... |
+|-----------------|----------|
+| API reference and getting started | [SwiftMTP](SwiftMTP.docc/SwiftMTP.md) |
+| macOS Tahoe 26 specific features | [macOS Tahoe 26 Guide](SwiftMTP.docc/macOS26.md) |
+| Device-specific tuning | [Device Tuning Guide](SwiftMTP.docc/DeviceTuningGuide.md) |
+| Supported devices | [Device Guides](SwiftMTP.docc/Devices/) |
+| Performance benchmarks | [Benchmarks](benchmarks.md) |
+
+## Platform Requirements
+
+- **macOS 26.0+** / **iOS 26.0+**
+- **Xcode 16.0+** with Swift 6 (`6.2` recommended)
+
+## Installation
+
+### Swift Package Manager
+
+```swift
+// swift-tools-version: 6.2
+import PackageDescription
+
+let package = Package(
+    name: "SwiftMTP",
+    platforms: [
+        .macOS(.v26),
+        .iOS(.v26)
+    ],
+    dependencies: [
+        .package(url: "https://github.com/EffortlessMetrics/SwiftMTP.git", from: "1.0.0")
+    ]
+)
+```
+
+### Homebrew
+
+```bash
+brew tap effortlessmetrics/swiftmtp
+brew install swiftmtp
+```
 
 ## Sprint and Delivery Docs
 
@@ -21,7 +63,6 @@ Use this page as the entry point for sprint planning, delivery, and release oper
 
 ## Product and Technical Docs
 
-- [DocC entry](SwiftMTP.docc/SwiftMTP.md)
 - [Benchmarks](benchmarks.md)
 - [File Provider Tech Preview](FileProvider-TechPreview.md)
 - [Notarization Notes](Notarization.md)
@@ -30,4 +71,4 @@ Use this page as the entry point for sprint planning, delivery, and release oper
 
 - [Changelog](../CHANGELOG.md)
 
-When documentation and behavior diverge, treat scripts and CI outputs as source of truth and update docs in the same PR.
+> **Note:** When documentation and behavior diverge, treat scripts and CI outputs as source of truth and update docs in the same PR.

@@ -193,6 +193,10 @@
         "supportsEvents": true,
         "disableWriteResume": false
       },
+      "flags": {
+        "writeToSubfolderOnly": true,
+        "resetReopenOnOpenSessionIOError": true
+      },
       "confidence": "high",
       "status": "stable",
       "notes": [

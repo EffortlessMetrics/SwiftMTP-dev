@@ -8,7 +8,9 @@ import OSLog
 /// Some devices (Xiaomi, OnePlus) return InvalidParameter (0x201D) when writing to storage root.
 public struct WriteTargetLadder {
   /// Fallback preferred folder names in priority order (used when no quirk preference is set)
-  public static let fallbackPreferredFolders = ["DCIM", "Pictures", "Documents", "Download"]
+  public static let fallbackPreferredFolders = [
+    "Download", "Downloads", "DCIM", "Camera", "Pictures", "Documents",
+  ]
 
   /// Resolve a safe parent handle for writing.
   /// - Parameters:
@@ -73,25 +75,10 @@ public struct WriteTargetLadder {
       return (storage, firstFolder.handle)
     }
 
-    // No folders found - create Documents/SwiftMTP as fallback
+    // No folders found - create SwiftMTP at root as fallback
     Logger(subsystem: "SwiftMTP", category: "write")
-      .info("No folders found, creating Documents/SwiftMTP")
-    let documentsFolder: MTPObjectHandle
-
-    // Check if Documents folder exists, create if not
-    if let docsMatch = folders.first(where: {
-      $0.name.caseInsensitiveCompare("Documents") == .orderedSame
-    }) {
-      documentsFolder = docsMatch.handle
-    } else {
-      // Create Documents folder
-      documentsFolder = try await device.createFolder(
-        parent: nil, name: "Documents", storage: storage)
-    }
-
-    // Create SwiftMTP subfolder
-    let swiftMTPFolder = try await device.createFolder(
-      parent: documentsFolder, name: "SwiftMTP", storage: storage)
+      .info("No folders found, creating SwiftMTP at root")
+    let swiftMTPFolder = try await device.createFolder(parent: nil, name: "SwiftMTP", storage: storage)
     return (storage, swiftMTPFolder)
   }
 }

@@ -83,8 +83,7 @@ SwiftMTP is built with modern Swift 6 concurrency patterns:
 ## 🛠 Installation & Setup
 
 ### Prerequisites
-- **macOS 15.0+** for `SwiftMTPKit` CLI/library workflows or **Linux**
-- **macOS 26+** for top-level `SwiftMTP` package targets and Tahoe-era app flows
+- **macOS 26.0+** / **iOS 26.0+**
 - **Xcode 16.0+** with Swift 6 (`6.2` recommended)
 - `libusb` installed via Homebrew: `brew install libusb`
 
@@ -95,7 +94,7 @@ swift run --package-path SwiftMTPKit SwiftMTPApp
 
 ### Quick Start (CLI)
 ```bash
-swift run --package-path SwiftMTPKit swiftmtp --help
+swift run swiftmtp --help
 ```
 
 ### Homebrew Installation
@@ -154,7 +153,7 @@ See [`Docs/SwiftMTP.docc/Devices/`](Docs/SwiftMTP.docc/Devices/) for device-spec
 
 ### Connected Device Lab (repeatable host workflow)
 ```bash
-swift run --package-path SwiftMTPKit swiftmtp device-lab connected --json
+swift run swiftmtp device-lab connected --json
 ```
 
 Artifacts are written under `Docs/benchmarks/connected-lab/<timestamp>/` with per-device JSON reports.
@@ -179,7 +178,7 @@ export SWIFTMTP_DEMO_MODE=1
 export SWIFTMTP_MOCK_PROFILE=pixel7  # Options: pixel7, galaxy, iphone, canon
 
 # Run CLI in demo mode
-swift run --package-path SwiftMTPKit swiftmtp probe
+swift run swiftmtp probe
 ```
 
 GUI users can toggle simulation via the Orange Play button in the toolbar.
@@ -209,7 +208,7 @@ See [`Docs/benchmarks.md`](Docs/benchmarks.md) for detailed performance analysis
 ### Building from Source
 ```bash
 git clone https://github.com/effortlessmetrics/swiftmtp.git
-cd swiftmtp/SwiftMTPKit
+cd swiftmtp
 swift build
 ```
 

@@ -1,9 +1,8 @@
 # Xiaomi Mi Note 2 Ff40
 
 @Metadata {
-    @DisplayName: "Xiaomi Mi Note 2 Ff40"
-    @PageKind: article
-    @Available: iOS 15.0, macOS 12.0
+    @DisplayName("Xiaomi Mi Note 2")
+    @PageKind(article)
 }
 
 Device-specific configuration for Xiaomi Mi Note 2 Ff40 MTP implementation.
@@ -58,7 +57,7 @@ Device-specific configuration for Xiaomi Mi Note 2 Ff40 MTP implementation.
 
 - **Author**: Steven Zimmerman
 - **Date**: 2025-01-09
-- **Commit**: <current-commit>
+- **Commit**: (See git history for this device file)
 
 ### Evidence Artifacts
 - [Device Probe](probes/mi-note2-probe.txt)

@@ -18,7 +18,7 @@ let package = Package(
     name: "SwiftMTP",
     platforms: [
         .macOS(.v26),
-        .iOS(.v18)
+        .iOS(.v26)
     ],
     products: [
         .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
@@ -166,13 +166,24 @@ SwiftMTP can mirror device content to a local directory. The mirrored folder can
 
 ```swift
 import SwiftMTPSync
+import SwiftMTPIndex
 
-let mirror = MirrorOperation(device: device)
-mirror.localRoot = "/Users/user/Backups/MTP-Device"
-mirror.includeFilters = ["*.jpg", "*.png", "*.mp4"]
-mirror.excludeFilters = ["*.tmp", ".thumb"]
+// Create mirror engine with required dependencies
+let snapshotter = Snapshotter(persistence: persistence)
+let diffEngine = DiffEngine()
+let journal: any TransferJournal = FileTransferJournal()
 
-try await mirror.run()
+let mirror = MirrorEngine(snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
+
+let report = try await mirror.mirror(
+    device: device,
+    deviceId: deviceId,
+    to: URL(fileURLWithPath: "/Users/user/Backups/MTP-Device"),
+    include: { row in
+        let ext = (row.name as NSString).pathExtension.lowercased()
+        return ["jpg", "png", "mp4"].contains(ext)
+    }
+)
 
 print("Mirrored \(mirror.stats.filesCopied) files")
 ```

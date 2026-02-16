@@ -25,8 +25,8 @@ public extension MTPError {
   }
 }
 
-public extension MTPError: LocalizedError {
-  var errorDescription: String? {
+extension MTPError: LocalizedError {
+  public var errorDescription: String? {
     switch self {
     case .deviceDisconnected:
       return "The device disconnected during the operation."
@@ -55,7 +55,7 @@ public extension MTPError: LocalizedError {
     }
   }
 
-  var failureReason: String? {
+  public var failureReason: String? {
     switch self {
     case .protocolError(let code, _):
       if code == 0x201D {
@@ -70,7 +70,7 @@ public extension MTPError: LocalizedError {
     }
   }
 
-  var recoverySuggestion: String? {
+  public var recoverySuggestion: String? {
     switch self {
     case .protocolError(let code, _):
       if code == 0x201D {
@@ -102,8 +102,8 @@ public enum TransportError: Error, Sendable, Equatable {
   case io(String)
 }
 
-public extension TransportError: LocalizedError {
-  var errorDescription: String? {
+extension TransportError: LocalizedError {
+  public var errorDescription: String? {
     switch self {
     case .noDevice:
       return "No MTP-capable USB device found. Ensure the phone is in File Transfer (MTP) mode and still connected."
@@ -118,7 +118,7 @@ public extension TransportError: LocalizedError {
     }
   }
 
-  var failureReason: String? {
+  public var failureReason: String? {
     switch self {
     case .noDevice:
       return "No matching USB interface was claimed for MTP operations."
@@ -131,7 +131,7 @@ public extension TransportError: LocalizedError {
     }
   }
 
-  var recoverySuggestion: String? {
+  public var recoverySuggestion: String? {
     switch self {
     case .noDevice:
       return "Unplug and replug the device, confirm screen unlocked and trust prompt accepted."

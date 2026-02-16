@@ -102,6 +102,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case writeToSubfolderOnly
     case preferredWriteFolder
     case forceFFFFFFFForSendObject
+    case emptyDatesInSendObject
   }
 
   public init(from decoder: Decoder) throws {
@@ -140,6 +141,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       String.self, forKey: .preferredWriteFolder)
     self.forceFFFFFFFForSendObject =
       try container.decodeIfPresent(Bool.self, forKey: .forceFFFFFFFForSendObject) ?? false
+    self.emptyDatesInSendObject =
+      try container.decodeIfPresent(Bool.self, forKey: .emptyDatesInSendObject) ?? false
   }
 
   public func encode(to encoder: Encoder) throws {
@@ -165,5 +168,6 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(writeToSubfolderOnly, forKey: .writeToSubfolderOnly)
     try container.encodeIfPresent(preferredWriteFolder, forKey: .preferredWriteFolder)
     try container.encodeIfPresent(forceFFFFFFFForSendObject, forKey: .forceFFFFFFFForSendObject)
+    try container.encodeIfPresent(emptyDatesInSendObject, forKey: .emptyDatesInSendObject)
   }
 }

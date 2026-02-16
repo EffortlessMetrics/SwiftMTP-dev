@@ -59,6 +59,12 @@ struct DeviceLabCommand {
     var bytesUploaded = 0
     var remoteFolder: String?
     var remoteFile: String?
+    var storageID: String?
+    var parentHandle: MTPObjectHandle?
+    var objectFormatCode: String?
+    var declaredObjectSizeBytes: UInt64?
+    var writeStrategy: String?
+    var attemptedTargets: [String] = []
     var uploadedHandle: MTPObjectHandle?
     var deleteAttempted = false
     var deleteSucceeded = false
@@ -472,7 +478,12 @@ struct DeviceLabCommand {
           )
         }
       } else {
-        result.notes.append("No storage exposed by device.")
+        result.notes.append(
+          "Device returned zero storages. On Android this often means the phone is locked or file access is not yet approved."
+        )
+        result.notes.append(
+          "Unlock the phone, accept the USB file-access prompt, then unplug/replug and rerun."
+        )
         appendOperation(
           "object-enumeration",
           attempted: false,
@@ -598,27 +609,53 @@ struct DeviceLabCommand {
     }
   }
 
-  /// Finds an existing writable folder in root (Download, Downloads, Documents).
-  /// Returns (handle, name) or nil if none found.
-  private static func findWritableParent(device: any MTPDevice, storage: MTPStorageID) async -> (
-    MTPObjectHandle, String
-  )? {
-    let preferredFolders = ["Download", "Downloads", "Documents"]
+  /// Finds writable parent folders in preference order.
+  private static func findWritableParents(
+    device: any MTPDevice,
+    storage: MTPStorageID
+  ) async -> [(MTPObjectHandle, String)] {
+    let preferredFolders = ["Download", "Downloads", "DCIM", "Camera", "Pictures", "Documents"]
     let rootItems: [MTPObjectInfo]
     do {
-      rootItems = try await listObjects(device: device, parent: nil, storage: storage, limit: 256)
+      rootItems = try await listObjects(device: device, parent: nil, storage: storage, limit: 512)
     } catch {
-      return nil
+      return []
     }
+
+    var ordered: [(MTPObjectHandle, String)] = []
+    var seen = Set<MTPObjectHandle>()
 
     for folderName in preferredFolders {
       if let existing = rootItems.first(where: {
         $0.formatCode == 0x3001 && $0.name.lowercased() == folderName.lowercased()
       }) {
-        return (existing.handle, existing.name)
+        if seen.insert(existing.handle).inserted {
+          ordered.append((existing.handle, existing.name))
+        }
       }
     }
-    return nil
+
+    // Keep remaining folders as low-priority fallbacks.
+    for folder in rootItems where folder.formatCode == 0x3001 {
+      if seen.insert(folder.handle).inserted {
+        ordered.append((folder.handle, folder.name))
+      }
+    }
+
+    return ordered
+  }
+
+  private static func ensureSwiftMTPFolder(
+    device: any MTPDevice,
+    storage: MTPStorageID
+  ) async throws -> MTPObjectHandle {
+    let rootItems = try await listObjects(device: device, parent: nil, storage: storage, limit: 512)
+    if let existing = rootItems.first(where: {
+      $0.formatCode == 0x3001 && $0.name.lowercased() == "swiftmtp"
+    }) {
+      return existing.handle
+    }
+    return try await device.createFolder(parent: nil, name: "SwiftMTP", storage: storage)
   }
 
   private static func runWriteSmoke(device: any MTPDevice, storage: MTPStorageInfo) async
@@ -633,19 +670,57 @@ struct DeviceLabCommand {
       return smoke
     }
 
-    // Find existing writable parent instead of creating folders
-    if let (parentHandle, parentName) = await findWritableParent(
-      device: device, storage: storage.id)
-    {
-      smoke.remoteFolder = parentName
-      return await writeToParent(
+    let writableParents = await findWritableParents(device: device, storage: storage.id)
+    var attempts: [String] = []
+    var lastFailure: WriteSmoke?
+
+    for (parentHandle, parentName) in writableParents {
+      attempts.append(parentName)
+      var attempt = await writeToParent(
         device: device, storage: storage, parentHandle: parentHandle, parentName: parentName)
+      attempt.attemptedTargets = attempts
+      if attempt.succeeded {
+        return attempt
+      }
+      lastFailure = attempt
+      // Keep climbing the ladder only for InvalidParameter-class failures.
+      if looksLikeInvalidParameter(attempt.error) {
+        continue
+      }
+      return attempt
     }
 
-    // No existing folder found - skip write smoke instead of creating folders
+    // Last rung: create/use SwiftMTP folder in root and retry once.
+    do {
+      let swiftMTPHandle = try await ensureSwiftMTPFolder(device: device, storage: storage.id)
+      attempts.append("SwiftMTP")
+      var attempt = await writeToParent(
+        device: device, storage: storage, parentHandle: swiftMTPHandle, parentName: "SwiftMTP")
+      attempt.attemptedTargets = attempts
+      if attempt.succeeded {
+        return attempt
+      }
+      lastFailure = attempt
+    } catch {
+      smoke.attemptedTargets = attempts + ["SwiftMTP"]
+      smoke.error = "failed to create/access SwiftMTP folder: \(error)"
+      smoke.skipped = true
+      smoke.reason = "no writable target accepted upload"
+      return smoke
+    }
+
+    if var failure = lastFailure {
+      failure.attemptedTargets = attempts
+      failure.skipped = true
+      if failure.reason == nil {
+        failure.reason = "all writable parent targets rejected upload"
+      }
+      return failure
+    }
+
+    smoke.attemptedTargets = attempts
     smoke.skipped = true
-    smoke.reason =
-      "no writable parent found (Download/Downloads/Documents not present); folder creation skipped"
+    smoke.reason = "no writable parent folders discovered in root"
     return smoke
   }
 
@@ -656,12 +731,17 @@ struct DeviceLabCommand {
     var smoke = WriteSmoke()
     smoke.attempted = true
     smoke.remoteFolder = parentName
+    smoke.storageID = String(format: "0x%08x", storage.id.raw)
+    smoke.parentHandle = parentHandle
 
     let fm = FileManager.default
     let fileName = "swiftmtp-smoke-\(UUID().uuidString.prefix(8)).txt"
     let payloadSize = 16 * 1024
     smoke.bytesUploaded = payloadSize
     smoke.remoteFile = fileName
+    smoke.declaredObjectSizeBytes = UInt64(payloadSize)
+    smoke.objectFormatCode = String(format: "0x%04x", inferredFormatCode(for: fileName))
+    smoke.writeStrategy = await device.devicePolicy?.fallbacks.write.rawValue
 
     let tempURL = fm.temporaryDirectory.appendingPathComponent(fileName)
     let payload = Data(repeating: 0x5A, count: payloadSize)
@@ -680,7 +760,7 @@ struct DeviceLabCommand {
     } catch {
       smoke.error = "write to \(parentName) failed: \(error)"
       smoke.skipped = true
-      smoke.reason = "SendObject rejected by device (\(error)); write smoke skipped"
+      smoke.reason = "SendObject rejected by device (\(error)); attempting fallback target"
       return smoke
     }
 
@@ -706,6 +786,19 @@ struct DeviceLabCommand {
     }
 
     return smoke
+  }
+
+  private static func looksLikeInvalidParameter(_ message: String?) -> Bool {
+    guard let lowered = message?.lowercased() else { return false }
+    return lowered.contains("0x201d") || lowered.contains("invalidparameter")
+  }
+
+  private static func inferredFormatCode(for filename: String) -> UInt16 {
+    let lower = filename.lowercased()
+    if lower.hasSuffix(".txt") { return 0x3004 }  // Text
+    if lower.hasSuffix(".jpg") || lower.hasSuffix(".jpeg") { return 0x3801 }
+    if lower.hasSuffix(".png") { return 0x380B }
+    return 0x3000  // Undefined non-association
   }
 
   private static func finalizeOutcome(_ result: inout DeviceResult) {
@@ -782,20 +875,28 @@ struct DeviceLabCommand {
 
     if !result.read.openSucceeded {
       if combined.contains("no mtp") || combined.contains("no device")
-        || combined.contains("no interface")
+        || combined.contains("no interface") || combined.contains("no candidate")
       {
         result.failureClass = .enumeration
       } else if combined.contains("access denied") || combined.contains("busy")
         || combined.contains("claim restrictions")
+        || combined.contains("claim failed")
       {
         result.failureClass = .claim
+      } else if combined.contains("handshake") || combined.contains("open session")
+        || combined.contains("did not complete mtp command")
+        || combined.contains("claimed but did not complete")
+      {
+        result.failureClass = .handshake
       } else {
         result.failureClass = .handshake
       }
       return
     }
 
-    if !result.read.deviceInfoSucceeded || !result.read.storagesSucceeded {
+    if !result.read.deviceInfoSucceeded || !result.read.storagesSucceeded
+      || result.read.storageCount == 0 || !result.read.rootListingSucceeded
+    {
       result.failureClass = .handshake
       return
     }

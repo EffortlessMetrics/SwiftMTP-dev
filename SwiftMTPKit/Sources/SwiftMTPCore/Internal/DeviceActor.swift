@@ -85,7 +85,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       // Run beforeGetStorageIDs hook for devices that need preparation time
       try await self.runHook(.beforeGetStorageIDs, tuning: self.currentTuning)
 
-      let ids = try await link.getStorageIDs()
+      var ids = try await link.getStorageIDs()
 
       // If zero storages, apply fallback retry logic with escalating backoff
       if ids.isEmpty {
@@ -99,20 +99,11 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
           try await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000)
 
           // Retry GetStorageIDs
-          let retryIds = try await link.getStorageIDs()
-          if !retryIds.isEmpty {
-            return try await withThrowingTaskGroup(of: MTPStorageInfo.self) { g in
-              for id in retryIds { g.addTask { try await link.getStorageInfo(id: id) } }
-              var out = [MTPStorageInfo]()
-              out.reserveCapacity(retryIds.count)
-              for try await s in g { out.append(s) }
-              return out
-            }
-          }
+          ids = try await link.getStorageIDs()
         }
 
         // All retries exhausted, return empty
-        return []
+        if ids.isEmpty { return [] }
       }
 
       return try await withThrowingTaskGroup(of: MTPStorageInfo.self) { g in

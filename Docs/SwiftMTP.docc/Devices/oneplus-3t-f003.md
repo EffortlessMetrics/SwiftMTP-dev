@@ -1,12 +1,11 @@
-# Oneplus 3T F003
+# OnePlus 3T F003
 
 @Metadata {
-    @DisplayName: "Oneplus 3T F003"
-    @PageKind: article
-    @Available: iOS 15.0, macOS 12.0
+    @DisplayName("OnePlus 3T")
+    @PageKind(article)
 }
 
-Device-specific configuration for Oneplus 3T F003 MTP implementation.
+Device-specific configuration for OnePlus 3T F003 MTP implementation.
 
 ## Identity
 
@@ -61,7 +60,7 @@ Device-specific configuration for Oneplus 3T F003 MTP implementation.
 
 - **Author**: Steven Zimmerman
 - **Date**: 2026-02-07
-- **Commit**: Unknown
+- **Commit**: (See git history for this device file)
 
 ### Evidence Artifacts
 - [Device Probe](Docs/benchmarks/probes/oneplus3t-probe.txt)

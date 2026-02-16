@@ -257,6 +257,9 @@ public enum CollectCommand {
         case .timeout:
           fputs("❌ collect failed: \(error)\n", stderr)
           return .tempfail
+        case .redactionCheckFailed:
+          fputs("❌ collect failed: \(error)\n", stderr)
+          return .software
         }
       }
       

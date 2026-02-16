@@ -196,20 +196,15 @@ extension MTPDeviceActor {
     defer { ProcessInfo.processInfo.endActivity(activity) }
 
     do {
+      let policy = await self.devicePolicy
+
       // Check if device requires subfolder for writes (quirk flag)
-      let requiresSubfolder: Bool
-      let preferredWriteFolder: String?
-      if let policy = await self.devicePolicy {
-        requiresSubfolder = policy.flags.writeToSubfolderOnly
-        preferredWriteFolder = policy.flags.preferredWriteFolder
-      } else {
-        requiresSubfolder = false
-        preferredWriteFolder = nil
-      }
+      let requiresSubfolder = policy?.flags.writeToSubfolderOnly ?? false
+      let preferredWriteFolder = policy?.flags.preferredWriteFolder
 
       // Check if device requires 0xFFFFFFFF for storage ID in SendObjectInfo
-      let forceFFFFFFF = (await self.devicePolicy?.flags.forceFFFFFFFForSendObject) ?? false
-      let useEmptyDates = (await self.devicePolicy?.flags.emptyDatesInSendObject) ?? false
+      let forceFFFFFFF = policy?.flags.forceFFFFFFFForSendObject ?? false
+      let useEmptyDates = policy?.flags.emptyDatesInSendObject ?? false
 
       // Determine storage ID and parent handle using WriteTargetLadder
       let availableStorages = try? await self.storages()
@@ -247,13 +242,22 @@ extension MTPDeviceActor {
         }
       }
 
-      func performWrite(to parent: MTPObjectHandle?, storageRaw: UInt32) async throws -> Int {
+      struct WriteAttemptParameters: Equatable {
+        let forceWildcardStorage: Bool
+        let useEmptyDates: Bool
+      }
+
+      func performWrite(
+        to parent: MTPObjectHandle?,
+        storageRaw: UInt32,
+        params: WriteAttemptParameters
+      ) async throws -> UInt64 {
         let source = try FileSource(url: url)
         defer { try? source.close() }
 
         let sourceAdapter = SendableSourceAdapter(source)
         let progressTracker = AtomicProgressTracker()
-        let sendObjectStorageID = forceFFFFFFF ? 0xFFFFFFFF : storageRaw
+        let sendObjectStorageID = params.forceWildcardStorage ? 0xFFFFFFFF : storageRaw
         try await ProtoTransfer.writeWholeObject(
           storageID: sendObjectStorageID, parent: parent, name: name, size: size,
           dataHandler: { buf in
@@ -262,36 +266,91 @@ extension MTPDeviceActor {
             progress.completedUnitCount = Int64(totalBytes)
             return Int(produced)
           }, on: link, ioTimeoutMs: timeout,
-          forceFFFFFFF: forceFFFFFFF,
-          useEmptyDates: useEmptyDates
+          forceFFFFFFF: params.forceWildcardStorage,
+          useEmptyDates: params.useEmptyDates
         )
         return progressTracker.total
       }
 
-      var bytesRead: Int
+      var bytesRead: UInt64 = 0
+      let primaryParams = WriteAttemptParameters(
+        forceWildcardStorage: forceFFFFFFF,
+        useEmptyDates: useEmptyDates
+      )
 
       do {
-        bytesRead = try await performWrite(to: resolvedParent, storageRaw: targetStorageRaw)
-      } catch {
-        guard case .protocolError(let code, _) = error as? MTPError, code == 0x201D,
-              requiresSubfolder, resolvedParent == nil,
-              let firstStorage = availableStorages?.first
-        else { throw error }
-
-        Logger(subsystem: "SwiftMTP", category: "write")
-          .warning("Initial SendObject hit 0x201D; retrying with WriteTargetLadder fallback parent")
-
-        let fallback = try await WriteTargetLadder.resolveTarget(
-          device: self,
-          storage: firstStorage.id,
-          explicitParent: nil,
-          requiresSubfolder: true,
-          preferredWriteFolder: preferredWriteFolder
+        bytesRead = try await performWrite(
+          to: resolvedParent,
+          storageRaw: targetStorageRaw,
+          params: primaryParams
         )
-        targetStorageRaw = fallback.0.raw
-        resolvedParent = fallback.1
+      } catch {
+        guard case .protocolError(let code, _) = error as? MTPError, code == 0x201D else {
+          throw error
+        }
 
-        bytesRead = try await performWrite(to: resolvedParent, storageRaw: targetStorageRaw)
+        let configuredStrategy = policy?.fallbacks.write.rawValue ?? "unknown"
+        Logger(subsystem: "SwiftMTP", category: "write")
+          .warning(
+            "SendObject returned 0x201D (strategy=\(configuredStrategy)); retrying with conservative parameters")
+
+        // Retry ladder for devices that misreport partial-write behavior or reject rich metadata.
+        var retries: [WriteAttemptParameters] = []
+        func addRetry(_ params: WriteAttemptParameters) {
+          guard params != primaryParams else { return }
+          guard !retries.contains(params) else { return }
+          retries.append(params)
+        }
+        addRetry(WriteAttemptParameters(
+          forceWildcardStorage: primaryParams.forceWildcardStorage,
+          useEmptyDates: true
+        ))
+        addRetry(WriteAttemptParameters(
+          forceWildcardStorage: true,
+          useEmptyDates: primaryParams.useEmptyDates
+        ))
+        addRetry(WriteAttemptParameters(forceWildcardStorage: true, useEmptyDates: true))
+
+        var lastInvalidParameterError: Error = error
+        var recovered = false
+        for retryParams in retries {
+          do {
+            bytesRead = try await performWrite(
+              to: resolvedParent,
+              storageRaw: targetStorageRaw,
+              params: retryParams
+            )
+            recovered = true
+            break
+          } catch {
+            guard case .protocolError(let retryCode, _) = error as? MTPError, retryCode == 0x201D
+            else {
+              throw error
+            }
+            lastInvalidParameterError = error
+          }
+        }
+
+        if !recovered, (parent == nil || parent == 0), let firstStorage = availableStorages?.first {
+          let fallback = try await WriteTargetLadder.resolveTarget(
+            device: self,
+            storage: firstStorage.id,
+            explicitParent: nil,
+            requiresSubfolder: true,
+            preferredWriteFolder: preferredWriteFolder
+          )
+          targetStorageRaw = fallback.0.raw
+          resolvedParent = fallback.1
+
+          bytesRead = try await performWrite(
+            to: resolvedParent,
+            storageRaw: targetStorageRaw,
+            params: WriteAttemptParameters(forceWildcardStorage: true, useEmptyDates: true)
+          )
+          recovered = true
+        }
+
+        if !recovered { throw lastInvalidParameterError }
       }
 
       // Update journal after transfer completes

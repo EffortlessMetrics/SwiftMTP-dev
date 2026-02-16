@@ -202,6 +202,17 @@ func claimCandidate(
         c.ifaceNumber, c.bulkIn, c.bulkOut, c.ifaceClass))
   }
 
+  // Always attempt auto-detach before claim on first contact.
+  // Some devices need this even before we can "learn" a profile.
+  let autoDetachRC = libusb_set_auto_detach_kernel_driver(handle, 1)
+  if debug {
+    if autoDetachRC == LIBUSB_SUCCESS {
+      print("   [Claim] set_auto_detach_kernel_driver: enabled")
+    } else {
+      print("   [Claim] set_auto_detach_kernel_driver rc=\(autoDetachRC) (continuing anyway)")
+    }
+  }
+
   // Try claim with optional retry for vendor-specific devices
   for attempt in 0...retryCount {
     if attempt > 0 {
@@ -647,6 +658,8 @@ func tryProbeAllCandidates(
   postProbeStabilizeMs: Int,
   debug: Bool
 ) -> ProbeAllResult {
+  var lastProbeStep: String?
+
   for candidate in candidates {
     let start = DispatchTime.now()
     let isVendorSpecific = candidate.ifaceClass == 0xff
@@ -667,25 +680,14 @@ func tryProbeAllCandidates(
       continue
     }
 
-    let probeResult: ProbeLadderResult
-    if isVendorSpecific {
-      // Use probe ladder for vendor-specific interfaces (Samsung, etc.)
-      probeResult = probeCandidateWithLadder(
-        handle: handle, candidate,
-        timeoutMs: UInt32(handshakeTimeoutMs),
-        debug: debug
-      )
-    } else {
-      // Use standard probe for canonical MTP interfaces
-      let (ok, info) = probeCandidate(
-        handle: handle, candidate, timeoutMs: UInt32(handshakeTimeoutMs)
-      )
-      probeResult = ProbeLadderResult(
-        succeeded: ok,
-        cachedDeviceInfoData: info,
-        stepAttempted: ok ? "sessionlessGetDeviceInfo" : "none"
-      )
-    }
+    // Use the same ladder for canonical and vendor-specific interfaces.
+    // Pixel-class devices can require OpenSession-first probing.
+    let probeResult = probeCandidateWithLadder(
+      handle: handle, candidate,
+      timeoutMs: UInt32(handshakeTimeoutMs),
+      debug: debug
+    )
+    lastProbeStep = probeResult.stepAttempted
 
     let elapsed = Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
 
@@ -711,5 +713,5 @@ func tryProbeAllCandidates(
       releaseCandidate(handle: handle, candidate)
     }
   }
-  return ProbeAllResult(candidate: nil, cachedDeviceInfo: nil, probeStep: nil)
+  return ProbeAllResult(candidate: nil, cachedDeviceInfo: nil, probeStep: lastProbeStep)
 }
