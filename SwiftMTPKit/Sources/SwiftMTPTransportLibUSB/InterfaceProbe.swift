@@ -380,9 +380,10 @@ func probeCandidateWithLadder(
 func probeOpenSession(
   handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32, debug: Bool
 ) -> Bool {
-  let txid: UInt32 = 1
-  // OpenSession params: transaction ID (32-bit)
-  let cmdBytes = makePTPCommand(opcode: 0x1002, txid: txid, params: [txid])
+  // OpenSession uses transaction ID 0, with session ID 1 as parameter.
+  let txid: UInt32 = 0
+  let sessionID: UInt32 = 1
+  let cmdBytes = makePTPCommand(opcode: 0x1002, txid: txid, params: [sessionID])
 
   var sent: Int32 = 0
   let writeRC = cmdBytes.withUnsafeBytes { ptr -> Int32 in
@@ -418,12 +419,12 @@ func probeOpenSession(
   return false
 }
 
-/// Send GetStorageIDs (0x1005) to validate the device speaks MTP.
+/// Send GetStorageIDs (0x1004) to validate the device speaks MTP.
 func probeGetStorageIDs(
   handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32, debug: Bool
 ) -> Bool {
   let txid: UInt32 = 1
-  let cmdBytes = makePTPCommand(opcode: 0x1005, txid: txid, params: [])
+  let cmdBytes = makePTPCommand(opcode: 0x1004, txid: txid, params: [])
 
   var sent: Int32 = 0
   let writeRC = cmdBytes.withUnsafeBytes { ptr -> Int32 in

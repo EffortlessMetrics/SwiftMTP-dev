@@ -28,7 +28,7 @@ Current bring-up status for Xiaomi Mi Note 2 (`VID:PID 2717:ff40`).
 
 | Mode | Evidence | Open + DeviceInfo | Storage IDs | Root List | Read Smoke | Write Smoke | Delete Smoke | Result |
 |---|---|---|---|---|---|---|---|---|
-| MTP (storage gated) | `20260216-015505` | Pass | `0` storages | Fail | Skipped | Skipped | Skipped | `partial` |
+| MTP (storage gated) | `20260216-015505` | Pass | `0` storages | Fail | Skipped | Skipped | Skipped | `storage_gated` |
 | MTP (storage exposed) | `20260212-053429` | Pass | `1` storage | Pass (`416` root objects) | Not run | Fail (`InvalidParameter 0x201D` on write to `Download`) | Skipped | `partial` |
 | PTP | Not yet captured | Pending | Pending | Pending | Pending | Pending | Pending | Pending |
 | Charge-only | Not yet captured | Pending | Pending | Pending | Pending | Pending | Pending | Pending |

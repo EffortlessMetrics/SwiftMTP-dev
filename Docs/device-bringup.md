@@ -12,6 +12,10 @@ This avoids binary "works/doesn't work" decisions and gives repeatable evidence 
 # Full bring-up with automatic artifact collection
 ./scripts/device-bringup.sh --mode mtp-unlocked --vid 0x18d1 --pid 0x4ee1
 
+# Full bring-up with strict unlocked gate (all green checks required)
+./scripts/device-bringup.sh --mode mtp-unlocked --strict-unlocked \
+  --expect 04e8:6860 --expect 2717:ff40 --expect 18d1:4ee1 --expect 2a70:f003
+
 # Quick smoke test
 swift run swiftmtp --real-only probe
 
@@ -82,6 +86,7 @@ Connected-lab reports classify failures as:
 - `class2-claim`: interface present but claim/access denied or busy
 - `class3-handshake`: claimed link but OpenSession/GetDeviceInfo fails
 - `class4-transfer`: read/write/delete fails after handshake succeeds
+- `storage_gated`: session opened but `GetStorageIDs` returned zero (typically locked/unapproved Android state)
 
 ### Recovery Patterns
 
@@ -91,6 +96,7 @@ Connected-lab reports classify failures as:
 | class2 | Unplug/replug, reset USB on host, check sandbox permissions |
 | class3 | Add stabilization delay (postOpenSession hook), handle DEVICE_BUSY |
 | class4 | Adjust timeouts, check quirk settings, try smaller chunk sizes |
+| storage_gated | Unlock phone, approve file access prompt, then unplug/replug and rerun |
 
 ## Device Page Template
 

@@ -27,6 +27,7 @@ struct DeviceLabCommand {
     case claim = "class2-claim"
     case handshake = "class3-handshake"
     case transfer = "class4-transfer"
+    case storageGated = "storage_gated"
   }
 
   private struct ReadValidation: Codable, Sendable {
@@ -56,6 +57,7 @@ struct DeviceLabCommand {
     var succeeded = false
     var skipped = false
     var reason: String?
+    var strategyRung: String?
     var bytesUploaded = 0
     var remoteFolder: String?
     var remoteFile: String?
@@ -136,6 +138,7 @@ struct DeviceLabCommand {
     "04e8:6860": .readBestEffort,
     "18d1:4ee1": .readBestEffort,
   ]
+  private static let connectedLabSchemaVersion = "1.2.0"
 
   static func run(flags: CLIFlags, args: [String]) async {
     guard let mode = args.first, mode == "connected" else {
@@ -171,7 +174,7 @@ struct DeviceLabCommand {
             totalDevices: 0, passed: 0, partial: 0, blocked: 0, failed: 0,
             missingExpected: hasExplicitFilter ? [] : Array(expectedPolicies.keys).sorted())
           let emptyReport = ConnectedLabReport(
-            schemaVersion: "1.1.0",
+            schemaVersion: connectedLabSchemaVersion,
             generatedAt: Date(),
             outputPath: portableOutputPath,
             connectedDeviceCount: 0,
@@ -254,7 +257,7 @@ struct DeviceLabCommand {
       )
 
       let report = ConnectedLabReport(
-        schemaVersion: "1.1.0",
+        schemaVersion: connectedLabSchemaVersion,
         generatedAt: Date(),
         outputPath: portableOutputPath,
         connectedDeviceCount: connected.count,
@@ -769,6 +772,7 @@ struct DeviceLabCommand {
     smoke.declaredObjectSizeBytes = UInt64(payloadSize)
     smoke.objectFormatCode = String(format: "0x%04x", inferredFormatCode(for: fileName))
     smoke.writeStrategy = await device.devicePolicy?.fallbacks.write.rawValue
+    smoke.strategyRung = "primary-target"
 
     let tempURL = fm.temporaryDirectory.appendingPathComponent(fileName)
     let payload = Data(repeating: 0x5A, count: payloadSize)
@@ -798,6 +802,7 @@ struct DeviceLabCommand {
         ) {
           smoke.succeeded = true
           smoke.uploadedHandle = uploaded.handle
+          smoke.strategyRung = "timeout-verify-existing"
           smoke.warning = appendWarning(
             smoke.warning, "write returned timeout but object exists on device")
           smoke.warning = appendWarning(smoke.warning, "original write error: \(writeError)")
@@ -807,6 +812,7 @@ struct DeviceLabCommand {
 
       if !smoke.succeeded {
         smoke.skipped = true
+        smoke.strategyRung = "target-ladder"
         smoke.reason = "SendObject rejected by device (\(error)); attempting fallback target"
         return smoke
       }
@@ -956,39 +962,77 @@ struct DeviceLabCommand {
       ]
       .compactMap { $0 } + result.operations.compactMap(\.error)
     let combined = combinedErrors.joined(separator: " ").lowercased()
+    let hasTransferErrors =
+      result.readSmoke.error != nil || result.write.error != nil || result.write.deleteError != nil
 
-    if !result.read.openSucceeded {
-      if combined.contains("no mtp") || combined.contains("no device")
-        || combined.contains("no interface") || combined.contains("no candidate")
+    result.failureClass = classifyFailureClass(
+      openSucceeded: result.read.openSucceeded,
+      deviceInfoSucceeded: result.read.deviceInfoSucceeded,
+      storagesSucceeded: result.read.storagesSucceeded,
+      storageCount: result.read.storageCount,
+      rootListingSucceeded: result.read.rootListingSucceeded,
+      hasTransferErrors: hasTransferErrors,
+      combinedErrorText: combined
+    )
+  }
+
+  private static func classifyFailureClass(
+    openSucceeded: Bool,
+    deviceInfoSucceeded: Bool,
+    storagesSucceeded: Bool,
+    storageCount: Int,
+    rootListingSucceeded: Bool,
+    hasTransferErrors: Bool,
+    combinedErrorText: String
+  ) -> FailureClass? {
+    if !openSucceeded {
+      if combinedErrorText.contains("no mtp") || combinedErrorText.contains("no device")
+        || combinedErrorText.contains("no interface") || combinedErrorText.contains("no candidate")
       {
-        result.failureClass = .enumeration
-      } else if combined.contains("access denied") || combined.contains("busy")
-        || combined.contains("claim restrictions")
-        || combined.contains("claim failed")
-      {
-        result.failureClass = .claim
-      } else if combined.contains("handshake") || combined.contains("open session")
-        || combined.contains("did not complete mtp command")
-        || combined.contains("claimed but did not complete")
-      {
-        result.failureClass = .handshake
-      } else {
-        result.failureClass = .handshake
+        return .enumeration
       }
-      return
+      if combinedErrorText.contains("access denied") || combinedErrorText.contains("busy")
+        || combinedErrorText.contains("claim restrictions")
+        || combinedErrorText.contains("claim failed")
+      {
+        return .claim
+      }
+      return .handshake
     }
 
-    if !result.read.deviceInfoSucceeded || !result.read.storagesSucceeded
-      || result.read.storageCount == 0 || !result.read.rootListingSucceeded
-    {
-      result.failureClass = .handshake
-      return
+    if deviceInfoSucceeded && storagesSucceeded && storageCount == 0 {
+      return .storageGated
     }
 
-    if result.readSmoke.error != nil || result.write.error != nil || result.write.deleteError != nil {
-      result.failureClass = .transfer
-      return
+    if !deviceInfoSucceeded || !storagesSucceeded || !rootListingSucceeded {
+      return .handshake
     }
+
+    if hasTransferErrors {
+      return .transfer
+    }
+
+    return nil
+  }
+
+  static func classifyFailureClassForState(
+    openSucceeded: Bool,
+    deviceInfoSucceeded: Bool,
+    storagesSucceeded: Bool,
+    storageCount: Int,
+    rootListingSucceeded: Bool,
+    hasTransferErrors: Bool,
+    combinedErrorText: String
+  ) -> String? {
+    classifyFailureClass(
+      openSucceeded: openSucceeded,
+      deviceInfoSucceeded: deviceInfoSucceeded,
+      storagesSucceeded: storagesSucceeded,
+      storageCount: storageCount,
+      rootListingSucceeded: rootListingSucceeded,
+      hasTransferErrors: hasTransferErrors,
+      combinedErrorText: combinedErrorText.lowercased()
+    )?.rawValue
   }
 
   private static func elapsedMs(since start: DispatchTime) -> Int {

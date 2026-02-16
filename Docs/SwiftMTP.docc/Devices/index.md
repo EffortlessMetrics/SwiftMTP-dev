@@ -18,8 +18,8 @@ Mode-by-mode bring-up status for currently profiled devices.
 | Device | VID:PID | Current Result | Guide |
 |---|---|---|---|
 | Google Pixel 7 | `18d1:4ee1` | `class3-handshake` (open fails after claim) | [Pixel 7](google-pixel-7-4ee1.md) |
-| Samsung Android | `04e8:6860` | Flaky open; when open succeeds storage is currently gated (`storageCount=0`) | [Samsung 6860](samsung-android-6860.md) |
-| Xiaomi Mi Note 2 | `2717:ff40` | Opens; currently gated (`storageCount=0`) in latest run, historical write `0x201D` case documented | [Xiaomi ff40](xiaomi-mi-note-2-ff40.md) |
+| Samsung Android | `04e8:6860` | `storage_gated` when open succeeds (`GetStorageIDs` returns zero) | [Samsung 6860](samsung-android-6860.md) |
+| Xiaomi Mi Note 2 | `2717:ff40` | `storage_gated` in latest run (`storageCount=0`), historical write `0x201D` case documented | [Xiaomi ff40](xiaomi-mi-note-2-ff40.md) |
 | OnePlus 3T | `2a70:f003` | Not present in latest run; last captured as `class3-handshake` | [OnePlus f003](oneplus-3t-f003.md) |
 
 ## Mode Labels Used in Guides

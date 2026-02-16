@@ -300,40 +300,24 @@ extension MTPDeviceActor {
           .warning(
             "SendObject failed (\(retryReason), strategy=\(configuredStrategy)); retrying with conservative parameters")
 
-        // Retry ladder for devices that misreport partial-write behavior or reject rich metadata.
-        var retries: [WriteAttemptParameters] = []
-        func addRetry(_ params: WriteAttemptParameters) {
-          guard params != primaryParams else { return }
-          guard !retries.contains(params) else { return }
-          retries.append(params)
-        }
-        switch retryClass {
-        case .invalidParameter:
-          addRetry(WriteAttemptParameters(
-            forceWildcardStorage: primaryParams.forceWildcardStorage,
-            useEmptyDates: true
-          ))
-          addRetry(WriteAttemptParameters(
-            forceWildcardStorage: true,
-            useEmptyDates: primaryParams.useEmptyDates
-          ))
-          addRetry(WriteAttemptParameters(forceWildcardStorage: true, useEmptyDates: true))
-        case .transientTransport:
-          // Keep timeout/busy retries intentionally small so call sites can continue target ladders.
-          addRetry(WriteAttemptParameters(forceWildcardStorage: true, useEmptyDates: true))
-        }
-
+        let conservativeParams = WriteAttemptParameters(
+          forceWildcardStorage: true,
+          useEmptyDates: true
+        )
         var lastRetryableError: Error = error
         var recovered = false
-        for retryParams in retries {
+
+        // Single conservative retry (whole-object compatible metadata/profile).
+        if conservativeParams != primaryParams {
           do {
+            Logger(subsystem: "SwiftMTP", category: "write")
+              .info("SendObject retry rung=conservative (wildcard storage + empty dates)")
             bytesRead = try await performWrite(
               to: resolvedParent,
               storageRaw: targetStorageRaw,
-              params: retryParams
+              params: conservativeParams
             )
             recovered = true
-            break
           } catch {
             guard retryableSendObjectFailureReason(error) != nil else {
               throw error
@@ -342,25 +326,34 @@ extension MTPDeviceActor {
           }
         }
 
+        // For InvalidParameter at root, immediately switch target folder after one conservative retry.
         if !recovered, retryClass == .invalidParameter, (parent == nil || parent == 0),
           let firstStorage = availableStorages?.first
         {
-          let fallback = try await WriteTargetLadder.resolveTarget(
-            device: self,
-            storage: firstStorage.id,
-            explicitParent: nil,
-            requiresSubfolder: true,
-            preferredWriteFolder: preferredWriteFolder
-          )
-          targetStorageRaw = fallback.0.raw
-          resolvedParent = fallback.1
-
-          bytesRead = try await performWrite(
-            to: resolvedParent,
-            storageRaw: targetStorageRaw,
-            params: WriteAttemptParameters(forceWildcardStorage: true, useEmptyDates: true)
-          )
-          recovered = true
+          do {
+            Logger(subsystem: "SwiftMTP", category: "write")
+              .info("SendObject retry rung=target-ladder (Download/DCIM/.../SwiftMTP)")
+            let fallback = try await WriteTargetLadder.resolveTarget(
+              device: self,
+              storage: firstStorage.id,
+              explicitParent: nil,
+              requiresSubfolder: true,
+              preferredWriteFolder: preferredWriteFolder
+            )
+            targetStorageRaw = fallback.0.raw
+            resolvedParent = fallback.1
+            bytesRead = try await performWrite(
+              to: resolvedParent,
+              storageRaw: targetStorageRaw,
+              params: conservativeParams
+            )
+            recovered = true
+          } catch {
+            guard retryableSendObjectFailureReason(error) != nil else {
+              throw error
+            }
+            lastRetryableError = error
+          }
         }
 
         if !recovered { throw lastRetryableError }

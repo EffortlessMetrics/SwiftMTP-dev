@@ -161,6 +161,21 @@ final class LibUSBErrorHandlingTests: XCTestCase {
         XCTAssertGreaterThan(retryCount, 0)
     }
 
+    func testNoProgressTimeoutRecoveryGateMatchesSentZeroTimeout() {
+        let shouldRecover = MTPUSBLink.shouldRecoverNoProgressTimeout(rc: -7, sent: 0)
+        XCTAssertTrue(shouldRecover)
+    }
+
+    func testNoProgressTimeoutRecoveryGateRejectsPartialProgress() {
+        let shouldRecover = MTPUSBLink.shouldRecoverNoProgressTimeout(rc: -7, sent: 4)
+        XCTAssertFalse(shouldRecover)
+    }
+
+    func testNoProgressTimeoutRecoveryGateRejectsNonTimeout() {
+        let shouldRecover = MTPUSBLink.shouldRecoverNoProgressTimeout(rc: -9, sent: 0)
+        XCTAssertFalse(shouldRecover)
+    }
+
     func testDeviceReconnection() {
         // Test device ID persistence after reconnection
         let originalID = MTPDeviceID(raw: "18d1:4ee7@1:5")

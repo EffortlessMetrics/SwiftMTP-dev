@@ -73,6 +73,32 @@ final class DeviceLabToolingTests: XCTestCase {
     XCTAssertEqual(result.devices.map(\.id.raw), ["a", "b"])
   }
 
+  func testApplyConnectedFilterWithNoMatchesReturnsEmpty() {
+    let devices = [
+      makeDevice(id: "a", vid: 0x04e8, pid: 0x6860, bus: 1, address: 4),
+      makeDevice(id: "b", vid: 0x2717, pid: 0xff40, bus: 2, address: 5),
+    ]
+
+    let flags = makeFlags(targetVID: "0x18d1", targetPID: "0x4ee1", targetBus: 9, targetAddress: 9)
+    let result = DeviceLabCommand.applyConnectedFilter(discovered: devices, flags: flags)
+
+    XCTAssertTrue(result.hasExplicitFilter)
+    XCTAssertTrue(result.devices.isEmpty)
+  }
+
+  func testClassifyFailureClassForStateStorageGated() {
+    let failureClass = DeviceLabCommand.classifyFailureClassForState(
+      openSucceeded: true,
+      deviceInfoSucceeded: true,
+      storagesSucceeded: true,
+      storageCount: 0,
+      rootListingSucceeded: false,
+      hasTransferErrors: false,
+      combinedErrorText: ""
+    )
+    XCTAssertEqual(failureClass, "storage_gated")
+  }
+
   func testLooksLikeRetryableWriteFailure() {
     XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("protocolError(code=0x201D)"))
     XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("transport(SwiftMTPCore.TransportError.timeout)"))

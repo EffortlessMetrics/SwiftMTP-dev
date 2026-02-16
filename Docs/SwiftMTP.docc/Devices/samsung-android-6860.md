@@ -30,8 +30,8 @@ Current bring-up status for Samsung Android (`VID:PID 04e8:6860`).
 | Mode | Evidence | Open + DeviceInfo | Storage IDs | Root List | Read Smoke | Write Smoke | Delete Smoke | Result |
 |---|---|---|---|---|---|---|---|---|
 | MTP (handshake blocked) | `20260216-015505` | Fail | N/A | N/A | Skipped | Skipped | Skipped | `class3-handshake` |
-| MTP (storage gated) | `20260216-013705` | Pass | `0` storages | Fail | Skipped | Skipped | Skipped | `partial` |
-| MTP (storage gated) | `20260212-053429` | Pass | `0` storages | Fail | Skipped | Skipped | Skipped | `partial` |
+| MTP (storage gated) | `20260216-013705` | Pass | `0` storages | Fail | Skipped | Skipped | Skipped | `storage_gated` |
+| MTP (storage gated) | `20260212-053429` | Pass | `0` storages | Fail | Skipped | Skipped | Skipped | `storage_gated` |
 | MTP (storage exposed) | Not yet captured | Pending | Pending | Pending | Pending | Pending | Pending | Pending |
 | PTP | Not yet captured | Pending | Pending | Pending | Pending | Pending | Pending | Pending |
 | Charge-only | Not yet captured | Pending | Pending | Pending | Pending | Pending | Pending | Pending |

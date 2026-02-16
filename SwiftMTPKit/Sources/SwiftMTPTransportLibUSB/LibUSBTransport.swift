@@ -435,6 +435,10 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   /// USB interface/endpoint metadata from transport probing.
   public let linkDescriptor: MTPLinkDescriptor?
 
+  static func shouldRecoverNoProgressTimeout(rc: Int32, sent: Int32) -> Bool {
+    rc == Int32(LIBUSB_ERROR_TIMEOUT.rawValue) && sent == 0
+  }
+
   init(
     handle: OpaquePointer, device: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8,
     epEvt: UInt8, config: SwiftMTPConfig, manufacturer: String, model: String,
@@ -748,10 +752,8 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
     if debug { print(String(format: "   [USB] op=0x%04x tx=%u phase=COMMAND", command.code, txid)) }
     let cmdBytes = makePTPCommand(opcode: command.code, txid: txid, params: command.params)
-    try cmdBytes.withUnsafeBytes {
-      try bulkWriteAll(
-        outEP, from: $0.baseAddress!, count: $0.count, timeout: UInt32(config.ioTimeoutMs))
-    }
+    try writeCommandContainerWithRecovery(
+      cmdBytes, opcode: command.code, txid: txid, timeout: UInt32(config.ioTimeoutMs), debug: debug)
 
     if let produce = dataOutHandler {
       if debug {
@@ -854,6 +856,163 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       params.append(param)
     }
     return PTPResponseResult(code: rHdr.code, txid: rHdr.txid, params: params)
+  }
+
+  private struct CommandWriteAttempt {
+    let rc: Int32
+    let sent: Int32
+    let expected: Int32
+
+    var succeeded: Bool { rc == 0 && sent == expected }
+    var isNoProgressTimeout: Bool {
+      MTPUSBLink.shouldRecoverNoProgressTimeout(rc: rc, sent: sent)
+    }
+  }
+
+  private func attemptCommandWrite(_ bytes: [UInt8], timeout: UInt32) -> CommandWriteAttempt {
+    var sent: Int32 = 0
+    let rc = bytes.withUnsafeBytes { ptr -> Int32 in
+      libusb_bulk_transfer(
+        h, outEP,
+        UnsafeMutablePointer(
+          mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
+        Int32(bytes.count), &sent, timeout)
+    }
+    return CommandWriteAttempt(rc: rc, sent: sent, expected: Int32(bytes.count))
+  }
+
+  private func throwCommandWriteFailure(_ attempt: CommandWriteAttempt, context: String) throws {
+    if attempt.rc == 0, attempt.sent != attempt.expected {
+      throw MTPError.transport(
+        .io("\(context): short write sent=\(attempt.sent)/\(attempt.expected)"))
+    }
+    if attempt.isNoProgressTimeout {
+      throw MTPError.transport(
+        .io("\(context): command-phase timeout with no progress (sent=0)"))
+    }
+    throw MTPError.transport(mapLibusb(attempt.rc))
+  }
+
+  private func writeCommandContainerWithRecovery(
+    _ bytes: [UInt8], opcode: UInt16, txid: UInt32, timeout: UInt32, debug: Bool
+  ) throws {
+    let initialAttempt = attemptCommandWrite(bytes, timeout: timeout)
+    if initialAttempt.succeeded { return }
+    guard initialAttempt.isNoProgressTimeout else {
+      try throwCommandWriteFailure(initialAttempt, context: "command write failed")
+      return
+    }
+
+    if debug {
+      print(
+        String(
+          format:
+            "   [USB][Recover] op=0x%04x tx=%u no-progress timeout detected (rc=%d sent=%d), running light rung",
+          opcode, txid, initialAttempt.rc, initialAttempt.sent))
+    }
+    _ = performCommandNoProgressLightRecovery(opcode: opcode, txid: txid, debug: debug)
+    let lightRetry = attemptCommandWrite(bytes, timeout: timeout)
+    if lightRetry.succeeded {
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover] op=0x%04x tx=%u recovered after light rung",
+            opcode, txid))
+      }
+      return
+    }
+
+    if debug {
+      print(
+        String(
+          format:
+            "   [USB][Recover] op=0x%04x tx=%u light rung did not recover (rc=%d sent=%d), running hard rung",
+          opcode, txid, lightRetry.rc, lightRetry.sent))
+    }
+    guard performCommandNoProgressHardRecovery(opcode: opcode, txid: txid, debug: debug) else {
+      try throwCommandWriteFailure(lightRetry, context: "command write failed after light recovery")
+      return
+    }
+    let hardRetry = attemptCommandWrite(bytes, timeout: timeout)
+    if hardRetry.succeeded {
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover] op=0x%04x tx=%u recovered after hard rung",
+            opcode, txid))
+      }
+      return
+    }
+    try throwCommandWriteFailure(
+      hardRetry, context: "command write failed after recovery rungs")
+  }
+
+  @discardableResult
+  private func performCommandNoProgressLightRecovery(opcode: UInt16, txid: UInt32, debug: Bool)
+    -> Bool
+  {
+    let clearOutRC = libusb_clear_halt(h, outEP)
+    let clearInRC = libusb_clear_halt(h, inEP)
+    let clearEventRC: Int32 = evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+    let classResetRC = libusb_control_transfer(
+      h, 0x21, 0x66, 0, UInt16(iface), nil, 0, 2000)
+
+    setConfigurationIfNeeded(handle: h, device: dev, force: true, debug: debug)
+    let setAltRC = libusb_set_interface_alt_setting(h, Int32(iface), 0)
+
+    let clearOutPostRC = libusb_clear_halt(h, outEP)
+    let clearInPostRC = libusb_clear_halt(h, inEP)
+    let clearEventPostRC: Int32 =
+      evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+
+    usleep(200_000)
+
+    if debug {
+      print(
+        String(
+          format:
+            "   [USB][Recover][Light] op=0x%04x tx=%u clear(out=%d in=%d evt=%d) classReset=%d setAlt0=%d postClear(out=%d in=%d evt=%d)",
+          opcode, txid, clearOutRC, clearInRC, clearEventRC, classResetRC, setAltRC,
+          clearOutPostRC, clearInPostRC, clearEventPostRC))
+    }
+    return true
+  }
+
+  private func performCommandNoProgressHardRecovery(opcode: UInt16, txid: UInt32, debug: Bool)
+    -> Bool
+  {
+    let resetRC = libusb_reset_device(h)
+    if resetRC != 0 {
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover][Hard] op=0x%04x tx=%u reset_device failed rc=%d",
+            opcode, txid, resetRC))
+      }
+      return false
+    }
+
+    usleep(300_000)
+
+    setConfigurationIfNeeded(handle: h, device: dev, force: true, debug: debug)
+    let setAltRC = libusb_set_interface_alt_setting(h, Int32(iface), 0)
+    let clearOutRC = libusb_clear_halt(h, outEP)
+    let clearInRC = libusb_clear_halt(h, inEP)
+    let clearEventRC: Int32 = evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+
+    usleep(200_000)
+
+    if debug {
+      print(
+        String(
+          format:
+            "   [USB][Recover][Hard] op=0x%04x tx=%u reset_device=0 setAlt0=%d clear(out=%d in=%d evt=%d)",
+          opcode, txid, setAltRC, clearOutRC, clearInRC, clearEventRC))
+    }
+    return true
   }
 
   @inline(__always) func bulkWriteAll(
