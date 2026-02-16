@@ -243,6 +243,20 @@ public actor LibUSBTransport: MTPTransport {
       postProbeStabilizeMs: config.postProbeStabilizeMs, debug: debug
     )
 
+    // Pass 1b (aggressive, no reset): force configuration + re-claim + alt=0 + clear_halt,
+    // then rerun ladder once before escalating to reset/reopen.
+    if result.candidate == nil {
+      if debug { print("   [Open] Pass 1 failed, attempting aggressive no-reset retry rung") }
+      result = tryProbeAllCandidatesAggressive(
+        handle: handle,
+        device: dev,
+        candidates: candidates,
+        handshakeTimeoutMs: max(effectiveTimeout, config.handshakeTimeoutMs),
+        postClaimStabilizeMs: max(config.postClaimStabilizeMs, 500),
+        debug: debug
+      )
+    }
+
     // Pass 2 (fallback): if pass 1 fails, do USB reset + teardown + fresh reopen + re-probe.
     // This mirrors the libmtp-style recovery rung used by Pixel/OnePlus-class handshakes.
     if result.candidate == nil {

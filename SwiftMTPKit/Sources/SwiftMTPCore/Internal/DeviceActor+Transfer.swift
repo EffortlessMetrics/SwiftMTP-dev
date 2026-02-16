@@ -285,14 +285,14 @@ extension MTPDeviceActor {
           params: primaryParams
         )
       } catch {
-        guard case .protocolError(let code, _) = error as? MTPError, code == 0x201D else {
+        guard let retryReason = retryableSendObjectFailureReason(error) else {
           throw error
         }
 
         let configuredStrategy = policy?.fallbacks.write.rawValue ?? "unknown"
         Logger(subsystem: "SwiftMTP", category: "write")
           .warning(
-            "SendObject returned 0x201D (strategy=\(configuredStrategy)); retrying with conservative parameters")
+            "SendObject failed (\(retryReason), strategy=\(configuredStrategy)); retrying with conservative parameters")
 
         // Retry ladder for devices that misreport partial-write behavior or reject rich metadata.
         var retries: [WriteAttemptParameters] = []
@@ -311,7 +311,7 @@ extension MTPDeviceActor {
         ))
         addRetry(WriteAttemptParameters(forceWildcardStorage: true, useEmptyDates: true))
 
-        var lastInvalidParameterError: Error = error
+        var lastRetryableError: Error = error
         var recovered = false
         for retryParams in retries {
           do {
@@ -323,11 +323,10 @@ extension MTPDeviceActor {
             recovered = true
             break
           } catch {
-            guard case .protocolError(let retryCode, _) = error as? MTPError, retryCode == 0x201D
-            else {
+            guard retryableSendObjectFailureReason(error) != nil else {
               throw error
             }
-            lastInvalidParameterError = error
+            lastRetryableError = error
           }
         }
 
@@ -350,7 +349,7 @@ extension MTPDeviceActor {
           recovered = true
         }
 
-        if !recovered { throw lastInvalidParameterError }
+        if !recovered { throw lastRetryableError }
       }
 
       // Update journal after transfer completes
@@ -388,6 +387,36 @@ extension MTPDeviceActor {
       }
 
       throw error
+    }
+  }
+
+  private func retryableSendObjectFailureReason(_ error: Error) -> String? {
+    guard let mtpError = error as? MTPError else { return nil }
+    switch mtpError {
+    case .protocolError(let code, _) where code == 0x201D:
+      return "invalid-parameter-0x201d"
+    case .busy:
+      return "busy"
+    case .timeout:
+      return "timeout"
+    case .transport(let transportError):
+      switch transportError {
+      case .timeout:
+        return "transport-timeout"
+      case .busy:
+        return "transport-busy"
+      case .io(let message):
+        let lowered = message.lowercased()
+        if lowered.contains("timeout") || lowered.contains("timed out") || lowered.contains("busy")
+        {
+          return "transport-io-transient"
+        }
+        return nil
+      default:
+        return nil
+      }
+    default:
+      return nil
     }
   }
 }

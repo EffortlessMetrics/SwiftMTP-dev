@@ -676,14 +676,13 @@ func tryProbeAllCandidates(
 
   for candidate in candidates {
     let start = DispatchTime.now()
-    let isVendorSpecific = candidate.ifaceClass == 0xff
 
     if debug {
       print(
         String(
           format: "   [Probe] Trying interface %d (score=%d, class=0x%02x) %@",
           candidate.ifaceNumber, candidate.score, candidate.ifaceClass,
-          isVendorSpecific ? "(vendor-specific, using ladder)" : ""))
+          candidate.ifaceClass == 0xff ? "(vendor-specific, using ladder)" : ""))
     }
 
     do {
@@ -700,7 +699,7 @@ func tryProbeAllCandidates(
       handle: handle, candidate,
       timeoutMs: UInt32(handshakeTimeoutMs),
       debug: debug,
-      includeStorageProbe: isVendorSpecific
+      includeStorageProbe: true
     )
     lastProbeStep = probeResult.stepAttempted
 
@@ -728,5 +727,94 @@ func tryProbeAllCandidates(
       releaseCandidate(handle: handle, candidate)
     }
   }
+  return ProbeAllResult(candidate: nil, cachedDeviceInfo: nil, probeStep: lastProbeStep)
+}
+
+/// Aggressive probe rung used after the normal pass fails.
+/// Forces configuration reapply, reclaims with longer settle, explicitly sets alt=0,
+/// clears bulk endpoint halt states, then reruns the full probe ladder once.
+func tryProbeAllCandidatesAggressive(
+  handle: OpaquePointer,
+  device: OpaquePointer,
+  candidates: [InterfaceCandidate],
+  handshakeTimeoutMs: Int,
+  postClaimStabilizeMs: Int,
+  debug: Bool
+) -> ProbeAllResult {
+  var lastProbeStep: String?
+  let settleMs = max(postClaimStabilizeMs, 500)
+
+  for candidate in candidates {
+    let start = DispatchTime.now()
+    if debug {
+      print(
+        String(
+          format: "   [Probe][Aggressive] Trying interface %d (score=%d, class=0x%02x)",
+          candidate.ifaceNumber, candidate.score, candidate.ifaceClass))
+    }
+
+    setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+
+    do {
+      try claimCandidate(
+        handle: handle,
+        device: device,
+        candidate,
+        postClaimStabilizeMs: settleMs
+      )
+    } catch {
+      if debug { print("   [Probe][Aggressive] Claim failed: \(error)") }
+      continue
+    }
+
+    let iface = Int32(candidate.ifaceNumber)
+    let setAltRC = libusb_set_interface_alt_setting(handle, iface, 0)
+    if debug { print("   [Probe][Aggressive] set_interface_alt_setting(0) rc=\(setAltRC)") }
+
+    let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
+    let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Aggressive] clear_halt in=0x%02x rc=%d out=0x%02x rc=%d",
+          candidate.bulkIn, clearInRC, candidate.bulkOut, clearOutRC))
+    }
+
+    usleep(UInt32(settleMs) * 1000)
+
+    let probeResult = probeCandidateWithLadder(
+      handle: handle,
+      candidate,
+      timeoutMs: UInt32(handshakeTimeoutMs),
+      debug: debug,
+      includeStorageProbe: true
+    )
+    lastProbeStep = probeResult.stepAttempted
+
+    let elapsed = Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
+    if probeResult.succeeded {
+      if debug {
+        print(
+          String(
+            format: "   [Probe][Aggressive] Interface %d OK (%@) in %dms",
+            candidate.ifaceNumber, probeResult.stepAttempted, elapsed))
+      }
+      return ProbeAllResult(
+        candidate: candidate,
+        cachedDeviceInfo: probeResult.cachedDeviceInfoData,
+        probeStep: probeResult.stepAttempted
+      )
+    }
+
+    if debug {
+      print(
+        String(
+          format: "   [Probe][Aggressive] Interface %d failed (%@) in %dms, trying next...",
+          candidate.ifaceNumber, probeResult.stepAttempted, elapsed))
+    }
+    releaseCandidate(handle: handle, candidate)
+  }
+
   return ProbeAllResult(candidate: nil, cachedDeviceInfo: nil, probeStep: lastProbeStep)
 }

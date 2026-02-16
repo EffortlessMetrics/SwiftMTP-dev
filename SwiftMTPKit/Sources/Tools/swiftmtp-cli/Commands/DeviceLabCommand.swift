@@ -154,12 +154,22 @@ struct DeviceLabCommand {
       let usbDumpURL = outputDir.appendingPathComponent("usb-dump.json")
       try writeJSON(usbDump, to: usbDumpURL)
 
-      let connected = try await LibUSBDiscovery.enumerateMTPDevices()
+      let discovered = try await LibUSBDiscovery.enumerateMTPDevices()
+      let filterResult = applyConnectedFilter(discovered: discovered, flags: flags)
+      let filter = filterResult.filter
+      let hasExplicitFilter = filterResult.hasExplicitFilter
+      let connected = filterResult.devices
       if connected.isEmpty {
+        let message: String
+        if hasExplicitFilter {
+          message = "No connected MTP devices matched the filter."
+        } else {
+          message = "No connected MTP devices found."
+        }
         if flags.json {
           let emptySummary = ReportSummary(
             totalDevices: 0, passed: 0, partial: 0, blocked: 0, failed: 0,
-            missingExpected: Array(expectedPolicies.keys).sorted())
+            missingExpected: hasExplicitFilter ? [] : Array(expectedPolicies.keys).sorted())
           let emptyReport = ConnectedLabReport(
             schemaVersion: "1.1.0",
             generatedAt: Date(),
@@ -170,7 +180,10 @@ struct DeviceLabCommand {
           )
           printEncodedJSON(emptyReport)
         } else {
-          print("No connected MTP devices found.")
+          print(message)
+          if hasExplicitFilter {
+            print("Filter: \(describeFilter(filter))")
+          }
         }
         exitNow(.unavailable)
       }
@@ -223,8 +236,13 @@ struct DeviceLabCommand {
       }
 
       let discoveredVIDPIDs = Set(results.map(\.vidpid))
-      let missingExpected = expectedPolicies.keys.sorted()
-        .filter { !discoveredVIDPIDs.contains($0) }
+      let missingExpected: [String]
+      if hasExplicitFilter {
+        missingExpected = []
+      } else {
+        missingExpected = expectedPolicies.keys.sorted()
+          .filter { !discoveredVIDPIDs.contains($0) }
+      }
 
       let summary = ReportSummary(
         totalDevices: results.count,
@@ -683,8 +701,8 @@ struct DeviceLabCommand {
         return attempt
       }
       lastFailure = attempt
-      // Keep climbing the ladder only for InvalidParameter-class failures.
-      if looksLikeInvalidParameter(attempt.error) {
+      // Keep climbing the ladder for known retryable write failures.
+      if looksLikeRetryableWriteFailure(attempt.error) {
         continue
       }
       return attempt
@@ -758,39 +776,87 @@ struct DeviceLabCommand {
         parent: parentHandle, name: fileName, size: UInt64(payloadSize), from: tempURL)
       smoke.succeeded = true
     } catch {
-      smoke.error = "write to \(parentName) failed: \(error)"
-      smoke.skipped = true
-      smoke.reason = "SendObject rejected by device (\(error)); attempting fallback target"
-      return smoke
+      let writeError = "write to \(parentName) failed: \(error)"
+      smoke.error = writeError
+
+      // Timeout-class write errors may still result in an uploaded object.
+      if looksLikeTimeoutFailure(writeError) {
+        if let uploaded = try? await findUploadedObject(
+          device: device,
+          storage: storage.id,
+          parent: parentHandle,
+          name: fileName
+        ) {
+          smoke.succeeded = true
+          smoke.uploadedHandle = uploaded.handle
+          smoke.warning = appendWarning(
+            smoke.warning, "write returned timeout but object exists on device")
+          smoke.warning = appendWarning(smoke.warning, "original write error: \(writeError)")
+          smoke.error = nil
+        }
+      }
+
+      if !smoke.succeeded {
+        smoke.skipped = true
+        smoke.reason = "SendObject rejected by device (\(error)); attempting fallback target"
+        return smoke
+      }
     }
 
     // Verify and cleanup
-    do {
-      let children = try await listObjects(
-        device: device, parent: parentHandle, storage: storage.id, limit: 128)
-      if let uploaded = children.first(where: { $0.name == fileName }) {
-        smoke.uploadedHandle = uploaded.handle
-        smoke.deleteAttempted = true
-        do {
-          try await device.delete(uploaded.handle, recursive: false)
-          smoke.deleteSucceeded = true
-        } catch {
-          smoke.deleteError = "delete failed: \(error)"
+    if smoke.uploadedHandle == nil {
+      do {
+        let children = try await listObjects(
+          device: device, parent: parentHandle, storage: storage.id, limit: 128)
+        if let uploaded = children.first(where: { $0.name == fileName }) {
+          smoke.uploadedHandle = uploaded.handle
+        } else {
+          smoke.warning = appendWarning(
+            smoke.warning, "uploaded file not visible for delete verification")
         }
-      } else {
-        smoke.warning = appendWarning(
-          smoke.warning, "uploaded file not visible for delete verification")
+      } catch {
+        smoke.warning = appendWarning(smoke.warning, "cleanup verification failed: \(error)")
       }
-    } catch {
-      smoke.warning = appendWarning(smoke.warning, "cleanup verification failed: \(error)")
+    }
+
+    if let uploadedHandle = smoke.uploadedHandle {
+      smoke.deleteAttempted = true
+      do {
+        try await device.delete(uploadedHandle, recursive: false)
+        smoke.deleteSucceeded = true
+      } catch {
+        smoke.deleteError = "delete failed: \(error)"
+      }
     }
 
     return smoke
   }
 
-  private static func looksLikeInvalidParameter(_ message: String?) -> Bool {
+  private static func findUploadedObject(
+    device: any MTPDevice,
+    storage: MTPStorageID,
+    parent: MTPObjectHandle,
+    name: String
+  ) async throws -> MTPObjectInfo? {
+    let children = try await listObjects(device: device, parent: parent, storage: storage, limit: 128)
+    return children.first(where: { $0.name == name })
+  }
+
+  static func looksLikeTimeoutFailure(_ message: String?) -> Bool {
     guard let lowered = message?.lowercased() else { return false }
-    return lowered.contains("0x201d") || lowered.contains("invalidparameter")
+    return lowered.contains("timeout") || lowered.contains("timed out")
+  }
+
+  static func looksLikeRetryableWriteFailure(_ message: String?) -> Bool {
+    guard let lowered = message?.lowercased() else { return false }
+    return lowered.contains("0x201d")
+      || lowered.contains("invalidparameter")
+      || lowered.contains("timeout")
+      || lowered.contains("timed out")
+      || lowered.contains("busy")
+      || lowered.contains("temporar")
+      || lowered.contains("io(")
+      || lowered.contains("transport(")
   }
 
   private static func inferredFormatCode(for filename: String) -> UInt16 {
@@ -1076,6 +1142,42 @@ struct DeviceLabCommand {
         $0.vendorID.caseInsensitiveCompare(vid) == .orderedSame
           && $0.productID.caseInsensitiveCompare(pid) == .orderedSame
       }
+  }
+
+  private static func matchesFilter(_ summary: MTPDeviceSummary, filter: DeviceFilter) -> Bool {
+    if let vid = filter.vid, summary.vendorID != vid { return false }
+    if let pid = filter.pid, summary.productID != pid { return false }
+    if let bus = filter.bus {
+      guard let deviceBus = summary.bus, bus == Int(deviceBus) else { return false }
+    }
+    if let address = filter.address {
+      guard let deviceAddress = summary.address, address == Int(deviceAddress) else { return false }
+    }
+    return true
+  }
+
+  static func applyConnectedFilter(discovered: [MTPDeviceSummary], flags: CLIFlags)
+    -> (devices: [MTPDeviceSummary], filter: DeviceFilter, hasExplicitFilter: Bool)
+  {
+    let filter = DeviceFilter(
+      vid: parseUSBIdentifier(flags.targetVID),
+      pid: parseUSBIdentifier(flags.targetPID),
+      bus: flags.targetBus,
+      address: flags.targetAddress
+    )
+    let hasExplicitFilter =
+      filter.vid != nil || filter.pid != nil || filter.bus != nil || filter.address != nil
+    let devices = discovered.filter { matchesFilter($0, filter: filter) }
+    return (devices, filter, hasExplicitFilter)
+  }
+
+  private static func describeFilter(_ filter: DeviceFilter) -> String {
+    var parts: [String] = []
+    if let vid = filter.vid { parts.append(String(format: "vid=%04x", vid)) }
+    if let pid = filter.pid { parts.append(String(format: "pid=%04x", pid)) }
+    if let bus = filter.bus { parts.append("bus=\(bus)") }
+    if let address = filter.address { parts.append("address=\(address)") }
+    return parts.isEmpty ? "(none)" : parts.joined(separator: ", ")
   }
 
   private static func deviceSortOrder(_ lhs: MTPDeviceSummary, _ rhs: MTPDeviceSummary) -> Bool {
