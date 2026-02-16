@@ -329,7 +329,7 @@ struct ProbeLadderResult: Sendable {
 /// Matches the transport-layer no-progress timeout recovery gate.
 /// A timeout with zero bytes written indicates the endpoint did not accept the command container.
 func probeShouldRecoverNoProgressTimeout(rc: Int32, sent: Int32) -> Bool {
-  rc == Int32(LIBUSB_ERROR_TIMEOUT.rawValue) && sent == 0
+  rc == LIBUSB_ERROR_TIMEOUT && sent == 0
 }
 
 private struct ProbeCommandWriteResult: Sendable {
@@ -377,18 +377,19 @@ private func probePerformNoProgressLightRecovery(
   let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
   let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
   let clearEventRC: Int32 =
-    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : Int32(LIBUSB_SUCCESS.rawValue)
+    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
   let classResetRC = libusb_control_transfer(
     handle, 0x21, 0x66, 0, UInt16(candidate.ifaceNumber), nil, 0, 2000)
 
-  let device = libusb_get_device(handle)
-  setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+  if let device = libusb_get_device(handle) {
+    setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+  }
   let setAltRC = libusb_set_interface_alt_setting(handle, Int32(candidate.ifaceNumber), 0)
 
   let clearOutPostRC = libusb_clear_halt(handle, candidate.bulkOut)
   let clearInPostRC = libusb_clear_halt(handle, candidate.bulkIn)
   let clearEventPostRC: Int32 =
-    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : Int32(LIBUSB_SUCCESS.rawValue)
+    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
 
   usleep(200_000)
 
@@ -424,13 +425,14 @@ private func probePerformNoProgressHardRecovery(
 
   usleep(300_000)
 
-  let device = libusb_get_device(handle)
-  setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+  if let device = libusb_get_device(handle) {
+    setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+  }
   let setAltRC = libusb_set_interface_alt_setting(handle, Int32(candidate.ifaceNumber), 0)
   let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
   let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
   let clearEventRC: Int32 =
-    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : Int32(LIBUSB_SUCCESS.rawValue)
+    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
 
   usleep(200_000)
 

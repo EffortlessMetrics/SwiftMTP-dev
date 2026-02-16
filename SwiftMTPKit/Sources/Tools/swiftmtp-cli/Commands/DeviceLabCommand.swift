@@ -5,7 +5,6 @@ import Foundation
 @_spi(Dev) import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 
-@MainActor
 struct DeviceLabCommand {
   private enum ExpectedPolicy: String, Codable, Sendable {
     case fullExercise = "full-exercise"
@@ -139,11 +138,11 @@ struct DeviceLabCommand {
     "18d1:4ee1": .readBestEffort,
   ]
   private static let connectedLabSchemaVersion = "1.2.0"
-  private static let openDeviceTimeoutMs = 120_000
-  private static let operationTimeoutMs = 90_000
-  private static let capabilityReportTimeoutMs = 30_000
-  private static let readSmokeTimeoutMs = 90_000
-  private static let writeSmokeTimeoutMs = 120_000
+  private static let openDeviceTimeoutMs = 45_000
+  private static let operationTimeoutMs = 30_000
+  private static let capabilityReportTimeoutMs = 10_000
+  private static let readSmokeTimeoutMs = 30_000
+  private static let writeSmokeTimeoutMs = 45_000
 
   private enum DeviceLabTimeoutError: LocalizedError {
     case exceeded(stage: String, ms: Int)
@@ -153,6 +152,16 @@ struct DeviceLabCommand {
       case .exceeded(let stage, let ms):
         return "operation '\(stage)' exceeded deadline (\(ms) ms)"
       }
+    }
+  }
+
+  private actor DeadlineResolutionGate {
+    private var resolved = false
+
+    func claim() -> Bool {
+      if resolved { return false }
+      resolved = true
+      return true
     }
   }
 
@@ -173,7 +182,51 @@ struct DeviceLabCommand {
       let usbDumpURL = outputDir.appendingPathComponent("usb-dump.json")
       try writeJSON(usbDump, to: usbDumpURL)
 
-      let discovered = try await LibUSBDiscovery.enumerateMTPDevices()
+      let requestedFilter = DeviceFilter(
+        vid: parseUSBIdentifier(flags.targetVID),
+        pid: parseUSBIdentifier(flags.targetPID),
+        bus: flags.targetBus,
+        address: flags.targetAddress
+      )
+      let requestedHasExplicitFilter =
+        requestedFilter.vid != nil || requestedFilter.pid != nil || requestedFilter.bus != nil
+        || requestedFilter.address != nil
+
+      let discovered: [MTPDeviceSummary]
+      do {
+        discovered = try await within(ms: operationTimeoutMs, stage: "connected-discovery") {
+          try await LibUSBDiscovery.enumerateMTPDevices()
+        }
+      } catch {
+        let summary = ReportSummary(
+          totalDevices: 0,
+          passed: 0,
+          partial: 0,
+          blocked: 0,
+          failed: 0,
+          missingExpected: requestedHasExplicitFilter ? [] : Array(expectedPolicies.keys).sorted()
+        )
+        let report = ConnectedLabReport(
+          schemaVersion: connectedLabSchemaVersion,
+          generatedAt: Date(),
+          outputPath: portableOutputPath,
+          connectedDeviceCount: 0,
+          summary: summary,
+          devices: []
+        )
+        let reportJSONURL = outputDir.appendingPathComponent("connected-lab.json")
+        try? writeJSON(report, to: reportJSONURL)
+        let reportMDURL = outputDir.appendingPathComponent("connected-lab.md")
+        try? writeMarkdown(report: report, to: reportMDURL)
+        if flags.json {
+          printEncodedJSON(report)
+        } else {
+          print("Connected discovery failed: \(error)")
+          print("Output: \(portableOutputPath)")
+        }
+        exitNow(.tempfail)
+      }
+
       let filterResult = applyConnectedFilter(discovered: discovered, flags: flags)
       let filter = filterResult.filter
       let hasExplicitFilter = filterResult.hasExplicitFilter
@@ -312,6 +365,22 @@ struct DeviceLabCommand {
     deviceDir: URL
   ) async -> DeviceResult {
     let vidpid = formatVIDPID(summary)
+    let stageTraceURL = deviceDir.appendingPathComponent("stage-trace.log")
+    let iso8601 = ISO8601DateFormatter()
+
+    func trace(_ message: String) {
+      let line = "[\(iso8601.string(from: Date()))] \(message)\n"
+      let data = Data(line.utf8)
+      if !FileManager.default.fileExists(atPath: stageTraceURL.path) {
+        _ = FileManager.default.createFile(atPath: stageTraceURL.path, contents: data)
+        return
+      }
+      guard let handle = try? FileHandle(forWritingTo: stageTraceURL) else { return }
+      defer { try? handle.close() }
+      _ = try? handle.seekToEnd()
+      try? handle.write(contentsOf: data)
+    }
+
     var result = DeviceResult(
       id: summary.id.raw,
       vidpid: vidpid,
@@ -357,9 +426,11 @@ struct DeviceLabCommand {
     )
 
     do {
+      trace("open-device:start")
       let device = try await within(ms: openDeviceTimeoutMs, stage: "open-device") {
         try await openDevice(flags: perDeviceFlags)
       }
+      trace("open-device:ok")
 
       func appendOperation(
         _ operation: String,
@@ -381,14 +452,17 @@ struct DeviceLabCommand {
       }
 
       do {
+        trace("enumerate-and-claim-interface:start")
         let startedAt = DispatchTime.now()
         try await within(ms: operationTimeoutMs, stage: "enumerate-and-claim-interface") {
           try await device.openIfNeeded()
         }
+        trace("enumerate-and-claim-interface:ok")
         result.read.openSucceeded = true
         appendOperation(
           "enumerate-and-claim-interface", succeeded: true, durationMs: elapsedMs(since: startedAt))
       } catch {
+        trace("enumerate-and-claim-interface:fail error=\(error)")
         let message = "open failed: \(error)"
         result.read.error = message
         result.error = message
@@ -397,29 +471,45 @@ struct DeviceLabCommand {
           succeeded: false,
           error: message
         )
+        trace("close-after-open-failure:start")
         _ = try? await within(ms: 10_000, stage: "close-after-open-failure") {
           try await device.devClose()
           return ()
         }
+        trace("close-after-open-failure:done")
         finalizeOutcome(&result)
         classifyFailure(&result)
         return result
       }
 
-      result.probeReceipt = await device.probeReceipt
       do {
+        trace("probe-receipt:start")
+        result.probeReceipt = try await within(ms: operationTimeoutMs, stage: "probe-receipt") {
+          await device.probeReceipt
+        }
+        trace("probe-receipt:ok")
+      } catch {
+        trace("probe-receipt:fail error=\(error)")
+        result.notes.append("Probe receipt unavailable: \(error)")
+      }
+      do {
+        trace("capability-harness:start")
         result.capabilityReport = try await within(ms: capabilityReportTimeoutMs, stage: "capability-harness") {
           try await DeviceLabHarness().collect(device: device)
         }
+        trace("capability-harness:ok")
       } catch {
+        trace("capability-harness:fail error=\(error)")
         result.notes.append("Capability harness unavailable: \(error)")
       }
 
       do {
+        trace("open-session-and-get-device-info:start")
         let startedAt = DispatchTime.now()
         _ = try await within(ms: operationTimeoutMs, stage: "open-session-and-get-device-info") {
           try await device.info
         }
+        trace("open-session-and-get-device-info:ok")
         result.read.deviceInfoSucceeded = true
         appendOperation(
           "open-session-and-get-device-info",
@@ -427,6 +517,7 @@ struct DeviceLabCommand {
           durationMs: elapsedMs(since: startedAt)
         )
       } catch {
+        trace("open-session-and-get-device-info:fail error=\(error)")
         let message = "device info failed: \(error)"
         result.read.error = result.read.error ?? message
         result.error = result.error ?? message
@@ -439,10 +530,12 @@ struct DeviceLabCommand {
 
       var storages: [MTPStorageInfo] = []
       do {
+        trace("storage-discovery:start")
         let startedAt = DispatchTime.now()
         storages = try await within(ms: operationTimeoutMs, stage: "storage-discovery") {
           try await device.storages()
         }
+        trace("storage-discovery:ok count=\(storages.count)")
         result.read.storagesSucceeded = true
         result.read.storageCount = storages.count
         appendOperation(
@@ -452,6 +545,7 @@ struct DeviceLabCommand {
           details: "storages=\(storages.count)"
         )
       } catch {
+        trace("storage-discovery:fail error=\(error)")
         let message = "storage enumeration failed: \(error)"
         result.read.error = result.read.error ?? message
         result.error = result.error ?? message
@@ -464,10 +558,12 @@ struct DeviceLabCommand {
 
       if let firstStorage = storages.first {
         do {
+          trace("object-enumeration:start")
           let startedAt = DispatchTime.now()
           result.read.rootObjectCount = try await within(ms: operationTimeoutMs, stage: "object-enumeration") {
             try await sampleRootListing(device: device, storage: firstStorage.id)
           }
+          trace("object-enumeration:ok count=\(result.read.rootObjectCount ?? 0)")
           result.read.rootListingSucceeded = true
           appendOperation(
             "object-enumeration",
@@ -476,6 +572,7 @@ struct DeviceLabCommand {
             details: "rootObjects=\(result.read.rootObjectCount ?? 0)"
           )
         } catch {
+          trace("object-enumeration:fail error=\(error)")
           let message = "root listing failed: \(error)"
           result.read.error = result.read.error ?? message
           result.error = result.error ?? message
@@ -487,10 +584,12 @@ struct DeviceLabCommand {
         }
 
         do {
+          trace("read-download:start")
           let readSmokeStartedAt = DispatchTime.now()
           result.readSmoke = try await within(ms: readSmokeTimeoutMs, stage: "read-download") {
             await runReadSmoke(device: device, storage: firstStorage)
           }
+          trace("read-download:ok attempted=\(result.readSmoke.attempted) succeeded=\(result.readSmoke.succeeded)")
           appendOperation(
             "read-download",
             attempted: result.readSmoke.attempted,
@@ -501,6 +600,7 @@ struct DeviceLabCommand {
             error: result.readSmoke.error
           )
         } catch {
+          trace("read-download:fail error=\(error)")
           var timedReadSmoke = ReadSmoke()
           timedReadSmoke.attempted = true
           timedReadSmoke.reason = "read smoke stage did not complete"
@@ -517,10 +617,12 @@ struct DeviceLabCommand {
 
         if expectation != .blockerExpected {
           do {
+            trace("write-upload:start")
             let writeSmokeStartedAt = DispatchTime.now()
             result.write = try await within(ms: writeSmokeTimeoutMs, stage: "write-upload") {
               await runWriteSmoke(device: device, storage: firstStorage)
             }
+            trace("write-upload:ok attempted=\(result.write.attempted) succeeded=\(result.write.succeeded)")
             appendOperation(
               "write-upload",
               attempted: result.write.attempted,
@@ -538,6 +640,7 @@ struct DeviceLabCommand {
               error: result.write.deleteError
             )
           } catch {
+            trace("write-upload:fail error=\(error)")
             var timedWriteSmoke = WriteSmoke()
             timedWriteSmoke.attempted = true
             timedWriteSmoke.reason = "write smoke stage did not complete"
@@ -606,11 +709,14 @@ struct DeviceLabCommand {
         )
       }
 
+      trace("device-close:start")
       _ = try? await within(ms: 10_000, stage: "device-close") {
         try await device.devClose()
         return ()
       }
+      trace("device-close:done")
     } catch {
+      trace("open-device:fail error=\(error)")
       result.error = "openDevice failed: \(error)"
       result.operations.append(
         OperationReceipt(
@@ -1121,22 +1227,34 @@ struct DeviceLabCommand {
   }
 
   /// Execute an operation with a wall-clock timeout and fail the stage deterministically.
+  /// Uses detached racing tasks so timeout completion does not block on non-cooperative operations.
   private static func within<T: Sendable>(
     ms: Int,
     stage: String,
     _ operation: @escaping @Sendable () async throws -> T
   ) async throws -> T {
-    try await withThrowingTaskGroup(of: T.self) { group in
-      group.addTask {
-        try await operation()
+    let gate = DeadlineResolutionGate()
+    let timeoutMs = max(ms, 1)
+    return try await withCheckedThrowingContinuation { continuation in
+      Task.detached {
+        do {
+          let value = try await operation()
+          if await gate.claim() {
+            continuation.resume(returning: value)
+          }
+        } catch {
+          if await gate.claim() {
+            continuation.resume(throwing: error)
+          }
+        }
       }
-      group.addTask {
-        try await Task.sleep(nanoseconds: UInt64(ms) * 1_000_000)
-        throw DeviceLabTimeoutError.exceeded(stage: stage, ms: ms)
+
+      Task.detached {
+        try? await Task.sleep(nanoseconds: UInt64(timeoutMs) * 1_000_000)
+        if await gate.claim() {
+          continuation.resume(throwing: DeviceLabTimeoutError.exceeded(stage: stage, ms: timeoutMs))
+        }
       }
-      let result = try await group.next()!
-      group.cancelAll()
-      return result
     }
   }
 

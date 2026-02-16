@@ -178,7 +178,7 @@ final class LibUSBErrorHandlingTests: XCTestCase {
 
     func testProbeNoProgressTimeoutRecoveryGateMatchesSentZeroTimeout() {
         let shouldRecover = probeShouldRecoverNoProgressTimeout(
-            rc: Int32(LIBUSB_ERROR_TIMEOUT.rawValue),
+            rc: -7,
             sent: 0
         )
         XCTAssertTrue(shouldRecover)
@@ -186,7 +186,7 @@ final class LibUSBErrorHandlingTests: XCTestCase {
 
     func testProbeNoProgressTimeoutRecoveryGateRejectsPartialProgress() {
         let shouldRecover = probeShouldRecoverNoProgressTimeout(
-            rc: Int32(LIBUSB_ERROR_TIMEOUT.rawValue),
+            rc: -7,
             sent: 3
         )
         XCTAssertFalse(shouldRecover)
@@ -194,7 +194,7 @@ final class LibUSBErrorHandlingTests: XCTestCase {
 
     func testProbeNoProgressTimeoutRecoveryGateRejectsNonTimeout() {
         let shouldRecover = probeShouldRecoverNoProgressTimeout(
-            rc: Int32(LIBUSB_ERROR_PIPE.rawValue),
+            rc: -9,
             sent: 0
         )
         XCTAssertFalse(shouldRecover)
