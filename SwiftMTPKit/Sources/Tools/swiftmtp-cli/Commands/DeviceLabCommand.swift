@@ -143,6 +143,7 @@ struct DeviceLabCommand {
   private static let capabilityReportTimeoutMs = 10_000
   private static let readSmokeTimeoutMs = 30_000
   private static let writeSmokeTimeoutMs = 45_000
+  private static let perDeviceWatchdogTimeoutMs = 240_000
 
   private enum DeviceLabTimeoutError: LocalizedError {
     case exceeded(stage: String, ms: Int)
@@ -274,37 +275,58 @@ struct DeviceLabCommand {
           at: deviceDir, withIntermediateDirectories: true, attributes: nil)
 
         let usbDevice = findUSBDumpDevice(for: summary, in: usbDump.devices)
-        var result = await runPerDevice(
-          summary: summary, expectation: expectedPolicies[vidpid] ?? .generic, flags: flags,
-          usbDumpDevice: usbDevice, deviceDir: deviceDir)
+        let expectation = expectedPolicies[vidpid] ?? .generic
+        let result: DeviceResult
+        do {
+          result = try await within(
+            ms: perDeviceWatchdogTimeoutMs, stage: "per-device-\(vidpid)-watchdog"
+          ) {
+            await runPerDevice(
+              summary: summary,
+              expectation: expectation,
+              flags: flags,
+              usbDumpDevice: usbDevice,
+              deviceDir: deviceDir
+            )
+          }
+        } catch {
+          result = makeTimedOutResult(
+            summary: summary,
+            expectation: expectation,
+            usbDumpDevice: usbDevice,
+            deviceDir: deviceDir,
+            error: error
+          )
+        }
 
         // Persist per-device artifacts.
         let reportURL = deviceDir.appendingPathComponent("device-report.json")
-        result.artifacts.reportJSON = reportURL.lastPathComponent
-        try writeJSON(result, to: reportURL)
+        var resultMutable = result
+        resultMutable.artifacts.reportJSON = reportURL.lastPathComponent
+        try writeJSON(resultMutable, to: reportURL)
 
-        if let receipt = result.probeReceipt {
+        if let receipt = resultMutable.probeReceipt {
           let receiptURL = deviceDir.appendingPathComponent("probe-receipt.json")
-          result.artifacts.probeReceiptJSON = receiptURL.lastPathComponent
+          resultMutable.artifacts.probeReceiptJSON = receiptURL.lastPathComponent
           try writeJSON(receipt, to: receiptURL)
-          try writeJSON(result, to: reportURL)
+          try writeJSON(resultMutable, to: reportURL)
         }
 
-        if let capabilityReport = result.capabilityReport {
+        if let capabilityReport = resultMutable.capabilityReport {
           let harnessURL = deviceDir.appendingPathComponent("harness-report.json")
-          result.artifacts.harnessReportJSON = harnessURL.lastPathComponent
+          resultMutable.artifacts.harnessReportJSON = harnessURL.lastPathComponent
           try writeJSON(capabilityReport, to: harnessURL)
-          try writeJSON(result, to: reportURL)
+          try writeJSON(resultMutable, to: reportURL)
         }
 
         if let usbDevice {
           let usbURL = deviceDir.appendingPathComponent("usb-interface.json")
-          result.artifacts.usbInterfaceJSON = usbURL.lastPathComponent
+          resultMutable.artifacts.usbInterfaceJSON = usbURL.lastPathComponent
           try writeJSON(usbDevice, to: usbURL)
-          try writeJSON(result, to: reportURL)
+          try writeJSON(resultMutable, to: reportURL)
         }
 
-        results.append(result)
+        results.append(resultMutable)
       }
 
       let discoveredVIDPIDs = Set(results.map(\.vidpid))
@@ -729,6 +751,56 @@ struct DeviceLabCommand {
         ))
     }
 
+    finalizeOutcome(&result)
+    classifyFailure(&result)
+    return result
+  }
+
+  private static func makeTimedOutResult(
+    summary: MTPDeviceSummary,
+    expectation: ExpectedPolicy,
+    usbDumpDevice: USBDumper.DumpDevice?,
+    deviceDir: URL,
+    error: Error
+  ) -> DeviceResult {
+    let vidpid = formatVIDPID(summary)
+    var result = DeviceResult(
+      id: summary.id.raw,
+      vidpid: vidpid,
+      bus: Int(summary.bus ?? 0),
+      address: Int(summary.address ?? 0),
+      manufacturer: summary.manufacturer,
+      model: summary.model,
+      expectation: expectation,
+      outcome: .failed,
+      failureClass: nil,
+      read: ReadValidation(),
+      readSmoke: ReadSmoke(),
+      write: WriteSmoke(),
+      operations: [],
+      notes: ["Per-device watchdog timeout emitted a partial report."],
+      error: "device-lab watchdog timeout: \(error)",
+      capabilityReport: nil,
+      probeReceipt: nil,
+      usbInterfaceDump: usbDumpDevice,
+      artifacts: ArtifactPaths(
+        directory: deviceDir.lastPathComponent,
+        reportJSON: "device-report.json",
+        harnessReportJSON: nil,
+        probeReceiptJSON: nil,
+        usbInterfaceJSON: nil
+      )
+    )
+    result.operations.append(
+      OperationReceipt(
+        operation: "per-device-watchdog",
+        attempted: true,
+        succeeded: false,
+        durationMs: nil,
+        details: nil,
+        error: result.error
+      )
+    )
     finalizeOutcome(&result)
     classifyFailure(&result)
     return result
@@ -1255,6 +1327,18 @@ struct DeviceLabCommand {
           continuation.resume(throwing: DeviceLabTimeoutError.exceeded(stage: stage, ms: timeoutMs))
         }
       }
+    }
+  }
+
+  static func testWithinTimeoutProbe(timeoutMs: Int, sleepMs: Int) async -> String {
+    do {
+      _ = try await within(ms: timeoutMs, stage: "test-timeout-probe") {
+        try await Task.sleep(nanoseconds: UInt64(max(sleepMs, 1)) * 1_000_000)
+        return "completed"
+      }
+      return "completed"
+    } catch {
+      return String(describing: error)
     }
   }
 

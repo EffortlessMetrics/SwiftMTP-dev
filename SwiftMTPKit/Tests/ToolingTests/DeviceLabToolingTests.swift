@@ -120,4 +120,13 @@ final class DeviceLabToolingTests: XCTestCase {
     XCTAssertNotNil(json["generatedAt"] as? String)
     XCTAssertEqual((json["devices"] as? [Any])?.count, 0)
   }
+
+  func testWithinTimeoutProbeTimesOut() async {
+    let startedAt = Date()
+    let result = await DeviceLabCommand.testWithinTimeoutProbe(timeoutMs: 20, sleepMs: 200)
+    let elapsed = Date().timeIntervalSince(startedAt)
+
+    XCTAssertTrue(result.contains("test-timeout-probe"))
+    XCTAssertLessThan(elapsed, 1.0)
+  }
 }
