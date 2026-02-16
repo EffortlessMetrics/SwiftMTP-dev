@@ -245,7 +245,9 @@ public actor LibUSBTransport: MTPTransport {
 
     // Pass 1b (aggressive, no reset): force configuration + re-claim + alt=0 + clear_halt,
     // then rerun ladder once before escalating to reset/reopen.
-    if result.candidate == nil {
+    // Restrict this expensive rung to devices where it has shown value (Pixel/vendor-specific).
+    let shouldRunAggressivePass = isVendorSpecificMTP || vendorID == 0x18D1
+    if result.candidate == nil && shouldRunAggressivePass {
       if debug { print("   [Open] Pass 1 failed, attempting aggressive no-reset retry rung") }
       result = tryProbeAllCandidatesAggressive(
         handle: handle,
@@ -255,6 +257,8 @@ public actor LibUSBTransport: MTPTransport {
         postClaimStabilizeMs: max(config.postClaimStabilizeMs, 500),
         debug: debug
       )
+    } else if result.candidate == nil && debug {
+      print("   [Open] Pass 1 failed; skipping aggressive rung for this device family")
     }
 
     // Pass 2 (fallback): if pass 1 fails, do USB reset + teardown + fresh reopen + re-probe.

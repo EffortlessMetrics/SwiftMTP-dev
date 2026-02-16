@@ -490,11 +490,9 @@ func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: U
   _ = libusb_clear_halt(handle, c.bulkIn)
   _ = libusb_clear_halt(handle, c.bulkOut)
 
-  // CRITICAL: Add delay after clear_halt before first bulk write.
-  // Some devices (especially Pixel) need time for the endpoint to become writable after reset.
-  // This is distinct from postClaimStabilizeMs which happens during claim.
-  // Try 2000ms for Pixel 7 - devices with "UI says File transfer, USB stack still waking up"
-  let preFirstCommandDelayMs = 2000  // 2000ms - adjust per-device if needed
+  // Add a small settle delay after clear_halt before the first bulk write.
+  // Pixel-class devices often need longer here; most others should not pay a 2s penalty.
+  let preFirstCommandDelayMs = preFirstProbeCommandDelayMs(handle: handle)
   if debug {
     print("   [Probe] waiting \(preFirstCommandDelayMs)ms after clear_halt before first command")
   }
@@ -608,6 +606,23 @@ func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: U
   }
 
   return (responseOK, responseOK ? deviceInfoData : nil)
+}
+
+private func preFirstProbeCommandDelayMs(handle: OpaquePointer) -> Int {
+  var delayMs = 750
+  let device = libusb_get_device(handle)
+  var descriptor = libusb_device_descriptor()
+  if libusb_get_device_descriptor(device, &descriptor) == 0 {
+    switch descriptor.idVendor {
+    case 0x18D1:  // Google / Pixel
+      delayMs = 2000
+    case 0x2A70:  // OnePlus
+      delayMs = 500
+    default:
+      delayMs = 750
+    }
+  }
+  return delayMs
 }
 
 /// Best-effort drain of stale data from bulk IN endpoint after a failed probe.

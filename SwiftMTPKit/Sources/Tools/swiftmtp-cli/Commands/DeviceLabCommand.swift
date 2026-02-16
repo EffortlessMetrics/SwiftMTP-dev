@@ -691,6 +691,8 @@ struct DeviceLabCommand {
     let writableParents = await findWritableParents(device: device, storage: storage.id)
     var attempts: [String] = []
     var lastFailure: WriteSmoke?
+    // Keep target climb bounded so one device cannot stall an entire bring-up cycle.
+    let maxRetryableTargetAttempts = 3
 
     for (parentHandle, parentName) in writableParents {
       attempts.append(parentName)
@@ -703,6 +705,13 @@ struct DeviceLabCommand {
       lastFailure = attempt
       // Keep climbing the ladder for known retryable write failures.
       if looksLikeRetryableWriteFailure(attempt.error) {
+        if attempts.count >= maxRetryableTargetAttempts {
+          attempt.reason = appendWarning(
+            attempt.reason,
+            "retryable target attempt budget exhausted (\(maxRetryableTargetAttempts)); proceeding to SwiftMTP fallback rung")
+          lastFailure = attempt
+          break
+        }
         continue
       }
       return attempt
@@ -806,9 +815,9 @@ struct DeviceLabCommand {
     // Verify and cleanup
     if smoke.uploadedHandle == nil {
       do {
-        let children = try await listObjects(
-          device: device, parent: parentHandle, storage: storage.id, limit: 128)
-        if let uploaded = children.first(where: { $0.name == fileName }) {
+        if let uploaded = try await findUploadedObject(
+          device: device, storage: storage.id, parent: parentHandle, name: fileName)
+        {
           smoke.uploadedHandle = uploaded.handle
         } else {
           smoke.warning = appendWarning(
@@ -838,8 +847,17 @@ struct DeviceLabCommand {
     parent: MTPObjectHandle,
     name: String
   ) async throws -> MTPObjectInfo? {
-    let children = try await listObjects(device: device, parent: parent, storage: storage, limit: 128)
-    return children.first(where: { $0.name == name })
+    let maxScanObjects = 4096
+    var scanned = 0
+    let stream = device.list(parent: parent, in: storage)
+    for try await batch in stream {
+      if let uploaded = batch.first(where: { $0.name == name }) {
+        return uploaded
+      }
+      scanned += batch.count
+      if scanned >= maxScanObjects { break }
+    }
+    return nil
   }
 
   static func looksLikeTimeoutFailure(_ message: String?) -> Bool {

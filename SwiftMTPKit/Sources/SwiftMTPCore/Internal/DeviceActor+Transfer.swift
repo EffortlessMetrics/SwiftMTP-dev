@@ -5,6 +5,11 @@ import Foundation
 import OSLog
 
 extension MTPDeviceActor {
+  private enum SendObjectRetryClass {
+    case invalidParameter
+    case transientTransport
+  }
+
   public func createFolder(parent: MTPObjectHandle?, name: String, storage: MTPStorageID)
     async throws -> MTPObjectHandle
   {
@@ -288,6 +293,7 @@ extension MTPDeviceActor {
         guard let retryReason = retryableSendObjectFailureReason(error) else {
           throw error
         }
+        let retryClass = sendObjectRetryClass(for: retryReason)
 
         let configuredStrategy = policy?.fallbacks.write.rawValue ?? "unknown"
         Logger(subsystem: "SwiftMTP", category: "write")
@@ -301,15 +307,21 @@ extension MTPDeviceActor {
           guard !retries.contains(params) else { return }
           retries.append(params)
         }
-        addRetry(WriteAttemptParameters(
-          forceWildcardStorage: primaryParams.forceWildcardStorage,
-          useEmptyDates: true
-        ))
-        addRetry(WriteAttemptParameters(
-          forceWildcardStorage: true,
-          useEmptyDates: primaryParams.useEmptyDates
-        ))
-        addRetry(WriteAttemptParameters(forceWildcardStorage: true, useEmptyDates: true))
+        switch retryClass {
+        case .invalidParameter:
+          addRetry(WriteAttemptParameters(
+            forceWildcardStorage: primaryParams.forceWildcardStorage,
+            useEmptyDates: true
+          ))
+          addRetry(WriteAttemptParameters(
+            forceWildcardStorage: true,
+            useEmptyDates: primaryParams.useEmptyDates
+          ))
+          addRetry(WriteAttemptParameters(forceWildcardStorage: true, useEmptyDates: true))
+        case .transientTransport:
+          // Keep timeout/busy retries intentionally small so call sites can continue target ladders.
+          addRetry(WriteAttemptParameters(forceWildcardStorage: true, useEmptyDates: true))
+        }
 
         var lastRetryableError: Error = error
         var recovered = false
@@ -330,7 +342,9 @@ extension MTPDeviceActor {
           }
         }
 
-        if !recovered, (parent == nil || parent == 0), let firstStorage = availableStorages?.first {
+        if !recovered, retryClass == .invalidParameter, (parent == nil || parent == 0),
+          let firstStorage = availableStorages?.first
+        {
           let fallback = try await WriteTargetLadder.resolveTarget(
             device: self,
             storage: firstStorage.id,
@@ -418,5 +432,12 @@ extension MTPDeviceActor {
     default:
       return nil
     }
+  }
+
+  private func sendObjectRetryClass(for retryReason: String) -> SendObjectRetryClass {
+    if retryReason == "invalid-parameter-0x201d" {
+      return .invalidParameter
+    }
+    return .transientTransport
   }
 }
