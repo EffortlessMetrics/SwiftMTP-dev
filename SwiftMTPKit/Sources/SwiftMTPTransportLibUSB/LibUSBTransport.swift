@@ -855,6 +855,16 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       guard let param = paramReader.u32() else { break }
       params.append(param)
     }
+    if debug {
+      let paramsText =
+        params.isEmpty ? "[]" : "[" + params.map { String(format: "0x%08x", $0) }.joined(separator: ",") + "]"
+      print(
+        String(
+          format: "   [USB] op=0x%04x tx=%u response=0x%04x params=%@",
+          command.code, txid, rHdr.code, paramsText
+        ))
+    }
+
     return PTPResponseResult(code: rHdr.code, txid: rHdr.txid, params: params)
   }
 

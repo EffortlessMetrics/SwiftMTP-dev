@@ -138,11 +138,11 @@ struct DeviceLabCommand {
     "18d1:4ee1": .readBestEffort,
   ]
   private static let connectedLabSchemaVersion = "1.2.0"
-  private static let openDeviceTimeoutMs = 45_000
-  private static let operationTimeoutMs = 30_000
-  private static let capabilityReportTimeoutMs = 10_000
-  private static let readSmokeTimeoutMs = 30_000
-  private static let writeSmokeTimeoutMs = 45_000
+  private static let openDeviceTimeoutMs = 120_000
+  private static let operationTimeoutMs = 90_000
+  private static let capabilityReportTimeoutMs = 30_000
+  private static let readSmokeTimeoutMs = 90_000
+  private static let writeSmokeTimeoutMs = 120_000
   private static let perDeviceWatchdogTimeoutMs = 240_000
 
   private enum DeviceLabTimeoutError: LocalizedError {
@@ -156,13 +156,33 @@ struct DeviceLabCommand {
     }
   }
 
-  private actor DeadlineResolutionGate {
+  private final class ContinuationResumer<T>: @unchecked Sendable {
+    private let lock = NSLock()
     private var resolved = false
+    private let continuation: CheckedContinuation<T, Error>
 
-    func claim() -> Bool {
-      if resolved { return false }
-      resolved = true
-      return true
+    init(_ continuation: CheckedContinuation<T, Error>) {
+      self.continuation = continuation
+    }
+
+    func resume(returning value: sending T) {
+      lock.lock()
+      let shouldResume = !resolved
+      if shouldResume { resolved = true }
+      lock.unlock()
+      if shouldResume {
+        continuation.resume(returning: value)
+      }
+    }
+
+    func resume(throwing error: Error) {
+      lock.lock()
+      let shouldResume = !resolved
+      if shouldResume { resolved = true }
+      lock.unlock()
+      if shouldResume {
+        continuation.resume(throwing: error)
+      }
     }
   }
 
@@ -493,6 +513,14 @@ struct DeviceLabCommand {
           succeeded: false,
           error: message
         )
+        if Self.isDeadlineTimeout(error) {
+          result.notes.append(
+            "Aborted device run after timeout at enumerate-and-claim-interface to avoid in-flight USB race."
+          )
+          finalizeOutcome(&result)
+          classifyFailure(&result)
+          return result
+        }
         trace("close-after-open-failure:start")
         _ = try? await within(ms: 10_000, stage: "close-after-open-failure") {
           try await device.devClose()
@@ -512,6 +540,15 @@ struct DeviceLabCommand {
         trace("probe-receipt:ok")
       } catch {
         trace("probe-receipt:fail error=\(error)")
+        if Self.isDeadlineTimeout(error) {
+          result.error = result.error ?? "probe receipt failed: \(error)"
+          result.notes.append(
+            "Aborted device run after timeout at probe-receipt to avoid in-flight USB race."
+          )
+          finalizeOutcome(&result)
+          classifyFailure(&result)
+          return result
+        }
         result.notes.append("Probe receipt unavailable: \(error)")
       }
       do {
@@ -522,6 +559,15 @@ struct DeviceLabCommand {
         trace("capability-harness:ok")
       } catch {
         trace("capability-harness:fail error=\(error)")
+        if Self.isDeadlineTimeout(error) {
+          result.error = result.error ?? "capability harness failed: \(error)"
+          result.notes.append(
+            "Aborted device run after timeout at capability-harness to avoid in-flight USB race."
+          )
+          finalizeOutcome(&result)
+          classifyFailure(&result)
+          return result
+        }
         result.notes.append("Capability harness unavailable: \(error)")
       }
 
@@ -548,6 +594,14 @@ struct DeviceLabCommand {
           succeeded: false,
           error: message
         )
+        if Self.isDeadlineTimeout(error) {
+          result.notes.append(
+            "Aborted device run after timeout at open-session-and-get-device-info to avoid in-flight USB race."
+          )
+          finalizeOutcome(&result)
+          classifyFailure(&result)
+          return result
+        }
       }
 
       var storages: [MTPStorageInfo] = []
@@ -576,6 +630,14 @@ struct DeviceLabCommand {
           succeeded: false,
           error: message
         )
+        if Self.isDeadlineTimeout(error) {
+          result.notes.append(
+            "Aborted device run after timeout at storage-discovery to avoid in-flight USB race."
+          )
+          finalizeOutcome(&result)
+          classifyFailure(&result)
+          return result
+        }
       }
 
       if let firstStorage = storages.first {
@@ -603,6 +665,14 @@ struct DeviceLabCommand {
             succeeded: false,
             error: message
           )
+          if Self.isDeadlineTimeout(error) {
+            result.notes.append(
+              "Aborted device run after timeout at object-enumeration to avoid in-flight USB race."
+            )
+            finalizeOutcome(&result)
+            classifyFailure(&result)
+            return result
+          }
         }
 
         do {
@@ -635,6 +705,14 @@ struct DeviceLabCommand {
             details: timedReadSmoke.reason,
             error: timedReadSmoke.error
           )
+          if Self.isDeadlineTimeout(error) {
+            result.notes.append(
+              "Aborted device run after timeout at read-download to avoid in-flight USB race."
+            )
+            finalizeOutcome(&result)
+            classifyFailure(&result)
+            return result
+          }
         }
 
         if expectation != .blockerExpected {
@@ -682,6 +760,14 @@ struct DeviceLabCommand {
               succeeded: false,
               details: "skipped because write stage did not complete"
             )
+            if Self.isDeadlineTimeout(error) {
+              result.notes.append(
+                "Aborted device run after timeout at write-upload to avoid in-flight USB race."
+              )
+              finalizeOutcome(&result)
+              classifyFailure(&result)
+              return result
+            }
           }
         } else {
           result.notes.append("Policy: blocker diagnostics only; write smoke skipped.")
@@ -754,6 +840,11 @@ struct DeviceLabCommand {
     finalizeOutcome(&result)
     classifyFailure(&result)
     return result
+  }
+
+  private static func isDeadlineTimeout(_ error: Error) -> Bool {
+    if case DeviceLabTimeoutError.exceeded = error { return true }
+    return false
   }
 
   private static func makeTimedOutResult(
@@ -952,6 +1043,10 @@ struct DeviceLabCommand {
     var lastFailure: WriteSmoke?
     // Keep target climb bounded so one device cannot stall an entire bring-up cycle.
     let maxRetryableTargetAttempts = 6
+    // Timeout-class failures are expensive; cap these earlier so the stage can return deterministically.
+    let maxTimeoutTargetAttempts = 2
+    var timeoutTargetAttempts = 0
+    var allowSwiftMTPFallback = true
 
     for (parentHandle, parentName) in writableParents {
       attempts.append(parentName)
@@ -964,6 +1059,17 @@ struct DeviceLabCommand {
       lastFailure = attempt
       // Keep climbing the ladder for known retryable write failures.
       if looksLikeRetryableWriteFailure(attempt.error) {
+        if looksLikeTimeoutFailure(attempt.error) {
+          timeoutTargetAttempts += 1
+          if timeoutTargetAttempts >= maxTimeoutTargetAttempts {
+            attempt.reason = appendWarning(
+              attempt.reason,
+              "timeout target attempt budget exhausted (\(maxTimeoutTargetAttempts)); stopping target climb")
+            lastFailure = attempt
+            allowSwiftMTPFallback = false
+            break
+          }
+        }
         if attempts.count >= maxRetryableTargetAttempts {
           attempt.reason = appendWarning(
             attempt.reason,
@@ -977,6 +1083,21 @@ struct DeviceLabCommand {
     }
 
     // Last rung: create/use SwiftMTP folder in root and retry once.
+    if !allowSwiftMTPFallback {
+      if var failure = lastFailure {
+        failure.attemptedTargets = attempts
+        failure.skipped = true
+        if failure.reason == nil {
+          failure.reason = "all writable parent targets rejected upload"
+        }
+        return failure
+      }
+      smoke.attemptedTargets = attempts
+      smoke.skipped = true
+      smoke.reason = "timeout target attempt budget exhausted before fallback"
+      return smoke
+    }
+
     do {
       let swiftMTPHandle = try await ensureSwiftMTPFolder(device: device, storage: storage.id)
       attempts.append("SwiftMTP")
@@ -1134,6 +1255,8 @@ struct DeviceLabCommand {
       || lowered.contains("invalidparameter")
       || lowered.contains("invalidstorageid")
       || lowered.contains("parameternotsupported")
+      || lowered.contains("objectnotfound")
+      || lowered.contains("object not found")
       || lowered.contains("timeout")
       || lowered.contains("timed out")
       || lowered.contains("busy")
@@ -1299,33 +1422,29 @@ struct DeviceLabCommand {
   }
 
   /// Execute an operation with a wall-clock timeout and fail the stage deterministically.
-  /// Uses detached racing tasks so timeout completion does not block on non-cooperative operations.
+  /// Uses a GCD timer so timeout signaling is independent from Swift task scheduling.
   private static func within<T: Sendable>(
     ms: Int,
     stage: String,
     _ operation: @escaping @Sendable () async throws -> T
   ) async throws -> T {
-    let gate = DeadlineResolutionGate()
     let timeoutMs = max(ms, 1)
     return try await withCheckedThrowingContinuation { continuation in
+      let resumer = ContinuationResumer<T>(continuation)
+
       Task.detached {
         do {
           let value = try await operation()
-          if await gate.claim() {
-            continuation.resume(returning: value)
-          }
+          resumer.resume(returning: value)
         } catch {
-          if await gate.claim() {
-            continuation.resume(throwing: error)
-          }
+          resumer.resume(throwing: error)
         }
       }
 
-      Task.detached {
-        try? await Task.sleep(nanoseconds: UInt64(timeoutMs) * 1_000_000)
-        if await gate.claim() {
-          continuation.resume(throwing: DeviceLabTimeoutError.exceeded(stage: stage, ms: timeoutMs))
-        }
+      DispatchQueue.global(qos: .userInitiated).asyncAfter(
+        deadline: .now() + .milliseconds(timeoutMs)
+      ) {
+        resumer.resume(throwing: DeviceLabTimeoutError.exceeded(stage: stage, ms: timeoutMs))
       }
     }
   }

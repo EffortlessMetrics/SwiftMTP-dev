@@ -58,6 +58,20 @@ final class DeviceActorSendObjectRetryTests: XCTestCase {
     )
   }
 
+  func testSendObjectRetryParametersForTransientTransportRetryOnceWithSameParams() {
+    let primary = MTPDeviceActor.SendObjectRetryParameters(
+      forceWildcardStorage: false,
+      useEmptyDates: false
+    )
+
+    let retries = MTPDeviceActor.sendObjectRetryParameters(
+      primary: primary,
+      retryClass: .transientTransport
+    )
+
+    XCTAssertEqual(retries, [primary])
+  }
+
   func testTargetLadderFallbackOnlyForRootInvalidParameter() {
     XCTAssertTrue(
       MTPDeviceActor.shouldAttemptTargetLadderFallback(parent: nil, retryClass: .invalidParameter)

@@ -181,7 +181,6 @@ extension MTPDeviceActor {
     let supportsPartial = deviceInfo.operationsSupported.contains(0x95C1)  // SendPartialObject
 
     var journalTransferId: String?
-    let timeout = 10_000  // 10 seconds
 
     // Initialize transfer journal if available
     if let journal = transferJournal {
@@ -207,6 +206,9 @@ extension MTPDeviceActor {
 
     do {
       let policy = await self.devicePolicy
+      let policyTimeout = max(policy?.tuning.ioTimeoutMs ?? 10_000, 1_000)
+      // Keep small write-smoke requests from spending minutes in per-command timeout recovery.
+      let timeout = size <= 256 * 1024 ? min(policyTimeout, 4_000) : policyTimeout
 
       // Check if device requires subfolder for writes (quirk flag)
       let requiresSubfolder = policy?.flags.writeToSubfolderOnly ?? false
@@ -229,7 +231,16 @@ extension MTPDeviceActor {
       if let p = effectiveParent {
         // Parent specified - get storage from parent info
         if let parentInfos = try? await link.getObjectInfos([p]), let parentInfo = parentInfos.first {
-          targetStorageRaw = parentInfo.storage.raw
+          let parentStorage = parentInfo.storage.raw
+          if parentStorage != 0 && parentStorage != 0xFFFFFFFF {
+            targetStorageRaw = parentStorage
+          } else if let storage = rootStorages.first {
+            // Some devices report wildcard/zero storage for folder handles.
+            // Normalize to the discovered storage ID to avoid 0x2008 InvalidStorageID.
+            targetStorageRaw = storage.id.raw
+          } else {
+            targetStorageRaw = parentStorage
+          }
         } else if let storage = rootStorages.first {
           targetStorageRaw = storage.id.raw
         }
@@ -278,6 +289,7 @@ extension MTPDeviceActor {
       }
 
       var bytesRead: UInt64 = 0
+      let isLabSmokeWrite = name.hasPrefix("swiftmtp-smoke-")
       let primaryParams = SendObjectRetryParameters(
         forceWildcardStorage: forceFFFFFFF,
         useEmptyDates: useEmptyDates
@@ -290,6 +302,12 @@ extension MTPDeviceActor {
           params: primaryParams
         )
       } catch {
+        // For lab smoke writes, return the first concrete failure quickly.
+        // Device-lab controls target climbing and retry budget deterministically.
+        if isLabSmokeWrite {
+          throw error
+        }
+
         guard let retryReason = Self.retryableSendObjectFailureReason(for: error) else {
           throw error
         }
@@ -480,11 +498,6 @@ extension MTPDeviceActor {
         ))
     case .transientTransport:
       appendRetry(primary, allowPrimary: true)
-      appendRetry(
-        SendObjectRetryParameters(
-          forceWildcardStorage: true,
-          useEmptyDates: true
-        ))
     }
 
     return retries

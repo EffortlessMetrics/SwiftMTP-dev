@@ -4,10 +4,23 @@
 
 Welcome to SwiftMTP documentation. Use this page as the entry point for finding the right documentation for your needs.
 
+## Diátaxis Documentation Structure
+
+We use the [Diátaxis](https://diataxis.fr/) framework to organize our documentation by user intent. See the [Diátaxis Overview](diataxis/README.md) for details.
+
+### By Intent
+
+| What you need... | Go to... |
+|------------------|----------|
+| Learning SwiftMTP (beginner) | [Tutorials](diataxis/tutorials/getting-started.md) |
+| Accomplishing a specific task | [How-to Guides](diataxis/howto/connect-device.md) |
+| Looking up API/command details | [Reference](diataxis/reference/cli-commands.md) |
+| Understanding how things work | [Explanation](diataxis/explanation/architecture.md) |
+
 ## Quick Links
 
 | What you need... | Go to... |
-|-----------------|----------|
+|------------------|----------|
 | API reference and getting started | [SwiftMTP](SwiftMTP.docc/SwiftMTP.md) |
 | macOS Tahoe 26 specific features | [macOS Tahoe 26 Guide](SwiftMTP.docc/macOS26.md) |
 | Device-specific tuning | [Device Tuning Guide](SwiftMTP.docc/DeviceTuningGuide.md) |
