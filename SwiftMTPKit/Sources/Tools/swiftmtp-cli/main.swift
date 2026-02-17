@@ -118,7 +118,7 @@ struct SwiftMTPCLI {
         case "probe":
             await ProbeCommand.runProbe(flags: flags)
         case "usb-dump":
-            await ProbeCommand.runUSBDump()
+            await ProbeCommand.runUSBDump(flags: flags)
         case "device-lab":
             await DeviceLabCommand.run(flags: flags, args: remainingArgs)
         case "diag":

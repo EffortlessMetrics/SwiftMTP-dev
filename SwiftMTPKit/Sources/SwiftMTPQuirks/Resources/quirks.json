@@ -136,6 +136,9 @@
         "resetOnOpen": true,
         "requiresKernelDetach": true
       },
+      "hooks": [
+        { "phase": "postOpenSession", "delayMs": 500 }
+      ],
       "ops": {
         "supportsGetPartialObject64": true,
         "supportsSendPartialObject": false,
@@ -193,6 +196,10 @@
         "supportsEvents": true,
         "disableWriteResume": false
       },
+      "flags": {
+        "writeToSubfolderOnly": true,
+        "resetReopenOnOpenSessionIOError": true
+      },
       "confidence": "high",
       "status": "stable",
       "notes": [
@@ -236,6 +243,12 @@
         "overallDeadlineMs": 180000,
         "stabilizeMs": 3000,
         "resetOnOpen": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "resetReopenOnOpenSessionIOError": true,
+        "transactionIdResetsOnSession": true
       },
       "confidence": "low",
       "status": "experimental",

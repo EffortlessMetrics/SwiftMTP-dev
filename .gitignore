@@ -99,6 +99,7 @@ SwiftMTPKit/fuzz_*.log
 
 # Device lab artifacts (do not commit raw evidence)
 Docs/benchmarks/connected-lab/
+Docs/benchmarks/device-bringup/
 Docs/benchmarks/probes/
 
 # Benchmark artifacts (may contain absolute paths)

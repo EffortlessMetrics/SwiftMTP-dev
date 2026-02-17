@@ -48,6 +48,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   private var currentProbeReceipt: ProbeReceipt?
   public var probeReceipt: ProbeReceipt? { get async { currentProbeReceipt } }
   private var eventPump: EventPump = EventPump()
+  /// Session-scoped cache to avoid repeated GetObjectInfo(parent) calls on writes.
+  var parentStorageIDCache: [MTPObjectHandle: UInt32] = [:]
 
   public init(
     id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport,
@@ -85,7 +87,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       // Run beforeGetStorageIDs hook for devices that need preparation time
       try await self.runHook(.beforeGetStorageIDs, tuning: self.currentTuning)
 
-      let ids = try await link.getStorageIDs()
+      var ids = try await link.getStorageIDs()
 
       // If zero storages, apply fallback retry logic with escalating backoff
       if ids.isEmpty {
@@ -99,20 +101,11 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
           try await Task.sleep(nanoseconds: UInt64(delay) * 1_000_000)
 
           // Retry GetStorageIDs
-          let retryIds = try await link.getStorageIDs()
-          if !retryIds.isEmpty {
-            return try await withThrowingTaskGroup(of: MTPStorageInfo.self) { g in
-              for id in retryIds { g.addTask { try await link.getStorageInfo(id: id) } }
-              var out = [MTPStorageInfo]()
-              out.reserveCapacity(retryIds.count)
-              for try await s in g { out.append(s) }
-              return out
-            }
-          }
+          ids = try await link.getStorageIDs()
         }
 
         // All retries exhausted, return empty
-        return []
+        if ids.isEmpty { return [] }
       }
 
       return try await withThrowingTaskGroup(of: MTPStorageInfo.self) { g in
@@ -236,6 +229,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   /// Open device session if not already open, with optional stabilization delay.
   public func openIfNeeded() async throws {
     guard !sessionOpen else { return }
+    parentStorageIDCache.removeAll(keepingCapacity: true)
     let link = try await getMTPLink()
     try await applyTuningAndOpenSession(link: link)
     sessionOpen = true
@@ -255,6 +249,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
     mtpLink = nil
     sessionOpen = false
+    parentStorageIDCache.removeAll(keepingCapacity: true)
   }
 
   public func devGetDeviceInfoUncached() async throws -> MTPDeviceInfo {
@@ -371,7 +366,9 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     if debugEnabled { print("   [Actor] Running postOpenUSB hooks...") }
     try await self.runHook(.postOpenUSB, tuning: initialTuning)
 
-    // 9) Open session + stabilization (with retry on timeout/IO error)
+    let enableResetReopenLadder = initialPolicy.flags.resetReopenOnOpenSessionIOError
+
+    // 9) Open session + stabilization (with optional quirk-gated reset/reopen ladder)
     if debugEnabled { print("   [Actor] Opening MTP session...") }
     var sessionResult = SessionProbeResult()
     let sessionStart = DispatchTime.now()
@@ -397,25 +394,46 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         receipt.sessionEstablishment = sessionResult
         throw error
       }
+      sessionResult.firstFailure = "\(error)"
+      guard enableResetReopenLadder else {
+        sessionResult.error = "\(error)"
+        receipt.sessionEstablishment = sessionResult
+        throw error
+      }
       if debugEnabled {
-        print("   [Actor] OpenSession failed (\(error)), retrying with USB reset...")
+        print("   [Actor] OpenSession failed (\(error)), applying quirk reset+reopen ladder...")
       }
       sessionResult.requiredRetry = true
+      sessionResult.recoveryAction = "reset-reopen"
 
-      // Close current link, re-open with resetOnOpen forced
+      // Step 1: Attempt device reset on current handle.
+      sessionResult.resetAttempted = true
+      do {
+        try await link.resetDevice()
+      } catch {
+        sessionResult.resetError = "\(error)"
+      }
+
+      // Step 2: Full teardown before re-opening a fresh handle/interface claim.
+      eventPump.stop()
       await link.close()
       self.mtpLink = nil
-      self.config.resetOnOpen = true
-      let newLink = try await transport.open(summary, config: config)
+      try? await transport.close()
+
+      var reopenConfig = self.config
+      reopenConfig.resetOnOpen = false
+      let newLink = try await transport.open(summary, config: reopenConfig)
       self.mtpLink = newLink
+      self.config = reopenConfig
 
-      // Stabilize after USB reset
-      try await Task.sleep(nanoseconds: 500_000_000)
+      // Step 3: Brief settle time after re-enumeration/re-claim.
+      let settleMs = max(initialTuning.postClaimStabilizeMs, 250)
+      try await Task.sleep(nanoseconds: UInt64(settleMs) * 1_000_000)
 
-      // Retry OpenSession
+      // Step 4: Retry OpenSession once with fresh link state.
       try await newLink.openSession(id: 1)
       sessionResult.succeeded = true
-      if debugEnabled { print("   [Actor] OpenSession succeeded after USB reset.") }
+      if debugEnabled { print("   [Actor] OpenSession succeeded after reset+reopen.") }
     }
     sessionResult.durationMs = Int(
       (DispatchTime.now().uptimeNanoseconds - sessionStart.uptimeNanoseconds) / 1_000_000)

@@ -7,7 +7,6 @@ import SwiftMTPQuirks
 import Foundation
 
 /// Helper to find and open a device based on CLI flags
-@MainActor
 func openDevice(flags: CLIFlags) async throws -> any MTPDevice {
     let manager = MTPDeviceManager.shared
     await manager.configureLibUSBSupport()

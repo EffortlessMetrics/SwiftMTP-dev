@@ -2,7 +2,58 @@
 
 Swift-native Media Transfer Protocol stack with device quirks, modern SwiftUI implementation, and comprehensive verification suite.
 
-A privacy-safe, evidence-gated MTP implementation for macOS and Linux with adaptive device handling and comprehensive device quirk support.
+A privacy-safe, evidence-gated MTP implementation for macOS and iOS with adaptive device handling and comprehensive device quirk support.
+
+## Release and roadmap status
+
+- Current release train: `2.0.0` (2026-02-08)
+- Active work: 2.1.x planning with stability and documentation improvements
+- Change tracking: [`CHANGELOG.md`](CHANGELOG.md)
+- Docs index: [`Docs/README.md`](Docs/README.md)
+- Delivery plan: [`Docs/ROADMAP.md`](Docs/ROADMAP.md)
+- Sprint execution playbook: [`Docs/SPRINT-PLAYBOOK.md`](Docs/SPRINT-PLAYBOOK.md)
+- Release prep: [`Docs/ROADMAP.release-checklist.md`](Docs/ROADMAP.release-checklist.md)
+- Testing gates: [`Docs/ROADMAP.testing.md`](Docs/ROADMAP.testing.md)
+- Contribution workflow: [`Docs/ContributionGuide.md`](Docs/ContributionGuide.md)
+- Operator troubleshooting: [`Docs/Troubleshooting.md`](Docs/Troubleshooting.md)
+
+## Start Here for Implementation Sprints
+
+Use this order when joining an active sprint:
+
+1. Read scope and acceptance criteria in [`Docs/ROADMAP.md`](Docs/ROADMAP.md).
+2. Confirm operating rules in [`Docs/SPRINT-PLAYBOOK.md`](Docs/SPRINT-PLAYBOOK.md).
+3. Run the `Sprint Readiness Loop` below.
+4. For transport/quirk changes, capture evidence with `device-bringup`.
+5. Update docs + `CHANGELOG.md` in the same PR.
+
+Weekly sprint rhythm:
+
+- Monday: confirm scope, risks, and ready-state of sprint items.
+- Midweek: run checkpoint gates and resolve drift (test/docs/CI).
+- Friday: close or carry over items using DoD from the sprint playbook.
+
+## Sprint Readiness Loop
+
+Use this command loop for implementation sprints:
+
+```bash
+# 1) Build + targeted checks while iterating
+swift build --package-path SwiftMTPKit
+swift test --package-path SwiftMTPKit --filter CoreTests
+
+# 2) No-hardware smoke contract checks
+./scripts/smoke.sh
+
+# 3) Milestone/full gate before merge
+./run-all-tests.sh
+```
+
+For real-device mode evidence capture:
+
+```bash
+./scripts/device-bringup.sh --mode mtp-unlocked --vid 0x18d1 --pid 0x4ee1
+```
 
 ## 🚀 Swift 6 Actor-Based Architecture
 
@@ -32,19 +83,17 @@ SwiftMTP is built with modern Swift 6 concurrency patterns:
 ## 🛠 Installation & Setup
 
 ### Prerequisites
-- **macOS 15.0+** (for modern SwiftUI features) or **Linux**
-- **Xcode 16.0+** or **Swift 6.0+**
+- **macOS 26.0+** / **iOS 26.0+**
+- **Xcode 16.0+** with Swift 6 (`6.2` recommended)
 - `libusb` installed via Homebrew: `brew install libusb`
 
 ### Quick Start (GUI)
 ```bash
-cd SwiftMTPKit
-swift run SwiftMTPApp
+swift run --package-path SwiftMTPKit SwiftMTPApp
 ```
 
 ### Quick Start (CLI)
 ```bash
-cd SwiftMTPKit
 swift run swiftmtp --help
 ```
 
@@ -69,17 +118,17 @@ By default this runs:
 
 ### BDD Scenarios (CucumberSwift)
 ```bash
-swift test --filter BDDTests
+swift test --package-path SwiftMTPKit --filter BDDTests
 ```
 
 ### Property-Based Testing (SwiftCheck)
 ```bash
-swift test --filter PropertyTests
+swift test --package-path SwiftMTPKit --filter PropertyTests
 ```
 
 ### Snapshot & Visual Regression
 ```bash
-swift test --filter SnapshotTests
+swift test --package-path SwiftMTPKit --filter SnapshotTests
 ```
 
 ### Protocol Fuzzing
@@ -96,18 +145,26 @@ swift test --filter SnapshotTests
 
 | Device | VID:PID | Status | Notes |
 |--------|---------|--------|-------|
-| Google Pixel 7 | 18d1:4ee1 | ⚠️ Experimental | Probe/open blocker on macOS Tahoe 26 (diagnostics captured) |
-| OnePlus 3T | 2a70:f003 | ✅ Stable (probe/read) | Probe hardened for misaligned-buffer crash path |
+| Google Pixel 7 | 18d1:4ee1 | ⚠️ Experimental | Uses quirk-gated reset+reopen ladder on OpenSession I/O failures |
+| OnePlus 3T | 2a70:f003 | ⚠️ Partial | Probe/read stable; write-path tuning is still in-progress |
 | Xiaomi Mi Note 2 | 2717:ff10 / 2717:ff40 | ✅ Stable | ff40 variant uses vendor-specific MTP interface matching |
 
 See [`Docs/SwiftMTP.docc/Devices/`](Docs/SwiftMTP.docc/Devices/) for device-specific tuning guides.
 
 ### Connected Device Lab (repeatable host workflow)
 ```bash
-swift run --package-path SwiftMTPKit swiftmtp device-lab connected --json
+swift run swiftmtp device-lab connected --json
 ```
 
 Artifacts are written under `Docs/benchmarks/connected-lab/<timestamp>/` with per-device JSON reports.
+
+### Device Bring-Up Wrapper (mode evidence capture)
+```bash
+./scripts/device-bringup.sh --mode mtp-unlocked --vid 0x18d1 --pid 0x4ee1
+```
+
+This captures `system_profiler` USB data, `swiftmtp usb-dump`, and `device-lab` outputs under `Docs/benchmarks/device-bringup/<timestamp>-<mode>/`.
+See [`Docs/device-bringup.md`](Docs/device-bringup.md) for the `(device × mode × operation)` matrix.
 
 ## 🎮 Demo Mode & Simulation
 
@@ -130,19 +187,28 @@ GUI users can toggle simulation via the Orange Play button in the toolbar.
 
 Benchmark results from real devices:
 
-| Device | Read Speed | Write Speed | USB |
-|--------|------------|-------------|-----|
-| Google Pixel 7 | ~38 MB/s | ~32 MB/s | USB 3.0 |
-| OnePlus 3T | TBD | TBD | USB 3.0 |
+| Device | Read Speed | Write Speed | Status |
+|--------|------------|-------------|--------|
+| Google Pixel 7 | N/A | N/A | Blocked on Tahoe 26 bulk-transfer timeout |
+| OnePlus 3T | N/A | N/A | Probe/read stable, large write path in progress |
+| Samsung Galaxy S21 | 15.8 MB/s | 12.4 MB/s | Experimental but measurable |
 
 See [`Docs/benchmarks.md`](Docs/benchmarks.md) for detailed performance analysis.
 
 ## 📖 Development
 
+### Documentation
+- [Contribution guide](Docs/ContributionGuide.md)
+- [Roadmap and milestones](Docs/ROADMAP.md)
+- [Sprint playbook](Docs/SPRINT-PLAYBOOK.md)
+- [Testing guide](Docs/ROADMAP.testing.md)
+- [Device submission workflow](Docs/ROADMAP.device-submission.md)
+- [Release runbook](RELEASE.md)
+
 ### Building from Source
 ```bash
 git clone https://github.com/effortlessmetrics/swiftmtp.git
-cd swiftmtp/SwiftMTPKit
+cd swiftmtp
 swift build
 ```
 
@@ -151,7 +217,7 @@ swift build
 ./scripts/build-libusb-xcframework.sh
 ```
 
-### Documentation
+### DocC Preview
 ```bash
 swift package --disable-sandbox preview-documentation --target SwiftMTPCore
 ```

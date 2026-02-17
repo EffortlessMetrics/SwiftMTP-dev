@@ -43,12 +43,12 @@ public struct UploadScenario: BDDScenario {
             return
         }
         
-        context.step("When I attempt to upload to storage \(storageID.raw) parent 9")
+        context.step("When I attempt to upload to storage \(storageID.raw) root")
         
         do {
             try await ProtoTransfer.writeWholeObject(
                 storageID: storageID.raw,
-                parent: 9 as UInt32?,
+                parent: nil,
                 name: "bdd_test.txt",
                 size: UInt64(testData.count),
                 dataHandler: { buf in

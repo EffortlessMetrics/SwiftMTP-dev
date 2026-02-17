@@ -13,6 +13,8 @@ struct CollectCLICommand {
             json: flags.json,
             noninteractive: false,
             bundlePath: nil,
+            deviceName: nil,
+            openPR: false,
             vid: parseUSBIdentifier(flags.targetVID),
             pid: parseUSBIdentifier(flags.targetPID),
             bus: flags.targetBus,
@@ -35,6 +37,13 @@ struct CollectCLICommand {
                 i += 1
             } else if arg.hasPrefix("--bundle=") {
                 collectFlags.bundlePath = String(arg.dropFirst("--bundle=".count))
+            } else if arg == "--device-name" && i + 1 < args.count {
+                collectFlags.deviceName = args[i+1]
+                i += 1
+            } else if arg.hasPrefix("--device-name=") {
+                collectFlags.deviceName = String(arg.dropFirst("--device-name=".count))
+            } else if arg == "--open-pr" {
+                collectFlags.openPR = true
             }
             i += 1
         }
@@ -51,5 +60,7 @@ struct CollectCLICommand {
         print("  --run-bench <sizes>  - Run benchmarks with sizes (e.g., '100M,1G')")
         print("  --noninteractive     - Skip consent prompts")
         print("  --bundle <path>      - Custom output location for submission bundle")
+        print("  --device-name <name> - Custom device name for generated bundle path")
+        print("  --open-pr            - Run submit flow against GitHub after collect")
     }
 }

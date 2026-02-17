@@ -16,8 +16,8 @@
 ## Checklist
 
 - [ ] `./scripts/validate-quirks.sh` passes
-- [ ] `swift run swiftmtp quirks --explain` shows expected layers and deltas
-- [ ] `swift run swiftmtp health` passes (for operational changes)
+- [ ] `swift run --package-path SwiftMTPKit swiftmtp quirks --explain` shows expected layers and deltas
+- [ ] `swift run --package-path SwiftMTPKit swiftmtp health` passes (for operational changes)
 - [ ] CI green on all gates (evidence, bench, docc, lint)
 - [ ] Manual testing with target device(s)
 

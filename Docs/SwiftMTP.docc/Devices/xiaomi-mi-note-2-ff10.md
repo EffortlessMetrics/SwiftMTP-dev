@@ -1,9 +1,8 @@
 # Xiaomi Mi Note 2 Ff10
 
 @Metadata {
-    @DisplayName: "Xiaomi Mi Note 2 Ff10"
-    @PageKind: article
-    @Available: iOS 15.0, macOS 12.0
+    @DisplayName("Xiaomi Mi Note 2")
+    @PageKind(article)
 }
 
 Device-specific configuration for Xiaomi Mi Note 2 Ff10 MTP implementation.
@@ -58,11 +57,6 @@ Device-specific configuration for Xiaomi Mi Note 2 Ff10 MTP implementation.
 
 - **Author**: Steven Zimmerman
 - **Date**: 2025-01-09
-- **Commit**: <current-commit>
+- **Commit**: (See git history for this device file)
 
 ### Evidence Artifacts
-- [Device Probe](Docs/benchmarks/probes/mi-note2-probe.txt)
-- [USB Dump](Docs/benchmarks/probes/mi-note2-usb-dump.txt)
-- [100MB Benchmark](Docs/benchmarks/csv/mi-note2-100m.csv)
-- [1GB Benchmark](Docs/benchmarks/csv/mi-note2-1g.csv)
-- [Mirror Log](Docs/benchmarks/logs/mi-note2-mirror.log)

@@ -243,10 +243,27 @@ public actor LibUSBTransport: MTPTransport {
       postProbeStabilizeMs: config.postProbeStabilizeMs, debug: debug
     )
 
-    // Pass 2 (fallback): If pass 1 failed entirely and resetOnOpen is enabled,
-    // do USB reset + MTP readiness poll + re-probe.
-    // Also try Pass 2 for vendor-specific devices even without resetOnOpen
-    if result.candidate == nil && (config.resetOnOpen || isVendorSpecificMTP) {
+    // Pass 1b (aggressive, no reset): force configuration + re-claim + alt=0 + clear_halt,
+    // then rerun ladder once before escalating to reset/reopen.
+    // Restrict this expensive rung to devices where it has shown value (Pixel/vendor-specific).
+    let shouldRunAggressivePass = isVendorSpecificMTP || vendorID == 0x18D1
+    if result.candidate == nil && shouldRunAggressivePass {
+      if debug { print("   [Open] Pass 1 failed, attempting aggressive no-reset retry rung") }
+      result = tryProbeAllCandidatesAggressive(
+        handle: handle,
+        device: dev,
+        candidates: candidates,
+        handshakeTimeoutMs: max(effectiveTimeout, config.handshakeTimeoutMs),
+        postClaimStabilizeMs: max(config.postClaimStabilizeMs, 500),
+        debug: debug
+      )
+    } else if result.candidate == nil && debug {
+      print("   [Open] Pass 1 failed; skipping aggressive rung for this device family")
+    }
+
+    // Pass 2 (fallback): if pass 1 fails, do USB reset + teardown + fresh reopen + re-probe.
+    // This mirrors the libmtp-style recovery rung used by Pixel/OnePlus-class handshakes.
+    if result.candidate == nil {
       if debug { print("   [Open] Pass 1 failed, attempting USB reset fallback") }
 
       // Capture bus + port path before reset (address may change, bus+port won't)
@@ -260,52 +277,51 @@ public actor LibUSBTransport: MTPTransport {
       let deviceReenumerated = (resetRC == Int32(LIBUSB_ERROR_NOT_FOUND.rawValue))
 
       if resetRC == 0 || deviceReenumerated {
-        if deviceReenumerated {
-          // Device re-enumerated after reset — close old handle, find new device
-          if debug { print("   [Open] Device re-enumerated after reset, reopening handle...") }
-          libusb_close(handle)
-          libusb_unref_device(dev)
-
-          // Brief pause for USB enumeration
-          usleep(500_000)
-
-          // Re-enumerate and match by bus + port path
-          var newList: UnsafeMutablePointer<OpaquePointer?>?
-          let newCnt = libusb_get_device_list(ctx, &newList)
-          var newTarget: OpaquePointer?
-          if newCnt > 0, let newList {
-            for i in 0..<Int(newCnt) {
-              guard let d = newList[i] else { continue }
-              let dBus = libusb_get_bus_number(d)
-              guard dBus == preBus else { continue }
-              var dPort = [UInt8](repeating: 0, count: 7)
-              let dDepth = libusb_get_port_numbers(d, &dPort, Int32(dPort.count))
-              if dDepth == portDepth && dPort[0..<Int(dDepth)] == portPath[0..<Int(portDepth)] {
-                libusb_ref_device(d)
-                newTarget = d
-                break
-              }
-            }
-            libusb_free_device_list(newList, 1)
-          }
-
-          guard let nd = newTarget else {
-            if debug { print("   [Open] Could not re-find device after reset") }
-            throw TransportError.noDevice
-          }
-          dev = nd
-
-          var nh: OpaquePointer?
-          guard libusb_open(dev, &nh) == 0, let newHandle = nh else {
-            libusb_unref_device(dev)
-            throw TransportError.accessDenied
-          }
-          handle = newHandle
-
-          // Re-rank candidates with new handle
-          candidates = try rankMTPInterfaces(handle: handle, device: dev)
-          if debug { print("   [Open] Reopened handle, \(candidates.count) candidate(s)") }
+        // Always teardown and reopen a fresh handle after reset.
+        if debug {
+          let kind = deviceReenumerated ? "re-enumerated" : "same address"
+          print("   [Open] Reset succeeded (\(kind)); reopening fresh handle...")
         }
+        libusb_close(handle)
+        libusb_unref_device(dev)
+        usleep(350_000)
+
+        // Re-enumerate and match by bus + port path.
+        var newList: UnsafeMutablePointer<OpaquePointer?>?
+        let newCnt = libusb_get_device_list(ctx, &newList)
+        var newTarget: OpaquePointer?
+        if newCnt > 0, let newList {
+          for i in 0..<Int(newCnt) {
+            guard let d = newList[i] else { continue }
+            let dBus = libusb_get_bus_number(d)
+            guard dBus == preBus else { continue }
+            var dPort = [UInt8](repeating: 0, count: 7)
+            let dDepth = libusb_get_port_numbers(d, &dPort, Int32(dPort.count))
+            if dDepth == portDepth && dPort[0..<Int(dDepth)] == portPath[0..<Int(portDepth)] {
+              libusb_ref_device(d)
+              newTarget = d
+              break
+            }
+          }
+          libusb_free_device_list(newList, 1)
+        }
+
+        guard let nd = newTarget else {
+          if debug { print("   [Open] Could not re-find device after reset") }
+          throw TransportError.noDevice
+        }
+        dev = nd
+
+        var nh: OpaquePointer?
+        guard libusb_open(dev, &nh) == 0, let newHandle = nh else {
+          libusb_unref_device(dev)
+          throw TransportError.accessDenied
+        }
+        handle = newHandle
+
+        // Re-rank candidates with new handle.
+        candidates = try rankMTPInterfaces(handle: handle, device: dev)
+        if debug { print("   [Open] Reopened handle, \(candidates.count) candidate(s)") }
 
         // Poll GetDeviceStatus until MTP stack recovers (budget from stabilizeMs)
         let budget = max(config.stabilizeMs, 3000)
@@ -331,37 +347,13 @@ public actor LibUSBTransport: MTPTransport {
     guard let sel = result.candidate else {
       libusb_close(handle)
       libusb_unref_device(dev)
-      // Determine if this is a claim failure vs probe failure
-      var failureGuidance = ""
       if result.probeStep == nil {
-        // Claim succeeded but no probe response - device not responding to MTP commands
-        // This is a TIMEOUT situation: device is claimed but not responding
-        failureGuidance = """
-
-          The USB interface was claimed successfully, but the device did not respond to MTP commands.
-          This typically indicates:
-          - Device is in PTP mode instead of MTP mode (check phone USB settings)
-          - USB cable is charge-only (no data lines)
-          - Device screen is locked or in sleep mode
-          - USB hub or port issue
-
-          Try:
-          1. On the device, verify "File Transfer (MTP)" mode is selected in USB preferences
-          2. Unlock the device screen
-          3. Try a different USB cable (must support data, not just charging)
-          4. Try a different USB port (directly on Mac, not through hub)
-          5. Check if ioreg shows the device with idProduct=0x4EE1 (MTP mode)
-          """
-      } else {
-        // Some probe steps worked but final candidate selection failed
-        failureGuidance = """
-
-          The probe ladder completed some steps but failed to establish a working session.
-          This may indicate a device-specific quirk or timing issue.
-          """
+        throw TransportError.io(
+          "mtp interface claim failed across \(candidates.count) candidate(s). Close competing USB apps (Android File Transfer, adb, browsers) and retry."
+        )
       }
       throw TransportError.io(
-        "no suitable MTP interface found: last probe step=\(result.probeStep ?? "none")\(failureGuidance)"
+        "mtp handshake failed after interface claim: last probe step=\(result.probeStep ?? "none"). Device claimed but did not complete MTP command exchange; unlock/authorize the phone and replug."
       )
     }
 
@@ -412,6 +404,7 @@ public actor LibUSBTransport: MTPTransport {
       handle: handle, device: dev,
       iface: sel.ifaceNumber, epIn: sel.bulkIn, epOut: sel.bulkOut, epEvt: sel.eventIn,
       config: config, manufacturer: summary.manufacturer, model: summary.model,
+      vendorID: vendorID, productID: productID,
       cachedDeviceInfoData: result.cachedDeviceInfo,
       linkDescriptor: descriptor
     )
@@ -432,20 +425,35 @@ public actor LibUSBTransport: MTPTransport {
 }
 
 public final class MTPUSBLink: @unchecked Sendable, MTPLink {
-  private let h: OpaquePointer, dev: OpaquePointer, iface: UInt8, inEP, outEP, evtEP: UInt8
+  private var h: OpaquePointer
+  private var dev: OpaquePointer
+  private let iface: UInt8
+  private let inEP: UInt8
+  private let outEP: UInt8
+  private let evtEP: UInt8
   private let ioQ = DispatchQueue(
     label: "com.effortlessmetrics.swiftmtp.usbio", qos: .userInitiated)
   private var nextTx: UInt32 = 1
-  private let config: SwiftMTPConfig, manufacturer: String, model: String
+  private let config: SwiftMTPConfig
+  private let manufacturer: String
+  private let model: String
+  private let vendorID: UInt16
+  private let productID: UInt16
+  private var didRunPixelPreOpenSessionPreflight = false
   private var eventContinuation: AsyncStream<Data>.Continuation?, eventPumpTask: Task<Void, Never>?
   /// Raw device-info bytes cached from the interface probe (avoids redundant GetDeviceInfo).
   private let cachedDeviceInfoData: Data?
   /// USB interface/endpoint metadata from transport probing.
   public let linkDescriptor: MTPLinkDescriptor?
 
+  static func shouldRecoverNoProgressTimeout(rc: Int32, sent: Int32) -> Bool {
+    rc == Int32(LIBUSB_ERROR_TIMEOUT.rawValue) && sent == 0
+  }
+
   init(
     handle: OpaquePointer, device: OpaquePointer, iface: UInt8, epIn: UInt8, epOut: UInt8,
     epEvt: UInt8, config: SwiftMTPConfig, manufacturer: String, model: String,
+    vendorID: UInt16, productID: UInt16,
     cachedDeviceInfoData: Data? = nil, linkDescriptor: MTPLinkDescriptor? = nil
   ) {
     self.h = handle
@@ -457,6 +465,8 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     self.config = config
     self.manufacturer = manufacturer
     self.model = model
+    self.vendorID = vendorID
+    self.productID = productID
     self.cachedDeviceInfoData = cachedDeviceInfoData
     self.linkDescriptor = linkDescriptor
   }
@@ -490,12 +500,49 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   }
 
   public func openUSBIfNeeded() async throws {}
+
+  private var isPixel7PreflightTarget: Bool {
+    vendorID == 0x18D1 && productID == 0x4EE1
+  }
+
+  private func runPixelPreOpenSessionPreflightIfNeeded() {
+    guard isPixel7PreflightTarget, !didRunPixelPreOpenSessionPreflight else { return }
+    didRunPixelPreOpenSessionPreflight = true
+
+    let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+    setConfigurationIfNeeded(handle: h, device: dev, force: true, debug: debug)
+    let setAltRC = libusb_set_interface_alt_setting(h, Int32(iface), 0)
+    let clearOutRC = libusb_clear_halt(h, outEP)
+    let clearInRC = libusb_clear_halt(h, inEP)
+    let clearEventRC: Int32 = evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+    let classResetRC = libusb_control_transfer(
+      h, 0x21, 0x66, 0, UInt16(iface), nil, 0, 2000
+    )
+    usleep(200_000)
+
+    if debug {
+      print(
+        String(
+          format:
+            "   [USB][Preflight][Pixel] setAlt0=%d clear(out=%d in=%d evt=%d) classReset=%d settleMs=200",
+          setAltRC,
+          clearOutRC,
+          clearInRC,
+          clearEventRC,
+          classResetRC
+        )
+      )
+    }
+  }
+
   public func openSession(id: UInt32) async throws {
+    runPixelPreOpenSessionPreflightIfNeeded()
     try await executeStreamingCommand(
       PTPContainer(type: 1, code: 0x1002, txid: 0, params: [id]), dataPhaseLength: nil,
       dataInHandler: nil, dataOutHandler: nil
     )
     .checkOK()
+    nextTx = 1
   }
   public func closeSession() async throws {
     try await executeStreamingCommand(
@@ -756,10 +803,8 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
     if debug { print(String(format: "   [USB] op=0x%04x tx=%u phase=COMMAND", command.code, txid)) }
     let cmdBytes = makePTPCommand(opcode: command.code, txid: txid, params: command.params)
-    try cmdBytes.withUnsafeBytes {
-      try bulkWriteAll(
-        outEP, from: $0.baseAddress!, count: $0.count, timeout: UInt32(config.ioTimeoutMs))
-    }
+    try writeCommandContainerWithRecovery(
+      cmdBytes, opcode: command.code, txid: txid, timeout: UInt32(config.ioTimeoutMs), debug: debug)
 
     if let produce = dataOutHandler {
       if debug {
@@ -861,7 +906,339 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       guard let param = paramReader.u32() else { break }
       params.append(param)
     }
+    if debug {
+      let paramsText =
+        params.isEmpty ? "[]" : "[" + params.map { String(format: "0x%08x", $0) }.joined(separator: ",") + "]"
+      print(
+        String(
+          format: "   [USB] op=0x%04x tx=%u response=0x%04x params=%@",
+          command.code, txid, rHdr.code, paramsText
+        ))
+    }
+
     return PTPResponseResult(code: rHdr.code, txid: rHdr.txid, params: params)
+  }
+
+  private struct CommandWriteAttempt {
+    let rc: Int32
+    let sent: Int32
+    let expected: Int32
+
+    var succeeded: Bool { rc == 0 && sent == expected }
+    var isNoProgressTimeout: Bool {
+      MTPUSBLink.shouldRecoverNoProgressTimeout(rc: rc, sent: sent)
+    }
+  }
+
+  private func attemptCommandWrite(_ bytes: [UInt8], timeout: UInt32) -> CommandWriteAttempt {
+    var sent: Int32 = 0
+    let rc = bytes.withUnsafeBytes { ptr -> Int32 in
+      libusb_bulk_transfer(
+        h, outEP,
+        UnsafeMutablePointer(
+          mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
+        Int32(bytes.count), &sent, timeout)
+    }
+    return CommandWriteAttempt(rc: rc, sent: sent, expected: Int32(bytes.count))
+  }
+
+  private func throwCommandWriteFailure(_ attempt: CommandWriteAttempt, context: String) throws {
+    if attempt.rc == 0, attempt.sent != attempt.expected {
+      throw MTPError.transport(
+        .io("\(context): short write sent=\(attempt.sent)/\(attempt.expected)"))
+    }
+    if attempt.isNoProgressTimeout {
+      throw MTPError.transport(
+        .io("\(context): command-phase timeout with no progress (sent=0)"))
+    }
+    throw MTPError.transport(mapLibusb(attempt.rc))
+  }
+
+  private func writeCommandContainerWithRecovery(
+    _ bytes: [UInt8], opcode: UInt16, txid: UInt32, timeout: UInt32, debug: Bool
+  ) throws {
+    let initialAttempt = attemptCommandWrite(bytes, timeout: timeout)
+    if initialAttempt.succeeded { return }
+    guard initialAttempt.isNoProgressTimeout else {
+      try throwCommandWriteFailure(initialAttempt, context: "command write failed")
+      return
+    }
+
+    if debug {
+      print(
+        String(
+          format:
+            "   [USB][Recover] op=0x%04x tx=%u no-progress timeout detected (rc=%d sent=%d), running light rung",
+          opcode, txid, initialAttempt.rc, initialAttempt.sent))
+    }
+    _ = performCommandNoProgressLightRecovery(opcode: opcode, txid: txid, debug: debug)
+    let lightRetry = attemptCommandWrite(bytes, timeout: timeout)
+    if lightRetry.succeeded {
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover] op=0x%04x tx=%u recovered after light rung",
+            opcode, txid))
+      }
+      return
+    }
+
+    if shouldAttemptPixelResetReopenRecovery(after: lightRetry) {
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover] op=0x%04x tx=%u light rung still no-progress (rc=%d sent=%d), running reset+reopen rung",
+            opcode, txid, lightRetry.rc, lightRetry.sent))
+      }
+      if performCommandNoProgressResetReopenRecovery(opcode: opcode, txid: txid, debug: debug) {
+        _ = performCommandNoProgressLightRecovery(opcode: opcode, txid: txid, debug: debug)
+        let reopenRetry = attemptCommandWrite(bytes, timeout: timeout)
+        if reopenRetry.succeeded {
+          if debug {
+            print(
+              String(
+                format:
+                  "   [USB][Recover] op=0x%04x tx=%u recovered after reset+reopen rung",
+                opcode, txid))
+          }
+          return
+        }
+        try throwCommandWriteFailure(
+          reopenRetry, context: "command write failed after reset+reopen recovery")
+        return
+      }
+      try throwCommandWriteFailure(
+        lightRetry, context: "command write failed after reset+reopen recovery")
+      return
+    }
+
+    if debug {
+      print(
+        String(
+          format:
+            "   [USB][Recover] op=0x%04x tx=%u light rung did not recover (rc=%d sent=%d), running hard rung",
+          opcode, txid, lightRetry.rc, lightRetry.sent))
+    }
+    guard performCommandNoProgressHardRecovery(opcode: opcode, txid: txid, debug: debug) else {
+      try throwCommandWriteFailure(lightRetry, context: "command write failed after light recovery")
+      return
+    }
+    let hardRetry = attemptCommandWrite(bytes, timeout: timeout)
+    if hardRetry.succeeded {
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover] op=0x%04x tx=%u recovered after hard rung",
+            opcode, txid))
+      }
+      return
+    }
+
+    try throwCommandWriteFailure(
+      hardRetry, context: "command write failed after recovery rungs")
+  }
+
+  private var isPixelClassNoProgressTarget: Bool {
+    vendorID == 0x18D1 && productID == 0x4EE1
+  }
+
+  private func shouldAttemptPixelResetReopenRecovery(after attempt: CommandWriteAttempt) -> Bool {
+    isPixelClassNoProgressTarget && attempt.isNoProgressTimeout
+  }
+
+  @discardableResult
+  private func performCommandNoProgressLightRecovery(opcode: UInt16, txid: UInt32, debug: Bool)
+    -> Bool
+  {
+    let clearOutRC = libusb_clear_halt(h, outEP)
+    let clearInRC = libusb_clear_halt(h, inEP)
+    let clearEventRC: Int32 = evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+    let classResetRC = libusb_control_transfer(
+      h, 0x21, 0x66, 0, UInt16(iface), nil, 0, 2000)
+
+    setConfigurationIfNeeded(handle: h, device: dev, force: true, debug: debug)
+    let setAltRC = libusb_set_interface_alt_setting(h, Int32(iface), 0)
+
+    let clearOutPostRC = libusb_clear_halt(h, outEP)
+    let clearInPostRC = libusb_clear_halt(h, inEP)
+    let clearEventPostRC: Int32 =
+      evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+
+    usleep(200_000)
+
+    if debug {
+      print(
+        String(
+          format:
+            "   [USB][Recover][Light] op=0x%04x tx=%u clear(out=%d in=%d evt=%d) classReset=%d setAlt0=%d postClear(out=%d in=%d evt=%d)",
+          opcode, txid, clearOutRC, clearInRC, clearEventRC, classResetRC, setAltRC,
+          clearOutPostRC, clearInPostRC, clearEventPostRC))
+    }
+    return true
+  }
+
+  private func performCommandNoProgressHardRecovery(opcode: UInt16, txid: UInt32, debug: Bool)
+    -> Bool
+  {
+    let resetRC = libusb_reset_device(h)
+    if resetRC != 0 {
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover][Hard] op=0x%04x tx=%u reset_device failed rc=%d",
+            opcode, txid, resetRC))
+      }
+      return false
+    }
+
+    usleep(300_000)
+
+    setConfigurationIfNeeded(handle: h, device: dev, force: true, debug: debug)
+    let setAltRC = libusb_set_interface_alt_setting(h, Int32(iface), 0)
+    let clearOutRC = libusb_clear_halt(h, outEP)
+    let clearInRC = libusb_clear_halt(h, inEP)
+    let clearEventRC: Int32 = evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+
+    usleep(200_000)
+
+    if debug {
+      print(
+        String(
+          format:
+            "   [USB][Recover][Hard] op=0x%04x tx=%u reset_device=0 setAlt0=%d clear(out=%d in=%d evt=%d)",
+          opcode, txid, setAltRC, clearOutRC, clearInRC, clearEventRC))
+    }
+    return true
+  }
+
+  private func performCommandNoProgressResetReopenRecovery(
+    opcode: UInt16,
+    txid: UInt32,
+    debug: Bool
+  ) -> Bool {
+    // Ensure no concurrent event reads are still using the old handle.
+    eventPumpTask?.cancel()
+    eventPumpTask = nil
+
+    let oldHandle = h
+    let oldDevice = dev
+
+    let oldBus = libusb_get_bus_number(oldDevice)
+    let oldAddress = libusb_get_device_address(oldDevice)
+    var oldPortPath = [UInt8](repeating: 0, count: 7)
+    let oldPortDepth = libusb_get_port_numbers(oldDevice, &oldPortPath, Int32(oldPortPath.count))
+
+    let resetRC = libusb_reset_device(oldHandle)
+    let releaseRC = libusb_release_interface(oldHandle, Int32(iface))
+
+    guard let reopenedDevice = findRecoveryDevice(
+      bus: oldBus,
+      address: oldAddress,
+      portPath: oldPortPath,
+      portDepth: oldPortDepth
+    ),
+      let reopenedHandle = openAndClaimRecoveryHandle(device: reopenedDevice, debug: debug)
+    else {
+      let reclaimRC = libusb_claim_interface(oldHandle, Int32(iface))
+      if reclaimRC == 0 {
+        _ = libusb_set_interface_alt_setting(oldHandle, Int32(iface), 0)
+      }
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover][Reopen] op=0x%04x tx=%u failed to reopen (reset=%d release=%d reclaim=%d)",
+            opcode, txid, resetRC, releaseRC, reclaimRC))
+      }
+      return false
+    }
+
+    h = reopenedHandle
+    dev = reopenedDevice
+
+    libusb_close(oldHandle)
+    libusb_unref_device(oldDevice)
+    usleep(200_000)
+
+    if debug {
+      print(
+        String(
+          format:
+            "   [USB][Recover][Reopen] op=0x%04x tx=%u reset=%d release=%d reopened iface=%d",
+          opcode, txid, resetRC, releaseRC, iface))
+    }
+    return true
+  }
+
+  private func findRecoveryDevice(
+    bus: UInt8,
+    address: UInt8,
+    portPath: [UInt8],
+    portDepth: Int32
+  ) -> OpaquePointer? {
+    let ctx = LibUSBContext.shared.ctx
+    var list: UnsafeMutablePointer<OpaquePointer?>?
+    let count = libusb_get_device_list(ctx, &list)
+    guard count > 0, let list else { return nil }
+    defer { libusb_free_device_list(list, 1) }
+
+    for index in 0..<Int(count) {
+      guard let device = list[index] else { continue }
+      guard libusb_get_bus_number(device) == bus else { continue }
+
+      if portDepth > 0 {
+        var candidatePortPath = [UInt8](repeating: 0, count: 7)
+        let candidateDepth = libusb_get_port_numbers(
+          device,
+          &candidatePortPath,
+          Int32(candidatePortPath.count)
+        )
+        if candidateDepth == portDepth
+          && candidatePortPath[0..<Int(candidateDepth)] == portPath[0..<Int(portDepth)]
+        {
+          libusb_ref_device(device)
+          return device
+        }
+        continue
+      }
+
+      if libusb_get_device_address(device) == address {
+        libusb_ref_device(device)
+        return device
+      }
+    }
+    return nil
+  }
+
+  private func openAndClaimRecoveryHandle(device: OpaquePointer, debug: Bool) -> OpaquePointer? {
+    var reopenedHandle: OpaquePointer?
+    guard libusb_open(device, &reopenedHandle) == 0, let reopenedHandle else {
+      libusb_unref_device(device)
+      return nil
+    }
+
+    _ = libusb_set_auto_detach_kernel_driver(reopenedHandle, 1)
+    _ = libusb_detach_kernel_driver(reopenedHandle, Int32(iface))
+    setConfigurationIfNeeded(handle: reopenedHandle, device: device, force: true, debug: debug)
+
+    let claimRC = libusb_claim_interface(reopenedHandle, Int32(iface))
+    if claimRC != 0 {
+      libusb_close(reopenedHandle)
+      libusb_unref_device(device)
+      return nil
+    }
+
+    _ = libusb_set_interface_alt_setting(reopenedHandle, Int32(iface), 0)
+    _ = libusb_clear_halt(reopenedHandle, outEP)
+    _ = libusb_clear_halt(reopenedHandle, inEP)
+    if evtEP != 0 {
+      _ = libusb_clear_halt(reopenedHandle, evtEP)
+    }
+    return reopenedHandle
   }
 
   @inline(__always) func bulkWriteAll(
