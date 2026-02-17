@@ -44,18 +44,21 @@ final class DeviceActorSendObjectRetryTests: XCTestCase {
     XCTAssertEqual(retryClass, .transientTransport)
   }
 
-  func testSendObjectRetryParametersFollowDeterministicInvalidParameterMatrix() {
+  func testSendObjectRetryParametersInvalidParameterRetriesWithFormatFlip() {
     let primary = MTPDeviceActor.SendObjectRetryParameters(
       useEmptyDates: false,
       useUndefinedObjectFormat: false,
       useUnknownObjectInfoSize: false,
       omitOptionalObjectInfoFields: false,
-      zeroObjectInfoParentHandle: false
+      zeroObjectInfoParentHandle: false,
+      useRootCommandParentHandle: false
     )
 
     let retries = MTPDeviceActor.sendObjectRetryParameters(
       primary: primary,
-      retryClass: .invalidParameter
+      retryClass: .invalidParameter,
+      isRootParent: false,
+      allowUnknownObjectInfoSizeRetry: false
     )
 
     XCTAssertEqual(
@@ -66,101 +69,80 @@ final class DeviceActorSendObjectRetryTests: XCTestCase {
           useUndefinedObjectFormat: true,
           useUnknownObjectInfoSize: false,
           omitOptionalObjectInfoFields: false,
-          zeroObjectInfoParentHandle: false
-        ),
-        MTPDeviceActor.SendObjectRetryParameters(
-          useEmptyDates: true,
-          useUndefinedObjectFormat: true,
-          useUnknownObjectInfoSize: false,
-          omitOptionalObjectInfoFields: false,
-          zeroObjectInfoParentHandle: false
-        ),
-        MTPDeviceActor.SendObjectRetryParameters(
-          useEmptyDates: true,
-          useUndefinedObjectFormat: true,
-          useUnknownObjectInfoSize: true,
-          omitOptionalObjectInfoFields: false,
-          zeroObjectInfoParentHandle: false
-        ),
-        MTPDeviceActor.SendObjectRetryParameters(
-          useEmptyDates: true,
-          useUndefinedObjectFormat: true,
-          useUnknownObjectInfoSize: true,
-          omitOptionalObjectInfoFields: true,
-          zeroObjectInfoParentHandle: false
-        ),
-        MTPDeviceActor.SendObjectRetryParameters(
-          useEmptyDates: true,
-          useUndefinedObjectFormat: true,
-          useUnknownObjectInfoSize: true,
-          omitOptionalObjectInfoFields: true,
-          zeroObjectInfoParentHandle: true
+          zeroObjectInfoParentHandle: false,
+          useRootCommandParentHandle: false
         ),
       ]
     )
   }
 
-  func testSendObjectRetryParametersDedupesWhenPrimaryAlreadyUsesMostConservativeSettings() {
+  func testSendObjectRetryParametersInvalidParameterRootRetryZeroesDatasetParent() {
     let primary = MTPDeviceActor.SendObjectRetryParameters(
-      useEmptyDates: true,
-      useUndefinedObjectFormat: true,
-      useUnknownObjectInfoSize: true,
-      omitOptionalObjectInfoFields: true,
-      zeroObjectInfoParentHandle: true
-    )
-
-    let retries = MTPDeviceActor.sendObjectRetryParameters(
-      primary: primary,
-      retryClass: .invalidParameter
-    )
-
-    XCTAssertEqual(retries, [])
-  }
-
-  func testSendObjectRetryParametersKeepsUndefinedFormatRungWhenPrimaryUsesOnlyEmptyDates() {
-    let primary = MTPDeviceActor.SendObjectRetryParameters(
-      useEmptyDates: true,
+      useEmptyDates: false,
       useUndefinedObjectFormat: false,
       useUnknownObjectInfoSize: false,
       omitOptionalObjectInfoFields: false,
-      zeroObjectInfoParentHandle: false
+      zeroObjectInfoParentHandle: false,
+      useRootCommandParentHandle: false
     )
 
     let retries = MTPDeviceActor.sendObjectRetryParameters(
       primary: primary,
-      retryClass: .invalidParameter
+      retryClass: .invalidParameter,
+      isRootParent: true,
+      allowUnknownObjectInfoSizeRetry: false
     )
 
     XCTAssertEqual(
       retries,
       [
         MTPDeviceActor.SendObjectRetryParameters(
-          useEmptyDates: true,
+          useEmptyDates: false,
           useUndefinedObjectFormat: true,
           useUnknownObjectInfoSize: false,
           omitOptionalObjectInfoFields: false,
-          zeroObjectInfoParentHandle: false
+          zeroObjectInfoParentHandle: true,
+          useRootCommandParentHandle: false
+        )
+      ]
+    )
+  }
+
+  func testSendObjectRetryParametersUnknownSizeRetryIsQuirkGated() {
+    let primary = MTPDeviceActor.SendObjectRetryParameters(
+      useEmptyDates: false,
+      useUndefinedObjectFormat: false,
+      useUnknownObjectInfoSize: false,
+      omitOptionalObjectInfoFields: false,
+      zeroObjectInfoParentHandle: false,
+      useRootCommandParentHandle: false
+    )
+
+    let retries = MTPDeviceActor.sendObjectRetryParameters(
+      primary: primary,
+      retryClass: .invalidParameter,
+      isRootParent: false,
+      allowUnknownObjectInfoSizeRetry: true
+    )
+
+    XCTAssertEqual(
+      retries,
+      [
+        MTPDeviceActor.SendObjectRetryParameters(
+          useEmptyDates: false,
+          useUndefinedObjectFormat: true,
+          useUnknownObjectInfoSize: false,
+          omitOptionalObjectInfoFields: false,
+          zeroObjectInfoParentHandle: false,
+          useRootCommandParentHandle: false
         ),
         MTPDeviceActor.SendObjectRetryParameters(
-          useEmptyDates: true,
+          useEmptyDates: false,
           useUndefinedObjectFormat: true,
           useUnknownObjectInfoSize: true,
           omitOptionalObjectInfoFields: false,
-          zeroObjectInfoParentHandle: false
-        ),
-        MTPDeviceActor.SendObjectRetryParameters(
-          useEmptyDates: true,
-          useUndefinedObjectFormat: true,
-          useUnknownObjectInfoSize: true,
-          omitOptionalObjectInfoFields: true,
-          zeroObjectInfoParentHandle: false
-        ),
-        MTPDeviceActor.SendObjectRetryParameters(
-          useEmptyDates: true,
-          useUndefinedObjectFormat: true,
-          useUnknownObjectInfoSize: true,
-          omitOptionalObjectInfoFields: true,
-          zeroObjectInfoParentHandle: true
+          zeroObjectInfoParentHandle: false,
+          useRootCommandParentHandle: false
         )
       ]
     )
@@ -172,12 +154,15 @@ final class DeviceActorSendObjectRetryTests: XCTestCase {
       useUndefinedObjectFormat: false,
       useUnknownObjectInfoSize: false,
       omitOptionalObjectInfoFields: false,
-      zeroObjectInfoParentHandle: false
+      zeroObjectInfoParentHandle: false,
+      useRootCommandParentHandle: false
     )
 
     let retries = MTPDeviceActor.sendObjectRetryParameters(
       primary: primary,
-      retryClass: .transientTransport
+      retryClass: .transientTransport,
+      isRootParent: false,
+      allowUnknownObjectInfoSizeRetry: false
     )
 
     XCTAssertEqual(retries, [primary])
