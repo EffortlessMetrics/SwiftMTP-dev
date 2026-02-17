@@ -505,6 +505,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       dataInHandler: nil, dataOutHandler: nil
     )
     .checkOK()
+    nextTx = 1
   }
   public func closeSession() async throws {
     try await executeStreamingCommand(

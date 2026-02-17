@@ -357,7 +357,10 @@ public struct PTPObjectInfoDataset {
   public static func encode(
     storageID: UInt32, parentHandle: UInt32, format: UInt16, size: UInt64, name: String,
     associationType: UInt16 = 0, associationDesc: UInt32 = 0,
-    useEmptyDates: Bool = false
+    useEmptyDates: Bool = false,
+    objectCompressedSizeOverride: UInt32? = nil,
+    omitOptionalStringFields: Bool = false,
+    objectInfoParentHandleOverride: UInt32? = nil
   ) -> Data {
     var data = Data()
     func put32(_ v: UInt32) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
@@ -379,7 +382,7 @@ public struct PTPObjectInfoDataset {
     put32(storageID)
     put16(format)
     put16(0)  // ProtectionStatus
-    put32(UInt32(min(size, UInt64(0xFFFFFFFF))))  // ObjectCompressedSize
+    put32(objectCompressedSizeOverride ?? UInt32(min(size, UInt64(0xFFFFFFFF))))  // ObjectCompressedSize
     put16(0)  // ThumbFormat
     put32(0)  // ThumbCompressedSize
     put32(0)  // ThumbPixWidth
@@ -387,19 +390,21 @@ public struct PTPObjectInfoDataset {
     put32(0)  // ImagePixWidth
     put32(0)  // ImagePixHeight
     put32(0)  // ImageBitDepth
-    put32(parentHandle)
+    put32(objectInfoParentHandleOverride ?? parentHandle)
     put16(associationType)
     put32(associationDesc)
     put32(0)  // SequenceNumber
     putPTPString(name)
-    if useEmptyDates {
-      putPTPString("")  // CaptureDate (empty)
-      putPTPString("")  // ModificationDate (empty)
-    } else {
-      putPTPString("20250101T000000")  // CaptureDate
-      putPTPString("20250101T000000")  // ModificationDate
+    if !omitOptionalStringFields {
+      if useEmptyDates {
+        putPTPString("")  // CaptureDate (empty)
+        putPTPString("")  // ModificationDate (empty)
+      } else {
+        putPTPString("20250101T000000")  // CaptureDate
+        putPTPString("20250101T000000")  // ModificationDate
+      }
+      putPTPString("")  // Keywords
     }
-    putPTPString("")  // Keywords
 
     return data
   }

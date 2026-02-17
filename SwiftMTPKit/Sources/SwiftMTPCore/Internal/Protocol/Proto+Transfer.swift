@@ -48,7 +48,11 @@ public enum ProtoTransfer {
     dataHandler: @escaping MTPDataOut,
     on link: MTPLink,
     ioTimeoutMs: Int,
-    useEmptyDates: Bool = false
+    useEmptyDates: Bool = false,
+    useUndefinedObjectFormat: Bool = false,
+    useUnknownObjectInfoSize: Bool = false,
+    omitOptionalObjectInfoFields: Bool = false,
+    zeroObjectInfoParentHandle: Bool = false
   ) async throws {
     // PTP Spec: SendObjectInfo command parameters are [StorageID, ParentHandle]
     // Use a concrete storage ID; wildcard storage (0xFFFFFFFF) triggers
@@ -59,7 +63,8 @@ public enum ProtoTransfer {
         "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID))).")
     }
     let targetStorage = storageID
-    let formatCode = PTPObjectFormat.forFilename(name)
+    let formatCode = useUndefinedObjectFormat ? 0x3000 : PTPObjectFormat.forFilename(name)
+    let objectInfoParentHandle = zeroObjectInfoParentHandle ? UInt32(0) : parentParam
 
     let sendObjectInfoCommand = PTPContainer(
       length: 20,  // 12 + 2 * 4
@@ -71,11 +76,19 @@ public enum ProtoTransfer {
 
     let dataset = PTPObjectInfoDataset.encode(
       storageID: targetStorage, parentHandle: parentParam, format: formatCode, size: size,
-      name: name, useEmptyDates: useEmptyDates)
+      name: name, useEmptyDates: useEmptyDates,
+      objectCompressedSizeOverride: useUnknownObjectInfoSize ? 0xFFFFFFFF : nil,
+      omitOptionalStringFields: omitOptionalObjectInfoFields,
+      objectInfoParentHandleOverride: objectInfoParentHandle
+    )
 
     if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
       print(
         "   [USB] SendObjectInfo: storage=\(String(format: "0x%08x", targetStorage)) parent=\(String(format: "0x%08x", parentParam)) format=\(String(format: "0x%04x", formatCode)) size=\(size) name=\(name)"
+      )
+      let formatSource = useUndefinedObjectFormat ? "forced-undefined" : "filename"
+      print(
+        "   [USB] SendObjectInfo fields: emptyDates=\(useEmptyDates) unknownSize=\(useUnknownObjectInfoSize) formatSource=\(formatSource) omitOptionalObjectInfoFields=\(omitOptionalObjectInfoFields) zeroObjectInfoParentHandle=\(zeroObjectInfoParentHandle) nameUTF16Units=\(name.utf16.count)"
       )
       print("   [USB] SendObjectInfo dataset length: \(dataset.count) bytes")
       let hex = dataset.map { String(format: "%02x", $0) }.joined(separator: " ")

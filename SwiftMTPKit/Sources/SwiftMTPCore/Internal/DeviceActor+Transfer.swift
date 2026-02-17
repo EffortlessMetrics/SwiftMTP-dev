@@ -5,13 +5,41 @@ import Foundation
 import OSLog
 
 extension MTPDeviceActor {
+  private final class LockedDataBuffer: @unchecked Sendable {
+    private var data = Data()
+    private let lock = NSLock()
+
+    func append(_ raw: UnsafeRawBufferPointer) {
+      lock.lock()
+      data.append(contentsOf: raw.bindMemory(to: UInt8.self))
+      lock.unlock()
+    }
+
+    func snapshot() -> Data {
+      lock.lock()
+      defer { lock.unlock() }
+      return data
+    }
+  }
+
+  private struct WriteStorageResolution: Sendable {
+    let sendObjectInfoStorageID: UInt32
+    let parentStorageID: UInt32?
+    let source: String
+  }
+
   enum SendObjectRetryClass: Sendable {
     case invalidParameter
+    case invalidObjectHandle
     case transientTransport
   }
 
   struct SendObjectRetryParameters: Equatable, Sendable {
     let useEmptyDates: Bool
+    let useUndefinedObjectFormat: Bool
+    let useUnknownObjectInfoSize: Bool
+    let omitOptionalObjectInfoFields: Bool
+    let zeroObjectInfoParentHandle: Bool
   }
 
   public func createFolder(parent: MTPObjectHandle?, name: String, storage: MTPStorageID)
@@ -21,14 +49,14 @@ extension MTPDeviceActor {
     let link = try await getMTPLink()
     let resolvedParent = (parent == 0xFFFFFFFF) ? nil : parent
     let parentHandle = resolvedParent ?? 0xFFFFFFFF
-    let resolvedStorageRaw = try await resolveWriteStorageID(
+    let storageResolution = try await resolveWriteStorageID(
       parent: resolvedParent,
       selectedStorageRaw: storage.raw,
       link: link
     )
     return try await BusyBackoff.onDeviceBusy {
       try await ProtoTransfer.createFolder(
-        storageID: resolvedStorageRaw, parent: parentHandle, name: name,
+        storageID: storageResolution.sendObjectInfoStorageID, parent: parentHandle, name: name,
         on: link, ioTimeoutMs: 10_000
       )
     }
@@ -252,17 +280,59 @@ extension MTPDeviceActor {
             .info("Device requires subfolder for writes, resolved to parent handle \(resolvedParent!)")
         }
       }
-      var targetStorageRaw = try await resolveWriteStorageID(
+      let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+      var storageResolution = try await resolveWriteStorageID(
         parent: resolvedParent,
         selectedStorageRaw: selectedStorageRaw,
         link: link
       )
+      var targetStorageRaw = storageResolution.sendObjectInfoStorageID
+
+      func logSendObjectInfoContext(
+        parent: MTPObjectHandle?,
+        storageRaw: UInt32,
+        resolution: WriteStorageResolution
+      ) {
+        guard debugEnabled else { return }
+        let parentHandle = parent ?? 0xFFFFFFFF
+        let parentStorageText: String
+        if let parentStorageID = resolution.parentStorageID {
+          parentStorageText = String(format: "0x%08x", parentStorageID)
+        } else {
+          parentStorageText = "n/a"
+        }
+        print(
+          "   [USB] SendObjectInfo context: parentHandle=\(String(format: "0x%08x", parentHandle)) parentStorageId=\(parentStorageText) sendObjectInfo.storageId=\(String(format: "0x%08x", storageRaw)) source=\(resolution.source)"
+        )
+      }
+
+      func logParentHandleCheck(parent: MTPObjectHandle?) async {
+        guard debugEnabled, let parent, parent != 0xFFFFFFFF else { return }
+        do {
+          if let info = try await self.getObjectInfoStrict(handle: parent, link: link) {
+            let parentOfParent = info.parent ?? 0xFFFFFFFF
+            print(
+              "   [USB] Parent handle check: handle=\(String(format: "0x%08x", parent)) exists=yes name=\(info.name) storage=\(String(format: "0x%08x", info.storage.raw)) parent=\(String(format: "0x%08x", parentOfParent))"
+            )
+          } else {
+            print(
+              "   [USB] Parent handle check: handle=\(String(format: "0x%08x", parent)) exists=no (GetObjectInfo returned object-not-found)"
+            )
+          }
+        } catch {
+          print(
+            "   [USB] Parent handle check: handle=\(String(format: "0x%08x", parent)) lookup-error=\(error)"
+          )
+        }
+      }
 
       func performWrite(
         to parent: MTPObjectHandle?,
         storageRaw: UInt32,
-        params: SendObjectRetryParameters
+        params: SendObjectRetryParameters,
+        resolution: WriteStorageResolution
       ) async throws -> UInt64 {
+        logSendObjectInfoContext(parent: parent, storageRaw: storageRaw, resolution: resolution)
         let source = try FileSource(url: url)
         defer { try? source.close() }
 
@@ -276,22 +346,60 @@ extension MTPDeviceActor {
             progress.completedUnitCount = Int64(totalBytes)
             return Int(produced)
           }, on: link, ioTimeoutMs: timeout,
-          useEmptyDates: params.useEmptyDates
+          useEmptyDates: params.useEmptyDates,
+          useUndefinedObjectFormat: params.useUndefinedObjectFormat,
+          useUnknownObjectInfoSize: params.useUnknownObjectInfoSize,
+          omitOptionalObjectInfoFields: params.omitOptionalObjectInfoFields,
+          zeroObjectInfoParentHandle: params.zeroObjectInfoParentHandle
         )
         return progressTracker.total
+      }
+
+      func recoverSessionIfNeeded(for reason: String) async {
+        guard reason == "session-not-open-0x2003" else { return }
+        let postOpenStabilizeMs = max(policy?.tuning.stabilizeMs ?? 0, 200)
+        do {
+          try await link.openSession(id: 1)
+          if postOpenStabilizeMs > 0 {
+            try? await Task.sleep(nanoseconds: UInt64(postOpenStabilizeMs) * 1_000_000)
+          }
+          if debugEnabled {
+            print(
+              "   [USB] Session recovery: reopened session after 0x2003 (stabilized \(postOpenStabilizeMs)ms)"
+            )
+          }
+        } catch let mtpError as MTPError {
+          if mtpError.isSessionAlreadyOpen {
+            if debugEnabled {
+              print("   [USB] Session recovery: session already open")
+            }
+          } else if debugEnabled {
+            print("   [USB] Session recovery: openSession failed (\(mtpError))")
+          }
+        } catch {
+          if debugEnabled {
+            print("   [USB] Session recovery: openSession failed (\(error))")
+          }
+        }
       }
 
       var bytesRead: UInt64 = 0
       let isLabSmokeWrite = name.hasPrefix("swiftmtp-smoke-")
       let primaryParams = SendObjectRetryParameters(
-        useEmptyDates: useEmptyDates
+        useEmptyDates: useEmptyDates,
+        useUndefinedObjectFormat: false,
+        useUnknownObjectInfoSize: false,
+        omitOptionalObjectInfoFields: false,
+        zeroObjectInfoParentHandle: false
       )
+      await logParentHandleCheck(parent: resolvedParent)
 
       do {
         bytesRead = try await performWrite(
           to: resolvedParent,
           storageRaw: targetStorageRaw,
-          params: primaryParams
+          params: primaryParams,
+          resolution: storageResolution
         )
       } catch {
         // For lab smoke writes, return the first concrete failure quickly.
@@ -303,6 +411,7 @@ extension MTPDeviceActor {
         guard let retryReason = Self.retryableSendObjectFailureReason(for: error) else {
           throw error
         }
+        await recoverSessionIfNeeded(for: retryReason)
         let retryClass = Self.sendObjectRetryClass(for: retryReason)
 
         let configuredStrategy = policy?.fallbacks.write.rawValue ?? "unknown"
@@ -314,6 +423,7 @@ extension MTPDeviceActor {
           primary: primaryParams,
           retryClass: retryClass
         )
+        var sawInvalidObjectHandle = retryClass == .invalidObjectHandle
         var lastRetryableError: Error = error
         var recovered = false
 
@@ -325,21 +435,90 @@ extension MTPDeviceActor {
             bytesRead = try await performWrite(
               to: resolvedParent,
               storageRaw: targetStorageRaw,
-              params: retryParams
+              params: retryParams,
+              resolution: storageResolution
             )
             recovered = true
             break
           } catch {
-            guard Self.retryableSendObjectFailureReason(for: error) != nil else {
+            guard let reason = Self.retryableSendObjectFailureReason(for: error) else {
               throw error
+            }
+            await recoverSessionIfNeeded(for: reason)
+            if Self.sendObjectRetryClass(for: reason) == .invalidObjectHandle {
+              sawInvalidObjectHandle = true
+              if let currentParent = resolvedParent, currentParent != 0xFFFFFFFF {
+                var existingParent: MTPObjectInfo?
+                do {
+                  existingParent = try await self.getObjectInfoStrict(handle: currentParent, link: link)
+                } catch {
+                  if let reason = Self.retryableSendObjectFailureReason(for: error) {
+                    await recoverSessionIfNeeded(for: reason)
+                  }
+                  do {
+                    existingParent = try await self.getObjectInfoStrict(
+                      handle: currentParent,
+                      link: link
+                    )
+                  } catch {
+                    if debugEnabled {
+                      print("   [USB] Parent handle refresh: unable to verify current parent (\(error))")
+                    }
+                    lastRetryableError = error
+                    continue
+                  }
+                }
+                if existingParent == nil,
+                  let fallbackStorage =
+                    availableStorages?.first(where: { $0.id.raw == targetStorageRaw })
+                    ?? availableStorages?.first
+                {
+                  do {
+                    let fallback = try await WriteTargetLadder.resolveTarget(
+                      device: self,
+                      storage: fallbackStorage.id,
+                      explicitParent: nil,
+                      requiresSubfolder: true,
+                      preferredWriteFolder: preferredWriteFolder,
+                      excludingParent: currentParent
+                    )
+                    let oldParent = currentParent
+                    targetStorageRaw = fallback.0.raw
+                    resolvedParent = fallback.1
+                    storageResolution = try await resolveWriteStorageID(
+                      parent: resolvedParent,
+                      selectedStorageRaw: targetStorageRaw,
+                      link: link
+                    )
+                    targetStorageRaw = storageResolution.sendObjectInfoStorageID
+                    if debugEnabled {
+                      print(
+                        "   [USB] Parent handle refresh: old=\(String(format: "0x%08x", oldParent)) new=\(String(format: "0x%08x", resolvedParent ?? 0xFFFFFFFF)) storage=\(String(format: "0x%08x", targetStorageRaw))"
+                      )
+                    }
+                  } catch {
+                    if let reason = Self.retryableSendObjectFailureReason(for: error) {
+                      await recoverSessionIfNeeded(for: reason)
+                    }
+                    if debugEnabled {
+                      print("   [USB] Parent handle refresh: failed (\(error))")
+                    }
+                  }
+                }
+              }
             }
             lastRetryableError = error
           }
         }
 
         // For InvalidParameter at root, immediately switch target folder after one conservative retry.
-        if !recovered, Self.shouldAttemptTargetLadderFallback(parent: parent, retryClass: retryClass),
-          let firstStorage = availableStorages?.first
+        let ladderStorage =
+          availableStorages?.first(where: { $0.id.raw == targetStorageRaw })
+          ?? availableStorages?.first
+        if !recovered,
+          (Self.shouldAttemptTargetLadderFallback(parent: parent, retryClass: retryClass)
+            || sawInvalidObjectHandle),
+          let firstStorage = ladderStorage
         {
           do {
             Logger(subsystem: "SwiftMTP", category: "write")
@@ -349,27 +528,39 @@ extension MTPDeviceActor {
               storage: firstStorage.id,
               explicitParent: nil,
               requiresSubfolder: true,
-              preferredWriteFolder: preferredWriteFolder
+              preferredWriteFolder: preferredWriteFolder,
+              excludingParent: resolvedParent
             )
             targetStorageRaw = fallback.0.raw
             resolvedParent = fallback.1
-            targetStorageRaw = try await resolveWriteStorageID(
+            storageResolution = try await resolveWriteStorageID(
               parent: resolvedParent,
               selectedStorageRaw: targetStorageRaw,
               link: link
             )
+            targetStorageRaw = storageResolution.sendObjectInfoStorageID
+            let ladderParams =
+              (retryClass == .invalidParameter || sawInvalidObjectHandle)
+              ? SendObjectRetryParameters(
+                useEmptyDates: true,
+                useUndefinedObjectFormat: true,
+                useUnknownObjectInfoSize: true,
+                omitOptionalObjectInfoFields: true,
+                zeroObjectInfoParentHandle: false
+              )
+              : primaryParams
             bytesRead = try await performWrite(
               to: resolvedParent,
               storageRaw: targetStorageRaw,
-              params: SendObjectRetryParameters(
-                useEmptyDates: true
-              )
+              params: ladderParams,
+              resolution: storageResolution
             )
             recovered = true
           } catch {
-            guard Self.retryableSendObjectFailureReason(for: error) != nil else {
+            guard let reason = Self.retryableSendObjectFailureReason(for: error) else {
               throw error
             }
+            await recoverSessionIfNeeded(for: reason)
             lastRetryableError = error
           }
         }
@@ -422,6 +613,12 @@ extension MTPDeviceActor {
       return "invalid-parameter-0x201d"
     case .protocolError(let code, _) where code == 0x2008:
       return "invalid-storage-id-0x2008"
+    case .protocolError(let code, _) where code == 0x2009:
+      return "invalid-object-handle-0x2009"
+    case .protocolError(let code, _) where code == 0x2003:
+      return "session-not-open-0x2003"
+    case .objectNotFound:
+      return "invalid-object-handle-0x2009"
     case .busy:
       return "busy"
     case .timeout:
@@ -451,6 +648,8 @@ extension MTPDeviceActor {
     switch retryReason {
     case "invalid-parameter-0x201d", "invalid-storage-id-0x2008":
       return .invalidParameter
+    case "invalid-object-handle-0x2009":
+      return .invalidObjectHandle
     default:
       return .transientTransport
     }
@@ -460,7 +659,14 @@ extension MTPDeviceActor {
     parent: MTPObjectHandle?,
     retryClass: SendObjectRetryClass
   ) -> Bool {
-    retryClass == .invalidParameter && (parent == nil || parent == 0)
+    switch retryClass {
+    case .invalidParameter:
+      return true
+    case .invalidObjectHandle:
+      return parent != nil && parent != 0xFFFFFFFF
+    case .transientTransport:
+      return false
+    }
   }
 
   static func sendObjectRetryParameters(
@@ -477,10 +683,69 @@ extension MTPDeviceActor {
 
     switch retryClass {
     case .invalidParameter:
-      appendRetry(
-        SendObjectRetryParameters(
-          useEmptyDates: true
-        ))
+      if !primary.useUndefinedObjectFormat {
+        appendRetry(
+          SendObjectRetryParameters(
+            useEmptyDates: primary.useEmptyDates,
+            useUndefinedObjectFormat: true,
+            useUnknownObjectInfoSize: false,
+            omitOptionalObjectInfoFields: false,
+            zeroObjectInfoParentHandle: false
+          ))
+      }
+      if !(primary.useEmptyDates && primary.useUndefinedObjectFormat) {
+        appendRetry(
+          SendObjectRetryParameters(
+            useEmptyDates: true,
+            useUndefinedObjectFormat: true,
+            useUnknownObjectInfoSize: false,
+            omitOptionalObjectInfoFields: false,
+            zeroObjectInfoParentHandle: false
+          ))
+      }
+      if !(primary.useEmptyDates && primary.useUndefinedObjectFormat && primary.useUnknownObjectInfoSize) {
+        appendRetry(
+          SendObjectRetryParameters(
+            useEmptyDates: true,
+            useUndefinedObjectFormat: true,
+            useUnknownObjectInfoSize: true,
+            omitOptionalObjectInfoFields: false,
+            zeroObjectInfoParentHandle: false
+          ))
+      }
+      if !(
+        primary.useEmptyDates
+          && primary.useUndefinedObjectFormat
+          && primary.useUnknownObjectInfoSize
+          && primary.omitOptionalObjectInfoFields
+      ) {
+        appendRetry(
+          SendObjectRetryParameters(
+            useEmptyDates: true,
+            useUndefinedObjectFormat: true,
+            useUnknownObjectInfoSize: true,
+            omitOptionalObjectInfoFields: true,
+            zeroObjectInfoParentHandle: false
+          ))
+      }
+      if !(
+        primary.useEmptyDates
+          && primary.useUndefinedObjectFormat
+          && primary.useUnknownObjectInfoSize
+          && primary.omitOptionalObjectInfoFields
+          && primary.zeroObjectInfoParentHandle
+      ) {
+        appendRetry(
+          SendObjectRetryParameters(
+            useEmptyDates: true,
+            useUndefinedObjectFormat: true,
+            useUnknownObjectInfoSize: true,
+            omitOptionalObjectInfoFields: true,
+            zeroObjectInfoParentHandle: true
+          ))
+      }
+    case .invalidObjectHandle:
+      break
     case .transientTransport:
       appendRetry(primary, allowPrimary: true)
     }
@@ -496,6 +761,35 @@ extension MTPDeviceActor {
     if index == 0 && params == primary {
       return "retry-same-params"
     }
+    if params.useEmptyDates && params.useUndefinedObjectFormat && params.useUnknownObjectInfoSize {
+      if params.omitOptionalObjectInfoFields && params.zeroObjectInfoParentHandle {
+        return "minimal-object-info+dataset-parent-zero"
+      }
+      if params.omitOptionalObjectInfoFields {
+        return "minimal-object-info"
+      }
+    }
+    if params.omitOptionalObjectInfoFields && params.zeroObjectInfoParentHandle {
+      return "omit-optional-fields+dataset-parent-zero"
+    }
+    if params.omitOptionalObjectInfoFields {
+      return "omit-optional-fields"
+    }
+    if params.zeroObjectInfoParentHandle {
+      return "dataset-parent-zero"
+    }
+    if params.useEmptyDates && params.useUndefinedObjectFormat {
+      if params.useUnknownObjectInfoSize {
+        return "empty-dates+format-undefined+size-unknown"
+      }
+      return "empty-dates+format-undefined"
+    }
+    if params.useUnknownObjectInfoSize {
+      return "size-unknown"
+    }
+    if params.useUndefinedObjectFormat {
+      return "format-undefined"
+    }
     if params.useEmptyDates {
       return "empty-dates"
     }
@@ -510,16 +804,24 @@ extension MTPDeviceActor {
     parent: MTPObjectHandle?,
     selectedStorageRaw: UInt32?,
     link: any MTPLink
-  ) async throws -> UInt32 {
+  ) async throws -> WriteStorageResolution {
     if let parent, parent != 0xFFFFFFFF {
       if let cached = parentStorageIDCache[parent], Self.isConcreteStorageID(cached) {
-        return cached
+        return WriteStorageResolution(
+          sendObjectInfoStorageID: cached,
+          parentStorageID: cached,
+          source: "parent-cache"
+        )
       }
-      if let parentInfos = try? await link.getObjectInfos([parent]), let parentInfo = parentInfos.first {
+      if let parentInfo = try await getObjectInfoStrict(handle: parent, link: link) {
         let raw = parentInfo.storage.raw
         if Self.isConcreteStorageID(raw) {
           parentStorageIDCache[parent] = raw
-          return raw
+          return WriteStorageResolution(
+            sendObjectInfoStorageID: raw,
+            parentStorageID: raw,
+            source: "parent-object-info"
+          )
         }
       }
       throw MTPError.preconditionFailed(
@@ -527,8 +829,64 @@ extension MTPDeviceActor {
     }
 
     if let selectedStorageRaw, Self.isConcreteStorageID(selectedStorageRaw) {
-      return selectedStorageRaw
+      return WriteStorageResolution(
+        sendObjectInfoStorageID: selectedStorageRaw,
+        parentStorageID: nil,
+        source: "selected-storage"
+      )
     }
     throw MTPError.preconditionFailed("No concrete storage ID available for SendObjectInfo.")
+  }
+
+  private func getObjectInfoStrict(handle: MTPObjectHandle, link: any MTPLink) async throws
+    -> MTPObjectInfo?
+  {
+    let payloadBuffer = LockedDataBuffer()
+    let result = try await link.executeStreamingCommand(
+      PTPContainer(type: 1, code: 0x1008, txid: 0, params: [handle]),
+      dataPhaseLength: nil,
+      dataInHandler: { raw in
+        payloadBuffer.append(raw)
+        return raw.count
+      },
+      dataOutHandler: nil
+    )
+
+    do {
+      try result.checkOK()
+    } catch MTPError.objectNotFound {
+      return nil
+    }
+
+    let payload = payloadBuffer.snapshot()
+    guard !payload.isEmpty else { return nil }
+
+    var reader = PTPReader(data: payload)
+    guard let sid = reader.u32(), let format = reader.u16() else { return nil }
+    _ = reader.u16()  // ProtectionStatus
+    let size = reader.u32()
+    _ = reader.u16()  // ThumbFormat
+    _ = reader.u32()  // ThumbCompressedSize
+    _ = reader.u32()  // ThumbPixWidth
+    _ = reader.u32()  // ThumbPixHeight
+    _ = reader.u32()  // ImagePixWidth
+    _ = reader.u32()  // ImagePixHeight
+    _ = reader.u32()  // ImageBitDepth
+    let parentRaw = reader.u32()
+    _ = reader.u16()  // AssociationType
+    _ = reader.u32()  // AssociationDesc
+    _ = reader.u32()  // SequenceNumber
+    let name = reader.string() ?? "Unknown"
+
+    return MTPObjectInfo(
+      handle: handle,
+      storage: MTPStorageID(raw: sid),
+      parent: parentRaw == 0 ? nil : parentRaw,
+      name: name,
+      sizeBytes: (size == nil || size == 0xFFFFFFFF) ? nil : UInt64(size!),
+      modified: nil,
+      formatCode: format,
+      properties: [:]
+    )
   }
 }

@@ -19,13 +19,15 @@ public struct WriteTargetLadder {
   ///   - explicitParent: Optional explicit parent handle (if provided, used directly).
   ///   - requiresSubfolder: Whether the device requires a subfolder (not root).
   ///   - preferredWriteFolder: Optional device-specific preferred folder from quirks.
+  ///   - excludingParent: Optional parent handle to skip when selecting fallback folders.
   /// - Returns: A tuple of (storageID, parentHandle) where the file should be written.
   public static func resolveTarget(
     device: any MTPDevice,
     storage: MTPStorageID,
     explicitParent: MTPObjectHandle?,
     requiresSubfolder: Bool,
-    preferredWriteFolder: String?
+    preferredWriteFolder: String?,
+    excludingParent: MTPObjectHandle? = nil
   ) async throws -> (MTPStorageID, MTPObjectHandle) {
     // If explicit parent provided, use it directly
     if let parent = explicitParent {
@@ -51,6 +53,7 @@ public struct WriteTargetLadder {
     if let preferred = preferredWriteFolder {
       if let match = folders.first(where: {
         $0.name.caseInsensitiveCompare(preferred) == .orderedSame
+          && $0.handle != excludingParent
       }) {
         Logger(subsystem: "SwiftMTP", category: "write")
           .info("Using device-preferred folder: \(match.name)")
@@ -62,6 +65,7 @@ public struct WriteTargetLadder {
     for name in Self.fallbackPreferredFolders {
       if let match = folders.first(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame })
       {
+        if match.handle == excludingParent { continue }
         Logger(subsystem: "SwiftMTP", category: "write")
           .info("Using fallback preferred folder: \(match.name)")
         return (storage, match.handle)
@@ -69,7 +73,7 @@ public struct WriteTargetLadder {
     }
 
     // Fall back to first available folder
-    if let firstFolder = folders.first {
+    if let firstFolder = folders.first(where: { $0.handle != excludingParent }) {
       Logger(subsystem: "SwiftMTP", category: "write")
         .info("Using first available folder: \(firstFolder.name)")
       return (storage, firstFolder.handle)

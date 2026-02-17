@@ -67,6 +67,41 @@ Artifacts include:
 - `swiftmtp device-lab connected --json` output and per-device artifacts
 - mode metadata and run summary
 
+### SendObjectInfo Proof (0x100C)
+
+Use this operator check to prove write-path storage IDs remain concrete and to catch regressions early.
+
+```bash
+# Build release binary once
+cd SwiftMTPKit
+swift build -c release --product swiftmtp
+
+# Run a small push with debug traces enabled
+SWIFTMTP_DEBUG=1 ./.build/release/swiftmtp push \
+  /tmp/swiftmtp-smoke.txt \
+  Download
+```
+
+Verify in the captured logs:
+
+```bash
+# Must include concrete parent/storage context line
+rg "SendObjectInfo context:" <run-log>
+
+# Must NOT include wildcard storage in SendObjectInfo
+! rg "storage=0xFFFFFFFF" <run-log>
+
+# Must NOT include InvalidStorageID response
+! rg "0x2008" <run-log>
+```
+
+Optional follow-up while debugging remaining write failures:
+
+```bash
+# Track remaining device-side rejects
+rg "0x201D|0x2009|SendObjectInfo fields:" <run-log>
+```
+
 ### Device Collection
 
 For contribution-ready evidence, use the collect command:
