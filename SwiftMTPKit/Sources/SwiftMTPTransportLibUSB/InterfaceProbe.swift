@@ -341,10 +341,135 @@ private func probeIsPixelNoProgressTarget(handle: OpaquePointer) -> Bool {
   return descriptor.idVendor == 0x18D1 && descriptor.idProduct == 0x4EE1
 }
 
+/// Pixel-specific preflight before first OpenSession write.
+///
+/// This runs in the probe path (before a transport instance exists), so it mirrors the
+/// transport-layer preflight and escalates once to reset when endpoints still reject setup.
+private func probeRunPixelOpenSessionPreflightIfNeeded(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate,
+  opcode: UInt16,
+  txid: UInt32,
+  debug: Bool
+) {
+  guard opcode == 0x1002, probeIsPixelNoProgressTarget(handle: handle) else {
+    return
+  }
+
+  if debug {
+    print(
+      String(
+        format: "   [Probe][Preflight][Pixel] start op=0x%04x tx=%u",
+        opcode, txid))
+  }
+
+  let iface = Int32(candidate.ifaceNumber)
+  let alt = Int32(candidate.altSetting)
+  if let device = libusb_get_device(handle) {
+    setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+  }
+
+  let setAltRC = libusb_set_interface_alt_setting(handle, iface, alt)
+  let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
+  let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
+  let clearEventRC: Int32 =
+    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
+  let classResetRC = libusb_control_transfer(
+    handle, 0x21, 0x66, 0, UInt16(candidate.ifaceNumber), nil, 0, 2000
+  )
+  usleep(200_000)
+
+  let needsHardPreflight =
+    setAltRC != LIBUSB_SUCCESS || clearOutRC != LIBUSB_SUCCESS || clearInRC != LIBUSB_SUCCESS
+
+  var hardResetRC: Int32 = LIBUSB_SUCCESS
+  var hardSetAltRC: Int32 = LIBUSB_SUCCESS
+  var hardClearOutRC: Int32 = LIBUSB_SUCCESS
+  var hardClearInRC: Int32 = LIBUSB_SUCCESS
+  var hardClearEventRC: Int32 = LIBUSB_SUCCESS
+  var hardAutoDetachRC: Int32 = LIBUSB_SUCCESS
+  var hardDetachRC: Int32 = LIBUSB_SUCCESS
+  var hardReleaseRC: Int32 = LIBUSB_SUCCESS
+  var hardClaimRC: Int32 = LIBUSB_SUCCESS
+  var readyAfterHardReset = false
+
+  if needsHardPreflight {
+    hardResetRC = libusb_reset_device(handle)
+    if hardResetRC == LIBUSB_SUCCESS {
+      usleep(300_000)
+
+      let reclaim = probeReclaimInterfaceAfterReset(handle: handle, candidate: candidate)
+      hardAutoDetachRC = reclaim.autoDetachRC
+      hardDetachRC = reclaim.detachRC
+      hardReleaseRC = reclaim.releaseRC
+      hardClaimRC = reclaim.claimRC
+
+      if let device = libusb_get_device(handle) {
+        setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+      }
+      hardSetAltRC = libusb_set_interface_alt_setting(handle, iface, alt)
+      hardClearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
+      hardClearInRC = libusb_clear_halt(handle, candidate.bulkIn)
+      hardClearEventRC =
+        candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
+      readyAfterHardReset = waitForMTPReady(
+        handle: handle, iface: UInt16(candidate.ifaceNumber), budgetMs: 3000)
+      usleep(200_000)
+    }
+  }
+
+  if debug {
+    print(
+      String(
+        format:
+          "   [Probe][Preflight][Pixel] setAlt=%d clear(out=%d in=%d evt=%d) classReset=%d hardReset=%d reclaim(autoDetach=%d detach=%d release=%d claim=%d) hardSetAlt=%d hardClear(out=%d in=%d evt=%d) ready=%@",
+        setAltRC,
+        clearOutRC,
+        clearInRC,
+        clearEventRC,
+        classResetRC,
+        hardResetRC,
+        hardAutoDetachRC,
+        hardDetachRC,
+        hardReleaseRC,
+        hardClaimRC,
+        hardSetAltRC,
+        hardClearOutRC,
+        hardClearInRC,
+        hardClearEventRC,
+        readyAfterHardReset ? "true" : "false"
+      ))
+  }
+}
+
 private struct ProbeCommandWriteResult: Sendable {
   let succeeded: Bool
   let rc: Int32
   let sent: Int32
+}
+
+private struct ProbeReclaimResult: Sendable {
+  let autoDetachRC: Int32
+  let detachRC: Int32
+  let releaseRC: Int32
+  let claimRC: Int32
+}
+
+private func probeReclaimInterfaceAfterReset(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate
+) -> ProbeReclaimResult {
+  let iface = Int32(candidate.ifaceNumber)
+  let autoDetachRC = libusb_set_auto_detach_kernel_driver(handle, 1)
+  let detachRC = libusb_detach_kernel_driver(handle, iface)
+  let releaseRC = libusb_release_interface(handle, iface)
+  let claimRC = libusb_claim_interface(handle, iface)
+  return ProbeReclaimResult(
+    autoDetachRC: autoDetachRC,
+    detachRC: detachRC,
+    releaseRC: releaseRC,
+    claimRC: claimRC
+  )
 }
 
 private struct ProbeCommandWriteAttempt: Sendable {
@@ -393,7 +518,8 @@ private func probePerformNoProgressLightRecovery(
   if let device = libusb_get_device(handle) {
     setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
   }
-  let setAltRC = libusb_set_interface_alt_setting(handle, Int32(candidate.ifaceNumber), 0)
+  let setAltRC = libusb_set_interface_alt_setting(
+    handle, Int32(candidate.ifaceNumber), Int32(candidate.altSetting))
 
   let clearOutPostRC = libusb_clear_halt(handle, candidate.bulkOut)
   let clearInPostRC = libusb_clear_halt(handle, candidate.bulkIn)
@@ -434,10 +560,23 @@ private func probePerformNoProgressHardRecovery(
 
   usleep(300_000)
 
+  let reclaim = probeReclaimInterfaceAfterReset(handle: handle, candidate: candidate)
+  if reclaim.claimRC != LIBUSB_SUCCESS && reclaim.claimRC != LIBUSB_ERROR_BUSY {
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover][Hard] op=0x%04x tx=%u reclaim failed (autoDetach=%d detach=%d release=%d claim=%d)",
+          opcode, txid, reclaim.autoDetachRC, reclaim.detachRC, reclaim.releaseRC, reclaim.claimRC))
+    }
+    return false
+  }
+
   if let device = libusb_get_device(handle) {
     setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
   }
-  let setAltRC = libusb_set_interface_alt_setting(handle, Int32(candidate.ifaceNumber), 0)
+  let setAltRC = libusb_set_interface_alt_setting(
+    handle, Int32(candidate.ifaceNumber), Int32(candidate.altSetting))
   let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
   let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
   let clearEventRC: Int32 =
@@ -449,8 +588,9 @@ private func probePerformNoProgressHardRecovery(
     print(
       String(
         format:
-          "   [Probe][Recover][Hard] op=0x%04x tx=%u reset_device=0 setAlt0=%d clear(out=%d in=%d evt=%d)",
-        opcode, txid, setAltRC, clearOutRC, clearInRC, clearEventRC))
+          "   [Probe][Recover][Hard] op=0x%04x tx=%u reset_device=0 reclaim(autoDetach=%d detach=%d release=%d claim=%d) setAlt0=%d clear(out=%d in=%d evt=%d)",
+        opcode, txid, reclaim.autoDetachRC, reclaim.detachRC, reclaim.releaseRC, reclaim.claimRC,
+        setAltRC, clearOutRC, clearInRC, clearEventRC))
   }
   return true
 }
@@ -464,6 +604,14 @@ private func probeWriteCommandWithRecovery(
   timeoutMs: UInt32,
   debug: Bool
 ) -> ProbeCommandWriteResult {
+  probeRunPixelOpenSessionPreflightIfNeeded(
+    handle: handle,
+    candidate: candidate,
+    opcode: opcode,
+    txid: txid,
+    debug: debug
+  )
+
   let initialAttempt = probeAttemptCommandWrite(
     handle: handle, candidate: candidate, bytes: bytes, timeoutMs: timeoutMs)
   if initialAttempt.succeeded {
@@ -512,8 +660,15 @@ private func probeWriteCommandWithRecovery(
     else {
       return ProbeCommandWriteResult(succeeded: false, rc: lightRetry.rc, sent: lightRetry.sent)
     }
-    _ = probePerformNoProgressLightRecovery(
-      handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
+    let ready = waitForMTPReady(
+      handle: handle, iface: UInt16(candidate.ifaceNumber), budgetMs: 3000)
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover] op=0x%04x tx=%u Pixel post-reset ready=%@",
+          opcode, txid, ready ? "true" : "false"))
+    }
     let pixelRetry = probeAttemptCommandWrite(
       handle: handle, candidate: candidate, bytes: bytes, timeoutMs: timeoutMs)
     if pixelRetry.succeeded {
