@@ -25,6 +25,8 @@ We use the [Diátaxis](https://diataxis.fr/) framework to organize our documenta
 - [Advanced Transfer Strategies](diataxis/tutorials/advanced-transfer.md) - Parallel transfers, resume, batch operations
 - [Device Probing and Analysis](diataxis/tutorials/device-probing.md) - Probe and analyze new devices
 - [Debugging MTP Issues](diataxis/tutorials/debugging-mtp.md) - Debug MTP connection and transfer issues
+- [Batch Operations](diataxis/tutorials/batch-operations.md) - Bulk transfers, folder synchronization
+- [Platform Integration](diataxis/tutorials/platform-integration.md) - iOS, macOS, Catalyst integration
 
 #### 📋 How-to Guides
 - [Connect a New Device](diataxis/howto/connect-device.md)
@@ -37,6 +39,9 @@ We use the [Diátaxis](https://diataxis.fr/) framework to organize our documenta
 - [Security and Privacy](diataxis/howto/security-privacy.md) - Security best practices
 - [Performance Tuning](diataxis/howto/performance-tuning.md) - Optimize transfer speeds
 - [Testing MTP Devices](diataxis/howto/testing-devices.md) - Comprehensive device testing
+- [Error Recovery](diataxis/howto/error-recovery.md) - Error handling and recovery strategies
+- [Logging and Debugging](diataxis/howto/logging-debugging.md) - Logging and debugging guide
+- [CLI Automation](diataxis/howto/cli-automation.md) - CLI automation and scripting
 
 #### 📖 Reference
 - [CLI Command Reference](diataxis/reference/cli-commands.md)
@@ -46,6 +51,8 @@ We use the [Diátaxis](https://diataxis.fr/) framework to organize our documenta
 - [Configuration Reference](diataxis/reference/configuration.md) - Configuration options
 - [Events Reference](diataxis/reference/events.md) - Event types and handling
 - [Quirks JSON Schema](diataxis/reference/quirks-schema.md) - Quirks configuration schema
+- [Environment Variables](diataxis/reference/environment-variables.md) - Complete environment variable reference
+- [Device Capabilities](diataxis/reference/device-capabilities.md) - Device capabilities reference
 
 #### 💡 Explanation
 - [Understanding MTP Protocol](diataxis/explanation/mtp-protocol.md)
@@ -55,6 +62,8 @@ We use the [Diátaxis](https://diataxis.fr/) framework to organize our documenta
 - [Transfer Modes](diataxis/explanation/transfer-modes.md) - Transfer modes explained
 - [Session Management](diataxis/explanation/session-management.md) - Session lifecycle
 - [Data Persistence](diataxis/explanation/persistence.md) - Caching and storage
+- [Version History](diataxis/explanation/version-history.md) - Version history and migration
+- [Concurrency Model](diataxis/explanation/concurrency-model.md) - Concurrency and threading model
 
 ## Quick Links
 

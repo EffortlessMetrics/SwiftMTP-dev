@@ -127,6 +127,11 @@ extension ProtoTransfer {
     storageID: UInt32, parent: UInt32, name: String,
     on link: MTPLink, ioTimeoutMs: Int
   ) async throws -> MTPObjectHandle {
+    guard storageID != 0 && storageID != 0xFFFFFFFF else {
+      throw MTPError.preconditionFailed(
+        "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID))).")
+    }
+
     // Build ObjectInfoDataset for an Association (folder)
     // format=0x3001 (Association), associationType=0x0001 (GenericFolder), size=0
     let dataset = PTPObjectInfoDataset.encode(
@@ -134,6 +139,13 @@ extension ProtoTransfer {
       format: 0x3001, size: 0, name: name,
       associationType: 0x0001, associationDesc: 0
     )
+
+    if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
+      print(
+        "   [USB] SendObjectInfo: storage=\(String(format: "0x%08x", storageID)) parent=\(String(format: "0x%08x", parent)) format=0x3001 size=0 name=\(name)"
+      )
+      print("   [USB] SendObjectInfo dataset length: \(dataset.count) bytes")
+    }
 
     let sendObjectInfoCommand = PTPContainer(
       length: 20,

@@ -19,10 +19,16 @@ extension MTPDeviceActor {
   {
     try await openIfNeeded()
     let link = try await getMTPLink()
-    let parentHandle = parent ?? 0xFFFFFFFF
+    let resolvedParent = (parent == 0xFFFFFFFF) ? nil : parent
+    let parentHandle = resolvedParent ?? 0xFFFFFFFF
+    let resolvedStorageRaw = try await resolveWriteStorageID(
+      parent: resolvedParent,
+      selectedStorageRaw: storage.raw,
+      link: link
+    )
     return try await BusyBackoff.onDeviceBusy {
       try await ProtoTransfer.createFolder(
-        storageID: storage.raw, parent: parentHandle, name: name,
+        storageID: resolvedStorageRaw, parent: parentHandle, name: name,
         on: link, ioTimeoutMs: 10_000
       )
     }
@@ -218,8 +224,9 @@ extension MTPDeviceActor {
       // Determine storage ID and parent handle using WriteTargetLadder
       let availableStorages = try? await self.storages()
       let rootStorages = availableStorages ?? []
+      let preferredRootStorage = rootStorages.first(where: { !$0.isReadOnly }) ?? rootStorages.first
 
-      var selectedStorageRaw: UInt32? = rootStorages.first?.id.raw
+      var selectedStorageRaw: UInt32? = preferredRootStorage?.id.raw
       var resolvedParent: MTPObjectHandle? = parent
 
       // If parent is 0 (root) AND device requires subfolder, treat as "no parent" and use WriteTargetLadder
@@ -227,7 +234,7 @@ extension MTPDeviceActor {
 
       if let p = effectiveParent {
         resolvedParent = p
-      } else if let first = rootStorages.first {
+      } else if let first = preferredRootStorage {
         // No parent or parent=0 with requiresSubfolder - need to resolve target
         let target = try await WriteTargetLadder.resolveTarget(
           device: self,
@@ -514,10 +521,6 @@ extension MTPDeviceActor {
           parentStorageIDCache[parent] = raw
           return raw
         }
-      }
-      if let selectedStorageRaw, Self.isConcreteStorageID(selectedStorageRaw) {
-        parentStorageIDCache[parent] = selectedStorageRaw
-        return selectedStorageRaw
       }
       throw MTPError.preconditionFailed(
         "Unable to resolve concrete storage ID for parent \(String(format: "0x%08x", parent)).")

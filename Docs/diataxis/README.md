@@ -21,6 +21,8 @@ The Diátaxis framework organizes documentation into four types based on the use
 - [Advanced Transfer Strategies](tutorials/advanced-transfer.md) - Parallel transfers, resume, batch operations
 - [Device Probing and Analysis](tutorials/device-probing.md) - Probe and analyze new devices
 - [Debugging MTP Issues](tutorials/debugging-mtp.md) - Debug MTP connection and transfer issues
+- [Batch Operations](tutorials/batch-operations.md) - Bulk transfers, folder synchronization
+- [Platform Integration](tutorials/platform-integration.md) - iOS, macOS, Catalyst integration
 
 ### 📋 How-to Guides
 - [Connect a New Device](howto/connect-device.md)
@@ -33,6 +35,9 @@ The Diátaxis framework organizes documentation into four types based on the use
 - [Security and Privacy](howto/security-privacy.md) - Security best practices
 - [Performance Tuning](howto/performance-tuning.md) - Optimize transfer speeds
 - [Testing MTP Devices](howto/testing-devices.md) - Comprehensive device testing
+- [Error Recovery](howto/error-recovery.md) - Error handling and recovery strategies
+- [Logging and Debugging](howto/logging-debugging.md) - Logging and debugging guide
+- [CLI Automation](howto/cli-automation.md) - CLI automation and scripting
 
 ### 📖 Reference
 - [CLI Command Reference](reference/cli-commands.md)
@@ -42,6 +47,8 @@ The Diátaxis framework organizes documentation into four types based on the use
 - [Configuration Reference](reference/configuration.md) - Configuration options
 - [Events Reference](reference/events.md) - Event types and handling
 - [Quirks JSON Schema](reference/quirks-schema.md) - Quirks configuration schema
+- [Environment Variables](reference/environment-variables.md) - Complete environment variable reference
+- [Device Capabilities](reference/device-capabilities.md) - Device capabilities reference
 
 ### 💡 Explanation
 - [Understanding MTP Protocol](explanation/mtp-protocol.md)
@@ -51,6 +58,8 @@ The Diátaxis framework organizes documentation into four types based on the use
 - [Transfer Modes](explanation/transfer-modes.md) - Transfer modes explained
 - [Session Management](explanation/session-management.md) - Session lifecycle
 - [Data Persistence](explanation/persistence.md) - Caching and storage
+- [Version History](explanation/version-history.md) - Version history and migration
+- [Concurrency Model](explanation/concurrency-model.md) - Concurrency and threading model
 
 ## Choosing the Right Documentation
 
