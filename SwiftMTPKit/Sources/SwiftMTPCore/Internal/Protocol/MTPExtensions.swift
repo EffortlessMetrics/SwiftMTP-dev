@@ -11,6 +11,9 @@ public enum MTPOp: UInt16, Sendable {
   /// GetObjectPropList — batch property retrieval.
   case getObjectPropList = 0x9805
 
+  /// SendObjectPropList — create object metadata via property list prior to SendObject.
+  case sendObjectPropList = 0x9808
+
   /// GetPartialObject64 — 64-bit offset partial read (MTP extension).
   case getPartialObject64 = 0x95C4
 

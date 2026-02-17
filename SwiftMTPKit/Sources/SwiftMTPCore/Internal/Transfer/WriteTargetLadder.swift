@@ -20,6 +20,7 @@ public struct WriteTargetLadder {
   ///   - requiresSubfolder: Whether the device requires a subfolder (not root).
   ///   - preferredWriteFolder: Optional device-specific preferred folder from quirks.
   ///   - excludingParent: Optional parent handle to skip when selecting fallback folders.
+  ///   - excludingParents: Optional parent handles to skip when selecting fallback folders.
   /// - Returns: A tuple of (storageID, parentHandle) where the file should be written.
   public static func resolveTarget(
     device: any MTPDevice,
@@ -27,8 +28,14 @@ public struct WriteTargetLadder {
     explicitParent: MTPObjectHandle?,
     requiresSubfolder: Bool,
     preferredWriteFolder: String?,
-    excludingParent: MTPObjectHandle? = nil
+    excludingParent: MTPObjectHandle? = nil,
+    excludingParents: Set<MTPObjectHandle> = []
   ) async throws -> (MTPStorageID, MTPObjectHandle) {
+    var excluded = excludingParents
+    if let excludingParent {
+      excluded.insert(excludingParent)
+    }
+
     // If explicit parent provided, use it directly
     if let parent = explicitParent {
       return (storage, parent)
@@ -53,7 +60,7 @@ public struct WriteTargetLadder {
     if let preferred = preferredWriteFolder {
       if let match = folders.first(where: {
         $0.name.caseInsensitiveCompare(preferred) == .orderedSame
-          && $0.handle != excludingParent
+          && !excluded.contains($0.handle)
       }) {
         Logger(subsystem: "SwiftMTP", category: "write")
           .info("Using device-preferred folder: \(match.name)")
@@ -65,7 +72,7 @@ public struct WriteTargetLadder {
     for name in Self.fallbackPreferredFolders {
       if let match = folders.first(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame })
       {
-        if match.handle == excludingParent { continue }
+        if excluded.contains(match.handle) { continue }
         Logger(subsystem: "SwiftMTP", category: "write")
           .info("Using fallback preferred folder: \(match.name)")
         return (storage, match.handle)
@@ -73,7 +80,7 @@ public struct WriteTargetLadder {
     }
 
     // Fall back to first available folder
-    if let firstFolder = folders.first(where: { $0.handle != excludingParent }) {
+    if let firstFolder = folders.first(where: { !excluded.contains($0.handle) }) {
       Logger(subsystem: "SwiftMTP", category: "write")
         .info("Using first available folder: \(firstFolder.name)")
       return (storage, firstFolder.handle)

@@ -79,6 +79,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// Some devices reject date strings with InvalidParameter.
   public var emptyDatesInSendObject: Bool = false
 
+  /// Force ObjectCompressedSize to 0xFFFFFFFF in SendObjectInfo.
+  /// Disabled by default; some devices reject unknown-size semantics.
+  public var unknownSizeInSendObjectInfo: Bool = false
+
   public init() {}
 
   // MARK: - Custom Codable for backward compatibility
@@ -103,6 +107,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case preferredWriteFolder
     case forceFFFFFFFForSendObject
     case emptyDatesInSendObject
+    case unknownSizeInSendObjectInfo
   }
 
   public init(from decoder: Decoder) throws {
@@ -143,6 +148,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .forceFFFFFFFForSendObject) ?? false
     self.emptyDatesInSendObject =
       try container.decodeIfPresent(Bool.self, forKey: .emptyDatesInSendObject) ?? false
+    self.unknownSizeInSendObjectInfo =
+      try container.decodeIfPresent(Bool.self, forKey: .unknownSizeInSendObjectInfo) ?? false
   }
 
   public func encode(to encoder: Encoder) throws {
@@ -169,5 +176,6 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(preferredWriteFolder, forKey: .preferredWriteFolder)
     try container.encodeIfPresent(forceFFFFFFFForSendObject, forKey: .forceFFFFFFFForSendObject)
     try container.encodeIfPresent(emptyDatesInSendObject, forKey: .emptyDatesInSendObject)
+    try container.encodeIfPresent(unknownSizeInSendObjectInfo, forKey: .unknownSizeInSendObjectInfo)
   }
 }
