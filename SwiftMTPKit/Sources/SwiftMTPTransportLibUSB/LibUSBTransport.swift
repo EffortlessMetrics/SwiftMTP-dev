@@ -947,6 +947,36 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       return
     }
 
+    if shouldAttemptPixelResetReopenRecovery(after: lightRetry) {
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover] op=0x%04x tx=%u light rung still no-progress (rc=%d sent=%d), running reset+reopen rung",
+            opcode, txid, lightRetry.rc, lightRetry.sent))
+      }
+      if performCommandNoProgressResetReopenRecovery(opcode: opcode, txid: txid, debug: debug) {
+        _ = performCommandNoProgressLightRecovery(opcode: opcode, txid: txid, debug: debug)
+        let reopenRetry = attemptCommandWrite(bytes, timeout: timeout)
+        if reopenRetry.succeeded {
+          if debug {
+            print(
+              String(
+                format:
+                  "   [USB][Recover] op=0x%04x tx=%u recovered after reset+reopen rung",
+                opcode, txid))
+          }
+          return
+        }
+        try throwCommandWriteFailure(
+          reopenRetry, context: "command write failed after reset+reopen recovery")
+        return
+      }
+      try throwCommandWriteFailure(
+        lightRetry, context: "command write failed after reset+reopen recovery")
+      return
+    }
+
     if debug {
       print(
         String(
@@ -968,33 +998,6 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
             opcode, txid))
       }
       return
-    }
-
-    if shouldAttemptPixelResetReopenRecovery(after: hardRetry) {
-      if debug {
-        print(
-          String(
-            format:
-              "   [USB][Recover] op=0x%04x tx=%u hard rung still no-progress (rc=%d sent=%d), running reset+reopen rung",
-            opcode, txid, hardRetry.rc, hardRetry.sent))
-      }
-      if performCommandNoProgressResetReopenRecovery(opcode: opcode, txid: txid, debug: debug) {
-        _ = performCommandNoProgressLightRecovery(opcode: opcode, txid: txid, debug: debug)
-        let reopenRetry = attemptCommandWrite(bytes, timeout: timeout)
-        if reopenRetry.succeeded {
-          if debug {
-            print(
-              String(
-                format:
-                  "   [USB][Recover] op=0x%04x tx=%u recovered after reset+reopen rung",
-                opcode, txid))
-          }
-          return
-        }
-        try throwCommandWriteFailure(
-          reopenRetry, context: "command write failed after reset+reopen recovery")
-        return
-      }
     }
 
     try throwCommandWriteFailure(

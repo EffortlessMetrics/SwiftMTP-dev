@@ -332,6 +332,15 @@ func probeShouldRecoverNoProgressTimeout(rc: Int32, sent: Int32) -> Bool {
   rc == LIBUSB_ERROR_TIMEOUT && sent == 0
 }
 
+private func probeIsPixelNoProgressTarget(handle: OpaquePointer) -> Bool {
+  let device = libusb_get_device(handle)
+  var descriptor = libusb_device_descriptor()
+  guard libusb_get_device_descriptor(device, &descriptor) == 0 else {
+    return false
+  }
+  return descriptor.idVendor == 0x18D1 && descriptor.idProduct == 0x4EE1
+}
+
 private struct ProbeCommandWriteResult: Sendable {
   let succeeded: Bool
   let rc: Int32
@@ -488,6 +497,36 @@ private func probeWriteCommandWithRecovery(
   }
   guard lightRetry.isNoProgressTimeout else {
     return ProbeCommandWriteResult(succeeded: false, rc: lightRetry.rc, sent: lightRetry.sent)
+  }
+
+  if probeIsPixelNoProgressTarget(handle: handle) {
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover] op=0x%04x tx=%u Pixel no-progress persists (rc=%d sent=%d), running reset rung",
+          opcode, txid, lightRetry.rc, lightRetry.sent))
+    }
+    guard probePerformNoProgressHardRecovery(
+      handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
+    else {
+      return ProbeCommandWriteResult(succeeded: false, rc: lightRetry.rc, sent: lightRetry.sent)
+    }
+    _ = probePerformNoProgressLightRecovery(
+      handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
+    let pixelRetry = probeAttemptCommandWrite(
+      handle: handle, candidate: candidate, bytes: bytes, timeoutMs: timeoutMs)
+    if pixelRetry.succeeded {
+      if debug {
+        print(
+          String(
+            format:
+              "   [Probe][Recover] op=0x%04x tx=%u recovered after Pixel reset rung",
+            opcode, txid))
+      }
+      return ProbeCommandWriteResult(succeeded: true, rc: pixelRetry.rc, sent: pixelRetry.sent)
+    }
+    return ProbeCommandWriteResult(succeeded: false, rc: pixelRetry.rc, sent: pixelRetry.sent)
   }
 
   if debug {
