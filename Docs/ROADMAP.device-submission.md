@@ -1,6 +1,22 @@
 # SwiftMTP Device Submission Guide
 
+*Last updated: 2026-02-16*
+
 This guide explains how to submit new device profiles (quirks) to SwiftMTP for inclusion in the official quirks database.
+
+## Sprint Fast Path (Recommended)
+
+For active sprint work, use the automated collect path before manual bundle authoring:
+
+```bash
+swift run --package-path SwiftMTPKit swiftmtp collect \
+  --device-name "<device-name>" \
+  --noninteractive --strict --run-bench 100M,1G --json --open-pr
+./scripts/validate-submission.sh Contrib/submissions/<bundle-dir>
+./scripts/validate-quirks.sh
+```
+
+Use manual `submission.json` / `quirk-suggestion.json` editing only when the generated artifacts need explicit adjustments.
 
 ## Overview
 
@@ -27,7 +43,7 @@ pip install jsonschema  # or: npm install -g ajv-cli
 
 1. **Enable Developer Options** on your Android device
 2. **Enable USB Debugging** (Settings → Developer Options)
-3. **Set USB Mode to MTP** (not PTP or File Transfer)
+3. **Set USB Mode to MTP / File Transfer** (not PTP or Charge-only)
 4. **Unlock device** and accept "Trust this computer" prompt
 5. **Keep screen unlocked** during testing
 
@@ -59,16 +75,15 @@ This script will:
 
 ```bash
 # Build CLI
-cd SwiftMTPKit
-swift build --configuration release
+swift build --package-path SwiftMTPKit --configuration release
 
 # Probe device
-swift run swiftmtp --real-only probe > ../probes/my-device.txt
+swift run --package-path SwiftMTPKit swiftmtp --real-only probe > probes/my-device.txt
 
 # Run benchmarks
-swift run swiftmtp --real-only bench 100M --repeat 3 --out ../benches/my-device-100m.csv
-swift run swiftmtp --real-only bench 500M --repeat 3 --out ../benches/my-device-500m.csv
-swift run swiftmtp --real-only bench 1G --repeat 3 --out ../benches/my-device-1g.csv
+swift run --package-path SwiftMTPKit swiftmtp --real-only bench 100M --repeat 3 --out benches/my-device-100m.csv
+swift run --package-path SwiftMTPKit swiftmtp --real-only bench 500M --repeat 3 --out benches/my-device-500m.csv
+swift run --package-path SwiftMTPKit swiftmtp --real-only bench 1G --repeat 3 --out benches/my-device-1g.csv
 ```
 
 ### Step 2: Create Submission Bundle
@@ -202,12 +217,12 @@ Bundle: Contrib/submissions/my-device/
 ### Step 6: Submit Pull Request
 
 1. Fork the repository
-2. Create a branch: `git checkout -b device/my-new-device`
+2. Create a branch: `git checkout -b device/2.1-B-my-new-device`
 3. Add your submission files
 4. Update `Specs/quirks.json` with your suggestion
 5. Run `./scripts/validate-quirks.sh` one more time
 6. Commit and push
-7. Open a pull request
+7. Open a pull request with command outputs and artifact paths
 
 ## Reference: Validation Scripts
 
@@ -339,4 +354,4 @@ After your submission is merged:
 
 ---
 
-*See also: [ROADMAP.md](ROADMAP.md) | [Testing Guide](ROADMAP.testing.md) | [Release Checklist](ROADMAP.release-checklist.md)*
+*See also: [ROADMAP.md](ROADMAP.md) | [Sprint Playbook](SPRINT-PLAYBOOK.md) | [Testing Guide](ROADMAP.testing.md) | [Release Checklist](ROADMAP.release-checklist.md)*

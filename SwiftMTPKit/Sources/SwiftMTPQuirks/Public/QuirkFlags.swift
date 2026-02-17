@@ -26,6 +26,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// Device resets its transaction-ID counter when a new session opens.
   public var transactionIdResetsOnSession: Bool = false
 
+  /// On first OpenSession timeout/I/O failure, perform a one-time
+  /// reset+reopen recovery ladder before giving up.
+  public var resetReopenOnOpenSessionIOError: Bool = false
+
   // MARK: - Transfer-level
 
   /// Device supports GetPartialObject64 (0x95C4).
@@ -75,6 +79,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// Some devices reject date strings with InvalidParameter.
   public var emptyDatesInSendObject: Bool = false
 
+  /// Force ObjectCompressedSize to 0xFFFFFFFF in SendObjectInfo.
+  /// Disabled by default; some devices reject unknown-size semantics.
+  public var unknownSizeInSendObjectInfo: Bool = false
+
   public init() {}
 
   // MARK: - Custom Codable for backward compatibility
@@ -85,6 +93,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case needsLongerOpenTimeout
     case requiresSessionBeforeDeviceInfo
     case transactionIdResetsOnSession
+    case resetReopenOnOpenSessionIOError
     case supportsPartialRead64
     case supportsPartialRead32
     case supportsPartialWrite
@@ -97,6 +106,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case writeToSubfolderOnly
     case preferredWriteFolder
     case forceFFFFFFFForSendObject
+    case emptyDatesInSendObject
+    case unknownSizeInSendObjectInfo
   }
 
   public init(from decoder: Decoder) throws {
@@ -110,6 +121,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .requiresSessionBeforeDeviceInfo) ?? false
     self.transactionIdResetsOnSession =
       try container.decodeIfPresent(Bool.self, forKey: .transactionIdResetsOnSession) ?? false
+    self.resetReopenOnOpenSessionIOError =
+      try container.decodeIfPresent(Bool.self, forKey: .resetReopenOnOpenSessionIOError) ?? false
     self.supportsPartialRead64 =
       try container.decodeIfPresent(Bool.self, forKey: .supportsPartialRead64) ?? true
     self.supportsPartialRead32 =
@@ -133,6 +146,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       String.self, forKey: .preferredWriteFolder)
     self.forceFFFFFFFForSendObject =
       try container.decodeIfPresent(Bool.self, forKey: .forceFFFFFFFForSendObject) ?? false
+    self.emptyDatesInSendObject =
+      try container.decodeIfPresent(Bool.self, forKey: .emptyDatesInSendObject) ?? false
+    self.unknownSizeInSendObjectInfo =
+      try container.decodeIfPresent(Bool.self, forKey: .unknownSizeInSendObjectInfo) ?? false
   }
 
   public func encode(to encoder: Encoder) throws {
@@ -144,6 +161,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       requiresSessionBeforeDeviceInfo, forKey: .requiresSessionBeforeDeviceInfo)
     try container.encodeIfPresent(
       transactionIdResetsOnSession, forKey: .transactionIdResetsOnSession)
+    try container.encodeIfPresent(
+      resetReopenOnOpenSessionIOError, forKey: .resetReopenOnOpenSessionIOError)
     try container.encodeIfPresent(supportsPartialRead64, forKey: .supportsPartialRead64)
     try container.encodeIfPresent(supportsPartialRead32, forKey: .supportsPartialRead32)
     try container.encodeIfPresent(supportsPartialWrite, forKey: .supportsPartialWrite)
@@ -156,5 +175,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(writeToSubfolderOnly, forKey: .writeToSubfolderOnly)
     try container.encodeIfPresent(preferredWriteFolder, forKey: .preferredWriteFolder)
     try container.encodeIfPresent(forceFFFFFFFForSendObject, forKey: .forceFFFFFFFForSendObject)
+    try container.encodeIfPresent(emptyDatesInSendObject, forKey: .emptyDatesInSendObject)
+    try container.encodeIfPresent(unknownSizeInSendObjectInfo, forKey: .unknownSizeInSendObjectInfo)
   }
 }

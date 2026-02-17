@@ -1,145 +1,99 @@
-# SwiftMTP 1.0 Release Steps
+# SwiftMTP Release Runbook (2.x)
 
-## 1. Freeze API Surface
-- Audit public symbols in `SwiftMTPCore/Public/` and `SwiftMTPTransportLibUSB/`
-- Add `internal` or `fileprivate` to implementation details
-- Expose test-only APIs under `@_spi(Testing)` if needed
-- Update CHANGELOG.md with final API surface
+*Last updated: 2026-02-16*
 
-## 2. Real-Device Smoke Tests
-Run these commands on at least **two different devices** (e.g., Pixel + Samsung camera):
+This runbook describes how to prepare and ship SwiftMTP releases in the current 2.x train.
 
-```bash
-# Build the CLI tool
-cd SwiftMTPKit
-swift build -c release
-export PATH="$PWD/.build/release:$PATH"
+## Scope
 
-# Probe devices
-swiftmtp probe
+- Applies to `v2.x.y` patch releases and `v2.x.0` minor releases.
+- Assumes release artifacts are produced by GitHub Actions (`.github/workflows/release.yml`).
 
-# Benchmark 1GB transfer (adjust path for your device)
-swiftmtp bench 1G --device "Your Device Name" --path "/DCIM" --output benchmark_results.json
+## Pre-Release Readiness
 
-# Mirror test (optional, smaller scope)
-swiftmtp mirror ~/TestBackup --include "DCIM/Camera/*.jpg" --max-files 5
-```
+Before cutting a tag, complete `Docs/ROADMAP.release-checklist.md`.
+Confirm sprint completion/carry-over state in `Docs/SPRINT-PLAYBOOK.md` and `Docs/ROADMAP.md`.
 
-Capture results for `Docs/benchmarks.md` including:
-- Device model and OS version
-- Transfer speeds (p50/p95/p99)
-- Chunk size used
-- Timeout settings
-- Any errors encountered
+Minimum readiness gates:
 
-## 3. Update Device Quirk Registry
-- Add concrete entries to `Specs/quirks.json` based on benchmark results
-- Include at least one entry from real device testing
-- Document device-specific workarounds or optimizations
+- Local full gate passes: `./run-all-tests.sh`
+- Smoke gate passes: `./scripts/smoke.sh`
+- Quirk and submission validators pass for touched evidence paths
+- Changelog and roadmap docs are up to date
+- Required CI workflows are green for the release commit (`ci`, `Smoke`, `validate-quirks`, `validate-submission`)
 
-## 4. Tag Release Candidate
-```bash
-# Ensure all changes are committed
-git status
-git add .
-git commit -m "Prepare v1.0.0-rc1"
+## Version Preparation
 
-# Tag the release candidate
-git tag v1.0.0-rc1
-git push --tags
-```
+1. Decide release type (patch/minor).
+2. Update release metadata and any version surfaces used by tooling.
+3. Update `CHANGELOG.md` with final release heading and date.
+4. Ensure roadmap + sprint playbook reflect closed items and carry-over items.
+5. Create a release prep commit.
 
-## 5. Validate CI Pipeline
-- Monitor GitHub Actions for the tag
-- Verify SBOM generation completes
-- Download and test the XCFramework artifact
-- Ensure all tests pass in CI environment
-
-## 6. Cut Final Release (after RC validation)
-```bash
-# If RC looks good, cut final release
-git tag v1.0.0
-git push --tags
-
-# Publish documentation
-# - DocC site builds automatically via CI
-# - Update README install snippet if needed
-```
-
-## Rollback Plan
-If issues discovered in RC:
-```bash
-# Delete the problematic tag
-git tag -d v1.0.0-rc1
-git push origin :refs/tags/v1.0.0-rc1
-
-# Address issues and re-tag
-git tag v1.0.0-rc1
-git push --tags
-```
-
-## Acceptance Criteria for GA
-- [ ] API frozen and documented
-- [ ] Real-device testing completed on ≥2 devices
-- [ ] CI passes with green TSAN job
-- [ ] SBOM generated successfully
-- [ ] XCFramework builds and links correctly
-- [ ] Documentation published and accessible
-- [ ] CHANGELOG.md updated with release notes
-
----
-
-# SwiftMTP 1.1.0 Release Checklist
-
-## Pre-Release
-- [ ] Finalize File Provider XPC integration testing
-- [ ] Verify transfer journaling works across interruptions
-- [ ] Test mirror/sync conflict resolution
-- [ ] Complete OnePlus 3T quirk validation
-- [ ] Update `Docs/benchmarks.md` with all device results
-- [ ] Run full test suite (BDD, Property, Snapshot, Fuzzing)
-- [ ] Validate CLI storybook mode
-
-## Release Steps
+Example:
 
 ```bash
-# 1. Final audit
-swift test
-swift-format lint -r Sources Tests
-
-# 2. Commit final changes
-git add .
-git commit -m "Release v1.1.0: File Provider, Transfer Journaling, Mirror/Sync"
-
-# 3. Tag release
-git tag v1.1.0
-git push --tags
-
-# 4. Verify CI
-# - Monitor GitHub Actions
-# - Check SBOM generation
-# - Verify XCFramework artifact
+git add CHANGELOG.md Docs/ROADMAP.md Docs/SPRINT-PLAYBOOK.md Docs/ROADMAP.release-checklist.md
+# Add any version/build metadata files you changed
+git commit -m "chore: prepare v2.1.0"
 ```
 
-## Acceptance Criteria for v1.1.0
-- [ ] File Provider extension builds and loads on macOS
-- [ ] Transfer journal survives app restart
-- [ ] Mirror operations complete without data loss
-- [ ] OnePlus 3T quirk works with device trust flow
-- [ ] All BDD scenarios pass
-- [ ] Thread sanitizer clean on Core/Index tests
-- [ ] Benchmarks documented in `Docs/benchmarks.md`
-- [ ] CHANGELOG.md complete with v1.1.0 entry
-- [ ] README.md reflects new features
+## Tag and Trigger Release Pipeline
 
-## Rollback for v1.1.0
-If issues discovered post-release:
+Create and push an annotated tag:
+
 ```bash
-git tag -d v1.1.0
-git push origin :refs/tags/v1.1.0
-
-# Create patch release
-git commit -m "Revert <feature> for v1.1.1"
-git tag v1.1.1
-git push --tags
+git tag -a v2.1.0 -m "Release v2.1.0"
+git push origin v2.1.0
 ```
+
+This triggers `.github/workflows/release.yml`, which builds and validates:
+
+- macOS artifact (`swiftmtp-macos-arm64.tar.gz` + checksum)
+- Linux artifact (`swiftmtp-linux-x86_64-<tag>.tar.gz` + checksum)
+- SPDX SBOM artifact
+- Draft GitHub release with artifacts attached
+
+## Release Artifact Validation
+
+Validate artifacts before publishing the draft release:
+
+- Tarballs contain the expected `swiftmtp` binary
+- Checksums verify successfully
+- SBOM is present and readable
+- Release notes match `CHANGELOG.md`
+
+Optional local package sanity check:
+
+```bash
+swift build -c release --package-path SwiftMTPKit --product swiftmtp
+BIN="$(swift build -c release --package-path SwiftMTPKit --product swiftmtp --show-bin-path)/swiftmtp"
+"$BIN" version --json
+```
+
+## Publish
+
+1. Open the draft release in GitHub.
+2. Verify title/body/tag consistency.
+3. Publish the release.
+4. Announce in project channels.
+
+## Post-Release
+
+- Open the next milestone/sprint issue set.
+- Move unfinished items from `Unreleased` to next sprint backlog.
+- Reset `Unreleased` headings for next cycle and refresh roadmap sprint queue.
+- Backport urgent documentation fixes if needed.
+
+## Hotfix Flow
+
+For urgent patches after release:
+
+1. Branch from the release tag.
+2. Apply minimal fix + tests.
+3. Update changelog for `v2.x.(y+1)`.
+4. Tag and publish patch release through same pipeline.
+
+## Historical Notes
+
+Legacy 1.0/1.1 checklist content was replaced by this 2.x runbook. See git history for archival release procedures.

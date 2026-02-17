@@ -308,6 +308,25 @@ final class InterfaceProbeTests: XCTestCase {
     XCTAssertEqual(responseOK, 0x2001)
   }
 
+  func testProbeOpenSessionCommandUsesTxidZeroAndSessionIDOne() {
+    let cmd = makePTPCommand(opcode: 0x1002, txid: 0, params: [1])
+    let header = cmd.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
+    XCTAssertEqual(header.code, 0x1002)
+    XCTAssertEqual(header.txid, 0)
+    XCTAssertEqual(cmd.count, 16)
+
+    let sessionID = UInt32(cmd[12]) | (UInt32(cmd[13]) << 8) | (UInt32(cmd[14]) << 16)
+      | (UInt32(cmd[15]) << 24)
+    XCTAssertEqual(sessionID, 1)
+  }
+
+  func testProbeGetStorageIDsCommandUsesOpcode1004() {
+    let cmd = makePTPCommand(opcode: 0x1004, txid: 1, params: [])
+    let header = cmd.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
+    XCTAssertEqual(header.code, 0x1004)
+    XCTAssertEqual(header.type, PTPContainer.Kind.command.rawValue)
+  }
+
   // MARK: - Interface Score Tests
 
   func testMTPScoreCalculation() {

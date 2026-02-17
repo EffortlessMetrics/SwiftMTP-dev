@@ -174,6 +174,54 @@ final class ProtoTransferCoverageTests: XCTestCase {
         // Verify ProtoTransfer type exists and is accessible
         XCTAssertNotNil(ProtoTransfer.self)
     }
+
+    func testWriteWholeObjectRejectsWildcardStorageID() async {
+        let link = MockMTPLinkForBDD()
+
+        do {
+            try await ProtoTransfer.writeWholeObject(
+                storageID: 0xFFFFFFFF,
+                parent: nil,
+                name: "wildcard.txt",
+                size: 0,
+                dataHandler: { _ in 0 },
+                on: link,
+                ioTimeoutMs: 1000
+            )
+            XCTFail("Expected preconditionFailed for wildcard storage ID")
+        } catch let error as MTPError {
+            guard case .preconditionFailed(let message) = error else {
+                XCTFail("Expected preconditionFailed, got \(error)")
+                return
+            }
+            XCTAssertTrue(message.contains("concrete storage ID"))
+        } catch {
+            XCTFail("Unexpected error type: \(error)")
+        }
+    }
+
+    func testCreateFolderRejectsWildcardStorageID() async {
+        let link = MockMTPLinkForBDD()
+
+        do {
+            _ = try await ProtoTransfer.createFolder(
+                storageID: 0xFFFFFFFF,
+                parent: 0xFFFFFFFF,
+                name: "WildcardFolder",
+                on: link,
+                ioTimeoutMs: 1000
+            )
+            XCTFail("Expected preconditionFailed for wildcard storage ID")
+        } catch let error as MTPError {
+            guard case .preconditionFailed(let message) = error else {
+                XCTFail("Expected preconditionFailed, got \(error)")
+                return
+            }
+            XCTAssertTrue(message.contains("concrete storage ID"))
+        } catch {
+            XCTFail("Unexpected error type: \(error)")
+        }
+    }
 }
 
 // MARK: - TransferEdgeCaseTests

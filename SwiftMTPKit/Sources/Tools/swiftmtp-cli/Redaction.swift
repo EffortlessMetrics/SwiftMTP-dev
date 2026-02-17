@@ -12,7 +12,7 @@ struct Redaction {
     ///   - salt: Random salt for HMAC (must be saved separately for consistency)
     /// - Returns: Redacted serial in format "hmacsha256:<hex>"
     static func redactSerial(_ serial: String, salt: Data) -> String {
-        let data = (serial + String(data: salt, encoding: .utf8)!).data(using: .utf8) ?? Data()
+        let data = Data(serial.utf8)
         let hmac = hmacSHA256(data: data, key: salt)
         return "hmacsha256:" + hmac.map { String(format: "%02x", $0) }.joined()
     }

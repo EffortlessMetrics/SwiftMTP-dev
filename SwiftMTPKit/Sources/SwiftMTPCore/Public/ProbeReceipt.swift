@@ -126,6 +126,10 @@ public struct SessionProbeResult: Sendable, Codable {
   public var requiredRetry: Bool = false
   public var durationMs: Int = 0
   public var error: String?
+  public var firstFailure: String?
+  public var recoveryAction: String?
+  public var resetAttempted: Bool = false
+  public var resetError: String?
 
   public init() {}
 }

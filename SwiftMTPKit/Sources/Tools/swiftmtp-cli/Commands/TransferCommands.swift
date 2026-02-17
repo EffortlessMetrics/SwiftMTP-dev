@@ -172,7 +172,7 @@ struct TransferCommands {
 
   static func runBench(flags: CLIFlags, args: [String]) async {
     guard let sizeStr = args.first else {
-      print("Usage: bench <size> [--storage <id>] [--parent <handle>]")
+      print("Usage: bench <size> [--storage <id>] [--parent <handle>] [--repeat <n>] [--out <csv>]")
       exitNow(.usage)
     }
 
@@ -182,9 +182,11 @@ struct TransferCommands {
       exitNow(.usage)
     }
 
-    // Parse optional --storage and --parent flags
+    // Parse optional --storage / --parent / --repeat / --out flags
     var explicitStorage: UInt32? = nil
     var explicitParent: UInt32? = nil
+    var repeatCount = 1
+    var outPath: String? = nil
     var i = 1
     while i < args.count {
       if args[i] == "--storage", i + 1 < args.count {
@@ -195,12 +197,35 @@ struct TransferCommands {
         let val = args[i + 1]
         explicitParent = UInt32(val, radix: 16) ?? UInt32(val)
         i += 2
+      } else if args[i] == "--repeat", i + 1 < args.count {
+        if let n = Int(args[i + 1]), n > 0 {
+          repeatCount = n
+          i += 2
+        } else {
+          print("Invalid value for --repeat: \(args[i + 1])")
+          exitNow(.usage)
+        }
+      } else if args[i].hasPrefix("--repeat=") {
+        let value = String(args[i].dropFirst("--repeat=".count))
+        if let n = Int(value), n > 0 {
+          repeatCount = n
+          i += 1
+        } else {
+          print("Invalid value for --repeat: \(value)")
+          exitNow(.usage)
+        }
+      } else if args[i] == "--out", i + 1 < args.count {
+        outPath = args[i + 1]
+        i += 2
+      } else if args[i].hasPrefix("--out=") {
+        outPath = String(args[i].dropFirst("--out=".count))
+        i += 1
       } else {
         i += 1
       }
     }
 
-    print("Benchmarking with \(formatBytes(sizeBytes))...")
+    print("Benchmarking with \(formatBytes(sizeBytes)) (repeat: \(repeatCount))...")
 
     do {
       let device = try await openDevice(flags: flags)
@@ -208,42 +233,44 @@ struct TransferCommands {
         device: device, explicitStorage: explicitStorage, explicitParent: explicitParent
       )
 
-      let randomSuffix = String(UInt32.random(in: 0...UInt32.max), radix: 16, uppercase: false)
-      let benchFilename = "swiftmtp-bench-\(randomSuffix).tmp"
-
-      let tempURL = URL(fileURLWithPath: NSTemporaryDirectory())
-        .appendingPathComponent(benchFilename)
-      let testData = Data(repeating: 0xAA, count: Int(min(sizeBytes, 1024 * 1024)))
-      FileManager.default.createFile(atPath: tempURL.path, contents: nil)
-      let fileHandle = try FileHandle(forWritingTo: tempURL)
-      var written: UInt64 = 0
-      while written < sizeBytes {
-        let toWrite = min(UInt64(testData.count), sizeBytes - written)
-        try fileHandle.write(contentsOf: testData.prefix(Int(toWrite)))
-        written += toWrite
-      }
-      try fileHandle.close()
-
       print(
         "   Target: storage=0x\(String(format: "%08x", storageID.raw)) parent=0x\(String(format: "%08x", parentHandle))"
       )
-      print("   Starting upload of \(benchFilename)...")
-      let startTime = Date()
-      let progress = try await device.write(
-        parent: parentHandle == 0xFFFFFFFF ? nil : parentHandle,
-        name: benchFilename, size: sizeBytes, from: tempURL
-      )
-      while !progress.isFinished { try await Task.sleep(nanoseconds: 100_000_000) }
+      var csvRows = ["timestamp,operation,size_bytes,duration_seconds,speed_mbps"]
+      let iso = ISO8601DateFormatter()
 
-      let duration = Date().timeIntervalSince(startTime)
-      let speedMBps = Double(sizeBytes) / duration / 1_000_000
-      print(String(format: "Upload: %.2f MB/s (%.2f seconds)", speedMBps, duration))
+      for pass in 1...repeatCount {
+        let randomSuffix = String(UInt32.random(in: 0...UInt32.max), radix: 16, uppercase: false)
+        let benchFilename = "swiftmtp-bench-\(randomSuffix).tmp"
+        let tempURL = try createBenchPayloadFile(name: benchFilename, sizeBytes: sizeBytes)
+        defer { try? FileManager.default.removeItem(at: tempURL) }
 
-      // Cleanup: find and delete the bench file on device
-      await cleanupBenchFile(
-        device: device, storage: storageID, parent: parentHandle, name: benchFilename)
+        print("   Run \(pass)/\(repeatCount): upload \(benchFilename)...")
+        let startTime = Date()
+        let progress = try await device.write(
+          parent: parentHandle == 0xFFFFFFFF ? nil : parentHandle,
+          name: benchFilename, size: sizeBytes, from: tempURL
+        )
+        while !progress.isFinished { try await Task.sleep(nanoseconds: 100_000_000) }
 
-      try? FileManager.default.removeItem(at: tempURL)
+        let duration = max(Date().timeIntervalSince(startTime), 0.001)
+        let speedMBps = Double(sizeBytes) / duration / 1_000_000
+        print(String(format: "   Run %d: %.2f MB/s (%.2f seconds)", pass, speedMBps, duration))
+
+        csvRows.append(
+          "\(iso.string(from: startTime)),write,\(sizeBytes),\(String(format: "%.6f", duration)),\(String(format: "%.3f", speedMBps))"
+        )
+
+        await cleanupBenchFile(
+          device: device, storage: storageID, parent: parentHandle, name: benchFilename)
+      }
+
+      if let outPath {
+        let outURL = URL(fileURLWithPath: outPath)
+        let csv = csvRows.joined(separator: "\n") + "\n"
+        try csv.write(to: outURL, atomically: true, encoding: .utf8)
+        print("   CSV written: \(outURL.path)")
+      }
     } catch {
       print("Benchmark failed: \(error)")
       if let mtpError = error as? MTPError {
@@ -258,6 +285,21 @@ struct TransferCommands {
       }
       exitNow(.tempfail)
     }
+  }
+
+  private static func createBenchPayloadFile(name: String, sizeBytes: UInt64) throws -> URL {
+    let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(name)
+    let testData = Data(repeating: 0xAA, count: Int(min(sizeBytes, 1024 * 1024)))
+    FileManager.default.createFile(atPath: tempURL.path, contents: nil)
+    let fileHandle = try FileHandle(forWritingTo: tempURL)
+    var written: UInt64 = 0
+    while written < sizeBytes {
+      let toWrite = min(UInt64(testData.count), sizeBytes - written)
+      try fileHandle.write(contentsOf: testData.prefix(Int(toWrite)))
+      written += toWrite
+    }
+    try fileHandle.close()
+    return tempURL
   }
 
   /// Resolve a safe target folder for benchmark writes.

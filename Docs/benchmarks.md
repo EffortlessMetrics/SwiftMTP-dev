@@ -8,7 +8,7 @@ This document captures **repeatable** performance results for SwiftMTP across MT
 |--------|---------|--------|------|-------|-------|
 | Google Pixel 7 | 18d1:4ee1 | Experimental | N/A | N/A | macOS Tahoe 26 bulk timeout |
 | OnePlus 3T | 2a70:f003 | Stable (probe/read) | N/A | N/A | Probe path hardened (no misaligned-pointer trap) |
-| Xiaomi Mi Note 2 | 2717:ff10 | Stable | TBD | TBD | DEVICE_BUSY handling verified |
+| Xiaomi Mi Note 2 | 2717:ff10 | Stable | Pending | Pending | DEVICE_BUSY handling verified |
 | Samsung Galaxy S21 | 04e8:6860 | Experimental | 15.8 MB/s | 12.4 MB/s | Vendor-specific interface, conservative tuning |
 | Canon EOS R5 | 04a9:3196 | Known | 45.6 MB/s | 28.9 MB/s | PTP-derived |
 
@@ -19,6 +19,13 @@ Lab runs are generated locally via `swift run swiftmtp device-lab connected --js
 - Aggregate report: `Docs/benchmarks/connected-lab/<timestamp>/connected-lab.md`
 - JSON matrix: `Docs/benchmarks/connected-lab/<timestamp>/connected-lab.json`
 - Per-device artifacts: `Docs/benchmarks/connected-lab/<timestamp>/devices/`
+- Operation receipts include `enumerate/claim`, `OpenSession+GetDeviceInfo`, `storage`, `list`, `read`, `write`, and `delete` stages with timing/error fields.
+
+For per-mode bring-up capture (including host USB truth), use:
+
+```bash
+./scripts/device-bringup.sh --mode mtp-unlocked
+```
 
 | VID:PID | Outcome | Notes |
 |--------|---------|-------|
@@ -172,8 +179,8 @@ swift run swiftmtp --real-only mirror ~/PhoneBackup --include "DCIM/**" --out lo
 | VID:PID | 2717:ff10 (variant: 2717:ff40) | |
 | USB Speed | High-Speed (USB 2.0) | |
 | MTP Operations | Full PTP/MTP extensions | ✅ |
-| Read Speed | TBD | ⏳ Pending |
-| Write Speed | TBD | ⏳ Pending |
+| Read Speed | Pending | ⏳ Pending |
+| Write Speed | Pending | ⏳ Pending |
 
 **Quirk Configuration:**
 ```json
@@ -287,6 +294,45 @@ done
 # Mirror test
 swift run swiftmtp --real-only mirror ~/PhoneBackup --include "DCIM/**" --out ../logs/my-device-mirror.log
 ```
+
+### Collect + benchmark troubleshooting flow
+
+Use this combined flow for contribution-ready device evidence:
+
+1. Capture a baseline probe:
+
+   ```bash
+   swift run swiftmtp --real-only probe > ../probes/my-device.txt
+   ```
+
+2. Run one `collect` pass with strict checks:
+
+   ```bash
+   swift run swiftmtp collect --strict --noninteractive --bundle ../Contrib/submissions/my-device-bundle
+   ```
+
+3. If collect succeeds, run single-size smoke benchmark:
+
+   ```bash
+   swift run swiftmtp --real-only bench 100M --repeat 3 --out ../benches/my-device-100m.csv
+   ```
+
+4. Confirm artifacts were generated and private fields were redacted:
+
+   ```bash
+   ls ../Contrib/submissions/my-device-bundle
+   rg -n "Serial|/Users/|iSerial|<[Rr]edacted>" ../Contrib/submissions/my-device-bundle/usb-dump.txt
+   ```
+
+5. Expand to full matrix only after steps 1-4 pass:
+
+   ```bash
+   for size in 100M 500M 1G; do
+     swift run swiftmtp --real-only bench $size --repeat 3 --out ../benches/my-device-$size.csv
+   done
+   ```
+
+6. If a step fails, attach the exact output and artifact location to the issue before changing quirks.
 
 ### Interpreting Results
 
@@ -403,7 +449,7 @@ Docs/SwiftMTP.docc/Devices/<device>.md
 
 ---
 
-*Last updated: 2026-02-14*
+*Last updated: 2026-02-16*
 *SwiftMTP Version: 2.0.0*
 
 *See also: [ROADMAP.md](ROADMAP.md) | [Device Submission](ROADMAP.device-submission.md) | [Testing Guide](ROADMAP.testing.md)*

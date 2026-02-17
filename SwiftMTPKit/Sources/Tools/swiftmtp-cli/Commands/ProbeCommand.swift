@@ -113,13 +113,24 @@ struct ProbeCommand {
         }
     }
 
-    static func runUSBDump() async {
-        print("🔍 Dumping USB device interfaces...")
+    static func runUSBDump(flags: CLIFlags) async {
         do {
-            try await USBDumper().run()
-            print("✅ USB dump complete")
+            if flags.json {
+                let report = try USBDumper().collect()
+                let encoder = JSONEncoder()
+                encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+                encoder.dateEncodingStrategy = .iso8601
+                let data = try encoder.encode(report)
+                print(String(data: data, encoding: .utf8) ?? "{}")
+            } else {
+                print("🔍 Dumping USB device interfaces...")
+                try await USBDumper().run()
+                print("✅ USB dump complete")
+            }
         } catch {
-            print("❌ USB dump failed: \(error)")
+            if !flags.json {
+                print("❌ USB dump failed: \(error)")
+            }
             exitNow(.tempfail)
         }
     }
@@ -128,7 +139,7 @@ struct ProbeCommand {
         print("== Probe ==")
         await runProbe(flags: flags)
         print("\n== USB Dump ==")
-        await runUSBDump()
+        await runUSBDump(flags: flags)
         print("\n✅ Diagnostic complete")
     }
 }

@@ -78,6 +78,22 @@ done
 
 echo "✅ All referenced artifacts exist"
 
+# Ensure benchmark evidence is portable (no machine-specific absolute paths)
+echo "🔍 Checking benchmark artifacts for absolute path leakage..."
+if command -v rg >/dev/null 2>&1; then
+    absolute_path_hits=$(rg -n --hidden -e '/Users/' -e '/home/' -e 'C:\\\\Users\\\\' Docs/benchmarks || true)
+else
+    absolute_path_hits=$(grep -RInE '/Users/|/home/|C:\\Users\\' Docs/benchmarks || true)
+fi
+
+if [[ -n "$absolute_path_hits" ]]; then
+    echo "❌ Found absolute paths in Docs/benchmarks artifacts:"
+    echo "$absolute_path_hits"
+    exit 1
+fi
+
+echo "✅ Benchmark artifacts are portable"
+
 # Validate entry IDs are unique
 echo "🔍 Checking for duplicate entry IDs..."
 ids=$(jq -r '.entries[].id' "$QUIRKS_FILE")

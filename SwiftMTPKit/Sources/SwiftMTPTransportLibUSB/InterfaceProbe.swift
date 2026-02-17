@@ -202,6 +202,17 @@ func claimCandidate(
         c.ifaceNumber, c.bulkIn, c.bulkOut, c.ifaceClass))
   }
 
+  // Always attempt auto-detach before claim on first contact.
+  // Some devices need this even before we can "learn" a profile.
+  let autoDetachRC = libusb_set_auto_detach_kernel_driver(handle, 1)
+  if debug {
+    if autoDetachRC == LIBUSB_SUCCESS {
+      print("   [Claim] set_auto_detach_kernel_driver: enabled")
+    } else {
+      print("   [Claim] set_auto_detach_kernel_driver rc=\(autoDetachRC) (continuing anyway)")
+    }
+  }
+
   // Try claim with optional retry for vendor-specific devices
   for attempt in 0...retryCount {
     if attempt > 0 {
@@ -242,7 +253,7 @@ func claimCandidate(
       // Brief pause for pipe setup (alt-setting does the real work, but some devices need more time)
       // Samsung and similar vendor-specific MTP stacks benefit from 250-500ms stabilization
       if debug {
-        print("   [Claim] claimed OK, waiting \\(postClaimStabilizeMs)ms for pipe activation")
+        print("   [Claim] claimed OK, waiting \(postClaimStabilizeMs)ms for pipe activation")
       }
       usleep(UInt32(postClaimStabilizeMs) * 1000)
 
@@ -315,11 +326,403 @@ struct ProbeLadderResult: Sendable {
   let stepAttempted: String
 }
 
+/// Matches the transport-layer no-progress timeout recovery gate.
+/// A timeout with zero bytes written indicates the endpoint did not accept the command container.
+func probeShouldRecoverNoProgressTimeout(rc: Int32, sent: Int32) -> Bool {
+  rc == LIBUSB_ERROR_TIMEOUT && sent == 0
+}
+
+private func probeIsPixelNoProgressTarget(handle: OpaquePointer) -> Bool {
+  let device = libusb_get_device(handle)
+  var descriptor = libusb_device_descriptor()
+  guard libusb_get_device_descriptor(device, &descriptor) == 0 else {
+    return false
+  }
+  return descriptor.idVendor == 0x18D1 && descriptor.idProduct == 0x4EE1
+}
+
+/// Pixel-specific preflight before first OpenSession write.
+///
+/// This runs in the probe path (before a transport instance exists), so it mirrors the
+/// transport-layer preflight and escalates once to reset when endpoints still reject setup.
+private func probeRunPixelOpenSessionPreflightIfNeeded(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate,
+  opcode: UInt16,
+  txid: UInt32,
+  debug: Bool
+) {
+  guard opcode == 0x1002, probeIsPixelNoProgressTarget(handle: handle) else {
+    return
+  }
+
+  if debug {
+    print(
+      String(
+        format: "   [Probe][Preflight][Pixel] start op=0x%04x tx=%u",
+        opcode, txid))
+  }
+
+  let iface = Int32(candidate.ifaceNumber)
+  let alt = Int32(candidate.altSetting)
+  if let device = libusb_get_device(handle) {
+    setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+  }
+
+  let setAltRC = libusb_set_interface_alt_setting(handle, iface, alt)
+  let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
+  let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
+  let clearEventRC: Int32 =
+    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
+  let classResetRC = libusb_control_transfer(
+    handle, 0x21, 0x66, 0, UInt16(candidate.ifaceNumber), nil, 0, 2000
+  )
+  usleep(200_000)
+
+  let needsHardPreflight =
+    setAltRC != LIBUSB_SUCCESS || clearOutRC != LIBUSB_SUCCESS || clearInRC != LIBUSB_SUCCESS
+
+  var hardResetRC: Int32 = LIBUSB_SUCCESS
+  var hardSetAltRC: Int32 = LIBUSB_SUCCESS
+  var hardClearOutRC: Int32 = LIBUSB_SUCCESS
+  var hardClearInRC: Int32 = LIBUSB_SUCCESS
+  var hardClearEventRC: Int32 = LIBUSB_SUCCESS
+  var hardAutoDetachRC: Int32 = LIBUSB_SUCCESS
+  var hardDetachRC: Int32 = LIBUSB_SUCCESS
+  var hardReleaseRC: Int32 = LIBUSB_SUCCESS
+  var hardClaimRC: Int32 = LIBUSB_SUCCESS
+  var readyAfterHardReset = false
+
+  if needsHardPreflight {
+    hardResetRC = libusb_reset_device(handle)
+    if hardResetRC == LIBUSB_SUCCESS {
+      usleep(300_000)
+
+      let reclaim = probeReclaimInterfaceAfterReset(handle: handle, candidate: candidate)
+      hardAutoDetachRC = reclaim.autoDetachRC
+      hardDetachRC = reclaim.detachRC
+      hardReleaseRC = reclaim.releaseRC
+      hardClaimRC = reclaim.claimRC
+
+      if let device = libusb_get_device(handle) {
+        setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+      }
+      hardSetAltRC = libusb_set_interface_alt_setting(handle, iface, alt)
+      hardClearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
+      hardClearInRC = libusb_clear_halt(handle, candidate.bulkIn)
+      hardClearEventRC =
+        candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
+      readyAfterHardReset = waitForMTPReady(
+        handle: handle, iface: UInt16(candidate.ifaceNumber), budgetMs: 3000)
+      usleep(200_000)
+    }
+  }
+
+  if debug {
+    print(
+      String(
+        format:
+          "   [Probe][Preflight][Pixel] setAlt=%d clear(out=%d in=%d evt=%d) classReset=%d hardReset=%d reclaim(autoDetach=%d detach=%d release=%d claim=%d) hardSetAlt=%d hardClear(out=%d in=%d evt=%d) ready=%@",
+        setAltRC,
+        clearOutRC,
+        clearInRC,
+        clearEventRC,
+        classResetRC,
+        hardResetRC,
+        hardAutoDetachRC,
+        hardDetachRC,
+        hardReleaseRC,
+        hardClaimRC,
+        hardSetAltRC,
+        hardClearOutRC,
+        hardClearInRC,
+        hardClearEventRC,
+        readyAfterHardReset ? "true" : "false"
+      ))
+  }
+}
+
+private struct ProbeCommandWriteResult: Sendable {
+  let succeeded: Bool
+  let rc: Int32
+  let sent: Int32
+}
+
+private struct ProbeReclaimResult: Sendable {
+  let autoDetachRC: Int32
+  let detachRC: Int32
+  let releaseRC: Int32
+  let claimRC: Int32
+}
+
+private func probeReclaimInterfaceAfterReset(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate
+) -> ProbeReclaimResult {
+  let iface = Int32(candidate.ifaceNumber)
+  let autoDetachRC = libusb_set_auto_detach_kernel_driver(handle, 1)
+  let detachRC = libusb_detach_kernel_driver(handle, iface)
+  let releaseRC = libusb_release_interface(handle, iface)
+  let claimRC = libusb_claim_interface(handle, iface)
+  return ProbeReclaimResult(
+    autoDetachRC: autoDetachRC,
+    detachRC: detachRC,
+    releaseRC: releaseRC,
+    claimRC: claimRC
+  )
+}
+
+private struct ProbeCommandWriteAttempt: Sendable {
+  let rc: Int32
+  let sent: Int32
+  let expected: Int32
+
+  var succeeded: Bool { rc == 0 && sent == expected }
+  var isNoProgressTimeout: Bool {
+    probeShouldRecoverNoProgressTimeout(rc: rc, sent: sent)
+  }
+}
+
+private func probeAttemptCommandWrite(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate,
+  bytes: [UInt8],
+  timeoutMs: UInt32
+) -> ProbeCommandWriteAttempt {
+  var sent: Int32 = 0
+  let rc = bytes.withUnsafeBytes { ptr -> Int32 in
+    libusb_bulk_transfer(
+      handle, candidate.bulkOut,
+      UnsafeMutablePointer(mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
+      Int32(bytes.count), &sent, timeoutMs
+    )
+  }
+  return ProbeCommandWriteAttempt(rc: rc, sent: sent, expected: Int32(bytes.count))
+}
+
+@discardableResult
+private func probePerformNoProgressLightRecovery(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate,
+  opcode: UInt16,
+  txid: UInt32,
+  debug: Bool
+) -> Bool {
+  let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
+  let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
+  let clearEventRC: Int32 =
+    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
+  let classResetRC = libusb_control_transfer(
+    handle, 0x21, 0x66, 0, UInt16(candidate.ifaceNumber), nil, 0, 2000)
+
+  if let device = libusb_get_device(handle) {
+    setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+  }
+  let setAltRC = libusb_set_interface_alt_setting(
+    handle, Int32(candidate.ifaceNumber), Int32(candidate.altSetting))
+
+  let clearOutPostRC = libusb_clear_halt(handle, candidate.bulkOut)
+  let clearInPostRC = libusb_clear_halt(handle, candidate.bulkIn)
+  let clearEventPostRC: Int32 =
+    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
+
+  usleep(200_000)
+
+  if debug {
+    print(
+      String(
+        format:
+          "   [Probe][Recover][Light] op=0x%04x tx=%u clear(out=%d in=%d evt=%d) classReset=%d setAlt0=%d postClear(out=%d in=%d evt=%d)",
+        opcode, txid, clearOutRC, clearInRC, clearEventRC, classResetRC, setAltRC,
+        clearOutPostRC, clearInPostRC, clearEventPostRC))
+  }
+  return true
+}
+
+private func probePerformNoProgressHardRecovery(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate,
+  opcode: UInt16,
+  txid: UInt32,
+  debug: Bool
+) -> Bool {
+  let resetRC = libusb_reset_device(handle)
+  if resetRC != 0 {
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover][Hard] op=0x%04x tx=%u reset_device failed rc=%d",
+          opcode, txid, resetRC))
+    }
+    return false
+  }
+
+  usleep(300_000)
+
+  let reclaim = probeReclaimInterfaceAfterReset(handle: handle, candidate: candidate)
+  if reclaim.claimRC != LIBUSB_SUCCESS && reclaim.claimRC != LIBUSB_ERROR_BUSY {
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover][Hard] op=0x%04x tx=%u reclaim failed (autoDetach=%d detach=%d release=%d claim=%d)",
+          opcode, txid, reclaim.autoDetachRC, reclaim.detachRC, reclaim.releaseRC, reclaim.claimRC))
+    }
+    return false
+  }
+
+  if let device = libusb_get_device(handle) {
+    setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+  }
+  let setAltRC = libusb_set_interface_alt_setting(
+    handle, Int32(candidate.ifaceNumber), Int32(candidate.altSetting))
+  let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
+  let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
+  let clearEventRC: Int32 =
+    candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
+
+  usleep(200_000)
+
+  if debug {
+    print(
+      String(
+        format:
+          "   [Probe][Recover][Hard] op=0x%04x tx=%u reset_device=0 reclaim(autoDetach=%d detach=%d release=%d claim=%d) setAlt0=%d clear(out=%d in=%d evt=%d)",
+        opcode, txid, reclaim.autoDetachRC, reclaim.detachRC, reclaim.releaseRC, reclaim.claimRC,
+        setAltRC, clearOutRC, clearInRC, clearEventRC))
+  }
+  return true
+}
+
+private func probeWriteCommandWithRecovery(
+  handle: OpaquePointer,
+  candidate: InterfaceCandidate,
+  bytes: [UInt8],
+  opcode: UInt16,
+  txid: UInt32,
+  timeoutMs: UInt32,
+  debug: Bool
+) -> ProbeCommandWriteResult {
+  probeRunPixelOpenSessionPreflightIfNeeded(
+    handle: handle,
+    candidate: candidate,
+    opcode: opcode,
+    txid: txid,
+    debug: debug
+  )
+
+  let initialAttempt = probeAttemptCommandWrite(
+    handle: handle, candidate: candidate, bytes: bytes, timeoutMs: timeoutMs)
+  if initialAttempt.succeeded {
+    return ProbeCommandWriteResult(succeeded: true, rc: initialAttempt.rc, sent: initialAttempt.sent)
+  }
+  guard initialAttempt.isNoProgressTimeout else {
+    return ProbeCommandWriteResult(
+      succeeded: false, rc: initialAttempt.rc, sent: initialAttempt.sent)
+  }
+
+  if debug {
+    print(
+      String(
+        format:
+          "   [Probe][Recover] op=0x%04x tx=%u no-progress timeout detected (rc=%d sent=%d), running light rung",
+        opcode, txid, initialAttempt.rc, initialAttempt.sent))
+  }
+  _ = probePerformNoProgressLightRecovery(
+    handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
+  let lightRetry = probeAttemptCommandWrite(
+    handle: handle, candidate: candidate, bytes: bytes, timeoutMs: timeoutMs)
+  if lightRetry.succeeded {
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover] op=0x%04x tx=%u recovered after light rung",
+          opcode, txid))
+    }
+    return ProbeCommandWriteResult(succeeded: true, rc: lightRetry.rc, sent: lightRetry.sent)
+  }
+  guard lightRetry.isNoProgressTimeout else {
+    return ProbeCommandWriteResult(succeeded: false, rc: lightRetry.rc, sent: lightRetry.sent)
+  }
+
+  if probeIsPixelNoProgressTarget(handle: handle) {
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover] op=0x%04x tx=%u Pixel no-progress persists (rc=%d sent=%d), running reset rung",
+          opcode, txid, lightRetry.rc, lightRetry.sent))
+    }
+    guard probePerformNoProgressHardRecovery(
+      handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
+    else {
+      return ProbeCommandWriteResult(succeeded: false, rc: lightRetry.rc, sent: lightRetry.sent)
+    }
+    let ready = waitForMTPReady(
+      handle: handle, iface: UInt16(candidate.ifaceNumber), budgetMs: 3000)
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover] op=0x%04x tx=%u Pixel post-reset ready=%@",
+          opcode, txid, ready ? "true" : "false"))
+    }
+    let pixelRetry = probeAttemptCommandWrite(
+      handle: handle, candidate: candidate, bytes: bytes, timeoutMs: timeoutMs)
+    if pixelRetry.succeeded {
+      if debug {
+        print(
+          String(
+            format:
+              "   [Probe][Recover] op=0x%04x tx=%u recovered after Pixel reset rung",
+            opcode, txid))
+      }
+      return ProbeCommandWriteResult(succeeded: true, rc: pixelRetry.rc, sent: pixelRetry.sent)
+    }
+    return ProbeCommandWriteResult(succeeded: false, rc: pixelRetry.rc, sent: pixelRetry.sent)
+  }
+
+  if debug {
+    print(
+      String(
+        format:
+          "   [Probe][Recover] op=0x%04x tx=%u light rung did not recover (rc=%d sent=%d), running hard rung",
+        opcode, txid, lightRetry.rc, lightRetry.sent))
+  }
+  guard probePerformNoProgressHardRecovery(
+    handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
+  else {
+    return ProbeCommandWriteResult(succeeded: false, rc: lightRetry.rc, sent: lightRetry.sent)
+  }
+
+  let hardRetry = probeAttemptCommandWrite(
+    handle: handle, candidate: candidate, bytes: bytes, timeoutMs: timeoutMs)
+  if hardRetry.succeeded {
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover] op=0x%04x tx=%u recovered after hard rung",
+          opcode, txid))
+    }
+    return ProbeCommandWriteResult(succeeded: true, rc: hardRetry.rc, sent: hardRetry.sent)
+  }
+  return ProbeCommandWriteResult(succeeded: false, rc: hardRetry.rc, sent: hardRetry.sent)
+}
+
 /// Probe ladder: try OpenSession first (like libmtp), then sessionless GetDeviceInfo, then GetStorageIDs.
 /// Returns (success, cached raw device-info bytes) and which step succeeded.
 func probeCandidateWithLadder(
-  handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32 = 2000, debug: Bool = false
+  handle: OpaquePointer,
+  _ c: InterfaceCandidate,
+  timeoutMs: UInt32 = 2000,
+  debug: Bool = false,
+  includeStorageProbe: Bool = true
 ) -> ProbeLadderResult {
+  var lastAttemptedStep = "openSessionThenGetDeviceInfo"
+
   // Step 1: OpenSession FIRST - this is what libmtp does and it handles Pixel 7 better
   // Some devices need a session before they respond to other commands
   if debug { print("   [ProbeLadder] Step 1: OpenSession first (like libmtp)") }
@@ -333,6 +736,7 @@ func probeCandidateWithLadder(
   }
 
   // Step 2: Fallback to sessionless GetDeviceInfo
+  lastAttemptedStep = "sessionlessGetDeviceInfo"
   if debug { print("   [ProbeLadder] Step 2: sessionless GetDeviceInfo fallback") }
   let (step2OK, infoData2) = probeCandidate(handle: handle, c, timeoutMs: timeoutMs)
   if step2OK {
@@ -340,35 +744,44 @@ func probeCandidateWithLadder(
       succeeded: true, cachedDeviceInfoData: infoData2, stepAttempted: "sessionlessGetDeviceInfo")
   }
 
-  // Step 3: GetStorageIDs (some devices respond to this even if DeviceInfo fails)
-  if debug { print("   [ProbeLadder] Step 3: GetStorageIDs") }
-  if probeGetStorageIDs(handle: handle, c, timeoutMs: timeoutMs, debug: debug) {
-    // Even without device info, consider this a successful probe for vendor-specific stacks
-    return ProbeLadderResult(
-      succeeded: true, cachedDeviceInfoData: nil, stepAttempted: "getStorageIDs")
+  if includeStorageProbe {
+    // Step 3: GetStorageIDs (some vendor-specific devices respond to this even if DeviceInfo fails)
+    lastAttemptedStep = "getStorageIDs"
+    if debug { print("   [ProbeLadder] Step 3: GetStorageIDs") }
+    if probeGetStorageIDs(handle: handle, c, timeoutMs: timeoutMs, debug: debug) {
+      // Even without device info, consider this a successful probe for vendor-specific stacks
+      return ProbeLadderResult(
+        succeeded: true, cachedDeviceInfoData: nil, stepAttempted: "getStorageIDs")
+    }
   }
 
-  return ProbeLadderResult(succeeded: false, cachedDeviceInfoData: nil, stepAttempted: "none")
+  return ProbeLadderResult(
+    succeeded: false,
+    cachedDeviceInfoData: nil,
+    stepAttempted: lastAttemptedStep
+  )
 }
 
 /// Send OpenSession (0x1002) to establish an MTP session.
 func probeOpenSession(
   handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32, debug: Bool
 ) -> Bool {
-  let txid: UInt32 = 1
-  // OpenSession params: transaction ID (32-bit)
-  let cmdBytes = makePTPCommand(opcode: 0x1002, txid: txid, params: [txid])
+  // OpenSession uses transaction ID 0, with session ID 1 as parameter.
+  let txid: UInt32 = 0
+  let sessionID: UInt32 = 1
+  let cmdBytes = makePTPCommand(opcode: 0x1002, txid: txid, params: [sessionID])
 
-  var sent: Int32 = 0
-  let writeRC = cmdBytes.withUnsafeBytes { ptr -> Int32 in
-    libusb_bulk_transfer(
-      handle, c.bulkOut,
-      UnsafeMutablePointer(mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
-      Int32(cmdBytes.count), &sent, timeoutMs
-    )
-  }
-  if writeRC != 0 || sent != cmdBytes.count {
-    if debug { print("   [ProbeLadder] OpenSession write failed: rc=\(writeRC) sent=\(sent)") }
+  let write = probeWriteCommandWithRecovery(
+    handle: handle,
+    candidate: c,
+    bytes: cmdBytes,
+    opcode: 0x1002,
+    txid: txid,
+    timeoutMs: timeoutMs,
+    debug: debug
+  )
+  if !write.succeeded {
+    if debug { print("   [ProbeLadder] OpenSession write failed: rc=\(write.rc) sent=\(write.sent)") }
     drainBulkIn(handle: handle, ep: c.bulkIn)
     return false
   }
@@ -393,23 +806,24 @@ func probeOpenSession(
   return false
 }
 
-/// Send GetStorageIDs (0x1005) to validate the device speaks MTP.
+/// Send GetStorageIDs (0x1004) to validate the device speaks MTP.
 func probeGetStorageIDs(
   handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32, debug: Bool
 ) -> Bool {
   let txid: UInt32 = 1
-  let cmdBytes = makePTPCommand(opcode: 0x1005, txid: txid, params: [])
+  let cmdBytes = makePTPCommand(opcode: 0x1004, txid: txid, params: [])
 
-  var sent: Int32 = 0
-  let writeRC = cmdBytes.withUnsafeBytes { ptr -> Int32 in
-    libusb_bulk_transfer(
-      handle, c.bulkOut,
-      UnsafeMutablePointer(mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
-      Int32(cmdBytes.count), &sent, timeoutMs
-    )
-  }
-  if writeRC != 0 || sent != cmdBytes.count {
-    if debug { print("   [ProbeLadder] GetStorageIDs write failed: rc=\(writeRC) sent=\(sent)") }
+  let write = probeWriteCommandWithRecovery(
+    handle: handle,
+    candidate: c,
+    bytes: cmdBytes,
+    opcode: 0x1004,
+    txid: txid,
+    timeoutMs: timeoutMs,
+    debug: debug
+  )
+  if !write.succeeded {
+    if debug { print("   [ProbeLadder] GetStorageIDs write failed: rc=\(write.rc) sent=\(write.sent)") }
     drainBulkIn(handle: handle, ep: c.bulkIn)
     return false
   }
@@ -465,11 +879,9 @@ func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: U
   _ = libusb_clear_halt(handle, c.bulkIn)
   _ = libusb_clear_halt(handle, c.bulkOut)
 
-  // CRITICAL: Add delay after clear_halt before first bulk write.
-  // Some devices (especially Pixel) need time for the endpoint to become writable after reset.
-  // This is distinct from postClaimStabilizeMs which happens during claim.
-  // Try 2000ms for Pixel 7 - devices with "UI says File transfer, USB stack still waking up"
-  let preFirstCommandDelayMs = 2000  // 2000ms - adjust per-device if needed
+  // Add a small settle delay after clear_halt before the first bulk write.
+  // Pixel-class devices often need longer here; most others should not pay a 2s penalty.
+  let preFirstCommandDelayMs = preFirstProbeCommandDelayMs(handle: handle)
   if debug {
     print("   [Probe] waiting \(preFirstCommandDelayMs)ms after clear_halt before first command")
   }
@@ -481,32 +893,21 @@ func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: U
 
   let cmdBytes = makePTPCommand(opcode: 0x1001, txid: probeTxid, params: [])
 
-  // Send command container
-  var sent: Int32 = 0
-  let writeRC = cmdBytes.withUnsafeBytes { ptr -> Int32 in
-    libusb_bulk_transfer(
-      handle, c.bulkOut,
-      UnsafeMutablePointer(mutating: ptr.baseAddress!.assumingMemoryBound(to: UInt8.self)),
-      Int32(cmdBytes.count), &sent, timeoutMs
-    )
+  let write = probeWriteCommandWithRecovery(
+    handle: handle,
+    candidate: c,
+    bytes: cmdBytes,
+    opcode: 0x1001,
+    txid: probeTxid,
+    timeoutMs: timeoutMs,
+    debug: debug
+  )
+  if debug { print("   [Probe] write rc=\(write.rc) sent=\(write.sent)/\(cmdBytes.count)") }
+  if !write.succeeded && probeShouldRecoverNoProgressTimeout(rc: write.rc, sent: write.sent), debug {
+    print("   [Probe] WARNING: sent=0 timeout - endpoint not accepting writes!")
+    print("   [Probe] This may indicate: wrong alt setting, device not ready, or host interference")
   }
-  if debug { print("   [Probe] write rc=\(writeRC) sent=\(sent)/\(cmdBytes.count)") }
-
-  // Special handling for sent=0 timeouts - this indicates the endpoint is not accepting writes
-  // This is a distinct failure mode from partial writes (sent > 0 but < expected)
-  // LIBUSB_ERROR_TIMEOUT = -7
-  if sent == 0 && writeRC == -7 {
-    if debug {
-      print("   [Probe] WARNING: sent=0 timeout - endpoint not accepting writes!")
-      print(
-        "   [Probe] This may indicate: wrong alt setting, device not ready, or host interference")
-    }
-    // Drain any pending data and try to recover
-    drainBulkIn(handle: handle, ep: c.bulkIn)
-    return (false, nil)
-  }
-
-  guard writeRC == 0, sent == cmdBytes.count else {
+  guard write.succeeded else {
     drainBulkIn(handle: handle, ep: c.bulkIn)
     return (false, nil)
   }
@@ -585,6 +986,23 @@ func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: U
   return (responseOK, responseOK ? deviceInfoData : nil)
 }
 
+private func preFirstProbeCommandDelayMs(handle: OpaquePointer) -> Int {
+  var delayMs = 750
+  let device = libusb_get_device(handle)
+  var descriptor = libusb_device_descriptor()
+  if libusb_get_device_descriptor(device, &descriptor) == 0 {
+    switch descriptor.idVendor {
+    case 0x18D1:  // Google / Pixel
+      delayMs = 2000
+    case 0x2A70:  // OnePlus
+      delayMs = 500
+    default:
+      delayMs = 750
+    }
+  }
+  return delayMs
+}
+
 /// Best-effort drain of stale data from bulk IN endpoint after a failed probe.
 /// Prevents poisoning subsequent probe attempts.
 private func drainBulkIn(handle: OpaquePointer, ep: UInt8, maxAttempts: Int = 5) {
@@ -647,16 +1065,17 @@ func tryProbeAllCandidates(
   postProbeStabilizeMs: Int,
   debug: Bool
 ) -> ProbeAllResult {
+  var lastProbeStep: String?
+
   for candidate in candidates {
     let start = DispatchTime.now()
-    let isVendorSpecific = candidate.ifaceClass == 0xff
 
     if debug {
       print(
         String(
           format: "   [Probe] Trying interface %d (score=%d, class=0x%02x) %@",
           candidate.ifaceNumber, candidate.score, candidate.ifaceClass,
-          isVendorSpecific ? "(vendor-specific, using ladder)" : ""))
+          candidate.ifaceClass == 0xff ? "(vendor-specific, using ladder)" : ""))
     }
 
     do {
@@ -667,25 +1086,15 @@ func tryProbeAllCandidates(
       continue
     }
 
-    let probeResult: ProbeLadderResult
-    if isVendorSpecific {
-      // Use probe ladder for vendor-specific interfaces (Samsung, etc.)
-      probeResult = probeCandidateWithLadder(
-        handle: handle, candidate,
-        timeoutMs: UInt32(handshakeTimeoutMs),
-        debug: debug
-      )
-    } else {
-      // Use standard probe for canonical MTP interfaces
-      let (ok, info) = probeCandidate(
-        handle: handle, candidate, timeoutMs: UInt32(handshakeTimeoutMs)
-      )
-      probeResult = ProbeLadderResult(
-        succeeded: ok,
-        cachedDeviceInfoData: info,
-        stepAttempted: ok ? "sessionlessGetDeviceInfo" : "none"
-      )
-    }
+    // Use the same ladder for canonical and vendor-specific interfaces.
+    // Pixel-class devices can require OpenSession-first probing.
+    let probeResult = probeCandidateWithLadder(
+      handle: handle, candidate,
+      timeoutMs: UInt32(handshakeTimeoutMs),
+      debug: debug,
+      includeStorageProbe: true
+    )
+    lastProbeStep = probeResult.stepAttempted
 
     let elapsed = Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
 
@@ -711,5 +1120,94 @@ func tryProbeAllCandidates(
       releaseCandidate(handle: handle, candidate)
     }
   }
-  return ProbeAllResult(candidate: nil, cachedDeviceInfo: nil, probeStep: nil)
+  return ProbeAllResult(candidate: nil, cachedDeviceInfo: nil, probeStep: lastProbeStep)
+}
+
+/// Aggressive probe rung used after the normal pass fails.
+/// Forces configuration reapply, reclaims with longer settle, explicitly sets alt=0,
+/// clears bulk endpoint halt states, then reruns the full probe ladder once.
+func tryProbeAllCandidatesAggressive(
+  handle: OpaquePointer,
+  device: OpaquePointer,
+  candidates: [InterfaceCandidate],
+  handshakeTimeoutMs: Int,
+  postClaimStabilizeMs: Int,
+  debug: Bool
+) -> ProbeAllResult {
+  var lastProbeStep: String?
+  let settleMs = max(postClaimStabilizeMs, 500)
+
+  for candidate in candidates {
+    let start = DispatchTime.now()
+    if debug {
+      print(
+        String(
+          format: "   [Probe][Aggressive] Trying interface %d (score=%d, class=0x%02x)",
+          candidate.ifaceNumber, candidate.score, candidate.ifaceClass))
+    }
+
+    setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
+
+    do {
+      try claimCandidate(
+        handle: handle,
+        device: device,
+        candidate,
+        postClaimStabilizeMs: settleMs
+      )
+    } catch {
+      if debug { print("   [Probe][Aggressive] Claim failed: \(error)") }
+      continue
+    }
+
+    let iface = Int32(candidate.ifaceNumber)
+    let setAltRC = libusb_set_interface_alt_setting(handle, iface, 0)
+    if debug { print("   [Probe][Aggressive] set_interface_alt_setting(0) rc=\(setAltRC)") }
+
+    let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
+    let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Aggressive] clear_halt in=0x%02x rc=%d out=0x%02x rc=%d",
+          candidate.bulkIn, clearInRC, candidate.bulkOut, clearOutRC))
+    }
+
+    usleep(UInt32(settleMs) * 1000)
+
+    let probeResult = probeCandidateWithLadder(
+      handle: handle,
+      candidate,
+      timeoutMs: UInt32(handshakeTimeoutMs),
+      debug: debug,
+      includeStorageProbe: true
+    )
+    lastProbeStep = probeResult.stepAttempted
+
+    let elapsed = Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
+    if probeResult.succeeded {
+      if debug {
+        print(
+          String(
+            format: "   [Probe][Aggressive] Interface %d OK (%@) in %dms",
+            candidate.ifaceNumber, probeResult.stepAttempted, elapsed))
+      }
+      return ProbeAllResult(
+        candidate: candidate,
+        cachedDeviceInfo: probeResult.cachedDeviceInfoData,
+        probeStep: probeResult.stepAttempted
+      )
+    }
+
+    if debug {
+      print(
+        String(
+          format: "   [Probe][Aggressive] Interface %d failed (%@) in %dms, trying next...",
+          candidate.ifaceNumber, probeResult.stepAttempted, elapsed))
+    }
+    releaseCandidate(handle: handle, candidate)
+  }
+
+  return ProbeAllResult(candidate: nil, cachedDeviceInfo: nil, probeStep: lastProbeStep)
 }
