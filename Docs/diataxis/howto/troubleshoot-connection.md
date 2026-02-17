@@ -214,7 +214,9 @@ When opening an issue, include:
 
 ## Related Documentation
 
+- [Debugging MTP Issues](../tutorials/debugging-mtp.md) - Comprehensive debugging guide
 - [Error Codes Reference](../reference/error-codes.md)
+- [Device Probing](../tutorials/device-probing.md) - Analyze device capabilities
 - [Connect Device](connect-device.md)
 - [Run Benchmarks](run-benchmarks.md)
 - [Device Bring-Up Guide](../../device-bringup.md)

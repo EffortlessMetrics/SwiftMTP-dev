@@ -20,7 +20,6 @@ final class DeviceActorSendObjectRetryTests: XCTestCase {
 
   func testSendObjectRetryParametersFollowDeterministicInvalidParameterMatrix() {
     let primary = MTPDeviceActor.SendObjectRetryParameters(
-      forceWildcardStorage: false,
       useEmptyDates: false
     )
 
@@ -32,17 +31,14 @@ final class DeviceActorSendObjectRetryTests: XCTestCase {
     XCTAssertEqual(
       retries,
       [
-        MTPDeviceActor.SendObjectRetryParameters(forceWildcardStorage: false, useEmptyDates: true),
-        MTPDeviceActor.SendObjectRetryParameters(forceWildcardStorage: true, useEmptyDates: false),
-        MTPDeviceActor.SendObjectRetryParameters(forceWildcardStorage: true, useEmptyDates: true),
+        MTPDeviceActor.SendObjectRetryParameters(useEmptyDates: true)
       ]
     )
   }
 
-  func testSendObjectRetryParametersDedupesWhenPrimaryAlreadyWildcard() {
+  func testSendObjectRetryParametersDedupesWhenPrimaryAlreadyUsesEmptyDates() {
     let primary = MTPDeviceActor.SendObjectRetryParameters(
-      forceWildcardStorage: true,
-      useEmptyDates: false
+      useEmptyDates: true
     )
 
     let retries = MTPDeviceActor.sendObjectRetryParameters(
@@ -50,17 +46,11 @@ final class DeviceActorSendObjectRetryTests: XCTestCase {
       retryClass: .invalidParameter
     )
 
-    XCTAssertEqual(
-      retries,
-      [
-        MTPDeviceActor.SendObjectRetryParameters(forceWildcardStorage: true, useEmptyDates: true)
-      ]
-    )
+    XCTAssertEqual(retries, [])
   }
 
   func testSendObjectRetryParametersForTransientTransportRetryOnceWithSameParams() {
     let primary = MTPDeviceActor.SendObjectRetryParameters(
-      forceWildcardStorage: false,
       useEmptyDates: false
     )
 

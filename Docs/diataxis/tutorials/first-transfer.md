@@ -153,7 +153,10 @@ SwiftMTP supports resume for interrupted transfers:
 
 ## Next Steps
 
+- 📋 [Device Probing and Analysis](device-probing.md) - Analyze your device
+- 📋 [Debugging MTP Issues](debugging-mtp.md) - Debug problems
 - 📋 [Run Benchmarks](../howto/run-benchmarks.md) - Test your transfer speeds
+- 📋 [Transfer Files Guide](../howto/transfer-files.md) - Detailed transfer operations
 - 📋 [Troubleshoot Issues](../howto/troubleshoot-connection.md) - Fix common problems
 - 📋 [Device-Specific Guides](../reference/../SwiftMTP.docc/Devices/) - Learn about supported devices
 

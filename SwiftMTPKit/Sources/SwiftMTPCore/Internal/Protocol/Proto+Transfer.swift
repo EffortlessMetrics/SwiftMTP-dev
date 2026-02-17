@@ -48,19 +48,17 @@ public enum ProtoTransfer {
     dataHandler: @escaping MTPDataOut,
     on link: MTPLink,
     ioTimeoutMs: Int,
-    forceFFFFFFF: Bool = false,
     useEmptyDates: Bool = false
   ) async throws {
     // PTP Spec: SendObjectInfo command parameters are [StorageID, ParentHandle]
-    // Try using 0xFFFFFFFF for storageID in both places for some devices,
-    // but real ID is usually better.
+    // Use a concrete storage ID; wildcard storage (0xFFFFFFFF) triggers
+    // InvalidStorageID (0x2008) on multiple Android stacks.
     let parentParam = parent ?? 0xFFFFFFFF
-    let targetStorage: UInt32
-    if forceFFFFFFF {
-      targetStorage = 0xFFFFFFFF
-    } else {
-      targetStorage = (storageID == 0 || storageID == 0xFFFFFFFF) ? 0xFFFFFFFF : storageID
+    guard storageID != 0 && storageID != 0xFFFFFFFF else {
+      throw MTPError.preconditionFailed(
+        "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID))).")
     }
+    let targetStorage = storageID
     let formatCode = PTPObjectFormat.forFilename(name)
 
     let sendObjectInfoCommand = PTPContainer(

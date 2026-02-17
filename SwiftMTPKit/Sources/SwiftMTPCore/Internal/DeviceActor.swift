@@ -48,6 +48,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   private var currentProbeReceipt: ProbeReceipt?
   public var probeReceipt: ProbeReceipt? { get async { currentProbeReceipt } }
   private var eventPump: EventPump = EventPump()
+  /// Session-scoped cache to avoid repeated GetObjectInfo(parent) calls on writes.
+  var parentStorageIDCache: [MTPObjectHandle: UInt32] = [:]
 
   public init(
     id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport,
@@ -227,6 +229,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   /// Open device session if not already open, with optional stabilization delay.
   public func openIfNeeded() async throws {
     guard !sessionOpen else { return }
+    parentStorageIDCache.removeAll(keepingCapacity: true)
     let link = try await getMTPLink()
     try await applyTuningAndOpenSession(link: link)
     sessionOpen = true
@@ -246,6 +249,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
     mtpLink = nil
     sessionOpen = false
+    parentStorageIDCache.removeAll(keepingCapacity: true)
   }
 
   public func devGetDeviceInfoUncached() async throws -> MTPDeviceInfo {

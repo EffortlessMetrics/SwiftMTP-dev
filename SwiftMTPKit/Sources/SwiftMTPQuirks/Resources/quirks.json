@@ -136,6 +136,9 @@
         "resetOnOpen": true,
         "requiresKernelDetach": true
       },
+      "hooks": [
+        { "phase": "postOpenSession", "delayMs": 500 }
+      ],
       "ops": {
         "supportsGetPartialObject64": true,
         "supportsSendPartialObject": false,

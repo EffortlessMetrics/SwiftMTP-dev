@@ -1,6 +1,6 @@
 # SwiftMTP Documentation Index
 
-*Last updated: 2026-02-16*
+*Last updated: 2026-02-17*
 
 Welcome to SwiftMTP documentation. Use this page as the entry point for finding the right documentation for your needs.
 
@@ -16,6 +16,45 @@ We use the [Diátaxis](https://diataxis.fr/) framework to organize our documenta
 | Accomplishing a specific task | [How-to Guides](diataxis/howto/connect-device.md) |
 | Looking up API/command details | [Reference](diataxis/reference/cli-commands.md) |
 | Understanding how things work | [Explanation](diataxis/explanation/architecture.md) |
+
+### Expanded Diátaxis Documentation
+
+#### 🎓 Tutorials
+- [Getting Started](diataxis/tutorials/getting-started.md) - Your first SwiftMTP project
+- [Your First Device Transfer](diataxis/tutorials/first-transfer.md) - Connect and transfer files
+- [Advanced Transfer Strategies](diataxis/tutorials/advanced-transfer.md) - Parallel transfers, resume, batch operations
+- [Device Probing and Analysis](diataxis/tutorials/device-probing.md) - Probe and analyze new devices
+- [Debugging MTP Issues](diataxis/tutorials/debugging-mtp.md) - Debug MTP connection and transfer issues
+
+#### 📋 How-to Guides
+- [Connect a New Device](diataxis/howto/connect-device.md)
+- [Troubleshoot Connection Issues](diataxis/howto/troubleshoot-connection.md)
+- [Transfer Files](diataxis/howto/transfer-files.md) - Detailed file transfer operations
+- [Work with Device Quirks](diataxis/howto/device-quirks.md) - Configure device-specific quirks
+- [File Provider Integration](diataxis/howto/file-provider.md) - Using Finder/Files app integration
+- [Run Benchmarks](diataxis/howto/run-benchmarks.md)
+- [Add Device Support](diataxis/howto/add-device-support.md)
+- [Security and Privacy](diataxis/howto/security-privacy.md) - Security best practices
+- [Performance Tuning](diataxis/howto/performance-tuning.md) - Optimize transfer speeds
+- [Testing MTP Devices](diataxis/howto/testing-devices.md) - Comprehensive device testing
+
+#### 📖 Reference
+- [CLI Command Reference](diataxis/reference/cli-commands.md)
+- [Error Codes](diataxis/reference/error-codes.md)
+- [API Overview](diataxis/reference/api-overview.md)
+- [Public Types Reference](diataxis/reference/public-types.md) - Detailed type documentation
+- [Configuration Reference](diataxis/reference/configuration.md) - Configuration options
+- [Events Reference](diataxis/reference/events.md) - Event types and handling
+- [Quirks JSON Schema](diataxis/reference/quirks-schema.md) - Quirks configuration schema
+
+#### 💡 Explanation
+- [Understanding MTP Protocol](diataxis/explanation/mtp-protocol.md)
+- [Architecture Overview](diataxis/explanation/architecture.md)
+- [Device Quirks System](diataxis/explanation/device-quirks.md)
+- [Transport Layers](diataxis/explanation/transport-layers.md) - Understanding USB/IOKit transports
+- [Transfer Modes](diataxis/explanation/transfer-modes.md) - Transfer modes explained
+- [Session Management](diataxis/explanation/session-management.md) - Session lifecycle
+- [Data Persistence](diataxis/explanation/persistence.md) - Caching and storage
 
 ## Quick Links
 

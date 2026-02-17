@@ -144,8 +144,11 @@ See [Troubleshoot Connection Issues](troubleshoot-connection.md) for more help.
 ## Next Steps
 
 - 📊 [Run Benchmarks](run-benchmarks.md) - Test device performance
+- 📋 [Transfer Files](transfer-files.md) - Detailed transfer operations
+- 📋 [Device Quirks](device-quirks.md) - Configure device quirks
 - 📋 [Add Device Support](add-device-support.md) - Contribute device quirks
 - 📖 [Error Codes](../reference/error-codes.md) - Understand error messages
+- 📖 [Configuration](../reference/configuration.md) - Configuration options
 
 ## Summary
 

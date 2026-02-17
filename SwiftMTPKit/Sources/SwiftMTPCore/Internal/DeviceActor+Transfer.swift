@@ -11,7 +11,6 @@ extension MTPDeviceActor {
   }
 
   struct SendObjectRetryParameters: Equatable, Sendable {
-    let forceWildcardStorage: Bool
     let useEmptyDates: Bool
   }
 
@@ -214,36 +213,20 @@ extension MTPDeviceActor {
       let requiresSubfolder = policy?.flags.writeToSubfolderOnly ?? false
       let preferredWriteFolder = policy?.flags.preferredWriteFolder
 
-      // Check if device requires 0xFFFFFFFF for storage ID in SendObjectInfo
-      let forceFFFFFFF = policy?.flags.forceFFFFFFFForSendObject ?? false
       let useEmptyDates = policy?.flags.emptyDatesInSendObject ?? false
 
       // Determine storage ID and parent handle using WriteTargetLadder
       let availableStorages = try? await self.storages()
       let rootStorages = availableStorages ?? []
 
-      var targetStorageRaw: UInt32 = 0xFFFFFFFF
+      var selectedStorageRaw: UInt32? = rootStorages.first?.id.raw
       var resolvedParent: MTPObjectHandle? = parent
 
       // If parent is 0 (root) AND device requires subfolder, treat as "no parent" and use WriteTargetLadder
       let effectiveParent: MTPObjectHandle? = (parent == 0 && requiresSubfolder) ? nil : parent
 
       if let p = effectiveParent {
-        // Parent specified - get storage from parent info
-        if let parentInfos = try? await link.getObjectInfos([p]), let parentInfo = parentInfos.first {
-          let parentStorage = parentInfo.storage.raw
-          if parentStorage != 0 && parentStorage != 0xFFFFFFFF {
-            targetStorageRaw = parentStorage
-          } else if let storage = rootStorages.first {
-            // Some devices report wildcard/zero storage for folder handles.
-            // Normalize to the discovered storage ID to avoid 0x2008 InvalidStorageID.
-            targetStorageRaw = storage.id.raw
-          } else {
-            targetStorageRaw = parentStorage
-          }
-        } else if let storage = rootStorages.first {
-          targetStorageRaw = storage.id.raw
-        }
+        resolvedParent = p
       } else if let first = rootStorages.first {
         // No parent or parent=0 with requiresSubfolder - need to resolve target
         let target = try await WriteTargetLadder.resolveTarget(
@@ -253,7 +236,7 @@ extension MTPDeviceActor {
           requiresSubfolder: requiresSubfolder,
           preferredWriteFolder: preferredWriteFolder
         )
-        targetStorageRaw = target.0.raw
+        selectedStorageRaw = target.0.raw
         resolvedParent = target.1
 
         // Log where we're writing to
@@ -262,6 +245,11 @@ extension MTPDeviceActor {
             .info("Device requires subfolder for writes, resolved to parent handle \(resolvedParent!)")
         }
       }
+      var targetStorageRaw = try await resolveWriteStorageID(
+        parent: resolvedParent,
+        selectedStorageRaw: selectedStorageRaw,
+        link: link
+      )
 
       func performWrite(
         to parent: MTPObjectHandle?,
@@ -273,16 +261,14 @@ extension MTPDeviceActor {
 
         let sourceAdapter = SendableSourceAdapter(source)
         let progressTracker = AtomicProgressTracker()
-        let sendObjectStorageID = params.forceWildcardStorage ? 0xFFFFFFFF : storageRaw
         try await ProtoTransfer.writeWholeObject(
-          storageID: sendObjectStorageID, parent: parent, name: name, size: size,
+          storageID: storageRaw, parent: parent, name: name, size: size,
           dataHandler: { buf in
             let produced = sourceAdapter.produce(buf)
             let totalBytes = progressTracker.add(Int(produced))
             progress.completedUnitCount = Int64(totalBytes)
             return Int(produced)
           }, on: link, ioTimeoutMs: timeout,
-          forceFFFFFFF: params.forceWildcardStorage,
           useEmptyDates: params.useEmptyDates
         )
         return progressTracker.total
@@ -291,7 +277,6 @@ extension MTPDeviceActor {
       var bytesRead: UInt64 = 0
       let isLabSmokeWrite = name.hasPrefix("swiftmtp-smoke-")
       let primaryParams = SendObjectRetryParameters(
-        forceWildcardStorage: forceFFFFFFF,
         useEmptyDates: useEmptyDates
       )
 
@@ -361,11 +346,15 @@ extension MTPDeviceActor {
             )
             targetStorageRaw = fallback.0.raw
             resolvedParent = fallback.1
+            targetStorageRaw = try await resolveWriteStorageID(
+              parent: resolvedParent,
+              selectedStorageRaw: targetStorageRaw,
+              link: link
+            )
             bytesRead = try await performWrite(
               to: resolvedParent,
               storageRaw: targetStorageRaw,
               params: SendObjectRetryParameters(
-                forceWildcardStorage: true,
                 useEmptyDates: true
               )
             )
@@ -483,17 +472,6 @@ extension MTPDeviceActor {
     case .invalidParameter:
       appendRetry(
         SendObjectRetryParameters(
-          forceWildcardStorage: primary.forceWildcardStorage,
-          useEmptyDates: true
-        ))
-      appendRetry(
-        SendObjectRetryParameters(
-          forceWildcardStorage: true,
-          useEmptyDates: primary.useEmptyDates
-        ))
-      appendRetry(
-        SendObjectRetryParameters(
-          forceWildcardStorage: true,
           useEmptyDates: true
         ))
     case .transientTransport:
@@ -511,15 +489,43 @@ extension MTPDeviceActor {
     if index == 0 && params == primary {
       return "retry-same-params"
     }
-    if params.forceWildcardStorage && params.useEmptyDates {
-      return "wildcard-storage-empty-dates"
-    }
-    if params.forceWildcardStorage {
-      return "wildcard-storage"
-    }
     if params.useEmptyDates {
       return "empty-dates"
     }
     return "retry-\(index + 1)"
+  }
+
+  private static func isConcreteStorageID(_ raw: UInt32) -> Bool {
+    raw != 0 && raw != 0xFFFFFFFF
+  }
+
+  private func resolveWriteStorageID(
+    parent: MTPObjectHandle?,
+    selectedStorageRaw: UInt32?,
+    link: any MTPLink
+  ) async throws -> UInt32 {
+    if let parent, parent != 0xFFFFFFFF {
+      if let cached = parentStorageIDCache[parent], Self.isConcreteStorageID(cached) {
+        return cached
+      }
+      if let parentInfos = try? await link.getObjectInfos([parent]), let parentInfo = parentInfos.first {
+        let raw = parentInfo.storage.raw
+        if Self.isConcreteStorageID(raw) {
+          parentStorageIDCache[parent] = raw
+          return raw
+        }
+      }
+      if let selectedStorageRaw, Self.isConcreteStorageID(selectedStorageRaw) {
+        parentStorageIDCache[parent] = selectedStorageRaw
+        return selectedStorageRaw
+      }
+      throw MTPError.preconditionFailed(
+        "Unable to resolve concrete storage ID for parent \(String(format: "0x%08x", parent)).")
+    }
+
+    if let selectedStorageRaw, Self.isConcreteStorageID(selectedStorageRaw) {
+      return selectedStorageRaw
+    }
+    throw MTPError.preconditionFailed("No concrete storage ID available for SendObjectInfo.")
   }
 }

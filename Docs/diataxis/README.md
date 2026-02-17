@@ -18,22 +18,39 @@ The Diátaxis framework organizes documentation into four types based on the use
 ### 🎓 Tutorials
 - [Getting Started](tutorials/getting-started.md) - Your first SwiftMTP project
 - [Your First Device Transfer](tutorials/first-transfer.md) - Connect and transfer files
+- [Advanced Transfer Strategies](tutorials/advanced-transfer.md) - Parallel transfers, resume, batch operations
+- [Device Probing and Analysis](tutorials/device-probing.md) - Probe and analyze new devices
+- [Debugging MTP Issues](tutorials/debugging-mtp.md) - Debug MTP connection and transfer issues
 
 ### 📋 How-to Guides
 - [Connect a New Device](howto/connect-device.md)
 - [Troubleshoot Connection Issues](howto/troubleshoot-connection.md)
+- [Transfer Files](howto/transfer-files.md) - Detailed file transfer operations
+- [Work with Device Quirks](howto/device-quirks.md) - Configure device-specific quirks
+- [File Provider Integration](howto/file-provider.md) - Using Finder/Files app integration
 - [Run Benchmarks](howto/run-benchmarks.md)
 - [Add Device Support](howto/add-device-support.md)
+- [Security and Privacy](howto/security-privacy.md) - Security best practices
+- [Performance Tuning](howto/performance-tuning.md) - Optimize transfer speeds
+- [Testing MTP Devices](howto/testing-devices.md) - Comprehensive device testing
 
 ### 📖 Reference
 - [CLI Command Reference](reference/cli-commands.md)
 - [Error Codes](reference/error-codes.md)
 - [API Overview](reference/api-overview.md)
+- [Public Types Reference](reference/public-types.md) - Detailed type documentation
+- [Configuration Reference](reference/configuration.md) - Configuration options
+- [Events Reference](reference/events.md) - Event types and handling
+- [Quirks JSON Schema](reference/quirks-schema.md) - Quirks configuration schema
 
 ### 💡 Explanation
 - [Understanding MTP Protocol](explanation/mtp-protocol.md)
 - [Architecture Overview](explanation/architecture.md)
 - [Device Quirks System](explanation/device-quirks.md)
+- [Transport Layers](explanation/transport-layers.md) - Understanding USB/IOKit transports
+- [Transfer Modes](explanation/transfer-modes.md) - Transfer modes explained
+- [Session Management](explanation/session-management.md) - Session lifecycle
+- [Data Persistence](explanation/persistence.md) - Caching and storage
 
 ## Choosing the Right Documentation
 

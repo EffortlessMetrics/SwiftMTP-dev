@@ -130,6 +130,8 @@ The app provides:
 Now that you've connected your first device:
 
 - 📋 [Your First Transfer](first-transfer.md) - Learn to copy files
+- 📋 [Device Probing and Analysis](device-probing.md) - Analyze device capabilities
+- 📋 [Debugging MTP Issues](debugging-mtp.md) - Debug problems
 - 📋 [Run Benchmarks](../howto/run-benchmarks.md) - Test transfer performance
 - 📋 [Troubleshoot Issues](../howto/troubleshoot-connection.md) - Common problems and solutions
 
