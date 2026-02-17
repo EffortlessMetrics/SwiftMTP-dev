@@ -252,6 +252,9 @@ extension MTPDeviceActor {
 
       let useEmptyDates = policy?.flags.emptyDatesInSendObject ?? false
       let allowUnknownObjectInfoSizeRetry = policy?.flags.unknownSizeInSendObjectInfo ?? false
+      let isXiaomiFF40 = Self.isXiaomiMiNote2FF40(summary: summary)
+      let isOnePlusF003 = Self.isOnePlus3TF003(summary: summary)
+      let useMediaTargetPolicy = isXiaomiFF40 || isOnePlusF003
 
       // Determine storage ID and parent handle using WriteTargetLadder
       let availableStorages = try? await self.storages()
@@ -420,7 +423,10 @@ extension MTPDeviceActor {
         guard let retryReason = Self.retryableSendObjectFailureReason(for: error) else {
           throw error
         }
-        if await self.hardResetWriteSessionIfNeeded(reason: retryReason, debugEnabled: debugEnabled) {
+        let retryClass = Self.sendObjectRetryClass(for: retryReason)
+        if !Self.shouldSkipDeepRecovery(reason: retryReason, useMediaTargetPolicy: useMediaTargetPolicy),
+          await self.hardResetWriteSessionIfNeeded(reason: retryReason, debugEnabled: debugEnabled)
+        {
           do {
             let refreshedContext = try await self.resolveWriteContextAfterRecovery(
               effectiveParent: effectiveParent,
@@ -440,24 +446,118 @@ extension MTPDeviceActor {
             }
           }
         }
-        let retryClass = Self.sendObjectRetryClass(for: retryReason)
 
         let configuredStrategy = policy?.fallbacks.write.rawValue ?? "unknown"
         Logger(subsystem: "SwiftMTP", category: "write")
           .warning(
             "SendObject failed (\(retryReason), strategy=\(configuredStrategy)); retrying with fallback parameter ladder")
 
-        let retryParameters = Self.sendObjectRetryParameters(
+        var retryParameters = Self.sendObjectRetryParameters(
           primary: primaryParams,
           retryClass: retryClass,
           isRootParent: (resolvedParent ?? 0xFFFFFFFF) == 0xFFFFFFFF,
           allowUnknownObjectInfoSizeRetry: allowUnknownObjectInfoSizeRetry
         )
+        if useMediaTargetPolicy {
+          retryParameters = []
+        }
         var sawInvalidObjectHandle = retryClass == .invalidObjectHandle
         var lastRetryableError: Error = error
         var recovered = false
 
-        for (index, retryParams) in retryParameters.enumerated() {
+        if useMediaTargetPolicy, retryClass == .invalidParameter {
+          let formatRetry = Self.sendObjectRetryParameters(
+            primary: primaryParams,
+            retryClass: .invalidParameter,
+            isRootParent: (resolvedParent ?? 0xFFFFFFFF) == 0xFFFFFFFF,
+            allowUnknownObjectInfoSizeRetry: false
+          ).first
+
+          if let formatRetry {
+            var shouldAttemptFormatRetry = true
+            if isOnePlusF003 {
+              let refreshStorage =
+                availableStorages?.first(where: { $0.id.raw == targetStorageRaw })?.id
+                ?? availableStorages?.first?.id
+                ?? MTPStorageID(raw: targetStorageRaw)
+              if let currentParent = resolvedParent, currentParent != 0xFFFFFFFF {
+                let refreshResult = await self.refreshOnePlusParentByNameForRetry(
+                  currentParent: currentParent,
+                  storageID: refreshStorage,
+                  debugEnabled: debugEnabled
+                )
+                switch refreshResult {
+                case .refreshed(let refreshedParent):
+                  resolvedParent = refreshedParent
+                  do {
+                    let currentLink = try await self.getMTPLink()
+                    storageResolution = try await resolveWriteStorageID(
+                      parent: resolvedParent,
+                      selectedStorageRaw: targetStorageRaw,
+                      link: currentLink
+                    )
+                    targetStorageRaw = storageResolution.sendObjectInfoStorageID
+                  } catch {
+                    shouldAttemptFormatRetry = false
+                  }
+                case .unchanged, .unresolved:
+                  shouldAttemptFormatRetry = false
+                }
+              }
+            }
+
+            if shouldAttemptFormatRetry {
+              do {
+                Logger(subsystem: "SwiftMTP", category: "write")
+                  .info("SendObject retry rung=format-undefined")
+                bytesRead = try await performWrite(
+                  to: resolvedParent,
+                  storageRaw: targetStorageRaw,
+                  params: formatRetry,
+                  resolution: storageResolution
+                )
+                recovered = true
+              } catch {
+                if let formatReason = Self.retryableSendObjectFailureReason(for: error) {
+                  if !Self.shouldSkipDeepRecovery(
+                    reason: formatReason,
+                    useMediaTargetPolicy: useMediaTargetPolicy
+                  ),
+                    await self.hardResetWriteSessionIfNeeded(
+                      reason: formatReason,
+                      debugEnabled: debugEnabled
+                    )
+                  {
+                    do {
+                      let refreshedContext = try await self.resolveWriteContextAfterRecovery(
+                        effectiveParent: effectiveParent,
+                        preferredRootStorage: preferredRootStorage,
+                        requiresSubfolder: requiresSubfolder,
+                        preferredWriteFolder: preferredWriteFolder,
+                        selectedStorageRaw: selectedStorageRaw
+                      )
+                      selectedStorageRaw = refreshedContext.selectedStorageRaw
+                      resolvedParent = refreshedContext.resolvedParent
+                      storageResolution = refreshedContext.resolution
+                      targetStorageRaw = refreshedContext.targetStorageRaw
+                      await logParentHandleCheck(parent: resolvedParent)
+                    } catch {
+                      if debugEnabled {
+                        print("   [USB] Session recovery: target re-resolve failed (\(error))")
+                      }
+                    }
+                  }
+                  if Self.sendObjectRetryClass(for: formatReason) == .invalidObjectHandle {
+                    sawInvalidObjectHandle = true
+                  }
+                }
+                lastRetryableError = error
+              }
+            }
+          }
+        }
+
+        for (index, retryParams) in retryParameters.enumerated() where !recovered {
           do {
             Logger(subsystem: "SwiftMTP", category: "write")
               .info(
@@ -474,7 +574,8 @@ extension MTPDeviceActor {
             guard let reason = Self.retryableSendObjectFailureReason(for: error) else {
               throw error
             }
-            if await self.hardResetWriteSessionIfNeeded(reason: reason, debugEnabled: debugEnabled)
+            if !Self.shouldSkipDeepRecovery(reason: reason, useMediaTargetPolicy: useMediaTargetPolicy),
+              await self.hardResetWriteSessionIfNeeded(reason: reason, debugEnabled: debugEnabled)
             {
               do {
                 let refreshedContext = try await self.resolveWriteContextAfterRecovery(
@@ -497,6 +598,10 @@ extension MTPDeviceActor {
             }
             if Self.sendObjectRetryClass(for: reason) == .invalidObjectHandle {
               sawInvalidObjectHandle = true
+              if useMediaTargetPolicy {
+                lastRetryableError = error
+                continue
+              }
               if let currentParent = resolvedParent, currentParent != 0xFFFFFFFF {
                 var existingParent: MTPObjectInfo?
                 do {
@@ -611,7 +716,9 @@ extension MTPDeviceActor {
           }
         }
 
-        if !recovered && retryClass == .invalidParameter && supportsSendObjectPropList {
+        if !useMediaTargetPolicy && !recovered && retryClass == .invalidParameter
+          && supportsSendObjectPropList
+        {
           let propListParams = retryParameters.last ?? primaryParams
           do {
             Logger(subsystem: "SwiftMTP", category: "write")
@@ -625,7 +732,8 @@ extension MTPDeviceActor {
             recovered = true
           } catch {
             if let reason = Self.retryableSendObjectFailureReason(for: error) {
-              if await self.hardResetWriteSessionIfNeeded(reason: reason, debugEnabled: debugEnabled)
+              if !Self.shouldSkipDeepRecovery(reason: reason, useMediaTargetPolicy: useMediaTargetPolicy),
+                await self.hardResetWriteSessionIfNeeded(reason: reason, debugEnabled: debugEnabled)
               {
                 do {
                   let refreshedContext = try await self.resolveWriteContextAfterRecovery(
@@ -701,7 +809,9 @@ extension MTPDeviceActor {
             guard let reason = Self.retryableSendObjectFailureReason(for: error) else {
               throw error
             }
-            if await self.hardResetWriteSessionIfNeeded(reason: reason, debugEnabled: debugEnabled) {
+            if !Self.shouldSkipDeepRecovery(reason: reason, useMediaTargetPolicy: useMediaTargetPolicy),
+              await self.hardResetWriteSessionIfNeeded(reason: reason, debugEnabled: debugEnabled)
+            {
               do {
                 let refreshedContext = try await self.resolveWriteContextAfterRecovery(
                   effectiveParent: effectiveParent,
@@ -723,14 +833,50 @@ extension MTPDeviceActor {
             }
             lastRetryableError = error
 
+            if useMediaTargetPolicy, Self.sendObjectRetryClass(for: reason) == .invalidObjectHandle {
+              sawInvalidObjectHandle = true
+              if debugEnabled {
+                print("   [USB] Target ladder: parent handle stale (0x2009); advancing target")
+              }
+              continue
+            }
+
             if Self.sendObjectRetryClass(for: reason) == .invalidParameter {
               let ladderRetries = Self.sendObjectRetryParameters(
                 primary: primaryParams,
                 retryClass: .invalidParameter,
                 isRootParent: false,
-                allowUnknownObjectInfoSizeRetry: allowUnknownObjectInfoSizeRetry
+                allowUnknownObjectInfoSizeRetry: useMediaTargetPolicy
+                  ? false : allowUnknownObjectInfoSizeRetry
               )
               if let ladderRetry = ladderRetries.first {
+                if isOnePlusF003 {
+                  if let currentParent = resolvedParent, currentParent != 0xFFFFFFFF {
+                    let refreshResult = await self.refreshOnePlusParentByNameForRetry(
+                      currentParent: currentParent,
+                      storageID: firstStorage.id,
+                      debugEnabled: debugEnabled
+                    )
+                    switch refreshResult {
+                    case .refreshed(let refreshedParent):
+                      resolvedParent = refreshedParent
+                      attemptedParents.insert(refreshedParent)
+                      do {
+                        let currentLink = try await self.getMTPLink()
+                        storageResolution = try await resolveWriteStorageID(
+                          parent: resolvedParent,
+                          selectedStorageRaw: targetStorageRaw,
+                          link: currentLink
+                        )
+                        targetStorageRaw = storageResolution.sendObjectInfoStorageID
+                      } catch {
+                        continue
+                      }
+                    case .unchanged, .unresolved:
+                      continue
+                    }
+                  }
+                }
                 do {
                   Logger(subsystem: "SwiftMTP", category: "write")
                     .info("SendObject retry rung=target-ladder-format")
@@ -744,10 +890,15 @@ extension MTPDeviceActor {
                   break
                 } catch {
                   if let retryReason = Self.retryableSendObjectFailureReason(for: error) {
-                    if await self.hardResetWriteSessionIfNeeded(
+                    if !Self.shouldSkipDeepRecovery(
                       reason: retryReason,
-                      debugEnabled: debugEnabled
-                    ) {
+                      useMediaTargetPolicy: useMediaTargetPolicy
+                    ),
+                      await self.hardResetWriteSessionIfNeeded(
+                        reason: retryReason,
+                        debugEnabled: debugEnabled
+                      )
+                    {
                       do {
                         let refreshedContext = try await self.resolveWriteContextAfterRecovery(
                           effectiveParent: effectiveParent,
@@ -766,6 +917,11 @@ extension MTPDeviceActor {
                           print("   [USB] Session recovery: target re-resolve failed (\(error))")
                         }
                       }
+                    }
+                    if useMediaTargetPolicy,
+                      Self.sendObjectRetryClass(for: retryReason) == .invalidObjectHandle
+                    {
+                      sawInvalidObjectHandle = true
                     }
                   }
                   lastRetryableError = error
@@ -814,6 +970,84 @@ extension MTPDeviceActor {
 
       throw error
     }
+  }
+
+  private enum OnePlusParentRefreshResult: Sendable {
+    case refreshed(MTPObjectHandle)
+    case unchanged
+    case unresolved
+  }
+
+  private func refreshOnePlusParentByNameForRetry(
+    currentParent: MTPObjectHandle,
+    storageID: MTPStorageID,
+    debugEnabled: Bool
+  ) async -> OnePlusParentRefreshResult {
+    do {
+      let currentLink = try await self.getMTPLink()
+      guard
+        let currentInfo = try await self.getObjectInfoStrict(
+          handle: currentParent,
+          link: currentLink
+        )
+      else {
+        if debugEnabled {
+          print(
+            "   [USB] OnePlus parent refresh: current handle \(String(format: "0x%08x", currentParent)) no longer resolvable; advancing target"
+          )
+        }
+        return .unresolved
+      }
+
+      guard
+        let refreshedParent = try await WriteTargetLadder.resolveFolderHandleByName(
+          device: self,
+          storage: storageID,
+          folderName: currentInfo.name
+        )
+      else {
+        if debugEnabled {
+          print("   [USB] OnePlus parent refresh: name=\(currentInfo.name) not found; advancing target")
+        }
+        return .unresolved
+      }
+
+      if refreshedParent == currentParent {
+        if debugEnabled {
+          print(
+            "   [USB] OnePlus parent refresh: unchanged handle \(String(format: "0x%08x", currentParent)); advancing target"
+          )
+        }
+        return .unchanged
+      }
+
+      if debugEnabled {
+        print(
+          "   [USB] OnePlus parent refresh: old=\(String(format: "0x%08x", currentParent)) new=\(String(format: "0x%08x", refreshedParent))"
+        )
+      }
+      return .refreshed(refreshedParent)
+    } catch {
+      if debugEnabled {
+        print("   [USB] OnePlus parent refresh: failed (\(error)); advancing target")
+      }
+      return .unresolved
+    }
+  }
+
+  private static func isXiaomiMiNote2FF40(summary: MTPDeviceSummary) -> Bool {
+    summary.vendorID == 0x2717 && summary.productID == 0xFF40
+  }
+
+  private static func isOnePlus3TF003(summary: MTPDeviceSummary) -> Bool {
+    summary.vendorID == 0x2A70 && summary.productID == 0xF003
+  }
+
+  private static func shouldSkipDeepRecovery(reason: String, useMediaTargetPolicy: Bool) -> Bool {
+    guard useMediaTargetPolicy else { return false }
+    return reason == "invalid-parameter-0x201d"
+      || reason == "invalid-object-handle-0x2009"
+      || reason == "session-not-open-0x2003"
   }
 
   static func retryableSendObjectFailureReason(for error: Error) -> String? {

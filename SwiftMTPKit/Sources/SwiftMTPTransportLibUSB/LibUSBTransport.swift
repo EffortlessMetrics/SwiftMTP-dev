@@ -439,6 +439,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   private let model: String
   private let vendorID: UInt16
   private let productID: UInt16
+  private var didRunPixelPreOpenSessionPreflight = false
   private var eventContinuation: AsyncStream<Data>.Continuation?, eventPumpTask: Task<Void, Never>?
   /// Raw device-info bytes cached from the interface probe (avoids redundant GetDeviceInfo).
   private let cachedDeviceInfoData: Data?
@@ -499,7 +500,43 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   }
 
   public func openUSBIfNeeded() async throws {}
+
+  private var isPixel7PreflightTarget: Bool {
+    vendorID == 0x18D1 && productID == 0x4EE1
+  }
+
+  private func runPixelPreOpenSessionPreflightIfNeeded() {
+    guard isPixel7PreflightTarget, !didRunPixelPreOpenSessionPreflight else { return }
+    didRunPixelPreOpenSessionPreflight = true
+
+    let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
+    setConfigurationIfNeeded(handle: h, device: dev, force: true, debug: debug)
+    let setAltRC = libusb_set_interface_alt_setting(h, Int32(iface), 0)
+    let clearOutRC = libusb_clear_halt(h, outEP)
+    let clearInRC = libusb_clear_halt(h, inEP)
+    let clearEventRC: Int32 = evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+    let classResetRC = libusb_control_transfer(
+      h, 0x21, 0x66, 0, UInt16(iface), nil, 0, 2000
+    )
+    usleep(200_000)
+
+    if debug {
+      print(
+        String(
+          format:
+            "   [USB][Preflight][Pixel] setAlt0=%d clear(out=%d in=%d evt=%d) classReset=%d settleMs=200",
+          setAltRC,
+          clearOutRC,
+          clearInRC,
+          clearEventRC,
+          classResetRC
+        )
+      )
+    }
+  }
+
   public func openSession(id: UInt32) async throws {
+    runPixelPreOpenSessionPreflightIfNeeded()
     try await executeStreamingCommand(
       PTPContainer(type: 1, code: 0x1002, txid: 0, params: [id]), dataPhaseLength: nil,
       dataInHandler: nil, dataOutHandler: nil

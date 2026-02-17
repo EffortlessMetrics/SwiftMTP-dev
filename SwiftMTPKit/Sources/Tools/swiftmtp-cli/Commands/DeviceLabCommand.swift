@@ -982,7 +982,12 @@ struct DeviceLabCommand {
     device: any MTPDevice,
     storage: MTPStorageID
   ) async -> [(MTPObjectHandle, String)] {
-    let preferredFolders = ["Download", "Downloads", "DCIM", "Camera", "Pictures", "Documents"]
+    let mediaFirstTargetDevice = isMediaFirstWriteTargetDevice(summary: device.summary)
+    let preferredFolderPaths =
+      mediaFirstTargetDevice
+      ? ["DCIM/Camera", "Pictures", "Download"] : [
+        "Download", "Downloads", "DCIM", "Camera", "Pictures", "Documents",
+      ]
     let rootItems: [MTPObjectInfo]
     do {
       rootItems = try await listObjects(device: device, parent: nil, storage: storage, limit: 512)
@@ -992,19 +997,56 @@ struct DeviceLabCommand {
 
     var ordered: [(MTPObjectHandle, String)] = []
     var seen = Set<MTPObjectHandle>()
+    let rootFolders = rootItems.filter { $0.formatCode == 0x3001 }
 
-    for folderName in preferredFolders {
-      if let existing = rootItems.first(where: {
-        $0.formatCode == 0x3001 && $0.name.lowercased() == folderName.lowercased()
-      }) {
-        if seen.insert(existing.handle).inserted {
-          ordered.append((existing.handle, existing.name))
+    func resolveFolderPath(_ path: String) async -> (MTPObjectHandle, String)? {
+      let components = path.split(separator: "/").map(String.init).filter { !$0.isEmpty }
+      guard !components.isEmpty else { return nil }
+
+      var currentFolders = rootFolders
+      var currentParent: MTPObjectHandle?
+      var resolvedPath: [String] = []
+
+      for component in components {
+        guard let match = currentFolders.first(where: {
+          $0.name.caseInsensitiveCompare(component) == .orderedSame
+        }) else {
+          return nil
         }
+        currentParent = match.handle
+        resolvedPath.append(match.name)
+
+        do {
+          let children = try await listObjects(
+            device: device,
+            parent: match.handle,
+            storage: storage,
+            limit: 512
+          )
+          currentFolders = children.filter { $0.formatCode == 0x3001 }
+        } catch {
+          currentFolders = []
+        }
+      }
+
+      guard let handle = currentParent else { return nil }
+      return (handle, resolvedPath.joined(separator: "/"))
+    }
+
+    for folderPath in preferredFolderPaths {
+      if let resolved = await resolveFolderPath(folderPath),
+        seen.insert(resolved.0).inserted
+      {
+        ordered.append(resolved)
       }
     }
 
+    if mediaFirstTargetDevice {
+      return ordered
+    }
+
     // Keep remaining folders as low-priority fallbacks.
-    for folder in rootItems where folder.formatCode == 0x3001 {
+    for folder in rootFolders {
       if seen.insert(folder.handle).inserted {
         ordered.append((folder.handle, folder.name))
       }
@@ -1263,6 +1305,11 @@ struct DeviceLabCommand {
       || lowered.contains("temporar")
       || lowered.contains("io(")
       || lowered.contains("transport(")
+  }
+
+  private static func isMediaFirstWriteTargetDevice(summary: MTPDeviceSummary) -> Bool {
+    guard let vid = summary.vendorID, let pid = summary.productID else { return false }
+    return (vid == 0x2717 && pid == 0xFF40) || (vid == 0x2A70 && pid == 0xF003)
   }
 
   private static func inferredFormatCode(for filename: String) -> UInt16 {

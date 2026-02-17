@@ -11,6 +11,57 @@ public struct WriteTargetLadder {
   public static let fallbackPreferredFolders = [
     "Download", "Downloads", "DCIM", "Camera", "Pictures", "Documents",
   ]
+  private static let mediaFirstPreferredPaths = ["DCIM/Camera", "Pictures", "Download", "SwiftMTP"]
+
+  private static func isMediaFirstTargetDevice(_ summary: MTPDeviceSummary) -> Bool {
+    guard let vid = summary.vendorID, let pid = summary.productID else { return false }
+    return (vid == 0x2717 && pid == 0xFF40) || (vid == 0x2A70 && pid == 0xF003)
+  }
+
+  private static func preferredFolderPaths(
+    device: any MTPDevice,
+    preferredWriteFolder: String?
+  ) -> [String] {
+    if isMediaFirstTargetDevice(device.summary) {
+      return mediaFirstPreferredPaths
+    }
+
+    var ordered: [String] = []
+    if let preferredWriteFolder, !preferredWriteFolder.isEmpty {
+      ordered.append(preferredWriteFolder)
+    }
+    for name in fallbackPreferredFolders where !ordered.contains(where: {
+      $0.caseInsensitiveCompare(name) == .orderedSame
+    }) {
+      ordered.append(name)
+    }
+    return ordered
+  }
+
+  /// Resolve a folder handle by name in root or first-level subfolders.
+  /// Used when some devices invalidate handles between retries.
+  public static func resolveFolderHandleByName(
+    device: any MTPDevice,
+    storage: MTPStorageID,
+    folderName: String
+  ) async throws -> MTPObjectHandle? {
+    let rootFolders = try await listFolders(device: device, storage: storage, parent: nil)
+    if let rootMatch = rootFolders.first(where: {
+      $0.name.caseInsensitiveCompare(folderName) == .orderedSame
+    }) {
+      return rootMatch.handle
+    }
+
+    for parent in rootFolders {
+      let children = try await listFolders(device: device, storage: storage, parent: parent.handle)
+      if let childMatch = children.first(where: {
+        $0.name.caseInsensitiveCompare(folderName) == .orderedSame
+      }) {
+        return childMatch.handle
+      }
+    }
+    return nil
+  }
 
   /// Resolve a safe parent handle for writing.
   /// - Parameters:
@@ -46,41 +97,40 @@ public struct WriteTargetLadder {
       return (storage, 0xFFFFFFFF)
     }
 
-    // List root objects to find available folders
-    let rootStream = device.list(parent: nil, in: storage)
-    var rootItems: [MTPObjectInfo] = []
-    for try await batch in rootStream {
-      rootItems.append(contentsOf: batch)
-    }
+    let rootFolders = try await listFolders(device: device, storage: storage, parent: nil)
+    let preferredPaths = preferredFolderPaths(device: device, preferredWriteFolder: preferredWriteFolder)
 
-    // Find folders (format code 0x3001 = Association)
-    let folders = rootItems.filter { $0.formatCode == 0x3001 }
-
-    // Try device-specific preferred folder first if specified
-    if let preferred = preferredWriteFolder {
-      if let match = folders.first(where: {
-        $0.name.caseInsensitiveCompare(preferred) == .orderedSame
-          && !excluded.contains($0.handle)
-      }) {
-        Logger(subsystem: "SwiftMTP", category: "write")
-          .info("Using device-preferred folder: \(match.name)")
-        return (storage, match.handle)
+    for preferredPath in preferredPaths {
+      if preferredPath.caseInsensitiveCompare("SwiftMTP") == .orderedSame {
+        if let swiftMTPHandle = try await ensureSwiftMTPFolder(
+          device: device,
+          storage: storage,
+          rootFolders: rootFolders,
+          preferredPaths: preferredPaths,
+          excluded: excluded
+        ) {
+          Logger(subsystem: "SwiftMTP", category: "write")
+            .info("Using preferred folder path: SwiftMTP")
+          return (storage, swiftMTPHandle)
+        }
+        continue
       }
-    }
 
-    // Try fallback preferred folder names
-    for name in Self.fallbackPreferredFolders {
-      if let match = folders.first(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame })
-      {
-        if excluded.contains(match.handle) { continue }
+      if let resolved = try await resolveFolderPath(
+        device: device,
+        storage: storage,
+        path: preferredPath,
+        rootFolders: rootFolders
+      ) {
+        if excluded.contains(resolved.handle) { continue }
         Logger(subsystem: "SwiftMTP", category: "write")
-          .info("Using fallback preferred folder: \(match.name)")
-        return (storage, match.handle)
+          .info("Using preferred folder path: \(resolved.label)")
+        return (storage, resolved.handle)
       }
     }
 
     // Fall back to first available folder
-    if let firstFolder = folders.first(where: { !excluded.contains($0.handle) }) {
+    if let firstFolder = rootFolders.first(where: { !excluded.contains($0.handle) }) {
       Logger(subsystem: "SwiftMTP", category: "write")
         .info("Using first available folder: \(firstFolder.name)")
       return (storage, firstFolder.handle)
@@ -91,5 +141,95 @@ public struct WriteTargetLadder {
       .info("No folders found, creating SwiftMTP at root")
     let swiftMTPFolder = try await device.createFolder(parent: nil, name: "SwiftMTP", storage: storage)
     return (storage, swiftMTPFolder)
+  }
+
+  private static func listFolders(
+    device: any MTPDevice,
+    storage: MTPStorageID,
+    parent: MTPObjectHandle?
+  ) async throws -> [MTPObjectInfo] {
+    let stream = device.list(parent: parent, in: storage)
+    var items: [MTPObjectInfo] = []
+    for try await batch in stream {
+      items.append(contentsOf: batch)
+    }
+    return items.filter { $0.formatCode == 0x3001 }
+  }
+
+  private static func resolveFolderPath(
+    device: any MTPDevice,
+    storage: MTPStorageID,
+    path: String,
+    rootFolders: [MTPObjectInfo]
+  ) async throws -> (handle: MTPObjectHandle, label: String)? {
+    let components = path.split(separator: "/").map(String.init).filter { !$0.isEmpty }
+    guard !components.isEmpty else { return nil }
+
+    var currentParent: MTPObjectHandle?
+    var currentFolders = rootFolders
+    var resolvedLabel: [String] = []
+
+    for component in components {
+      guard
+        let match = currentFolders.first(where: {
+          $0.name.caseInsensitiveCompare(component) == .orderedSame
+        })
+      else {
+        return nil
+      }
+      currentParent = match.handle
+      resolvedLabel.append(match.name)
+      currentFolders = try await listFolders(device: device, storage: storage, parent: match.handle)
+    }
+
+    guard let handle = currentParent else { return nil }
+    return (handle: handle, label: resolvedLabel.joined(separator: "/"))
+  }
+
+  private static func ensureSwiftMTPFolder(
+    device: any MTPDevice,
+    storage: MTPStorageID,
+    rootFolders: [MTPObjectInfo],
+    preferredPaths: [String],
+    excluded: Set<MTPObjectHandle>
+  ) async throws -> MTPObjectHandle? {
+    if let existingRootSwiftMTP = rootFolders.first(where: {
+      $0.name.caseInsensitiveCompare("SwiftMTP") == .orderedSame
+    }), !excluded.contains(existingRootSwiftMTP.handle) {
+      return existingRootSwiftMTP.handle
+    }
+
+    var checkedParents = Set<MTPObjectHandle>()
+    for preferredPath in preferredPaths where preferredPath.caseInsensitiveCompare("SwiftMTP") != .orderedSame {
+      guard let resolved = try await resolveFolderPath(
+        device: device,
+        storage: storage,
+        path: preferredPath,
+        rootFolders: rootFolders
+      ) else {
+        continue
+      }
+      if !checkedParents.insert(resolved.handle).inserted || excluded.contains(resolved.handle) {
+        continue
+      }
+
+      let childFolders = try await listFolders(device: device, storage: storage, parent: resolved.handle)
+      if let existingChild = childFolders.first(where: {
+        $0.name.caseInsensitiveCompare("SwiftMTP") == .orderedSame
+      }), !excluded.contains(existingChild.handle) {
+        return existingChild.handle
+      }
+
+      do {
+        let created = try await device.createFolder(parent: resolved.handle, name: "SwiftMTP", storage: storage)
+        if !excluded.contains(created) { return created }
+      } catch {
+        continue
+      }
+    }
+
+    let createdRoot = try await device.createFolder(parent: nil, name: "SwiftMTP", storage: storage)
+    if excluded.contains(createdRoot) { return nil }
+    return createdRoot
   }
 }
