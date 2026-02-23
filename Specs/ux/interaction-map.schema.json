@@ -1,0 +1,177 @@
+{
+  "$id": "https://effortlessmetrics.dev/swiftmtp/ux/interaction-map.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SwiftMTP UX interaction map",
+  "type": "object",
+  "required": ["version", "owner", "interactions"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Map schema version marker",
+      "pattern": "^\\d+(?:\\.\\d+){0,2}$",
+      "minLength": 1
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interactions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/interaction"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "interaction": {
+      "type": "object",
+      "required": [
+        "id",
+        "screen",
+        "kind",
+        "risk",
+        "assertion_level",
+        "priority",
+        "gate",
+        "preconditions",
+        "user_action",
+        "expected_ui",
+        "expected_state",
+        "oracles",
+        "test_kinds",
+        "test_refs",
+        "accessibility_ids",
+        "negative_cases"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^ux\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+        },
+        "screen": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "tap",
+            "toggle",
+            "navigate",
+            "edit",
+            "confirm",
+            "background_update"
+          ]
+        },
+        "risk": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "assertion_level": {
+          "type": "string",
+          "enum": ["state-only", "view-tree", "automation", "hardware"]
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["P0", "P1", "P2"]
+        },
+        "gate": {
+          "type": "string",
+          "enum": ["pr-hard", "nightly-soft", "tracked"]
+        },
+        "preconditions": {
+          "type": "string",
+          "minLength": 1
+        },
+        "user_action": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_ui": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "oracles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": ["state_marker", "rendered_text", "ux_event", "model_state"]
+          }
+        },
+        "test_kinds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": ["automation", "unit", "snapshot", "hardware", "manual"]
+          }
+        },
+        "test_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^(automation|unit|snapshot|hardware|manual):.+$"
+          }
+        },
+        "accessibility_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9._-]+\\*?$"
+          }
+        },
+        "negative_cases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "priority": {
+            "const": "P0"
+          }
+        },
+        "required": ["priority"]
+      },
+      "then": {
+        "properties": {
+          "test_kinds": {
+            "contains": {
+              "const": "automation"
+            }
+          },
+          "test_refs": {
+            "contains": {
+              "pattern": "^automation:.+"
+            }
+          },
+          "oracles": {
+            "contains": {
+              "enum": ["state_marker", "ux_event"]
+            }
+          },
+          "assertion_level": {
+            "const": "automation"
+          }
+        },
+        "required": ["test_kinds", "test_refs", "oracles", "assertion_level"]
+      }
+    }
+  }
+}

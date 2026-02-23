@@ -112,6 +112,9 @@
 			);
 			name = SwiftMTP;
 			packageProductDependencies = (
+				B0D1A0012F01100000A0A001 /* SwiftMTPUI */,
+				B0D1A0022F01100000A0A001 /* SwiftMTPCore */,
+				B0D1A0032F01100000A0A001 /* SwiftMTPStore */,
 			);
 			productName = SwiftMTP;
 			productReference = B0C88CC12E6645C200EFB5B8 /* SwiftMTP.app */;
@@ -195,6 +198,9 @@
 			);
 			mainGroup = B0C88CB82E6645C200EFB5B8;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B0D1A0002F01100000A0A001 /* XCLocalSwiftPackageReference "." */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B0C88CC22E6645C200EFB5B8 /* Products */;
 			projectDirPath = "";
@@ -267,6 +273,31 @@
 			targetProxy = B0C88CDC2E6645C300EFB5B8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		B0D1A0002F01100000A0A001 /* XCLocalSwiftPackageReference "." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B0D1A0012F01100000A0A001 /* SwiftMTPUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0D1A0002F01100000A0A001 /* XCLocalSwiftPackageReference "." */;
+			productName = SwiftMTPUI;
+		};
+		B0D1A0022F01100000A0A001 /* SwiftMTPCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0D1A0002F01100000A0A001 /* XCLocalSwiftPackageReference "." */;
+			productName = SwiftMTPCore;
+		};
+		B0D1A0032F01100000A0A001 /* SwiftMTPStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0D1A0002F01100000A0A001 /* XCLocalSwiftPackageReference "." */;
+			productName = SwiftMTPStore;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B0C88CE32E6645C300EFB5B8 /* Debug */ = {
@@ -406,7 +437,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EffortlessMetrics.SwiftMTP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -443,7 +474,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EffortlessMetrics.SwiftMTP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -465,7 +496,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EffortlessMetrics.SwiftMTPTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -487,7 +518,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EffortlessMetrics.SwiftMTPTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -508,7 +539,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EffortlessMetrics.SwiftMTPUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -529,7 +560,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
-				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EffortlessMetrics.SwiftMTPUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

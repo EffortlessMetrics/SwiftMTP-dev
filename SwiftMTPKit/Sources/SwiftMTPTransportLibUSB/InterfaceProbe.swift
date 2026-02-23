@@ -178,6 +178,18 @@ private let LIBUSB_ERROR_NOT_FOUND = Int32(-5)
 private let LIBUSB_ERROR_BUSY = Int32(-6)
 private let LIBUSB_ERROR_TIMEOUT = Int32(-7)
 private let LIBUSB_ERROR_NOT_SUPPORTED = Int32(-12)
+private let LIBUSB_ERROR_OTHER = Int32(-99)
+
+@inline(__always)
+private func shouldAllowPixelAlt0Fallback(_ rc: Int32) -> Bool {
+  // Allow only "alt already selected" style errors. Treat -99 as hard failure.
+  rc == LIBUSB_ERROR_NOT_FOUND || rc == LIBUSB_ERROR_BUSY
+}
+
+@inline(__always)
+private func isPixelDeadPipeError(_ rc: Int32) -> Bool {
+  rc == LIBUSB_ERROR_OTHER || rc == LIBUSB_ERROR_NO_DEVICE
+}
 
 /// Claim a single interface candidate using the libmtp-aligned sequence:
 /// detach kernel driver → set_configuration → claim → set_interface_alt_setting.
@@ -194,6 +206,7 @@ func claimCandidate(
 ) throws {
   let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
   let iface = Int32(c.ifaceNumber)
+  let isPixel = probeIsPixelNoProgressTarget(handle: handle)
 
   if debug {
     print(
@@ -233,8 +246,11 @@ func claimCandidate(
       }
     }
 
-    // Smart configuration: only set if needed or during recovery
-    setConfigurationIfNeeded(handle: handle, device: device, debug: debug)
+    // Pixel 7 benefits from forcing config re-assertion before each claim attempt.
+    setConfigurationIfNeeded(handle: handle, device: device, force: isPixel, debug: debug)
+    if isPixel {
+      usleep(120_000)
+    }
 
     // Attempt to claim the interface
     let claimRC = libusb_claim_interface(handle, iface)
@@ -245,9 +261,36 @@ func claimCandidate(
     if claimRC == LIBUSB_SUCCESS {
       // Successfully claimed - proceed with alt setting
       let setAltRC = libusb_set_interface_alt_setting(handle, iface, Int32(c.altSetting))
+      var effectiveSetAltRC = setAltRC
       if debug {
         print(
           String(format: "   [Claim] set_interface_alt_setting(%d) rc=%d", c.altSetting, setAltRC))
+      }
+      // Some Pixel 7 states reject explicit alt=0 activation even when alt=0 is already active.
+      if isPixel && c.altSetting == 0 && setAltRC != LIBUSB_SUCCESS
+        && shouldAllowPixelAlt0Fallback(setAltRC)
+      {
+        effectiveSetAltRC = LIBUSB_SUCCESS
+        if debug {
+          print(
+            "   [Claim] Pixel alt=0 fallback: continuing without set_interface_alt_setting (rc=\(setAltRC))"
+          )
+        }
+      }
+      if effectiveSetAltRC != LIBUSB_SUCCESS {
+        if debug {
+          print("   [Claim] set_interface_alt_setting failed; releasing interface and retrying")
+        }
+        _ = libusb_release_interface(handle, iface)
+        if attempt == retryCount {
+          if isPixel && isPixelDeadPipeError(setAltRC) {
+            throw TransportError.io(
+              "set_interface_alt_setting failed: rc=\(setAltRC) (macOS IOService unavailable or exclusive USB claim)"
+            )
+          }
+          throw TransportError.io("set_interface_alt_setting failed: rc=\(setAltRC)")
+        }
+        continue
       }
 
       // Brief pause for pipe setup (alt-setting does the real work, but some devices need more time)
@@ -275,6 +318,27 @@ func claimCandidate(
         print(String(format: "   [Claim] maxPacketSize: bulkIn=%d bulkOut=%d", inMax, outMax))
         if inMax < 0 { print("   [Claim] WARNING: bulkIn max_packet_size negative (bad pipe)") }
         if outMax < 0 { print("   [Claim] WARNING: bulkOut max_packet_size negative (bad pipe)") }
+      }
+
+      if isPixel && (isPixelDeadPipeError(clearInRC) || isPixelDeadPipeError(clearOutRC)) {
+        if debug {
+          print(
+            "   [Claim] Pixel clear_halt indicates dead pipe (in=\(clearInRC) out=\(clearOutRC)); releasing interface and retrying"
+          )
+        }
+        _ = libusb_release_interface(handle, iface)
+        if attempt == retryCount {
+          throw TransportError.io(
+            "Pixel endpoint pipe unavailable after claim: clear_halt in=\(clearInRC) out=\(clearOutRC) (macOS IOService unavailable or exclusive USB claim)"
+          )
+        }
+        continue
+      }
+
+      if isPixel && (clearInRC != LIBUSB_SUCCESS || clearOutRC != LIBUSB_SUCCESS), debug {
+        print(
+          "   [Claim] Pixel clear_halt failed (in=\(clearInRC) out=\(clearOutRC)); continuing to command probe"
+        )
       }
 
       return  // Success - exit the retry loop
@@ -341,6 +405,15 @@ private func probeIsPixelNoProgressTarget(handle: OpaquePointer) -> Bool {
   return descriptor.idVendor == 0x18D1 && descriptor.idProduct == 0x4EE1
 }
 
+private func probeAllowPixelUSBReset() -> Bool {
+  ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_ALLOW_PROBE_RESET"] == "1"
+}
+
+private func probeSkipPixelClassReset(handle: OpaquePointer) -> Bool {
+  probeIsPixelNoProgressTarget(handle: handle)
+    && ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_SKIP_CLASS_RESET"] == "1"
+}
+
 /// Pixel-specific preflight before first OpenSession write.
 ///
 /// This runs in the probe path (before a transport instance exists), so it mirrors the
@@ -374,9 +447,11 @@ private func probeRunPixelOpenSessionPreflightIfNeeded(
   let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
   let clearEventRC: Int32 =
     candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
-  let classResetRC = libusb_control_transfer(
-    handle, 0x21, 0x66, 0, UInt16(candidate.ifaceNumber), nil, 0, 2000
-  )
+  let skipClassReset = probeSkipPixelClassReset(handle: handle)
+  let classResetRC: Int32 =
+    skipClassReset
+    ? LIBUSB_SUCCESS
+    : libusb_control_transfer(handle, 0x21, 0x66, 0, UInt16(candidate.ifaceNumber), nil, 0, 2000)
   usleep(200_000)
 
   let needsHardPreflight =
@@ -393,7 +468,7 @@ private func probeRunPixelOpenSessionPreflightIfNeeded(
   var hardClaimRC: Int32 = LIBUSB_SUCCESS
   var readyAfterHardReset = false
 
-  if needsHardPreflight {
+  if needsHardPreflight && probeAllowPixelUSBReset() {
     hardResetRC = libusb_reset_device(handle)
     if hardResetRC == LIBUSB_SUCCESS {
       usleep(300_000)
@@ -416,18 +491,23 @@ private func probeRunPixelOpenSessionPreflightIfNeeded(
         handle: handle, iface: UInt16(candidate.ifaceNumber), budgetMs: 3000)
       usleep(200_000)
     }
+  } else if needsHardPreflight && debug {
+    print(
+      "   [Probe][Preflight][Pixel] skipping hard reset preflight (set SWIFTMTP_PIXEL_ALLOW_PROBE_RESET=1 to override)"
+    )
   }
 
   if debug {
     print(
       String(
         format:
-          "   [Probe][Preflight][Pixel] setAlt=%d clear(out=%d in=%d evt=%d) classReset=%d hardReset=%d reclaim(autoDetach=%d detach=%d release=%d claim=%d) hardSetAlt=%d hardClear(out=%d in=%d evt=%d) ready=%@",
+          "   [Probe][Preflight][Pixel] setAlt=%d clear(out=%d in=%d evt=%d) classReset=%d skipClassReset=%@ hardReset=%d reclaim(autoDetach=%d detach=%d release=%d claim=%d) hardSetAlt=%d hardClear(out=%d in=%d evt=%d) ready=%@",
         setAltRC,
         clearOutRC,
         clearInRC,
         clearEventRC,
         classResetRC,
+        skipClassReset ? "true" : "false",
         hardResetRC,
         hardAutoDetachRC,
         hardDetachRC,
@@ -512,8 +592,11 @@ private func probePerformNoProgressLightRecovery(
   let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
   let clearEventRC: Int32 =
     candidate.eventIn != 0 ? libusb_clear_halt(handle, candidate.eventIn) : LIBUSB_SUCCESS
-  let classResetRC = libusb_control_transfer(
-    handle, 0x21, 0x66, 0, UInt16(candidate.ifaceNumber), nil, 0, 2000)
+  let skipClassReset = probeSkipPixelClassReset(handle: handle)
+  let classResetRC: Int32 =
+    skipClassReset
+    ? LIBUSB_SUCCESS
+    : libusb_control_transfer(handle, 0x21, 0x66, 0, UInt16(candidate.ifaceNumber), nil, 0, 2000)
 
   if let device = libusb_get_device(handle) {
     setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
@@ -532,8 +615,9 @@ private func probePerformNoProgressLightRecovery(
     print(
       String(
         format:
-          "   [Probe][Recover][Light] op=0x%04x tx=%u clear(out=%d in=%d evt=%d) classReset=%d setAlt0=%d postClear(out=%d in=%d evt=%d)",
-        opcode, txid, clearOutRC, clearInRC, clearEventRC, classResetRC, setAltRC,
+          "   [Probe][Recover][Light] op=0x%04x tx=%u clear(out=%d in=%d evt=%d) classReset=%d skipClassReset=%@ setAlt0=%d postClear(out=%d in=%d evt=%d)",
+        opcode, txid, clearOutRC, clearInRC, clearEventRC, classResetRC,
+        skipClassReset ? "true" : "false", setAltRC,
         clearOutPostRC, clearInPostRC, clearEventPostRC))
   }
   return true
@@ -546,6 +630,17 @@ private func probePerformNoProgressHardRecovery(
   txid: UInt32,
   debug: Bool
 ) -> Bool {
+  if probeIsPixelNoProgressTarget(handle: handle) && !probeAllowPixelUSBReset() {
+    if debug {
+      print(
+        String(
+          format:
+            "   [Probe][Recover][Hard] op=0x%04x tx=%u skipping reset rung for Pixel 7 (set SWIFTMTP_PIXEL_ALLOW_PROBE_RESET=1 to override)",
+          opcode, txid))
+    }
+    return false
+  }
+
   let resetRC = libusb_reset_device(handle)
   if resetRC != 0 {
     if debug {
@@ -648,6 +743,16 @@ private func probeWriteCommandWithRecovery(
   }
 
   if probeIsPixelNoProgressTarget(handle: handle) {
+    guard probeAllowPixelUSBReset() else {
+      if debug {
+        print(
+          String(
+            format:
+              "   [Probe][Recover] op=0x%04x tx=%u Pixel no-progress persists (rc=%d sent=%d), skipping reset rung by policy",
+            opcode, txid, lightRetry.rc, lightRetry.sent))
+      }
+      return ProbeCommandWriteResult(succeeded: false, rc: lightRetry.rc, sent: lightRetry.sent)
+    }
     if debug {
       print(
         String(

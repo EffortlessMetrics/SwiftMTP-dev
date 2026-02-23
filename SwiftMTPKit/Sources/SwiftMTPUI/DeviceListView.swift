@@ -33,12 +33,20 @@ public struct DeviceListView: View {
                 }
             }
             .contentShape(Rectangle())
+            .accessibilityIdentifier(AccessibilityID.deviceRow(device.id.raw))
             .onTapGesture {
+                UITestEventLogger.emit(
+                    flow: .deviceSelect,
+                    step: "tap_row",
+                    result: "started",
+                    metadata: ["deviceId": device.id.raw]
+                )
                 Task {
                     await viewModel.connect(to: device)
                 }
             }
         }
+        .accessibilityIdentifier(AccessibilityID.deviceList)
         .navigationTitle("MTP Devices")
         .overlay {
             if viewModel.devices.isEmpty {
@@ -47,6 +55,7 @@ public struct DeviceListView: View {
                     systemImage: "usb.fill",
                     description: Text("Connect an MTP device to your Mac.")
                 )
+                .accessibilityIdentifier(AccessibilityID.noDevicesState)
             }
         }
     }

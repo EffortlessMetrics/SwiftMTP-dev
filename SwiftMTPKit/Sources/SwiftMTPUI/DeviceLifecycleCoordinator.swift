@@ -47,6 +47,8 @@ public final class DeviceLifecycleCoordinator {
     private var xpcListener: MTPXPCListener?
     private var orchestrators: [String: DeviceIndexOrchestrator] = [:]
     private var changeSignalers: [String: ChangeSignaler] = [:]
+    private var uiTestDevices: [MTPDeviceID: any MTPDevice] = [:]
+    private let uiTestConfig = UITestConfiguration.current
     private var bootstrapped = false
 
     public init(manager: MTPDeviceManager = .shared) {
@@ -57,6 +59,12 @@ public final class DeviceLifecycleCoordinator {
 
     /// One-time initialization. Safe to call multiple times (no-ops after first).
     public func bootstrap() async throws {
+        if uiTestConfig.enabled {
+            try await bootstrapUITestScenario()
+            bootstrapped = true
+            return
+        }
+
         guard !bootstrapped else { return }
         bootstrapped = true
 
@@ -110,6 +118,88 @@ public final class DeviceLifecycleCoordinator {
                 await self.handleDetach(deviceId: deviceId)
             }
         )
+    }
+
+    private func bootstrapUITestScenario() async throws {
+        discoveredDevices.removeAll()
+        openedDevices.removeAll()
+        selectedDevice = nil
+        error = nil
+        uiTestDevices.removeAll()
+
+        UITestEventLogger.emit(
+            flow: .launchEmptyState,
+            step: "bootstrap",
+            result: "started",
+            metadata: [
+                "scenario": uiTestConfig.scenario,
+                "mockProfile": uiTestConfig.mockProfile,
+                "demoMode": FeatureFlags.shared.useMockTransport ? "true" : "false",
+            ]
+        )
+
+        if uiTestConfig.scenario == "error-discovery" {
+            error = "UI test scenario forced discovery failure."
+            UITestEventLogger.emit(
+                flow: .errorDiscovery,
+                step: "discovery",
+                result: "forced_error",
+                metadata: ["scenario": uiTestConfig.scenario]
+            )
+            return
+        }
+
+        if uiTestConfig.scenario == "empty-state" || !FeatureFlags.shared.useMockTransport {
+            UITestEventLogger.emit(
+                flow: .launchEmptyState,
+                step: "discovery",
+                result: "completed",
+                metadata: ["deviceCount": "0"]
+            )
+            return
+        }
+
+        let profile = resolvedMockProfile(named: uiTestConfig.mockProfile)
+        let mockData = MockTransportFactory.deviceData(for: profile)
+        let summary = mockData.deviceSummary
+        let transport = MockTransport(deviceData: mockData)
+        let device = try await manager.openDevice(with: summary, transport: transport, config: SwiftMTPConfig())
+        _ = try await device.info
+
+        discoveredDevices = [summary]
+        uiTestDevices[summary.id] = device
+
+        UITestEventLogger.emit(
+            flow: .deviceListVisible,
+            step: "discovery",
+            result: "completed",
+            metadata: [
+                "deviceId": summary.id.raw,
+                "manufacturer": summary.manufacturer,
+                "model": summary.model,
+            ]
+        )
+    }
+
+    private func resolvedMockProfile(named name: String) -> MockTransportFactory.DeviceProfile {
+        switch name.lowercased() {
+        case "s21", "galaxy":
+            return .androidGalaxyS21
+        case "oneplus", "oneplus3t":
+            return .androidOnePlus3T
+        case "iphone", "ios":
+            return .iosDevice
+        case "canon", "camera":
+            return .canonCamera
+        case "failure-timeout":
+            return .failureTimeout
+        case "failure-busy":
+            return .failureBusy
+        case "failure-disconnected":
+            return .failureDisconnected
+        default:
+            return .androidPixel7
+        }
     }
 
     // MARK: - Attach
@@ -246,9 +336,48 @@ public final class DeviceLifecycleCoordinator {
     /// Connect to a specific device (for UI selection).
     /// The device is already opened by the coordinator; this just selects it.
     public func selectDevice(_ summary: MTPDeviceSummary) async {
+        if uiTestConfig.enabled, let testDevice = uiTestDevices[summary.id] {
+            selectedDevice = testDevice
+            UITestEventLogger.emit(
+                flow: .deviceSelect,
+                step: "select_device",
+                result: "selected",
+                metadata: ["deviceId": summary.id.raw]
+            )
+
+            if uiTestConfig.scenario == "detach-on-select" {
+                UITestEventLogger.emit(
+                    flow: .detachSelectionReset,
+                    step: "detach_schedule",
+                    result: "queued",
+                    metadata: ["deviceId": summary.id.raw]
+                )
+                Task { @MainActor [weak self] in
+                    try? await Task.sleep(nanoseconds: 400_000_000)
+                    self?.performUITestDetach(deviceId: summary.id)
+                }
+            }
+            return
+        }
+
         if let svc = await registry.service(for: summary.id) {
             selectedDevice = await svc.underlyingDevice
         }
+    }
+
+    private func performUITestDetach(deviceId: MTPDeviceID) {
+        discoveredDevices.removeAll { $0.id == deviceId }
+        uiTestDevices.removeValue(forKey: deviceId)
+        openedDevices.removeValue(forKey: deviceId)
+        if selectedDevice?.id == deviceId {
+            selectedDevice = nil
+        }
+        UITestEventLogger.emit(
+            flow: .detachSelectionReset,
+            step: "detach_complete",
+            result: "detached",
+            metadata: ["deviceId": deviceId.raw]
+        )
     }
 
     /// Access the device service registry (for XPC and other consumers).
@@ -256,6 +385,14 @@ public final class DeviceLifecycleCoordinator {
 
     /// Shut down all lifecycle components.
     public func shutdown() async {
+        if uiTestConfig.enabled {
+            uiTestDevices.removeAll()
+            openedDevices.removeAll()
+            discoveredDevices.removeAll()
+            selectedDevice = nil
+            return
+        }
+
         await registry.stopMonitoring()
         xpcListener?.stop()
         for (_, orchestrator) in orchestrators {

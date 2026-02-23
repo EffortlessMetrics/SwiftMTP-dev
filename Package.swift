@@ -14,6 +14,9 @@ let package = Package(
   products: [
     .executable(name: "simple-probe", targets: ["simple-probe"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
+    .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
+    .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
+    .library(name: "SwiftMTPUI", targets: ["SwiftMTPUI"]),
     .library(name: "SwiftMTPQuirks", targets: ["SwiftMTPQuirks"]),
     .executable(name: "SwiftMTPApp", targets: ["SwiftMTPApp"]),
   ],

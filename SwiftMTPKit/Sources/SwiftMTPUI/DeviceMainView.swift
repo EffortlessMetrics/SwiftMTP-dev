@@ -10,15 +10,27 @@ public struct DeviceMainView: View {
     @State private var files: [MTPObjectInfo] = []
     @State private var isLoading = true
     @State private var isFilesLoading = false
+    @State private var filesError: String?
     
     public init(device: any MTPDevice) {
         self.device = device
+    }
+
+    private var filesOutcomeLabel: String {
+        if isFilesLoading {
+            return "loading"
+        }
+        if filesError != nil {
+            return "error"
+        }
+        return files.isEmpty ? "empty" : "ready"
     }
     
     public var body: some View {
         VStack {
             if isLoading {
                 ProgressView("Loading device info...")
+                    .accessibilityIdentifier(AccessibilityID.deviceLoadingIndicator)
             } else {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
@@ -44,9 +56,13 @@ public struct DeviceMainView: View {
                         Text("Storages")
                             .font(.headline)
                             .padding(.horizontal)
+                            .accessibilityIdentifier(AccessibilityID.storageSection)
                         
                         ForEach(storages, id: \.id) { storage in
-                            StorageRow(storage: storage)
+                            StorageRow(
+                                storage: storage,
+                                accessibilityID: AccessibilityID.storageRow(storage.id.raw)
+                            )
                         }
                         
                         Divider()
@@ -55,20 +71,32 @@ public struct DeviceMainView: View {
                         HStack {
                             Text("Root Files")
                                 .font(.headline)
+                                .accessibilityIdentifier(AccessibilityID.filesSection)
                             if isFilesLoading {
-                                ProgressView().controlSize(.small)
+                                ProgressView()
+                                    .controlSize(.small)
+                                    .accessibilityIdentifier(AccessibilityID.filesLoadingIndicator)
                             }
                         }
                         .padding(.horizontal)
                         
-                        if files.isEmpty && !isFilesLoading {
+                        if let filesError {
+                            Text(filesError)
+                                .foregroundStyle(.red)
+                                .padding()
+                                .accessibilityIdentifier(AccessibilityID.filesErrorState)
+                        } else if files.isEmpty && !isFilesLoading {
                             Text("No files found or storage empty.")
                                 .foregroundStyle(.secondary)
                                 .padding()
+                                .accessibilityIdentifier(AccessibilityID.filesEmptyState)
                         } else {
                             VStack(spacing: 0) {
                                 ForEach(files, id: \.handle) { file in
-                                    FileRow(file: file)
+                                    FileRow(
+                                        file: file,
+                                        accessibilityID: AccessibilityID.fileRow(file.handle)
+                                    )
                                     Divider().padding(.leading, 44)
                                 }
                             }
@@ -82,11 +110,12 @@ public struct DeviceMainView: View {
                         // Actions
                         HStack {
                             Button(action: {
-                                Task { await loadFiles() }
+                                Task { await loadFiles(trigger: "refresh_button") }
                             }) {
                                 Label("Refresh Files", systemImage: "arrow.clockwise")
                             }
                             .buttonStyle(.bordered)
+                            .accessibilityIdentifier(AccessibilityID.refreshFilesButton)
                             
                             Button(action: {}) {
                                 Label("Eject", systemImage: "eject.fill")
@@ -96,19 +125,61 @@ public struct DeviceMainView: View {
                         .padding()
                     }
                 }
+                .accessibilityIdentifier(AccessibilityID.detailContainer)
             }
+
+            Color.clear
+                .frame(width: 1, height: 1)
+                .accessibilityElement()
+                .accessibilityIdentifier(AccessibilityID.filesOutcomeState)
+                .accessibilityLabel(filesOutcomeLabel)
         }
         .task {
-            storages = (try? await device.storages()) ?? []
+            do {
+                storages = try await device.storages()
+                UITestEventLogger.emit(
+                    flow: .storageRender,
+                    step: "load_storages",
+                    result: "completed",
+                    metadata: ["storageCount": "\(storages.count)"]
+                )
+            } catch {
+                storages = []
+                filesError = "Failed to load storages: \(error.localizedDescription)"
+                UITestEventLogger.emit(
+                    flow: .storageRender,
+                    step: "load_storages",
+                    result: "failed",
+                    metadata: ["error": error.localizedDescription]
+                )
+            }
             isLoading = false
-            await loadFiles()
+            await loadFiles(trigger: "initial_load")
         }
     }
     
     @MainActor
-    private func loadFiles() async {
-        guard let storage = storages.first else { return }
+    private func loadFiles(trigger: String) async {
+        UITestEventLogger.emit(
+            flow: .filesRefresh,
+            step: trigger,
+            result: "started",
+            metadata: ["storageCount": "\(storages.count)"]
+        )
+
+        guard let storage = storages.first else {
+            filesError = "No storage available for listing."
+            UITestEventLogger.emit(
+                flow: .filesRefresh,
+                step: trigger,
+                result: "failed",
+                metadata: ["reason": "no_storage"]
+            )
+            return
+        }
+
         isFilesLoading = true
+        filesError = nil
         files.removeAll()
         
         do {
@@ -116,8 +187,20 @@ public struct DeviceMainView: View {
             for try await batch in stream {
                 files.append(contentsOf: batch)
             }
+            UITestEventLogger.emit(
+                flow: .filesRefresh,
+                step: trigger,
+                result: "completed",
+                metadata: ["fileCount": "\(files.count)"]
+            )
         } catch {
-            print("Failed to load files: \(error)")
+            filesError = "Failed to load files: \(error.localizedDescription)"
+            UITestEventLogger.emit(
+                flow: .filesRefresh,
+                step: trigger,
+                result: "failed",
+                metadata: ["error": error.localizedDescription]
+            )
         }
         isFilesLoading = false
     }
@@ -125,6 +208,7 @@ public struct DeviceMainView: View {
 
 struct StorageRow: View {
     let storage: MTPStorageInfo
+    let accessibilityID: String
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -144,6 +228,7 @@ struct StorageRow: View {
         .background(Color.secondary.opacity(0.1))
         .cornerRadius(10)
         .padding(.horizontal)
+        .accessibilityIdentifier(accessibilityID)
     }
     
     func formatBytes(_ bytes: UInt64) -> String {
@@ -156,6 +241,7 @@ struct StorageRow: View {
 
 struct FileRow: View {
     let file: MTPObjectInfo
+    let accessibilityID: String
     
     var body: some View {
         HStack {
@@ -176,6 +262,7 @@ struct FileRow: View {
         }
         .padding(.vertical, 8)
         .padding(.horizontal)
+        .accessibilityIdentifier(accessibilityID)
     }
     
     func formatBytes(_ bytes: UInt64) -> String {

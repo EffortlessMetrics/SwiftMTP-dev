@@ -145,6 +145,69 @@ public actor LibUSBTransport: MTPTransport {
 
   public init() {}
 
+  private static func isPixel7(vendorID: UInt16, productID: UInt16) -> Bool {
+    vendorID == 0x18D1 && productID == 0x4EE1
+  }
+
+  private static func shouldSkipPixelClassResetControlTransfer(vendorID: UInt16, productID: UInt16)
+    -> Bool
+  {
+    isPixel7(vendorID: vendorID, productID: productID)
+      && ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_SKIP_CLASS_RESET"] == "1"
+  }
+
+  /// Pixel 7 is prone to disappearing from user-space after `libusb_reset_device`
+  /// on macOS. Keep open-path recovery on non-reset rungs unless explicitly overridden.
+  private static func shouldSkipUSBResetFallback(vendorID: UInt16, productID: UInt16) -> Bool {
+    isPixel7(vendorID: vendorID, productID: productID)
+      && ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_ALLOW_OPEN_RESET"] != "1"
+  }
+
+  private static func shouldAttemptNoResetReopenFallback(vendorID: UInt16, productID: UInt16)
+    -> Bool
+  {
+    isPixel7(vendorID: vendorID, productID: productID)
+      && ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_DISABLE_NO_RESET_REOPEN"] != "1"
+  }
+
+  private static func pixelNoResetReopenAttemptCount(vendorID: UInt16, productID: UInt16) -> Int {
+    guard isPixel7(vendorID: vendorID, productID: productID) else { return 1 }
+    if let raw = ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_NO_RESET_REOPEN_ATTEMPTS"],
+      let parsed = Int(raw), parsed > 0
+    {
+      return min(parsed, 8)
+    }
+    return 4
+  }
+
+  private static func findDeviceByBusAndPort(
+    ctx: OpaquePointer,
+    bus: UInt8,
+    portPath: [UInt8],
+    portDepth: Int32
+  ) -> OpaquePointer? {
+    guard portDepth > 0 else { return nil }
+    var list: UnsafeMutablePointer<OpaquePointer?>?
+    let count = libusb_get_device_list(ctx, &list)
+    guard count > 0, let list else { return nil }
+    defer { libusb_free_device_list(list, 1) }
+
+    for index in 0..<Int(count) {
+      guard let device = list[index] else { continue }
+      guard libusb_get_bus_number(device) == bus else { continue }
+      var devicePortPath = [UInt8](repeating: 0, count: 7)
+      let devicePortDepth = libusb_get_port_numbers(
+        device, &devicePortPath, Int32(devicePortPath.count))
+      if devicePortDepth == portDepth
+        && devicePortPath[0..<Int(devicePortDepth)] == portPath[0..<Int(portDepth)]
+      {
+        libusb_ref_device(device)
+        return device
+      }
+    }
+    return nil
+  }
+
   public func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig) async throws -> MTPLink {
     let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
     let ctx = LibUSBContext.shared.ctx
@@ -202,23 +265,38 @@ public actor LibUSBTransport: MTPTransport {
       throw TransportError.io("no MTP interface")
     }
 
-    // For vendor-specific devices (class 0xff), try USB reset before probing
-    // This helps with Samsung, Xiaomi, and similar devices that have interface claiming issues
+    let skipPixelResetByPolicy = Self.shouldSkipUSBResetFallback(
+      vendorID: vendorID, productID: productID)
+
+    // For vendor-specific devices (class 0xff), try USB reset before probing.
+    // Pixel 7 is explicitly excluded by default to avoid re-enumeration collapse.
     if isVendorSpecificMTP {
-      if debug {
-        print(
-          String(
-            format:
-              "   [Open] Vendor-specific MTP device (VID=0x%04X PID=0x%04X), attempting pre-claim reset",
-            vendorID, productID))
+      if skipPixelResetByPolicy {
+        if debug {
+          print(
+            "   [Open] Vendor-specific MTP device is Pixel 7; skipping pre-claim reset (set SWIFTMTP_PIXEL_ALLOW_OPEN_RESET=1 to override)"
+          )
+        }
+      } else {
+        if debug {
+          print(
+            String(
+              format:
+                "   [Open] Vendor-specific MTP device (VID=0x%04X PID=0x%04X), attempting pre-claim reset",
+              vendorID, productID))
+        }
+        // Attempt USB reset before claim - helps with stubborn non-Pixel devices.
+        let resetRC = libusb_reset_device(handle)
+        if debug {
+          print(
+            String(
+              format: "   [Open] Pre-claim libusb_reset_device rc=%d", resetRC))
+        }
       }
-      // Attempt USB reset before claim - helps with stubborn devices
-      let resetRC = libusb_reset_device(handle)
-      if debug {
-        print(String(format: "   [Open] Pre-claim libusb_reset_device rc=%d", resetRC))
+      // Brief pause after reset for device to stabilize.
+      if !skipPixelResetByPolicy {
+        usleep(300_000)
       }
-      // Brief pause after reset for device to stabilize
-      usleep(300_000)
     }
 
     // Pass 1: Normal probe (no USB reset).
@@ -246,7 +324,12 @@ public actor LibUSBTransport: MTPTransport {
     // Pass 1b (aggressive, no reset): force configuration + re-claim + alt=0 + clear_halt,
     // then rerun ladder once before escalating to reset/reopen.
     // Restrict this expensive rung to devices where it has shown value (Pixel/vendor-specific).
-    let shouldRunAggressivePass = isVendorSpecificMTP || vendorID == 0x18D1
+    // On Pixel 7, aggressive re-claim often degrades a good initial alt-setting
+    // into persistent set_interface_alt_setting failures. Keep Pixel on pass-1
+    // only unless reset fallback is explicitly allowed.
+    let shouldRunAggressivePass =
+      (isVendorSpecificMTP || vendorID == 0x18D1)
+      && !Self.shouldSkipUSBResetFallback(vendorID: vendorID, productID: productID)
     if result.candidate == nil && shouldRunAggressivePass {
       if debug { print("   [Open] Pass 1 failed, attempting aggressive no-reset retry rung") }
       result = tryProbeAllCandidatesAggressive(
@@ -261,10 +344,99 @@ public actor LibUSBTransport: MTPTransport {
       print("   [Open] Pass 1 failed; skipping aggressive rung for this device family")
     }
 
-    // Pass 2 (fallback): if pass 1 fails, do USB reset + teardown + fresh reopen + re-probe.
+    // Pass 1c (Pixel): if pass 1 fails, try close+reopen with no reset.
+    // This refreshes host-side state without forcing device re-enumeration.
+    if result.candidate == nil {
+      let skipResetFallback = Self.shouldSkipUSBResetFallback(
+        vendorID: vendorID, productID: productID)
+      let tryNoResetReopen =
+        skipResetFallback
+        && Self.shouldAttemptNoResetReopenFallback(vendorID: vendorID, productID: productID)
+
+      if tryNoResetReopen {
+        let preBus = libusb_get_bus_number(dev)
+        var portPath = [UInt8](repeating: 0, count: 7)
+        let portDepth = libusb_get_port_numbers(dev, &portPath, Int32(portPath.count))
+        var currentlyOpen = true
+        let reopenAttempts = Self.pixelNoResetReopenAttemptCount(
+          vendorID: vendorID, productID: productID)
+
+        for reopenAttempt in 1...reopenAttempts {
+          if debug {
+            print(
+              "   [Open] Pass 1 failed, attempting no-reset close+reopen fallback for Pixel 7 (\(reopenAttempt)/\(reopenAttempts))"
+            )
+          }
+
+          if currentlyOpen {
+            libusb_close(handle)
+            libusb_unref_device(dev)
+            currentlyOpen = false
+          }
+
+          let settleMs = UInt32(min(250 + (reopenAttempt - 1) * 250, 1500))
+          usleep(settleMs * 1000)
+
+          guard let reopenedDevice = Self.findDeviceByBusAndPort(
+            ctx: ctx, bus: preBus, portPath: portPath, portDepth: portDepth)
+          else {
+            if debug {
+              print(
+                "   [Open] No-reset reopen attempt \(reopenAttempt) could not re-find device by bus/port"
+              )
+            }
+            continue
+          }
+          dev = reopenedDevice
+
+          var reopenedHandlePtr: OpaquePointer?
+          guard libusb_open(dev, &reopenedHandlePtr) == 0, let reopenedHandle = reopenedHandlePtr else {
+            if debug {
+              print("   [Open] No-reset reopen attempt \(reopenAttempt) could not open device")
+            }
+            libusb_unref_device(dev)
+            continue
+          }
+          handle = reopenedHandle
+          currentlyOpen = true
+
+          candidates = try rankMTPInterfaces(handle: handle, device: dev)
+          if debug { print("   [Open] No-reset reopen got \(candidates.count) candidate(s)") }
+
+          setConfigurationIfNeeded(handle: handle, device: dev, force: true, debug: debug)
+          result = tryProbeAllCandidates(
+            handle: handle, device: dev, candidates: candidates,
+            handshakeTimeoutMs: effectiveTimeout,
+            postClaimStabilizeMs: config.postClaimStabilizeMs,
+            postProbeStabilizeMs: config.postProbeStabilizeMs, debug: debug
+          )
+          if result.candidate != nil { break }
+        }
+
+        if result.candidate == nil, !currentlyOpen {
+          throw TransportError.noDevice
+        }
+      } else if skipResetFallback && debug {
+        print("   [Open] Pass 1 failed; skipping no-reset reopen fallback for Pixel 7")
+      }
+    }
+
+    // Pass 2 (fallback): if earlier passes fail, do USB reset + teardown + fresh reopen + re-probe.
     // This mirrors the libmtp-style recovery rung used by Pixel/OnePlus-class handshakes.
     if result.candidate == nil {
-      if debug { print("   [Open] Pass 1 failed, attempting USB reset fallback") }
+      let skipResetFallback = Self.shouldSkipUSBResetFallback(
+        vendorID: vendorID, productID: productID)
+      if skipResetFallback {
+        if debug {
+          print(
+            "   [Open] Pass 1 failed; skipping USB reset fallback for Pixel 7 (set SWIFTMTP_PIXEL_ALLOW_OPEN_RESET=1 to override)"
+          )
+        }
+      } else if debug {
+        print("   [Open] Pass 1 failed, attempting USB reset fallback")
+      }
+
+      if !skipResetFallback {
 
       // Capture bus + port path before reset (address may change, bus+port won't)
       let preBus = libusb_get_bus_number(dev)
@@ -286,27 +458,9 @@ public actor LibUSBTransport: MTPTransport {
         libusb_unref_device(dev)
         usleep(350_000)
 
-        // Re-enumerate and match by bus + port path.
-        var newList: UnsafeMutablePointer<OpaquePointer?>?
-        let newCnt = libusb_get_device_list(ctx, &newList)
-        var newTarget: OpaquePointer?
-        if newCnt > 0, let newList {
-          for i in 0..<Int(newCnt) {
-            guard let d = newList[i] else { continue }
-            let dBus = libusb_get_bus_number(d)
-            guard dBus == preBus else { continue }
-            var dPort = [UInt8](repeating: 0, count: 7)
-            let dDepth = libusb_get_port_numbers(d, &dPort, Int32(dPort.count))
-            if dDepth == portDepth && dPort[0..<Int(dDepth)] == portPath[0..<Int(portDepth)] {
-              libusb_ref_device(d)
-              newTarget = d
-              break
-            }
-          }
-          libusb_free_device_list(newList, 1)
-        }
-
-        guard let nd = newTarget else {
+        guard let nd = Self.findDeviceByBusAndPort(
+          ctx: ctx, bus: preBus, portPath: portPath, portDepth: portDepth)
+        else {
           if debug { print("   [Open] Could not re-find device after reset") }
           throw TransportError.noDevice
         }
@@ -342,12 +496,18 @@ public actor LibUSBTransport: MTPTransport {
       } else if debug {
         print("   [Open] USB reset failed (rc=\(resetRC)), skipping pass 2")
       }
+      }
     }
 
     guard let sel = result.candidate else {
       libusb_close(handle)
       libusb_unref_device(dev)
       if result.probeStep == nil {
+        if Self.isPixel7(vendorID: vendorID, productID: productID) {
+          throw TransportError.io(
+            "mtp interface claim failed across \(candidates.count) candidate(s). macOS reports IOService unavailable/exclusive claim (often Image Capture stack). Close competing USB apps and retry; running the CLI with elevated privileges may be required on this host."
+          )
+        }
         throw TransportError.io(
           "mtp interface claim failed across \(candidates.count) candidate(s). Close competing USB apps (Android File Transfer, adb, browsers) and retry."
         )
@@ -358,9 +518,21 @@ public actor LibUSBTransport: MTPTransport {
     }
 
     // PTP Device Reset to clear stale sessions
-    let resetRC = libusb_control_transfer(
-      handle, 0x21, 0x66, 0, UInt16(sel.ifaceNumber), nil, 0, 5000)
-    if debug { print("   [Open] PTP Device Reset (0x66) rc=\(resetRC)") }
+    let skipClassReset = Self.shouldSkipPixelClassResetControlTransfer(
+      vendorID: vendorID, productID: productID)
+    let resetRC: Int32
+    if skipClassReset {
+      resetRC = 0
+      if debug {
+        print(
+          "   [Open] Skipping PTP Device Reset (0x66) for Pixel 7 (SWIFTMTP_PIXEL_SKIP_CLASS_RESET=1)"
+        )
+      }
+    } else {
+      resetRC = libusb_control_transfer(
+        handle, 0x21, 0x66, 0, UInt16(sel.ifaceNumber), nil, 0, 5000)
+      if debug { print("   [Open] PTP Device Reset (0x66) rc=\(resetRC)") }
+    }
 
     if resetRC < 0 {
       // Device doesn't support PTP Device Reset — send CloseSession (0x1003) via bulk
@@ -505,6 +677,11 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     vendorID == 0x18D1 && productID == 0x4EE1
   }
 
+  private var skipPixelClassResetControlTransfer: Bool {
+    isPixelClassNoProgressTarget
+      && ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_SKIP_CLASS_RESET"] == "1"
+  }
+
   private func runPixelPreOpenSessionPreflightIfNeeded() {
     guard isPixel7PreflightTarget, !didRunPixelPreOpenSessionPreflight else { return }
     didRunPixelPreOpenSessionPreflight = true
@@ -515,21 +692,24 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let clearOutRC = libusb_clear_halt(h, outEP)
     let clearInRC = libusb_clear_halt(h, inEP)
     let clearEventRC: Int32 = evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
-    let classResetRC = libusb_control_transfer(
-      h, 0x21, 0x66, 0, UInt16(iface), nil, 0, 2000
-    )
+    let skipClassReset = skipPixelClassResetControlTransfer
+    let classResetRC: Int32 =
+      skipClassReset
+      ? Int32(LIBUSB_SUCCESS.rawValue)
+      : libusb_control_transfer(h, 0x21, 0x66, 0, UInt16(iface), nil, 0, 2000)
     usleep(200_000)
 
     if debug {
       print(
         String(
           format:
-            "   [USB][Preflight][Pixel] setAlt0=%d clear(out=%d in=%d evt=%d) classReset=%d settleMs=200",
+            "   [USB][Preflight][Pixel] setAlt0=%d clear(out=%d in=%d evt=%d) classReset=%d skipClassReset=%@ settleMs=200",
           setAltRC,
           clearOutRC,
           clearInRC,
           clearEventRC,
-          classResetRC
+          classResetRC,
+          skipClassReset ? "true" : "false"
         )
       )
     }
@@ -1045,8 +1225,16 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     vendorID == 0x18D1 && productID == 0x4EE1
   }
 
+  private var allowPixelCommandResetRecovery: Bool {
+    ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_ALLOW_COMMAND_RESET"] == "1"
+  }
+
+  private var shouldSkipPixelCommandResetRecovery: Bool {
+    isPixelClassNoProgressTarget && !allowPixelCommandResetRecovery
+  }
+
   private func shouldAttemptPixelResetReopenRecovery(after attempt: CommandWriteAttempt) -> Bool {
-    isPixelClassNoProgressTarget && attempt.isNoProgressTimeout
+    isPixelClassNoProgressTarget && allowPixelCommandResetRecovery && attempt.isNoProgressTimeout
   }
 
   @discardableResult
@@ -1056,8 +1244,11 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let clearOutRC = libusb_clear_halt(h, outEP)
     let clearInRC = libusb_clear_halt(h, inEP)
     let clearEventRC: Int32 = evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
-    let classResetRC = libusb_control_transfer(
-      h, 0x21, 0x66, 0, UInt16(iface), nil, 0, 2000)
+    let skipClassReset = skipPixelClassResetControlTransfer
+    let classResetRC: Int32 =
+      skipClassReset
+      ? Int32(LIBUSB_SUCCESS.rawValue)
+      : libusb_control_transfer(h, 0x21, 0x66, 0, UInt16(iface), nil, 0, 2000)
 
     setConfigurationIfNeeded(handle: h, device: dev, force: true, debug: debug)
     let setAltRC = libusb_set_interface_alt_setting(h, Int32(iface), 0)
@@ -1073,8 +1264,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       print(
         String(
           format:
-            "   [USB][Recover][Light] op=0x%04x tx=%u clear(out=%d in=%d evt=%d) classReset=%d setAlt0=%d postClear(out=%d in=%d evt=%d)",
-          opcode, txid, clearOutRC, clearInRC, clearEventRC, classResetRC, setAltRC,
+            "   [USB][Recover][Light] op=0x%04x tx=%u clear(out=%d in=%d evt=%d) classReset=%d skipClassReset=%@ setAlt0=%d postClear(out=%d in=%d evt=%d)",
+          opcode, txid, clearOutRC, clearInRC, clearEventRC, classResetRC,
+          skipClassReset ? "true" : "false", setAltRC,
           clearOutPostRC, clearInPostRC, clearEventPostRC))
     }
     return true
@@ -1083,6 +1275,17 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   private func performCommandNoProgressHardRecovery(opcode: UInt16, txid: UInt32, debug: Bool)
     -> Bool
   {
+    if shouldSkipPixelCommandResetRecovery {
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover][Hard] op=0x%04x tx=%u skipping reset rung for Pixel 7 (set SWIFTMTP_PIXEL_ALLOW_COMMAND_RESET=1 to override)",
+            opcode, txid))
+      }
+      return false
+    }
+
     let resetRC = libusb_reset_device(h)
     if resetRC != 0 {
       if debug {
@@ -1120,6 +1323,17 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     txid: UInt32,
     debug: Bool
   ) -> Bool {
+    if shouldSkipPixelCommandResetRecovery {
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover][Reopen] op=0x%04x tx=%u skipping reset+reopen for Pixel 7 (set SWIFTMTP_PIXEL_ALLOW_COMMAND_RESET=1 to override)",
+            opcode, txid))
+      }
+      return false
+    }
+
     // Ensure no concurrent event reads are still using the old handle.
     eventPumpTask?.cancel()
     eventPumpTask = nil

@@ -16,6 +16,10 @@
 ## Checklist
 
 - [ ] `./scripts/validate-quirks.sh` passes
+- [ ] `./scripts/validate-ux-touch.sh` passes (for UX changes)
+- [ ] Updated `Specs/ux/interaction-map.yaml` entries (or added `UX-NO-MAP: <reason>` in diff)
+- [ ] Added/updated `AccessibilityID` and `UXFlowID` coverage for new user-facing interactions
+- [ ] Added/updated `test_refs` and oracles for changed UX flows
 - [ ] `swift run --package-path SwiftMTPKit swiftmtp quirks --explain` shows expected layers and deltas
 - [ ] `swift run --package-path SwiftMTPKit swiftmtp health` passes (for operational changes)
 - [ ] CI green on all gates (evidence, bench, docc, lint)

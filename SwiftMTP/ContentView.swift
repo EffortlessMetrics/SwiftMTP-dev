@@ -11,10 +11,14 @@ import SwiftMTPUI
 #endif
 
 struct ContentView: View {
+    #if canImport(SwiftMTPUI)
+    @State private var coordinator = DeviceLifecycleCoordinator()
+    #endif
+
     var body: some View {
         Group {
             #if canImport(SwiftMTPUI)
-            DeviceBrowserView()
+            DeviceBrowserView(coordinator: coordinator)
             #else
             VStack(spacing: 12) {
                 Text("SwiftMTP")

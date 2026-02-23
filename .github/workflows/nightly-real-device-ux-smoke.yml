@@ -1,0 +1,56 @@
+name: nightly-real-device-ux-smoke
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  real-device-ux-smoke:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 16
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "16"
+
+      - name: Real-device UX smoke (best effort)
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/real-device-ux
+
+          set +e
+          swift run --package-path SwiftMTPKit swiftmtp --real-only probe --json \
+            > artifacts/real-device-ux/probe.json \
+            2> artifacts/real-device-ux/probe.stderr.log
+          probe_code=$?
+          set -e
+          echo "$probe_code" > artifacts/real-device-ux/probe.exitcode
+
+          if [[ "$probe_code" != "0" && "$probe_code" != "69" && "$probe_code" != "75" ]]; then
+            echo "❌ real-only probe failed with unexpected exit code: $probe_code"
+            exit "$probe_code"
+          fi
+
+          set +e
+          swift run --package-path SwiftMTPKit swiftmtp device-lab connected --json \
+            > artifacts/real-device-ux/device-lab.json \
+            2> artifacts/real-device-ux/device-lab.stderr.log
+          lab_code=$?
+          set -e
+          echo "$lab_code" > artifacts/real-device-ux/device-lab.exitcode
+
+          if [[ "$lab_code" != "0" && "$lab_code" != "69" && "$lab_code" != "75" ]]; then
+            echo "❌ device-lab connected failed with unexpected exit code: $lab_code"
+            exit "$lab_code"
+          fi
+
+      - name: Upload nightly real-device UX artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-real-device-ux-artifacts
+          retention-days: 30
+          path: artifacts/real-device-ux
