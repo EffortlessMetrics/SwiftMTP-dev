@@ -74,12 +74,12 @@ struct MTPEndianCodecFuzzTests {
   /// Fuzz test for UInt16 decoding from Data.
   @Test("UInt16 decode from Data - fuzz test with random bytes")
   func testFuzzDecodeUInt16FromData() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed)
+    var rng = FuzzRNG(seed: Self.fuzzSeed)
 
-    for iteration in 0..<fuzzIterations {
+    for iteration in 0..<Self.fuzzIterations {
       // Generate random data of various lengths
       let dataLength = Int.random(in: 0...32, using: &rng)
-      let data = generateRandomData(length: dataLength, using: &rng)
+      let data = Self.generateRandomData(length: dataLength, using: &rng)
 
       // Test at random offset
       let offset = Int.random(in: -8...32, using: &rng)
@@ -109,11 +109,11 @@ struct MTPEndianCodecFuzzTests {
   /// Fuzz test for UInt16 decoding from byte array.
   @Test("UInt16 decode from byte array - fuzz test with random bytes")
   func testFuzzDecodeUInt16FromBytes() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 1)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 1)
 
-    for _ in 0..<fuzzIterations {
+    for _ in 0..<Self.fuzzIterations {
       let dataLength = Int.random(in: 0...32, using: &rng)
-      let bytes = generateRandomBytes(length: dataLength, using: &rng)
+      let bytes = Self.generateRandomBytes(length: dataLength, using: &rng)
       let offset = Int.random(in: -8...32, using: &rng)
 
       // This should never crash
@@ -132,11 +132,11 @@ struct MTPEndianCodecFuzzTests {
   /// Fuzz test for UInt32 decoding from Data.
   @Test("UInt32 decode from Data - fuzz test with random bytes")
   func testFuzzDecodeUInt32FromData() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 2)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 2)
 
-    for _ in 0..<fuzzIterations {
+    for _ in 0..<Self.fuzzIterations {
       let dataLength = Int.random(in: 0...32, using: &rng)
-      let data = generateRandomData(length: dataLength, using: &rng)
+      let data = Self.generateRandomData(length: dataLength, using: &rng)
       let offset = Int.random(in: -8...32, using: &rng)
 
       // This should never crash
@@ -152,11 +152,11 @@ struct MTPEndianCodecFuzzTests {
   /// Fuzz test for UInt32 decoding from byte array.
   @Test("UInt32 decode from byte array - fuzz test with random bytes")
   func testFuzzDecodeUInt32FromBytes() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 3)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 3)
 
-    for _ in 0..<fuzzIterations {
+    for _ in 0..<Self.fuzzIterations {
       let dataLength = Int.random(in: 0...32, using: &rng)
-      let bytes = generateRandomBytes(length: dataLength, using: &rng)
+      let bytes = Self.generateRandomBytes(length: dataLength, using: &rng)
       let offset = Int.random(in: -8...32, using: &rng)
 
       // This should never crash
@@ -174,11 +174,11 @@ struct MTPEndianCodecFuzzTests {
   /// Fuzz test for UInt64 decoding from Data.
   @Test("UInt64 decode from Data - fuzz test with random bytes")
   func testFuzzDecodeUInt64FromData() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 4)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 4)
 
-    for _ in 0..<fuzzIterations {
+    for _ in 0..<Self.fuzzIterations {
       let dataLength = Int.random(in: 0...32, using: &rng)
-      let data = generateRandomData(length: dataLength, using: &rng)
+      let data = Self.generateRandomData(length: dataLength, using: &rng)
       let offset = Int.random(in: -8...32, using: &rng)
 
       // This should never crash
@@ -194,11 +194,11 @@ struct MTPEndianCodecFuzzTests {
   /// Fuzz test for UInt64 decoding from byte array.
   @Test("UInt64 decode from byte array - fuzz test with random bytes")
   func testFuzzDecodeUInt64FromBytes() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 5)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 5)
 
-    for _ in 0..<fuzzIterations {
+    for _ in 0..<Self.fuzzIterations {
       let dataLength = Int.random(in: 0...32, using: &rng)
-      let bytes = generateRandomBytes(length: dataLength, using: &rng)
+      let bytes = Self.generateRandomBytes(length: dataLength, using: &rng)
       let offset = Int.random(in: -8...32, using: &rng)
 
       // This should never crash
@@ -216,11 +216,11 @@ struct MTPEndianCodecFuzzTests {
   /// Fuzz test for generic decodeLittleEndian method.
   @Test("Generic decodeLittleEndian - fuzz test with random bytes")
   func testFuzzGenericDecode() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 6)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 6)
 
-    for _ in 0..<fuzzIterations {
+    for _ in 0..<Self.fuzzIterations {
       let dataLength = Int.random(in: 0...32, using: &rng)
-      let data = generateRandomData(length: dataLength, using: &rng)
+      let data = Self.generateRandomData(length: dataLength, using: &rng)
       let offset = Int.random(in: -8...32, using: &rng)
 
       // Test UInt16
@@ -253,11 +253,11 @@ struct MTPEndianCodecFuzzTests {
   /// We test with valid buffers only to ensure no crashes with correct usage.
   @Test("Raw buffer decode - fuzz test with valid buffers")
   func testFuzzRawBufferDecode() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 7)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 7)
 
-    for _ in 0..<fuzzIterations {
+    for _ in 0..<Self.fuzzIterations {
       // Generate enough data for all types
-      let data = generateRandomData(length: 16, using: &rng)
+      let data = Self.generateRandomData(length: 16, using: &rng)
 
       data.withUnsafeBytes { ptr in
         guard let baseAddress = ptr.baseAddress else { return }
@@ -284,11 +284,11 @@ struct MTPEndianCodecFuzzTests {
   /// Fuzz test for MTPDataDecoder with random data.
   @Test("MTPDataDecoder - fuzz test with random data")
   func testFuzzMTPDataDecoder() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 8)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 8)
 
-    for iteration in 0..<fuzzIterations {
+    for iteration in 0..<Self.fuzzIterations {
       let dataLength = Int.random(in: 0...64, using: &rng)
-      let data = generateRandomData(length: dataLength, using: &rng)
+      let data = Self.generateRandomData(length: dataLength, using: &rng)
 
       var decoder = MTPDataDecoder(data: data)
 
@@ -361,17 +361,17 @@ struct MTPEndianCodecFuzzTests {
   /// Test decoder behavior at exact boundaries.
   @Test("Boundary conditions - exact buffer boundaries")
   func testBoundaryConditions() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 9)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 9)
 
     for _ in 0..<1000 {
       // Test with exactly 2 bytes
-      let data2 = generateRandomData(length: 2, using: &rng)
+      let data2 = Self.generateRandomData(length: 2, using: &rng)
       #expect(MTPEndianCodec.decodeUInt16(from: data2, at: 0) != nil)
       #expect(MTPEndianCodec.decodeUInt32(from: data2, at: 0) == nil)
       #expect(MTPEndianCodec.decodeUInt64(from: data2, at: 0) == nil)
 
       // Test with exactly 4 bytes
-      let data4 = generateRandomData(length: 4, using: &rng)
+      let data4 = Self.generateRandomData(length: 4, using: &rng)
       #expect(MTPEndianCodec.decodeUInt16(from: data4, at: 0) != nil)
       #expect(MTPEndianCodec.decodeUInt16(from: data4, at: 2) != nil)
       #expect(MTPEndianCodec.decodeUInt16(from: data4, at: 3) == nil)  // Only 1 byte left
@@ -379,7 +379,7 @@ struct MTPEndianCodecFuzzTests {
       #expect(MTPEndianCodec.decodeUInt64(from: data4, at: 0) == nil)
 
       // Test with exactly 8 bytes
-      let data8 = generateRandomData(length: 8, using: &rng)
+      let data8 = Self.generateRandomData(length: 8, using: &rng)
       #expect(MTPEndianCodec.decodeUInt16(from: data8, at: 0) != nil)
       #expect(MTPEndianCodec.decodeUInt16(from: data8, at: 6) != nil)
       #expect(MTPEndianCodec.decodeUInt16(from: data8, at: 7) == nil)
@@ -418,10 +418,10 @@ struct MTPEndianCodecFuzzTests {
   /// Test decoder behavior with negative offsets.
   @Test("Negative offset handling")
   func testNegativeOffsets() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 10)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 10)
 
     for _ in 0..<1000 {
-      let data = generateRandomData(length: 16, using: &rng)
+      let data = Self.generateRandomData(length: 16, using: &rng)
       let negativeOffset = -Int.random(in: 1...100, using: &rng)
 
       // All decodes should return nil for negative offsets
@@ -434,11 +434,11 @@ struct MTPEndianCodecFuzzTests {
   /// Test decoder behavior with offsets past the end.
   @Test("Offset past end handling")
   func testOffsetPastEnd() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 11)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 11)
 
     for _ in 0..<1000 {
       let dataLength = Int.random(in: 1...16, using: &rng)
-      let data = generateRandomData(length: dataLength, using: &rng)
+      let data = Self.generateRandomData(length: dataLength, using: &rng)
       let pastEndOffset = dataLength + Int.random(in: 0...100, using: &rng)
 
       // All decodes should return nil for offsets past end
@@ -453,9 +453,9 @@ struct MTPEndianCodecFuzzTests {
   /// Fuzz test for MTPDataEncoder with random values.
   @Test("MTPDataEncoder - fuzz test with random values")
   func testFuzzMTPDataEncoder() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 12)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 12)
 
-    for _ in 0..<fuzzIterations {
+    for _ in 0..<Self.fuzzIterations {
       var encoder = MTPDataEncoder()
       var expectedData = Data()
 
@@ -493,14 +493,14 @@ struct MTPEndianCodecFuzzTests {
         case 4:
           // Append bytes
           let byteCount = Int.random(in: 0...8, using: &rng)
-          let bytes = generateRandomBytes(length: byteCount, using: &rng)
+          let bytes = Self.generateRandomBytes(length: byteCount, using: &rng)
           encoder.append(contentsOf: bytes)
           expectedData.append(contentsOf: bytes)
 
         case 5:
           // Append Data
           let dataLength = Int.random(in: 0...8, using: &rng)
-          let data = generateRandomData(length: dataLength, using: &rng)
+          let data = Self.generateRandomData(length: dataLength, using: &rng)
           encoder.append(data)
           expectedData.append(data)
 
@@ -520,9 +520,9 @@ struct MTPEndianCodecFuzzTests {
   /// Fuzz test for round-trip encoding/decoding.
   @Test("Round-trip fuzz test - encode then decode")
   func testFuzzRoundTrip() async throws {
-    var rng = FuzzRNG(seed: fuzzSeed &+ 13)
+    var rng = FuzzRNG(seed: Self.fuzzSeed &+ 13)
 
-    for _ in 0..<fuzzIterations {
+    for _ in 0..<Self.fuzzIterations {
       // UInt16 round-trip
       let u16 = UInt16.random(in: .min ... .max, using: &rng)
       let encoded16 = MTPEndianCodec.encode(u16)

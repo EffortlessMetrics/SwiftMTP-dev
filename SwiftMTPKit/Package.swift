@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
-// swift-tools-version: 6.0
+// swift-tools-version: 6.2
 import PackageDescription
 
 let package = Package(
   name: "SwiftMTPKit",
   defaultLocalization: "en",
-  platforms: [.macOS(.v15), .iOS(.v18)],
+  platforms: [.macOS(.v26), .iOS(.v26)],
   products: [
     .library(name: "MTPEndianCodec", targets: ["MTPEndianCodec"]),
     .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
@@ -20,8 +20,15 @@ let package = Package(
     .library(name: "SwiftMTPXPC", targets: ["SwiftMTPXPC"]),
     .library(name: "SwiftMTPFileProvider", targets: ["SwiftMTPFileProvider"]),
     .library(name: "SwiftMTPTestKit", targets: ["SwiftMTPTestKit"]),
+    .library(name: "SwiftMTPCLI", targets: ["SwiftMTPCLI"]),
+    .library(name: "SwiftMTPUI", targets: ["SwiftMTPUI"]),
     .plugin(name: "SwiftMTPBuildTool", targets: ["SwiftMTPBuildTool"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
+    .executable(name: "SwiftMTPApp", targets: ["SwiftMTPApp"]),
+    .executable(name: "MTPEndianCodecFuzz", targets: ["MTPEndianCodecFuzz"]),
+    .executable(name: "SwiftMTPFuzz", targets: ["SwiftMTPFuzz"]),
+    .executable(name: "simple-probe", targets: ["simple-probe"]),
+    .executable(name: "test-xiaomi", targets: ["test-xiaomi"]),
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-async-algorithms.git", exact: "1.1.1"),
@@ -39,6 +46,10 @@ let package = Package(
       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .target(
+      name: "SwiftMTPCLI",
+      swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+
+    .target(
       name: "SwiftMTPObservability",
       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
@@ -47,6 +58,8 @@ let package = Package(
       dependencies: [
         "SwiftMTPObservability",
         "SwiftMTPQuirks",
+        "SwiftMTPCLI",
+        "MTPEndianCodec",
         .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
         .product(name: "Collections", package: "swift-collections"),
       ]),
@@ -96,13 +109,23 @@ let package = Package(
 
     .target(
       name: "SwiftMTPXPC",
-      dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex"],
-      swiftSettings: [.swiftLanguageMode(.v5)]),
+      dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex"]),
 
     .target(
       name: "SwiftMTPFileProvider",
-      dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPStore", "SwiftMTPXPC"],
-      swiftSettings: [.swiftLanguageMode(.v5)]),
+      dependencies: ["SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPStore", "SwiftMTPXPC"]),
+
+    // MARK: - UI / App
+
+    .target(
+      name: "SwiftMTPUI",
+      dependencies: [
+        "SwiftMTPCore",
+        "SwiftMTPTransportLibUSB",
+        "SwiftMTPIndex",
+        "SwiftMTPQuirks",
+        "SwiftMTPFileProvider",
+      ]),
 
     .plugin(
       name: "SwiftMTPBuildTool",
@@ -120,6 +143,31 @@ let package = Package(
       ],
       path: "Sources/Tools/swiftmtp-cli",
       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+
+    .executableTarget(
+      name: "SwiftMTPApp",
+      dependencies: ["SwiftMTPUI"],
+      path: "Sources/Tools/SwiftMTPApp"),
+
+    .executableTarget(
+      name: "MTPEndianCodecFuzz",
+      dependencies: ["MTPEndianCodec"],
+      path: "Sources/Tools/MTPEndianCodecFuzz"),
+
+    .executableTarget(
+      name: "SwiftMTPFuzz",
+      dependencies: ["SwiftMTPCore"],
+      path: "Sources/Tools/SwiftMTPFuzz"),
+
+    .executableTarget(
+      name: "simple-probe",
+      dependencies: ["CLibusb"],
+      path: "Sources/Tools/simple-probe"),
+
+    .executableTarget(
+      name: "test-xiaomi",
+      dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb"],
+      path: "Sources/Tools/test-xiaomi"),
 
     .testTarget(
       name: "CoreTests",
@@ -223,5 +271,9 @@ let package = Package(
       name: "MTPEndianCodecTests",
       dependencies: ["MTPEndianCodec"],
       exclude: ["Corpus", "__Snapshots__"]),
+
+    .testTarget(
+      name: "SwiftMTPCLITests",
+      dependencies: ["SwiftMTPCLI", "SwiftMTPCore"]),
   ]
 )

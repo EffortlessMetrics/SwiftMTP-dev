@@ -24,7 +24,8 @@ private enum HexFailure: Error {
 }
 
 private func decodeHexLines(_ text: String) -> Result<[Data], HexFailure> {
-  let lines = text.split(whereSeparator: \.isNewline).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+  let lines = text.split(whereSeparator: \.isNewline)
+    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
   let values: [Data] = lines.compactMap { line in
     let parts = line.split(separator: " ").map { String($0) }.filter { !$0.isEmpty }
     guard !parts.isEmpty else { return nil }
@@ -79,18 +80,38 @@ func runFuzz(seed: UInt64, rounds: Int, corpus: [Data]) -> Int {
     }
 
     let data = Data(buffer)
+    var iterationFailed = false
+
+    // Validate round-trip invariants and detect decode anomalies
     let _ = MTPEndianCodec.decodeUInt16(from: data, at: 0)
     let _ = MTPEndianCodec.decodeUInt32(from: data, at: 0)
     let _ = MTPEndianCodec.decodeUInt64(from: data, at: 0)
     if let u16 = MTPEndianCodec.decodeUInt16(from: data, at: max(0, data.count - 2)) {
       var roundTrip = Data()
       roundTrip.append(MTPEndianCodec.encode(u16))
-      _ = MTPEndianCodec.decodeUInt16(from: roundTrip, at: 0)
+      if let decoded = MTPEndianCodec.decodeUInt16(from: roundTrip, at: 0), decoded != u16 {
+        iterationFailed = true
+        print(
+          "FAILURE[round=\(round)]: UInt16 round-trip mismatch: encoded \(u16) decoded \(decoded)")
+        print("  input: \(buffer.map { String(format: "%02x", $0) }.joined(separator: " "))")
+      }
     }
+
+    // Validate encoder produces stable output
+    var enc = MTPDataEncoder()
+    enc.append(UInt32(data.count))
+    _ = enc.encodedData
+
+    if iterationFailed {
+      failures += 1
+      // Dump crash corpus entry so CI can collect
+      let hex = buffer.map { String(format: "%02x", $0) }.joined(separator: " ")
+      print("CRASH_CORPUS[\(failures)]: \(hex)")
+    }
+
     if round.isMultiple(of: 1024) {
-      print("fuzz round \(round) seed=0x\(String(seed, radix: 16))")
+      print("fuzz round \(round) seed=0x\(String(seed, radix: 16)) failures=\(failures)")
     }
-    _ = MTPEndianCodec.MTPDataEncoder()
   }
 
   return failures
@@ -98,12 +119,20 @@ func runFuzz(seed: UInt64, rounds: Int, corpus: [Data]) -> Int {
 
 let arguments = CommandLine.arguments
 let defaultSeed: UInt64 = 0x1A_11_C0DE_BAAD_F00D
-let seed = arguments.dropFirst().compactMap { arg in
-  if arg.hasPrefix("--seed=") { return UInt64(arg.dropFirst(7), radix: 16) } ; return nil
-}.first ?? defaultSeed
-let iterations = arguments.dropFirst().compactMap { arg in
-  if arg.hasPrefix("--iterations=") { return Int(arg.dropFirst(13)) } ; return nil
-}.first ?? 8192
+let seed =
+  arguments.dropFirst()
+  .compactMap { arg in
+    if arg.hasPrefix("--seed=") { return UInt64(arg.dropFirst(7), radix: 16) }
+    return nil
+  }
+  .first ?? defaultSeed
+let iterations =
+  arguments.dropFirst()
+  .compactMap { arg in
+    if arg.hasPrefix("--iterations=") { return Int(arg.dropFirst(13)) }
+    return nil
+  }
+  .first ?? 8192
 let corpusPath = arguments.first(where: { $0.hasSuffix(".hex") || $0.hasSuffix(".txt") })
 
 let corpus = {
@@ -111,7 +140,8 @@ let corpus = {
     return try? readCorpus(from: corpusPath)
   }
   let bundleURL = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
-  let fallback = bundleURL.appendingPathComponent("Corpus").appendingPathComponent("event-buffer.hex")
+  let fallback = bundleURL.appendingPathComponent("Corpus")
+    .appendingPathComponent("event-buffer.hex")
   return try? readCorpus(from: fallback.path)
 }()
 

@@ -10,12 +10,12 @@ import SwiftMTPCLI
 struct CLIParsingBehavior {
   @Test("parseUSBIdentifier supports decimal and hex inputs")
   func parseUSBIdentifierFormats() {
-    #expect(parseUSBIdentifier("0x2717") == 0x2717)
-    #expect(parseUSBIdentifier("0XABCD") == 0xABCD)
-    #expect(parseUSBIdentifier("4660") == 0x1234)
-    #expect(parseUSBIdentifier("ff40") == 0xFF40)
-    #expect(parseUSBIdentifier(" 1234 ") == 0x1234)
-    #expect(parseUSBIdentifier("not-a-number") == nil)
+    #expect(SwiftMTPCLI.parseUSBIdentifier("0x2717") == 0x2717)
+    #expect(SwiftMTPCLI.parseUSBIdentifier("0XABCD") == 0xABCD)
+    #expect(SwiftMTPCLI.parseUSBIdentifier("4660") == 0x1234)
+    #expect(SwiftMTPCLI.parseUSBIdentifier("ff40") == 0xFF40)
+    #expect(SwiftMTPCLI.parseUSBIdentifier(" 1234 ") == 0x1234)
+    #expect(SwiftMTPCLI.parseUSBIdentifier("not-a-number") == nil)
   }
 
   @Test("DeviceFilter parser is canonical under randomized idempotence runs")
@@ -41,7 +41,8 @@ struct CLIParsingBehavior {
         args.append("--noise-\(rng.nextInt(1...99))")
         args.append("noise-\(rng.nextInt(1...999))")
       }
-      let unknownCount = (args.count - canonicalFilterArgs(vid: vid, pid: pid, bus: bus, address: address).count) / 2
+      let unknownCount =
+        (args.count - canonicalFilterArgs(vid: vid, pid: pid, bus: bus, address: address).count) / 2
 
       var parsedArgs = args
       let parsed = DeviceFilterParse.parse(from: &parsedArgs)
@@ -105,7 +106,8 @@ struct CLISelectionIntegration {
       address: 7
     )
 
-    let outcome = selectDevice([matched, nonmatch], filter: filter, noninteractive: true)
+    let outcome = SwiftMTPCLI.selectDevice(
+      [matched, nonmatch], filter: filter, noninteractive: true)
 
     #expect(args == ["--other", "token"])
     switch outcome {
@@ -135,7 +137,8 @@ struct CLIJSONSnapshot {
     let data = try encoder.encode(envelope)
     let text = String(data: data, encoding: .utf8) ?? ""
 
-    let snapshot = #"{"details":{"code":"E42"},"error":"snapshot-error","mode":"unit","schemaVersion":"1.0","timestamp":"2026-01-01T00:00:00Z","type":"error"}"#
+    let snapshot =
+      #"{"details":{"code":"E42"},"error":"snapshot-error","mode":"unit","schemaVersion":"1.0","timestamp":"2026-01-01T00:00:00Z","type":"error"}"#
     #expect(text == snapshot)
   }
 }
@@ -185,7 +188,6 @@ struct CLIParserFuzz {
 }
 
 // MARK: - Deterministic random helpers
-
 
 private struct SeededGenerator {
   private var state: UInt64
