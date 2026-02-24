@@ -1,4 +1,6 @@
-// JSONIO.swift
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2025 Effortless Metrics, Inc.
+
 import Foundation
 
 public struct CLIErrorEnvelope: Codable, Sendable {
@@ -8,11 +10,17 @@ public struct CLIErrorEnvelope: Codable, Sendable {
   public let timestamp: String
   public let details: [String:String]?
   public let mode: String?
-  public init(_ error: String, details: [String:String]? = nil, mode: String? = nil) {
+
+  public init(
+    _ error: String,
+    details: [String:String]? = nil,
+    mode: String? = nil,
+    timestamp: String? = nil
+  ) {
     self.schemaVersion = "1.0"
     self.type = "error"
     self.error = error
-    self.timestamp = ISO8601DateFormatter().string(from: Date())
+    self.timestamp = timestamp ?? ISO8601DateFormatter().string(from: Date())
     self.details = details
     self.mode = mode
   }
@@ -36,7 +44,12 @@ public func printJSON<T: Encodable>(_ value: T) {
 }
 
 @inline(__always)
-public func printJSONErrorAndExit(_ message: String, code: ExitCode = .software, details: [String:String]? = nil, mode: String? = nil) -> Never {
+public func printJSONErrorAndExit(
+  _ message: String,
+  code: ExitCode = .software,
+  details: [String:String]? = nil,
+  mode: String? = nil
+) -> Never {
   printJSON(CLIErrorEnvelope(message, details: details, mode: mode))
   exitNow(code)
 }

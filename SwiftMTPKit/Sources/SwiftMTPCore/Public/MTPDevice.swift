@@ -2,20 +2,8 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import MTPEndianCodec
 import SwiftMTPQuirks
-
-@inline(__always)
-private func decodeLittleEndian<T: FixedWidthInteger>(
-  _ data: Data, at offset: Int, as: T.Type = T.self
-) -> T? {
-  let width = MemoryLayout<T>.size
-  guard offset >= 0, offset + width <= data.count else { return nil }
-  var value: T = 0
-  _ = withUnsafeMutableBytes(of: &value) { raw in
-    data.copyBytes(to: raw, from: offset..<(offset + width))
-  }
-  return T(littleEndian: value)
-}
 
 public struct MTPDeviceID: Hashable, Sendable, Codable {
   public let raw: String
@@ -89,12 +77,12 @@ public enum MTPEvent: Sendable {
   public static func fromRaw(_ data: Data) -> MTPEvent? {
     guard data.count >= 12 else { return nil }
     // PTP/MTP Event container: [len(4) type(2)=4 code(2) txid(4) params...]
-    guard let code: UInt16 = decodeLittleEndian(data, at: 6) else { return nil }
+    guard let code: UInt16 = MTPEndianCodec.decodeUInt16(from: data, at: 6) else { return nil }
     let paramCount = (data.count - 12) / 4
     var params: [UInt32] = []
     params.reserveCapacity(paramCount)
     for index in 0..<paramCount {
-      guard let value: UInt32 = decodeLittleEndian(data, at: 12 + index * 4) else { break }
+      guard let value: UInt32 = MTPEndianCodec.decodeUInt32(from: data, at: 12 + index * 4) else { break }
       params.append(value)
     }
 

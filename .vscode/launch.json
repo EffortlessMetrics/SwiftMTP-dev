@@ -99,6 +99,26 @@
             "target": "SwiftMTPFuzz",
             "configuration": "release",
             "preLaunchTask": "swift: Build Release SwiftMTPFuzz"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:SwiftMTP}",
+            "name": "Debug MTPEndianCodecFuzz",
+            "target": "MTPEndianCodecFuzz",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug MTPEndianCodecFuzz"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:SwiftMTP}",
+            "name": "Release MTPEndianCodecFuzz",
+            "target": "MTPEndianCodecFuzz",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release MTPEndianCodecFuzz"
         }
     ]
 }
