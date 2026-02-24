@@ -9,379 +9,393 @@ import FileProvider
 
 final class FileProviderExtensionTests: XCTestCase {
 
-    // MARK: - Mock LiveIndexReader
+  // MARK: - Mock LiveIndexReader
 
-    private final class MockLiveIndexReader: @unchecked Sendable, LiveIndexReader {
-        private var objects: [String: [UInt32: IndexedObject]] = [:]
-        private var storages: [String: [IndexedStorage]] = [:]
+  private final class MockLiveIndexReader: @unchecked Sendable, LiveIndexReader {
+    private var objects: [String: [UInt32: IndexedObject]] = [:]
+    private var storages: [String: [IndexedStorage]] = [:]
 
-        func addObject(_ object: IndexedObject) {
-            let key = object.deviceId
-            if objects[key] == nil {
-                objects[key] = [:]
-            }
-            objects[key]?[object.handle] = object
+    func addObject(_ object: IndexedObject) {
+      let key = object.deviceId
+      if objects[key] == nil {
+        objects[key] = [:]
+      }
+      objects[key]?[object.handle] = object
+    }
+
+    func addStorage(_ storage: IndexedStorage) {
+      let key = storage.deviceId
+      if storages[key] == nil {
+        storages[key] = []
+      }
+      storages[key]?.append(storage)
+    }
+
+    func object(deviceId: String, handle: UInt32) async throws -> IndexedObject? {
+      return objects[deviceId]?[handle]
+    }
+
+    func children(deviceId: String, storageId: UInt32, parentHandle: UInt32?) async throws
+      -> [IndexedObject]
+    {
+      let key = deviceId
+      guard let allObjects = objects[key] else { return [] }
+      return allObjects.values
+        .filter { obj in
+          obj.storageId == storageId && obj.parentHandle == parentHandle
         }
-
-        func addStorage(_ storage: IndexedStorage) {
-            let key = storage.deviceId
-            if storages[key] == nil {
-                storages[key] = []
-            }
-            storages[key]?.append(storage)
-        }
-
-        func object(deviceId: String, handle: UInt32) async throws -> IndexedObject? {
-            return objects[deviceId]?[handle]
-        }
-
-        func children(deviceId: String, storageId: UInt32, parentHandle: UInt32?) async throws -> [IndexedObject] {
-            let key = deviceId
-            guard let allObjects = objects[key] else { return [] }
-            return allObjects.values.filter { obj in
-                obj.storageId == storageId && obj.parentHandle == parentHandle
-            }.sorted { $0.handle < $1.handle }
-        }
-
-        func storages(deviceId: String) async throws -> [IndexedStorage] {
-            return storages[deviceId] ?? []
-        }
-
-        func currentChangeCounter(deviceId: String) async throws -> Int64 {
-            return 0
-        }
-
-        func changesSince(deviceId: String, anchor: Int64) async throws -> [IndexedObjectChange] {
-            return []
-        }
-
-        func crawlState(deviceId: String, storageId: UInt32, parentHandle: UInt32?) async throws -> Date? {
-            return nil
-        }
+        .sorted { $0.handle < $1.handle }
     }
 
-    // MARK: - Extension Lifecycle Tests
-
-    func testExtensionInitialization() {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
-
-        // Extension should be creatable with a domain
-        let extension1 = MTPFileProviderExtension(domain: domain)
-        XCTAssertNotNil(extension1)
+    func storages(deviceId: String) async throws -> [IndexedStorage] {
+      return storages[deviceId] ?? []
     }
 
-    func testExtensionInvalidation() {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
-
-        let extension1 = MTPFileProviderExtension(domain: domain)
-
-        // Invalidation should not crash
-        extension1.invalidate()
+    func currentChangeCounter(deviceId: String) async throws -> Int64 {
+      return 0
     }
 
-    // MARK: - Item Lookup Tests
-
-    func testItemForIdentifierWithInvalidFormat() {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
-
-        let extension1 = MTPFileProviderExtension(domain: domain)
-        let invalidIdentifier = NSFileProviderItemIdentifier("invalid-format")
-
-        let expectation = XCTestExpectation(description: "Item lookup completes")
-
-        _ = extension1.item(
-            for: invalidIdentifier,
-            request: NSFileProviderRequest(),
-            completionHandler: { item, error in
-                XCTAssertNil(item)
-                XCTAssertNotNil(error)
-                expectation.fulfill()
-            }
-        )
-
-        wait(for: [expectation], timeout: 1.0)
+    func changesSince(deviceId: String, anchor: Int64) async throws -> [IndexedObjectChange] {
+      return []
     }
 
-    func testItemForValidIdentifierWithMockIndex() throws {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
-
-        // Create mock index
-        let mockReader = MockLiveIndexReader()
-        mockReader.addStorage(IndexedStorage(
-            deviceId: "device1",
-            storageId: 1,
-            description: "Internal Storage",
-            capacity: 64_000_000_000,
-            free: 32_000_000_000,
-            readOnly: false
-        ))
-
-        mockReader.addObject(IndexedObject(
-            deviceId: "device1",
-            storageId: 1,
-            handle: 100,
-            parentHandle: nil,
-            name: "DCIM",
-            pathKey: "/DCIM",
-            sizeBytes: nil,
-            mtime: nil,
-            formatCode: 0x3001,
-            isDirectory: true,
-            changeCounter: 0
-        ))
-
-        // Note: In real tests, we would inject the mock reader
-        // For now, we test that the extension handles valid identifiers
-        let extension1 = MTPFileProviderExtension(domain: domain)
-
-        let validIdentifier = NSFileProviderItemIdentifier("device1:1:100")
-
-        let expectation = XCTestExpectation(description: "Item lookup completes")
-
-        _ = extension1.item(
-            for: validIdentifier,
-            request: NSFileProviderRequest(),
-            completionHandler: { item, error in
-                // Will return nil if index not available, but should not crash
-                expectation.fulfill()
-            }
-        )
-
-        wait(for: [expectation], timeout: 1.0)
+    func crawlState(deviceId: String, storageId: UInt32, parentHandle: UInt32?) async throws
+      -> Date?
+    {
+      return nil
     }
+  }
 
-    // MARK: - Enumerator Creation Tests
+  // MARK: - Extension Lifecycle Tests
 
-    func testEnumeratorForContainer() throws {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
+  func testExtensionInitialization() {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
 
-        let extension1 = MTPFileProviderExtension(domain: domain)
+    // Extension should be creatable with a domain
+    let extension1 = MTPFileProviderExtension(domain: domain)
+    XCTAssertNotNil(extension1)
+  }
 
-        // Create enumerator for device root
-        let deviceIdentifier = NSFileProviderItemIdentifier("device1")
-        let enumerator = try extension1.enumerator(for: deviceIdentifier, request: NSFileProviderRequest())
+  func testExtensionInvalidation() {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
 
-        XCTAssertNotNil(enumerator)
-    }
+    let extension1 = MTPFileProviderExtension(domain: domain)
 
-    func testEnumeratorForStorageContainer() throws {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
+    // Invalidation should not crash
+    extension1.invalidate()
+  }
 
-        let extension1 = MTPFileProviderExtension(domain: domain)
+  // MARK: - Item Lookup Tests
 
-        let storageIdentifier = NSFileProviderItemIdentifier("device1:1")
-        let enumerator = try extension1.enumerator(for: storageIdentifier, request: NSFileProviderRequest())
+  func testItemForIdentifierWithInvalidFormat() {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
 
-        XCTAssertNotNil(enumerator)
-    }
+    let extension1 = MTPFileProviderExtension(domain: domain)
+    let invalidIdentifier = NSFileProviderItemIdentifier("invalid-format")
 
-    func testEnumeratorForNestedContainer() throws {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
+    let expectation = XCTestExpectation(description: "Item lookup completes")
 
-        let extension1 = MTPFileProviderExtension(domain: domain)
+    _ = extension1.item(
+      for: invalidIdentifier,
+      request: NSFileProviderRequest(),
+      completionHandler: { item, error in
+        XCTAssertNil(item)
+        XCTAssertNotNil(error)
+        expectation.fulfill()
+      }
+    )
 
-        let nestedIdentifier = NSFileProviderItemIdentifier("device1:1:100")
-        let enumerator = try extension1.enumerator(for: nestedIdentifier, request: NSFileProviderRequest())
+    wait(for: [expectation], timeout: 1.0)
+  }
 
-        XCTAssertNotNil(enumerator)
-    }
+  func testItemForValidIdentifierWithMockIndex() throws {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
 
-    func testEnumeratorForInvalidContainerThrows() {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
+    // Create mock index
+    let mockReader = MockLiveIndexReader()
+    mockReader.addStorage(
+      IndexedStorage(
+        deviceId: "device1",
+        storageId: 1,
+        description: "Internal Storage",
+        capacity: 64_000_000_000,
+        free: 32_000_000_000,
+        readOnly: false
+      ))
 
-        let extension1 = MTPFileProviderExtension(domain: domain)
+    mockReader.addObject(
+      IndexedObject(
+        deviceId: "device1",
+        storageId: 1,
+        handle: 100,
+        parentHandle: nil,
+        name: "DCIM",
+        pathKey: "/DCIM",
+        sizeBytes: nil,
+        mtime: nil,
+        formatCode: 0x3001,
+        isDirectory: true,
+        changeCounter: 0
+      ))
 
-        let invalidIdentifier = NSFileProviderItemIdentifier("invalid")
+    // Note: In real tests, we would inject the mock reader
+    // For now, we test that the extension handles valid identifiers
+    let extension1 = MTPFileProviderExtension(domain: domain)
 
-        XCTAssertNoThrow(try extension1.enumerator(for: invalidIdentifier, request: NSFileProviderRequest()))
-    }
+    let validIdentifier = NSFileProviderItemIdentifier("device1:1:100")
 
-    // MARK: - Content Fetch Tests
+    let expectation = XCTestExpectation(description: "Item lookup completes")
 
-    func testFetchContentsForNonFileItem() {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
+    _ = extension1.item(
+      for: validIdentifier,
+      request: NSFileProviderRequest(),
+      completionHandler: { item, error in
+        // Will return nil if index not available, but should not crash
+        expectation.fulfill()
+      }
+    )
 
-        let extension1 = MTPFileProviderExtension(domain: domain)
+    wait(for: [expectation], timeout: 1.0)
+  }
 
-        // Storage item has no objectHandle, should fail
-        let storageIdentifier = NSFileProviderItemIdentifier("device1:1")
+  // MARK: - Enumerator Creation Tests
 
-        let expectation = XCTestExpectation(description: "Fetch contents completes")
+  func testEnumeratorForContainer() throws {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
 
-        _ = extension1.fetchContents(
-            for: storageIdentifier,
-            version: nil,
-            request: NSFileProviderRequest(),
-            completionHandler: { url, item, error in
-                XCTAssertNil(url)
-                XCTAssertNil(item)
-                XCTAssertNotNil(error)
-                expectation.fulfill()
-            }
-        )
+    let extension1 = MTPFileProviderExtension(domain: domain)
 
-        wait(for: [expectation], timeout: 1.0)
-    }
+    // Create enumerator for device root
+    let deviceIdentifier = NSFileProviderItemIdentifier("device1")
+    let enumerator = try extension1.enumerator(
+      for: deviceIdentifier, request: NSFileProviderRequest())
 
-    // MARK: - Write Operations Return Errors
+    XCTAssertNotNil(enumerator)
+  }
 
-    func testCreateItemReturnsNotAuthenticated() {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
+  func testEnumeratorForStorageContainer() throws {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
 
-        let extension1 = MTPFileProviderExtension(domain: domain)
-        let templateItem = MTPFileProviderItem(
-            deviceId: "device1",
-            storageId: 1,
-            objectHandle: nil,
-            name: "Template",
-            size: nil,
-            isDirectory: true,
-            modifiedDate: nil
-        )
+    let extension1 = MTPFileProviderExtension(domain: domain)
 
-        let expectation = XCTestExpectation(description: "Create item completes")
+    let storageIdentifier = NSFileProviderItemIdentifier("device1:1")
+    let enumerator = try extension1.enumerator(
+      for: storageIdentifier, request: NSFileProviderRequest())
 
-        _ = extension1.createItem(
-            basedOn: templateItem,
-            fields: [],
-            contents: nil,
-            request: NSFileProviderRequest(),
-            completionHandler: { item, fields, shouldRename, error in
-                XCTAssertNil(item)
-                XCTAssertNotNil(error)
-                expectation.fulfill()
-            }
-        )
+    XCTAssertNotNil(enumerator)
+  }
 
-        wait(for: [expectation], timeout: 1.0)
-    }
+  func testEnumeratorForNestedContainer() throws {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
 
-    func testModifyItemReturnsNotAuthenticated() {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
+    let extension1 = MTPFileProviderExtension(domain: domain)
 
-        let extension1 = MTPFileProviderExtension(domain: domain)
-        let templateItem = MTPFileProviderItem(
-            deviceId: "device1",
-            storageId: 1,
-            objectHandle: 100,
-            parentHandle: nil,
-            name: "test.txt",
-            size: 10,
-            isDirectory: false,
-            modifiedDate: nil
-        )
+    let nestedIdentifier = NSFileProviderItemIdentifier("device1:1:100")
+    let enumerator = try extension1.enumerator(
+      for: nestedIdentifier, request: NSFileProviderRequest())
 
-        let expectation = XCTestExpectation(description: "Modify item completes")
+    XCTAssertNotNil(enumerator)
+  }
 
-        _ = extension1.modifyItem(
-            templateItem,
-            baseVersion: NSFileProviderItemVersion(),
-            changedFields: [],
-            contents: nil,
-            request: NSFileProviderRequest(),
-            completionHandler: { item, fields, shouldRename, error in
-                XCTAssertNil(item)
-                XCTAssertNotNil(error)
-                expectation.fulfill()
-            }
-        )
+  func testEnumeratorForInvalidContainerThrows() {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
 
-        wait(for: [expectation], timeout: 1.0)
-    }
+    let extension1 = MTPFileProviderExtension(domain: domain)
 
-    func testDeleteItemReturnsNotAuthenticated() {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
+    let invalidIdentifier = NSFileProviderItemIdentifier("invalid")
 
-        let extension1 = MTPFileProviderExtension(domain: domain)
+    XCTAssertNoThrow(
+      try extension1.enumerator(for: invalidIdentifier, request: NSFileProviderRequest()))
+  }
 
-        let expectation = XCTestExpectation(description: "Delete item completes")
+  // MARK: - Content Fetch Tests
 
-        _ = extension1.deleteItem(
-            identifier: NSFileProviderItemIdentifier("device1:1:100"),
-            baseVersion: NSFileProviderItemVersion(),
-            options: [],
-            request: NSFileProviderRequest(),
-            completionHandler: { error in
-                XCTAssertNotNil(error)
-                expectation.fulfill()
-            }
-        )
+  func testFetchContentsForNonFileItem() {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
 
-        wait(for: [expectation], timeout: 1.0)
-    }
+    let extension1 = MTPFileProviderExtension(domain: domain)
 
-    // MARK: - Progress Tests
+    // Storage item has no objectHandle, should fail
+    let storageIdentifier = NSFileProviderItemIdentifier("device1:1")
 
-    func testItemLookupReturnsProgress() {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
+    let expectation = XCTestExpectation(description: "Fetch contents completes")
 
-        let extension1 = MTPFileProviderExtension(domain: domain)
+    _ = extension1.fetchContents(
+      for: storageIdentifier,
+      version: nil,
+      request: NSFileProviderRequest(),
+      completionHandler: { url, item, error in
+        XCTAssertNil(url)
+        XCTAssertNil(item)
+        XCTAssertNotNil(error)
+        expectation.fulfill()
+      }
+    )
 
-        let progress = extension1.item(
-            for: NSFileProviderItemIdentifier.rootContainer,
-            request: NSFileProviderRequest(),
-            completionHandler: { _, _ in }
-        )
+    wait(for: [expectation], timeout: 1.0)
+  }
 
-        XCTAssertNotNil(progress)
-        XCTAssertEqual(progress.totalUnitCount, 1)
-    }
+  // MARK: - Write Operations
 
-    func testFetchContentsReturnsProgress() {
-        let domain = NSFileProviderDomain(
-            identifier: NSFileProviderDomainIdentifier("test-domain"),
-            displayName: "Test Domain"
-        )
+  func testCreateItemReturnsErrorForFileWithNoContents() {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
 
-        let extension1 = MTPFileProviderExtension(domain: domain)
+    let extension1 = MTPFileProviderExtension(domain: domain)
+    // A file template (not a folder) with no contents URL → hits the guard and returns error
+    let templateItem = MTPFileProviderItem(
+      deviceId: "device1",
+      storageId: 1,
+      objectHandle: nil,
+      name: "file.txt",
+      size: nil,
+      isDirectory: false,
+      modifiedDate: nil
+    )
 
-        let progress = extension1.fetchContents(
-            for: NSFileProviderItemIdentifier("device1:1:100"),
-            version: nil,
-            request: NSFileProviderRequest(),
-            completionHandler: { _, _, _ in }
-        )
+    let expectation = XCTestExpectation(description: "Create item completes")
 
-        XCTAssertNotNil(progress)
-        XCTAssertEqual(progress.totalUnitCount, 1)
-    }
+    _ = extension1.createItem(
+      basedOn: templateItem,
+      fields: [],
+      contents: nil,  // No URL → noSuchItem error path
+      request: NSFileProviderRequest(),
+      completionHandler: { item, fields, shouldRename, error in
+        XCTAssertNil(item)
+        XCTAssertNotNil(error)
+        expectation.fulfill()
+      }
+    )
+
+    wait(for: [expectation], timeout: 1.0)
+  }
+
+  func testModifyItemAcknowledgesMetadataOnlyChange() {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
+
+    let extension1 = MTPFileProviderExtension(domain: domain)
+    let templateItem = MTPFileProviderItem(
+      deviceId: "device1",
+      storageId: 1,
+      objectHandle: 100,
+      parentHandle: nil,
+      name: "test.txt",
+      size: 10,
+      isDirectory: false,
+      modifiedDate: nil
+    )
+
+    let expectation = XCTestExpectation(description: "Modify item completes")
+
+    _ = extension1.modifyItem(
+      templateItem,
+      baseVersion: NSFileProviderItemVersion(),
+      changedFields: [],  // No content change → metadata-only, acknowledged with no error
+      contents: nil,
+      request: NSFileProviderRequest(),
+      completionHandler: { item, fields, shouldRename, error in
+        XCTAssertNotNil(item)  // Item echoed back for metadata-only acknowledgement
+        XCTAssertNil(error)
+        expectation.fulfill()
+      }
+    )
+
+    wait(for: [expectation], timeout: 1.0)
+  }
+
+  func testDeleteItemReturnsErrorForRootContainer() {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
+
+    let extension1 = MTPFileProviderExtension(domain: domain)
+
+    let expectation = XCTestExpectation(description: "Delete item completes")
+
+    // Use an identifier without an objectHandle — hits the guard and returns error immediately
+    _ = extension1.deleteItem(
+      identifier: NSFileProviderItemIdentifier("device1"),
+      baseVersion: NSFileProviderItemVersion(),
+      options: [],
+      request: NSFileProviderRequest(),
+      completionHandler: { error in
+        XCTAssertNotNil(error)
+        expectation.fulfill()
+      }
+    )
+
+    wait(for: [expectation], timeout: 1.0)
+  }
+
+  // MARK: - Progress Tests
+
+  func testItemLookupReturnsProgress() {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
+
+    let extension1 = MTPFileProviderExtension(domain: domain)
+
+    let progress = extension1.item(
+      for: NSFileProviderItemIdentifier.rootContainer,
+      request: NSFileProviderRequest(),
+      completionHandler: { _, _ in }
+    )
+
+    XCTAssertNotNil(progress)
+    XCTAssertEqual(progress.totalUnitCount, 1)
+  }
+
+  func testFetchContentsReturnsProgress() {
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("test-domain"),
+      displayName: "Test Domain"
+    )
+
+    let extension1 = MTPFileProviderExtension(domain: domain)
+
+    let progress = extension1.fetchContents(
+      for: NSFileProviderItemIdentifier("device1:1:100"),
+      version: nil,
+      request: NSFileProviderRequest(),
+      completionHandler: { _, _, _ in }
+    )
+
+    XCTAssertNotNil(progress)
+    XCTAssertEqual(progress.totalUnitCount, 1)
+  }
 }

@@ -53,11 +53,15 @@
     "candidatesEvaluated" : 2,
     "deviceInfoCached" : false,
     "selectedInterface" : 0,
-    "selectedScore" : 12
+    "selectedScore" : 12,
+    "skippedAlternatives" : [
+
+    ]
   },
   "sessionEstablishment" : {
     "durationMs" : 0,
     "requiredRetry" : false,
+    "resetAttempted" : false,
     "succeeded" : true
   },
   "timestamp" : 792237660,

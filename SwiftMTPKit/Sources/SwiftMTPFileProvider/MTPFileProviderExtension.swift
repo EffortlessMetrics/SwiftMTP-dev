@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import UniformTypeIdentifiers
 @preconcurrency import FileProvider
 import SwiftMTPXPC
 import SwiftMTPCore
@@ -230,7 +231,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
     )
   }
 
-  // MARK: - Required Stubs for Replicated Extension
+  // MARK: - Write Operations (via XPC)
 
   public func createItem(
     basedOn itemTemplate: NSFileProviderItem, fields: NSFileProviderItemFields, contents url: URL?,
@@ -239,11 +240,100 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
       @escaping (NSFileProviderItem?, NSFileProviderItemFields, Bool, Error?) -> Void
   ) -> Progress {
     let progress = Progress(totalUnitCount: 1)
-    completionHandler(
-      nil, [], false,
-      NSError(
-        domain: NSFileProviderErrorDomain, code: NSFileProviderError.notAuthenticated.rawValue))
-    progress.completedUnitCount = 1
+
+    guard let xpcService = getXPCService(),
+      let components = MTPFileProviderItem.parseItemIdentifier(itemTemplate.itemIdentifier)
+    else {
+      completionHandler(
+        nil, [], false,
+        NSError(
+          domain: NSFileProviderErrorDomain, code: NSFileProviderError.serverUnreachable.rawValue))
+      progress.completedUnitCount = 1
+      return progress
+    }
+
+    // Folder creation
+    if itemTemplate.contentType == .folder || itemTemplate.contentType == .directory {
+      guard let storageId = components.storageId else {
+        completionHandler(
+          nil, [], false,
+          NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.noSuchItem.rawValue))
+        progress.completedUnitCount = 1
+        return progress
+      }
+      let folderParentHandle = MTPFileProviderItem.parseItemIdentifier(
+        itemTemplate.parentItemIdentifier)?
+        .objectHandle
+      let req = CreateFolderRequest(
+        deviceId: components.deviceId, storageId: storageId,
+        parentHandle: folderParentHandle, name: itemTemplate.filename)
+      let xpcBox = SendableBox(xpcService)
+      let cb = SendableBox(completionHandler)
+      Task {
+        let completionHandler = cb.value
+        await MainActor.run {
+          xpcBox.value.createFolder(req) { response in
+            if response.success {
+              let item = MTPFileProviderItem(
+                deviceId: components.deviceId, storageId: storageId,
+                objectHandle: response.newHandle, parentHandle: folderParentHandle,
+                name: req.name, size: nil, isDirectory: true, modifiedDate: nil)
+              completionHandler(item, [], false, nil)
+            } else {
+              completionHandler(
+                nil, [], false,
+                NSError(
+                  domain: NSFileProviderErrorDomain,
+                  code: NSFileProviderError.serverUnreachable.rawValue))
+            }
+            progress.completedUnitCount = 1
+          }
+        }
+      }
+      return progress
+    }
+
+    // File upload
+    guard let sourceURL = url, let storageId = components.storageId else {
+      completionHandler(
+        nil, [], false,
+        NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.noSuchItem.rawValue))
+      progress.completedUnitCount = 1
+      return progress
+    }
+    let fileSize =
+      (try? FileManager.default.attributesOfItem(atPath: sourceURL.path)[.size] as? UInt64) ?? 0
+    let bookmark = try? sourceURL.bookmarkData(options: .withSecurityScope)
+    // The parent is the container the new file is being created in
+    let parentHandle = MTPFileProviderItem.parseItemIdentifier(itemTemplate.parentItemIdentifier)?
+      .objectHandle
+    let req = WriteRequest(
+      deviceId: components.deviceId, storageId: storageId,
+      parentHandle: parentHandle, name: itemTemplate.filename,
+      size: fileSize, bookmark: bookmark)
+    let xpcBox = SendableBox(xpcService)
+    let cb = SendableBox(completionHandler)
+    Task {
+      let completionHandler = cb.value
+      await MainActor.run {
+        xpcBox.value.writeObject(req) { response in
+          if response.success {
+            let item = MTPFileProviderItem(
+              deviceId: components.deviceId, storageId: storageId,
+              objectHandle: response.newHandle, parentHandle: parentHandle,
+              name: req.name, size: fileSize, isDirectory: false, modifiedDate: nil)
+            completionHandler(item, [], false, nil)
+          } else {
+            completionHandler(
+              nil, [], false,
+              NSError(
+                domain: NSFileProviderErrorDomain,
+                code: NSFileProviderError.serverUnreachable.rawValue))
+          }
+          progress.completedUnitCount = 1
+        }
+      }
+    }
     return progress
   }
 
@@ -255,11 +345,56 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
       @escaping (NSFileProviderItem?, NSFileProviderItemFields, Bool, Error?) -> Void
   ) -> Progress {
     let progress = Progress(totalUnitCount: 1)
-    completionHandler(
-      nil, [], false,
-      NSError(
-        domain: NSFileProviderErrorDomain, code: NSFileProviderError.notAuthenticated.rawValue))
-    progress.completedUnitCount = 1
+
+    // Metadata-only change (rename etc.) — acknowledge with no server mutation for now
+    guard changedFields.contains(.contents), let sourceURL = newContents,
+      let xpcService = getXPCService(),
+      let components = MTPFileProviderItem.parseItemIdentifier(item.itemIdentifier),
+      let storageId = components.storageId
+    else {
+      completionHandler(item, [], false, nil)
+      progress.completedUnitCount = 1
+      return progress
+    }
+
+    // MTP has no in-place modify: delete old handle then upload new content
+    let fileSize =
+      (try? FileManager.default.attributesOfItem(atPath: sourceURL.path)[.size] as? UInt64) ?? 0
+    let bookmark = try? sourceURL.bookmarkData(options: .withSecurityScope)
+    let deleteReq = DeleteRequest(
+      deviceId: components.deviceId, objectHandle: components.objectHandle ?? 0)
+    let writeReq = WriteRequest(
+      deviceId: components.deviceId, storageId: storageId,
+      parentHandle: MTPFileProviderItem.parseItemIdentifier(item.parentItemIdentifier)?
+        .objectHandle,
+      name: item.filename, size: fileSize, bookmark: bookmark)
+    let xpcBox = SendableBox(xpcService)
+    let cb = SendableBox(completionHandler)
+    let parentHandle = MTPFileProviderItem.parseItemIdentifier(item.parentItemIdentifier)?
+      .objectHandle
+    Task {
+      let completionHandler = cb.value
+      await MainActor.run {
+        xpcBox.value.deleteObject(deleteReq) { _ in
+          xpcBox.value.writeObject(writeReq) { response in
+            if response.success {
+              let newItem = MTPFileProviderItem(
+                deviceId: components.deviceId, storageId: storageId,
+                objectHandle: response.newHandle, parentHandle: parentHandle,
+                name: writeReq.name, size: fileSize, isDirectory: false, modifiedDate: nil)
+              completionHandler(newItem, [], false, nil)
+            } else {
+              completionHandler(
+                nil, [], false,
+                NSError(
+                  domain: NSFileProviderErrorDomain,
+                  code: NSFileProviderError.serverUnreachable.rawValue))
+            }
+            progress.completedUnitCount = 1
+          }
+        }
+      }
+    }
     return progress
   }
 
@@ -269,10 +404,35 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
     completionHandler: @escaping (Error?) -> Void
   ) -> Progress {
     let progress = Progress(totalUnitCount: 1)
-    completionHandler(
-      NSError(
-        domain: NSFileProviderErrorDomain, code: NSFileProviderError.notAuthenticated.rawValue))
-    progress.completedUnitCount = 1
+
+    guard let xpcService = getXPCService(),
+      let components = MTPFileProviderItem.parseItemIdentifier(identifier),
+      let objectHandle = components.objectHandle
+    else {
+      completionHandler(
+        NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.noSuchItem.rawValue))
+      progress.completedUnitCount = 1
+      return progress
+    }
+
+    let req = DeleteRequest(
+      deviceId: components.deviceId, objectHandle: objectHandle, recursive: true)
+    let xpcBox = SendableBox(xpcService)
+    let cb = SendableBox(completionHandler)
+    Task {
+      let completionHandler = cb.value
+      await MainActor.run {
+        xpcBox.value.deleteObject(req) { response in
+          completionHandler(
+            response.success
+              ? nil
+              : NSError(
+                domain: NSFileProviderErrorDomain,
+                code: NSFileProviderError.serverUnreachable.rawValue))
+          progress.completedUnitCount = 1
+        }
+      }
+    }
     return progress
   }
 }
