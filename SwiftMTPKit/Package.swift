@@ -29,6 +29,8 @@ let package = Package(
     .executable(name: "SwiftMTPFuzz", targets: ["SwiftMTPFuzz"]),
     .executable(name: "simple-probe", targets: ["simple-probe"]),
     .executable(name: "test-xiaomi", targets: ["test-xiaomi"]),
+    .executable(name: "learn-promote", targets: ["learn-promote"]),
+    .executable(name: "swiftmtp-docs", targets: ["swiftmtp-docs"]),
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-async-algorithms.git", exact: "1.1.1"),
@@ -169,6 +171,16 @@ let package = Package(
       dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb"],
       path: "Sources/Tools/test-xiaomi"),
 
+    .executableTarget(
+      name: "learn-promote",
+      dependencies: ["SwiftMTPCore", "SwiftMTPQuirks"],
+      path: "Sources/Tools/learn-promote"),
+
+    .executableTarget(
+      name: "swiftmtp-docs",
+      dependencies: [],
+      path: "Sources/Tools/docc-generator-tool"),
+
     .testTarget(
       name: "CoreTests",
       dependencies: [
@@ -221,7 +233,7 @@ let package = Package(
       name: "IntegrationTests",
       dependencies: [
         "SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPFileProvider",
-        "SwiftMTPQuirks", "SwiftMTPTestKit",
+        "SwiftMTPXPC", "SwiftMTPQuirks", "SwiftMTPTestKit",
       ]),
     .testTarget(
       name: "StoreTests",

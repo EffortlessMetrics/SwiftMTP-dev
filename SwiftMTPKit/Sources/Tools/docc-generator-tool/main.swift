@@ -1,4 +1,9 @@
-#!/usr/bin/env swift
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2025 Effortless Metrics, Inc.
+//
+// Hands-off DocC device page generator.
+// Usage: swift run swiftmtp-docs <quirks.json> [output_dir]
+// Default output_dir: Docs/SwiftMTP.docc/Devices/
 
 import Foundation
 

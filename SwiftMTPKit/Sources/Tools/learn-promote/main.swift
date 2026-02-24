@@ -3,6 +3,7 @@
 
 import Foundation
 import SwiftMTPCore
+import SwiftMTPQuirks
 
 // Script-style entry point for learning promotion
 let args = CommandLine.arguments
@@ -40,31 +41,32 @@ do {
         print("  Last Updated: \(profile.lastUpdated.ISO8601Format())")
 
         if profile.successRate > 0.8 && profile.sampleCount >= 3 {
-            // Check if there's an existing quirk
-            let fp = DeviceFingerprint(
-                vid: UInt16(profile.fingerprint.vid, radix: 16) ?? 0,
-                pid: UInt16(profile.fingerprint.pid, radix: 16) ?? 0,
-                bcdDevice: profile.fingerprint.bcdDevice.flatMap { UInt16($0, radix: 16) },
-                ifaceClass: UInt8(profile.fingerprint.interfaceTriple.class, radix: 16),
-                ifaceSubClass: UInt8(profile.fingerprint.interfaceTriple.subclass, radix: 16),
-                ifaceProtocol: UInt8(profile.fingerprint.interfaceTriple.protocol, radix: 16)
-            )
-            
-            if let existingQuirk = quirkDB.bestMatch(for: fp) {
-                print("  Existing Quirk: \(existingQuirk.id) (\(existingQuirk.status))")
+            // Resolve USB identifiers from fingerprint hex strings
+            let vid = UInt16(profile.fingerprint.vid, radix: 16) ?? 0
+            let pid = UInt16(profile.fingerprint.pid, radix: 16) ?? 0
+            let bcdDevice = profile.fingerprint.bcdDevice.flatMap { UInt16($0, radix: 16) }
+            let ifaceClass = UInt8(profile.fingerprint.interfaceTriple.class, radix: 16)
+            let ifaceSubclass = UInt8(profile.fingerprint.interfaceTriple.subclass, radix: 16)
+            let ifaceProtocol = UInt8(profile.fingerprint.interfaceTriple.protocol, radix: 16)
+
+            if let existingQuirk = quirkDB.match(
+                vid: vid, pid: pid, bcdDevice: bcdDevice,
+                ifaceClass: ifaceClass, ifaceSubclass: ifaceSubclass, ifaceProtocol: ifaceProtocol
+            ) {
+                print("  Existing Quirk: \(existingQuirk.id) (\(existingQuirk.status ?? "unknown"))")
 
                 // Compare learned values with quirk values
                 var suggestions = [String]()
 
                 if let learnedChunk = profile.optimalChunkSize {
-                    let quirkChunk = existingQuirk.overrides.maxChunkBytes ?? 1048576
-                    if abs(learnedChunk - quirkChunk) > quirkChunk / 4 { // 25% difference
+                    let quirkChunk = existingQuirk.maxChunkBytes ?? 1_048_576
+                    if abs(learnedChunk - quirkChunk) > quirkChunk / 4 {  // 25% difference
                         suggestions.append("maxChunkBytes: \(quirkChunk) -> \(learnedChunk)")
                     }
                 }
 
                 if let learnedIO = profile.optimalIoTimeoutMs {
-                    let quirkIO = existingQuirk.overrides.ioTimeoutMs ?? 8000
+                    let quirkIO = existingQuirk.ioTimeoutMs ?? 8000
                     if abs(learnedIO - quirkIO) > quirkIO / 4 {
                         suggestions.append("ioTimeoutMs: \(quirkIO) -> \(learnedIO)")
                     }
@@ -78,7 +80,7 @@ do {
                 }
 
             } else {
-                print("  🆕 No existing quirk - consider creating one")
+                print("  🆕 No existing quirk for VID:\(profile.fingerprint.vid) PID:\(profile.fingerprint.pid) — consider creating one")
                 print("  📝 Suggested values:")
                 if let chunk = profile.optimalChunkSize {
                     print("    maxChunkBytes: \(chunk)")

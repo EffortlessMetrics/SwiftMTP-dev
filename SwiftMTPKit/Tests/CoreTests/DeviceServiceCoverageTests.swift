@@ -413,4 +413,113 @@ final class DeviceServiceCoverageTests: XCTestCase {
         try await device.openIfNeeded()
         XCTAssertEqual(device.storageCallCount, 1)
     }
+
+    // MARK: - Multi-Device Tests
+
+    func testMultipleDevicesConcurrentRegistration() async throws {
+        let registry = DeviceServiceRegistry()
+        let deviceIds = (1...3).map { MTPDeviceID(raw: "device-\($0)") }
+        let domainIds = (1...3).map { "domain-\($0)" }
+
+        // Register 3 devices sequentially (actor serializes concurrent access internally)
+        for i in 0..<3 {
+            let (device, _, _) = makeVirtualDevice()
+            let service = DeviceService(device: device)
+            await registry.register(deviceId: deviceIds[i], service: service)
+            await registry.registerDomainMapping(deviceId: deviceIds[i], domainId: domainIds[i])
+        }
+
+        // All 3 devices should be individually resolvable
+        for i in 0..<3 {
+            let svc = await registry.service(for: deviceIds[i])
+            XCTAssertNotNil(svc, "Service for device \(i) should be registered")
+            let domain = await registry.domainId(for: deviceIds[i])
+            XCTAssertEqual(domain, domainIds[i])
+            let reverse = await registry.deviceId(for: domainIds[i])
+            XCTAssertEqual(reverse, deviceIds[i])
+        }
+    }
+
+    func testRemoveOneDeviceDoesNotAffectOthers() async throws {
+        let registry = DeviceServiceRegistry()
+        let id1 = MTPDeviceID(raw: "multi-a")
+        let id2 = MTPDeviceID(raw: "multi-b")
+        let (d1, _, _) = makeVirtualDevice()
+        let (d2, _, _) = makeVirtualDevice()
+        await registry.register(deviceId: id1, service: DeviceService(device: d1))
+        await registry.register(deviceId: id2, service: DeviceService(device: d2))
+        await registry.registerDomainMapping(deviceId: id1, domainId: "dom-a")
+        await registry.registerDomainMapping(deviceId: id2, domainId: "dom-b")
+
+        // Remove device 1
+        await registry.remove(deviceId: id1)
+
+        // Device 1 gone
+        let svc1After = await registry.service(for: id1)
+        XCTAssertNil(svc1After)
+        let dom1After = await registry.domainId(for: id1)
+        XCTAssertNil(dom1After)
+        let rev1After = await registry.deviceId(for: "dom-a")
+        XCTAssertNil(rev1After)
+
+        // Device 2 still present
+        let svc2After = await registry.service(for: id2)
+        XCTAssertNotNil(svc2After)
+        let dom2After = await registry.domainId(for: id2)
+        XCTAssertEqual(dom2After, "dom-b")
+        let rev2After = await registry.deviceId(for: "dom-b")
+        XCTAssertEqual(rev2After, id2)
+    }
+
+    func testDetachAndReconnectOneDeviceIsolated() async throws {
+        let registry = DeviceServiceRegistry()
+        let id1 = MTPDeviceID(raw: "iso-a")
+        let id2 = MTPDeviceID(raw: "iso-b")
+        let (d1, _, _) = makeVirtualDevice()
+        let (d2, _, _) = makeVirtualDevice()
+        let svc1 = DeviceService(device: d1)
+        let svc2 = DeviceService(device: d2)
+        await registry.register(deviceId: id1, service: svc1)
+        await registry.register(deviceId: id2, service: svc2)
+
+        // Detach device 1 only
+        await registry.handleDetach(deviceId: id1)
+
+        // svc1 disconnected
+        do {
+            _ = try await svc1.submit(priority: .low) { _ in 1 }
+            XCTFail("Expected disconnected error")
+        } catch let e as MTPError {
+            XCTAssertEqual(e, .deviceDisconnected)
+        }
+
+        // svc2 still operational
+        let val = try await (try await svc2.submit(priority: .high) { _ in 42 }).value
+        XCTAssertEqual(val, 42)
+
+        // Reconnect device 1
+        await registry.handleReconnect(deviceId: id1)
+        let val1 = try await (try await svc1.submit(priority: .high) { _ in 7 }).value
+        XCTAssertEqual(val1, 7)
+    }
+
+    func testDomainMappingUpdateReplacesStaleEntry() async throws {
+        let registry = DeviceServiceRegistry()
+        let id = MTPDeviceID(raw: "remap-dev")
+
+        // Register with first domain
+        await registry.registerDomainMapping(deviceId: id, domainId: "old-domain")
+        let dom1 = await registry.domainId(for: id)
+        XCTAssertEqual(dom1, "old-domain")
+
+        // Re-register same device with new domain (e.g., reconnect with new ephemeral ID)
+        await registry.registerDomainMapping(deviceId: id, domainId: "new-domain")
+        let dom2 = await registry.domainId(for: id)
+        XCTAssertEqual(dom2, "new-domain")
+        // Old domain reverse mapping must be evicted
+        let oldRev = await registry.deviceId(for: "old-domain")
+        XCTAssertNil(oldRev)
+        let newRev = await registry.deviceId(for: "new-domain")
+        XCTAssertEqual(newRev, id)
+    }
 }

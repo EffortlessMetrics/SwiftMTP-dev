@@ -64,16 +64,32 @@ public struct FallbackResult<T: Sendable>: Sendable {
   public let attempts: [FallbackAttempt]
 }
 
+/// Error thrown when all rungs of a fallback ladder have failed.
+/// Carries the full attempt history for first-line diagnosis.
+public struct FallbackAllFailedError: Error, Sendable, CustomStringConvertible {
+  public let attempts: [FallbackAttempt]
+
+  public var description: String {
+    let summary =
+      attempts.map { a in
+        "  [\(a.name)] \(a.succeeded ? "✓" : "✗") \(a.durationMs)ms\(a.error.map { " — \($0)" } ?? "")"
+      }
+      .joined(separator: "\n")
+    return "All fallback rungs failed:\n\(summary)"
+  }
+
+  public var localizedDescription: String { description }
+}
+
 /// Fallback ladder for storage ID retrieval with retry logic for storage readiness.
 public enum FallbackLadder {
 
   /// Execute a list of rungs in order. Returns the first success.
-  /// Throws the last error if all rungs fail.
+  /// Throws `FallbackAllFailedError` with full attempt history if all rungs fail.
   public static func execute<T: Sendable>(
     _ rungs: [FallbackRung<T>]
   ) async throws -> FallbackResult<T> {
     var attempts: [FallbackAttempt] = []
-    var lastError: Error?
 
     for rung in rungs {
       let start = DispatchTime.now()
@@ -90,11 +106,10 @@ public enum FallbackLadder {
         attempts.append(
           FallbackAttempt(name: rung.name, succeeded: false, error: "\(error)", durationMs: elapsed)
         )
-        lastError = error
       }
     }
 
-    throw lastError ?? MTPError.notSupported("all fallback rungs failed")
+    throw FallbackAllFailedError(attempts: attempts)
   }
 
   // MARK: - Storage ID Fetching with Retry
