@@ -43,10 +43,14 @@ public final class MockMTPLink: @unchecked Sendable, MTPLink {
   private weak var transport: MockTransport?
   private var sessionID: UInt32?
   private var eventContinuation: AsyncStream<Data>.Continuation?
+  public let eventStream: AsyncStream<Data>
 
   init(deviceData: MockDeviceData, transport: MockTransport) {
     self.deviceData = deviceData
     self.transport = transport
+    var cont: AsyncStream<Data>.Continuation!
+    self.eventStream = AsyncStream(Data.self, bufferingPolicy: .bufferingNewest(16)) { cont = $0 }
+    self.eventContinuation = cont
   }
 
   public func close() async {

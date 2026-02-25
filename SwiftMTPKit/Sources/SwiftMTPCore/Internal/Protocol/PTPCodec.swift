@@ -126,6 +126,16 @@ public enum PTPValue: Sendable {
 }
 
 public struct PTPReader {
+  /// Maximum safe device-supplied count for arrays and object lists.
+  public static let maxSafeCount: UInt32 = 100_000
+
+  /// Throws if `count` exceeds the maximum safe device-provided array or object count.
+  public static func validateCount(_ count: UInt32) throws {
+    guard count <= maxSafeCount else {
+      throw MTPError.protocolError(code: 0x2006, message: "invalid dataset: count too large")
+    }
+  }
+
   public let data: Data
   public var o: Int = 0
   public init(data: Data) { self.data = data }
@@ -165,6 +175,7 @@ public struct PTPReader {
     if (dt & 0x4000) != 0 {
       let base = dt & ~0x4000
       guard let count = u32() else { return nil }
+      guard count <= PTPReader.maxSafeCount else { return nil }
       var out: [PTPValue] = []
       out.reserveCapacity(Int(count))
       for _ in 0..<count {
@@ -232,6 +243,7 @@ public struct PTPDeviceInfo {
     var r = PTPReader(data: data)
     func readArray16() -> [UInt16]? {
       guard let count = r.u32() else { return nil }
+      guard count <= PTPReader.maxSafeCount else { return nil }
       var array = [UInt16]()
       for _ in 0..<count {
         guard let value = r.u16() else { return nil }
@@ -270,6 +282,7 @@ public struct PTPPropList: Sendable {
   public static func parse(from data: Data) -> PTPPropList? {
     var r = PTPReader(data: data)
     guard let n = r.u32() else { return nil }
+    guard n <= PTPReader.maxSafeCount else { return nil }
     var out: [PTPPropEntry] = []
     out.reserveCapacity(Int(n))
     for _ in 0..<n {

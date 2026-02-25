@@ -6,12 +6,26 @@ import OSLog
 import SwiftMTPQuirks
 import SwiftMTPObservability
 
-struct EventPump {
-  func startIfAvailable(on link: any MTPLink) throws {
-    // Implementation needed
+/// Drives the interrupt-endpoint event loop and fans received events back to the actor.
+final class EventPump: @unchecked Sendable {
+  private var task: Task<Void, Never>?
+
+  func startIfAvailable(on link: any MTPLink, handler: @escaping @Sendable (MTPEvent) async -> Void)
+  {
+    link.startEventPump()
+    task = Task {
+      for await data in link.eventStream {
+        guard !Task.isCancelled else { break }
+        if let event = MTPEvent.fromRaw(data) {
+          await handler(event)
+        }
+      }
+    }
   }
+
   func stop() {
-    // Implementation needed
+    task?.cancel()
+    task = nil
   }
 }
 
@@ -679,9 +693,24 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   }
 
   private func startEventPump() async throws {
-    // Start event pump if supported
-    if let link = await getMTPLinkIfAvailable() {
-      try eventPump.startIfAvailable(on: link)
+    guard let link = await getMTPLinkIfAvailable() else { return }
+    eventPump.startIfAvailable(on: link) { [weak self] event in
+      await self?.handleMTPEvent(event)
+    }
+  }
+
+  /// Invalidate actor-local caches in response to a device-generated MTP event.
+  private func handleMTPEvent(_ event: MTPEvent) {
+    switch event {
+    case .objectAdded, .objectRemoved, .objectInfoChanged:
+      parentStorageIDCache.removeAll(keepingCapacity: true)
+    case .storageAdded, .storageRemoved, .storageInfoChanged:
+      parentStorageIDCache.removeAll(keepingCapacity: true)
+    case .deviceInfoChanged:
+      deviceInfo = nil
+      parentStorageIDCache.removeAll(keepingCapacity: true)
+    case .unknown:
+      break
     }
   }
 

@@ -127,7 +127,9 @@ public final class MirrorEngine: Sendable {
   /// Convert a path key to a local file URL
   internal func pathKeyToLocalURL(_ pathKey: String, root: URL) -> URL {
     let (_, components) = PathKey.parse(pathKey)
-    let relativePath = components.joined(separator: "/")
+    // Sanitize each component to guard against path traversal from device-supplied names.
+    let safeComponents = components.compactMap { PathSanitizer.sanitize($0) }
+    let relativePath = safeComponents.joined(separator: "/")
     return root.appendingPathComponent(relativePath)
   }
 
