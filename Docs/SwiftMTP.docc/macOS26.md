@@ -277,7 +277,7 @@ adb devices
 - This is a Pixel 7 / macOS USB stack interaction issue, not a SwiftMTP bug
 
 **Related Issues:**
-- [GitHub Issue: Pixel 7 macOS compatibility](https://github.com/example/SwiftMTP/issues/XXX)
+- Pixel 7 macOS compatibility (tracked internally)
 - Android Open Source Project: USB accessory mode documentation
 
 ## Related Documentation
