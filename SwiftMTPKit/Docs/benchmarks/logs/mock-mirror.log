@@ -1,9 +1,0 @@
-🔄 Starting mirror operation...
-   Source: test-device-1756922951
-   Destination: /Users/steven/SwiftMTPMirror
-   Include pattern: DCIM/**
-✅ Mirror completed!
-   Downloaded: 0
-   Skipped: 2
-   Failed: 0
-   Success rate: 0.0%
