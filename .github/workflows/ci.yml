@@ -1,4 +1,8 @@
 name: ci
+# Purpose: Primary CI — runs on every push and PR (all branches).
+# Checks: build, UX validation, full test suite + coverage, TSAN (thread sanitizer),
+#         fuzz harness, SBOM (on tags). This is the required check for merging PRs.
+# Complement: swiftmtp-ci.yml adds deeper coverage reporting, docs, and CLI smoke on main.
 on:
   push:
   pull_request:

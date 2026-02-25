@@ -50,8 +50,8 @@ Minimum expectations for each item:
 
 Primary outcome: reduce high-severity real-device failures and make first-line failures actionable.
 
-- [ ] Resolve Pixel 7 Tahoe 26 bulk-transfer timeout path (control-plane succeeds, bulk path times out)
-- [ ] Stabilize OnePlus 3T `SendObject` / `0x201D` large-write behavior
+- [x] Resolve Pixel 7 Tahoe 26 bulk-transfer timeout path (control-plane succeeds, bulk path times out)
+- [x] Stabilize OnePlus 3T `SendObject` / `0x201D` large-write behavior
 - [ ] Improve first-line error messages for `probe`, `collect`, and write-path operations
 - [ ] Refresh per-device behavior notes in `Docs/Troubleshooting.md` and device pages
 
@@ -66,8 +66,8 @@ Sprint exit criteria:
 
 Primary outcome: contributors can produce valid, redacted submission bundles with less manual intervention.
 
-- [ ] Harden `swiftmtp collect` strict-mode path and validation messaging
-- [ ] Add/expand privacy-redaction assertions for submission artifacts
+- [x] Harden `swiftmtp collect` strict-mode path and validation messaging
+- [x] Add/expand privacy-redaction assertions for submission artifacts
 - [ ] Tighten `validate-submission` and evidence expectations for PR review
 - [ ] Publish one canonical `collect` + `benchmark` troubleshooting sequence
 
@@ -82,8 +82,8 @@ Sprint exit criteria:
 
 Primary outcome: predictable CI signal and consistent local-to-CI test behavior.
 
-- [ ] Consolidate overlapping CI workflows and document required checks
-- [ ] Ensure TSAN execution path is explicit and repeatable for concurrency-heavy targets
+- [x] Consolidate overlapping CI workflows and document required checks
+- [x] Ensure TSAN execution path is explicit and repeatable for concurrency-heavy targets
 - [ ] Keep filtered coverage gate stable and documented
 - [ ] Publish a minimal "pre-PR local gate" command sequence
 

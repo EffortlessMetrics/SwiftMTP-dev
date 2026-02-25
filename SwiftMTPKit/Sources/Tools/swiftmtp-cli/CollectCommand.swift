@@ -997,13 +997,28 @@ public enum CollectCommand {
 
     var errorDescription: String? {
       switch self {
-      case .noDeviceMatched: return "No device matched the provided filter."
-      case .ambiguousSelection(let n, _): return "Multiple devices matched the filter (\(n))."
-      case .timeout(let ms): return "Step exceeded deadline (\(ms) ms)."
+      case .noDeviceMatched:
+        return
+          "No device matched the provided filter. "
+          + "Run `swiftmtp probe` to list attached MTP devices, then re-run with --vid and --pid."
+      case .ambiguousSelection(let n, _):
+        return
+          "Multiple devices (\(n)) matched the filter. "
+          + "Specify --vid, --pid, --bus, and/or --address to select a single device."
+      case .timeout(let ms):
+        return
+          "Step exceeded deadline (\(ms) ms). "
+          + "The device may be slow to respond; retry or use --io-timeout to extend the limit."
       case .redactionCheckFailed(let issues):
-        return "Debug-artifact redaction check failed: \(issues.joined(separator: ", "))."
+        let issueList = issues.joined(separator: ", ")
+        return
+          "Debug-artifact redaction check failed: [\(issueList)]. "
+          + "Run `swiftmtp redact` on the artifact to strip sensitive fields, then re-run with --strict. "
+          + "To submit anyway (not recommended): re-run with --no-strict and review the artifact manually."
       case .invalidBenchSize(let size):
-        return "Invalid benchmark size '\(size)'. Expected values like 100M, 500M, or 1G."
+        return
+          "Invalid benchmark size '\(size)'. "
+          + "Expected values like 100M, 500M, 1G, or 2G (must be ≥ 1 MB and ≤ 4 GB)."
       }
     }
   }

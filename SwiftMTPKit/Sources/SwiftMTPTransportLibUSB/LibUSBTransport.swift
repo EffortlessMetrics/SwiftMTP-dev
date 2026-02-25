@@ -1133,6 +1133,19 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
         .io("\(context): short write sent=\(attempt.sent)/\(attempt.expected)"))
     }
     if attempt.isNoProgressTimeout {
+      if isPixelClassNoProgressTarget {
+        // Pixel 7 / macOS 26 specific: bulk OUT stalled with no bytes written.
+        // Root cause: macOS does not expose MTP IOUSBInterface children for this device
+        // when USB mode or developer options are not fully configured on the phone.
+        throw MTPError.transport(
+          .io(
+            "\(context): Google Pixel 7 — bulk OUT timeout, no bytes sent (rc=\(attempt.rc)). "
+              + "Action: on the phone, enable Developer Options → USB Debugging, "
+              + "set USB Preferences to 'File Transfer' (not 'Charging only'), "
+              + "and tap 'Allow' on the 'Trust this computer?' prompt. "
+              + "Then unplug and replug the cable. "
+              + "If the problem persists, verify ioreg shows IOUSBInterface children for VID 18D1:4EE1."))
+      }
       throw MTPError.transport(
         .io("\(context): command-phase timeout with no progress (sent=0)"))
     }

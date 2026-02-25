@@ -177,6 +177,14 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 
 ## CI & Coverage
 - CI workflows: `.github/workflows/ci.yml`, `.github/workflows/swiftmtp-ci.yml`, `.github/workflows/smoke.yml`
+  - `ci.yml`: runs on ALL pushes and PRs; covers build, full tests, **TSAN**, fuzz, SBOM on tags.
+  - `swiftmtp-ci.yml`: runs on main branch and nightly; covers full coverage report, CLI smoke, DocC docs.
+  - `smoke.yml`: minimal sanity build (product swiftmtp) for fast feedback.
+- **TSAN** (Thread Sanitizer) execution:
+  - CI: `ci.yml` → `tsan` job: `swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests`
+  - Local: `cd SwiftMTPKit && swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests`
+  - Scope: TransportTests excluded (USB I/O is inherently single-threaded at the libusb level).
+  - Exit criteria: zero race warnings or TSan-reported errors.
 - Coverage gating: `SwiftMTPKit/scripts/coverage_gate.py` enforces minimum thresholds
 - Run locally: `./run-all-tests.sh` (full verification suite)
 

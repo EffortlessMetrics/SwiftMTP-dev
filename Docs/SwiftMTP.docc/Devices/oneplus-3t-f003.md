@@ -57,6 +57,41 @@ Current bring-up status for OnePlus 3T (`VID:PID 2a70:f003`).
 | Prefer Object Property List | Yes |
 | Write Resume Disabled | No |
 
+## Troubleshooting
+
+### SendObject 0x201D (InvalidParameter) when uploading files
+
+**Symptom:** `swiftmtp push` or file upload fails with error code `0x201D` (InvalidParameter).
+
+**Root cause:** OnePlus 3T rejects `SendObject` when the parent handle is `0x00000000`
+(storage root). This is a device firmware limitation, not an MTP protocol violation.
+
+**Fix (automatic):** SwiftMTP detects this device via its quirk profile and automatically
+redirects writes to the first available subfolder (`writeToSubfolderOnly=true` flag).
+If you see this error, ensure the quirk profile is loaded:
+```
+swift run --package-path SwiftMTPKit swiftmtp quirks --vid 2a70 --pid f003
+```
+The output should show `writeToSubfolderOnly: true`.
+
+**Manual workaround:** Always specify a destination folder, not the device root:
+```
+swift run --package-path SwiftMTPKit swiftmtp push --parent-path /DCIM/Camera myfile.jpg
+```
+
+### Large file uploads stall or timeout
+
+If uploads > 1 MB stall, the device may be overwhelmed by the default 1 MB chunk size.
+The quirk profile already sets `maxChunkBytes: 1048576`. If you still see stalls:
+1. Set a smaller chunk: `export SWIFTMTP_MAX_CHUNK_BYTES=524288` and retry.
+2. Increase I/O timeout: `export SWIFTMTP_IO_TIMEOUT_MS=15000` for large transfers.
+
+### Mass Storage interface claim conflict
+
+If `probe` fails with "access denied", Android File Transfer or macOS may have claimed
+the Mass Storage interface (interface 1). The MTP transport must bind interface 0.
+Quit Android File Transfer, revoke all USB authorizations on the phone, and replug.
+
 ## Notes
 
 - OnePlus 3T (ONEPLUS A3010) probes in ~115 ms; no resetOnOpen needed with new claim sequence.
