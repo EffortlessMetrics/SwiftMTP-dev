@@ -125,7 +125,7 @@ Sprint exit criteria:
 - [x] ObjectSize U64 fallback for files > 4 GB
 - [x] Increase mutation and edge-case coverage for transport error handling
 - [x] Expand real-device troubleshooting trees for top support issues
-- [ ] Improve benchmark report consistency and release evidence packaging
+- [x] Improve benchmark report consistency and release evidence packaging
 
 ### 2.3 Focus: Growth and Performance
 
@@ -159,8 +159,8 @@ Any minor release (`v2.x.0`) should satisfy all of the following:
 - [ ] Filtered coverage gate passes (`SwiftMTPQuirks`, `SwiftMTPStore`, `SwiftMTPSync`, `SwiftMTPObservability`)
 - [ ] TSAN path is clean for required concurrency-heavy targets this cycle
 - [ ] At least one real-device evidence run is attached in release artifacts
-- [ ] `./scripts/validate-quirks.sh` and submission validation checks pass
-- [ ] `CHANGELOG.md`, roadmap docs, and release notes are aligned
+- [x] `./scripts/validate-quirks.sh` and submission validation checks pass
+- [x] `CHANGELOG.md`, roadmap docs, and release notes are aligned
 
 See `Docs/ROADMAP.release-checklist.md` for operator-level release commands and sequencing.
 

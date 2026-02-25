@@ -187,35 +187,26 @@ done
 
 echo "✅ Bench gates validation complete"
 
-# Check that DocC generator exists and is executable
+# Check that DocC generator source exists (built binary is 'swiftmtp-docs')
 echo "🔍 Checking DocC generator..."
-docc_generator="SwiftMTPKit/Sources/Tools/docc-generator"
-if [[ ! -f "$docc_generator" ]]; then
-    echo "❌ DocC generator not found: $docc_generator"
+docc_generator_src="SwiftMTPKit/Sources/Tools/docc-generator-tool"
+docc_generator_cmd="swift run --package-path SwiftMTPKit swiftmtp-docs"
+if [[ ! -d "$docc_generator_src" ]]; then
+    echo "❌ DocC generator source not found: $docc_generator_src"
     exit 1
 fi
 
-if [[ ! -x "$docc_generator" ]]; then
-    echo "⚠️  DocC generator is not executable, fixing..."
-    chmod +x "$docc_generator"
-fi
-
-echo "✅ DocC generator is ready"
+echo "✅ DocC generator source found (run via: $docc_generator_cmd)"
 
 # Check DocC freshness (in CI mode)
 if [[ "${CI:-false}" == "true" ]]; then
     echo "🔍 Checking DocC freshness..."
 
-    if [[ ! -x "$docc_generator" ]]; then
-        echo "❌ DocC generator not executable"
-        exit 1
-    fi
-
     # Generate docs and check if they differ from committed versions
     temp_dir=$(mktemp -d)
     echo "  Generating docs to $temp_dir..."
 
-    if ! ./$docc_generator "$QUIRKS_FILE" "$temp_dir" 2>/dev/null; then
+    if ! swift run --package-path SwiftMTPKit swiftmtp-docs "$QUIRKS_FILE" "$temp_dir" 2>/dev/null; then
         echo "❌ DocC generator failed to run"
         rm -rf "$temp_dir"
         exit 1
@@ -234,7 +225,7 @@ if [[ "${CI:-false}" == "true" ]]; then
         echo "   Generated files differ from committed versions."
         echo ""
         echo "   To fix, regenerate docs:"
-        echo "   ./$docc_generator $QUIRKS_FILE Docs/SwiftMTP.docc/Devices"
+        echo "   swift run --package-path SwiftMTPKit swiftmtp-docs $QUIRKS_FILE Docs/SwiftMTP.docc/Devices"
         echo ""
         echo "   Then commit the changes."
         echo ""
@@ -256,7 +247,7 @@ if [[ "${CI:-false}" == "true" ]]; then
     echo "✅ All CI evidence gates passed!"
 else
     echo "Next steps:"
-    echo "1. Run DocC generator: ./$docc_generator $QUIRKS_FILE Docs/SwiftMTP.docc/Devices"
+    echo "1. Run DocC generator: swift run --package-path SwiftMTPKit swiftmtp-docs $QUIRKS_FILE Docs/SwiftMTP.docc/Devices"
     echo "2. Commit any generated documentation changes"
     echo "3. Test CLI commands: swift run swiftmtp quirks --explain"
     echo "4. Run benchmarks: ./scripts/benchmark-device.sh <device-id>"
