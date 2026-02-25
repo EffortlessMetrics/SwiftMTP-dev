@@ -54,7 +54,8 @@ do {
         vid: vid, pid: pid, bcdDevice: bcdDevice,
         ifaceClass: ifaceClass, ifaceSubclass: ifaceSubclass, ifaceProtocol: ifaceProtocol
       ) {
-        print("  Existing Quirk: \(existingQuirk.id) (\(existingQuirk.status ?? "unknown"))")
+        print(
+          "  Existing Quirk: \(existingQuirk.id) (\(existingQuirk.status?.rawValue ?? "unknown"))")
 
         // Compare learned values with quirk values
         var suggestions = [String]()

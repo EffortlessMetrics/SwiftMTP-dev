@@ -691,6 +691,12 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
 
   public func openUSBIfNeeded() async throws {}
 
+  private func recoverStall() {
+    _ = libusb_clear_halt(h, outEP)
+    _ = libusb_clear_halt(h, inEP)
+    if evtEP != 0 { _ = libusb_clear_halt(h, evtEP) }
+  }
+
   private var isPixel7PreflightTarget: Bool {
     vendorID == 0x18D1 && productID == 0x4EE1
   }
@@ -1503,6 +1509,18 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
         UnsafeMutablePointer<UInt8>(
           mutating: ptr.advanced(by: sent).assumingMemoryBound(to: UInt8.self)),
         Int32(count - sent), &s, timeout)
+      if rc == Int32(LIBUSB_ERROR_PIPE.rawValue) {
+        recoverStall()
+        var r: Int32 = 0
+        let rc2 = libusb_bulk_transfer(
+          h, ep,
+          UnsafeMutablePointer<UInt8>(
+            mutating: ptr.advanced(by: sent).assumingMemoryBound(to: UInt8.self)),
+          Int32(count - sent), &r, timeout)
+        if rc2 != 0 { throw MTPError.transport(mapLibusb(rc2)) }
+        sent += Int(r)
+        continue
+      }
       if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }
       sent += Int(s)
     }
@@ -1515,6 +1533,15 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       var tmp = [UInt8](repeating: 0, count: 512)
       let rc = libusb_bulk_transfer(h, ep, &tmp, 512, &g, timeout)
       if rc == -7 { return 0 }
+      if rc == Int32(LIBUSB_ERROR_PIPE.rawValue) {
+        recoverStall()
+        var g2: Int32 = 0
+        let rc2 = libusb_bulk_transfer(h, ep, &tmp, 512, &g2, timeout)
+        if rc2 != 0 && rc2 != -8 { throw MTPError.transport(mapLibusb(rc2)) }
+        let c = min(Int(g2), max)
+        if c > 0 { memcpy(buf, tmp, c) }
+        return c
+      }
       if rc != 0 && rc != -8 { throw MTPError.transport(mapLibusb(rc)) }
       let c = min(Int(g), max)
       if c > 0 { memcpy(buf, tmp, c) }
@@ -1523,6 +1550,14 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let rc = libusb_bulk_transfer(
       h, ep, buf.assumingMemoryBound(to: UInt8.self), Int32(max), &g, timeout)
     if rc == -7 { return 0 }
+    if rc == Int32(LIBUSB_ERROR_PIPE.rawValue) {
+      recoverStall()
+      var g2: Int32 = 0
+      let rc2 = libusb_bulk_transfer(
+        h, ep, buf.assumingMemoryBound(to: UInt8.self), Int32(max), &g2, timeout)
+      if rc2 != 0 { throw MTPError.transport(mapLibusb(rc2)) }
+      return Int(g2)
+    }
     if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }
     return Int(g)
   }

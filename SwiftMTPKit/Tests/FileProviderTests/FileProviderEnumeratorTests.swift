@@ -10,9 +10,14 @@ final class FileProviderEnumeratorTests: XCTestCase {
 
   private actor MockLiveIndexReader: LiveIndexReader {
     var changeCounter: Int64 = 0
+    var stubbedChanges: [IndexedObjectChange] = []
 
     func setChangeCounter(_ value: Int64) {
       changeCounter = value
+    }
+
+    func setChanges(_ changes: [IndexedObjectChange]) {
+      stubbedChanges = changes
     }
 
     func object(deviceId: String, handle: UInt32) async throws -> IndexedObject? { nil }
@@ -21,10 +26,34 @@ final class FileProviderEnumeratorTests: XCTestCase {
     { [] }
     func storages(deviceId: String) async throws -> [IndexedStorage] { [] }
     func currentChangeCounter(deviceId: String) async throws -> Int64 { changeCounter }
-    func changesSince(deviceId: String, anchor: Int64) async throws -> [IndexedObjectChange] { [] }
+    func changesSince(deviceId: String, anchor: Int64) async throws -> [IndexedObjectChange] {
+      stubbedChanges
+    }
     func crawlState(deviceId: String, storageId: UInt32, parentHandle: UInt32?) async throws
       -> Date?
     { nil }
+  }
+
+  private class MockChangeObserver: NSObject, NSFileProviderChangeObserver {
+    nonisolated(unsafe) var updatedItems: [NSFileProviderItem] = []
+    nonisolated(unsafe) var deletedIdentifiers: [NSFileProviderItemIdentifier] = []
+    nonisolated(unsafe) var onFinish: (() -> Void)?
+
+    func didUpdate(_ items: [NSFileProviderItem]) {
+      updatedItems.append(contentsOf: items)
+    }
+
+    func didDeleteItems(withIdentifiers identifiers: [NSFileProviderItemIdentifier]) {
+      deletedIdentifiers.append(contentsOf: identifiers)
+    }
+
+    func finishEnumeratingChanges(upTo anchor: NSFileProviderSyncAnchor, moreComing: Bool) {
+      onFinish?()
+    }
+
+    func finishEnumeratingWithError(_ error: Error) {
+      onFinish?()
+    }
   }
 
   func testEnumeratorCreationForDeviceRoot() {
@@ -92,5 +121,84 @@ final class FileProviderEnumeratorTests: XCTestCase {
     }
 
     await fulfillment(of: [anchorExpectation], timeout: 1.0)
+  }
+
+  func testSyncAnchorEncodingRoundTrip() async {
+    let reader = MockLiveIndexReader()
+    await reader.setChangeCounter(999)
+
+    let enumerator = DomainEnumerator(
+      deviceId: "device1", storageId: 1, parentHandle: nil, indexReader: reader)
+
+    let anchorExp = expectation(description: "anchor")
+    var capturedAnchor: NSFileProviderSyncAnchor?
+    enumerator.currentSyncAnchor { anchor in
+      capturedAnchor = anchor
+      anchorExp.fulfill()
+    }
+    await fulfillment(of: [anchorExp], timeout: 1.0)
+
+    guard let data = capturedAnchor?.rawValue else {
+      XCTFail("No anchor data")
+      return
+    }
+    XCTAssertEqual(data.count, MemoryLayout<Int64>.size)
+    var decoded: Int64 = 0
+    _ = withUnsafeMutableBytes(of: &decoded) { data.copyBytes(to: $0) }
+    XCTAssertEqual(decoded, 999)
+  }
+
+  func testEnumerateChangesCallsDidUpdateForUpsertedItems() async {
+    let reader = MockLiveIndexReader()
+    let obj = IndexedObject(
+      deviceId: "device1", storageId: 1, handle: 100,
+      parentHandle: nil, name: "photo.jpg", pathKey: "/photo.jpg",
+      sizeBytes: 1024, mtime: nil, formatCode: 0x3800,
+      isDirectory: false, changeCounter: 1)
+    await reader.setChanges([IndexedObjectChange(kind: .upserted, object: obj)])
+    await reader.setChangeCounter(1)
+
+    let enumerator = DomainEnumerator(
+      deviceId: "device1", storageId: 1, parentHandle: nil, indexReader: reader)
+
+    let observer = MockChangeObserver()
+    let finishExp = expectation(description: "finish")
+    observer.onFinish = { finishExp.fulfill() }
+
+    var zeroAnchor: Int64 = 0
+    let anchorData = Data(bytes: &zeroAnchor, count: MemoryLayout<Int64>.size)
+    enumerator.enumerateChanges(for: observer, from: NSFileProviderSyncAnchor(anchorData))
+
+    await fulfillment(of: [finishExp], timeout: 2.0)
+    XCTAssertEqual(observer.updatedItems.count, 1)
+    XCTAssertEqual(observer.updatedItems.first?.filename, "photo.jpg")
+    XCTAssertTrue(observer.deletedIdentifiers.isEmpty)
+  }
+
+  func testEnumerateChangesCallsDidDeleteItemsForDeletedItems() async {
+    let reader = MockLiveIndexReader()
+    let obj = IndexedObject(
+      deviceId: "device1", storageId: 1, handle: 200,
+      parentHandle: nil, name: "old.txt", pathKey: "/old.txt",
+      sizeBytes: 512, mtime: nil, formatCode: 0x3000,
+      isDirectory: false, changeCounter: 2)
+    await reader.setChanges([IndexedObjectChange(kind: .deleted, object: obj)])
+    await reader.setChangeCounter(2)
+
+    let enumerator = DomainEnumerator(
+      deviceId: "device1", storageId: 1, parentHandle: nil, indexReader: reader)
+
+    let observer = MockChangeObserver()
+    let finishExp = expectation(description: "finish")
+    observer.onFinish = { finishExp.fulfill() }
+
+    var zeroAnchor: Int64 = 0
+    let anchorData = Data(bytes: &zeroAnchor, count: MemoryLayout<Int64>.size)
+    enumerator.enumerateChanges(for: observer, from: NSFileProviderSyncAnchor(anchorData))
+
+    await fulfillment(of: [finishExp], timeout: 2.0)
+    XCTAssertTrue(observer.updatedItems.isEmpty)
+    XCTAssertEqual(observer.deletedIdentifiers.count, 1)
+    XCTAssertEqual(observer.deletedIdentifiers.first?.rawValue, "device1:1:200")
   }
 }

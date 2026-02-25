@@ -51,6 +51,12 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   /// Session-scoped cache to avoid repeated GetObjectInfo(parent) calls on writes.
   var parentStorageIDCache: [MTPObjectHandle: UInt32] = [:]
 
+  // MARK: - Transaction lock
+  /// Whether a transaction body is currently executing.
+  private var transactionInProgress = false
+  /// Callers waiting to acquire the transaction lock.
+  private var transactionWaiters: [CheckedContinuation<Void, Never>] = []
+
   public init(
     id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport,
     config: SwiftMTPConfig = .init(), transferJournal: (any TransferJournal)? = nil
@@ -64,6 +70,31 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
   public func getMTPLinkIfAvailable() -> (any MTPLink)? {
     return mtpLink
+  }
+
+  // MARK: - Transaction serialization
+
+  /// Execute `body` as an exclusive protocol transaction.
+  ///
+  /// At most one `body` runs at a time per device. Concurrent callers queue and
+  /// run sequentially in arrival order. The lock is released — and the next
+  /// waiter unblocked — even when `body` throws.
+  public func withTransaction<R: Sendable>(_ body: () async throws -> R) async throws -> R {
+    if transactionInProgress {
+      await withCheckedContinuation { continuation in
+        transactionWaiters.append(continuation)
+      }
+    }
+    transactionInProgress = true
+    defer {
+      if let next = transactionWaiters.first {
+        transactionWaiters.removeFirst()
+        next.resume()
+      } else {
+        transactionInProgress = false
+      }
+    }
+    return try await body()
   }
 
   public var info: MTPDeviceInfo {
@@ -233,6 +264,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     let link = try await getMTPLink()
     try await applyTuningAndOpenSession(link: link)
     sessionOpen = true
+    // Clean up any partial write objects left from previous interrupted transfers.
+    await reconcilePartials()
   }
 
   /// Close the device session and release all underlying transport resources.

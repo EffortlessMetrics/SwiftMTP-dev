@@ -100,6 +100,7 @@ func mapLibusb(_ rc: Int32) -> TransportError {
   case Int32(LIBUSB_ERROR_BUSY.rawValue): return .busy
   case Int32(LIBUSB_ERROR_ACCESS.rawValue): return .accessDenied
   case Int32(LIBUSB_ERROR_NO_DEVICE.rawValue): return .noDevice
+  case Int32(LIBUSB_ERROR_PIPE.rawValue): return .stall
   default: return .io("libusb rc=\(rc)")
   }
 }

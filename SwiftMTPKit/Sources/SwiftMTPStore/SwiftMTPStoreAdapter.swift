@@ -145,6 +145,16 @@ public final class SwiftMTPStoreAdapter: MTPPersistenceProvider, LearnedProfileS
     try await actor.updateTransferThroughput(id: id, throughputMBps: throughputMBps)
   }
 
+  public func recordRemoteHandle(id: String, handle: UInt32) async throws {
+    let actor = store.createActor()
+    try await actor.updateTransferRemoteHandle(id: id, handle: handle)
+  }
+
+  public func addContentHash(id: String, hash: String) async throws {
+    let actor = store.createActor()
+    try await actor.updateTransferContentHash(id: id, hash: hash)
+  }
+
   public func loadResumables(for device: MTPDeviceID) async throws -> [TransferRecord] {
     let actor = store.createActor()
     return try await actor.fetchResumableTransfers(for: device.raw)

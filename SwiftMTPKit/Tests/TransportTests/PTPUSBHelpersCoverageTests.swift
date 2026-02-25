@@ -114,4 +114,21 @@ final class PTPUSBHelpersCoverageTests: XCTestCase {
     let second = LibUSBContext.shared.contextPointer
     XCTAssertEqual(first, second)
   }
+
+  func testMapLibusbPipeReturnsStall() {
+    XCTAssertEqual(mapLibusb(Int32(LIBUSB_ERROR_PIPE.rawValue)), .stall)
+  }
+
+  func testTransportErrorStallCaseExists() {
+    let stall = TransportError.stall
+    XCTAssertEqual(stall, TransportError.stall)
+    XCTAssertNotEqual(stall, TransportError.timeout)
+    XCTAssertNotNil(stall.errorDescription)
+  }
+
+  func testTransportPhaseDescriptions() {
+    XCTAssertEqual(TransportPhase.bulkOut.description, "bulk-out")
+    XCTAssertEqual(TransportPhase.bulkIn.description, "bulk-in")
+    XCTAssertEqual(TransportPhase.responseWait.description, "response-wait")
+  }
 }

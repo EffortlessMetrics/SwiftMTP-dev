@@ -51,7 +51,7 @@
         "disableWriteResume": false
       },
       "confidence": "high",
-      "status": "stable",
+      "status": "promoted",
       "notes": [
         "Requires 250-500 ms stabilization after OpenSession.",
         "Prefer direct USB port; keep screen unlocked.",
@@ -66,7 +66,14 @@
         "requiresKernelDetach": true,
         "resetOnOpen": false,
         "writeToSubfolderOnly": true
-      }
+      },
+      "evidenceRequired": [
+        "probe_log",
+        "write_test",
+        "disconnect_recovery"
+      ],
+      "lastVerifiedDate": "2025-01-09",
+      "lastVerifiedBy": "Steven Zimmerman, CPA"
     },
     {
       "id": "xiaomi-mi-note-2-ff40",
@@ -122,7 +129,7 @@
           "bench1G": "Docs/benchmarks/csv/mi-note2-1g.csv"
         }
       },
-      "status": "stable",
+      "status": "promoted",
       "flags": {
         "requiresKernelDetach": true,
         "resetOnOpen": false,
@@ -130,7 +137,15 @@
         "preferredWriteFolder": "Download",
         "emptyDatesInSendObject": true
       },
-      "confidence": "high"
+      "confidence": "high",
+      "evidenceRequired": [
+        "probe_log",
+        "bench_100m",
+        "bench_1g",
+        "write_test"
+      ],
+      "lastVerifiedDate": "2025-01-09",
+      "lastVerifiedBy": "Steven Zimmerman, CPA"
     },
     {
       "id": "samsung-android-6860",
@@ -204,7 +219,7 @@
         }
       ],
       "confidence": "medium",
-      "status": "experimental",
+      "status": "promoted",
       "notes": [
         "Vendor-specific interface class (0xff) discovered by shared MTP heuristic.",
         "Increased post-claim stabilize to 500ms for Samsung MTP stack readiness.",
@@ -221,7 +236,13 @@
         "requiresKernelDetach": true,
         "resetOnOpen": false,
         "writeToSubfolderOnly": false
-      }
+      },
+      "evidenceRequired": [
+        "probe_log",
+        "read_test"
+      ],
+      "lastVerifiedDate": "2026-02-10",
+      "lastVerifiedBy": "Steven Zimmerman, CPA"
     },
     {
       "id": "oneplus-3t-f003",
@@ -272,7 +293,7 @@
         }
       ],
       "confidence": "high",
-      "status": "stable",
+      "status": "promoted",
       "notes": [
         "OnePlus 3T (ONEPLUS A3010) probes in ~115 ms; no resetOnOpen needed with new claim sequence.",
         "PTP Device Reset (0x66) NOT supported (rc=-9, LIBUSB_ERROR_PIPE); skipPTPReset=true.",
@@ -292,7 +313,14 @@
       "flags": {
         "writeToSubfolderOnly": true,
         "resetReopenOnOpenSessionIOError": true
-      }
+      },
+      "evidenceRequired": [
+        "probe_log",
+        "write_test",
+        "disconnect_recovery"
+      ],
+      "lastVerifiedDate": "2026-02-07",
+      "lastVerifiedBy": "Steven Zimmerman, CPA"
     },
     {
       "id": "google-pixel-7-4ee1",
@@ -344,7 +372,7 @@
         }
       ],
       "confidence": "low",
-      "status": "experimental",
+      "status": "promoted",
       "flags": {
         "requiresKernelDetach": true,
         "resetOnOpen": false,
@@ -373,7 +401,13 @@
         "supportsSendPartialObject": false,
         "preferGetObjectPropList": false,
         "disableWriteResume": false
-      }
+      },
+      "evidenceRequired": [
+        "probe_log",
+        "ioreg_dump"
+      ],
+      "lastVerifiedDate": "2026-02-12",
+      "lastVerifiedBy": "Steven Zimmerman, CPA"
     },
     {
       "id": "canon-eos-rebel-3139",
@@ -411,7 +445,7 @@
         "skipGetObjectPropValue": false
       },
       "confidence": "medium",
-      "status": "experimental",
+      "status": "promoted",
       "notes": [
         "Canon EOS cameras use PTP over USB with PTPIP-style initialization.",
         "Large RAW files (>20 MB) may require extended ioTimeoutMs.",
@@ -429,7 +463,13 @@
         "resetOnOpen": false,
         "writeToSubfolderOnly": false,
         "cameraClass": true
-      }
+      },
+      "evidenceRequired": [
+        "probe_log",
+        "read_test"
+      ],
+      "lastVerifiedDate": "2025-02-25",
+      "lastVerifiedBy": "SwiftMTP Contributors"
     },
     {
       "id": "nikon-dslr-0410",
@@ -467,7 +507,7 @@
         "skipGetObjectPropValue": false
       },
       "confidence": "medium",
-      "status": "experimental",
+      "status": "promoted",
       "notes": [
         "Nikon D-series cameras use PTP over USB.",
         "Camera must be in MTP/PTP mode via Settings > USB Options.",
@@ -485,7 +525,13 @@
         "resetOnOpen": false,
         "writeToSubfolderOnly": false,
         "cameraClass": true
-      }
+      },
+      "evidenceRequired": [
+        "probe_log",
+        "read_test"
+      ],
+      "lastVerifiedDate": "2025-02-25",
+      "lastVerifiedBy": "SwiftMTP Contributors"
     }
   ]
 }

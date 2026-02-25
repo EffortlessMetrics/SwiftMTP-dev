@@ -11,10 +11,17 @@ import SwiftMTPCLI
 struct SystemCommands {
   static func runQuirks(flags: CLIFlags, args: [String]) async {
     guard let subcommand = args.first else {
-      print("❌ Usage: quirks --explain")
+      print("❌ Usage: quirks --explain | quirks matrix")
       exitNow(.usage)
     }
-    if subcommand == "--explain" { await runQuirksExplain(flags: flags) }
+    if subcommand == "--explain" {
+      await runQuirksExplain(flags: flags)
+    } else if subcommand == "matrix" {
+      await runQuirksMatrix(flags: flags)
+    } else {
+      print("❌ Unknown quirks subcommand: \(subcommand)")
+      exitNow(.usage)
+    }
   }
 
   static func runQuirksExplain(flags: CLIFlags) async {
@@ -77,6 +84,40 @@ struct SystemCommands {
     print("    Handshake Timeout: \(effective.handshakeTimeoutMs)ms")
     print("    Stabilize Delay: \(effective.stabilizeMs)ms")
     print("")
+  }
+
+  static func runQuirksMatrix(flags: CLIFlags) async {
+    do {
+      let db = try QuirkDatabase.load()
+      if flags.json {
+        let rows = db.entries.map { e -> [String: Any] in
+          var row: [String: Any] = [
+            "id": e.id,
+            "vidpid": String(format: "0x%04x:0x%04x", e.vid, e.pid),
+            "status": e.status?.rawValue ?? "proposed",
+            "confidence": e.confidence ?? "unknown",
+          ]
+          if let d = e.lastVerifiedDate { row["lastVerifiedDate"] = d }
+          if let by = e.lastVerifiedBy { row["lastVerifiedBy"] = by }
+          if let ev = e.evidenceRequired { row["evidenceRequired"] = ev }
+          return row
+        }
+        printJSON(["matrix": rows], type: "quirksMatrix")
+        return
+      }
+      print("| Device | VID:PID | Status | Last Verified | Confidence |")
+      print("| --- | --- | --- | --- | --- |")
+      for e in db.entries {
+        let vidpid = String(format: "0x%04x:0x%04x", e.vid, e.pid)
+        let status = e.status?.rawValue ?? "proposed"
+        let date = e.lastVerifiedDate ?? "—"
+        let confidence = e.confidence ?? "—"
+        print("| \(e.id) | \(vidpid) | \(status) | \(date) | \(confidence) |")
+      }
+    } catch {
+      print("❌ Failed to load quirks: \(error)")
+      exitNow(.unavailable)
+    }
   }
 
   static func runHealth() async {

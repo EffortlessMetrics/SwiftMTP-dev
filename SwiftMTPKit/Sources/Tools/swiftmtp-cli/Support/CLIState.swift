@@ -116,6 +116,10 @@ public func actionableMessage(for error: Error) -> String {
         return "Device is busy. Wait a moment, then retry. Rebooting the device may help."
       case .accessDenied:
         return "USB access denied. Accept the USB permission dialog on the device."
+      case .stall:
+        return "USB endpoint stalled; recovering. Reconnect the device and retry."
+      case .timeoutInPhase(let phase):
+        return "USB transfer timed out (\(phase.description) phase). Check cable and retry."
       case .io(let msg):
         return "USB I/O error: \(msg). Try a different cable or port."
       }
@@ -131,6 +135,8 @@ public func actionableMessage(for error: Error) -> String {
       return "Operation timed out. Ensure the device is unlocked and no other app is accessing it."
     case .busy:
       return "Device is busy. Wait a moment and retry."
+    case .sessionBusy:
+      return "A transaction is already in progress. Retry after the current operation completes."
     case .protocolError(let code, let message):
       let hint = message ?? "see device log"
       return "MTP protocol error 0x\(String(format: "%04X", code)): \(hint)."

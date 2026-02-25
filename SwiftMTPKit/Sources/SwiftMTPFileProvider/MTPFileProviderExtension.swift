@@ -279,6 +279,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
                 objectHandle: response.newHandle, parentHandle: folderParentHandle,
                 name: req.name, size: nil, isDirectory: true, modifiedDate: nil)
               completionHandler(item, [], false, nil)
+              self.signalRootContainer()
             } else {
               completionHandler(
                 nil, [], false,
@@ -323,6 +324,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
               objectHandle: response.newHandle, parentHandle: parentHandle,
               name: req.name, size: fileSize, isDirectory: false, modifiedDate: nil)
             completionHandler(item, [], false, nil)
+            self.signalRootContainer()
           } else {
             completionHandler(
               nil, [], false,
@@ -392,6 +394,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
                 objectHandle: response.newHandle, parentHandle: parentHandle,
                 name: writeReq.name, size: fileSize, isDirectory: false, modifiedDate: nil)
               completionHandler(newItem, [], false, nil)
+              self.signalRootContainer()
             } else {
               completionHandler(
                 nil, [], false,
@@ -438,10 +441,18 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
               : NSError(
                 domain: NSFileProviderErrorDomain,
                 code: NSFileProviderError.serverUnreachable.rawValue))
+          if response.success { self.signalRootContainer() }
           progress.completedUnitCount = 1
         }
       }
     }
     return progress
+  }
+
+  // MARK: - Private Helpers
+
+  private func signalRootContainer() {
+    guard let manager = NSFileProviderManager(for: domain) else { return }
+    manager.signalEnumerator(for: .rootContainer) { _ in }
   }
 }

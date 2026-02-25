@@ -218,6 +218,28 @@ public actor StoreActor {
     }
   }
 
+  public func updateTransferRemoteHandle(id: String, handle: UInt32) throws {
+    let predicate = #Predicate<TransferEntity> { $0.id == id }
+    if let transfer = try modelContext.fetch(FetchDescriptor<TransferEntity>(predicate: predicate))
+      .first
+    {
+      transfer.remoteHandle = handle
+      transfer.updatedAt = Date()
+      try modelContext.save()
+    }
+  }
+
+  public func updateTransferContentHash(id: String, hash: String) throws {
+    let predicate = #Predicate<TransferEntity> { $0.id == id }
+    if let transfer = try modelContext.fetch(FetchDescriptor<TransferEntity>(predicate: predicate))
+      .first
+    {
+      transfer.contentHash = hash
+      transfer.updatedAt = Date()
+      try modelContext.save()
+    }
+  }
+
   public func fetchResumableTransfers(for deviceId: String) throws -> [TransferRecord] {
     let predicate = #Predicate<TransferEntity> {
       $0.deviceId == deviceId && ($0.state == "active" || $0.state == "paused")
@@ -232,7 +254,8 @@ public actor StoreActor {
         supportsPartial: entity.supportsPartial,
         localTempURL: URL(fileURLWithPath: entity.localTempURL),
         finalURL: entity.finalURL.map { URL(fileURLWithPath: $0) }, state: entity.state,
-        updatedAt: entity.updatedAt, throughputMBps: entity.throughputMBps
+        updatedAt: entity.updatedAt, throughputMBps: entity.throughputMBps,
+        remoteHandle: entity.remoteHandle, contentHash: entity.contentHash
       )
     }
   }

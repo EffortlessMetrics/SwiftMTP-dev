@@ -23,9 +23,18 @@ struct QuirkEntry: Codable {
   let notes: [String]?
   let provenance: Provenance?
   let status: Status
+  let evidenceRequired: [String]?
+  let lastVerifiedDate: String?
+  let lastVerifiedBy: String?
 
   enum Status: String, Codable {
     case experimental, stable, deprecated
+    case proposed, verified, promoted
+
+    init(from decoder: Decoder) throws {
+      let raw = try decoder.singleValueContainer().decode(String.self)
+      self = Status(rawValue: raw) ?? .proposed
+    }
   }
 }
 

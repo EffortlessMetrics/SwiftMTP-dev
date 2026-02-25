@@ -22,6 +22,10 @@ public final class TransferEntity {
   public var lastError: String?
   /// Measured throughput in MB/s, recorded on successful completion.
   public var throughputMBps: Double?
+  /// Remote object handle assigned by the device after SendObjectInfo succeeds.
+  public var remoteHandle: UInt32?
+  /// SHA-256 hex digest of the source data, when available.
+  public var contentHash: String?
 
   // ETag/Precondition info
   public var etagSize: UInt64?

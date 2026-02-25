@@ -21,6 +21,13 @@ public protocol TransferJournal: Sendable {
   /// Called after `complete(id:)` with measured bytes and wall-clock duration.
   /// Default implementation is a no-op for backwards compatibility.
   func recordThroughput(id: String, throughputMBps: Double) async throws
+  /// Persist the remote object handle assigned by the device after SendObjectInfo succeeds.
+  /// Called before SendObject so a partial can be found and cleaned up on retry.
+  /// Default implementation is a no-op for backwards compatibility.
+  func recordRemoteHandle(id: String, handle: UInt32) async throws
+  /// Persist a SHA-256 hex content hash for the transferred data when available.
+  /// Default implementation is a no-op for backwards compatibility.
+  func addContentHash(id: String, hash: String) async throws
   func loadResumables(for device: MTPDeviceID) async throws -> [TransferRecord]
   func clearStaleTemps(olderThan: TimeInterval) async throws
 }
@@ -28,6 +35,10 @@ public protocol TransferJournal: Sendable {
 extension TransferJournal {
   /// Default no-op so existing journal implementations don't need to change.
   public func recordThroughput(id: String, throughputMBps: Double) async throws {}
+  /// Default no-op so existing journal implementations don't need to change.
+  public func recordRemoteHandle(id: String, handle: UInt32) async throws {}
+  /// Default no-op so existing journal implementations don't need to change.
+  public func addContentHash(id: String, hash: String) async throws {}
 }
 
 public struct TransferRecord: Sendable {
@@ -46,12 +57,19 @@ public struct TransferRecord: Sendable {
   public let updatedAt: Date
   /// Measured throughput in MB/s, recorded on successful completion. Nil if unknown.
   public let throughputMBps: Double?
+  /// Remote object handle assigned by the device after SendObjectInfo succeeds.
+  /// Populated so a partial object can be located and cleaned up on retry.
+  public let remoteHandle: UInt32?
+  /// SHA-256 hex digest of the source data, when available.
+  public let contentHash: String?
 
   public init(
     id: String, deviceId: MTPDeviceID, kind: String, handle: UInt32?, parentHandle: UInt32?,
     name: String, totalBytes: UInt64?, committedBytes: UInt64, supportsPartial: Bool,
     localTempURL: URL, finalURL: URL?, state: String, updatedAt: Date,
-    throughputMBps: Double? = nil
+    throughputMBps: Double? = nil,
+    remoteHandle: UInt32? = nil,
+    contentHash: String? = nil
   ) {
     self.id = id
     self.deviceId = deviceId
@@ -67,5 +85,7 @@ public struct TransferRecord: Sendable {
     self.state = state
     self.updatedAt = updatedAt
     self.throughputMBps = throughputMBps
+    self.remoteHandle = remoteHandle
+    self.contentHash = contentHash
   }
 }

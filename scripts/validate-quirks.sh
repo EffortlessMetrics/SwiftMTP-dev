@@ -105,6 +105,33 @@ fi
 
 echo "✅ All entry IDs are unique"
 
+# Check that all entries have a governance status field
+echo "🔍 Checking governance status field..."
+missing_status=$(jq -r '.entries[] | select(.status == null) | .id' "$QUIRKS_FILE")
+if [[ -n "$missing_status" ]]; then
+    echo "❌ Entries missing 'status' field:"
+    echo "$missing_status"
+    exit 1
+fi
+echo "✅ All entries have a 'status' field"
+
+# Warn (not fail) if any entry has status=proposed
+proposed_count=$(jq '[.entries[] | select(.status == "proposed")] | length' "$QUIRKS_FILE")
+if [[ "$proposed_count" -gt 0 ]]; then
+    echo "⚠️  WARNING: $proposed_count entry/entries have status='proposed' (unverified — review before merging)"
+    jq -r '.entries[] | select(.status == "proposed") | "   proposed: " + .id' "$QUIRKS_FILE"
+fi
+
+# Fail if a promoted profile is missing evidenceRequired
+echo "🔍 Checking promoted profiles have evidenceRequired..."
+missing_evidence=$(jq -r '.entries[] | select(.status == "promoted") | select(.evidenceRequired == null or (.evidenceRequired | length) == 0) | .id' "$QUIRKS_FILE")
+if [[ -n "$missing_evidence" ]]; then
+    echo "❌ Promoted profiles missing 'evidenceRequired':"
+    echo "$missing_evidence"
+    exit 1
+fi
+echo "✅ All promoted profiles have evidenceRequired"
+
 # Validate bench gates against actual benchmark results
 echo "🔍 Validating bench gates..."
 jq -c '.entries[] | select(.benchGates) | {id: .id, readMin: (.benchGates.readMBpsMin // 0), writeMin: (.benchGates.writeMBpsMin // 0)}' "$QUIRKS_FILE" | while read -r entry; do

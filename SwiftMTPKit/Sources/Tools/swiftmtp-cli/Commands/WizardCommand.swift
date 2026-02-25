@@ -97,7 +97,7 @@ struct WizardCommand {
         vid: selected.vendorID ?? 0, pid: selected.productID ?? 0,
         bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
       {
-        print("   Known device: \(match.id) (status: \(match.status ?? "unknown"))")
+        print("   Known device: \(match.id) (status: \(match.status?.rawValue ?? "unknown"))")
       } else {
         print("   New device! Not in the quirks database yet.")
       }
