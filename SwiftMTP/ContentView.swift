@@ -1,9 +1,5 @@
-//
-//  ContentView.swift
-//  SwiftMTP
-//
-//  Created by Steven Zimmerman, CPA on 9/6/25.
-//
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2025 Effortless Metrics, Inc.
 
 import SwiftUI
 #if canImport(SwiftMTPUI)
