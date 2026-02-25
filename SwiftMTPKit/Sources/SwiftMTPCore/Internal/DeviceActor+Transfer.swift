@@ -177,6 +177,11 @@ extension MTPDeviceActor {
           "Transfer completed: read \(bytesWritten) bytes in \(String(format: "%.2f", duration))s (\(String(format: "%.2f", throughput/1024/1024)) MB/s)"
         )
 
+      // Record throughput telemetry in journal
+      if let journal = transferJournal, let transferId = journalTransferId, duration > 0 {
+        try? await journal.recordThroughput(id: transferId, throughputMBps: throughput / 1_048_576)
+      }
+
       return progress
     } catch {
       try? sink.close()
@@ -965,6 +970,11 @@ extension MTPDeviceActor {
         .info(
           "Transfer completed: write \(bytesRead) bytes in \(String(format: "%.2f", duration))s (\(String(format: "%.2f", throughput/1024/1024)) MB/s)"
         )
+
+      // Record throughput telemetry in journal
+      if let journal = transferJournal, let transferId = journalTransferId, duration > 0 {
+        try? await journal.recordThroughput(id: transferId, throughputMBps: throughput / 1_048_576)
+      }
 
       return progress
     } catch {

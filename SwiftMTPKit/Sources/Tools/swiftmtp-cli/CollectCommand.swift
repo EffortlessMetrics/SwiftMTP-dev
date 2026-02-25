@@ -762,13 +762,16 @@ public enum CollectCommand {
     )
 
     let benchFiles = benchResults.map { "bench-\($0.name).csv" }
-    let benchSummary: SubmissionManifest.BenchSummary? = benchFiles.isEmpty ? nil : {
-      let count = Double(benchResults.count)
-      let avgRead = round(benchResults.map(\.readMBps).reduce(0, +) / count * 100) / 100
-      let avgWrite = round(benchResults.map(\.writeMBps).reduce(0, +) / count * 100) / 100
-      return SubmissionManifest.BenchSummary(
-        readMBpsAvg: avgRead, writeMBpsAvg: avgWrite, sizes: benchResults.map(\.name))
-    }()
+    let benchSummary: SubmissionManifest.BenchSummary? =
+      benchFiles.isEmpty
+      ? nil
+      : {
+        let count = Double(benchResults.count)
+        let avgRead = round(benchResults.map(\.readMBps).reduce(0, +) / count * 100) / 100
+        let avgWrite = round(benchResults.map(\.writeMBps).reduce(0, +) / count * 100) / 100
+        return SubmissionManifest.BenchSummary(
+          readMBpsAvg: avgRead, writeMBpsAvg: avgWrite, sizes: benchResults.map(\.name))
+      }()
 
     return SubmissionManifest(
       tool: .init(

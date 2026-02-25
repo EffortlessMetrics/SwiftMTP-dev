@@ -207,6 +207,17 @@ public actor StoreActor {
     }
   }
 
+  public func updateTransferThroughput(id: String, throughputMBps: Double) throws {
+    let predicate = #Predicate<TransferEntity> { $0.id == id }
+    if let transfer = try modelContext.fetch(FetchDescriptor<TransferEntity>(predicate: predicate))
+      .first
+    {
+      transfer.throughputMBps = throughputMBps
+      transfer.updatedAt = Date()
+      try modelContext.save()
+    }
+  }
+
   public func fetchResumableTransfers(for deviceId: String) throws -> [TransferRecord] {
     let predicate = #Predicate<TransferEntity> {
       $0.deviceId == deviceId && ($0.state == "active" || $0.state == "paused")
@@ -221,7 +232,7 @@ public actor StoreActor {
         supportsPartial: entity.supportsPartial,
         localTempURL: URL(fileURLWithPath: entity.localTempURL),
         finalURL: entity.finalURL.map { URL(fileURLWithPath: $0) }, state: entity.state,
-        updatedAt: entity.updatedAt
+        updatedAt: entity.updatedAt, throughputMBps: entity.throughputMBps
       )
     }
   }

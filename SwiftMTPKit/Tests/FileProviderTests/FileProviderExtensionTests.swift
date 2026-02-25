@@ -409,14 +409,19 @@ final class FileProviderExtensionTests: XCTestCase {
     func readObject(_ req: ReadRequest, withReply r: @escaping (ReadResponse) -> Void) {
       r(ReadResponse(success: false))
     }
-    func listStorages(_ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void) {
+    func listStorages(
+      _ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void
+    ) {
       r(StorageListResponse(success: false))
     }
-    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void) {
+    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void)
+    {
       r(ObjectListResponse(success: false))
     }
-    func getObjectInfo(deviceId: String, storageId: UInt32, objectHandle: UInt32,
-                       withReply r: @escaping (ReadResponse) -> Void) { r(ReadResponse(success: false)) }
+    func getObjectInfo(
+      deviceId: String, storageId: UInt32, objectHandle: UInt32,
+      withReply r: @escaping (ReadResponse) -> Void
+    ) { r(ReadResponse(success: false)) }
     func writeObject(_ req: WriteRequest, withReply r: @escaping (WriteResponse) -> Void) {
       XCTFail("writeObject must not be called when deleteObject fails")
       r(WriteResponse(success: false))
@@ -427,10 +432,14 @@ final class FileProviderExtensionTests: XCTestCase {
     func createFolder(_ req: CreateFolderRequest, withReply r: @escaping (WriteResponse) -> Void) {
       r(WriteResponse(success: false))
     }
-    func requestCrawl(_ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void) {
+    func requestCrawl(
+      _ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void
+    ) {
       r(CrawlTriggerResponse(accepted: false))
     }
-    func deviceStatus(_ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void) {
+    func deviceStatus(
+      _ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void
+    ) {
       r(DeviceStatusResponse(connected: false, sessionOpen: false))
     }
   }
@@ -442,7 +451,8 @@ final class FileProviderExtensionTests: XCTestCase {
       identifier: NSFileProviderDomainIdentifier("abort-test"),
       displayName: "Abort Test"
     )
-    let ext = MTPFileProviderExtension(domain: domain, indexReader: nil, xpcServiceResolver: { stub })
+    let ext = MTPFileProviderExtension(
+      domain: domain, indexReader: nil, xpcServiceResolver: { stub })
 
     let item = MTPFileProviderItem(
       deviceId: "device1", storageId: 1, objectHandle: 42,
@@ -450,7 +460,8 @@ final class FileProviderExtensionTests: XCTestCase {
       isDirectory: false, modifiedDate: nil)
 
     // Write a tiny temp file so sourceURL resolves and fileSize > 0
-    let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("fp-abort-test.txt")
+    let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
+      .appendingPathComponent("fp-abort-test.txt")
     try? "test".data(using: .utf8)!.write(to: tmpURL)
     defer { try? FileManager.default.removeItem(at: tmpURL) }
 

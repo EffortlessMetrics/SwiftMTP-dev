@@ -20,6 +20,8 @@ public final class TransferEntity {
   public var state: String  // "active" | "paused" | "failed" | "done"
   public var updatedAt: Date
   public var lastError: String?
+  /// Measured throughput in MB/s, recorded on successful completion.
+  public var throughputMBps: Double?
 
   // ETag/Precondition info
   public var etagSize: UInt64?

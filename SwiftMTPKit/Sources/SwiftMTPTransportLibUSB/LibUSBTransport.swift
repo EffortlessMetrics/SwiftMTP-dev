@@ -1144,7 +1144,8 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
               + "set USB Preferences to 'File Transfer' (not 'Charging only'), "
               + "and tap 'Allow' on the 'Trust this computer?' prompt. "
               + "Then unplug and replug the cable. "
-              + "If the problem persists, verify ioreg shows IOUSBInterface children for VID 18D1:4EE1."))
+              + "If the problem persists, verify ioreg shows IOUSBInterface children for VID 18D1:4EE1."
+          ))
       }
       throw MTPError.transport(
         .io("\(context): command-phase timeout with no progress (sent=0)"))

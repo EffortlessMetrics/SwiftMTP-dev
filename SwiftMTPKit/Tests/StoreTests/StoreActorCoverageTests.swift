@@ -129,4 +129,30 @@ final class StoreActorCoverageTests: XCTestCase {
     XCTAssertEqual(rows.count, 1)
     XCTAssertEqual(rows.first?.finalURL?.path, finalURLPath)
   }
+
+  func testUpdateTransferThroughputPersistsValue() async throws {
+    let actor = store.createActor()
+    let deviceId = "tp-device-\(UUID().uuidString)"
+    let transferId = "tp-transfer-\(UUID().uuidString)"
+
+    try await actor.createTransfer(
+      id: transferId,
+      deviceId: deviceId,
+      kind: "read",
+      handle: 20,
+      parentHandle: nil,
+      name: "video.mp4",
+      totalBytes: 1_000_000,
+      supportsPartial: true,
+      localTempURL: "/tmp/tp-temp-\(UUID().uuidString)",
+      finalURL: nil,
+      etagSize: nil,
+      etagMtime: nil
+    )
+
+    try await actor.updateTransferThroughput(id: transferId, throughputMBps: 12.5)
+
+    let rows = try await actor.fetchResumableTransfers(for: deviceId)
+    XCTAssertEqual(rows.first?.throughputMBps, 12.5)
+  }
 }
