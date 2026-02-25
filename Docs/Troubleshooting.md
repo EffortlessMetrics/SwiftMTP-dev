@@ -213,28 +213,46 @@ The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.
 
 ## Submission & Benchmark Issues
 
-### Troubleshooting Flow
+### Canonical `collect` + `benchmark` Sequence
 
-Run these commands in order:
+Use this exact sequence when gathering evidence for a device submission or debugging a transfer issue:
 
 ```bash
-# 1. Probe device
+# Step 1: Confirm device is reachable
 swift run swiftmtp probe
 
-# 2. Capture evidence
+# Step 2: Capture a submission bundle (privacy-safe, JSON output)
 swift run swiftmtp collect --strict --json --noninteractive
 
-# 3. Verify artifacts
-# - submission.json exists
-# - usb-dump.txt contains only redacted placeholders
+# Step 3: Validate the bundle (check redaction and required fields)
+./scripts/validate-submission.sh Docs/benchmarks/<timestamp>/submission.json
 
-# 4. Single-size check
+# Step 4: Warm-up + single-size check (confirms write path is working)
 swift run swiftmtp bench 100M --out /tmp/bench-100m.csv
 
-# 5. Full benchmark
-swift run swiftmtp bench 500M
+# Step 5: Full benchmark at two sizes with 3 repeats
+swift run swiftmtp bench 500M --repeat 3
 swift run swiftmtp bench 1G --repeat 3
+
+# Step 6: Snapshot for regression comparison
+swift run swiftmtp snapshot --out /tmp/snapshot.json
 ```
+
+**Expected artifacts after Step 5:**
+- `/tmp/bench-100m.csv` — CSV with write+read speed per run
+- `Docs/benchmarks/<timestamp>/submission.json` — privacy-safe device profile
+- `Docs/benchmarks/<timestamp>/usb-dump.txt` — USB interface dump (redacted)
+
+**If `collect` fails:**
+1. Run `swift run swiftmtp probe` first — confirms MTP handshake works
+2. If `DEVICE_BUSY` is returned, wait 30 s then retry (device may have a background sync in progress)
+3. If `permissionDenied`, accept "Trust This Computer" on the device screen
+4. Re-run with `--lax` to skip strict redaction check (not for submission — for local debug only)
+
+**If `bench` fails mid-run:**
+1. Check available storage: `swift run swiftmtp ls` — confirm at least 2× bench size is free
+2. If timeout, the device dropped the session — reconnect and reduce to `--size 50M` to isolate
+3. Use `swift run swiftmtp quirks` to check if the device has known write-timeout quirks
 
 ### Device Lab Diagnostics
 
@@ -276,6 +294,31 @@ swift run swiftmtp usb-dump
 ```
 
 See [Docs/device-bringup.md](device-bringup.md) for mode options.
+
+---
+
+## Pre-PR Local Gate
+
+Before opening a PR, run this minimal gate to match CI checks:
+
+```bash
+# 1. Format (required — CI rejects unformatted code)
+swift-format -i -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+
+# 2. Lint (must be clean)
+swift-format lint -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+
+# 3. Full test suite
+cd SwiftMTPKit && swift test -v
+
+# 4. TSAN on concurrency-heavy targets
+swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
+
+# 5. Quirks validation
+./scripts/validate-quirks.sh
+```
+
+All five must pass before pushing. CI runs the same checks. The full matrix run (`./run-all-tests.sh`) is recommended for release PRs.
 
 ---
 

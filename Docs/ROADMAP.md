@@ -69,13 +69,13 @@ Primary outcome: contributors can produce valid, redacted submission bundles wit
 - [x] Harden `swiftmtp collect` strict-mode path and validation messaging
 - [x] Add/expand privacy-redaction assertions for submission artifacts
 - [ ] Tighten `validate-submission` and evidence expectations for PR review
-- [ ] Publish one canonical `collect` + `benchmark` troubleshooting sequence
+- [x] Publish one canonical `collect` + `benchmark` troubleshooting sequence
 
 Sprint exit criteria:
 
 - [ ] New submission bundle validates with `./scripts/validate-submission.sh`
 - [ ] Redaction checks catch known bad patterns without false positives in baseline artifacts
-- [ ] Contribution docs and roadmap docs reference the same workflow and command set
+- [x] Contribution docs and roadmap docs reference the same workflow and command set
 - [ ] Device submission PR template is aligned with documented command examples
 
 ### Sprint 2.1-C: CI and Verification Consolidation
@@ -85,7 +85,7 @@ Primary outcome: predictable CI signal and consistent local-to-CI test behavior.
 - [x] Consolidate overlapping CI workflows and document required checks
 - [x] Ensure TSAN execution path is explicit and repeatable for concurrency-heavy targets
 - [ ] Keep filtered coverage gate stable and documented
-- [ ] Publish a minimal "pre-PR local gate" command sequence
+- [x] Publish a minimal "pre-PR local gate" command sequence
 
 Sprint exit criteria:
 

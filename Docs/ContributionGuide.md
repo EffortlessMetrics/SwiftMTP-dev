@@ -24,10 +24,19 @@ Choose the lane that matches your work:
 
 ### Sprint Checkpoint Gates
 
+Minimal pre-PR gate (must pass before every PR):
+
 ```bash
+# Format (CI requires)
+swift-format -i -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+swift-format lint -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+
+# Build + targeted tests
 swift build --package-path SwiftMTPKit
-./scripts/smoke.sh
 swift test --package-path SwiftMTPKit --filter <RelevantSuite>
+
+# Quirks validation (required if quirks.json changed)
+./scripts/validate-quirks.sh
 ```
 
 For milestone merges and release prep:
@@ -41,6 +50,8 @@ If concurrency-related code changes:
 ```bash
 swift test --package-path SwiftMTPKit -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
 ```
+
+See `Docs/Troubleshooting.md#pre-pr-local-gate` for the full canonical sequence.
 
 ## Branch and PR Naming
 
