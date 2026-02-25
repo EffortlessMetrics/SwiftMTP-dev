@@ -762,6 +762,13 @@ public enum CollectCommand {
     )
 
     let benchFiles = benchResults.map { "bench-\($0.name).csv" }
+    let benchSummary: SubmissionManifest.BenchSummary? = benchFiles.isEmpty ? nil : {
+      let count = Double(benchResults.count)
+      let avgRead = round(benchResults.map(\.readMBps).reduce(0, +) / count * 100) / 100
+      let avgWrite = round(benchResults.map(\.writeMBps).reduce(0, +) / count * 100) / 100
+      return SubmissionManifest.BenchSummary(
+        readMBpsAvg: avgRead, writeMBpsAvg: avgWrite, sizes: benchResults.map(\.name))
+    }()
 
     return SubmissionManifest(
       tool: .init(
@@ -787,7 +794,8 @@ public enum CollectCommand {
       artifacts: .init(
         probe: "probe.json",
         usbDump: "usb-dump.txt",
-        bench: benchFiles.isEmpty ? nil : benchFiles
+        bench: benchFiles.isEmpty ? nil : benchFiles,
+        benchSummary: benchSummary
       ),
       consent: .init(anonymizeSerial: true, allowBench: !benchResults.isEmpty)
     )
@@ -1103,6 +1111,13 @@ public enum CollectCommand {
       let probe: String
       let usbDump: String
       let bench: [String]?
+      let benchSummary: BenchSummary?
+    }
+
+    public struct BenchSummary: Codable {
+      let readMBpsAvg: Double
+      let writeMBpsAvg: Double
+      let sizes: [String]
     }
 
     public struct ConsentInfo: Codable {

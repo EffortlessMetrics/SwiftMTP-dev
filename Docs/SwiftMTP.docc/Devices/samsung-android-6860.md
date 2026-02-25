@@ -59,6 +59,43 @@ Current bring-up status for Samsung Android (`VID:PID 04e8:6860`).
 | Prefer Object Property List | Yes |
 | Write Resume Disabled | Yes |
 
+## Troubleshooting
+
+### Storage gated: GetStorageIDs returns empty list
+
+**Symptom:** Device handshake succeeds (`Open + DeviceInfo` passes) but storage list is empty (`storageCount=0`).
+
+**Root cause:** Samsung Android requires the user to authorize file access on the phone screen before
+the MTP storage is exposed. The device is in a "locked" state where it has entered MTP mode but
+not yet granted full access.
+
+**Fix:**
+1. **Unlock the phone screen** — storage access is blocked when the screen is locked.
+2. **Approve the access prompt** — when connected, Samsung shows "Allow access to your files?"
+   — tap **Allow**. If you missed it, check the notification shade.
+3. **Unplug and replug** the USB cable after approving. The storage layer resets on reconnect.
+4. Re-run `swift run --package-path SwiftMTPKit swiftmtp device-lab connected --json`.
+
+### Handshake blocked on repeated attach
+
+**Symptom:** `Open + DeviceInfo` fails, no recovery after reset+reopen rung.
+
+**Possible causes:**
+- Samsung's MTP daemon (`mtp-responder`) has not started. Enable file transfer mode explicitly:
+  Settings → Connected devices → USB → File Transfer.
+- Samsung's class 0xff vendor interface may need an extra stabilization window.
+  The quirk profile uses `stabilizeMs: 500`; if you see this on slower hardware, try
+  `export SWIFTMTP_STABILIZE_MS=1000`.
+
+### Write smoke fails after storage is exposed
+
+Samsung Galaxy S21 (`6860`) does **not** support `SendPartialObject`. Always use whole-object
+writes (the default). If you see partial-write errors, verify the quirk profile is active:
+```
+swift run --package-path SwiftMTPKit swiftmtp quirks --vid 04e8 --pid 6860
+```
+The output must show `supportsSendPartialObject: false` and `disableWriteResume: true`.
+
 ## Notes
 
 - Vendor-specific interface class (0xff) discovered by shared MTP heuristic.

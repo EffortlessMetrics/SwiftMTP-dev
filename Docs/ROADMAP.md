@@ -115,16 +115,16 @@ Sprint exit criteria:
 - [x] Multi-device parallel transfer support
 - [x] FileProvider write operations (macOS 26 Finder integration)
 - [x] Extended MTP event handling (storageAdded/Removed, objectInfoChanged, unknown)
-- [ ] Pixel 7 and OnePlus write/open-path stabilization complete
-- [ ] Submission and troubleshooting workflow hardening complete
-- [ ] CI/test gate documentation and execution consolidated
+- [x] Pixel 7 and OnePlus write/open-path stabilization complete
+- [x] Submission and troubleshooting workflow hardening complete
+- [x] CI/test gate documentation and execution consolidated
 
 ### 2.2 Focus: Testing and Submission Depth
 
 - [x] GetObjectPropsSupported for format-aware property discovery
 - [x] ObjectSize U64 fallback for files > 4 GB
-- [ ] Increase mutation and edge-case coverage for transport error handling
-- [ ] Expand real-device troubleshooting trees for top support issues
+- [x] Increase mutation and edge-case coverage for transport error handling
+- [x] Expand real-device troubleshooting trees for top support issues
 - [ ] Improve benchmark report consistency and release evidence packaging
 
 ### 2.3 Focus: Growth and Performance
