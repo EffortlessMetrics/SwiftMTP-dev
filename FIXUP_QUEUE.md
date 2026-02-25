@@ -27,12 +27,13 @@
    full `fromRaw()` parsing. All switch sites updated.
 
 8. ~~`MTPLink` missing object property operations~~  
-   **DONE** — Added `getObjectPropValue` / `setObjectPropValue` to `MTPLink`
-   protocol with default implementations via `executeStreamingCommand`.
+   **DONE** — Added `getObjectPropValue` / `setObjectPropValue` / `getObjectPropsSupported`
+   to `MTPLink` protocol with default implementations via `executeStreamingCommand`.
    `VirtualMTPLink` implements them backed by `VirtualObjectConfig`.
    `PTPLayer` exposes `getObjectModificationDate`, `setObjectModificationDate`,
-   and `getObjectFileName` helpers. `MTPObjectPropCode` and `MTPDateString`
-   enums added.
+   `getObjectFileName`, `getObjectPropsSupported`, `getObjectSizeU64` helpers.
+   `MTPObjectPropCode` and `MTPDateString` enums added. ObjectSize U64 fallback
+   wired into `getObjectInfoStrict`. `skipGetObjectPropValue` QuirkFlag added.
 
 9. ~~`FallbackAllFailedError` not tested~~  
    **DONE** — `FallbackAllFailedErrorTests` (8 tests) in `ErrorHandlingTests`.
