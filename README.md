@@ -85,6 +85,8 @@ SwiftMTP is built with modern Swift 6 concurrency patterns:
 ### Prerequisites
 - **macOS Tahoe 26.0+** (macOS 2026, requires Apple Silicon or Intel Mac with Tahoe upgrade)
 - **iOS 26.0+** (partial support: index, sync, and FileProvider operations; USB transport requires macOS host)
+
+- **macOS 26.0+** / **iOS 26.0+**
 - **Xcode 16.0+** with Swift 6 (`6.2` recommended)
 - `libusb` installed via Homebrew: `brew install libusb`
 
