@@ -264,7 +264,7 @@ SwiftMTP is dual-licensed:
 - **AGPL-3.0** for open-source use
 - **Commercial license** for closed-source/App Store distribution
 
-See [`legal/outbound/COMMERCIAL-LICENSE.md`](legal/outbound/COMMERCIAL-LICENSE.md) or contact licensing@effortlessmetrics.com.
+See [`legal/outbound/COMMERCIAL-LICENSE.md`](legal/outbound/COMMERCIAL-LICENSE.md) or contact git@effortlesssteven.com.
 
 ## 🏆 Acknowledgments
 

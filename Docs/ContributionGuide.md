@@ -4,6 +4,17 @@
 
 This guide covers how to contribute during the active implementation sprints, including code changes, device evidence, and documentation updates.
 
+## Legal Requirements
+
+All contributions to SwiftMTP require a signed Contributor License Agreement (CLA).
+
+- **Individuals:** Sign the [Individual CLA](../legal/inbound/CLA-INDIVIDUAL.md) before your first PR.
+- **Entities:** Have an authorized signatory complete the [Entity CLA](../legal/inbound/CLA-ENTITY.md).
+
+All commits must also include a [Developer Certificate of Origin](../legal/inbound/DCO.txt) sign-off. Use `git commit -s` to add the `Signed-off-by` trailer automatically.
+
+PRs without a signed CLA and DCO sign-off cannot be merged.
+
 ## Contribution Lanes
 
 Choose the lane that matches your work:

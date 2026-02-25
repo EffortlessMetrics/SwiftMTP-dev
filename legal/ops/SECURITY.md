@@ -2,8 +2,7 @@
 
 ## Reporting Security Issues
 
-**Report to:** security@effortlessmetrics.com
-**PGP Key:** [Fingerprint will be provided upon request]
+**Report to:** git@effortlesssteven.com
 **Response Time:** Within 3 business days
 
 **Do not** open public issues for vulnerabilities.
@@ -53,5 +52,5 @@ We consider security research conducted in accordance with this policy to be aut
 
 ---
 
-**Last Updated:** [Date]
-**Contact:** security@effortlessmetrics.com
+**Last Updated:** 2026-02-25
+**Contact:** git@effortlesssteven.com

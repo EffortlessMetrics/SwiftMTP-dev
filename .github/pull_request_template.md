@@ -24,6 +24,7 @@
 - [ ] `swift run --package-path SwiftMTPKit swiftmtp health` passes (for operational changes)
 - [ ] CI green on all gates (evidence, bench, docc, lint)
 - [ ] Manual testing with target device(s)
+- [ ] CLA signed and commits include DCO sign-off (`git commit -s`)
 
 ## Risk & Rollback
 

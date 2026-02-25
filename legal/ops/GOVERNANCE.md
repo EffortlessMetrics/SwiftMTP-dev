@@ -16,7 +16,7 @@
 ## Maintainers
 
 Current maintainers:
-- [List maintainer names and GitHub handles]
+- Steven Zimmerman, CPA (@EffortlessSteven)
 
 **Responsibilities:**
 - Review PRs within 2 business days
@@ -65,4 +65,4 @@ Current maintainers:
 
 ---
 
-**Last Updated:** [Date]
+**Last Updated:** 2026-02-25

@@ -57,5 +57,5 @@ For SLA breaches:
 
 ---
 
-**Effective Date:** [Date]
-**Last Updated:** [Date]
+**Effective Date:** 2026-02-25
+**Last Updated:** 2026-02-25

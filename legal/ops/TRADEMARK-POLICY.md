@@ -37,15 +37,15 @@ If you distribute products using SwiftMTP:
 
 We enforce our trademarks to prevent confusion. If you receive a trademark notice:
 1. Cease the prohibited use immediately
-2. Contact legal@effortlessmetrics.com for clarification
+2. Contact git@effortlesssteven.com for clarification
 3. We may grant permission for appropriate uses
 
 ## Contact
 
 For trademark permissions or questions:
-- Email: trademarks@effortlessmetrics.com
-- Address: [Company address]
+- Email: git@effortlesssteven.com
+- Address: git@effortlesssteven.com
 
 ---
 
-**Last Updated:** [Date]
+**Last Updated:** 2026-02-25
