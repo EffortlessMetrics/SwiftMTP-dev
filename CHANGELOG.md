@@ -63,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - macOS 15 backward compatibility
 - Legacy USB entitlements (simplified to modern model)
+- **Linux support**: IOUSBHost dependency is macOS-only. Linux users should remain on v1.x.
 
 ### Documentation
 

@@ -225,11 +225,15 @@ let ladder: [Int] = [
 
 ### Performance by Capability
 
-| Device Type | Typical Speed | Max Chunk |
-|-------------|---------------|-----------|
-| USB 3.0 | 40-80 MB/s | 4 MB |
-| USB 2.0 | 10-15 MB/s | 2 MB |
-| Wireless | 2-5 MB/s | 1 MB |
+These are practical MTP-over-USB transfer speeds observed in real-device testing,
+not USB theoretical maximums (USB 3.0 theoretical max is 625 MB/s; MTP protocol
+overhead and device firmware limits reduce this significantly).
+
+| Connection | Practical MTP Speed | Max Chunk |
+|------------|---------------------|-----------|
+| USB 3.0    | 40–80 MB/s          | 4 MB      |
+| USB 2.0    | 10–15 MB/s          | 2 MB      |
+| Wireless   | 2–5 MB/s            | 1 MB      |
 
 ## Object Operations
 
