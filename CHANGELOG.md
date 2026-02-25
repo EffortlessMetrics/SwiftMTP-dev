@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **DeviceSessionActor `withTransaction<R>`**: Exclusive protocol transaction lock on `MTPDeviceActor`. Concurrent callers queue in arrival order; the lock is always released even if the body throws. Prevents MTP command interleaving at actor reentrancy points.
+- **`MTPError.sessionBusy`**: New error case for transaction contention detection.
+- **Transport recovery — classified errors**: `TransportPhase` enum (`.bulkOut`, `.bulkIn`, `.responseWait`); `TransportError.stall` maps `LIBUSB_ERROR_PIPE` with automatic `clear_halt` + one retry in `bulkWriteAll`/`bulkReadOnce`; `TransportError.timeoutInPhase(TransportPhase)` for phase-specific timeout classification with actionable messages.
+- **Write-path durability**: `TransferJournal.recordRemoteHandle(id:handle:)` and `addContentHash(id:hash:)` (default no-ops for backward compat). `TransferRecord.remoteHandle` and `contentHash` fields. On retry after reset, partial remote objects are detected and deleted before re-upload. `MTPDeviceActor.reconcilePartials()` cleans up partial objects on session open.
+- **BufferPool + 2-stage pipeline**: `BufferPool` actor with preallocated `PooledBuffer` (@unchecked Sendable) pool. `PipelinedUpload`/`PipelinedDownload` provide depth-2 concurrent read/send pipeline with `PipelineMetrics` (bytes, duration, throughput MB/s).
+- **FileProvider incremental change notifications**: `signalRootContainer()` called after every `createItem`/`modifyItem`/`deleteItem` success. `enumerateChanges` and `currentSyncAnchor` implemented with SQLite change log; sync anchors encode Int64 change counter as 8-byte Data.
+- **Quirk governance lifecycle**: `QuirkStatus` enum (`proposed | verified | promoted`) on `DeviceQuirk`. `evidenceRequired`, `lastVerifiedDate`, `lastVerifiedBy` fields. All existing profiles promoted to `promoted`. `scripts/validate-quirks.sh` enforces status presence and evidence requirements. `scripts/generate-compat-matrix.sh` generates markdown compatibility table.
+- **Per-transaction observability timeline**: `TransactionLog` actor (ring-buffered at 1000) with `TransactionRecord` (opcode, txid, bytes, duration, outcome). `MTPOpcodeLabel` with 21 common opcode labels. `ActionableErrors` protocol with user-friendly descriptions for all `MTPError`/`TransportError` cases.
+- **libmtp compatibility harness** (`scripts/compat-harness.py`): Python script comparing SwiftMTP vs `mtp-tools` output. Structured JSON evidence, diff classification, expectation overlays per device (`compat/expectations/<vidpid>.yml`).
+- **Test count: 1920** (up from 1891), 0 failures, 0 lint warnings.
+
 - **Transfer throughput telemetry**: `TransferJournal.recordThroughput(id:throughputMBps:)` protocol method captures measured MB/s on read and write completion. `TransferEntity.throughputMBps` persists to SwiftData. Default no-op implementation preserves backward compatibility.
 - **Actionable CLI error messages**: `actionableMessage(for:)` helper in `CLIState.swift` maps all `MTPError` and `TransportError` cases to concise fix-guidance strings. `probe`, `pull`, `push`, and `bench` now emit actionable hints instead of raw error descriptions.
 - **Canon EOS and Nikon DSLR device profiles**: Added `canon-eos-rebel-3139` (PTP conflict guidance) and `nikon-dslr-0410` (NEF vendor extension) experimental quirk entries with full device guides.
