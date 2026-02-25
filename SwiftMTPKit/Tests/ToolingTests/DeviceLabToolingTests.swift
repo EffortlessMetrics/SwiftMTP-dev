@@ -136,3 +136,42 @@ final class DeviceLabToolingTests: XCTestCase {
     XCTAssertLessThan(elapsed, 1.0)
   }
 }
+
+final class ActionableMessageTests: XCTestCase {
+  func testNoDeviceMessage() {
+    let err = MTPError.transport(.noDevice)
+    let msg = actionableMessage(for: err)
+    XCTAssertTrue(msg.contains("USB mode"), "Expected USB mode hint, got: \(msg)")
+  }
+
+  func testTimeoutMessage() {
+    let err = MTPError.timeout
+    let msg = actionableMessage(for: err)
+    XCTAssertTrue(msg.contains("unlocked"), "Expected unlock hint, got: \(msg)")
+  }
+
+  func testPermissionDeniedMessage() {
+    let err = MTPError.permissionDenied
+    let msg = actionableMessage(for: err)
+    XCTAssertTrue(msg.contains("Trust"), "Expected Trust Computer hint, got: \(msg)")
+  }
+
+  func testStorageFullMessage() {
+    let err = MTPError.storageFull
+    let msg = actionableMessage(for: err)
+    XCTAssertTrue(msg.contains("full"), "Expected storage full hint, got: \(msg)")
+  }
+
+  func testProtocolErrorMessage() {
+    let err = MTPError.protocolError(code: 0x2019, message: "object not deleted")
+    let msg = actionableMessage(for: err)
+    XCTAssertTrue(msg.contains("0x2019"), "Expected error code, got: \(msg)")
+  }
+
+  func testFallbackForNonMTPError() {
+    let err = NSError(
+      domain: "test", code: 42, userInfo: [NSLocalizedDescriptionKey: "custom error"])
+    let msg = actionableMessage(for: err)
+    XCTAssertEqual(msg, "custom error")
+  }
+}

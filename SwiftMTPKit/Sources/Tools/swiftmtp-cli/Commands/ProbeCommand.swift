@@ -48,7 +48,7 @@ struct ProbeCommand {
           break
         }
       }
-      log("❌ Probe failed: \(error)")
+      log("❌ Probe failed: \(actionableMessage(for: error))")
       exitNow(.tempfail)
     }
   }
@@ -93,6 +93,7 @@ struct ProbeCommand {
     } catch {
       let errorOutput: [String: Any] = [
         "error": error.localizedDescription,
+        "hint": actionableMessage(for: error),
         "capabilities": [:],
         "effective": [:],
       ]
@@ -111,7 +112,7 @@ struct ProbeCommand {
           break
         }
       }
-      log("❌ Probe failed: \(error)")
+      log("❌ Probe failed: \(actionableMessage(for: error))")
       exitNow(.tempfail)
     }
   }

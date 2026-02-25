@@ -52,7 +52,7 @@ Primary outcome: reduce high-severity real-device failures and make first-line f
 
 - [x] Resolve Pixel 7 Tahoe 26 bulk-transfer timeout path (control-plane succeeds, bulk path times out)
 - [x] Stabilize OnePlus 3T `SendObject` / `0x201D` large-write behavior
-- [ ] Improve first-line error messages for `probe`, `collect`, and write-path operations
+- [x] Improve first-line error messages for `probe`, `collect`, and write-path operations
 - [ ] Refresh per-device behavior notes in `Docs/Troubleshooting.md` and device pages
 
 Sprint exit criteria:
@@ -132,7 +132,7 @@ Sprint exit criteria:
 - [x] Expand supported device profile coverage (new vendor classes) — Canon EOS (04A9:3139), Nikon DSLR (04B0:0410) added as experimental profiles with full troubleshooting docs
 - [x] Investigate parallel multi-device enumeration — implemented Task-per-attach dispatch in DeviceServiceRegistry.startMonitoring; O(1) startup regardless of N devices
 - [ ] Improve large-file throughput on USB 3.x controllers
-- [ ] Add transfer resume telemetry to benchmark reports
+- [x] Add transfer resume telemetry to benchmark reports
 
 ### 3.x Exploratory Themes
 

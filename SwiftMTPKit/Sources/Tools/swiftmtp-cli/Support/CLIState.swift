@@ -94,6 +94,53 @@ public func log(_ message: String) {
   FileHandle.standardError.write((message + "\n").data(using: .utf8)!)
 }
 
+/// Returns a short, actionable first-line error message for a given error.
+/// Used to surface fix guidance at the CLI level without verbose stack traces.
+public func actionableMessage(for error: Error) -> String {
+  if let mtpError = error as? MTPError {
+    switch mtpError {
+    case .deviceDisconnected:
+      return "Device disconnected. Reconnect the cable and ensure the screen is unlocked."
+    case .permissionDenied:
+      return "Permission denied. Accept the 'Trust This Computer' prompt on the device."
+    case .notSupported(let msg):
+      return "Operation not supported: \(msg). Try a different USB mode (MTP vs PTP)."
+    case .transport(let te):
+      switch te {
+      case .noDevice:
+        return "No MTP device found. Check cable, USB mode (File Transfer/MTP), and unlock screen."
+      case .timeout:
+        return
+          "Device timed out. Unlock screen, disconnect competing apps (adb, Android File Transfer), and retry."
+      case .busy:
+        return "Device is busy. Wait a moment, then retry. Rebooting the device may help."
+      case .accessDenied:
+        return "USB access denied. Accept the USB permission dialog on the device."
+      case .io(let msg):
+        return "USB I/O error: \(msg). Try a different cable or port."
+      }
+    case .objectNotFound:
+      return "Object not found. The file or folder may have been moved or deleted on the device."
+    case .objectWriteProtected:
+      return "Object is write-protected. Disable write protection in the device settings."
+    case .storageFull:
+      return "Device storage is full. Free up space on the device and retry."
+    case .readOnly:
+      return "Storage is read-only. Check device write-protection settings."
+    case .timeout:
+      return "Operation timed out. Ensure the device is unlocked and no other app is accessing it."
+    case .busy:
+      return "Device is busy. Wait a moment and retry."
+    case .protocolError(let code, let message):
+      let hint = message ?? "see device log"
+      return "MTP protocol error 0x\(String(format: "%04X", code)): \(hint)."
+    case .preconditionFailed(let reason):
+      return "Precondition failed: \(reason)."
+    }
+  }
+  return error.localizedDescription
+}
+
 @MainActor
 public func printJSON(_ value: Any, type: String) {
   var envelope: [String: Any] = [
