@@ -532,4 +532,63 @@ final class DeviceServiceCoverageTests: XCTestCase {
     let newRev = await registry.deviceId(for: "new-domain")
     XCTAssertEqual(newRev, id)
   }
+
+  /// Concurrent attach events are processed in parallel.
+  /// Two devices are injected simultaneously via syncConnectedDeviceSnapshot.
+  /// Each onAttach sleeps 50 ms. If serial: ~100 ms total. If parallel: ~50 ms total.
+  func testConcurrentAttachEventsProcessedInParallel() async throws {
+    // Don't use mock transport — it would inject an extra auto-attach event.
+    // startDiscovery() still initializes the attach/detach stream continuations.
+    let manager = MTPDeviceManager()
+    let registry = DeviceServiceRegistry()
+    let attachedIDs = ActorBox<String>()
+    let delay: UInt64 = 50_000_000  // 50 ms
+
+    await registry.startMonitoring(
+      manager: manager,
+      onAttach: { summary, _ in
+        try? await Task.sleep(nanoseconds: delay)
+        await attachedIDs.append(summary.id.raw)
+      },
+      onDetach: { _, _ in }
+    )
+
+    // Prime the discovery streams without starting real USB discovery
+    try await manager.startDiscovery()
+
+    let start = Date()
+
+    // Inject two devices in one snapshot → both attach events fired immediately
+    let idA = MTPDeviceID(raw: "par-A")
+    let idB = MTPDeviceID(raw: "par-B")
+    let summaryA = MTPDeviceSummary(
+      id: idA, manufacturer: "Test", model: "A",
+      vendorID: 0xAAAA, productID: 0x0001, bus: 1, address: 1)
+    let summaryB = MTPDeviceSummary(
+      id: idB, manufacturer: "Test", model: "B",
+      vendorID: 0xAAAA, productID: 0x0002, bus: 1, address: 2)
+    await manager.syncConnectedDeviceSnapshot([summaryA, summaryB])
+
+    // Wait 1.5× the per-handler delay — enough for parallel but not for serial
+    try await Task.sleep(nanoseconds: delay + delay / 2)
+
+    await registry.stopMonitoring()
+    await manager.stopDiscovery()
+
+    let ids = await attachedIDs.values
+    XCTAssertEqual(ids.count, 2, "Both parallel attach handlers should have completed")
+    XCTAssertTrue(ids.contains("par-A") && ids.contains("par-B"))
+
+    let elapsed = Date().timeIntervalSince(start)
+    // If handlers ran serially, elapsed ≥ 2 × 50 ms = 100 ms.
+    // If parallel, elapsed ≈ 50–80 ms. Allow up to 0.15 s for CI jitter.
+    XCTAssertLessThan(elapsed, 0.15, "Parallel attach should complete in ~1× handler delay")
+  }
+}
+
+// MARK: - Test Helpers
+
+private actor ActorBox<T: Sendable> {
+  private(set) var values: [T] = []
+  func append(_ v: T) { values.append(v) }
 }

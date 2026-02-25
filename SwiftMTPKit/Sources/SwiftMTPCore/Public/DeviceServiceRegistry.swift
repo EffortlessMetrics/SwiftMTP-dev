@@ -69,6 +69,12 @@ public actor DeviceServiceRegistry {
   }
 
   /// Start monitoring device attach/detach events.
+  ///
+  /// Each `onAttach` callback is dispatched in a separate `Task` so that multiple
+  /// simultaneous hotplug events are processed concurrently rather than sequentially.
+  /// This ensures a slow initialization for device A does not block device B from
+  /// starting its own setup.
+  ///
   /// - Parameters:
   ///   - manager: The device manager to monitor.
   ///   - onAttach: Called when a device is attached. Should set up transport, service, orchestrator.
@@ -80,15 +86,16 @@ public actor DeviceServiceRegistry {
   ) {
     let registry = self
     monitorTask = Task {
-      // Monitor attachments
+      // Monitor attachments — each handler fires concurrently so a slow
+      // device A initialization never delays device B.
       async let attachTask: Void = {
         let stream = await manager.attachedStream
         for await summary in stream {
-          await onAttach(summary, registry)
+          Task { await onAttach(summary, registry) }
         }
       }()
 
-      // Monitor detachments
+      // Monitor detachments — sequential is fine; detach is fast (just marks disconnected).
       async let detachTask: Void = {
         let stream = await manager.detachedStream
         for await deviceId in stream {
