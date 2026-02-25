@@ -4,9 +4,9 @@ set -euo pipefail
 LICENSOR="Effortless Metrics, Inc."
 LAW="Delaware"
 VENUE="New York, NY"
-LICENSING_EMAIL="licensing@effortlesssteven.com"
-SECURITY_EMAIL="security@effortlesssteven.com"
-SUPPORT_EMAIL="support@effortlesssteven.com"
+LICENSING_EMAIL="git@effortlesssteven.com"
+SECURITY_EMAIL="git@effortlesssteven.com"
+SUPPORT_EMAIL="git@effortlesssteven.com"
 
 # macOS sed in-place (-i '') variant
 find legal -type f -name "*.md" -print0 | xargs -0 sed -i '' \
