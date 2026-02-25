@@ -116,6 +116,20 @@ git push -u origin HEAD
 - [ ] `.salt` is not committed
 - [ ] Bundle validated locally with `validate-submission.sh`
 
+## CI Workflows
+
+| Workflow | Trigger | Required for merge | What it checks |
+|----------|---------|-------------------|----------------|
+| `ci.yml` | All branches/PRs | ✅ Yes | Build, full test suite, coverage gate, TSAN, fuzz harness, SBOM (tags) |
+| `swiftmtp-ci.yml` | main merges | No (supplemental) | Deeper coverage reporting, docs build, CLI smoke |
+| `smoke.yml` | Schedule + PRs | No (advisory) | Real-device smoke check |
+| `validate-quirks.yml` | PRs touching quirks | ✅ Yes (if quirks changed) | JSON schema + required fields |
+| `validate-submission.yml` | Device submission PRs | ✅ Yes | Bundle completeness + redaction |
+| `release.yml` | Tags | Release gate | Changelog, artifacts, SBOM |
+| `nightly-real-device-ux-smoke.yml` | Nightly | No (advisory) | End-to-end with physical device |
+
+**The only required check for merging a PR is `ci.yml`.** All other workflows are supplemental or advisory. Device submission PRs also require `validate-submission.yml`.
+
 ## Troubleshooting During Contribution
 
 - Device not found: `swift run --package-path SwiftMTPKit swiftmtp --real-only probe`

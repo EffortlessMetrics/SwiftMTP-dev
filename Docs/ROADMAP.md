@@ -76,7 +76,7 @@ Sprint exit criteria:
 - [ ] New submission bundle validates with `./scripts/validate-submission.sh`
 - [ ] Redaction checks catch known bad patterns without false positives in baseline artifacts
 - [x] Contribution docs and roadmap docs reference the same workflow and command set
-- [ ] Device submission PR template is aligned with documented command examples
+- [x] Device submission PR template is aligned with documented command examples
 
 ### Sprint 2.1-C: CI and Verification Consolidation
 
@@ -89,9 +89,9 @@ Primary outcome: predictable CI signal and consistent local-to-CI test behavior.
 
 Sprint exit criteria:
 
-- [ ] Single documented CI truth path in docs (including optional/nightly jobs)
-- [ ] TSAN invocation is documented and verified in CI config
-- [ ] Local gate commands mirror CI behavior for core checks
+- [x] Single documented CI truth path in docs (including optional/nightly jobs)
+- [x] TSAN invocation is documented and verified in CI config
+- [x] Local gate commands mirror CI behavior for core checks
 - [ ] Release checklist references the same required checks and artifact rules
 
 ## Dependency and Risk Register (v2.1)
