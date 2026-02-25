@@ -43,12 +43,12 @@ final class ModelSnapshotTests: XCTestCase {
     )
 
     let summary = MTPDeviceSummary(
-      id: MTPDeviceID(raw: "pixel7-4ee1-REDACTED"),
+      id: MTPDeviceID(raw: "pixel7-4ee1-TESTSERIAL001"),
       manufacturer: "Google",
       model: "Pixel 7",
       vendorID: 0x18D1,
       productID: 0x4EE1,
-      usbSerial: "REDACTED"
+      usbSerial: "TESTSERIAL001"
     )
 
     let receipt = ProbeReceipt(
@@ -133,12 +133,12 @@ final class ModelSnapshotTests: XCTestCase {
     )
 
     let summary = MTPDeviceSummary(
-      id: MTPDeviceID(raw: "oneplus3t-f003-REDACTED"),
+      id: MTPDeviceID(raw: "oneplus3t-f003-TESTSERIAL002"),
       manufacturer: "OnePlus",
       model: "ONEPLUS A3010",
       vendorID: 0x2A70,
       productID: 0xF003,
-      usbSerial: "REDACTED"
+      usbSerial: "TESTSERIAL002"
     )
 
     let receipt = ProbeReceipt(

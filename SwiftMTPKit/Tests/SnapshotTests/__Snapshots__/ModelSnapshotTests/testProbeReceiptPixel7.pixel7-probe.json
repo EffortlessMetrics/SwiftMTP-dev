@@ -6,7 +6,7 @@
     "supportsSendPartialObject" : true
   },
   "deviceSummary" : {
-    "id" : "pixel7-4ee1-REDACTED",
+    "id" : "pixel7-4ee1-TESTSERIAL001",
     "manufacturer" : "Google",
     "model" : "Pixel 7",
     "productID" : "0x4ee1",
