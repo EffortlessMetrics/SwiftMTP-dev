@@ -1357,6 +1357,9 @@ extension MTPDeviceActor {
     _ = reader.u32()  // AssociationDesc
     _ = reader.u32()  // SequenceNumber
     let name = reader.string() ?? "Unknown"
+    _ = reader.string()  // CaptureDate — skip
+    let modDateStr = reader.string()
+    let modified = modDateStr.flatMap { MTPDateString.decode($0) }
 
     return MTPObjectInfo(
       handle: handle,
@@ -1364,7 +1367,7 @@ extension MTPDeviceActor {
       parent: parentRaw == 0 ? nil : parentRaw,
       name: name,
       sizeBytes: (size == nil || size == 0xFFFFFFFF) ? nil : UInt64(size!),
-      modified: nil,
+      modified: modified,
       formatCode: format,
       properties: [:]
     )

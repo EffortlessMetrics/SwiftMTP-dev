@@ -159,6 +159,72 @@ final class ObjectPropAPITests: XCTestCase {
     XCTAssertEqual(data[0], 0)
   }
 
+  // MARK: - PTPObjectInfoDataset date round-trip
+
+  func testPTPObjectInfoDatasetDateDecoding() {
+    // Encode an ObjectInfoDataset with a known modification date
+    let data = PTPObjectInfoDataset.encode(
+      storageID: 0x00010001,
+      parentHandle: 0,
+      format: 0x3801,
+      size: 4096,
+      name: "photo.jpg",
+      useEmptyDates: false,
+      omitOptionalStringFields: false
+    )
+    XCTAssertGreaterThan(data.count, 0)
+    // Parse the encoded data using PTPReader (same code path as DeviceActor)
+    var reader = PTPReader(data: data)
+    _ = reader.u32()  // storageID
+    _ = reader.u16()  // format
+    _ = reader.u16()  // ProtectionStatus
+    _ = reader.u32()  // ObjectCompressedSize
+    _ = reader.u16()  // ThumbFormat
+    _ = reader.u32()  // ThumbCompressedSize
+    _ = reader.u32()  // ThumbPixWidth
+    _ = reader.u32()  // ThumbPixHeight
+    _ = reader.u32()  // ImagePixWidth
+    _ = reader.u32()  // ImagePixHeight
+    _ = reader.u32()  // ImageBitDepth
+    _ = reader.u32()  // ParentObject
+    _ = reader.u16()  // AssociationType
+    _ = reader.u32()  // AssociationDesc
+    _ = reader.u32()  // SequenceNumber
+    _ = reader.string()  // Filename
+    _ = reader.string()  // CaptureDate
+    let modStr = reader.string()
+    XCTAssertNotNil(modStr)
+    // Default date string is "20250101T000000"
+    XCTAssertEqual(modStr, "20250101T000000")
+    let date = modStr.flatMap { MTPDateString.decode($0) }
+    XCTAssertNotNil(date)
+  }
+
+  func testPTPObjectInfoDatasetEmptyDatesSkipped() {
+    let data = PTPObjectInfoDataset.encode(
+      storageID: 0x00010001,
+      parentHandle: 0,
+      format: 0x3001,
+      size: 0,
+      name: "folder",
+      useEmptyDates: true,
+      omitOptionalStringFields: false
+    )
+    XCTAssertGreaterThan(data.count, 0)
+  }
+
+  func testPTPObjectInfoDatasetOmitOptionalFields() {
+    let withFields = PTPObjectInfoDataset.encode(
+      storageID: 0x00010001, parentHandle: 0, format: 0x3001,
+      size: 0, name: "a", useEmptyDates: true, omitOptionalStringFields: false
+    )
+    let withoutFields = PTPObjectInfoDataset.encode(
+      storageID: 0x00010001, parentHandle: 0, format: 0x3001,
+      size: 0, name: "a", useEmptyDates: true, omitOptionalStringFields: true
+    )
+    XCTAssertGreaterThan(withFields.count, withoutFields.count)
+  }
+
   // MARK: - Helpers
 
   private func makeLinkWithSamplePhoto() -> VirtualMTPLink {
