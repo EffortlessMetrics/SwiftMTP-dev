@@ -79,12 +79,16 @@ struct MTPEndianCodecPropertyTests {
   /// Verifies that encoding the same UInt64 value twice produces identical byte sequences.
   @Test("UInt64 idempotence: encoding twice produces identical bytes")
   func testUInt64Idempotence() async throws {
-    property("UInt64 idempotence")
-      <- forAll { (value: UInt64) in
-        let encoded1 = MTPEndianCodec.encode(value)
-        let encoded2 = MTPEndianCodec.encode(value)
-        return encoded1 == encoded2
-      }
+    // Use explicit values instead of SwiftCheck forAll to avoid XCTest/Swift Testing mixing crash
+    let values: [UInt64] = [
+      0, 1, 0x7F, 0xFF, 0xFFFF, 0xFFFFFFFF, 0xFFFFFFFFFFFFFFFF,
+      0x0123456789ABCDEF, 0x8000000000000000, 0x0000000100000000,
+    ]
+    for value in values {
+      let encoded1 = MTPEndianCodec.encode(value)
+      let encoded2 = MTPEndianCodec.encode(value)
+      #expect(encoded1 == encoded2, "Idempotence failed for \(value)")
+    }
   }
 
   // MARK: - Byte Order Invariants
