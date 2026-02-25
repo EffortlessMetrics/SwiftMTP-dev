@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2025 Effortless Metrics, Inc.
+
 enum ExitCode: Int32 {
   case ok = 0
   case usage = 64  // EX_USAGE
