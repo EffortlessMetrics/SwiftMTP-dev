@@ -769,8 +769,12 @@ public enum CollectCommand {
         let count = Double(benchResults.count)
         let avgRead = round(benchResults.map(\.readMBps).reduce(0, +) / count * 100) / 100
         let avgWrite = round(benchResults.map(\.writeMBps).reduce(0, +) / count * 100) / 100
+        let peakRead = round((benchResults.map(\.readMBps).max() ?? 0) * 100) / 100
+        let peakWrite = round((benchResults.map(\.writeMBps).max() ?? 0) * 100) / 100
         return SubmissionManifest.BenchSummary(
-          readMBpsAvg: avgRead, writeMBpsAvg: avgWrite, sizes: benchResults.map(\.name))
+          readMBpsAvg: avgRead, writeMBpsAvg: avgWrite,
+          readMBpsPeak: peakRead, writeMBpsPeak: peakWrite,
+          sizes: benchResults.map(\.name), runCount: benchResults.count)
       }()
 
     return SubmissionManifest(
@@ -1120,7 +1124,10 @@ public enum CollectCommand {
     public struct BenchSummary: Codable {
       let readMBpsAvg: Double
       let writeMBpsAvg: Double
+      let readMBpsPeak: Double
+      let writeMBpsPeak: Double
       let sizes: [String]
+      let runCount: Int
     }
 
     public struct ConsentInfo: Codable {

@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Transfer throughput telemetry**: `TransferJournal.recordThroughput(id:throughputMBps:)` protocol method captures measured MB/s on read and write completion. `TransferEntity.throughputMBps` persists to SwiftData. Default no-op implementation preserves backward compatibility.
+- **Actionable CLI error messages**: `actionableMessage(for:)` helper in `CLIState.swift` maps all `MTPError` and `TransportError` cases to concise fix-guidance strings. `probe`, `pull`, `push`, and `bench` now emit actionable hints instead of raw error descriptions.
+- **Canon EOS and Nikon DSLR device profiles**: Added `canon-eos-rebel-3139` (PTP conflict guidance) and `nikon-dslr-0410` (NEF vendor extension) experimental quirk entries with full device guides.
+- **Parallel multi-device enumeration**: `DeviceServiceRegistry.startMonitoring` now dispatches each `onAttach` handler in an independent `Task {}`, so N simultaneously-connected devices are initialized concurrently instead of serially.
+- **BDD test coverage expanded** from 1 to 8 implemented Gherkin scenarios covering session open, error propagation (disconnect/busy/timeout), folder create, file delete, file move, and file integrity.
+- **Canonical collect+benchmark troubleshooting sequence** in `Docs/Troubleshooting.md` with failure branches for each step and artifact descriptions.
+- **Pre-PR local gate** documented in `Docs/Troubleshooting.md` and `Docs/ContributionGuide.md` (format → lint → test → TSAN → quirks validation).
+- **CI Workflows reference table** in `Docs/ContributionGuide.md` clarifying required vs supplemental checks.
+- **Per-device troubleshooting notes** expanded in `Docs/Troubleshooting.md`: Pixel 7/Tahoe 26 bulk-transfer root cause, OnePlus 3T large-write workaround, Canon EOS PTP conflict, Nikon NEF vendor extension.
+- **validate-submission.sh** now checks `submission.json` itself for `/Users/`, Windows, and Linux path leaks (not only `usb-dump.txt`).
+
+### Changed
+
+- `TransferRecord` gains optional `throughputMBps: Double?` field (backward-compatible, defaults to `nil`).
+- Device submission PR template commands updated to canonical `cd SwiftMTPKit && swift run swiftmtp ...` form and to sync both `Specs/quirks.json` and `SwiftMTPQuirks/Resources/quirks.json`.
+- Release checklist Suggested Validation Commands use `cd SwiftMTPKit` pattern and include `coverage_gate.py` step.
+- JSON probe error output now includes a `hint` field with the actionable fix message.
+
+### Fixed
+
+- Schema gaps in `xiaomi-mi-note-2-ff40` (missing `confidence`) and `google-pixel-7-4ee1` (missing `ops` block) corrected in `Specs/quirks.json`.
+
 - **FileProvider write operations**: `createItem`, `modifyItem`, `deleteItem` now fully wired to XPC backend (`MTPFileProviderExtension.swift`).
 - **XPC write protocol**: `WriteRequest`, `DeleteRequest`, `CreateFolderRequest`, `WriteResponse` — all NSSecureCoding with round-trip tests.
 - **`swiftmtp-docs` tool**: Hands-off DocC device page generator. Reads `Specs/quirks.json` and emits per-device `.md` pages to `Docs/SwiftMTP.docc/Devices/`. Run: `swift run swiftmtp-docs Specs/quirks.json Docs/SwiftMTP.docc/Devices/`.

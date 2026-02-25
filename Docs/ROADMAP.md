@@ -59,8 +59,8 @@ Sprint exit criteria:
 
 - [ ] Reproducible before/after artifacts for Pixel 7 and OnePlus 3T
 - [ ] No regression in `./scripts/smoke.sh`
-- [ ] Documentation includes concrete command-level fallback guidance for both failure classes
-- [ ] Changelog and roadmap status are updated with shipped behavior changes
+- [x] Documentation includes concrete command-level fallback guidance for both failure classes
+- [x] Changelog and roadmap status are updated with shipped behavior changes
 
 ### Sprint 2.1-B: Submission Workflow Hardening
 
@@ -68,13 +68,13 @@ Primary outcome: contributors can produce valid, redacted submission bundles wit
 
 - [x] Harden `swiftmtp collect` strict-mode path and validation messaging
 - [x] Add/expand privacy-redaction assertions for submission artifacts
-- [ ] Tighten `validate-submission` and evidence expectations for PR review
+- [x] Tighten `validate-submission` and evidence expectations for PR review
 - [x] Publish one canonical `collect` + `benchmark` troubleshooting sequence
 
 Sprint exit criteria:
 
 - [ ] New submission bundle validates with `./scripts/validate-submission.sh`
-- [ ] Redaction checks catch known bad patterns without false positives in baseline artifacts
+- [x] Redaction checks catch known bad patterns without false positives in baseline artifacts
 - [x] Contribution docs and roadmap docs reference the same workflow and command set
 - [x] Device submission PR template is aligned with documented command examples
 
