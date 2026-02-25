@@ -5,6 +5,7 @@ import Foundation
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPQuirks
+import SwiftMTPCLI
 
 @MainActor
 struct SystemCommands {

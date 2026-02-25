@@ -3,6 +3,7 @@
 
 import Foundation
 import SwiftMTPCore
+import SwiftMTPCLI
 
 struct SubmitCommand {
   static func run(bundlePath: String, gh: Bool) async -> ExitCode {

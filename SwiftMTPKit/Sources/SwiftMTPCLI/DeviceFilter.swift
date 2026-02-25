@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import SwiftMTPCore
 
 public protocol DeviceFilterCandidate {
   var vendorID: UInt16? { get }
@@ -109,3 +110,5 @@ public func selectDevice<DeviceSummary: DeviceFilterCandidate>(
   if filtered.count == 1 { return .selected(filtered[0]) }
   return .multiple(filtered)
 }
+
+extension MTPDeviceSummary: DeviceFilterCandidate {}

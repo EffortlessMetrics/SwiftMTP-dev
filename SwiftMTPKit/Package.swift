@@ -49,6 +49,7 @@ let package = Package(
 
     .target(
       name: "SwiftMTPCLI",
+      dependencies: ["SwiftMTPCore"],
       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
     .target(
@@ -60,7 +61,6 @@ let package = Package(
       dependencies: [
         "SwiftMTPObservability",
         "SwiftMTPQuirks",
-        "SwiftMTPCLI",
         "MTPEndianCodec",
         .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
         .product(name: "Collections", package: "swift-collections"),
@@ -141,7 +141,7 @@ let package = Package(
       name: "swiftmtp-cli",
       dependencies: [
         "SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPSync",
-        "SwiftMTPObservability", "SwiftMTPQuirks", "SwiftMTPStore", "SwiftMTPXPC",
+        "SwiftMTPObservability", "SwiftMTPQuirks", "SwiftMTPStore", "SwiftMTPXPC", "SwiftMTPCLI",
       ],
       path: "Sources/Tools/swiftmtp-cli",
       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
@@ -185,6 +185,7 @@ let package = Package(
       name: "CoreTests",
       dependencies: [
         "SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks", "SwiftMTPTestKit",
+        "SwiftMTPCLI",
       ]),
     .testTarget(
       name: "IndexTests",

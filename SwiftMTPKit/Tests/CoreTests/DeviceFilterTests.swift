@@ -4,6 +4,7 @@
 import Foundation
 import XCTest
 @testable import SwiftMTPCore
+import SwiftMTPCLI
 
 /// Tests for DeviceFilter.swift CLI module
 final class DeviceFilterTests: XCTestCase {
@@ -170,7 +171,8 @@ final class DeviceFilterTests: XCTestCase {
 
   func testSelectDeviceEmptyList() {
     let outcome = selectDevice(
-      [], filter: DeviceFilter(vid: nil, pid: nil, bus: nil, address: nil), noninteractive: false)
+      [MTPDeviceSummary](), filter: DeviceFilter(vid: nil, pid: nil, bus: nil, address: nil),
+      noninteractive: false)
 
     if case .none = outcome {
       // Expected
@@ -430,9 +432,9 @@ final class DeviceFilterTests: XCTestCase {
       productID: 0x5678
     )
 
-    let noneOutcome: SelectionOutcome = .none
-    let singleOutcome: SelectionOutcome = .selected(device)
-    let multipleOutcome: SelectionOutcome = .multiple([device])
+    let noneOutcome: SelectionOutcome<MTPDeviceSummary> = .none
+    let singleOutcome: SelectionOutcome<MTPDeviceSummary> = .selected(device)
+    let multipleOutcome: SelectionOutcome<MTPDeviceSummary> = .multiple([device])
 
     switch noneOutcome {
     case .none: break

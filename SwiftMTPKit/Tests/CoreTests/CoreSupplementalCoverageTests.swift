@@ -4,6 +4,7 @@
 import Foundation
 import XCTest
 @testable import SwiftMTPCore
+import SwiftMTPCLI
 
 final class CoreSupplementalCoverageTests: XCTestCase {
   private func makeEventContainer(code: UInt16, param: UInt32?) -> Data {

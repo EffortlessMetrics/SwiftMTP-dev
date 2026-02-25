@@ -4,6 +4,7 @@
 import Foundation
 import XCTest
 @testable import SwiftMTPCore
+import SwiftMTPCLI
 
 /// Tests for Exit.swift CLI module
 final class ExitTests: XCTestCase {

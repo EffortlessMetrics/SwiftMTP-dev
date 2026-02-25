@@ -4,6 +4,7 @@
 import Foundation
 import XCTest
 @testable import SwiftMTPCore
+import SwiftMTPCLI
 
 /// Tests for LearnedProfile.swift to boost coverage
 final class LearnedProfileCoverageTests: XCTestCase {

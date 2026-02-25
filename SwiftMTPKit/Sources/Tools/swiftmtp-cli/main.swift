@@ -4,6 +4,7 @@
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPStore
+import SwiftMTPCLI
 import Foundation
 
 @MainActor
@@ -150,7 +151,7 @@ struct SwiftMTPCLI {
     case "health":
       await SystemCommands.runHealth()
     case "delete":
-      let filter = SwiftMTPCore.DeviceFilter(
+      let filter = DeviceFilter(
         vid: parseUSBIdentifier(flags.targetVID),
         pid: parseUSBIdentifier(flags.targetPID),
         bus: flags.targetBus,
@@ -162,7 +163,7 @@ struct SwiftMTPCLI {
         strict: flags.strict, safe: flags.safe)
       exitNow(exitCode)
     case "move":
-      let filter = SwiftMTPCore.DeviceFilter(
+      let filter = DeviceFilter(
         vid: parseUSBIdentifier(flags.targetVID),
         pid: parseUSBIdentifier(flags.targetPID),
         bus: flags.targetBus,
@@ -174,7 +175,7 @@ struct SwiftMTPCLI {
         strict: flags.strict, safe: flags.safe)
       exitNow(exitCode)
     case "events":
-      let filter = SwiftMTPCore.DeviceFilter(
+      let filter = DeviceFilter(
         vid: parseUSBIdentifier(flags.targetVID),
         pid: parseUSBIdentifier(flags.targetPID),
         bus: flags.targetBus,

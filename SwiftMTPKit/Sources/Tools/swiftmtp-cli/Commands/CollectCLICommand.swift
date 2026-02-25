@@ -3,6 +3,7 @@
 
 import Foundation
 import SwiftMTPCore
+import SwiftMTPCLI
 
 @MainActor
 struct CollectCLICommand {

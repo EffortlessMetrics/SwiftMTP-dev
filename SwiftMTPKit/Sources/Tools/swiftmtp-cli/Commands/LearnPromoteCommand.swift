@@ -4,6 +4,7 @@
 import Foundation
 import SwiftMTPCore
 import SwiftMTPQuirks
+import SwiftMTPCLI
 
 @MainActor
 struct LearnPromoteCommand {

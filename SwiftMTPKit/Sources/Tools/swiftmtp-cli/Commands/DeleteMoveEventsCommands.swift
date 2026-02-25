@@ -5,10 +5,11 @@ import Foundation
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPQuirks
+import SwiftMTPCLI
 
 @MainActor
 func runDeleteCommand(
-  args: inout [String], json: Bool, noninteractive: Bool, filter: SwiftMTPCore.DeviceFilter,
+  args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter,
   strict: Bool, safe: Bool
 ) async -> ExitCode {
   guard args.count >= 1, let handle = UInt32(args.removeFirst(), radix: 0) else {
@@ -74,7 +75,7 @@ func runDeleteCommand(
 
 @MainActor
 func runMoveCommand(
-  args: inout [String], json: Bool, noninteractive: Bool, filter: SwiftMTPCore.DeviceFilter,
+  args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter,
   strict: Bool, safe: Bool
 ) async -> ExitCode {
   guard args.count >= 2,
@@ -141,7 +142,7 @@ func runMoveCommand(
 
 @MainActor
 func runEventsCommand(
-  args: inout [String], json: Bool, noninteractive: Bool, filter: SwiftMTPCore.DeviceFilter,
+  args: inout [String], json: Bool, noninteractive: Bool, filter: DeviceFilter,
   strict: Bool, safe: Bool
 ) async -> ExitCode {
   let seconds = (args.first.flatMap { Int($0) }) ?? 30

@@ -6,6 +6,7 @@ import XCTest
 @testable import SwiftMTPCore
 import SwiftMTPQuirks
 import SwiftMTPTestKit
+import SwiftMTPCLI
 
 private actor IntRecorder {
   private var values: [Int] = []
@@ -259,7 +260,7 @@ final class DeviceServiceCoverageTests: XCTestCase {
       XCTFail("Expected multiple candidates")
     }
 
-    switch selectDevice([], filter: broadFilter, noninteractive: true) {
+    switch selectDevice([MTPDeviceSummary](), filter: broadFilter, noninteractive: true) {
     case .none:
       break
     default:

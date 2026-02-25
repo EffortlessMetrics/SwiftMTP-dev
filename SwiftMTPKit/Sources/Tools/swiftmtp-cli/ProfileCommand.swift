@@ -3,6 +3,7 @@
 
 import Foundation
 @_spi(Dev) import SwiftMTPCore
+import SwiftMTPCLI
 
 struct ProfileCommand {
   static func run(flags: CLIFlags, iterations: Int = 3) async {

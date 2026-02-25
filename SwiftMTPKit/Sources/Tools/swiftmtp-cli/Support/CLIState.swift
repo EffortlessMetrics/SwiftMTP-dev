@@ -3,6 +3,7 @@
 
 import Foundation
 import SwiftMTPCore
+import SwiftMTPCLI
 
 public struct CLIFlags: Sendable {
   public let realOnly: Bool

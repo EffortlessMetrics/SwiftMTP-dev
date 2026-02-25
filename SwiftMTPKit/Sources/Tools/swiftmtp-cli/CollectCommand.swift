@@ -4,10 +4,7 @@ import CryptoKit
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPQuirks
-
-// Import ExitCode and exitNow from SwiftMTPCore
-import enum SwiftMTPCore.ExitCode
-import func SwiftMTPCore.exitNow
+import SwiftMTPCLI
 
 // Import CLI utilities
 func printJSONErrorAndExit(_ error: any Error) -> Never {

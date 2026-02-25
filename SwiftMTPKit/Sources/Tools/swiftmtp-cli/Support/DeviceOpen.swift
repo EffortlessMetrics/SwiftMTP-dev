@@ -5,6 +5,7 @@ import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPQuirks
 import Foundation
+import SwiftMTPCLI
 
 /// Helper to find and open a device based on CLI flags
 func openDevice(flags: CLIFlags) async throws -> any MTPDevice {

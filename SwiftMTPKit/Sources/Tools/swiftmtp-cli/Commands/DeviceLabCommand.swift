@@ -4,6 +4,7 @@
 import Foundation
 @_spi(Dev) import SwiftMTPCore
 import SwiftMTPTransportLibUSB
+import SwiftMTPCLI
 
 struct DeviceLabCommand {
   private enum ExpectedPolicy: String, Codable, Sendable {
