@@ -162,6 +162,20 @@ public final class VirtualMTPLink: MTPLink, @unchecked Sendable {
     }
   }
 
+  public func getObjectPropsSupported(format: UInt16) async throws -> [UInt16] {
+    try checkFault(.executeCommand)
+    // Return the standard baseline set supported by all virtual device profiles.
+    return [
+      MTPObjectPropCode.storageID,  // 0xDC01
+      MTPObjectPropCode.objectFormat,  // 0xDC02
+      MTPObjectPropCode.objectSize,  // 0xDC04
+      MTPObjectPropCode.objectFileName,  // 0xDC07
+      MTPObjectPropCode.dateCreated,  // 0xDC08
+      MTPObjectPropCode.dateModified,  // 0xDC09
+      MTPObjectPropCode.parentObject,  // 0xDC0B
+    ]
+  }
+
   public func setObjectPropValue(handle: MTPObjectHandle, property: UInt16, value: Data)
     async throws
   {

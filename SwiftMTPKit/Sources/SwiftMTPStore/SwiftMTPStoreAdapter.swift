@@ -221,4 +221,3 @@ public final class SwiftMTPStoreAdapter: MTPPersistenceProvider, LearnedProfileS
   }
 
 }
-

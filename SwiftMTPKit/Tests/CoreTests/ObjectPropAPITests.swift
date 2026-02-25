@@ -6,6 +6,7 @@ import Foundation
 @testable import SwiftMTPCore
 @testable import SwiftMTPTestKit
 import MTPEndianCodec
+import SwiftMTPQuirks
 
 /// Tests for GetObjectPropValue / SetObjectPropValue APIs including
 /// VirtualMTPLink property read-back and PTPLayer date helpers.
@@ -230,5 +231,65 @@ final class ObjectPropAPITests: XCTestCase {
   private func makeLinkWithSamplePhoto() -> VirtualMTPLink {
     let config = VirtualDeviceConfig.pixel7
     return VirtualMTPLink(config: config)
+  }
+}
+
+/// Tests for GetObjectPropsSupported and ObjectSize U64 fallback.
+final class ObjectPropsSupportedTests: XCTestCase {
+
+  /// VirtualMTPLink.getObjectPropsSupported returns a non-empty array for JPEG format.
+  func testGetObjectPropsSupportedReturnsStandardProps() async throws {
+    let link = VirtualMTPLink(config: .pixel7)
+    let props = try await PTPLayer.getObjectPropsSupported(format: 0x3801, on: link)
+    XCTAssertFalse(props.isEmpty, "Expected non-empty props list for JPEG format")
+    XCTAssertTrue(props.contains(0xDC07), "objectFileName (0xDC07) should be supported")
+    XCTAssertTrue(props.contains(0xDC04), "objectSize (0xDC04) should be supported")
+  }
+
+  /// getObjectPropsSupported returns an array that includes storageID and parentObject.
+  func testGetObjectPropsSupportedContainsBaselineProps() async throws {
+    let link = VirtualMTPLink(config: .pixel7)
+    let props = try await PTPLayer.getObjectPropsSupported(format: 0x3001, on: link)
+    // storageID (0xDC01), objectFormat (0xDC02), objectSize (0xDC04),
+    // objectFileName (0xDC07), parentObject (0xDC0B)
+    let baseline: [UInt16] = [0xDC01, 0xDC04, 0xDC07, 0xDC0B]
+    for code in baseline {
+      XCTAssertTrue(props.contains(code), "Missing expected code 0x\(String(code, radix: 16))")
+    }
+  }
+
+  /// getObjectSizeU64 returns the size as UInt64 via GetObjectPropValue.
+  func testGetObjectSizeU64ReturnsCorrectValue() async throws {
+    let link = VirtualMTPLink(config: .pixel7)
+    let config = VirtualDeviceConfig.pixel7
+    guard let storage = config.storages.first else {
+      throw XCTSkip("No storages in virtual device")
+    }
+    let handles = try await link.getObjectHandles(storage: storage.id, parent: nil)
+    guard let firstHandle = handles.first else {
+      throw XCTSkip("No objects in virtual device")
+    }
+    let size = try await PTPLayer.getObjectSizeU64(handle: firstHandle, on: link)
+    XCTAssertNotNil(size)
+  }
+
+  /// skipGetObjectPropValue quirk flag is decoded correctly from QuirkFlags.
+  func testSkipGetObjectPropValueFlagRoundTrips() throws {
+    var flags = QuirkFlags()
+    XCTAssertFalse(flags.skipGetObjectPropValue, "Default should be false")
+    flags.skipGetObjectPropValue = true
+
+    let enc = JSONEncoder()
+    let data = try enc.encode(flags)
+    let dec = JSONDecoder()
+    let decoded = try dec.decode(QuirkFlags.self, from: data)
+    XCTAssertTrue(decoded.skipGetObjectPropValue, "Flag should survive JSON round-trip")
+  }
+
+  /// skipGetObjectPropValue defaults to false in decoder (backward compat).
+  func testSkipGetObjectPropValueDefaultsToFalse() throws {
+    let json = Data("{}".utf8)
+    let decoded = try JSONDecoder().decode(QuirkFlags.self, from: json)
+    XCTAssertFalse(decoded.skipGetObjectPropValue)
   }
 }

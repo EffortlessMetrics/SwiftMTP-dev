@@ -45,7 +45,7 @@ final class FallbackAllFailedErrorTests: XCTestCase {
 
   func testFallbackAllFailedAttemptsCarryErrorStrings() async {
     let rungs: [FallbackRung<Data>] = [
-      FallbackRung(name: "timeout-rung") { throw MTPError.timeout },
+      FallbackRung(name: "timeout-rung") { throw MTPError.timeout }
     ]
     do {
       _ = try await FallbackLadder.execute(rungs)
@@ -59,13 +59,14 @@ final class FallbackAllFailedErrorTests: XCTestCase {
 
   func testFallbackAllFailedDescriptionContainsSymbols() async {
     let rungs: [FallbackRung<Int>] = [
-      FallbackRung(name: "a") { throw MTPError.timeout },
+      FallbackRung(name: "a") { throw MTPError.timeout }
     ]
     do {
       _ = try await FallbackLadder.execute(rungs)
       XCTFail("Expected FallbackAllFailedError")
     } catch let err as FallbackAllFailedError {
-      XCTAssertTrue(err.description.contains("✗"), "description should contain ✗: \(err.description)")
+      XCTAssertTrue(
+        err.description.contains("✗"), "description should contain ✗: \(err.description)")
     } catch {
       XCTFail("Unexpected error: \(error)")
     }
@@ -103,7 +104,7 @@ final class FallbackAllFailedErrorTests: XCTestCase {
       FallbackRung(name: "slow") {
         try await Task.sleep(nanoseconds: 1_000_000)  // 1ms
         throw MTPError.timeout
-      },
+      }
     ]
     do {
       _ = try await FallbackLadder.execute(rungs)
@@ -131,7 +132,7 @@ final class FallbackAllFailedErrorTests: XCTestCase {
 
   func testFallbackFirstRungSucceedsSingleAttempt() async throws {
     let rungs: [FallbackRung<String>] = [
-      FallbackRung(name: "first") { return "ok" },
+      FallbackRung(name: "first") { return "ok" }
     ]
     let result = try await FallbackLadder.execute(rungs)
     XCTAssertEqual(result.value, "ok")

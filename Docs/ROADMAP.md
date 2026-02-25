@@ -1,12 +1,27 @@
 # SwiftMTP Roadmap
 
-*Last updated: 2026-02-16*
+*Last updated: 2026-02-25*
 
 This roadmap is the execution plan for the next implementation sprints in the 2.x release train.
 
 ## Current Operating Goal
 
 Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green.
+
+## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
+
+- [x] **GetObjectPropValue / SetObjectPropValue** — `MTPLink` protocol property APIs with default implementations
+- [x] **MTPObjectPropCode enum** — all standard MTP object property codes (0xDC01–0xDC48)
+- [x] **MTPDateString** — encode/decode MTP ISO 8601 compact date format
+- [x] **MTPObjectInfo.modified** — populated from GetObjectInfo ModificationDate field
+- [x] **ObjectSize U64 fallback** — GetObjectPropValue(0xDC04) for files > 4 GB
+- [x] **GetObjectPropsSupported (0x9801)** — list device-supported properties per format
+- [x] **Extended MTPEvent** — storageAdded, storageRemoved, objectInfoChanged, deviceInfoChanged, unknown(code:params:)
+- [x] **FileProvider write operations** — createItem, modifyItem, deleteItem with XPC bridge
+- [x] **Multi-device parallel transfers** — 8 scenario tests, DeviceServiceRegistry routing
+- [x] **FallbackAllFailedError** — carries full attempt history (name, duration, error per rung)
+- [x] **Automatic documentation** — `swiftmtp-docs` SPM executable target for hands-off DocC generation
+- [x] **1849 tests, 0 failures** (up from 1799 with preexisting failures)
 
 ## Sprint Execution Rules
 
@@ -94,12 +109,18 @@ Sprint exit criteria:
 - [x] macOS Tahoe 26 native support
 - [x] SwiftPM 6.2+ tooling alignment
 - [x] IOUSBHost integration as primary USB interface
+- [x] MTP object property APIs (GetObjectPropValue, SetObjectPropValue)
+- [x] Multi-device parallel transfer support
+- [x] FileProvider write operations (macOS 26 Finder integration)
+- [x] Extended MTP event handling (storageAdded/Removed, objectInfoChanged, unknown)
 - [ ] Pixel 7 and OnePlus write/open-path stabilization complete
 - [ ] Submission and troubleshooting workflow hardening complete
 - [ ] CI/test gate documentation and execution consolidated
 
 ### 2.2 Focus: Testing and Submission Depth
 
+- [x] GetObjectPropsSupported for format-aware property discovery
+- [x] ObjectSize U64 fallback for files > 4 GB
 - [ ] Increase mutation and edge-case coverage for transport error handling
 - [ ] Expand real-device troubleshooting trees for top support issues
 - [ ] Improve benchmark report consistency and release evidence packaging

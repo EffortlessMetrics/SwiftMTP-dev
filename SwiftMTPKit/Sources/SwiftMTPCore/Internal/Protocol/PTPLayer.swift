@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import MTPEndianCodec
 
 // MARK: - MTP Object Property Codes
 
@@ -121,5 +122,27 @@ public enum PTPLayer {
       handle: handle, property: MTPObjectPropCode.objectFileName)
     var offset = 0
     return PTPString.parse(from: data, at: &offset)
+  }
+
+  /// GetObjectPropsSupported (0x9801): list all property codes supported for a given format.
+  ///
+  /// Returns an empty array if the device does not support this operation.
+  public static func getObjectPropsSupported(
+    format: UInt16, on link: MTPLink
+  ) async throws -> [UInt16] {
+    return try await link.getObjectPropsSupported(format: format)
+  }
+
+  /// Read the `ObjectSize` (0xDC04) property as a UInt64 via GetObjectPropValue.
+  ///
+  /// Use this to get the accurate 64-bit size of files > 4 GB, where
+  /// `GetObjectInfo` reports `0xFFFFFFFF` as the compressed size.
+  public static func getObjectSizeU64(
+    handle: MTPObjectHandle, on link: MTPLink
+  ) async throws -> UInt64? {
+    let data = try await link.getObjectPropValue(
+      handle: handle, property: MTPObjectPropCode.objectSize)
+    var dec = MTPDataDecoder(data: data)
+    return dec.readUInt64()
   }
 }

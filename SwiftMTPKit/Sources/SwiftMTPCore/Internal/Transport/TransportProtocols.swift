@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import MTPEndianCodec
 
 // Heap-allocated mutable buffer captured across @Sendable closures.
 private final class _PropValueBuffer: @unchecked Sendable {
@@ -106,6 +107,12 @@ public protocol MTPLink: Sendable {
   ///   - property: MTP property code.
   ///   - value: Encoded property value bytes (little-endian per MTP spec).
   func setObjectPropValue(handle: MTPObjectHandle, property: UInt16, value: Data) async throws
+
+  /// GetObjectPropsSupported (0x9801): list property codes supported for a given object format.
+  ///
+  /// - Parameter format: MTP object format code (e.g. 0x3801 for JPEG).
+  /// - Returns: Array of supported property codes, or empty if not supported by device.
+  func getObjectPropsSupported(format: UInt16) async throws -> [UInt16]
 }
 
 /// Default implementations for optional MTPLink properties.
@@ -157,6 +164,34 @@ public extension MTPLink {
       }
     )
     try response.checkOK()
+  }
+
+  /// Default: execute GetObjectPropsSupported via executeStreamingCommand.
+  func getObjectPropsSupported(format: UInt16) async throws -> [UInt16] {
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: MTPOp.getObjectPropsSupported.rawValue,
+      txid: 0,
+      params: [UInt32(format)]
+    )
+    let buf = _PropValueBuffer()
+    let response = try await executeStreamingCommand(
+      command, dataPhaseLength: nil,
+      dataInHandler: { chunk in
+        buf.data.append(contentsOf: chunk)
+        return chunk.count
+      },
+      dataOutHandler: nil
+    )
+    guard response.isOK, buf.data.count >= 4 else { return [] }
+    var dec = MTPDataDecoder(data: buf.data)
+    guard let count = dec.readUInt32() else { return [] }
+    var props: [UInt16] = []
+    for _ in 0..<count {
+      guard let code = dec.readUInt16() else { break }
+      props.append(code)
+    }
+    return props
   }
 }
 

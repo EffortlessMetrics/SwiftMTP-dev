@@ -1361,12 +1361,23 @@ extension MTPDeviceActor {
     let modDateStr = reader.string()
     let modified = modDateStr.flatMap { MTPDateString.decode($0) }
 
+    // If the ObjectInfoDataset reports 0xFFFFFFFF for size, the object is > 4 GB.
+    // Fall back to GetObjectPropValue(0xDC04) which returns the actual UInt64 size,
+    // unless the device quirk flags indicate prop value calls should be skipped.
+    var resolvedSize: UInt64? = (size == nil || size == 0xFFFFFFFF) ? nil : UInt64(size!)
+    let skipPropValue = await devicePolicy?.flags.skipGetObjectPropValue ?? false
+    if resolvedSize == nil, let _ = size, !skipPropValue {
+      if let u64Size = try? await PTPLayer.getObjectSizeU64(handle: handle, on: link) {
+        resolvedSize = u64Size
+      }
+    }
+
     return MTPObjectInfo(
       handle: handle,
       storage: MTPStorageID(raw: sid),
       parent: parentRaw == 0 ? nil : parentRaw,
       name: name,
-      sizeBytes: (size == nil || size == 0xFFFFFFFF) ? nil : UInt64(size!),
+      sizeBytes: resolvedSize,
       modified: modified,
       formatCode: format,
       properties: [:]
