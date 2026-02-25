@@ -168,6 +168,8 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 | Samsung Galaxy S21 | 04e8:6860 | Experimental | samsung-android-6860 |
 | OnePlus 3T | 2a70:f003 | Stable | oneplus-3t-f003 |
 | Google Pixel 7 | 18d1:4ee1 | Blocked | google-pixel-7-4ee1 |
+| Canon EOS Rebel / R-class | 04a9:3139 | Experimental | canon-eos-rebel-3139 |
+| Nikon DSLR / Z-series | 04b0:0410 | Experimental | nikon-dslr-0410 |
 
 ## Performance Considerations
 - Chunk sizes auto-tune from 512KB to 8MB based on device performance

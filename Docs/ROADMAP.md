@@ -129,7 +129,7 @@ Sprint exit criteria:
 
 ### 2.3 Focus: Growth and Performance
 
-- [ ] Expand supported device profile coverage (new vendor classes)
+- [x] Expand supported device profile coverage (new vendor classes) — Canon EOS (04A9:3139), Nikon DSLR (04B0:0410) added as experimental profiles with full troubleshooting docs
 - [ ] Investigate parallel multi-device enumeration
 - [ ] Improve large-file throughput on USB 3.x controllers
 - [ ] Add transfer resume telemetry to benchmark reports
