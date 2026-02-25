@@ -127,6 +127,22 @@ validate_submission_manifest() {
     fi
 
     validate_json_schema "$manifest_file" "$schema_file" "submission manifest"
+
+    # Check for known-bad privacy patterns directly in submission.json
+    echo "🔍 Checking submission.json for privacy leaks..."
+    if grep -Eq '/Users/[^/[:space:]"]+' "$manifest_file"; then
+        echo -e "${RED}❌ submission.json leaks local user path (/Users/...)${NC}"
+        return 1
+    fi
+    if grep -Eqi 'C:\\\\Users\\\\[^\\\\[:space:]"]+' "$manifest_file"; then
+        echo -e "${RED}❌ submission.json leaks Windows user path${NC}"
+        return 1
+    fi
+    if grep -Eqi '/home/[^/[:space:]"]+' "$manifest_file"; then
+        echo -e "${RED}❌ submission.json leaks Linux home path${NC}"
+        return 1
+    fi
+    echo -e "${GREEN}✅ submission.json privacy check passed${NC}"
 }
 
 # Validate quirk suggestion

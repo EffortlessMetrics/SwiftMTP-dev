@@ -84,7 +84,7 @@ Primary outcome: predictable CI signal and consistent local-to-CI test behavior.
 
 - [x] Consolidate overlapping CI workflows and document required checks
 - [x] Ensure TSAN execution path is explicit and repeatable for concurrency-heavy targets
-- [ ] Keep filtered coverage gate stable and documented
+- [x] Keep filtered coverage gate stable and documented
 - [x] Publish a minimal "pre-PR local gate" command sequence
 
 Sprint exit criteria:

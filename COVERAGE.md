@@ -430,10 +430,10 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 | Metric | Value | Status |
 |--------|-------|--------|
-| **Overall Line Coverage** | **~68%** | ✅ Improving |
-| Total Lines Covered | ~2,178 | - |
+| **Overall Line Coverage** | **~70%** | ✅ Improving |
+| Total Lines Covered | ~2,250+ | - |
 | Total Lines | ~3,205 | - |
-| **Total Test Cases** | **1,690** | ✅ Executed |
+| **Total Test Cases** | **1881** | ✅ Executed |
 | Test Failures | 0 | ✅ All Passing |
 
 ### New Coverage Tests Added (February 2026 - Final Coverage Push)
