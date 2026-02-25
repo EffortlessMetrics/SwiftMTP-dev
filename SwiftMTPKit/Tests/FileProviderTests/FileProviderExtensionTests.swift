@@ -5,6 +5,7 @@ import XCTest
 @testable import SwiftMTPFileProvider
 import SwiftMTPCore
 import SwiftMTPIndex
+import SwiftMTPXPC
 import FileProvider
 
 final class FileProviderExtensionTests: XCTestCase {
@@ -397,5 +398,75 @@ final class FileProviderExtensionTests: XCTestCase {
 
     XCTAssertNotNil(progress)
     XCTAssertEqual(progress.totalUnitCount, 1)
+  }
+
+  // MARK: - modifyItem delete-failure regression
+
+  /// Stub XPC service that reports delete failure, allowing the test to verify
+  /// that modifyItem aborts the upload rather than proceeding after delete failure.
+  private final class FailingDeleteXPCService: NSObject, MTPXPCService {
+    func ping(reply: @escaping (String) -> Void) { reply("ok") }
+    func readObject(_ req: ReadRequest, withReply r: @escaping (ReadResponse) -> Void) {
+      r(ReadResponse(success: false))
+    }
+    func listStorages(_ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void) {
+      r(StorageListResponse(success: false))
+    }
+    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void) {
+      r(ObjectListResponse(success: false))
+    }
+    func getObjectInfo(deviceId: String, storageId: UInt32, objectHandle: UInt32,
+                       withReply r: @escaping (ReadResponse) -> Void) { r(ReadResponse(success: false)) }
+    func writeObject(_ req: WriteRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      XCTFail("writeObject must not be called when deleteObject fails")
+      r(WriteResponse(success: false))
+    }
+    func deleteObject(_ req: DeleteRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      r(WriteResponse(success: false))  // simulate delete failure
+    }
+    func createFolder(_ req: CreateFolderRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      r(WriteResponse(success: false))
+    }
+    func requestCrawl(_ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void) {
+      r(CrawlTriggerResponse(accepted: false))
+    }
+    func deviceStatus(_ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void) {
+      r(DeviceStatusResponse(connected: false, sessionOpen: false))
+    }
+  }
+
+  @MainActor
+  func testModifyItemAbortOnDeleteFailure() {
+    let stub = FailingDeleteXPCService()
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("abort-test"),
+      displayName: "Abort Test"
+    )
+    let ext = MTPFileProviderExtension(domain: domain, indexReader: nil, xpcServiceResolver: { stub })
+
+    let item = MTPFileProviderItem(
+      deviceId: "device1", storageId: 1, objectHandle: 42,
+      parentHandle: nil, name: "f.txt", size: 4,
+      isDirectory: false, modifiedDate: nil)
+
+    // Write a tiny temp file so sourceURL resolves and fileSize > 0
+    let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("fp-abort-test.txt")
+    try? "test".data(using: .utf8)!.write(to: tmpURL)
+    defer { try? FileManager.default.removeItem(at: tmpURL) }
+
+    let expectation = XCTestExpectation(description: "modifyItem aborts on delete failure")
+
+    _ = ext.modifyItem(
+      item, baseVersion: NSFileProviderItemVersion(),
+      changedFields: NSFileProviderItemFields.contents, contents: tmpURL,
+      request: NSFileProviderRequest(),
+      completionHandler: { resultItem, _, _, error in
+        XCTAssertNil(resultItem, "Item should be nil when delete failed")
+        XCTAssertNotNil(error, "Error should be reported when delete failed")
+        expectation.fulfill()
+      }
+    )
+
+    wait(for: [expectation], timeout: 2.0)
   }
 }

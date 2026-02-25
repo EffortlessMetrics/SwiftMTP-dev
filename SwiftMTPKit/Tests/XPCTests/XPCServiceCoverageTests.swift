@@ -202,6 +202,25 @@ final class XPCServiceCoverageTests: XCTestCase {
     XCTAssertFalse(FileManager.default.fileExists(atPath: tempFile.path))
   }
 
+  func testDeviceStatusReportsFalseAfterDisconnect() async throws {
+    let config = await configuredService()
+    let impl = config.impl
+
+    // Before disconnect: service should be connected
+    let before = await status(impl, request: DeviceStatusRequest(deviceId: config.ephemeralId.raw))
+    XCTAssertTrue(before.connected)
+
+    // Mark service disconnected
+    if let svc = await config.impl.registry?.service(for: config.ephemeralId) {
+      await svc.markDisconnected()
+    }
+
+    // After disconnect: deviceStatus must report connected=false
+    let after = await status(impl, request: DeviceStatusRequest(deviceId: config.ephemeralId.raw))
+    XCTAssertFalse(after.connected)
+    XCTAssertFalse(after.sessionOpen)
+  }
+
   func testListenerLifecycleAndConnectionAcceptance() async {
     let impl = MTPXPCServiceImpl(deviceManager: .shared)
     let listener = MTPXPCListener(serviceImpl: impl)

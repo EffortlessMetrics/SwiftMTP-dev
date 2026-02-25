@@ -291,8 +291,8 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
       let deviceId = MTPDeviceID(raw: request.deviceId)
 
       if let registry = registry, let svc = await registry.service(for: deviceId) {
-        let connected = await !svc.underlyingDevice.id.raw.isEmpty  // Always true if service exists
-        reply(DeviceStatusResponse(connected: connected, sessionOpen: true))
+        let connected = await svc.isConnected
+        reply(DeviceStatusResponse(connected: connected, sessionOpen: connected))
       } else {
         reply(DeviceStatusResponse(connected: false, sessionOpen: false))
       }

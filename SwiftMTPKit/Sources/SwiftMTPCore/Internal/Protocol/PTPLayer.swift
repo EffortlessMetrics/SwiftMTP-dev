@@ -25,22 +25,23 @@ public enum MTPObjectPropCode {
 
 /// Encode/decode MTP date strings (ISO 8601 compact format `YYYYMMDDTHHmmSS`).
 public enum MTPDateString {
-  private static let dateFormatter: DateFormatter = {
+  // DateFormatter is not thread-safe: create a fresh instance per call.
+  private static func makeFormatter() -> DateFormatter {
     let f = DateFormatter()
     f.dateFormat = "yyyyMMdd'T'HHmmss"
     f.timeZone = TimeZone(identifier: "UTC")
     f.locale = Locale(identifier: "en_US_POSIX")
     return f
-  }()
+  }
 
   public static func encode(_ date: Date) -> String {
-    dateFormatter.string(from: date)
+    makeFormatter().string(from: date)
   }
 
   public static func decode(_ string: String) -> Date? {
     // Strip trailing timezone suffix (e.g. ".0Z", "+0000") before parsing
     let stripped = String(string.prefix(15))
-    return dateFormatter.date(from: stripped)
+    return makeFormatter().date(from: stripped)
   }
 }
 

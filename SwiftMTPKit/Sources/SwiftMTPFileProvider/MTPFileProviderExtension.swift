@@ -375,7 +375,16 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
     Task {
       let completionHandler = cb.value
       await MainActor.run {
-        xpcBox.value.deleteObject(deleteReq) { _ in
+        xpcBox.value.deleteObject(deleteReq) { deleteResponse in
+          guard deleteResponse.success else {
+            completionHandler(
+              nil, [], false,
+              NSError(
+                domain: NSFileProviderErrorDomain,
+                code: NSFileProviderError.serverUnreachable.rawValue))
+            progress.completedUnitCount = 1
+            return
+          }
           xpcBox.value.writeObject(writeReq) { response in
             if response.success {
               let newItem = MTPFileProviderItem(

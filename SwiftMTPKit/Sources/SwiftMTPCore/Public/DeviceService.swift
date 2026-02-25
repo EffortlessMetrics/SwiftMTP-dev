@@ -92,6 +92,9 @@ public actor DeviceService {
   /// The underlying device.
   public var underlyingDevice: any MTPDevice { device }
 
+  /// Whether this service is still connected (not yet marked disconnected).
+  public var isConnected: Bool { !disconnected }
+
   /// Submit an operation to the priority queue.
   public func submit<T: Sendable>(
     priority: DeviceOperationPriority,
