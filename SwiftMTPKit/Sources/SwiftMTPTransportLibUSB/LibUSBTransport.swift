@@ -565,6 +565,20 @@ public actor LibUSBTransport: MTPTransport {
       && got > 0
     {}
 
+    // Detect USB connection speed for adaptive chunk sizing
+    let usbSpeedMBps: Int?
+    let rawSpeed = libusb_get_device_speed(dev)
+    switch rawSpeed {
+    case 3:  // LIBUSB_SPEED_HIGH (USB 2.0 Hi-Speed) ≈ 40 MB/s practical
+      usbSpeedMBps = 40
+    case 4:  // LIBUSB_SPEED_SUPER (USB 3.0 SuperSpeed) ≈ 400 MB/s practical
+      usbSpeedMBps = 400
+    case 5:  // LIBUSB_SPEED_SUPER_PLUS (USB 3.1+) ≈ 1200 MB/s practical
+      usbSpeedMBps = 1200
+    default:
+      usbSpeedMBps = nil
+    }
+
     let descriptor = MTPLinkDescriptor(
       interfaceNumber: sel.ifaceNumber,
       interfaceClass: sel.ifaceClass,
@@ -572,7 +586,8 @@ public actor LibUSBTransport: MTPTransport {
       interfaceProtocol: sel.ifaceProtocol,
       bulkInEndpoint: sel.bulkIn,
       bulkOutEndpoint: sel.bulkOut,
-      interruptEndpoint: sel.eventIn != 0 ? sel.eventIn : nil
+      interruptEndpoint: sel.eventIn != 0 ? sel.eventIn : nil,
+      usbSpeedMBps: usbSpeedMBps
     )
 
     let link = MTPUSBLink(

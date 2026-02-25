@@ -542,4 +542,26 @@ final class MTPLinkDescriptorTransportTests: XCTestCase {
 
     XCTAssertNil(descriptor.interruptEndpoint)
   }
+
+  func testMTPLinkDescriptorUSBSpeedField() {
+    let usb2Desc = MTPLinkDescriptor(
+      interfaceNumber: 0, interfaceClass: 0x06, interfaceSubclass: 0x01,
+      interfaceProtocol: 0x01, bulkInEndpoint: 0x81, bulkOutEndpoint: 0x01,
+      interruptEndpoint: nil, usbSpeedMBps: 40
+    )
+    XCTAssertEqual(usb2Desc.usbSpeedMBps, 40)
+
+    let usb3Desc = MTPLinkDescriptor(
+      interfaceNumber: 0, interfaceClass: 0x06, interfaceSubclass: 0x01,
+      interfaceProtocol: 0x01, bulkInEndpoint: 0x81, bulkOutEndpoint: 0x01,
+      interruptEndpoint: nil, usbSpeedMBps: 400
+    )
+    XCTAssertEqual(usb3Desc.usbSpeedMBps, 400)
+
+    let noSpeedDesc = MTPLinkDescriptor(
+      interfaceNumber: 0, interfaceClass: 0x06, interfaceSubclass: 0x01,
+      interfaceProtocol: 0x01, bulkInEndpoint: 0x81, bulkOutEndpoint: 0x01
+    )
+    XCTAssertNil(noSpeedDesc.usbSpeedMBps)
+  }
 }

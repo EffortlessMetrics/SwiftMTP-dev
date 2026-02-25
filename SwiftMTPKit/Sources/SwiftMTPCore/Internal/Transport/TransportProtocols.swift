@@ -39,11 +39,14 @@ public struct MTPLinkDescriptor: Sendable, Codable, Hashable {
   public let bulkInEndpoint: UInt8
   public let bulkOutEndpoint: UInt8
   public let interruptEndpoint: UInt8?
+  /// USB connection speed in MB/s (approximate). Nil if unknown.
+  /// USB 2.0 Hi-Speed ≈ 40 MB/s theoretical; USB 3.x SuperSpeed ≈ 400 MB/s.
+  public let usbSpeedMBps: Int?
 
   public init(
     interfaceNumber: UInt8, interfaceClass: UInt8, interfaceSubclass: UInt8,
     interfaceProtocol: UInt8, bulkInEndpoint: UInt8, bulkOutEndpoint: UInt8,
-    interruptEndpoint: UInt8? = nil
+    interruptEndpoint: UInt8? = nil, usbSpeedMBps: Int? = nil
   ) {
     self.interfaceNumber = interfaceNumber
     self.interfaceClass = interfaceClass
@@ -52,6 +55,7 @@ public struct MTPLinkDescriptor: Sendable, Codable, Hashable {
     self.bulkInEndpoint = bulkInEndpoint
     self.bulkOutEndpoint = bulkOutEndpoint
     self.interruptEndpoint = interruptEndpoint
+    self.usbSpeedMBps = usbSpeedMBps
   }
 }
 
