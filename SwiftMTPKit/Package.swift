@@ -205,7 +205,7 @@ let package = Package(
       name: "PropertyTests",
       dependencies: [
         "SwiftMTPCore", "SwiftMTPIndex", "SwiftMTPObservability", "SwiftMTPStore", "SwiftMTPQuirks",
-        "SwiftCheck",
+        "MTPEndianCodec", "SwiftCheck",
       ]),
     .testTarget(
       name: "SnapshotTests",

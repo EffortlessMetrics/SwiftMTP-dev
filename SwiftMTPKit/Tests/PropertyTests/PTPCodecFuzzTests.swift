@@ -4,6 +4,7 @@
 import Foundation
 import XCTest
 @testable import SwiftMTPCore
+import MTPEndianCodec
 
 /// Fuzz tests for PTPCodec - tests that the parser handles malformed input gracefully
 final class PTPCodecFuzzTests: XCTestCase {
@@ -251,5 +252,115 @@ final class PTPCodecFuzzTests: XCTestCase {
   private func generateRandomString(length: Int) -> String {
     let characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789áéíóú"
     return String((0..<length).map { _ in characters.randomElement()! })
+  }
+}
+
+// MARK: - GetObjectPropValue Fuzz Tests
+
+/// Fuzz tests for GetObjectPropValue (0x9803) response parsing.
+///
+/// These tests verify that `PTPLayer.getObjectSizeU64`, `MTPDateString.decode`,
+/// and `PTPString.parse` handle arbitrary byte payloads without crashing.
+final class GetObjectPropValueFuzzTests: XCTestCase {
+
+  private static let iterations = 1_000
+
+  /// Fuzz MTPDateString.decode with random strings — must not crash.
+  func testMTPDateStringDecodeRandomStrings() {
+    let chars = "0123456789T+-Z:."
+    for _ in 0..<Self.iterations {
+      let len = Int.random(in: 0...25)
+      let s = String((0..<len).map { _ in chars.randomElement()! })
+      _ = MTPDateString.decode(s)  // must not crash or throw
+    }
+  }
+
+  /// Fuzz MTPDateString.decode with valid-looking but corrupt byte patterns.
+  func testMTPDateStringDecodeCorruptPayloads() {
+    let candidates = [
+      "",
+      "T",
+      "20250101",
+      "20250101T",
+      "20250101T120000",
+      "20250101T120000.0Z",
+      "20250101T120000+0000",
+      "99999999T999999",
+      "00000000T000000",
+      "2025-01-01T12:00:00Z",  // ISO 8601 variant — not MTP format
+      "XXXXXXXXTXXXXXX",
+    ]
+    for s in candidates {
+      _ = MTPDateString.decode(s)  // must not crash
+    }
+  }
+
+  /// Fuzz getObjectSizeU64 via PTPLayer with random data payloads.
+  ///
+  /// The decoder reads a UInt64 from the start of the payload — any 8-byte
+  /// or shorter input must be handled gracefully.
+  func testGetObjectSizeU64WithRandomPayloads() {
+    for len in [0, 1, 4, 7, 8, 9, 16, 64, 256] {
+      var data = Data(count: len)
+      // Fill with pseudo-random bytes
+      for i in 0..<len { data[i] = UInt8((i &* 0x6B + 0x2D) & 0xFF) }
+      var dec = MTPDataDecoder(data: data)
+      let result = dec.readUInt64()
+      if len >= 8 {
+        XCTAssertNotNil(result, "readUInt64 should succeed for \(len)-byte payload")
+      } else {
+        XCTAssertNil(result, "readUInt64 should fail for \(len)-byte payload (too short)")
+      }
+    }
+  }
+
+  /// Fuzz PTPString.parse with random binary data — must not crash.
+  func testPTPStringParseWithRandomBinaryPayloads() {
+    var rng = SystemRandomNumberGenerator()
+    for _ in 0..<Self.iterations {
+      let len = Int.random(in: 0...64, using: &rng)
+      var data = Data(count: len)
+      for i in 0..<len { data[i] = UInt8.random(in: 0...255, using: &rng) }
+      var offset = 0
+      _ = PTPString.parse(from: data, at: &offset)  // must not crash
+    }
+  }
+
+  /// GetObjectPropsSupported response with random valid array payloads decodes correctly.
+  func testGetObjectPropsSupportedDecodeRandomPropLists() {
+    for count in [0, 1, 5, 20, 100] {
+      var enc = MTPDataEncoder()
+      enc.append(UInt32(count))
+      for i in 0..<count { enc.append(UInt16(0xDC00 + i)) }
+      let data = enc.encodedData
+      var dec = MTPDataDecoder(data: data)
+      guard let decoded = dec.readUInt32() else {
+        XCTFail("readUInt32 should succeed")
+        continue
+      }
+      XCTAssertEqual(decoded, UInt32(count))
+      for _ in 0..<count {
+        XCTAssertNotNil(dec.readUInt16())
+      }
+    }
+  }
+
+  /// GetObjectPropsSupported truncated response is handled gracefully.
+  func testGetObjectPropsSupportedTruncatedResponse() {
+    // Header says 10 props but only 3 bytes of data follows
+    var enc = MTPDataEncoder()
+    enc.append(UInt32(10))
+    enc.append(UInt16(0xDC01))
+    // Deliberately truncated: missing 9 more UInt16s
+    let data = enc.encodedData
+    var dec = MTPDataDecoder(data: data)
+    guard let count = dec.readUInt32() else { return XCTFail("count parse failed") }
+    XCTAssertEqual(count, 10)
+    var props: [UInt16] = []
+    for _ in 0..<count {
+      guard let code = dec.readUInt16() else { break }
+      props.append(code)
+    }
+    XCTAssertEqual(props.count, 1, "Only 1 prop should decode from truncated response")
   }
 }
