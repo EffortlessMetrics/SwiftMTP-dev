@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **CI Workflows reference table** in `Docs/ContributionGuide.md` clarifying required vs supplemental checks.
 - **Per-device troubleshooting notes** expanded in `Docs/Troubleshooting.md`: Pixel 7/Tahoe 26 bulk-transfer root cause, OnePlus 3T large-write workaround, Canon EOS PTP conflict, Nikon NEF vendor extension.
 - **validate-submission.sh** now checks `submission.json` itself for `/Users/`, Windows, and Linux path leaks (not only `usb-dump.txt`).
+- **USB 3.x adaptive chunk sizing**: `MTPLinkDescriptor.usbSpeedMBps` field (populated from `libusb_get_device_speed`) auto-scales `maxChunkBytes` floor — 4 MiB for USB 2.0 Hi-Speed, 8 MiB for USB 3.0 SuperSpeed — when no quirk override is present.
+- **MTPDataEncoder fully adopted**: All `withUnsafeBytes(of:littleEndian)` raw encoding in `Proto+Transfer.swift`, `MockTransport.swift`, and `StorybookCommand.swift` migrated to `MTPDataEncoder`, eliminating divergence between protocol stacks and fuzz inputs (FIXUP_QUEUE item 5 complete).
+- **100% line coverage** on all gated modules: `SwiftMTPObservability` (57/57), `SwiftMTPQuirks` (492/492), `SwiftMTPStore` (628/628), `SwiftMTPSync` (244/244). New tests cover `recordThroughput` adapter path and `shouldSkipDownload` size/timestamp mismatch branches.
+- **Test count: 1891** (up from 1888 after this sprint).
 
 ### Changed
 

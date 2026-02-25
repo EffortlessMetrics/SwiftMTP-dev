@@ -156,7 +156,7 @@ Sprint exit criteria:
 Any minor release (`v2.x.0`) should satisfy all of the following:
 
 - [ ] Full matrix run (`./run-all-tests.sh`) completes without regressions
-- [ ] Filtered coverage gate passes (`SwiftMTPQuirks`, `SwiftMTPStore`, `SwiftMTPSync`, `SwiftMTPObservability`)
+- [x] Filtered coverage gate passes (`SwiftMTPQuirks`, `SwiftMTPStore`, `SwiftMTPSync`, `SwiftMTPObservability`)
 - [ ] TSAN path is clean for required concurrency-heavy targets this cycle
 - [ ] At least one real-device evidence run is attached in release artifacts
 - [x] `./scripts/validate-quirks.sh` and submission validation checks pass

@@ -431,9 +431,9 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 | Metric | Value | Status |
 |--------|-------|--------|
 | **Overall Line Coverage** | **~70%** | ✅ Improving |
-| Total Lines Covered | ~2,250+ | - |
-| Total Lines | ~3,205 | - |
-| **Total Test Cases** | **1881** | ✅ Executed |
+| Total Lines Covered | ~2,280+ | - |
+| Total Lines | ~3,240 | - |
+| **Total Test Cases** | **1891** | ✅ Executed |
 | Test Failures | 0 | ✅ All Passing |
 
 ### New Coverage Tests Added (February 2026 - Final Coverage Push)
@@ -450,10 +450,10 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 |--------|----------|-------|--------|--------|
 | SwiftMTPCore | **68%** | 2,178/3,205 | 80% | ⚠️ Improving |
 | SwiftMTPIndex | 87-98% | ~2,400/2,600 | 75% | ✅ Exceeds Target |
-| SwiftMTPObservability | 97-100% | 57/57 | 70% | ✅ Exceeds Target |
-| SwiftMTPQuirks | 100% | 363/363 | 70% | ✅ Exceeds Target |
-| SwiftMTPStore | 100% | 585/585 | 70% | ✅ Exceeds Target |
-| SwiftMTPSync | 100% | 239/239 | 70% | ✅ Exceeds Target |
+| SwiftMTPObservability | 100% | 57/57 | 70% | ✅ Exceeds Target |
+| SwiftMTPQuirks | 100% | 492/492 | 70% | ✅ Exceeds Target |
+| SwiftMTPStore | 100% | 628/628 | 70% | ✅ Exceeds Target |
+| SwiftMTPSync | 100% | 244/244 | 70% | ✅ Exceeds Target |
 
 ### Key Coverage Gaps (Priority for Improvement)
 
@@ -508,10 +508,10 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 |--------|----------|-------|--------|--------|
 | SwiftMTPCore | 58-80% | ~2,400/3,500 | 80% | ⚠️ Below Target |
 | SwiftMTPIndex | 87-98% | ~2,400/2,600 | 75% | ✅ Exceeds Target |
-| SwiftMTPObservability | 97-100% | 57/57 | 70% | ✅ Exceeds Target |
-| SwiftMTPQuirks | 100% | 363/363 | 70% | ✅ Exceeds Target |
-| SwiftMTPStore | 100% | 585/585 | 70% | ✅ Exceeds Target |
-| SwiftMTPSync | 100% | 239/239 | 70% | ✅ Exceeds Target |
+| SwiftMTPObservability | 100% | 57/57 | 70% | ✅ Exceeds Target |
+| SwiftMTPQuirks | 100% | 492/492 | 70% | ✅ Exceeds Target |
+| SwiftMTPStore | 100% | 628/628 | 70% | ✅ Exceeds Target |
+| SwiftMTPSync | 100% | 244/244 | 70% | ✅ Exceeds Target |
 | SwiftMTPTestKit | 82-99% | ~900/1,100 | 60% | ✅ Exceeds Target |
 | SwiftMTPFileProvider | 47-97% | ~500/800 | 65% | ⚠️ Variable |
 | SwiftMTPTransportLibUSB | 22-75% | ~300/1,300 | 70% | 🔴 Hardware Required |
