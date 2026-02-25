@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import SwiftMTPCore
+import MTPEndianCodec
 import SwiftMTPTransportLibUSB
 import SwiftMTPObservability
 import Foundation
@@ -148,15 +149,12 @@ struct StorybookCommand {
 
   /// Helper to construct raw PTP event packet
   static func makeRawEvent(code: UInt16, params: [UInt32]) -> Data {
-    var data = Data()
-    let length = UInt32(12 + params.count * 4)
-    data.append(contentsOf: withUnsafeBytes(of: length.littleEndian) { Data($0) })
-    data.append(contentsOf: withUnsafeBytes(of: UInt16(4).littleEndian) { Data($0) })  // Type 4 = Event
-    data.append(contentsOf: withUnsafeBytes(of: code.littleEndian) { Data($0) })
-    data.append(contentsOf: withUnsafeBytes(of: UInt32(0).littleEndian) { Data($0) })  // Transaction ID (usually 0 for events)
-    for p in params {
-      data.append(contentsOf: withUnsafeBytes(of: p.littleEndian) { Data($0) })
-    }
-    return data
+    var enc = MTPDataEncoder()
+    enc.append(UInt32(12 + UInt32(params.count) * 4))  // length
+    enc.append(UInt16(4))  // Type 4 = Event
+    enc.append(code)
+    enc.append(UInt32(0))  // Transaction ID (usually 0 for events)
+    for p in params { enc.append(p) }
+    return enc.encodedData
   }
 }

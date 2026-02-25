@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import MTPEndianCodec
 import SwiftMTPCore
 
 /// Mock transport that simulates libusb operations without physical hardware
@@ -136,30 +137,27 @@ public final class MockMTPLink: @unchecked Sendable, MTPLink {
       sessionID = command.params.first
       return PTPResponseResult(code: 0x2001, txid: command.txid)
     case 0x1004:  // GetStorageIDs
-      var d = Data()
+      var enc = MTPDataEncoder()
       let ids = deviceData.storages.map { $0.id.raw }
-      d.append(contentsOf: withUnsafeBytes(of: UInt32(ids.count).littleEndian) { Data($0) })
-      for id in ids { d.append(contentsOf: withUnsafeBytes(of: id.littleEndian) { Data($0) }) }
-      _ = dataInHandler?(d.withUnsafeBytes { $0 })
+      enc.append(UInt32(ids.count))
+      for id in ids { enc.append(id) }
+      _ = dataInHandler?(enc.encodedData.withUnsafeBytes { $0 })
       return PTPResponseResult(code: 0x2001, txid: command.txid)
     case 0x1005:  // GetStorageInfo
       let id = MTPStorageID(raw: command.params.first ?? 0)
       guard let s = deviceData.storages.first(where: { $0.id == id }) else {
         return PTPResponseResult(code: 0x2009, txid: command.txid)
       }
-      var d = Data()
-      func p16(_ v: UInt16) { withUnsafeBytes(of: v.littleEndian) { d.append(contentsOf: $0) } }
-      func p32(_ v: UInt32) { withUnsafeBytes(of: v.littleEndian) { d.append(contentsOf: $0) } }
-      func p64(_ v: UInt64) { withUnsafeBytes(of: v.littleEndian) { d.append(contentsOf: $0) } }
-      p16(0x0003)
-      p16(0x0002)
-      p16(s.isReadOnly ? 0x0001 : 0x0000)
-      p64(s.capacityBytes)
-      p64(s.freeBytes)
-      p32(0xFFFFFFFF)
-      d.append(PTPString.encode(s.description))
-      d.append(PTPString.encode("Mock"))
-      _ = dataInHandler?(d.withUnsafeBytes { $0 })
+      var enc = MTPDataEncoder()
+      enc.append(UInt16(0x0003))
+      enc.append(UInt16(0x0002))
+      enc.append(UInt16(s.isReadOnly ? 0x0001 : 0x0000))
+      enc.append(s.capacityBytes)
+      enc.append(s.freeBytes)
+      enc.append(UInt32(0xFFFFFFFF))
+      enc.append(PTPString.encode(s.description))
+      enc.append(PTPString.encode("Mock"))
+      _ = dataInHandler?(enc.encodedData.withUnsafeBytes { $0 })
       return PTPResponseResult(code: 0x2001, txid: command.txid)
     case 0x100C:  // SendObjectInfo
       let newHandle: UInt32 = 0x00010001
@@ -179,23 +177,21 @@ public final class MockMTPLink: @unchecked Sendable, MTPLink {
   }
 
   private func handleGetDeviceInfo() -> Data {
-    var d = Data()
-    func p16(_ v: UInt16) { withUnsafeBytes(of: v.littleEndian) { d.append(contentsOf: $0) } }
-    func p32(_ v: UInt32) { withUnsafeBytes(of: v.littleEndian) { d.append(contentsOf: $0) } }
-    p16(100)
-    p32(0x00000006)
-    p16(100)
-    d.append(PTPString.encode("Mock Vendor"))
-    p16(0)
-    p32(0)
-    p32(0)
-    p32(0)
-    p32(0)
-    p32(0)
-    d.append(PTPString.encode(deviceData.deviceInfo.manufacturer))
-    d.append(PTPString.encode(deviceData.deviceInfo.model))
-    d.append(PTPString.encode(deviceData.deviceInfo.version))
-    d.append(PTPString.encode(deviceData.deviceInfo.serialNumber ?? ""))
-    return d
+    var enc = MTPDataEncoder()
+    enc.append(UInt16(100))
+    enc.append(UInt32(0x00000006))
+    enc.append(UInt16(100))
+    enc.append(PTPString.encode("Mock Vendor"))
+    enc.append(UInt16(0))
+    enc.append(UInt32(0))
+    enc.append(UInt32(0))
+    enc.append(UInt32(0))
+    enc.append(UInt32(0))
+    enc.append(UInt32(0))
+    enc.append(PTPString.encode(deviceData.deviceInfo.manufacturer))
+    enc.append(PTPString.encode(deviceData.deviceInfo.model))
+    enc.append(PTPString.encode(deviceData.deviceInfo.version))
+    enc.append(PTPString.encode(deviceData.deviceInfo.serialNumber ?? ""))
+    return enc.encodedData
   }
 }

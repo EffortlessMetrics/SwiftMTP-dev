@@ -357,7 +357,8 @@ public struct PTPObjectInfoDataset {
     w.append(storageID)
     w.append(format)
     w.append(UInt16(0))  // ProtectionStatus
-    w.append(objectCompressedSizeOverride ?? UInt32(min(size, UInt64(0xFFFF_FFFF))))  // ObjectCompressedSize
+    // ObjectCompressedSize
+    w.append(objectCompressedSizeOverride ?? UInt32(min(size, UInt64(0xFFFF_FFFF))))
     w.append(UInt16(0))  // ThumbFormat
     w.append(UInt32(0))  // ThumbCompressedSize
     w.append(UInt32(0))  // ThumbPixWidth

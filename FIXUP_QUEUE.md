@@ -15,8 +15,10 @@
 4. `Package.swift`
    - `MTPEndianCodecTests` currently depends on `SnapshotTesting` but does not yet persist checked-in snapshots. If snapshot-based CI is enforced, add committed baseline files in `SwiftMTPKit/Tests/MTPEndianCodecTests/__Snapshots__`.
 
-5. `SwiftMTPKit/Sources/MTPEndianCodec/MTPEndianCodec.swift`
-   - Ensure any downstream protocol structs that rely on little-endian framing also use the shared encoder/decoder paths to prevent divergence between protocol stacks and fuzz inputs.
+5. ~~`SwiftMTPKit/Sources/MTPEndianCodec/MTPEndianCodec.swift`~~  
+   **DONE** — `encodeSendObjectPropListDataset` in `Proto+Transfer.swift` now uses
+   `MTPDataEncoder` instead of raw `withUnsafeBytes(of:littleEndian)` calls.
+   `import MTPEndianCodec` added to `Proto+Transfer.swift`.
 
 6. ~~`SwiftMTPKit/Sources/Tools/learn-promote/` *(excluded from Package.swift)*~~  
    **DONE** — Fixed all broken API calls; re-added as `learn-promote` executable target.
