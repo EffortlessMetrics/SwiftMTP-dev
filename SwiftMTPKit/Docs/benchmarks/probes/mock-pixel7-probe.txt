@@ -1,0 +1,31 @@
+🔍 Probing device capabilities...
+
+📱 Device Information:
+   Manufacturer: Google
+   Model: Pixel 7
+   Version: Mock Version 1.0
+   Serial Number: MOCK123456
+
+⚙️  Supported Operations (4):
+   0x1001 - GetDeviceInfo
+   0x1002 - OpenSession
+   0x1004 - GetStorageIDs
+   0x1005 - GetStorageInfo
+
+💾 Storage Devices (2):
+   📁 Internal Storage
+      Capacity: 119.2 GB
+      Free: 74.5 GB
+      Used: 44.7 GB (37.5%)
+      Read-only: No
+
+   📁 SD Card
+      Capacity: 238.4 GB
+      Free: 186.3 GB
+      Used: 52.2 GB (21.9%)
+      Read-only: No
+
+📄 Sample Files (first 10 from root):
+   Association: 2 files
+
+✅ Probe complete

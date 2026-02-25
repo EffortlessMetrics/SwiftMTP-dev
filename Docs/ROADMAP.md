@@ -2,8 +2,6 @@
 
 *Last updated: 2026-02-25*
 
-*Last updated: 2026-02-16*
-
 This roadmap is the execution plan for the next implementation sprints in the 2.x release train.
 
 ## Current Operating Goal

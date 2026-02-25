@@ -438,7 +438,9 @@ public final class LearnedProfileManager {
       try data.write(to: storageURL)
     } catch {
       // Log error but don't crash - learned profiles are not critical
-      print("Warning: Failed to save learned profiles: \(error)")
+      if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
+        print("Warning: Failed to save learned profiles: \(error)")
+      }
     }
   }
 

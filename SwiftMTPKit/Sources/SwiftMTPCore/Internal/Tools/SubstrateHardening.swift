@@ -65,7 +65,9 @@ public final class BDDContext: @unchecked Sendable {
     lock.lock()
     defer { lock.unlock() }
     logs.append(description)
-    print("   [BDD] \(description)")
+    if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
+      print("   [BDD] \(description)")
+    }
   }
 
   public func verify(_ condition: Bool, _ message: String) throws {
