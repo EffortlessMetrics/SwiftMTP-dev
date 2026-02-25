@@ -202,12 +202,60 @@ The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.
 
 ### Pixel 7 / Tahoe 26 Issues
 
-**Known Issue:** macOS Tahoe 26 USB stack timing on Pixel 7
+**Known Issue:** macOS Tahoe 26 USB stack timing on Pixel 7 — bulk transfer path times out even though control-plane (`OpenSession`) succeeds.
+
+**Symptoms:**
+- `swiftmtp probe` succeeds but `swiftmtp ls` hangs or returns timeout
+- `LIBUSB_ERROR_TIMEOUT` in logs after a successful handshake
 
 **Solutions:**
-- Keep `stabilizeMs` elevated
-- Treat `LIBUSB_ERROR_TIMEOUT` as transport layer symptom
-- Use direct port and probe before benchmarking
+- Keep `stabilizeMs` elevated (≥ 600 ms); use `swiftmtp quirks` to confirm active quirk
+- Treat `LIBUSB_ERROR_TIMEOUT` as a transport-layer symptom, not a protocol error
+- Use a direct USB-A port (not a hub or USB-C adapter); Tahoe 26 has known USB-C timing regressions
+- Run `swiftmtp probe` first and wait for the ✅ before any transfer command
+- Status: `blocked` — awaiting kernel-level fix in Tahoe 26 beta chain (see `Docs/pixel7-usb-debug-report.md`)
+
+### OnePlus 3T Issues
+
+**Known Issue:** `SendObject` (opcode `0x200C`) timeout on large writes (> 512 MB).
+
+**Symptoms:**
+- Upload of large files (videos, disk images) stalls at 50–80% and returns `timeout`
+- `swiftmtp push` exits with code 1 and `Device timed out` message
+
+**Solutions:**
+- Use `--chunk 1M` to limit write-chunk size; the device firmware cannot handle default 8 MB chunks reliably
+- Keep transfers under 500 MB per session; reconnect between large sessions
+- Confirm the device is on Android 9 or later (earlier builds have a SCSI bridge bug)
+- Workaround: use `--size` flag to split large files before pushing
+
+### Canon EOS / DSLR Issues
+
+**Known Issue:** Canon EOS devices expose both MTP and PTP interfaces; macOS Image Capture claims the PTP interface on connection.
+
+**Symptoms:**
+- `swiftmtp probe` returns `permissionDenied` or `noDevice`
+- Images are visible in Photos but not via SwiftMTP
+
+**Solutions:**
+1. Quit Image Capture and Photos before running SwiftMTP
+2. Set the camera to **MTP** mode in its USB connection settings (not PTP or PC Remote)
+3. Run `swift run swiftmtp probe` within 5 s of connection; macOS may re-claim after idle
+4. For Canon R-series: enable "WiFi + USB" in connection settings to force MTP over PTP
+
+### Nikon DSLR Issues
+
+**Known Issue:** Nikon Z-series and D-series require the `Nikon Object` vendor extension for NEF raw files; standard `GetObject` may return an empty blob.
+
+**Symptoms:**
+- `.NEF` files download as 0-byte files
+- `objectNotFound` for raw files that are visible on the camera LCD
+
+**Solutions:**
+1. Use `swiftmtp quirks` to confirm the `allowNikonExtensions` flag is active
+2. Set Nikon USB to **MTP/PTP** (not PC Control) — PC Control mode disables file access
+3. For large NEF files (> 50 MB): increase `ioTimeoutMs` via `--timeout 30000` flag
+4. If the issue persists, use in-camera formatting on the SD card and re-import
 
 ---
 

@@ -53,7 +53,7 @@ Primary outcome: reduce high-severity real-device failures and make first-line f
 - [x] Resolve Pixel 7 Tahoe 26 bulk-transfer timeout path (control-plane succeeds, bulk path times out)
 - [x] Stabilize OnePlus 3T `SendObject` / `0x201D` large-write behavior
 - [x] Improve first-line error messages for `probe`, `collect`, and write-path operations
-- [ ] Refresh per-device behavior notes in `Docs/Troubleshooting.md` and device pages
+- [x] Refresh per-device behavior notes in `Docs/Troubleshooting.md` and device pages
 
 Sprint exit criteria:
 
@@ -92,7 +92,7 @@ Sprint exit criteria:
 - [x] Single documented CI truth path in docs (including optional/nightly jobs)
 - [x] TSAN invocation is documented and verified in CI config
 - [x] Local gate commands mirror CI behavior for core checks
-- [ ] Release checklist references the same required checks and artifact rules
+- [x] Release checklist references the same required checks and artifact rules
 
 ## Dependency and Risk Register (v2.1)
 
