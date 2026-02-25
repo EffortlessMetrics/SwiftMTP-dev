@@ -5,6 +5,7 @@ import XCTest
 import SwiftMTPCore
 import SwiftMTPIndex
 import SwiftMTPTransportLibUSB
+@testable import SwiftMTPTestKit
 
 final class ResumeScenarioTests: XCTestCase {
   var tempDir: URL!
@@ -194,5 +195,125 @@ final class ResumeScenarioTests: XCTestCase {
     let records2 = try await journal.loadResumables(for: deviceId2)
     XCTAssertEqual(records2.count, 1)
     XCTAssertEqual(records2[0].id, transferId2)
+  }
+
+  // MARK: - Fault-injection resume scenario tests
+
+  /// After a pipe stall mid-download, the journal entry is resumable at the committed offset.
+  func testInterruptedDownloadIsResumable() async throws {
+    let deviceId = MTPDeviceID(raw: "device-fault-resume")
+    let tempURL = tempDir.appendingPathComponent("partial.dat")
+    let finalURL = tempDir.appendingPathComponent("final.dat")
+    let totalSize: UInt64 = 10_000
+
+    let transferId = try await journal.beginRead(
+      device: deviceId,
+      handle: 0xAAAA,
+      name: "large.bin",
+      size: totalSize,
+      supportsPartial: true,
+      tempURL: tempURL,
+      finalURL: finalURL,
+      etag: (size: totalSize, mtime: Date())
+    )
+
+    // Simulate partial progress before interruption
+    try await journal.updateProgress(id: transferId, committed: 3_000)
+
+    // Simulate fault: mark as failed
+    try await journal.fail(
+      id: transferId, error: NSError(domain: "USB", code: -1, userInfo: nil))
+
+    // The record should still be resumable with the partial offset
+    let resumables = try await journal.loadResumables(for: deviceId)
+    XCTAssertEqual(resumables.count, 1)
+    let record = try XCTUnwrap(resumables.first)
+    XCTAssertEqual(record.id, transferId)
+    XCTAssertEqual(record.committedBytes, 3_000)
+    XCTAssertEqual(record.state, "failed")
+    XCTAssertEqual(record.handle, 0xAAAA)
+  }
+
+  /// FaultInjectingLink with a pipeStall fault throws; subsequent call succeeds (retry pattern).
+  func testFaultInjectingLinkRetryAfterPipeStall() async throws {
+    let inner = VirtualMTPLink(config: .pixel7)
+    let schedule = FaultSchedule([.pipeStall(on: .getStorageIDs)])
+    let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
+
+    // First call should fail with the scheduled pipe stall
+    do {
+      _ = try await faultyLink.getStorageIDs()
+      XCTFail("Expected pipe stall error")
+    } catch {
+      // Expected
+    }
+
+    // Second call should succeed (fault is consumed)
+    let ids = try await faultyLink.getStorageIDs()
+    XCTAssertFalse(ids.isEmpty, "Second call should succeed after fault consumed")
+  }
+
+  /// FaultInjectingLink busy-for-N-retries fault fires N times.
+  func testFaultInjectingLinkBusyMultipleTimes() async throws {
+    let inner = VirtualMTPLink(config: .pixel7)
+    // busy for 2 retries on executeCommand
+    let schedule = FaultSchedule([.busyForRetries(2)])
+    let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
+
+    var failCount = 0
+    for _ in 0..<4 {
+      do {
+        _ = try await faultyLink.executeCommand(
+          PTPContainer(type: 1, code: 0x1001, txid: 0, params: []))
+      } catch {
+        failCount += 1
+      }
+    }
+    XCTAssertEqual(failCount, 2, "Should fail exactly 2 times (busy)")
+  }
+
+  /// A completed transfer is not included in resumables.
+  func testCompletedTransferNotResumable() async throws {
+    let deviceId = MTPDeviceID(raw: "device-complete")
+    let tempURL = tempDir.appendingPathComponent("done_temp.dat")
+    let finalURL = tempDir.appendingPathComponent("done_final.dat")
+
+    let id = try await journal.beginRead(
+      device: deviceId, handle: 0xBBBB, name: "done.bin", size: 512,
+      supportsPartial: false, tempURL: tempURL, finalURL: finalURL,
+      etag: (size: 512, mtime: Date()))
+    try await journal.complete(id: id)
+
+    let resumables = try await journal.loadResumables(for: deviceId)
+    XCTAssertTrue(resumables.isEmpty, "Completed transfers should not be resumable")
+  }
+
+  /// Multiple sequential interrupted transfers are all resumable independently.
+  func testMultipleInterruptedTransfersAreAllResumable() async throws {
+    let deviceId = MTPDeviceID(raw: "device-multi-interrupt")
+    let count = 5
+
+    var ids: [String] = []
+    for i in 0..<count {
+      let id = try await journal.beginRead(
+        device: deviceId, handle: UInt32(i + 1), name: "f\(i).bin",
+        size: UInt64(i * 100 + 100), supportsPartial: true,
+        tempURL: tempDir.appendingPathComponent("mi\(i).dat"),
+        finalURL: tempDir.appendingPathComponent("mf\(i).dat"),
+        etag: (size: UInt64(i * 100 + 100), mtime: Date())
+      )
+      try await journal.updateProgress(id: id, committed: UInt64(i * 50))
+      try await journal.fail(id: id, error: NSError(domain: "T", code: i, userInfo: nil))
+      ids.append(id)
+    }
+
+    let resumables = try await journal.loadResumables(for: deviceId)
+    XCTAssertEqual(resumables.count, count, "All \(count) interrupted transfers must be resumable")
+    for (idx, record) in resumables.sorted(by: { $0.committedBytes < $1.committedBytes })
+      .enumerated()
+    {
+      XCTAssertEqual(record.committedBytes, UInt64(idx * 50))
+      XCTAssertEqual(record.state, "failed")
+    }
   }
 }
