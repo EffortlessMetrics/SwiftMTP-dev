@@ -380,4 +380,29 @@ final class StoreAdapterTests: XCTestCase {
   func testClearStaleTempsCompletes() async throws {
     try await adapter.clearStaleTemps(olderThan: 3600)
   }
+
+  // MARK: - recordThroughput Adapter Tests
+
+  func testRecordThroughputPersistsThroughAdapter() async throws {
+    let deviceId = MTPDeviceID(raw: "adapter-tp-\(UUID().uuidString)")
+    let tempURL = URL(fileURLWithPath: "/tmp/adapter-tp-\(UUID().uuidString)")
+    let finalURL = URL(fileURLWithPath: "/tmp/adapter-tp-final-\(UUID().uuidString)")
+
+    let transferId = try await adapter.beginRead(
+      device: deviceId,
+      handle: 77,
+      name: "movie.mp4",
+      size: 500_000,
+      supportsPartial: false,
+      tempURL: tempURL,
+      finalURL: finalURL,
+      etag: (size: nil, mtime: nil)
+    )
+
+    try await adapter.recordThroughput(id: transferId, throughputMBps: 42.0)
+
+    let records = try await adapter.loadResumables(for: deviceId)
+    XCTAssertEqual(
+      records.first?.throughputMBps, 42.0, "throughput should be persisted via adapter")
+  }
 }

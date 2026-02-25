@@ -88,6 +88,47 @@ final class MirrorEngineCoverageTests: XCTestCase {
     XCTAssertFalse(shouldSkip)
   }
 
+  func testShouldSkipDownloadReturnsFalseOnSizeMismatch() throws {
+    // Create a local file with different size than the remote record
+    let localURL = tempDirectory.appendingPathComponent("size-mismatch.jpg")
+    try Data(repeating: 0xAA, count: 100).write(to: localURL)  // 100 bytes locally
+
+    let row = MTPDiff.Row(
+      handle: 99,
+      storage: 0x0001_0001,
+      pathKey: "00010001/size-mismatch.jpg",
+      size: 200,  // remote claims 200 bytes — mismatch
+      mtime: Date(),
+      format: 0x3801
+    )
+
+    let shouldSkip = try mirrorEngine.shouldSkipDownload(of: localURL, file: row)
+    XCTAssertFalse(shouldSkip, "should not skip when sizes differ")
+  }
+
+  func testShouldSkipDownloadReturnsFalseOnTimestampTooOld() throws {
+    // Create a local file whose mtime differs from the remote by > 5 minutes
+    let localURL = tempDirectory.appendingPathComponent("time-mismatch.jpg")
+    let payload = Data(repeating: 0xBB, count: 64)
+    try payload.write(to: localURL)
+    // Set local mtime to exactly the same size so size check passes
+    let staleDate = Date(timeIntervalSinceNow: -3600)  // 1 hour ago
+    try FileManager.default.setAttributes(
+      [.modificationDate: staleDate], ofItemAtPath: localURL.path)
+
+    let row = MTPDiff.Row(
+      handle: 98,
+      storage: 0x0001_0001,
+      pathKey: "00010001/time-mismatch.jpg",
+      size: UInt64(payload.count),  // sizes match
+      mtime: Date(),  // remote says "now" — diff > 5 min
+      format: 0x3801
+    )
+
+    let shouldSkip = try mirrorEngine.shouldSkipDownload(of: localURL, file: row)
+    XCTAssertFalse(shouldSkip, "should not skip when timestamps differ by > 5 minutes")
+  }
+
   func testGlobDoubleStarCanFailWhenSuffixDoesNotMatch() {
     XCTAssertFalse(
       mirrorEngine.matchesPattern("00010001/DCIM/Camera/photo.jpg", pattern: "**/*.png"))
