@@ -6,29 +6,29 @@ import SwiftData
 import SwiftMTPCore
 
 public final class SwiftMTPStore: Sendable {
-    public static let shared = SwiftMTPStore()
-    
-    public let container: ModelContainer
-    
-    private init() {
-        let useInMemory = ProcessInfo.processInfo.environment["SWIFTMTP_STORE_TYPE"] == "memory"
+  public static let shared = SwiftMTPStore()
 
-        let schema = Schema([
-            DeviceEntity.self,
-            LearnedProfileEntity.self,
-            ProfilingRunEntity.self,
-            ProfilingMetricEntity.self,
-            SnapshotEntity.self,
-            SubmissionEntity.self,
-            TransferEntity.self,
-            MTPStorageEntity.self,
-            MTPObjectEntity.self
-        ])
-        let config = ModelConfiguration("SwiftMTP", schema: schema, isStoredInMemoryOnly: useInMemory)
-        container = try! ModelContainer(for: schema, configurations: [config])
-    }
-    
-    public func createActor() -> StoreActor {
-        StoreActor(modelContainer: container)
-    }
+  public let container: ModelContainer
+
+  private init() {
+    let useInMemory = ProcessInfo.processInfo.environment["SWIFTMTP_STORE_TYPE"] == "memory"
+
+    let schema = Schema([
+      DeviceEntity.self,
+      LearnedProfileEntity.self,
+      ProfilingRunEntity.self,
+      ProfilingMetricEntity.self,
+      SnapshotEntity.self,
+      SubmissionEntity.self,
+      TransferEntity.self,
+      MTPStorageEntity.self,
+      MTPObjectEntity.self,
+    ])
+    let config = ModelConfiguration("SwiftMTP", schema: schema, isStoredInMemoryOnly: useInMemory)
+    container = try! ModelContainer(for: schema, configurations: [config])
+  }
+
+  public func createActor() -> StoreActor {
+    StoreActor(modelContainer: container)
+  }
 }

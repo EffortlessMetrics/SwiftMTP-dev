@@ -28,7 +28,7 @@ final class PerformanceRegressionTests: XCTestCase {
 
     // Compare against baseline
     if let baseline = await Self.baselineStorage.getBaseline(for: "throughput-100m") {
-      XCTAssertGreaterThanOrEqual(throughputMbps, baseline * 0.9) // Allow 10% regression
+      XCTAssertGreaterThanOrEqual(throughputMbps, baseline * 0.9)  // Allow 10% regression
     } else {
       // Store baseline for first run
       await Self.baselineStorage.setBaseline(throughputMbps, for: "throughput-100m")
@@ -43,12 +43,12 @@ final class PerformanceRegressionTests: XCTestCase {
     for _ in 0..<100 {
       let startTime = Date()
       _ = try await benchmark.measure(bytes: 1024)
-      totalLatency += Date().timeIntervalSince(startTime) * 1000 // ms
+      totalLatency += Date().timeIntervalSince(startTime) * 1000  // ms
     }
 
     let avgLatency = totalLatency / 100.0
 
-    XCTAssertLessThan(avgLatency, 100) // Should be under 100ms average
+    XCTAssertLessThan(avgLatency, 100)  // Should be under 100ms average
   }
 
   func testLargeFileSequentialTransfer() async throws {
@@ -59,9 +59,10 @@ final class PerformanceRegressionTests: XCTestCase {
 
     for size in sizes {
       let result = try await benchmark.measure(bytes: size)
-      let throughput = Double(result.bytesTransferred) / result.durationMs * 1000.0 / 1024.0 / 1024.0
+      let throughput =
+        Double(result.bytesTransferred) / result.durationMs * 1000.0 / 1024.0 / 1024.0
 
-      XCTAssertGreaterThan(throughput, 0) // Must have positive throughput
+      XCTAssertGreaterThan(throughput, 0)  // Must have positive throughput
     }
   }
 
@@ -82,7 +83,7 @@ final class PerformanceRegressionTests: XCTestCase {
     // Get peak memory
     let peakMemory = await memoryTracker.peakMemoryUsage()
 
-    XCTAssertLessThan(peakMemory, 500 * 1024 * 1024) // Under 500MB peak
+    XCTAssertLessThan(peakMemory, 500 * 1024 * 1024)  // Under 500MB peak
   }
 
   func testMemoryLeakDetection() async throws {
@@ -101,7 +102,7 @@ final class PerformanceRegressionTests: XCTestCase {
     let finalMemory = await leakDetector.currentMemory()
     let growth = finalMemory - baselineMemory
 
-    XCTAssertLessThan(growth, 10 * 1024 * 1024) // Less than 10MB growth
+    XCTAssertLessThan(growth, 10 * 1024 * 1024)  // Less than 10MB growth
   }
 
   // MARK: - CI Reporting Tests
@@ -130,14 +131,14 @@ final class PerformanceRegressionTests: XCTestCase {
     let currentResults: [String: Double] = [
       "throughput": 25.5,
       "latency": 45.2,
-      "memory": 128.0
+      "memory": 128.0,
     ]
 
     // Previous baselines
     let baselines: [String: Double] = [
       "throughput": 30.0,
       "latency": 40.0,
-      "memory": 100.0
+      "memory": 100.0,
     ]
 
     let comparison = comparator.compare(current: currentResults, baselines: baselines)
@@ -173,9 +174,9 @@ struct ThroughputBenchmark {
     let startTime = Date()
 
     // Simulate transfer (in real tests, this would do actual I/O)
-    try await Task.sleep(nanoseconds: UInt64(Double(bytes) / 1000000)) // Simulated
+    try await Task.sleep(nanoseconds: UInt64(Double(bytes) / 1000000))  // Simulated
 
-    let duration = Date().timeIntervalSince(startTime) * 1000 // ms
+    let duration = Date().timeIntervalSince(startTime) * 1000  // ms
 
     return BenchmarkResult(
       bytesTransferred: bytes,
@@ -278,7 +279,7 @@ struct BaselineComparator {
 
     for (key, currentValue) in current {
       if let baselineValue = baselines[key] {
-        let threshold = baselineValue * 0.1 // 10% threshold
+        let threshold = baselineValue * 0.1  // 10% threshold
 
         if currentValue < baselineValue - threshold {
           regressions.append(key)

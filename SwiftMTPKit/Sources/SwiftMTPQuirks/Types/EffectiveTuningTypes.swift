@@ -7,9 +7,11 @@ public struct ProbedCapabilities: Sendable, Codable, Equatable {
   public var partialWrite: Bool
   public var supportsEvents: Bool
 
-  public init(partialRead: Bool = false,
-              partialWrite: Bool = false,
-              supportsEvents: Bool = false) {
+  public init(
+    partialRead: Bool = false,
+    partialWrite: Bool = false,
+    supportsEvents: Bool = false
+  ) {
     self.partialRead = partialRead
     self.partialWrite = partialWrite
     self.supportsEvents = supportsEvents
@@ -28,15 +30,17 @@ public struct UserOverride: Sendable, Equatable {
   public var disablePartialRead: Bool?
   public var disablePartialWrite: Bool?
 
-  public init(maxChunkBytes: Int? = nil,
-              ioTimeoutMs: Int? = nil,
-              handshakeTimeoutMs: Int? = nil,
-              inactivityTimeoutMs: Int? = nil,
-              overallDeadlineMs: Int? = nil,
-              stabilizeMs: Int? = nil,
-              postClaimStabilizeMs: Int? = nil,
-              disablePartialRead: Bool? = nil,
-              disablePartialWrite: Bool? = nil) {
+  public init(
+    maxChunkBytes: Int? = nil,
+    ioTimeoutMs: Int? = nil,
+    handshakeTimeoutMs: Int? = nil,
+    inactivityTimeoutMs: Int? = nil,
+    overallDeadlineMs: Int? = nil,
+    stabilizeMs: Int? = nil,
+    postClaimStabilizeMs: Int? = nil,
+    disablePartialRead: Bool? = nil,
+    disablePartialWrite: Bool? = nil
+  ) {
     self.maxChunkBytes = maxChunkBytes
     self.ioTimeoutMs = ioTimeoutMs
     self.handshakeTimeoutMs = handshakeTimeoutMs
@@ -57,7 +61,9 @@ public enum UserOverrideSource {
 public extension UserOverride {
   /// SWIFTMTP_OVERRIDES env format:
   ///   key=value,key=value (e.g. "maxChunkBytes=2097152,ioTimeoutMs=15000,stabilizeMs=400")
-  static func fromEnvironment(_ env: [String:String] = ProcessInfo.processInfo.environment) -> (UserOverride, UserOverrideSource) {
+  static func fromEnvironment(_ env: [String: String] = ProcessInfo.processInfo.environment) -> (
+    UserOverride, UserOverrideSource
+  ) {
     guard let raw = env["SWIFTMTP_OVERRIDES"], !raw.isEmpty else { return (UserOverride(), .none) }
     var ov = UserOverride()
     for pair in raw.split(separator: ",") {
@@ -66,15 +72,15 @@ public extension UserOverride {
       let k = kv[0].trimmingCharacters(in: .whitespaces)
       let v = kv[1].trimmingCharacters(in: .whitespaces)
       switch k {
-      case "maxChunkBytes":        ov.maxChunkBytes        = Int(v)
-      case "ioTimeoutMs":          ov.ioTimeoutMs          = Int(v)
-      case "handshakeTimeoutMs":   ov.handshakeTimeoutMs   = Int(v)
-      case "inactivityTimeoutMs":  ov.inactivityTimeoutMs  = Int(v)
-      case "overallDeadlineMs":    ov.overallDeadlineMs    = Int(v)
-      case "stabilizeMs":          ov.stabilizeMs          = Int(v)
+      case "maxChunkBytes": ov.maxChunkBytes = Int(v)
+      case "ioTimeoutMs": ov.ioTimeoutMs = Int(v)
+      case "handshakeTimeoutMs": ov.handshakeTimeoutMs = Int(v)
+      case "inactivityTimeoutMs": ov.inactivityTimeoutMs = Int(v)
+      case "overallDeadlineMs": ov.overallDeadlineMs = Int(v)
+      case "stabilizeMs": ov.stabilizeMs = Int(v)
       case "postClaimStabilizeMs": ov.postClaimStabilizeMs = Int(v)
-      case "disablePartialRead":   ov.disablePartialRead   = (v == "1" || v.lowercased() == "true")
-      case "disablePartialWrite":  ov.disablePartialWrite  = (v == "1" || v.lowercased() == "true")
+      case "disablePartialRead": ov.disablePartialRead = (v == "1" || v.lowercased() == "true")
+      case "disablePartialWrite": ov.disablePartialWrite = (v == "1" || v.lowercased() == "true")
       default: break
       }
     }

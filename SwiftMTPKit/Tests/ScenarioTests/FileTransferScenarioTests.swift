@@ -9,140 +9,145 @@ import Testing
 @Suite("File Transfer Scenario Tests")
 struct FileTransferScenarioTests {
 
-    @Test("Mock device file download works")
-    func testMockFileDownload() async throws {
-        // Create mock transport
-        let mockData = MockTransportFactory.deviceData(for: .androidPixel7)
-        let transport = MockTransport(deviceData: mockData)
-        let deviceSummary = mockData.deviceSummary
+  @Test("Mock device file download works")
+  func testMockFileDownload() async throws {
+    // Create mock transport
+    let mockData = MockTransportFactory.deviceData(for: .androidPixel7)
+    let transport = MockTransport(deviceData: mockData)
+    let deviceSummary = mockData.deviceSummary
 
-        // Open device
-        let link = try await transport.open(deviceSummary, config: SwiftMTPConfig())
-        let device = MTPDeviceActor(id: deviceSummary.id, summary: deviceSummary, transport: transport)
+    // Open device
+    let link = try await transport.open(deviceSummary, config: SwiftMTPConfig())
+    let device = MTPDeviceActor(id: deviceSummary.id, summary: deviceSummary, transport: transport)
 
-        // Find a file to download (first file in mock data)
-        guard let firstObject = mockData.objects.first(where: { $0.size != nil }) else {
-            Issue.record("No files found in mock data")
-            return
-        }
-
-        // Create temp output file
-        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("test_download.tmp")
-
-        do {
-            // Download file
-            let progress = try await device.read(handle: firstObject.handle, range: nil, to: tempURL)
-
-            // Verify download
-            let fileData = try Data(contentsOf: tempURL)
-            #expect(fileData.count > 0)
-            #expect(Int64(fileData.count) == progress.completedUnitCount)
-
-            // Verify file exists
-            #expect(FileManager.default.fileExists(atPath: tempURL.path))
-
-        } catch {
-            let description = String(describing: error)
-            if description.contains("OperationNotSupported") || description.contains("notSupported") {
-                // Some mock profiles expose objects that are not readable via ranged download.
-                return
-            }
-            Issue.record("Mock file download test failed: \(error)")
-        }
-
-        // Cleanup
-        try? FileManager.default.removeItem(at: tempURL)
-        await link.close()
+    // Find a file to download (first file in mock data)
+    guard let firstObject = mockData.objects.first(where: { $0.size != nil }) else {
+      Issue.record("No files found in mock data")
+      return
     }
 
-    @Test("Mock device file upload works")
-    func testMockFileUpload() async throws {
-        // Create mock transport
-        let mockData = MockTransportFactory.deviceData(for: .androidPixel7)
-        let transport = MockTransport(deviceData: mockData)
-        let deviceSummary = mockData.deviceSummary
+    // Create temp output file
+    let tempURL = URL(fileURLWithPath: NSTemporaryDirectory())
+      .appendingPathComponent("test_download.tmp")
 
-        // Open device
-        let link = try await transport.open(deviceSummary, config: SwiftMTPConfig())
-        let device = MTPDeviceActor(id: deviceSummary.id, summary: deviceSummary, transport: transport)
+    do {
+      // Download file
+      let progress = try await device.read(handle: firstObject.handle, range: nil, to: tempURL)
 
-        // Create a test file to upload
-        let testFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("test_upload.tmp")
-        let testData: [UInt8] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        try Data(testData).write(to: testFileURL)
+      // Verify download
+      let fileData = try Data(contentsOf: tempURL)
+      #expect(fileData.count > 0)
+      #expect(Int64(fileData.count) == progress.completedUnitCount)
 
-        do {
-            // Upload file (use root as parent)
-            let progress = try await device.write(parent: nil, name: "test_upload.tmp",
-                                                 size: UInt64(testData.count), from: testFileURL)
+      // Verify file exists
+      #expect(FileManager.default.fileExists(atPath: tempURL.path))
 
-            // Verify upload progress
-            #expect(progress.completedUnitCount == Int64(testData.count))
-
-        } catch {
-            Issue.record("Mock file upload test failed: \(error)")
-        }
-
-        // Cleanup
-        try? FileManager.default.removeItem(at: testFileURL)
-        await link.close()
+    } catch {
+      let description = String(describing: error)
+      if description.contains("OperationNotSupported") || description.contains("notSupported") {
+        // Some mock profiles expose objects that are not readable via ranged download.
+        return
+      }
+      Issue.record("Mock file download test failed: \(error)")
     }
 
-    @Test("Transfer cancellation works with timing validation")
-    func testTransferCancellation() async throws {
-        // Create mock transport
-        let mockData = MockTransportFactory.deviceData(for: .androidPixel7)
-        let transport = MockTransport(deviceData: mockData)
-        let deviceSummary = mockData.deviceSummary
+    // Cleanup
+    try? FileManager.default.removeItem(at: tempURL)
+    await link.close()
+  }
 
-        // Open device
-        let link = try await transport.open(deviceSummary, config: SwiftMTPConfig())
-        let device = MTPDeviceActor(id: deviceSummary.id, summary: deviceSummary, transport: transport)
+  @Test("Mock device file upload works")
+  func testMockFileUpload() async throws {
+    // Create mock transport
+    let mockData = MockTransportFactory.deviceData(for: .androidPixel7)
+    let transport = MockTransport(deviceData: mockData)
+    let deviceSummary = mockData.deviceSummary
 
-        // Find a file to download
-        guard let firstObject = mockData.objects.first(where: { $0.size != nil }) else {
-            Issue.record("No files found in mock data")
-            return
-        }
+    // Open device
+    let link = try await transport.open(deviceSummary, config: SwiftMTPConfig())
+    let device = MTPDeviceActor(id: deviceSummary.id, summary: deviceSummary, transport: transport)
 
-        // Create temp output file
-        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("test_cancel.tmp")
+    // Create a test file to upload
+    let testFileURL = URL(fileURLWithPath: NSTemporaryDirectory())
+      .appendingPathComponent("test_upload.tmp")
+    let testData: [UInt8] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    try Data(testData).write(to: testFileURL)
 
-        do {
-            // Start download in a task that we'll cancel
-            let downloadTask = Task {
-                try await device.read(handle: firstObject.handle, range: nil, to: tempURL)
-            }
+    do {
+      // Upload file (use root as parent)
+      let progress = try await device.write(
+        parent: nil, name: "test_upload.tmp",
+        size: UInt64(testData.count), from: testFileURL)
 
-            // Measure cancellation latency
-            let cancelStart = Date()
-            downloadTask.cancel()
+      // Verify upload progress
+      #expect(progress.completedUnitCount == Int64(testData.count))
 
-            // Wait for cancellation
-            do {
-                _ = try await downloadTask.value
-                Issue.record("Expected task to be cancelled")
-            } catch {
-                let cancelLatency = Date().timeIntervalSince(cancelStart)
-
-                // Expected to catch cancellation
-                if Task.isCancelled || error is CancellationError {
-                    print("✅ Transfer cancelled in \(String(format: "%.3f", cancelLatency * 1000))ms")
-
-                    // Validate cancellation is reasonably fast (< 1 second)
-                    #expect(cancelLatency < 1.0,
-                           "Cancellation took too long: \(String(format: "%.3f", cancelLatency * 1000))ms")
-                } else {
-                    Issue.record("Unexpected error during cancellation: \(error)")
-                }
-            }
-
-        } catch {
-            Issue.record("Transfer cancellation test failed: \(error)")
-        }
-
-        // Cleanup
-        try? FileManager.default.removeItem(at: tempURL)
-        await link.close()
+    } catch {
+      Issue.record("Mock file upload test failed: \(error)")
     }
+
+    // Cleanup
+    try? FileManager.default.removeItem(at: testFileURL)
+    await link.close()
+  }
+
+  @Test("Transfer cancellation works with timing validation")
+  func testTransferCancellation() async throws {
+    // Create mock transport
+    let mockData = MockTransportFactory.deviceData(for: .androidPixel7)
+    let transport = MockTransport(deviceData: mockData)
+    let deviceSummary = mockData.deviceSummary
+
+    // Open device
+    let link = try await transport.open(deviceSummary, config: SwiftMTPConfig())
+    let device = MTPDeviceActor(id: deviceSummary.id, summary: deviceSummary, transport: transport)
+
+    // Find a file to download
+    guard let firstObject = mockData.objects.first(where: { $0.size != nil }) else {
+      Issue.record("No files found in mock data")
+      return
+    }
+
+    // Create temp output file
+    let tempURL = URL(fileURLWithPath: NSTemporaryDirectory())
+      .appendingPathComponent("test_cancel.tmp")
+
+    do {
+      // Start download in a task that we'll cancel
+      let downloadTask = Task {
+        try await device.read(handle: firstObject.handle, range: nil, to: tempURL)
+      }
+
+      // Measure cancellation latency
+      let cancelStart = Date()
+      downloadTask.cancel()
+
+      // Wait for cancellation
+      do {
+        _ = try await downloadTask.value
+        Issue.record("Expected task to be cancelled")
+      } catch {
+        let cancelLatency = Date().timeIntervalSince(cancelStart)
+
+        // Expected to catch cancellation
+        if Task.isCancelled || error is CancellationError {
+          print("✅ Transfer cancelled in \(String(format: "%.3f", cancelLatency * 1000))ms")
+
+          // Validate cancellation is reasonably fast (< 1 second)
+          #expect(
+            cancelLatency < 1.0,
+            "Cancellation took too long: \(String(format: "%.3f", cancelLatency * 1000))ms")
+        } else {
+          Issue.record("Unexpected error during cancellation: \(error)")
+        }
+      }
+
+    } catch {
+      Issue.record("Transfer cancellation test failed: \(error)")
+    }
+
+    // Cleanup
+    try? FileManager.default.removeItem(at: tempURL)
+    await link.close()
+  }
 }

@@ -4,12 +4,16 @@
 import Foundation
 
 public protocol TransferJournal: Sendable {
-  func beginRead(device: MTPDeviceID, handle: UInt32, name: String,
-                 size: UInt64?, supportsPartial: Bool,
-                 tempURL: URL, finalURL: URL?, etag: (size: UInt64?, mtime: Date?)) async throws -> String // returns id
-  func beginWrite(device: MTPDeviceID, parent: UInt32, name: String,
-                  size: UInt64, supportsPartial: Bool,
-                  tempURL: URL, sourceURL: URL?) async throws -> String
+  func beginRead(
+    device: MTPDeviceID, handle: UInt32, name: String,
+    size: UInt64?, supportsPartial: Bool,
+    tempURL: URL, finalURL: URL?, etag: (size: UInt64?, mtime: Date?)
+  ) async throws -> String  // returns id
+  func beginWrite(
+    device: MTPDeviceID, parent: UInt32, name: String,
+    size: UInt64, supportsPartial: Bool,
+    tempURL: URL, sourceURL: URL?
+  ) async throws -> String
   func updateProgress(id: String, committed: UInt64) async throws
   func fail(id: String, error: Error) async throws
   func complete(id: String) async throws
@@ -32,7 +36,11 @@ public struct TransferRecord: Sendable {
   public let state: String
   public let updatedAt: Date
 
-  public init(id: String, deviceId: MTPDeviceID, kind: String, handle: UInt32?, parentHandle: UInt32?, name: String, totalBytes: UInt64?, committedBytes: UInt64, supportsPartial: Bool, localTempURL: URL, finalURL: URL?, state: String, updatedAt: Date) {
+  public init(
+    id: String, deviceId: MTPDeviceID, kind: String, handle: UInt32?, parentHandle: UInt32?,
+    name: String, totalBytes: UInt64?, committedBytes: UInt64, supportsPartial: Bool,
+    localTempURL: URL, finalURL: URL?, state: String, updatedAt: Date
+  ) {
     self.id = id
     self.deviceId = deviceId
     self.kind = kind

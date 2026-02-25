@@ -10,63 +10,64 @@ import SwiftMTPCore
 /// handler on the `CrawlScheduler`. Falls back to periodic refresh if the device
 /// does not support events.
 public actor EventBridge {
-    private let scheduler: CrawlScheduler
-    private let deviceId: String
-    private var eventTask: Task<Void, Never>?
-    private var stopped = false
+  private let scheduler: CrawlScheduler
+  private let deviceId: String
+  private var eventTask: Task<Void, Never>?
+  private var stopped = false
 
-    public init(scheduler: CrawlScheduler, deviceId: String) {
-        self.scheduler = scheduler
-        self.deviceId = deviceId
-    }
+  public init(scheduler: CrawlScheduler, deviceId: String) {
+    self.scheduler = scheduler
+    self.deviceId = deviceId
+  }
 
-    /// Start listening to device events.
-    public func start(device: any MTPDevice) async {
-        stopped = false
+  /// Start listening to device events.
+  public func start(device: any MTPDevice) async {
+    stopped = false
 
-        // Check if device supports events
-        let info = try? await device.info
-        let supportsEvents = !(info?.eventsSupported.isEmpty ?? true)
+    // Check if device supports events
+    let info = try? await device.info
+    let supportsEvents = !(info?.eventsSupported.isEmpty ?? true)
 
-        if supportsEvents {
-            eventTask = Task { [weak self, deviceId] in
-                for await event in device.events {
-                    guard let self, await !self.isStopped() else { break }
-                    switch event {
-                    case .objectAdded(let handle):
-                        await self.scheduler.handleObjectAdded(deviceId: deviceId, handle: handle, device: device)
-                    case .objectRemoved(let handle):
-                        await self.scheduler.handleObjectRemoved(deviceId: deviceId, handle: handle)
-                    case .storageInfoChanged:
-                        // Re-seed the crawl to pick up storage changes
-                        await self.scheduler.seedOnConnect(deviceId: deviceId, device: device)
-                    case .storageAdded, .storageRemoved:
-                        // Storage topology change — re-seed crawl
-                        await self.scheduler.seedOnConnect(deviceId: deviceId, device: device)
-                    case .objectInfoChanged:
-                        // Object metadata changed — re-seed to pick up updated metadata
-                        await self.scheduler.seedOnConnect(deviceId: deviceId, device: device)
-                    case .deviceInfoChanged:
-                        break  // No index action needed for device-level info changes
-                    case .unknown:
-                        break  // Unrecognised event — ignore
-                    }
-                }
-            }
-        } else {
-            // No event support — use periodic refresh
-            await scheduler.startPeriodicRefresh(deviceId: deviceId, device: device)
+    if supportsEvents {
+      eventTask = Task { [weak self, deviceId] in
+        for await event in device.events {
+          guard let self, await !self.isStopped() else { break }
+          switch event {
+          case .objectAdded(let handle):
+            await self.scheduler.handleObjectAdded(
+              deviceId: deviceId, handle: handle, device: device)
+          case .objectRemoved(let handle):
+            await self.scheduler.handleObjectRemoved(deviceId: deviceId, handle: handle)
+          case .storageInfoChanged:
+            // Re-seed the crawl to pick up storage changes
+            await self.scheduler.seedOnConnect(deviceId: deviceId, device: device)
+          case .storageAdded, .storageRemoved:
+            // Storage topology change — re-seed crawl
+            await self.scheduler.seedOnConnect(deviceId: deviceId, device: device)
+          case .objectInfoChanged:
+            // Object metadata changed — re-seed to pick up updated metadata
+            await self.scheduler.seedOnConnect(deviceId: deviceId, device: device)
+          case .deviceInfoChanged:
+            break  // No index action needed for device-level info changes
+          case .unknown:
+            break  // Unrecognised event — ignore
+          }
         }
+      }
+    } else {
+      // No event support — use periodic refresh
+      await scheduler.startPeriodicRefresh(deviceId: deviceId, device: device)
     }
+  }
 
-    /// Stop listening to events.
-    public func stop() {
-        stopped = true
-        eventTask?.cancel()
-        eventTask = nil
-    }
+  /// Stop listening to events.
+  public func stop() {
+    stopped = true
+    eventTask?.cancel()
+    eventTask = nil
+  }
 
-    private func isStopped() -> Bool {
-        stopped
-    }
+  private func isStopped() -> Bool {
+    stopped
+  }
 }

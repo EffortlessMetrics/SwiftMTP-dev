@@ -15,7 +15,8 @@ final class ObjectPropAPITests: XCTestCase {
 
   func testGetObjectFileNameReturnsName() async throws {
     let link = makeLinkWithSamplePhoto()
-    let data = try await link.getObjectPropValue(handle: 0x0003, property: MTPObjectPropCode.objectFileName)
+    let data = try await link.getObjectPropValue(
+      handle: 0x0003, property: MTPObjectPropCode.objectFileName)
     var offset = 0
     let name = PTPString.parse(from: data, at: &offset)
     XCTAssertEqual(name, "IMG_20250101_120000.jpg")
@@ -23,7 +24,8 @@ final class ObjectPropAPITests: XCTestCase {
 
   func testGetObjectSizeReturnsBytes() async throws {
     let link = makeLinkWithSamplePhoto()
-    let data = try await link.getObjectPropValue(handle: 0x0003, property: MTPObjectPropCode.objectSize)
+    let data = try await link.getObjectPropValue(
+      handle: 0x0003, property: MTPObjectPropCode.objectSize)
     var dec = MTPDataDecoder(data: data)
     let size = dec.readUInt64()
     XCTAssertEqual(size, 4_500_000)  // as set in pixel7 config
@@ -31,7 +33,8 @@ final class ObjectPropAPITests: XCTestCase {
 
   func testGetObjectStorageIDReturnsCorrectStorage() async throws {
     let link = makeLinkWithSamplePhoto()
-    let data = try await link.getObjectPropValue(handle: 0x0003, property: MTPObjectPropCode.storageID)
+    let data = try await link.getObjectPropValue(
+      handle: 0x0003, property: MTPObjectPropCode.storageID)
     var dec = MTPDataDecoder(data: data)
     let raw = dec.readUInt32()
     XCTAssertNotNil(raw)
@@ -39,7 +42,8 @@ final class ObjectPropAPITests: XCTestCase {
 
   func testGetParentObjectReturnsParentHandle() async throws {
     let link = makeLinkWithSamplePhoto()
-    let data = try await link.getObjectPropValue(handle: 0x0003, property: MTPObjectPropCode.parentObject)
+    let data = try await link.getObjectPropValue(
+      handle: 0x0003, property: MTPObjectPropCode.parentObject)
     var dec = MTPDataDecoder(data: data)
     let parent = dec.readUInt32()
     XCTAssertNotNil(parent)
@@ -47,7 +51,8 @@ final class ObjectPropAPITests: XCTestCase {
 
   func testGetDateModifiedReturnsPTPDateString() async throws {
     let link = makeLinkWithSamplePhoto()
-    let data = try await link.getObjectPropValue(handle: 0x0003, property: MTPObjectPropCode.dateModified)
+    let data = try await link.getObjectPropValue(
+      handle: 0x0003, property: MTPObjectPropCode.dateModified)
     var offset = 0
     let str = PTPString.parse(from: data, at: &offset)
     XCTAssertNotNil(str)
@@ -68,7 +73,8 @@ final class ObjectPropAPITests: XCTestCase {
   func testGetPropertyOnMissingHandleThrows() async throws {
     let link = makeLinkWithSamplePhoto()
     do {
-      _ = try await link.getObjectPropValue(handle: 0xDEAD, property: MTPObjectPropCode.objectFileName)
+      _ = try await link.getObjectPropValue(
+        handle: 0xDEAD, property: MTPObjectPropCode.objectFileName)
       XCTFail("Should have thrown for missing object")
     } catch {
       // Expected
@@ -81,14 +87,16 @@ final class ObjectPropAPITests: XCTestCase {
     let link = makeLinkWithSamplePhoto()
     // VirtualMTPLink accepts all set operations silently
     let encoded = PTPString.encode("NEWNAME.JPG")
-    try await link.setObjectPropValue(handle: 0x0003, property: MTPObjectPropCode.objectFileName, value: encoded)
+    try await link.setObjectPropValue(
+      handle: 0x0003, property: MTPObjectPropCode.objectFileName, value: encoded)
     // No assertion needed — just verifying it doesn't throw
   }
 
   func testSetPropertyOnMissingHandleThrows() async throws {
     let link = makeLinkWithSamplePhoto()
     do {
-      try await link.setObjectPropValue(handle: 0xDEAD, property: MTPObjectPropCode.objectFileName, value: Data())
+      try await link.setObjectPropValue(
+        handle: 0xDEAD, property: MTPObjectPropCode.objectFileName, value: Data())
       XCTFail("Should have thrown for missing object")
     } catch {
       // Expected

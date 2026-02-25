@@ -28,12 +28,17 @@ public struct PTPContainer: Sendable {
   public func encode(into buf: UnsafeMutablePointer<UInt8>) -> Int {
     let base = UnsafeMutableRawPointer(buf)
     var off = 0
-    MTPEndianCodec.encode(length, into: base, at: off); off += 4
-    MTPEndianCodec.encode(type, into: base, at: off); off += 2
-    MTPEndianCodec.encode(code, into: base, at: off); off += 2
-    MTPEndianCodec.encode(txid, into: base, at: off); off += 4
+    MTPEndianCodec.encode(length, into: base, at: off)
+    off += 4
+    MTPEndianCodec.encode(type, into: base, at: off)
+    off += 2
+    MTPEndianCodec.encode(code, into: base, at: off)
+    off += 2
+    MTPEndianCodec.encode(txid, into: base, at: off)
+    off += 4
     for p in params {
-      MTPEndianCodec.encode(p, into: base, at: off); off += 4
+      MTPEndianCodec.encode(p, into: base, at: off)
+      off += 4
     }
     return off
   }

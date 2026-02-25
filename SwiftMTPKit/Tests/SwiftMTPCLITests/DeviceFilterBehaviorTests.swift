@@ -10,11 +10,11 @@ import SwiftMTPCLI
 struct CLIParsingBehavior {
   @Test("parseUSBIdentifier treats unprefixed values as hex (USB convention)")
   func parseUSBIdentifierFormats() {
-    #expect(SwiftMTPCLI.parseUSBIdentifier("0x2717") == 0x2717)   // explicit 0x prefix → hex
-    #expect(SwiftMTPCLI.parseUSBIdentifier("0XABCD") == 0xABCD)   // explicit 0X prefix → hex
-    #expect(SwiftMTPCLI.parseUSBIdentifier("4660") == 0x4660)     // unprefixed → hex (USB convention)
-    #expect(SwiftMTPCLI.parseUSBIdentifier("ff40") == 0xFF40)     // hex letters → hex
-    #expect(SwiftMTPCLI.parseUSBIdentifier(" 1234 ") == 0x1234)   // whitespace-stripped, unprefixed → hex
+    #expect(SwiftMTPCLI.parseUSBIdentifier("0x2717") == 0x2717)  // explicit 0x prefix → hex
+    #expect(SwiftMTPCLI.parseUSBIdentifier("0XABCD") == 0xABCD)  // explicit 0X prefix → hex
+    #expect(SwiftMTPCLI.parseUSBIdentifier("4660") == 0x4660)  // unprefixed → hex (USB convention)
+    #expect(SwiftMTPCLI.parseUSBIdentifier("ff40") == 0xFF40)  // hex letters → hex
+    #expect(SwiftMTPCLI.parseUSBIdentifier(" 1234 ") == 0x1234)  // whitespace-stripped, unprefixed → hex
     #expect(SwiftMTPCLI.parseUSBIdentifier("not-a-number") == nil)
   }
 

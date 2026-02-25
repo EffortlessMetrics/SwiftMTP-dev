@@ -710,7 +710,8 @@ private func probeWriteCommandWithRecovery(
   let initialAttempt = probeAttemptCommandWrite(
     handle: handle, candidate: candidate, bytes: bytes, timeoutMs: timeoutMs)
   if initialAttempt.succeeded {
-    return ProbeCommandWriteResult(succeeded: true, rc: initialAttempt.rc, sent: initialAttempt.sent)
+    return ProbeCommandWriteResult(
+      succeeded: true, rc: initialAttempt.rc, sent: initialAttempt.sent)
   }
   guard initialAttempt.isNoProgressTimeout else {
     return ProbeCommandWriteResult(
@@ -760,8 +761,9 @@ private func probeWriteCommandWithRecovery(
             "   [Probe][Recover] op=0x%04x tx=%u Pixel no-progress persists (rc=%d sent=%d), running reset rung",
           opcode, txid, lightRetry.rc, lightRetry.sent))
     }
-    guard probePerformNoProgressHardRecovery(
-      handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
+    guard
+      probePerformNoProgressHardRecovery(
+        handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
     else {
       return ProbeCommandWriteResult(succeeded: false, rc: lightRetry.rc, sent: lightRetry.sent)
     }
@@ -796,8 +798,9 @@ private func probeWriteCommandWithRecovery(
           "   [Probe][Recover] op=0x%04x tx=%u light rung did not recover (rc=%d sent=%d), running hard rung",
         opcode, txid, lightRetry.rc, lightRetry.sent))
   }
-  guard probePerformNoProgressHardRecovery(
-    handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
+  guard
+    probePerformNoProgressHardRecovery(
+      handle: handle, candidate: candidate, opcode: opcode, txid: txid, debug: debug)
   else {
     return ProbeCommandWriteResult(succeeded: false, rc: lightRetry.rc, sent: lightRetry.sent)
   }
@@ -886,7 +889,9 @@ func probeOpenSession(
     debug: debug
   )
   if !write.succeeded {
-    if debug { print("   [ProbeLadder] OpenSession write failed: rc=\(write.rc) sent=\(write.sent)") }
+    if debug {
+      print("   [ProbeLadder] OpenSession write failed: rc=\(write.rc) sent=\(write.sent)")
+    }
     drainBulkIn(handle: handle, ep: c.bulkIn)
     return false
   }
@@ -928,7 +933,9 @@ func probeGetStorageIDs(
     debug: debug
   )
   if !write.succeeded {
-    if debug { print("   [ProbeLadder] GetStorageIDs write failed: rc=\(write.rc) sent=\(write.sent)") }
+    if debug {
+      print("   [ProbeLadder] GetStorageIDs write failed: rc=\(write.rc) sent=\(write.sent)")
+    }
     drainBulkIn(handle: handle, ep: c.bulkIn)
     return false
   }
@@ -1008,7 +1015,8 @@ func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: U
     debug: debug
   )
   if debug { print("   [Probe] write rc=\(write.rc) sent=\(write.sent)/\(cmdBytes.count)") }
-  if !write.succeeded && probeShouldRecoverNoProgressTimeout(rc: write.rc, sent: write.sent), debug {
+  if !write.succeeded && probeShouldRecoverNoProgressTimeout(rc: write.rc, sent: write.sent), debug
+  {
     print("   [Probe] WARNING: sent=0 timeout - endpoint not accepting writes!")
     print("   [Probe] This may indicate: wrong alt setting, device not ready, or host interference")
   }

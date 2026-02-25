@@ -70,7 +70,9 @@ public enum PTPLayer {
   }
 
   /// Get storage info for a specific storage.
-  public static func getStorageInfo(id: MTPStorageID, on link: MTPLink) async throws -> MTPStorageInfo {
+  public static func getStorageInfo(id: MTPStorageID, on link: MTPLink) async throws
+    -> MTPStorageInfo
+  {
     try await link.getStorageInfo(id: id)
   }
 
@@ -95,7 +97,8 @@ public enum PTPLayer {
   public static func getObjectModificationDate(
     handle: MTPObjectHandle, on link: MTPLink
   ) async throws -> Date? {
-    let data = try await link.getObjectPropValue(handle: handle, property: MTPObjectPropCode.dateModified)
+    let data = try await link.getObjectPropValue(
+      handle: handle, property: MTPObjectPropCode.dateModified)
     var offset = 0
     guard let s = PTPString.parse(from: data, at: &offset), !s.isEmpty else { return nil }
     return MTPDateString.decode(s)
@@ -106,14 +109,16 @@ public enum PTPLayer {
     handle: MTPObjectHandle, date: Date, on link: MTPLink
   ) async throws {
     let encoded = PTPString.encode(MTPDateString.encode(date))
-    try await link.setObjectPropValue(handle: handle, property: MTPObjectPropCode.dateModified, value: encoded)
+    try await link.setObjectPropValue(
+      handle: handle, property: MTPObjectPropCode.dateModified, value: encoded)
   }
 
   /// Read the `ObjectFileName` (0xDC07) property for an object.
   public static func getObjectFileName(
     handle: MTPObjectHandle, on link: MTPLink
   ) async throws -> String? {
-    let data = try await link.getObjectPropValue(handle: handle, property: MTPObjectPropCode.objectFileName)
+    let data = try await link.getObjectPropValue(
+      handle: handle, property: MTPObjectPropCode.objectFileName)
     var offset = 0
     return PTPString.parse(from: data, at: &offset)
   }

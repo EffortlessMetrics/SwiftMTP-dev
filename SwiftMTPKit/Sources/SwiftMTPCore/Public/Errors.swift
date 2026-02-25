@@ -64,8 +64,9 @@ extension MTPError: LocalizedError {
       return "The transport response indicates a protocol error."
     case .transport(let transportError):
       return transportError.failureReason
-    case .deviceDisconnected, .permissionDenied, .notSupported, .objectNotFound, .objectWriteProtected,
-         .storageFull, .readOnly, .timeout, .busy, .preconditionFailed:
+    case .deviceDisconnected, .permissionDenied, .notSupported, .objectNotFound,
+      .objectWriteProtected,
+      .storageFull, .readOnly, .timeout, .busy, .preconditionFailed:
       return nil
     }
   }
@@ -74,7 +75,8 @@ extension MTPError: LocalizedError {
     switch self {
     case .protocolError(let code, _):
       if code == 0x201D {
-        return "Write to a writable folder (for example Download, DCIM, or a nested folder) instead of root."
+        return
+          "Write to a writable folder (for example Download, DCIM, or a nested folder) instead of root."
       }
       return "Retry with corrected request details."
     case .transport(let transportError):
@@ -106,7 +108,8 @@ extension TransportError: LocalizedError {
   public var errorDescription: String? {
     switch self {
     case .noDevice:
-      return "No MTP-capable USB device found. Ensure the phone is in File Transfer (MTP) mode and still connected."
+      return
+        "No MTP-capable USB device found. Ensure the phone is in File Transfer (MTP) mode and still connected."
     case .timeout:
       return "The USB transfer timed out."
     case .busy:
@@ -138,7 +141,8 @@ extension TransportError: LocalizedError {
     case .accessDenied:
       return "Close competing USB tools, then retry."
     case .timeout:
-      return "Retry after increasing timeout values (`SWIFTMTP_MAX_CHUNK_BYTES`, `SWIFTMTP_IO_TIMEOUT_MS`)."
+      return
+        "Retry after increasing timeout values (`SWIFTMTP_MAX_CHUNK_BYTES`, `SWIFTMTP_IO_TIMEOUT_MS`)."
     case .busy:
       return "Retry briefly if bus or host contention is expected."
     case .io:

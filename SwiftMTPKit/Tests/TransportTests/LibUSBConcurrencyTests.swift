@@ -10,271 +10,277 @@ import SwiftMTPTestKit
 /// Tests for concurrent operations and thread safety
 final class LibUSBConcurrencyTests: XCTestCase {
 
-    // MARK: - Concurrent Device Operations Tests
+  // MARK: - Concurrent Device Operations Tests
 
-    func testMultipleDeviceDiscovery() async throws {
-        // Test that device discovery can be called concurrently
-        let config1 = VirtualDeviceConfig.pixel7
-        let config2 = VirtualDeviceConfig.emptyDevice
+  func testMultipleDeviceDiscovery() async throws {
+    // Test that device discovery can be called concurrently
+    let config1 = VirtualDeviceConfig.pixel7
+    let config2 = VirtualDeviceConfig.emptyDevice
 
-        XCTAssertNotNil(config1)
-        XCTAssertNotNil(config2)
-    }
+    XCTAssertNotNil(config1)
+    XCTAssertNotNil(config2)
+  }
 
-    func testConcurrentVirtualDeviceCreation() async {
-        // Test creating multiple virtual devices concurrently
-        await withTaskGroup(of: Void.self) { group in
-            for i in 0..<5 {
-                group.addTask {
-                    let config = VirtualDeviceConfig.pixel7
-                        .withStorage(VirtualStorageConfig(
-                            id: MTPStorageID(raw: UInt32(i + 1)),
-                            description: "Storage \(i)"
-                        ))
-                    _ = VirtualMTPDevice(config: config)
-                }
-            }
+  func testConcurrentVirtualDeviceCreation() async {
+    // Test creating multiple virtual devices concurrently
+    await withTaskGroup(of: Void.self) { group in
+      for i in 0..<5 {
+        group.addTask {
+          let config = VirtualDeviceConfig.pixel7
+            .withStorage(
+              VirtualStorageConfig(
+                id: MTPStorageID(raw: UInt32(i + 1)),
+                description: "Storage \(i)"
+              ))
+          _ = VirtualMTPDevice(config: config)
         }
+      }
     }
+  }
 
-    // MARK: - Thread Safety Tests
+  // MARK: - Thread Safety Tests
 
-    func testMockTransportSendable() {
-        // Test that MockTransport conforms to Sendable
-        let summary = MTPDeviceSummary(
-            id: MTPDeviceID(raw: "1234:5678@1:1"),
-            manufacturer: "Test",
-            model: "TestModel",
-            vendorID: 0x1234,
-            productID: 0x5678,
-            bus: 1,
-            address: 1,
-            usbSerial: nil
-        )
+  func testMockTransportSendable() {
+    // Test that MockTransport conforms to Sendable
+    let summary = MTPDeviceSummary(
+      id: MTPDeviceID(raw: "1234:5678@1:1"),
+      manufacturer: "Test",
+      model: "TestModel",
+      vendorID: 0x1234,
+      productID: 0x5678,
+      bus: 1,
+      address: 1,
+      usbSerial: nil
+    )
 
-        let mockTransport = MockTransport(deviceData: MockDeviceData(
-            deviceSummary: summary,
-            deviceInfo: MTPDeviceInfo(
-                manufacturer: summary.manufacturer,
-                model: summary.model,
-                version: "1.0",
-                serialNumber: summary.usbSerial,
-                operationsSupported: [],
-                eventsSupported: []
-            ),
-            storages: [],
-            objects: [],
-            operationsSupported: [],
-            eventsSupported: []
-        ))
+    let mockTransport = MockTransport(
+      deviceData: MockDeviceData(
+        deviceSummary: summary,
+        deviceInfo: MTPDeviceInfo(
+          manufacturer: summary.manufacturer,
+          model: summary.model,
+          version: "1.0",
+          serialNumber: summary.usbSerial,
+          operationsSupported: [],
+          eventsSupported: []
+        ),
+        storages: [],
+        objects: [],
+        operationsSupported: [],
+        eventsSupported: []
+      ))
 
-        XCTAssertNotNil(mockTransport)
-    }
+    XCTAssertNotNil(mockTransport)
+  }
 
-    func testMockMTPLinkSendable() {
-        // Test that MockMTPLink conforms to Sendable
-        let summary = MTPDeviceSummary(
-            id: MTPDeviceID(raw: "1234:5678@1:1"),
-            manufacturer: "Test",
-            model: "TestModel",
-            vendorID: 0x1234,
-            productID: 0x5678,
-            bus: 1,
-            address: 1,
-            usbSerial: nil
-        )
+  func testMockMTPLinkSendable() {
+    // Test that MockMTPLink conforms to Sendable
+    let summary = MTPDeviceSummary(
+      id: MTPDeviceID(raw: "1234:5678@1:1"),
+      manufacturer: "Test",
+      model: "TestModel",
+      vendorID: 0x1234,
+      productID: 0x5678,
+      bus: 1,
+      address: 1,
+      usbSerial: nil
+    )
 
-        let mockTransport = MockTransport(deviceData: MockDeviceData(
-            deviceSummary: summary,
-            deviceInfo: MTPDeviceInfo(
-                manufacturer: summary.manufacturer,
-                model: summary.model,
-                version: "1.0",
-                serialNumber: summary.usbSerial,
-                operationsSupported: [],
-                eventsSupported: []
-            ),
-            storages: [],
-            objects: [],
-            operationsSupported: [],
-            eventsSupported: []
-        ))
+    let mockTransport = MockTransport(
+      deviceData: MockDeviceData(
+        deviceSummary: summary,
+        deviceInfo: MTPDeviceInfo(
+          manufacturer: summary.manufacturer,
+          model: summary.model,
+          version: "1.0",
+          serialNumber: summary.usbSerial,
+          operationsSupported: [],
+          eventsSupported: []
+        ),
+        storages: [],
+        objects: [],
+        operationsSupported: [],
+        eventsSupported: []
+      ))
 
-        let mockLink = MockMTPLink(deviceData: MockDeviceData(
-            deviceSummary: summary,
-            deviceInfo: MTPDeviceInfo(
-                manufacturer: summary.manufacturer,
-                model: summary.model,
-                version: "1.0",
-                serialNumber: summary.usbSerial,
-                operationsSupported: [],
-                eventsSupported: []
-            ),
-            storages: [],
-            objects: [],
-            operationsSupported: [],
-            eventsSupported: []
-        ), transport: mockTransport)
+    let mockLink = MockMTPLink(
+      deviceData: MockDeviceData(
+        deviceSummary: summary,
+        deviceInfo: MTPDeviceInfo(
+          manufacturer: summary.manufacturer,
+          model: summary.model,
+          version: "1.0",
+          serialNumber: summary.usbSerial,
+          operationsSupported: [],
+          eventsSupported: []
+        ),
+        storages: [],
+        objects: [],
+        operationsSupported: [],
+        eventsSupported: []
+      ), transport: mockTransport)
 
-        XCTAssertNotNil(mockLink)
-    }
+    XCTAssertNotNil(mockLink)
+  }
 
-    // MARK: - Async/Await Tests
+  // MARK: - Async/Await Tests
 
-    func testAsyncDeviceOpen() async throws {
-        let summary = MTPDeviceSummary(
-            id: MTPDeviceID(raw: "1234:5678@1:1"),
-            manufacturer: "Test",
-            model: "TestModel",
-            vendorID: 0x1234,
-            productID: 0x5678,
-            bus: 1,
-            address: 1,
-            usbSerial: nil
-        )
+  func testAsyncDeviceOpen() async throws {
+    let summary = MTPDeviceSummary(
+      id: MTPDeviceID(raw: "1234:5678@1:1"),
+      manufacturer: "Test",
+      model: "TestModel",
+      vendorID: 0x1234,
+      productID: 0x5678,
+      bus: 1,
+      address: 1,
+      usbSerial: nil
+    )
 
-        let mockTransport = MockTransport(deviceData: MockDeviceData(
-            deviceSummary: summary,
-            deviceInfo: MTPDeviceInfo(
-                manufacturer: summary.manufacturer,
-                model: summary.model,
-                version: "1.0",
-                serialNumber: summary.usbSerial,
-                operationsSupported: [],
-                eventsSupported: []
-            ),
-            storages: [],
-            objects: [],
-            operationsSupported: [],
-            eventsSupported: []
-        ))
+    let mockTransport = MockTransport(
+      deviceData: MockDeviceData(
+        deviceSummary: summary,
+        deviceInfo: MTPDeviceInfo(
+          manufacturer: summary.manufacturer,
+          model: summary.model,
+          version: "1.0",
+          serialNumber: summary.usbSerial,
+          operationsSupported: [],
+          eventsSupported: []
+        ),
+        storages: [],
+        objects: [],
+        operationsSupported: [],
+        eventsSupported: []
+      ))
 
-        // Test async open operation
-        let link = try await mockTransport.open(summary, config: SwiftMTPConfig())
-        XCTAssertNotNil(link)
-    }
+    // Test async open operation
+    let link = try await mockTransport.open(summary, config: SwiftMTPConfig())
+    XCTAssertNotNil(link)
+  }
 
-    func testAsyncCloseOperation() async throws {
-        let summary = MTPDeviceSummary(
-            id: MTPDeviceID(raw: "1234:5678@1:1"),
-            manufacturer: "Test",
-            model: "TestModel",
-            vendorID: 0x1234,
-            productID: 0x5678,
-            bus: 1,
-            address: 1,
-            usbSerial: nil
-        )
+  func testAsyncCloseOperation() async throws {
+    let summary = MTPDeviceSummary(
+      id: MTPDeviceID(raw: "1234:5678@1:1"),
+      manufacturer: "Test",
+      model: "TestModel",
+      vendorID: 0x1234,
+      productID: 0x5678,
+      bus: 1,
+      address: 1,
+      usbSerial: nil
+    )
 
-        let mockTransport = MockTransport(deviceData: MockDeviceData(
-            deviceSummary: summary,
-            deviceInfo: MTPDeviceInfo(
-                manufacturer: summary.manufacturer,
-                model: summary.model,
-                version: "1.0",
-                serialNumber: summary.usbSerial,
-                operationsSupported: [],
-                eventsSupported: []
-            ),
-            storages: [],
-            objects: [],
-            operationsSupported: [],
-            eventsSupported: []
-        ))
+    let mockTransport = MockTransport(
+      deviceData: MockDeviceData(
+        deviceSummary: summary,
+        deviceInfo: MTPDeviceInfo(
+          manufacturer: summary.manufacturer,
+          model: summary.model,
+          version: "1.0",
+          serialNumber: summary.usbSerial,
+          operationsSupported: [],
+          eventsSupported: []
+        ),
+        storages: [],
+        objects: [],
+        operationsSupported: [],
+        eventsSupported: []
+      ))
 
-        try await mockTransport.close()
-    }
+    try await mockTransport.close()
+  }
 
-    // MARK: - Concurrent Transfer Tests
+  // MARK: - Concurrent Transfer Tests
 
-    func testConcurrentDataBufferAccess() async {
-        // Test concurrent production of chunks and serialized buffer writes
-        var producedChunks: [Data] = []
-        await withTaskGroup(of: Data.self) { group in
-            for i in 0..<10 {
-                group.addTask {
-                    Data([UInt8(i)])
-                }
-            }
-
-            for await chunk in group {
-                producedChunks.append(chunk)
-            }
+  func testConcurrentDataBufferAccess() async {
+    // Test concurrent production of chunks and serialized buffer writes
+    var producedChunks: [Data] = []
+    await withTaskGroup(of: Data.self) { group in
+      for i in 0..<10 {
+        group.addTask {
+          Data([UInt8(i)])
         }
+      }
 
-        var buffer = DataBuffer(capacity: 1024)
-        for chunk in producedChunks {
-            buffer.write(chunk)
-        }
-
-        XCTAssertGreaterThanOrEqual(buffer.availableBytes, 0)
+      for await chunk in group {
+        producedChunks.append(chunk)
+      }
     }
 
-    // MARK: - Actor Isolation Tests
-
-    func testLibUSBTransportActorIsolation() {
-        // Test that LibUSBTransport is properly isolated
-        let transport = LibUSBTransport()
-        XCTAssertNotNil(transport)
+    var buffer = DataBuffer(capacity: 1024)
+    for chunk in producedChunks {
+      buffer.write(chunk)
     }
 
-    // MARK: - Task Cancellation Tests
+    XCTAssertGreaterThanOrEqual(buffer.availableBytes, 0)
+  }
 
-    func testCancellationDuringOperation() async {
-        let task = Task {
-            try? await Task.sleep(nanoseconds: 10_000_000_000) // 10 seconds
-        }
+  // MARK: - Actor Isolation Tests
 
-        // Cancel immediately
-        task.cancel()
+  func testLibUSBTransportActorIsolation() {
+    // Test that LibUSBTransport is properly isolated
+    let transport = LibUSBTransport()
+    XCTAssertNotNil(transport)
+  }
 
-        // Task should be cancelled
-        XCTAssertTrue(task.isCancelled)
+  // MARK: - Task Cancellation Tests
+
+  func testCancellationDuringOperation() async {
+    let task = Task {
+      try? await Task.sleep(nanoseconds: 10_000_000_000)  // 10 seconds
     }
 
-    // MARK: - Timeout Handling Tests
+    // Cancel immediately
+    task.cancel()
 
-    func testTimeoutConfiguration() {
-        // Test various timeout configurations
-        let shortTimeout: Int = 1000
-        let mediumTimeout: Int = 5000
-        let longTimeout: Int = 30000
+    // Task should be cancelled
+    XCTAssertTrue(task.isCancelled)
+  }
 
-        XCTAssertLessThan(shortTimeout, mediumTimeout)
-        XCTAssertLessThan(mediumTimeout, longTimeout)
-    }
+  // MARK: - Timeout Handling Tests
 
-    // MARK: - Parallel Test Execution
+  func testTimeoutConfiguration() {
+    // Test various timeout configurations
+    let shortTimeout: Int = 1000
+    let mediumTimeout: Int = 5000
+    let longTimeout: Int = 30000
 
-    func testParallelDeviceOperations() {
-        // This test runs in parallel with other tests
-        XCTAssertTrue(true)
-    }
+    XCTAssertLessThan(shortTimeout, mediumTimeout)
+    XCTAssertLessThan(mediumTimeout, longTimeout)
+  }
 
-    // MARK: - Sendable Conformance Tests
+  // MARK: - Parallel Test Execution
 
-    func testVirtualDeviceConfigSendable() {
-        // Test that VirtualDeviceConfig is Sendable
-        let config = VirtualDeviceConfig.pixel7
-        XCTAssertNotNil(config)
-    }
+  func testParallelDeviceOperations() {
+    // This test runs in parallel with other tests
+    XCTAssertTrue(true)
+  }
 
-    func testVirtualStorageConfigSendable() {
-        // Test that VirtualStorageConfig is Sendable
-        let storage = VirtualStorageConfig(
-            id: MTPStorageID(raw: 1),
-            description: "Test Storage"
-        )
-        XCTAssertNotNil(storage)
-    }
+  // MARK: - Sendable Conformance Tests
 
-    func testVirtualObjectConfigSendable() {
-        // Test that VirtualObjectConfig is Sendable
-        let object = VirtualObjectConfig(
-            handle: 0x0001_0001,
-            storage: MTPStorageID(raw: 1),
-            name: "test.txt"
-        )
-        XCTAssertNotNil(object)
-    }
+  func testVirtualDeviceConfigSendable() {
+    // Test that VirtualDeviceConfig is Sendable
+    let config = VirtualDeviceConfig.pixel7
+    XCTAssertNotNil(config)
+  }
+
+  func testVirtualStorageConfigSendable() {
+    // Test that VirtualStorageConfig is Sendable
+    let storage = VirtualStorageConfig(
+      id: MTPStorageID(raw: 1),
+      description: "Test Storage"
+    )
+    XCTAssertNotNil(storage)
+  }
+
+  func testVirtualObjectConfigSendable() {
+    // Test that VirtualObjectConfig is Sendable
+    let object = VirtualObjectConfig(
+      handle: 0x0001_0001,
+      storage: MTPStorageID(raw: 1),
+      name: "test.txt"
+    )
+    XCTAssertNotNil(object)
+  }
 }

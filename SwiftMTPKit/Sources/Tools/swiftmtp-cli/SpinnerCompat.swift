@@ -9,9 +9,9 @@ public struct CLISpinner {
   public init(_ message: String = "", enabled: Bool = true) {
     // Disable spinner if stdout is not a TTY (e.g., when output is piped or redirected)
     #if canImport(Darwin)
-    let isStdoutTTY = isatty(STDOUT_FILENO) == 1
+      let isStdoutTTY = isatty(STDOUT_FILENO) == 1
     #else
-    let isStdoutTTY = true
+      let isStdoutTTY = true
     #endif
     self.enabled = enabled && isStdoutTTY
     self.message = message
@@ -31,11 +31,20 @@ public struct CLISpinner {
 
   public mutating func start(_ msg: String? = nil) {
     guard enabled else { return }
-    if let m = msg { message = m; Self.printStart(m) }
+    if let m = msg {
+      message = m
+      Self.printStart(m)
+    }
   }
-  public func succeed(_ msg: String? = nil) { guard enabled else { return }; Self.printDone(msg ?? message, ok: true) }
-  public func fail(_ msg: String? = nil)    { guard enabled else { return }; Self.printDone(msg ?? message, ok: false) }
-  public func stopAndClear()                 { /* no-op for simple TTY spinner; left for API compat */ }
+  public func succeed(_ msg: String? = nil) {
+    guard enabled else { return }
+    Self.printDone(msg ?? message, ok: true)
+  }
+  public func fail(_ msg: String? = nil) {
+    guard enabled else { return }
+    Self.printDone(msg ?? message, ok: false)
+  }
+  public func stopAndClear() { /* no-op for simple TTY spinner; left for API compat */  }
 
   // --- tiny TTY helpers (stdout is fine for progress; JSON is suppressed via enabled=false) ---
   private static func printStart(_ s: String) { fputs("⏳ \(s)\n", stderr) }

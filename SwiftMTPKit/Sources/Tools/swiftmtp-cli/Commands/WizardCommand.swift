@@ -30,7 +30,8 @@ struct WizardCommand {
 
     var timeoutSec = 60
     if let idx = args.firstIndex(of: "--timeout"), idx + 1 < args.count,
-       let t = Int(args[idx + 1]) {
+      let t = Int(args[idx + 1])
+    {
       timeoutSec = t
     }
 
@@ -92,8 +93,10 @@ struct WizardCommand {
     print("Step 2: Checking device database...")
     do {
       let qdb = try QuirkDatabase.load()
-      if let match = qdb.match(vid: selected.vendorID ?? 0, pid: selected.productID ?? 0,
-                                bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil) {
+      if let match = qdb.match(
+        vid: selected.vendorID ?? 0, pid: selected.productID ?? 0,
+        bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+      {
         print("   Known device: \(match.id) (status: \(match.status ?? "unknown"))")
       } else {
         print("   New device! Not in the quirks database yet.")
@@ -126,7 +129,7 @@ struct WizardCommand {
     print("Step 4: Collecting device evidence...")
     let collectFlags = CollectCommand.CollectFlags(
       strict: true,
-      safe: flags.safe || true, // wizard always uses safe mode
+      safe: flags.safe || true,  // wizard always uses safe mode
       runBench: [],
       json: false,
       noninteractive: true,

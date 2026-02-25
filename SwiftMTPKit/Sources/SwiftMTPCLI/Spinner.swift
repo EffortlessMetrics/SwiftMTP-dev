@@ -24,7 +24,7 @@ public final class Spinner: Sendable {
 
 private actor SpinnerDriver {
   private var task: Task<Void, Never>?
-  private let frames = ["⠋","⠙","⠹","⠸","⠼","⠴","⠦","⠧","⠇","⠏"]
+  private let frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
 
   func start(label: String) {
     stopInternal()

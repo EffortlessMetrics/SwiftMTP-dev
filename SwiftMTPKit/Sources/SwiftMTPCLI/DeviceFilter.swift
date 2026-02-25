@@ -50,27 +50,27 @@ public struct DeviceFilterParse {
     while i < args.count {
       switch args[i] {
       case "--vid":
-        if i + 1 < args.count, let v = parseUSBIdentifier(args[i+1]) {
+        if i + 1 < args.count, let v = parseUSBIdentifier(args[i + 1]) {
           vid = v
-          args.removeSubrange(i...i+1)
+          args.removeSubrange(i...i + 1)
           continue
         }
       case "--pid":
-        if i + 1 < args.count, let v = parseUSBIdentifier(args[i+1]) {
+        if i + 1 < args.count, let v = parseUSBIdentifier(args[i + 1]) {
           pid = v
-          args.removeSubrange(i...i+1)
+          args.removeSubrange(i...i + 1)
           continue
         }
       case "--bus":
-        if i + 1 < args.count, let v = parseInt(args[i+1]) {
+        if i + 1 < args.count, let v = parseInt(args[i + 1]) {
           bus = v
-          args.removeSubrange(i...i+1)
+          args.removeSubrange(i...i + 1)
           continue
         }
       case "--address":
-        if i + 1 < args.count, let v = parseInt(args[i+1]) {
+        if i + 1 < args.count, let v = parseInt(args[i + 1]) {
           address = v
-          args.removeSubrange(i...i+1)
+          args.removeSubrange(i...i + 1)
           continue
         }
       default:

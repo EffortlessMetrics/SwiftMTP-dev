@@ -66,12 +66,19 @@ struct USBDumper {
 
   func collect() throws -> DumpReport {
     var ctx: OpaquePointer?
-    guard libusb_init(&ctx) == 0, let ctx else { throw NSError(domain: "USBDumper", code: 1, userInfo: [NSLocalizedDescriptionKey: "libusb_init failed"]) }
+    guard libusb_init(&ctx) == 0, let ctx else {
+      throw NSError(
+        domain: "USBDumper", code: 1, userInfo: [NSLocalizedDescriptionKey: "libusb_init failed"])
+    }
     defer { libusb_exit(ctx) }
 
     var list: UnsafeMutablePointer<OpaquePointer?>?
     let cnt = libusb_get_device_list(ctx, &list)
-    guard cnt >= 0 else { throw NSError(domain: "USBDumper", code: 2, userInfo: [NSLocalizedDescriptionKey: "libusb_get_device_list failed"]) }
+    guard cnt >= 0 else {
+      throw NSError(
+        domain: "USBDumper", code: 2,
+        userInfo: [NSLocalizedDescriptionKey: "libusb_get_device_list failed"])
+    }
     guard cnt > 0, let list else {
       return DumpReport(schemaVersion: "1.0.0", generatedAt: Date(), devices: [])
     }
@@ -157,44 +164,47 @@ struct USBDumper {
 
   /// Sanitize text output to remove privacy-sensitive information
   static func sanitizeTextFile(_ url: URL) throws {
-      var text = String(decoding: try Data(contentsOf: url), as: UTF8.self)
+    var text = String(decoding: try Data(contentsOf: url), as: UTF8.self)
 
-      // Define comprehensive patterns to redact for privacy protection
-      let patterns: [(String, String)] = [
-          // Serial numbers in various formats
-          (#"(?im)^(\s*Serial Number:\s*)(\S+)$"#, "$1<redacted>"),
-          (#"(?im)^(\s*iSerial\s+)(\S+)$"#, "$1<redacted>"),
-          (#"(?im)^(\s*Serial:\s*)(\S+)$"#, "$1<redacted>"),
+    // Define comprehensive patterns to redact for privacy protection
+    let patterns: [(String, String)] = [
+      // Serial numbers in various formats
+      (#"(?im)^(\s*Serial Number:\s*)(\S+)$"#, "$1<redacted>"),
+      (#"(?im)^(\s*iSerial\s+)(\S+)$"#, "$1<redacted>"),
+      (#"(?im)^(\s*Serial:\s*)(\S+)$"#, "$1<redacted>"),
 
-          // Device-friendly names that may contain personal info
-          (#"(?im)^(\s*(Product|Manufacturer|Device Name|Model|Friendly Name):\s+)(.+)$"#, "$1<redacted>"),
+      // Device-friendly names that may contain personal info
+      (
+        #"(?im)^(\s*(Product|Manufacturer|Device Name|Model|Friendly Name):\s+)(.+)$"#,
+        "$1<redacted>"
+      ),
 
-          // Absolute user paths - comprehensive coverage
-          (#"/Users/[^/\s]+"#, "/Users/<redacted>"),
-          (#"(?i)C:\\Users\\[^\\[:space:]]+"#, "C:\\Users\\<redacted>"),
-          (#"(?i)/home/[^/[:space:]]+"#, "/home/<redacted>"),
+      // Absolute user paths - comprehensive coverage
+      (#"/Users/[^/\s]+"#, "/Users/<redacted>"),
+      (#"(?i)C:\\Users\\[^\\[:space:]]+"#, "C:\\Users\\<redacted>"),
+      (#"(?i)/home/[^/[:space:]]+"#, "/home/<redacted>"),
 
-          // Additional privacy-sensitive patterns
-          (#"(?i)\b(Hostname|Computer Name|Machine Name):\s+(.+)$"#, "$1: <redacted>"),
-          (#"(?i)\b(User Name|Owner|Author):\s+(.+)$"#, "$1: <redacted>"),
+      // Additional privacy-sensitive patterns
+      (#"(?i)\b(Hostname|Computer Name|Machine Name):\s+(.+)$"#, "$1: <redacted>"),
+      (#"(?i)\b(User Name|Owner|Author):\s+(.+)$"#, "$1: <redacted>"),
 
-          // Network-related identifiers that might leak personal info
-          (#"(?i)\b(MAC Address|Ethernet ID|WiFi Address):\s+([0-9A-Fa-f:-]+)"#, "$1: <redacted>"),
+      // Network-related identifiers that might leak personal info
+      (#"(?i)\b(MAC Address|Ethernet ID|WiFi Address):\s+([0-9A-Fa-f:-]+)"#, "$1: <redacted>"),
 
-          // UUIDs that might be device-specific
-          (#"(?i)\b(UUID|GUID):\s+([0-9A-Fa-f-]+)"#, "$1: <redacted>")
-      ]
+      // UUIDs that might be device-specific
+      (#"(?i)\b(UUID|GUID):\s+([0-9A-Fa-f-]+)"#, "$1: <redacted>"),
+    ]
 
-      // Apply all patterns
-      for (pattern, replacement) in patterns {
-          text = text.replacingOccurrences(
-              of: pattern,
-              with: replacement,
-              options: .regularExpression
-          )
-      }
+    // Apply all patterns
+    for (pattern, replacement) in patterns {
+      text = text.replacingOccurrences(
+        of: pattern,
+        with: replacement,
+        options: .regularExpression
+      )
+    }
 
-      try text.data(using: .utf8)!.write(to: url)
+    try text.data(using: .utf8)!.write(to: url)
   }
 
   func run() async throws {
@@ -212,16 +222,20 @@ struct USBDumper {
         var evtIn = "0x00"
         for endpoint in iface.endpoints {
           if endpoint.transferType == "bulk" {
-            if endpoint.direction == "in" { bulkIn = endpoint.address } else { bulkOut = endpoint.address }
+            if endpoint.direction == "in" {
+              bulkIn = endpoint.address
+            } else {
+              bulkOut = endpoint.address
+            }
           } else if endpoint.transferType == "interrupt", endpoint.direction == "in" {
             evtIn = endpoint.address
           }
         }
 
         print(
-          "  iface=\(iface.number) alt=\(iface.altSetting) class=\(iface.interfaceClass) " +
-          "sub=\(iface.interfaceSubclass) proto=\(iface.interfaceProtocol) " +
-          "in=\(bulkIn) out=\(bulkOut) evt=\(evtIn) name=\"\(iface.name)\""
+          "  iface=\(iface.number) alt=\(iface.altSetting) class=\(iface.interfaceClass) "
+            + "sub=\(iface.interfaceSubclass) proto=\(iface.interfaceProtocol) "
+            + "in=\(bulkIn) out=\(bulkOut) evt=\(evtIn) name=\"\(iface.name)\""
         )
       }
     }

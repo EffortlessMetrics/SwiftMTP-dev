@@ -377,8 +377,9 @@ public actor LibUSBTransport: MTPTransport {
           let settleMs = UInt32(min(250 + (reopenAttempt - 1) * 250, 1500))
           usleep(settleMs * 1000)
 
-          guard let reopenedDevice = Self.findDeviceByBusAndPort(
-            ctx: ctx, bus: preBus, portPath: portPath, portDepth: portDepth)
+          guard
+            let reopenedDevice = Self.findDeviceByBusAndPort(
+              ctx: ctx, bus: preBus, portPath: portPath, portDepth: portDepth)
           else {
             if debug {
               print(
@@ -390,7 +391,8 @@ public actor LibUSBTransport: MTPTransport {
           dev = reopenedDevice
 
           var reopenedHandlePtr: OpaquePointer?
-          guard libusb_open(dev, &reopenedHandlePtr) == 0, let reopenedHandle = reopenedHandlePtr else {
+          guard libusb_open(dev, &reopenedHandlePtr) == 0, let reopenedHandle = reopenedHandlePtr
+          else {
             if debug {
               print("   [Open] No-reset reopen attempt \(reopenAttempt) could not open device")
             }
@@ -438,64 +440,65 @@ public actor LibUSBTransport: MTPTransport {
 
       if !skipResetFallback {
 
-      // Capture bus + port path before reset (address may change, bus+port won't)
-      let preBus = libusb_get_bus_number(dev)
-      var portPath = [UInt8](repeating: 0, count: 7)
-      let portDepth = libusb_get_port_numbers(dev, &portPath, Int32(portPath.count))
+        // Capture bus + port path before reset (address may change, bus+port won't)
+        let preBus = libusb_get_bus_number(dev)
+        var portPath = [UInt8](repeating: 0, count: 7)
+        let portDepth = libusb_get_port_numbers(dev, &portPath, Int32(portPath.count))
 
-      let resetRC = libusb_reset_device(handle)
-      if debug { print("   [Open] libusb_reset_device rc=\(resetRC)") }
+        let resetRC = libusb_reset_device(handle)
+        if debug { print("   [Open] libusb_reset_device rc=\(resetRC)") }
 
-      let deviceReenumerated = (resetRC == Int32(LIBUSB_ERROR_NOT_FOUND.rawValue))
+        let deviceReenumerated = (resetRC == Int32(LIBUSB_ERROR_NOT_FOUND.rawValue))
 
-      if resetRC == 0 || deviceReenumerated {
-        // Always teardown and reopen a fresh handle after reset.
-        if debug {
-          let kind = deviceReenumerated ? "re-enumerated" : "same address"
-          print("   [Open] Reset succeeded (\(kind)); reopening fresh handle...")
-        }
-        libusb_close(handle)
-        libusb_unref_device(dev)
-        usleep(350_000)
-
-        guard let nd = Self.findDeviceByBusAndPort(
-          ctx: ctx, bus: preBus, portPath: portPath, portDepth: portDepth)
-        else {
-          if debug { print("   [Open] Could not re-find device after reset") }
-          throw TransportError.noDevice
-        }
-        dev = nd
-
-        var nh: OpaquePointer?
-        guard libusb_open(dev, &nh) == 0, let newHandle = nh else {
+        if resetRC == 0 || deviceReenumerated {
+          // Always teardown and reopen a fresh handle after reset.
+          if debug {
+            let kind = deviceReenumerated ? "re-enumerated" : "same address"
+            print("   [Open] Reset succeeded (\(kind)); reopening fresh handle...")
+          }
+          libusb_close(handle)
           libusb_unref_device(dev)
-          throw TransportError.accessDenied
+          usleep(350_000)
+
+          guard
+            let nd = Self.findDeviceByBusAndPort(
+              ctx: ctx, bus: preBus, portPath: portPath, portDepth: portDepth)
+          else {
+            if debug { print("   [Open] Could not re-find device after reset") }
+            throw TransportError.noDevice
+          }
+          dev = nd
+
+          var nh: OpaquePointer?
+          guard libusb_open(dev, &nh) == 0, let newHandle = nh else {
+            libusb_unref_device(dev)
+            throw TransportError.accessDenied
+          }
+          handle = newHandle
+
+          // Re-rank candidates with new handle.
+          candidates = try rankMTPInterfaces(handle: handle, device: dev)
+          if debug { print("   [Open] Reopened handle, \(candidates.count) candidate(s)") }
+
+          // Poll GetDeviceStatus until MTP stack recovers (budget from stabilizeMs)
+          let budget = max(config.stabilizeMs, 3000)
+          let ifaceNum = candidates.first.map { UInt16($0.ifaceNumber) } ?? 0
+          let ready = waitForMTPReady(handle: handle, iface: ifaceNum, budgetMs: budget)
+          if debug { print("   [Open] waitForMTPReady → \(ready)") }
+
+          // Re-set configuration to reinitialize pipes after reset
+          setConfigurationIfNeeded(handle: handle, device: dev, force: true, debug: debug)
+
+          result = tryProbeAllCandidates(
+            handle: handle, device: dev, candidates: candidates,
+            handshakeTimeoutMs: config.handshakeTimeoutMs,
+            postClaimStabilizeMs: config.postClaimStabilizeMs,
+            postProbeStabilizeMs: config.postProbeStabilizeMs,
+            debug: debug
+          )
+        } else if debug {
+          print("   [Open] USB reset failed (rc=\(resetRC)), skipping pass 2")
         }
-        handle = newHandle
-
-        // Re-rank candidates with new handle.
-        candidates = try rankMTPInterfaces(handle: handle, device: dev)
-        if debug { print("   [Open] Reopened handle, \(candidates.count) candidate(s)") }
-
-        // Poll GetDeviceStatus until MTP stack recovers (budget from stabilizeMs)
-        let budget = max(config.stabilizeMs, 3000)
-        let ifaceNum = candidates.first.map { UInt16($0.ifaceNumber) } ?? 0
-        let ready = waitForMTPReady(handle: handle, iface: ifaceNum, budgetMs: budget)
-        if debug { print("   [Open] waitForMTPReady → \(ready)") }
-
-        // Re-set configuration to reinitialize pipes after reset
-        setConfigurationIfNeeded(handle: handle, device: dev, force: true, debug: debug)
-
-        result = tryProbeAllCandidates(
-          handle: handle, device: dev, candidates: candidates,
-          handshakeTimeoutMs: config.handshakeTimeoutMs,
-          postClaimStabilizeMs: config.postClaimStabilizeMs,
-          postProbeStabilizeMs: config.postProbeStabilizeMs,
-          debug: debug
-        )
-      } else if debug {
-        print("   [Open] USB reset failed (rc=\(resetRC)), skipping pass 2")
-      }
       }
     }
 
@@ -691,7 +694,8 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let setAltRC = libusb_set_interface_alt_setting(h, Int32(iface), 0)
     let clearOutRC = libusb_clear_halt(h, outEP)
     let clearInRC = libusb_clear_halt(h, inEP)
-    let clearEventRC: Int32 = evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+    let clearEventRC: Int32 =
+      evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
     let skipClassReset = skipPixelClassResetControlTransfer
     let classResetRC: Int32 =
       skipClassReset
@@ -1088,7 +1092,8 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     }
     if debug {
       let paramsText =
-        params.isEmpty ? "[]" : "[" + params.map { String(format: "0x%08x", $0) }.joined(separator: ",") + "]"
+        params.isEmpty
+        ? "[]" : "[" + params.map { String(format: "0x%08x", $0) }.joined(separator: ",") + "]"
       print(
         String(
           format: "   [USB] op=0x%04x tx=%u response=0x%04x params=%@",
@@ -1243,7 +1248,8 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   {
     let clearOutRC = libusb_clear_halt(h, outEP)
     let clearInRC = libusb_clear_halt(h, inEP)
-    let clearEventRC: Int32 = evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+    let clearEventRC: Int32 =
+      evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
     let skipClassReset = skipPixelClassResetControlTransfer
     let classResetRC: Int32 =
       skipClassReset
@@ -1304,7 +1310,8 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let setAltRC = libusb_set_interface_alt_setting(h, Int32(iface), 0)
     let clearOutRC = libusb_clear_halt(h, outEP)
     let clearInRC = libusb_clear_halt(h, inEP)
-    let clearEventRC: Int32 = evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+    let clearEventRC: Int32 =
+      evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
 
     usleep(200_000)
 
@@ -1349,12 +1356,13 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     let resetRC = libusb_reset_device(oldHandle)
     let releaseRC = libusb_release_interface(oldHandle, Int32(iface))
 
-    guard let reopenedDevice = findRecoveryDevice(
-      bus: oldBus,
-      address: oldAddress,
-      portPath: oldPortPath,
-      portDepth: oldPortDepth
-    ),
+    guard
+      let reopenedDevice = findRecoveryDevice(
+        bus: oldBus,
+        address: oldAddress,
+        portPath: oldPortPath,
+        portDepth: oldPortDepth
+      ),
       let reopenedHandle = openAndClaimRecoveryHandle(device: reopenedDevice, debug: debug)
     else {
       let reclaimRC = libusb_claim_interface(oldHandle, Int32(iface))

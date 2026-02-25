@@ -101,15 +101,21 @@ final class DeviceLabToolingTests: XCTestCase {
 
   func testLooksLikeRetryableWriteFailure() {
     XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("protocolError(code=0x201D)"))
-    XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("protocolError(code=0x2008) InvalidStorageID"))
-    XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("ParameterNotSupported from SendObjectInfo"))
-    XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("transport(SwiftMTPCore.TransportError.timeout)"))
+    XCTAssertTrue(
+      DeviceLabCommand.looksLikeRetryableWriteFailure("protocolError(code=0x2008) InvalidStorageID")
+    )
+    XCTAssertTrue(
+      DeviceLabCommand.looksLikeRetryableWriteFailure("ParameterNotSupported from SendObjectInfo"))
+    XCTAssertTrue(
+      DeviceLabCommand.looksLikeRetryableWriteFailure(
+        "transport(SwiftMTPCore.TransportError.timeout)"))
     XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("device busy"))
     XCTAssertFalse(DeviceLabCommand.looksLikeRetryableWriteFailure("permission denied"))
   }
 
   func testUSBDumpReportJSONShape() throws {
-    let report = USBDumper.DumpReport(schemaVersion: "1.0.0", generatedAt: Date(timeIntervalSince1970: 0), devices: [])
+    let report = USBDumper.DumpReport(
+      schemaVersion: "1.0.0", generatedAt: Date(timeIntervalSince1970: 0), devices: [])
     let encoder = JSONEncoder()
     encoder.dateEncodingStrategy = .iso8601
 

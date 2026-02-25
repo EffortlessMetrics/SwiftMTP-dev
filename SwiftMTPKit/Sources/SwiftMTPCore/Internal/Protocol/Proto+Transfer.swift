@@ -110,7 +110,8 @@ public enum ProtoTransfer {
     let commandParentParam = useRootCommandParentHandle ? UInt32(0xFFFFFFFF) : parentParam
     guard storageID != 0 && storageID != 0xFFFFFFFF else {
       throw MTPError.preconditionFailed(
-        "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID))).")
+        "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID)))."
+      )
     }
     let targetStorage = storageID
     let formatCode = objectFormatCode(for: name, useUndefinedObjectFormat: useUndefinedObjectFormat)
@@ -186,7 +187,8 @@ public enum ProtoTransfer {
     let parentParam = parent ?? 0xFFFFFFFF
     guard storageID != 0 && storageID != 0xFFFFFFFF else {
       throw MTPError.preconditionFailed(
-        "SendObjectPropList requires a concrete storage ID (got \(String(format: "0x%08x", storageID))).")
+        "SendObjectPropList requires a concrete storage ID (got \(String(format: "0x%08x", storageID)))."
+      )
     }
     let formatCode = objectFormatCode(for: name, useUndefinedObjectFormat: useUndefinedObjectFormat)
     let propListParentHandle = zeroObjectInfoParentHandle ? UInt32(0) : parentParam
@@ -275,7 +277,8 @@ extension ProtoTransfer {
   ) async throws -> MTPObjectHandle {
     guard storageID != 0 && storageID != 0xFFFFFFFF else {
       throw MTPError.preconditionFailed(
-        "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID))).")
+        "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID)))."
+      )
     }
 
     // Build ObjectInfoDataset for an Association (folder)

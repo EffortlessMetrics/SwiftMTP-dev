@@ -8,12 +8,12 @@ public struct CLIErrorEnvelope: Codable, Sendable {
   public let type: String
   public let error: String
   public let timestamp: String
-  public let details: [String:String]?
+  public let details: [String: String]?
   public let mode: String?
 
   public init(
     _ error: String,
-    details: [String:String]? = nil,
+    details: [String: String]? = nil,
     mode: String? = nil,
     timestamp: String? = nil
   ) {
@@ -47,7 +47,7 @@ public func printJSON<T: Encodable>(_ value: T) {
 public func printJSONErrorAndExit(
   _ message: String,
   code: ExitCode = .software,
-  details: [String:String]? = nil,
+  details: [String: String]? = nil,
   mode: String? = nil
 ) -> Never {
   printJSON(CLIErrorEnvelope(message, details: details, mode: mode))

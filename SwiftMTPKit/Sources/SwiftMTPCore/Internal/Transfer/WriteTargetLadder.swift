@@ -30,7 +30,8 @@ public struct WriteTargetLadder {
     if let preferredWriteFolder, !preferredWriteFolder.isEmpty {
       ordered.append(preferredWriteFolder)
     }
-    for name in fallbackPreferredFolders where !ordered.contains(where: {
+    for name in fallbackPreferredFolders
+    where !ordered.contains(where: {
       $0.caseInsensitiveCompare(name) == .orderedSame
     }) {
       ordered.append(name)
@@ -98,7 +99,8 @@ public struct WriteTargetLadder {
     }
 
     let rootFolders = try await listFolders(device: device, storage: storage, parent: nil)
-    let preferredPaths = preferredFolderPaths(device: device, preferredWriteFolder: preferredWriteFolder)
+    let preferredPaths = preferredFolderPaths(
+      device: device, preferredWriteFolder: preferredWriteFolder)
 
     for preferredPath in preferredPaths {
       if preferredPath.caseInsensitiveCompare("SwiftMTP") == .orderedSame {
@@ -139,7 +141,8 @@ public struct WriteTargetLadder {
     // No folders found - create SwiftMTP at root as fallback
     Logger(subsystem: "SwiftMTP", category: "write")
       .info("No folders found, creating SwiftMTP at root")
-    let swiftMTPFolder = try await device.createFolder(parent: nil, name: "SwiftMTP", storage: storage)
+    let swiftMTPFolder = try await device.createFolder(
+      parent: nil, name: "SwiftMTP", storage: storage)
     return (storage, swiftMTPFolder)
   }
 
@@ -200,20 +203,24 @@ public struct WriteTargetLadder {
     }
 
     var checkedParents = Set<MTPObjectHandle>()
-    for preferredPath in preferredPaths where preferredPath.caseInsensitiveCompare("SwiftMTP") != .orderedSame {
-      guard let resolved = try await resolveFolderPath(
-        device: device,
-        storage: storage,
-        path: preferredPath,
-        rootFolders: rootFolders
-      ) else {
+    for preferredPath in preferredPaths
+    where preferredPath.caseInsensitiveCompare("SwiftMTP") != .orderedSame {
+      guard
+        let resolved = try await resolveFolderPath(
+          device: device,
+          storage: storage,
+          path: preferredPath,
+          rootFolders: rootFolders
+        )
+      else {
         continue
       }
       if !checkedParents.insert(resolved.handle).inserted || excluded.contains(resolved.handle) {
         continue
       }
 
-      let childFolders = try await listFolders(device: device, storage: storage, parent: resolved.handle)
+      let childFolders = try await listFolders(
+        device: device, storage: storage, parent: resolved.handle)
       if let existingChild = childFolders.first(where: {
         $0.name.caseInsensitiveCompare("SwiftMTP") == .orderedSame
       }), !excluded.contains(existingChild.handle) {
@@ -221,7 +228,8 @@ public struct WriteTargetLadder {
       }
 
       do {
-        let created = try await device.createFolder(parent: resolved.handle, name: "SwiftMTP", storage: storage)
+        let created = try await device.createFolder(
+          parent: resolved.handle, name: "SwiftMTP", storage: storage)
         if !excluded.contains(created) { return created }
       } catch {
         continue
