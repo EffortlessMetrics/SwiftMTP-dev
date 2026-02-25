@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import MTPEndianCodec
 import SwiftMTPCore
 
 /// An in-memory ``MTPLink`` implementation backed by a ``VirtualDeviceConfig``.
@@ -123,6 +124,41 @@ public final class VirtualMTPLink: MTPLink, @unchecked Sendable {
         try checkFault(.executeStreamingCommand)
         try await applyLatency(.executeStreamingCommand)
         return PTPResponseResult(code: 0x2001, txid: command.txid)
+    }
+
+    public func getObjectPropValue(handle: MTPObjectHandle, property: UInt16) async throws -> Data {
+        try checkFault(.executeCommand)
+        guard let obj = config.objects.first(where: { $0.handle == handle }) else {
+            throw TransportError.io("Object \(handle) not found")
+        }
+        switch property {
+        case MTPObjectPropCode.objectFileName:
+            return PTPString.encode(obj.name)
+        case MTPObjectPropCode.objectSize:
+            var enc = MTPDataEncoder()
+            enc.append(UInt64(obj.sizeBytes ?? 0))
+            return enc.encodedData
+        case MTPObjectPropCode.storageID:
+            var enc = MTPDataEncoder()
+            enc.append(obj.storage.raw)
+            return enc.encodedData
+        case MTPObjectPropCode.parentObject:
+            var enc = MTPDataEncoder()
+            enc.append(obj.parent ?? 0xFFFFFFFF)
+            return enc.encodedData
+        case MTPObjectPropCode.dateModified, MTPObjectPropCode.dateCreated:
+            return PTPString.encode("20250101T000000")
+        default:
+            throw MTPError.notSupported("Property 0x\(String(property, radix: 16)) not supported by VirtualMTPLink")
+        }
+    }
+
+    public func setObjectPropValue(handle: MTPObjectHandle, property: UInt16, value: Data) async throws {
+        try checkFault(.executeCommand)
+        guard config.objects.contains(where: { $0.handle == handle }) else {
+            throw TransportError.io("Object \(handle) not found")
+        }
+        // VirtualMTPLink accepts all set-prop operations without persisting them
     }
 
     // MARK: - Private

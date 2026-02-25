@@ -69,6 +69,16 @@ struct StorybookCommand {
                         print("   🔔 EVENT: Object removed! (Handle: \(handle))")
                     case .storageInfoChanged(let storageID):
                         print("   🔔 EVENT: Storage info changed! (ID: \(storageID.raw))")
+                    case .storageAdded(let storageID):
+                        print("   🔔 EVENT: Storage added (ID: \(storageID.raw))")
+                    case .storageRemoved(let storageID):
+                        print("   🔔 EVENT: Storage removed (ID: \(storageID.raw))")
+                    case .objectInfoChanged(let handle):
+                        print("   🔔 EVENT: Object info changed (Handle: \(handle))")
+                    case .deviceInfoChanged:
+                        print("   🔔 EVENT: Device info changed")
+                    case .unknown(let code, let params):
+                        print("   🔔 EVENT: Unknown event code=\(String(format: "0x%04X", code)) params=\(params)")
                     }
                 }
             }

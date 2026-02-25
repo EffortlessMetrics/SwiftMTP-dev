@@ -107,7 +107,7 @@ let package = Package(
 
     .target(
       name: "SwiftMTPTestKit",
-      dependencies: ["SwiftMTPCore", "SwiftMTPQuirks"]),
+      dependencies: ["SwiftMTPCore", "SwiftMTPQuirks", "MTPEndianCodec"]),
 
     .target(
       name: "SwiftMTPXPC",

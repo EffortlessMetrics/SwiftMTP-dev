@@ -3,6 +3,11 @@
 
 import Foundation
 
+// Heap-allocated mutable buffer captured across @Sendable closures.
+private final class _PropValueBuffer: @unchecked Sendable {
+  var data = Data()
+}
+
 public struct PTPResponseResult: Sendable {
     public let code: UInt16
     public let txid: UInt32
@@ -80,12 +85,74 @@ public protocol MTPLink: Sendable {
         dataInHandler: MTPDataIn?,
         dataOutHandler: MTPDataOut?
     ) async throws -> PTPResponseResult
+
+    /// GetObjectPropValue (0x9803): read a single MTP object property.
+    ///
+    /// - Parameters:
+    ///   - handle: Object handle whose property to read.
+    ///   - property: MTP property code (e.g. 0xDC09 = DateModified, 0xDC07 = ObjectFileName).
+    /// - Returns: Raw data phase bytes for the property value.
+    func getObjectPropValue(handle: MTPObjectHandle, property: UInt16) async throws -> Data
+
+    /// SetObjectPropValue (0x9804): write a single MTP object property.
+    ///
+    /// - Parameters:
+    ///   - handle: Object handle to update.
+    ///   - property: MTP property code.
+    ///   - value: Encoded property value bytes (little-endian per MTP spec).
+    func setObjectPropValue(handle: MTPObjectHandle, property: UInt16, value: Data) async throws
 }
 
 /// Default implementations for optional MTPLink properties.
 public extension MTPLink {
   var cachedDeviceInfo: MTPDeviceInfo? { nil }
   var linkDescriptor: MTPLinkDescriptor? { nil }
+
+  /// Default: execute GetObjectPropValue via executeStreamingCommand.
+  func getObjectPropValue(handle: MTPObjectHandle, property: UInt16) async throws -> Data {
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: MTPOp.getObjectPropValue.rawValue,
+      txid: 0,
+      params: [handle, UInt32(property)]
+    )
+    let buf = _PropValueBuffer()
+    let response = try await executeStreamingCommand(
+      command, dataPhaseLength: nil,
+      dataInHandler: { chunk in
+        buf.data.append(contentsOf: chunk)
+        return chunk.count
+      },
+      dataOutHandler: nil
+    )
+    try response.checkOK()
+    return buf.data
+  }
+
+  /// Default: execute SetObjectPropValue via executeStreamingCommand.
+  func setObjectPropValue(handle: MTPObjectHandle, property: UInt16, value: Data) async throws {
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: MTPOp.setObjectPropValue.rawValue,
+      txid: 0,
+      params: [handle, UInt32(property)]
+    )
+    let boxed = BoxedOffset()
+    let response = try await executeStreamingCommand(
+      command, dataPhaseLength: UInt64(value.count),
+      dataInHandler: nil,
+      dataOutHandler: { buf in
+        let off = boxed.get()
+        let remaining = value.count - off
+        guard remaining > 0 else { return 0 }
+        let toCopy = min(buf.count, remaining)
+        value.copyBytes(to: buf, from: off..<off + toCopy)
+        _ = boxed.getAndAdd(toCopy)
+        return toCopy
+      }
+    )
+    try response.checkOK()
+  }
 }
 
 public protocol TransportFactory {

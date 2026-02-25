@@ -183,6 +183,21 @@ func runEventsCommand(args: inout [String], json: Bool, noninteractive: Bool, fi
       case .storageInfoChanged(let storageId):
           code = 0x400C
           params = [storageId.raw]
+      case .storageAdded(let storageId):
+          code = 0x4004
+          params = [storageId.raw]
+      case .storageRemoved(let storageId):
+          code = 0x4005
+          params = [storageId.raw]
+      case .objectInfoChanged(let handle):
+          code = 0x4007
+          params = [handle]
+      case .deviceInfoChanged:
+          code = 0x4008
+          params = []
+      case .unknown(let c, let p):
+          code = UInt16(c)
+          params = p
       }
       
       let e = EventOut(

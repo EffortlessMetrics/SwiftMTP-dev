@@ -53,7 +53,12 @@ final class CoreSupplementalCoverageTests: XCTestCase {
             XCTFail("Expected storageInfoChanged event")
         }
 
-        XCTAssertNil(MTPEvent.fromRaw(makeEventContainer(code: 0x4999, param: 1)))
+        // Unknown codes now return .unknown(code:params:) instead of nil
+        if case .unknown(let code, _)? = MTPEvent.fromRaw(makeEventContainer(code: 0x4999, param: 1)) {
+            XCTAssertEqual(code, 0x4999)
+        } else {
+            XCTFail("Expected .unknown for code 0x4999")
+        }
         XCTAssertNil(MTPEvent.fromRaw(Data([0x01, 0x02])))
         XCTAssertNil(MTPEvent.fromRaw(makeEventContainer(code: 0x4002, param: nil)))
     }
