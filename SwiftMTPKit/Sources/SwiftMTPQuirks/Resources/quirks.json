@@ -58,7 +58,7 @@
         "Back off on DEVICE_BUSY for early storage ops."
       ],
       "provenance": {
-        "author": "Steven Zimmerman",
+        "author": "Steven Zimmerman, CPA",
         "date": "2025-01-09",
         "commit": "<current-commit>"
       },
@@ -113,7 +113,7 @@
         "Prefer direct USB port; keep screen unlocked."
       ],
       "provenance": {
-        "author": "Steven Zimmerman",
+        "author": "Steven Zimmerman, CPA",
         "date": "2025-01-09",
         "commit": "<current-commit>",
         "artifacts": {
@@ -214,7 +214,7 @@
         "Read validation is reliable; write smoke remains best-effort."
       ],
       "provenance": {
-        "author": "Steven Zimmerman",
+        "author": "Steven Zimmerman, CPA",
         "date": "2026-02-10"
       },
       "flags": {
@@ -282,7 +282,7 @@
         "Fallback strategies: enum=propList5, read=partial64, write=partial."
       ],
       "provenance": {
-        "author": "Steven Zimmerman",
+        "author": "Steven Zimmerman, CPA",
         "date": "2026-02-07",
         "artifacts": {
           "probe": "Docs/benchmarks/probes/oneplus3t-probe.txt",
@@ -360,7 +360,7 @@
         "Samsung and Xiaomi devices work correctly; Pixel 7 Still Image class is not being exposed."
       ],
       "provenance": {
-        "author": "Steven Zimmerman",
+        "author": "Steven Zimmerman, CPA",
         "date": "2026-02-12",
         "artifacts": {
           "ioregDump": "Docs/benchmarks/pixel7/ioreg-dump.txt",

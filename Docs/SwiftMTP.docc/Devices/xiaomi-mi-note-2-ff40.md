@@ -56,7 +56,7 @@ Current bring-up status for Xiaomi Mi Note 2 (`VID:PID 2717:ff40`).
 - Prefer direct USB port; keep screen unlocked.
 ## Provenance
 
-- **Author**: Steven Zimmerman
+- **Author**: Steven Zimmerman, CPA
 - **Date**: 2025-01-09
 - **Commit**: <current-commit>
 

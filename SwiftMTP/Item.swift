@@ -2,7 +2,7 @@
 //  Item.swift
 //  SwiftMTP
 //
-//  Created by Steven Zimmerman on 9/6/25.
+//  Created by Steven Zimmerman, CPA on 9/6/25.
 //
 
 import Foundation

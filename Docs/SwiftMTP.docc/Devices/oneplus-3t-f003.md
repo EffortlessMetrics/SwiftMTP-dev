@@ -102,7 +102,7 @@ Quit Android File Transfer, revoke all USB authorizations on the phone, and repl
 - Fallback strategies: enum=propList5, read=partial64, write=partial.
 ## Provenance
 
-- **Author**: Steven Zimmerman
+- **Author**: Steven Zimmerman, CPA
 - **Date**: 2026-02-07
 - **Commit**: Unknown
 

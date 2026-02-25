@@ -75,7 +75,7 @@ If you see `2717:ff40`, use the `xiaomi-mi-note-2-ff40` quirk profile instead.
 - Back off on DEVICE_BUSY for early storage ops.
 ## Provenance
 
-- **Author**: Steven Zimmerman
+- **Author**: Steven Zimmerman, CPA
 - **Date**: 2025-01-09
 - **Commit**: (See git history for this device file)
 

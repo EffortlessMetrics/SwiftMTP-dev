@@ -92,7 +92,7 @@ confirmed macOS 26 / Pixel 7 USB kernel extension incompatibility outside SwiftM
 - **Error message**: SwiftMTP now emits an actionable error with the steps above when this condition is detected.
 ## Provenance
 
-- **Author**: Steven Zimmerman
+- **Author**: Steven Zimmerman, CPA
 - **Date**: 2026-02-12
 - **Commit**: Unknown
 

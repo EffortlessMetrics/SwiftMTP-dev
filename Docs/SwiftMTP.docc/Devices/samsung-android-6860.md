@@ -106,7 +106,7 @@ The output must show `supportsSendPartialObject: false` and `disableWriteResume:
 - Read validation is reliable; write smoke remains best-effort.
 ## Provenance
 
-- **Author**: Steven Zimmerman
+- **Author**: Steven Zimmerman, CPA
 - **Date**: 2026-02-10
 - **Commit**: Unknown
 
