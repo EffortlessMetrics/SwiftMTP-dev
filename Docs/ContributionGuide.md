@@ -24,10 +24,19 @@ Choose the lane that matches your work:
 
 ### Sprint Checkpoint Gates
 
+Minimal pre-PR gate (must pass before every PR):
+
 ```bash
+# Format (CI requires)
+swift-format -i -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+swift-format lint -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+
+# Build + targeted tests
 swift build --package-path SwiftMTPKit
-./scripts/smoke.sh
 swift test --package-path SwiftMTPKit --filter <RelevantSuite>
+
+# Quirks validation (required if quirks.json changed)
+./scripts/validate-quirks.sh
 ```
 
 For milestone merges and release prep:
@@ -41,6 +50,8 @@ If concurrency-related code changes:
 ```bash
 swift test --package-path SwiftMTPKit -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
 ```
+
+See `Docs/Troubleshooting.md#pre-pr-local-gate` for the full canonical sequence.
 
 ## Branch and PR Naming
 
@@ -104,6 +115,20 @@ git push -u origin HEAD
 - [ ] No raw serials in committed files
 - [ ] `.salt` is not committed
 - [ ] Bundle validated locally with `validate-submission.sh`
+
+## CI Workflows
+
+| Workflow | Trigger | Required for merge | What it checks |
+|----------|---------|-------------------|----------------|
+| `ci.yml` | All branches/PRs | ✅ Yes | Build, full test suite, coverage gate, TSAN, fuzz harness, SBOM (tags) |
+| `swiftmtp-ci.yml` | main merges | No (supplemental) | Deeper coverage reporting, docs build, CLI smoke |
+| `smoke.yml` | Schedule + PRs | No (advisory) | Real-device smoke check |
+| `validate-quirks.yml` | PRs touching quirks | ✅ Yes (if quirks changed) | JSON schema + required fields |
+| `validate-submission.yml` | Device submission PRs | ✅ Yes | Bundle completeness + redaction |
+| `release.yml` | Tags | Release gate | Changelog, artifacts, SBOM |
+| `nightly-real-device-ux-smoke.yml` | Nightly | No (advisory) | End-to-end with physical device |
+
+**The only required check for merging a PR is `ci.yml`.** All other workflows are supplemental or advisory. Device submission PRs also require `validate-submission.yml`.
 
 ## Troubleshooting During Contribution
 

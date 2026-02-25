@@ -12,25 +12,25 @@ public actor MockUSBTransport: @unchecked Sendable {
   public private(set) var endpointIn: UInt8 = 0x81
   public private(set) var endpointOut: UInt8 = 0x01
   public private(set) var configurationValue: UInt8 = 1
-  
+
   private var responseQueue: [Data] = []
   private var requestLog: [RequestRecord] = []
   private var programmableDelays: [UInt16: TimeInterval] = [:]
   private var errorInjectionMode: ErrorInjectionMode = .none
   private var bandwidthThrottling: Double = 1.0
-  
+
   public struct RequestRecord: Sendable, Codable {
     public let timestamp: Date
     public let data: Data
     public let direction: Direction
     public let durationNs: UInt64
-    
+
     public enum Direction: String, Sendable, Codable {
       case inRequest = "IN"
       case outRequest = "OUT"
     }
   }
-  
+
   public enum ErrorInjectionMode: Sendable {
     case none
     case corruptNextPacket
@@ -38,33 +38,33 @@ public actor MockUSBTransport: @unchecked Sendable {
     case stallNextRequest
     case randomBitFlips(probability: Double)
   }
-  
+
   public init() {}
-  
+
   public func connect(vid: UInt16, pid: UInt16) async throws {
     isConnected = true
     responseQueue.removeAll()
     requestLog.removeAll()
   }
-  
+
   public func disconnect() {
     isConnected = false
   }
-  
+
   public func write(_ data: Data, timeout: Int) async throws -> Int {
     guard isConnected else { throw USBTransportError.notConnected }
-    
+
     let startTime = DispatchTime.now()
-    
+
     // Apply delay if programmed
     if let opcode = parseOpcode(from: data), let delay = programmableDelays[opcode] {
       try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
     }
-    
+
     // Apply bandwidth throttling
-    let transferTime = Double(data.count) / (12_000_000 * bandwidthThrottling) // USB 2.0 HS
+    let transferTime = Double(data.count) / (12_000_000 * bandwidthThrottling)  // USB 2.0 HS
     try await Task.sleep(nanoseconds: UInt64(transferTime * 1_000_000_000))
-    
+
     // Handle error injection
     switch errorInjectionMode {
     case .none:
@@ -83,10 +83,10 @@ public actor MockUSBTransport: @unchecked Sendable {
         throw USBTransportError.crcMismatch
       }
     }
-    
+
     let endTime = DispatchTime.now()
     let duration = endTime.uptimeNanoseconds - startTime.uptimeNanoseconds
-    
+
     let record = RequestRecord(
       timestamp: Date(),
       data: data,
@@ -94,13 +94,13 @@ public actor MockUSBTransport: @unchecked Sendable {
       durationNs: duration
     )
     requestLog.append(record)
-    
+
     return data.count
   }
-  
+
   public func read(into buffer: inout Data, timeout: Int) async throws -> Int {
     guard isConnected else { throw USBTransportError.notConnected }
-    
+
     switch errorInjectionMode {
     case .timeoutNextRequest:
       errorInjectionMode = .none
@@ -108,42 +108,42 @@ public actor MockUSBTransport: @unchecked Sendable {
     default:
       break
     }
-    
+
     guard !responseQueue.isEmpty else {
       throw USBTransportError.noData
     }
-    
+
     let response = responseQueue.removeFirst()
     let copyCount = min(response.count, buffer.count)
     buffer.replaceSubrange(0..<copyCount, with: response.prefix(copyCount))
-    
+
     return copyCount
   }
-  
+
   public func queueResponse(_ data: Data) {
     responseQueue.append(data)
   }
-  
+
   public func programDelay(opcode: UInt16, delay: TimeInterval) {
     programmableDelays[opcode] = delay
   }
-  
+
   public func setErrorInjection(_ injection: ErrorInjectionMode) {
     errorInjectionMode = injection
   }
-  
+
   public func setBandwidthThrottling(_ factor: Double) {
     bandwidthThrottling = factor
   }
-  
+
   public func clearRequests() {
     requestLog.removeAll()
   }
-  
+
   public func getRequestLog() -> [RequestRecord] {
     return requestLog
   }
-  
+
   private func parseOpcode(from data: Data) -> UInt16? {
     guard data.count >= 2 else { return nil }
     return UInt16(data[0]) | (UInt16(data[1]) << 8)
@@ -174,15 +174,18 @@ public struct VirtualDeviceProfile: Sendable {
   public let supportedEvents: [UInt16]
   public let quirks: QuirkFlags
   public let storageInfo: [VirtualStorageInfo]
-  
+
   public struct VirtualStorageInfo: Sendable {
     public let storageID: UInt32
     public let capacity: UInt64
     public let freeSpace: UInt64
     public let fileSystemType: String
     public let accessCapability: UInt16
-    
-    public init(storageID: UInt32, capacity: UInt64, freeSpace: UInt64, fileSystemType: String, accessCapability: UInt16) {
+
+    public init(
+      storageID: UInt32, capacity: UInt64, freeSpace: UInt64, fileSystemType: String,
+      accessCapability: UInt16
+    ) {
       self.storageID = storageID
       self.capacity = capacity
       self.freeSpace = freeSpace
@@ -190,7 +193,7 @@ public struct VirtualDeviceProfile: Sendable {
       self.accessCapability = accessCapability
     }
   }
-  
+
   public init(
     name: String,
     vendorID: UInt16,
@@ -231,10 +234,10 @@ public enum VirtualDeviceProfiles {
       0x1017, 0x1018, 0x1019, 0x101A, 0x101B, 0x101C, 0x101D, 0x101E, 0x101F,
       0x9801, 0x9802, 0x9803, 0x9804, 0x9805, 0x9806, 0x9807, 0x9808, 0x9809,
       0x980A, 0x980B, 0x980C, 0x980D, 0x980E, 0x980F, 0x9810, 0x9811, 0x9812,
-      0x95C1, 0x95C2, 0x95C3, 0x95C4, 0x95C5, 0x95C6
+      0x95C1, 0x95C2, 0x95C3, 0x95C4, 0x95C5, 0x95C6,
     ],
     supportedEvents: [
-      0x4001, 0x4002, 0x4003, 0x4004, 0x4005, 0x4006, 0x4007, 0x4008
+      0x4001, 0x4002, 0x4003, 0x4004, 0x4005, 0x4006, 0x4007, 0x4008,
     ],
     quirks: {
       var q = QuirkFlags()
@@ -255,7 +258,7 @@ public enum VirtualDeviceProfiles {
       )
     ]
   )
-  
+
   public static let onePlus3T = VirtualDeviceProfile(
     name: "oneplus3t",
     vendorID: 0x2A70,
@@ -267,10 +270,10 @@ public enum VirtualDeviceProfiles {
       0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1006, 0x1007, 0x1008, 0x1009,
       0x100A, 0x100B, 0x100C, 0x100D, 0x100E, 0x100F, 0x1014, 0x1015, 0x1016,
       0x1017, 0x1018, 0x1019, 0x101A, 0x101B, 0x101C, 0x9801, 0x9802, 0x9803,
-      0x9804, 0x9805, 0x9806, 0x9807, 0x9808, 0x95C1, 0x95C2, 0x95C3, 0x95C4
+      0x9804, 0x9805, 0x9806, 0x9807, 0x9808, 0x95C1, 0x95C2, 0x95C3, 0x95C4,
     ],
     supportedEvents: [
-      0x4001, 0x4002, 0x4003, 0x4004, 0x4005, 0x4006
+      0x4001, 0x4002, 0x4003, 0x4004, 0x4005, 0x4006,
     ],
     quirks: {
       var q = QuirkFlags()
@@ -295,10 +298,10 @@ public enum VirtualDeviceProfiles {
         freeSpace: 16_000_000_000,
         fileSystemType: "exFAT",
         accessCapability: 0x0003
-      )
+      ),
     ]
   )
-  
+
   public static let miNote2 = VirtualDeviceProfile(
     name: "mi-note2",
     vendorID: 0x2717,
@@ -310,10 +313,10 @@ public enum VirtualDeviceProfiles {
       0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1006, 0x1007, 0x1008, 0x1009,
       0x100A, 0x100B, 0x100C, 0x100D, 0x100E, 0x100F, 0x1014, 0x1015, 0x1016,
       0x1017, 0x1018, 0x1019, 0x101A, 0x101B, 0x101C, 0x9801, 0x9802, 0x9803,
-      0x9804, 0x95C1, 0x95C2, 0x95C3
+      0x9804, 0x95C1, 0x95C2, 0x95C3,
     ],
     supportedEvents: [
-      0x4001, 0x4002, 0x4003, 0x4004
+      0x4001, 0x4002, 0x4003, 0x4004,
     ],
     quirks: {
       var q = QuirkFlags()
@@ -342,7 +345,7 @@ public enum VirtualDeviceProfiles {
 public actor TrafficRecorder {
   public private(set) var recordings: [RecordingSession] = []
   private var currentSessionData: RecordingSessionData?
-  
+
   public struct RecordingSession: Sendable, Codable {
     public let id: UUID
     public let deviceProfile: String
@@ -351,57 +354,59 @@ public actor TrafficRecorder {
     public let entries: [TrafficEntry]
     public let summary: SessionSummary
   }
-  
+
   public struct TrafficEntry: Sendable, Codable {
     public let timestamp: Date
     public let direction: Direction
     public let opcode: UInt16?
     public let payload: Data
     public let responseTimeMs: Int
-    
+
     public enum Direction: String, Sendable, Codable {
       case request = "REQ"
       case response = "RSP"
     }
   }
-  
+
   public struct SessionSummary: Sendable, Codable {
     public let totalRequests: Int
     public let totalBytes: Int64
     public let averageResponseTimeMs: Double
     public let errorCount: Int
   }
-  
+
   private struct RecordingSessionData {
     var entries: [TrafficEntry] = []
     let deviceProfile: String
     let startTime: Date
   }
-  
+
   public init() {}
-  
+
   public func startSession(profile: String) {
     currentSessionData = RecordingSessionData(
       deviceProfile: profile,
       startTime: Date()
     )
   }
-  
+
   public func record(entry: TrafficEntry) {
     guard var session = currentSessionData else { return }
     session.entries.append(entry)
     currentSessionData = session
   }
-  
+
   @discardableResult
   public func endSession() -> RecordingSession? {
     guard var session = currentSessionData else { return nil }
-    
+
     let totalRequests = session.entries.filter { $0.direction == .request }.count
     let totalBytes = session.entries.reduce(0) { $0 + Int64($1.payload.count) }
-    let responseTimes = session.entries.filter { $0.direction == .response }.map { Double($0.responseTimeMs) }
-    let avgResponse = responseTimes.isEmpty ? 0 : responseTimes.reduce(0, +) / Double(responseTimes.count)
-    
+    let responseTimes = session.entries.filter { $0.direction == .response }
+      .map { Double($0.responseTimeMs) }
+    let avgResponse =
+      responseTimes.isEmpty ? 0 : responseTimes.reduce(0, +) / Double(responseTimes.count)
+
     let recording = RecordingSession(
       id: UUID(),
       deviceProfile: session.deviceProfile,
@@ -415,12 +420,12 @@ public actor TrafficRecorder {
         errorCount: 0
       )
     )
-    
+
     recordings.append(recording)
     currentSessionData = nil
     return recording
   }
-  
+
   public func getRecordings() -> [RecordingSession] {
     return recordings
   }
@@ -435,7 +440,10 @@ public struct CapabilityTestResult: Sendable, Codable {
   public let durationMs: Int
   public let errorMessage: String?
 
-  public init(name: String, opcode: String? = nil, supported: Bool, durationMs: Int, errorMessage: String? = nil) {
+  public init(
+    name: String, opcode: String? = nil, supported: Bool, durationMs: Int,
+    errorMessage: String? = nil
+  ) {
     self.name = name
     self.opcode = opcode
     self.supported = supported
@@ -489,7 +497,8 @@ public struct SuggestedTuning: Sendable, Codable {
   public var ioTimeoutMs: Int
   public var handshakeTimeoutMs: Int
 
-  public init(maxChunkBytes: Int = 1 << 20, ioTimeoutMs: Int = 8000, handshakeTimeoutMs: Int = 6000) {
+  public init(maxChunkBytes: Int = 1 << 20, ioTimeoutMs: Int = 8000, handshakeTimeoutMs: Int = 6000)
+  {
     self.maxChunkBytes = maxChunkBytes
     self.ioTimeoutMs = ioTimeoutMs
     self.handshakeTimeoutMs = handshakeTimeoutMs
@@ -524,21 +533,24 @@ public struct DeviceLabHarness: Sendable {
     var tests: [CapabilityTestResult] = []
 
     // Test GetDeviceInfo
-    tests.append(await testOperation(device: device, name: "GetDeviceInfo", opcode: 0x1001) {
-      _ = try await device.devGetDeviceInfoUncached()
-    })
+    tests.append(
+      await testOperation(device: device, name: "GetDeviceInfo", opcode: 0x1001) {
+        _ = try await device.devGetDeviceInfoUncached()
+      })
 
     // Test GetStorageIDs
-    tests.append(await testOperation(device: device, name: "GetStorageIDs", opcode: 0x1004) {
-      _ = try await device.devGetStorageIDsUncached()
-    })
+    tests.append(
+      await testOperation(device: device, name: "GetStorageIDs", opcode: 0x1004) {
+        _ = try await device.devGetStorageIDsUncached()
+      })
 
     // Test storages enumeration
     let storages = try? await device.storages()
     if let firstStorage = storages?.first {
-      tests.append(await testOperation(device: device, name: "GetObjectHandles", opcode: 0x1007) {
-        _ = try await device.devGetRootHandlesUncached(storage: firstStorage.id)
-      })
+      tests.append(
+        await testOperation(device: device, name: "GetObjectHandles", opcode: 0x1007) {
+          _ = try await device.devGetRootHandlesUncached(storage: firstStorage.id)
+        })
     }
 
     // Check supported operations
@@ -580,11 +592,16 @@ public struct DeviceLabHarness: Sendable {
     let start = DispatchTime.now()
     do {
       try await body()
-      let elapsed = Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
-      return CapabilityTestResult(name: name, opcode: String(format: "0x%04X", opcode), supported: true, durationMs: elapsed)
+      let elapsed = Int(
+        (DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
+      return CapabilityTestResult(
+        name: name, opcode: String(format: "0x%04X", opcode), supported: true, durationMs: elapsed)
     } catch {
-      let elapsed = Int((DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
-      return CapabilityTestResult(name: name, opcode: String(format: "0x%04X", opcode), supported: false, durationMs: elapsed, errorMessage: "\(error)")
+      let elapsed = Int(
+        (DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000)
+      return CapabilityTestResult(
+        name: name, opcode: String(format: "0x%04X", opcode), supported: false, durationMs: elapsed,
+        errorMessage: "\(error)")
     }
   }
 }

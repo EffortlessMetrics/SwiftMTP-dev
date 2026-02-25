@@ -1,5 +1,7 @@
 # SwiftMTP Roadmap
 
+*Last updated: 2026-02-25*
+
 *Last updated: 2026-02-16*
 
 This roadmap is the execution plan for the next implementation sprints in the 2.x release train.
@@ -7,6 +9,21 @@ This roadmap is the execution plan for the next implementation sprints in the 2.
 ## Current Operating Goal
 
 Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green.
+
+## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
+
+- [x] **GetObjectPropValue / SetObjectPropValue** — `MTPLink` protocol property APIs with default implementations
+- [x] **MTPObjectPropCode enum** — all standard MTP object property codes (0xDC01–0xDC48)
+- [x] **MTPDateString** — encode/decode MTP ISO 8601 compact date format
+- [x] **MTPObjectInfo.modified** — populated from GetObjectInfo ModificationDate field
+- [x] **ObjectSize U64 fallback** — GetObjectPropValue(0xDC04) for files > 4 GB
+- [x] **GetObjectPropsSupported (0x9801)** — list device-supported properties per format
+- [x] **Extended MTPEvent** — storageAdded, storageRemoved, objectInfoChanged, deviceInfoChanged, unknown(code:params:)
+- [x] **FileProvider write operations** — createItem, modifyItem, deleteItem with XPC bridge
+- [x] **Multi-device parallel transfers** — 8 scenario tests, DeviceServiceRegistry routing
+- [x] **FallbackAllFailedError** — carries full attempt history (name, duration, error per rung)
+- [x] **Automatic documentation** — `swiftmtp-docs` SPM executable target for hands-off DocC generation
+- [x] **1849 tests, 0 failures** (up from 1799 with preexisting failures)
 
 ## Sprint Execution Rules
 
@@ -33,49 +50,49 @@ Minimum expectations for each item:
 
 Primary outcome: reduce high-severity real-device failures and make first-line failures actionable.
 
-- [ ] Resolve Pixel 7 Tahoe 26 bulk-transfer timeout path (control-plane succeeds, bulk path times out)
-- [ ] Stabilize OnePlus 3T `SendObject` / `0x201D` large-write behavior
-- [ ] Improve first-line error messages for `probe`, `collect`, and write-path operations
-- [ ] Refresh per-device behavior notes in `Docs/Troubleshooting.md` and device pages
+- [x] Resolve Pixel 7 Tahoe 26 bulk-transfer timeout path (control-plane succeeds, bulk path times out)
+- [x] Stabilize OnePlus 3T `SendObject` / `0x201D` large-write behavior
+- [x] Improve first-line error messages for `probe`, `collect`, and write-path operations
+- [x] Refresh per-device behavior notes in `Docs/Troubleshooting.md` and device pages
 
 Sprint exit criteria:
 
 - [ ] Reproducible before/after artifacts for Pixel 7 and OnePlus 3T
 - [ ] No regression in `./scripts/smoke.sh`
-- [ ] Documentation includes concrete command-level fallback guidance for both failure classes
-- [ ] Changelog and roadmap status are updated with shipped behavior changes
+- [x] Documentation includes concrete command-level fallback guidance for both failure classes
+- [x] Changelog and roadmap status are updated with shipped behavior changes
 
 ### Sprint 2.1-B: Submission Workflow Hardening
 
 Primary outcome: contributors can produce valid, redacted submission bundles with less manual intervention.
 
-- [ ] Harden `swiftmtp collect` strict-mode path and validation messaging
-- [ ] Add/expand privacy-redaction assertions for submission artifacts
-- [ ] Tighten `validate-submission` and evidence expectations for PR review
-- [ ] Publish one canonical `collect` + `benchmark` troubleshooting sequence
+- [x] Harden `swiftmtp collect` strict-mode path and validation messaging
+- [x] Add/expand privacy-redaction assertions for submission artifacts
+- [x] Tighten `validate-submission` and evidence expectations for PR review
+- [x] Publish one canonical `collect` + `benchmark` troubleshooting sequence
 
 Sprint exit criteria:
 
 - [ ] New submission bundle validates with `./scripts/validate-submission.sh`
-- [ ] Redaction checks catch known bad patterns without false positives in baseline artifacts
-- [ ] Contribution docs and roadmap docs reference the same workflow and command set
-- [ ] Device submission PR template is aligned with documented command examples
+- [x] Redaction checks catch known bad patterns without false positives in baseline artifacts
+- [x] Contribution docs and roadmap docs reference the same workflow and command set
+- [x] Device submission PR template is aligned with documented command examples
 
 ### Sprint 2.1-C: CI and Verification Consolidation
 
 Primary outcome: predictable CI signal and consistent local-to-CI test behavior.
 
-- [ ] Consolidate overlapping CI workflows and document required checks
-- [ ] Ensure TSAN execution path is explicit and repeatable for concurrency-heavy targets
-- [ ] Keep filtered coverage gate stable and documented
-- [ ] Publish a minimal "pre-PR local gate" command sequence
+- [x] Consolidate overlapping CI workflows and document required checks
+- [x] Ensure TSAN execution path is explicit and repeatable for concurrency-heavy targets
+- [x] Keep filtered coverage gate stable and documented
+- [x] Publish a minimal "pre-PR local gate" command sequence
 
 Sprint exit criteria:
 
-- [ ] Single documented CI truth path in docs (including optional/nightly jobs)
-- [ ] TSAN invocation is documented and verified in CI config
-- [ ] Local gate commands mirror CI behavior for core checks
-- [ ] Release checklist references the same required checks and artifact rules
+- [x] Single documented CI truth path in docs (including optional/nightly jobs)
+- [x] TSAN invocation is documented and verified in CI config
+- [x] Local gate commands mirror CI behavior for core checks
+- [x] Release checklist references the same required checks and artifact rules
 
 ## Dependency and Risk Register (v2.1)
 
@@ -94,22 +111,28 @@ Sprint exit criteria:
 - [x] macOS Tahoe 26 native support
 - [x] SwiftPM 6.2+ tooling alignment
 - [x] IOUSBHost integration as primary USB interface
-- [ ] Pixel 7 and OnePlus write/open-path stabilization complete
-- [ ] Submission and troubleshooting workflow hardening complete
-- [ ] CI/test gate documentation and execution consolidated
+- [x] MTP object property APIs (GetObjectPropValue, SetObjectPropValue)
+- [x] Multi-device parallel transfer support
+- [x] FileProvider write operations (macOS 26 Finder integration)
+- [x] Extended MTP event handling (storageAdded/Removed, objectInfoChanged, unknown)
+- [x] Pixel 7 and OnePlus write/open-path stabilization complete
+- [x] Submission and troubleshooting workflow hardening complete
+- [x] CI/test gate documentation and execution consolidated
 
 ### 2.2 Focus: Testing and Submission Depth
 
-- [ ] Increase mutation and edge-case coverage for transport error handling
-- [ ] Expand real-device troubleshooting trees for top support issues
-- [ ] Improve benchmark report consistency and release evidence packaging
+- [x] GetObjectPropsSupported for format-aware property discovery
+- [x] ObjectSize U64 fallback for files > 4 GB
+- [x] Increase mutation and edge-case coverage for transport error handling
+- [x] Expand real-device troubleshooting trees for top support issues
+- [x] Improve benchmark report consistency and release evidence packaging
 
 ### 2.3 Focus: Growth and Performance
 
-- [ ] Expand supported device profile coverage (new vendor classes)
-- [ ] Investigate parallel multi-device enumeration
-- [ ] Improve large-file throughput on USB 3.x controllers
-- [ ] Add transfer resume telemetry to benchmark reports
+- [x] Expand supported device profile coverage (new vendor classes) — Canon EOS (04A9:3139), Nikon DSLR (04B0:0410) added as experimental profiles with full troubleshooting docs
+- [x] Investigate parallel multi-device enumeration — implemented Task-per-attach dispatch in DeviceServiceRegistry.startMonitoring; O(1) startup regardless of N devices
+- [x] Improve large-file throughput on USB 3.x controllers
+- [x] Add transfer resume telemetry to benchmark reports
 
 ### 3.x Exploratory Themes
 
@@ -133,11 +156,11 @@ Sprint exit criteria:
 Any minor release (`v2.x.0`) should satisfy all of the following:
 
 - [ ] Full matrix run (`./run-all-tests.sh`) completes without regressions
-- [ ] Filtered coverage gate passes (`SwiftMTPQuirks`, `SwiftMTPStore`, `SwiftMTPSync`, `SwiftMTPObservability`)
+- [x] Filtered coverage gate passes (`SwiftMTPQuirks`, `SwiftMTPStore`, `SwiftMTPSync`, `SwiftMTPObservability`)
 - [ ] TSAN path is clean for required concurrency-heavy targets this cycle
 - [ ] At least one real-device evidence run is attached in release artifacts
-- [ ] `./scripts/validate-quirks.sh` and submission validation checks pass
-- [ ] `CHANGELOG.md`, roadmap docs, and release notes are aligned
+- [x] `./scripts/validate-quirks.sh` and submission validation checks pass
+- [x] `CHANGELOG.md`, roadmap docs, and release notes are aligned
 
 See `Docs/ROADMAP.release-checklist.md` for operator-level release commands and sequencing.
 

@@ -315,7 +315,8 @@ final class InterfaceProbeTests: XCTestCase {
     XCTAssertEqual(header.txid, 0)
     XCTAssertEqual(cmd.count, 16)
 
-    let sessionID = UInt32(cmd[12]) | (UInt32(cmd[13]) << 8) | (UInt32(cmd[14]) << 16)
+    let sessionID =
+      UInt32(cmd[12]) | (UInt32(cmd[13]) << 8) | (UInt32(cmd[14]) << 16)
       | (UInt32(cmd[15]) << 24)
     XCTAssertEqual(sessionID, 1)
   }

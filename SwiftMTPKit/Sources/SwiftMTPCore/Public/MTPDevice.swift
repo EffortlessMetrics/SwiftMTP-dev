@@ -2,20 +2,8 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import MTPEndianCodec
 import SwiftMTPQuirks
-
-@inline(__always)
-private func decodeLittleEndian<T: FixedWidthInteger>(
-  _ data: Data, at offset: Int, as: T.Type = T.self
-) -> T? {
-  let width = MemoryLayout<T>.size
-  guard offset >= 0, offset + width <= data.count else { return nil }
-  var value: T = 0
-  _ = withUnsafeMutableBytes(of: &value) { raw in
-    data.copyBytes(to: raw, from: offset..<(offset + width))
-  }
-  return T(littleEndian: value)
-}
 
 public struct MTPDeviceID: Hashable, Sendable, Codable {
   public let raw: String
@@ -84,17 +72,32 @@ public enum MTPEvent: Sendable {
   case objectRemoved(MTPObjectHandle)
   /// Storage information changed (capacity, free space, etc.)
   case storageInfoChanged(MTPStorageID)
+  /// A new storage (SD card, etc.) was added
+  case storageAdded(MTPStorageID)
+  /// A storage was removed
+  case storageRemoved(MTPStorageID)
+  /// Object metadata was updated (name, date, etc.)
+  case objectInfoChanged(MTPObjectHandle)
+  /// Device info changed (e.g. battery level property updated)
+  case deviceInfoChanged
+  /// An unknown event code was received; carries the raw 16-bit code and parameters
+  case unknown(code: UInt16, params: [UInt32])
 
-  /// Parse MTP event from raw PTP/MTP event container data
+  /// Parse MTP event from raw PTP/MTP event container data.
+  ///
+  /// Returns `.unknown(code:params:)` for any unrecognised (but structurally valid) event
+  /// rather than returning `nil`, so callers can log unknown events.
   public static func fromRaw(_ data: Data) -> MTPEvent? {
     guard data.count >= 12 else { return nil }
     // PTP/MTP Event container: [len(4) type(2)=4 code(2) txid(4) params...]
-    guard let code: UInt16 = decodeLittleEndian(data, at: 6) else { return nil }
+    guard let code: UInt16 = MTPEndianCodec.decodeUInt16(from: data, at: 6) else { return nil }
     let paramCount = (data.count - 12) / 4
     var params: [UInt32] = []
     params.reserveCapacity(paramCount)
     for index in 0..<paramCount {
-      guard let value: UInt32 = decodeLittleEndian(data, at: 12 + index * 4) else { break }
+      guard let value: UInt32 = MTPEndianCodec.decodeUInt32(from: data, at: 12 + index * 4) else {
+        break
+      }
       params.append(value)
     }
 
@@ -105,11 +108,22 @@ public enum MTPEvent: Sendable {
     case 0x4003:  // ObjectRemoved
       guard let handle = params.first else { return nil }
       return .objectRemoved(handle)
+    case 0x4004:  // StoreAdded
+      guard let raw = params.first else { return nil }
+      return .storageAdded(MTPStorageID(raw: raw))
+    case 0x4005:  // StoreRemoved
+      guard let raw = params.first else { return nil }
+      return .storageRemoved(MTPStorageID(raw: raw))
+    case 0x4007:  // ObjectInfoChanged
+      guard let handle = params.first else { return nil }
+      return .objectInfoChanged(handle)
+    case 0x4008:  // DeviceInfoChanged
+      return .deviceInfoChanged
     case 0x400C:  // StorageInfoChanged
-      guard let storageIdRaw = params.first else { return nil }
-      return .storageInfoChanged(MTPStorageID(raw: storageIdRaw))
+      guard let raw = params.first else { return nil }
+      return .storageInfoChanged(MTPStorageID(raw: raw))
     default:
-      return nil
+      return .unknown(code: code, params: params)
     }
   }
 }

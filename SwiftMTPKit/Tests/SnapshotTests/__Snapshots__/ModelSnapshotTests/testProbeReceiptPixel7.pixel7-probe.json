@@ -52,7 +52,10 @@
     "candidatesEvaluated" : 2,
     "deviceInfoCached" : false,
     "selectedInterface" : 0,
-    "selectedScore" : 10
+    "selectedScore" : 10,
+    "skippedAlternatives" : [
+
+    ]
   },
   "resolvedPolicy" : {
     "disableEventPump" : false,
@@ -67,6 +70,7 @@
   "sessionEstablishment" : {
     "durationMs" : 89,
     "requiredRetry" : false,
+    "resetAttempted" : false,
     "succeeded" : true
   },
   "timestamp" : 792237600,

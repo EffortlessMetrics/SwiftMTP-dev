@@ -61,7 +61,10 @@ public final class SQLiteDB: @unchecked Sendable {
   public init(path: String) throws {
     self.path = path
     var db: OpaquePointer?
-    if sqlite3_open_v2(path, &db, SQLITE_OPEN_CREATE|SQLITE_OPEN_READWRITE|SQLITE_OPEN_FULLMUTEX, nil) != SQLITE_OK {
+    if sqlite3_open_v2(
+      path, &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX, nil)
+      != SQLITE_OK
+    {
       throw DBError.open(String(cString: sqlite3_errmsg(db)))
     }
     self.handle = db
@@ -74,7 +77,8 @@ public final class SQLiteDB: @unchecked Sendable {
   public init(path: String, readOnly: Bool) throws {
     self.path = path
     var db: OpaquePointer?
-    let flags: Int32 = readOnly
+    let flags: Int32 =
+      readOnly
       ? (SQLITE_OPEN_READONLY | SQLITE_OPEN_FULLMUTEX)
       : (SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_FULLMUTEX)
     if sqlite3_open_v2(path, &db, flags, nil) != SQLITE_OK {
@@ -104,7 +108,9 @@ public final class SQLiteDB: @unchecked Sendable {
     dbLock.lock()
     defer { dbLock.unlock() }
     var stmt: OpaquePointer?
-    guard sqlite3_prepare_v2(handle, sql, -1, &stmt, nil) == SQLITE_OK else { throw DBError.prepare(err()) }
+    guard sqlite3_prepare_v2(handle, sql, -1, &stmt, nil) == SQLITE_OK else {
+      throw DBError.prepare(err())
+    }
     return stmt!
   }
 
@@ -140,7 +146,9 @@ public final class SQLiteDB: @unchecked Sendable {
     dbLock.lock()
     defer { dbLock.unlock() }
     if let v = value {
-      guard sqlite3_bind_text(stmt, idx, v, -1, SQLITE_TRANSIENT) == SQLITE_OK else { throw DBError.bind(err()) }
+      guard sqlite3_bind_text(stmt, idx, v, -1, SQLITE_TRANSIENT) == SQLITE_OK else {
+        throw DBError.bind(err())
+      }
     } else {
       guard sqlite3_bind_null(stmt, idx) == SQLITE_OK else { throw DBError.bind(err()) }
     }
@@ -151,8 +159,8 @@ public final class SQLiteDB: @unchecked Sendable {
     defer { dbLock.unlock() }
     let rc = sqlite3_step(stmt)
     switch rc {
-    case SQLITE_ROW:    return true
-    case SQLITE_DONE:   return false
+    case SQLITE_ROW: return true
+    case SQLITE_DONE: return false
     case SQLITE_CONSTRAINT: throw DBError.constraint(err())
     default: throw DBError.step(err())
     }
@@ -166,7 +174,8 @@ public final class SQLiteDB: @unchecked Sendable {
   public func colText(_ stmt: OpaquePointer, _ idx: Int32) -> String? {
     dbLock.lock()
     defer { dbLock.unlock() }
-    guard sqlite3_column_type(stmt, idx) != SQLITE_NULL, let c = sqlite3_column_text(stmt, idx) else { return nil }
+    guard sqlite3_column_type(stmt, idx) != SQLITE_NULL, let c = sqlite3_column_text(stmt, idx)
+    else { return nil }
     return String(cString: c)
   }
 }

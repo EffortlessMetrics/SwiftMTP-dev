@@ -93,7 +93,10 @@ public struct SkippedInterface: Sendable, Codable {
   public let score: Int
   public let reason: String
 
-  public init(interfaceNumber: Int, interfaceClass: UInt8, interfaceSubclass: UInt8, interfaceProtocol: UInt8, score: Int, reason: String) {
+  public init(
+    interfaceNumber: Int, interfaceClass: UInt8, interfaceSubclass: UInt8, interfaceProtocol: UInt8,
+    score: Int, reason: String
+  ) {
     self.interfaceNumber = interfaceNumber
     self.interfaceClass = interfaceClass
     self.interfaceSubclass = interfaceSubclass
@@ -111,7 +114,9 @@ public struct InterfaceAttemptResult: Sendable, Codable {
   public let durationMs: Int
   public let error: String?
 
-  public init(interfaceNumber: Int, score: Int, succeeded: Bool, durationMs: Int, error: String? = nil) {
+  public init(
+    interfaceNumber: Int, score: Int, succeeded: Bool, durationMs: Int, error: String? = nil
+  ) {
     self.interfaceNumber = interfaceNumber
     self.score = score
     self.succeeded = succeeded

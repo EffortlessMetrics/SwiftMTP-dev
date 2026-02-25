@@ -11,7 +11,7 @@ private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.sel
 public struct SQLiteTransferRecord: Sendable {
   public let id: String
   public let deviceId: String
-  public let kind: String   // "read" | "write"
+  public let kind: String  // "read" | "write"
   public let handle: Int64?
   public let parentHandle: Int64?
   public let pathKey: String?
@@ -23,7 +23,7 @@ public struct SQLiteTransferRecord: Sendable {
   public let etagMtime: Int64?
   public let localTempURL: String?
   public let finalURL: String?
-  public let state: String   // "active" | "failed" | "done"
+  public let state: String  // "active" | "failed" | "done"
   public let lastError: String?
   public let updatedAt: Int64
 }
@@ -43,26 +43,26 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
 
   private func setupSchema() throws {
     let sql = """
-    CREATE TABLE IF NOT EXISTS transfers (
-      id TEXT PRIMARY KEY,
-      deviceId TEXT NOT NULL,
-      kind TEXT NOT NULL,
-      handle INTEGER,
-      parentHandle INTEGER,
-      pathKey TEXT,
-      name TEXT,
-      totalBytes INTEGER,
-      committedBytes INTEGER NOT NULL DEFAULT 0,
-      supportsPartial INTEGER NOT NULL DEFAULT 0,
-      etag_size INTEGER,
-      etag_mtime INTEGER,
-      localTempURL TEXT,
-      finalURL TEXT,
-      state TEXT NOT NULL,
-      lastError TEXT,
-      updatedAt INTEGER NOT NULL
-    );
-    """
+      CREATE TABLE IF NOT EXISTS transfers (
+        id TEXT PRIMARY KEY,
+        deviceId TEXT NOT NULL,
+        kind TEXT NOT NULL,
+        handle INTEGER,
+        parentHandle INTEGER,
+        pathKey TEXT,
+        name TEXT,
+        totalBytes INTEGER,
+        committedBytes INTEGER NOT NULL DEFAULT 0,
+        supportsPartial INTEGER NOT NULL DEFAULT 0,
+        etag_size INTEGER,
+        etag_mtime INTEGER,
+        localTempURL TEXT,
+        finalURL TEXT,
+        state TEXT NOT NULL,
+        lastError TEXT,
+        updatedAt INTEGER NOT NULL
+      );
+      """
     try exec(sql)
   }
 
@@ -122,21 +122,21 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
   public func loadResumables(for device: MTPDeviceID) throws -> [SwiftMTPCore.TransferRecord] {
     let active = try listResumables(deviceId: device.raw)
     return active.map { row in
-        SwiftMTPCore.TransferRecord(
-            id: row.id,
-            deviceId: MTPDeviceID(raw: row.deviceId),
-            kind: row.kind,
-            handle: row.handle.map { UInt32($0) },
-            parentHandle: row.parentHandle.map { UInt32($0) },
-            name: row.name ?? "",
-            totalBytes: row.totalBytes.map { UInt64($0) },
-            committedBytes: UInt64(row.committedBytes),
-            supportsPartial: row.supportsPartial,
-            localTempURL: URL(fileURLWithPath: row.localTempURL ?? ""),
-            finalURL: row.finalURL.map { URL(fileURLWithPath: $0) },
-            state: row.state,
-            updatedAt: Date(timeIntervalSince1970: TimeInterval(row.updatedAt))
-        )
+      SwiftMTPCore.TransferRecord(
+        id: row.id,
+        deviceId: MTPDeviceID(raw: row.deviceId),
+        kind: row.kind,
+        handle: row.handle.map { UInt32($0) },
+        parentHandle: row.parentHandle.map { UInt32($0) },
+        name: row.name ?? "",
+        totalBytes: row.totalBytes.map { UInt64($0) },
+        committedBytes: UInt64(row.committedBytes),
+        supportsPartial: row.supportsPartial,
+        localTempURL: URL(fileURLWithPath: row.localTempURL ?? ""),
+        finalURL: row.finalURL.map { URL(fileURLWithPath: $0) },
+        state: row.state,
+        updatedAt: Date(timeIntervalSince1970: TimeInterval(row.updatedAt))
+      )
     }
   }
 
@@ -198,7 +198,9 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
 
   public func listActive() throws -> [SQLiteTransferRecord] {
     var out: [SQLiteTransferRecord] = []
-    try query("SELECT id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt FROM transfers WHERE state='active' ORDER BY updatedAt DESC") { row in
+    try query(
+      "SELECT id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt FROM transfers WHERE state='active' ORDER BY updatedAt DESC"
+    ) { row in
       out.append(row)
     }
     return out
@@ -206,7 +208,9 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
 
   public func listFailed() throws -> [SQLiteTransferRecord] {
     var out: [SQLiteTransferRecord] = []
-    try query("SELECT id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt FROM transfers WHERE state='failed' ORDER BY updatedAt DESC") { row in
+    try query(
+      "SELECT id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt FROM transfers WHERE state='failed' ORDER BY updatedAt DESC"
+    ) { row in
       out.append(row)
     }
     return out
@@ -248,10 +252,10 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
   ) throws {
     let now = nowSec()
     let sql = """
-    INSERT INTO transfers
-    (id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?, 'active', NULL, ?)
-    """
+      INSERT INTO transfers
+      (id,deviceId,kind,handle,parentHandle,pathKey,name,totalBytes,committedBytes,supportsPartial,etag_size,etag_mtime,localTempURL,finalURL,state,lastError,updatedAt)
+      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?, 'active', NULL, ?)
+      """
     try exec(sql) { [self] s in
       sqlite3_bind_text(s, 1, id, -1, SQLITE_TRANSIENT)
       sqlite3_bind_text(s, 2, deviceId, -1, SQLITE_TRANSIENT)
@@ -275,37 +279,44 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
 
   private func exec(_ sql: String, bind: ((OpaquePointer) -> Void)? = nil) throws {
     var stmt: OpaquePointer?
-    guard sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK else { throw makeError("prepare") }
+    guard sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK else {
+      throw makeError("prepare")
+    }
     defer { sqlite3_finalize(stmt) }
     if let b = bind { b(stmt!) }
     guard sqlite3_step(stmt) == SQLITE_DONE else { throw makeError("step") }
   }
 
-  private func query(_ sql: String, bind: ((OpaquePointer) -> Void)? = nil, row: (SQLiteTransferRecord) -> Void) throws {
+  private func query(
+    _ sql: String, bind: ((OpaquePointer) -> Void)? = nil, row: (SQLiteTransferRecord) -> Void
+  ) throws {
     var stmt: OpaquePointer?
-    guard sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK else { throw makeError("prepare") }
+    guard sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK else {
+      throw makeError("prepare")
+    }
     defer { sqlite3_finalize(stmt) }
     if let b = bind { b(stmt!) }
     while sqlite3_step(stmt) == SQLITE_ROW {
-      row(SQLiteTransferRecord(
-        id: getText(stmt!, 0),
-        deviceId: getText(stmt!, 1),
-        kind: getText(stmt!, 2),
-        handle: getOptInt64(stmt!, 3),
-        parentHandle: getOptInt64(stmt!, 4),
-        pathKey: getOptText(stmt!, 5),
-        name: getOptText(stmt!, 6),
-        totalBytes: getOptInt64(stmt!, 7),
-        committedBytes: sqlite3_column_int64(stmt!, 8),
-        supportsPartial: sqlite3_column_int(stmt!, 9) != 0,
-        etagSize: getOptInt64(stmt!,10),
-        etagMtime: getOptInt64(stmt!,11),
-        localTempURL: getOptText(stmt!,12),
-        finalURL: getOptText(stmt!,13),
-        state: getText(stmt!,14),
-        lastError: getOptText(stmt!,15),
-        updatedAt: sqlite3_column_int64(stmt!,16)
-      ))
+      row(
+        SQLiteTransferRecord(
+          id: getText(stmt!, 0),
+          deviceId: getText(stmt!, 1),
+          kind: getText(stmt!, 2),
+          handle: getOptInt64(stmt!, 3),
+          parentHandle: getOptInt64(stmt!, 4),
+          pathKey: getOptText(stmt!, 5),
+          name: getOptText(stmt!, 6),
+          totalBytes: getOptInt64(stmt!, 7),
+          committedBytes: sqlite3_column_int64(stmt!, 8),
+          supportsPartial: sqlite3_column_int(stmt!, 9) != 0,
+          etagSize: getOptInt64(stmt!, 10),
+          etagMtime: getOptInt64(stmt!, 11),
+          localTempURL: getOptText(stmt!, 12),
+          finalURL: getOptText(stmt!, 13),
+          state: getText(stmt!, 14),
+          lastError: getOptText(stmt!, 15),
+          updatedAt: sqlite3_column_int64(stmt!, 16)
+        ))
     }
   }
 
@@ -320,13 +331,18 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
     sqlite3_column_type(s, idx) == SQLITE_NULL ? nil : sqlite3_column_int64(s, idx)
   }
   private func bindOptText(_ s: OpaquePointer, _ idx: Int32, _ v: String?) {
-    if let v { sqlite3_bind_text(s, idx, v, -1, unsafeBitCast(-1, to: sqlite3_destructor_type.self)) } else { sqlite3_bind_null(s, idx) }
+    if let v {
+      sqlite3_bind_text(s, idx, v, -1, unsafeBitCast(-1, to: sqlite3_destructor_type.self))
+    } else {
+      sqlite3_bind_null(s, idx)
+    }
   }
   private func bindOptInt64(_ s: OpaquePointer, _ idx: Int32, _ v: Int64?) {
     if let v { sqlite3_bind_int64(s, idx, v) } else { sqlite3_bind_null(s, idx) }
   }
   private func makeError(_ msg: String) -> NSError {
     let err = db.flatMap { sqlite3_errmsg($0) }.map { String(cString: $0!) } ?? "unknown"
-    return NSError(domain: "TransferJournal", code: 1, userInfo: [NSLocalizedDescriptionKey: "\(msg): \(err)"])
+    return NSError(
+      domain: "TransferJournal", code: 1, userInfo: [NSLocalizedDescriptionKey: "\(msg): \(err)"])
   }
 }

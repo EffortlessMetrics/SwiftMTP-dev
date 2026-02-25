@@ -202,39 +202,105 @@ The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.
 
 ### Pixel 7 / Tahoe 26 Issues
 
-**Known Issue:** macOS Tahoe 26 USB stack timing on Pixel 7
+**Known Issue:** macOS Tahoe 26 USB stack timing on Pixel 7 — bulk transfer path times out even though control-plane (`OpenSession`) succeeds.
+
+**Symptoms:**
+- `swiftmtp probe` succeeds but `swiftmtp ls` hangs or returns timeout
+- `LIBUSB_ERROR_TIMEOUT` in logs after a successful handshake
 
 **Solutions:**
-- Keep `stabilizeMs` elevated
-- Treat `LIBUSB_ERROR_TIMEOUT` as transport layer symptom
-- Use direct port and probe before benchmarking
+- Keep `stabilizeMs` elevated (≥ 600 ms); use `swiftmtp quirks` to confirm active quirk
+- Treat `LIBUSB_ERROR_TIMEOUT` as a transport-layer symptom, not a protocol error
+- Use a direct USB-A port (not a hub or USB-C adapter); Tahoe 26 has known USB-C timing regressions
+- Run `swiftmtp probe` first and wait for the ✅ before any transfer command
+- Status: `blocked` — awaiting kernel-level fix in Tahoe 26 beta chain (see `Docs/pixel7-usb-debug-report.md`)
+
+### OnePlus 3T Issues
+
+**Known Issue:** `SendObject` (opcode `0x200C`) timeout on large writes (> 512 MB).
+
+**Symptoms:**
+- Upload of large files (videos, disk images) stalls at 50–80% and returns `timeout`
+- `swiftmtp push` exits with code 1 and `Device timed out` message
+
+**Solutions:**
+- Use `--chunk 1M` to limit write-chunk size; the device firmware cannot handle default 8 MB chunks reliably
+- Keep transfers under 500 MB per session; reconnect between large sessions
+- Confirm the device is on Android 9 or later (earlier builds have a SCSI bridge bug)
+- Workaround: use `--size` flag to split large files before pushing
+
+### Canon EOS / DSLR Issues
+
+**Known Issue:** Canon EOS devices expose both MTP and PTP interfaces; macOS Image Capture claims the PTP interface on connection.
+
+**Symptoms:**
+- `swiftmtp probe` returns `permissionDenied` or `noDevice`
+- Images are visible in Photos but not via SwiftMTP
+
+**Solutions:**
+1. Quit Image Capture and Photos before running SwiftMTP
+2. Set the camera to **MTP** mode in its USB connection settings (not PTP or PC Remote)
+3. Run `swift run swiftmtp probe` within 5 s of connection; macOS may re-claim after idle
+4. For Canon R-series: enable "WiFi + USB" in connection settings to force MTP over PTP
+
+### Nikon DSLR Issues
+
+**Known Issue:** Nikon Z-series and D-series require the `Nikon Object` vendor extension for NEF raw files; standard `GetObject` may return an empty blob.
+
+**Symptoms:**
+- `.NEF` files download as 0-byte files
+- `objectNotFound` for raw files that are visible on the camera LCD
+
+**Solutions:**
+1. Use `swiftmtp quirks` to confirm the `allowNikonExtensions` flag is active
+2. Set Nikon USB to **MTP/PTP** (not PC Control) — PC Control mode disables file access
+3. For large NEF files (> 50 MB): increase `ioTimeoutMs` via `--timeout 30000` flag
+4. If the issue persists, use in-camera formatting on the SD card and re-import
 
 ---
 
 ## Submission & Benchmark Issues
 
-### Troubleshooting Flow
+### Canonical `collect` + `benchmark` Sequence
 
-Run these commands in order:
+Use this exact sequence when gathering evidence for a device submission or debugging a transfer issue:
 
 ```bash
-# 1. Probe device
+# Step 1: Confirm device is reachable
 swift run swiftmtp probe
 
-# 2. Capture evidence
+# Step 2: Capture a submission bundle (privacy-safe, JSON output)
 swift run swiftmtp collect --strict --json --noninteractive
 
-# 3. Verify artifacts
-# - submission.json exists
-# - usb-dump.txt contains only redacted placeholders
+# Step 3: Validate the bundle (check redaction and required fields)
+./scripts/validate-submission.sh Docs/benchmarks/<timestamp>/submission.json
 
-# 4. Single-size check
+# Step 4: Warm-up + single-size check (confirms write path is working)
 swift run swiftmtp bench 100M --out /tmp/bench-100m.csv
 
-# 5. Full benchmark
-swift run swiftmtp bench 500M
+# Step 5: Full benchmark at two sizes with 3 repeats
+swift run swiftmtp bench 500M --repeat 3
 swift run swiftmtp bench 1G --repeat 3
+
+# Step 6: Snapshot for regression comparison
+swift run swiftmtp snapshot --out /tmp/snapshot.json
 ```
+
+**Expected artifacts after Step 5:**
+- `/tmp/bench-100m.csv` — CSV with write+read speed per run
+- `Docs/benchmarks/<timestamp>/submission.json` — privacy-safe device profile
+- `Docs/benchmarks/<timestamp>/usb-dump.txt` — USB interface dump (redacted)
+
+**If `collect` fails:**
+1. Run `swift run swiftmtp probe` first — confirms MTP handshake works
+2. If `DEVICE_BUSY` is returned, wait 30 s then retry (device may have a background sync in progress)
+3. If `permissionDenied`, accept "Trust This Computer" on the device screen
+4. Re-run with `--lax` to skip strict redaction check (not for submission — for local debug only)
+
+**If `bench` fails mid-run:**
+1. Check available storage: `swift run swiftmtp ls` — confirm at least 2× bench size is free
+2. If timeout, the device dropped the session — reconnect and reduce to `--size 50M` to isolate
+3. Use `swift run swiftmtp quirks` to check if the device has known write-timeout quirks
 
 ### Device Lab Diagnostics
 
@@ -276,6 +342,31 @@ swift run swiftmtp usb-dump
 ```
 
 See [Docs/device-bringup.md](device-bringup.md) for mode options.
+
+---
+
+## Pre-PR Local Gate
+
+Before opening a PR, run this minimal gate to match CI checks:
+
+```bash
+# 1. Format (required — CI rejects unformatted code)
+swift-format -i -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+
+# 2. Lint (must be clean)
+swift-format lint -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+
+# 3. Full test suite
+cd SwiftMTPKit && swift test -v
+
+# 4. TSAN on concurrency-heavy targets
+swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
+
+# 5. Quirks validation
+./scripts/validate-quirks.sh
+```
+
+All five must pass before pushing. CI runs the same checks. The full matrix run (`./run-all-tests.sh`) is recommended for release PRs.
 
 ---
 

@@ -166,7 +166,9 @@ final class ClearHaltBehaviorTests: XCTestCase {
 
   func testClearHaltErrorsAreNonFatalDuringProbe() {
     // Even if clear_halt returns an error, the probe should continue
-    // because the endpoint might still be usable
+    // because the endpoint might still be usable.
+    // Non-fatal codes: 0 (success), -4 (NOT_SUPPORTED), -5 (NO_DEVICE — device
+    // may still respond on the alternate endpoint).
 
     let errors: [Int32] = [
       0,  // LIBUSB_SUCCESS
@@ -175,7 +177,7 @@ final class ClearHaltBehaviorTests: XCTestCase {
     ]
 
     for error in errors {
-      let isNonFatal = error == 0 || error == -4
+      let isNonFatal = error == 0 || error == -4 || error == -5
       XCTAssertTrue(
         isNonFatal,
         "Error code \(error) should be handled as non-fatal during probe")

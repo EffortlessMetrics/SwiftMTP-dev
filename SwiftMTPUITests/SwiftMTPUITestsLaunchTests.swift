@@ -23,6 +23,11 @@ final class SwiftMTPUITestsLaunchTests: XCTestCase {
     @MainActor
     func testLaunch() throws {
         let app = XCUIApplication()
+        app.launchArguments = ["-ApplePersistenceIgnoreState", "YES"]
+        app.launchEnvironment["SWIFTMTP_UI_TEST"] = "1"
+        app.launchEnvironment["SWIFTMTP_UI_SCENARIO"] = "empty-state"
+        app.launchEnvironment["SWIFTMTP_DEMO_MODE"] = "1"
+        app.launchEnvironment["SWIFTMTP_MOCK_PROFILE"] = "pixel7"
         app.launch()
 
         // Insert steps here to perform after app launch but before taking a screenshot,
@@ -32,5 +37,7 @@ final class SwiftMTPUITestsLaunchTests: XCTestCase {
         attachment.name = "Launch Screen"
         attachment.lifetime = .keepAlways
         add(attachment)
+
+        XCTAssertTrue(app.otherElements["swiftmtp.browser.root"].waitForExistence(timeout: 10))
     }
 }

@@ -101,15 +101,21 @@ final class DeviceLabToolingTests: XCTestCase {
 
   func testLooksLikeRetryableWriteFailure() {
     XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("protocolError(code=0x201D)"))
-    XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("protocolError(code=0x2008) InvalidStorageID"))
-    XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("ParameterNotSupported from SendObjectInfo"))
-    XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("transport(SwiftMTPCore.TransportError.timeout)"))
+    XCTAssertTrue(
+      DeviceLabCommand.looksLikeRetryableWriteFailure("protocolError(code=0x2008) InvalidStorageID")
+    )
+    XCTAssertTrue(
+      DeviceLabCommand.looksLikeRetryableWriteFailure("ParameterNotSupported from SendObjectInfo"))
+    XCTAssertTrue(
+      DeviceLabCommand.looksLikeRetryableWriteFailure(
+        "transport(SwiftMTPCore.TransportError.timeout)"))
     XCTAssertTrue(DeviceLabCommand.looksLikeRetryableWriteFailure("device busy"))
     XCTAssertFalse(DeviceLabCommand.looksLikeRetryableWriteFailure("permission denied"))
   }
 
   func testUSBDumpReportJSONShape() throws {
-    let report = USBDumper.DumpReport(schemaVersion: "1.0.0", generatedAt: Date(timeIntervalSince1970: 0), devices: [])
+    let report = USBDumper.DumpReport(
+      schemaVersion: "1.0.0", generatedAt: Date(timeIntervalSince1970: 0), devices: [])
     let encoder = JSONEncoder()
     encoder.dateEncodingStrategy = .iso8601
 
@@ -128,5 +134,44 @@ final class DeviceLabToolingTests: XCTestCase {
 
     XCTAssertTrue(result.contains("test-timeout-probe"))
     XCTAssertLessThan(elapsed, 1.0)
+  }
+}
+
+final class ActionableMessageTests: XCTestCase {
+  func testNoDeviceMessage() {
+    let err = MTPError.transport(.noDevice)
+    let msg = actionableMessage(for: err)
+    XCTAssertTrue(msg.contains("USB mode"), "Expected USB mode hint, got: \(msg)")
+  }
+
+  func testTimeoutMessage() {
+    let err = MTPError.timeout
+    let msg = actionableMessage(for: err)
+    XCTAssertTrue(msg.contains("unlocked"), "Expected unlock hint, got: \(msg)")
+  }
+
+  func testPermissionDeniedMessage() {
+    let err = MTPError.permissionDenied
+    let msg = actionableMessage(for: err)
+    XCTAssertTrue(msg.contains("Trust"), "Expected Trust Computer hint, got: \(msg)")
+  }
+
+  func testStorageFullMessage() {
+    let err = MTPError.storageFull
+    let msg = actionableMessage(for: err)
+    XCTAssertTrue(msg.contains("full"), "Expected storage full hint, got: \(msg)")
+  }
+
+  func testProtocolErrorMessage() {
+    let err = MTPError.protocolError(code: 0x2019, message: "object not deleted")
+    let msg = actionableMessage(for: err)
+    XCTAssertTrue(msg.contains("0x2019"), "Expected error code, got: \(msg)")
+  }
+
+  func testFallbackForNonMTPError() {
+    let err = NSError(
+      domain: "test", code: 42, userInfo: [NSLocalizedDescriptionKey: "custom error"])
+    let msg = actionableMessage(for: err)
+    XCTAssertEqual(msg, "custom error")
   }
 }

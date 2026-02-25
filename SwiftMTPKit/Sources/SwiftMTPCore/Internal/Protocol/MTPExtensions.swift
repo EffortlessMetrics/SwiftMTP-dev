@@ -8,6 +8,9 @@ import Foundation
 /// MTP-specific operation codes beyond the PTP standard (0x1001–0x101B).
 /// These are vendor extensions defined by the MTP specification.
 public enum MTPOp: UInt16, Sendable {
+  /// GetObjectPropsSupported — list all property codes supported for a given format.
+  case getObjectPropsSupported = 0x9801
+
   /// GetObjectPropList — batch property retrieval.
   case getObjectPropList = 0x9805
 

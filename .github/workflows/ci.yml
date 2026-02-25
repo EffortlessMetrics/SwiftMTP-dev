@@ -1,4 +1,8 @@
 name: ci
+# Purpose: Primary CI — runs on every push and PR (all branches).
+# Checks: build, UX validation, full test suite + coverage, TSAN (thread sanitizer),
+#         fuzz harness, SBOM (on tags). This is the required check for merging PRs.
+# Complement: swiftmtp-ci.yml adds deeper coverage reporting, docs, and CLI smoke on main.
 on:
   push:
   pull_request:
@@ -7,6 +11,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Select Xcode 16
         uses: maxim-lobanov/setup-xcode@v1
         with: { xcode-version: "16" }
@@ -20,6 +26,32 @@ jobs:
       - name: Build (SwiftMTPKit)
         working-directory: SwiftMTPKit
         run: swift build -v
+      - name: Validate UX touch policy
+        run: ./scripts/validate-ux-touch.sh
+      - name: Ensure UX map schema tooling
+        run: python3 -m pip install jsonschema
+      - name: Validate UX interaction map
+        run: ./scripts/validate-ux-map.sh
+      - name: Critical UX UI lane (mock deterministic)
+        env:
+          SWIFTMTP_UI_TEST_ARTIFACT_BASE_DIR: ${{ github.workspace }}/artifacts/ui
+        run: |
+          mkdir -p artifacts/ui
+          xcodebuild test \
+            -project SwiftMTP.xcodeproj \
+            -scheme SwiftMTP \
+            -destination 'platform=macOS' \
+            -only-testing:SwiftMTPUITests/CriticalFlowTests \
+            -resultBundlePath artifacts/ui/critical-flows.xcresult
+      - name: Upload critical UI artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: critical-ui-artifacts
+          retention-days: 14
+          path: |
+            artifacts/ui/critical-flows.xcresult
+            artifacts/ui
       - name: Full Test Suite + Coverage Gate + Xcode Unit/UI Tests
         env:
           RUN_XCODE_UI_TESTS: "1"

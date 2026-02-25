@@ -4,10 +4,7 @@ import CryptoKit
 import SwiftMTPCore
 import SwiftMTPTransportLibUSB
 import SwiftMTPQuirks
-
-// Import ExitCode and exitNow from SwiftMTPCore
-import enum SwiftMTPCore.ExitCode
-import func SwiftMTPCore.exitNow
+import SwiftMTPCLI
 
 // Import CLI utilities
 func printJSONErrorAndExit(_ error: any Error) -> Never {
@@ -64,14 +61,14 @@ public enum CollectCommand {
 
   // MARK: - Flags structure for back-compatibility
   public struct CollectFlags: Sendable {
-    public var strict: Bool = true           // default strict on
-    public var safe: Bool = false            // --safe
-    public var runBench: [String] = []       // default no bench
-    public var json: Bool = false            // --json
+    public var strict: Bool = true  // default strict on
+    public var safe: Bool = false  // --safe
+    public var runBench: [String] = []  // default no bench
+    public var json: Bool = false  // --json
     public var noninteractive: Bool = false  // --noninteractive
-    public var bundlePath: String?           // --bundle
-    public var deviceName: String?           // --device-name
-    public var openPR: Bool = false          // --open-pr
+    public var bundlePath: String?  // --bundle
+    public var deviceName: String?  // --device-name
+    public var openPR: Bool = false  // --open-pr
     public var vid: UInt16?
     public var pid: UInt16?
     public var bus: Int?
@@ -96,11 +93,17 @@ public enum CollectCommand {
       self.bundlePath = bundlePath
       self.deviceName = deviceName
       self.openPR = openPR
-      self.vid = vid; self.pid = pid; self.bus = bus; self.address = address
+      self.vid = vid
+      self.pid = pid
+      self.bus = bus
+      self.address = address
     }
 
     // Backward-compat initializer (no json parameter)
-    @available(*, deprecated, message: "Use newer initializer that includes json/noninteractive/bundlePath/IDs")
+    @available(
+      *, deprecated,
+      message: "Use newer initializer that includes json/noninteractive/bundlePath/IDs"
+    )
     public init(strict: Bool = true, runBench: [String] = []) {
       self.init(
         strict: strict,
@@ -114,20 +117,27 @@ public enum CollectCommand {
     }
 
     // Backward‑compat initializer: older call‑sites used `jsonOutput`
-    @available(*, deprecated, message: "Use init(strict:runBench:json:noninteractive:bundlePath:vid:pid:bus:address:) instead.")
-    public init(jsonOutput: Bool,
-                noninteractive: Bool = false,
-                strict: Bool = true,
-                runBench: [String] = [],
-                bundlePath: String? = nil) {
-      self.init(strict: strict,
-                runBench: runBench,
-                json: jsonOutput,
-                noninteractive: noninteractive,
-                bundlePath: bundlePath,
-                deviceName: nil,
-                openPR: false,
-                vid: nil, pid: nil, bus: nil, address: nil)
+    @available(
+      *, deprecated,
+      message:
+        "Use init(strict:runBench:json:noninteractive:bundlePath:vid:pid:bus:address:) instead."
+    )
+    public init(
+      jsonOutput: Bool,
+      noninteractive: Bool = false,
+      strict: Bool = true,
+      runBench: [String] = [],
+      bundlePath: String? = nil
+    ) {
+      self.init(
+        strict: strict,
+        runBench: runBench,
+        json: jsonOutput,
+        noninteractive: noninteractive,
+        bundlePath: bundlePath,
+        deviceName: nil,
+        openPR: false,
+        vid: nil, pid: nil, bus: nil, address: nil)
     }
   }
 
@@ -135,7 +145,9 @@ public enum CollectCommand {
 
   /// Collect a device evidence bundle without calling exitNow().
   /// Returns the bundle URL and optional CI output.
-  public static func collectBundle(flags: Flags) async throws -> (bundleURL: URL, summary: MTPDeviceSummary) {
+  public static func collectBundle(flags: Flags) async throws -> (
+    bundleURL: URL, summary: MTPDeviceSummary
+  ) {
     let summary = try await selectDeviceOrExit(flags: flags)
     let (device, config) = try await openDevice(summary: summary, strict: flags.strict)
     let bundleURL = try prepareBundlePath(flags: flags, summary: summary)
@@ -208,7 +220,7 @@ public enum CollectCommand {
 
     } catch {
       if jsonMode { printJSONErrorAndExit(error, flags: flags) }
-      
+
       if let collectError = error as? CollectError {
         switch collectError {
         case .noDeviceMatched:
@@ -228,7 +240,7 @@ public enum CollectCommand {
           return .usage
         }
       }
-      
+
       fputs("❌ collect failed: \(error)\n", stderr)
       return .software
     }
@@ -237,7 +249,8 @@ public enum CollectCommand {
   // MARK: - Device selection (no internal helpers)
   private static func selectDeviceOrExit(flags: Flags) async throws -> MTPDeviceSummary {
     let devs = try await enumerateRealMTPDevices()
-    let filter = DeviceFilter(vid: flags.vid, pid: flags.pid, bus: flags.bus, address: flags.address)
+    let filter = DeviceFilter(
+      vid: flags.vid, pid: flags.pid, bus: flags.bus, address: flags.address)
     let outcome = selectDevice(devs, filter: filter, noninteractive: flags.noninteractive)
 
     let candidates = devs.map { DeviceCandidate(from: $0) }
@@ -252,25 +265,31 @@ public enum CollectCommand {
         if !devs.isEmpty {
           fputs("Available devices:\n", stderr)
           for (i, candidate) in candidates.enumerated() {
-            fputs("  \(i+1). \(candidate.vid):\(candidate.pid) @ \(candidate.bus):\(candidate.address) - \(candidate.manufacturer) \(candidate.model)\n", stderr)
+            fputs(
+              "  \(i+1). \(candidate.vid):\(candidate.pid) @ \(candidate.bus):\(candidate.address) - \(candidate.manufacturer) \(candidate.model)\n",
+              stderr)
           }
         }
         exitNow(.unavailable)
       }
-      // never returns
+    // never returns
     case .selected(let selected):
       return selected
     case .multiple(let matches):
       // If interactive, you could prompt; for noninteractive we must exit(64).
       if flags.noninteractive {
         if flags.json {
-          printJSONErrorAndExit(CollectError.ambiguousSelection(count: matches.count, candidates: candidates), flags: flags)
+          printJSONErrorAndExit(
+            CollectError.ambiguousSelection(count: matches.count, candidates: candidates),
+            flags: flags)
         } else {
           fputs("Multiple devices matched the filter; refine selection.\n", stderr)
           fputs("Matching devices:\n", stderr)
           for (i, device) in matches.enumerated() {
             let candidate = DeviceCandidate(from: device)
-            fputs("  \(i+1). \(candidate.vid):\(candidate.pid) @ \(candidate.bus):\(candidate.address) - \(candidate.manufacturer) \(candidate.model)\n", stderr)
+            fputs(
+              "  \(i+1). \(candidate.vid):\(candidate.pid) @ \(candidate.bus):\(candidate.address) - \(candidate.manufacturer) \(candidate.model)\n",
+              stderr)
           }
           exitNow(.usage)
         }
@@ -289,15 +308,17 @@ public enum CollectCommand {
 
   // MARK: - Open device
   private static func openDevice(summary: MTPDeviceSummary, strict: Bool) async throws
-  -> (any MTPDevice, SwiftMTPConfig) {
+    -> (any MTPDevice, SwiftMTPConfig)
+  {
     let transport = LibUSBTransportFactory.createTransport()
     let config = SwiftMTPConfig()
     // Strict mode is conceptual; your DeviceActor applies conservative tuning when strict=true
     // Apply tuning/quirks at open time using your existing actor method:
-    let device = try await MTPDeviceManager.shared.openDevice(with: summary,
-                                                              transport: transport,
-                                                              config: config)
-    try await device.openIfNeeded() // compat shim you added
+    let device = try await MTPDeviceManager.shared.openDevice(
+      with: summary,
+      transport: transport,
+      config: config)
+    try await device.openIfNeeded()  // compat shim you added
     return (device, config)
   }
 
@@ -339,11 +360,12 @@ public enum CollectCommand {
     }
 
     let salt = Redaction.generateSalt()
-    try (salt.hexString() + "\n").write(
-      to: bundleURL.appendingPathComponent(".salt"),
-      atomically: true,
-      encoding: .utf8
-    )
+    try (salt.hexString() + "\n")
+      .write(
+        to: bundleURL.appendingPathComponent(".salt"),
+        atomically: true,
+        encoding: .utf8
+      )
 
     let tuning = await device.effectiveTuning
     let manifest = buildSubmissionManifest(
@@ -361,7 +383,8 @@ public enum CollectCommand {
       benchResults: benchResults,
       submittedBy: manifest.user?.github
     )
-    try writeJSONFile(quirkSuggestion, to: bundleURL.appendingPathComponent("quirk-suggestion.json"))
+    try writeJSONFile(
+      quirkSuggestion, to: bundleURL.appendingPathComponent("quirk-suggestion.json"))
   }
 
   // MARK: - Probe capture
@@ -386,8 +409,10 @@ public enum CollectCommand {
     var serial: String?
   }
 
-  private static func collectProbeJSON(device: any MTPDevice,
-                                       summary: MTPDeviceSummary) async throws -> ProbeJSON {
+  private static func collectProbeJSON(
+    device: any MTPDevice,
+    summary: MTPDeviceSummary
+  ) async throws -> ProbeJSON {
     let info = try await device.getDeviceInfo()
     let storages = try await device.storages()
     let receipt = await device.probeReceipt
@@ -399,10 +424,11 @@ public enum CollectCommand {
       capabilities: capabilities,
       vendorID: summary.vendorID ?? 0, productID: summary.productID ?? 0,
       bus: Int(summary.bus ?? 0), address: Int(summary.address ?? 0),
-      deviceInfo: .init(manufacturer: info.manufacturer,
-                        model: info.model,
-                        version: info.version,
-                        serial: info.serialNumber),
+      deviceInfo: .init(
+        manufacturer: info.manufacturer,
+        model: info.model,
+        version: info.version,
+        serial: info.serialNumber),
       storageCount: storages.count
     )
   }
@@ -423,7 +449,8 @@ public enum CollectCommand {
   // MARK: - USB dump (simple, sanitized)
   private static func generateSimpleUSBDump(summary: MTPDeviceSummary) async throws -> String {
     // We rely only on information embedded in the summary to avoid internal helpers.
-    var text = "Device \(String(format: "%04x:%04x", summary.vendorID ?? 0, summary.productID ?? 0))\n"
+    var text =
+      "Device \(String(format: "%04x:%04x", summary.vendorID ?? 0, summary.productID ?? 0))\n"
     text += "  bus=\(summary.bus ?? 0) address=\(summary.address ?? 0)\n"
     // If your summary exposes interface/endpoint info, include it here similarly.
     return text
@@ -434,35 +461,57 @@ public enum CollectCommand {
     var t = s
 
     // User paths (macOS, Linux, Windows)
-    t = t.replacingOccurrences(of: #"/Users/[^/\n]+"#, with: "/Users/<redacted>", options: .regularExpression)
-    t = t.replacingOccurrences(of: #"/home/[^/\n]+"#, with: "/home/<redacted>", options: .regularExpression)
-    t = t.replacingOccurrences(of: #"/var/[^/\n]+"#, with: "/var/<redacted>", options: .regularExpression)
-    t = t.replacingOccurrences(of: #"/etc/[^/\n]+"#, with: "/etc/<redacted>", options: .regularExpression)
-    t = t.replacingOccurrences(of: #"([A-Za-z]:\\Users\\)[^\\]+"#, with: "$1<redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(
+      of: #"/Users/[^/\n]+"#, with: "/Users/<redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(
+      of: #"/home/[^/\n]+"#, with: "/home/<redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(
+      of: #"/var/[^/\n]+"#, with: "/var/<redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(
+      of: #"/etc/[^/\n]+"#, with: "/etc/<redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(
+      of: #"([A-Za-z]:\\Users\\)[^\\]+"#, with: "$1<redacted>", options: .regularExpression)
 
     // Host/computer names
-    t = t.replacingOccurrences(of: #"(?i)(Host\s*Name|Hostname|Computer\s*Name)\s*:\s*.*"#, with: "$1: <redacted>", options: .regularExpression)
+    t = t.replacingOccurrences(
+      of: #"(?i)(Host\s*Name|Hostname|Computer\s*Name)\s*:\s*.*"#, with: "$1: <redacted>",
+      options: .regularExpression)
 
     // Emails
-    t = t.replacingOccurrences(of: #"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}"#, with: "<redacted-email>", options: [.regularExpression, .caseInsensitive])
+    t = t.replacingOccurrences(
+      of: #"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}"#, with: "<redacted-email>",
+      options: [.regularExpression, .caseInsensitive])
 
     // IP addresses (IPv4 and IPv6)
-    t = t.replacingOccurrences(of: #"\b(\d{1,3}\.){3}\d{1,3}\b"#, with: "<redacted-ipv4>", options: .regularExpression)
-    t = t.replacingOccurrences(of: #"\b([0-9A-Fa-f]{0,4}:){2,7}[0-9A-Fa-f]{0,4}\b"#, with: "<redacted-ipv6>", options: [.regularExpression, .caseInsensitive])
+    t = t.replacingOccurrences(
+      of: #"\b(\d{1,3}\.){3}\d{1,3}\b"#, with: "<redacted-ipv4>", options: .regularExpression)
+    t = t.replacingOccurrences(
+      of: #"\b([0-9A-Fa-f]{0,4}:){2,7}[0-9A-Fa-f]{0,4}\b"#, with: "<redacted-ipv6>",
+      options: [.regularExpression, .caseInsensitive])
 
     // MAC addresses
-    t = t.replacingOccurrences(of: #"\b([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b"#, with: "<redacted-mac>", options: [.regularExpression, .caseInsensitive])
+    t = t.replacingOccurrences(
+      of: #"\b([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b"#, with: "<redacted-mac>",
+      options: [.regularExpression, .caseInsensitive])
 
     // Serial numbers and device IDs
-    t = t.replacingOccurrences(of: #"(?i)(UDID|Serial\s*(?:Number)?|iSerial)\b[:\s]+(\S+)"#, with: "$1: <redacted>", options: .regularExpression)
-    t = t.replacingOccurrences(of: #"\b([0-9a-f]{16,64})\b(?=.*\b(udid|serial|device|sn|id)\b)"#, with: "<redacted-hex>", options: [.regularExpression, .caseInsensitive])
+    t = t.replacingOccurrences(
+      of: #"(?i)(UDID|Serial\s*(?:Number)?|iSerial)\b[:\s]+(\S+)"#, with: "$1: <redacted>",
+      options: .regularExpression)
+    t = t.replacingOccurrences(
+      of: #"\b([0-9a-f]{16,64})\b(?=.*\b(udid|serial|device|sn|id)\b)"#, with: "<redacted-hex>",
+      options: [.regularExpression, .caseInsensitive])
 
     // Possessive device names (e.g., "Steven's iPhone" → "iPhone")
-    t = t.replacingOccurrences(of: #"\b[\p{L}\p{N}._%+-]+'s\s+"#, with: "", options: [.regularExpression, .caseInsensitive])
+    t = t.replacingOccurrences(
+      of: #"\b[\p{L}\p{N}._%+-]+'s\s+"#, with: "", options: [.regularExpression, .caseInsensitive])
 
     // Legacy patterns for backward compatibility
-    t = t.replacingOccurrences(of: #"Serial\s+Number:\s+[^\s]+"#, with: "Serial Number: <redacted>", options: .regularExpression)
-    t = t.replacingOccurrences(of: #"\b[A-Za-z0-9._-]+\.local\b"#, with: "<redacted>.local", options: .regularExpression)
+    t = t.replacingOccurrences(
+      of: #"Serial\s+Number:\s+[^\s]+"#, with: "Serial Number: <redacted>",
+      options: .regularExpression)
+    t = t.replacingOccurrences(
+      of: #"\b[A-Za-z0-9._-]+\.local\b"#, with: "<redacted>.local", options: .regularExpression)
 
     return t
   }
@@ -486,7 +535,7 @@ public enum CollectCommand {
       ("hostname", #"(?im)^(Host Name|Hostname|Computer Name)\s*:\s*(?!<redacted>)\S+"#),
       ("email", #"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}"#),
       ("ipv4", #"\b(\d{1,3}\.){3}\d{1,3}\b"#),
-      ("mac", #"\b([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b"#)
+      ("mac", #"\b([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b"#),
     ]
 
     return checks.compactMap { label, pattern in
@@ -502,7 +551,9 @@ public enum CollectCommand {
     let writeMBps: Double
   }
 
-  private static func runBenches(device: any MTPDevice, sizes: [String]) async throws -> [BenchResult] {
+  private static func runBenches(device: any MTPDevice, sizes: [String]) async throws
+    -> [BenchResult]
+  {
     var results: [BenchResult] = []
     results.reserveCapacity(sizes.count)
 
@@ -645,7 +696,8 @@ public enum CollectCommand {
     let preferredNames = ["Download", "Downloads", "DCIM"]
     var safeFolder: MTPObjectInfo? = nil
     for name in preferredNames {
-      if let match = folders.first(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame }) {
+      if let match = folders.first(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame })
+      {
         safeFolder = match
         break
       }
@@ -710,6 +762,20 @@ public enum CollectCommand {
     )
 
     let benchFiles = benchResults.map { "bench-\($0.name).csv" }
+    let benchSummary: SubmissionManifest.BenchSummary? =
+      benchFiles.isEmpty
+      ? nil
+      : {
+        let count = Double(benchResults.count)
+        let avgRead = round(benchResults.map(\.readMBps).reduce(0, +) / count * 100) / 100
+        let avgWrite = round(benchResults.map(\.writeMBps).reduce(0, +) / count * 100) / 100
+        let peakRead = round((benchResults.map(\.readMBps).max() ?? 0) * 100) / 100
+        let peakWrite = round((benchResults.map(\.writeMBps).max() ?? 0) * 100) / 100
+        return SubmissionManifest.BenchSummary(
+          readMBpsAvg: avgRead, writeMBpsAvg: avgWrite,
+          readMBpsPeak: peakRead, writeMBpsPeak: peakWrite,
+          sizes: benchResults.map(\.name), runCount: benchResults.count)
+      }()
 
     return SubmissionManifest(
       tool: .init(
@@ -735,7 +801,8 @@ public enum CollectCommand {
       artifacts: .init(
         probe: "probe.json",
         usbDump: "usb-dump.txt",
-        bench: benchFiles.isEmpty ? nil : benchFiles
+        bench: benchFiles.isEmpty ? nil : benchFiles,
+        benchSummary: benchSummary
       ),
       consent: .init(anonymizeSerial: true, allowBench: !benchResults.isEmpty)
     )
@@ -758,7 +825,7 @@ public enum CollectCommand {
       "postClaimStabilizeMs": AnyCodable(tuning.postClaimStabilizeMs),
       "postProbeStabilizeMs": AnyCodable(tuning.postProbeStabilizeMs),
       "resetOnOpen": AnyCodable(tuning.resetOnOpen),
-      "disableEventPump": AnyCodable(tuning.disableEventPump)
+      "disableEventPump": AnyCodable(tuning.disableEventPump),
     ]
     overrides["resumeEnabled"] = AnyCodable(config.resumeEnabled)
 
@@ -772,10 +839,12 @@ public enum CollectCommand {
       )
     }
 
-    let readGate = benchResults.isEmpty
+    let readGate =
+      benchResults.isEmpty
       ? 0
       : benchResults.map(\.readMBps).reduce(0, +) / Double(benchResults.count)
-    let writeGate = benchResults.isEmpty
+    let writeGate =
+      benchResults.isEmpty
       ? 0
       : benchResults.map(\.writeMBps).reduce(0, +) / Double(benchResults.count)
 
@@ -841,15 +910,15 @@ public enum CollectCommand {
   }
 
   private static func hostArch() -> String {
-#if arch(arm64)
-    return "arm64"
-#elseif arch(x86_64)
-    return "x86_64"
-#elseif arch(i386)
-    return "i386"
-#else
-    return "unknown"
-#endif
+    #if arch(arm64)
+      return "arm64"
+    #elseif arch(x86_64)
+      return "x86_64"
+    #elseif arch(i386)
+      return "i386"
+    #else
+      return "unknown"
+    #endif
   }
 
   private static func toHexByte(_ raw: String) -> String {
@@ -875,7 +944,8 @@ public enum CollectCommand {
 
   private static func slugify(_ value: String) -> String {
     let lower = value.lowercased()
-    let slug = lower
+    let slug =
+      lower
       .replacingOccurrences(of: #"[^a-z0-9]+"#, with: "-", options: .regularExpression)
       .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
     return slug.isEmpty ? "device" : slug
@@ -897,13 +967,16 @@ public enum CollectCommand {
       base = URL(fileURLWithPath: b, isDirectory: true)
     } else {
       let root = URL(fileURLWithPath: fm.currentDirectoryPath, isDirectory: true)
-      let stamp = ISO8601DateFormatter().string(from: Date()).replacingOccurrences(of: ":", with: "-")
+      let stamp = ISO8601DateFormatter().string(from: Date())
+        .replacingOccurrences(of: ":", with: "-")
       let namePrefix: String
       if let customName = flags.deviceName?.trimmingCharacters(in: .whitespacesAndNewlines),
-         !customName.isEmpty {
+        !customName.isEmpty
+      {
         namePrefix = slugify(customName)
       } else {
-        namePrefix = String(format: "device-%04x-%04x", summary.vendorID ?? 0, summary.productID ?? 0)
+        namePrefix = String(
+          format: "device-%04x-%04x", summary.vendorID ?? 0, summary.productID ?? 0)
       }
       let name = "\(namePrefix)-\(stamp)"
       base = root.appendingPathComponent("Contrib/submissions/\(name)", isDirectory: true)
@@ -913,7 +986,9 @@ public enum CollectCommand {
   }
 
   /// Execute `op` with a wall-clock deadline (ms). Cancels the task on timeout.
-  private static func within<T: Sendable>(ms: Int, _ op: @escaping @Sendable () async throws -> T) async throws -> T {
+  private static func within<T: Sendable>(ms: Int, _ op: @escaping @Sendable () async throws -> T)
+    async throws -> T
+  {
     try await withThrowingTaskGroup(of: T.self) { group in
       group.addTask { try await op() }
       group.addTask {
@@ -937,13 +1012,28 @@ public enum CollectCommand {
 
     var errorDescription: String? {
       switch self {
-      case .noDeviceMatched: return "No device matched the provided filter."
-      case .ambiguousSelection(let n, _): return "Multiple devices matched the filter (\(n))."
-      case .timeout(let ms): return "Step exceeded deadline (\(ms) ms)."
+      case .noDeviceMatched:
+        return
+          "No device matched the provided filter. "
+          + "Run `swiftmtp probe` to list attached MTP devices, then re-run with --vid and --pid."
+      case .ambiguousSelection(let n, _):
+        return
+          "Multiple devices (\(n)) matched the filter. "
+          + "Specify --vid, --pid, --bus, and/or --address to select a single device."
+      case .timeout(let ms):
+        return
+          "Step exceeded deadline (\(ms) ms). "
+          + "The device may be slow to respond; retry or use --io-timeout to extend the limit."
       case .redactionCheckFailed(let issues):
-        return "Debug-artifact redaction check failed: \(issues.joined(separator: ", "))."
+        let issueList = issues.joined(separator: ", ")
+        return
+          "Debug-artifact redaction check failed: [\(issueList)]. "
+          + "Run `swiftmtp redact` on the artifact to strip sensitive fields, then re-run with --strict. "
+          + "To submit anyway (not recommended): re-run with --no-strict and review the artifact manually."
       case .invalidBenchSize(let size):
-        return "Invalid benchmark size '\(size)'. Expected values like 100M, 500M, or 1G."
+        return
+          "Invalid benchmark size '\(size)'. "
+          + "Expected values like 100M, 500M, 1G, or 2G (must be ≥ 1 MB and ≤ 4 GB)."
       }
     }
   }
@@ -1028,6 +1118,16 @@ public enum CollectCommand {
       let probe: String
       let usbDump: String
       let bench: [String]?
+      let benchSummary: BenchSummary?
+    }
+
+    public struct BenchSummary: Codable {
+      let readMBpsAvg: Double
+      let writeMBpsAvg: Double
+      let readMBpsPeak: Double
+      let writeMBpsPeak: Double
+      let sizes: [String]
+      let runCount: Int
     }
 
     public struct ConsentInfo: Codable {
@@ -1092,7 +1192,10 @@ public enum CollectCommand {
       } else if let bool = try? container.decode(Bool.self) {
         value = bool
       } else {
-        throw DecodingError.typeMismatch(AnyCodable.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Unsupported type"))
+        throw DecodingError.typeMismatch(
+          AnyCodable.self,
+          DecodingError.Context(
+            codingPath: decoder.codingPath, debugDescription: "Unsupported type"))
       }
     }
 
@@ -1104,7 +1207,10 @@ public enum CollectCommand {
       case let string as String: try container.encode(string)
       case let bool as Bool: try container.encode(bool)
       default:
-        throw EncodingError.invalidValue(value, EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "Unsupported type"))
+        throw EncodingError.invalidValue(
+          value,
+          EncodingError.Context(
+            codingPath: encoder.codingPath, debugDescription: "Unsupported type"))
       }
     }
   }

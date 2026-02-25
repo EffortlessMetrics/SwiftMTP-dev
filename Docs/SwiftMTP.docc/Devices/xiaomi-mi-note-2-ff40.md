@@ -26,6 +26,14 @@ Current bring-up status for Xiaomi Mi Note 2 (`VID:PID 2717:ff40`).
 
 ## Modes x Operations
 
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | 2.1 MB | bytes |
+| Handshake Timeout | 6000 | ms |
+| I/O Timeout | 15000 | ms |
+| Inactivity Timeout | 8000 | ms |
+| Overall Deadline | 120000 | ms || Stabilization Delay | 400 | ms |
+
 | Mode | Evidence | Open + DeviceInfo | Storage IDs | Root List | Read Smoke | Write Smoke | Delete Smoke | Result |
 |---|---|---|---|---|---|---|---|---|
 | MTP (storage gated) | `20260216-015505` | Pass | `0` storages | Fail | Skipped | Skipped | Skipped | `storage_gated` |
@@ -34,6 +42,28 @@ Current bring-up status for Xiaomi Mi Note 2 (`VID:PID 2717:ff40`).
 | Charge-only | Not yet captured | Pending | Pending | Pending | Pending | Pending | Pending | Pending |
 
 ## Write Path Notes
+
+| Operation | Supported |
+|-----------|-----------|| 64-bit Partial Object Retrieval | Yes |
+| Partial Object Sending | Yes |
+| Prefer Object Property List | No |
+| Write Resume Disabled | No |
+
+## Notes
+
+- Same tuning as ff10 variant with vendor-specific (0xff) MTP interface matching.
+- Requires 250-500 ms stabilization after OpenSession.
+- Prefer direct USB port; keep screen unlocked.
+## Provenance
+
+- **Author**: Steven Zimmerman
+- **Date**: 2025-01-09
+- **Commit**: <current-commit>
+
+### Evidence Artifacts
+- [Device Probe](probes/mi-note2-probe.txt)
+- [100MB Benchmark](Docs/benchmarks/csv/mi-note2-100m.csv)
+- [1GB Benchmark](Docs/benchmarks/csv/mi-note2-1g.csv)
 
 - Historical failure class was `SendObject` rejection with `0x201D` when targeting `Download`.
 - Write fallback ladder is now implemented in core and in `device-lab` write smoke:

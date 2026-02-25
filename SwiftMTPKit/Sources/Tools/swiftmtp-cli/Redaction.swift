@@ -6,45 +6,47 @@ import CommonCrypto
 
 /// Utility for redacting sensitive data using HMAC-SHA256
 struct Redaction {
-    /// Redacts a serial number using HMAC-SHA256 with a random salt
-    /// - Parameters:
-    ///   - serial: The serial number to redact
-    ///   - salt: Random salt for HMAC (must be saved separately for consistency)
-    /// - Returns: Redacted serial in format "hmacsha256:<hex>"
-    static func redactSerial(_ serial: String, salt: Data) -> String {
-        let data = Data(serial.utf8)
-        let hmac = hmacSHA256(data: data, key: salt)
-        return "hmacsha256:" + hmac.map { String(format: "%02x", $0) }.joined()
-    }
+  /// Redacts a serial number using HMAC-SHA256 with a random salt
+  /// - Parameters:
+  ///   - serial: The serial number to redact
+  ///   - salt: Random salt for HMAC (must be saved separately for consistency)
+  /// - Returns: Redacted serial in format "hmacsha256:<hex>"
+  static func redactSerial(_ serial: String, salt: Data) -> String {
+    let data = Data(serial.utf8)
+    let hmac = hmacSHA256(data: data, key: salt)
+    return "hmacsha256:" + hmac.map { String(format: "%02x", $0) }.joined()
+  }
 
-    /// Generates a random salt for HMAC operations
-    /// - Parameter count: Number of random bytes to generate
-    /// - Returns: Random data to use as salt
-    static func generateSalt(count: Int = 32) -> Data {
-        var bytes = [UInt8](repeating: 0, count: count)
-        _ = SecRandomCopyBytes(kSecRandomDefault, count, &bytes)
-        return Data(bytes)
-    }
+  /// Generates a random salt for HMAC operations
+  /// - Parameter count: Number of random bytes to generate
+  /// - Returns: Random data to use as salt
+  static func generateSalt(count: Int = 32) -> Data {
+    var bytes = [UInt8](repeating: 0, count: count)
+    _ = SecRandomCopyBytes(kSecRandomDefault, count, &bytes)
+    return Data(bytes)
+  }
 
-    /// Computes HMAC-SHA256
-    /// - Parameters:
-    ///   - data: Data to hash
-    ///   - key: Key for HMAC
-    /// - Returns: HMAC digest
-    private static func hmacSHA256(data: Data, key: Data) -> Data {
-        var hmac = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
-        key.withUnsafeBytes { keyBuffer in
-            data.withUnsafeBytes { dataBuffer in
-                CCHmac(CCHmacAlgorithm(kCCHmacAlgSHA256), keyBuffer.baseAddress, key.count, dataBuffer.baseAddress, data.count, &hmac)
-            }
-        }
-        return Data(hmac)
+  /// Computes HMAC-SHA256
+  /// - Parameters:
+  ///   - data: Data to hash
+  ///   - key: Key for HMAC
+  /// - Returns: HMAC digest
+  private static func hmacSHA256(data: Data, key: Data) -> Data {
+    var hmac = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+    key.withUnsafeBytes { keyBuffer in
+      data.withUnsafeBytes { dataBuffer in
+        CCHmac(
+          CCHmacAlgorithm(kCCHmacAlgSHA256), keyBuffer.baseAddress, key.count,
+          dataBuffer.baseAddress, data.count, &hmac)
+      }
     }
+    return Data(hmac)
+  }
 }
 
 extension Data {
-    /// Converts Data to hexadecimal string
-    func hexString() -> String {
-        return self.map { String(format: "%02x", $0) }.joined()
-    }
+  /// Converts Data to hexadecimal string
+  func hexString() -> String {
+    return self.map { String(format: "%02x", $0) }.joined()
+  }
 }

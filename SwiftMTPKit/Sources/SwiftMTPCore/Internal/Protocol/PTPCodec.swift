@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import MTPEndianCodec
 
 // Sendable closure type aliases for MTP data transfer
 public typealias MTPDataIn = @Sendable (UnsafeRawBufferPointer) -> Int
@@ -25,24 +26,20 @@ public struct PTPContainer: Sendable {
   }
 
   public func encode(into buf: UnsafeMutablePointer<UInt8>) -> Int {
+    let base = UnsafeMutableRawPointer(buf)
     var off = 0
-    func put32(_ v: UInt32) {
-      withUnsafeBytes(of: v.littleEndian) { m in
-        m.copyBytes(to: UnsafeMutableRawBufferPointer(start: buf + off, count: 4))
-        off += 4
-      }
+    MTPEndianCodec.encode(length, into: base, at: off)
+    off += 4
+    MTPEndianCodec.encode(type, into: base, at: off)
+    off += 2
+    MTPEndianCodec.encode(code, into: base, at: off)
+    off += 2
+    MTPEndianCodec.encode(txid, into: base, at: off)
+    off += 4
+    for p in params {
+      MTPEndianCodec.encode(p, into: base, at: off)
+      off += 4
     }
-    func put16(_ v: UInt16) {
-      withUnsafeBytes(of: v.littleEndian) { m in
-        m.copyBytes(to: UnsafeMutableRawBufferPointer(start: buf + off, count: 2))
-        off += 2
-      }
-    }
-    put32(length)
-    put16(type)
-    put16(code)
-    put32(txid)
-    for p in params { put32(p) }
     return off
   }
 }
@@ -140,27 +137,21 @@ public struct PTPReader {
   }
 
   public mutating func u16() -> UInt16? {
-    guard o + 2 <= data.count else { return nil }
-    var v: UInt16 = 0
-    _ = withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o + 2)) }
+    guard let v = MTPEndianCodec.decodeUInt16(from: data, at: o) else { return nil }
     defer { o += 2 }
-    return v.littleEndian
+    return v
   }
 
   public mutating func u32() -> UInt32? {
-    guard o + 4 <= data.count else { return nil }
-    var v: UInt32 = 0
-    _ = withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o + 4)) }
+    guard let v = MTPEndianCodec.decodeUInt32(from: data, at: o) else { return nil }
     defer { o += 4 }
-    return v.littleEndian
+    return v
   }
 
   public mutating func u64() -> UInt64? {
-    guard o + 8 <= data.count else { return nil }
-    var v: UInt64 = 0
-    _ = withUnsafeMutableBytes(of: &v) { data.copyBytes(to: $0, from: o..<(o + 8)) }
+    guard let v = MTPEndianCodec.decodeUInt64(from: data, at: o) else { return nil }
     defer { o += 8 }
-    return v.littleEndian
+    return v
   }
 
   public mutating func bytes(_ n: Int) -> Data? {
@@ -362,50 +353,34 @@ public struct PTPObjectInfoDataset {
     omitOptionalStringFields: Bool = false,
     objectInfoParentHandleOverride: UInt32? = nil
   ) -> Data {
-    var data = Data()
-    func put32(_ v: UInt32) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
-    func put16(_ v: UInt16) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
-    func putPTPString(_ s: String) {
-      if s.isEmpty {
-        data.append(0)
-        return
-      }
-      let utf16 = Array(s.utf16)
-      let charCount = UInt8(min(255, utf16.count + 1))
-      data.append(charCount)
-      for cu in utf16.prefix(Int(charCount) - 1) {
-        put16(UInt16(cu))
-      }
-      put16(0)  // Null terminator
-    }
-
-    put32(storageID)
-    put16(format)
-    put16(0)  // ProtectionStatus
-    put32(objectCompressedSizeOverride ?? UInt32(min(size, UInt64(0xFFFFFFFF))))  // ObjectCompressedSize
-    put16(0)  // ThumbFormat
-    put32(0)  // ThumbCompressedSize
-    put32(0)  // ThumbPixWidth
-    put32(0)  // ThumbPixHeight
-    put32(0)  // ImagePixWidth
-    put32(0)  // ImagePixHeight
-    put32(0)  // ImageBitDepth
-    put32(objectInfoParentHandleOverride ?? parentHandle)
-    put16(associationType)
-    put32(associationDesc)
-    put32(0)  // SequenceNumber
-    putPTPString(name)
+    var w = MTPDataEncoder()
+    w.append(storageID)
+    w.append(format)
+    w.append(UInt16(0))  // ProtectionStatus
+    // ObjectCompressedSize
+    w.append(objectCompressedSizeOverride ?? UInt32(min(size, UInt64(0xFFFF_FFFF))))
+    w.append(UInt16(0))  // ThumbFormat
+    w.append(UInt32(0))  // ThumbCompressedSize
+    w.append(UInt32(0))  // ThumbPixWidth
+    w.append(UInt32(0))  // ThumbPixHeight
+    w.append(UInt32(0))  // ImagePixWidth
+    w.append(UInt32(0))  // ImagePixHeight
+    w.append(UInt32(0))  // ImageBitDepth
+    w.append(objectInfoParentHandleOverride ?? parentHandle)
+    w.append(associationType)
+    w.append(associationDesc)
+    w.append(UInt32(0))  // SequenceNumber
+    w.append(PTPString.encode(name))
     if !omitOptionalStringFields {
       if useEmptyDates {
-        putPTPString("")  // CaptureDate (empty)
-        putPTPString("")  // ModificationDate (empty)
+        w.append(PTPString.encode(""))  // CaptureDate
+        w.append(PTPString.encode(""))  // ModificationDate
       } else {
-        putPTPString("20250101T000000")  // CaptureDate
-        putPTPString("20250101T000000")  // ModificationDate
+        w.append(PTPString.encode("20250101T000000"))  // CaptureDate
+        w.append(PTPString.encode("20250101T000000"))  // ModificationDate
       }
-      putPTPString("")  // Keywords
+      w.append(PTPString.encode(""))  // Keywords
     }
-
-    return data
+    return w.encodedData
   }
 }

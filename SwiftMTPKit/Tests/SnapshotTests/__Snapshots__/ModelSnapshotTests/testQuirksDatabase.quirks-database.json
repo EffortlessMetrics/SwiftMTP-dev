@@ -36,6 +36,31 @@
       "status" : "stable"
     },
     {
+      "confidence" : "medium",
+      "hooks" : [
+        {
+          "delayMs" : 500,
+          "phase" : "postOpenSession"
+        },
+        {
+          "busyBackoff" : {
+            "baseMs" : 400,
+            "jitterPct" : 0.25,
+            "retries" : 5
+          },
+          "phase" : "beforeGetStorageIDs"
+        }
+      ],
+      "id" : "samsung-android-6860",
+      "ops" : {
+        "disableWriteResume" : true,
+        "preferGetObjectPropList" : true,
+        "supportsGetPartialObject64" : true,
+        "supportsSendPartialObject" : false
+      },
+      "status" : "experimental"
+    },
+    {
       "confidence" : "high",
       "hooks" : [
         {

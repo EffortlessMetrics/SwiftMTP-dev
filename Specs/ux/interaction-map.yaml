@@ -1,0 +1,444 @@
+version: 2
+owner: SwiftMTPUI
+
+interactions:
+  - id: ux.launch.empty_state
+    screen: DeviceBrowserView
+    kind: navigate
+    risk: high
+    assertion_level: automation
+    priority: P0
+    gate: pr-hard
+    preconditions: UI test mode enabled, scenario empty-state
+    user_action: Launch app
+    expected_ui: No devices empty state and no-selection placeholder are visible
+    expected_state: Discovery state marker resolves to empty and no device is selected
+    oracles:
+      - rendered_text
+      - state_marker
+      - ux_event
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_launch_empty_state
+    accessibility_ids:
+      - swiftmtp.browser.root
+      - swiftmtp.device.empty
+      - swiftmtp.selection.empty
+    negative_cases: []
+
+  - id: ux.demo.toggle
+    screen: DeviceBrowserView
+    kind: toggle
+    risk: high
+    assertion_level: automation
+    priority: P0
+    gate: pr-hard
+    preconditions: UI test mode enabled, scenario mock-default
+    user_action: Toggle Demo Mode off then on
+    expected_ui: Device rows disappear when off and return when on
+    expected_state: Discovery restarts for both toggle transitions
+    oracles:
+      - rendered_text
+      - ux_event
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_demo_toggle
+    accessibility_ids:
+      - swiftmtp.demo.button
+      - swiftmtp.device.list
+      - swiftmtp.device.row.*
+    negative_cases: []
+
+  - id: ux.device.list.visible
+    screen: DeviceListView
+    kind: background_update
+    risk: high
+    assertion_level: automation
+    priority: P0
+    gate: pr-hard
+    preconditions: UI test mode enabled, scenario mock-default
+    user_action: Wait for discovery completion
+    expected_ui: Device list and at least one device row are visible
+    expected_state: Discovery marker resolves to ready
+    oracles:
+      - rendered_text
+      - state_marker
+      - ux_event
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_device_list_visible
+    accessibility_ids:
+      - swiftmtp.device.list
+      - swiftmtp.device.row.*
+    negative_cases: []
+
+  - id: ux.device.select
+    screen: DeviceBrowserView detail panel
+    kind: tap
+    risk: high
+    assertion_level: automation
+    priority: P0
+    gate: pr-hard
+    preconditions: UI test mode enabled, scenario mock-default, at least one device row visible
+    user_action: Tap a device row
+    expected_ui: Detail pane replaces no-selection state with device details
+    expected_state: Selected device becomes non-nil
+    oracles:
+      - rendered_text
+      - model_state
+      - ux_event
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_device_select
+    accessibility_ids:
+      - swiftmtp.device.row.*
+      - swiftmtp.selection.empty
+    negative_cases: []
+
+  - id: ux.storage.render
+    screen: DeviceMainView
+    kind: background_update
+    risk: high
+    assertion_level: automation
+    priority: P0
+    gate: pr-hard
+    preconditions: Device detail panel open
+    user_action: Wait for storage loading to complete
+    expected_ui: Storage section and at least one storage row are visible
+    expected_state: Storage list rendered from device response
+    oracles:
+      - rendered_text
+      - model_state
+      - ux_event
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_storage_render
+    accessibility_ids:
+      - swiftmtp.storage.section
+      - swiftmtp.storage.row.*
+    negative_cases: []
+
+  - id: ux.files.refresh
+    screen: DeviceMainView
+    kind: tap
+    risk: high
+    assertion_level: automation
+    priority: P0
+    gate: pr-hard
+    preconditions: Device detail panel open
+    user_action: Tap Refresh Files
+    expected_ui: Files section reaches a deterministic terminal state
+    expected_state: Files refresh flow emits completion or failure event
+    oracles:
+      - rendered_text
+      - state_marker
+      - ux_event
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_files_refresh
+    accessibility_ids:
+      - swiftmtp.files.section
+      - swiftmtp.files.refresh
+      - swiftmtp.files.outcome
+    negative_cases:
+      - no_storage
+
+  - id: ux.error.discovery
+    screen: DeviceBrowserView
+    kind: background_update
+    risk: high
+    assertion_level: automation
+    priority: P0
+    gate: pr-hard
+    preconditions: UI test mode enabled, scenario error-discovery
+    user_action: Launch app
+    expected_ui: Discovery error banner appears with actionable text
+    expected_state: Discovery state marker resolves to error
+    oracles:
+      - rendered_text
+      - state_marker
+      - ux_event
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_error_discovery
+    accessibility_ids:
+      - swiftmtp.discovery.error
+      - swiftmtp.discovery.state
+    negative_cases:
+      - forced_discovery_failure
+
+  - id: ux.detach.selection_reset
+    screen: DeviceBrowserView
+    kind: background_update
+    risk: high
+    assertion_level: automation
+    priority: P0
+    gate: pr-hard
+    preconditions: UI test mode enabled, scenario detach-on-select
+    user_action: Select device and wait for synthetic detach
+    expected_ui: No-selection detail and no-devices empty state are shown after detach
+    expected_state: Selected device and discovered list are cleared
+    oracles:
+      - rendered_text
+      - model_state
+      - ux_event
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_detach_selection_reset
+    accessibility_ids:
+      - swiftmtp.selection.empty
+      - swiftmtp.device.empty
+    negative_cases:
+      - synthetic_detach
+
+  - id: ux.discovery.state.marker
+    screen: DeviceBrowserView
+    kind: background_update
+    risk: medium
+    assertion_level: view-tree
+    priority: P1
+    gate: nightly-soft
+    preconditions: UI test mode enabled
+    user_action: Observe discovery completion/error transitions
+    expected_ui: Hidden state marker stays addressable
+    expected_state: Marker reports one of empty, ready, error
+    oracles:
+      - state_marker
+    test_kinds:
+      - manual
+    test_refs:
+      - manual:Docs/testing/ux-manual-recipes.md#discovery-state-marker
+    accessibility_ids:
+      - swiftmtp.discovery.state
+    negative_cases: []
+
+  - id: ux.selection.placeholder.visible
+    screen: DeviceBrowserView detail panel
+    kind: navigate
+    risk: medium
+    assertion_level: automation
+    priority: P1
+    gate: nightly-soft
+    preconditions: No selected device
+    user_action: Launch app or wait for detach
+    expected_ui: No-selection placeholder is visible
+    expected_state: Detail panel remains in unselected mode
+    oracles:
+      - rendered_text
+      - model_state
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_launch_empty_state
+      - automation:CriticalFlowTests.test_ux_detach_selection_reset
+    accessibility_ids:
+      - swiftmtp.selection.empty
+    negative_cases: []
+
+  - id: ux.device.loading.phase
+    screen: DeviceMainView
+    kind: background_update
+    risk: medium
+    assertion_level: view-tree
+    priority: P1
+    gate: nightly-soft
+    preconditions: Device row tapped
+    user_action: Enter device detail panel
+    expected_ui: Loading indicator appears before storage/files sections settle
+    expected_state: Device detail phase transitions from loading to ready/error
+    oracles:
+      - rendered_text
+      - model_state
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_device_select
+    accessibility_ids:
+      - swiftmtp.device.loading
+    negative_cases: []
+
+  - id: ux.detail.container.visible
+    screen: DeviceMainView
+    kind: navigate
+    risk: medium
+    assertion_level: automation
+    priority: P1
+    gate: nightly-soft
+    preconditions: Device is selected
+    user_action: Wait for detail pane render
+    expected_ui: Device detail container is visible
+    expected_state: Detail layout remains stable for storage/files sections
+    oracles:
+      - rendered_text
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_device_select
+    accessibility_ids:
+      - swiftmtp.detail.container
+    negative_cases: []
+
+  - id: ux.files.loading.phase
+    screen: DeviceMainView
+    kind: background_update
+    risk: medium
+    assertion_level: automation
+    priority: P1
+    gate: nightly-soft
+    preconditions: Device detail panel open
+    user_action: Trigger initial or manual file refresh
+    expected_ui: Files loading indicator appears while listing
+    expected_state: Files phase transitions from loading to terminal state
+    oracles:
+      - state_marker
+      - ux_event
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_files_refresh
+    accessibility_ids:
+      - swiftmtp.files.loading
+    negative_cases: []
+
+  - id: ux.files.empty.phase
+    screen: DeviceMainView
+    kind: background_update
+    risk: medium
+    assertion_level: view-tree
+    priority: P1
+    gate: nightly-soft
+    preconditions: Selected storage has no visible file entries
+    user_action: Trigger file listing
+    expected_ui: Files empty message is visible
+    expected_state: Files outcome marker resolves to empty
+    oracles:
+      - rendered_text
+      - state_marker
+    test_kinds:
+      - manual
+    test_refs:
+      - manual:Docs/testing/ux-manual-recipes.md#files-empty-phase
+    accessibility_ids:
+      - swiftmtp.files.empty
+    negative_cases:
+      - storage_empty
+
+  - id: ux.files.error.phase
+    screen: DeviceMainView
+    kind: background_update
+    risk: high
+    assertion_level: view-tree
+    priority: P1
+    gate: nightly-soft
+    preconditions: Selected storage returns list error
+    user_action: Trigger file listing
+    expected_ui: Files error message is visible
+    expected_state: Files outcome marker resolves to error
+    oracles:
+      - rendered_text
+      - state_marker
+      - ux_event
+    test_kinds:
+      - manual
+    test_refs:
+      - manual:Docs/testing/ux-manual-recipes.md#files-error-phase
+    accessibility_ids:
+      - swiftmtp.files.error
+    negative_cases:
+      - exclusive_claim
+      - disconnected_mid_list
+
+  - id: ux.files.outcome.marker
+    screen: DeviceMainView
+    kind: background_update
+    risk: medium
+    assertion_level: automation
+    priority: P1
+    gate: nightly-soft
+    preconditions: Device detail panel open
+    user_action: Wait for files refresh to settle
+    expected_ui: Outcome marker stays addressable for automation assertions
+    expected_state: Outcome marker reports loading, empty, ready, or error
+    oracles:
+      - state_marker
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_files_refresh
+    accessibility_ids:
+      - swiftmtp.files.outcome
+    negative_cases: []
+
+  - id: ux.device.row.render
+    screen: DeviceListView
+    kind: background_update
+    risk: medium
+    assertion_level: automation
+    priority: P1
+    gate: nightly-soft
+    preconditions: Discovery succeeded
+    user_action: Observe list rendering
+    expected_ui: Device rows are addressable with stable row identifiers
+    expected_state: At least one discovered device can be selected by row identifier
+    oracles:
+      - model_state
+      - rendered_text
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_device_list_visible
+    accessibility_ids:
+      - swiftmtp.device.row.*
+    negative_cases: []
+
+  - id: ux.storage.row.render
+    screen: DeviceMainView
+    kind: background_update
+    risk: medium
+    assertion_level: automation
+    priority: P1
+    gate: nightly-soft
+    preconditions: Device detail panel open
+    user_action: Wait for storages() response
+    expected_ui: Storage rows are addressable with stable row identifiers
+    expected_state: Storage entries match response count
+    oracles:
+      - model_state
+      - ux_event
+    test_kinds:
+      - automation
+    test_refs:
+      - automation:CriticalFlowTests.test_ux_storage_render
+    accessibility_ids:
+      - swiftmtp.storage.row.*
+    negative_cases: []
+
+  - id: ux.file.row.render
+    screen: DeviceMainView
+    kind: background_update
+    risk: low
+    assertion_level: view-tree
+    priority: P2
+    gate: tracked
+    preconditions: Files refresh completes with one or more rows
+    user_action: Observe file row rendering
+    expected_ui: File rows are addressable with stable row identifiers
+    expected_state: File row count matches listed items
+    oracles:
+      - model_state
+      - state_marker
+    test_kinds:
+      - manual
+    test_refs:
+      - manual:Docs/testing/ux-manual-recipes.md#file-row-render
+    accessibility_ids:
+      - swiftmtp.file.row.*
+    negative_cases: []

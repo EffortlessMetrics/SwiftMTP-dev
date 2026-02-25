@@ -3,64 +3,66 @@
 
 import Foundation
 import SwiftMTPCore
+import SwiftMTPCLI
 
 @MainActor
 struct CollectCLICommand {
-    static func run(args: [String], flags: CLIFlags) async {
-        var collectFlags = CollectCommand.CollectFlags(
-            strict: flags.strict,
-            runBench: [],
-            json: flags.json,
-            noninteractive: false,
-            bundlePath: nil,
-            deviceName: nil,
-            openPR: false,
-            vid: parseUSBIdentifier(flags.targetVID),
-            pid: parseUSBIdentifier(flags.targetPID),
-            bus: flags.targetBus,
-            address: flags.targetAddress
-        )
-        
-        // Basic arg parsing for collect-specific options
-        var i = 0
-        while i < args.count {
-            let arg = args[i]
-            if arg == "--run-bench" && i + 1 < args.count {
-                collectFlags.runBench = args[i+1].split(separator: ",").map { String($0) }
-                i += 1
-            } else if arg.hasPrefix("--run-bench=") {
-                collectFlags.runBench = String(arg.dropFirst("--run-bench=".count)).split(separator: ",").map { String($0) }
-            } else if arg == "--noninteractive" {
-                collectFlags.noninteractive = true
-            } else if arg == "--bundle" && i + 1 < args.count {
-                collectFlags.bundlePath = args[i+1]
-                i += 1
-            } else if arg.hasPrefix("--bundle=") {
-                collectFlags.bundlePath = String(arg.dropFirst("--bundle=".count))
-            } else if arg == "--device-name" && i + 1 < args.count {
-                collectFlags.deviceName = args[i+1]
-                i += 1
-            } else if arg.hasPrefix("--device-name=") {
-                collectFlags.deviceName = String(arg.dropFirst("--device-name=".count))
-            } else if arg == "--open-pr" {
-                collectFlags.openPR = true
-            }
-            i += 1
-        }
-        
-        let exitCode = await CollectCommand.run(flags: collectFlags)
-        exitNow(exitCode)
+  static func run(args: [String], flags: CLIFlags) async {
+    var collectFlags = CollectCommand.CollectFlags(
+      strict: flags.strict,
+      runBench: [],
+      json: flags.json,
+      noninteractive: false,
+      bundlePath: nil,
+      deviceName: nil,
+      openPR: false,
+      vid: parseUSBIdentifier(flags.targetVID),
+      pid: parseUSBIdentifier(flags.targetPID),
+      bus: flags.targetBus,
+      address: flags.targetAddress
+    )
+
+    // Basic arg parsing for collect-specific options
+    var i = 0
+    while i < args.count {
+      let arg = args[i]
+      if arg == "--run-bench" && i + 1 < args.count {
+        collectFlags.runBench = args[i + 1].split(separator: ",").map { String($0) }
+        i += 1
+      } else if arg.hasPrefix("--run-bench=") {
+        collectFlags.runBench = String(arg.dropFirst("--run-bench=".count)).split(separator: ",")
+          .map { String($0) }
+      } else if arg == "--noninteractive" {
+        collectFlags.noninteractive = true
+      } else if arg == "--bundle" && i + 1 < args.count {
+        collectFlags.bundlePath = args[i + 1]
+        i += 1
+      } else if arg.hasPrefix("--bundle=") {
+        collectFlags.bundlePath = String(arg.dropFirst("--bundle=".count))
+      } else if arg == "--device-name" && i + 1 < args.count {
+        collectFlags.deviceName = args[i + 1]
+        i += 1
+      } else if arg.hasPrefix("--device-name=") {
+        collectFlags.deviceName = String(arg.dropFirst("--device-name=".count))
+      } else if arg == "--open-pr" {
+        collectFlags.openPR = true
+      }
+      i += 1
     }
-    
-    static func printHelp() {
-        print("SwiftMTP Device Submission Collector")
-        print("Usage: swift run swiftmtp collect [flags]")
-        print("")
-        print("Flags:")
-        print("  --run-bench <sizes>  - Run benchmarks with sizes (e.g., '100M,1G')")
-        print("  --noninteractive     - Skip consent prompts")
-        print("  --bundle <path>      - Custom output location for submission bundle")
-        print("  --device-name <name> - Custom device name for generated bundle path")
-        print("  --open-pr            - Run submit flow against GitHub after collect")
-    }
+
+    let exitCode = await CollectCommand.run(flags: collectFlags)
+    exitNow(exitCode)
+  }
+
+  static func printHelp() {
+    print("SwiftMTP Device Submission Collector")
+    print("Usage: swift run swiftmtp collect [flags]")
+    print("")
+    print("Flags:")
+    print("  --run-bench <sizes>  - Run benchmarks with sizes (e.g., '100M,1G')")
+    print("  --noninteractive     - Skip consent prompts")
+    print("  --bundle <path>      - Custom output location for submission bundle")
+    print("  --device-name <name> - Custom device name for generated bundle path")
+    print("  --open-pr            - Run submit flow against GitHub after collect")
+  }
 }

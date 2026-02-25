@@ -14,7 +14,12 @@ let package = Package(
   products: [
     .executable(name: "simple-probe", targets: ["simple-probe"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
+    .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
+    .library(name: "MTPEndianCodec", targets: ["MTPEndianCodec"]),
+    .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
+    .library(name: "SwiftMTPUI", targets: ["SwiftMTPUI"]),
     .library(name: "SwiftMTPQuirks", targets: ["SwiftMTPQuirks"]),
+    .library(name: "SwiftMTPCLI", targets: ["SwiftMTPCLI"]),
     .executable(name: "SwiftMTPApp", targets: ["SwiftMTPApp"]),
   ],
   dependencies: [
@@ -33,11 +38,20 @@ let package = Package(
     // Core MTP functionality
     .target(name: "SwiftMTPCore",
             dependencies: [
-                "SwiftMTPQuirks", "SwiftMTPObservability",
+                "SwiftMTPQuirks", "SwiftMTPObservability", "SwiftMTPCLI", "MTPEndianCodec",
                 .product(name: "Collections", package: "swift-collections"),
             ],
             path: "SwiftMTPKit/Sources/SwiftMTPCore",
-            sources: ["Internal", "Public", "CLI"]),
+            sources: ["Internal", "Public"]),
+
+    // Shared CLI parsing/output surfaces extracted to a dedicated module.
+    .target(name: "SwiftMTPCLI",
+            dependencies: [],
+            path: "SwiftMTPKit/Sources/SwiftMTPCLI"),
+
+    .target(name: "MTPEndianCodec",
+            dependencies: [],
+            path: "SwiftMTPKit/Sources/MTPEndianCodec"),
 
     // Transport layer for libusb
     .target(name: "SwiftMTPTransportLibUSB",
@@ -114,6 +128,7 @@ let package = Package(
     .executableTarget(name: "swiftmtp-cli",
                       dependencies: [
                         "SwiftMTPCore",
+                        "SwiftMTPCLI",
                         "SwiftMTPTransportLibUSB",
                         "SwiftMTPIndex",
                         "SwiftMTPQuirks",
@@ -128,6 +143,13 @@ let package = Package(
                       dependencies: ["SwiftMTPUI"],
                       path: "SwiftMTPKit/Sources/Tools/SwiftMTPApp",
                       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+
+    .executableTarget(
+      name: "MTPEndianCodecFuzz",
+      dependencies: ["MTPEndianCodec", "SwiftMTPCore"],
+      path: "SwiftMTPKit/Sources/Tools/MTPEndianCodecFuzz",
+      swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]
+    ),
                       
     .executableTarget(name: "SwiftMTPFuzz",
                       dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB"],
@@ -138,6 +160,21 @@ let package = Package(
                 dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", .product(name: "CucumberSwift", package: "CucumberSwift")],
                 path: "SwiftMTPKit/Tests/BDDTests",
                 resources: [.copy("Features")]),
+
+    .testTarget(name: "SwiftMTPCLITests",
+                dependencies: ["SwiftMTPCLI", "SwiftMTPCore", "SwiftCheck"],
+                path: "SwiftMTPKit/Tests/SwiftMTPCLITests"),
+
+    .testTarget(
+      name: "MTPEndianCodecTests",
+      dependencies: [
+        "MTPEndianCodec",
+        "SwiftMTPCore",
+        .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+      ],
+      path: "SwiftMTPKit/Tests/MTPEndianCodecTests",
+      resources: [.copy("Corpus")]
+    ),
                 
     .testTarget(name: "PropertyTests",
                 dependencies: [

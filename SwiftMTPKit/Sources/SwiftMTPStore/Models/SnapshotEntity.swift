@@ -6,17 +6,20 @@ import SwiftData
 
 @Model
 public final class SnapshotEntity {
-    public var generation: Int
-    public var createdAt: Date
-    public var artifactPath: String?
-    public var artifactHash: String?
-    
-    public var device: DeviceEntity?
+  public var generation: Int
+  public var createdAt: Date
+  public var artifactPath: String?
+  public var artifactHash: String?
 
-    public init(generation: Int, createdAt: Date = Date(), artifactPath: String? = nil, artifactHash: String? = nil) {
-        self.generation = generation
-        self.createdAt = createdAt
-        self.artifactPath = artifactPath
-        self.artifactHash = artifactHash
-    }
+  public var device: DeviceEntity?
+
+  public init(
+    generation: Int, createdAt: Date = Date(), artifactPath: String? = nil,
+    artifactHash: String? = nil
+  ) {
+    self.generation = generation
+    self.createdAt = createdAt
+    self.artifactPath = artifactPath
+    self.artifactHash = artifactHash
+  }
 }

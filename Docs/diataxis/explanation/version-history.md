@@ -6,11 +6,36 @@ This document covers SwiftMTP version history, notable changes, and migration gu
 
 | Version | Release Date | Status |
 |---------|--------------|--------|
-| 1.0.0 | 2024-01-15 | Current |
+| 2.0.0 | 2026-02-08 | **Current** |
+| 1.0.0 | 2024-01-15 | Legacy |
 | 0.9.0 | 2023-09-01 | Legacy |
 | 0.8.0 | 2023-05-15 | Legacy |
 
-## 1.0.0 (Current)
+## 2.0.0 (Current)
+
+Released 2026-02-08. Requires macOS Tahoe 26, iOS 26, Swift 6.2.
+
+### New in 2.0.0
+
+- **macOS Tahoe 26 support**: IOUSBHost as primary USB transport (replaces libusb-only path)
+- **Swift 6 strict concurrency**: Actor-isolated device operations, `@Sendable` enforced throughout
+- **FileProvider write operations**: create/modify/delete via XPC bridge for Finder integration
+- **Multi-device support**: `DeviceServiceRegistry` routes concurrent transfers across devices
+- **Extended MTP events**: `storageAdded`, `storageRemoved`, `objectInfoChanged`, `deviceInfoChanged`, `unknown`
+- **Object property APIs**: `GetObjectPropValue`/`SetObjectPropValue` with date and filename helpers
+- **Automatic documentation**: `swiftmtp-docs` SPM executable for hands-off DocC generation
+- **1854 tests**: Up from 1799 with all preexisting failures resolved
+
+### Breaking Changes in 2.0.0
+
+| Change | Migration |
+|--------|-----------|
+| Minimum macOS bumped to Tahoe 26 | Requires macOS 2026 or later |
+| Linux support removed (IOUSBHost dependency) | Stay on v1.x for Linux; see MigrationGuide.md |
+| `MTPEvent` cases added | Exhaustive switches need new cases |
+| `CLICompat` shims removed from `SwiftMTPCore` | Import `SwiftMTPCLI` directly |
+
+## 1.0.0 (Legacy)
 
 ### New Features
 

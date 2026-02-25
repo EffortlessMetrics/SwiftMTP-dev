@@ -4,6 +4,7 @@
 import Foundation
 @_spi(Dev) import SwiftMTPCore
 import SwiftMTPTransportLibUSB
+import SwiftMTPCLI
 
 struct DeviceLabCommand {
   private enum ExpectedPolicy: String, Codable, Sendable {
@@ -553,7 +554,9 @@ struct DeviceLabCommand {
       }
       do {
         trace("capability-harness:start")
-        result.capabilityReport = try await within(ms: capabilityReportTimeoutMs, stage: "capability-harness") {
+        result.capabilityReport = try await within(
+          ms: capabilityReportTimeoutMs, stage: "capability-harness"
+        ) {
           try await DeviceLabHarness().collect(device: device)
         }
         trace("capability-harness:ok")
@@ -644,7 +647,9 @@ struct DeviceLabCommand {
         do {
           trace("object-enumeration:start")
           let startedAt = DispatchTime.now()
-          result.read.rootObjectCount = try await within(ms: operationTimeoutMs, stage: "object-enumeration") {
+          result.read.rootObjectCount = try await within(
+            ms: operationTimeoutMs, stage: "object-enumeration"
+          ) {
             try await sampleRootListing(device: device, storage: firstStorage.id)
           }
           trace("object-enumeration:ok count=\(result.read.rootObjectCount ?? 0)")
@@ -681,7 +686,9 @@ struct DeviceLabCommand {
           result.readSmoke = try await within(ms: readSmokeTimeoutMs, stage: "read-download") {
             await runReadSmoke(device: device, storage: firstStorage)
           }
-          trace("read-download:ok attempted=\(result.readSmoke.attempted) succeeded=\(result.readSmoke.succeeded)")
+          trace(
+            "read-download:ok attempted=\(result.readSmoke.attempted) succeeded=\(result.readSmoke.succeeded)"
+          )
           appendOperation(
             "read-download",
             attempted: result.readSmoke.attempted,
@@ -722,7 +729,9 @@ struct DeviceLabCommand {
             result.write = try await within(ms: writeSmokeTimeoutMs, stage: "write-upload") {
               await runWriteSmoke(device: device, storage: firstStorage)
             }
-            trace("write-upload:ok attempted=\(result.write.attempted) succeeded=\(result.write.succeeded)")
+            trace(
+              "write-upload:ok attempted=\(result.write.attempted) succeeded=\(result.write.succeeded)"
+            )
             appendOperation(
               "write-upload",
               attempted: result.write.attempted,
@@ -932,7 +941,8 @@ struct DeviceLabCommand {
 
     let rootItems: [MTPObjectInfo]
     do {
-      rootItems = try await listObjects(device: device, parent: nil, storage: storage.id, limit: 256)
+      rootItems = try await listObjects(
+        device: device, parent: nil, storage: storage.id, limit: 256)
     } catch {
       smoke.skipped = true
       smoke.reason = "root listing unavailable for read smoke"
@@ -985,7 +995,8 @@ struct DeviceLabCommand {
     let mediaFirstTargetDevice = isMediaFirstWriteTargetDevice(summary: device.summary)
     let preferredFolderPaths =
       mediaFirstTargetDevice
-      ? ["DCIM/Camera", "Pictures", "Download"] : [
+      ? ["DCIM/Camera", "Pictures", "Download"]
+      : [
         "Download", "Downloads", "DCIM", "Camera", "Pictures", "Documents",
       ]
     let rootItems: [MTPObjectInfo]
@@ -1008,9 +1019,11 @@ struct DeviceLabCommand {
       var resolvedPath: [String] = []
 
       for component in components {
-        guard let match = currentFolders.first(where: {
-          $0.name.caseInsensitiveCompare(component) == .orderedSame
-        }) else {
+        guard
+          let match = currentFolders.first(where: {
+            $0.name.caseInsensitiveCompare(component) == .orderedSame
+          })
+        else {
           return nil
         }
         currentParent = match.handle
@@ -1106,7 +1119,8 @@ struct DeviceLabCommand {
           if timeoutTargetAttempts >= maxTimeoutTargetAttempts {
             attempt.reason = appendWarning(
               attempt.reason,
-              "timeout target attempt budget exhausted (\(maxTimeoutTargetAttempts)); stopping target climb")
+              "timeout target attempt budget exhausted (\(maxTimeoutTargetAttempts)); stopping target climb"
+            )
             lastFailure = attempt
             allowSwiftMTPFallback = false
             break
@@ -1115,7 +1129,8 @@ struct DeviceLabCommand {
         if attempts.count >= maxRetryableTargetAttempts {
           attempt.reason = appendWarning(
             attempt.reason,
-            "retryable target attempt budget exhausted (\(maxRetryableTargetAttempts)); proceeding to SwiftMTP fallback rung")
+            "retryable target attempt budget exhausted (\(maxRetryableTargetAttempts)); proceeding to SwiftMTP fallback rung"
+          )
           lastFailure = attempt
           break
         }
@@ -1461,7 +1476,8 @@ struct DeviceLabCommand {
       rootListingSucceeded: rootListingSucceeded,
       hasTransferErrors: hasTransferErrors,
       combinedErrorText: combinedErrorText.lowercased()
-    )?.rawValue
+    )?
+    .rawValue
   }
 
   private static func elapsedMs(since start: DispatchTime) -> Int {
@@ -1488,11 +1504,12 @@ struct DeviceLabCommand {
         }
       }
 
-      DispatchQueue.global(qos: .userInitiated).asyncAfter(
-        deadline: .now() + .milliseconds(timeoutMs)
-      ) {
-        resumer.resume(throwing: DeviceLabTimeoutError.exceeded(stage: stage, ms: timeoutMs))
-      }
+      DispatchQueue.global(qos: .userInitiated)
+        .asyncAfter(
+          deadline: .now() + .milliseconds(timeoutMs)
+        ) {
+          resumer.resume(throwing: DeviceLabTimeoutError.exceeded(stage: stage, ms: timeoutMs))
+        }
     }
   }
 
@@ -1638,11 +1655,12 @@ struct DeviceLabCommand {
         return device.write.deleteSucceeded ? "ok" : "failed"
       }()
       let noteText =
-        (
-          device.notes
-            + [device.error, device.readSmoke.error, device.write.warning, device.write.error, device.write.deleteError]
-              .compactMap { $0 }
-        )
+        (device.notes
+        + [
+          device.error, device.readSmoke.error, device.write.warning, device.write.error,
+          device.write.deleteError,
+        ]
+        .compactMap { $0 })
         .joined(separator: "; ")
       lines.append(
         "| \(device.vidpid) | \(device.manufacturer) \(device.model) | \(device.expectation.rawValue) | \(device.outcome.rawValue) | \(device.failureClass?.rawValue ?? "-") | \(readState) | \(readSmokeState) | \(writeState) | \(deleteState) | \(noteText.isEmpty ? "-" : noteText) |"

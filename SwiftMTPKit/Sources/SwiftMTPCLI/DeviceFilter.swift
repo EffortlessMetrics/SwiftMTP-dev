@@ -1,5 +1,15 @@
-// DeviceFilter.swift
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2025 Effortless Metrics, Inc.
+
 import Foundation
+import SwiftMTPCore
+
+public protocol DeviceFilterCandidate {
+  var vendorID: UInt16? { get }
+  var productID: UInt16? { get }
+  var bus: UInt8? { get }
+  var address: UInt8? { get }
+}
 
 public struct DeviceFilter: Sendable {
   public let vid: UInt16?
@@ -8,7 +18,10 @@ public struct DeviceFilter: Sendable {
   public let address: Int?
 
   public init(vid: UInt16?, pid: UInt16?, bus: Int?, address: Int?) {
-    self.vid = vid; self.pid = pid; self.bus = bus; self.address = address
+    self.vid = vid
+    self.pid = pid
+    self.bus = bus
+    self.address = address
   }
 }
 
@@ -37,11 +50,32 @@ public struct DeviceFilterParse {
     var i = 0
     while i < args.count {
       switch args[i] {
-      case "--vid":     if i+1 < args.count, let v = parseUSBIdentifier(args[i+1]) { vid = v; args.removeSubrange(i...i+1); continue }
-      case "--pid":     if i+1 < args.count, let v = parseUSBIdentifier(args[i+1]) { pid = v; args.removeSubrange(i...i+1); continue }
-      case "--bus":     if i+1 < args.count, let v = parseInt(args[i+1]) { bus = v; args.removeSubrange(i...i+1); continue }
-      case "--address": if i+1 < args.count, let v = parseInt(args[i+1]) { address = v; args.removeSubrange(i...i+1); continue }
-      default: break
+      case "--vid":
+        if i + 1 < args.count, let v = parseUSBIdentifier(args[i + 1]) {
+          vid = v
+          args.removeSubrange(i...i + 1)
+          continue
+        }
+      case "--pid":
+        if i + 1 < args.count, let v = parseUSBIdentifier(args[i + 1]) {
+          pid = v
+          args.removeSubrange(i...i + 1)
+          continue
+        }
+      case "--bus":
+        if i + 1 < args.count, let v = parseInt(args[i + 1]) {
+          bus = v
+          args.removeSubrange(i...i + 1)
+          continue
+        }
+      case "--address":
+        if i + 1 < args.count, let v = parseInt(args[i + 1]) {
+          address = v
+          args.removeSubrange(i...i + 1)
+          continue
+        }
+      default:
+        break
       }
       i += 1
     }
@@ -49,32 +83,32 @@ public struct DeviceFilterParse {
   }
 }
 
-public enum SelectionOutcome {
-  case selected(MTPDeviceSummary) // your existing summary type
+public enum SelectionOutcome<DeviceSummary: DeviceFilterCandidate> {
+  case selected(DeviceSummary)
   case none
-  case multiple([MTPDeviceSummary])
+  case multiple([DeviceSummary])
 }
 
 // Call from command entrypoints after discovery
-public func selectDevice(
-  _ devices: [MTPDeviceSummary],
+public func selectDevice<DeviceSummary: DeviceFilterCandidate>(
+  _ devices: [DeviceSummary],
   filter: DeviceFilter,
   noninteractive: Bool
-) -> SelectionOutcome {
+) -> SelectionOutcome<DeviceSummary> {
   let filtered = devices.filter { d in
     if let v = filter.vid, d.vendorID != v { return false }
     if let p = filter.pid, d.productID != p { return false }
-    // If filter specifies bus, device must have the same bus value
     if let b = filter.bus {
-      guard let db = d.bus, b == db else { return false }
+      guard let db = d.bus, UInt8(exactly: b) == db else { return false }
     }
-    // If filter specifies address, device must have the same address value
     if let a = filter.address {
-      guard let da = d.address, a == da else { return false }
+      guard let da = d.address, UInt8(exactly: a) == da else { return false }
     }
     return true
   }
   if filtered.isEmpty { return .none }
   if filtered.count == 1 { return .selected(filtered[0]) }
-  return noninteractive ? .multiple(filtered) : .multiple(filtered) // in interactive, you prompt
+  return .multiple(filtered)
 }
+
+extension MTPDeviceSummary: DeviceFilterCandidate {}

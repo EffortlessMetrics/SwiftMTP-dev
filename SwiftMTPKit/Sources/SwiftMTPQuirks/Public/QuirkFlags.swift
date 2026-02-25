@@ -83,6 +83,13 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// Disabled by default; some devices reject unknown-size semantics.
   public var unknownSizeInSendObjectInfo: Bool = false
 
+  // MARK: - Property-level
+
+  /// Skip GetObjectPropValue / SetObjectPropValue calls for all objects.
+  /// Some devices hang or return error codes on these operations.
+  /// Disabling prop-value calls degrades metadata accuracy (e.g., dates, sizes > 4 GB).
+  public var skipGetObjectPropValue: Bool = false
+
   public init() {}
 
   // MARK: - Custom Codable for backward compatibility
@@ -108,6 +115,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case forceFFFFFFFForSendObject
     case emptyDatesInSendObject
     case unknownSizeInSendObjectInfo
+    case skipGetObjectPropValue
   }
 
   public init(from decoder: Decoder) throws {
@@ -150,6 +158,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .emptyDatesInSendObject) ?? false
     self.unknownSizeInSendObjectInfo =
       try container.decodeIfPresent(Bool.self, forKey: .unknownSizeInSendObjectInfo) ?? false
+    self.skipGetObjectPropValue =
+      try container.decodeIfPresent(Bool.self, forKey: .skipGetObjectPropValue) ?? false
   }
 
   public func encode(to encoder: Encoder) throws {
@@ -177,5 +187,6 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(forceFFFFFFFForSendObject, forKey: .forceFFFFFFFForSendObject)
     try container.encodeIfPresent(emptyDatesInSendObject, forKey: .emptyDatesInSendObject)
     try container.encodeIfPresent(unknownSizeInSendObjectInfo, forKey: .unknownSizeInSendObjectInfo)
+    try container.encodeIfPresent(skipGetObjectPropValue, forKey: .skipGetObjectPropValue)
   }
 }

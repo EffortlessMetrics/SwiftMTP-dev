@@ -129,7 +129,8 @@
         "writeToSubfolderOnly": false,
         "preferredWriteFolder": "Download",
         "emptyDatesInSendObject": true
-      }
+      },
+      "confidence": "high"
     },
     {
       "id": "samsung-android-6860",
@@ -366,6 +367,124 @@
           "debugReport": "Docs/pixel7-usb-debug-report.md",
           "macOS26Doc": "Docs/SwiftMTP.docc/macOS26.md"
         }
+      },
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "disableWriteResume": false
+      }
+    },
+    {
+      "id": "canon-eos-rebel-3139",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3139",
+        "deviceInfoRegex": ".*Canon.*EOS.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "experimental",
+      "notes": [
+        "Canon EOS cameras use PTP over USB with PTPIP-style initialization.",
+        "Large RAW files (>20 MB) may require extended ioTimeoutMs.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "Event pump needed for capture events (0x4001 ObjectAdded).",
+        "Battery level can be read via GetDevicePropValue (0xD002)."
+      ],
+      "provenance": {
+        "author": "SwiftMTP Contributors",
+        "date": "2025-02-25",
+        "commit": "<pending>"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true
+      }
+    },
+    {
+      "id": "nikon-dslr-0410",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0410",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "experimental",
+      "notes": [
+        "Nikon D-series cameras use PTP over USB.",
+        "Camera must be in MTP/PTP mode via Settings > USB Options.",
+        "Liveview and capture events require Nikon vendor extensions (0x9xxx).",
+        "NEF raw files are large (15-30 MB); extend ioTimeoutMs if needed.",
+        "Some Nikon bodies support GetObjectSizeU64 via property 0xDC04."
+      ],
+      "provenance": {
+        "author": "SwiftMTP Contributors",
+        "date": "2025-02-25",
+        "commit": "<pending>"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true
       }
     }
   ]

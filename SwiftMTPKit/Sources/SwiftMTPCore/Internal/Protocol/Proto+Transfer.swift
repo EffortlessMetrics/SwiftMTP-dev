@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import MTPEndianCodec
 
 enum TransferMode { case whole, partial }
 
@@ -37,38 +38,43 @@ public enum ProtoTransfer {
     formatCode: UInt16,
     size: UInt64
   ) -> Data {
-    var data = Data()
-    func put32(_ value: UInt32) {
-      withUnsafeBytes(of: value.littleEndian) { data.append(contentsOf: $0) }
-    }
-    func put16(_ value: UInt16) {
-      withUnsafeBytes(of: value.littleEndian) { data.append(contentsOf: $0) }
-    }
-    func put64(_ value: UInt64) {
-      withUnsafeBytes(of: value.littleEndian) { data.append(contentsOf: $0) }
-    }
-    func putString(_ value: String) {
-      data.append(PTPString.encode(value))
-    }
-
-    // MTP property codes used by SendObjectPropList.
+    var enc = MTPDataEncoder()
     let objectHandle: UInt32 = 0  // Creating a new object.
-    let properties: [(code: UInt16, type: UInt16, writer: () -> Void)] = [
-      (0xDC01, 0x0006, { put32(storageID) }),  // StorageID
-      (0xDC0B, 0x0006, { put32(parentHandle) }),  // ParentObject
-      (0xDC07, 0xFFFF, { putString(name) }),  // ObjectFileName
-      (0xDC02, 0x0004, { put16(formatCode) }),  // ObjectFormat
-      (0xDC04, 0x0008, { put64(size) }),  // ObjectSize
-    ]
 
-    put32(UInt32(properties.count))
-    for property in properties {
-      put32(objectHandle)
-      put16(property.code)
-      put16(property.type)
-      property.writer()
-    }
-    return data
+    // MTP property list header: count of properties
+    enc.append(UInt32(5))
+
+    // StorageID (0xDC01, type 0x0006 = UINT32)
+    enc.append(objectHandle)
+    enc.append(UInt16(0xDC01))
+    enc.append(UInt16(0x0006))
+    enc.append(storageID)
+
+    // ParentObject (0xDC0B, type 0x0006 = UINT32)
+    enc.append(objectHandle)
+    enc.append(UInt16(0xDC0B))
+    enc.append(UInt16(0x0006))
+    enc.append(parentHandle)
+
+    // ObjectFileName (0xDC07, type 0xFFFF = STR)
+    enc.append(objectHandle)
+    enc.append(UInt16(0xDC07))
+    enc.append(UInt16(0xFFFF))
+    enc.append(PTPString.encode(name))
+
+    // ObjectFormat (0xDC02, type 0x0004 = UINT16)
+    enc.append(objectHandle)
+    enc.append(UInt16(0xDC02))
+    enc.append(UInt16(0x0004))
+    enc.append(formatCode)
+
+    // ObjectSize (0xDC04, type 0x0008 = UINT64)
+    enc.append(objectHandle)
+    enc.append(UInt16(0xDC04))
+    enc.append(UInt16(0x0008))
+    enc.append(size)
+
+    return enc.encodedData
   }
 
   /// Whole-object read: GetObject, stream data-in into a sink.
@@ -110,7 +116,8 @@ public enum ProtoTransfer {
     let commandParentParam = useRootCommandParentHandle ? UInt32(0xFFFFFFFF) : parentParam
     guard storageID != 0 && storageID != 0xFFFFFFFF else {
       throw MTPError.preconditionFailed(
-        "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID))).")
+        "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID)))."
+      )
     }
     let targetStorage = storageID
     let formatCode = objectFormatCode(for: name, useUndefinedObjectFormat: useUndefinedObjectFormat)
@@ -186,7 +193,8 @@ public enum ProtoTransfer {
     let parentParam = parent ?? 0xFFFFFFFF
     guard storageID != 0 && storageID != 0xFFFFFFFF else {
       throw MTPError.preconditionFailed(
-        "SendObjectPropList requires a concrete storage ID (got \(String(format: "0x%08x", storageID))).")
+        "SendObjectPropList requires a concrete storage ID (got \(String(format: "0x%08x", storageID)))."
+      )
     }
     let formatCode = objectFormatCode(for: name, useUndefinedObjectFormat: useUndefinedObjectFormat)
     let propListParentHandle = zeroObjectInfoParentHandle ? UInt32(0) : parentParam
@@ -275,7 +283,8 @@ extension ProtoTransfer {
   ) async throws -> MTPObjectHandle {
     guard storageID != 0 && storageID != 0xFFFFFFFF else {
       throw MTPError.preconditionFailed(
-        "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID))).")
+        "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID)))."
+      )
     }
 
     // Build ObjectInfoDataset for an Association (folder)

@@ -6,44 +6,44 @@ import XCTest
 import SwiftMTPCore
 
 final class FaultInjectingTests: XCTestCase {
-    func testFaultScheduleTriggersOnOperation() {
-        let schedule = FaultSchedule([
-            .timeoutOnce(on: .getDeviceInfo)
-        ])
+  func testFaultScheduleTriggersOnOperation() {
+    let schedule = FaultSchedule([
+      .timeoutOnce(on: .getDeviceInfo)
+    ])
 
-        let result = schedule.check(operation: .getDeviceInfo, callIndex: 0, byteOffset: nil)
-        XCTAssertNotNil(result)
+    let result = schedule.check(operation: .getDeviceInfo, callIndex: 0, byteOffset: nil)
+    XCTAssertNotNil(result)
 
-        // Should not fire again (repeatCount was 1)
-        let result2 = schedule.check(operation: .getDeviceInfo, callIndex: 1, byteOffset: nil)
-        XCTAssertNil(result2)
+    // Should not fire again (repeatCount was 1)
+    let result2 = schedule.check(operation: .getDeviceInfo, callIndex: 1, byteOffset: nil)
+    XCTAssertNil(result2)
+  }
+
+  func testBusyForRetries() {
+    let schedule = FaultSchedule([
+      .busyForRetries(3)
+    ])
+
+    for _ in 0..<3 {
+      let result = schedule.check(operation: .executeCommand, callIndex: 0, byteOffset: nil)
+      XCTAssertNotNil(result)
     }
 
-    func testBusyForRetries() {
-        let schedule = FaultSchedule([
-            .busyForRetries(3)
-        ])
+    // 4th call should succeed
+    let result = schedule.check(operation: .executeCommand, callIndex: 0, byteOffset: nil)
+    XCTAssertNil(result)
+  }
 
-        for _ in 0..<3 {
-            let result = schedule.check(operation: .executeCommand, callIndex: 0, byteOffset: nil)
-            XCTAssertNotNil(result)
-        }
+  func testDynamicFaultInjection() {
+    let schedule = FaultSchedule()
 
-        // 4th call should succeed
-        let result = schedule.check(operation: .executeCommand, callIndex: 0, byteOffset: nil)
-        XCTAssertNil(result)
-    }
+    // No faults initially
+    XCTAssertNil(schedule.check(operation: .openSession, callIndex: 0, byteOffset: nil))
 
-    func testDynamicFaultInjection() {
-        let schedule = FaultSchedule()
+    // Add fault dynamically
+    schedule.add(.pipeStall(on: .openSession))
 
-        // No faults initially
-        XCTAssertNil(schedule.check(operation: .openSession, callIndex: 0, byteOffset: nil))
-
-        // Add fault dynamically
-        schedule.add(.pipeStall(on: .openSession))
-
-        let result = schedule.check(operation: .openSession, callIndex: 0, byteOffset: nil)
-        XCTAssertNotNil(result)
-    }
+    let result = schedule.check(operation: .openSession, callIndex: 0, byteOffset: nil)
+    XCTAssertNotNil(result)
+  }
 }

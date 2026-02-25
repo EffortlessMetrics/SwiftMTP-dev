@@ -2,6 +2,11 @@
 # Copyright (c) 2025 Effortless Metrics, Inc.
 
 name: SwiftMTP CI/CD
+# Purpose: Comprehensive CI for main branch and nightly runs.
+# Checks: full test + coverage gate, CLI smoke, DocC docs, SBOM on release.
+# Runs on: push/PR to main + nightly schedule (2 AM UTC).
+# Complement: ci.yml runs on all branches/PRs and includes TSAN + fuzz.
+# Local equivalent: ./run-all-tests.sh (full) or swift test -v (quick).
 
 on:
   push:

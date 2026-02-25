@@ -473,7 +473,21 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       overrides: overrides.isEmpty ? nil : overrides
     )
     finalPolicy.fallbacks = fallbacks
-    let finalTuning = finalPolicy.tuning
+    let finalTuning: EffectiveTuning
+    // Adapt chunk size for USB 3.x if no explicit override was provided
+    var resolvedTuning = finalPolicy.tuning
+    if overrides["maxChunkBytes"] == nil {
+      if let speedMBps = mtpLink?.linkDescriptor?.usbSpeedMBps {
+        if speedMBps >= 400 {
+          // USB 3.0+ SuperSpeed: prefer 8 MiB chunks for higher throughput
+          resolvedTuning.maxChunkBytes = max(resolvedTuning.maxChunkBytes, 8 * 1024 * 1024)
+        } else if speedMBps >= 40 {
+          // USB 2.0 Hi-Speed: prefer 4 MiB chunks
+          resolvedTuning.maxChunkBytes = max(resolvedTuning.maxChunkBytes, 4 * 1024 * 1024)
+        }
+      }
+    }
+    finalTuning = resolvedTuning
     self.currentTuning = finalTuning
     self.currentPolicy = finalPolicy
     self.apply(finalTuning)

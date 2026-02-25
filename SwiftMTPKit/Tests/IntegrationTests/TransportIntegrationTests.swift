@@ -62,7 +62,7 @@ final class TransportIntegrationTests: XCTestCase {
       0x01,  // Configuration value
       0x00,  // Configuration string index
       0xC0,  // Attributes (bus powered)
-      0x32   // Max power (100mA)
+      0x32,  // Max power (100mA)
     ])
 
     XCTAssertEqual(malformedDescriptor.count, 9)
@@ -102,7 +102,7 @@ final class TransportIntegrationTests: XCTestCase {
     await transport.setErrorInjection(.corruptNextPacket)
 
     do {
-      let data = Data([0x0C, 0x00]) // GetDeviceInfo opcode
+      let data = Data([0x0C, 0x00])  // GetDeviceInfo opcode
       _ = try await transport.write(data, timeout: 5000)
       XCTFail("Should have thrown")
     } catch let error as USBTransportError {
@@ -167,8 +167,8 @@ final class TransportIntegrationTests: XCTestCase {
     let transport = try await connectedTransport()
 
     // Queue responses
-    await transport.queueResponse(Data([0x20, 0x00, 0x0A, 0x00])) // Response header
-    await transport.queueResponse(Data([0x01, 0x02, 0x03, 0x04])) // Response data
+    await transport.queueResponse(Data([0x20, 0x00, 0x0A, 0x00]))  // Response header
+    await transport.queueResponse(Data([0x01, 0x02, 0x03, 0x04]))  // Response data
 
     var buffer = Data(count: 1024)
     let bytesRead = try await transport.read(into: &buffer, timeout: 5000)
@@ -183,11 +183,11 @@ final class TransportIntegrationTests: XCTestCase {
     await transport.programDelay(opcode: 0x1001, delay: 0.1)
 
     let startTime = Date()
-    let data = Data([0x01, 0x10]) // GetDeviceInfo
+    let data = Data([0x01, 0x10])  // GetDeviceInfo
     _ = try await transport.write(data, timeout: 10000)
     let elapsed = Date().timeIntervalSince(startTime)
 
-    XCTAssertGreaterThan(elapsed, 0.09) // Should be approximately 100ms
+    XCTAssertGreaterThan(elapsed, 0.09)  // Should be approximately 100ms
   }
 }
 

@@ -77,12 +77,30 @@ Run these before creating a release tag.
 ## Suggested Validation Commands
 
 ```bash
-swift build --package-path SwiftMTPKit
-swift test --package-path SwiftMTPKit --enable-code-coverage
-swift test --package-path SwiftMTPKit -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
-./scripts/smoke.sh
-./scripts/validate-quirks.sh
-./run-all-tests.sh
+# From repo root:
+cd SwiftMTPKit
+
+# Build
+swift build
+
+# Full test suite with coverage
+swift test --enable-code-coverage
+
+# TSAN (required for concurrency changes)
+swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
+
+# Coverage gate (enforced by CI; must pass for all four modules)
+python3 scripts/coverage_gate.py .build/debug/codecov/
+
+# Format + lint (required before every PR)
+swift-format -i -r Sources Tests
+swift-format lint -r Sources Tests
+
+# Quirks validation
+cd .. && ./scripts/validate-quirks.sh
+
+# Full matrix (release prep)
+cd .. && ./run-all-tests.sh
 ```
 
 ## Minimal Release Artifact Checklist

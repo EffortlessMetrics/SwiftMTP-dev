@@ -4,17 +4,30 @@
 import Foundation
 
 public protocol TransferJournal: Sendable {
-  func beginRead(device: MTPDeviceID, handle: UInt32, name: String,
-                 size: UInt64?, supportsPartial: Bool,
-                 tempURL: URL, finalURL: URL?, etag: (size: UInt64?, mtime: Date?)) async throws -> String // returns id
-  func beginWrite(device: MTPDeviceID, parent: UInt32, name: String,
-                  size: UInt64, supportsPartial: Bool,
-                  tempURL: URL, sourceURL: URL?) async throws -> String
+  func beginRead(
+    device: MTPDeviceID, handle: UInt32, name: String,
+    size: UInt64?, supportsPartial: Bool,
+    tempURL: URL, finalURL: URL?, etag: (size: UInt64?, mtime: Date?)
+  ) async throws -> String  // returns id
+  func beginWrite(
+    device: MTPDeviceID, parent: UInt32, name: String,
+    size: UInt64, supportsPartial: Bool,
+    tempURL: URL, sourceURL: URL?
+  ) async throws -> String
   func updateProgress(id: String, committed: UInt64) async throws
   func fail(id: String, error: Error) async throws
   func complete(id: String) async throws
+  /// Record final throughput for a completed transfer.
+  /// Called after `complete(id:)` with measured bytes and wall-clock duration.
+  /// Default implementation is a no-op for backwards compatibility.
+  func recordThroughput(id: String, throughputMBps: Double) async throws
   func loadResumables(for device: MTPDeviceID) async throws -> [TransferRecord]
   func clearStaleTemps(olderThan: TimeInterval) async throws
+}
+
+extension TransferJournal {
+  /// Default no-op so existing journal implementations don't need to change.
+  public func recordThroughput(id: String, throughputMBps: Double) async throws {}
 }
 
 public struct TransferRecord: Sendable {
@@ -31,8 +44,15 @@ public struct TransferRecord: Sendable {
   public let finalURL: URL?
   public let state: String
   public let updatedAt: Date
+  /// Measured throughput in MB/s, recorded on successful completion. Nil if unknown.
+  public let throughputMBps: Double?
 
-  public init(id: String, deviceId: MTPDeviceID, kind: String, handle: UInt32?, parentHandle: UInt32?, name: String, totalBytes: UInt64?, committedBytes: UInt64, supportsPartial: Bool, localTempURL: URL, finalURL: URL?, state: String, updatedAt: Date) {
+  public init(
+    id: String, deviceId: MTPDeviceID, kind: String, handle: UInt32?, parentHandle: UInt32?,
+    name: String, totalBytes: UInt64?, committedBytes: UInt64, supportsPartial: Bool,
+    localTempURL: URL, finalURL: URL?, state: String, updatedAt: Date,
+    throughputMBps: Double? = nil
+  ) {
     self.id = id
     self.deviceId = deviceId
     self.kind = kind
@@ -46,5 +66,6 @@ public struct TransferRecord: Sendable {
     self.finalURL = finalURL
     self.state = state
     self.updatedAt = updatedAt
+    self.throughputMBps = throughputMBps
   }
 }

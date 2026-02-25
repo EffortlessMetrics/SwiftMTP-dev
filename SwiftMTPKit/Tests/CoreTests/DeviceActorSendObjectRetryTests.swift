@@ -71,7 +71,7 @@ final class DeviceActorSendObjectRetryTests: XCTestCase {
           omitOptionalObjectInfoFields: false,
           zeroObjectInfoParentHandle: false,
           useRootCommandParentHandle: false
-        ),
+        )
       ]
     )
   }
@@ -143,7 +143,7 @@ final class DeviceActorSendObjectRetryTests: XCTestCase {
           omitOptionalObjectInfoFields: false,
           zeroObjectInfoParentHandle: false,
           useRootCommandParentHandle: false
-        )
+        ),
       ]
     )
   }

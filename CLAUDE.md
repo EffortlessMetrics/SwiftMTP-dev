@@ -168,6 +168,8 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 | Samsung Galaxy S21 | 04e8:6860 | Experimental | samsung-android-6860 |
 | OnePlus 3T | 2a70:f003 | Stable | oneplus-3t-f003 |
 | Google Pixel 7 | 18d1:4ee1 | Blocked | google-pixel-7-4ee1 |
+| Canon EOS Rebel / R-class | 04a9:3139 | Experimental | canon-eos-rebel-3139 |
+| Nikon DSLR / Z-series | 04b0:0410 | Experimental | nikon-dslr-0410 |
 
 ## Performance Considerations
 - Chunk sizes auto-tune from 512KB to 8MB based on device performance
@@ -177,6 +179,14 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 
 ## CI & Coverage
 - CI workflows: `.github/workflows/ci.yml`, `.github/workflows/swiftmtp-ci.yml`, `.github/workflows/smoke.yml`
+  - `ci.yml`: runs on ALL pushes and PRs; covers build, full tests, **TSAN**, fuzz, SBOM on tags.
+  - `swiftmtp-ci.yml`: runs on main branch and nightly; covers full coverage report, CLI smoke, DocC docs.
+  - `smoke.yml`: minimal sanity build (product swiftmtp) for fast feedback.
+- **TSAN** (Thread Sanitizer) execution:
+  - CI: `ci.yml` → `tsan` job: `swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests`
+  - Local: `cd SwiftMTPKit && swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests`
+  - Scope: TransportTests excluded (USB I/O is inherently single-threaded at the libusb level).
+  - Exit criteria: zero race warnings or TSan-reported errors.
 - Coverage gating: `SwiftMTPKit/scripts/coverage_gate.py` enforces minimum thresholds
 - Run locally: `./run-all-tests.sh` (full verification suite)
 

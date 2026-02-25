@@ -3,6 +3,7 @@
 
 import Foundation
 import SwiftMTPCore
+import SwiftMTPCLI
 
 @MainActor
 struct TransferCommands {
@@ -22,16 +23,10 @@ struct TransferCommands {
       while !progress.isFinished { try await Task.sleep(nanoseconds: 100_000_000) }
       print("✅ Downloaded successfully")
     } catch {
-      print("❌ Failed to download: \(error)")
-      if let mtpError = error as? MTPError {
-        switch mtpError {
-        case .notSupported:
-          exitNow(.unavailable)
-        case .transport(let te):
-          if case .noDevice = te { exitNow(.unavailable) }
-        default:
-          break
-        }
+      log("❌ Failed to download: \(actionableMessage(for: error))")
+      if let mtpError = error as? MTPError, case .transport(let te) = mtpError, case .noDevice = te
+      {
+        exitNow(.unavailable)
       }
       exitNow(.tempfail)
     }
@@ -90,16 +85,10 @@ struct TransferCommands {
       while !progress.isFinished { try await Task.sleep(nanoseconds: 100_000_000) }
       print("✅ Uploaded successfully")
     } catch {
-      print("❌ Failed to upload: \(error)")
-      if let mtpError = error as? MTPError {
-        switch mtpError {
-        case .notSupported:
-          exitNow(.unavailable)
-        case .transport(let te):
-          if case .noDevice = te { exitNow(.unavailable) }
-        default:
-          break
-        }
+      log("❌ Failed to upload: \(actionableMessage(for: error))")
+      if let mtpError = error as? MTPError, case .transport(let te) = mtpError, case .noDevice = te
+      {
+        exitNow(.unavailable)
       }
       exitNow(.tempfail)
     }
@@ -272,16 +261,10 @@ struct TransferCommands {
         print("   CSV written: \(outURL.path)")
       }
     } catch {
-      print("Benchmark failed: \(error)")
-      if let mtpError = error as? MTPError {
-        switch mtpError {
-        case .notSupported:
-          exitNow(.unavailable)
-        case .transport(let te):
-          if case .noDevice = te { exitNow(.unavailable) }
-        default:
-          break
-        }
+      log("❌ Benchmark failed: \(actionableMessage(for: error))")
+      if let mtpError = error as? MTPError, case .transport(let te) = mtpError, case .noDevice = te
+      {
+        exitNow(.unavailable)
       }
       exitNow(.tempfail)
     }

@@ -7,6 +7,9 @@ RUN_KIT_TESTS="${RUN_KIT_TESTS:-1}"
 RUN_XCODE_TESTS="${RUN_XCODE_TESTS:-1}"
 RUN_XCODE_UI_TESTS="${RUN_XCODE_UI_TESTS:-1}"
 
+printf 'Validating UX interaction map completeness...\n'
+"$REPO_ROOT/scripts/validate-ux-map.sh"
+
 if [[ "$RUN_KIT_TESTS" != "0" ]]; then
   printf 'Running SwiftMTPKit test matrix...\n'
   "$REPO_ROOT/SwiftMTPKit/run-all-tests.sh"

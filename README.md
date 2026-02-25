@@ -83,6 +83,9 @@ SwiftMTP is built with modern Swift 6 concurrency patterns:
 ## 🛠 Installation & Setup
 
 ### Prerequisites
+- **macOS Tahoe 26.0+** (macOS 2026, requires Apple Silicon or Intel Mac with Tahoe upgrade)
+- **iOS 26.0+** (partial support: index, sync, and FileProvider operations; USB transport requires macOS host)
+
 - **macOS 26.0+** / **iOS 26.0+**
 - **Xcode 16.0+** with Swift 6 (`6.2` recommended)
 - `libusb` installed via Homebrew: `brew install libusb`
@@ -148,6 +151,9 @@ swift test --package-path SwiftMTPKit --filter SnapshotTests
 | Google Pixel 7 | 18d1:4ee1 | ⚠️ Experimental | Uses quirk-gated reset+reopen ladder on OpenSession I/O failures |
 | OnePlus 3T | 2a70:f003 | ⚠️ Partial | Probe/read stable; write-path tuning is still in-progress |
 | Xiaomi Mi Note 2 | 2717:ff10 / 2717:ff40 | ✅ Stable | ff40 variant uses vendor-specific MTP interface matching |
+| Samsung Galaxy S21 | 04e8:6860 | ⚠️ Experimental | Requires storage unlock prompt; class 0xff interface |
+| Canon EOS (Rebel / R-class) | 04a9:3139 | 🧪 Experimental | PTP over USB; camera must be in PTP/MTP mode |
+| Nikon DSLR / Z-series | 04b0:0410 | 🧪 Experimental | MTP/PTP mode required; NEF files need extended IO timeout |
 
 See [`Docs/SwiftMTP.docc/Devices/`](Docs/SwiftMTP.docc/Devices/) for device-specific tuning guides.
 
