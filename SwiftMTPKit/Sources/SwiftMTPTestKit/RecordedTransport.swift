@@ -140,7 +140,9 @@ public final class RecordedMTPLink: MTPLink, @unchecked Sendable {
     throw MTPError.notSupported("RecordedMTPLink: deleteObject not supported in replay")
   }
 
-  public func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?)
+  public func moveObject(
+    handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?
+  )
     async throws
   {
     throw MTPError.notSupported("RecordedMTPLink: moveObject not supported in replay")
@@ -198,17 +200,16 @@ public final class RecordedMTPLink: MTPLink, @unchecked Sendable {
   private func nextDataAndResponse() throws -> (Data, UInt16) {
     let first = try nextResponse()
     let firstType = readLE16(from: first, at: 4) ?? 0
-    if firstType == 2 {
-      // data container: payload is bytes after the 12-byte header
-      let payload = first.count > 12 ? first.dropFirst(12) : Data()
-      let responsePacket = try nextResponse()
-      let code = readLE16(from: responsePacket, at: 6) ?? 0x2001
-      return (Data(payload), code)
-    } else {
+    guard firstType == 2 else {
       // no data phase; first packet is the response
       let code = readLE16(from: first, at: 6) ?? 0x2001
       return (Data(), code)
     }
+    // data container: payload is bytes after the 12-byte header
+    let payload = first.count > 12 ? first.dropFirst(12) : Data()
+    let responsePacket = try nextResponse()
+    let code = readLE16(from: responsePacket, at: 6) ?? 0x2001
+    return (Data(payload), code)
   }
 
   private func checkResponseCode(_ data: Data) throws {
@@ -222,10 +223,14 @@ public final class RecordedMTPLink: MTPLink, @unchecked Sendable {
     var d = Data(count: 12)
     d.withUnsafeMutableBytes { ptr in
       let p = ptr.baseAddress!
-      var len: UInt32 = 12; memcpy(p, &len, 4)
-      var t: UInt16 = 3; memcpy(p.advanced(by: 4), &t, 2)
-      var c: UInt16 = 0x2001; memcpy(p.advanced(by: 6), &c, 2)
-      var x: UInt32 = txid; memcpy(p.advanced(by: 8), &x, 4)
+      var len: UInt32 = 12
+      memcpy(p, &len, 4)
+      var t: UInt16 = 3
+      memcpy(p.advanced(by: 4), &t, 2)
+      var c: UInt16 = 0x2001
+      memcpy(p.advanced(by: 6), &c, 2)
+      var x: UInt32 = txid
+      memcpy(p.advanced(by: 8), &x, 4)
     }
     return d
   }

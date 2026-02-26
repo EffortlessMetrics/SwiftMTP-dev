@@ -69,15 +69,17 @@ final class VerificationModeTests: XCTestCase {
   func testVerificationFailedErrorDescription() {
     let error = MTPError.verificationFailed(expected: 2048, actual: 1024)
     let desc = error.localizedDescription
-    XCTAssertTrue(desc.contains("2048") || desc.contains("verify") || desc.contains("verif"),
-                  "Error description should mention size values or verification: \(desc)")
+    XCTAssertTrue(
+      desc.contains("2048") || desc.contains("verify") || desc.contains("verif"),
+      "Error description should mention size values or verification: \(desc)")
   }
 
   func testVerificationFailedActionableDescription() {
     let error = MTPError.verificationFailed(expected: 100, actual: 50)
-    XCTAssertTrue(error.actionableDescription.contains("verification") ||
-                  error.actionableDescription.contains("size"),
-                  "Actionable description missing expected content: \(error.actionableDescription)")
+    XCTAssertTrue(
+      error.actionableDescription.contains("verification")
+        || error.actionableDescription.contains("size"),
+      "Actionable description missing expected content: \(error.actionableDescription)")
   }
 
   func testVerificationFailedIsEquatable() {

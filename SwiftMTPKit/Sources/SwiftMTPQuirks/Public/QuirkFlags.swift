@@ -90,6 +90,14 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// Disabling prop-value calls degrades metadata accuracy (e.g., dates, sizes > 4 GB).
   public var skipGetObjectPropValue: Bool = false
 
+  /// Device supports GetObjectPropList (0x9805) for batch directory enumeration.
+  /// When true, a single round-trip fetches all properties for all children of a parent.
+  public var supportsGetObjectPropList: Bool = false
+
+  /// Device supports GetPartialObject (0x101B) for partial/resumable reads.
+  /// When true, interrupted downloads can resume from a byte offset instead of restarting.
+  public var supportsGetPartialObject: Bool = false
+
   public init() {}
 
   // MARK: - Custom Codable for backward compatibility
@@ -116,6 +124,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case emptyDatesInSendObject
     case unknownSizeInSendObjectInfo
     case skipGetObjectPropValue
+    case supportsGetObjectPropList
+    case supportsGetPartialObject
   }
 
   public init(from decoder: Decoder) throws {
@@ -160,6 +170,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .unknownSizeInSendObjectInfo) ?? false
     self.skipGetObjectPropValue =
       try container.decodeIfPresent(Bool.self, forKey: .skipGetObjectPropValue) ?? false
+    self.supportsGetObjectPropList =
+      try container.decodeIfPresent(Bool.self, forKey: .supportsGetObjectPropList) ?? false
+    self.supportsGetPartialObject =
+      try container.decodeIfPresent(Bool.self, forKey: .supportsGetPartialObject) ?? false
   }
 
   public func encode(to encoder: Encoder) throws {
@@ -188,5 +202,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(emptyDatesInSendObject, forKey: .emptyDatesInSendObject)
     try container.encodeIfPresent(unknownSizeInSendObjectInfo, forKey: .unknownSizeInSendObjectInfo)
     try container.encodeIfPresent(skipGetObjectPropValue, forKey: .skipGetObjectPropValue)
+    try container.encodeIfPresent(supportsGetObjectPropList, forKey: .supportsGetObjectPropList)
+    try container.encodeIfPresent(supportsGetPartialObject, forKey: .supportsGetPartialObject)
   }
 }

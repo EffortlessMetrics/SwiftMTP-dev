@@ -233,13 +233,14 @@ final class FileProviderEnumeratorTests: XCTestCase {
 
   /// Builds `count` synthetic `IndexedObject` values for paging tests.
   private func makeObjects(count: Int) -> [IndexedObject] {
-    (0..<count).map { i in
-      IndexedObject(
-        deviceId: "device1", storageId: 1, handle: UInt32(i + 1),
-        parentHandle: nil, name: "file\(i).jpg", pathKey: "/file\(i).jpg",
-        sizeBytes: 1024, mtime: nil, formatCode: 0x3800,
-        isDirectory: false, changeCounter: 0)
-    }
+    (0..<count)
+      .map { i in
+        IndexedObject(
+          deviceId: "device1", storageId: 1, handle: UInt32(i + 1),
+          parentHandle: nil, name: "file\(i).jpg", pathKey: "/file\(i).jpg",
+          sizeBytes: 1024, mtime: nil, formatCode: 0x3800,
+          isDirectory: false, changeCounter: 0)
+      }
   }
 
   func testPagedEnumeration_firstPageOf1200_yields500ItemsAndCursor() async {

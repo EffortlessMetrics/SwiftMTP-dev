@@ -60,7 +60,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   public var verifyAfterWrite: Bool = false
   private var currentTuning: EffectiveTuning = .defaults()
   public var effectiveTuning: EffectiveTuning { get async { currentTuning } }
-  private var currentPolicy: DevicePolicy?
+  var currentPolicy: DevicePolicy?
   public var devicePolicy: DevicePolicy? { get async { currentPolicy } }
   private var currentProbeReceipt: ProbeReceipt?
   public var probeReceipt: ProbeReceipt? { get async { currentProbeReceipt } }

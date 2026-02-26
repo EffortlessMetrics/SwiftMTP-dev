@@ -48,19 +48,9 @@
         "supportsGetPartialObject64": true,
         "supportsSendPartialObject": true,
         "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
         "disableWriteResume": false
-      },
-      "confidence": "high",
-      "status": "promoted",
-      "notes": [
-        "Requires 250-500 ms stabilization after OpenSession.",
-        "Prefer direct USB port; keep screen unlocked.",
-        "Back off on DEVICE_BUSY for early storage ops."
-      ],
-      "provenance": {
-        "author": "Steven Zimmerman, CPA",
-        "date": "2025-01-09",
-        "commit": "<current-commit>"
       },
       "flags": {
         "requiresKernelDetach": true,
@@ -104,6 +94,8 @@
         "supportsGetPartialObject64": true,
         "supportsSendPartialObject": true,
         "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
         "disableWriteResume": false
       },
       "behaviorLimitations": [
@@ -192,6 +184,8 @@
         "supportsGetPartialObject64": true,
         "supportsSendPartialObject": false,
         "preferGetObjectPropList": true,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": true,
         "disableWriteResume": true
       },
       "probeLadder": {
@@ -281,6 +275,8 @@
         "supportsGetPartialObject64": true,
         "supportsSendPartialObject": true,
         "preferGetObjectPropList": true,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": true,
         "supportsEvents": true,
         "disableWriteResume": false
       },
@@ -400,6 +396,8 @@
         "supportsGetPartialObject64": false,
         "supportsSendPartialObject": false,
         "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": true,
         "disableWriteResume": false
       },
       "evidenceRequired": [
@@ -441,6 +439,8 @@
         "supportsGetPartialObject64": false,
         "supportsSendPartialObject": false,
         "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
         "disableWriteResume": true,
         "skipGetObjectPropValue": false
       },
@@ -503,6 +503,8 @@
         "supportsGetPartialObject64": false,
         "supportsSendPartialObject": false,
         "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
         "disableWriteResume": true,
         "skipGetObjectPropValue": false
       },

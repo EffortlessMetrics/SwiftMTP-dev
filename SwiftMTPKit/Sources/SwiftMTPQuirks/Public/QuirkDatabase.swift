@@ -134,7 +134,12 @@ public struct DeviceQuirk: Codable, Sendable {
     if let ops = operations {
       if let v = ops["supportsGetPartialObject64"] { f.supportsPartialRead64 = v }
       if let v = ops["supportsSendPartialObject"] { f.supportsPartialWrite = v }
-      if let v = ops["preferGetObjectPropList"] { f.prefersPropListEnumeration = v }
+      if let v = ops["preferGetObjectPropList"] {
+        f.prefersPropListEnumeration = v
+        f.supportsGetObjectPropList = v
+      }
+      if let v = ops["supportsGetObjectPropList"] { f.supportsGetObjectPropList = v }
+      if let v = ops["supportsGetPartialObject"] { f.supportsGetPartialObject = v }
     }
     if let v = resetOnOpen { f.resetOnOpen = v }
     if let v = disableEventPump { f.disableEventPump = v }

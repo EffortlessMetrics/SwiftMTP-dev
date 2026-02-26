@@ -23,6 +23,13 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
   /// Read-only index reader opened from the shared app group container.
   private let indexReader: (any LiveIndexReader)?
 
+  /// Shared anchor store; receives push events and supplies them to `DomainEnumerator`.
+  private let syncAnchorStore = SyncAnchorStore()
+
+  /// Optional override for `NSFileProviderManager.signalEnumerator`; used in unit tests.
+  nonisolated(unsafe) private var signalEnumeratorOverride:
+    ((NSFileProviderItemIdentifier) -> Void)?
+
   public init(domain: NSFileProviderDomain) {
     self.xpcServiceResolver = nil
     self.domain = domain
@@ -34,11 +41,13 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
   init(
     domain: NSFileProviderDomain,
     indexReader: (any LiveIndexReader)?,
-    xpcServiceResolver: (() -> MTPXPCService?)? = nil
+    xpcServiceResolver: (() -> MTPXPCService?)? = nil,
+    signalEnumeratorOverride: ((NSFileProviderItemIdentifier) -> Void)? = nil
   ) {
     self.domain = domain
     self.indexReader = indexReader
     self.xpcServiceResolver = xpcServiceResolver
+    self.signalEnumeratorOverride = signalEnumeratorOverride
     super.init()
   }
 
@@ -223,7 +232,8 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
       deviceId: components.deviceId,
       storageId: components.storageId,
       parentHandle: components.objectHandle,
-      indexReader: indexReader
+      indexReader: indexReader,
+      syncAnchorStore: syncAnchorStore
     )
   }
 
@@ -512,6 +522,33 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
 
   // MARK: - Private Helpers
 
+  /// Handles a typed MTP device event: records pending changes in the anchor store
+  /// and signals the affected File Provider container.
+  public func handleDeviceEvent(_ event: MTPEventCoalescer.Event) {
+    switch event {
+    case .addObject(let deviceId, let storageId, let objectHandle, _):
+      let key = "\(deviceId):\(storageId)"
+      let identifier = NSFileProviderItemIdentifier("\(deviceId):\(storageId):\(objectHandle)")
+      syncAnchorStore.recordChange(added: [identifier], deleted: [], for: key)
+      signalContainer(NSFileProviderItemIdentifier("\(deviceId):\(storageId)"))
+
+    case .deleteObject(let deviceId, let storageId, let objectHandle):
+      let key = "\(deviceId):\(storageId)"
+      let identifier = NSFileProviderItemIdentifier("\(deviceId):\(storageId):\(objectHandle)")
+      syncAnchorStore.recordChange(added: [], deleted: [identifier], for: key)
+      signalContainer(NSFileProviderItemIdentifier("\(deviceId):\(storageId)"))
+
+    case .storageAdded(let deviceId, let storageId):
+      signalContainer(NSFileProviderItemIdentifier("\(deviceId):\(storageId)"))
+
+    case .storageRemoved(let deviceId, let storageId):
+      let key = "\(deviceId):\(storageId)"
+      let identifier = NSFileProviderItemIdentifier("\(deviceId):\(storageId)")
+      syncAnchorStore.recordChange(added: [], deleted: [identifier], for: key)
+      signalRootContainer()
+    }
+  }
+
   /// Classifies an XPC error message into the appropriate `NSFileProviderError` code.
   /// Disconnect-related messages map to `.serverUnreachable`; all others to `.noSuchItem`.
   private func xpcError(from message: String?) -> NSError {
@@ -524,8 +561,16 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
     return NSError(domain: NSFileProviderErrorDomain, code: code)
   }
 
-  private func signalRootContainer() {
+  private func signalContainer(_ identifier: NSFileProviderItemIdentifier) {
+    if let override = signalEnumeratorOverride {
+      override(identifier)
+      return
+    }
     guard let manager = NSFileProviderManager(for: domain) else { return }
-    manager.signalEnumerator(for: .rootContainer) { _ in }
+    manager.signalEnumerator(for: identifier) { _ in }
+  }
+
+  private func signalRootContainer() {
+    signalContainer(.rootContainer)
   }
 }

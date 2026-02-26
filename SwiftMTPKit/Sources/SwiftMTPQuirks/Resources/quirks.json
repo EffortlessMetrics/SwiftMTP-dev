@@ -48,7 +48,9 @@
         "supportsGetPartialObject64": true,
         "supportsSendPartialObject": true,
         "preferGetObjectPropList": false,
-        "disableWriteResume": false
+        "disableWriteResume": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false
       },
       "confidence": "high",
       "status": "promoted",
@@ -104,7 +106,9 @@
         "supportsGetPartialObject64": true,
         "supportsSendPartialObject": true,
         "preferGetObjectPropList": false,
-        "disableWriteResume": false
+        "disableWriteResume": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false
       },
       "behaviorLimitations": [
         {
@@ -192,7 +196,9 @@
         "supportsGetPartialObject64": true,
         "supportsSendPartialObject": false,
         "preferGetObjectPropList": true,
-        "disableWriteResume": true
+        "disableWriteResume": true,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": true
       },
       "probeLadder": {
         "enabled": true,
@@ -282,7 +288,9 @@
         "supportsSendPartialObject": true,
         "preferGetObjectPropList": true,
         "supportsEvents": true,
-        "disableWriteResume": false
+        "disableWriteResume": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": true
       },
       "behaviorLimitations": [
         {
@@ -400,7 +408,9 @@
         "supportsGetPartialObject64": false,
         "supportsSendPartialObject": false,
         "preferGetObjectPropList": false,
-        "disableWriteResume": false
+        "disableWriteResume": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": true
       },
       "evidenceRequired": [
         "probe_log",
@@ -442,7 +452,9 @@
         "supportsSendPartialObject": false,
         "preferGetObjectPropList": false,
         "disableWriteResume": true,
-        "skipGetObjectPropValue": false
+        "skipGetObjectPropValue": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false
       },
       "confidence": "medium",
       "status": "promoted",
@@ -504,7 +516,9 @@
         "supportsSendPartialObject": false,
         "preferGetObjectPropList": false,
         "disableWriteResume": true,
-        "skipGetObjectPropValue": false
+        "skipGetObjectPropValue": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false
       },
       "confidence": "medium",
       "status": "promoted",

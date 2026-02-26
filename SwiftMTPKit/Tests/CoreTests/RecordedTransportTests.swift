@@ -31,7 +31,8 @@ final class RecordedTransportTests: XCTestCase {
     let info = try await PTPLayer.getDeviceInfo(on: link)
     try await link.closeSession()
 
-    XCTAssert(info.model.contains("Pixel"), "Expected model to contain 'Pixel', got '\(info.model)'")
+    XCTAssert(
+      info.model.contains("Pixel"), "Expected model to contain 'Pixel', got '\(info.model)'")
     XCTAssertEqual(info.manufacturer, "Google")
   }
 
@@ -47,7 +48,8 @@ final class RecordedTransportTests: XCTestCase {
     } catch let error as MTPError {
       switch error {
       case .protocolError(let code, _):
-        XCTAssertEqual(code, 0x2019, "Expected DeviceBusy (0x2019), got 0x\(String(code, radix: 16))")
+        XCTAssertEqual(
+          code, 0x2019, "Expected DeviceBusy (0x2019), got 0x\(String(code, radix: 16))")
       default:
         XCTFail("Expected .protocolError, got \(error)")
       }

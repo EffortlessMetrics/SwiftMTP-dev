@@ -20,7 +20,7 @@ final class QuirkRegressionTests: XCTestCase {
       vid: 0xAAAA,
       pid: 0x0001,
       stabilizeMs: 100
-      // No typed `flags` — exercises the legacy-synthesis path in resolvedFlags()
+        // No typed `flags` — exercises the legacy-synthesis path in resolvedFlags()
     )
 
     let withoutStabilize = DeviceQuirk(
@@ -80,7 +80,7 @@ final class QuirkRegressionTests: XCTestCase {
       id: "test-no-recovery",
       vid: 0xBBBB,
       pid: 0x0002
-      // flags defaults to nil → QuirkFlags() → resetReopenOnOpenSessionIOError = false
+        // flags defaults to nil → QuirkFlags() → resetReopenOnOpenSessionIOError = false
     )
 
     XCTAssertTrue(

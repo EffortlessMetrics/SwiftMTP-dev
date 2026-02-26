@@ -282,7 +282,7 @@ let package = Package(
 
     .testTarget(
       name: "MTPEndianCodecTests",
-      dependencies: ["MTPEndianCodec"],
+      dependencies: ["MTPEndianCodec", "SwiftCheck"],
       exclude: ["Corpus", "__Snapshots__"]),
 
     .testTarget(

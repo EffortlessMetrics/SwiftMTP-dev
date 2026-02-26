@@ -151,10 +151,25 @@ actor BDDWorld {
   private var nextHandleRaw: UInt32 = 100
   private let defaultStorage = MTPStorageID(raw: 0x0001_0001)
 
+  // MARK: – Paged-enumeration state
+  private static let pageSize = 500
+  private var allPagedObjects: [MTPObjectInfo] = []
+  var pagedItems: [MTPObjectInfo] = []
+  var nextPageCursor: Int? = nil
+
+  // MARK: – Path-sanitization state
+  var pathInput: String = ""
+  var pathResult: String? = nil
+
   func reset() {
     device = nil
     seededHandles = [:]
     nextHandleRaw = 100
+    allPagedObjects = []
+    pagedItems = []
+    nextPageCursor = nil
+    pathInput = ""
+    pathResult = nil
   }
 
   func setupVirtualDevice() {
@@ -264,6 +279,43 @@ actor BDDWorld {
     let actual = try Data(contentsOf: url)
     try? FileManager.default.removeItem(at: url)
     XCTAssertEqual(actual, expected)
+  }
+
+  // MARK: – Paged-enumeration helpers
+
+  func setupLargeDevice(fileCount: Int) async throws {
+    // Synthesise the object list directly (avoids 1200 sequential actor hops).
+    let storage = defaultStorage
+    allPagedObjects = (0..<fileCount)
+      .map { i in
+        MTPObjectInfo(
+          handle: MTPObjectHandle(200 + UInt32(i)),
+          storage: storage,
+          parent: nil,
+          name: String(format: "file%04d.jpg", i),
+          sizeBytes: 4,
+          modified: nil,
+          formatCode: 0x3801,
+          properties: [:]
+        )
+      }
+  }
+
+  func enumeratePage(offset: Int) async throws {
+    let all = allPagedObjects
+    let end = min(offset + BDDWorld.pageSize, all.count)
+    pagedItems = Array(all[offset..<end])
+    nextPageCursor = end < all.count ? end : nil
+  }
+
+  // MARK: – Path-sanitization helpers
+
+  func setPathInput(_ path: String) {
+    pathInput = path
+  }
+
+  func sanitizePath() {
+    pathResult = PathSanitizer.sanitize(pathInput)
   }
 
   // MARK: – write-journal.feature helpers
@@ -544,6 +596,85 @@ extension Cucumber: @retroactive StepImplementation {
 
     Then("the stall is cleared and transfer succeeds") { _, _ in
       /* retry after stall error in testUSBStallRecoveredAutomatically is the verification */
+    }
+
+    // MARK: paged-enumeration.feature
+
+    Given("^a virtual device with (\\d+) files in root storage$") { args, step in
+      guard let countStr = args.first, let count = Int(countStr) else { return }
+      runAsync(step, timeout: 30.0) {
+        await world.reset()
+        try await world.setupLargeDevice(fileCount: count)
+      }
+    }
+
+    When("I enumerate items from the initial page") { _, step in
+      runAsync(step, timeout: 30.0) { try await world.enumeratePage(offset: 0) }
+    }
+
+    When("^I enumerate items from page cursor at offset (\\d+)$") { args, step in
+      guard let offsetStr = args.first, let offset = Int(offsetStr) else { return }
+      runAsync(step, timeout: 30.0) { try await world.enumeratePage(offset: offset) }
+    }
+
+    Then("I receive exactly (\\d+) items") { args, step in
+      runAsync(step) {
+        guard let countStr = args.first, let expected = Int(countStr) else { return }
+        let actual = await world.pagedItems.count
+        XCTAssertEqual(actual, expected, "Page item count mismatch")
+      }
+    }
+
+    Then("a next-page cursor is provided") { _, step in
+      runAsync(step) {
+        let cursor = await world.nextPageCursor
+        XCTAssertNotNil(cursor, "Expected a next-page cursor but none was provided")
+      }
+    }
+
+    Then("no next-page cursor is provided") { _, step in
+      runAsync(step) {
+        let cursor = await world.nextPageCursor
+        XCTAssertNil(
+          cursor, "Expected no next-page cursor but one was provided: \(String(describing: cursor))"
+        )
+      }
+    }
+
+    // MARK: path-sanitization.feature
+
+    Given("^a path \"(.*)\"$") { args, step in
+      guard let path = args.first else { return }
+      runAsync(step) { await world.setPathInput(path) }
+    }
+
+    When("I sanitize the path") { _, step in
+      runAsync(step) { await world.sanitizePath() }
+    }
+
+    Then("^the result does not contain \"(.*)\"$") { args, step in
+      guard let forbidden = args.first else { return }
+      runAsync(step) {
+        guard let result = await world.pathResult else { return }
+        XCTAssertFalse(
+          result.contains(forbidden),
+          "Sanitized path '\(result)' must not contain '\(forbidden)'")
+      }
+    }
+
+    Then("the result does not contain a null byte") { _, step in
+      runAsync(step) {
+        guard let result = await world.pathResult else { return }
+        XCTAssertFalse(result.contains("\0"), "Sanitized path must not contain a null byte")
+      }
+    }
+
+    Then("^the result equals \"(.*)\"$") { args, step in
+      guard let expected = args.first else { return }
+      runAsync(step) {
+        let result = await world.pathResult
+        XCTAssertEqual(result, expected, "Sanitized path mismatch")
+      }
     }
 
     // MARK: Pending step fallback — remaining steps pass silently (not yet backed by assertions)
