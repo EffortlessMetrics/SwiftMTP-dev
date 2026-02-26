@@ -138,6 +138,106 @@ struct BufferPoolTests {
     // crash here or leak. Test passes if execution reaches this point.
     #expect(Bool(true))
   }
+
+  // MARK: - Required named tests
+
+  @Test("Acquire and release a single buffer (pool depth 4)")
+  func testAcquireReleaseSingleBuffer() async throws {
+    let pool = BufferPool(bufferSize: 4096, poolDepth: 4)
+    let buf = await pool.acquire()
+    #expect(buf.ptr.count == 4096)
+    await pool.release(buf)
+    // Confirm buffer is returned — second acquire should succeed immediately.
+    let buf2 = await pool.acquire()
+    #expect(buf2.ptr.count == 4096)
+    await pool.release(buf2)
+  }
+
+  @Test("5th acquire blocks when pool depth is 4, unblocks on release")
+  func testConcurrentAcquireBlocks() async throws {
+    let pool = BufferPool(bufferSize: 1024, poolDepth: 4)
+
+    // Drain all 4 buffers.
+    let b1 = await pool.acquire()
+    let b2 = await pool.acquire()
+    let b3 = await pool.acquire()
+    let b4 = await pool.acquire()
+
+    // A 5th acquire must block.
+    let acquired = ActorBox(false)
+    let t = Task {
+      let b5 = await pool.acquire()
+      await acquired.set(true)
+      await pool.release(b5)
+    }
+
+    try await Task.sleep(nanoseconds: 50_000_000)  // 50 ms
+    #expect(await acquired.value == false, "5th acquire should still be blocked")
+
+    // Release one — the 5th acquire should now proceed.
+    await pool.release(b1)
+    try await Task.sleep(nanoseconds: 100_000_000)  // 100 ms
+    #expect(await acquired.value == true, "5th acquire should complete after release")
+
+    await pool.release(b2)
+    await pool.release(b3)
+    await pool.release(b4)
+    await t.value
+  }
+
+  @Test("Small file (< 8 MB) sends exactly one chunk — direct path")
+  func testPipelinedWriteSmallFile_usesDirectPath() async throws {
+    let chunkSize = 8 * 1024 * 1024  // 8 MiB
+    let smallSize = 4 * 1024 * 1024  // 4 MiB — fits in a single chunk
+    let payload = Data(repeating: 0xAB, count: smallSize)
+
+    let url = URL(fileURLWithPath: NSTemporaryDirectory())
+      .appendingPathComponent("pipeline_small_\(UUID().uuidString).bin")
+    try payload.write(to: url)
+    defer { try? FileManager.default.removeItem(at: url) }
+
+    let pool = BufferPool(bufferSize: chunkSize, poolDepth: 2)
+    let upload = PipelinedUpload(pool: pool)
+    let counter = ActorBox(0)
+
+    _ = try await upload.run(
+      sourceURL: url,
+      totalSize: UInt64(smallSize),
+      chunkSize: chunkSize,
+      sendChunk: { _, _ in await counter.set(await counter.value + 1) },
+      onProgress: { _ in }
+    )
+
+    let count = await counter.value
+    #expect(count == 1, "Small file should use a single send (direct path)")
+  }
+
+  @Test("16 MB file is split into exactly 2 × 8 MB chunks")
+  func testPipelinedWriteLargeFile_2xChunk_sendsTwoChunks() async throws {
+    let chunkSize = 8 * 1024 * 1024  // 8 MiB
+    let largeSize = 16 * 1024 * 1024  // 16 MiB — exactly 2 chunks
+    let payload = Data(repeating: 0xCD, count: largeSize)
+
+    let url = URL(fileURLWithPath: NSTemporaryDirectory())
+      .appendingPathComponent("pipeline_large_\(UUID().uuidString).bin")
+    try payload.write(to: url)
+    defer { try? FileManager.default.removeItem(at: url) }
+
+    let pool = BufferPool(bufferSize: chunkSize, poolDepth: 2)
+    let upload = PipelinedUpload(pool: pool)
+    let counter = ActorBox(0)
+
+    _ = try await upload.run(
+      sourceURL: url,
+      totalSize: UInt64(largeSize),
+      chunkSize: chunkSize,
+      sendChunk: { _, _ in await counter.set(await counter.value + 1) },
+      onProgress: { _ in }
+    )
+
+    let count = await counter.value
+    #expect(count == 2, "16 MB file should split into exactly 2 chunks")
+  }
 }
 
 // MARK: - Helpers

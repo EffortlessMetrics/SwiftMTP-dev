@@ -3,6 +3,7 @@
 
 import Foundation
 import OSLog
+import SwiftMTPObservability
 
 // MARK: - Post-write size verification
 
@@ -23,7 +24,7 @@ func postWriteVerify(device: any MTPDevice, handle: MTPObjectHandle, expectedSiz
 }
 
 extension MTPDeviceActor {
-  private final class LockedDataBuffer: @unchecked Sendable {
+  final class LockedDataBuffer: @unchecked Sendable {
     private var data = Data()
     private let lock = NSLock()
 
@@ -103,6 +104,7 @@ extension MTPDeviceActor {
 
     var journalTransferId: String?
     var sink: any ByteSink
+    var resumingFromOffset: UInt64 = 0
 
     // Try to resume if we have a journal
     if let journal = transferJournal {
@@ -114,6 +116,7 @@ extension MTPDeviceActor {
             sink = try FileSink(url: existing.localTempURL, append: true)
             journalTransferId = existing.id
             progress.completedUnitCount = Int64(existing.committedBytes)
+            resumingFromOffset = existing.committedBytes
           } else {
             // Temp file missing, start fresh
             sink = try FileSink(url: temp)
@@ -162,14 +165,27 @@ extension MTPDeviceActor {
       // Use thread-safe progress tracking
       let progressTracker = AtomicProgressTracker()
 
-      try await ProtoTransfer.readWholeObject(
-        handle: handle, on: link,
-        dataHandler: { buf in
-          let consumed = sinkAdapter.consume(buf)
-          let totalBytes = progressTracker.add(consumed)
-          progress.completedUnitCount = Int64(totalBytes)
-          return consumed
-        }, ioTimeoutMs: timeout)
+      let supportsPartialResume = currentPolicy?.flags.supportsGetPartialObject ?? false
+      if resumingFromOffset > 0 && supportsPartialResume,
+        let totalSize = info.sizeBytes, totalSize > resumingFromOffset
+      {
+        // Resume via GetPartialObject from the committed offset
+        let remaining = totalSize - resumingFromOffset
+        let partial = try await resumeRead(
+          handle: handle, offset: resumingFromOffset, length: remaining)
+        let count = partial.withUnsafeBytes { sinkAdapter.consume($0) }
+        _ = progressTracker.add(count)
+        progress.completedUnitCount = Int64(resumingFromOffset) + Int64(count)
+      } else {
+        try await ProtoTransfer.readWholeObject(
+          handle: handle, on: link,
+          dataHandler: { buf in
+            let consumed = sinkAdapter.consume(buf)
+            let totalBytes = progressTracker.add(consumed)
+            progress.completedUnitCount = Int64(totalBytes)
+            return consumed
+          }, ioTimeoutMs: timeout)
+      }
 
       let bytesWritten = progressTracker.total
 
@@ -1460,5 +1476,112 @@ extension MTPDeviceActor {
       formatCode: format,
       properties: [:]
     )
+  }
+
+  // MARK: - Pipelined Write
+
+  /// Internal chunk size for the 2-stage write pipeline: 8 MiB.
+  static let pipelineChunkSize = 8 * 1024 * 1024
+
+  /// Writes `data` into an already-created remote object identified by `handle`.
+  ///
+  /// Payloads smaller than one chunk (< 8 MiB) take the **direct path**: a single
+  /// `SendObject` call with no `TaskGroup` overhead.  Larger payloads are split into
+  /// 8 MiB chunks and streamed with a depth-2 `BufferPool` + `withThrowingTaskGroup`
+  /// pipeline so that buffer filling and USB send overlap (one chunk being prepared
+  /// while the previous one is in flight).
+  ///
+  /// A `MTPLog.perf` event is emitted per chunk for observability.
+  func pipelinedWrite(handle: MTPObjectHandle, data: Data, progress: Progress) async throws {
+    let chunkSize = MTPDeviceActor.pipelineChunkSize
+    let link = try await getMTPLink()
+    let total = data.count
+
+    guard total >= chunkSize else {
+      // Direct path: single SendObject call for small files — no pipeline overhead.
+      let boxed = BoxedOffset()
+      let cmd = PTPContainer(
+        type: PTPContainer.Kind.command.rawValue,
+        code: PTPOp.sendObject.rawValue, txid: 0, params: [])
+      _ = try await link.executeStreamingCommand(
+        cmd, dataPhaseLength: UInt64(total), dataInHandler: nil,
+        dataOutHandler: { buf in
+          let off = boxed.get()
+          let n = min(buf.count, total - off)
+          guard n > 0 else { return 0 }
+          data.copyBytes(to: buf, from: off..<(off + n))
+          _ = boxed.getAndAdd(n)
+          return n
+        })
+      progress.completedUnitCount = Int64(total)
+      return
+    }
+
+    // Pipelined path: depth-2 BufferPool + TaskGroup overlap.
+    let pool = BufferPool(bufferSize: chunkSize, poolDepth: 2)
+    let totalChunks = (total + chunkSize - 1) / chunkSize
+
+    try await withThrowingTaskGroup(of: Int.self) { group in
+      var offset = 0
+      for chunkIdx in 0..<totalChunks {
+        let end = min(offset + chunkSize, total)
+        let bytes = end - offset
+
+        // Acquire a buffer (blocks at depth-2 until a slot is free).
+        let buf = await pool.acquire()
+
+        // Stage 1: fill buffer from in-memory data (fast memcopy).
+        data.copyBytes(to: buf.mutable(count: bytes), from: offset..<end)
+
+        // Stage 2 (child task): send filled buffer via SendPartialObject.
+        let capturedBuf = buf
+        let partOff = UInt64(chunkIdx) * UInt64(chunkSize)
+        let i = chunkIdx
+        let n = bytes
+        group.addTask {
+          let boxed = BoxedOffset()
+          let cmd = PTPContainer(
+            type: PTPContainer.Kind.command.rawValue,
+            code: PTPOp.sendPartialObject.rawValue, txid: 0,
+            params: [
+              handle,
+              UInt32(partOff & 0xFFFF_FFFF),
+              UInt32(partOff >> 32),
+              UInt32(n),
+            ])
+          do {
+            _ = try await link.executeStreamingCommand(
+              cmd, dataPhaseLength: UInt64(n), dataInHandler: nil,
+              dataOutHandler: { outBuf in
+                let off = boxed.get()
+                let toCopy = min(outBuf.count, n - off)
+                guard toCopy > 0 else { return 0 }
+                outBuf.baseAddress?
+                  .copyMemory(
+                    from: capturedBuf.ptr.baseAddress!.advanced(by: off),
+                    byteCount: toCopy)
+                _ = boxed.getAndAdd(toCopy)
+                return toCopy
+              })
+          } catch {
+            await pool.release(capturedBuf)
+            throw error
+          }
+          await pool.release(capturedBuf)
+          Logger(subsystem: "SwiftMTP", category: "performance")
+            .info(
+              "pipelineChunk index=\(i) total=\(totalChunks) bytes=\(n)")
+          return n
+        }
+
+        offset = end
+      }
+
+      var totalSent = 0
+      for try await chunkBytes in group {
+        totalSent += chunkBytes
+      }
+      progress.completedUnitCount = Int64(totalSent)
+    }
   }
 }
