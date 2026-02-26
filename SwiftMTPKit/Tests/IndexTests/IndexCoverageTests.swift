@@ -298,6 +298,11 @@ private actor MockSchedulerDevice: MTPDevice {
     throw MTPError.notSupported("delete is not needed in this test double")
   }
 
+  func rename(_ handle: MTPObjectHandle, to newName: String) async throws {
+    let _ = (handle, newName)
+    throw MTPError.notSupported("rename is not needed in this test double")
+  }
+
   func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {
     let _ = (handle, newParent)
     throw MTPError.notSupported("move is not needed in this test double")

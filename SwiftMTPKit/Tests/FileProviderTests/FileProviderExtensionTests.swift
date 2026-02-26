@@ -432,6 +432,12 @@ final class FileProviderExtensionTests: XCTestCase {
     func createFolder(_ req: CreateFolderRequest, withReply r: @escaping (WriteResponse) -> Void) {
       r(WriteResponse(success: false))
     }
+    func renameObject(_ req: RenameRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      r(WriteResponse(success: false))
+    }
+    func moveObject(_ req: MoveObjectRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      r(WriteResponse(success: false))
+    }
     func requestCrawl(
       _ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void
     ) {

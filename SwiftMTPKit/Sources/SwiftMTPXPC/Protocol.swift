@@ -280,6 +280,8 @@ public final class ObjectListResponse: NSObject, NSSecureCoding, Sendable {
   func deleteObject(_ request: DeleteRequest, withReply reply: @escaping (WriteResponse) -> Void)
   func createFolder(
     _ request: CreateFolderRequest, withReply reply: @escaping (WriteResponse) -> Void)
+  func renameObject(_ request: RenameRequest, withReply reply: @escaping (WriteResponse) -> Void)
+  func moveObject(_ request: MoveObjectRequest, withReply reply: @escaping (WriteResponse) -> Void)
 
   // Cache-first API (Phase 3)
   func requestCrawl(
@@ -438,6 +440,78 @@ public final class WriteResponse: NSObject, NSSecureCoding, Sendable {
     self.newHandle =
       coder.containsValue(forKey: "newHandle")
       ? UInt32(coder.decodeInt64(forKey: "newHandle")) : nil
+  }
+}
+
+// MARK: - Rename / Move Request
+
+@objc(RenameRequest)
+public final class RenameRequest: NSObject, NSSecureCoding, Sendable {
+  public static let supportsSecureCoding: Bool = true
+
+  public let deviceId: String
+  public let objectHandle: UInt32
+  public let newName: String
+
+  public init(deviceId: String, objectHandle: UInt32, newName: String) {
+    self.deviceId = deviceId
+    self.objectHandle = objectHandle
+    self.newName = newName
+    super.init()
+  }
+
+  public func encode(with coder: NSCoder) {
+    coder.encode(deviceId, forKey: "deviceId")
+    coder.encode(Int64(objectHandle), forKey: "objectHandle")
+    coder.encode(newName, forKey: "newName")
+  }
+
+  public init?(coder: NSCoder) {
+    guard let deviceId = coder.decodeObject(of: NSString.self, forKey: "deviceId") as String?,
+      let newName = coder.decodeObject(of: NSString.self, forKey: "newName") as String?
+    else { return nil }
+    self.deviceId = deviceId
+    self.objectHandle = UInt32(coder.decodeInt64(forKey: "objectHandle"))
+    self.newName = newName
+  }
+}
+
+@objc(MoveObjectRequest)
+public final class MoveObjectRequest: NSObject, NSSecureCoding, Sendable {
+  public static let supportsSecureCoding: Bool = true
+
+  public let deviceId: String
+  public let objectHandle: UInt32
+  public let newParentHandle: UInt32?
+  public let newStorageId: UInt32
+
+  public init(
+    deviceId: String, objectHandle: UInt32, newParentHandle: UInt32?, newStorageId: UInt32
+  ) {
+    self.deviceId = deviceId
+    self.objectHandle = objectHandle
+    self.newParentHandle = newParentHandle
+    self.newStorageId = newStorageId
+    super.init()
+  }
+
+  public func encode(with coder: NSCoder) {
+    coder.encode(deviceId, forKey: "deviceId")
+    coder.encode(Int64(objectHandle), forKey: "objectHandle")
+    if let ph = newParentHandle { coder.encode(Int64(ph), forKey: "newParentHandle") }
+    coder.encode(Int64(newStorageId), forKey: "newStorageId")
+  }
+
+  public init?(coder: NSCoder) {
+    guard let deviceId = coder.decodeObject(of: NSString.self, forKey: "deviceId") as String? else {
+      return nil
+    }
+    self.deviceId = deviceId
+    self.objectHandle = UInt32(coder.decodeInt64(forKey: "objectHandle"))
+    self.newParentHandle =
+      coder.containsValue(forKey: "newParentHandle")
+      ? UInt32(coder.decodeInt64(forKey: "newParentHandle")) : nil
+    self.newStorageId = UInt32(coder.decodeInt64(forKey: "newStorageId"))
   }
 }
 

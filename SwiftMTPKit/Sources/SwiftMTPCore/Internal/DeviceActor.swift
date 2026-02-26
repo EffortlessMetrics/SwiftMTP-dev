@@ -214,6 +214,17 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     }
   }
 
+  public func rename(_ handle: MTPObjectHandle, to newName: String) async throws {
+    try await openIfNeeded()
+    let link = try await getMTPLink()
+    // SetObjectPropValue (0x9804) on ObjectFileName (0xDC07)
+    let encoded = PTPString.encode(newName)
+    try await BusyBackoff.onDeviceBusy {
+      try await link.setObjectPropValue(
+        handle: handle, property: MTPObjectPropCode.objectFileName, value: encoded)
+    }
+  }
+
   public func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {
     // Default to current storage
     let info = try await getInfo(handle: handle)

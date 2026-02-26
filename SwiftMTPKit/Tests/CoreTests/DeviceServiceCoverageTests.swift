@@ -386,6 +386,8 @@ final class DeviceServiceCoverageTests: XCTestCase {
 
       func delete(_ handle: MTPObjectHandle, recursive: Bool) async throws {}
 
+      func rename(_ handle: MTPObjectHandle, to newName: String) async throws {}
+
       func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {}
 
       var probedCapabilities: [String: Bool] { get async { [:] } }

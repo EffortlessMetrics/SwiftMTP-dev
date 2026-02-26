@@ -221,6 +221,49 @@ final class XPCServiceCoverageTests: XCTestCase {
     XCTAssertFalse(after.sessionOpen)
   }
 
+  func testRenameAndMoveObject() async throws {
+    let config = await configuredService()
+    let impl = config.impl
+
+    // Rename: missing device
+    let missingRename = await withCheckedContinuation {
+      (c: CheckedContinuation<WriteResponse, Never>) in
+      impl.renameObject(RenameRequest(deviceId: "bad", objectHandle: 1, newName: "new.txt")) {
+        c.resume(returning: $0)
+      }
+    }
+    XCTAssertFalse(missingRename.success)
+
+    // Rename: success
+    let renameResp = await withCheckedContinuation {
+      (c: CheckedContinuation<WriteResponse, Never>) in
+      impl.renameObject(
+        RenameRequest(
+          deviceId: config.stableId, objectHandle: config.objectHandle, newName: "renamed.txt")
+      ) { c.resume(returning: $0) }
+    }
+    XCTAssertTrue(renameResp.success)
+
+    // Move: missing device
+    let missingMove = await withCheckedContinuation {
+      (c: CheckedContinuation<WriteResponse, Never>) in
+      impl.moveObject(
+        MoveObjectRequest(deviceId: "bad", objectHandle: 1, newParentHandle: nil, newStorageId: 0)
+      ) { c.resume(returning: $0) }
+    }
+    XCTAssertFalse(missingMove.success)
+
+    // Move: success (move to root)
+    let moveResp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
+      impl.moveObject(
+        MoveObjectRequest(
+          deviceId: config.stableId, objectHandle: config.objectHandle,
+          newParentHandle: nil, newStorageId: config.storageId)
+      ) { c.resume(returning: $0) }
+    }
+    XCTAssertTrue(moveResp.success)
+  }
+
   func testListenerLifecycleAndConnectionAcceptance() async {
     let impl = MTPXPCServiceImpl(deviceManager: .shared)
     let listener = MTPXPCListener(serviceImpl: impl)

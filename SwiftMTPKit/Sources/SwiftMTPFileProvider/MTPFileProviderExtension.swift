@@ -348,23 +348,97 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
   ) -> Progress {
     let progress = Progress(totalUnitCount: 1)
 
-    // Metadata-only change (rename etc.) — acknowledge with no server mutation for now
-    guard changedFields.contains(.contents), let sourceURL = newContents,
-      let xpcService = getXPCService(),
+    guard let xpcService = getXPCService(),
       let components = MTPFileProviderItem.parseItemIdentifier(item.itemIdentifier),
-      let storageId = components.storageId
+      let storageId = components.storageId,
+      let objectHandle = components.objectHandle
     else {
       completionHandler(item, [], false, nil)
       progress.completedUnitCount = 1
       return progress
     }
 
-    // MTP has no in-place modify: delete old handle then upload new content
+    // Rename: filename changed but contents not
+    if changedFields.contains(.filename) && !changedFields.contains(.contents) {
+      let renameReq = RenameRequest(
+        deviceId: components.deviceId, objectHandle: objectHandle, newName: item.filename)
+      let xpcBox = SendableBox(xpcService)
+      let cb = SendableBox(completionHandler)
+      let capturedId = components.deviceId
+      let capturedStorage = storageId
+      let capturedParent = MTPFileProviderItem.parseItemIdentifier(item.parentItemIdentifier)?
+        .objectHandle
+      let capturedName = item.filename
+      let capturedHandle = objectHandle
+      let capturedIsDir = item.contentType == .folder
+      Task {
+        let completionHandler = cb.value
+        await MainActor.run {
+          xpcBox.value.renameObject(renameReq) { response in
+            if response.success {
+              let updatedItem = MTPFileProviderItem(
+                deviceId: capturedId, storageId: capturedStorage,
+                objectHandle: capturedHandle, parentHandle: capturedParent,
+                name: capturedName, size: nil, isDirectory: capturedIsDir, modifiedDate: nil)
+              completionHandler(updatedItem, [], false, nil)
+              self.signalRootContainer()
+            } else {
+              completionHandler(nil, [], false, nil)
+            }
+            progress.completedUnitCount = 1
+          }
+        }
+      }
+      return progress
+    }
+
+    if changedFields.contains(.parentItemIdentifier) && !changedFields.contains(.contents) {
+      let newParentComponents = MTPFileProviderItem.parseItemIdentifier(item.parentItemIdentifier)
+      let moveReq = MoveObjectRequest(
+        deviceId: components.deviceId, objectHandle: objectHandle,
+        newParentHandle: newParentComponents?.objectHandle,
+        newStorageId: newParentComponents?.storageId ?? storageId)
+      let xpcBox = SendableBox(xpcService)
+      let cb = SendableBox(completionHandler)
+      let capturedId = components.deviceId
+      let capturedStorage = newParentComponents?.storageId ?? storageId
+      let capturedParent = newParentComponents?.objectHandle
+      let capturedName = item.filename
+      let capturedHandle = objectHandle
+      let capturedIsDir = item.contentType == .folder
+      Task {
+        let completionHandler = cb.value
+        await MainActor.run {
+          xpcBox.value.moveObject(moveReq) { response in
+            if response.success {
+              let updatedItem = MTPFileProviderItem(
+                deviceId: capturedId, storageId: capturedStorage,
+                objectHandle: capturedHandle, parentHandle: capturedParent,
+                name: capturedName, size: nil, isDirectory: capturedIsDir, modifiedDate: nil)
+              completionHandler(updatedItem, [], false, nil)
+              self.signalRootContainer()
+            } else {
+              completionHandler(nil, [], false, nil)
+            }
+            progress.completedUnitCount = 1
+          }
+        }
+      }
+      return progress
+    }
+
+    // Contents update: MTP has no in-place modify — delete old handle then upload new content
+    guard changedFields.contains(.contents), let sourceURL = newContents else {
+      completionHandler(item, [], false, nil)
+      progress.completedUnitCount = 1
+      return progress
+    }
+
     let fileSize =
       (try? FileManager.default.attributesOfItem(atPath: sourceURL.path)[.size] as? UInt64) ?? 0
     let bookmark = try? sourceURL.bookmarkData(options: .withSecurityScope)
     let deleteReq = DeleteRequest(
-      deviceId: components.deviceId, objectHandle: components.objectHandle ?? 0)
+      deviceId: components.deviceId, objectHandle: objectHandle)
     let writeReq = WriteRequest(
       deviceId: components.deviceId, storageId: storageId,
       parentHandle: MTPFileProviderItem.parseItemIdentifier(item.parentItemIdentifier)?

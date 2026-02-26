@@ -119,6 +119,10 @@ private class MockDevice: MTPDevice, @unchecked Sendable {
     throw MTPError.notSupported("Mock implementation")
   }
 
+  func rename(_ handle: MTPObjectHandle, to newName: String) async throws {
+    throw MTPError.notSupported("Mock implementation")
+  }
+
   func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {
     throw MTPError.notSupported("Mock implementation")
   }
