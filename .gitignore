@@ -98,6 +98,9 @@ dist/
 *.tar.gz
 *.tgz
 
+# DocC archive (generated; use scripts/generate-docs.sh to rebuild)
+Docs/*.doccarchive
+
 # Coverage outputs
 coverage/
 **/coverage/

@@ -1,59 +1,70 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+# Auto-generate Docs/compat-matrix.md from Specs/quirks.json
+# Usage: ./scripts/generate-compat-matrix.sh
 
 # SPDX-License-Identifier: AGPL-3.0-only
 # Copyright (c) 2025 Effortless Metrics, Inc.
-#
-# Reads Specs/quirks.json and prints a Markdown compatibility matrix to stdout.
-# Usage: ./scripts/generate-compat-matrix.sh [quirks.json]
 
-set -e
-
-QUIRKS_FILE="${1:-Specs/quirks.json}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+QUIRKS_FILE="$REPO_ROOT/Specs/quirks.json"
+OUTPUT_FILE="$REPO_ROOT/Docs/compat-matrix.md"
 
 if [[ ! -f "$QUIRKS_FILE" ]]; then
     echo "Error: Quirks file not found: $QUIRKS_FILE" >&2
     exit 1
 fi
 
-if command -v jq &>/dev/null; then
-    echo "| Device | VID:PID | Status | Last Verified | Known Issues |"
-    echo "| --- | --- | --- | --- | --- |"
-    jq -r '
-      .entries[] |
-      (.id) as $id |
-      ((.match.vid // "?") + ":" + (.match.pid // "?")) as $vidpid |
-      (.status // "proposed") as $status |
-      (.lastVerifiedDate // "—") as $date |
-      (
-        if (.behaviorLimitations // []) | length > 0 then
-          .behaviorLimitations[0].description | gsub("\n";" ") |
-          if length > 80 then .[0:80] + "…" else . end
-        else "—" end
-      ) as $issues |
-      "| \($id) | \($vidpid) | \($status) | \($date) | \($issues) |"
-    ' "$QUIRKS_FILE"
-else
-    python3 - "$QUIRKS_FILE" <<'PYEOF'
-import json, sys
+python3 - "$QUIRKS_FILE" "$OUTPUT_FILE" <<'PYEOF'
+import json, sys, re
 
-path = sys.argv[1]
-with open(path) as f:
+quirks_path, output_path = sys.argv[1], sys.argv[2]
+with open(quirks_path) as f:
     data = json.load(f)
 
-print("| Device | VID:PID | Status | Last Verified | Known Issues |")
-print("| --- | --- | --- | --- | --- |")
-for e in data.get("entries", []):
-    did = e["id"]
+STATUS_EMOJI = {"promoted": "✅", "verified": "✓", "proposed": "⚪"}
+
+def device_name(entry_id):
+    # Strip trailing -<pid> segment (hex suffix) and title-case
+    name = re.sub(r'-[0-9a-f]{4}$', '', entry_id)
+    return ' '.join(w.upper() if w in ('mtp', 'dslr', 'eos', 'usb') else w.capitalize()
+                    for w in name.split('-'))
+
+def format_vidpid(vid, pid):
+    # Strip 0x prefix only (preserve leading zeros)
+    def strip_0x(s):
+        return s[2:] if s and s.lower().startswith('0x') else s
+    v = strip_0x(vid) if vid and vid != '?' else '?'
+    p = strip_0x(pid) if pid and pid != '?' else '?'
+    return f"{v}:{p}"
+
+def format_status(status):
+    emoji = STATUS_EMOJI.get(status, "")
+    return f"{emoji} {status}" if emoji else status
+
+def format_quirks(ops):
+    return ', '.join(k for k, v in ops.items() if v is True) or '—'
+
+entries = data.get("entries", [])
+lines = [
+    "# Compatibility Matrix",
+    "",
+    "Auto-generated from Specs/quirks.json — do not edit manually.",
+    "",
+    "| Device | VID:PID | Status | Quirks |",
+    "|--------|---------|--------|--------|",
+]
+for e in entries:
     m = e.get("match", {})
-    vidpid = "{}:{}".format(m.get("vid", "?"), m.get("pid", "?"))
-    status = e.get("status", "proposed")
-    date = e.get("lastVerifiedDate") or "—"
-    lims = e.get("behaviorLimitations", [])
-    if lims:
-        desc = lims[0].get("description", "—").replace("\n", " ")
-        issues = desc[:80] + "…" if len(desc) > 80 else desc
-    else:
-        issues = "—"
-    print("| {} | {} | {} | {} | {} |".format(did, vidpid, status, date, issues))
+    name = device_name(e["id"])
+    vidpid = format_vidpid(m.get("vid", "?"), m.get("pid", "?"))
+    status = format_status(e.get("status", "proposed"))
+    quirks = format_quirks(e.get("ops", {}))
+    lines.append(f"| {name} | {vidpid} | {status} | {quirks} |")
+
+with open(output_path, 'w') as f:
+    f.write('\n'.join(lines) + '\n')
+
+print(f"Generated {output_path} with {len(entries)} entries")
 PYEOF
-fi
