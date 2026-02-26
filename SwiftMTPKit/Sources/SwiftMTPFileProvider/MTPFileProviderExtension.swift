@@ -200,11 +200,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
             )
             completionHandler(tempFileURL, item, nil)
           } else {
-            completionHandler(
-              nil, nil,
-              NSError(
-                domain: NSFileProviderErrorDomain,
-                code: NSFileProviderError.serverUnreachable.rawValue))
+            completionHandler(nil, nil, self.xpcError(from: response.errorMessage))
           }
           progress.completedUnitCount = 1
         }
@@ -455,9 +451,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
           guard deleteResponse.success else {
             completionHandler(
               nil, [], false,
-              NSError(
-                domain: NSFileProviderErrorDomain,
-                code: NSFileProviderError.serverUnreachable.rawValue))
+              self.xpcError(from: deleteResponse.errorMessage))
             progress.completedUnitCount = 1
             return
           }
@@ -472,9 +466,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
             } else {
               completionHandler(
                 nil, [], false,
-                NSError(
-                  domain: NSFileProviderErrorDomain,
-                  code: NSFileProviderError.serverUnreachable.rawValue))
+                self.xpcError(from: response.errorMessage))
             }
             progress.completedUnitCount = 1
           }
@@ -509,12 +501,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
       let completionHandler = cb.value
       await MainActor.run {
         xpcBox.value.deleteObject(req) { response in
-          completionHandler(
-            response.success
-              ? nil
-              : NSError(
-                domain: NSFileProviderErrorDomain,
-                code: NSFileProviderError.serverUnreachable.rawValue))
+          completionHandler(response.success ? nil : self.xpcError(from: response.errorMessage))
           if response.success { self.signalRootContainer() }
           progress.completedUnitCount = 1
         }
@@ -524,6 +511,18 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
   }
 
   // MARK: - Private Helpers
+
+  /// Classifies an XPC error message into the appropriate `NSFileProviderError` code.
+  /// Disconnect-related messages map to `.serverUnreachable`; all others to `.noSuchItem`.
+  private func xpcError(from message: String?) -> NSError {
+    let msg = (message ?? "").lowercased()
+    let isDisconnect =
+      msg.contains("not connected") || msg.contains("disconnected") || msg.contains("unavailable")
+    let code =
+      isDisconnect
+      ? NSFileProviderError.serverUnreachable.rawValue : NSFileProviderError.noSuchItem.rawValue
+    return NSError(domain: NSFileProviderErrorDomain, code: code)
+  }
 
   private func signalRootContainer() {
     guard let manager = NSFileProviderManager(for: domain) else { return }

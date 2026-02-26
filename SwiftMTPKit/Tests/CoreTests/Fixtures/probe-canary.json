@@ -1,0 +1,26 @@
+[
+  {
+    "direction": "out",
+    "data": "EAAAAAEAAhABAAAAAQAAAA==",
+    "timestampMs": 0.0,
+    "errorCode": null
+  },
+  {
+    "direction": "in",
+    "data": "DAAAAAMAASABAAAA",
+    "timestampMs": 1.0,
+    "errorCode": null
+  },
+  {
+    "direction": "out",
+    "data": "DAAAAAEAARACAAAA",
+    "timestampMs": 1.5,
+    "errorCode": null
+  },
+  {
+    "direction": "in",
+    "data": "DAAAAAMAGSACAAAA",
+    "timestampMs": 2.0,
+    "errorCode": null
+  }
+]

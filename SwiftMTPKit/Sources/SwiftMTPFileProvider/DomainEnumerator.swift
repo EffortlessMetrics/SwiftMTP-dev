@@ -11,6 +11,9 @@ import SwiftMTPXPC
 /// Reads directly from the local SQLite live index (no XPC for metadata).
 /// If the index is empty for a folder, fires a background crawl request via XPC.
 public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchecked Sendable {
+  /// Maximum items yielded per enumeration page.
+  private static let pageSize: Int = 500
+
   private let deviceId: String
   private let storageId: UInt32?
   private let parentHandle: UInt32?
@@ -51,7 +54,7 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
           return
         }
 
-        var items: [NSFileProviderItem] = []
+        var allItems: [NSFileProviderItem] = []
 
         if storageId == nil {
           // Enumerate storages
@@ -66,7 +69,7 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
               isDirectory: true,
               modifiedDate: nil
             )
-            items.append(item)
+            allItems.append(item)
           }
 
           if storages.isEmpty {
@@ -90,7 +93,7 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
               isDirectory: obj.isDirectory,
               modifiedDate: obj.mtime
             )
-            items.append(item)
+            allItems.append(item)
           }
 
           if objects.isEmpty {
@@ -99,12 +102,39 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
           }
         }
 
-        observer.didEnumerate(items)
-        observer.finishEnumerating(upTo: nil)
+        // Page the results: decode the current offset from the page cursor,
+        // yield one page of items, and supply a next-page cursor when more remain.
+        let offset = decodePageOffset(page)
+        let end = min(offset + Self.pageSize, allItems.count)
+        observer.didEnumerate(Array(allItems[offset..<end]))
+        if end < allItems.count {
+          observer.finishEnumerating(upTo: encodePageCursor(UInt64(end)))
+        } else {
+          observer.finishEnumerating(upTo: nil)
+        }
       } catch {
         observer.finishEnumeratingWithError(error)
       }
     }
+  }
+
+  // MARK: - Page Cursor Encoding
+
+  /// Encodes a byte offset as an `NSFileProviderPage` cursor.
+  private func encodePageCursor(_ offset: UInt64) -> NSFileProviderPage {
+    var value = offset
+    let data = Data(bytes: &value, count: MemoryLayout<UInt64>.size)
+    return NSFileProviderPage(data)
+  }
+
+  /// Decodes a page cursor back to an item offset.
+  /// Returns 0 for the initial (system-supplied) page, which is not 8 bytes.
+  private func decodePageOffset(_ page: NSFileProviderPage) -> Int {
+    let data = page.rawValue
+    guard data.count == MemoryLayout<UInt64>.size else { return 0 }
+    var value: UInt64 = 0
+    _ = withUnsafeMutableBytes(of: &value) { data.copyBytes(to: $0) }
+    return Int(value)
   }
 
   // MARK: - Change Tracking

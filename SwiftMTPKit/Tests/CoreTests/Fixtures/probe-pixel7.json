@@ -1,0 +1,44 @@
+[
+  {
+    "direction": "out",
+    "data": "EAAAAAEAAhABAAAAAQAAAA==",
+    "timestampMs": 0.0,
+    "errorCode": null
+  },
+  {
+    "direction": "in",
+    "data": "DAAAAAMAASABAAAA",
+    "timestampMs": 1.2,
+    "errorCode": null
+  },
+  {
+    "direction": "out",
+    "data": "DAAAAAEAARACAAAA",
+    "timestampMs": 1.5,
+    "errorCode": null
+  },
+  {
+    "direction": "in",
+    "data": "9wAAAAIAARACAAAAZAAGAAAAZAAmbQBpAGMAcgBvAHMAbwBmAHQALgBjAG8AbQA6ACAAMQAuADAAOwAgAGEAbgBkAHIAbwBpAGQALgBjAG8AbQA6ACAAMQAuADAAOwAAAAAACQAAAAEQAhADEAQQBRAHEAgQCxAUEAMAAAACQANABkADAAAAAVAGUALUAAAAAAUAAAAAMAEwATgCOIK5B0cAbwBvAGcAbABlAAAACFAAaQB4AGUAbAAgADcAAAAQVABQADEAQQAuADIAMgAwADkAMAA1AC4AMAAwADQAAAALMQAyADMANAA1ADYANwA4ADkAMAAAAA==",
+    "timestampMs": 5.2,
+    "errorCode": null
+  },
+  {
+    "direction": "in",
+    "data": "DAAAAAMAASACAAAA",
+    "timestampMs": 5.5,
+    "errorCode": null
+  },
+  {
+    "direction": "out",
+    "data": "DAAAAAEAAxADAAAA",
+    "timestampMs": 6.0,
+    "errorCode": null
+  },
+  {
+    "direction": "in",
+    "data": "DAAAAAMAASADAAAA",
+    "timestampMs": 6.3,
+    "errorCode": null
+  }
+]

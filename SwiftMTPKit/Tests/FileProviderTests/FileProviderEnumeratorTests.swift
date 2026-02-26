@@ -11,6 +11,7 @@ final class FileProviderEnumeratorTests: XCTestCase {
   private actor MockLiveIndexReader: LiveIndexReader {
     var changeCounter: Int64 = 0
     var stubbedChanges: [IndexedObjectChange] = []
+    var stubbedChildren: [IndexedObject] = []
 
     func setChangeCounter(_ value: Int64) {
       changeCounter = value
@@ -20,10 +21,14 @@ final class FileProviderEnumeratorTests: XCTestCase {
       stubbedChanges = changes
     }
 
+    func setChildren(_ children: [IndexedObject]) {
+      stubbedChildren = children
+    }
+
     func object(deviceId: String, handle: UInt32) async throws -> IndexedObject? { nil }
     func children(deviceId: String, storageId: UInt32, parentHandle: UInt32?) async throws
       -> [IndexedObject]
-    { [] }
+    { stubbedChildren }
     func storages(deviceId: String) async throws -> [IndexedStorage] { [] }
     func currentChangeCounter(deviceId: String) async throws -> Int64 { changeCounter }
     func changesSince(deviceId: String, anchor: Int64) async throws -> [IndexedObjectChange] {
@@ -32,6 +37,28 @@ final class FileProviderEnumeratorTests: XCTestCase {
     func crawlState(deviceId: String, storageId: UInt32, parentHandle: UInt32?) async throws
       -> Date?
     { nil }
+  }
+
+  private class MockEnumerationObserver: NSObject, NSFileProviderEnumerationObserver {
+    nonisolated(unsafe) var enumeratedItems: [NSFileProviderItem] = []
+    nonisolated(unsafe) var nextPageCursor: NSFileProviderPage?
+    nonisolated(unsafe) var didFinish: Bool = false
+    nonisolated(unsafe) var onFinish: (() -> Void)?
+
+    func didEnumerate(_ items: [NSFileProviderItem]) {
+      enumeratedItems.append(contentsOf: items)
+    }
+
+    func finishEnumerating(upTo nextPage: NSFileProviderPage?) {
+      nextPageCursor = nextPage
+      didFinish = true
+      onFinish?()
+    }
+
+    func finishEnumeratingWithError(_ error: Error) {
+      didFinish = true
+      onFinish?()
+    }
   }
 
   private class MockChangeObserver: NSObject, NSFileProviderChangeObserver {
@@ -200,5 +227,82 @@ final class FileProviderEnumeratorTests: XCTestCase {
     XCTAssertTrue(observer.updatedItems.isEmpty)
     XCTAssertEqual(observer.deletedIdentifiers.count, 1)
     XCTAssertEqual(observer.deletedIdentifiers.first?.rawValue, "device1:1:200")
+  }
+
+  // MARK: - Paged Enumeration Tests
+
+  /// Builds `count` synthetic `IndexedObject` values for paging tests.
+  private func makeObjects(count: Int) -> [IndexedObject] {
+    (0..<count).map { i in
+      IndexedObject(
+        deviceId: "device1", storageId: 1, handle: UInt32(i + 1),
+        parentHandle: nil, name: "file\(i).jpg", pathKey: "/file\(i).jpg",
+        sizeBytes: 1024, mtime: nil, formatCode: 0x3800,
+        isDirectory: false, changeCounter: 0)
+    }
+  }
+
+  func testPagedEnumeration_firstPageOf1200_yields500ItemsAndCursor() async {
+    let reader = MockLiveIndexReader()
+    await reader.setChildren(makeObjects(count: 1200))
+
+    let enumerator = DomainEnumerator(
+      deviceId: "device1", storageId: 1, parentHandle: nil, indexReader: reader)
+    let observer = MockEnumerationObserver()
+    let finishExp = expectation(description: "page 1 finish")
+    observer.onFinish = { finishExp.fulfill() }
+
+    enumerator.enumerateItems(
+      for: observer, startingAt: NSFileProviderPage.initialPageSortedByName as! NSFileProviderPage)
+
+    await fulfillment(of: [finishExp], timeout: 2.0)
+    XCTAssertEqual(observer.enumeratedItems.count, 500, "Page 1 must yield exactly 500 items")
+    XCTAssertNotNil(observer.nextPageCursor, "Page 1 must supply a next-page cursor")
+  }
+
+  func testPagedEnumeration_secondPageOf1200_yields500ItemsAndCursor() async {
+    let reader = MockLiveIndexReader()
+    await reader.setChildren(makeObjects(count: 1200))
+
+    let enumerator = DomainEnumerator(
+      deviceId: "device1", storageId: 1, parentHandle: nil, indexReader: reader)
+
+    // Build a cursor encoding offset 500 (result of page 1)
+    var offset500: UInt64 = 500
+    let cursorData = Data(bytes: &offset500, count: MemoryLayout<UInt64>.size)
+    let page2Cursor = NSFileProviderPage(cursorData)
+
+    let observer = MockEnumerationObserver()
+    let finishExp = expectation(description: "page 2 finish")
+    observer.onFinish = { finishExp.fulfill() }
+
+    enumerator.enumerateItems(for: observer, startingAt: page2Cursor)
+
+    await fulfillment(of: [finishExp], timeout: 2.0)
+    XCTAssertEqual(observer.enumeratedItems.count, 500, "Page 2 must yield exactly 500 items")
+    XCTAssertNotNil(observer.nextPageCursor, "Page 2 must supply a next-page cursor")
+  }
+
+  func testPagedEnumeration_thirdPageOf1200_yields200ItemsAndNoCursor() async {
+    let reader = MockLiveIndexReader()
+    await reader.setChildren(makeObjects(count: 1200))
+
+    let enumerator = DomainEnumerator(
+      deviceId: "device1", storageId: 1, parentHandle: nil, indexReader: reader)
+
+    // Build a cursor encoding offset 1000 (result of page 2)
+    var offset1000: UInt64 = 1000
+    let cursorData = Data(bytes: &offset1000, count: MemoryLayout<UInt64>.size)
+    let page3Cursor = NSFileProviderPage(cursorData)
+
+    let observer = MockEnumerationObserver()
+    let finishExp = expectation(description: "page 3 finish")
+    observer.onFinish = { finishExp.fulfill() }
+
+    enumerator.enumerateItems(for: observer, startingAt: page3Cursor)
+
+    await fulfillment(of: [finishExp], timeout: 2.0)
+    XCTAssertEqual(observer.enumeratedItems.count, 200, "Page 3 must yield exactly 200 items")
+    XCTAssertNil(observer.nextPageCursor, "Page 3 (last page) must not supply a cursor")
   }
 }

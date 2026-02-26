@@ -33,6 +33,12 @@ func reconcilePartialWrites(journal: any TransferJournal, device: any MTPDevice)
         "Deleting partial object handle=\(handle) name=\(record.name) actual=\(actual) expected=\(expected)"
       )
     try? await device.delete(handle, recursive: false)
+    // Mark the journal entry as failed so the next write() starts fresh.
+    try? await journal.fail(
+      id: record.id,
+      error: MTPError.preconditionFailed(
+        "partial object found on reconnect; deleted for clean retry")
+    )
   }
 }
 

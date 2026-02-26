@@ -55,6 +55,9 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   private var sessionOpen = false
   let transferJournal: (any TransferJournal)?
   public var probedCapabilities: [String: Bool] = [:]
+  /// When `true`, after each successful write the remote object size is verified against
+  /// the expected size; a mismatch throws `MTPError.verificationFailed`.
+  public var verifyAfterWrite: Bool = false
   private var currentTuning: EffectiveTuning = .defaults()
   public var effectiveTuning: EffectiveTuning { get async { currentTuning } }
   private var currentPolicy: DevicePolicy?

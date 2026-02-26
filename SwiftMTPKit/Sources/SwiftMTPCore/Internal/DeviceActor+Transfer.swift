@@ -4,6 +4,24 @@
 import Foundation
 import OSLog
 
+// MARK: - Post-write size verification
+
+/// Verifies that the remote object size matches the expected size after a successful write.
+/// Exposed as a package-internal function so tests can invoke it directly with any `MTPDevice`.
+func postWriteVerify(device: any MTPDevice, handle: MTPObjectHandle, expectedSize: UInt64)
+  async throws
+{
+  guard let info = try? await device.getInfo(handle: handle) else { return }
+  let actual = info.sizeBytes ?? 0
+  Logger(subsystem: "SwiftMTP", category: "transfer")
+    .info(
+      "Post-write verify handle=\(handle) expected=\(expectedSize) actual=\(actual)"
+    )
+  if actual != expectedSize {
+    throw MTPError.verificationFailed(expected: expectedSize, actual: actual)
+  }
+}
+
 extension MTPDeviceActor {
   private final class LockedDataBuffer: @unchecked Sendable {
     private var data = Data()
@@ -1000,6 +1018,11 @@ extension MTPDeviceActor {
         }
 
         progress.completedUnitCount = total
+
+        // Post-write size verification (optional)
+        if verifyAfterWrite, let remoteHandle = remoteHandleCapture.value {
+          try await postWriteVerify(device: self, handle: remoteHandle, expectedSize: size)
+        }
 
         // Mark as complete in journal
         if let journal = transferJournal, let transferId = journalTransferId {

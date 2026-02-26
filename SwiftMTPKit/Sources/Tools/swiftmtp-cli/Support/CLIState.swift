@@ -142,6 +142,9 @@ public func actionableMessage(for error: Error) -> String {
       return "MTP protocol error 0x\(String(format: "%04X", code)): \(hint)."
     case .preconditionFailed(let reason):
       return "Precondition failed: \(reason)."
+    case .verificationFailed(let expected, let actual):
+      return
+        "Write verification failed: remote size \(actual) != expected \(expected). The file may be corrupted on the device."
     }
   }
   return error.localizedDescription

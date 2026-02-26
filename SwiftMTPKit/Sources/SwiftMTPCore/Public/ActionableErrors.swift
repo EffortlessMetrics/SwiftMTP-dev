@@ -35,6 +35,9 @@ extension MTPError: ActionableError {
       return "An MTP operation is already in progress. Wait briefly and retry."
     case .preconditionFailed(let reason):
       return "Precondition failed: \(reason)"
+    case .verificationFailed:
+      return
+        "Write verification failed: remote file size does not match expected size. The file may be corrupted on the device."
     }
   }
 }

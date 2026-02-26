@@ -12,6 +12,8 @@ public enum MTPError: Error, Sendable, Equatable {
   /// A protocol transaction is already in progress on this device.
   case sessionBusy
   case preconditionFailed(String)
+  /// The remote object size after a write does not match the expected size.
+  case verificationFailed(expected: UInt64, actual: UInt64)
 }
 
 public extension MTPError {
@@ -56,6 +58,9 @@ extension MTPError: LocalizedError {
       return "A protocol transaction is already in progress on this device."
     case .preconditionFailed(let reason):
       return "Precondition failed: \(reason)"
+    case .verificationFailed(let expected, let actual):
+      return
+        "Write verification failed: remote size \(actual) does not match expected \(expected)."
     }
   }
 
@@ -70,7 +75,8 @@ extension MTPError: LocalizedError {
       return transportError.failureReason
     case .deviceDisconnected, .permissionDenied, .notSupported, .objectNotFound,
       .objectWriteProtected,
-      .storageFull, .readOnly, .timeout, .busy, .sessionBusy, .preconditionFailed:
+      .storageFull, .readOnly, .timeout, .busy, .sessionBusy, .preconditionFailed,
+      .verificationFailed:
       return nil
     }
   }
