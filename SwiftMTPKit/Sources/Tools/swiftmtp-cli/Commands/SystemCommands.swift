@@ -220,4 +220,48 @@ struct SystemCommands {
       print("SwiftMTP \(BuildInfo.version) (\(BuildInfo.git))")
     }
   }
+
+  static func runInfo(flags: CLIFlags) async {
+    do {
+      let qdb = try QuirkDatabase.load()
+      let entries = qdb.entries
+      let vids = Set(entries.map { String(format: "0x%04x", $0.vid) })
+      let byStatus = Dictionary(grouping: entries) { $0.status?.rawValue ?? "unknown" }
+      let proplistCount = entries.filter { $0.resolvedFlags().supportsGetObjectPropList }.count
+      let kernelDetachCount = entries.filter { $0.resolvedFlags().requiresKernelDetach }.count
+
+      if flags.json {
+        let info: [String: Any] = [
+          "totalEntries": entries.count,
+          "uniqueVIDs": vids.count,
+          "byStatus": byStatus.mapValues { $0.count },
+          "supportsGetObjectPropList": proplistCount,
+          "requiresKernelDetach": kernelDetachCount,
+        ]
+        if let data = try? JSONSerialization.data(withJSONObject: info, options: [.prettyPrinted]),
+          let str = String(data: data, encoding: .utf8)
+        {
+          print(str)
+        }
+      } else {
+        print("📦 SwiftMTP Device Database")
+        print("")
+        print("   Entries:          \(entries.count)")
+        print("   Unique VIDs:      \(vids.count)")
+        print("   Proplist-capable: \(proplistCount)")
+        print("   Kernel-detach:    \(kernelDetachCount)")
+        print("")
+        print("   By status:")
+        for (status, items) in byStatus.sorted(by: { $0.key < $1.key }) {
+          let padded = status + String(repeating: " ", count: max(0, 14 - status.count))
+          print("     \(padded) \(items.count)")
+        }
+        print("")
+        print("   Run 'swiftmtp quirks' for the full list.")
+      }
+    } catch {
+      print("❌ Could not load quirks database: \(error)")
+      exitNow(.unavailable)
+    }
+  }
 }
