@@ -312,6 +312,54 @@ final class BDDRunner: XCTestCase {
     XCTAssertEqual(q.id, "kobo-arc-android-b108")
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Kobo tablet should not require kernel detach")
   }
+
+  // modern-cameras-wave5.feature – Fujifilm X-T10
+  func testCamera_FujifilmXT10() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x04cb, pid: 0x02c8, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("fujifilm-xt10-02c8 not in database") }
+    XCTAssertEqual(q.id, "fujifilm-xt10-02c8")
+    XCTAssertTrue(q.resolvedFlags().supportsGetObjectPropList)
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  // modern-cameras-wave5.feature – GoPro Hero 11 Black
+  func testCamera_GoProHero11() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2672, pid: 0x0059, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("gopro-hero11-black-0059 not in database") }
+    XCTAssertEqual(q.id, "gopro-hero11-black-0059")
+    XCTAssertTrue(q.resolvedFlags().supportsGetObjectPropList)
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  // modern-cameras-wave5.feature – GoPro Hero 12 Black
+  func testCamera_GoProHero12() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2672, pid: 0x005c, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("gopro-hero12-black-005c not in database") }
+    XCTAssertEqual(q.id, "gopro-hero12-black-005c")
+    XCTAssertTrue(q.resolvedFlags().supportsGetObjectPropList)
+  }
+
+  // modern-cameras-wave5.feature – Canon EOS 70D
+  func testCamera_CanonEOS70D() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x04a9, pid: 0x3253, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("canon-eos-70d-3253 not in database") }
+    XCTAssertEqual(q.id, "canon-eos-70d-3253")
+    // Entry exists and has resolvable flags (specific flag values depend on profile version)
+    _ = q.resolvedFlags()
+  }
+
+  // modern-cameras-wave5.feature – Garmin Fenix 6 Pro
+  func testWearable_GarminFenix6Pro() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x091e, pid: 0x4cda, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("garmin-fenix6-pro-4cda not in database") }
+    XCTAssertEqual(q.id, "garmin-fenix6-pro-4cda")
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
