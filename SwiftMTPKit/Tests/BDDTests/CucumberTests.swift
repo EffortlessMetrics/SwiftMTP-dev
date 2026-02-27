@@ -440,6 +440,64 @@ final class BDDRunner: XCTestCase {
     else { throw XCTSkip("asus-rog-phone-6-4dba not in database") }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
+
+  // MARK: - Wave-11 Emerging Brands
+
+  func testWave11TecnoCamon30Pro() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x1d5b, pid: 0x600b, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("tecno-camon-30-pro-600b not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave11InfinixNote40Pro() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x1d5c, pid: 0x6009, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("infinix-note-40-pro-6009 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave11ValveSteamDeckLCD() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x28de, pid: 0x1002, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("valve-steam-deck-lcd-1002 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave11MetaQuest2() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2833, pid: 0x0182, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("meta-quest-2-0182 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave11ToshibaGigabeatS() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0930, pid: 0x0010, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("toshiba-gigabeat-s-0010 not in database") }
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave11PhilipsGoGearVibe() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0471, pid: 0x2075, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("philips-gogear-vibe-2075 not in database") }
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave11Archos504() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0e79, pid: 0x1307, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("archos-504-1307 not in database") }
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave11YotaPhone2() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2916, pid: 0x914d, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("yota-phone-2-914d not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)

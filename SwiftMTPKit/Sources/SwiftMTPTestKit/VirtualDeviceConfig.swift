@@ -543,6 +543,34 @@ public struct VirtualDeviceConfig: Sendable {
       includePropList: false)
   }()
 
+  // MARK: - Wave-11 Presets
+
+  public static let valveSteamDeck: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "28de:1002@1:46", vendor: "Valve", model: "Steam Deck LCD",
+      vendorID: 0x28de, productID: 0x1002, serial: "VIRT-VALVE-DECK-1002",
+      includePropList: false)
+  }()
+
+  public static let metaQuest3: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "2833:0184@1:47", vendor: "Meta", model: "Quest 3",
+      vendorID: 0x2833, productID: 0x0184, serial: "VIRT-META-Q3-0184",
+      includePropList: false)
+  }()
+
+  public static let tecnoCamon30: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "1d5b:600b@1:48", vendor: "Tecno", model: "Camon 30 Pro",
+      vendorID: 0x1d5b, productID: 0x600b, serial: "VIRT-TECNO-C30P-600B",
+      includePropList: false)
+  }()
+
+  public static let archosMediaPlayer: VirtualDeviceConfig = {
+    _cameraPreset(
+      rawId: "0e79:1307@1:49", vendor: "Archos", model: "504",
+      vendorID: 0x0e79, productID: 0x1307, serial: "VIRT-ARCHOS-504-1307")
+  }()
 
   private static func _androidPreset(
     rawId: String, vendor: String, model: String,
