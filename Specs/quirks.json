@@ -125328,7 +125328,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125362,7 +125368,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125396,7 +125408,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125430,7 +125448,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125464,7 +125488,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125498,7 +125528,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125532,7 +125568,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125566,7 +125608,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125600,7 +125648,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125634,7 +125688,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125668,7 +125728,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125702,7 +125768,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125736,7 +125808,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125770,7 +125848,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125804,7 +125888,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125838,7 +125928,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125872,7 +125968,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125906,7 +126008,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125940,7 +126048,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -125974,7 +126088,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126008,7 +126128,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126042,7 +126168,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126076,7 +126208,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126110,7 +126248,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126144,7 +126288,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126178,7 +126328,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126212,9 +126368,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "brokenBatteryLevel"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126248,9 +126408,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126284,7 +126448,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126318,7 +126488,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126352,9 +126528,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126388,7 +126568,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126422,7 +126608,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126456,7 +126648,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126490,9 +126688,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126526,9 +126728,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126562,9 +126768,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126598,9 +126808,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126634,9 +126848,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126670,9 +126888,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126706,9 +126928,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126742,9 +126968,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126778,9 +127008,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126814,9 +127048,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126850,9 +127088,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126886,7 +127128,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126920,7 +127168,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126954,7 +127208,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -126988,7 +127248,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127022,7 +127288,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127056,7 +127328,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127090,7 +127368,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127124,7 +127408,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127158,7 +127448,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127192,7 +127488,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127226,7 +127528,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127260,7 +127568,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127294,7 +127608,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127328,7 +127648,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127362,7 +127688,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127396,7 +127728,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127430,7 +127768,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127464,7 +127808,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127498,7 +127848,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127532,7 +127888,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127566,7 +127928,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127600,7 +127968,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127634,7 +128008,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127668,7 +128048,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127702,7 +128088,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127736,7 +128128,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127770,7 +128168,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127804,7 +128208,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127838,7 +128248,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127872,7 +128288,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127906,7 +128328,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127940,7 +128368,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -127974,7 +128408,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128008,7 +128448,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128042,7 +128488,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128076,7 +128528,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128110,7 +128568,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128144,7 +128608,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128178,7 +128648,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128212,7 +128688,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128246,7 +128728,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128280,7 +128768,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128314,7 +128808,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128348,7 +128848,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128382,7 +128888,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128416,9 +128928,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128452,9 +128968,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128488,9 +129008,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128524,7 +129048,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128558,7 +129088,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128592,9 +129128,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128628,9 +129168,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128664,9 +129208,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128700,9 +129248,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128736,9 +129288,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128772,7 +129328,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128806,7 +129368,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128840,7 +129408,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128874,7 +129448,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128908,7 +129488,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128942,7 +129528,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -128976,7 +129568,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129010,7 +129608,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129044,7 +129648,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129078,7 +129688,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129112,7 +129728,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129146,7 +129768,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129180,7 +129808,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129214,7 +129848,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129248,7 +129888,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129282,7 +129928,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129316,7 +129968,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129350,7 +130008,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129384,7 +130048,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129418,7 +130088,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129452,7 +130128,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129486,7 +130168,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129520,7 +130208,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129554,7 +130248,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129588,7 +130288,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129622,7 +130328,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129656,7 +130368,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129690,7 +130408,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129724,7 +130448,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129758,7 +130488,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129792,7 +130528,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129826,7 +130568,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129860,7 +130608,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129894,7 +130648,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129928,7 +130688,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129962,7 +130728,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -129996,7 +130768,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130030,9 +130808,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130066,9 +130848,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130102,9 +130888,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130138,9 +130928,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130174,9 +130968,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130210,7 +131008,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130244,7 +131048,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130278,7 +131088,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130312,7 +131128,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130346,7 +131168,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130380,7 +131208,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130414,7 +131248,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130448,7 +131288,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130482,7 +131328,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130516,7 +131368,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130550,7 +131408,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130584,7 +131448,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130618,7 +131488,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130652,7 +131528,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130686,7 +131568,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130720,7 +131608,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130754,7 +131648,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130788,7 +131688,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130822,7 +131728,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130856,7 +131768,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130890,7 +131808,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130924,7 +131848,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130958,7 +131888,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -130992,7 +131928,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131026,7 +131968,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131060,7 +132008,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131094,7 +132048,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131128,7 +132088,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131162,7 +132128,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131196,7 +132168,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131230,7 +132208,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131264,7 +132248,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131298,7 +132288,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131332,7 +132328,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131366,7 +132368,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131400,7 +132408,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131434,7 +132448,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131468,7 +132488,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131502,7 +132528,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131536,7 +132568,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131570,7 +132608,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131604,7 +132648,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131638,7 +132688,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131672,7 +132728,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131706,7 +132768,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131740,7 +132808,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131774,7 +132848,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131808,7 +132888,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131842,7 +132928,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131876,7 +132968,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131910,7 +133008,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131944,7 +133048,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -131978,7 +133088,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132012,7 +133128,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132046,7 +133168,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132080,7 +133208,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132114,7 +133248,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132148,7 +133288,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132182,7 +133328,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132216,7 +133368,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132250,7 +133408,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132284,7 +133448,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132318,7 +133488,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132352,7 +133528,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132386,7 +133568,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132420,7 +133608,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132454,7 +133648,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132488,7 +133688,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132522,7 +133728,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132556,7 +133768,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132590,7 +133808,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132624,7 +133848,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132658,9 +133888,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132694,9 +133928,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132730,7 +133968,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132764,7 +134008,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132798,7 +134048,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132832,7 +134088,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132866,7 +134128,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132900,7 +134168,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132934,7 +134208,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -132968,7 +134248,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133002,7 +134288,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133036,9 +134328,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133072,9 +134368,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133108,9 +134408,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133144,7 +134448,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133178,9 +134488,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133214,7 +134528,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133248,7 +134568,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133282,7 +134608,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133316,7 +134648,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133350,7 +134688,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133384,7 +134728,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133418,7 +134768,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133452,7 +134808,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133486,7 +134848,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133520,7 +134888,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133554,7 +134928,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133588,7 +134968,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133622,7 +135008,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133656,7 +135048,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133690,7 +135088,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133724,7 +135128,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133758,7 +135168,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133792,7 +135208,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133826,7 +135248,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133860,7 +135288,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133894,7 +135328,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133928,7 +135368,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133962,7 +135408,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -133996,7 +135448,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134030,7 +135488,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134064,7 +135528,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134098,7 +135568,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134132,7 +135608,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134166,7 +135648,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134200,7 +135688,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134234,7 +135728,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134268,7 +135768,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134302,7 +135808,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134336,7 +135848,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134370,7 +135888,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134404,7 +135928,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134438,7 +135968,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134472,7 +136008,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134506,7 +136048,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134540,7 +136088,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134574,7 +136128,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134608,7 +136168,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134642,7 +136208,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134676,7 +136248,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134710,7 +136288,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134744,7 +136328,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134778,7 +136368,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134812,7 +136408,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134846,9 +136448,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134882,9 +136488,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134918,9 +136528,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134954,9 +136568,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -134990,9 +136608,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135026,9 +136648,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135062,9 +136688,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135098,7 +136728,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135132,7 +136768,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135166,7 +136808,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135200,7 +136848,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135234,9 +136888,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135270,9 +136928,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135306,9 +136968,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135342,9 +137008,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135378,9 +137048,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135414,9 +137088,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135450,9 +137128,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135486,9 +137168,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135522,9 +137208,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135558,9 +137248,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135594,9 +137288,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135630,9 +137328,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135666,9 +137368,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135702,9 +137408,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135738,9 +137448,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135774,9 +137488,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135810,9 +137528,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135846,9 +137568,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135882,9 +137608,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135918,9 +137648,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135954,9 +137688,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -135990,9 +137728,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136026,9 +137768,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136062,9 +137808,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136098,7 +137848,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136132,7 +137888,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136166,7 +137928,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136200,9 +137968,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136236,7 +138008,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136270,7 +138048,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136304,7 +138088,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136338,7 +138128,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136372,7 +138168,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136406,7 +138208,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136440,7 +138248,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136474,7 +138288,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136508,9 +138328,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136544,9 +138368,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136580,9 +138408,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136616,9 +138448,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136652,9 +138488,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136688,9 +138528,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136724,9 +138568,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136760,9 +138608,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136796,9 +138648,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136832,9 +138688,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136868,9 +138728,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136904,9 +138768,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136940,9 +138808,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -136976,9 +138848,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137012,9 +138888,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137048,9 +138928,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137084,9 +138968,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137120,9 +139008,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137156,9 +139048,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137192,9 +139088,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137228,9 +139128,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137264,9 +139168,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137300,9 +139208,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137336,9 +139248,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137372,9 +139288,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137408,9 +139328,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137444,9 +139368,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137480,9 +139408,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137516,9 +139448,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137552,9 +139488,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137588,9 +139528,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137624,9 +139568,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137660,9 +139608,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137696,9 +139648,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137732,9 +139688,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137768,9 +139728,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137804,7 +139768,13 @@
         "supportsGetObjectPropList": true,
         "supportsGetPartialObject": true
       },
-      "flags": [],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
@@ -137838,9 +139808,13 @@
         "supportsGetObjectPropList": false,
         "supportsGetPartialObject": true
       },
-      "flags": [
-        "requiresKernelDetach"
-      ],
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
       "confidence": "low",
       "status": "proposed",
       "evidenceRequired": [
