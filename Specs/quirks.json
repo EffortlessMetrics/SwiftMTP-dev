@@ -25567,6 +25567,975 @@
         "sourceRef": "music-players.h",
         "notes": "BLU Vivo XL Android MTP"
       }
+    },
+    {
+      "id": "leica-dlux2-04da-2375",
+      "match": {
+        "vid": "0x04da",
+        "pid": "0x2375",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Leica D-LUX 2 — Panasonic-built Leica compact"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Leica D-LUX 2 — PTP compact, Panasonic OEM VID 0x04da"
+      }
+    },
+    {
+      "id": "leica-sl-04da-2041",
+      "match": {
+        "vid": "0x04da",
+        "pid": "0x2041",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Leica SL (Typ 601) via Panasonic VID — alternate USB identity"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Leica SL (Typ 601) — same PID as leica-sl-typ601-2041 but VID 0x04da (Panasonic OEM)"
+      }
+    },
+    {
+      "id": "pentax-optio-43wr-000d",
+      "match": {
+        "vid": "0x0a17",
+        "pid": "0x000d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Pentax Optio 43WR — legacy Pentax PTP compact"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Pentax Optio 43WR — PTP, legacy VID 0x0a17"
+      }
+    },
+    {
+      "id": "pentax-optio-w90-00f7",
+      "match": {
+        "vid": "0x0a17",
+        "pid": "0x00f7",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Pentax Optio W90 — legacy Pentax PTP waterproof compact"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Pentax Optio W90 — PTP, legacy VID 0x0a17"
+      }
+    },
+    {
+      "id": "ricoh-theta-m15-0365",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x0365",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Ricoh Theta m15 — 360 camera, PTP mode"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Ricoh Theta m15 — 360 camera"
+      }
+    },
+    {
+      "id": "ricoh-theta-s-0366",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x0366",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Ricoh Theta S — 360 camera, PTP mode"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Ricoh Theta S — 360 camera"
+      }
+    },
+    {
+      "id": "ricoh-theta-sc-0367",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x0367",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Ricoh Theta SC — 360 camera, PTP mode"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Ricoh Theta SC — 360 camera"
+      }
+    },
+    {
+      "id": "ricoh-theta-v-0368",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x0368",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Ricoh Theta V — 360 camera, PTP mode"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Ricoh Theta V — 360 camera"
+      }
+    },
+    {
+      "id": "ricoh-theta-z1-036d",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x036d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 400
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Ricoh Theta Z1 — professional 360 camera with 1-inch sensor"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Ricoh Theta Z1 — pro 360 camera, 1-inch sensor"
+      }
+    },
+    {
+      "id": "ricoh-caplio-r5-0110",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x0110",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Ricoh Caplio R5 — PTP compact camera"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Ricoh Caplio R5 — legacy Ricoh compact VID 0x05ca"
+      }
+    },
+    {
+      "id": "ricoh-caplio-gx-0325",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x0325",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Ricoh Caplio GX — PTP compact camera"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Ricoh Caplio GX — legacy Ricoh compact VID 0x05ca"
+      }
+    },
+    {
+      "id": "ricoh-caplio-r1v-032b",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x032b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Ricoh Caplio R1v — PTP compact camera"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Ricoh Caplio R1v — legacy Ricoh compact VID 0x05ca"
+      }
+    },
+    {
+      "id": "ricoh-caplio-r3-032f",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x032f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Ricoh Caplio R3 — PTP compact camera"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Ricoh Caplio R3 — legacy Ricoh compact VID 0x05ca"
+      }
+    },
+    {
+      "id": "ricoh-caplio-gx8-032d",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x032d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Ricoh Caplio GX 8 — PTP compact camera"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Ricoh Caplio GX 8 — legacy Ricoh compact VID 0x05ca"
+      }
+    },
+    {
+      "id": "ricoh-caplio-rr750-033d",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x033d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Ricoh Caplio RR750 — PTP compact camera"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Ricoh Caplio RR750 — legacy Ricoh compact VID 0x05ca"
+      }
+    },
+    {
+      "id": "sea-and-sea-5000g-0327",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x0327",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Sea & Sea 5000G — niche underwater PTP camera"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Sea & Sea 5000G — underwater/dive camera, Ricoh OEM VID 0x05ca"
+      }
+    },
+    {
+      "id": "sea-and-sea-2g-0353",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x0353",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Sea & Sea 2G — niche underwater PTP camera"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Sea & Sea 2G — underwater/dive camera, Ricoh OEM VID 0x05ca"
+      }
+    },
+    {
+      "id": "rollei-dr5-220f",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x220f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false,
+        "prefersPropListEnumeration": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Rollei dr5 — niche Rollei-branded PTP camera"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Rollei dr5 — PTP, Ricoh OEM VID 0x05ca"
+      }
+    },
+    {
+      "id": "parrot-sequoia-19cf-5039",
+      "match": {
+        "vid": "0x19cf",
+        "pid": "0x5039",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 400
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-src",
+        "addedDate": "2025-07-14",
+        "verificationNotes": "Parrot Sequoia — professional multispectral agricultural drone camera"
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Parrot Sequoia — pro agriculture/mapping multispectral camera with PTP capture support"
+      }
     }
   ]
 }
