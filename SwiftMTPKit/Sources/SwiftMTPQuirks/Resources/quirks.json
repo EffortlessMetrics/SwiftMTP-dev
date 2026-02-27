@@ -9913,6 +9913,920 @@
         "addedDate": "2025-07-08",
         "verificationNotes": "Added from gphoto2 device database research: Panasonic Lumix DC-GH5"
       }
+    },
+    {
+      "id": "sigma-fp-c432",
+      "match": {
+        "vid": "0x1003",
+        "pid": "0xc432",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "sigma-fp-l-c442",
+      "match": {
+        "vid": "0x1003",
+        "pid": "0xc442",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "leica-m9-0002",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "leica-sl-typ601-2041",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x2041",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "leica-m11-monochrom-2083",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x2083",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "leica-q3-2376",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x2376",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "leica-sl3-2382",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x2382",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "ricoh-pentax-k3-0165",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x0165",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "ricoh-pentax-k1-0179",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x0179",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "ricoh-pentax-k3ii-017b",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x017b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "ricoh-pentax-k70-017d",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x017d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "ricoh-pentax-kp-017f",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x017f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "ricoh-wgm2-210b",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x210b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "ricoh-gr-iii-210f",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x210f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "ricoh-gr-iiix-2115",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x2115",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 device database research"
+      }
+    },
+    {
+      "id": "gopro-max-004b",
+      "match": {
+        "vid": "0x2672",
+        "pid": "0x004b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 and libmtp device database research"
+      }
+    },
+    {
+      "id": "gopro-hero9-black-004d",
+      "match": {
+        "vid": "0x2672",
+        "pid": "0x004d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 and libmtp device database research"
+      }
+    },
+    {
+      "id": "gopro-hero10-black-0056",
+      "match": {
+        "vid": "0x2672",
+        "pid": "0x0056",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 and libmtp device database research"
+      }
+    },
+    {
+      "id": "gopro-hero11-black-0059",
+      "match": {
+        "vid": "0x2672",
+        "pid": "0x0059",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 and libmtp device database research"
+      }
+    },
+    {
+      "id": "gopro-hero11-mini-005a",
+      "match": {
+        "vid": "0x2672",
+        "pid": "0x005a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Added from libgphoto2 and libmtp device database research"
+      }
     }
   ]
 }
