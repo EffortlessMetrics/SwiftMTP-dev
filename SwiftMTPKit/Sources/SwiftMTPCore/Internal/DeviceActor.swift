@@ -410,6 +410,16 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       ifaceProtocol: linkDesc?.interfaceProtocol
     )
     if debugEnabled, let q = quirk { print("   [Actor] Matched quirk: \(q.id)") }
+    if debugEnabled && quirk == nil {
+      let ifClass = linkDesc?.interfaceClass
+      if ifClass == 0x06 {
+        print("   [Actor] No quirk match — applying PTP camera class heuristic (class=0x06)")
+      } else {
+        print(
+          "   [Actor] No quirk match — using conservative defaults (ifaceClass=\(ifClass.map { String($0, radix: 16) } ?? "nil"))"
+        )
+      }
+    }
 
     // 7) Build initial effective tuning + policy
     let initialPolicy = EffectiveTuningBuilder.buildPolicy(
