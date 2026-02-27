@@ -298,3 +298,129 @@ else
     echo "4. Run benchmarks: ./scripts/benchmark-device.sh <device-id>"
     echo "5. For CI: Set CI=true to enable strict evidence validation"
 fi
+
+# ──────────────────────────────────────────────────────────
+# JSON Schema validation (Python)
+# ──────────────────────────────────────────────────────────
+echo ""
+echo "🔍 Running JSON Schema validation (Python)..."
+
+python3 - "$QUIRKS_FILE" "$SCHEMA_FILE" << 'PYTHON_SCRIPT'
+import json, re, sys
+
+quirks_path = sys.argv[1]
+schema_path = sys.argv[2]
+
+with open(quirks_path) as f:
+    data = json.load(f)
+with open(schema_path) as f:
+    schema = json.load(f)
+
+errors = []
+warnings = []
+
+# Try jsonschema library first; fall back to manual checks
+try:
+    import jsonschema
+    validator = jsonschema.Draft202012Validator(schema)
+    schema_errors = sorted(validator.iter_errors(data), key=lambda e: list(e.absolute_path))
+    for err in schema_errors:
+        path = ".".join(str(p) for p in err.absolute_path) or "(root)"
+        errors.append(f"Schema: {path}: {err.message}")
+    if not schema_errors:
+        print("  ✅ jsonschema validation passed")
+except ImportError:
+    print("  ⚠️  jsonschema not installed — running manual checks")
+
+# ── Manual checks (always run, catch issues jsonschema might miss) ──
+
+ID_RE = re.compile(r"^[a-z0-9-]+$")
+VID_PID_RE = re.compile(r"^0x[0-9a-fA-F]{4}$")
+VALID_STATUS = {"stable", "experimental", "proposed", "blocked", "promoted", "verified"}
+VALID_CONFIDENCE = {"high", "medium", "low"}
+
+seen_ids = set()
+seen_vidpid = set()
+
+for i, entry in enumerate(data.get("entries", [])):
+    prefix = f"entries[{i}] ({entry.get('id', '?')})"
+
+    # ID format and uniqueness
+    eid = entry.get("id", "")
+    if not ID_RE.match(eid):
+        errors.append(f"{prefix}: id '{eid}' does not match ^[a-z0-9-]+$")
+    if eid in seen_ids:
+        errors.append(f"{prefix}: duplicate id '{eid}'")
+    seen_ids.add(eid)
+
+    # VID:PID format and uniqueness
+    match = entry.get("match", {})
+    vid = match.get("vid", "")
+    pid = match.get("pid", "")
+    if vid and not VID_PID_RE.match(vid):
+        errors.append(f"{prefix}: match.vid '{vid}' does not match ^0x[0-9a-fA-F]{{4}}$")
+    if pid and not VID_PID_RE.match(pid):
+        errors.append(f"{prefix}: match.pid '{pid}' does not match ^0x[0-9a-fA-F]{{4}}$")
+    pair = f"{vid}:{pid}"
+    if pair in seen_vidpid:
+        errors.append(f"{prefix}: duplicate VID:PID pair {pair}")
+    seen_vidpid.add(pair)
+
+    # ops — all values must be boolean
+    ops = entry.get("ops", {})
+    for k, v in ops.items():
+        if not isinstance(v, bool):
+            errors.append(f"{prefix}: ops.{k} is {type(v).__name__}, expected boolean")
+
+    # flags — all values must be boolean (except preferredWriteFolder)
+    flags = entry.get("flags", {})
+    for k, v in flags.items():
+        if k == "preferredWriteFolder":
+            if not isinstance(v, str):
+                errors.append(f"{prefix}: flags.preferredWriteFolder is {type(v).__name__}, expected string")
+        elif not isinstance(v, bool):
+            errors.append(f"{prefix}: flags.{k} is {type(v).__name__}, expected boolean")
+
+    # evidenceRequired — must be array of strings
+    evr = entry.get("evidenceRequired")
+    if evr is not None:
+        if not isinstance(evr, list):
+            errors.append(f"{prefix}: evidenceRequired is {type(evr).__name__}, expected array")
+        elif not all(isinstance(x, str) for x in evr):
+            errors.append(f"{prefix}: evidenceRequired contains non-string elements")
+
+    # status enum
+    status = entry.get("status")
+    if status and status not in VALID_STATUS:
+        errors.append(f"{prefix}: status '{status}' not in {sorted(VALID_STATUS)}")
+
+    # confidence enum
+    conf = entry.get("confidence")
+    if conf and conf not in VALID_CONFIDENCE:
+        errors.append(f"{prefix}: confidence '{conf}' not in {sorted(VALID_CONFIDENCE)}")
+
+    # governance.status enum
+    gov = entry.get("governance", {})
+    if isinstance(gov, dict):
+        gs = gov.get("status")
+        if gs and gs not in VALID_STATUS:
+            errors.append(f"{prefix}: governance.status '{gs}' not in {sorted(VALID_STATUS)}")
+
+if errors:
+    print(f"\n  ❌ {len(errors)} validation error(s):")
+    for e in errors[:25]:
+        print(f"     {e}")
+    if len(errors) > 25:
+        print(f"     ... and {len(errors) - 25} more")
+    sys.exit(1)
+else:
+    print("  ✅ All manual validation checks passed")
+    print(f"     {len(seen_ids)} entries, {len(seen_vidpid)} unique VID:PID pairs")
+PYTHON_SCRIPT
+
+if [[ $? -ne 0 ]]; then
+    echo "❌ JSON Schema validation failed"
+    exit 1
+fi
+
+echo "✅ JSON Schema validation passed"
