@@ -1,0 +1,14 @@
+{
+  "flagsSource" : "quirk",
+  "ioTimeoutMs" : 15000,
+  "maxChunkBytes" : 4194304,
+  "prefersPropListEnumeration" : true,
+  "quirkID" : "gopro-max-004b",
+  "requireStabilization" : false,
+  "requiresKernelDetach" : false,
+  "resetOnOpen" : false,
+  "skipPTPReset" : false,
+  "stabilizeMs" : 200,
+  "supportsGetObjectPropList" : true,
+  "supportsPartialRead64" : true
+}
