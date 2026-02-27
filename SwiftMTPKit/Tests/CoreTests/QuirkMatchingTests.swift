@@ -5,6 +5,7 @@ import XCTest
 
 @testable import SwiftMTPCore
 import SwiftMTPQuirks
+import SwiftMTPTestKit
 
 /// Tests that the QuirkDatabase correctly loads all 26 entries and produces accurate
 /// policy flags for each known device via VID/PID matching.
@@ -42,10 +43,33 @@ final class QuirkMatchingTests: XCTestCase {
 
   // MARK: - Match Helpers
 
+  /// Match by VID+PID, probing the common interface class/subclass/protocol combos used by real
+  /// MTP/PTP devices. In production the exact values come from USB enumeration; in tests we try
+  /// all known combinations.
   private func match(vid: UInt16, pid: UInt16, ifaceClass: UInt8? = nil) -> DeviceQuirk? {
-    db.match(
-      vid: vid, pid: pid, bcdDevice: nil,
-      ifaceClass: ifaceClass, ifaceSubclass: nil, ifaceProtocol: nil)
+    if let ic = ifaceClass {
+      return db.match(
+        vid: vid, pid: pid, bcdDevice: nil,
+        ifaceClass: ic, ifaceSubclass: nil, ifaceProtocol: nil)
+    }
+    // Probe: (class, subclass, protocol)
+    // 0x06/0x01/0x01 = USB Still Image / PTP (cameras, some Android PTP-mode)
+    // 0xff/nil/nil    = Android vendor-class MTP
+    // 0x08/nil/nil    = USB Mass Storage (rare fallback)
+    let combos: [(UInt8, UInt8?, UInt8?)] = [
+      (0x06, 0x01, 0x01),
+      (0xff, nil, nil),
+      (0x08, nil, nil),
+    ]
+    for (ic, isc, ipr) in combos {
+      if let q = db.match(
+        vid: vid, pid: pid, bcdDevice: nil,
+        ifaceClass: ic, ifaceSubclass: isc, ifaceProtocol: ipr)
+      {
+        return q
+      }
+    }
+    return nil
   }
 
   private func flags(vid: UInt16, pid: UInt16, ifaceClass: UInt8? = nil) -> QuirkFlags {
@@ -311,73 +335,51 @@ final class QuirkMatchingTests: XCTestCase {
 
   func testSamsungGalaxyPreset_MatchesQuirk() {
     let cfg = VirtualDeviceConfig.samsungGalaxy
-    let q = db.match(
-      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
-      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
-    XCTAssertNotNil(q, "samsungGalaxy preset should match a quirk entry")
+    XCTAssertNotNil(
+      match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!),
+      "samsungGalaxy preset should match a quirk entry")
   }
 
   func testSamsungGalaxyMtpAdbPreset_MatchesQuirk() {
     let cfg = VirtualDeviceConfig.samsungGalaxyMtpAdb
-    let q = db.match(
-      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
-      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
-    XCTAssertNotNil(q)
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
   }
 
   func testGooglePixelAdbPreset_MatchesQuirk() {
     let cfg = VirtualDeviceConfig.googlePixelAdb
-    let q = db.match(
-      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
-      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
-    XCTAssertNotNil(q)
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
   }
 
   func testMotorolaMotoGPreset_MatchesQuirk() {
     let cfg = VirtualDeviceConfig.motorolaMotoG
-    let q = db.match(
-      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
-      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
-    XCTAssertNotNil(q)
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
   }
 
   func testSonyXperiaZPreset_MatchesQuirk() {
     let cfg = VirtualDeviceConfig.sonyXperiaZ
-    let q = db.match(
-      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
-      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
-    XCTAssertNotNil(q)
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
   }
 
   func testCanonEOSR5Preset_MatchesQuirk() {
     let cfg = VirtualDeviceConfig.canonEOSR5
-    let q = db.match(
-      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
-      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
-    XCTAssertNotNil(q)
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
   }
 
   func testNikonZ6Preset_MatchesQuirk() {
     let cfg = VirtualDeviceConfig.nikonZ6
-    let q = db.match(
-      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
-      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
-    XCTAssertNotNil(q)
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
   }
 
   func testOnePlus9Preset_MatchesQuirk() {
     let cfg = VirtualDeviceConfig.onePlus9
-    let q = db.match(
-      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
-      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
-    XCTAssertNotNil(q)
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
   }
 
   // MARK: - Policy consistency: VirtualDeviceConfig propList support matches quirk
 
   func testSamsungGalaxy_PresetOpsPropListConsistentWithQuirk() {
     let cfg = VirtualDeviceConfig.samsungGalaxy
-    let f = flags(vid: cfg.summary.vendorID, pid: cfg.summary.productID)
+    let f = flags(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!)
     let presetHasPropList = cfg.info.operationsSupported.contains(0x9805)
     XCTAssertEqual(
       presetHasPropList, f.supportsGetObjectPropList,
@@ -386,14 +388,14 @@ final class QuirkMatchingTests: XCTestCase {
 
   func testSamsungGalaxyMtpAdb_PresetOpsPropListConsistentWithQuirk() {
     let cfg = VirtualDeviceConfig.samsungGalaxyMtpAdb
-    let f = flags(vid: cfg.summary.vendorID, pid: cfg.summary.productID)
+    let f = flags(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!)
     let presetHasPropList = cfg.info.operationsSupported.contains(0x9805)
     XCTAssertEqual(presetHasPropList, f.supportsGetObjectPropList)
   }
 
   func testMotorolaMotoG_PresetOpsPropListConsistentWithQuirk() {
     let cfg = VirtualDeviceConfig.motorolaMotoG
-    let f = flags(vid: cfg.summary.vendorID, pid: cfg.summary.productID)
+    let f = flags(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!)
     let presetHasPropList = cfg.info.operationsSupported.contains(0x9805)
     XCTAssertEqual(presetHasPropList, f.supportsGetObjectPropList)
   }

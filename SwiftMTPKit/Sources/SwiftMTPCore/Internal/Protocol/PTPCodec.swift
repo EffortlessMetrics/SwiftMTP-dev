@@ -172,6 +172,12 @@ public struct PTPReader {
   public mutating func string() -> String? { PTPString.parse(from: data, at: &o) }
 
   public mutating func value(dt: UInt16) -> PTPValue? {
+    // 0xFFFF is the PTP Unicode String type — must be handled before the array-bit check
+    // because 0xFFFF & 0x4000 ≠ 0 and would otherwise fall into the array branch.
+    if dt == 0xFFFF {
+      guard let s = string() else { return nil }
+      return .string(s)
+    }
     if (dt & 0x4000) != 0 {
       let base = dt & ~0x4000
       guard let count = u32() else { return nil }
@@ -215,9 +221,6 @@ public struct PTPReader {
     case 0x000A:
       guard let d = bytes(16) else { return nil }
       return .uint128(d)
-    case 0xFFFF:
-      guard let s = string() else { return nil }
-      return .string(s)
     default: return nil
     }
   }
