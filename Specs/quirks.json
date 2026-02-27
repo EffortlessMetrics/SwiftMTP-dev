@@ -70193,6 +70193,2893 @@
         "source": "community",
         "notes": "Honor X9b - Android MTP"
       }
+    },
+    {
+      "id": "sony-xperia-z2-01ad",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01ad",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 4194304
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia Z2 - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-z3-01b9",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01b9",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 4194304
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia Z3 - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-z4-01c5",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01c5",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 4194304
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia Z4/Z3+ - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-m4-aqua-01d0",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01d0",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 4194304
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia M4 Aqua - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-z5-01d3",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01d3",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 4194304
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia Z5 - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-xa2-01e3",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01e3",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia XA2 - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-xa2-ultra-01e4",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01e4",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia XA2 Ultra - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-xz-01e5",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01e5",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia XZ - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-xz-premium-01ea",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01ea",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia XZ Premium - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-xz1-compact-01f5",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01f5",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia XZ1 Compact - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-1-0200",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0200",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 1 - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-10-0202",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0202",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 10 - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-10-plus-0203",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0203",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 10 Plus - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-l3-0204",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0204",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 4194304
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia L3 - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-1-ii-0206",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0206",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 1 II - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-10-ii-0208",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0208",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 10 II - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-5-iii-020b",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x020b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 5 III - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-5-iv-020f",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x020f",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 5 IV - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-10-iv-0210",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0210",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 10 IV - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-1-v-0212",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0212",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 1 V - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-5-v-0213",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0213",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 5 V - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-10-v-0214",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0214",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 10 V - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-1-vi-0216",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0216",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 1 VI - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-10-vi-0217",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0217",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 10 VI - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-5-vi-0218",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0218",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 15000,
+        "maxChunkBytes": 8388608
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "evidenceRequired": "community-validation",
+        "status": "proposed",
+        "verificationNotes": "Added from libmtp device database research - Sony Xperia 5 VI - Android MTP"
+      }
+    },
+    {
+      "id": "leica-m10-0001",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica M10 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica M10 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-m10-p-0003",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica M10-P - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica M10-P - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-m10-r-0004",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica M10-R - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica M10-R - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-m11-0005",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica M11 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica M11 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-m11-monochrom-0006",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0006",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica M11 Monochrom - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica M11 Monochrom - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-q-0007",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0007",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica Q - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica Q - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-q2-0008",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0008",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica Q2 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica Q2 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-q3-0009",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0009",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica Q3 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica Q3 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-sl-typ601-000a",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x000a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica SL (Typ 601) - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica SL (Typ 601) - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-sl2-000b",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x000b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica SL2 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica SL2 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-sl2-s-000c",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x000c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica SL2-S - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica SL2-S - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-sl3-000d",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x000d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica SL3 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica SL3 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-s-typ007-000e",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x000e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica S (Typ 007) - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica S (Typ 007) - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-s3-000f",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x000f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica S3 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica S3 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-x-e-0010",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0010",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica X-E - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica X-E - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-v-lux-5-0011",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0011",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica V-Lux 5 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica V-Lux 5 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leica-d-lux-7-0012",
+      "match": {
+        "vid": "0x1a98",
+        "pid": "0x0012",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leica D-Lux 7 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leica D-Lux 7 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "phaseone-iq3-100mp-0001",
+      "match": {
+        "vid": "0x04bc",
+        "pid": "0x0001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Phase One IQ3 100MP - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Phase One IQ3 100MP - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "phaseone-iq4-150mp-0002",
+      "match": {
+        "vid": "0x04bc",
+        "pid": "0x0002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Phase One IQ4 150MP - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Phase One IQ4 150MP - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "phaseone-xt-0003",
+      "match": {
+        "vid": "0x04bc",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Phase One XT - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Phase One XT - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "phaseone-xf-iq4-0004",
+      "match": {
+        "vid": "0x04bc",
+        "pid": "0x0004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Phase One XF IQ4 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Phase One XF IQ4 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "phaseone-p65plus-0005",
+      "match": {
+        "vid": "0x04bc",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Phase One P65+ - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Phase One P65+ - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "mamiya-dm33-4001",
+      "match": {
+        "vid": "0x04f1",
+        "pid": "0x4001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Mamiya DM33 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Mamiya DM33 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "leaf-credo-80-4002",
+      "match": {
+        "vid": "0x04f1",
+        "pid": "0x4002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Leaf Credo 80 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Leaf Credo 80 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "pentax-k1-markii-0002",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x0002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Pentax K-1 Mark II - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Pentax K-1 Mark II - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "pentax-k3-markiii-0003",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Pentax K-3 Mark III - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Pentax K-3 Mark III - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "pentax-k70-0004",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x0004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Pentax K-70 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Pentax K-70 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "pentax-kf-0005",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Pentax KF - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Pentax KF - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "pentax-645z-0006",
+      "match": {
+        "vid": "0x25fb",
+        "pid": "0x0006",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Pentax 645Z - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Pentax 645Z - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "casio-ex-zr200-4001",
+      "match": {
+        "vid": "0x07cf",
+        "pid": "0x4001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Casio EX-ZR200 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Casio EX-ZR200 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "casio-ex-zr1000-4002",
+      "match": {
+        "vid": "0x07cf",
+        "pid": "0x4002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Casio EX-ZR1000 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Casio EX-ZR1000 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "casio-ex-10-4003",
+      "match": {
+        "vid": "0x07cf",
+        "pid": "0x4003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Casio EX-10 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Casio EX-10 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "casio-ex-tr70-4004",
+      "match": {
+        "vid": "0x07cf",
+        "pid": "0x4004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Casio EX-TR70 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Casio EX-TR70 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "casio-ex-fr200-4005",
+      "match": {
+        "vid": "0x07cf",
+        "pid": "0x4005",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Casio EX-FR200 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Casio EX-FR200 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "minolta-dimage-7i-4001",
+      "match": {
+        "vid": "0x0686",
+        "pid": "0x4001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Minolta DiMage 7i - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Minolta DiMage 7i - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "minolta-dimage-a1-4002",
+      "match": {
+        "vid": "0x0686",
+        "pid": "0x4002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Minolta DiMage A1 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Minolta DiMage A1 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "konica-minolta-dimage-z5-4003",
+      "match": {
+        "vid": "0x0686",
+        "pid": "0x4003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Konica Minolta DiMage Z5 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Konica Minolta DiMage Z5 - PTP/MTP camera"
+      }
+    },
+    {
+      "id": "konica-minolta-dimage-a200-4004",
+      "match": {
+        "vid": "0x0686",
+        "pid": "0x4004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Konica Minolta DiMage A200 - PTP/MTP camera"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Konica Minolta DiMage A200 - PTP/MTP camera"
+      }
     }
   ]
 }
