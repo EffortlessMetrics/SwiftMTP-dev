@@ -11,16 +11,91 @@ import SwiftMTPCLI
 struct SystemCommands {
   static func runQuirks(flags: CLIFlags, args: [String]) async {
     guard let subcommand = args.first else {
-      print("❌ Usage: quirks --explain | quirks matrix")
+      print("❌ Usage: quirks --explain | quirks matrix | quirks lookup --vid 0xXXXX --pid 0xXXXX")
       exitNow(.usage)
     }
     if subcommand == "--explain" {
       await runQuirksExplain(flags: flags)
     } else if subcommand == "matrix" {
       await runQuirksMatrix(flags: flags)
+    } else if subcommand == "lookup" {
+      await runQuirksLookup(flags: flags, args: Array(args.dropFirst()))
     } else {
       print("❌ Unknown quirks subcommand: \(subcommand)")
+      print("   Usage: quirks --explain | quirks matrix | quirks lookup --vid 0xXXXX --pid 0xXXXX")
       exitNow(.usage)
+    }
+  }
+
+  static func runQuirksLookup(flags: CLIFlags, args: [String]) async {
+    // Parse --vid and --pid from args
+    var vidStr: String? = nil
+    var pidStr: String? = nil
+    var i = 0
+    while i < args.count {
+      switch args[i] {
+      case "--vid": if i + 1 < args.count { vidStr = args[i + 1]; i += 1 }
+      case "--pid": if i + 1 < args.count { pidStr = args[i + 1]; i += 1 }
+      default: break
+      }
+      i += 1
+    }
+    guard let vidRaw = vidStr, let pidRaw = pidStr else {
+      print("❌ Usage: quirks lookup --vid 0xXXXX --pid 0xXXXX")
+      print("   Example: quirks lookup --vid 0x18d1 --pid 0x4ee1")
+      exitNow(.usage)
+    }
+    // Normalize to lowercase 0xXXXX format and parse to UInt16
+    let vidHex = vidRaw.lowercased().hasPrefix("0x") ? String(vidRaw.dropFirst(2)) : vidRaw.lowercased()
+    let pidHex = pidRaw.lowercased().hasPrefix("0x") ? String(pidRaw.dropFirst(2)) : pidRaw.lowercased()
+    guard let vidVal = UInt16(vidHex, radix: 16), let pidVal = UInt16(pidHex, radix: 16) else {
+      print("❌ Invalid VID/PID format. Use hex like 0x18d1 or 18d1")
+      exitNow(.usage)
+    }
+    let vidFormatted = String(format: "0x%04x", vidVal)
+    let pidFormatted = String(format: "0x%04x", pidVal)
+
+    do {
+      let db = try QuirkDatabase.load()
+      let match = db.entries.first { $0.vid == vidVal && $0.pid == pidVal }
+      if let q = match {
+        if flags.json {
+          printJSON([
+            "found": true,
+            "id": q.id,
+            "vid": vidFormatted,
+            "pid": pidFormatted,
+            "status": q.status?.rawValue ?? "proposed",
+          ], type: "quirksLookup")
+        } else {
+          print("✅ Device found in quirk database")
+          print("   ID:     \(q.id)")
+          print("   VID:    \(vidFormatted)")
+          print("   PID:    \(pidFormatted)")
+          print("   Status: \(q.status?.rawValue ?? "proposed")")
+          if let proplist = q.flags?.supportsGetObjectPropList {
+            print("   GetObjectPropList: \(proplist ? "✅ fast-path" : "— fallback only")")
+          }
+        }
+      } else {
+        if flags.json {
+          printJSON([
+            "found": false,
+            "vid": vidFormatted,
+            "pid": pidFormatted,
+            "message": "Device not in quirk database. It may still work via PTP class heuristic.",
+            "submitURL": "Docs/DeviceSubmission.md",
+          ], type: "quirksLookup")
+        } else {
+          print("⚠️  Device \(vidFormatted):\(pidFormatted) not found in quirk database (\(db.entries.count) entries)")
+          print("   PTP cameras (class 0x06) will work via automatic heuristic.")
+          print("   Android devices may need a quirk entry for best results.")
+          print("   To contribute: see Docs/DeviceSubmission.md or run `swiftmtp add-device`")
+        }
+      }
+    } catch {
+      print("❌ Failed to load quirks: \(error)")
+      exitNow(.unavailable)
     }
   }
 
