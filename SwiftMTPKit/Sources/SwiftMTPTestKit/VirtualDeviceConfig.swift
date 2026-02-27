@@ -386,6 +386,77 @@ public struct VirtualDeviceConfig: Sendable {
       vendorID: 0x2672, productID: 0x0056, serial: "VIRT-GOPRO-HERO10-0056")
   }()
 
+  /// An Alcatel/TCL Android phone in MTP mode (VID 0x1bbb, PID 0x901b).
+  /// GetObjectPropList not supported; requiresKernelDetach per quirk database.
+  public static let alcatelAndroid: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "1bbb:901b@1:25", vendor: "Alcatel", model: "A405DL",
+      vendorID: 0x1bbb, productID: 0x901b, serial: "VIRT-ALCATEL-901B",
+      includePropList: false)
+  }()
+
+  /// A Sharp AQUOS Android phone in MTP mode (VID 0x04dd, PID 0x99d2).
+  public static let sharpAquos: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "04dd:99d2@1:26", vendor: "Sharp", model: "AQUOS U (SHV35)",
+      vendorID: 0x04dd, productID: 0x99d2, serial: "VIRT-SHARP-99D2",
+      includePropList: false)
+  }()
+
+  /// A Kyocera Android phone in MTP mode (VID 0x0482, PID 0x0571).
+  public static let kyoceraAndroid: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "0482:0571@1:27", vendor: "Kyocera", model: "Rise",
+      vendorID: 0x0482, productID: 0x0571, serial: "VIRT-KYOCERA-0571",
+      includePropList: false)
+  }()
+
+  /// A Fairphone 2 in MTP mode (VID 0x2ae5, PID 0x6764).
+  public static let fairphone2: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "2ae5:6764@1:28", vendor: "Fairphone", model: "Fairphone 2",
+      vendorID: 0x2ae5, productID: 0x6764, serial: "VIRT-FAIRPHONE-6764",
+      includePropList: false)
+  }()
+
+  /// A Fujifilm X-T10 camera (VID 0x04cb, PID 0x02c8). PTP class, proplist supported.
+  public static let fujifilmXT10: VirtualDeviceConfig = {
+    _cameraPreset(
+      rawId: "04cb:02c8@1:29", vendor: "Fujifilm", model: "X-T10",
+      vendorID: 0x04cb, productID: 0x02c8, serial: "VIRT-FUJI-XT10-02C8")
+  }()
+
+  /// A Casio Exilim camera (VID 0x07cf, PID 0x1042). PTP class, proplist supported.
+  public static let casioExilim: VirtualDeviceConfig = {
+    _cameraPreset(
+      rawId: "07cf:1042@1:30", vendor: "Casio", model: "Exilim",
+      vendorID: 0x07cf, productID: 0x1042, serial: "VIRT-CASIO-EXILIM-1042")
+  }()
+
+  /// A GoPro HERO11 Black action camera (VID 0x2672, PID 0x0059). PTP class, proplist supported.
+  public static let goproHero11: VirtualDeviceConfig = {
+    _cameraPreset(
+      rawId: "2672:0059@1:31", vendor: "GoPro", model: "HERO11 Black",
+      vendorID: 0x2672, productID: 0x0059, serial: "VIRT-GOPRO-HERO11-0059")
+  }()
+
+  /// A Garmin Fenix 6 Pro wearable (VID 0x091e, PID 0x4cda). Vendor class, no proplist.
+  public static let garminFenix: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "091e:4cda@1:32", vendor: "Garmin", model: "Fenix 6 Pro",
+      vendorID: 0x091e, productID: 0x4cda, serial: "VIRT-GARMIN-FENIX6-4CDA",
+      includePropList: false)
+  }()
+
+  /// A Honor Android phone in MTP mode (VID 0x339b, PID 0x107d).
+  /// GetObjectPropList not supported; requiresKernelDetach per quirk database.
+  public static let honorAndroid: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "339b:107d@1:33", vendor: "Honor", model: "X8/X9 5G",
+      vendorID: 0x339b, productID: 0x107d, serial: "VIRT-HONOR-107D",
+      includePropList: false)
+  }()
+
   // MARK: - Private helpers
 
   private static func _androidPreset(
