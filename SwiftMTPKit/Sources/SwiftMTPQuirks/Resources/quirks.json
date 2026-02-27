@@ -83117,6 +83117,514 @@
         "notes": "Samsung Galaxy Tab Active5 - Android MTP"
       },
       "id": "samsung-galaxy-tab-active5-6933"
+    },
+    {
+      "id": "apple-iphone-ptp-12a8",
+      "match": {
+        "vid": "0x05ac",
+        "pid": "0x12a8",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "notes": [
+        "iOS camera-roll PTP — photo import only, limited to DCIM; full MTP not supported by iOS"
+      ],
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Apple iPhone — PTP camera roll only; not full MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "iPhone/iPad/iPod PTP camera roll access — photo import only. Full MTP not supported by iOS; use libimobiledevice/ifuse for full file access"
+      }
+    },
+    {
+      "id": "apple-ipad-ptp-12ab",
+      "match": {
+        "vid": "0x05ac",
+        "pid": "0x12ab",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "notes": [
+        "iOS camera-roll PTP — photo import only, limited to DCIM; full MTP not supported by iOS"
+      ],
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Apple iPad — PTP camera roll only; not full MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "iPhone/iPad/iPod PTP camera roll access — photo import only. Full MTP not supported by iOS; use libimobiledevice/ifuse for full file access"
+      }
+    },
+    {
+      "id": "apple-ipod-nano-ptp-12ac",
+      "match": {
+        "vid": "0x05ac",
+        "pid": "0x12ac",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "notes": [
+        "iOS camera-roll PTP — photo import only, limited to DCIM; full MTP not supported by iOS"
+      ],
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Apple iPod nano — PTP camera roll only; not full MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "iPhone/iPad/iPod PTP camera roll access — photo import only. Full MTP not supported by iOS; use libimobiledevice/ifuse for full file access"
+      }
+    },
+    {
+      "id": "apple-tv-ptp-12aa",
+      "match": {
+        "vid": "0x05ac",
+        "pid": "0x12aa",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "notes": [
+        "iOS camera-roll PTP — photo import only, limited to DCIM; full MTP not supported by iOS"
+      ],
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Apple TV — PTP camera roll only; not full MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Apple TV PTP camera roll access — photo import only. Full MTP not supported by tvOS; use libimobiledevice/ifuse for full file access"
+      }
+    },
+    {
+      "id": "apple-ipod-classic-mtp-1280",
+      "match": {
+        "vid": "0x05ac",
+        "pid": "0x1280",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Apple iPod classic — MTP on some firmware versions; libmtp research"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "iPod classic — MTP interface present on some firmware versions; libmtp music-players.h"
+      }
+    },
+    {
+      "id": "apple-ipod-classic-2g-mtp-1281",
+      "match": {
+        "vid": "0x05ac",
+        "pid": "0x1281",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Apple iPod classic 2nd gen — MTP on some firmware versions; libmtp research"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "iPod classic 2nd gen — MTP interface on some firmware versions; libmtp music-players.h"
+      }
+    },
+    {
+      "id": "apple-ipod-nano-3g-mtp-1291",
+      "match": {
+        "vid": "0x05ac",
+        "pid": "0x1291",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Apple iPod nano 3rd gen — MTP on some firmware versions; libmtp research"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "iPod nano 3rd gen — MTP interface on some firmware versions; libmtp music-players.h"
+      }
+    },
+    {
+      "id": "apple-ipod-nano-4g-mtp-1293",
+      "match": {
+        "vid": "0x05ac",
+        "pid": "0x1293",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Apple iPod nano 4th gen — MTP on some firmware versions; libmtp research"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "iPod nano 4th gen — MTP interface on some firmware versions; libmtp music-players.h"
+      }
+    },
+    {
+      "id": "apple-ipod-nano-5g-mtp-1299",
+      "match": {
+        "vid": "0x05ac",
+        "pid": "0x1299",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Apple iPod nano 5th gen — MTP on some firmware versions; libmtp research"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "iPod nano 5th gen — MTP interface on some firmware versions; libmtp music-players.h"
+      }
+    },
+    {
+      "id": "apple-ipod-nano-6g-mtp-129a",
+      "match": {
+        "vid": "0x05ac",
+        "pid": "0x129a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Apple iPod nano 6th gen — MTP on some firmware versions; libmtp research"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "iPod nano 6th gen — MTP interface on some firmware versions; libmtp music-players.h"
+      }
+    },
+    {
+      "id": "apple-ipod-touch-3g-mtp-129e",
+      "match": {
+        "vid": "0x05ac",
+        "pid": "0x129e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Apple iPod touch 3rd gen — MTP on some firmware versions; libmtp research"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "iPod touch 3rd gen — MTP/iPod firmware interface; libmtp music-players.h"
+      }
     }
   ]
 }
