@@ -68078,6 +68078,2121 @@
         "source": "community",
         "notes": "Motorola Razr 40 Ultra - Android MTP"
       }
+    },
+    {
+      "id": "huawei-p9-plus-1053",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1053",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P9 Plus - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P9 Plus - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p10-plus-1055",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1055",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P10 Plus - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P10 Plus - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p20-1056",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1056",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P20 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P20 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p20-pro-1057",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1057",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P20 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P20 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p20-lite-1058",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1058",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P20 Lite - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P20 Lite - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p30-1059",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1059",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P30 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P30 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p30-pro-105a",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x105a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P30 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P30 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p30-lite-105b",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x105b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P30 Lite / nova 4e - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P30 Lite / nova 4e - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p40-105c",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x105c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P40 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P40 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p40-pro-105d",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x105d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P40 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P40 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p40-lite-105e",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x105e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P40 Lite - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P40 Lite - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p50-pro-105f",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x105f",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P50 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P50 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-p60-pro-1060",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1060",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei P60 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei P60 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-mate-9-107a",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x107a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei Mate 9 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei Mate 9 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-mate-10-107b",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x107b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei Mate 10 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei Mate 10 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-mate-10-pro-107c",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x107c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei Mate 10 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei Mate 10 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-mate-20-x-1080",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1080",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei Mate 20 X - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei Mate 20 X - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-mate-30-pro-1081",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1081",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei Mate 30 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei Mate 30 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-mate-50-pro-1083",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1083",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei Mate 50 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei Mate 50 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-mate-60-pro-1084",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1084",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei Mate 60 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei Mate 60 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-mate-x-foldable-1085",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1085",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei Mate X (foldable) - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei Mate X (foldable) - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-mate-xs2-1086",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1086",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei Mate Xs 2 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei Mate Xs 2 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-nova-3-1090",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1090",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei nova 3 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei nova 3 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-nova-3i-1091",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1091",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei nova 3i - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei nova 3i - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-nova-5t-1092",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1092",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei nova 5T - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei nova 5T - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-nova-7-se-1093",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1093",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei nova 7 SE - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei nova 7 SE - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-nova-8-pro-1094",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1094",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei nova 8 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei nova 8 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-nova-9-1095",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x1095",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei nova 9 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei nova 9 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-mediapad-m5-3803",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x3803",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei MediaPad M5 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei MediaPad M5 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-mediapad-m6-3804",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x3804",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei MediaPad M6 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei MediaPad M6 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-matepad-pro-108-3805",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x3805",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei MatePad Pro 10.8 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei MatePad Pro 10.8 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-matepad-11-3806",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x3806",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei MatePad 11 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei MatePad 11 - Android MTP"
+      }
+    },
+    {
+      "id": "huawei-matepad-pro-126-3807",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x3807",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Huawei MatePad Pro 12.6 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Huawei MatePad Pro 12.6 - Android MTP"
+      }
+    },
+    {
+      "id": "honor-8-0001",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x0001",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor 8 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor 8 - Android MTP"
+      }
+    },
+    {
+      "id": "honor-9-0002",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x0002",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor 9 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor 9 - Android MTP"
+      }
+    },
+    {
+      "id": "honor-10-0003",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor 10 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor 10 - Android MTP"
+      }
+    },
+    {
+      "id": "honor-20-0004",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x0004",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor 20 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor 20 - Android MTP"
+      }
+    },
+    {
+      "id": "honor-30-pro-0005",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor 30 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor 30 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "honor-50-0006",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x0006",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor 50 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor 50 - Android MTP"
+      }
+    },
+    {
+      "id": "honor-70-0007",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x0007",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor 70 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor 70 - Android MTP"
+      }
+    },
+    {
+      "id": "honor-90-0008",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x0008",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor 90 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor 90 - Android MTP"
+      }
+    },
+    {
+      "id": "honor-magic4-pro-0009",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x0009",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor Magic4 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor Magic4 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "honor-magic5-pro-000a",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x000a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor Magic5 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor Magic5 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "honor-magic6-pro-000b",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x000b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor Magic6 Pro - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor Magic6 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "honor-x8-000c",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x000c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor X8 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor X8 - Android MTP"
+      }
+    },
+    {
+      "id": "honor-x9-000d",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x000d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor X9 - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor X9 - Android MTP"
+      }
+    },
+    {
+      "id": "honor-x9b-000e",
+      "match": {
+        "vid": "0x339b",
+        "pid": "0x000e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "supportsGetObjectPropList": false,
+        "writeToSubfolderOnly": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 2097152
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01",
+        "verificationNotes": "Honor X9b - Android MTP"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Honor X9b - Android MTP"
+      }
     }
   ]
 }

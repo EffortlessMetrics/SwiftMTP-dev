@@ -410,6 +410,36 @@ final class BDDRunner: XCTestCase {
     XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
+
+  // Wave-8: Flagship Android brands
+  func testAndroid_GooglePixel8() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x18d1, pid: 0x4ef7, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("google-pixel-8-4ef7 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testAndroid_OnePlus12() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2a70, pid: 0xf014, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("oneplus-12-f014 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+    XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
+  }
+
+  func testAndroid_NothingPhone2() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2b0e, pid: 0x0002, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("nothing-phone-2-0002 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testAndroid_ASUSROGPhone6() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0b05, pid: 0x4dba, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("asus-rog-phone-6-4dba not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)

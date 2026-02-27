@@ -513,7 +513,35 @@ public struct VirtualDeviceConfig: Sendable {
       vendorID: 0x091e, productID: 0x4b35, serial: "VIRT-GARMIN-FR945-4B35")
   }()
 
-  // MARK: - Private helpers
+  // Wave-8 presets: Google Pixel, OnePlus, Samsung Galaxy flagship, Nothing, Realme
+
+  public static let googlePixel8: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "18d1:4ef7@1:42", vendor: "Google", model: "Pixel 8",
+      vendorID: 0x18d1, productID: 0x4ef7, serial: "VIRT-GOOGLE-PX8-4EF7",
+      includePropList: false)
+  }()
+
+  public static let onePlus12: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "2a70:f014@1:43", vendor: "OnePlus", model: "OnePlus 12",
+      vendorID: 0x2a70, productID: 0xf014, serial: "VIRT-ONEPLUS-12-F014",
+      includePropList: false)
+  }()
+
+  public static let samsungGalaxyS24: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "04e8:6904@1:44", vendor: "Samsung", model: "Galaxy S24",
+      vendorID: 0x04e8, productID: 0x6904, serial: "VIRT-SAMSUNG-S24-6904",
+      includePropList: false)
+  }()
+
+  public static let nothingPhone2: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "2b0e:0002@1:45", vendor: "Nothing", model: "Phone (2)",
+      vendorID: 0x2b0e, productID: 0x0002, serial: "VIRT-NOTHING-PH2-0002",
+      includePropList: false)
+  }()
 
 
   private static func _androidPreset(
