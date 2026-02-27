@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
       - name: Select Xcode 16
         uses: maxim-lobanov/setup-xcode@v1
-        with: { xcode-version: "16" }
+        with: { xcode-version: "latest" }
       - name: Swift version
         run: swift --version
       - name: Cache SPM
@@ -64,7 +64,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: maxim-lobanov/setup-xcode@v1
-        with: { xcode-version: "16" }
+        with: { xcode-version: "latest" }
       - name: TSAN (Core/Index/Scenario only)
         working-directory: SwiftMTPKit
         run: swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
@@ -74,7 +74,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: maxim-lobanov/setup-xcode@v1
-        with: { xcode-version: "16" }
+        with: { xcode-version: "latest" }
       - name: Build Fuzzer
         working-directory: SwiftMTPKit
         run: swift build --product SwiftMTPFuzz 2>/dev/null || echo "No fuzzer product, skipping"

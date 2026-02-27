@@ -9,6 +9,11 @@ on:
       - 'scripts/validate-submission.sh'
       - 'scripts/validate-quirks.sh'
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   validate:
     runs-on: macos-latest
