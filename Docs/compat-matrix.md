@@ -2536,3 +2536,219 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Wd My Passport Wireless Ssd | 1058:0740 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Seagate Wireless Plus | 0bc2:5580 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Seagate Wireless Mobile | 0bc2:5581 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Dell Dj 2nd Generation | 041e:412f | ⚪ proposed | — |
+| Dell Dell Pocket Dj MTP Mode | 041e:4132 | ⚪ proposed | — |
+| Creative Zen Microphoto Alt | 041e:4133 | ⚪ proposed | — |
+| Creative Zen Sleek MTP Mode | 041e:4137 | ⚪ proposed | — |
+| Creative Zen V 2gb | 041e:4158 | ⚪ proposed | — |
+| Creative Zen X Fi 3 | 041e:4169 | ⚪ proposed | — |
+| Ziilabs Zii Egg | 041e:6000 | ⚪ proposed | — |
+| Acer Iconia Tab A100 Id1 | 0502:3348 | ⚪ proposed | — |
+| Acer Iconia Tab A100 Id2 | 0502:3349 | ⚪ proposed | — |
+| Acer Iconia Tab A101 Id1 | 0502:334a | ⚪ proposed | — |
+| Acer Iconia Tab A200 Id1 | 0502:337c | ⚪ proposed | — |
+| Acer Iconia Tab A200 Id2 | 0502:337d | ⚪ proposed | — |
+| Acer Iconia Tab A510 Id1 | 0502:3389 | ⚪ proposed | — |
+| Acer Iconia Tab A510 Id2 | 0502:338a | ⚪ proposed | — |
+| Acer S500 Cloudmobile | 0502:33aa | ⚪ proposed | — |
+| Acer E350 Liquid Gallant Duo Id1 | 0502:33c3 | ⚪ proposed | — |
+| Acer E350 Liquid Gallant Duo Id2 | 0502:33c4 | ⚪ proposed | — |
+| Acer Iconia Tab A210 | 0502:33cb | ⚪ proposed | — |
+| Acer Iconia Tab A110 | 0502:33d8 | ⚪ proposed | — |
+| Acer Liquid Z120 Mt65xx | 0502:3473 | ⚪ proposed | — |
+| Acer Liquid E2 | 0502:3514 | ⚪ proposed | — |
+| Acer Iconia A1 810 | 0502:353c | ⚪ proposed | — |
+| Acer Liquid Z130 Mt65xx | 0502:355f | ⚪ proposed | — |
+| Acer Iconia A3 A11 | 0502:3586 | ⚪ proposed | — |
+| Acer Liquid E3 | 0502:35a8 | ⚪ proposed | — |
+| Acer Z150 | 0502:35e4 | ⚪ proposed | — |
+| Acer Liquid X1 | 0502:3609 | ⚪ proposed | — |
+| Acer Z160 | 0502:361d | ⚪ proposed | — |
+| Acer Iconia A1 840fhd | 0502:362d | ⚪ proposed | — |
+| Acer E39 | 0502:3643 | ⚪ proposed | — |
+| Acer Liquid E700 | 0502:3644 | ⚪ proposed | — |
+| Acer One 7 | 0502:3657 | ⚪ proposed | — |
+| Acer Z200 | 0502:3683 | ⚪ proposed | — |
+| Acer A1 841 | 0502:365e | ⚪ proposed | — |
+| Acer Liquid S56 | 0502:3725 | ⚪ proposed | — |
+| Acer Liquid Z220 Id1 | 0502:374f | ⚪ proposed | — |
+| Acer Liquid Z220 Id2 | 0502:3750 | ⚪ proposed | — |
+| Acer Liquid Z630 | 0502:37ef | ⚪ proposed | — |
+| Acer Z530 | 0502:3822 | ⚪ proposed | — |
+| Acer Z530 16gb | 0502:3823 | ⚪ proposed | — |
+| Acer Iconia One 10 | 0502:3841 | ⚪ proposed | — |
+| Acer A3 A40 | 0502:387a | ⚪ proposed | — |
+| Acer Zest T06 | 0502:3886 | ⚪ proposed | — |
+| Acer Liquid Zest 4g | 0502:38a5 | ⚪ proposed | — |
+| Acer Liquid Zest Plus | 0502:38bb | ⚪ proposed | — |
+| Acer Liquid Z6e | 0502:3938 | ⚪ proposed | — |
+| Acer Iconia One 10 B3 A40 | 0502:394b | ⚪ proposed | — |
+| Iriver Portable Media Center 1 | 1006:4002 | ⚪ proposed | — |
+| Iriver Portable Media Center 2 | 1006:4003 | ⚪ proposed | — |
+| Jvc Alneo Xa Hd500 | 04f1:6105 | ⚪ proposed | supportsGetObjectPropList |
+| Intex Aqua Fish | 05c6:0a07 | ⚪ proposed | supportsGetObjectPropList |
+| Qualcomm Nokia 5530 Xpressmusic | 05c6:0229 | ⚪ proposed | supportsGetObjectPropList |
+| Qualcomm 6205 Balboa | 05c6:3196 | ⚪ proposed | supportsGetObjectPropList |
+| Qualcomm Gsmart G1342 | 05c6:8800 | ⚪ proposed | supportsGetObjectPropList |
+| Qualcomm Andromax U | 05c6:9025 | ⚪ proposed | supportsGetObjectPropList |
+| Qualcomm Oneplus One MTP | 05c6:6764 | ⚪ proposed | — |
+| Qualcomm Oneplus One Mtpplusadb | 05c6:6765 | ⚪ proposed | — |
+| Qualcomm Xolo Black MTP | 05c6:901b | ⚪ proposed | — |
+| Qualcomm Phicomm C230w MTP | 05c6:9039 | ⚪ proposed | — |
+| Archos Spod MTP Mode | 0e79:1341 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 5s It MTP Mode | 0e79:1351 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 5h It MTP Mode | 0e79:1357 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 48 MTP Mode | 0e79:1421 | ⚪ proposed | — |
+| Archos Arnova Childpad | 0e79:1458 | ⚪ proposed | — |
+| Archos Arnova 8c G3 | 0e79:145e | ⚪ proposed | — |
+| Archos Arnova 10bg3 Tablet | 0e79:146b | ⚪ proposed | — |
+| Archos 97 Xenon | 0e79:149a | ⚪ proposed | — |
+| Archos 97 Titanium | 0e79:14ad | ⚪ proposed | — |
+| Archos 80 Titanium | 0e79:14bf | ⚪ proposed | — |
+| Archos 101 Titanium | 0e79:14b9 | ⚪ proposed | — |
+| Archos 70b Titanium | 0e79:14ef | ⚪ proposed | — |
+| Archos 8o G9 MTP Mode | 0e79:1508 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 8o G9 Turbo MTP Mode | 0e79:1509 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 80g9 | 0e79:1518 | ⚪ proposed | — |
+| Archos 101 G9 Id1 | 0e79:1528 | ⚪ proposed | — |
+| Archos 101 G9 Id2 | 0e79:1529 | ⚪ proposed | — |
+| Archos 101 G9 Turbo 250 Hd | 0e79:1538 | ⚪ proposed | — |
+| Archos 101 G9 Turbo | 0e79:1539 | ⚪ proposed | — |
+| Archos 101 Xs | 0e79:1548 | ⚪ proposed | — |
+| Archos 70it2 Id 1 | 0e79:1568 | ⚪ proposed | — |
+| Archos 70it2 Id 2 | 0e79:1569 | ⚪ proposed | — |
+| Archos 70 Cobalt | 0e79:15ba | ⚪ proposed | — |
+| Archos 50c | 0e79:2008 | ⚪ proposed | — |
+| Archos C40 | 0e79:31ab | ⚪ proposed | — |
+| Archos 50b | 0e79:31bd | ⚪ proposed | — |
+| Archos Helium 45b | 0e79:31d8 | ⚪ proposed | — |
+| Archos Phone | 0e79:31e1 | ⚪ proposed | — |
+| Archos 45 Neon | 0e79:31f3 | ⚪ proposed | — |
+| Archos 50 Diamond | 0e79:3229 | ⚪ proposed | — |
+| Archos 50 Diamond 2nd Id | 0e79:322a | ⚪ proposed | — |
+| Archos 101 G4 | 0e79:4002 | ⚪ proposed | — |
+| Archos Hudl Id1 | 0e79:5008 | ⚪ proposed | — |
+| Archos Hudl Id2 | 0e79:5009 | ⚪ proposed | — |
+| Archos 101d Neon | 0e79:51c6 | ⚪ proposed | — |
+| Archos Ac40dti | 0e79:5217 | ⚪ proposed | — |
+| Archos 50 Helium Plus | 0e79:5229 | ⚪ proposed | — |
+| Archos 50 Helium Plus 2nd Id | 0e79:522a | ⚪ proposed | — |
+| Archos 101 Xenon Lite | 0e79:528c | ⚪ proposed | — |
+| Archos 101 Xenon Lite Adb | 0e79:528d | ⚪ proposed | — |
+| Archos 40 Helium Phone | 0e79:52c2 | ⚪ proposed | — |
+| Archos Diamond S | 0e79:5305 | ⚪ proposed | — |
+| Archos 50d Neon | 0e79:5371 | ⚪ proposed | — |
+| Archos 70b Neon | 0e79:5395 | ⚪ proposed | — |
+| Archos 50 Power | 0e79:53a7 | ⚪ proposed | — |
+| Archos 101b Oxygen | 0e79:542f | ⚪ proposed | — |
+| Archos 55b Platinum | 0e79:544a | ⚪ proposed | — |
+| Archos 50f Helium | 0e79:545c | ⚪ proposed | — |
+| Archos 55 Diamond Selfie | 0e79:5465 | ⚪ proposed | — |
+| Archos Core 50p | 0e79:5603 | ⚪ proposed | — |
+| Cowon Iaudio D2plus Fw 2x MTP Mode | 0e21:0861 | ⚪ proposed | — |
+| Cowon Iaudio D2plus Dab Fw 4x MTP Mode | 0e21:0871 | ⚪ proposed | — |
+| Cowon Iaudio D2plus Fw 3x MTP Mode | 0e21:0881 | ⚪ proposed | — |
+| Cowon Iaudio D2plus Dmb Fw 1x MTP Mode | 0e21:0891 | ⚪ proposed | — |
+| Cowon Iaudio 9 MTP Mode | 0e21:0911 | ⚪ proposed | — |
+| Cowon Iaudio C2 MTP Mode | 0e21:0941 | ⚪ proposed | — |
+| Cowon Iaudio 10 MTP Mode | 0e21:0952 | ⚪ proposed | — |
+| Dell Dell Venue 7 Inch | 413c:b11a | ⚪ proposed | — |
+| Dell Dell Venue 7 Inch 2nd Id | 413c:b11b | ⚪ proposed | — |
+| Iriver T7 Volcano | 1042:1143 | ⚪ proposed | supportsGetObjectPropList |
+| Barnesnoble Nook 1st Edition | 2080:0001 | ⚪ proposed | — |
+| Barnesnoble Nook Tablet | 2080:0004 | ⚪ proposed | — |
+| Barnesnoble Nook Hd | 2080:0009 | ⚪ proposed | — |
+| Barnesnoble Nook 10 | 2080:000d | ⚪ proposed | — |
+| Google Nook Tablet MTP | 18d1:685c | ⚪ proposed | — |
+| Onyx Boox Tab X | 2207:0021 | ⚪ proposed | — |
+| Onyx Boox Go 103 | 2207:0022 | ⚪ proposed | — |
+| Onyx Boox Tab Mini C | 2207:0023 | ⚪ proposed | — |
+| Onyx Boox Note X3 | 2207:0024 | ⚪ proposed | — |
+| Onyx Boox Poke5 | 2207:0025 | ⚪ proposed | — |
+| Onyx Boox Page | 2207:0026 | ⚪ proposed | — |
+| Pocketbook Touch Lux 4 | 0525:a4a1 | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Aqua 2 | 0525:a4a2 | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Inkpad 3 Pro | 0525:a4a3 | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Era | 0525:a4a4 | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Inkpad Eo | 0525:a4ad | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Inkpad X Pro | 0525:a4ae | ⚪ proposed | supportsGetObjectPropList |
+| Tolino Shine 5 | 1f85:6060 | ⚪ proposed | — |
+| Tolino Vision 7 | 1f85:6062 | ⚪ proposed | — |
+| Tolino Page 3 | 1f85:6064 | ⚪ proposed | — |
+| Tolino Epos 4 | 1f85:6066 | ⚪ proposed | — |
+| Kobo Libra Colour | 2237:4191 | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Clara Bw | 2237:4192 | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Nia 2 | 2237:4193 | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Sage 2 | 2237:4194 | ⚪ proposed | supportsGetObjectPropList |
+| Amazon Fire Hdx 7 MTP | 1949:0041 | ⚪ proposed | — |
+| Amazon Fire Hdx 7 Adb | 1949:0042 | ⚪ proposed | — |
+| Amazon Fire Hdx 89 MTP | 1949:0091 | ⚪ proposed | — |
+| Amazon Fire Hdx 89 Adb | 1949:0092 | ⚪ proposed | — |
+| Amazon Fire 5th MTP | 1949:0201 | ⚪ proposed | — |
+| Amazon Fire 5th Adb | 1949:0202 | ⚪ proposed | — |
+| Amazon Fire 7 2022 MTP | 1949:03c1 | ⚪ proposed | — |
+| Amazon Fire 7 2022 Adb | 1949:03c2 | ⚪ proposed | — |
+| Amazon Fire Hd8 2022 MTP | 1949:0651 | ⚪ proposed | — |
+| Amazon Fire Hd8 2022 Adb | 1949:0652 | ⚪ proposed | — |
+| Amazon Fire Hd10 2023 Adb | 1949:06f2 | ⚪ proposed | — |
+| Lenovo Yoga Tablet 10 | 17ef:76fe | ⚪ proposed | — |
+| Lenovo Tab2 A7 | 17ef:785f | ⚪ proposed | — |
+| Lenovo Tab2 A8 | 17ef:78da | ⚪ proposed | — |
+| Lenovo Yoga Tab Yt3 | 17ef:7932 | ⚪ proposed | — |
+| Lenovo Tab2 A10 | 17ef:7949 | ⚪ proposed | — |
+| Lenovo Yoga Tab3 Pro | 17ef:795c | ⚪ proposed | — |
+| Lenovo Tab3 7 | 17ef:79a2 | ⚪ proposed | — |
+| Lenovo Yoga Book | 17ef:79af | ⚪ proposed | — |
+| Lenovo Tab3 10plus | 17ef:79de | ⚪ proposed | — |
+| Lenovo Tab 10 | 17ef:7a50 | ⚪ proposed | — |
+| Lenovo Tab3 8plus | 17ef:7a6b | ⚪ proposed | — |
+| Lenovo Tab4 10 | 17ef:7ac5 | ⚪ proposed | — |
+| Lenovo Tab4 10plus | 17ef:7ad0 | ⚪ proposed | — |
+| Lenovo Tab X704a | 17ef:7b25 | ⚪ proposed | — |
+| Lenovo Tab7 Essential | 17ef:7b3c | ⚪ proposed | — |
+| Lenovo Tab E8 | 17ef:7b84 | ⚪ proposed | — |
+| Lenovo Tab4 10 Alt | 17ef:7bc7 | ⚪ proposed | — |
+| Lenovo Tab P10 | 17ef:7bd3 | ⚪ proposed | — |
+| Lenovo Tab V7 | 17ef:7beb | ⚪ proposed | — |
+| Lenovo Yoga Smart Tab | 17ef:7c12 | ⚪ proposed | — |
+| Lenovo Tab M10 Fhd | 17ef:7c45 | ⚪ proposed | — |
+| Lenovo Tab M10 Fhdplus | 17ef:7c46 | ⚪ proposed | — |
+| Lenovo Tab P11 | 17ef:7c6f | ⚪ proposed | — |
+| Lenovo Tab M10hd Gen2 | 17ef:7c97 | ⚪ proposed | — |
+| Lenovo Tab M7 Gen3 | 17ef:7cb3 | ⚪ proposed | — |
+| Lenovo Tab P11plus | 17ef:7d4b | ⚪ proposed | — |
+| Lenovo Tab P11pro Gen2 | 17ef:7da5 | ⚪ proposed | — |
+| Lenovo Tab P12 | 17ef:7e16 | ⚪ proposed | — |
+| Lenovo Tab M11 | 17ef:7e7c | ⚪ proposed | — |
+| Lenovo Tab Plus | 17ef:7ea5 | ⚪ proposed | — |
+| Huawei Y560 | 12d1:259c | ⚪ proposed | — |
+| Huawei Cun U29 | 12d1:2608 | ⚪ proposed | — |
+| Huawei Lua L02 | 12d1:260b | ⚪ proposed | — |
+| Alcatel Popo4 | 1bbb:a00f | ⚪ proposed | — |
+| Tcl Alcatel Ot986 | 0451:d108 | ⚪ proposed | — |
+| Essential Ph1a | 2e17:c030 | ⚪ proposed | — |
+| Essential Ph1 | 2e17:c033 | ⚪ proposed | — |
+| Chuwi Vi8 Tablet | 8087:0a5f | ⚪ proposed | — |
+| Garmin Gps Generic | 091e:0003 | ⚪ proposed | — |
+| Garmin Etrex Cx | 091e:21a5 | ⚪ proposed | — |
+| Garmin Nuvi 360 | 091e:2236 | ⚪ proposed | — |
+| Garmin Edge 605 | 091e:2271 | ⚪ proposed | — |
+| Garmin Colorado 300 | 091e:2295 | ⚪ proposed | — |
+| Garmin Etrex Vista Hcx | 091e:22b6 | ⚪ proposed | — |
+| Garmin Oregon 400t | 091e:231b | ⚪ proposed | — |
+| Garmin Nuvi 205t | 091e:2353 | ⚪ proposed | — |
+| Garmin Edge 800 | 091e:2491 | ⚪ proposed | — |
+| Garmin Etrex 10 | 091e:2518 | ⚪ proposed | — |
+| Garmin Edge 800 Alt | 091e:2535 | ⚪ proposed | — |
+| Garmin Edge 200 | 091e:2613 | ⚪ proposed | — |
+| Garmin Drive 52m | 091e:2bf5 | ⚪ proposed | — |
+| Tomtom Blue Me | 1390:5454 | ⚪ proposed | — |
+| Magellan Roadmate 1475t | 120f:524e | ⚪ proposed | — |
+| Magellan Triton Series | 120f:5260 | ⚪ proposed | — |
+| Magellan Explorist Gc | 1dab:0001 | ⚪ proposed | — |
+| Magellan Crossover Gps | 1dab:0002 | ⚪ proposed | — |
+| 70mai Dashcam Pro Plus | 3361:7001 | ⚪ proposed | — |
+| 70mai Dashcam 4k | 3361:7002 | ⚪ proposed | — |
+| 70mai Dashcam Lite | 3361:7003 | ⚪ proposed | — |
+| 70mai Dashcam A800s | 3361:7004 | ⚪ proposed | — |
+| 70mai Dashcam M300 | 3361:7005 | ⚪ proposed | — |

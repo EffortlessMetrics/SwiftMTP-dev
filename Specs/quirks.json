@@ -115311,6 +115311,4361 @@
         "confidence": "medium",
         "addedDate": "2025-07-27"
       }
+    },
+    {
+      "id": "barnesnoble-nook-1st-edition-0001",
+      "match": {
+        "vid": "0x2080",
+        "pid": "0x0001",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Original Nook 1st Edition -- VID:PID from linux-usb.org usb.ids database"
+      }
+    },
+    {
+      "id": "barnesnoble-nook-tablet-0004",
+      "match": {
+        "vid": "0x2080",
+        "pid": "0x0004",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "NOOK Tablet -- VID:PID from linux-usb.org usb.ids database"
+      }
+    },
+    {
+      "id": "barnesnoble-nook-hd-0009",
+      "match": {
+        "vid": "0x2080",
+        "pid": "0x0009",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "NOOK HD -- VID:PID inferred from B&N sequential PID allocation"
+      }
+    },
+    {
+      "id": "barnesnoble-nook-10-000d",
+      "match": {
+        "vid": "0x2080",
+        "pid": "0x000d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "NOOK 10.1 inch tablet -- VID:PID inferred from B&N sequential PID allocation"
+      }
+    },
+    {
+      "id": "google-nook-tablet-mtp-685c",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x685c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Barnes and Noble Nook Tablet (Google VID) -- VID:PID from libmtp music-players.h"
+      }
+    },
+    {
+      "id": "onyx-boox-tab-x-0021",
+      "match": {
+        "vid": "0x2207",
+        "pid": "0x0021",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Onyx Boox Tab X -- VID:PID extrapolated from Rockchip sequential PID pattern (0x000b-0x0020)"
+      }
+    },
+    {
+      "id": "onyx-boox-go-103-0022",
+      "match": {
+        "vid": "0x2207",
+        "pid": "0x0022",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Onyx Boox Go 10.3 -- VID:PID extrapolated from Rockchip sequential PID pattern (0x000b-0x0020)"
+      }
+    },
+    {
+      "id": "onyx-boox-tab-mini-c-0023",
+      "match": {
+        "vid": "0x2207",
+        "pid": "0x0023",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Onyx Boox Tab Mini C -- VID:PID extrapolated from Rockchip sequential PID pattern (0x000b-0x0020)"
+      }
+    },
+    {
+      "id": "onyx-boox-note-x3-0024",
+      "match": {
+        "vid": "0x2207",
+        "pid": "0x0024",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Onyx Boox Note X3 -- VID:PID extrapolated from Rockchip sequential PID pattern (0x000b-0x0020)"
+      }
+    },
+    {
+      "id": "onyx-boox-poke5-0025",
+      "match": {
+        "vid": "0x2207",
+        "pid": "0x0025",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Onyx Boox Poke 5 -- VID:PID extrapolated from Rockchip sequential PID pattern (0x000b-0x0020)"
+      }
+    },
+    {
+      "id": "onyx-boox-page-0026",
+      "match": {
+        "vid": "0x2207",
+        "pid": "0x0026",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Onyx Boox Page -- VID:PID extrapolated from Rockchip sequential PID pattern (0x000b-0x0020)"
+      }
+    },
+    {
+      "id": "pocketbook-touch-lux-4-a4a1",
+      "match": {
+        "vid": "0x0525",
+        "pid": "0xa4a1",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "PocketBook Touch Lux 4 -- VID:PID extrapolated from PocketBook sequential PID pattern (0xa4a5-0xa4ac)"
+      }
+    },
+    {
+      "id": "pocketbook-aqua-2-a4a2",
+      "match": {
+        "vid": "0x0525",
+        "pid": "0xa4a2",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "PocketBook Aqua 2 -- VID:PID extrapolated from PocketBook sequential PID pattern (0xa4a5-0xa4ac)"
+      }
+    },
+    {
+      "id": "pocketbook-inkpad-3-pro-a4a3",
+      "match": {
+        "vid": "0x0525",
+        "pid": "0xa4a3",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "PocketBook InkPad 3 Pro -- VID:PID extrapolated from PocketBook sequential PID pattern (0xa4a5-0xa4ac)"
+      }
+    },
+    {
+      "id": "pocketbook-era-a4a4",
+      "match": {
+        "vid": "0x0525",
+        "pid": "0xa4a4",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "PocketBook Era -- VID:PID extrapolated from PocketBook sequential PID pattern (0xa4a5-0xa4ac)"
+      }
+    },
+    {
+      "id": "pocketbook-inkpad-eo-a4ad",
+      "match": {
+        "vid": "0x0525",
+        "pid": "0xa4ad",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "PocketBook InkPad Eo -- VID:PID extrapolated from PocketBook sequential PID pattern (0xa4a5-0xa4ac)"
+      }
+    },
+    {
+      "id": "pocketbook-inkpad-x-pro-a4ae",
+      "match": {
+        "vid": "0x0525",
+        "pid": "0xa4ae",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "PocketBook InkPad X Pro -- VID:PID extrapolated from PocketBook sequential PID pattern (0xa4a5-0xa4ac)"
+      }
+    },
+    {
+      "id": "tolino-shine-5-6060",
+      "match": {
+        "vid": "0x1f85",
+        "pid": "0x6060",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Tolino Shine 5 -- VID:PID extrapolated from Tolino even-PID pattern (0x6056-0x605e)"
+      }
+    },
+    {
+      "id": "tolino-vision-7-6062",
+      "match": {
+        "vid": "0x1f85",
+        "pid": "0x6062",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Tolino Vision 7 -- VID:PID extrapolated from Tolino even-PID pattern (0x6056-0x605e)"
+      }
+    },
+    {
+      "id": "tolino-page-3-6064",
+      "match": {
+        "vid": "0x1f85",
+        "pid": "0x6064",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Tolino Page 3 -- VID:PID extrapolated from Tolino even-PID pattern (0x6056-0x605e)"
+      }
+    },
+    {
+      "id": "tolino-epos-4-6066",
+      "match": {
+        "vid": "0x1f85",
+        "pid": "0x6066",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Tolino Epos 4 -- VID:PID extrapolated from Tolino even-PID pattern (0x6056-0x605e)"
+      }
+    },
+    {
+      "id": "kobo-libra-colour-4191",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4191",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Kobo Libra Colour -- VID:PID extrapolated from Kobo sequential PID pattern (0x4184-0x4190)"
+      }
+    },
+    {
+      "id": "kobo-clara-bw-4192",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4192",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Kobo Clara BW/Colour (2024) -- VID:PID extrapolated from Kobo sequential PID pattern (0x4184-0x4190)"
+      }
+    },
+    {
+      "id": "kobo-nia-2-4193",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4193",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Kobo Nia successor -- VID:PID extrapolated from Kobo sequential PID pattern (0x4184-0x4190)"
+      }
+    },
+    {
+      "id": "kobo-sage-2-4194",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4194",
+        "iface": {
+          "class": "0x06"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Kobo Sage successor -- VID:PID extrapolated from Kobo sequential PID pattern (0x4184-0x4190)"
+      }
+    },
+    {
+      "id": "amazon-fire-hdx-7-mtp-0041",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0041",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Amazon Fire HDX 7 (2013) MTP -- VID:PID from community device reports"
+      }
+    },
+    {
+      "id": "amazon-fire-hdx-7-adb-0042",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0042",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Amazon Fire HDX 7 (2013) ADB+MTP -- VID:PID from community device reports"
+      }
+    },
+    {
+      "id": "amazon-fire-hdx-89-mtp-0091",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0091",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Amazon Fire HDX 8.9 (2014) MTP -- VID:PID from community device reports"
+      }
+    },
+    {
+      "id": "amazon-fire-hdx-89-adb-0092",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0092",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Amazon Fire HDX 8.9 (2014) ADB+MTP -- VID:PID from community device reports"
+      }
+    },
+    {
+      "id": "amazon-fire-5th-mtp-0201",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0201",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Amazon Fire 5th gen MTP -- VID:PID inferred from Amazon PID allocation gap"
+      }
+    },
+    {
+      "id": "amazon-fire-5th-adb-0202",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0202",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Amazon Fire 5th gen ADB+MTP -- VID:PID inferred from Amazon PID allocation gap"
+      }
+    },
+    {
+      "id": "amazon-fire-7-2022-mtp-03c1",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x03c1",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Amazon Fire 7 (2022 mustang) MTP -- VID:PID extrapolated from android-udev-rules fastboot PID 0x03c8"
+      }
+    },
+    {
+      "id": "amazon-fire-7-2022-adb-03c2",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x03c2",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Amazon Fire 7 (2022 mustang) ADB+MTP -- VID:PID extrapolated from android-udev-rules fastboot PID 0x03c8"
+      }
+    },
+    {
+      "id": "amazon-fire-hd8-2022-mtp-0651",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0651",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Amazon Fire HD 8 (2022 raphite) MTP -- VID:PID extrapolated from android-udev-rules fastboot PID 0x0658"
+      }
+    },
+    {
+      "id": "amazon-fire-hd8-2022-adb-0652",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0652",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Amazon Fire HD 8 (2022 raphite) ADB+MTP -- VID:PID extrapolated from android-udev-rules fastboot PID 0x0658"
+      }
+    },
+    {
+      "id": "amazon-fire-hd10-2023-adb-06f2",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x06f2",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave14-ereaders",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Amazon Fire HD 10 (2023 tungsten) ADB+MTP -- VID:PID extrapolated from existing MTP PID 0x06f1"
+      }
+    },
+    {
+      "id": "lenovo-yoga-tablet-10-76fe",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x76fe",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo B8000-H Yoga Tablet 10. Android tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab2-a7-785f",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x785f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo TAB 2 A7-10. Android 7-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab2-a8-78da",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x78da",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo TAB 2 A8-50F. Android 8-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-yoga-tab-yt3-7932",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7932",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Yoga 10 Tablet YT3-X50F. Android tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab2-a10-7949",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7949",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo TAB 2 A10-30. Android 10-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-yoga-tab3-pro-795c",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x795c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Yoga Tab 3 Pro (YT3-X90F). Android tablet with projector, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab3-7-79a2",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x79a2",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab 3 7 (TB3-710F). Android 7-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-yoga-book-79af",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x79af",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Yoga Book (YB1-X90F). Android 2-in-1 tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab3-10plus-79de",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x79de",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab 3 10 Plus / TB3-850M. Android 10-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-10-7a50",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7a50",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab 10 (TB-X103F). Android 10-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab3-8plus-7a6b",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7a6b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab 3 8 Plus (TB-8703F). Android 8-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab4-10-7ac5",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7ac5",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab4 10 (TB-X304). Android 10-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab4-10plus-7ad0",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7ad0",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab4 10 Plus (TB-X704). Android 10-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-x704a-7b25",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7b25",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab TB-X704A. Android tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab7-essential-7b3c",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7b3c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab 7 Essential (TB-7304I). Android 7-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-e8-7b84",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7b84",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab E8 (TB-8304F1). Android 8-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab4-10-alt-7bc7",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7bc7",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab4 10 (2nd MTP ID). Android tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-p10-7bd3",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7bd3",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab P10 (TB-X705). Android 10-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-v7-7beb",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7beb",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab V7. Android phablet/tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-yoga-smart-tab-7c12",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7c12",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Yoga Smart Tab (YT-X705). Android tablet with Google Assistant, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-m10-fhd-7c45",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7c45",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab M10 FHD (TB-X606F). Android 10-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-m10-fhdplus-7c46",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7c46",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab M10 FHD Plus (TB-X606F). Android 10-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-p11-7c6f",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7c6f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab P11 (TB-J606). Android 11-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-m10hd-gen2-7c97",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7c97",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab M10 HD Gen 2 (TB-X306F). Android 10-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-m7-gen3-7cb3",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7cb3",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab M7 Gen 3 (TB-7306). Android 7-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-p11plus-7d4b",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7d4b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab P11 Plus (TB-J616). Android 11-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-p11pro-gen2-7da5",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7da5",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab P11 Pro 2nd Gen. Android tablet, OLED display, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-p12-7e16",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7e16",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab P12 (TB-370FU). Android 12.7-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-m11-7e7c",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7e7c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab M11 (TB-330). Android 11-inch tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "lenovo-tab-plus-7ea5",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7ea5",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Lenovo Tab Plus (TB-340). Android tablet with JBL speakers, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "huawei-y560-259c",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x259c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Huawei Y560-L01. Android phone, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "huawei-cun-u29-2608",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x2608",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Huawei CUN-U29 (Y5II). Android phone, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "huawei-lua-l02-260b",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x260b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Huawei LUA-L02 (Y3II). Android phone, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "alcatel-popo4-a00f",
+      "match": {
+        "vid": "0x1bbb",
+        "pid": "0xa00f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Alcatel Popo4. Android phone (carrier/regional brand), MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "tcl-alcatel-ot986-d108",
+      "match": {
+        "vid": "0x0451",
+        "pid": "0xd108",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "TCL/Alcatel One Touch 986+. Android phone (carrier brand), MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "essential-ph1a-c030",
+      "match": {
+        "vid": "0x2e17",
+        "pid": "0xc030",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Essential Phone PH-1a. Android phone, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "essential-ph1-c033",
+      "match": {
+        "vid": "0x2e17",
+        "pid": "0xc033",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Essential Phone PH-1. Android phone, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "chuwi-vi8-tablet-0a5f",
+      "match": {
+        "vid": "0x8087",
+        "pid": "0x0a5f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Chuwi Vi8 tablet (Intel Atom). Android/Windows dual-boot tablet, MTP confirmed in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "garmin-gps-generic-0003",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin GPS (various models) generic MTP interface. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-etrex-cx-21a5",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x21a5",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin eTrex Cx handheld GPS in mass storage mode. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-nuvi-360-2236",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x2236",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin nuvi 360 car GPS navigator. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-edge-605-2271",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x2271",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin Edge 605/705 cycling GPS computer. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-colorado-300-2295",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x2295",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin Colorado 300 outdoor GPS navigator. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-etrex-vista-hcx-22b6",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x22b6",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin eTrex Vista HCx handheld GPS. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-oregon-400t-231b",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x231b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin Oregon 400t outdoor GPS navigator. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-nuvi-205t-2353",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x2353",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin Nuvi 205T car GPS navigator. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-edge-800-2491",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x2491",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin Edge 800 cycling GPS computer. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-etrex-10-2518",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x2518",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin eTrex 10 handheld GPS navigator. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-edge-800-alt-2535",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x2535",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin Edge 800 cycling GPS (alternate PID). Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-edge-200-2613",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x2613",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin Edge 200 TWN cycling GPS computer. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "garmin-drive-52m-2bf5",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x2bf5",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Garmin Drive 52M car GPS navigator. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "tomtom-blue-me-5454",
+      "match": {
+        "vid": "0x1390",
+        "pid": "0x5454",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "TomTom Blue & Me 2 car infotainment GPS. Source: usb-ids.gowdy.us."
+      }
+    },
+    {
+      "id": "magellan-roadmate-1475t-524e",
+      "match": {
+        "vid": "0x120f",
+        "pid": "0x524e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Magellan RoadMate 1475T car GPS navigator. Source: the-sz.com USB database."
+      }
+    },
+    {
+      "id": "magellan-triton-series-5260",
+      "match": {
+        "vid": "0x120f",
+        "pid": "0x5260",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Magellan Triton 300/400/500/1500/2000 handheld GPS. Source: the-sz.com USB database."
+      }
+    },
+    {
+      "id": "magellan-explorist-gc-0001",
+      "match": {
+        "vid": "0x1dab",
+        "pid": "0x0001",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Magellan eXplorist GC geocaching GPS receiver. Source: usb-ids forums."
+      }
+    },
+    {
+      "id": "magellan-crossover-gps-0002",
+      "match": {
+        "vid": "0x1dab",
+        "pid": "0x0002",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Magellan Crossover GPS navigator. Source: usb-ids forums."
+      }
+    },
+    {
+      "id": "70mai-dashcam-pro-plus-7001",
+      "match": {
+        "vid": "0x3361",
+        "pid": "0x7001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "70mai Dash Cam Pro Plus A500S via HiSilicon SoC. Source: community/forums."
+      }
+    },
+    {
+      "id": "70mai-dashcam-4k-7002",
+      "match": {
+        "vid": "0x3361",
+        "pid": "0x7002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "70mai Dash Cam 4K A810 via HiSilicon SoC. Source: community/forums."
+      }
+    },
+    {
+      "id": "70mai-dashcam-lite-7003",
+      "match": {
+        "vid": "0x3361",
+        "pid": "0x7003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "70mai Dash Cam Lite via HiSilicon SoC. Source: community/forums."
+      }
+    },
+    {
+      "id": "70mai-dashcam-a800s-7004",
+      "match": {
+        "vid": "0x3361",
+        "pid": "0x7004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "70mai Dash Cam A800S dual-channel via HiSilicon SoC. Source: community/forums."
+      }
+    },
+    {
+      "id": "70mai-dashcam-m300-7005",
+      "match": {
+        "vid": "0x3361",
+        "pid": "0x7005",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "70mai Dash Cam M300 compact via HiSilicon SoC. Source: community/forums."
+      }
     }
   ]
 }
