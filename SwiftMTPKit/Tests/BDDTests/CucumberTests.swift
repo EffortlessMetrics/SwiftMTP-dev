@@ -519,7 +519,8 @@ final class BDDRunner: XCTestCase {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1949, pid: 0x0006, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
     else { throw XCTSkip("kindle-fire-hd8 not in database") }
-    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+    // E-readers don't need kernel detach on macOS
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave14GarminDashCam() throws {
