@@ -198,6 +198,18 @@ public actor VirtualMTPDevice: MTPDevice {
     }
   }
 
+  public func rename(_ handle: MTPObjectHandle, to newName: String) async throws {
+    record("rename", parameters: ["handle": "\(handle)", "newName": newName])
+    guard let existing = objectTree[handle] else {
+      throw MTPError.objectNotFound
+    }
+    let renamed = VirtualObjectConfig(
+      handle: existing.handle, storage: existing.storage, parent: existing.parent,
+      name: newName, sizeBytes: existing.sizeBytes, formatCode: existing.formatCode,
+      data: existing.data)
+    objectTree[handle] = renamed
+  }
+
   public func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {
     record("move", parameters: ["handle": "\(handle)", "newParent": "\(newParent ?? 0)"])
     guard let existing = objectTree[handle] else {

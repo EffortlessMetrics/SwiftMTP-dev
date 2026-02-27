@@ -29,7 +29,7 @@ final class QuirkDatabaseCoverageTests: XCTestCase {
       pid: 0x4ee1,
       operations: ["supportsGetPartialObject64": true],
       hooks: [hook],
-      status: "stable",
+      status: .promoted,
       confidence: "high"
     )
 
@@ -37,7 +37,7 @@ final class QuirkDatabaseCoverageTests: XCTestCase {
     let payload = try JSONSerialization.jsonObject(with: data) as? [String: Any]
 
     XCTAssertEqual(payload?["id"] as? String, "encode-device")
-    XCTAssertEqual(payload?["status"] as? String, "stable")
+    XCTAssertEqual(payload?["status"] as? String, "promoted")
     XCTAssertEqual(payload?["confidence"] as? String, "high")
     XCTAssertNotNil(payload?["hooks"])
     XCTAssertNotNil(payload?["ops"])

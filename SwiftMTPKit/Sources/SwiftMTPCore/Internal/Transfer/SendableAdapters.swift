@@ -37,6 +37,27 @@ final class AtomicProgressTracker: @unchecked Sendable {
   }
 }
 
+/// Thread-safe container for capturing the remote handle assigned by SendObjectInfo.
+/// Used to persist the handle to the journal even when SendObject subsequently fails.
+public final class AtomicHandleBox: @unchecked Sendable {
+  private var _value: UInt32?
+  private let lock = NSLock()
+
+  public init() {}
+
+  public func set(_ value: UInt32) {
+    lock.lock()
+    defer { lock.unlock() }
+    _value = value
+  }
+
+  public var value: UInt32? {
+    lock.lock()
+    defer { lock.unlock() }
+    return _value
+  }
+}
+
 // MARK: - Sendable Wrappers
 
 /// Sendable wrapper for ByteSink that serializes access

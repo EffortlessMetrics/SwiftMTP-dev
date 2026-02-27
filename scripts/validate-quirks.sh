@@ -99,11 +99,56 @@ echo "🔍 Checking for duplicate entry IDs..."
 ids=$(jq -r '.entries[].id' "$QUIRKS_FILE")
 unique_ids=$(echo "$ids" | sort | uniq)
 if [[ "$(echo "$ids" | wc -l)" != "$(echo "$unique_ids" | wc -l)" ]]; then
-    echo "❌ Duplicate entry IDs found"
+    echo "❌ Duplicate entry IDs found:"
+    echo "$ids" | sort | uniq -d | while read -r dup; do
+        echo "   DUPLICATE: $dup"
+    done
     exit 1
 fi
 
 echo "✅ All entry IDs are unique"
+
+# Validate VID+PID pairs are unique
+echo "🔍 Checking for duplicate VID:PID pairs..."
+vidpid_pairs=$(jq -r '.entries[] | "\(.match.vid):\(.match.pid)"' "$QUIRKS_FILE")
+unique_pairs=$(echo "$vidpid_pairs" | sort | uniq)
+if [[ "$(echo "$vidpid_pairs" | wc -l)" != "$(echo "$unique_pairs" | wc -l)" ]]; then
+    echo "❌ Duplicate VID:PID pairs found:"
+    echo "$vidpid_pairs" | sort | uniq -d | while read -r dup; do
+        echo "   DUPLICATE VID:PID $dup used by:"
+        jq -r --arg pair "$dup" '.entries[] | select("\(.match.vid):\(.match.pid)" == $pair) | "     \(.id)"' "$QUIRKS_FILE"
+    done
+    exit 1
+fi
+
+echo "✅ All VID:PID pairs are unique"
+
+# Check that all entries have a governance status field
+echo "🔍 Checking governance status field..."
+missing_status=$(jq -r '.entries[] | select(.status == null) | .id' "$QUIRKS_FILE")
+if [[ -n "$missing_status" ]]; then
+    echo "❌ Entries missing 'status' field:"
+    echo "$missing_status"
+    exit 1
+fi
+echo "✅ All entries have a 'status' field"
+
+# Warn (not fail) if any entry has status=proposed
+proposed_count=$(jq '[.entries[] | select(.status == "proposed")] | length' "$QUIRKS_FILE")
+if [[ "$proposed_count" -gt 0 ]]; then
+    echo "⚠️  WARNING: $proposed_count entry/entries have status='proposed' (unverified — review before merging)"
+    jq -r '.entries[] | select(.status == "proposed") | "   proposed: " + .id' "$QUIRKS_FILE"
+fi
+
+# Fail if a promoted profile is missing evidenceRequired
+echo "🔍 Checking promoted profiles have evidenceRequired..."
+missing_evidence=$(jq -r '.entries[] | select(.status == "promoted") | select(.evidenceRequired == null or (.evidenceRequired | length) == 0) | .id' "$QUIRKS_FILE")
+if [[ -n "$missing_evidence" ]]; then
+    echo "❌ Promoted profiles missing 'evidenceRequired':"
+    echo "$missing_evidence"
+    exit 1
+fi
+echo "✅ All promoted profiles have evidenceRequired"
 
 # Validate bench gates against actual benchmark results
 echo "🔍 Validating bench gates..."

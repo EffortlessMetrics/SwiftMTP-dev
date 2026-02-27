@@ -460,4 +460,158 @@ final class PTPCodecTests: XCTestCase {
     var reader = PTPReader(data: Data([0x01, 0x02, 0x03, 0x04]))
     XCTAssertNil(reader.value(dt: 0x1234))  // Invalid type
   }
+
+  // MARK: - Missing Coverage
+
+  func testValueStringType_notMistreatedAsArray() {
+    // Regression: 0xFFFF & 0x4000 != 0, so without the explicit guard the string type
+    // would fall into the array branch and mis-decode.
+    let encoded = PTPString.encode("hello")
+    var reader = PTPReader(data: encoded)
+    let result = reader.value(dt: 0xFFFF)
+    if case .string(let s) = result {
+      XCTAssertEqual(s, "hello")
+    } else {
+      XCTFail("Expected .string(\"hello\"), got \(String(describing: result))")
+    }
+  }
+
+  func testValueAllScalarTypes() {
+    // INT8
+    var r1 = PTPReader(data: Data([0xFE]))
+    if case .int8(let v) = r1.value(dt: 0x0001) { XCTAssertEqual(v, -2) }
+    else { XCTFail("Expected int8") }
+
+    // UINT8
+    var r2 = PTPReader(data: Data([0x42]))
+    if case .uint8(let v) = r2.value(dt: 0x0002) { XCTAssertEqual(v, 0x42) }
+    else { XCTFail("Expected uint8") }
+
+    // INT16 — LE 0xFF00 = -256 as Int16
+    var r3 = PTPReader(data: Data([0x00, 0xFF]))
+    if case .int16(let v) = r3.value(dt: 0x0003) { XCTAssertEqual(v, -256) }
+    else { XCTFail("Expected int16") }
+
+    // UINT16
+    var r4 = PTPReader(data: Data([0x78, 0x56]))
+    if case .uint16(let v) = r4.value(dt: 0x0004) { XCTAssertEqual(v, 0x5678) }
+    else { XCTFail("Expected uint16") }
+
+    // INT32 — LE 0xFFFFFF00 = -256 as Int32
+    var r5data = Data(count: 4)
+    r5data[0] = 0x00; r5data[1] = 0xFF; r5data[2] = 0xFF; r5data[3] = 0xFF
+    var r5 = PTPReader(data: r5data)
+    if case .int32(let v) = r5.value(dt: 0x0005) { XCTAssertEqual(v, -256) }
+    else { XCTFail("Expected int32") }
+
+    // UINT32
+    var r6data = Data(count: 4)
+    r6data[0] = 0x01
+    var r6 = PTPReader(data: r6data)
+    if case .uint32(let v) = r6.value(dt: 0x0006) { XCTAssertEqual(v, 1) }
+    else { XCTFail("Expected uint32") }
+
+    // INT64 — all 0xFF = -1 as Int64
+    var r7 = PTPReader(data: Data(repeating: 0xFF, count: 8))
+    if case .int64(let v) = r7.value(dt: 0x0007) { XCTAssertEqual(v, -1) }
+    else { XCTFail("Expected int64") }
+
+    // UINT64
+    var r8data = Data(count: 8)
+    r8data[0] = 0xFF; r8data[1] = 0xFF
+    var r8 = PTPReader(data: r8data)
+    if case .uint64(let v) = r8.value(dt: 0x0008) { XCTAssertEqual(v, 0xFFFF) }
+    else { XCTFail("Expected uint64") }
+  }
+
+  func testValueUINT128AndINT128() {
+    let bytes = Data((0..<16).map { UInt8($0) })
+
+    var r1 = PTPReader(data: bytes)
+    if case .uint128(let d) = r1.value(dt: 0x000A) {
+      XCTAssertEqual(d, bytes)
+    } else {
+      XCTFail("Expected uint128")
+    }
+
+    var r2 = PTPReader(data: bytes)
+    if case .int128(let d) = r2.value(dt: 0x0009) {
+      XCTAssertEqual(d, bytes)
+    } else {
+      XCTFail("Expected int128")
+    }
+  }
+
+  func testValueArrayOfUINT32() {
+    var data = Data(count: 4 + 3 * 4)
+    // count = 3
+    data[0] = 0x03
+    // first = 0xAABBCCDD
+    data[4] = 0xDD; data[5] = 0xCC; data[6] = 0xBB; data[7] = 0xAA
+    // second = 0x11223344
+    data[8] = 0x44; data[9] = 0x33; data[10] = 0x22; data[11] = 0x11
+    // third = 0 (already zero-init)
+
+    var reader = PTPReader(data: data)
+    if case .array(let arr) = reader.value(dt: 0x4006) {
+      XCTAssertEqual(arr.count, 3)
+      if case .uint32(let v) = arr[0] { XCTAssertEqual(v, 0xAABBCCDD) }
+      else { XCTFail("arr[0] not uint32") }
+      if case .uint32(let v) = arr[1] { XCTAssertEqual(v, 0x11223344) }
+      else { XCTFail("arr[1] not uint32") }
+      if case .uint32(let v) = arr[2] { XCTAssertEqual(v, 0) }
+      else { XCTFail("arr[2] not uint32") }
+    } else {
+      XCTFail("Expected array")
+    }
+  }
+
+  func testValueEmptyArray() {
+    let data = Data(count: 4)  // count = 0 (all zero bytes)
+    var reader = PTPReader(data: data)
+    if case .array(let arr) = reader.value(dt: 0x4006) {
+      XCTAssertEqual(arr.count, 0)
+    } else {
+      XCTFail("Expected empty array")
+    }
+  }
+
+  func testValueBoundsChecking() {
+    // INT16 needs 2 bytes — only 1 provided
+    var r1 = PTPReader(data: Data([0x01]))
+    XCTAssertNil(r1.value(dt: 0x0003))
+
+    // INT32 needs 4 bytes — only 2 provided
+    var r2 = PTPReader(data: Data([0x01, 0x02]))
+    XCTAssertNil(r2.value(dt: 0x0005))
+
+    // UINT64 needs 8 bytes — only 4 provided
+    var r3 = PTPReader(data: Data([0x01, 0x02, 0x03, 0x04]))
+    XCTAssertNil(r3.value(dt: 0x0008))
+
+    // UINT128 needs 16 bytes — only 8 provided
+    var r4 = PTPReader(data: Data(repeating: 0, count: 8))
+    XCTAssertNil(r4.value(dt: 0x000A))
+
+    // String type (0xFFFF) with empty data
+    var r5 = PTPReader(data: Data())
+    XCTAssertNil(r5.value(dt: 0xFFFF))
+  }
+
+  func testMTPDateStringDecodeVariants() {
+    XCTAssertNotNil(MTPDateString.decode("20250101T120000"))
+    XCTAssertNotNil(MTPDateString.decode("20251231T235959"))
+    XCTAssertNotNil(MTPDateString.decode("20250101T120000.0Z"))  // suffix stripped
+    XCTAssertNil(MTPDateString.decode("notadate"))
+
+    // Round-trip encode then decode produces equivalent date (1s accuracy)
+    let ref = Date(timeIntervalSinceReferenceDate: 0)
+    let encoded = MTPDateString.encode(ref)
+    let decoded = MTPDateString.decode(encoded)
+    XCTAssertNotNil(decoded)
+    if let d = decoded {
+      XCTAssertEqual(
+        d.timeIntervalSinceReferenceDate, ref.timeIntervalSinceReferenceDate, accuracy: 1.0)
+    }
+  }
 }

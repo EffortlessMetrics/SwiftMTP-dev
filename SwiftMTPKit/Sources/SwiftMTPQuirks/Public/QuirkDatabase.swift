@@ -31,6 +31,19 @@ public struct QuirkHook: Codable, Sendable {
   }
 }
 
+/// Governance lifecycle status for a quirk profile.
+/// - `proposed`: submitted but not yet tested against a real device
+/// - `verified`: tested and confirmed working, awaiting final review
+/// - `promoted`: battle-tested, graduated into the stable database
+public enum QuirkStatus: String, Codable, Sendable {
+  case proposed, verified, promoted
+
+  public init(from decoder: Decoder) throws {
+    let raw = try decoder.singleValueContainer().decode(String.self)
+    self = QuirkStatus(rawValue: raw) ?? .proposed
+  }
+}
+
 public struct DeviceQuirk: Codable, Sendable {
   public var id: String  // e.g. "xiaomi-mi-note-2-ff10"
   public var vid: UInt16
@@ -52,8 +65,11 @@ public struct DeviceQuirk: Codable, Sendable {
   public var operations: [String: Bool]?  // e.g. {"partialRead": true}
   public var hooks: [QuirkHook]?
   public var flags: QuirkFlags?  // Typed behavioral flags
-  public var status: String?  // "stable" | "experimental" | ...
+  public var status: QuirkStatus?  // Governance lifecycle: proposed | verified | promoted
   public var confidence: String?  // "low" | "medium" | "high"
+  public var evidenceRequired: [String]?  // e.g. ["probe_log", "write_test"]
+  public var lastVerifiedDate: String?  // ISO-8601 date string
+  public var lastVerifiedBy: String?  // Author/team who last verified
 
   public init(
     id: String,
@@ -76,8 +92,11 @@ public struct DeviceQuirk: Codable, Sendable {
     operations: [String: Bool]? = nil,
     hooks: [QuirkHook]? = nil,
     flags: QuirkFlags? = nil,
-    status: String? = nil,
-    confidence: String? = nil
+    status: QuirkStatus? = nil,
+    confidence: String? = nil,
+    evidenceRequired: [String]? = nil,
+    lastVerifiedDate: String? = nil,
+    lastVerifiedBy: String? = nil
   ) {
     self.id = id
     self.vid = vid
@@ -101,6 +120,9 @@ public struct DeviceQuirk: Codable, Sendable {
     self.flags = flags
     self.status = status
     self.confidence = confidence
+    self.evidenceRequired = evidenceRequired
+    self.lastVerifiedDate = lastVerifiedDate
+    self.lastVerifiedBy = lastVerifiedBy
   }
 
   /// Resolve typed QuirkFlags, synthesizing from `operations` map if
@@ -112,7 +134,12 @@ public struct DeviceQuirk: Codable, Sendable {
     if let ops = operations {
       if let v = ops["supportsGetPartialObject64"] { f.supportsPartialRead64 = v }
       if let v = ops["supportsSendPartialObject"] { f.supportsPartialWrite = v }
-      if let v = ops["preferGetObjectPropList"] { f.prefersPropListEnumeration = v }
+      if let v = ops["preferGetObjectPropList"] {
+        f.prefersPropListEnumeration = v
+        f.supportsGetObjectPropList = v
+      }
+      if let v = ops["supportsGetObjectPropList"] { f.supportsGetObjectPropList = v }
+      if let v = ops["supportsGetPartialObject"] { f.supportsGetPartialObject = v }
     }
     if let v = resetOnOpen { f.resetOnOpen = v }
     if let v = disableEventPump { f.disableEventPump = v }
@@ -122,16 +149,21 @@ public struct DeviceQuirk: Codable, Sendable {
 
   private enum CodingKeys: String, CodingKey {
     case id, match, tuning, hooks, ops, flags, status, confidence
+    case evidenceRequired, lastVerifiedDate, lastVerifiedBy
   }
 
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     id = try container.decode(String.self, forKey: .id)
-    status = try container.decodeIfPresent(String.self, forKey: .status)
+    // Decode status: unknown raw values (legacy "stable"/"experimental") default to .proposed
+    status = try container.decodeIfPresent(QuirkStatus.self, forKey: .status)
     confidence = try container.decodeIfPresent(String.self, forKey: .confidence)
     hooks = try container.decodeIfPresent([QuirkHook].self, forKey: .hooks)
     operations = try container.decodeIfPresent([String: Bool].self, forKey: .ops)
     flags = try container.decodeIfPresent(QuirkFlags.self, forKey: .flags)
+    evidenceRequired = try container.decodeIfPresent([String].self, forKey: .evidenceRequired)
+    lastVerifiedDate = try container.decodeIfPresent(String.self, forKey: .lastVerifiedDate)
+    lastVerifiedBy = try container.decodeIfPresent(String.self, forKey: .lastVerifiedBy)
 
     // Decode 'match' object
     let match = try container.decode(RawMatch.self, forKey: .match)
@@ -164,8 +196,9 @@ public struct DeviceQuirk: Codable, Sendable {
     try container.encodeIfPresent(confidence, forKey: .confidence)
     try container.encodeIfPresent(hooks, forKey: .hooks)
     try container.encodeIfPresent(operations, forKey: .ops)
-
-    // Reverse mapping for 'match' and 'tuning' would go here if needed
+    try container.encodeIfPresent(evidenceRequired, forKey: .evidenceRequired)
+    try container.encodeIfPresent(lastVerifiedDate, forKey: .lastVerifiedDate)
+    try container.encodeIfPresent(lastVerifiedBy, forKey: .lastVerifiedBy)
   }
 }
 

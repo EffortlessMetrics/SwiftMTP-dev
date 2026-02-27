@@ -269,6 +269,45 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
     }
   }
 
+  public func renameObject(
+    _ request: RenameRequest, withReply reply: @escaping (WriteResponse) -> Void
+  ) {
+    Task {
+      do {
+        let deviceId = MTPDeviceID(raw: request.deviceId)
+        guard let device = try await findDevice(with: deviceId) else {
+          reply(WriteResponse(success: false, errorMessage: "Device not found or not connected"))
+          return
+        }
+        let handle: MTPObjectHandle = request.objectHandle
+        try await device.rename(handle, to: request.newName)
+        reply(WriteResponse(success: true))
+      } catch {
+        reply(WriteResponse(success: false, errorMessage: error.localizedDescription))
+      }
+    }
+  }
+
+  public func moveObject(
+    _ request: MoveObjectRequest, withReply reply: @escaping (WriteResponse) -> Void
+  ) {
+    Task {
+      do {
+        let deviceId = MTPDeviceID(raw: request.deviceId)
+        guard let device = try await findDevice(with: deviceId) else {
+          reply(WriteResponse(success: false, errorMessage: "Device not found or not connected"))
+          return
+        }
+        let handle: MTPObjectHandle = request.objectHandle
+        let parent: MTPObjectHandle? = request.newParentHandle
+        try await device.move(handle, to: parent)
+        reply(WriteResponse(success: true))
+      } catch {
+        reply(WriteResponse(success: false, errorMessage: error.localizedDescription))
+      }
+    }
+  }
+
   // MARK: - Cache-First API
 
   public func requestCrawl(

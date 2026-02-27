@@ -432,6 +432,12 @@ final class FileProviderExtensionTests: XCTestCase {
     func createFolder(_ req: CreateFolderRequest, withReply r: @escaping (WriteResponse) -> Void) {
       r(WriteResponse(success: false))
     }
+    func renameObject(_ req: RenameRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      r(WriteResponse(success: false))
+    }
+    func moveObject(_ req: MoveObjectRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      r(WriteResponse(success: false))
+    }
     func requestCrawl(
       _ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void
     ) {
@@ -479,5 +485,129 @@ final class FileProviderExtensionTests: XCTestCase {
     )
 
     wait(for: [expectation], timeout: 2.0)
+  }
+
+  // MARK: - Disconnect Error Mapping Tests
+
+  /// XPC service stub where every operation returns a failure with a configurable error message.
+  private final class ConfigurableErrorXPCService: NSObject, MTPXPCService {
+    let errorMessage: String?
+    init(errorMessage: String?) { self.errorMessage = errorMessage }
+
+    func ping(reply: @escaping (String) -> Void) { reply("ok") }
+    func readObject(_ req: ReadRequest, withReply r: @escaping (ReadResponse) -> Void) {
+      r(ReadResponse(success: false, errorMessage: errorMessage))
+    }
+    func listStorages(
+      _ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void
+    ) { r(StorageListResponse(success: false, errorMessage: errorMessage)) }
+    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void)
+    { r(ObjectListResponse(success: false, errorMessage: errorMessage)) }
+    func getObjectInfo(
+      deviceId: String, storageId: UInt32, objectHandle: UInt32,
+      withReply r: @escaping (ReadResponse) -> Void
+    ) { r(ReadResponse(success: false, errorMessage: errorMessage)) }
+    func writeObject(_ req: WriteRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      r(WriteResponse(success: false, errorMessage: errorMessage))
+    }
+    func deleteObject(_ req: DeleteRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      r(WriteResponse(success: false, errorMessage: errorMessage))
+    }
+    func createFolder(_ req: CreateFolderRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      r(WriteResponse(success: false, errorMessage: errorMessage))
+    }
+    func renameObject(_ req: RenameRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      r(WriteResponse(success: false, errorMessage: errorMessage))
+    }
+    func moveObject(_ req: MoveObjectRequest, withReply r: @escaping (WriteResponse) -> Void) {
+      r(WriteResponse(success: false, errorMessage: errorMessage))
+    }
+    func requestCrawl(
+      _ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void
+    ) { r(CrawlTriggerResponse(accepted: false)) }
+    func deviceStatus(
+      _ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void
+    ) { r(DeviceStatusResponse(connected: false, sessionOpen: false)) }
+  }
+
+  @MainActor
+  private func makeExtension(errorMessage: String?) -> MTPFileProviderExtension {
+    let stub = ConfigurableErrorXPCService(errorMessage: errorMessage)
+    let domain = NSFileProviderDomain(
+      identifier: NSFileProviderDomainIdentifier("error-map-test"),
+      displayName: "Error Map Test")
+    return MTPFileProviderExtension(
+      domain: domain, indexReader: nil, xpcServiceResolver: { stub })
+  }
+
+  @MainActor
+  func testFetchContents_notConnectedError_mapsToServerUnreachable() {
+    let ext = makeExtension(errorMessage: "Device not connected")
+    let exp = expectation(description: "fetchContents not connected")
+    _ = ext.fetchContents(
+      for: NSFileProviderItemIdentifier("device1:1:42"), version: nil,
+      request: NSFileProviderRequest(),
+      completionHandler: { _, _, error in
+        let nsError = error as NSError?
+        XCTAssertEqual(nsError?.code, NSFileProviderError.serverUnreachable.rawValue)
+        exp.fulfill()
+      })
+    wait(for: [exp], timeout: 2.0)
+  }
+
+  @MainActor
+  func testFetchContents_genericError_mapsToNoSuchItem() {
+    let ext = makeExtension(errorMessage: "I/O error reading object")
+    let exp = expectation(description: "fetchContents generic error")
+    _ = ext.fetchContents(
+      for: NSFileProviderItemIdentifier("device1:1:42"), version: nil,
+      request: NSFileProviderRequest(),
+      completionHandler: { _, _, error in
+        let nsError = error as NSError?
+        XCTAssertEqual(nsError?.code, NSFileProviderError.noSuchItem.rawValue)
+        exp.fulfill()
+      })
+    wait(for: [exp], timeout: 2.0)
+  }
+
+  @MainActor
+  func testDeleteItem_disconnectedError_mapsToServerUnreachable() {
+    let ext = makeExtension(errorMessage: "device disconnected")
+    let exp = expectation(description: "deleteItem disconnected")
+    _ = ext.deleteItem(
+      identifier: NSFileProviderItemIdentifier("device1:1:42"),
+      baseVersion: NSFileProviderItemVersion(), options: [],
+      request: NSFileProviderRequest(),
+      completionHandler: { error in
+        let nsError = error as NSError?
+        XCTAssertEqual(nsError?.code, NSFileProviderError.serverUnreachable.rawValue)
+        exp.fulfill()
+      })
+    wait(for: [exp], timeout: 2.0)
+  }
+
+  @MainActor
+  func testModifyItem_notConnectedOnDelete_mapsToServerUnreachable() {
+    let ext = makeExtension(errorMessage: "not connected")
+    let item = MTPFileProviderItem(
+      deviceId: "device1", storageId: 1, objectHandle: 42,
+      parentHandle: nil, name: "f.txt", size: 4,
+      isDirectory: false, modifiedDate: nil)
+    let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
+      .appendingPathComponent("disconnect-test.txt")
+    try? "data".data(using: .utf8)!.write(to: tmpURL)
+    defer { try? FileManager.default.removeItem(at: tmpURL) }
+
+    let exp = expectation(description: "modifyItem not connected")
+    _ = ext.modifyItem(
+      item, baseVersion: NSFileProviderItemVersion(),
+      changedFields: NSFileProviderItemFields.contents, contents: tmpURL,
+      request: NSFileProviderRequest(),
+      completionHandler: { _, _, _, error in
+        let nsError = error as NSError?
+        XCTAssertEqual(nsError?.code, NSFileProviderError.serverUnreachable.rawValue)
+        exp.fulfill()
+      })
+    wait(for: [exp], timeout: 2.0)
   }
 }

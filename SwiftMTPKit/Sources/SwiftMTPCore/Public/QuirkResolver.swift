@@ -43,7 +43,8 @@ public struct QuirkResolver: Sendable {
       capabilities: capabilities,
       learned: learned,
       quirk: quirk,
-      overrides: overrides
+      overrides: overrides,
+      ifaceClass: ifaceClass
     )
   }
 }

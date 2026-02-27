@@ -1,0 +1,14 @@
+{
+  "flagsSource" : "quirk",
+  "ioTimeoutMs" : 30000,
+  "maxChunkBytes" : 2097152,
+  "prefersPropListEnumeration" : true,
+  "quirkID" : "google-pixel-7-4ee1",
+  "requireStabilization" : false,
+  "requiresKernelDetach" : true,
+  "resetOnOpen" : false,
+  "skipPTPReset" : false,
+  "stabilizeMs" : 3000,
+  "supportsGetObjectPropList" : true,
+  "supportsPartialRead64" : true
+}

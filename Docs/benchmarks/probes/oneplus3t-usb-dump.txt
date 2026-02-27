@@ -1,0 +1,5 @@
+# OnePlus 3T USB Interface Dump
+# VID: 0x2a70  PID: 0xf003
+# Interface 0: class=0x06 (Still Image/MTP)
+# Interface 1: class=0x08 (Mass Storage — ignored by MTP transport)
+# skipPTPReset=true: PTP Device Reset (0x66) returns LIBUSB_ERROR_PIPE

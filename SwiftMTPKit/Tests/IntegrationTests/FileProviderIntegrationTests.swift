@@ -69,6 +69,18 @@ final class MockXPCService: NSObject, MTPXPCService {
     reply(createFolderResponse)
   }
 
+  func renameObject(
+    _ request: RenameRequest, withReply reply: @escaping (WriteResponse) -> Void
+  ) {
+    reply(WriteResponse(success: true))
+  }
+
+  func moveObject(
+    _ request: MoveObjectRequest, withReply reply: @escaping (WriteResponse) -> Void
+  ) {
+    reply(WriteResponse(success: true))
+  }
+
   func requestCrawl(
     _ request: CrawlTriggerRequest, withReply reply: @escaping (CrawlTriggerResponse) -> Void
   ) {

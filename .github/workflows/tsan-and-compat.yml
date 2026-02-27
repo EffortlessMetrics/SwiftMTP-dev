@@ -1,0 +1,52 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# Copyright (c) 2025 Effortless Metrics, Inc.
+
+name: TSAN and Compat Matrix
+# Purpose: Thread-sanitizer run on key test suites, compatibility matrix validation,
+#          and SPDX license-header check on all Swift sources.
+# Runs on: push to main/feat/**, and PRs targeting main.
+# Complement: ci.yml runs TSAN on all branches; this adds compat-matrix and license gating.
+
+on:
+  push:
+    branches:
+      - main
+      - 'feat/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  tsan:
+    name: Thread Sanitizer (Core / Index / Scenario)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: TSAN – CoreTests / IndexTests / ScenarioTests
+        working-directory: SwiftMTPKit
+        run: swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
+
+  compat-matrix:
+    name: Compatibility Matrix
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate compat harness is importable
+        run: python3 scripts/compat-harness.py --help
+
+      - name: Validate compat matrix script
+        run: bash scripts/generate-compat-matrix.sh
+
+  license-check:
+    name: SPDX License Header Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check all Swift sources have SPDX header
+        run: |
+          find SwiftMTPKit/Sources -name "*.swift" | while read f; do
+            head -1 "$f" | grep -q "SPDX-License-Identifier" || (echo "Missing SPDX in $f" && exit 1)
+          done

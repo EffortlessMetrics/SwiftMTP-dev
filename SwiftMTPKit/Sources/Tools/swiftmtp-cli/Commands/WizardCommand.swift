@@ -91,20 +91,37 @@ struct WizardCommand {
 
     // Step 3: Check known status
     print("Step 2: Checking device database...")
+    var isNewDevice = false
     do {
       let qdb = try QuirkDatabase.load()
       if let match = qdb.match(
         vid: selected.vendorID ?? 0, pid: selected.productID ?? 0,
         bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
       {
-        print("   Known device: \(match.id) (status: \(match.status ?? "unknown"))")
+        print("   Known device: \(match.id) (status: \(match.status?.rawValue ?? "unknown"))")
+        print("   ✅ This device has a quirk profile — it should connect automatically.")
       } else {
-        print("   New device! Not in the quirks database yet.")
+        isNewDevice = true
+        print("   ⚠️  New device — not in the quirks database yet.")
+        print("   If it connects successfully, you can help others by contributing a profile!")
+        if let vid = selected.vendorID, let pid = selected.productID {
+          let vidStr = String(format: "0x%04x", vid)
+          let pidStr = String(format: "0x%04x", pid)
+          let inferredClass = inferDeviceClass(manufacturer: selected.manufacturer, model: selected.model)
+          print("")
+          print("   Quick-start: generate a profile template with:")
+          print(
+            "     swiftmtp add-device --vid \(vidStr) --pid \(pidStr) --class \(inferredClass) --name \"\(selected.manufacturer) \(selected.model)\""
+          )
+          print("")
+          print("   See Docs/DeviceSubmission.md to contribute this profile.")
+        }
       }
     } catch {
       print("   Could not load quirks database: \(error)")
     }
     print("")
+    _ = isNewDevice  // used below to hint at submission step
 
     // Step 4: Privacy notice
     print("Step 3: Privacy notice")
@@ -205,5 +222,18 @@ struct WizardCommand {
 
     print("")
     print("Done! Thank you for contributing to SwiftMTP.")
+  }
+
+  // MARK: - Helpers
+
+  /// Guess Android vs PTP from manufacturer/model strings.
+  private static func inferDeviceClass(manufacturer: String, model: String) -> String {
+    let combined = (manufacturer + " " + model).lowercased()
+    let ptpKeywords = ["canon", "nikon", "sony", "fuji", "olympus", "panasonic", "pentax", "ricoh",
+                       "leica", "sigma", "hasselblad", "gopro", "dji", "camera", "dslr", "mirrorless"]
+    for kw in ptpKeywords where combined.contains(kw) {
+      return "ptp"
+    }
+    return "android"
   }
 }

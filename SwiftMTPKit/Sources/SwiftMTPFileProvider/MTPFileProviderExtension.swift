@@ -23,6 +23,13 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
   /// Read-only index reader opened from the shared app group container.
   private let indexReader: (any LiveIndexReader)?
 
+  /// Shared anchor store; receives push events and supplies them to `DomainEnumerator`.
+  private let syncAnchorStore = SyncAnchorStore()
+
+  /// Optional override for `NSFileProviderManager.signalEnumerator`; used in unit tests.
+  nonisolated(unsafe) private var signalEnumeratorOverride:
+    ((NSFileProviderItemIdentifier) -> Void)?
+
   public init(domain: NSFileProviderDomain) {
     self.xpcServiceResolver = nil
     self.domain = domain
@@ -34,11 +41,13 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
   init(
     domain: NSFileProviderDomain,
     indexReader: (any LiveIndexReader)?,
-    xpcServiceResolver: (() -> MTPXPCService?)? = nil
+    xpcServiceResolver: (() -> MTPXPCService?)? = nil,
+    signalEnumeratorOverride: ((NSFileProviderItemIdentifier) -> Void)? = nil
   ) {
     self.domain = domain
     self.indexReader = indexReader
     self.xpcServiceResolver = xpcServiceResolver
+    self.signalEnumeratorOverride = signalEnumeratorOverride
     super.init()
   }
 
@@ -200,11 +209,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
             )
             completionHandler(tempFileURL, item, nil)
           } else {
-            completionHandler(
-              nil, nil,
-              NSError(
-                domain: NSFileProviderErrorDomain,
-                code: NSFileProviderError.serverUnreachable.rawValue))
+            completionHandler(nil, nil, self.xpcError(from: response.errorMessage))
           }
           progress.completedUnitCount = 1
         }
@@ -227,7 +232,8 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
       deviceId: components.deviceId,
       storageId: components.storageId,
       parentHandle: components.objectHandle,
-      indexReader: indexReader
+      indexReader: indexReader,
+      syncAnchorStore: syncAnchorStore
     )
   }
 
@@ -279,6 +285,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
                 objectHandle: response.newHandle, parentHandle: folderParentHandle,
                 name: req.name, size: nil, isDirectory: true, modifiedDate: nil)
               completionHandler(item, [], false, nil)
+              self.signalRootContainer()
             } else {
               completionHandler(
                 nil, [], false,
@@ -323,6 +330,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
               objectHandle: response.newHandle, parentHandle: parentHandle,
               name: req.name, size: fileSize, isDirectory: false, modifiedDate: nil)
             completionHandler(item, [], false, nil)
+            self.signalRootContainer()
           } else {
             completionHandler(
               nil, [], false,
@@ -346,23 +354,97 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
   ) -> Progress {
     let progress = Progress(totalUnitCount: 1)
 
-    // Metadata-only change (rename etc.) — acknowledge with no server mutation for now
-    guard changedFields.contains(.contents), let sourceURL = newContents,
-      let xpcService = getXPCService(),
+    guard let xpcService = getXPCService(),
       let components = MTPFileProviderItem.parseItemIdentifier(item.itemIdentifier),
-      let storageId = components.storageId
+      let storageId = components.storageId,
+      let objectHandle = components.objectHandle
     else {
       completionHandler(item, [], false, nil)
       progress.completedUnitCount = 1
       return progress
     }
 
-    // MTP has no in-place modify: delete old handle then upload new content
+    // Rename: filename changed but contents not
+    if changedFields.contains(.filename) && !changedFields.contains(.contents) {
+      let renameReq = RenameRequest(
+        deviceId: components.deviceId, objectHandle: objectHandle, newName: item.filename)
+      let xpcBox = SendableBox(xpcService)
+      let cb = SendableBox(completionHandler)
+      let capturedId = components.deviceId
+      let capturedStorage = storageId
+      let capturedParent = MTPFileProviderItem.parseItemIdentifier(item.parentItemIdentifier)?
+        .objectHandle
+      let capturedName = item.filename
+      let capturedHandle = objectHandle
+      let capturedIsDir = item.contentType == .folder
+      Task {
+        let completionHandler = cb.value
+        await MainActor.run {
+          xpcBox.value.renameObject(renameReq) { response in
+            if response.success {
+              let updatedItem = MTPFileProviderItem(
+                deviceId: capturedId, storageId: capturedStorage,
+                objectHandle: capturedHandle, parentHandle: capturedParent,
+                name: capturedName, size: nil, isDirectory: capturedIsDir, modifiedDate: nil)
+              completionHandler(updatedItem, [], false, nil)
+              self.signalRootContainer()
+            } else {
+              completionHandler(nil, [], false, nil)
+            }
+            progress.completedUnitCount = 1
+          }
+        }
+      }
+      return progress
+    }
+
+    if changedFields.contains(.parentItemIdentifier) && !changedFields.contains(.contents) {
+      let newParentComponents = MTPFileProviderItem.parseItemIdentifier(item.parentItemIdentifier)
+      let moveReq = MoveObjectRequest(
+        deviceId: components.deviceId, objectHandle: objectHandle,
+        newParentHandle: newParentComponents?.objectHandle,
+        newStorageId: newParentComponents?.storageId ?? storageId)
+      let xpcBox = SendableBox(xpcService)
+      let cb = SendableBox(completionHandler)
+      let capturedId = components.deviceId
+      let capturedStorage = newParentComponents?.storageId ?? storageId
+      let capturedParent = newParentComponents?.objectHandle
+      let capturedName = item.filename
+      let capturedHandle = objectHandle
+      let capturedIsDir = item.contentType == .folder
+      Task {
+        let completionHandler = cb.value
+        await MainActor.run {
+          xpcBox.value.moveObject(moveReq) { response in
+            if response.success {
+              let updatedItem = MTPFileProviderItem(
+                deviceId: capturedId, storageId: capturedStorage,
+                objectHandle: capturedHandle, parentHandle: capturedParent,
+                name: capturedName, size: nil, isDirectory: capturedIsDir, modifiedDate: nil)
+              completionHandler(updatedItem, [], false, nil)
+              self.signalRootContainer()
+            } else {
+              completionHandler(nil, [], false, nil)
+            }
+            progress.completedUnitCount = 1
+          }
+        }
+      }
+      return progress
+    }
+
+    // Contents update: MTP has no in-place modify — delete old handle then upload new content
+    guard changedFields.contains(.contents), let sourceURL = newContents else {
+      completionHandler(item, [], false, nil)
+      progress.completedUnitCount = 1
+      return progress
+    }
+
     let fileSize =
       (try? FileManager.default.attributesOfItem(atPath: sourceURL.path)[.size] as? UInt64) ?? 0
     let bookmark = try? sourceURL.bookmarkData(options: .withSecurityScope)
     let deleteReq = DeleteRequest(
-      deviceId: components.deviceId, objectHandle: components.objectHandle ?? 0)
+      deviceId: components.deviceId, objectHandle: objectHandle)
     let writeReq = WriteRequest(
       deviceId: components.deviceId, storageId: storageId,
       parentHandle: MTPFileProviderItem.parseItemIdentifier(item.parentItemIdentifier)?
@@ -379,9 +461,7 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
           guard deleteResponse.success else {
             completionHandler(
               nil, [], false,
-              NSError(
-                domain: NSFileProviderErrorDomain,
-                code: NSFileProviderError.serverUnreachable.rawValue))
+              self.xpcError(from: deleteResponse.errorMessage))
             progress.completedUnitCount = 1
             return
           }
@@ -392,12 +472,11 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
                 objectHandle: response.newHandle, parentHandle: parentHandle,
                 name: writeReq.name, size: fileSize, isDirectory: false, modifiedDate: nil)
               completionHandler(newItem, [], false, nil)
+              self.signalRootContainer()
             } else {
               completionHandler(
                 nil, [], false,
-                NSError(
-                  domain: NSFileProviderErrorDomain,
-                  code: NSFileProviderError.serverUnreachable.rawValue))
+                self.xpcError(from: response.errorMessage))
             }
             progress.completedUnitCount = 1
           }
@@ -432,16 +511,66 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
       let completionHandler = cb.value
       await MainActor.run {
         xpcBox.value.deleteObject(req) { response in
-          completionHandler(
-            response.success
-              ? nil
-              : NSError(
-                domain: NSFileProviderErrorDomain,
-                code: NSFileProviderError.serverUnreachable.rawValue))
+          completionHandler(response.success ? nil : self.xpcError(from: response.errorMessage))
+          if response.success { self.signalRootContainer() }
           progress.completedUnitCount = 1
         }
       }
     }
     return progress
+  }
+
+  // MARK: - Private Helpers
+
+  /// Handles a typed MTP device event: records pending changes in the anchor store
+  /// and signals the affected File Provider container.
+  public func handleDeviceEvent(_ event: MTPEventCoalescer.Event) {
+    switch event {
+    case .addObject(let deviceId, let storageId, let objectHandle, _):
+      let key = "\(deviceId):\(storageId)"
+      let identifier = NSFileProviderItemIdentifier("\(deviceId):\(storageId):\(objectHandle)")
+      syncAnchorStore.recordChange(added: [identifier], deleted: [], for: key)
+      signalContainer(NSFileProviderItemIdentifier("\(deviceId):\(storageId)"))
+
+    case .deleteObject(let deviceId, let storageId, let objectHandle):
+      let key = "\(deviceId):\(storageId)"
+      let identifier = NSFileProviderItemIdentifier("\(deviceId):\(storageId):\(objectHandle)")
+      syncAnchorStore.recordChange(added: [], deleted: [identifier], for: key)
+      signalContainer(NSFileProviderItemIdentifier("\(deviceId):\(storageId)"))
+
+    case .storageAdded(let deviceId, let storageId):
+      signalContainer(NSFileProviderItemIdentifier("\(deviceId):\(storageId)"))
+
+    case .storageRemoved(let deviceId, let storageId):
+      let key = "\(deviceId):\(storageId)"
+      let identifier = NSFileProviderItemIdentifier("\(deviceId):\(storageId)")
+      syncAnchorStore.recordChange(added: [], deleted: [identifier], for: key)
+      signalRootContainer()
+    }
+  }
+
+  /// Classifies an XPC error message into the appropriate `NSFileProviderError` code.
+  /// Disconnect-related messages map to `.serverUnreachable`; all others to `.noSuchItem`.
+  private func xpcError(from message: String?) -> NSError {
+    let msg = (message ?? "").lowercased()
+    let isDisconnect =
+      msg.contains("not connected") || msg.contains("disconnected") || msg.contains("unavailable")
+    let code =
+      isDisconnect
+      ? NSFileProviderError.serverUnreachable.rawValue : NSFileProviderError.noSuchItem.rawValue
+    return NSError(domain: NSFileProviderErrorDomain, code: code)
+  }
+
+  private func signalContainer(_ identifier: NSFileProviderItemIdentifier) {
+    if let override = signalEnumeratorOverride {
+      override(identifier)
+      return
+    }
+    guard let manager = NSFileProviderManager(for: domain) else { return }
+    manager.signalEnumerator(for: identifier) { _ in }
+  }
+
+  private func signalRootContainer() {
+    signalContainer(.rootContainer)
   }
 }

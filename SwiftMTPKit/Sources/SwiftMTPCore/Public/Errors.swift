@@ -9,7 +9,11 @@ public enum MTPError: Error, Sendable, Equatable {
   case transport(TransportError)
   case protocolError(code: UInt16, message: String?)
   case objectNotFound, objectWriteProtected, storageFull, readOnly, timeout, busy
+  /// A protocol transaction is already in progress on this device.
+  case sessionBusy
   case preconditionFailed(String)
+  /// The remote object size after a write does not match the expected size.
+  case verificationFailed(expected: UInt64, actual: UInt64)
 }
 
 public extension MTPError {
@@ -50,8 +54,13 @@ extension MTPError: LocalizedError {
       return "The operation timed out while waiting for the device."
     case .busy:
       return "The device is busy. Retry shortly."
+    case .sessionBusy:
+      return "A protocol transaction is already in progress on this device."
     case .preconditionFailed(let reason):
       return "Precondition failed: \(reason)"
+    case .verificationFailed(let expected, let actual):
+      return
+        "Write verification failed: remote size \(actual) does not match expected \(expected)."
     }
   }
 
@@ -66,7 +75,8 @@ extension MTPError: LocalizedError {
       return transportError.failureReason
     case .deviceDisconnected, .permissionDenied, .notSupported, .objectNotFound,
       .objectWriteProtected,
-      .storageFull, .readOnly, .timeout, .busy, .preconditionFailed:
+      .storageFull, .readOnly, .timeout, .busy, .sessionBusy, .preconditionFailed,
+      .verificationFailed:
       return nil
     }
   }
@@ -99,9 +109,22 @@ extension MTPError: LocalizedError {
   }
 }
 
+public enum TransportPhase: Sendable, Equatable {
+  case bulkOut, bulkIn, responseWait
+
+  public var description: String {
+    switch self {
+    case .bulkOut: return "bulk-out"
+    case .bulkIn: return "bulk-in"
+    case .responseWait: return "response-wait"
+    }
+  }
+}
+
 public enum TransportError: Error, Sendable, Equatable {
-  case noDevice, timeout, busy, accessDenied
+  case noDevice, timeout, busy, accessDenied, stall
   case io(String)
+  case timeoutInPhase(TransportPhase)
 }
 
 extension TransportError: LocalizedError {
@@ -116,6 +139,10 @@ extension TransportError: LocalizedError {
       return "USB access is temporarily busy."
     case .accessDenied:
       return "The USB device is currently unavailable due to access/claim restrictions."
+    case .stall:
+      return "A USB endpoint stalled; the transfer was aborted."
+    case .timeoutInPhase(let phase):
+      return "The USB transfer timed out during the \(phase.description) phase."
     case .io(let message):
       return message
     }
@@ -145,6 +172,11 @@ extension TransportError: LocalizedError {
         "Retry after increasing timeout values (`SWIFTMTP_MAX_CHUNK_BYTES`, `SWIFTMTP_IO_TIMEOUT_MS`)."
     case .busy:
       return "Retry briefly if bus or host contention is expected."
+    case .stall:
+      return "Disconnect and reconnect the device, then retry."
+    case .timeoutInPhase:
+      return
+        "Retry after increasing timeout values (`SWIFTMTP_MAX_CHUNK_BYTES`, `SWIFTMTP_IO_TIMEOUT_MS`)."
     case .io:
       return nil
     }

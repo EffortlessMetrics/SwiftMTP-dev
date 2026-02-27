@@ -107,7 +107,8 @@ public enum ProtoTransfer {
     useUnknownObjectInfoSize: Bool = false,
     omitOptionalObjectInfoFields: Bool = false,
     zeroObjectInfoParentHandle: Bool = false,
-    useRootCommandParentHandle: Bool = false
+    useRootCommandParentHandle: Bool = false,
+    handleOut: AtomicHandleBox? = nil
   ) async throws {
     // PTP Spec: SendObjectInfo command parameters are [StorageID, ParentHandle]
     // Use a concrete storage ID; wildcard storage (0xFFFFFFFF) triggers
@@ -166,6 +167,10 @@ public enum ProtoTransfer {
       })
     try infoRes.checkOK()
 
+    // Capture the remote handle (params: [StorageID, ParentHandle, ObjectHandle]) for journaling.
+    // This is filled before SendObject so a partial can be tracked even if SendObject fails.
+    handleOut?.set(infoRes.params.count >= 3 ? infoRes.params[2] : (infoRes.params.last ?? 0))
+
     try await Task.sleep(nanoseconds: 100_000_000)
 
     let sendObjectCommand = PTPContainer(
@@ -188,7 +193,8 @@ public enum ProtoTransfer {
     on link: MTPLink,
     ioTimeoutMs: Int,
     useUndefinedObjectFormat: Bool = false,
-    zeroObjectInfoParentHandle: Bool = false
+    zeroObjectInfoParentHandle: Bool = false,
+    handleOut: AtomicHandleBox? = nil
   ) async throws {
     let parentParam = parent ?? 0xFFFFFFFF
     guard storageID != 0 && storageID != 0xFFFFFFFF else {
@@ -249,6 +255,12 @@ public enum ProtoTransfer {
       }
     )
     try propListResult.checkOK()
+
+    // Capture the remote handle (params: [StorageID, ParentHandle, ObjectHandle]) for journaling.
+    handleOut?
+      .set(
+        propListResult.params.count >= 3
+          ? propListResult.params[2] : (propListResult.params.last ?? 0))
 
     try await Task.sleep(nanoseconds: 100_000_000)
 

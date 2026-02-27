@@ -196,4 +196,38 @@ final class XPCProtocolCoverageTests: XCTestCase {
     XCTAssertEqual(decoded.errorMessage, "Device busy")
     XCTAssertNil(decoded.newHandle)
   }
+
+  func testRenameRequestRoundTrip() throws {
+    let original = RenameRequest(deviceId: "dev4", objectHandle: 1234, newName: "photo.jpg")
+    let data = try NSKeyedArchiver.archivedData(
+      withRootObject: original, requiringSecureCoding: true)
+    let decoded = try NSKeyedUnarchiver.unarchivedObject(ofClass: RenameRequest.self, from: data)!
+    XCTAssertEqual(decoded.deviceId, "dev4")
+    XCTAssertEqual(decoded.objectHandle, 1234)
+    XCTAssertEqual(decoded.newName, "photo.jpg")
+  }
+
+  func testMoveObjectRequestRoundTrip() throws {
+    let original = MoveObjectRequest(
+      deviceId: "dev5", objectHandle: 5678, newParentHandle: 9999, newStorageId: 1)
+    let data = try NSKeyedArchiver.archivedData(
+      withRootObject: original, requiringSecureCoding: true)
+    let decoded = try NSKeyedUnarchiver.unarchivedObject(
+      ofClass: MoveObjectRequest.self, from: data)!
+    XCTAssertEqual(decoded.deviceId, "dev5")
+    XCTAssertEqual(decoded.objectHandle, 5678)
+    XCTAssertEqual(decoded.newParentHandle, 9999)
+    XCTAssertEqual(decoded.newStorageId, 1)
+  }
+
+  func testMoveObjectRequestNilParent() throws {
+    let original = MoveObjectRequest(
+      deviceId: "dev5", objectHandle: 5678, newParentHandle: nil, newStorageId: 2)
+    let data = try NSKeyedArchiver.archivedData(
+      withRootObject: original, requiringSecureCoding: true)
+    let decoded = try NSKeyedUnarchiver.unarchivedObject(
+      ofClass: MoveObjectRequest.self, from: data)!
+    XCTAssertNil(decoded.newParentHandle)
+    XCTAssertEqual(decoded.newStorageId, 2)
+  }
 }

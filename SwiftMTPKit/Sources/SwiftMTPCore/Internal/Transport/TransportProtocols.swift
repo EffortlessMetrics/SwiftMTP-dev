@@ -117,12 +117,26 @@ public protocol MTPLink: Sendable {
   /// - Parameter format: MTP object format code (e.g. 0x3801 for JPEG).
   /// - Returns: Array of supported property codes, or empty if not supported by device.
   func getObjectPropsSupported(format: UInt16) async throws -> [UInt16]
+
+  /// Begin reading raw MTP event packets from the interrupt endpoint.
+  /// No-op on links that do not support an interrupt endpoint.
+  func startEventPump()
+
+  /// Stream of raw MTP event container bytes as they arrive from the device.
+  /// Completes when the link is closed. Empty on links without an interrupt endpoint.
+  var eventStream: AsyncStream<Data> { get }
 }
 
 /// Default implementations for optional MTPLink properties.
 public extension MTPLink {
   var cachedDeviceInfo: MTPDeviceInfo? { nil }
   var linkDescriptor: MTPLinkDescriptor? { nil }
+
+  /// Default: no-op for links without an interrupt endpoint.
+  func startEventPump() {}
+
+  /// Default: immediately-finishing stream for links without an interrupt endpoint.
+  var eventStream: AsyncStream<Data> { AsyncStream { $0.finish() } }
 
   /// Default: execute GetObjectPropValue via executeStreamingCommand.
   func getObjectPropValue(handle: MTPObjectHandle, property: UInt16) async throws -> Data {

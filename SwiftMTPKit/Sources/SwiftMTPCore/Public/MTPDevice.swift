@@ -320,6 +320,13 @@ public protocol MTPDevice: Sendable {
   ///   - recursive: If `true`, delete directories and their contents recursively
   func delete(_ handle: MTPObjectHandle, recursive: Bool) async throws
 
+  /// Rename an object on the device by setting its ObjectFileName property.
+  ///
+  /// - Parameters:
+  ///   - handle: Handle of the object to rename
+  ///   - newName: New filename (without path components)
+  func rename(_ handle: MTPObjectHandle, to newName: String) async throws
+
   /// Move an object to a new location on the device.
   ///
   /// - Parameters:

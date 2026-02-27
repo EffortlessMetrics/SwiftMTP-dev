@@ -1,0 +1,44 @@
+# SwiftMTP Device Probe — OnePlus 3T
+# Date: 2025-07-15
+# Tool: swiftmtp probe --verbose
+
+USB Device: OnePlus 3T (A3010)
+  VID: 0x2a70  PID: 0xf003
+  Bus: 001  Device: 007
+  USB Version: 2.0
+  Speed: High (480 Mbps)
+
+MTP Device Info:
+  Manufacturer: OnePlus
+  Model: ONEPLUS A3010
+  Serial: OP3T-XXXX-XXXX
+  Device Version: MTP 1.0
+  MTP Extensions: android.com/MTP; 1.0
+
+Storage:
+  Storage ID: 0x00010001
+  Type: Fixed RAM
+  Access: Read-Write
+  Capacity: 64.0 GB
+  Free: 38.2 GB
+  Description: Internal shared storage
+
+Interface:
+  Class: 0xFF (Vendor Specific)
+  SubClass: 0xFF
+  Protocol: 0x00
+
+Supported Operations: GetDeviceInfo, OpenSession, CloseSession,
+  GetStorageIDs, GetStorageInfo, GetNumObjects, GetObjectHandles,
+  GetObjectInfo, GetObject, SendObjectInfo, SendObject, DeleteObject,
+  GetDevicePropDesc, GetDevicePropValue, SetDevicePropValue,
+  GetPartialObject, GetObjectPropsSupported, GetObjectPropDesc,
+  GetObjectPropValue, SetObjectPropValue, SendPartialObject,
+  android_GetPartialObject64, android_SendPartialObject,
+  android_TruncateObject, android_BeginEditObject,
+  android_EndEditObject
+
+Quirk Profile: oneplus-3t-f003 (status: promoted)
+  requiresKernelDetach: true
+  useAndroidExtensions: true
+  ioTimeoutMs: 30000

@@ -197,7 +197,7 @@ let package = Package(
     .testTarget(
       name: "BDDTests",
       dependencies: [
-        "SwiftMTPCore", "SwiftMTPTransportLibUSB",
+        "SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPTestKit", "SwiftMTPQuirks",
         .product(name: "CucumberSwift", package: "CucumberSwift"),
       ],
       resources: [.copy("Features")]),
@@ -282,7 +282,7 @@ let package = Package(
 
     .testTarget(
       name: "MTPEndianCodecTests",
-      dependencies: ["MTPEndianCodec"],
+      dependencies: ["MTPEndianCodec", "SwiftCheck"],
       exclude: ["Corpus", "__Snapshots__"]),
 
     .testTarget(

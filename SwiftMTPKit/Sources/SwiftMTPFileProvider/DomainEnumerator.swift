@@ -11,21 +11,27 @@ import SwiftMTPXPC
 /// Reads directly from the local SQLite live index (no XPC for metadata).
 /// If the index is empty for a folder, fires a background crawl request via XPC.
 public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchecked Sendable {
+  /// Maximum items yielded per enumeration page.
+  private static let pageSize: Int = 500
+
   private let deviceId: String
   private let storageId: UInt32?
   private let parentHandle: UInt32?
   private let indexReader: (any LiveIndexReader)?
+  private let syncAnchorStore: SyncAnchorStore?
   /// Lazily-established XPC connection; created once and reused.
   nonisolated(unsafe) private var xpcConnection: NSXPCConnection?
 
   public init(
     deviceId: String, storageId: UInt32? = nil, parentHandle: UInt32? = nil,
-    indexReader: (any LiveIndexReader)?
+    indexReader: (any LiveIndexReader)?,
+    syncAnchorStore: SyncAnchorStore? = nil
   ) {
     self.deviceId = deviceId
     self.storageId = storageId
     self.parentHandle = parentHandle
     self.indexReader = indexReader
+    self.syncAnchorStore = syncAnchorStore
     super.init()
   }
 
@@ -51,7 +57,7 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
           return
         }
 
-        var items: [NSFileProviderItem] = []
+        var allItems: [NSFileProviderItem] = []
 
         if storageId == nil {
           // Enumerate storages
@@ -66,7 +72,7 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
               isDirectory: true,
               modifiedDate: nil
             )
-            items.append(item)
+            allItems.append(item)
           }
 
           if storages.isEmpty {
@@ -90,7 +96,7 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
               isDirectory: obj.isDirectory,
               modifiedDate: obj.mtime
             )
-            items.append(item)
+            allItems.append(item)
           }
 
           if objects.isEmpty {
@@ -99,12 +105,39 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
           }
         }
 
-        observer.didEnumerate(items)
-        observer.finishEnumerating(upTo: nil)
+        // Page the results: decode the current offset from the page cursor,
+        // yield one page of items, and supply a next-page cursor when more remain.
+        let offset = decodePageOffset(page)
+        let end = min(offset + Self.pageSize, allItems.count)
+        observer.didEnumerate(Array(allItems[offset..<end]))
+        if end < allItems.count {
+          observer.finishEnumerating(upTo: encodePageCursor(UInt64(end)))
+        } else {
+          observer.finishEnumerating(upTo: nil)
+        }
       } catch {
         observer.finishEnumeratingWithError(error)
       }
     }
+  }
+
+  // MARK: - Page Cursor Encoding
+
+  /// Encodes a byte offset as an `NSFileProviderPage` cursor.
+  private func encodePageCursor(_ offset: UInt64) -> NSFileProviderPage {
+    var value = offset
+    let data = Data(bytes: &value, count: MemoryLayout<UInt64>.size)
+    return NSFileProviderPage(data)
+  }
+
+  /// Decodes a page cursor back to an item offset.
+  /// Returns 0 for the initial (system-supplied) page, which is not 8 bytes.
+  private func decodePageOffset(_ page: NSFileProviderPage) -> Int {
+    let data = page.rawValue
+    guard data.count == MemoryLayout<UInt64>.size else { return 0 }
+    var value: UInt64 = 0
+    _ = withUnsafeMutableBytes(of: &value) { data.copyBytes(to: $0) }
+    return Int(value)
   }
 
   // MARK: - Change Tracking
@@ -115,15 +148,51 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
     let obs = SendableBox(observer)
     Task {
       let observer = obs.value
+
+      // --- SyncAnchorStore path (push-based MTP events) ---
+      if let store = syncAnchorStore {
+        let key = "\(deviceId):\(storageId ?? 0)"
+        let result = store.consumeChanges(from: anchor.rawValue, for: key)
+
+        var updatedItems: [NSFileProviderItem] = []
+        for identifier in result.added {
+          if let components = MTPFileProviderItem.parseItemIdentifier(identifier),
+            let handle = components.objectHandle,
+            let sid = components.storageId,
+            let reader = indexReader,
+            let obj = try? await reader.object(deviceId: components.deviceId, handle: handle)
+          {
+            let item = MTPFileProviderItem(
+              deviceId: obj.deviceId,
+              storageId: obj.storageId,
+              objectHandle: obj.handle,
+              parentHandle: obj.parentHandle,
+              name: obj.name,
+              size: obj.sizeBytes,
+              isDirectory: obj.isDirectory,
+              modifiedDate: obj.mtime
+            )
+            updatedItems.append(item)
+            _ = sid  // suppress unused warning
+          }
+        }
+
+        observer.didUpdate(updatedItems)
+        observer.didDeleteItems(withIdentifiers: result.deleted)
+
+        let newAnchor = NSFileProviderSyncAnchor(store.currentAnchor(for: key))
+        observer.finishEnumeratingChanges(upTo: newAnchor, moreComing: result.hasMore)
+        return
+      }
+
+      // --- LiveIndexReader path (SQLite change counter) ---
       do {
         guard let reader = indexReader else {
           observer.finishEnumeratingChanges(upTo: anchor, moreComing: false)
           return
         }
 
-        // Decode anchor as Int64 change counter
         let anchorValue = decodeSyncAnchor(anchor)
-
         let changes = try await reader.changesSince(deviceId: deviceId, anchor: anchorValue)
 
         var updatedItems: [NSFileProviderItem] = []
@@ -154,7 +223,6 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
         observer.didUpdate(updatedItems)
         observer.didDeleteItems(withIdentifiers: deletedIdentifiers)
 
-        // Encode new anchor
         let currentCounter = try await reader.currentChangeCounter(deviceId: deviceId)
         let newAnchor = encodeSyncAnchor(currentCounter)
         observer.finishEnumeratingChanges(upTo: newAnchor, moreComing: false)
@@ -165,6 +233,14 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
   }
 
   public func currentSyncAnchor(completionHandler: @escaping (NSFileProviderSyncAnchor?) -> Void) {
+    // SyncAnchorStore path
+    if let store = syncAnchorStore {
+      let key = "\(deviceId):\(storageId ?? 0)"
+      completionHandler(NSFileProviderSyncAnchor(store.currentAnchor(for: key)))
+      return
+    }
+
+    // LiveIndexReader path
     let cb = SendableBox(completionHandler)
     Task {
       let completionHandler = cb.value

@@ -12,7 +12,7 @@ public struct DevicePolicy: Sendable {
   public let tuning: EffectiveTuning
 
   /// Typed behavioral flags.
-  public let flags: QuirkFlags
+  public var flags: QuirkFlags
 
   /// Which enumeration/read/write strategies were selected.
   public var fallbacks: FallbackSelections

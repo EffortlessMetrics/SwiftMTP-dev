@@ -1,0 +1,34 @@
+name: Documentation
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  generate-docs:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate DocC
+        run: ./scripts/generate-docs.sh
+
+      - name: Generate Compat Matrix
+        run: ./scripts/generate-compat-matrix.sh
+
+      - name: Verify compat-matrix.md is up to date
+        run: |
+          git diff --exit-code Docs/compat-matrix.md || \
+            (echo "Docs/compat-matrix.md is out of date. Run ./scripts/generate-compat-matrix.sh and commit." && exit 1)
+
+      - name: Check CHANGELOG
+        run: ./scripts/check-changelog.sh
+
+      - name: Upload DocC archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: SwiftMTP-DocC
+          path: Docs/SwiftMTP.doccarchive
+          if-no-files-found: warn

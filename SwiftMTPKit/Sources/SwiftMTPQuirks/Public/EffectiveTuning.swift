@@ -129,11 +129,15 @@ public struct EffectiveTuningBuilder: Sendable {
   }
 
   /// Build a full `DevicePolicy` combining tuning, typed flags, and provenance.
+  ///
+  /// When `quirk` is nil but `ifaceClass` is `0x06` (PTP/Still-Image-Capture),
+  /// class-based heuristic defaults are applied so unrecognised cameras still work.
   public static func buildPolicy(
     capabilities: [String: Bool],
     learned: EffectiveTuning?,
     quirk: DeviceQuirk?,
-    overrides: [String: String]?
+    overrides: [String: String]?,
+    ifaceClass: UInt8? = nil
   ) -> DevicePolicy {
     let tuning = build(
       capabilities: capabilities,
@@ -141,7 +145,14 @@ public struct EffectiveTuningBuilder: Sendable {
       quirk: quirk,
       overrides: overrides
     )
-    let flags = quirk?.resolvedFlags() ?? QuirkFlags()
+    let flags: QuirkFlags
+    if let q = quirk {
+      flags = q.resolvedFlags()
+    } else if ifaceClass == 0x06 {
+      flags = QuirkFlags.ptpCameraDefaults()
+    } else {
+      flags = QuirkFlags()
+    }
     var sources = PolicySources()
     if overrides?.isEmpty == false {
       sources.chunkSizeSource = .userOverride
@@ -150,6 +161,8 @@ public struct EffectiveTuningBuilder: Sendable {
       sources.chunkSizeSource = .quirk
       sources.ioTimeoutSource = .quirk
       sources.flagsSource = .quirk
+    } else if ifaceClass == 0x06 {
+      sources.flagsSource = .defaults  // class heuristic
     } else if learned != nil {
       sources.chunkSizeSource = .learned
       sources.ioTimeoutSource = .learned

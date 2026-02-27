@@ -6,12 +6,26 @@ import OSLog
 import SwiftMTPQuirks
 import SwiftMTPObservability
 
-struct EventPump {
-  func startIfAvailable(on link: any MTPLink) throws {
-    // Implementation needed
+/// Drives the interrupt-endpoint event loop and fans received events back to the actor.
+final class EventPump: @unchecked Sendable {
+  private var task: Task<Void, Never>?
+
+  func startIfAvailable(on link: any MTPLink, handler: @escaping @Sendable (MTPEvent) async -> Void)
+  {
+    link.startEventPump()
+    task = Task {
+      for await data in link.eventStream {
+        guard !Task.isCancelled else { break }
+        if let event = MTPEvent.fromRaw(data) {
+          await handler(event)
+        }
+      }
+    }
   }
+
   func stop() {
-    // Implementation needed
+    task?.cancel()
+    task = nil
   }
 }
 
@@ -41,15 +55,24 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   private var sessionOpen = false
   let transferJournal: (any TransferJournal)?
   public var probedCapabilities: [String: Bool] = [:]
+  /// When `true`, after each successful write the remote object size is verified against
+  /// the expected size; a mismatch throws `MTPError.verificationFailed`.
+  public var verifyAfterWrite: Bool = false
   private var currentTuning: EffectiveTuning = .defaults()
   public var effectiveTuning: EffectiveTuning { get async { currentTuning } }
-  private var currentPolicy: DevicePolicy?
+  var currentPolicy: DevicePolicy?
   public var devicePolicy: DevicePolicy? { get async { currentPolicy } }
   private var currentProbeReceipt: ProbeReceipt?
   public var probeReceipt: ProbeReceipt? { get async { currentProbeReceipt } }
   private var eventPump: EventPump = EventPump()
   /// Session-scoped cache to avoid repeated GetObjectInfo(parent) calls on writes.
   var parentStorageIDCache: [MTPObjectHandle: UInt32] = [:]
+
+  // MARK: - Transaction lock
+  /// Whether a transaction body is currently executing.
+  private var transactionInProgress = false
+  /// Callers waiting to acquire the transaction lock.
+  private var transactionWaiters: [CheckedContinuation<Void, Never>] = []
 
   public init(
     id: MTPDeviceID, summary: MTPDeviceSummary, transport: MTPTransport,
@@ -64,6 +87,31 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
   public func getMTPLinkIfAvailable() -> (any MTPLink)? {
     return mtpLink
+  }
+
+  // MARK: - Transaction serialization
+
+  /// Execute `body` as an exclusive protocol transaction.
+  ///
+  /// At most one `body` runs at a time per device. Concurrent callers queue and
+  /// run sequentially in arrival order. The lock is released — and the next
+  /// waiter unblocked — even when `body` throws.
+  public func withTransaction<R: Sendable>(_ body: () async throws -> R) async throws -> R {
+    if transactionInProgress {
+      await withCheckedContinuation { continuation in
+        transactionWaiters.append(continuation)
+      }
+    }
+    transactionInProgress = true
+    defer {
+      if let next = transactionWaiters.first {
+        transactionWaiters.removeFirst()
+        next.resume()
+      } else {
+        transactionInProgress = false
+      }
+    }
+    return try await body()
   }
 
   public var info: MTPDeviceInfo {
@@ -169,6 +217,17 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     }
   }
 
+  public func rename(_ handle: MTPObjectHandle, to newName: String) async throws {
+    try await openIfNeeded()
+    let link = try await getMTPLink()
+    // SetObjectPropValue (0x9804) on ObjectFileName (0xDC07)
+    let encoded = PTPString.encode(newName)
+    try await BusyBackoff.onDeviceBusy {
+      try await link.setObjectPropValue(
+        handle: handle, property: MTPObjectPropCode.objectFileName, value: encoded)
+    }
+  }
+
   public func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {
     // Default to current storage
     let info = try await getInfo(handle: handle)
@@ -233,6 +292,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     let link = try await getMTPLink()
     try await applyTuningAndOpenSession(link: link)
     sessionOpen = true
+    // Clean up any partial write objects left from previous interrupted transfers.
+    await reconcilePartials()
   }
 
   /// Close the device session and release all underlying transport resources.
@@ -349,13 +410,24 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       ifaceProtocol: linkDesc?.interfaceProtocol
     )
     if debugEnabled, let q = quirk { print("   [Actor] Matched quirk: \(q.id)") }
+    if debugEnabled && quirk == nil {
+      let ifClass = linkDesc?.interfaceClass
+      if ifClass == 0x06 {
+        print("   [Actor] No quirk match — applying PTP camera class heuristic (class=0x06)")
+      } else {
+        print(
+          "   [Actor] No quirk match — using conservative defaults (ifaceClass=\(ifClass.map { String($0, radix: 16) } ?? "nil"))"
+        )
+      }
+    }
 
     // 7) Build initial effective tuning + policy
     let initialPolicy = EffectiveTuningBuilder.buildPolicy(
       capabilities: [:],
       learned: learnedTuning,
       quirk: quirk,
-      overrides: overrides.isEmpty ? nil : overrides
+      overrides: overrides.isEmpty ? nil : overrides,
+      ifaceClass: linkDesc?.interfaceClass
     )
     let initialTuning = initialPolicy.tuning
     self.currentTuning = initialTuning
@@ -470,7 +542,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       capabilities: realCaps,
       learned: learnedTuning,
       quirk: quirk,
-      overrides: overrides.isEmpty ? nil : overrides
+      overrides: overrides.isEmpty ? nil : overrides,
+      ifaceClass: linkDesc?.interfaceClass
     )
     finalPolicy.fallbacks = fallbacks
     let finalTuning: EffectiveTuning
@@ -646,9 +719,24 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   }
 
   private func startEventPump() async throws {
-    // Start event pump if supported
-    if let link = await getMTPLinkIfAvailable() {
-      try eventPump.startIfAvailable(on: link)
+    guard let link = await getMTPLinkIfAvailable() else { return }
+    eventPump.startIfAvailable(on: link) { [weak self] event in
+      await self?.handleMTPEvent(event)
+    }
+  }
+
+  /// Invalidate actor-local caches in response to a device-generated MTP event.
+  private func handleMTPEvent(_ event: MTPEvent) {
+    switch event {
+    case .objectAdded, .objectRemoved, .objectInfoChanged:
+      parentStorageIDCache.removeAll(keepingCapacity: true)
+    case .storageAdded, .storageRemoved, .storageInfoChanged:
+      parentStorageIDCache.removeAll(keepingCapacity: true)
+    case .deviceInfoChanged:
+      deviceInfo = nil
+      parentStorageIDCache.removeAll(keepingCapacity: true)
+    case .unknown:
+      break
     }
   }
 

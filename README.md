@@ -74,7 +74,7 @@ SwiftMTP is built with modern Swift 6 concurrency patterns:
 ### Key Features
 
 - **Privacy-First Design**: Read-only collection mode with strict defaults
-- **Device Quirks System**: Learned profiles and static quirks for 50+ devices
+- **Device Quirks System**: Learned profiles and static quirks for 3,500+ devices
 - **Transfer Journaling**: Resumable operations with automatic recovery
 - **File Provider Integration**: Native Finder integration on macOS (XPC service)
 - **Benchmarking Suite**: Performance profiling with p50/p95 metrics
@@ -148,12 +148,58 @@ swift test --package-path SwiftMTPKit --filter SnapshotTests
 
 | Device | VID:PID | Status | Notes |
 |--------|---------|--------|-------|
-| Google Pixel 7 | 18d1:4ee1 | ⚠️ Experimental | Uses quirk-gated reset+reopen ladder on OpenSession I/O failures |
-| OnePlus 3T | 2a70:f003 | ⚠️ Partial | Probe/read stable; write-path tuning is still in-progress |
-| Xiaomi Mi Note 2 | 2717:ff10 / 2717:ff40 | ✅ Stable | ff40 variant uses vendor-specific MTP interface matching |
-| Samsung Galaxy S21 | 04e8:6860 | ⚠️ Experimental | Requires storage unlock prompt; class 0xff interface |
-| Canon EOS (Rebel / R-class) | 04a9:3139 | 🧪 Experimental | PTP over USB; camera must be in PTP/MTP mode |
-| Nikon DSLR / Z-series | 04b0:0410 | 🧪 Experimental | MTP/PTP mode required; NEF files need extended IO timeout |
+| Xiaomi Mi Note 2 | 2717:ff10 | ✅ Promoted | Requires kernel detach; no GetObjectPropList |
+| Xiaomi Mi Note 2 (alt) | 2717:ff40 | ✅ Promoted | Vendor-specific MTP interface matching |
+| Samsung Galaxy | 04e8:6860 | ✅ Promoted | Requires storage unlock prompt; class 0xff interface |
+| Samsung Galaxy MTP+ADB | 04e8:685c | ✔ Verified | Dual-interface MTP+ADB configuration |
+| Google Pixel 7 | 18d1:4ee1 | ✅ Promoted | Quirk-gated reset+reopen ladder on OpenSession I/O failures |
+| Google Nexus/Pixel MTP+ADB | 18d1:4ee2 | ✔ Verified | Dual-interface MTP+ADB |
+| Google Pixel 3/4 | 18d1:4eed | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| OnePlus 3T | 2a70:f003 | ✅ Promoted | Probe/read stable; write-path tuning in progress |
+| OnePlus 9 | 2a70:9011 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| Motorola Moto G/E | 22b8:2e82 | ✔ Verified | GetObjectPropList supported |
+| Motorola Moto G/E ADB | 22b8:2e76 | ✔ Verified | Dual-interface MTP+ADB |
+| Sony Xperia Z | 0fce:0193 | ✔ Verified | GetObjectPropList supported |
+| Sony Xperia Z3 | 0fce:01ba | ✔ Verified | GetObjectPropList supported |
+| Sony Xperia XZ1 | 0fce:01f3 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| LG Android | 1004:633e | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| LG Android | 1004:6300 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| HTC Android | 0bb4:0f15 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| Huawei Android | 12d1:107e | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| Canon EOS Rebel / R-class | 04a9:3139 | ✅ Promoted | PTP over USB; camera must be in PTP/MTP mode |
+| Canon EOS 5D Mark III | 04a9:3234 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| Canon EOS R5 | 04a9:32b4 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| Canon EOS R3 | 04a9:32b5 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| Nikon DSLR / Z-series | 04b0:0410 | ✅ Promoted | MTP/PTP mode required; NEF files need extended IO timeout |
+| Nikon Z6/Z7 | 04b0:0441 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| Nikon Z6II/Z7II | 04b0:0442 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| Fujifilm X-series | 04cb:0104 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| Samsung Galaxy S20/S21 | 04e8:6866 | ⚠ Proposed | Android MTP; broken proplist, long timeout |
+| Samsung Galaxy Kies mode | 04e8:6877 | ⚠ Proposed | Kies mode MTP interface |
+| LG V20/G5/G6 | 1004:61f1 | ⚠ Proposed | Android MTP with Android bugs |
+| LG G4/V10 | 1004:61f9 | ⚠ Proposed | Android MTP with Android bugs |
+| HTC U11/U12 | 0bb4:0f91 | ⚠ Proposed | Android MTP with Android bugs |
+| HTC One M8/M9 | 0bb4:0ffe | ⚠ Proposed | Android MTP with Android bugs |
+| Huawei P9/P10 | 12d1:1052 | ⚠ Proposed | Android MTP; broken proplist |
+| Huawei P20 Pro/Mate 20 | 12d1:1054 | ⚠ Proposed | Android MTP; broken proplist |
+| Huawei P30/Mate 30 | 12d1:10c1 | ⚠ Proposed | Android MTP; broken proplist |
+| ASUS ZenFone 5 | 0b05:7770 | ⚠ Proposed | Android MTP with Android bugs |
+| ASUS ZenFone 6 / ROG Phone | 0b05:7776 | ⚠ Proposed | Android MTP with Android bugs |
+| Acer Iconia A500 | 0502:3325 | ⚠ Proposed | Android MTP; no proplist |
+| Acer Iconia A700 | 0502:3378 | ⚠ Proposed | Android MTP; no proplist |
+| Oppo/Realme Android | 22d9:0001 | ⚠ Proposed | Android MTP with Android bugs |
+| Google Nexus One | 18d1:4e41 | ⚠ Proposed | Legacy Android MTP |
+| Google Nexus 7 | 18d1:4e42 | ⚠ Proposed | Legacy Android MTP |
+| Sony Xperia Z1 | 0fce:019e | ⚠ Proposed | GetObjectPropList supported |
+| Sony Xperia Z5 | 0fce:01d9 | ⚠ Proposed | GetObjectPropList supported |
+| Sony Xperia XZ | 0fce:01e7 | ⚠ Proposed | GetObjectPropList supported |
+| Sony Alpha a7 III | 054c:0a79 | ⚠ Proposed | PTP/Camera; GetObjectPropList supported |
+| Sony Alpha a7R IV | 054c:0a6f | ⚠ Proposed | PTP/Camera; GetObjectPropList supported |
+| Panasonic Lumix G | 04da:2372 | ⚠ Proposed | PTP/Camera; GetObjectPropList supported |
+| Olympus E-series | 07b4:0113 | ⚠ Proposed | PTP/Camera; GetObjectPropList supported |
+| Ricoh/Pentax K-series | 25fb:0001 | ⚠ Proposed | PTP/Camera; GetObjectPropList supported |
+
+Status: ✅ Promoted = fully verified with evidence · ✔ Verified = confirmed working · ⚠ Proposed = unverified, based on libmtp data
 
 See [`Docs/SwiftMTP.docc/Devices/`](Docs/SwiftMTP.docc/Devices/) for device-specific tuning guides.
 
