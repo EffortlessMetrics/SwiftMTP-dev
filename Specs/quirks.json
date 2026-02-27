@@ -83625,6 +83625,2074 @@
         "source": "community",
         "notes": "iPod touch 3rd gen — MTP/iPod firmware interface; libmtp music-players.h"
       }
+    },
+    {
+      "id": "xiaomi-12-pro-ff4a",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff4a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 12 Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-12-ultra-ff4b",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff4b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 12 Ultra - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-12s-ff4c",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff4c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 12S - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-12s-pro-ff4d",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff4d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 12S Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-12s-ultra-ff4e",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff4e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 12S Ultra - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-12t-ff4f",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff4f",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 12T - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-12t-pro-ff50",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff50",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 12T Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-13-ff51",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff51",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 13 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-13-pro-ff52",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff52",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 13 Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-13-ultra-ff53",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff53",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 13 Ultra - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-13t-ff54",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff54",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 13T - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-13t-pro-ff55",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff55",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 13T Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-14-ff56",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff56",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 14 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-14-pro-ff57",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff57",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 14 Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-14-ultra-ff58",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff58",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 14 Ultra - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-14t-ff59",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff59",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 14T - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-14t-pro-ff5a",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff5a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi 14T Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "redmi-note-12-pro-ff5b",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff5b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Redmi Note 12 Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "redmi-note-12-pro-plus-ff5c",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff5c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Redmi Note 12 Pro+ - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "redmi-note-12-turbo-ff5d",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff5d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Redmi Note 12 Turbo - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "redmi-note-13-ff5e",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff5e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Redmi Note 13 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "redmi-note-13-pro-ff5f",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff5f",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Redmi Note 13 Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "redmi-12-ff61",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff61",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Redmi 12 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "redmi-12c-ff62",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff62",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Redmi 12C - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "redmi-13-ff63",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff63",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Redmi 13 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "redmi-13c-ff64",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff64",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Redmi 13C - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "redmi-a2-ff65",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff65",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Redmi A2 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "redmi-a2-plus-ff66",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff66",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Redmi A2+ - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "poco-x5-ff67",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff67",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "POCO X5 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "poco-x6-ff69",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff69",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "POCO X6 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "poco-x6-pro-ff6a",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff6a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "POCO X6 Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "poco-m5-ff6b",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff6b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "POCO M5 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "poco-m5s-ff6c",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff6c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "POCO M5s - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "poco-m6-pro-ff6d",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff6d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "POCO M6 Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "poco-f5-ff6e",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff6e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "POCO F5 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "poco-f5-pro-ff6f",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff6f",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "POCO F5 Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "poco-f6-ff70",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff70",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "POCO F6 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "poco-f6-pro-ff71",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff71",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "POCO F6 Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "poco-c65-ff72",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff72",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "POCO C65 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-mix-fold-3-ff73",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff73",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi MIX Fold 3 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-mix-fold-4-ff74",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff74",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi MIX Fold 4 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-mix-flip-ff75",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff75",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi MIX Flip - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-civi-3-ff76",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff76",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi CIVI 3 - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
+    },
+    {
+      "id": "xiaomi-civi-4-pro-ff77",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff77",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "requiresNoZeroReads": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "tuning": {
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000,
+        "maxChunkBytes": 4194304,
+        "stabilizeMs": 300
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "addedInVersion": "0.4.0",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "notes": "Xiaomi CIVI 4 Pro - Android MTP",
+        "source": "community",
+        "status": "proposed"
+      }
     }
   ]
 }
