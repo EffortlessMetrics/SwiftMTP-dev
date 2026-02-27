@@ -32966,6 +32966,932 @@
         "sourceRef": "music-players.h",
         "notes": "Sony NWZ-B163F Walkman"
       }
+    },
+    {
+      "id": "lenovo-p70-a-0c02",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x0c02",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo P70-A Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "lenovo-p700-7497",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7497",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo P700 Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "lenovo-p780-74a6",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x74a6",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo P780 Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "lenovo-k900-75b5",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x75b5",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo K900 Intel Clover Trail+ smartphone; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "lenovo-k920-778f",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x778f",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo K920 (Vibe Z2 Pro) Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "lenovo-vibe-z2-77ea",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x77ea",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo Vibe Z2 Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "lenovo-vibe-shot-78a7",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x78a7",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo Vibe Shot Z90a40 Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "lenovo-a7000-a-7882",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7882",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo A7000-A Smartphone Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "lenovo-phab-plus-78d1",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x78d1",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo PHAB Plus 6.8\" Android phablet; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "lenovo-vibe-k5-note-7999",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7999",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo Vibe K5 Note Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "lenovo-k6-power-7a2a",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7a2a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo K6 Power Android smartphone; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "lenovo-tab-m10-7bdf",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7bdf",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Lenovo Tab M10 Android tablet; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "motorola-xt1524-mtp-002e",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x002e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Motorola XT1524 (Moto C) MTP Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "motorola-razr-m-xt907-mtp-2e50",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e50",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Motorola RAZR M XT907 MTP Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "motorola-razr-m-xt907-adb-2e51",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e51",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Motorola RAZR M XT907 MTP+ADB Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "motorola-droid-maxx-2e67",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e67",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Motorola Droid Maxx XT1080 Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "motorola-droid-ultra-2e68",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e68",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Motorola Droid Ultra Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "motorola-moto-z-ptp-2e83",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e83",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Motorola Moto XT1032/XT1052/Z PTP Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "motorola-moto-maxx-xt1225-2ea4",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2ea4",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Motorola Moto Maxx XT1225 Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "motorola-xoom-mtp-70a8",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x70a8",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Motorola Xoom tablet MTP Android; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "meizu-pro5-ubuntu-d001",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0xd001",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Meizu Pro 5 Ubuntu Phone; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "sony-nwz-e464-05a6",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x05a6",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-E464 Walkman; DEVICE_FLAGS_SONY_NWZ_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "sony-nwz-s765-05a8",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x05a8",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-S765 Walkman; DEVICE_FLAGS_SONY_NWZ_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "sony-nwz-b173f-0689",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0689",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-B173F Walkman; DEVICE_FLAGS_SONY_NWZ_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "sony-nwz-e474-06a9",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06a9",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-E474 Walkman; DEVICE_FLAGS_SONY_NWZ_BUGS in libmtp"
+      }
     }
   ]
 }
