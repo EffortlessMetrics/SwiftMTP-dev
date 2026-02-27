@@ -60289,6 +60289,2638 @@
         "source": "community",
         "notes": "Black Shark 5 Pro - Android MTP"
       }
+    },
+    {
+      "id": "samsung-galaxy-s3-685e",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x685e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S3 (MTP+ADB) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s4-685f",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x685f",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S4 (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s4-adb-6861",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6861",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S4 (MTP+ADB) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s5-6862",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6862",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S5 (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s5-adb-6863",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6863",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S5 (MTP+ADB) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s6-6864",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6864",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S6 (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s6-edge-6865",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6865",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S6 Edge (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s7-edge-6867",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6867",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S7 Edge (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s8-6868",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6868",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S8 (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s8-plus-6869",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6869",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S8+ (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s9-686a",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x686a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S9 (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s9-plus-686b",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x686b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S9+ (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s21-fe-686d",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x686d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S21 FE (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s22-686e",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x686e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S22 (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s22-ultra-686f",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x686f",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S22 Ultra (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s23-6871",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6871",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S23 (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s23-ultra-6872",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6872",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S23 Ultra (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-s24-6873",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6873",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy S24 (MTP) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-z-fold-2-6875",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6875",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Z Fold 2 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-z-fold-3-6876",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6876",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Z Fold 3 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-z-flip-6879",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6879",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Z Flip - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-z-flip-3-687a",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x687a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Z Flip 3 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-z-flip-4-687b",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x687b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Z Flip 4 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-note-2-6900",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6900",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Note 2 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-note-3-6901",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6901",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Note 3 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-note-4-6902",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6902",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Note 4 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-note-5-6903",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6903",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Note 5 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-note-8-6904",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6904",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Note 8 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-note-9-6905",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6905",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Note 9 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-note-10-6906",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6906",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Note 10 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-note-10-plus-6907",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6907",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Note 10+ - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-note-20-ultra-6908",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6908",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Note 20 Ultra - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-a5-2017-6a00",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6a00",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy A5 (2017) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-a7-2017-6a01",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6a01",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy A7 (2017) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-a8-plus-6a02",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6a02",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy A8+ (2018) - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-a50-6a03",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6a03",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy A50 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-a51-6a04",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6a04",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy A51 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-a52-6a05",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6a05",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy A52 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-a53-5g-6a06",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6a06",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy A53 5G - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-a54-5g-6a07",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6a07",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy A54 5G - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-a71-6a08",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6a08",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy A71 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-a72-6a09",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6a09",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy A72 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-a34-5g-6a0a",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6a0a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy A34 5G - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s-6b00",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b00",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s2-6b01",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b01",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S2 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s3-6b02",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b02",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S3 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s4-6b03",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b03",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S4 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s5e-6b04",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b04",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S5e - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s6-6b05",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b05",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S6 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s6-lite-6b06",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b06",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S6 Lite - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s7-6b07",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b07",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S7 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s7-fe-6b08",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b08",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S7 FE - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s8-6b09",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b09",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S8 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s8-ultra-6b0a",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b0a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S8 Ultra - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s9-6b0b",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b0b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S9 - Android MTP"
+      }
+    },
+    {
+      "id": "samsung-galaxy-tab-s9-ultra-6b0c",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6b0c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Tab S9 Ultra - Android MTP"
+      }
     }
   ]
 }
