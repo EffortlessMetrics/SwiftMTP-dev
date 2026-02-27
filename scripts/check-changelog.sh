@@ -20,6 +20,11 @@ if [[ -z "$VERSION" ]]; then
 fi
 
 if [[ -z "$VERSION" ]]; then
+  # On shallow clones (CI), tags may not be available — check for [Unreleased] section instead
+  if grep -qE "^## \[Unreleased\]" "$CHANGELOG"; then
+    echo "OK: No version determined (shallow clone?), but CHANGELOG.md has [Unreleased] section."
+    exit 0
+  fi
   echo "Could not determine current version (no // Version: comment found and no git tags)."
   exit 1
 fi
