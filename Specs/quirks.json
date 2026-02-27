@@ -18477,6 +18477,7096 @@
         "sourceRef": "music-players.h",
         "notes": "OPPO X9006 (Find 7a / R1 variant)"
       }
+    },
+    {
+      "id": "nikon-coolpix-coolpix-aw100-0188",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0188",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix AW100 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix AW100"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-p7100-018b",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x018b",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix P7100 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix P7100"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-l820-0192",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0192",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix L820 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix L820"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-s9500-0193",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0193",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix S9500 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix S9500"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-aw110-0194",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0194",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix AW110 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix AW110"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-aw130-0198",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0198",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix AW130 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix AW130"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-p900-019c",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x019c",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix P900 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix P900"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-a900-019e",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x019e",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix A900 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix A900"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-p510-0223",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0223",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix P510 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix P510"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-p7700-0225",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0225",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix P7700 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix P7700"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-a-0226",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0226",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix A — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix A"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-p330-0227",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0227",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix P330 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix P330"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-p520-0228",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0228",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix P520 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix P520"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-p7800-0229",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0229",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix P7800 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix P7800"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-b700-0231",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0231",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix B700 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix B700"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-p1000-0232",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0232",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix P1000 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix P1000"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-p1100-0234",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0234",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix P1100 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix P1100"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-s9700-034b",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x034b",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix S9700 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix S9700"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-l840-035a",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x035a",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix L840 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix L840"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-l340-0361",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0361",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix L340 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix L340"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-b500-0362",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0362",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix B500 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix B500"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "nikon-coolpix-coolpix-p950-036d",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x036d",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 20000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": true,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Nikon Coolpix P950 — compact/bridge camera using PTP over USB.",
+        "Camera must be set to MTP/PTP transfer mode before connecting.",
+        "JPEG and NRW raw files supported; use ioTimeoutMs extension for large files."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Nikon Coolpix P950"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-g1-x-3233",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3233",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot G1 X — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot G1 X"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-s100-3236",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3236",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot S100 — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot S100"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-g15-3258",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3258",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot G15 — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot G15"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-s110-325b",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x325b",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot S110 — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot S110"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-g16-3274",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3274",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot G16 — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot G16"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-s120-3275",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3275",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot S120 — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot S120"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-sx600-hs-3286",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3286",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot SX600 HS — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot SX600 HS"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-elph-135-3288",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3288",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot ELPH 135 — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot ELPH 135"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-elph-340-hs-3289",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3289",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot ELPH 340 HS — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot ELPH 340 HS"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-sx60-hs-329a",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x329a",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot SX60 HS — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot SX60 HS"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-sx520-hs-329b",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x329b",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot SX520 HS — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot SX520 HS"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-g7-x-329d",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x329d",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot G7 X — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot G7 X"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-sx530-hs-329f",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x329f",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot SX530 HS — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot SX530 HS"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-eos-eos-m10-32a0",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32a0",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS EOS M10 — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon EOS EOS M10"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-g3-x-32a8",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32a8",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot G3 X — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot G3 X"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-ixus-ixus-165-32a9",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32a9",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon IXUS IXUS 165 — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon IXUS IXUS 165"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-ixus-ixus-160-32aa",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32aa",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon IXUS IXUS 160 — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon IXUS IXUS 160"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-elph-350-hs-32ab",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32ab",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot ELPH 350 HS — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot ELPH 350 HS"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-g5-x-32b3",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32b3",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot G5 X — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot G5 X"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-ixus-ixus-180-32c0",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32c0",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon IXUS IXUS 180 — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon IXUS IXUS 180"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-sx720-hs-32c2",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32c2",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot SX720 HS — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot SX720 HS"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "canon-powershot-sx620-hs-32c3",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32c3",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 25000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 150000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot SX620 HS — compact/bridge/mirrorless camera using PTP over USB.",
+        "Camera must be in PTP/MTP mode (not PC Connection mode).",
+        "JPEG and RAW (CR2/CR3) files supported.",
+        "Event pump needed for capture events (0x4001 ObjectAdded)."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "author": "SwiftMTP Contributors",
+        "date": "2025-07-17",
+        "commit": "<pending>",
+        "notes": "Canon PowerShot SX620 HS"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "lastVerifiedDate": "2025-07-17",
+      "lastVerifiedBy": "SwiftMTP Contributors"
+    },
+    {
+      "id": "sandisk-sansa-m230-7400",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7400",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa m230/m240"
+      }
+    },
+    {
+      "id": "sandisk-sansa-c150-7410",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7410",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa c150"
+      }
+    },
+    {
+      "id": "sandisk-sansa-e200-7420",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7420",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa e200/e250/e260/e270/e280"
+      }
+    },
+    {
+      "id": "sandisk-sansa-e260-v2-7422",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7422",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa e260/e280 v2"
+      }
+    },
+    {
+      "id": "sandisk-sansa-clip-7432",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7432",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa Clip"
+      }
+    },
+    {
+      "id": "sandisk-sansa-clip-v2-7434",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7434",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa Clip v2"
+      }
+    },
+    {
+      "id": "sandisk-sansa-c240-7450",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7450",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa c240/c250"
+      }
+    },
+    {
+      "id": "sandisk-sansa-connect-7480",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7480",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa Connect (Linux-based, DEVICE_FLAG_NONE)"
+      }
+    },
+    {
+      "id": "sandisk-sansa-view-74b0",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x74b0",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa View"
+      }
+    },
+    {
+      "id": "sandisk-sansa-fuze-74c0",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x74c0",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa Fuze"
+      }
+    },
+    {
+      "id": "sandisk-sansa-fuze-v2-74c2",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x74c2",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa Fuze v2"
+      }
+    },
+    {
+      "id": "sandisk-sansa-clip-plus-74d0",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x74d0",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa Clip+"
+      }
+    },
+    {
+      "id": "sandisk-sansa-fuze-plus-74e0",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x74e0",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa Fuze+"
+      }
+    },
+    {
+      "id": "sandisk-sansa-clip-zip-74e4",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x74e4",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "SanDisk Sansa Clip Zip"
+      }
+    },
+    {
+      "id": "creative-zen-micro-411e",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x411e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Creative ZEN Micro"
+      }
+    },
+    {
+      "id": "creative-zen-vision-411f",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x411f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Creative ZEN Vision"
+      }
+    },
+    {
+      "id": "creative-zen-touch-4131",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4131",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Creative ZEN Touch (MTP mode)"
+      }
+    },
+    {
+      "id": "creative-zen-microphoto-413c",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x413c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Creative ZEN MicroPhoto"
+      }
+    },
+    {
+      "id": "creative-zen-sleek-photo-413d",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x413d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Creative ZEN Sleek Photo"
+      }
+    },
+    {
+      "id": "creative-zen-vision-m-413e",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x413e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Creative ZEN Vision:M"
+      }
+    },
+    {
+      "id": "creative-zen-v-4150",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4150",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Creative ZEN V"
+      }
+    },
+    {
+      "id": "creative-zen-4157",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4157",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Creative ZEN"
+      }
+    },
+    {
+      "id": "creative-zen-mozaic-4161",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4161",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Creative ZEN Mozaic"
+      }
+    },
+    {
+      "id": "creative-zen-xfi-4162",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4162",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Creative ZEN X-Fi"
+      }
+    },
+    {
+      "id": "iriver-ifp-880-1008",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1008",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "iRiver iFP-880"
+      }
+    },
+    {
+      "id": "iriver-t10-1113",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1113",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "iRiver T10"
+      }
+    },
+    {
+      "id": "iriver-t20-1114",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1114",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "iRiver T20 FM"
+      }
+    },
+    {
+      "id": "iriver-t30-1119",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1119",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "iRiver T30"
+      }
+    },
+    {
+      "id": "iriver-clix2-1126",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1126",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "iRiver Clix2 (DEVICE_FLAG_NONE)"
+      }
+    },
+    {
+      "id": "iriver-t60-1134",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1134",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "iRiver T60"
+      }
+    },
+    {
+      "id": "iriver-e100-1141",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1141",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "iRiver E100"
+      }
+    },
+    {
+      "id": "iriver-h10-2101",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x2101",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "iRiver H10 20GB"
+      }
+    },
+    {
+      "id": "cowon-iaudio-u3-0701",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0701",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Cowon iAudio U3 (MTP mode)"
+      }
+    },
+    {
+      "id": "cowon-iaudio-6-0711",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0711",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Cowon iAudio 6 (MTP mode)"
+      }
+    },
+    {
+      "id": "cowon-iaudio-d2-0801",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0801",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Cowon iAudio D2 (MTP mode)"
+      }
+    },
+    {
+      "id": "cowon-iaudio-s9-0901",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0901",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Cowon iAudio S9 (MTP mode)"
+      }
+    },
+    {
+      "id": "cowon-iaudio-j3-0921",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0921",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Cowon iAudio J3 (MTP mode)"
+      }
+    },
+    {
+      "id": "cowon-iaudio-x7-0931",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0931",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Cowon iAudio X7 (MTP mode)"
+      }
+    },
+    {
+      "id": "microsoft-zune-0710",
+      "match": {
+        "vid": "0x045e",
+        "pid": "0x0710",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Microsoft Zune (all models, DEVICE_FLAG_NONE)"
+      }
+    },
+    {
+      "id": "microsoft-zune-hd-063e",
+      "match": {
+        "vid": "0x045e",
+        "pid": "0x063e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Microsoft Zune HD (DEVICE_FLAG_NONE)"
+      }
+    },
+    {
+      "id": "philips-hdd6320-014b",
+      "match": {
+        "vid": "0x0471",
+        "pid": "0x014b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Philips HDD6320/00 or HDD6330/17"
+      }
+    },
+    {
+      "id": "philips-gogear-sa9200-014f",
+      "match": {
+        "vid": "0x0471",
+        "pid": "0x014f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Philips GoGear SA9200"
+      }
+    },
+    {
+      "id": "philips-gogear-sa6014-084e",
+      "match": {
+        "vid": "0x0471",
+        "pid": "0x084e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Philips GoGear SA6014/SA6015/SA6024/SA6025/SA6044/SA6045"
+      }
+    },
+    {
+      "id": "philips-gogear-sa5145-0857",
+      "match": {
+        "vid": "0x0471",
+        "pid": "0x0857",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Philips GoGear SA5145"
+      }
+    },
+    {
+      "id": "philips-gogear-sa6125-2002",
+      "match": {
+        "vid": "0x0471",
+        "pid": "0x2002",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Philips GoGear SA6125/SA6145/SA6185"
+      }
+    },
+    {
+      "id": "samsung-yp-z5-503c",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x503c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Samsung YP-Z5"
+      }
+    },
+    {
+      "id": "samsung-yp-t9-507f",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x507f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Samsung YP-T9"
+      }
+    },
+    {
+      "id": "samsung-yp-p2-5083",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x5083",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Samsung YP-P2"
+      }
+    },
+    {
+      "id": "samsung-yp-u4-5093",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x5093",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Samsung YP-U4"
+      }
+    },
+    {
+      "id": "samsung-yp-q2-511d",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x511d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Samsung YP-Q2"
+      }
+    },
+    {
+      "id": "samsung-yp-u5-5121",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x5121",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Samsung YP-U5"
+      }
+    },
+    {
+      "id": "samsung-yp-r0-5125",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x5125",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Samsung YP-R0"
+      }
+    },
+    {
+      "id": "samsung-yp-q3-5130",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x5130",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Samsung YP-Q3"
+      }
+    },
+    {
+      "id": "sony-nwz-a815-0325",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0325",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-A815/NWZ-A818 Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-s615f-0327",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0327",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-S615F/NWZ-S616F/NWZ-S618F Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-a826-035b",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x035b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-A826/NWZ-A828/NWZ-A829 Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-a726-035c",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x035c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-A726/NWZ-A728/NWZ-A768 Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-e436f-0385",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0385",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-E436F Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-e344-03fc",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x03fc",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-E344/E345 Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-e354-04cb",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x04cb",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-E354 Walkman"
+      }
+    },
+    {
+      "id": "sony-nw-a45-0c71",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0c71",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NW-A45 Walkman"
+      }
+    },
+    {
+      "id": "sony-nw-a105-0d00",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0d00",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NW-A105 Walkman"
+      }
+    },
+    {
+      "id": "sony-nw-zx500-0d01",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0d01",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NW-ZX500 Walkman"
+      }
+    },
+    {
+      "id": "sony-nw-a306-0e6e",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0e6e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NW-A306 Walkman"
+      }
+    },
+    {
+      "id": "sony-nw-zx700-0e6f",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0e6f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NW-ZX700 Series Walkman"
+      }
+    },
+    {
+      "id": "archos-404-1301",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1301",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Archos 404 (MTP mode)"
+      }
+    },
+    {
+      "id": "archos-504-1307",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1307",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Archos 504 (MTP mode)"
+      }
+    },
+    {
+      "id": "archos-604-1309",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1309",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Archos 604 (MTP mode)"
+      }
+    },
+    {
+      "id": "archos-5-1331",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1331",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Archos 5 (MTP mode 1)"
+      }
+    },
+    {
+      "id": "amazon-kindle-0005",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire 2G (ID1); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-000a",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x000a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire (ID3); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-000b",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x000b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire (ID6); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-000c",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x000c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire (ID4); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-000d",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x000d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire (ID7); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0012",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0012",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire (ID5); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0232",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0232",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire HD8 (MTP+ADB, 3rd gen); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0233",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0233",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire HD8 (PTP, 3rd gen); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0234",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0234",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire HD8 (PTP+ADB, 3rd gen); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0262",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0262",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire HD8 (7th gen); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0272",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0272",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire Kids; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0332",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0332",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire HD8 (3rd ID); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-03f1",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x03f1",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire HD10 (2nd ID); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0582",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0582",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Amazon Fire HD8 Plus (MTP+ADB); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0583",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0583",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Amazon Fire HD8 Plus (PTP); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0584",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0584",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Amazon Fire HD8 Plus (PTP+ADB); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-05e2",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x05e2",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Amazon Fire HD10 (MTP+ADB); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-05e3",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x05e3",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Amazon Fire HD10 (PTP); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-05e4",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x05e4",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Amazon Fire HD10 (PTP+ADB); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-06f1",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x06f1",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Amazon Fire Tablet KFTUWI; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0800",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0800",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Amazon Fire Phone; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "amazon-kindle-0c31",
+      "match": {
+        "vid": "0x1949",
+        "pid": "0x0c31",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kindle Fire (ID8); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "barnesnoble-nook-0005",
+      "match": {
+        "vid": "0x2080",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Barnes & Noble Nook HD+; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "barnesnoble-nook-0006",
+      "match": {
+        "vid": "0x2080",
+        "pid": "0x0006",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Barnes & Noble Nook HD; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "barnesnoble-nook-000a",
+      "match": {
+        "vid": "0x2080",
+        "pid": "0x000a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Barnes & Noble Nook Glowlight+; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "kobo-arc-android-b108",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0xb108",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kobo Arc 7 HD; DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "kobo-arc-android-d108",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0xd108",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kobo Arc (ID1); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "kobo-arc-android-d109",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0xd109",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kobo Arc (ID2); DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "kobo-kobo-touch-4161",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4161",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Touch e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "kobo-kobo-mini-4163",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4163",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Mini e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "kobo-kobo-glo-4165",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4165",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Glo e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "kobo-kobo-aura-4168",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4168",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Aura e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "kobo-kobo-aura-hd-4169",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4169",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Aura HD e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "kobo-kobo-aura-h2o-416b",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x416b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Aura H2O e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "kobo-kobo-aura-one-4173",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4173",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Aura ONE e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "kobo-kobo-clara-hd-4179",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4179",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Clara HD e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "kobo-kobo-forma-417f",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x417f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Forma e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "kobo-kobo-libra-h2o-4184",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4184",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Libra H2O e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "kobo-kobo-nia-4186",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4186",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Nia e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "kobo-kobo-libra-2-4187",
+      "match": {
+        "vid": "0x2237",
+        "pid": "0x4187",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "community",
+        "sourceRef": "usb-device-databases",
+        "notes": "Kobo Libra 2 e-reader; MTP-native firmware (Rakuten Kobo)"
+      }
+    },
+    {
+      "id": "mediatek-mt5xx-0050",
+      "match": {
+        "vid": "0x0e8d",
+        "pid": "0x0050",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "MediaTek MT5xx/MT6xx SoCs — generic; used by many budget Android phones with MediaTek chipsets"
+      }
+    },
+    {
+      "id": "mediatek-mt65xx-mtp-2008",
+      "match": {
+        "vid": "0x0e8d",
+        "pid": "0x2008",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "MediaTek MT65xx/MT67xx MTP mode — covers many Transsion (Tecno, Infinix, Itel), Wiko, and budget brands"
+      }
+    },
+    {
+      "id": "mediatek-mt65xx-mtp-cdc-adb-200a",
+      "match": {
+        "vid": "0x0e8d",
+        "pid": "0x200a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "MediaTek MT65xx/MT67xx MTP+CDC+ADB composite mode"
+      }
+    },
+    {
+      "id": "mediatek-mt65xx-mtp-adb-201d",
+      "match": {
+        "vid": "0x0e8d",
+        "pid": "0x201d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "MediaTek MT65xx/MT67xx MTP+ADB mode"
+      }
+    },
+    {
+      "id": "mediatek-wiko-sunny-4001",
+      "match": {
+        "vid": "0x0e8d",
+        "pid": "0x4001",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Wiko Sunny Android phone (MediaTek VID); Wiko is a French budget brand"
+      }
+    },
+    {
+      "id": "vivo-y21-mediatek-ff00",
+      "match": {
+        "vid": "0x0e8d",
+        "pid": "0xff00",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "vivo Y21 Android phone (MediaTek VID)"
+      }
+    },
+    {
+      "id": "oneplus-9-5g-9012",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0x9012",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "OnePlus 9 5G Android MTP"
+      }
+    },
+    {
+      "id": "asus-zenfone-go-2008",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x2008",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "ASUS ZenFone Go ZC500TG"
+      }
+    },
+    {
+      "id": "asus-zenfone5-mtp-5480",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x5480",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "ASUS ZenFone 5 (MTP)"
+      }
+    },
+    {
+      "id": "asus-zenfone6-mtp-5490",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x5490",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "ASUS ZenFone 6 (MTP)"
+      }
+    },
+    {
+      "id": "asus-zenfone2-mtp-5600",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x5600",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "ASUS ZenFone 2 (MTP)"
+      }
+    },
+    {
+      "id": "asus-zenfone5-a500kl-7780",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x7780",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "ASUS ZenFone 5 A500KL (MTP)"
+      }
+    },
+    {
+      "id": "asus-memopad7-me572cl-7772",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x7772",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "ASUS MemoPad 7 ME572CL"
+      }
+    },
+    {
+      "id": "asus-fonepad7-fe375cxg-7773",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x7773",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "ASUS Fonepad 7 FE375CXG"
+      }
+    },
+    {
+      "id": "unisoc-android-mtp-4001",
+      "match": {
+        "vid": "0x1782",
+        "pid": "0x4001",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Spreadtrum/Unisoc MTP mode — covers Tecno, Infinix, Itel (Transsion brands) and other budget phones"
+      }
+    },
+    {
+      "id": "unisoc-android-mtp-adb-4002",
+      "match": {
+        "vid": "0x1782",
+        "pid": "0x4002",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Spreadtrum/Unisoc MTP+ADB mode ID1 — Tecno, Infinix, Itel and other Unisoc-chipset phones"
+      }
+    },
+    {
+      "id": "unisoc-android-mtp-adb-4003",
+      "match": {
+        "vid": "0x1782",
+        "pid": "0x4003",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Spreadtrum/Unisoc MTP+ADB mode ID2 — Tecno, Infinix, Itel and other Unisoc-chipset phones"
+      }
+    },
+    {
+      "id": "xiaomi-hongmi-mtp-adb-1240",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0x1240",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Xiaomi Hongmi (Redmi) MTP+ADB mode"
+      }
+    },
+    {
+      "id": "xiaomi-hm-note-1ltew-1360",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0x1360",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Xiaomi HM NOTE 1LTEW 4G Phone (MTP)"
+      }
+    },
+    {
+      "id": "xiaomi-mi2-mtp-adb-9039",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0x9039",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Xiaomi Mi-2 (MTP+ADB)"
+      }
+    },
+    {
+      "id": "xiaomi-mi2-mtp-f003",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xf003",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Xiaomi Mi-2 (MTP)"
+      }
+    },
+    {
+      "id": "alcatel-6030a-0168",
+      "match": {
+        "vid": "0x1bbb",
+        "pid": "0x0168",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Alcatel 6030a Android MTP"
+      }
+    },
+    {
+      "id": "htc-one-u11-0f26",
+      "match": {
+        "vid": "0x0bb4",
+        "pid": "0x0f26",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "HTC One U11 (MTP)"
+      }
+    },
+    {
+      "id": "kyocera-302kc-09fc",
+      "match": {
+        "vid": "0x0482",
+        "pid": "0x09fc",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kyocera 302KC Android MTP"
+      }
+    },
+    {
+      "id": "kyocera-c6740n-0a73",
+      "match": {
+        "vid": "0x0482",
+        "pid": "0x0a73",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Kyocera C6740N Android MTP"
+      }
+    },
+    {
+      "id": "letv-x5001s-1700",
+      "match": {
+        "vid": "0x2b0e",
+        "pid": "0x1700",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "LeTV/LeEco X5001s Android MTP"
+      }
+    },
+    {
+      "id": "letv-1s-1704",
+      "match": {
+        "vid": "0x2b0e",
+        "pid": "0x1704",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "LeTV/LeEco 1s Android MTP"
+      }
+    },
+    {
+      "id": "blu-vivo-xl-4008",
+      "match": {
+        "vid": "0x271d",
+        "pid": "0x4008",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "BLU Vivo XL Android MTP"
+      }
     }
   ]
 }
