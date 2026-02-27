@@ -3,6 +3,8 @@
 
 import Foundation
 import SwiftMTPCore
+import SwiftMTPTransportLibUSB
+import SwiftMTPQuirks
 import SwiftMTPCLI
 
 @MainActor
@@ -14,6 +16,15 @@ struct ProbeCommand {
     }
     log("🔍 Probing for MTP devices...")
     do {
+      // Pre-enumerate to get VID/PID for quirk lookup
+      let listings = try await LibUSBDiscovery.enumerateMTPDevices()
+      var selectedVID: UInt16? = nil
+      var selectedPID: UInt16? = nil
+      if let first = listings.first {
+        selectedVID = first.vendorID
+        selectedPID = first.productID
+      }
+
       let device = try await openDevice(flags: flags)
       log("✅ Device found and opened!")
 
@@ -21,6 +32,20 @@ struct ProbeCommand {
       let info = try await device.getDeviceInfo()
       let storages = try await device.storages()
 
+      // Show VID:PID and quirk status
+      if let vid = selectedVID, let pid = selectedPID {
+        let vidpid = String(format: "0x%04x:0x%04x", vid, pid)
+        print("USB ID:  \(vidpid)")
+        if let db = try? QuirkDatabase.load(), let q = db.entries.first(where: { $0.vid == vid && $0.pid == pid }) {
+          print("Quirk:   \(q.id) [\(q.status?.rawValue ?? "proposed")]")
+          if let proplist = q.flags?.supportsGetObjectPropList {
+            print("         GetObjectPropList: \(proplist ? "✅ fast-path" : "— fallback only")")
+          }
+        } else {
+          print("Quirk:   not in database — run: swiftmtp quirks lookup --vid \(String(format:"0x%04x",vid)) --pid \(String(format:"0x%04x",pid))")
+          print("         To contribute this device, see Docs/DeviceSubmission.md")
+        }
+      }
       print("Device: \(info.manufacturer) \(info.model)")
       print("Operations: \(info.operationsSupported.count)")
       print("Events: \(info.eventsSupported.count)")
