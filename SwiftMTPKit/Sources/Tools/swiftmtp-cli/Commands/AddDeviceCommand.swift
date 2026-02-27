@@ -132,13 +132,20 @@ struct AddDeviceCommand {
         },
         "ops": {
           "supportsGetObjectPropList": \(supportsGetObjectPropList),
+          "useAndroidExtensions": \(!supportsGetObjectPropList),
+          "preferGetObjectPropList": \(supportsGetObjectPropList)
+        },
+        "flags": {
           "requiresKernelDetach": \(requiresKernelDetach),
-          "ioTimeoutMs": 10000
+          "ioTimeoutMs": \(requiresKernelDetach ? 30000 : 10000),
+          "handshakeTimeoutMs": \(requiresKernelDetach ? 15000 : 8000),
+          "requiresNoZeroReads": false
         },
         "governance": {
           "status": "proposed",
-          "evidenceRequired": [],
-          "submittedBy": "community"
+          "confidence": "low",
+          "evidenceRequired": ["community-validation"],
+          "addedInVersion": "0.4.0"
         },
         "provenance": {
           "source": "user-submission",
