@@ -1,0 +1,400 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2025 Effortless Metrics, Inc.
+
+import XCTest
+
+@testable import SwiftMTPCore
+import SwiftMTPQuirks
+
+/// Tests that the QuirkDatabase correctly loads all 26 entries and produces accurate
+/// policy flags for each known device via VID/PID matching.
+final class QuirkMatchingTests: XCTestCase {
+
+  var db: QuirkDatabase!
+
+  override func setUpWithError() throws {
+    db = try QuirkDatabase.load()
+  }
+
+  // MARK: - Database Loading
+
+  func testDatabaseLoads26OrMoreEntries() throws {
+    XCTAssertGreaterThanOrEqual(db.entries.count, 26, "Expected at least 26 quirk entries")
+  }
+
+  func testAllEntriesHaveUniqueIDs() {
+    let ids = db.entries.map { $0.id }
+    XCTAssertEqual(ids.count, Set(ids).count, "Duplicate quirk IDs found")
+  }
+
+  func testAllEntriesHaveStatusField() {
+    for entry in db.entries {
+      XCTAssertNotNil(entry.status, "Entry \(entry.id) is missing status field")
+    }
+  }
+
+  func testPromotedEntriesHaveEvidenceRequired() {
+    for entry in db.entries where entry.status == .promoted {
+      let ev = entry.evidenceRequired ?? []
+      XCTAssertFalse(ev.isEmpty, "Promoted entry \(entry.id) must have non-empty evidenceRequired")
+    }
+  }
+
+  // MARK: - Match Helpers
+
+  private func match(vid: UInt16, pid: UInt16, ifaceClass: UInt8? = nil) -> DeviceQuirk? {
+    db.match(
+      vid: vid, pid: pid, bcdDevice: nil,
+      ifaceClass: ifaceClass, ifaceSubclass: nil, ifaceProtocol: nil)
+  }
+
+  private func flags(vid: UInt16, pid: UInt16, ifaceClass: UInt8? = nil) -> QuirkFlags {
+    match(vid: vid, pid: pid, ifaceClass: ifaceClass)?.resolvedFlags() ?? QuirkFlags()
+  }
+
+  // MARK: - Xiaomi
+
+  func testXiaomiMiNote2FF10_Matched() {
+    XCTAssertNotNil(match(vid: 0x2717, pid: 0xff10))
+  }
+
+  func testXiaomiMiNote2FF10_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x2717, pid: 0xff10).supportsGetObjectPropList, false)
+  }
+
+  func testXiaomiMiNote2FF10_RequiresKernelDetach() {
+    let q = match(vid: 0x2717, pid: 0xff10)!
+    XCTAssertEqual(q.flags?.requiresKernelDetach, true)
+  }
+
+  func testXiaomiMiNote2FF40_Matched() {
+    XCTAssertNotNil(match(vid: 0x2717, pid: 0xff40))
+  }
+
+  func testXiaomiMiNote2FF40_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x2717, pid: 0xff40).supportsGetObjectPropList, false)
+  }
+
+  // MARK: - Samsung
+
+  func testSamsungGalaxy6860_Matched() {
+    XCTAssertNotNil(match(vid: 0x04e8, pid: 0x6860))
+  }
+
+  func testSamsungGalaxy6860_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x04e8, pid: 0x6860).supportsGetObjectPropList, true)
+  }
+
+  func testSamsungGalaxy6860_LongTimeout() {
+    let q = match(vid: 0x04e8, pid: 0x6860)!
+    XCTAssertGreaterThanOrEqual(q.ioTimeoutMs ?? 0, 10000)
+  }
+
+  func testSamsungGalaxyMtpAdb685c_Matched() {
+    XCTAssertNotNil(match(vid: 0x04e8, pid: 0x685c))
+  }
+
+  func testSamsungGalaxyMtpAdb685c_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x04e8, pid: 0x685c).supportsGetObjectPropList, false)
+  }
+
+  func testSamsungGalaxyMtpAdb685c_LongTimeout() {
+    let q = match(vid: 0x04e8, pid: 0x685c)!
+    XCTAssertGreaterThanOrEqual(q.ioTimeoutMs ?? 0, 20000)
+  }
+
+  // MARK: - Google Pixel/Nexus
+
+  func testGooglePixel7_4ee1_Matched() {
+    XCTAssertNotNil(match(vid: 0x18d1, pid: 0x4ee1))
+  }
+
+  func testGooglePixel7_4ee1_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x18d1, pid: 0x4ee1).supportsGetObjectPropList, true)
+  }
+
+  func testGoogleNexusMtpAdb_4ee2_Matched() {
+    XCTAssertNotNil(match(vid: 0x18d1, pid: 0x4ee2))
+  }
+
+  func testGoogleNexusMtpAdb_4ee2_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x18d1, pid: 0x4ee2).supportsGetObjectPropList, false)
+  }
+
+  func testGooglePixel34_4eed_Matched() {
+    XCTAssertNotNil(match(vid: 0x18d1, pid: 0x4eed))
+  }
+
+  func testGooglePixel34_4eed_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x18d1, pid: 0x4eed).supportsGetObjectPropList, true)
+  }
+
+  // MARK: - OnePlus
+
+  func testOnePlus3t_f003_Matched() {
+    XCTAssertNotNil(match(vid: 0x2a70, pid: 0xf003))
+  }
+
+  func testOnePlus3t_f003_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x2a70, pid: 0xf003).supportsGetObjectPropList, false)
+  }
+
+  func testOnePlus9_9011_Matched() {
+    XCTAssertNotNil(match(vid: 0x2a70, pid: 0x9011))
+  }
+
+  func testOnePlus9_9011_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x2a70, pid: 0x9011).supportsGetObjectPropList, true)
+  }
+
+  // MARK: - Motorola
+
+  func testMotorolaMtp_2e82_Matched() {
+    XCTAssertNotNil(match(vid: 0x22b8, pid: 0x2e82))
+  }
+
+  func testMotorolaMtp_2e82_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x22b8, pid: 0x2e82).supportsGetObjectPropList, true)
+  }
+
+  func testMotorolaMtpAdb_2e76_Matched() {
+    XCTAssertNotNil(match(vid: 0x22b8, pid: 0x2e76))
+  }
+
+  func testMotorolaMtpAdb_2e76_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x22b8, pid: 0x2e76).supportsGetObjectPropList, false)
+  }
+
+  // MARK: - Sony Xperia
+
+  func testSonyXperiaZ_0193_Matched() {
+    XCTAssertNotNil(match(vid: 0x0fce, pid: 0x0193))
+  }
+
+  func testSonyXperiaZ_0193_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x0fce, pid: 0x0193).supportsGetObjectPropList, true)
+  }
+
+  func testSonyXperiaZ3_01ba_Matched() {
+    XCTAssertNotNil(match(vid: 0x0fce, pid: 0x01ba))
+  }
+
+  func testSonyXperiaXZ1_01f3_Matched() {
+    XCTAssertNotNil(match(vid: 0x0fce, pid: 0x01f3))
+  }
+
+  // MARK: - LG
+
+  func testLGAndroid_633e_Matched() {
+    XCTAssertNotNil(match(vid: 0x1004, pid: 0x633e))
+  }
+
+  func testLGAndroid_633e_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x1004, pid: 0x633e).supportsGetObjectPropList, false)
+  }
+
+  func testLGAndroid_6300_Matched() {
+    XCTAssertNotNil(match(vid: 0x1004, pid: 0x6300))
+  }
+
+  // MARK: - HTC
+
+  func testHTCAndroid_0f15_Matched() {
+    XCTAssertNotNil(match(vid: 0x0bb4, pid: 0x0f15))
+  }
+
+  func testHTCAndroid_0f15_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x0bb4, pid: 0x0f15).supportsGetObjectPropList, false)
+  }
+
+  // MARK: - Huawei
+
+  func testHuaweiAndroid_107e_Matched() {
+    XCTAssertNotNil(match(vid: 0x12d1, pid: 0x107e))
+  }
+
+  func testHuaweiAndroid_107e_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x12d1, pid: 0x107e).supportsGetObjectPropList, false)
+  }
+
+  // MARK: - Canon
+
+  func testCanonEOSRebel_3139_Matched() {
+    XCTAssertNotNil(match(vid: 0x04a9, pid: 0x3139))
+  }
+
+  func testCanonEOSRebel_3139_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x04a9, pid: 0x3139).supportsGetObjectPropList, false)
+  }
+
+  func testCanonEOS5D3_3234_Matched() {
+    XCTAssertNotNil(match(vid: 0x04a9, pid: 0x3234))
+  }
+
+  func testCanonEOS5D3_3234_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x04a9, pid: 0x3234).supportsGetObjectPropList, true)
+  }
+
+  func testCanonEOSR5_32b4_Matched() {
+    XCTAssertNotNil(match(vid: 0x04a9, pid: 0x32b4))
+  }
+
+  func testCanonEOSR5_32b4_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x04a9, pid: 0x32b4).supportsGetObjectPropList, true)
+  }
+
+  func testCanonEOSR3_32b5_Matched() {
+    XCTAssertNotNil(match(vid: 0x04a9, pid: 0x32b5))
+  }
+
+  // MARK: - Nikon
+
+  func testNikonDSLR_0410_Matched() {
+    XCTAssertNotNil(match(vid: 0x04b0, pid: 0x0410))
+  }
+
+  func testNikonDSLR_0410_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x04b0, pid: 0x0410).supportsGetObjectPropList, false)
+  }
+
+  func testNikonZ6Z7_0441_Matched() {
+    XCTAssertNotNil(match(vid: 0x04b0, pid: 0x0441))
+  }
+
+  func testNikonZ6Z7_0441_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x04b0, pid: 0x0441).supportsGetObjectPropList, false)
+  }
+
+  func testNikonZ6IIZ7II_0442_Matched() {
+    XCTAssertNotNil(match(vid: 0x04b0, pid: 0x0442))
+  }
+
+  // MARK: - Fujifilm
+
+  func testFujifilmXSeries_0104_Matched() {
+    XCTAssertNotNil(match(vid: 0x04cb, pid: 0x0104))
+  }
+
+  func testFujifilmXSeries_0104_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x04cb, pid: 0x0104).supportsGetObjectPropList, false)
+  }
+
+  // MARK: - No-match guard
+
+  func testUnknownDevice_ReturnsNil() {
+    XCTAssertNil(match(vid: 0xdead, pid: 0xbeef))
+  }
+
+  func testWrongPID_ReturnsNil() {
+    // Correct Xiaomi VID but wrong PID
+    XCTAssertNil(match(vid: 0x2717, pid: 0x0001))
+  }
+
+  // MARK: - Timeout / tuning spot-checks
+
+  func testCanonLongTimeout() {
+    let q = match(vid: 0x04a9, pid: 0x3139)!
+    XCTAssertGreaterThanOrEqual(q.ioTimeoutMs ?? 0, 20000, "Cameras need long I/O timeout")
+  }
+
+  func testNikonLongTimeout() {
+    let q = match(vid: 0x04b0, pid: 0x0410)!
+    XCTAssertGreaterThanOrEqual(q.ioTimeoutMs ?? 0, 20000, "Cameras need long I/O timeout")
+  }
+
+  func testXiaomiTimeout() {
+    let q = match(vid: 0x2717, pid: 0xff10)!
+    XCTAssertGreaterThanOrEqual(q.ioTimeoutMs ?? 0, 10000)
+  }
+
+  // MARK: - VirtualDeviceConfig factory smoke tests
+
+  func testSamsungGalaxyPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.samsungGalaxy
+    let q = db.match(
+      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
+      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(q, "samsungGalaxy preset should match a quirk entry")
+  }
+
+  func testSamsungGalaxyMtpAdbPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.samsungGalaxyMtpAdb
+    let q = db.match(
+      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
+      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(q)
+  }
+
+  func testGooglePixelAdbPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.googlePixelAdb
+    let q = db.match(
+      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
+      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(q)
+  }
+
+  func testMotorolaMotoGPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.motorolaMotoG
+    let q = db.match(
+      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
+      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(q)
+  }
+
+  func testSonyXperiaZPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.sonyXperiaZ
+    let q = db.match(
+      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
+      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(q)
+  }
+
+  func testCanonEOSR5Preset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.canonEOSR5
+    let q = db.match(
+      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
+      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(q)
+  }
+
+  func testNikonZ6Preset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.nikonZ6
+    let q = db.match(
+      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
+      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(q)
+  }
+
+  func testOnePlus9Preset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.onePlus9
+    let q = db.match(
+      vid: cfg.summary.vendorID, pid: cfg.summary.productID,
+      bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(q)
+  }
+
+  // MARK: - Policy consistency: VirtualDeviceConfig propList support matches quirk
+
+  func testSamsungGalaxy_PresetOpsPropListConsistentWithQuirk() {
+    let cfg = VirtualDeviceConfig.samsungGalaxy
+    let f = flags(vid: cfg.summary.vendorID, pid: cfg.summary.productID)
+    let presetHasPropList = cfg.info.operationsSupported.contains(0x9805)
+    XCTAssertEqual(
+      presetHasPropList, f.supportsGetObjectPropList,
+      "samsungGalaxy preset propList ops must match quirk flags")
+  }
+
+  func testSamsungGalaxyMtpAdb_PresetOpsPropListConsistentWithQuirk() {
+    let cfg = VirtualDeviceConfig.samsungGalaxyMtpAdb
+    let f = flags(vid: cfg.summary.vendorID, pid: cfg.summary.productID)
+    let presetHasPropList = cfg.info.operationsSupported.contains(0x9805)
+    XCTAssertEqual(presetHasPropList, f.supportsGetObjectPropList)
+  }
+
+  func testMotorolaMotoG_PresetOpsPropListConsistentWithQuirk() {
+    let cfg = VirtualDeviceConfig.motorolaMotoG
+    let f = flags(vid: cfg.summary.vendorID, pid: cfg.summary.productID)
+    let presetHasPropList = cfg.info.operationsSupported.contains(0x9805)
+    XCTAssertEqual(presetHasPropList, f.supportsGetObjectPropList)
+  }
+}

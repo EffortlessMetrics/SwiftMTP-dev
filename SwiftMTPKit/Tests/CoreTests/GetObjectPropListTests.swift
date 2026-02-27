@@ -143,52 +143,32 @@ final class GetObjectPropListTests: XCTestCase {
     var dateModified: String? = nil
   }
 
-  /// Build a binary GetObjectPropList response dataset.
+  /// Build a binary GetObjectPropList response dataset using raw Data to ensure correct encoding.
   private func makePropListDataset(objects: [PropListObject]) throws -> Data {
-    // Count total tuples: each object emits storageID, objectSize, objectFileName, parentObject
-    // + optional dateModified
     let tuplesPerObject = 4
     let extraTuples = objects.filter { $0.dateModified != nil }.count
-    let totalTuples = objects.count * tuplesPerObject + extraTuples
+    let totalTuples = UInt32(objects.count * tuplesPerObject + extraTuples)
 
-    var enc = MTPDataEncoder()
-    enc.append(UInt32(totalTuples))
+    var data = Data()
+
+    func appendU16(_ v: UInt16) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
+    func appendU32(_ v: UInt32) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
+    func appendU64(_ v: UInt64) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
+    func appendStr(_ s: String) { data.append(PTPString.encode(s)) }
+
+    appendU32(totalTuples)
 
     for obj in objects {
-      // StorageID (0xDC01) — uint32 (type 0x0006)
-      enc.append(obj.handle)
-      enc.append(UInt16(0xDC01))
-      enc.append(UInt16(0x0006))
-      enc.append(obj.storageID)
-
-      // ObjectSize (0xDC04) — uint64 (type 0x0008)
-      enc.append(obj.handle)
-      enc.append(UInt16(0xDC04))
-      enc.append(UInt16(0x0008))
-      enc.append(obj.sizeBytes)
-
-      // ObjectFileName (0xDC07) — string (type 0xFFFF)
-      enc.append(obj.handle)
-      enc.append(UInt16(0xDC07))
-      enc.append(UInt16(0xFFFF))
-      enc.appendPTPString(obj.name)
-
-      // ParentObject (0xDC0B) — uint32 (type 0x0006)
-      enc.append(obj.handle)
-      enc.append(UInt16(0xDC0B))
-      enc.append(UInt16(0x0006))
-      enc.append(obj.parent)
-
-      // DateModified (0xDC09) — string (type 0xFFFF), optional
+      appendU32(obj.handle); appendU16(0xDC01); appendU16(0x0006); appendU32(obj.storageID)
+      appendU32(obj.handle); appendU16(0xDC04); appendU16(0x0008); appendU64(obj.sizeBytes)
+      appendU32(obj.handle); appendU16(0xDC07); appendU16(0xFFFF); appendStr(obj.name)
+      appendU32(obj.handle); appendU16(0xDC0B); appendU16(0x0006); appendU32(obj.parent)
       if let dateStr = obj.dateModified {
-        enc.append(obj.handle)
-        enc.append(UInt16(0xDC09))
-        enc.append(UInt16(0xFFFF))
-        enc.appendPTPString(dateStr)
+        appendU32(obj.handle); appendU16(0xDC09); appendU16(0xFFFF); appendStr(dateStr)
       }
     }
 
-    return enc.encodedData
+    return data
   }
 }
 
@@ -270,10 +250,6 @@ final class InjectedLinkTransport: MTPTransport, @unchecked Sendable {
 extension MTPDataEncoder {
   /// Append a PTP/MTP Unicode String (count-prefixed UTF-16LE, including null terminator).
   mutating func appendPTPString(_ string: String) {
-    let encoded = PTPString.encode(string)
-    var raw = self.encodedData
-    raw.append(encoded)
-    self = MTPDataEncoder()
-    for byte in raw { self.append(byte) }
+    self.append(PTPString.encode(string))
   }
 }

@@ -212,6 +212,136 @@ public struct VirtualDeviceConfig: Sendable {
     )
   }
 
+  /// A Samsung Galaxy Android phone in MTP mode (VID 0x04e8, PID 0x6860).
+  /// GetObjectPropList is supported on this PID per libmtp.
+  public static var samsungGalaxy: VirtualDeviceConfig {
+    _androidPreset(
+      rawId: "04e8:6860@1:3", vendor: "Samsung", model: "Galaxy Android",
+      vendorID: 0x04e8, productID: 0x6860, serial: "VIRT-SAMSUNG-6860",
+      includePropList: true)
+  }
+
+  /// A Samsung Galaxy in MTP+ADB mode (VID 0x04e8, PID 0x685c).
+  /// GetObjectPropList is broken on this PID per libmtp.
+  public static var samsungGalaxyMtpAdb: VirtualDeviceConfig {
+    _androidPreset(
+      rawId: "04e8:685c@1:4", vendor: "Samsung", model: "Galaxy Android (ADB)",
+      vendorID: 0x04e8, productID: 0x685c, serial: "VIRT-SAMSUNG-685C",
+      includePropList: false)
+  }
+
+  /// A Google Nexus/Pixel in MTP+ADB mode (VID 0x18d1, PID 0x4ee2).
+  public static var googlePixelAdb: VirtualDeviceConfig {
+    _androidPreset(
+      rawId: "18d1:4ee2@1:5", vendor: "Google", model: "Nexus/Pixel (ADB)",
+      vendorID: 0x18d1, productID: 0x4ee2, serial: "VIRT-PIXEL-4EE2",
+      includePropList: false)
+  }
+
+  /// A Motorola Moto G/E/Z in standard MTP mode (VID 0x22b8, PID 0x2e82).
+  /// GetObjectPropList is NOT broken on this PID per libmtp.
+  public static var motorolaMotoG: VirtualDeviceConfig {
+    _androidPreset(
+      rawId: "22b8:2e82@1:6", vendor: "Motorola", model: "Moto G/E/Z",
+      vendorID: 0x22b8, productID: 0x2e82, serial: "VIRT-MOTO-2E82",
+      includePropList: true)
+  }
+
+  /// A Sony Xperia Z in MTP mode (VID 0x0fce, PID 0x0193). Standard MTP, no quirks.
+  public static var sonyXperiaZ: VirtualDeviceConfig {
+    _androidPreset(
+      rawId: "0fce:0193@1:7", vendor: "Sony", model: "Xperia Z",
+      vendorID: 0x0fce, productID: 0x0193, serial: "VIRT-XPERIA-0193",
+      includePropList: true)
+  }
+
+  /// A Canon EOS R5 camera (VID 0x04a9, PID 0x32b4). PTP/MTP camera with GetObjectPropList.
+  public static var canonEOSR5: VirtualDeviceConfig {
+    _cameraPreset(
+      rawId: "04a9:32b4@1:8", vendor: "Canon", model: "EOS R5",
+      vendorID: 0x04a9, productID: 0x32b4, serial: "VIRT-CANON-R5")
+  }
+
+  /// A Nikon Z6/Z7 mirrorless camera (VID 0x04b0, PID 0x0441).
+  public static var nikonZ6: VirtualDeviceConfig {
+    _cameraPreset(
+      rawId: "04b0:0441@1:9", vendor: "Nikon", model: "Z6/Z7",
+      vendorID: 0x04b0, productID: 0x0441, serial: "VIRT-NIKON-Z6")
+  }
+
+  /// An OnePlus 9 (VID 0x2a70, PID 0x9011).
+  public static var onePlus9: VirtualDeviceConfig {
+    _androidPreset(
+      rawId: "2a70:9011@1:10", vendor: "OnePlus", model: "OnePlus 9",
+      vendorID: 0x2a70, productID: 0x9011, serial: "VIRT-ONEPLUS-9011",
+      includePropList: true)
+  }
+
+  // MARK: - Private helpers
+
+  private static func _androidPreset(
+    rawId: String, vendor: String, model: String,
+    vendorID: UInt16, productID: UInt16, serial: String,
+    includePropList: Bool
+  ) -> VirtualDeviceConfig {
+    let deviceId = MTPDeviceID(raw: rawId)
+    let summary = MTPDeviceSummary(
+      id: deviceId, manufacturer: vendor, model: model,
+      vendorID: vendorID, productID: productID, bus: 1, address: 0)
+    var ops: [Int] = [
+      0x1001, 0x1002, 0x1003, 0x1004, 0x1005,
+      0x1006, 0x1007, 0x1008, 0x1009, 0x100B,
+      0x100C, 0x100D, 0x101B, 0x95C1,
+    ]
+    if includePropList { ops.append(0x9805) }
+    let info = MTPDeviceInfo(
+      manufacturer: vendor, model: model, version: "1.0", serialNumber: serial,
+      operationsSupported: Set(ops.map { UInt16($0) }),
+      eventsSupported: Set([0x4002, 0x4003, 0x400C].map { UInt16($0) }))
+    let storage = VirtualStorageConfig(
+      id: MTPStorageID(raw: 0x0001_0001), description: "Internal storage",
+      capacityBytes: 64 * 1024 * 1024 * 1024, freeBytes: 32 * 1024 * 1024 * 1024)
+    let dcim = VirtualObjectConfig(
+      handle: 1, storage: storage.id, parent: nil, name: "DCIM", formatCode: 0x3001)
+    let photo = VirtualObjectConfig(
+      handle: 2, storage: storage.id, parent: 1, name: "photo.jpg",
+      sizeBytes: 3_000_000, formatCode: 0x3801, data: Data(count: 256))
+    return VirtualDeviceConfig(
+      deviceId: deviceId, summary: summary, info: info,
+      storages: [storage], objects: [dcim, photo])
+  }
+
+  private static func _cameraPreset(
+    rawId: String, vendor: String, model: String,
+    vendorID: UInt16, productID: UInt16, serial: String
+  ) -> VirtualDeviceConfig {
+    let deviceId = MTPDeviceID(raw: rawId)
+    let summary = MTPDeviceSummary(
+      id: deviceId, manufacturer: vendor, model: model,
+      vendorID: vendorID, productID: productID, bus: 1, address: 0)
+    let info = MTPDeviceInfo(
+      manufacturer: vendor, model: model, version: "1.0", serialNumber: serial,
+      operationsSupported: Set(
+        [
+          0x1001, 0x1002, 0x1003, 0x1004, 0x1005,
+          0x1007, 0x1008, 0x1009, 0x100B, 0x100C, 0x100D,
+          0x100E, 0x101B,
+        ]
+        .map { UInt16($0) }),
+      eventsSupported: Set([0x4002, 0x4003].map { UInt16($0) }))
+    let storage = VirtualStorageConfig(
+      id: MTPStorageID(raw: 0x0001_0001), description: "Memory Card",
+      capacityBytes: 128 * 1024 * 1024 * 1024, freeBytes: 100 * 1024 * 1024 * 1024)
+    let dcim = VirtualObjectConfig(
+      handle: 1, storage: storage.id, parent: nil, name: "DCIM", formatCode: 0x3001)
+    let raw = VirtualObjectConfig(
+      handle: 2, storage: storage.id, parent: 1, name: "IMG_0001.CR3",
+      sizeBytes: 25_000_000, formatCode: 0x3000, data: Data(count: 256))
+    return VirtualDeviceConfig(
+      deviceId: deviceId, summary: summary, info: info,
+      storages: [storage], objects: [dcim, raw])
+  }
+
   /// An empty device with a single empty storage.
   public static var emptyDevice: VirtualDeviceConfig {
     let deviceId = MTPDeviceID(raw: "0000:0000@0:0")

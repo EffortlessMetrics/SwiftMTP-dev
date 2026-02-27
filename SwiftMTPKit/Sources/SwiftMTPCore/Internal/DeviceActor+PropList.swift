@@ -79,8 +79,12 @@ extension MTPDeviceActor {
     accum.reserveCapacity(Int(min(rawCount, 1024)))
 
     for _ in 0..<rawCount {
-      guard let handle = r.u32(), let propCode = r.u16(), let dataType = r.u16() else { break }
-      guard let val = r.value(dt: dataType) else { break }
+      guard let handle = r.u32(), let propCode = r.u16(), let dataType = r.u16() else {
+        break
+      }
+      guard let val = r.value(dt: dataType) else {
+        break
+      }
 
       var a = accum[handle] ?? Accum()
       switch propCode {
