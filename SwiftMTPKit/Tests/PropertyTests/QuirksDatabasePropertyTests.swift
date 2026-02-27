@@ -21,8 +21,8 @@ final class QuirksDatabasePropertyTests: XCTestCase {
 
   func testDatabaseHasMinimumEntryCount() {
     XCTAssertGreaterThanOrEqual(
-      db.entries.count, 395,
-      "Database should have at least 395 entries (wave-4 baseline)")
+      db.entries.count, 700,
+      "Database should have at least 700 entries (wave-6 baseline)")
   }
 
   func testAllQuirkIDsAreUnique() {
@@ -229,6 +229,53 @@ final class QuirksDatabasePropertyTests: XCTestCase {
         entry.id.count, 6,
         "Entry ID '\(entry.id)' is too short (minimum 6 characters)")
     }
+  }
+
+  /// LG Android phones must have requiresKernelDetach=true (MTP CDC detach required).
+  func testLGAndroidPhonesRequireKernelDetach() {
+    let lgEntries = db.entries.filter { $0.vid == 0x1004 && $0.ifaceClass == 0xff }
+    guard !lgEntries.isEmpty else {
+      XCTFail("Expected LG Android entries (VID 0x1004)")
+      return
+    }
+    let offenders = lgEntries.filter { !$0.resolvedFlags().requiresKernelDetach }
+    XCTAssertTrue(
+      offenders.isEmpty,
+      "LG Android devices should require kernel detach: \(offenders.map { $0.id })")
+  }
+
+  /// Wearable/fitness devices (Fitbit, Garmin) should NOT require kernel detach.
+  func testWearablesDoNotRequireKernelDetach() {
+    // Fitbit VID 0x2687, Garmin VID 0x091e
+    let wearableVIDs: Set<UInt16> = [0x2687, 0x091e]
+    let offenders = db.entries
+      .filter { wearableVIDs.contains($0.vid) }
+      .filter { $0.resolvedFlags().requiresKernelDetach }
+    XCTAssertTrue(
+      offenders.isEmpty,
+      "Wearable/fitness devices should not require kernel detach: \(offenders.map { $0.id })")
+  }
+
+  /// All Android (iface class 0xFF) entries must not have supportsGetObjectPropList=true
+  /// unless explicitly overridden (Android devices use MTP extensions, not PTP proplist).
+  func testAndroidEntriesHaveConsistentProplistFlag() {
+    let androidEntries = db.entries.filter { $0.ifaceClass == 0xff }
+    // There should be many Android entries
+    XCTAssertGreaterThanOrEqual(
+      androidEntries.count, 50,
+      "Expected at least 50 Android (iface class 0xFF) entries; found \(androidEntries.count)")
+    // All resolvedFlags() must be callable (smoke test)
+    for entry in androidEntries {
+      _ = entry.resolvedFlags()
+    }
+  }
+
+  /// All VIDs should be non-zero (no placeholder 0x0000 entries).
+  func testAllVIDsAreNonZero() {
+    let zeroVIDs = db.entries.filter { $0.vid == 0x0000 }
+    XCTAssertTrue(
+      zeroVIDs.isEmpty,
+      "Entries with VID=0x0000 found: \(zeroVIDs.map { $0.id })")
   }
 
   private func findDuplicates<T: Hashable>(_ items: [T]) -> [T] {

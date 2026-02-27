@@ -360,6 +360,56 @@ final class BDDRunner: XCTestCase {
     XCTAssertEqual(q.id, "garmin-fenix6-pro-4cda")
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
+
+  // MARK: android-brands-wave7.feature
+
+  func testAndroid_LG_G2() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x1004, pid: 0x633e, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("lg-android-633e not in database") }
+    XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testAndroid_HTC_Generic() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0bb4, pid: 0x0f15, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("htc-android-0f15 not in database") }
+    XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testAndroid_ZTE_BladeIII() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x19d2, pid: 0x0306, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("zte-blade3-0306 not in database") }
+    XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testAndroid_OPPO_Realme() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x22d9, pid: 0x0001, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("oppo-realme-android-0001 not in database") }
+    XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testAndroid_Vivo_V11() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2d95, pid: 0x6002, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("vivo-v11-6002 not in database") }
+    XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testAndroid_Huawei_P20() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x12d1, pid: 0x1054, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("huawei-p20-pro-mate20-1054 not in database") }
+    XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)

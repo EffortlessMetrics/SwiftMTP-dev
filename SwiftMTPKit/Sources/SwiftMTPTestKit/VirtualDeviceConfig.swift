@@ -457,7 +457,64 @@ public struct VirtualDeviceConfig: Sendable {
       includePropList: false)
   }()
 
+  // Wave-7 presets: LG, HTC, ZTE, OPPO, vivo, BlackBerry, Fitbit, Garmin wearable
+
+  public static let lgG5Android: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "1004:6368@1:34", vendor: "LG", model: "G5 (H850)",
+      vendorID: 0x1004, productID: 0x6368, serial: "VIRT-LG-G5-6368",
+      includePropList: false)
+  }()
+
+  public static let htcOneM8: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "0bb4:0ca3@1:35", vendor: "HTC", model: "One M8",
+      vendorID: 0x0bb4, productID: 0x0ca3, serial: "VIRT-HTC-M8-0CA3",
+      includePropList: false)
+  }()
+
+  public static let zteAxon7: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "19d2:03e5@1:36", vendor: "ZTE", model: "Axon 7 (A2017)",
+      vendorID: 0x19d2, productID: 0x03e5, serial: "VIRT-ZTE-AXON7-03E5",
+      includePropList: false)
+  }()
+
+  public static let oppoReno2: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "22d9:276c@1:37", vendor: "OPPO", model: "Reno 2",
+      vendorID: 0x22d9, productID: 0x276c, serial: "VIRT-OPPO-RENO2-276C",
+      includePropList: false)
+  }()
+
+  public static let vivoV20Pro: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "2d95:6012@1:38", vendor: "vivo", model: "V20 Pro",
+      vendorID: 0x2d95, productID: 0x6012, serial: "VIRT-VIVO-V20PRO-6012",
+      includePropList: false)
+  }()
+
+  public static let blackberryKEYone: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "0fca:8070@1:39", vendor: "BlackBerry", model: "KEYone",
+      vendorID: 0x0fca, productID: 0x8070, serial: "VIRT-BB-KEYONE-8070",
+      includePropList: false)
+  }()
+
+  public static let fitbitVersa: VirtualDeviceConfig = {
+    _cameraPreset(
+      rawId: "2687:fb0c@1:40", vendor: "Fitbit", model: "Versa",
+      vendorID: 0x2687, productID: 0xfb0c, serial: "VIRT-FITBIT-VERSA-FB0C")
+  }()
+
+  public static let garminForerunner945: VirtualDeviceConfig = {
+    _cameraPreset(
+      rawId: "091e:4b35@1:41", vendor: "Garmin", model: "Forerunner 945",
+      vendorID: 0x091e, productID: 0x4b35, serial: "VIRT-GARMIN-FR945-4B35")
+  }()
+
   // MARK: - Private helpers
+
 
   private static func _androidPreset(
     rawId: String, vendor: String, model: String,
