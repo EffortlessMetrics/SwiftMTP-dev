@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Per-transaction observability timeline**: `TransactionLog` actor (ring-buffered at 1000) with `TransactionRecord` (opcode, txid, bytes, duration, outcome). `MTPOpcodeLabel` with 21 common opcode labels. `ActionableErrors` protocol with user-friendly descriptions for all `MTPError`/`TransportError` cases.
 - **libmtp compatibility harness** (`scripts/compat-harness.py`): Python script comparing SwiftMTP vs `mtp-tools` output. Structured JSON evidence, diff classification, expectation overlays per device (`compat/expectations/<vidpid>.yml`).
 - **Test count: 1920** (up from 1891), 0 failures, 0 lint warnings.
+- **Expanded device quirk database** from 7 to 26 entries, adding support profiles for Samsung Galaxy MTP+ADB, Google Nexus/Pixel, Google Pixel 3/4, OnePlus 9, Motorola Moto G/E, Sony Xperia Z/Z3/XZ1, LG Android, HTC Android, Huawei Android, Canon EOS 5D3/R5/R3, Nikon Z6/Z7/Z6II/Z7II, and Fujifilm X-series devices.
+- **VirtualDeviceConfig factory presets** for 8 new device families: `samsungGalaxy`, `samsungGalaxyMtpAdb`, `googlePixelAdb`, `motorolaMotoG`, `sonyXperiaZ`, `canonEOSR5`, `nikonZ6`, `onePlus9`.
+- **QuirkMatchingTests**: 60+ tests covering all 26 quirk entries, no-match guards, timeout spot-checks, and policy-consistency tests.
 
 - **Transfer throughput telemetry**: `TransferJournal.recordThroughput(id:throughputMBps:)` protocol method captures measured MB/s on read and write completion. `TransferEntity.throughputMBps` persists to SwiftData. Default no-op implementation preserves backward compatibility.
 - **Actionable CLI error messages**: `actionableMessage(for:)` helper in `CLIState.swift` maps all `MTPError` and `TransportError` cases to concise fix-guidance strings. `probe`, `pull`, `push`, and `bench` now emit actionable hints instead of raw error descriptions.
@@ -45,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Schema gaps in `xiaomi-mi-note-2-ff40` (missing `confidence`) and `google-pixel-7-4ee1` (missing `ops` block) corrected in `Specs/quirks.json`.
+- Removed debug `print()` statements from `DeviceActor+PropList.swift`.
 
 - **FileProvider write operations**: `createItem`, `modifyItem`, `deleteItem` now fully wired to XPC backend (`MTPFileProviderExtension.swift`).
 - **XPC write protocol**: `WriteRequest`, `DeleteRequest`, `CreateFolderRequest`, `WriteResponse` — all NSSecureCoding with round-trip tests.
