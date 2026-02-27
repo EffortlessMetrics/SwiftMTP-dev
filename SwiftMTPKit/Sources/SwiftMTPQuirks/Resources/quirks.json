@@ -93090,6 +93090,4285 @@
         "sourceRef": "music-players.h",
         "notes": "Archos 7 (MTP mode, DEVICE_FLAG_UNLOAD_DRIVER)"
       }
+    },
+    {
+      "id": "astell-kern-ak120ii-1192",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1192",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "astell-kern-sr15-1213",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1213",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a500-id2-3341",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3341",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a501-id1-3344",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3344",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a501-id2-3345",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3345",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "asus-tf700-transformer-mtp-4c90",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4c90",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "asus-tf700-transformer-mtp-adb-4c91",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4c91",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "asus-tf701t-transformer-pad-mtp-4ca0",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4ca0",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "asus-tf701t-transformer-pad-mtp-adb-4ca1",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4ca1",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "caterpillar-cat-s50-88a9",
+      "match": {
+        "vid": "0x04b7",
+        "pid": "0x88a9",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "caterpillar-cat-s50-2nd-id-88aa",
+      "match": {
+        "vid": "0x04b7",
+        "pid": "0x88aa",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "cowon-iaudio-7-mtp-mode-0751",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0751",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "cowon-iaudio-u5-mtp-mode-0761",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0761",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "creative-portable-media-center-4123",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4123",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "creative-zen-xtra-mtp-mode-4128",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4128",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "creative-zen-micro-mtp-mode-4130",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4130",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "dell-dj-itty-4500",
+      "match": {
+        "vid": "0x413c",
+        "pid": "0x4500",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "dell-dell-streak-7-b10b",
+      "match": {
+        "vid": "0x413c",
+        "pid": "0xb10b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "garmin-d2-air-488b",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x488b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "garmin-vivoactive-3-music-lte-4bfa",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4bfa",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "garmin-d2-delta-delta-s-delta-px-4c7c",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4c7c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "garmin-vivoactive-4s-4c98",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4c98",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "garmin-vivoactive-4-4c99",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4c99",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "htc-one-m9-1st-id-040b",
+      "match": {
+        "vid": "0x0bb4",
+        "pid": "0x040b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "htc-spreadtrum-sh57myz03342-mtp-05e3",
+      "match": {
+        "vid": "0x0bb4",
+        "pid": "0x05e3",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "htc-desire-626g-mtp-05f0",
+      "match": {
+        "vid": "0x0bb4",
+        "pid": "0x05f0",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "htc-desire-510-mtp-adb-05fd",
+      "match": {
+        "vid": "0x0bb4",
+        "pid": "0x05fd",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "htc-one-m8-google-play-edition-mtp-adb-060b",
+      "match": {
+        "vid": "0x0bb4",
+        "pid": "0x060b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "huawei-y320-u10-2406",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x2406",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "huawei-y625-u03-255d",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x255d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "huawei-y360-u61-2567",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x2567",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "huawei-y360-u03-256b",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x256b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "huawei-y541-u02-257c",
+      "match": {
+        "vid": "0x12d1",
+        "pid": "0x257c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "iriver-tolino-tab-7-1002",
+      "match": {
+        "vid": "0x1e68",
+        "pid": "0x1002",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "iriver-tolino-tab-8-1007",
+      "match": {
+        "vid": "0x1e68",
+        "pid": "0x1007",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "kyocera-kyl22-0810",
+      "match": {
+        "vid": "0x0482",
+        "pid": "0x0810",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "lenovo-lifetab-s9512-74cc",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x74cc",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "lenovo-s660-74f8",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x74f8",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "lenovo-ideatab-a2109a-7542",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x7542",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "lenovo-ideatab-s2210a-757d",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x757d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "lenovo-k900-id2-75b3",
+      "match": {
+        "vid": "0x17ef",
+        "pid": "0x75b3",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "lg-vx8550-v-cast-mobile-phone-6010",
+      "match": {
+        "vid": "0x1004",
+        "pid": "0x6010",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "lg-kc910-renoir-mobile-phone-608f",
+      "match": {
+        "vid": "0x1004",
+        "pid": "0x608f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "lg-gr-500-music-player-611b",
+      "match": {
+        "vid": "0x1004",
+        "pid": "0x611b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "lg-km900-6132",
+      "match": {
+        "vid": "0x1004",
+        "pid": "0x6132",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "lg-lg8575-619a",
+      "match": {
+        "vid": "0x1004",
+        "pid": "0x619a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "motorola-v3m-v750-verizon-2a65",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2a65",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "motorola-mb632-2dff",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2dff",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "motorola-x-2nd-edition-xt1097-mtp-2e24",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e24",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "motorola-xoom-2-media-edition-id3-41cf",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x41cf",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "motorola-droid-x-mb525-defy-41d6",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x41d6",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "motorola-droid2-id1-41da",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x41da",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "nokia-3110c-mobile-phone-005f",
+      "match": {
+        "vid": "0x0421",
+        "pid": "0x005f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "nokia-3109c-mobile-phone-0065",
+      "match": {
+        "vid": "0x0421",
+        "pid": "0x0065",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "nokia-6220-classic-008d",
+      "match": {
+        "vid": "0x0421",
+        "pid": "0x008d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "nokia-6210-navigator-0098",
+      "match": {
+        "vid": "0x0421",
+        "pid": "0x0098",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "nvidia-cm9-adam-70a9",
+      "match": {
+        "vid": "0x0955",
+        "pid": "0x70a9",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "oneplus-oneplus-7-pro-mtp-f000",
+      "match": {
+        "vid": "0x05c6",
+        "pid": "0xf000",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "samsung-yp-900-0409",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x0409",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "samsung-i550w-phone-04a4",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x04a4",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "samsung-jet-s8000-4f1f",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x4f1f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "samsung-yh-920-501d-501d",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x501d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "samsung-yh-920-5022-5022",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x5022",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "samsung-yh-925gs-5024",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x5024",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "samsung-yh-820-502e",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x502e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "samsung-yh-925-gs-502f",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x502f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "sandisk-sansa-m200-tcc-mtp-mode-7401",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7401",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "sandisk-sansa-m240-m250-7430",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7430",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "sandisk-sansa-c250-v2-7452",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7452",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "xiaomi-mi-3w-ptp-0318",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0x0318",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "id": "xiaomi-mi-2-ptp-904d",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0x904d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "ioTimeoutMs": 30000,
+        "handshakeTimeoutMs": 15000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave12-libmtp",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "VID:PID from libmtp music-players.h open-source database"
+      },
+      "provenance": {
+        "source": "libmtp-music-players-h",
+        "confidence": "medium",
+        "addedDate": "2025-07-24"
+      }
+    },
+    {
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6934",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.5.0",
+        "source": "community",
+        "notes": "Samsung Galaxy S25 (SM-S931) - One UI 7, Snapdragon 8 Elite"
+      },
+      "id": "samsung-galaxy-s25-6934"
+    },
+    {
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6935",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.5.0",
+        "source": "community",
+        "notes": "Samsung Galaxy S25+ (SM-S936) - One UI 7, Snapdragon 8 Elite"
+      },
+      "id": "samsung-galaxy-s25-plus-6935"
+    },
+    {
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6936",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.5.0",
+        "source": "community",
+        "notes": "Samsung Galaxy S25 Ultra (SM-S938) - One UI 7, Snapdragon 8 Elite"
+      },
+      "id": "samsung-galaxy-s25-ultra-6936"
+    },
+    {
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6937",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.5.0",
+        "source": "community",
+        "notes": "Samsung Galaxy Tab S10 - One UI 6, Android 14 tablet"
+      },
+      "id": "samsung-galaxy-tab-s10-6937"
+    },
+    {
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6938",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.5.0",
+        "source": "community",
+        "notes": "Samsung Galaxy Tab S10+ - One UI 6, Android 14 tablet"
+      },
+      "id": "samsung-galaxy-tab-s10-plus-6938"
+    },
+    {
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6939",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.5.0",
+        "source": "community",
+        "notes": "Samsung Galaxy A56 5G - One UI 7, Exynos 1580"
+      },
+      "id": "samsung-galaxy-a56-6939"
+    },
+    {
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x693a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.5.0",
+        "source": "community",
+        "notes": "Samsung Galaxy A36 5G - One UI 7, Snapdragon 6 Gen 3"
+      },
+      "id": "samsung-galaxy-a36-693a"
+    },
+    {
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x693b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "medium",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.5.0",
+        "source": "community",
+        "notes": "Samsung Galaxy A16 5G - One UI 6, Dimensity 6300"
+      },
+      "id": "samsung-galaxy-a16-693b"
+    },
+    {
+      "id": "google-pixel-9a-4f00",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4f00",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 9a - Android 15, Tensor G4"
+      }
+    },
+    {
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf01b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 13 - OxygenOS 15, Snapdragon 8 Elite"
+      },
+      "id": "oneplus-13-f01b"
+    },
+    {
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf01c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 13R - OxygenOS 15, Snapdragon 8 Gen 3"
+      },
+      "id": "oneplus-13r-f01c"
+    },
+    {
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf01d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus Open 2 - OxygenOS 15, foldable"
+      },
+      "id": "oneplus-open-2-f01d"
+    },
+    {
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff78",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Xiaomi 15 - HyperOS 2, Snapdragon 8 Elite"
+      },
+      "id": "xiaomi-15-ff78"
+    },
+    {
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff79",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Xiaomi 15 Pro - HyperOS 2, Snapdragon 8 Elite"
+      },
+      "id": "xiaomi-15-pro-ff79"
+    },
+    {
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff7a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Xiaomi 15 Ultra - HyperOS 2, Snapdragon 8 Elite"
+      },
+      "id": "xiaomi-15-ultra-ff7a"
+    },
+    {
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff7b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Xiaomi Redmi Note 14 Pro - HyperOS, Dimensity 7300 Ultra"
+      },
+      "id": "xiaomi-redmi-note-14-pro-ff7b"
+    },
+    {
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff7c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Xiaomi Redmi Note 14 Pro+ - HyperOS, Snapdragon 7s Gen 3"
+      },
+      "id": "xiaomi-redmi-note-14-pro-plus-ff7c"
+    },
+    {
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff7d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Xiaomi Poco X7 - HyperOS, Dimensity 7300 Ultra"
+      },
+      "id": "xiaomi-poco-x7-ff7d"
+    },
+    {
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xff7e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Xiaomi Poco X7 Pro - HyperOS, Dimensity 8400 Ultra"
+      },
+      "id": "xiaomi-poco-x7-pro-ff7e"
+    },
+    {
+      "id": "nothing-phone-3-0006",
+      "match": {
+        "vid": "0x2b0e",
+        "pid": "0x0006",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2025-01-01"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Nothing Phone (3) - Nothing OS 3, Snapdragon 8s Gen 4 (upcoming)"
+      }
+    },
+    {
+      "id": "canon-eos-r7-mark-ii-3319",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3319",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave12",
+        "addedDate": "2025-07-17",
+        "verificationNotes": "PID estimated from Canon EOS R-series PID sequence (R7=0x32f7, R5II=0x3314, R50V=0x3320)"
+      },
+      "provenance": {
+        "source": "pid-range-estimation",
+        "sourceRef": "Canon EOS R-series PID pattern analysis",
+        "notes": "Canon EOS R7 Mark II \u2014 PTP Still Image, APS-C mirrorless successor to R7"
+      }
+    },
+    {
+      "id": "canon-powershot-v10-3316",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3316",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave12",
+        "addedDate": "2025-07-17",
+        "verificationNotes": "PID estimated from Canon PID sequence between R5II (0x3314) and R50V (0x3320)"
+      },
+      "provenance": {
+        "source": "pid-range-estimation",
+        "sourceRef": "Canon PowerShot/EOS PID pattern analysis",
+        "notes": "Canon PowerShot V10 \u2014 PTP Still Image, compact vlogging camera with 1\" sensor"
+      }
+    },
+    {
+      "id": "fujifilm-xs20-02f4",
+      "match": {
+        "vid": "0x04cb",
+        "pid": "0x02f4",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave12",
+        "addedDate": "2025-07-17",
+        "verificationNotes": "PID estimated from Fujifilm X-series sequence (X-H2=0x02f2, X-T5=0x02fc)"
+      },
+      "provenance": {
+        "source": "pid-range-estimation",
+        "sourceRef": "Fujifilm X-series PID pattern analysis",
+        "notes": "Fujifilm X-S20 \u2014 PTP Still Image, 26 MP APS-C midrange mirrorless"
+      }
+    },
+    {
+      "id": "fujifilm-xt50-0307",
+      "match": {
+        "vid": "0x04cb",
+        "pid": "0x0307",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave12",
+        "addedDate": "2025-07-17",
+        "verificationNotes": "PID estimated from Fujifilm sequence (X100VI=0x0305, X-M5=0x030c)"
+      },
+      "provenance": {
+        "source": "pid-range-estimation",
+        "sourceRef": "Fujifilm X-series PID pattern analysis",
+        "notes": "Fujifilm X-T50 \u2014 PTP Still Image, 40 MP APS-C compact mirrorless with film dial"
+      }
+    },
+    {
+      "id": "fujifilm-gfx100sii-0306",
+      "match": {
+        "vid": "0x04cb",
+        "pid": "0x0306",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave12",
+        "addedDate": "2025-07-17",
+        "verificationNotes": "PID estimated from Fujifilm GFX sequence (GFX100II=0x02fe, X100VI=0x0305)"
+      },
+      "provenance": {
+        "source": "pid-range-estimation",
+        "sourceRef": "Fujifilm GFX-series PID pattern analysis",
+        "notes": "Fujifilm GFX100S II \u2014 PTP Still Image, 102 MP medium format mirrorless"
+      }
     }
   ]
 }

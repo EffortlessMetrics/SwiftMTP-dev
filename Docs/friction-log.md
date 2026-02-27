@@ -15,6 +15,14 @@ Ongoing record of issues, paper cuts, and improvement opportunities encountered 
 
 ---
 
+## Worktree / Parallel Development
+
+| Date | Severity | Issue | Status |
+|------|----------|-------|--------|
+| 2026-02-27 | 🟡 P2 | `/tmp` directory not always writable from tool sessions — worktrees had to be created in `~/worktrees/` instead. Inconsistent filesystem permissions. | Workaround: use `~/worktrees/` |
+| 2026-02-27 | 🟡 P2 | Merging quirks.json from multiple worktrees requires custom Python dedup script every time. No reusable merge tool. | **TODO**: create `scripts/merge-quirks.py` as a proper CLI tool |
+| 2026-02-27 | 🟢 P3 | Worktree cleanup (removing branches + worktree dirs) is manual and error-prone. Could accumulate stale worktrees. | **TODO**: add `scripts/cleanup-worktrees.sh` helper |
+
 ## CI / Build
 
 | Date | Severity | Issue | Status |

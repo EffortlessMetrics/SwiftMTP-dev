@@ -2184,3 +2184,99 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Archos 405hdd | 0e79:1321 | ⚪ proposed | supportsGetObjectPropList |
 | Archos 5 Mode2 | 0e79:1333 | ⚪ proposed | supportsGetObjectPropList |
 | Archos 7 | 0e79:1335 | ⚪ proposed | supportsGetObjectPropList |
+| Astell Kern Ak120ii | 4102:1192 | ⚪ proposed | — |
+| Astell Kern Sr15 | 4102:1213 | ⚪ proposed | — |
+| Acer Iconia Tab A500 Id2 | 0502:3341 | ⚪ proposed | — |
+| Acer Iconia Tab A501 Id1 | 0502:3344 | ⚪ proposed | — |
+| Acer Iconia Tab A501 Id2 | 0502:3345 | ⚪ proposed | — |
+| Asus Tf700 Transformer MTP | 0b05:4c90 | ⚪ proposed | — |
+| Asus Tf700 Transformer MTP Adb | 0b05:4c91 | ⚪ proposed | — |
+| Asus Tf701t Transformer Pad MTP | 0b05:4ca0 | ⚪ proposed | — |
+| Asus Tf701t Transformer Pad MTP Adb | 0b05:4ca1 | ⚪ proposed | — |
+| Caterpillar Cat S50 | 04b7:88a9 | ⚪ proposed | — |
+| Caterpillar Cat S50 2nd Id | 04b7:88aa | ⚪ proposed | — |
+| Cowon Iaudio 7 MTP Mode | 0e21:0751 | ⚪ proposed | — |
+| Cowon Iaudio U5 MTP Mode | 0e21:0761 | ⚪ proposed | — |
+| Creative Portable Media Center | 041e:4123 | ⚪ proposed | — |
+| Creative Zen Xtra MTP Mode | 041e:4128 | ⚪ proposed | — |
+| Creative Zen Micro MTP Mode | 041e:4130 | ⚪ proposed | — |
+| Dell Dj Itty | 413c:4500 | ⚪ proposed | — |
+| Dell Dell Streak 7 | 413c:b10b | ⚪ proposed | — |
+| Garmin D2 Air | 091e:488b | ⚪ proposed | — |
+| Garmin Vivoactive 3 Music Lte | 091e:4bfa | ⚪ proposed | — |
+| Garmin D2 Delta Delta S Delta Px | 091e:4c7c | ⚪ proposed | — |
+| Garmin Vivoactive 4s | 091e:4c98 | ⚪ proposed | — |
+| Garmin Vivoactive 4 | 091e:4c99 | ⚪ proposed | — |
+| Htc One M9 1st Id | 0bb4:040b | ⚪ proposed | — |
+| Htc Spreadtrum Sh57myz03342 MTP | 0bb4:05e3 | ⚪ proposed | — |
+| Htc Desire 626g MTP | 0bb4:05f0 | ⚪ proposed | — |
+| Htc Desire 510 MTP Adb | 0bb4:05fd | ⚪ proposed | — |
+| Htc One M8 Google Play Edition MTP Adb | 0bb4:060b | ⚪ proposed | — |
+| Huawei Y320 U10 | 12d1:2406 | ⚪ proposed | — |
+| Huawei Y625 U03 | 12d1:255d | ⚪ proposed | — |
+| Huawei Y360 U61 | 12d1:2567 | ⚪ proposed | — |
+| Huawei Y360 U03 | 12d1:256b | ⚪ proposed | — |
+| Huawei Y541 U02 | 12d1:257c | ⚪ proposed | — |
+| Iriver Tolino Tab 7 | 1e68:1002 | ⚪ proposed | — |
+| Iriver Tolino Tab 8 | 1e68:1007 | ⚪ proposed | — |
+| Kyocera Kyl22 | 0482:0810 | ⚪ proposed | — |
+| Lenovo Lifetab S9512 | 17ef:74cc | ⚪ proposed | — |
+| Lenovo S660 | 17ef:74f8 | ⚪ proposed | — |
+| Lenovo Ideatab A2109a | 17ef:7542 | ⚪ proposed | — |
+| Lenovo Ideatab S2210a | 17ef:757d | ⚪ proposed | — |
+| Lenovo K900 Id2 | 17ef:75b3 | ⚪ proposed | — |
+| Lg Vx8550 V Cast Mobile Phone | 1004:6010 | ⚪ proposed | — |
+| Lg Kc910 Renoir Mobile Phone | 1004:608f | ⚪ proposed | — |
+| Lg Gr 500 Music Player | 1004:611b | ⚪ proposed | — |
+| Lg Km900 | 1004:6132 | ⚪ proposed | — |
+| Lg Lg8575 | 1004:619a | ⚪ proposed | — |
+| Motorola V3m V750 Verizon | 22b8:2a65 | ⚪ proposed | — |
+| Motorola Mb632 | 22b8:2dff | ⚪ proposed | — |
+| Motorola X 2nd Edition Xt1097 MTP | 22b8:2e24 | ⚪ proposed | — |
+| Motorola Xoom 2 Media Edition Id3 | 22b8:41cf | ⚪ proposed | — |
+| Motorola Droid X Mb525 Defy | 22b8:41d6 | ⚪ proposed | — |
+| Motorola Droid2 Id1 | 22b8:41da | ⚪ proposed | — |
+| Nokia 3110c Mobile Phone | 0421:005f | ⚪ proposed | — |
+| Nokia 3109c Mobile Phone | 0421:0065 | ⚪ proposed | — |
+| Nokia 6220 Classic | 0421:008d | ⚪ proposed | — |
+| Nokia 6210 Navigator | 0421:0098 | ⚪ proposed | — |
+| Nvidia Cm9 Adam | 0955:70a9 | ⚪ proposed | — |
+| Oneplus Oneplus 7 Pro MTP | 05c6:f000 | ⚪ proposed | — |
+| Samsung Yp 900 | 04e8:0409 | ⚪ proposed | — |
+| Samsung I550w Phone | 04e8:04a4 | ⚪ proposed | — |
+| Samsung Jet S8000 | 04e8:4f1f | ⚪ proposed | — |
+| Samsung Yh 920 501d | 04e8:501d | ⚪ proposed | — |
+| Samsung Yh 920 5022 | 04e8:5022 | ⚪ proposed | — |
+| Samsung Yh 925gs | 04e8:5024 | ⚪ proposed | — |
+| Samsung Yh 820 | 04e8:502e | ⚪ proposed | — |
+| Samsung Yh 925 Gs | 04e8:502f | ⚪ proposed | — |
+| Sandisk Sansa M200 Tcc MTP Mode | 0781:7401 | ⚪ proposed | — |
+| Sandisk Sansa M240 M250 | 0781:7430 | ⚪ proposed | — |
+| Sandisk Sansa C250 V2 | 0781:7452 | ⚪ proposed | — |
+| Xiaomi Mi 3w Ptp | 2717:0318 | ⚪ proposed | — |
+| Xiaomi Mi 2 Ptp | 2717:904d | ⚪ proposed | — |
+| Samsung Galaxy S25 | 04e8:6934 | ⚪ proposed | useAndroidExtensions |
+| Samsung Galaxy S25 Plus | 04e8:6935 | ⚪ proposed | useAndroidExtensions |
+| Samsung Galaxy S25 Ultra | 04e8:6936 | ⚪ proposed | useAndroidExtensions |
+| Samsung Galaxy Tab S10 | 04e8:6937 | ⚪ proposed | useAndroidExtensions |
+| Samsung Galaxy Tab S10 Plus | 04e8:6938 | ⚪ proposed | useAndroidExtensions |
+| Samsung Galaxy A56 | 04e8:6939 | ⚪ proposed | useAndroidExtensions |
+| Samsung Galaxy A36 | 04e8:693a | ⚪ proposed | useAndroidExtensions |
+| Samsung Galaxy A16 | 04e8:693b | ⚪ proposed | useAndroidExtensions |
+| Google Pixel 9a | 18d1:4f00 | ⚪ proposed | — |
+| Oneplus 13 | 2a70:f01b | ⚪ proposed | useAndroidExtensions |
+| Oneplus 13r | 2a70:f01c | ⚪ proposed | useAndroidExtensions |
+| Oneplus Open 2 | 2a70:f01d | ⚪ proposed | useAndroidExtensions |
+| Xiaomi 15 | 2717:ff78 | ⚪ proposed | useAndroidExtensions |
+| Xiaomi 15 Pro | 2717:ff79 | ⚪ proposed | useAndroidExtensions |
+| Xiaomi 15 Ultra | 2717:ff7a | ⚪ proposed | useAndroidExtensions |
+| Xiaomi Redmi Note 14 Pro | 2717:ff7b | ⚪ proposed | useAndroidExtensions |
+| Xiaomi Redmi Note 14 Pro Plus | 2717:ff7c | ⚪ proposed | useAndroidExtensions |
+| Xiaomi Poco X7 | 2717:ff7d | ⚪ proposed | useAndroidExtensions |
+| Xiaomi Poco X7 Pro | 2717:ff7e | ⚪ proposed | useAndroidExtensions |
+| Nothing Phone 3 | 2b0e:0006 | ⚪ proposed | useAndroidExtensions |
+| Canon EOS R7 Mark Ii | 04a9:3319 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon Powershot V10 | 04a9:3316 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm Xs20 | 04cb:02f4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm Xt50 | 04cb:0307 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm Gfx100sii | 04cb:0306 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
