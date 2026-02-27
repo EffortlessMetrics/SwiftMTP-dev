@@ -69,8 +69,10 @@ Ongoing record of issues, paper cuts, and improvement opportunities encountered 
 
 | Date | Severity | Issue | Status |
 |------|----------|-------|--------|
-| 2026-02-27 | 🟡 P2 | 2,000+ entries in a single JSON file (~180KB+) is becoming unwieldy. Load time, diff noise, and merge conflicts increase with size. | **TODO**: evaluate splitting quirks.json by VID prefix (e.g., `quirks/04e8-samsung.json`) with a build-time concatenation step. |
+| 2026-02-27 | 🟡 P2 | 2,000+ entries in a single JSON file (~180KB+) is becoming unwieldy. Load time, diff noise, and merge conflicts increase with size. | **TODO**: evaluate splitting quirks.json by VID prefix (e.g., `quirks/04e8-samsung.json`) with a build-time concatenation step. Now 3,200+ entries (~350KB+). |
 | 2026-02-27 | 🟢 P3 | No runtime telemetry for which quirk entries actually get matched in the wild. Can't prioritize verification efforts. | **TODO**: opt-in anonymous usage reporting of matched VID:PID (no PII). |
+| 2026-02-27 | 🔴 P0 | Agents generating quirk entries use inconsistent JSON schemas: nested dict ops (e.g., `openSession: {maxRetries: 2}`), non-boolean flag values, string evidenceRequired instead of arrays. Requires post-merge normalization pass. | ✅ Fixed with normalization script. **TODO**: add JSON Schema validation to `validate-quirks.sh` to catch these at CI time. |
+| 2026-02-27 | 🟡 P2 | `QuirkFlags` Swift struct doesn't surface `cameraClass` from JSON — BDD tests that check `.cameraClass` fail at compile time. JSON schema and Swift model are diverging. | **TODO**: either add `cameraClass` to `QuirkFlags` struct, or remove it from JSON entries and infer from iface class. |
 
 ---
 
