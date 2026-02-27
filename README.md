@@ -174,6 +174,30 @@ swift test --package-path SwiftMTPKit --filter SnapshotTests
 | Nikon Z6/Z7 | 04b0:0441 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
 | Nikon Z6II/Z7II | 04b0:0442 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
 | Fujifilm X-series | 04cb:0104 | ⚠ Proposed | Based on libmtp data; needs hardware validation |
+| Samsung Galaxy S20/S21 | 04e8:6866 | ⚠ Proposed | Android MTP; broken proplist, long timeout |
+| Samsung Galaxy Kies mode | 04e8:6877 | ⚠ Proposed | Kies mode MTP interface |
+| LG V20/G5/G6 | 1004:61f1 | ⚠ Proposed | Android MTP with Android bugs |
+| LG G4/V10 | 1004:61f9 | ⚠ Proposed | Android MTP with Android bugs |
+| HTC U11/U12 | 0bb4:0f91 | ⚠ Proposed | Android MTP with Android bugs |
+| HTC One M8/M9 | 0bb4:0ffe | ⚠ Proposed | Android MTP with Android bugs |
+| Huawei P9/P10 | 12d1:1052 | ⚠ Proposed | Android MTP; broken proplist |
+| Huawei P20 Pro/Mate 20 | 12d1:1054 | ⚠ Proposed | Android MTP; broken proplist |
+| Huawei P30/Mate 30 | 12d1:10c1 | ⚠ Proposed | Android MTP; broken proplist |
+| ASUS ZenFone 5 | 0b05:7770 | ⚠ Proposed | Android MTP with Android bugs |
+| ASUS ZenFone 6 / ROG Phone | 0b05:7776 | ⚠ Proposed | Android MTP with Android bugs |
+| Acer Iconia A500 | 0502:3325 | ⚠ Proposed | Android MTP; no proplist |
+| Acer Iconia A700 | 0502:3378 | ⚠ Proposed | Android MTP; no proplist |
+| Oppo/Realme Android | 22d9:0001 | ⚠ Proposed | Android MTP with Android bugs |
+| Google Nexus One | 18d1:4e41 | ⚠ Proposed | Legacy Android MTP |
+| Google Nexus 7 | 18d1:4e42 | ⚠ Proposed | Legacy Android MTP |
+| Sony Xperia Z1 | 0fce:019e | ⚠ Proposed | GetObjectPropList supported |
+| Sony Xperia Z5 | 0fce:01d9 | ⚠ Proposed | GetObjectPropList supported |
+| Sony Xperia XZ | 0fce:01e7 | ⚠ Proposed | GetObjectPropList supported |
+| Sony Alpha a7 III | 054c:0a79 | ⚠ Proposed | PTP/Camera; GetObjectPropList supported |
+| Sony Alpha a7R IV | 054c:0a6f | ⚠ Proposed | PTP/Camera; GetObjectPropList supported |
+| Panasonic Lumix G | 04da:2372 | ⚠ Proposed | PTP/Camera; GetObjectPropList supported |
+| Olympus E-series | 07b4:0113 | ⚠ Proposed | PTP/Camera; GetObjectPropList supported |
+| Ricoh/Pentax K-series | 25fb:0001 | ⚠ Proposed | PTP/Camera; GetObjectPropList supported |
 
 Status: ✅ Promoted = fully verified with evidence · ✔ Verified = confirmed working · ⚠ Proposed = unverified, based on libmtp data
 
