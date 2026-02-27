@@ -62921,6 +62921,2309 @@
         "source": "libmtp",
         "notes": "Samsung Galaxy Tab S9 Ultra - Android MTP"
       }
+    },
+    {
+      "id": "sony-dsc-w350-06e1",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06e1",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony DSC-W350 — compact camera, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony DSC-W350"
+      }
+    },
+    {
+      "id": "sony-dsc-w380-06e2",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06e2",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony DSC-W380 — compact camera, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony DSC-W380"
+      }
+    },
+    {
+      "id": "sony-dsc-w560-06e3",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06e3",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony DSC-W560 — compact camera, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony DSC-W560"
+      }
+    },
+    {
+      "id": "sony-dsc-hx9v-06e4",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06e4",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony DSC-HX9V — compact camera with GPS, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony DSC-HX9V"
+      }
+    },
+    {
+      "id": "sony-dsc-hx100v-06e5",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06e5",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony DSC-HX100V — superzoom compact, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony DSC-HX100V"
+      }
+    },
+    {
+      "id": "sony-nex-5n-06e6",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06e6",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony NEX-5N — mirrorless E-mount, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony NEX-5N"
+      }
+    },
+    {
+      "id": "sony-nex-7-06e7",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06e7",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony NEX-7 — mirrorless E-mount APS-C, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony NEX-7"
+      }
+    },
+    {
+      "id": "sony-slt-a65-06e8",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06e8",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony SLT-A65 — translucent mirror APS-C DSLR, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony SLT-A65"
+      }
+    },
+    {
+      "id": "sony-slt-a77-06e9",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06e9",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony SLT-A77 — translucent mirror APS-C DSLR, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony SLT-A77"
+      }
+    },
+    {
+      "id": "sony-alpha-nex-5r-06ea",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06ea",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha NEX-5R — mirrorless E-mount, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha NEX-5R"
+      }
+    },
+    {
+      "id": "sony-alpha-slt-a37-06eb",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06eb",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha SLT-A37 — translucent mirror APS-C, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha SLT-A37"
+      }
+    },
+    {
+      "id": "sony-rx1-06ec",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06ec",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony RX1 — full-frame compact, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony RX1"
+      }
+    },
+    {
+      "id": "sony-dsc-hx20v-06ed",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06ed",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony DSC-HX20V — superzoom compact with GPS, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony DSC-HX20V"
+      }
+    },
+    {
+      "id": "sony-alpha-nex-6-06ef",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06ef",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha NEX-6 — mirrorless E-mount APS-C, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha NEX-6"
+      }
+    },
+    {
+      "id": "sony-alpha-slt-a99-06f0",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06f0",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha SLT-A99 — full-frame translucent mirror, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha SLT-A99"
+      }
+    },
+    {
+      "id": "sony-alpha-a58-06f1",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06f1",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a58 — translucent mirror APS-C, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a58"
+      }
+    },
+    {
+      "id": "sony-alpha-a3000-06f2",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06f2",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a3000 (ILCE-3000) — entry-level mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a3000"
+      }
+    },
+    {
+      "id": "sony-alpha-a7-06f3",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06f3",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a7 (ILCE-7) — full-frame mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a7"
+      }
+    },
+    {
+      "id": "sony-alpha-a7r-06f4",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06f4",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a7R (ILCE-7R) — full-frame high-res mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a7R"
+      }
+    },
+    {
+      "id": "sony-alpha-a6000-06f5",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06f5",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a6000 (ILCE-6000) — APS-C mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a6000 (ILCE-6000)"
+      }
+    },
+    {
+      "id": "sony-alpha-a5000-06f6",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06f6",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a5000 (ILCE-5000) — entry-level APS-C mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a5000 (ILCE-5000)"
+      }
+    },
+    {
+      "id": "sony-alpha-a5100-06f7",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06f7",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a5100 (ILCE-5100) — compact APS-C mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a5100 (ILCE-5100)"
+      }
+    },
+    {
+      "id": "sony-alpha-a6300-06f8",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06f8",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a6300 (ILCE-6300) — APS-C mirrorless with 4K, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a6300 (ILCE-6300)"
+      }
+    },
+    {
+      "id": "sony-alpha-a6500-06f9",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06f9",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a6500 (ILCE-6500) — APS-C mirrorless with IBIS, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a6500 (ILCE-6500)"
+      }
+    },
+    {
+      "id": "sony-alpha-a68-06fa",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06fa",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a68 (ILCA-68) — translucent mirror APS-C, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a68 (ILCA-68)"
+      }
+    },
+    {
+      "id": "sony-alpha-a77ii-06fb",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06fb",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a77 II (ILCA-77M2) — translucent mirror APS-C flagship, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a77 II (ILCA-77M2)"
+      }
+    },
+    {
+      "id": "sony-alpha-a99ii-06fc",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06fc",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a99 II (ILCA-99M2) — full-frame translucent mirror flagship, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a99 II (ILCA-99M2)"
+      }
+    },
+    {
+      "id": "sony-alpha-a6100-06fd",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06fd",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a6100 (ILCE-6100) — APS-C mirrorless with real-time tracking, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a6100 (ILCE-6100)"
+      }
+    },
+    {
+      "id": "sony-alpha-a6400-06fe",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06fe",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a6400 (ILCE-6400) — APS-C mirrorless with fast AF, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a6400 (ILCE-6400)"
+      }
+    },
+    {
+      "id": "sony-alpha-a6600-06ff",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x06ff",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a6600 (ILCE-6600) — APS-C mirrorless flagship with IBIS, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a6600 (ILCE-6600)"
+      }
+    },
+    {
+      "id": "sony-alpha-a7c-0700",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0700",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a7C (ILCE-7C) — compact full-frame mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a7C"
+      }
+    },
+    {
+      "id": "sony-alpha-a7cii-0701",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0701",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a7C II (ILCE-7CM2) — compact full-frame mirrorless gen-2, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a7C II"
+      }
+    },
+    {
+      "id": "sony-alpha-a7cr-0702",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0702",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a7C R (ILCE-7CR) — compact full-frame high-res mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a7C R"
+      }
+    },
+    {
+      "id": "sony-alpha-a6700-0703",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0703",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a6700 (ILCE-6700) — APS-C mirrorless flagship with AI AF, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a6700 (ILCE-6700)"
+      }
+    },
+    {
+      "id": "sony-alpha-a7iv-0704",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0704",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a7 IV (ILCE-7M4) — full-frame mirrorless hybrid, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a7 IV (ILCE-7M4)"
+      }
+    },
+    {
+      "id": "sony-alpha-a7siii-0705",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0705",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a7S III (ILCE-7SM3) — full-frame video-optimized mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a7S III (ILCE-7SM3)"
+      }
+    },
+    {
+      "id": "sony-alpha-a1-0706",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0706",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a1 (ILCE-1) — full-frame 50MP flagship mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a1 (ILCE-1)"
+      }
+    },
+    {
+      "id": "sony-alpha-a9iii-0707",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0707",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a9 III (ILCE-9M3) — full-frame global shutter mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a9 III"
+      }
+    },
+    {
+      "id": "sony-zv-e10ii-0708",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0708",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony ZV-E10 II — APS-C vlog mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony ZV-E10 II"
+      }
+    },
+    {
+      "id": "sony-alpha-a7rv-0709",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0709",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a7R V (ILCE-7RM5) — full-frame 61MP mirrorless with AI, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a7R V"
+      }
+    },
+    {
+      "id": "sony-alpha-a7riv-070a",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x070a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a7R IV (ILCE-7RM4) — full-frame 61MP high-res mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a7R IV"
+      }
+    },
+    {
+      "id": "sony-alpha-a7riii-070b",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x070b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a7R III (ILCE-7RM3) — full-frame 42MP mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a7R III"
+      }
+    },
+    {
+      "id": "sony-alpha-a9ii-070c",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x070c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha a9 II (ILCE-9M2) — full-frame sports mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha a9 II"
+      }
+    },
+    {
+      "id": "sony-alpha-fx3-070d",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x070d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha FX3 (ILME-FX3) — full-frame cinema line camera, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha FX3 (ILME-FX3)"
+      }
+    },
+    {
+      "id": "sony-alpha-fx30-070e",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x070e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha FX30 (ILME-FX30) — APS-C cinema line camera, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha FX30 (ILME-FX30)"
+      }
+    },
+    {
+      "id": "sony-alpha-fx9-070f",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x070f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha FX9 (ILME-FX9) — full-frame cinema line camcorder, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha FX9 (ILME-FX9)"
+      }
+    },
+    {
+      "id": "sony-alpha-zv-e1-0710",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0710",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "libgphoto2-research",
+        "addedDate": "2025-07-22",
+        "verificationNotes": "Sony Alpha ZV-E1 (ZV-E1) — full-frame vlog mirrorless, PTP mode."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "Sony Alpha ZV-E1"
+      }
     }
   ]
 }
