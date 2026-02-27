@@ -34,22 +34,33 @@ extension MTPDeviceActor {
     // Fast path: GetObjectPropList (0x9805)
     // params: [parentHandle, 0 (all props), 0 (all formats), depth, 0]
     let buffer = LockedDataBuffer()
-    let result = try await link.executeStreamingCommand(
-      PTPContainer(
-        type: PTPContainer.Kind.command.rawValue,
-        code: MTPOp.getObjectPropList.rawValue,
-        txid: 0,
-        params: [parentHandle, 0x00000000, 0x00000000, depth, 0]
-      ),
-      dataPhaseLength: nil,
-      dataInHandler: { raw in
-        buffer.append(raw)
-        return raw.count
-      },
-      dataOutHandler: nil
-    )
-    try result.checkOK()
-    return try parsePropListDataset(buffer.snapshot())
+    do {
+      let result = try await link.executeStreamingCommand(
+        PTPContainer(
+          type: PTPContainer.Kind.command.rawValue,
+          code: MTPOp.getObjectPropList.rawValue,
+          txid: 0,
+          params: [parentHandle, 0x00000000, 0x00000000, depth, 0]
+        ),
+        dataPhaseLength: nil,
+        dataInHandler: { raw in
+          buffer.append(raw)
+          return raw.count
+        },
+        dataOutHandler: nil
+      )
+      try result.checkOK()
+      return try parsePropListDataset(buffer.snapshot())
+    } catch MTPError.notSupported {
+      // Device doesn't support GetObjectPropList despite heuristic — disable and fallback
+      if currentPolicy != nil {
+        currentPolicy!.flags.supportsGetObjectPropList = false
+      }
+      let handles = try await link.getObjectHandles(
+        storage: MTPStorageID(raw: 0xFFFFFFFF), parent: parentHandle)
+      guard !handles.isEmpty else { return [] }
+      return try await link.getObjectInfos(handles)
+    }
   }
 
   /// Parse a GetObjectPropList (0x9805) response dataset into `[MTPObjectInfo]`.
