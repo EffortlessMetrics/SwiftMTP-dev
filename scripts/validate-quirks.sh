@@ -99,11 +99,29 @@ echo "🔍 Checking for duplicate entry IDs..."
 ids=$(jq -r '.entries[].id' "$QUIRKS_FILE")
 unique_ids=$(echo "$ids" | sort | uniq)
 if [[ "$(echo "$ids" | wc -l)" != "$(echo "$unique_ids" | wc -l)" ]]; then
-    echo "❌ Duplicate entry IDs found"
+    echo "❌ Duplicate entry IDs found:"
+    echo "$ids" | sort | uniq -d | while read -r dup; do
+        echo "   DUPLICATE: $dup"
+    done
     exit 1
 fi
 
 echo "✅ All entry IDs are unique"
+
+# Validate VID+PID pairs are unique
+echo "🔍 Checking for duplicate VID:PID pairs..."
+vidpid_pairs=$(jq -r '.entries[] | "\(.match.vid):\(.match.pid)"' "$QUIRKS_FILE")
+unique_pairs=$(echo "$vidpid_pairs" | sort | uniq)
+if [[ "$(echo "$vidpid_pairs" | wc -l)" != "$(echo "$unique_pairs" | wc -l)" ]]; then
+    echo "❌ Duplicate VID:PID pairs found:"
+    echo "$vidpid_pairs" | sort | uniq -d | while read -r dup; do
+        echo "   DUPLICATE VID:PID $dup used by:"
+        jq -r --arg pair "$dup" '.entries[] | select("\(.match.vid):\(.match.pid)" == $pair) | "     \(.id)"' "$QUIRKS_FILE"
+    done
+    exit 1
+fi
+
+echo "✅ All VID:PID pairs are unique"
 
 # Check that all entries have a governance status field
 echo "🔍 Checking governance status field..."
