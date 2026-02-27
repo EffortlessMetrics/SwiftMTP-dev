@@ -21,8 +21,8 @@ final class QuirksDatabasePropertyTests: XCTestCase {
 
   func testDatabaseHasMinimumEntryCount() {
     XCTAssertGreaterThanOrEqual(
-      db.entries.count, 3200,
-      "Database should have at least 3200 entries (wave-15 baseline)")
+      db.entries.count, 3500,
+      "Database should have at least 3500 entries (wave-16 baseline)")
   }
 
   func testAllQuirkIDsAreUnique() {

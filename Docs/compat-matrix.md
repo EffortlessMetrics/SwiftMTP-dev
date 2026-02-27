@@ -3231,3 +3231,310 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Htc Htc For Hewlett Packard Hp Touchpad MTP Adb | 0bb4:6860 | ⚪ proposed | supportsGetPartialObject |
 | Htc Htc Windows Phone 8s Id1 | 0bb4:f0ca | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
 | Xiaomi Xiaomi Mi 2 Ptp Adb | 2717:904e | ⚪ proposed | supportsGetPartialObject |
+| Samsung Yh J70j | 04e8:5033 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Yp T7j | 04e8:5047 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Yp U2j Yp U2jxb Xaa | 04e8:5054 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Yp F2j | 04e8:5057 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Yp K5 | 04e8:505a | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Yp U3 | 04e8:507d | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Yp K3 | 04e8:5081 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Yp T10 | 04e8:508a | ⚪ proposed | — |
+| Samsung Yp S5 | 04e8:508b | ⚪ proposed | — |
+| Samsung Yp S3 | 04e8:5091 | ⚪ proposed | — |
+| Samsung Yp R1 | 04e8:510f | ⚪ proposed | — |
+| Samsung Yp Q1 | 04e8:5115 | ⚪ proposed | — |
+| Samsung Yp M1 | 04e8:5118 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Yp P3 | 04e8:511a | ⚪ proposed | — |
+| Samsung Yp R2 | 04e8:512e | ⚪ proposed | — |
+| Samsung Yp Z3 | 04e8:5137 | ⚪ proposed | — |
+| Samsung Yh 999 Portable Media Center Sgh A707 Sg | 04e8:5a0f | ⚪ proposed | — |
+| Samsung Z170 Mobile Phone | 04e8:6601 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung E250 Mobile Phone | 04e8:663e | ⚪ proposed | supportsGetObjectPropList |
+| Samsung M7600 Beat Gt S8300t Sgh F490 S8300 | 04e8:6642 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung X830 Mobile Phone | 04e8:6702 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung U600 Mobile Phone | 04e8:6709 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung F250 Mobile Phone | 04e8:6727 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Juke Sch U470 | 04e8:6734 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Gt B2700 | 04e8:6752 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Samsung Trance | 04e8:6763 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Gt S8500 | 04e8:6819 | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Gt B2710 Xcover 271 | 04e8:68af | ⚪ proposed | supportsGetObjectPropList |
+| Samsung Gt S5230 | 04e8:e20c | ⚪ proposed | supportsGetObjectPropList |
+| Fujitsu Ltd F903ix High Speed | 04c5:1140 | ⚪ proposed | supportsGetObjectPropList |
+| Fujitsu Ltd Stylistic M532 | 04c5:133b | ⚪ proposed | — |
+| Fujitsu Ltd F02 E | 04c5:1378 | ⚪ proposed | — |
+| Fujitsu Ltd Arrows 202f | 04c5:13dd | ⚪ proposed | — |
+| Fujitsu Ltd Tone M17 | 04c5:158c | ⚪ proposed | — |
+| Verizon Ellipsis 7 | 0408:3899 | ⚪ proposed | — |
+| Medion Md99000 P9514 Olivetti Olipad 110 | 0408:b009 | ⚪ proposed | — |
+| Medion Lifetab P9514 | 0408:b00a | ⚪ proposed | — |
+| Trekstor Surftab Breeze 70 Quad 3g | 1e68:1045 | ⚪ proposed | — |
+| Sony Nwz A845 | 054c:0404 | ⚪ proposed | supportsGetObjectPropList |
+| Sony Sony Tablet P1 | 054c:04d1 | ⚪ proposed | — |
+| Sony Sony Tablet S | 054c:05b3 | ⚪ proposed | — |
+| Sony Sony Tablet S1 | 054c:05b4 | ⚪ proposed | — |
+| Sony Xperia Tablet S Sgpt12 | 054c:06ac | ⚪ proposed | supportsGetObjectPropList |
+| Sony Nwz E384 | 054c:0882 | ⚪ proposed | supportsGetObjectPropList |
+| Sony Dcr Sr75 | 054c:1294 | ⚪ proposed | supportsGetObjectPropList |
+| Panasonic P905i | 04da:2145 | ⚪ proposed | supportsGetObjectPropList |
+| Panasonic P906i | 04da:2158 | ⚪ proposed | supportsGetObjectPropList |
+| Pioneer Xmp3 | 08e4:0148 | ⚪ proposed | supportsGetObjectPropList |
+| Curitel Communications Inc Verizon Wireless Device | 106c:3215 | ⚪ proposed | supportsGetObjectPropList |
+| Pantech Crux | 106c:f003 | ⚪ proposed | supportsGetObjectPropList |
+| Asus Me302kl Memo Pad Fhd10 MTP | 0b05:4cc0 | ⚪ proposed | — |
+| Asus Me302kl Memo Pad Fhd10 Mtpadb | 0b05:4cc1 | ⚪ proposed | — |
+| Asus Me301t Memo Pad Smart 10 MTP | 0b05:4cd0 | ⚪ proposed | — |
+| Asus Me301t Memo Pad Smart 10 Mtpadb | 0b05:4cd1 | ⚪ proposed | — |
+| Asus Asus Fonepad Note 6 MTP | 0b05:4ce0 | ⚪ proposed | — |
+| Asus Asus Fonepad Note 6 Mtpadb | 0b05:4ce1 | ⚪ proposed | — |
+| Asus Tf201 Transformer Prime Keyboard Dock | 0b05:4d00 | ⚪ proposed | — |
+| Asus Tf201 Transformer Prime Tablet Only | 0b05:4d01 | ⚪ proposed | — |
+| Asus Sl101 MTP | 0b05:4e00 | ⚪ proposed | — |
+| Asus Sl101 Mtpadb | 0b05:4e01 | ⚪ proposed | — |
+| Asus Tf101 Eeepad Transformer MTP | 0b05:4e0f | ⚪ proposed | — |
+| Asus Tf101 Eeepad Transformer Mtpadb | 0b05:4e1f | ⚪ proposed | — |
+| Asus Fonepad | 0b05:514f | ⚪ proposed | — |
+| Asus Padfone MTP | 0b05:5200 | ⚪ proposed | — |
+| Asus Padfone Mtpadb | 0b05:5201 | ⚪ proposed | — |
+| Asus Me302c Memopad MTP | 0b05:520f | ⚪ proposed | — |
+| Asus Padfone 2 MTP | 0b05:5210 | ⚪ proposed | — |
+| Asus Padfone 2 Mtpadb | 0b05:5211 | ⚪ proposed | — |
+| Asus Padfone 2 Ptp | 0b05:5214 | ⚪ proposed | — |
+| Asus Me302c Memopad MTP | 0b05:521f | ⚪ proposed | — |
+| Asus Padfone Infinity 2nd Id MTP | 0b05:5220 | ⚪ proposed | — |
+| Asus Padfone Infinity 2nd Id Mtpadb | 0b05:5221 | ⚪ proposed | — |
+| Asus Padfone Infinity MTP | 0b05:5230 | ⚪ proposed | — |
+| Asus Padfone Infinity Mtpadb | 0b05:5231 | ⚪ proposed | — |
+| Asus Memo Me172v MTP | 0b05:5400 | ⚪ proposed | — |
+| Asus Fonepad 7 Lte Me372cl MTP | 0b05:540f | ⚪ proposed | — |
+| Asus Memo Me173x MTP | 0b05:5410 | ⚪ proposed | — |
+| Asus Memo Me173x Mtpadb | 0b05:5411 | ⚪ proposed | — |
+| Asus Fonepad 7 Lte Me372cl Mtpadb | 0b05:541f | ⚪ proposed | — |
+| Asus Memo K00f MTP | 0b05:5460 | ⚪ proposed | — |
+| Asus Memo Pad 8 MTP | 0b05:5466 | ⚪ proposed | — |
+| Asus Memo K00f Mtpadb | 0b05:5468 | ⚪ proposed | — |
+| Asus Zenfone 5 Mtpadb | 0b05:5481 | ⚪ proposed | — |
+| Asus Zenfone 6 Mtpadb | 0b05:5491 | ⚪ proposed | — |
+| Asus K010 MTP | 0b05:5500 | ⚪ proposed | — |
+| Asus Memopad 7 Mtpadb | 0b05:5506 | ⚪ proposed | — |
+| Asus K00e Mtpadb | 0b05:550f | ⚪ proposed | — |
+| Asus Memopad 8 Me181 Cx MTP | 0b05:5561 | ⚪ proposed | — |
+| Asus Z00ad MTP | 0b05:5601 | ⚪ proposed | — |
+| Asus Tx201la MTP | 0b05:561f | ⚪ proposed | — |
+| Asus Zenfone 4 MTP | 0b05:580f | ⚪ proposed | — |
+| Asus Zenfone 4 A400cg MTP | 0b05:581f | ⚪ proposed | — |
+| Asus Asus Fonepad 8 Fe380cg MTP | 0b05:590f | ⚪ proposed | — |
+| Asus A450cg MTP | 0b05:5a0f | ⚪ proposed | — |
+| Asus Zenpad 80 MTP | 0b05:5e0f | ⚪ proposed | — |
+| Asus Zenfone 2 Ze550ml MTP | 0b05:5f02 | ⚪ proposed | — |
+| Asus Zenfone 2 Ze551ml MTP | 0b05:5f03 | ⚪ proposed | — |
+| Asus Zenpad 10 | 0b05:600f | ⚪ proposed | — |
+| Asus Zenfone V MTP | 0b05:610f | ⚪ proposed | — |
+| Asus Zenfone 5 A500kl Mtpadb | 0b05:7781 | ⚪ proposed | — |
+| Medion Lifetab P9516 | 17ef:7483 | ⚪ proposed | — |
+| Lenovo Ideapad A3000 Id1 | 17ef:75bc | ⚪ proposed | — |
+| Lenovo Ideapad A3000 Id2 | 17ef:75be | ⚪ proposed | — |
+| Lenovo A706 | 17ef:7614 | ⚪ proposed | — |
+| Lenovo Ideatab S5000 | 17ef:76e8 | ⚪ proposed | — |
+| Lenovo Toga Tablet B6000 F | 17ef:76f2 | ⚪ proposed | — |
+| Lenovo Yoga Tablet 10 B8000 H | 17ef:76ff | ⚪ proposed | — |
+| Lenovo S960 | 17ef:770a | ⚪ proposed | — |
+| Lenovo K910ss | 17ef:7713 | ⚪ proposed | — |
+| Lenovo S930 | 17ef:7718 | ⚪ proposed | — |
+| Lenovo A5500 H | 17ef:772a | ⚪ proposed | — |
+| Lenovo A5500 F | 17ef:772b | ⚪ proposed | — |
+| Lenovo A7600 F | 17ef:7730 | ⚪ proposed | — |
+| Lenovo A7600 F 2nd | 17ef:7731 | ⚪ proposed | — |
+| Lenovo A3500 F | 17ef:7737 | ⚪ proposed | — |
+| Lenovo A3500 Fl | 17ef:7738 | ⚪ proposed | — |
+| Lenovo Lifetab E733x | 17ef:775a | ⚪ proposed | — |
+| Lenovo Yoga Tablet 2 1050f | 17ef:77a4 | ⚪ proposed | — |
+| Lenovo Yoga Tablet 2 | 17ef:77a5 | ⚪ proposed | — |
+| Lenovo Yoga Tablet 2 Pro | 17ef:77b1 | ⚪ proposed | — |
+| Lenovo Tab S8 50f | 17ef:77d8 | ⚪ proposed | — |
+| Lenovo S60 A | 17ef:7802 | ⚪ proposed | — |
+| Lenovo A7 30hc | 17ef:7852 | ⚪ proposed | — |
+| Lenovo A7 30gc | 17ef:7853 | ⚪ proposed | — |
+| Lenovo A10 70f | 17ef:789a | ⚪ proposed | — |
+| Lenovo A10 70l | 17ef:789b | ⚪ proposed | — |
+| Medion P8312 Tablet | 17ef:78ae | ⚪ proposed | — |
+| Lenovo Lifetab S1034x | 17ef:78b0 | ⚪ proposed | — |
+| Lenovo Vibe K4 Note | 17ef:78f6 | ⚪ proposed | — |
+| Lenovo Vibe P1 Pro | 17ef:78fc | ⚪ proposed | — |
+| Lenovo Vibe X | 17ef:7902 | ⚪ proposed | — |
+| Lenovo P1ma40 2nd Id | 17ef:7920 | ⚪ proposed | — |
+| Lenovo P1ma40 | 17ef:7921 | ⚪ proposed | — |
+| Lenovo A1000 Smartphone | 17ef:7928 | ⚪ proposed | — |
+| Lenovo A1000 Smartphone Adb | 17ef:7929 | ⚪ proposed | — |
+| Lenovo K5 | 17ef:7993 | ⚪ proposed | — |
+| Lenovo Vibe K4 | 17ef:79b7 | ⚪ proposed | — |
+| Lenovo B Smartphone | 17ef:7a18 | ⚪ proposed | — |
+| Lenovo C2 | 17ef:7a36 | ⚪ proposed | — |
+| Lenovo P1060x | 17ef:9039 | ⚪ proposed | — |
+| Medion P10606 | 17ef:f003 | ⚪ proposed | — |
+| Nec Foma N01a | 0409:0242 | ⚪ proposed | supportsGetObjectPropList |
+| Casio Gzone Commando C771 | 0409:02ed | ⚪ proposed | supportsGetObjectPropList |
+| Nec Casio C811 | 0409:0326 | ⚪ proposed | supportsGetObjectPropList |
+| Nec Casio Ca 201l | 0409:0432 | ⚪ proposed | supportsGetObjectPropList |
+| Nvidia Various Tablets Id1 | 0955:7100 | ⚪ proposed | — |
+| Nvidia Various Tablets Id2 | 0955:7102 | ⚪ proposed | — |
+| Nvidia Jetson Tx1 | 0955:7721 | ⚪ proposed | — |
+| Nvidia Shield Mtpadb | 0955:b400 | ⚪ proposed | — |
+| Nvidia Shield MTP | 0955:b401 | ⚪ proposed | — |
+| Nvidia Shield Android Tv Pro MTP | 0955:b42a | ⚪ proposed | — |
+| Nvidia Tegra Note | 0955:cf02 | ⚪ proposed | — |
+| Nvidia Shield Tablet Mtpadb | 0955:cf05 | ⚪ proposed | — |
+| Nvidia Shield Tablet MTP | 0955:cf07 | ⚪ proposed | — |
+| Foxconn For Nokia N1 | 0489:1ab0 | ⚪ proposed | — |
+| Foxconn For Infocus M808 | 0489:c00b | ⚪ proposed | — |
+| Foxconn For Infocus M810 | 0489:c025 | ⚪ proposed | — |
+| Foxconn For Vizio Unknown 1 | 0489:c026 | ⚪ proposed | — |
+| Sharp Aquos Wish2 | 0489:c030 | ⚪ proposed | — |
+| Sharp Aquos Wish3 | 0489:c033 | ⚪ proposed | — |
+| Foxconn For Vizio Vtab1008 | 0489:e040 | ⚪ proposed | — |
+| Various Viewpia Dr Bq Kepler | 2207:0001 | ⚪ proposed | — |
+| Yifang Bq Tesla | 2207:0006 | ⚪ proposed | — |
+| Various Anbernic Rg353p MTP | 2207:0007 | ⚪ proposed | — |
+| Various Anbernic Rg353p Ptpadb | 2207:0008 | ⚪ proposed | — |
+| Various Viewpia Dr Bq Kepler Debugging | 2207:0011 | ⚪ proposed | — |
+| Supernote A5x | 2207:0031 | ⚪ proposed | — |
+| Hisense Sero 7 Pro | 109b:9105 | ⚪ proposed | — |
+| Hisense E860 Id1 | 109b:9106 | ⚪ proposed | — |
+| Hisense E860 Id2 | 109b:9109 | ⚪ proposed | — |
+| Crosscall Trekker M1 Core | 109b:9130 | ⚪ proposed | — |
+| Intel Point Of View Tab I847 | 8087:092a | ⚪ proposed | — |
+| Intel Xolo 900 Az210a | 8087:09fb | ⚪ proposed | — |
+| Intel Noblex T7a21 | 8087:0a16 | ⚪ proposed | — |
+| Intel Foxconn Iview I700 | 8087:0a15 | ⚪ proposed | — |
+| Intel Telcast Air 3g | 8087:0a5e | ⚪ proposed | — |
+| Xiaomi Mi 9 M1902f1g Or Poco X3 Pro MTP | 0a9d:ff40 | ⚪ proposed | — |
+| Acromag Inc Xo Learning Tablet Mtpadb | 16d5:8005 | ⚪ proposed | — |
+| Acromag Inc Xo Learning Tablet MTP | 16d5:8006 | ⚪ proposed | — |
+| Hewlett Packard Slate 7 4600 | 03f0:5c1d | ⚪ proposed | — |
+| Hewlett Packard Slate 7 2800 | 03f0:5d1d | ⚪ proposed | — |
+| Hewlett Packard Slate 10 Hd | 03f0:7e1d | ⚪ proposed | — |
+| Jolla Sailfish Id1 | 2931:0a01 | ⚪ proposed | — |
+| Jolla Sailfish Id2 | 2931:0a05 | ⚪ proposed | — |
+| Jolla Sailfish Id3 | 2931:0a07 | ⚪ proposed | — |
+| Garmin Descent Mk2 Mk2i Apac | 091e:4e76 | ⚪ proposed | — |
+| Garmin Descent Mk2s Apac | 091e:4f5a | ⚪ proposed | — |
+| Garmin Forerunner 255m | 091e:4f96 | ⚪ proposed | — |
+| Garmin Forerunner 255 | 091e:4f98 | ⚪ proposed | — |
+| Garmin Forerunner 255s Music | 091e:4f97 | ⚪ proposed | — |
+| Garmin Forerunner 255s | 091e:4f99 | ⚪ proposed | — |
+| Garmin Forerunner 955 Solar | 091e:4fb8 | ⚪ proposed | — |
+| Garmin Venu Sq 2 Music | 091e:5014 | ⚪ proposed | — |
+| Garmin Tactix 7 | 091e:5027 | ⚪ proposed | — |
+| Garmin Descent Mk3 Mk3i 43mm | 091e:507e | ⚪ proposed | — |
+| Garmin Descent Mk3i 51mm | 091e:507f | ⚪ proposed | — |
+| Garmin Epix Pro | 091e:50d9 | ⚪ proposed | — |
+| Garmin Epix Pro Gen 2 51mm | 091e:50da | ⚪ proposed | — |
+| Garmin Fenix 7s Pro Sapphire Solar | 091e:5116 | ⚪ proposed | — |
+| Garmin Fenix 7 Pro Solar | 091e:5117 | ⚪ proposed | — |
+| Garmin Fenix8 | 091e:51b6 | ⚪ proposed | — |
+| Garmin Fenix 8 Solar Sapphire | 091e:51b5 | ⚪ proposed | — |
+| Garmin Tactix 7 Amoled | 091e:51be | ⚪ proposed | — |
+| Garmin Forerunner 970 | 091e:51d5 | ⚪ proposed | — |
+| Garmin Forerunner 570 | 091e:51de | ⚪ proposed | — |
+| Garmin Venu X1 | 091e:51fb | ⚪ proposed | — |
+| Garmin Vivoactive 6 | 091e:5211 | ⚪ proposed | — |
+| Garmin Venu 4 41mm | 091e:5224 | ⚪ proposed | — |
+| Garmin Instinct 3 Solar | 091e:5297 | ⚪ proposed | — |
+| Wacom Cintiq Companion Hybrid Mtpadb | 0531:2001 | ⚪ proposed | — |
+| Kurio 7s | 1f3a:1006 | ⚪ proposed | — |
+| Irulu X1s | 1f3a:1007 | ⚪ proposed | — |
+| Digiland Dl701q | 1f3a:0c02 | ⚪ proposed | — |
+| Allwinner It701a | 1f3a:4ee1 | ⚪ proposed | — |
+| Bq Krillin Mtpadb | 2a47:0c02 | ⚪ proposed | — |
+| Bq Krillin MTP | 2a47:2008 | ⚪ proposed | — |
+| Bq Aquaris M10 MTP | 2a47:200d | ⚪ proposed | — |
+| Bq Avila Cooler MTP | 2a47:201d | ⚪ proposed | — |
+| Bq Aquaris X5 MTP | 2a47:3003 | ⚪ proposed | — |
+| Bq Aquaris X2 MTP | 2a47:4ee1 | ⚪ proposed | — |
+| Bq Aquarius E5 4g | 2a47:7f10 | ⚪ proposed | — |
+| Bq Aquarius X5 MTP Id2 | 2a47:7f11 | ⚪ proposed | — |
+| Bq Aquarius M55 | 2a47:901b | ⚪ proposed | — |
+| Bq Aquarius U | 2a47:9039 | ⚪ proposed | — |
+| Bq Aquarius U 2nd Id | 2a47:903a | ⚪ proposed | — |
+| Bq U Plus | 2a47:f003 | ⚪ proposed | — |
+| Prestigio 5505 Duo | 29e4:1103 | ⚪ proposed | — |
+| Mediatek 5508 Duo | 29e4:1201 | ⚪ proposed | — |
+| Prestigio 5504 Duo | 29e4:1203 | ⚪ proposed | — |
+| Prestigio 3405 Duo | 29e4:3201 | ⚪ proposed | — |
+| Prestigio Multipad Color 8 | 29e4:b001 | ⚪ proposed | — |
+| Prestigio Multipad Color 70 | 29e4:b003 | ⚪ proposed | — |
+| Megafon Mflogin3t | 201e:42ab | ⚪ proposed | — |
+| Haier Ct715 | 201e:a0c1 | ⚪ proposed | — |
+| Gensis Gt 7305 | 040d:885c | ⚪ proposed | — |
+| Gigabyte Rct6773w22 Mtpadb | 0414:0c02 | ⚪ proposed | — |
+| Gigabyte Rct6773w22 MTP | 0414:2008 | ⚪ proposed | — |
+| Caterpillar Cat S40 | 04b7:88b0 | ⚪ proposed | — |
+| Caterpillar Cat S30 | 04b7:88b9 | ⚪ proposed | — |
+| Caterpillar Cat S60 | 04b7:88c0 | ⚪ proposed | — |
+| Caterpillar Cat S60 2nd Id | 04b7:88c1 | ⚪ proposed | — |
+| Caterpillar Cat S41 | 04b7:88c6 | ⚪ proposed | — |
+| Caterpillar Cat S31 | 04b7:88d0 | ⚪ proposed | — |
+| Caterpillar Cat S61 | 04b7:88d6 | ⚪ proposed | — |
+| Caterpillar Cat S62 Pro | 04b7:88f1 | ⚪ proposed | — |
+| Pegatron Chagall Adb | 1d4d:5035 | ⚪ proposed | — |
+| Pegatron Chagall | 1d4d:5036 | ⚪ proposed | — |
+| Pegatron Hudl 2 | 1d4d:504a | ⚪ proposed | — |
+| Fly Evo Tech 4 | 2970:2008 | ⚪ proposed | — |
+| Fly Nimbus 3 | 2970:4001 | ⚪ proposed | — |
+| Fly 5s | 2970:4002 | ⚪ proposed | — |
+| Kazam Trooper 650 4g | 2970:9039 | ⚪ proposed | — |
+| Megafon Login | 1271:2012 | ⚪ proposed | — |
+| Fly Iq4415 Era Style 3 | 2970:0c02 | ⚪ proposed | — |
+| Yu Yureka Vodafone Smart Turbo 4 | 1ebf:7f29 | ⚪ proposed | — |
+| Coolpad 801es | 1ebf:7029 | ⚪ proposed | — |
+| Benq F5 | 1d45:459d | ⚪ proposed | — |
+| Ouya Videogame Console | 2836:0010 | ⚪ proposed | — |
+| Parrot Bebop Drone | 19cf:5038 | ⚪ proposed | — |
+| Gopro Hero4 Session | 2672:000f | ⚪ proposed | supportsGetObjectPropList |
+| Gopro Hero 2018 | 2672:002d | ⚪ proposed | supportsGetObjectPropList |
+| Gopro Fusion Back | 2672:0032 | ⚪ proposed | supportsGetObjectPropList |
+| Gopro Fusion Front | 2672:0035 | ⚪ proposed | supportsGetObjectPropList |
+| Allview Energy P5 | 271d:4016 | ⚪ proposed | — |
+| Blu Studio Energy 2 | 271d:4017 | ⚪ proposed | — |
+| Zuk Z1 | 2b4c:1004 | ⚪ proposed | — |
+| Zuk Z1 2nd Id | 2b4c:1005 | ⚪ proposed | — |
+| Zuk Z2 Pro | 2b4c:1013 | ⚪ proposed | — |
+| Zuk Z2 | 2b4c:101a | ⚪ proposed | — |
+| Lemobile Le 2 | 2b0e:1714 | ⚪ proposed | — |
+| Lemobile Le 2 Id2 | 2b0e:171b | ⚪ proposed | — |
+| Letv Leeco Le 1s | 2b0e:1768 | ⚪ proposed | — |
+| Letv Leeco Le 2 Pro | 2b0e:1778 | ⚪ proposed | — |
+| Letv X800 Id1 | 2b0e:182c | ⚪ proposed | — |
+| Letv X800 Id2 | 2b0e:1830 | ⚪ proposed | — |
+| Letv Le Max2 | 2b0e:1840 | ⚪ proposed | — |
+| Letv Le Max2 Id2 | 2b0e:1844 | ⚪ proposed | — |
+| Tp Link Neffos C5 MTP | 2357:0314 | ⚪ proposed | — |
+| Tp Link Neffos C5 Max MTP | 2357:031a | ⚪ proposed | — |
+| Tp Link Neffos Y5l MTP | 2357:0320 | ⚪ proposed | — |
+| Tp Link Neffos Y5 MTP | 2357:0328 | ⚪ proposed | — |
+| Tp Link Neffos X1 MTP | 2357:033c | ⚪ proposed | — |
+| Tp Link Neffos Y5s MTP | 2357:038c | ⚪ proposed | — |
+| Recon Instruments Jet | 2523:d209 | ⚪ proposed | — |
+| Recon Instruments Snow2 Hud | 2523:d109 | ⚪ proposed | — |
+| Nextbit Robin | 2c3f:0001 | ⚪ proposed | — |
+| Vega R3 | 10a9:1105 | ⚪ proposed | — |
+| Op Innovations Xdp 100r | 0746:a003 | ⚪ proposed | — |
+| Pioneer Xdp 300r | 0746:a023 | ⚪ proposed | — |
+| Niteto Adf Drive | 16c0:0489 | ⚪ proposed | — |
+| Longcheer D | 1c9e:f003 | ⚪ proposed | — |
+| Vtevch Storio Max Xl 20 | 0f88:0684 | ⚪ proposed | — |
+| Netronix E60qh2 | 1f85:6a12 | ⚪ proposed | — |
+| Mooink Plus 2 | 1f85:2571 | ⚪ proposed | — |
+| Doro Phone 8030 Dsb 0010 | 2b43:0006 | ⚪ proposed | — |
+| Isabella Her Prototype | 0b20:ddee | ⚪ proposed | supportsGetObjectPropList |
+| Nox A1 | 1e0a:1001 | ⚪ proposed | supportsGetObjectPropList |
+| Mudita Pure Phone | 3310:0100 | ⚪ proposed | supportsGetObjectPropList |
+| Flir C5 | 09cb:100b | ⚪ proposed | — |
+| Shift Shift6m | 3360:2008 | ⚪ proposed | — |
+| Teenage Engineering Tp 7 | 2367:0019 | ⚪ proposed | — |
+| Teenage Engineering Op 1 Field | 2367:0102 | ⚪ proposed | — |
+| Teenage Engineering Op Xy | 2367:0021 | ⚪ proposed | — |
+| Rohdeschwarz Rtx Oscilloscope | 0aad:01d7 | ⚪ proposed | — |
+| Polar Grit X2 Pro | 0da4:0014 | ⚪ proposed | — |
+| Hawkeye Ai15 | 1d6b:0101 | ⚪ proposed | — |
+| Qemu Virtual MTP | 46f4:0004 | ⚪ proposed | supportsGetObjectPropList |
