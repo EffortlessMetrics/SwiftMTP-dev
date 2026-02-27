@@ -78411,6 +78411,3349 @@
         "addedDate": "2025-01-01",
         "verificationNotes": "Shiftphone 8 - Android MTP vendor interface; open-source Android device"
       }
+    },
+    {
+      "id": "roland-r-26-field-recorder-0093",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x0093",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland R-26 Field Recorder - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "roland-r-44-field-recorder-0094",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x0094",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland R-44 Field Recorder - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "roland-go-piano-014e",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x014e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland GO:PIANO - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "roland-fantom-06-0150",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x0150",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland FANTOM-06 - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "roland-fantom-07-0151",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x0151",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland FANTOM-07 - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "roland-fantom-08-0152",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x0152",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland FANTOM-08 - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "roland-rd-88-016f",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x016f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland RD-88 - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "roland-rd-2000-ex-0170",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x0170",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland RD-2000 EX - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "roland-mc-707-0199",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x0199",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland MC-707 - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "roland-mc-101-019a",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x019a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland MC-101 - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "roland-zc-1-v-piano-01b9",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x01b9",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland ZC-1 (V-Piano) - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "roland-spd-sx-pro-01c6",
+      "match": {
+        "vid": "0x0582",
+        "pid": "0x01c6",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Roland SPD-SX Pro - field recorder/workstation MTP"
+      }
+    },
+    {
+      "id": "zoom-h6-0030",
+      "match": {
+        "vid": "0x1686",
+        "pid": "0x0030",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Zoom H6 - field recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "zoom-h8-0031",
+      "match": {
+        "vid": "0x1686",
+        "pid": "0x0031",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Zoom H8 - field recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "zoom-q8n-4k-0032",
+      "match": {
+        "vid": "0x1686",
+        "pid": "0x0032",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Zoom Q8n-4K - field recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "zoom-l-8-0033",
+      "match": {
+        "vid": "0x1686",
+        "pid": "0x0033",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Zoom L-8 - field recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "zoom-h3-vr-0034",
+      "match": {
+        "vid": "0x1686",
+        "pid": "0x0034",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Zoom H3-VR - field recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "zoom-h6essential-0035",
+      "match": {
+        "vid": "0x1686",
+        "pid": "0x0035",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Zoom H6essential - field recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "zoom-h1essential-0036",
+      "match": {
+        "vid": "0x1686",
+        "pid": "0x0036",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Zoom H1essential - field recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "tascam-dr-40-0001",
+      "match": {
+        "vid": "0x06ef",
+        "pid": "0x0001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "TASCAM DR-40 - portable recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "tascam-dr-100mkiii-0002",
+      "match": {
+        "vid": "0x06ef",
+        "pid": "0x0002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "TASCAM DR-100mkIII - portable recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "tascam-dr-701d-0003",
+      "match": {
+        "vid": "0x06ef",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "TASCAM DR-701D - portable recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "tascam-dr-44wl-0004",
+      "match": {
+        "vid": "0x06ef",
+        "pid": "0x0004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "TASCAM DR-44WL - portable recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "tascam-dr-05x-0005",
+      "match": {
+        "vid": "0x06ef",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "TASCAM DR-05X - portable recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "tascam-dr-10l-0006",
+      "match": {
+        "vid": "0x06ef",
+        "pid": "0x0006",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "TASCAM DR-10L - portable recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "tascam-portacapture-x8-0007",
+      "match": {
+        "vid": "0x06ef",
+        "pid": "0x0007",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "TASCAM PORTACAPTURE X8 - portable recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "sony-icd-tx660-0a5d",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a5d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony ICD-TX660 - IC recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "sony-icd-sx2000-0a5e",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a5e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony ICD-SX2000 - IC recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "sony-icd-ux570f-0a5f",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a5f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony ICD-UX570F - IC recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "sony-icd-tx800-0a60",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a60",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony ICD-TX800 - IC recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "sony-pcm-a10-0a61",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a61",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony PCM-A10 - IC recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "sony-pcm-d10-0a62",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a62",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony PCM-D10 - IC recorder PTP/MTP"
+      }
+    },
+    {
+      "id": "sandisk-sansa-fuze-74c4",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x74c4",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "libmtp",
+        "notes": "SanDisk Sansa Fuze - MTP media player"
+      }
+    },
+    {
+      "id": "sandisk-sansa-clip-74c8",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x74c8",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "libmtp",
+        "notes": "SanDisk Sansa Clip - MTP media player"
+      }
+    },
+    {
+      "id": "sandisk-sansa-e200-74e8",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x74e8",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "libmtp",
+        "notes": "SanDisk Sansa e200 - MTP media player"
+      }
+    },
+    {
+      "id": "sandisk-sansa-view-7494",
+      "match": {
+        "vid": "0x0781",
+        "pid": "0x7494",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "libmtp",
+        "notes": "SanDisk Sansa View - MTP media player"
+      }
+    },
+    {
+      "id": "creative-zen-v-4151",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4151",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Creative Zen V - MTP media player"
+      }
+    },
+    {
+      "id": "creative-zen-4152",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4152",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Creative Zen - MTP media player"
+      }
+    },
+    {
+      "id": "creative-zen-m-4153",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4153",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Creative Zen M - MTP media player"
+      }
+    },
+    {
+      "id": "creative-zen-x-fi-4154",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4154",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Creative ZEN X-Fi - MTP media player"
+      }
+    },
+    {
+      "id": "creative-zen-stone-4155",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4155",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Creative Zen Stone - MTP media player"
+      }
+    },
+    {
+      "id": "creative-zen-style-m300-415e",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x415e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "community-validation",
+        "addedBy": "automated-research",
+        "addedDate": "2026-02-27"
+      },
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Creative ZEN Style M300 - MTP media player"
+      }
+    },
+    {
+      "id": "epson-perfection-v39-01be",
+      "match": {
+        "vid": "0x04b8",
+        "pid": "0x01be",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Epson Perfection V39"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Epson Perfection V39"
+      }
+    },
+    {
+      "id": "epson-perfection-v370-01bf",
+      "match": {
+        "vid": "0x04b8",
+        "pid": "0x01bf",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Epson Perfection V370"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Epson Perfection V370"
+      }
+    },
+    {
+      "id": "epson-perfection-v550-01c0",
+      "match": {
+        "vid": "0x04b8",
+        "pid": "0x01c0",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Epson Perfection V550"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Epson Perfection V550"
+      }
+    },
+    {
+      "id": "epson-perfection-v600-01c1",
+      "match": {
+        "vid": "0x04b8",
+        "pid": "0x01c1",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Epson Perfection V600"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Epson Perfection V600"
+      }
+    },
+    {
+      "id": "epson-fastfoto-ff-680w-01c2",
+      "match": {
+        "vid": "0x04b8",
+        "pid": "0x01c2",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Epson FastFoto FF-680W"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Epson FastFoto FF-680W"
+      }
+    },
+    {
+      "id": "epson-ds-80w-01c3",
+      "match": {
+        "vid": "0x04b8",
+        "pid": "0x01c3",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Epson DS-80W"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Epson DS-80W"
+      }
+    },
+    {
+      "id": "epson-ds-575w-01c4",
+      "match": {
+        "vid": "0x04b8",
+        "pid": "0x01c4",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Epson DS-575W"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Epson DS-575W"
+      }
+    },
+    {
+      "id": "epson-ds-770-01c5",
+      "match": {
+        "vid": "0x04b8",
+        "pid": "0x01c5",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Epson DS-770"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Epson DS-770"
+      }
+    },
+    {
+      "id": "epson-es-50-01c6",
+      "match": {
+        "vid": "0x04b8",
+        "pid": "0x01c6",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Epson ES-50"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Epson ES-50"
+      }
+    },
+    {
+      "id": "canon-canoscan-lide-300-190a",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x190a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "CanoScan LiDE 300"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "CanoScan LiDE 300"
+      }
+    },
+    {
+      "id": "canon-canoscan-lide-400-190b",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x190b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "CanoScan LiDE 400"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "CanoScan LiDE 400"
+      }
+    },
+    {
+      "id": "canon-canoscan-lide-30-190c",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x190c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "CanoScan LiDE 30"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "CanoScan LiDE 30"
+      }
+    },
+    {
+      "id": "canon-canoscan-lide-220-190d",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x190d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "CanoScan LiDE 220"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "CanoScan LiDE 220"
+      }
+    },
+    {
+      "id": "canon-canoscan-9000f-mark-ii-190e",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x190e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "CanoScan 9000F Mark II"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "CanoScan 9000F Mark II"
+      }
+    },
+    {
+      "id": "hp-elite-x3-5411",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x5411",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "HP Elite x3"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "HP Elite x3"
+      }
+    },
+    {
+      "id": "hp-elitepad-1000-g2-5412",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x5412",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "HP ElitePad 1000 G2"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "HP ElitePad 1000 G2"
+      }
+    },
+    {
+      "id": "hp-pro-slate-8-5413",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x5413",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "HP Pro Slate 8"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "HP Pro Slate 8"
+      }
+    },
+    {
+      "id": "hp-photosmart-380-4205",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x4205",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "HP PhotoSmart 380"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "HP PhotoSmart 380"
+      }
+    },
+    {
+      "id": "hp-photosmart-470-4305",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x4305",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "HP PhotoSmart 470"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "HP PhotoSmart 470"
+      }
+    },
+    {
+      "id": "hp-photosmart-618-4505",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x4505",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "HP PhotoSmart 618"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "HP PhotoSmart 618"
+      }
+    },
+    {
+      "id": "hp-photosmart-m23-7505",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x7505",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "HP PhotoSmart M23"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "HP PhotoSmart M23"
+      }
+    },
+    {
+      "id": "blackmagic-pocket-cinema-camera-4k-0001",
+      "match": {
+        "vid": "0x1edb",
+        "pid": "0x0001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Blackmagic Pocket Cinema Camera 4K"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Blackmagic Pocket Cinema Camera 4K"
+      }
+    },
+    {
+      "id": "blackmagic-pocket-cinema-camera-6k-0002",
+      "match": {
+        "vid": "0x1edb",
+        "pid": "0x0002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Blackmagic Pocket Cinema Camera 6K"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Blackmagic Pocket Cinema Camera 6K"
+      }
+    },
+    {
+      "id": "blackmagic-pocket-cinema-camera-6k-g2-0003",
+      "match": {
+        "vid": "0x1edb",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Blackmagic Pocket Cinema Camera 6K G2"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Blackmagic Pocket Cinema Camera 6K G2"
+      }
+    },
+    {
+      "id": "blackmagic-pocket-cinema-camera-6k-pro-0004",
+      "match": {
+        "vid": "0x1edb",
+        "pid": "0x0004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Blackmagic Pocket Cinema Camera 6K Pro"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Blackmagic Pocket Cinema Camera 6K Pro"
+      }
+    },
+    {
+      "id": "blackmagic-pocket-cinema-camera-4k-g2-0005",
+      "match": {
+        "vid": "0x1edb",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Blackmagic Pocket Cinema Camera 4K G2"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Blackmagic Pocket Cinema Camera 4K G2"
+      }
+    },
+    {
+      "id": "dji-mini-2-0019",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0019",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Mini 2"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Mini 2"
+      }
+    },
+    {
+      "id": "dji-mini-3-001b",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x001b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Mini 3"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Mini 3"
+      }
+    },
+    {
+      "id": "dji-mini-3-pro-001c",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x001c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Mini 3 Pro"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Mini 3 Pro"
+      }
+    },
+    {
+      "id": "dji-mini-4-pro-001d",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x001d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Mini 4 Pro"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Mini 4 Pro"
+      }
+    },
+    {
+      "id": "dji-air-2s-001e",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x001e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Air 2S"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Air 2S"
+      }
+    },
+    {
+      "id": "flir-one-1001",
+      "match": {
+        "vid": "0x09cb",
+        "pid": "0x1001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "FLIR One"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "FLIR One"
+      }
+    },
+    {
+      "id": "flir-one-pro-1002",
+      "match": {
+        "vid": "0x09cb",
+        "pid": "0x1002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "FLIR One Pro"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "FLIR One Pro"
+      }
+    },
+    {
+      "id": "flir-one-pro-lt-1003",
+      "match": {
+        "vid": "0x09cb",
+        "pid": "0x1003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "FLIR One Pro LT"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "FLIR One Pro LT"
+      }
+    },
+    {
+      "id": "flir-vue-pro-1004",
+      "match": {
+        "vid": "0x09cb",
+        "pid": "0x1004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "FLIR Vue Pro"
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "FLIR Vue Pro"
+      }
     }
   ]
 }
