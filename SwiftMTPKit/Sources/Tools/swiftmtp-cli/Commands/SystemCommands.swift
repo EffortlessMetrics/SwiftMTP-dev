@@ -66,15 +66,23 @@ struct SystemCommands {
             "vid": vidFormatted,
             "pid": pidFormatted,
             "status": q.status?.rawValue ?? "proposed",
+            "supportsGetObjectPropList": q.resolvedFlags().supportsGetObjectPropList,
+            "requiresKernelDetach": q.resolvedFlags().requiresKernelDetach,
           ], type: "quirksLookup")
         } else {
+          let rf = q.resolvedFlags()
           print("✅ Device found in quirk database")
-          print("   ID:     \(q.id)")
-          print("   VID:    \(vidFormatted)")
-          print("   PID:    \(pidFormatted)")
-          print("   Status: \(q.status?.rawValue ?? "proposed")")
-          if let proplist = q.flags?.supportsGetObjectPropList {
-            print("   GetObjectPropList: \(proplist ? "✅ fast-path" : "— fallback only")")
+          print("   ID:               \(q.id)")
+          print("   VID:PID:          \(vidFormatted):\(pidFormatted)")
+          print("   Status:           \(q.status?.rawValue ?? "proposed")")
+          print("   GetObjectPropList:\(rf.supportsGetObjectPropList ? " ✅ fast-path" : " — fallback only")")
+          print("   Kernel detach:    \(rf.requiresKernelDetach ? "yes (Android)" : "no")")
+          if let cls = q.ifaceClass {
+            let label = cls == 0x06 ? "PTP (0x06)" : cls == 0xff ? "Android/vendor (0xff)" : String(format: "0x%02x", cls)
+            print("   Interface class:  \(label)")
+          }
+          if let ioMs = q.ioTimeoutMs {
+            print("   I/O timeout:      \(ioMs) ms")
           }
         }
       } else {
