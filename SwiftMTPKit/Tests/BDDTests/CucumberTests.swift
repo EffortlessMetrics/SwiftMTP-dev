@@ -258,6 +258,60 @@ final class BDDRunner: XCTestCase {
       "Canon EOS R5 camera quirk must have supportsGetObjectPropList=true"
     )
   }
+
+  // media-players-e-readers.feature – SanDisk Sansa m230
+  func testMediaPlayer_SanDiskSansaM230() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0781, pid: 0x7400, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("sandisk-sansa-m230-7400 not in database") }
+    XCTAssertEqual(q.id, "sandisk-sansa-m230-7400")
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Media player should not require kernel detach")
+  }
+
+  // media-players-e-readers.feature – Creative ZEN Micro
+  func testMediaPlayer_CreativeZenMicro() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x041e, pid: 0x411e, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("creative-zen-micro-411e not in database") }
+    XCTAssertEqual(q.id, "creative-zen-micro-411e")
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Media player should not require kernel detach")
+  }
+
+  // media-players-e-readers.feature – iRiver iFP-880
+  func testMediaPlayer_IRiverIFP880() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x4102, pid: 0x1008, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("iriver-ifp-880-1008 not in database") }
+    XCTAssertEqual(q.id, "iriver-ifp-880-1008")
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Media player should not require kernel detach")
+  }
+
+  // media-players-e-readers.feature – Amazon Kindle Fire
+  func testEReader_AmazonKindleFire() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x1949, pid: 0x0007, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("amazon-kindle-fire-0007 not in database") }
+    XCTAssertEqual(q.id, "amazon-kindle-fire-0007")
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Kindle should not require kernel detach")
+  }
+
+  // media-players-e-readers.feature – Philips GoGear HDD6320
+  func testMediaPlayer_PhilipsGoGear() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0471, pid: 0x014b, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("philips-hdd6320-014b not in database") }
+    XCTAssertEqual(q.id, "philips-hdd6320-014b")
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Media player should not require kernel detach")
+  }
+
+  // media-players-e-readers.feature – Kobo Arc Android tablet
+  func testEReader_KoboArcAndroid() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2237, pid: 0xb108, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("kobo-arc-android-b108 not in database") }
+    XCTAssertEqual(q.id, "kobo-arc-android-b108")
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Kobo tablet should not require kernel detach")
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
