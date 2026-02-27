@@ -85693,6 +85693,2538 @@
         "source": "community",
         "status": "proposed"
       }
+    },
+    {
+      "id": "fossil-gen5-0001",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Fossil Gen 5 Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "fossil-gen5e-0002",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Fossil Gen 5E Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "fossil-gen6-0003",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Fossil Gen 6 Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "fossil-gen6-wellness-0004",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Fossil Gen 6 Wellness Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "fossil-sport-0005",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Fossil Sport Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "skagen-falster3-0006",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0006",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Skagen Falster 3 Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "skagen-falster4-0007",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0007",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Skagen Falster 4 Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "ticwatch-pro3-0001",
+      "match": {
+        "vid": "0x1d5b",
+        "pid": "0x0001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "TicWatch Pro 3 Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "ticwatch-pro3ultra-0002",
+      "match": {
+        "vid": "0x1d5b",
+        "pid": "0x0002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "TicWatch Pro 3 Ultra Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "ticwatch-e3-0003",
+      "match": {
+        "vid": "0x1d5b",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "TicWatch E3 Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "ticwatch-pro5-0004",
+      "match": {
+        "vid": "0x1d5b",
+        "pid": "0x0004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "TicWatch Pro 5 Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "sonyericsson-xperia-x8-0187",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0187",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sony Ericsson Xperia X8 - Android MTP"
+      }
+    },
+    {
+      "id": "sonyericsson-xperia-x10mini-0188",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0188",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sony Ericsson Xperia X10 Mini - Android MTP"
+      }
+    },
+    {
+      "id": "sonyericsson-xperia-arc-0189",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0189",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sony Ericsson Xperia Arc - Android MTP"
+      }
+    },
+    {
+      "id": "sonyericsson-xperia-neo-018a",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x018a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sony Ericsson Xperia Neo - Android MTP"
+      }
+    },
+    {
+      "id": "sonyericsson-xperia-ray-018b",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x018b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sony Ericsson Xperia Ray - Android MTP"
+      }
+    },
+    {
+      "id": "sonyericsson-xperia-minipro-018c",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x018c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sony Ericsson Xperia Mini Pro - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-l4-01f0",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01f0",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sony Xperia L4 - Android MTP"
+      }
+    },
+    {
+      "id": "sony-xperia-l3-01f2",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01f2",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sony Xperia L3 - Android MTP"
+      }
+    },
+    {
+      "id": "sennheiser-momentum4-006c",
+      "match": {
+        "vid": "0x1395",
+        "pid": "0x006c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sennheiser MOMENTUM Wireless 4 - PTP firmware update"
+      }
+    },
+    {
+      "id": "sennheiser-hd450bt-006d",
+      "match": {
+        "vid": "0x1395",
+        "pid": "0x006d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sennheiser HD 450BT - PTP firmware update"
+      }
+    },
+    {
+      "id": "sennheiser-hd560s-006e",
+      "match": {
+        "vid": "0x1395",
+        "pid": "0x006e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sennheiser HD 560S - PTP firmware update"
+      }
+    },
+    {
+      "id": "sennheiser-accentum-006f",
+      "match": {
+        "vid": "0x1395",
+        "pid": "0x006f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sennheiser ACCENTUM Wireless - PTP firmware update"
+      }
+    },
+    {
+      "id": "oppo-find-n3flip-276f",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x276f",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "OPPO Find N3 Flip - Android MTP"
+      }
+    },
+    {
+      "id": "mkors-access-gen5e-0008",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0008",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Michael Kors Access Gen 5E Wear OS (Fossil Group)"
+      }
+    },
+    {
+      "id": "mkors-access-gen6-0009",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0009",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Michael Kors Access Gen 6 Wear OS (Fossil Group)"
+      }
+    },
+    {
+      "id": "diesel-fullguard3-000a",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x000a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Diesel On Full Guard 3 Wear OS (Fossil Group)"
+      }
+    },
+    {
+      "id": "diesel-fadelite-000b",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x000b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Diesel On Fadelite Wear OS (Fossil Group)"
+      }
+    },
+    {
+      "id": "emporio-armani-connected3-000c",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x000c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Emporio Armani Connected Smartwatch 3 (Fossil Group)"
+      }
+    },
+    {
+      "id": "armani-exchange-connected-000d",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x000d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Armani Exchange Connected Smartwatch (Fossil Group)"
+      }
+    },
+    {
+      "id": "kate-spade-scallop2-000e",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x000e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Kate Spade Scallop 2 Wear OS (Fossil Group)"
+      }
+    },
+    {
+      "id": "hugo-boss-smartwatch1-000f",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x000f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Hugo Boss Smartwatch 1 Wear OS (Fossil Group)"
+      }
+    },
+    {
+      "id": "puma-smartwatch-0010",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0010",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "PUMA Smartwatch Wear OS (Fossil Group)"
+      }
+    },
+    {
+      "id": "misfit-vaporx-0011",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0011",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Misfit Vapor X Wear OS (Fossil Group)"
+      }
+    },
+    {
+      "id": "fossil-gen4-0012",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0012",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Fossil Gen 4 Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "fossil-gen3-0013",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0013",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Fossil Gen 3 Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "skagen-falster2-0014",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0014",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Skagen Falster 2 Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "skagen-falster1-0015",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0015",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Skagen Falster Gen 1 Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "diesel-fullguard25-0016",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0016",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Diesel Full Guard 2.5 Wear OS (Fossil Group)"
+      }
+    },
+    {
+      "id": "mkors-sofie-0017",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0017",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Michael Kors Access Sofie Wear OS (Fossil Group)"
+      }
+    },
+    {
+      "id": "emporio-armani-smartwatch3-0018",
+      "match": {
+        "vid": "0x2ba0",
+        "pid": "0x0018",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Emporio Armani Smartwatch 3 Wear OS (Fossil Group)"
+      }
+    },
+    {
+      "id": "sennheiser-hd350bt-0070",
+      "match": {
+        "vid": "0x1395",
+        "pid": "0x0070",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sennheiser HD 350BT - PTP firmware update"
+      }
+    },
+    {
+      "id": "sennheiser-ie300-0071",
+      "match": {
+        "vid": "0x1395",
+        "pid": "0x0071",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sennheiser IE 300 - PTP firmware update"
+      }
+    },
+    {
+      "id": "sennheiser-cxtw-0072",
+      "match": {
+        "vid": "0x1395",
+        "pid": "0x0072",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sennheiser CX True Wireless - PTP firmware update"
+      }
+    },
+    {
+      "id": "sennheiser-sc230-0073",
+      "match": {
+        "vid": "0x1395",
+        "pid": "0x0073",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sennheiser SC 230 - PTP firmware update"
+      }
+    },
+    {
+      "id": "sennheiser-mb360uc-0074",
+      "match": {
+        "vid": "0x1395",
+        "pid": "0x0074",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sennheiser MB 360 UC - PTP firmware update"
+      }
+    },
+    {
+      "id": "sennheiser-hd206-0075",
+      "match": {
+        "vid": "0x1395",
+        "pid": "0x0075",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "Sennheiser HD 206 - PTP firmware update"
+      }
+    },
+    {
+      "id": "oppo-reno6pro-2766",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2766",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "OPPO Reno 6 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-a74-2767",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2767",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "OPPO A74 - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-a55-5g-2769",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2769",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "OPPO A55 5G - Android MTP"
+      }
+    },
+    {
+      "id": "ticwatch-gtx-0005",
+      "match": {
+        "vid": "0x1d5b",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "TicWatch GTX Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "ticwatch-c2plus-0006",
+      "match": {
+        "vid": "0x1d5b",
+        "pid": "0x0006",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "TicWatch C2+ Wear OS smartwatch"
+      }
+    },
+    {
+      "id": "ticwatch-s2-0007",
+      "match": {
+        "vid": "0x1d5b",
+        "pid": "0x0007",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "requiresNoZeroReads": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "governance": {
+        "status": "proposed",
+        "confidence": "low",
+        "evidenceRequired": [
+          "community-validation"
+        ],
+        "addedInVersion": "0.4.0",
+        "source": "community",
+        "notes": "TicWatch S2 Wear OS smartwatch"
+      }
     }
   ]
 }
