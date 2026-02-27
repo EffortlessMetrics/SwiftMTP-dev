@@ -65224,6 +65224,2860 @@
         "source": "libgphoto2",
         "notes": "Sony Alpha ZV-E1"
       }
+    },
+    {
+      "id": "google-nexus-one-htc-4e11",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4e11",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Nexus One (HTC-made) - DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "google-nexus-s-4e21",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4e21",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Nexus S (Samsung-made) - DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "google-nexus-4-lg-4e61",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4e61",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Nexus 4 (LG-made) - DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "google-nexus-7-2012-4e02",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4e02",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Nexus 7 (2012, ASUS-made) - DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "google-nexus-10-samsung-4e03",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4e03",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Nexus 10 (Samsung-made) - DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "google-nexus-7-2013-4e04",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4e04",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Nexus 7 (2013, ASUS-made) - DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "google-nexus-9-htc-4e05",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4e05",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Nexus 9 (HTC-made) - DEVICE_FLAGS_ANDROID_BUGS in libmtp"
+      }
+    },
+    {
+      "id": "google-pixel-3-4-xl-4eee",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4eee",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 3 XL / Pixel 4 XL - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-4a-4eef",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4eef",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 4a - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-5-4ef0",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ef0",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 5 - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-5a-4ef1",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ef1",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 5a - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-6-4ef2",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ef2",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 6 - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-6-pro-4ef3",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ef3",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 6 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-6a-4ef4",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ef4",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 6a - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-7-pro-4ef5",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ef5",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 7 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-7a-4ef6",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ef6",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 7a - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-8-4ef7",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ef7",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 8 - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-8-pro-4ef8",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ef8",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 8 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-8a-4ef9",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4ef9",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 8a - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-9-4efa",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4efa",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 9 - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-9-pro-4efb",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4efb",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 9 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-9-pro-xl-4efc",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4efc",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 9 Pro XL - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-9-pro-fold-4efd",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4efd",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel 9 Pro Fold - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-fold-4efe",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4efe",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel Fold - Android MTP"
+      }
+    },
+    {
+      "id": "google-pixel-tablet-4eff",
+      "match": {
+        "vid": "0x18d1",
+        "pid": "0x4eff",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "requiresNoZeroReads": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Google Pixel Tablet - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-one-f001",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf001",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus One - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-2-f002",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf002",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 2 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-5-f004",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf004",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 5 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-5t-f005",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf005",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 5T - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-6-f006",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf006",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 6 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-6t-f007",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf007",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 6T - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-7-f008",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf008",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 7 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-7-pro-f009",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf009",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 7 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-7t-f00a",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf00a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 7T - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-7t-pro-f00b",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf00b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 7T Pro - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-8-f00c",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf00c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 8 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-8-pro-f00d",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf00d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 8 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-8t-f00e",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf00e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 8T - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-9-f00f",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf00f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 9 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-9-pro-f010",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf010",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 9 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-9r-f011",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf011",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 9R - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-10-pro-f012",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf012",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 10 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-10t-f013",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf013",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 10T - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-11-f014",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf014",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 11 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-12-f015",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf015",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus 12 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-nord-f016",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf016",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus Nord - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-nord-2-f017",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf017",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus Nord 2 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-nord-ce-3-f018",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf018",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus Nord CE 3 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-nord-3-f019",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf019",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus Nord 3 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-open-f01a",
+      "match": {
+        "vid": "0x2a70",
+        "pid": "0xf01a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "OnePlus Open - Android MTP"
+      }
+    },
+    {
+      "id": "asus-zenfone-3-ze552kl-4daf",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4daf",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ZenFone 3 ZE552KL - Android MTP"
+      }
+    },
+    {
+      "id": "asus-zenfone-4-ze554kl-4db0",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4db0",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ZenFone 4 ZE554KL - Android MTP"
+      }
+    },
+    {
+      "id": "asus-zenfone-5-ze620kl-4db1",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4db1",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ZenFone 5 ZE620KL - Android MTP"
+      }
+    },
+    {
+      "id": "asus-zenfone-5z-4db2",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4db2",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ZenFone 5Z - Android MTP"
+      }
+    },
+    {
+      "id": "asus-zenfone-6-zs630kl-4db3",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4db3",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ZenFone 6 ZS630KL - Android MTP"
+      }
+    },
+    {
+      "id": "asus-rog-phone-2-4db4",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4db4",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ROG Phone 2 - Android MTP"
+      }
+    },
+    {
+      "id": "asus-rog-phone-3-4db5",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4db5",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ROG Phone 3 - Android MTP"
+      }
+    },
+    {
+      "id": "asus-zenfone-7-pro-4db6",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4db6",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ZenFone 7 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "asus-zenfone-8-4db7",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4db7",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ZenFone 8 - Android MTP"
+      }
+    },
+    {
+      "id": "asus-rog-phone-5-4db8",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4db8",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ROG Phone 5 - Android MTP"
+      }
+    },
+    {
+      "id": "asus-zenfone-9-4db9",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4db9",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ZenFone 9 - Android MTP"
+      }
+    },
+    {
+      "id": "asus-rog-phone-6-4dba",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4dba",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ROG Phone 6 - Android MTP"
+      }
+    },
+    {
+      "id": "asus-zenfone-10-4dbb",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4dbb",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ZenFone 10 - Android MTP"
+      }
+    },
+    {
+      "id": "asus-rog-phone-7-ultimate-4dbc",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4dbc",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ROG Phone 7 Ultimate - Android MTP"
+      }
+    },
+    {
+      "id": "asus-rog-phone-8-4dbd",
+      "match": {
+        "vid": "0x0b05",
+        "pid": "0x4dbd",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "ASUS ROG Phone 8 - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-moto-g-stylus-2e84",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e84",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Moto G Stylus - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-moto-g-play-2021-2e85",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e85",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Moto G Play 2021 - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-edge-2021-2e86",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e86",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Edge 2021 - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-edge-plus-2021-2e87",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e87",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Edge Plus 2021 - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-edge-20-2e88",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e88",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Edge 20 - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-edge-30-pro-2e89",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e89",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Edge 30 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-moto-g52-2e8a",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e8a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Moto G52 - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-moto-g62-5g-2e8b",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e8b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Moto G62 5G - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-moto-g82-5g-2e8c",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e8c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Moto G82 5G - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-edge-40-pro-2e8d",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e8d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Edge 40 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-edge-plus-2023-2e8e",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e8e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Edge Plus 2023 - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-moto-g54-2e8f",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e8f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Moto G54 - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-moto-g84-2e90",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e90",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Moto G84 - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-edge-50-pro-2e91",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e91",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Edge 50 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-razr-2023-2e92",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e92",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Razr 2023 - Android MTP"
+      }
+    },
+    {
+      "id": "motorola-razr-40-ultra-2e93",
+      "match": {
+        "vid": "0x22b8",
+        "pid": "0x2e93",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "community-validation"
+      ],
+      "provenance": {
+        "source": "community",
+        "notes": "Motorola Razr 40 Ultra - Android MTP"
+      }
     }
   ]
 }
