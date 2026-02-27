@@ -41383,6 +41383,3800 @@
         "sourceRef": "music-players.h",
         "notes": "BlackBerry KEY2 - Android MTP"
       }
+    },
+    {
+      "id": "zte-grandx-u970-0367",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x0367",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Grand X (U970) - Android MTP"
+      }
+    },
+    {
+      "id": "zte-blade3-0386",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x0386",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Blade III - Android MTP"
+      }
+    },
+    {
+      "id": "zte-grandx2-03a8",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03a8",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Grand X2 - Android MTP"
+      }
+    },
+    {
+      "id": "zte-grands-03c8",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03c8",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Grand S - Android MTP"
+      }
+    },
+    {
+      "id": "zte-grandmemo-03c9",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03c9",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Grand Memo - Android MTP"
+      }
+    },
+    {
+      "id": "zte-bladev-v9180-03d3",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03d3",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Blade V (V9180) - Android MTP"
+      }
+    },
+    {
+      "id": "zte-bladel3-03d5",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03d5",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Blade L3 - Android MTP"
+      }
+    },
+    {
+      "id": "zte-blades6-03e1",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03e1",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Blade S6 - Android MTP"
+      }
+    },
+    {
+      "id": "zte-axon7-a2017-03e5",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03e5",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Axon 7 (A2017) - Android MTP"
+      }
+    },
+    {
+      "id": "zte-bladev7max-03e7",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03e7",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Blade V7 Max - Android MTP"
+      }
+    },
+    {
+      "id": "zte-axonm-z999-03ee",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03ee",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Axon M (Z999) - Android MTP"
+      }
+    },
+    {
+      "id": "zte-bladezmax-03f1",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03f1",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Blade Z Max - Android MTP"
+      }
+    },
+    {
+      "id": "zte-zmaxpro-z981-03f3",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03f3",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE ZMAX Pro (Z981) - Android MTP"
+      }
+    },
+    {
+      "id": "zte-z557-03f5",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03f5",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Z557 - Android generic MTP"
+      }
+    },
+    {
+      "id": "zte-z971-03f8",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x03f8",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Z971 - Android MTP"
+      }
+    },
+    {
+      "id": "zte-zfiveg-z557bl-0402",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x0402",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE ZFive G (Z557BL) - Android MTP"
+      }
+    },
+    {
+      "id": "zte-bladex1-5g-0405",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x0405",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Blade X1 5G - Android MTP"
+      }
+    },
+    {
+      "id": "zte-z957-cricket-0408",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x0408",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Z957 (Cricket) - Android MTP"
+      }
+    },
+    {
+      "id": "zte-zmax10-z6250-0412",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x0412",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE ZMax 10 (Z6250) - Android MTP"
+      }
+    },
+    {
+      "id": "zte-bladev2020-0415",
+      "match": {
+        "vid": "0x19d2",
+        "pid": "0x0415",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "ZTE Blade V2020 - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-a5-a9-2768",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2768",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO A5 / A9 - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-findx-276a",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x276a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO Find X - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-reno-276b",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x276b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO Reno - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-reno2-276c",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x276c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO Reno 2 - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-a91-f15-276d",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x276d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO A91 / F15 - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-f11pro-276e",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x276e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO F11 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-a31-2770",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2770",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO A31 - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-a52-2771",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2771",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO A52 - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-a72-2772",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2772",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO A72 - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-a53s-2775",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2775",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO A53s - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-reno5pro-2776",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2776",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO Reno 5 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-a74-2777",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2777",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO A74 - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-findx3pro-2778",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2778",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO Find X3 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-findx3neo-2779",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2779",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO Find X3 Neo - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-reno6proplus-277a",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x277a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO Reno 6 Pro+ - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-a95-277b",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x277b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO A95 - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-findx5pro-277c",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x277c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO Find X5 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "oppo-a96-277d",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x277d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OPPO A96 - Android MTP"
+      }
+    },
+    {
+      "id": "realme-3pro-2780",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2780",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Realme 3 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "realme-5pro-2781",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2781",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Realme 5 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "realme-6pro-2782",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2782",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Realme 6 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "realme-7pro-2783",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2783",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Realme 7 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "realme-8pro-2784",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2784",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Realme 8 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "realme-9proplus-2785",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2785",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Realme 9 Pro+ - Android MTP"
+      }
+    },
+    {
+      "id": "realme-gt-2786",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2786",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Realme GT - Android MTP"
+      }
+    },
+    {
+      "id": "realme-gt2pro-2787",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2787",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Realme GT 2 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "realme-c35-2788",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2788",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Realme C35 - Android MTP"
+      }
+    },
+    {
+      "id": "oneplus-n10-5g-2789",
+      "match": {
+        "vid": "0x22d9",
+        "pid": "0x2789",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 20000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "OnePlus N10 5G (1+/OPPO) - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-y91i-600c",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x600c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo Y91i - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-v17pro-600d",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x600d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo V17 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-s1pro-600e",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x600e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo S1 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-x30pro-600f",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x600f",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo X30 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-x50pro-6010",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x6010",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo X50 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-x51-5g-6011",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x6011",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo X51 5G (X51 Pro) - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-v21-5g-6013",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x6013",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo V21 5G - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-x60proplus-6014",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x6014",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo X60 Pro+ - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-v23pro-6015",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x6015",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo V23 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-x70proplus-6016",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x6016",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo X70 Pro+ - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-v25pro-6017",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x6017",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo V25 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-x80pro-6018",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x6018",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo X80 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-x90proplus-6019",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x6019",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo X90 Pro+ - Android MTP"
+      }
+    },
+    {
+      "id": "iqoo-9pro-601a",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x601a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "iQOO 9 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "iqoo-10pro-601b",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x601b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "iQOO 10 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "iqoo-neo7-601c",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x601c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "iQOO Neo 7 - Android MTP"
+      }
+    },
+    {
+      "id": "iqoo-z6pro-601d",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x601d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "iQOO Z6 Pro - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-y76s-5g-601e",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x601e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo Y76s 5G - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-y75-5g-601f",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x601f",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo Y75 5G - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-y33s-6020",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x6020",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo Y33s - Android MTP"
+      }
+    },
+    {
+      "id": "vivo-t1-5g-6022",
+      "match": {
+        "vid": "0x2d95",
+        "pid": "0x6022",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 30000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "vivo T1 5G - Android MTP"
+      }
+    },
+    {
+      "id": "insta360-one-0003",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 ONE — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 ONE"
+      }
+    },
+    {
+      "id": "insta360-one-x-0005",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 ONE X — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 ONE X"
+      }
+    },
+    {
+      "id": "insta360-evo-0006",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0006",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 EVO — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 EVO"
+      }
+    },
+    {
+      "id": "insta360-one-r-0007",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0007",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 ONE R — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 ONE R"
+      }
+    },
+    {
+      "id": "insta360-go-2-0009",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0009",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 GO 2 — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 GO 2"
+      }
+    },
+    {
+      "id": "insta360-one-x2-000a",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x000a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 ONE X2 — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 ONE X2"
+      }
+    },
+    {
+      "id": "insta360-rs-000b",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x000b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 RS — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 RS"
+      }
+    },
+    {
+      "id": "insta360-x3-000c",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x000c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 X3 — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 X3"
+      }
+    },
+    {
+      "id": "insta360-go-3-000d",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x000d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 GO 3 — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 GO 3"
+      }
+    },
+    {
+      "id": "insta360-x4-000e",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x000e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 X4 — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 X4"
+      }
+    },
+    {
+      "id": "insta360-ace-pro-000f",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x000f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 Ace Pro — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 Ace Pro"
+      }
+    },
+    {
+      "id": "insta360-flow-0010",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0010",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 Flow — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 Flow"
+      }
+    },
+    {
+      "id": "insta360-link-0011",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0011",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Insta360 Link — action/360 camera, PTP mode. iface.class=0x06 (PTP). Source: Insta360 USB device enumeration."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Insta360 Link"
+      }
+    },
+    {
+      "id": "akaso-ek7000-0001",
+      "match": {
+        "vid": "0x3538",
+        "pid": "0x0001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "AKASO EK7000 — action/360 camera, PTP mode. iface.class=0x06 (PTP). AKASO action camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "AKASO EK7000"
+      }
+    },
+    {
+      "id": "akaso-ek7000-pro-0002",
+      "match": {
+        "vid": "0x3538",
+        "pid": "0x0002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "AKASO EK7000 Pro — action/360 camera, PTP mode. iface.class=0x06 (PTP). AKASO action camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "AKASO EK7000 Pro"
+      }
+    },
+    {
+      "id": "akaso-brave-4-0003",
+      "match": {
+        "vid": "0x3538",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "AKASO Brave 4 — action/360 camera, PTP mode. iface.class=0x06 (PTP). AKASO action camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "AKASO Brave 4"
+      }
+    },
+    {
+      "id": "akaso-brave-7-le-0004",
+      "match": {
+        "vid": "0x3538",
+        "pid": "0x0004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "AKASO Brave 7 LE — action/360 camera, PTP mode. iface.class=0x06 (PTP). AKASO action camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "AKASO Brave 7 LE"
+      }
+    },
+    {
+      "id": "akaso-v50x-0005",
+      "match": {
+        "vid": "0x3538",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "AKASO V50X — action/360 camera, PTP mode. iface.class=0x06 (PTP). AKASO action camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "AKASO V50X"
+      }
+    },
+    {
+      "id": "akaso-brave-4-pro-0006",
+      "match": {
+        "vid": "0x3538",
+        "pid": "0x0006",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "AKASO Brave 4 Pro — action/360 camera, PTP mode. iface.class=0x06 (PTP). AKASO action camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "AKASO Brave 4 Pro"
+      }
+    },
+    {
+      "id": "akaso-brave-8-0007",
+      "match": {
+        "vid": "0x3538",
+        "pid": "0x0007",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "AKASO Brave 8 — action/360 camera, PTP mode. iface.class=0x06 (PTP). AKASO action camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "AKASO Brave 8"
+      }
+    },
+    {
+      "id": "akaso-enduro-0008",
+      "match": {
+        "vid": "0x3538",
+        "pid": "0x0008",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "AKASO Enduro — action/360 camera, PTP mode. iface.class=0x06 (PTP). AKASO action camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "AKASO Enduro"
+      }
+    },
+    {
+      "id": "dji-osmo-action-3-001f",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x001f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Osmo Action 3 — action/360 camera, PTP mode. iface.class=0x06 (PTP). DJI action/drone camera USB storage mode."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Osmo Action 3"
+      }
+    },
+    {
+      "id": "dji-osmo-action-4-0020",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0020",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Osmo Action 4 — action/360 camera, PTP mode. iface.class=0x06 (PTP). DJI action/drone camera USB storage mode."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Osmo Action 4"
+      }
+    },
+    {
+      "id": "dji-action-2-0021",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0021",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Action 2 — action/360 camera, PTP mode. iface.class=0x06 (PTP). DJI action/drone camera USB storage mode."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Action 2"
+      }
+    },
+    {
+      "id": "dji-pocket-2-0022",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0022",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Pocket 2 — action/360 camera, PTP mode. iface.class=0x06 (PTP). DJI action/drone camera USB storage mode."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Pocket 2"
+      }
+    },
+    {
+      "id": "dji-pocket-3-0023",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0023",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Pocket 3 — action/360 camera, PTP mode. iface.class=0x06 (PTP). DJI action/drone camera USB storage mode."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Pocket 3"
+      }
+    },
+    {
+      "id": "dji-mini-3-0024",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0024",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Mini 3 — action/360 camera, PTP mode. iface.class=0x06 (PTP). DJI action/drone camera USB storage mode."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Mini 3"
+      }
+    },
+    {
+      "id": "dji-mini-4-pro-0025",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0025",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Mini 4 Pro — action/360 camera, PTP mode. iface.class=0x06 (PTP). DJI action/drone camera USB storage mode."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Mini 4 Pro"
+      }
+    },
+    {
+      "id": "dji-air-3-0026",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0026",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "DJI Air 3 — action/360 camera, PTP mode. iface.class=0x06 (PTP). DJI action/drone camera USB storage mode."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "DJI Air 3"
+      }
+    },
+    {
+      "id": "xiaomi-action-camera-4k-d001",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xd001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Xiaomi Mi Action Camera 4K — action/360 camera, PTP mode. iface.class=0x06 (PTP). Xiaomi action/360 camera, not a phone."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Xiaomi Mi Action Camera 4K"
+      }
+    },
+    {
+      "id": "xiaomi-sphere-camera-d002",
+      "match": {
+        "vid": "0x2717",
+        "pid": "0xd002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Xiaomi Mi Sphere Camera — action/360 camera, PTP mode. iface.class=0x06 (PTP). Xiaomi action/360 camera, not a phone."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Xiaomi Mi Sphere Camera"
+      }
+    },
+    {
+      "id": "sony-fdr-x3000-0a7b",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a7b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Sony FDR-X3000 — action/360 camera, PTP mode. iface.class=0x06 (PTP). Sony action/vlog camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony FDR-X3000"
+      }
+    },
+    {
+      "id": "sony-hdr-as300-0a7c",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a7c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Sony HDR-AS300 — action/360 camera, PTP mode. iface.class=0x06 (PTP). Sony action/vlog camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony HDR-AS300"
+      }
+    },
+    {
+      "id": "sony-rx0-ii-0a7d",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a7d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Sony RX0 II — action/360 camera, PTP mode. iface.class=0x06 (PTP). Sony action/vlog camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony RX0 II"
+      }
+    },
+    {
+      "id": "sony-zv-1-0a7e",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a7e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Sony ZV-1 — action/360 camera, PTP mode. iface.class=0x06 (PTP). Sony action/vlog camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony ZV-1"
+      }
+    },
+    {
+      "id": "sony-zv-e10-0a7f",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a7f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Sony ZV-E10 — action/360 camera, PTP mode. iface.class=0x06 (PTP). Sony action/vlog camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony ZV-E10"
+      }
+    },
+    {
+      "id": "sony-zv-e1-0a80",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0a80",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "Sony ZV-E1 — action/360 camera, PTP mode. iface.class=0x06 (PTP). Sony action/vlog camera."
+      },
+      "provenance": {
+        "source": "community",
+        "notes": "Sony ZV-E1"
+      }
+    },
+    {
+      "id": "ricoh-theta-sc2-0369",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x0369",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "RICOH THETA SC2 — action/360 camera, PTP mode. iface.class=0x06 (PTP). Ricoh Theta 360 camera."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "RICOH THETA SC2"
+      }
+    },
+    {
+      "id": "ricoh-theta-x-036a",
+      "match": {
+        "vid": "0x05ca",
+        "pid": "0x036a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-21",
+        "verificationNotes": "RICOH THETA X — action/360 camera, PTP mode. iface.class=0x06 (PTP). Ricoh Theta 360 camera."
+      },
+      "provenance": {
+        "source": "libgphoto2",
+        "notes": "RICOH THETA X"
+      }
     }
   ]
 }
