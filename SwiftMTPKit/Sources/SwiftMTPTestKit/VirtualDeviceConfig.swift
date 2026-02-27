@@ -319,6 +319,73 @@ public struct VirtualDeviceConfig: Sendable {
       vendorID: 0x04cb, productID: 0x0104, serial: "VIRT-FUJI-0104")
   }
 
+  /// A Nokia Android phone in MTP mode (VID 0x2e04, PID 0xc025).
+  public static let nokiaAndroid: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "2e04:c025@1:16", vendor: "Nokia", model: "Nokia 6",
+      vendorID: 0x2e04, productID: 0xc025, serial: "VIRT-NOKIA-C025",
+      includePropList: false)
+  }()
+
+  /// A ZTE Android phone in MTP mode (VID 0x19d2, PID 0x0306).
+  public static let zteAndroid: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "19d2:0306@1:17", vendor: "ZTE", model: "Blade 3",
+      vendorID: 0x19d2, productID: 0x0306, serial: "VIRT-ZTE-0306",
+      includePropList: false)
+  }()
+
+  /// An Amazon Kindle Fire in MTP mode (VID 0x1949, PID 0x0007).
+  public static let amazonKindleFire: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "1949:0007@1:18", vendor: "Amazon", model: "Kindle Fire",
+      vendorID: 0x1949, productID: 0x0007, serial: "VIRT-AMZN-0007",
+      includePropList: false)
+  }()
+
+  /// A Lenovo Android phone/tablet in MTP mode (VID 0x17ef, PID 0x740a).
+  public static let lenovoAndroid: VirtualDeviceConfig = {
+    _androidPreset(
+      rawId: "17ef:740a@1:19", vendor: "Lenovo", model: "K1",
+      vendorID: 0x17ef, productID: 0x740a, serial: "VIRT-LENOVO-740A",
+      includePropList: false)
+  }()
+
+  /// A Nikon Z-series mirrorless camera (VID 0x04b0, PID 0x0443). PTP class, proplist supported.
+  public static let nikonMirrorless: VirtualDeviceConfig = {
+    _cameraPreset(
+      rawId: "04b0:0443@1:20", vendor: "Nikon", model: "Z6",
+      vendorID: 0x04b0, productID: 0x0443, serial: "VIRT-NIKON-Z6-0443")
+  }()
+
+  /// A Canon EOS R mirrorless camera (VID 0x04a9, PID 0x32da). PTP class, proplist supported.
+  public static let canonEOSR: VirtualDeviceConfig = {
+    _cameraPreset(
+      rawId: "04a9:32da@1:21", vendor: "Canon", model: "EOS R",
+      vendorID: 0x04a9, productID: 0x32da, serial: "VIRT-CANON-EOSR-32DA")
+  }()
+
+  /// A Sony Alpha a7 III camera (VID 0x054c, PID 0x0c03). PTP class, proplist supported.
+  public static let sonyAlpha: VirtualDeviceConfig = {
+    _cameraPreset(
+      rawId: "054c:0c03@1:22", vendor: "Sony", model: "Alpha a7 III",
+      vendorID: 0x054c, productID: 0x0c03, serial: "VIRT-SONY-ALPHA-0C03")
+  }()
+
+  /// A Leica SL (Typ 601) camera (VID 0x1a98, PID 0x2041). PTP class, proplist supported.
+  public static let leica: VirtualDeviceConfig = {
+    _cameraPreset(
+      rawId: "1a98:2041@1:23", vendor: "Leica", model: "SL (Typ 601)",
+      vendorID: 0x1a98, productID: 0x2041, serial: "VIRT-LEICA-SL-2041")
+  }()
+
+  /// A GoPro HERO10 Black action camera (VID 0x2672, PID 0x0056). PTP class, proplist supported.
+  public static let goProHero: VirtualDeviceConfig = {
+    _cameraPreset(
+      rawId: "2672:0056@1:24", vendor: "GoPro", model: "HERO10 Black",
+      vendorID: 0x2672, productID: 0x0056, serial: "VIRT-GOPRO-HERO10-0056")
+  }()
+
   // MARK: - Private helpers
 
   private static func _androidPreset(
