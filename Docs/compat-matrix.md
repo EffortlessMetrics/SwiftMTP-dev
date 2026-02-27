@@ -2417,3 +2417,122 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Runcam Thumb Pro | 4255:0101 | ⚪ proposed | — |
 | Runcam Split 4 | 4255:0102 | ⚪ proposed | — |
 | Runcam Thumb 2 | 4255:0103 | ⚪ proposed | — |
+| Kobo Glo Hd | 2237:4167 | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Aura Edition 2 | 2237:4175 | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Aura H2o Edition 2 | 2237:4177 | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Sage | 2237:4188 | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Elipsa | 2237:4189 | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Clara 2e | 2237:418c | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Elipsa 2e | 2237:418d | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Libra Colour | 2237:418e | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Clara Bw | 2237:418f | ⚪ proposed | supportsGetObjectPropList |
+| Kobo Clara Colour | 2237:4190 | ⚪ proposed | supportsGetObjectPropList |
+| Onyx Boox Note Air | 2207:0016 | ⚪ proposed | — |
+| Onyx Boox Note Air 2 | 2207:0017 | ⚪ proposed | — |
+| Onyx Boox Note Air 3 | 2207:0018 | ⚪ proposed | — |
+| Onyx Boox Note Air 3c | 2207:0019 | ⚪ proposed | — |
+| Onyx Boox Tab Ultra | 2207:001a | ⚪ proposed | — |
+| Onyx Boox Tab Ultra C Pro | 2207:001b | ⚪ proposed | — |
+| Onyx Boox Poke5 | 2207:001c | ⚪ proposed | — |
+| Onyx Boox Page | 2207:001d | ⚪ proposed | — |
+| Onyx Boox Note X | 2207:001e | ⚪ proposed | — |
+| Onyx Boox Nova Air | 2207:001f | ⚪ proposed | — |
+| Onyx Boox Nova Air 2 | 2207:0020 | ⚪ proposed | — |
+| Pocketbook Inkpad 4 | 0525:a4a5 | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Inkpad Color 3 | 0525:a4a6 | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Era | 0525:a4a7 | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Touch Hd 3 | 0525:a4a8 | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Verse Pro | 0525:a4a9 | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Touch Lux 5 | 0525:a4aa | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Inkpad 3 | 0525:a4ab | ⚪ proposed | supportsGetObjectPropList |
+| Pocketbook Color | 0525:a4ac | ⚪ proposed | supportsGetObjectPropList |
+| Barnesnoble Nook Simple Touch | 2080:0002 | ⚪ proposed | — |
+| Barnesnoble Nook Glowlight Plus | 2080:0003 | ⚪ proposed | — |
+| Barnesnoble Nook Glowlight 4 | 2080:0007 | ⚪ proposed | — |
+| Barnesnoble Nook Glowlight 4e | 2080:0008 | ⚪ proposed | — |
+| Barnesnoble Nook Hd | 2080:000b | ⚪ proposed | — |
+| Barnesnoble Nook Hdplus | 2080:000c | ⚪ proposed | — |
+| Tolino Shine 4 | 1f85:6058 | ⚪ proposed | supportsGetObjectPropList |
+| Tolino Page 2 | 1f85:605a | ⚪ proposed | supportsGetObjectPropList |
+| Tolino Epos 3 | 1f85:605c | ⚪ proposed | supportsGetObjectPropList |
+| Tolino Vision 5 | 1f85:605e | ⚪ proposed | supportsGetObjectPropList |
+| Amazon Kindle 2 | 1949:0002 | ⚪ proposed | — |
+| Amazon Kindle Dx | 1949:0003 | ⚪ proposed | — |
+| Amazon Kindle Keyboard | 1949:0004 | ⚪ proposed | — |
+| Amazon Kindle Pw4 | 1949:0402 | ⚪ proposed | — |
+| Amazon Kindle Basic 10th | 1949:0502 | ⚪ proposed | — |
+| Amazon Kindle 11th 2022 | 1949:0632 | ⚪ proposed | — |
+| Amazon Kindle Pw Sig Edition | 1949:0642 | ⚪ proposed | — |
+| Garmin Dashcam47 | 091e:245f | ⚪ proposed | — |
+| Garmin Dashcam46 | 091e:2460 | ⚪ proposed | — |
+| Garmin Dashcam56 | 091e:2461 | ⚪ proposed | — |
+| Garmin Dashcam66w | 091e:2462 | ⚪ proposed | — |
+| Garmin Dashcamlive | 091e:2463 | ⚪ proposed | — |
+| Blackvue Dr900x 2ch | 0603:d901 | ⚪ proposed | — |
+| Blackvue Dr770x 2ch | 0603:d771 | ⚪ proposed | — |
+| Blackvue Dr750x 2ch | 0603:d751 | ⚪ proposed | — |
+| Blackvue Dr900s 2ch | 0603:d900 | ⚪ proposed | — |
+| Blackvue Dr590x 2ch | 0603:d591 | ⚪ proposed | — |
+| Blackvue Dr770x 1ch | 0603:d770 | ⚪ proposed | — |
+| Thinkware U1000 | 1eac:0100 | ⚪ proposed | — |
+| Thinkware Q1000 | 1eac:0200 | ⚪ proposed | — |
+| Thinkware F200pro | 1eac:0300 | ⚪ proposed | — |
+| Thinkware F70pro | 1eac:0400 | ⚪ proposed | — |
+| Thinkware X1000 | 1eac:0500 | ⚪ proposed | — |
+| Thinkware T700 | 1eac:0600 | ⚪ proposed | — |
+| 70mai A800s 4k | 2717:7001 | ⚪ proposed | — |
+| 70mai A810 | 2717:7002 | ⚪ proposed | — |
+| 70mai Omni X200 | 2717:7003 | ⚪ proposed | — |
+| 70mai A500s | 2717:7004 | ⚪ proposed | — |
+| 70mai M300 | 2717:7005 | ⚪ proposed | — |
+| Rexing V1 4k | 0603:e001 | ⚪ proposed | — |
+| Rexing V1p Pro | 0603:e002 | ⚪ proposed | — |
+| Rexing V3 | 0603:e003 | ⚪ proposed | — |
+| Rexing V5 | 0603:e004 | ⚪ proposed | — |
+| Vantrue N4 | 0603:f001 | ⚪ proposed | — |
+| Vantrue N2s | 0603:f002 | ⚪ proposed | — |
+| Vantrue S1 | 0603:f003 | ⚪ proposed | — |
+| Vantrue E1 | 0603:f004 | ⚪ proposed | — |
+| Vantrue N5 | 0603:f005 | ⚪ proposed | — |
+| Vantrue X4s | 0603:f006 | ⚪ proposed | — |
+| Flir E8 Xt | 09cb:1005 | ⚪ proposed | — |
+| Flir E6 Xt | 09cb:1006 | ⚪ proposed | — |
+| Flir E5 Xt | 09cb:1007 | ⚪ proposed | — |
+| Flir C5 | 09cb:1008 | ⚪ proposed | — |
+| Flir One Edge Pro | 09cb:1996 | ⚪ proposed | — |
+| Flir Breach Ptq136 | 09cb:4007 | ⚪ proposed | — |
+| Flir T530 | 09cb:1010 | ⚪ proposed | — |
+| Flir T540 | 09cb:1011 | ⚪ proposed | — |
+| Flir T560 | 09cb:1012 | ⚪ proposed | — |
+| Infiray P2 Pro | 2bdf:0001 | ⚪ proposed | — |
+| Infiray T2l | 2bdf:0002 | ⚪ proposed | — |
+| Infiray T2s Plus | 2bdf:0003 | ⚪ proposed | — |
+| Seek Thermal Compact Pro | 289d:0010 | ⚪ proposed | — |
+| Seek Thermal Shotpro | 289d:0011 | ⚪ proposed | — |
+| Tomtom Go 520 | 1390:0001 | ⚪ proposed | — |
+| Tomtom Runner Gps Watch | 1390:7474 | ⚪ proposed | — |
+| Tomtom Bandit Action Cam | 1390:a001 | ⚪ proposed | — |
+| Tomtom Go 5200 | 1390:5456 | ⚪ proposed | — |
+| Tomtom Go Discover | 1390:5457 | ⚪ proposed | — |
+| Tomtom Rider 550 | 1390:5458 | ⚪ proposed | — |
+| Garmin Drive 5 | 091e:28db | ⚪ proposed | — |
+| Garmin Nuvicam | 091e:47fb | ⚪ proposed | — |
+| Garmin Nuvi 2505 | 091e:255b | ⚪ proposed | — |
+| Garmin Nuvi 55 | 091e:26a1 | ⚪ proposed | — |
+| Garmin Etrex 30 | 091e:2519 | ⚪ proposed | — |
+| Garmin Gpsmap 62sc | 091e:253c | ⚪ proposed | — |
+| Garmin Oregon Series | 091e:2380 | ⚪ proposed | — |
+| Garmin Nuvi 1350 | 091e:23cc | ⚪ proposed | — |
+| Anbernic Rg556 | 1f3a:6001 | ⚪ proposed | — |
+| Anbernic Rg505 | 1f3a:6002 | ⚪ proposed | — |
+| Anbernic Rg353v | 1f3a:6003 | ⚪ proposed | — |
+| Retroid Pocket 4 Pro | 05c6:f001 | ⚪ proposed | — |
+| Retroid Pocket 3 Plus | 05c6:f002 | ⚪ proposed | — |
+| Retroid Pocket Mini | 05c6:f003 | ⚪ proposed | — |
+| Ayn Odin 2 | 05c6:f010 | ⚪ proposed | — |
+| Ayn Odin 2 Mini | 05c6:f011 | ⚪ proposed | — |
+| Ayn Odin 2 Portal | 05c6:f012 | ⚪ proposed | — |
+| Wd My Passport Wireless Pro | 1058:0730 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Wd My Passport Wireless Ssd | 1058:0740 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Seagate Wireless Plus | 0bc2:5580 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Seagate Wireless Mobile | 0bc2:5581 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |

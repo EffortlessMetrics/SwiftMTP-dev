@@ -32,6 +32,8 @@ Ongoing record of issues, paper cuts, and improvement opportunities encountered 
 | 2026-02-27 | 🟡 P2 | `validate-submission.yml` workflow lacks `permissions:` block, causing 403 on PR comment posting. Workflow silently looks broken to contributors. | ✅ Fixed — added permissions block. |
 | 2026-02-27 | 🟡 P2 | `smoke.yml` still targeted `macos-14` runner, which may not have latest SDK. | ✅ Fixed — updated to `macos-15`. |
 | 2026-02-27 | 🟡 P2 | SPDX license header check fails for new files — easy to forget when adding Swift files manually. | ✅ Fixed one file. **TODO**: add Xcode file template or pre-commit hook that auto-inserts SPDX header. |
+| 2026-02-27 | 🟠 P1 | `Docs/benchmarks/probes/` is gitignored but quirk entries reference artifacts in it. `git add -f` required. Fragile. | ✅ Fixed probe files. **TODO**: un-gitignore `Docs/benchmarks/probes/` or add a CI check that artifact refs map to tracked files. |
+| 2026-02-27 | 🟠 P1 | `scripts/check-changelog.sh` fails on shallow clones (CI) because `git describe --tags` can't find tags. | ✅ Fixed — added fallback to accept `[Unreleased]` section. |
 | 2026-02-27 | 🟢 P3 | `generate-compat-matrix.sh` output drifts from committed `Docs/compat-matrix.md` after every quirks addition. No automation to keep them in sync. | **TODO**: add a `post-commit` or CI step that auto-regenerates and commits, or make the CI check advisory-only. |
 
 ## Device Onboarding
