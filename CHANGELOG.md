@@ -59,6 +59,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`learn-promote` tool** re-added to Package.swift and fixed: now uses correct `QuirkDatabase.match(vid:pid:...)` API and `DeviceQuirk` field names.
 - **Multi-device `DeviceServiceRegistry` tests**: 4 new tests covering concurrent registration of 3 devices, isolated detach/reconnect, domain remapping, and remove-one-keeps-others.
 - **FileProvider integration tests**: Replaced 12 all-skipped stubs with 10 real mock-based tests (`FileProviderWriteIntegrationTests`, `MTPFileProviderItemIntegrationTests`) plus 3 correctly-documented sandbox-only skips.
+
+- **Quirk database: 50 → 395 entries** (waves 3 & 4). New VIDs: Alcatel/TCL (0x1bbb), Sharp Aquos (0x04dd), Kyocera (0x0482), Fairphone (0x2ae5), Honor (0x339b), Casio Exilim (0x07cf), Kodak EasyShare (0x040a), OM System (0x33a2). Coverage now spans Android phones, compact/mirrorless/DSLR cameras, action cameras, wearables, and tablets across 38+ USB VIDs.
+- **PTP class heuristic**: Unrecognized USB interface-class 0x06 devices automatically receive proplist-enabled PTP policy — cameras connect without a quirk entry. Auto-disable fallback: `GetObjectPropList` returning `OperationNotSupported` is silently suppressed and the device is downgraded to object-info enumeration.
+- **`swiftmtp quirks lookup --vid 0xXXXX --pid 0xXXXX`**: New CLI subcommand to look up a device by VID/PID and print its quirk ID, governance status, and proplist capability.
+- **`swiftmtp add-device --brand … --model … --vid … --pid … --class android|ptp|unknown`**: Generates a fully-formed quirk entry JSON template for community submission.
+- **`swiftmtp probe` VID/PID annotation**: Probe output now shows USB VID:PID and whether a quirk match was found, making it easy to collect data for device submissions.
+- **Contributor tooling**: `Docs/DeviceSubmission.md` step-by-step guide, `Docs/ContributionGuide.md` "Contributing Device Data" section. `validate-quirks.sh` now shows which specific IDs/VID:PID pairs are duplicated instead of a generic error.
+- **BDD scenarios**: 3 new Gherkin feature files — `ptp-class-heuristic.feature`, `auto-disable-proplist.feature`, `device-families-wave4.feature` (17 new scenarios total).
+- **Property tests** (`QuirksDatabasePropertyTests.swift`): 14 new SwiftCheck property tests validating DB integrity invariants (unique IDs, unique VID:PID pairs, consistent PTP/Android flag relationships, EffectiveTuningBuilder monotonicity).
+- **Snapshot tests** (`QuirkPolicySnapshotTests.swift`): 7 policy-regression snapshot tests with stored JSON baselines preventing accidental heuristic/flag regressions.
+- **Heuristic integration tests** (`HeuristicIntegrationTests.swift`): 8 integration tests exercising QuirkResolver + DevicePolicy + VirtualMTPDevice for PTP heuristic trigger and auto-disable paths.
+- **Compat matrix** (`Docs/compat-matrix.md`): Auto-generated markdown table of all 395 quirk entries with status, VID:PID, and key flags.
 - `SendableBox<T>` helper for bridging ObjC completion handlers into Swift 6.2 `sending Task` closures.
 - Sprint execution playbook with DoR/DoD, weekly cadence, carry-over rules, and evidence contracts (`Docs/SPRINT-PLAYBOOK.md`).
 - Central documentation hub for sprint/release workflows and technical references (`Docs/README.md`).
