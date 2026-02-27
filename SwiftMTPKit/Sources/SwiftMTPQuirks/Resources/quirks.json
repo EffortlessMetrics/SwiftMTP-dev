@@ -26536,6 +26536,6436 @@
         "sourceRef": "camlibs/ptp2/library.c",
         "notes": "Parrot Sequoia — pro agriculture/mapping multispectral camera with PTP capture support"
       }
+    },
+    {
+      "id": "garmin-monterra-2585",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x2585",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin Monterra — Android-based handheld outdoor GPS. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h."
+      }
+    },
+    {
+      "id": "garmin-drivesmart-55-4bf9",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4bf9",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin DriveSmart 55 — car GPS navigator. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (feature-requests/312)."
+      }
+    },
+    {
+      "id": "garmin-zumo-xt-4d9c",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4d9c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin Zumo XT — motorcycle GPS navigator. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (bugs/1887)."
+      }
+    },
+    {
+      "id": "garmin-edge-1040-4f03",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4f03",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin Edge 1040 — cycling GPS computer. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (bugs/1946)."
+      }
+    },
+    {
+      "id": "garmin-edge-540-4fdd",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4fdd",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin Edge 540 — cycling GPS computer. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h."
+      }
+    },
+    {
+      "id": "garmin-edge-840-4fde",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4fde",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin Edge 840 — cycling GPS computer. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h."
+      }
+    },
+    {
+      "id": "garmin-edge-explore-2-5049",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x5049",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin Edge Explore 2 — touring/navigation cycling GPS. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (issues/264)."
+      }
+    },
+    {
+      "id": "garmin-gpsmap-67-50f0",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x50f0",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin GPSMAP 67 — handheld hiking/outdoor GPS navigator. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (issues/218)."
+      }
+    },
+    {
+      "id": "garmin-edge-850-521a",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x521a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin Edge 850 — cycling GPS computer. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h."
+      }
+    },
+    {
+      "id": "tomtom-rider-40-5455",
+      "match": {
+        "vid": "0x1390",
+        "pid": "0x5455",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "TomTom Rider 40 — motorcycle GPS navigator. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (bugs/1362)."
+      }
+    },
+    {
+      "id": "nintendo-switch-switch-lite-201d",
+      "match": {
+        "vid": "0x057e",
+        "pid": "0x201d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Nintendo Switch / Switch Lite in MTP mode (System Settings > Data Management > Transfer to Computer). DEVICE_FLAG_NONE in libmtp — no Android quirks needed. Source: libmtp src/music-players.h (bugs/1893)."
+      }
+    },
+    {
+      "id": "nintendo-switch-2-2061",
+      "match": {
+        "vid": "0x057e",
+        "pid": "0x2061",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Nintendo Switch 2 in MTP mode. DEVICE_FLAG_NONE in libmtp. Source: libmtp src/music-players.h (bugs/1953)."
+      }
+    },
+    {
+      "id": "dji-controller-2-1021",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x1021",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "DJI RC Controller 2 (used with DJI Mini 3/4 Pro, Air 3, Mavic 3). Android-based MTP. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (issues/203)."
+      }
+    },
+    {
+      "id": "onyx-boox-max-2-000b",
+      "match": {
+        "vid": "0x2207",
+        "pid": "0x000b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Onyx Boox Max 2 e-reader (13.3-inch E-ink). Android-based, DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (debian.org/917259)."
+      }
+    },
+    {
+      "id": "onyx-boox-max-2-pro-000c",
+      "match": {
+        "vid": "0x2207",
+        "pid": "0x000c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Onyx Boox Max 2 Pro e-reader (13.3-inch E-ink). Android-based, DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (bugs/1833)."
+      }
+    },
+    {
+      "id": "onyx-boox-note-000d",
+      "match": {
+        "vid": "0x2207",
+        "pid": "0x000d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Onyx Boox Note e-reader (10.3-inch E-ink). Android-based, DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (bugs/1834)."
+      }
+    },
+    {
+      "id": "onyx-boox-nova-0014",
+      "match": {
+        "vid": "0x2207",
+        "pid": "0x0014",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Onyx Boox Nova e-reader (7.8-inch E-ink). Android-based, DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (support-requests/291)."
+      }
+    },
+    {
+      "id": "onyx-boox-nova-pro-0015",
+      "match": {
+        "vid": "0x2207",
+        "pid": "0x0015",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Onyx Boox Nova Pro e-reader (7.8-inch E-ink). Android-based, DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (bugs/1900)."
+      }
+    },
+    {
+      "id": "tolino-vision-4-hd-6056",
+      "match": {
+        "vid": "0x1f85",
+        "pid": "0x6056",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Tolino Vision 4 HD e-reader. Android-based, DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (bugs/1889)."
+      }
+    },
+    {
+      "id": "tolino-vision-6-8000",
+      "match": {
+        "vid": "0x4173",
+        "pid": "0x8000",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Tolino Vision 6 e-reader. Android-based, DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (bugs/1921)."
+      }
+    },
+    {
+      "id": "garmin-fenix-5-plus-4b54",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4b54",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin Fenix 5/5S/5X Plus — GPS multisport adventure watch. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (issues/15)."
+      }
+    },
+    {
+      "id": "garmin-vivoactive-3-4bac",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4bac",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin Vivoactive 3 — GPS smartwatch. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (feature-requests/271)."
+      }
+    },
+    {
+      "id": "garmin-forerunner-245-music-4c05",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4c05",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin Forerunner 245 Music — GPS running watch with onboard music storage. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h (bugs/1884)."
+      }
+    },
+    {
+      "id": "garmin-fenix-6x-pro-4cdb",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4cdb",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "ioTimeoutMs": 12000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "automated-research",
+        "addedDate": "2025-07-15",
+        "verificationNotes": "Garmin Fenix 6X Pro/Sapphire — GPS multisport watch. DEVICE_FLAGS_ANDROID_BUGS in libmtp. Source: libmtp src/music-players.h."
+      }
+    },
+    {
+      "id": "nikon-dsc-d100-0402",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0402",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D100 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D100"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d2h-0404",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0404",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D2H — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D2H"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d70-0406",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0406",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D70 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D70"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d2x-0408",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0408",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D2X — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D2X"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d50-040a",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x040a",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D50 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D50"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d2hs-040c",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x040c",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D2Hs — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D2Hs"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d70s-040e",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x040e",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D70s — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D70s"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d80-0412",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0412",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D80 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D80"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d40-0414",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0414",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D40 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D40"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d2xs-0416",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0416",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D2Xs — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D2Xs"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d40x-0418",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0418",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D40x — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D40x"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d300-041a",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x041a",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D300 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D300"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d3-041c",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x041c",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D3 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D3"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d60-041e",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x041e",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D60 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D60"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d3x-0420",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0420",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D3x — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D3x"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d5000-0423",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0423",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D5000 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D5000"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d3000-0424",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0424",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D3000 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D3000"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d300s-0425",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0425",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D300s — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D300s"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d3s-0426",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0426",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D3s — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D3s"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-df-0432",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0432",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon Df — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon Df"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-dsc-d810a-043b",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x043b",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon D810A — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon D810A"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-1-v1-0601",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0601",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon 1 V1 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon 1 V1"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-1-j1-0602",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0602",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon 1 J1 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon 1 J1"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-1-j2-0603",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0603",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon 1 J2 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon 1 J2"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-1-v2-0604",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0604",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon 1 V2 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon 1 V2"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-1-j3-0605",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0605",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon 1 J3 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon 1 J3"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-1-s1-0606",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0606",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon 1 S1 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon 1 S1"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-1-s2-0608",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0608",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon 1 S2 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon 1 S2"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-1-j4-0609",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x0609",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon 1 J4 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon 1 J4"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-1-v3-060a",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x060a",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon 1 V3 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon 1 V3"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "nikon-1-j5-060b",
+      "match": {
+        "vid": "0x04b0",
+        "pid": "0x060b",
+        "deviceInfoRegex": ".*Nikon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 300,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 100
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 300
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Nikon 1 J5 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Nikon 1 J5"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-300d-3099",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3099",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 300D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 300D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-10d-30bc",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x30bc",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 10D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 10D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-1d-mark-ii-30ea",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x30ea",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 1D Mark II — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 1D Mark II"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-20d-30ec",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x30ec",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 20D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 20D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-30d-3113",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3113",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 30D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 30D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-40d-3146",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3146",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 40D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 40D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-1d-mark-iii-3147",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3147",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 1D Mark III — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 1D Mark III"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-1000d-317b",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x317b",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 1000D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 1000D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-50d-319b",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x319b",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 50D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 50D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-1d-mark-iv-31d0",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x31d0",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 1D Mark IV — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 1D Mark IV"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-1100d-3217",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3217",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 1100D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 1100D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-1dx-3219",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3219",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 1D X — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 1D X"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-1dc-3252",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3252",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 1D C — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 1D C"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-100d-3270",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3270",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 100D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 100D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-m-323d",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x323d",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS M — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS M"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-m2-3273",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3273",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS M2 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS M2"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-1200d-327f",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x327f",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 1200D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 1200D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-1dx-mark-ii-3292",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3292",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 1D X Mark II — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 1D X Mark II"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-5ds-3295",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3295",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 5DS — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 5DS"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-m3-3299",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3299",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS M3 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS M3"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-m5-32bb",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32bb",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS M5 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS M5"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-77d-32cb",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32cb",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 77D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 77D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-m100-32d1",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32d1",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS M100 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS M100"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-ixus-185-32d4",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32d4",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon IXUS 185 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon IXUS 185"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-4000d-32d9",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32d9",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 4000D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 4000D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-2000d-32e1",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x32e1",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS 2000D — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS 2000D"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-r50v-3320",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3320",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS R50 V — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS R50 V"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-eos-r6-mark-iii-3323",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3323",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon EOS R6 Mark III — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon EOS R6 Mark III"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-powershot-g10-318f",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x318f",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot G10 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon PowerShot G10"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-powershot-g11-31df",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x31df",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot G11 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon PowerShot G11"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-powershot-g12-320f",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x320f",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot G12 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon PowerShot G12"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "canon-powershot-s95-3212",
+      "match": {
+        "vid": "0x04a9",
+        "pid": "0x3212",
+        "deviceInfoRegex": ".*Canon.*",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 30000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 180000,
+        "stabilizeMs": 200,
+        "resetOnOpen": false,
+        "eventPumpDelayMs": 50
+      },
+      "hooks": [
+        {
+          "phase": "postOpenSession",
+          "delayMs": 200
+        }
+      ],
+      "ops": {
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "preferGetObjectPropList": false,
+        "supportsGetObjectPropList": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": true,
+        "skipGetObjectPropValue": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "notes": [
+        "Canon PowerShot S95 — PTP camera.",
+        "Source: libgphoto2 camlibs/ptp2/library.c.",
+        "Camera must be set to PTP/MTP USB mode before connecting."
+      ],
+      "provenance": {
+        "source": "libgphoto2",
+        "sourceRef": "camlibs/ptp2/library.c",
+        "notes": "Canon PowerShot S95"
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      }
+    },
+    {
+      "id": "sony-xperia-ion-0177",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0177",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia Ion (LT28at)"
+      }
+    },
+    {
+      "id": "sony-xperia-t-0182",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0182",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia T (LT30p)"
+      }
+    },
+    {
+      "id": "sony-xperia-v-0186",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0186",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia V (LT25i)"
+      }
+    },
+    {
+      "id": "sony-xperia-sp-0195",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0195",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia SP"
+      }
+    },
+    {
+      "id": "sony-xperia-m-019b",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x019b",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia M"
+      }
+    },
+    {
+      "id": "sony-xperia-c-01a3",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01a3",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia C"
+      }
+    },
+    {
+      "id": "sony-xperia-z1-compact-01a7",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01a7",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia Z1 Compact (D5503)"
+      }
+    },
+    {
+      "id": "sony-xperia-t2-ultra-01a9",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01a9",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia T2 Ultra"
+      }
+    },
+    {
+      "id": "sony-xperia-m2-01aa",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01aa",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia M2"
+      }
+    },
+    {
+      "id": "sony-xperia-e3-01bc",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01bc",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia E3"
+      }
+    },
+    {
+      "id": "sony-xperia-m4-aqua-01c4",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01c4",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia M4 Aqua Dual"
+      }
+    },
+    {
+      "id": "sony-xperia-e4g-01cb",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01cb",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia E4g"
+      }
+    },
+    {
+      "id": "sony-xperia-c4-dual-01d2",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01d2",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia C4 Dual"
+      }
+    },
+    {
+      "id": "sony-xperia-m5-01d6",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01d6",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia M5"
+      }
+    },
+    {
+      "id": "sony-xperia-z5-compact-01da",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01da",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia Z5 Compact"
+      }
+    },
+    {
+      "id": "sony-xperia-z5-premium-01db",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01db",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia Z5 Premium Dual SIM"
+      }
+    },
+    {
+      "id": "sony-xperia-x-01e0",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01e0",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia X"
+      }
+    },
+    {
+      "id": "sony-xperia-x-compact-01e8",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01e8",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia X Compact"
+      }
+    },
+    {
+      "id": "sony-xperia-xa1-01eb",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01eb",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia XA1"
+      }
+    },
+    {
+      "id": "sony-xperia-xa1-ultra-01ef",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01ef",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia XA1 Ultra"
+      }
+    },
+    {
+      "id": "sony-xperia-xz-premium-01f1",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01f1",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia XZ Premium"
+      }
+    },
+    {
+      "id": "sony-xperia-xz1-compact-01f4",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01f4",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia XZ1 Compact"
+      }
+    },
+    {
+      "id": "sony-xperia-l2-01f6",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01f6",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia L2"
+      }
+    },
+    {
+      "id": "sony-xperia-xa2-compact-01f7",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01f7",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia XA2 Compact"
+      }
+    },
+    {
+      "id": "sony-xperia-xa2-ultra-01f8",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01f8",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia XA2 Ultra"
+      }
+    },
+    {
+      "id": "sony-xperia-xz2-compact-01f9",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01f9",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia XZ2 Compact Dual SIM"
+      }
+    },
+    {
+      "id": "sony-xperia-xz2-premium-01fb",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01fb",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia XZ2 Premium"
+      }
+    },
+    {
+      "id": "sony-xperia-xz3-01ff",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x01ff",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia XZ3 Dual SIM (H9436)"
+      }
+    },
+    {
+      "id": "sony-xperia-10-0201",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0201",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia 10 (I4113)"
+      }
+    },
+    {
+      "id": "sony-xperia-1-0205",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0205",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia 1 (J9110)"
+      }
+    },
+    {
+      "id": "sony-xperia-l3-0207",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x0207",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia L3"
+      }
+    },
+    {
+      "id": "sony-xperia-5-020a",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x020a",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia 5"
+      }
+    },
+    {
+      "id": "sony-xperia-10-v-020c",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x020c",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia 10 V"
+      }
+    },
+    {
+      "id": "sony-xperia-5-ii-020d",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x020d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia 5 II"
+      }
+    },
+    {
+      "id": "sony-xperia-10-vi-020e",
+      "match": {
+        "vid": "0x0fce",
+        "pid": "0x020e",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 8388608,
+        "ioTimeoutMs": 15000
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": true,
+        "prefersPropListEnumeration": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony Xperia 10 VI"
+      }
+    },
+    {
+      "id": "sony-nwz-s516-0326",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0326",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-S516 Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-s716f-035a",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x035a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-S716F Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-b135-036e",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x036e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-B135 Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-w202-0388",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0388",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-W202 Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-s739f-038c",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x038c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-S739F Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-s638f-038e",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x038e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-S638F Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-x1050-0397",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0397",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-X1050B/NWZ-X1060B Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-x1051-0398",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0398",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-X1051/NWZ-X1061 Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-b142f-03d8",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x03d8",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-B142F Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-e445-03fd",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x03fd",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-E445 Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-s545-03fe",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x03fe",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-S545 Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-w252b-04bb",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x04bb",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-W252B Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-b153f-04be",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x04be",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-B153F Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-s754-04cc",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x04cc",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-S754 Walkman"
+      }
+    },
+    {
+      "id": "sony-nwz-b163f-059a",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x059a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "sourceRef": "music-players.h",
+        "notes": "Sony NWZ-B163F Walkman"
+      }
     }
   ]
 }
