@@ -2059,3 +2059,128 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Ticwatch Gtx | 1d5b:0005 | ⚪ proposed | — |
 | Ticwatch C2plus | 1d5b:0006 | ⚪ proposed | — |
 | Ticwatch S2 | 1d5b:0007 | ⚪ proposed | — |
+| Tecno Camon 30 | 1d5b:600a | ⚪ proposed | — |
+| Tecno Camon 30 Pro | 1d5b:600b | ⚪ proposed | — |
+| Tecno Camon 30 Premier | 1d5b:600c | ⚪ proposed | — |
+| Tecno Phantom V Flip | 1d5b:600d | ⚪ proposed | — |
+| Tecno Phantom V Fold2 | 1d5b:600e | ⚪ proposed | — |
+| Tecno Phantom X2 Pro | 1d5b:600f | ⚪ proposed | — |
+| Tecno Spark 20 | 1d5b:6010 | ⚪ proposed | — |
+| Tecno Spark 20 Pro | 1d5b:6011 | ⚪ proposed | — |
+| Tecno Spark 20 Pro Plus | 1d5b:6012 | ⚪ proposed | — |
+| Tecno Spark Go 2024 | 1d5b:6013 | ⚪ proposed | — |
+| Tecno Pova 5 | 1d5b:6014 | ⚪ proposed | — |
+| Tecno Pova 5 Pro | 1d5b:6015 | ⚪ proposed | — |
+| Tecno Pova 6 | 1d5b:6016 | ⚪ proposed | — |
+| Tecno Pova 6 Pro | 1d5b:6017 | ⚪ proposed | — |
+| Tecno Pop 8 | 1d5b:6018 | ⚪ proposed | — |
+| Tecno Pop 8 Pro | 1d5b:6019 | ⚪ proposed | — |
+| Tecno Camon 20 | 1d5b:601a | ⚪ proposed | — |
+| Tecno Camon 20 Premier | 1d5b:601b | ⚪ proposed | — |
+| Tecno Spark 10 Pro | 1d5b:601c | ⚪ proposed | — |
+| Tecno Phantom Ultimate | 1d5b:601d | ⚪ proposed | — |
+| Infinix Note 40 | 1d5c:6008 | ⚪ proposed | — |
+| Infinix Note 40 Pro | 1d5c:6009 | ⚪ proposed | — |
+| Infinix Note 40 Pro Plus | 1d5c:600a | ⚪ proposed | — |
+| Infinix Hot 40 | 1d5c:600b | ⚪ proposed | — |
+| Infinix Hot 40 Pro | 1d5c:600c | ⚪ proposed | — |
+| Infinix Hot 40i | 1d5c:600d | ⚪ proposed | — |
+| Infinix Zero 30 | 1d5c:600e | ⚪ proposed | — |
+| Infinix Zero 30 5g | 1d5c:600f | ⚪ proposed | — |
+| Infinix Gt 20 Pro | 1d5c:6010 | ⚪ proposed | — |
+| Infinix Smart 8 | 1d5c:6011 | ⚪ proposed | — |
+| Infinix Smart 8 Hd | 1d5c:6012 | ⚪ proposed | — |
+| Infinix Smart 8 Plus | 1d5c:6013 | ⚪ proposed | — |
+| Infinix Note 30 | 1d5c:6014 | ⚪ proposed | — |
+| Infinix Note 30 Pro | 1d5c:6015 | ⚪ proposed | — |
+| Infinix Hot 30 | 1d5c:6016 | ⚪ proposed | — |
+| Infinix Hot 30i | 1d5c:6017 | ⚪ proposed | — |
+| Infinix Zero Ultra | 1d5c:6018 | ⚪ proposed | — |
+| Infinix Gt 10 Pro | 1d5c:6019 | ⚪ proposed | — |
+| Infinix Note 12 Pro | 1d5c:601a | ⚪ proposed | — |
+| Infinix Hot 20s | 1d5c:601b | ⚪ proposed | — |
+| Itel A70 | 1d4d:6009 | ⚪ proposed | — |
+| Itel A70s | 1d4d:600a | ⚪ proposed | — |
+| Itel P55 Plus | 1d4d:600b | ⚪ proposed | — |
+| Itel P55 5g Plus | 1d4d:600c | ⚪ proposed | — |
+| Itel S24 | 1d4d:600d | ⚪ proposed | — |
+| Itel S24 Pro | 1d4d:600e | ⚪ proposed | — |
+| Itel Vision 5 | 1d4d:600f | ⚪ proposed | — |
+| Itel A60s | 1d4d:6010 | ⚪ proposed | — |
+| Itel A60 | 1d4d:6011 | ⚪ proposed | — |
+| Itel P40 | 1d4d:6012 | ⚪ proposed | — |
+| Itel P40 Plus | 1d4d:6013 | ⚪ proposed | — |
+| Itel S23 | 1d4d:6014 | ⚪ proposed | — |
+| Itel S23 Plus | 1d4d:6015 | ⚪ proposed | — |
+| Itel A27 | 1d4d:6016 | ⚪ proposed | — |
+| Itel A49 | 1d4d:6017 | ⚪ proposed | — |
+| Itel Vision 3 | 1d4d:6018 | ⚪ proposed | — |
+| Itel Vision 3 Plus | 1d4d:6019 | ⚪ proposed | — |
+| Itel A05s | 1d4d:601a | ⚪ proposed | — |
+| Itel P33 | 1d4d:601b | ⚪ proposed | — |
+| Valve Steam Deck Lcd | 28de:1002 | ⚪ proposed | — |
+| Valve Steam Deck Oled | 28de:1003 | ⚪ proposed | — |
+| Meta Quest 2 | 2833:0182 | ⚪ proposed | useAndroidExtensions |
+| Meta Quest 2 Alt | 2833:0183 | ⚪ proposed | useAndroidExtensions |
+| Meta Quest 3 | 2833:0184 | ⚪ proposed | useAndroidExtensions |
+| Meta Quest Pro | 2833:0185 | ⚪ proposed | useAndroidExtensions |
+| Meta Quest 3s | 2833:0186 | ⚪ proposed | useAndroidExtensions |
+| Razer Edge Gaming Tablet | 1532:9004 | ⚪ proposed | useAndroidExtensions |
+| Microsoft Bandon Pmc | 045e:00c9 | ⚪ proposed | supportsGetObjectPropList |
+| Microsoft MTP Simulator | 045e:0622 | ⚪ proposed | supportsGetObjectPropList |
+| Microsoft Kin | 045e:0642 | ⚪ proposed | supportsGetObjectPropList |
+| Microsoft Htc 8s | 045e:f0ca | ⚪ proposed | supportsGetObjectPropList |
+| Toshiba Gigabeat Megf40 | 0930:0009 | ⚪ proposed | supportsGetObjectPropList |
+| Toshiba Gigabeat | 0930:000c | ⚪ proposed | supportsGetObjectPropList |
+| Toshiba Gigabeat P20 | 0930:000f | ⚪ proposed | supportsGetObjectPropList |
+| Toshiba Gigabeat S | 0930:0010 | ⚪ proposed | — |
+| Toshiba Gigabeat P10 | 0930:0011 | ⚪ proposed | supportsGetObjectPropList |
+| Toshiba Gigabeat V30 | 0930:0014 | ⚪ proposed | supportsGetObjectPropList |
+| Toshiba Gigabeat U | 0930:0016 | ⚪ proposed | supportsGetObjectPropList |
+| Toshiba Gigabeat Meu202 | 0930:0018 | ⚪ proposed | supportsGetObjectPropList |
+| Toshiba Gigabeat T | 0930:0019 | ⚪ proposed | supportsGetObjectPropList |
+| Toshiba Gigabeat Meu201 | 0930:001a | ⚪ proposed | supportsGetObjectPropList |
+| Toshiba Gigabeat Met401 | 0930:001d | ⚪ proposed | supportsGetObjectPropList |
+| Toshiba Excite At200 | 0930:0960 | ⚪ proposed | — |
+| Toshiba Excite At300 | 0930:0963 | ⚪ proposed | — |
+| Toshiba Thrive At100 | 0930:7100 | ⚪ proposed | — |
+| Philips Hdd14xx | 0471:014c | ⚪ proposed | supportsGetObjectPropList |
+| Philips Hdd085 | 0471:014d | ⚪ proposed | supportsGetObjectPropList |
+| Philips Sa1115 | 0471:0164 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Gogear Audio | 0471:0165 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Shoqbox | 0471:0172 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Psa610 | 0471:0181 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Hdd6320 | 0471:01eb | ⚪ proposed | supportsGetObjectPropList |
+| Philips Gogear Sa3345 | 0471:2004 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Gogear Vibe | 0471:2075 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Gogear Muse | 0471:2077 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Gogear Vibe08 | 0471:207b | ⚪ proposed | supportsGetObjectPropList |
+| Philips Gogear Aria | 0471:207c | ⚪ proposed | supportsGetObjectPropList |
+| Philips Gogear Vibe Sa2vbe | 0471:20b7 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Gogear Ariaz | 0471:20b9 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Gogear Vibe02 | 0471:20e5 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Gogear Ariaz97 | 0471:2138 | ⚪ proposed | supportsGetObjectPropList |
+| Yota Phone C9660 | 2916:9039 | ⚪ proposed | — |
+| Yota Phone | 2916:9139 | ⚪ proposed | — |
+| Yota Phone 2 | 2916:914d | ⚪ proposed | — |
+| Yota Phone 2 | 2916:f003 | ⚪ proposed | — |
+| Wileyfox Spark | 2970:201d | ⚪ proposed | — |
+| Wileyfox Swift | 2970:2281 | ⚪ proposed | — |
+| Wileyfox Swift2 | 2970:2282 | ⚪ proposed | — |
+| Archos Gmini Xs100 | 0e79:1207 | ⚪ proposed | supportsGetObjectPropList |
+| Archos Xs202 | 0e79:1208 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 104 | 0e79:120a | ⚪ proposed | supportsGetObjectPropList |
+| Archos 204 | 0e79:120c | ⚪ proposed | supportsGetObjectPropList |
+| Archos 404cam | 0e79:1303 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 604wifi | 0e79:130b | ⚪ proposed | supportsGetObjectPropList |
+| Archos 704 Dvr | 0e79:130d | ⚪ proposed | supportsGetObjectPropList |
+| Archos 704tv | 0e79:130f | ⚪ proposed | supportsGetObjectPropList |
+| Archos 405 | 0e79:1311 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 605 | 0e79:1313 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 605f | 0e79:1315 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 705 | 0e79:1319 | ⚪ proposed | supportsGetObjectPropList |
+| Archos Tvplus | 0e79:131b | ⚪ proposed | supportsGetObjectPropList |
+| Archos 105 | 0e79:131d | ⚪ proposed | supportsGetObjectPropList |
+| Archos 405hdd | 0e79:1321 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 5 Mode2 | 0e79:1333 | ⚪ proposed | supportsGetObjectPropList |
+| Archos 7 | 0e79:1335 | ⚪ proposed | supportsGetObjectPropList |
