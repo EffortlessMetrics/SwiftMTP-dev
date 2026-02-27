@@ -449,4 +449,51 @@ final class QuirkMatchingTests: XCTestCase {
     let presetHasPropList = cfg.info.operationsSupported.contains(0x9805)
     XCTAssertEqual(presetHasPropList, f.supportsGetObjectPropList)
   }
+
+  // MARK: - PTP class-based heuristic (unrecognized camera)
+
+  func testUnrecognizedPTPCamera_GetsHeuristicPropListEnabled() {
+    // An unrecognized device (unknown VID:PID) with PTP class 0x06 should get
+    // supportsGetObjectPropList=true via the class-based heuristic.
+    let policy = EffectiveTuningBuilder.buildPolicy(
+      capabilities: [:],
+      learned: nil,
+      quirk: nil,
+      overrides: nil,
+      ifaceClass: 0x06
+    )
+    XCTAssertTrue(
+      policy.flags.supportsGetObjectPropList,
+      "Unrecognized PTP-class camera should default to supportsGetObjectPropList=true")
+    XCTAssertFalse(
+      policy.flags.requiresKernelDetach,
+      "PTP-class camera should not require kernel detach")
+  }
+
+  func testUnrecognizedAndroidDevice_GetConservativeDefaults() {
+    // An unrecognized vendor-class (0xff) device should get conservative defaults
+    // (no proplist) since we can't know if it supports it.
+    let policy = EffectiveTuningBuilder.buildPolicy(
+      capabilities: [:],
+      learned: nil,
+      quirk: nil,
+      overrides: nil,
+      ifaceClass: 0xFF
+    )
+    XCTAssertFalse(
+      policy.flags.supportsGetObjectPropList,
+      "Unrecognized vendor-class device should default to supportsGetObjectPropList=false")
+  }
+
+  func testUnrecognizedNoClass_GetConservativeDefaults() {
+    // No quirk, no class → conservative defaults
+    let policy = EffectiveTuningBuilder.buildPolicy(
+      capabilities: [:],
+      learned: nil,
+      quirk: nil,
+      overrides: nil,
+      ifaceClass: nil
+    )
+    XCTAssertFalse(policy.flags.supportsGetObjectPropList)
+  }
 }

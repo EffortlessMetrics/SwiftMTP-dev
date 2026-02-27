@@ -100,6 +100,18 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
 
   public init() {}
 
+  /// Reasonable defaults for an unrecognized PTP/Still-Image-Capture class device
+  /// (USB interface class 0x06, subclass 0x01, protocol 0x01).
+  /// Used when a device connects with no matching quirk entry.
+  public static func ptpCameraDefaults() -> QuirkFlags {
+    var f = QuirkFlags()
+    f.requiresKernelDetach = false
+    f.supportsGetObjectPropList = true
+    f.prefersPropListEnumeration = true
+    f.supportsPartialRead32 = true
+    return f
+  }
+
   // MARK: - Custom Codable for backward compatibility
 
   private enum CodingKeys: String, CodingKey {

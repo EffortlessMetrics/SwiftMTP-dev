@@ -416,7 +416,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       capabilities: [:],
       learned: learnedTuning,
       quirk: quirk,
-      overrides: overrides.isEmpty ? nil : overrides
+      overrides: overrides.isEmpty ? nil : overrides,
+      ifaceClass: linkDesc?.interfaceClass
     )
     let initialTuning = initialPolicy.tuning
     self.currentTuning = initialTuning
@@ -531,7 +532,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       capabilities: realCaps,
       learned: learnedTuning,
       quirk: quirk,
-      overrides: overrides.isEmpty ? nil : overrides
+      overrides: overrides.isEmpty ? nil : overrides,
+      ifaceClass: linkDesc?.interfaceClass
     )
     finalPolicy.fallbacks = fallbacks
     let finalTuning: EffectiveTuning
