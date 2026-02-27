@@ -2752,3 +2752,482 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | 70mai Dashcam Lite | 3361:7003 | ⚪ proposed | — |
 | 70mai Dashcam A800s | 3361:7004 | ⚪ proposed | — |
 | 70mai Dashcam M300 | 3361:7005 | ⚪ proposed | — |
+| Sandisk Sansa Express | 0781:7460 | ⚪ proposed | — |
+| Iriver N12 | 4102:1122 | ⚪ proposed | — |
+| Thomson Em28 Series | 069b:0774 | ⚪ proposed | supportsGetObjectPropList |
+| Thomson Opal  Lyra Mc4002 | 069b:0777 | ⚪ proposed | supportsGetObjectPropList |
+| Thomson Lyra Mc5104b M51 Series | 069b:077c | ⚪ proposed | supportsGetObjectPropList |
+| Thomson Rca H106 | 069b:301a | ⚪ proposed | supportsGetObjectPropList |
+| Thomson Scenium E308 | 069b:3028 | ⚪ proposed | supportsGetObjectPropList |
+| Thomson Lyra Hc308a | 069b:3035 | ⚪ proposed | supportsGetObjectPropList |
+| Coby Coby Mp705 | 1e74:6512 | ⚪ proposed | supportsGetObjectPropList |
+| Bravis A401 Neo | 0e8d:0c03 | ⚪ proposed | supportsGetObjectPropList |
+| Mediatek Mt65xx 67xx Mtppluscdc Mode | 0e8d:2012 | ⚪ proposed | supportsGetObjectPropList |
+| Mediatek Qin Phone F21 Pro | 0e8d:2026 | ⚪ proposed | supportsGetObjectPropList |
+| Lenovo Tab P12 2nd Id | 0e8d:7e16 | ⚪ proposed | supportsGetObjectPropList |
+| Trekstor Vibez 8 12gb | 066f:842a | ⚪ proposed | — |
+| Medion Md8333 Id1 | 066f:8550 | ⚪ proposed | — |
+| Medion Md8333 Id2 | 066f:8588 | ⚪ proposed | — |
+| Maxfield G Flash Ng 1gb | 066f:846c | ⚪ proposed | — |
+| Sigmatel Mtpmscn Audio Player | 066f:a010 | ⚪ proposed | — |
+| Disney Mixmax | 0aa6:6021 | ⚪ proposed | supportsGetObjectPropList |
+| Tevion Md 81488 | 0aa6:3011 | ⚪ proposed | supportsGetObjectPropList |
+| Mymusix Pd 6070 | 0aa6:9601 | ⚪ proposed | — |
+| Perception Digital Gigaware Gx400 | 0aa6:9702 | ⚪ proposed | supportsGetObjectPropList |
+| Insignia Ns Dv45 | 19ff:0303 | ⚪ proposed | supportsGetObjectPropList |
+| Insignia Sport Player | 19ff:0307 | ⚪ proposed | supportsGetObjectPropList |
+| Insignia Pilot 4gb | 19ff:0309 | ⚪ proposed | supportsGetObjectPropList |
+| Lg T54 | 043e:7040 | ⚪ proposed | supportsGetObjectPropList |
+| Lg Up3 | 043e:70b1 | ⚪ proposed | supportsGetObjectPropList |
+| Dunlop Mp3 Player 1gb  Egoman Md223afd | 10d6:2200 | ⚪ proposed | supportsGetObjectPropList |
+| Memorex Mmp 8585 8586 Or Iriver E200 | 10d6:2300 | ⚪ proposed | supportsGetObjectPropList |
+| Sirius Stiletto | 18f6:0102 | ⚪ proposed | supportsGetObjectPropList |
+| Sirius Stiletto 2 | 18f6:0110 | ⚪ proposed | supportsGetObjectPropList |
+| Trekstor I.beat Sweez Fm | 0402:0611 | ⚪ proposed | supportsGetObjectPropList |
+| Nextar Ma715a 8r | 0402:5668 | ⚪ proposed | supportsGetObjectPropList |
+| Kenwood Media Keg Hd10gb7 | 0b28:100c | ⚪ proposed | supportsGetObjectPropList |
+| Msi P610 Model Ms 5557 | 0db0:5572 | ⚪ proposed | supportsGetObjectPropList |
+| Foma D905i | 06d3:21ba | ⚪ proposed | supportsGetObjectPropList |
+| Haier Ibiza Rhapsody 1 | 1302:1016 | ⚪ proposed | supportsGetObjectPropList |
+| Haier Ibiza Rhapsody 2 | 1302:1017 | ⚪ proposed | supportsGetObjectPropList |
+| Polaroid Freescape Mpu 433158 | 0546:2035 | ⚪ proposed | supportsGetObjectPropList |
+| Slacker Slacker Portable Media Player | 1bdc:fabf | ⚪ proposed | — |
+| Conceptronic Cmtd2 | 1e53:0005 | ⚪ proposed | — |
+| O2 Sistemas Zoltartv | 1e53:0006 | ⚪ proposed | — |
+| Wyplay Wyplayer | 1e53:0007 | ⚪ proposed | — |
+| Normsoft Pocket Tunes | 1703:0001 | ⚪ proposed | supportsGetObjectPropList |
+| Normsoft Pocket Tunes 4 | 1703:0002 | ⚪ proposed | supportsGetObjectPropList |
+| Logik Log Dax Mp3 And Dab Player | 13d1:7002 | ⚪ proposed | supportsGetObjectPropList |
+| Technika Mp 709 | 13d1:7017 | ⚪ proposed | supportsGetObjectPropList |
+| Philips I908 | 0471:190b | ⚪ proposed | supportsGetObjectPropList |
+| Philips W6610 | 0471:2008 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Sa5285 | 0471:2022 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Gogear Sa1vbe08kx 78 | 0471:208e | ⚪ proposed | supportsGetObjectPropList |
+| Philips Pi3900b2 58 | 0471:2190 | ⚪ proposed | supportsGetObjectPropList |
+| Philips Psa235 | 0471:7e01 | ⚪ proposed | supportsGetObjectPropList |
+| Trekstor I.beat Organix 2.0 | 1e68:0002 | ⚪ proposed | — |
+| Marshall London | 2ad9:000b | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Marq | 091e:4cae | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Marq Aviator | 091e:4caf | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Descent Mk2 Mk2i | 091e:4cba | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Fenix 6s Pro Sapphire | 091e:4cd8 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Rey | 091e:4daa | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Darth Vader | 091e:4dab | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Captain Marvel | 091e:4dac | ⚪ proposed | supportsGetObjectPropList |
+| Garmin First Avenger | 091e:4dad | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Descent Mk2s | 091e:4dd7 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Forerunner 745 | 091e:4e05 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Venu Sq Music | 091e:4e0c | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Forerunner 945 Lte | 091e:4e44 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Venu 2 | 091e:4e77 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Venu 2s | 091e:4e78 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Venu Mercedes Benz | 091e:4e9c | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Venu 2 Plus | 091e:4f0b | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Fenix 7s | 091e:4f41 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Fenix 7 Sapphire Solar | 091e:4f42 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Enduro 2 Fenix 7x | 091e:4f43 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Forerunner 265 | 091e:50a1 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Forerunner 265s | 091e:50a2 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Venu 3s | 091e:50a5 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Epix Pro Gen 2 | 091e:50d8 | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Forerunner 965 | 091e:50db | ⚪ proposed | supportsGetObjectPropList |
+| Garmin Fenix 8 Amoled | 091e:51b8 | ⚪ proposed | supportsGetObjectPropList |
+| Canon Cp 10 | 04a9:304a | ⚪ proposed | disableWriteResume |
+| Canon Cp 100 | 04a9:3063 | ⚪ proposed | disableWriteResume |
+| Canon Cp 200 | 04a9:307c | ⚪ proposed | disableWriteResume |
+| Canon Cp 300 | 04a9:307d | ⚪ proposed | disableWriteResume |
+| Canon Cp 220 | 04a9:30bd | ⚪ proposed | disableWriteResume |
+| Canon Cp 330 | 04a9:30be | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp500 | 04a9:30f5 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp400 | 04a9:30f6 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp600 | 04a9:310b | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp710 | 04a9:3127 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp510 | 04a9:3128 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Es1 | 04a9:3141 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp730 | 04a9:3142 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp720 | 04a9:3143 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp750 | 04a9:3170 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp740 | 04a9:3171 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp520 | 04a9:3172 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Es2 | 04a9:3185 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Es20 | 04a9:3186 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp770 | 04a9:31aa | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp760 | 04a9:31ab | ⚪ proposed | disableWriteResume |
+| Canon Selphy Es3 | 04a9:31af | ⚪ proposed | disableWriteResume |
+| Canon Selphy Es30 | 04a9:31b0 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp530 | 04a9:31b1 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp780 | 04a9:31dd | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp790 | 04a9:31e7 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Es40 | 04a9:31ee | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp800 | 04a9:3214 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp900 | 04a9:3255 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp810 | 04a9:3256 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp910 | 04a9:327a | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp820 | 04a9:327b | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp1200 | 04a9:32b1 | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp1300 | 04a9:32db | ⚪ proposed | disableWriteResume |
+| Canon Selphy Cp1500 | 04a9:3302 | ⚪ proposed | disableWriteResume |
+| Hp Color Laserjet Pro M478f | 03f0:c52a | ⚪ proposed | disableWriteResume |
+| Nokia Nokia 5320 Xpressmusic | 0421:00ea | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia 5800 Xpressmusic V2 | 0421:0155 | ⚪ proposed | supportsGetPartialObject |
+| Nokia Nokia 5800 Xpressmusic V3 | 0421:0159 | ⚪ proposed | supportsGetPartialObject |
+| Nokia Nokia E63 | 0421:0179 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N79 | 0421:0186 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia E71x | 0421:01a1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia E52 | 0421:01cf | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia 3710 | 0421:01ee | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N97 1 | 0421:01f4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia 5130 Xpressmusic | 0421:0209 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia 5530 | 0421:0229 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia E6 | 0421:032f | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N97 Mini | 0421:026b | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia X6 | 0421:0274 | ⚪ proposed | supportsGetPartialObject |
+| Nokia Nokia 6600i | 0421:0297 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia 2710 | 0421:02c1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N8 Ovi Mode | 0421:0302 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia E7 Ovi Mode | 0421:0335 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia C7 Id2 | 0421:03cd | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N950 | 0421:03d2 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia 3250 Mobile Phone | 0421:0462 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N93 Mobile Phone | 0421:0478 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia 5500 Sport Mobile Phone | 0421:047e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N91 Mobile Phone | 0421:0485 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia 5700 Xpressmusic Mobile Phone | 0421:04b4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia 5300 Mobile Phone | 0421:04ba | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia 5200 Mobile Phone | 0421:04be | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N73 Mobile Phone | 0421:04d1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N75 Mobile Phone | 0421:04e1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N93i Mobile Phone | 0421:04e5 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N80 Internet Edition Media Player | 0421:04f1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia N300 | 0421:0524 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia C5 00 Id2 | 0421:0595 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Nokia Nokia X2 Dual Sim | 0421:0708 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Lg Lg Electronics Inc G2 | 1004:6225 | ⚪ proposed | supportsGetPartialObject |
+| Lg Lg Electronics Inc Lg Vs950 | 1004:622a | ⚪ proposed | supportsGetPartialObject |
+| Lg Lg Electronics Inc Lg Vs870 | 1004:6239 | ⚪ proposed | supportsGetPartialObject |
+| Lg Lg Electronics Inc Lg Vs890 | 1004:623d | ⚪ proposed | supportsGetPartialObject |
+| Lg Lg Electronics Inc Lg Optimus Zone 2 | 1004:6259 | ⚪ proposed | supportsGetPartialObject |
+| Lg Lg Electronics Inc 810 Tablet | 1004:6263 | ⚪ proposed | supportsGetPartialObject |
+| Lg Lg Electronics Inc Vk810 | 1004:6265 | ⚪ proposed | supportsGetPartialObject |
+| Lg Lg Electronics Inc G3 Vs985 | 1004:626e | ⚪ proposed | supportsGetPartialObject |
+| Lg Lg Electronics Inc Transpyre | 1004:628a | ⚪ proposed | supportsGetPartialObject |
+| Lg Lg Electronics Inc Various E And P Models | 1004:631c | ⚪ proposed | supportsGetPartialObject |
+| Lg Lg Electronics Inc Lg G3 F460s | 1004:633f | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson K850i | 0fce:0075 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson W910 | 0fce:0076 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson W890i | 0fce:00b3 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson W760i | 0fce:00c6 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson C902 | 0fce:00d4 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson C702 | 0fce:00d9 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson W980 | 0fce:00da | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson C905 | 0fce:00ef | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson W595 | 0fce:00f3 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson W902 | 0fce:00f5 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson T700 | 0fce:00fb | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson W705 W715 | 0fce:0105 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson W995 | 0fce:0112 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson U5 | 0fce:0133 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson U8i | 0fce:013a | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson J10i2 Elm | 0fce:0144 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson J108i Cedar | 0fce:014e | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson W302 | 0fce:10c8 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson J10i Elm | 0fce:d144 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson K550i | 0fce:e000 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sonyericsson Xperia Dual E MTP | 0fce:0146 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Lt15i Xperia Arc S MTP | 0fce:014f | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Mt11i Xperia Neo MTP | 0fce:0156 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Is12s Xperia Acro MTP | 0fce:0157 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Mk16i Xperia MTP | 0fce:015a | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson R800 R88i Xperia Play MTP | 0fce:015d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson St18a Xperia Ray MTP | 0fce:0161 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Sk17i Xperia Mini Pro MTP | 0fce:0166 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson St15i Xperia Mini MTP | 0fce:0167 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson St17i Xperia Active MTP | 0fce:0168 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt26i Xperia S MTP | 0fce:0169 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Wt19i Live Walkman MTP | 0fce:016d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St21i Xperia Tipo MTP | 0fce:0170 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St15i Xperia U MTP | 0fce:0171 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt22i Xperia P MTP | 0fce:0172 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Mt27i Xperia Sola MTP | 0fce:0173 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt26w Xperia Acro Hd Is12s MTP | 0fce:0175 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt26w Xperia Acro Hd So 03d MTP | 0fce:0176 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt29i Xperia Gx MTP | 0fce:0178 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St27i St27a Xperia Go MTP | 0fce:017e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St23i Xperia Miro MTP | 0fce:0180 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony So 05d Xperia Sx MTP | 0fce:0181 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Tablet Z MTP 1 | 0fce:018d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia L MTP | 0fce:0192 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Tablet Z MTP 2 | 0fce:0194 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z Ultra MTP Id2 | 0fce:0196 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia Zr MTP | 0fce:0197 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia A MTP | 0fce:0198 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia Z Ultra MTP Id3 | 0fce:019c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia M2 Dual MTP | 0fce:01ab | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z3v MTP | 0fce:01b0 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia Z2 Tablet MTP | 0fce:01b1 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia E1 MTP | 0fce:01b5 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia Z Ultra MTP | 0fce:01b6 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia M2 Aqua MTP | 0fce:01b8 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia Z3 Tablet MTP | 0fce:01c0 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Sov33 | 0fce:01e1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz | 0fce:01ed | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xa2 Jolla Sailfish | 0fce:0a07 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Is12s Xperia Acro MTP Cdrom | 0fce:4157 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson St17i Xperia Active MTP Cdrom | 0fce:4168 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt26i Xperia S MTP Cdrom | 0fce:4169 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St21i Xperia Tipo MTP Cdrom | 0fce:4170 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St25i Xperia U MTP Cdrom | 0fce:4171 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt22i Xperia P MTP Cdrom | 0fce:4172 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Mt27i Xperia Sola MTP Cdrom | 0fce:4173 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt26w Xperia Acro Hd Is12s MTP Cdrom | 0fce:4175 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt26w Xperia Acro Hd So 03d MTP Cdrom | 0fce:4176 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt28at Xperia Ion MTP Cdrom | 0fce:4177 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt29i Xperia Gx MTP Cdrom | 0fce:4178 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St27i St27a Xperia Go MTP Cdrom | 0fce:417e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St23i Xperia Miro MTP Cdrom | 0fce:4180 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony So 05d Xperia Sx MTP Cdrom | 0fce:4181 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt30p Xperia T MTP Cdrom | 0fce:4182 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt25i Xperia V MTP Cdrom | 0fce:4186 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia J MTP Cdrom | 0fce:4188 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Zl MTP Cdrom | 0fce:4189 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia E MTP Cdrom | 0fce:418c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Tablet Z MTP Cdrom 1 | 0fce:418d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia L MTP Cdrom | 0fce:4192 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z MTP Cdrom | 0fce:4193 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Tablet Z MTP Cdrom 2 | 0fce:4194 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Sp MTP Cdrom | 0fce:4195 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia M MTP Cdrom | 0fce:419b | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z Ultra MTP Cdrom Id3 | 0fce:419c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z1 MTP Cdrom | 0fce:419e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia C MTP Cdrom | 0fce:41a3 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z1 Compact D5503 MTP Cdrom | 0fce:41a7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia T2 Ultra MTP Cdrom | 0fce:41a9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia M2 MTP Cdrom | 0fce:41aa | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia M2 Dual MTP Cdrom | 0fce:41ab | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z2 MTP Cdrom | 0fce:41af | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z3v MTP Cdrom | 0fce:41b0 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia Z2 Tablet MTP Cdrom | 0fce:41b1 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia E1 MTP Cdrom | 0fce:41b5 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia Z Ultra MTP Cdrom | 0fce:41b6 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia M2 Aqua MTP Cdrom | 0fce:41b8 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia Z3 MTP Cdrom | 0fce:41ba | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z3 Compact MTP Cdrom | 0fce:41bb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia E3 MTP Cdrom | 0fce:41bc | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z3 Tablet MTP Cdrom | 0fce:41c0 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia M4 Aqua Dual MTP Cdrom | 0fce:41c4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia E4 Dual MTP Cdrom | 0fce:41c5 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z3 MTP Cdrom | 0fce:41c9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia E4g MTP Cdrom | 0fce:41cb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia C4 Dual MTP Cdrom | 0fce:41d2 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia M5 MTP Cdrom | 0fce:41d6 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z5 MTP Cdrom | 0fce:41d9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z5 Compact MTP Cdrom | 0fce:41da | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z5 Premium Dual Sim MTP Cdrom | 0fce:41db | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xa MTP Cdrom | 0fce:41de | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia X MTP Cdrom | 0fce:41e0 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Sov33 MTP Cdrom | 0fce:41e1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz MTP Cdrom | 0fce:41e7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia X Compact MTP Cdrom | 0fce:41e8 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xa1 MTP Cdrom | 0fce:41eb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz Cdrom | 0fce:41ed | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xa1 Ultra MTP Cdrom | 0fce:41ef | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz Premium MTP Cdrom | 0fce:41f1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz1 MTP Cdrom | 0fce:41f3 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz1 Compact MTP Cdrom | 0fce:41f4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia L2 MTP Cdrom | 0fce:41f6 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xa2 Compact MTP Cdrom | 0fce:41f7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xa2 Ultra MTP Cdrom | 0fce:41f8 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz2 Compact Dual Sim MTP Cdrom | 0fce:41f9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz2 H8266 MTP Cdrom | 0fce:41fa | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz2 Premium MTP Cdrom | 0fce:41fb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz3 Dual Sim H9436 MTP Cdrom | 0fce:41ff | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 10 I4113 MTP Cdrom | 0fce:4201 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 1 J9110 MTP Cdrom | 0fce:4205 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia L3 MTP Cdrom | 0fce:4207 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 5 MTP Cdrom | 0fce:420a | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 10 V Phone MTP Cdrom | 0fce:420c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 5 Ii Phone MTP Cdrom | 0fce:420d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 10 Vi MTP Cdrom | 0fce:420e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Xperia Dual E MTP Adb | 0fce:5146 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Lt15i Xperia Arc MTP Adb | 0fce:514f | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Mt11i Xperia Neo MTP Adb | 0fce:5156 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Is12s Xperia Acro MTP Adb | 0fce:5157 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Mk16i Xperia MTP Adb | 0fce:515a | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson R800 R88i Xperia Play MTP Adb | 0fce:515d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson St18i Xperia Ray MTP Adb | 0fce:5161 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Sk17i Xperia Mini Pro MTP Adb | 0fce:5166 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson St15i Xperia Mini MTP Adb | 0fce:5167 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson St17i Xperia Active MTP Adb | 0fce:5168 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt26i Xperia S MTP Adb | 0fce:5169 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sonyericsson Wt19i Live Walkman MTP Adb | 0fce:516d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St21i Xperia Tipo MTP Adb | 0fce:5170 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St25i Xperia U MTP Adb | 0fce:5171 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt22i Xperia P MTP Adb | 0fce:5172 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Mt27i Xperia Sola MTP Adb | 0fce:5173 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Is12s Xperia Acro Hd MTP Adb | 0fce:5175 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony So 03d Xperia Acro Hd MTP Adb | 0fce:5176 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt28at Xperia Ion MTP Adb | 0fce:5177 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt29i Xperia Gx MTP Adb | 0fce:5178 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St27i St27a Xperia Go MTP Adb | 0fce:517e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St23i Xperia Miro MTP Adb | 0fce:5180 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony So 05d Xperia Sx MTP Adb | 0fce:5181 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt30p Xperia T MTP Adb | 0fce:5182 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt25i Xperia V MTP Adb | 0fce:5186 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia J MTP Adb | 0fce:5188 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Zl MTP Adb | 0fce:5189 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia E MTP Adb | 0fce:518c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Tablet Z MTP Adb 1 | 0fce:518d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia L MTP Adb | 0fce:5192 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z MTP Adb | 0fce:5193 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Tablet Z MTP Adb 2 | 0fce:5194 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Sp MTP Adb | 0fce:5195 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z Ultra MTP Adb Id2 | 0fce:5196 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Zr MTP Adb | 0fce:5197 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia A MTP Adb | 0fce:5198 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia M MTP Adb | 0fce:519b | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z Ultra MTP Adb Id3 | 0fce:519c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z1 MTP Adb | 0fce:519e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia C MTP Adb | 0fce:51a3 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z1 Compact MTP Adb | 0fce:51a7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia T2 Ultra MTP Adb | 0fce:51a9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia M2 MTP Adb | 0fce:51aa | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia M2 Dual MTP Adb | 0fce:51ab | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z2 MTP Adb | 0fce:51af | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z3v MTP Adb | 0fce:51b0 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia Z2 Tablet MTP Adb | 0fce:51b1 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia E1 MTP Adb | 0fce:51b5 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia Z Ultra MTP Adb | 0fce:51b6 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia M2 Aqua MTP Adb | 0fce:51b8 | ⚪ proposed | supportsGetPartialObject |
+| Sony Sony Xperia Z3 MTP Adb | 0fce:51ba | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z3 Compact MTP Adb | 0fce:51bb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia E3 MTP Adb | 0fce:51bc | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z3 Tablet MTP Adb | 0fce:51c0 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia M4 Aqua Dual MTP Adb | 0fce:51c4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia E4 Dual MTP Adb | 0fce:51c5 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z3 MTP Adb | 0fce:51c9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia E4g MTP Adb | 0fce:51cb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia C4 Dual MTP Adb | 0fce:51d2 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia M5 MTP Adb | 0fce:51d6 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z5 MTP Adb | 0fce:51d9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z5 Compact MTP Adb | 0fce:51da | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Z5 Premium Dual Sim MTP Adb | 0fce:51db | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xa MTP Adb | 0fce:51de | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia X MTP Adb | 0fce:51e0 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Sov33 MTP Adb | 0fce:51e1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz MTP Adb | 0fce:51e7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia X Compact MTP Adb | 0fce:51e8 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xa1 MTP Adb | 0fce:51eb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz Adb | 0fce:51ed | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xa1 Ultra MTP Adb | 0fce:51ef | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz Premium MTP Adb | 0fce:51f1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz1 Adb | 0fce:51f3 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz1 Compact MTP Adb | 0fce:51f4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia L2 MTP Adb | 0fce:51f6 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xa2 Compact MTP Adb | 0fce:51f7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xa2 Ultra MTP Adb | 0fce:51f8 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz2 Compact Dual Sim MTP Adb | 0fce:51f9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz2 H8266 MTP Adb | 0fce:51fa | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz2 Premium MTP Adb | 0fce:51fb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia Xz3 Dual Sim H9436 MTP Adb | 0fce:51ff | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 10 I4113 MTP Adb | 0fce:5201 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 1 J9110 MTP Adb | 0fce:5205 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia L3 MTP Adb | 0fce:5207 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 5 MTP Adb | 0fce:520a | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 10 V Phone MTP Adb | 0fce:520c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 5 Ii Phone MTP Adb | 0fce:520d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Xperia 10 Vi MTP Adb | 0fce:520e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Mt27i Xperia Sola MTP Ums | 0fce:a173 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Is12s Xperia Acro Hd MTP Ums | 0fce:a175 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony So 03d Xperia Acro Hd MTP Ums | 0fce:a176 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt28at Xperia Ion MTP Ums | 0fce:a177 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St27i St27a Xperia Go MTP Ums | 0fce:a17e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Mt27i Xperia Sola MTP Ums Adb | 0fce:b173 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Is12s Xperia Acro MTP Ums Adb | 0fce:b175 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony So 03d Xperia Acro MTP Ums Adb | 0fce:b176 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony Lt28at Xperia Ion MTP Ums Adb | 0fce:b177 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Sony Sony St27i St27a Xperia Go MTP Ums Adb | 0fce:b17e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Motorola Motorola Milestone Verizon Droid | 22b8:41dc | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Droid2 Id2 | 22b8:42a7 | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Xoom 2 Media Edition Id2 | 22b8:4306 | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Xoom 2 Media Edition | 22b8:4311 | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Xt912 Xt928 | 22b8:4362 | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Droid4 Ptp | 22b8:4373 | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Droid4 | 22b8:437f | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Ideapad K1 | 22b8:4811 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Motorola Motorola A1200 | 22b8:60ca | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Motorola Motorola MTP Test Command Interface | 22b8:6413 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Motorola Motorola Razr2 V8 U9 Z6 | 22b8:6415 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Motorola Motorola Razr D1 D3 I MTP | 22b8:64b5 | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Razr D1 D3 I MTP | 22b8:64b6 | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Atrix Xt687 MTP | 22b8:64cf | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Atrix Mb860 MTP | 22b8:7088 | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Xoom Factory Test | 22b8:70a3 | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Xoom MTP Adb | 22b8:70a9 | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Milestone X2 | 22b8:70ca | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Xt890 907 Razr MTP | 22b8:710d | ⚪ proposed | supportsGetPartialObject |
+| Motorola Motorola Xt890 907 Razr MTP Adb | 22b8:710e | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Allwinner A31 Soc | 18d1:0006 | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Ainol Novo Fire Flame | 18d1:0007 | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Sony S1 | 18d1:05b3 | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Fairphone Fairphone 2 | 18d1:0a07 | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Barnes Noble Nook Color | 18d1:2d02 | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Asus Tf201 Transformer | 18d1:4d00 | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Asus Tf101 Transformer | 18d1:4e0f | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc Nexus Pixel Ptp | 18d1:4ee5 | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc Nexus Pixel Ptp Adb | 18d1:4ee6 | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Motorola Xoom Mz604 | 18d1:70a8 | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Toshiba Thrive 7 At105 | 18d1:7102 | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Lenovo Ideapad K1 | 18d1:740a | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Medion Md99000 P9514 | 18d1:b00a | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Lg Electronics P990 Optimus Cyanoge | 18d1:d109 | ⚪ proposed | supportsGetPartialObject |
+| Google Google Inc For Lg Electronics P990 Optimus | 18d1:d10a | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc One Mini 2 MTP | 0bb4:0629 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Htc Htc One M9 2nd Id | 0bb4:065c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Htc Htc Desire 626s MTP | 0bb4:0668 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Htc Htc Htc Desire 520 | 0bb4:0670 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc6515lvw One Remix | 0bb4:07d8 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Htc Htc Htc X920e | 0bb4:07a1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Htc Htc Htc One Htc6500lvw | 0bb4:07ae | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Htc Htc Htc One M8 Htc6525lvw | 0bb4:07ca | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Htc Htc Htc One M8 Verizon Htc6525lvw | 0bb4:07cb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Htc Htc Htc One Remix Htc6515lvw | 0bb4:07d9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Htc Htc Windows Phone 8x Id1 | 0bb4:0ba1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Htc Htc Windows Phone 8x Id2 | 0bb4:0ba2 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Htc Dexp Ixion Xl145 Snatch | 0bb4:0c08 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Evo 4g Lte One V Id2 | 0bb4:0ca8 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One S Id1 | 0bb4:0cec | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc One Mini Id1 | 0bb4:0dcd | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One 802w Id1 | 0bb4:0dd2 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc Desire X | 0bb4:0dd5 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc Butterfly X290d | 0bb4:0de4 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One MTP Ums Adb | 0bb4:0dea | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc Evo 4g Lte Id1 | 0bb4:0df5 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One S Id2 | 0bb4:0df8 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One S Id3 | 0bb4:0df9 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One X Id1 | 0bb4:0dfa | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One X Id2 | 0bb4:0dfb | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One X Id3 | 0bb4:0dfc | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One X Id4 | 0bb4:0dfd | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc Butterfly Id1 | 0bb4:0dfe | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Droid Dna MTP Ums Adb | 0bb4:0dff | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc Droid Incredible 4g Lte MTP | 0bb4:0e31 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc Droid Incredible 4g Lte MTP Adb | 0bb4:0e32 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Droid Dna MTP Ums | 0bb4:0ebd | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Desire 310 2nd Id MTP | 0bb4:0ec7 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Desire 816g MTP | 0bb4:0edb | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Desire 626g Dual Sim MTP | 0bb4:0edd | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One MTP Adb Cdc | 0bb4:0f5f | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One MTP Cdc | 0bb4:0f60 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One MTP | 0bb4:0f64 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One M8 MTP Adb | 0bb4:061a | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One M8 MTP Ums | 0bb4:0fb5 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Htc One M8 MTP Adb Ums | 0bb4:0fb4 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Android Device Id2 Zopo Hd2 | 0bb4:2008 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Motorola Razr D1 | 0bb4:2012 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Motorola P98 4g | 0bb4:201d | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc One M9 3rd Id | 0bb4:4ee1 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc One M9 4th Id | 0bb4:4ee2 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc For Hewlett Packard Hp Touchpad MTP | 0bb4:685c | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc For Hewlett Packard Hp Touchpad MTP Adb | 0bb4:6860 | ⚪ proposed | supportsGetPartialObject |
+| Htc Htc Windows Phone 8s Id1 | 0bb4:f0ca | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
+| Xiaomi Xiaomi Mi 2 Ptp Adb | 2717:904e | ⚪ proposed | supportsGetPartialObject |
