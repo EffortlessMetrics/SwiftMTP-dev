@@ -496,4 +496,137 @@ final class QuirkMatchingTests: XCTestCase {
     )
     XCTAssertFalse(policy.flags.supportsGetObjectPropList)
   }
+
+  // MARK: - Wave-3 new brand smoke tests
+
+  func testDatabase222OrMoreEntries() {
+    XCTAssertGreaterThanOrEqual(db.entries.count, 222, "Expected at least 222 quirk entries")
+  }
+
+  // Nokia
+  func testNokiaAndroid_MatchesQuirk() {
+    XCTAssertNotNil(match(vid: 0x2e04, pid: 0xc025), "Nokia 6 should match a quirk")
+  }
+
+  func testNokiaAndroid_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x2e04, pid: 0xc025).supportsGetObjectPropList, false)
+  }
+
+  // ZTE
+  func testZTEAndroid_MatchesQuirk() {
+    XCTAssertNotNil(match(vid: 0x19d2, pid: 0x0306), "ZTE Blade 3 should match a quirk")
+  }
+
+  func testZTEAndroid_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x19d2, pid: 0x0306).supportsGetObjectPropList, false)
+  }
+
+  // Amazon
+  func testAmazonKindleFire_MatchesQuirk() {
+    XCTAssertNotNil(match(vid: 0x1949, pid: 0x0007), "Amazon Kindle Fire should match a quirk")
+  }
+
+  func testAmazonKindleFire_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x1949, pid: 0x0007).supportsGetObjectPropList, false)
+  }
+
+  // Lenovo
+  func testLenovoAndroid_MatchesQuirk() {
+    XCTAssertNotNil(match(vid: 0x17ef, pid: 0x740a), "Lenovo K1 should match a quirk")
+  }
+
+  func testLenovoAndroid_NoPropList() {
+    XCTAssertEqual(flags(vid: 0x17ef, pid: 0x740a).supportsGetObjectPropList, false)
+  }
+
+  // Nikon mirrorless (Z6, proplist supported)
+  func testNikonMirrorless_MatchesQuirk() {
+    XCTAssertNotNil(match(vid: 0x04b0, pid: 0x0443), "Nikon Z6 should match a quirk")
+  }
+
+  func testNikonMirrorless_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x04b0, pid: 0x0443).supportsGetObjectPropList, true)
+  }
+
+  // Canon EOS R
+  func testCanonEOSR_MatchesQuirk() {
+    XCTAssertNotNil(match(vid: 0x04a9, pid: 0x32da), "Canon EOS R should match a quirk")
+  }
+
+  func testCanonEOSR_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x04a9, pid: 0x32da).supportsGetObjectPropList, true)
+  }
+
+  // Sony Alpha
+  func testSonyAlpha_MatchesQuirk() {
+    XCTAssertNotNil(match(vid: 0x054c, pid: 0x0c03), "Sony Alpha a7 III should match a quirk")
+  }
+
+  func testSonyAlpha_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x054c, pid: 0x0c03).supportsGetObjectPropList, true)
+  }
+
+  // Leica
+  func testLeica_MatchesQuirk() {
+    XCTAssertNotNil(match(vid: 0x1a98, pid: 0x2041), "Leica SL should match a quirk")
+  }
+
+  func testLeica_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x1a98, pid: 0x2041).supportsGetObjectPropList, true)
+  }
+
+  // GoPro
+  func testGoProHero_MatchesQuirk() {
+    XCTAssertNotNil(match(vid: 0x2672, pid: 0x0056), "GoPro HERO10 Black should match a quirk")
+  }
+
+  func testGoProHero_SupportsPropList() {
+    XCTAssertEqual(flags(vid: 0x2672, pid: 0x0056).supportsGetObjectPropList, true)
+  }
+
+  // Wave-3 preset smoke tests
+  func testNokiaAndroidPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.nokiaAndroid
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
+  }
+
+  func testZTEAndroidPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.zteAndroid
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
+  }
+
+  func testAmazonKindleFirePreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.amazonKindleFire
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
+  }
+
+  func testLenovoAndroidPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.lenovoAndroid
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
+  }
+
+  func testNikonMirrorlessPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.nikonMirrorless
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
+  }
+
+  func testCanonEOSRPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.canonEOSR
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
+  }
+
+  func testSonyAlphaPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.sonyAlpha
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
+  }
+
+  func testLeicaPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.leica
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
+  }
+
+  func testGoProHeroPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.goProHero
+    XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
+  }
 }
