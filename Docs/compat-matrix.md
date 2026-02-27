@@ -2280,3 +2280,140 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Fujifilm Xs20 | 04cb:02f4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Fujifilm Xt50 | 04cb:0307 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Fujifilm Gfx100sii | 04cb:0306 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Kodak Dc240 | 040a:0121 | ⚪ proposed | — |
+| Kodak Dc4800 | 040a:0160 | ⚪ proposed | — |
+| Kodak Dx3900 | 040a:0170 | ⚪ proposed | — |
+| Kodak Mc3 | 040a:0400 | ⚪ proposed | — |
+| Kodak Z7590 | 040a:0403 | ⚪ proposed | — |
+| Kodak Dx3500 | 040a:0500 | ⚪ proposed | — |
+| Kodak Cx4230 | 040a:0535 | ⚪ proposed | — |
+| Kodak Dx4900 | 040a:0550 | ⚪ proposed | — |
+| Kodak Cx7530 | 040a:057c | ⚪ proposed | — |
+| Kodak M893is | 040a:0585 | ⚪ proposed | — |
+| Kodak Z700 | 040a:0587 | ⚪ proposed | — |
+| Kodak P880 | 040a:0593 | ⚪ proposed | — |
+| Kodak Z8612is | 040a:0595 | ⚪ proposed | — |
+| Kodak Z950 | 040a:05cd | ⚪ proposed | — |
+| Kodak C1530 | 040a:0617 | ⚪ proposed | — |
+| Kodak M531 | 040a:0600 | ⚪ proposed | — |
+| Kodak C183 | 040a:060b | ⚪ proposed | — |
+| Kodak Dx6490 | 040a:0575 | ⚪ proposed | — |
+| Kodak Dx7630 | 040a:0577 | ⚪ proposed | — |
+| Kodak Dx3600 | 040a:0510 | ⚪ proposed | — |
+| Hp Photosmart 812 | 03f0:4202 | ⚪ proposed | — |
+| Hp Photosmart 850 | 03f0:4302 | ⚪ proposed | — |
+| Hp Photosmart 935 | 03f0:4402 | ⚪ proposed | — |
+| Hp Photosmart 945 | 03f0:4502 | ⚪ proposed | — |
+| Hp Photosmart C500 | 03f0:6002 | ⚪ proposed | — |
+| Hp Photosmart 715 | 03f0:6402 | ⚪ proposed | — |
+| Hp Photosmart 120 | 03f0:6502 | ⚪ proposed | — |
+| Hp Photosmart 720 | 03f0:6702 | ⚪ proposed | — |
+| Hp Photosmart 735 | 03f0:6a02 | ⚪ proposed | — |
+| Hp Photosmart M307 | 03f0:7302 | ⚪ proposed | — |
+| Hp Photosmart M22 | 03f0:7502 | ⚪ proposed | — |
+| Hp Photosmart M415 | 03f0:7a02 | ⚪ proposed | — |
+| Hp Photosmart M425 | 03f0:8002 | ⚪ proposed | — |
+| Hp Photosmart R927 | 03f0:8702 | ⚪ proposed | — |
+| Hp Photosmart M737 | 03f0:9602 | ⚪ proposed | — |
+| Konica Minolta Dimage A2 | 132b:0001 | ⚪ proposed | — |
+| Konica Minolta Dimage Z2 | 132b:0007 | ⚪ proposed | — |
+| Konica Minolta Dimage X21 | 132b:0009 | ⚪ proposed | — |
+| Konica Minolta Dimage Z3 | 132b:0018 | ⚪ proposed | — |
+| Konica Minolta Dimage A200 | 132b:0019 | ⚪ proposed | — |
+| Konica Minolta Dimage Z5 | 132b:0022 | ⚪ proposed | — |
+| Konica Minolta Dimage Z6 | 132b:0033 | ⚪ proposed | — |
+| Sanyo Vpc C5 | 0474:0230 | ⚪ proposed | — |
+| Sanyo Vpc Fh1 | 0474:02e5 | ⚪ proposed | — |
+| Topdon Tc004 Mini | 3474:0020 | ⚪ proposed | — |
+| Pioneer Dvr Lx60d | 08e4:0142 | ⚪ proposed | — |
+| Kodak Dx3215 | 040a:0525 | ⚪ proposed | — |
+| Kodak Dx3700 | 040a:0530 | ⚪ proposed | — |
+| Kodak Ls420 | 040a:0540 | ⚪ proposed | — |
+| Kodak V530 | 040a:059b | ⚪ proposed | — |
+| Astell Kern Ak380 | 4102:1195 | ⚪ proposed | — |
+| Astell Kern Ak70 | 4102:1200 | ⚪ proposed | — |
+| Astell Kern Se180 | 4102:1230 | ⚪ proposed | — |
+| Astell Kern Sr35 | 4102:1247 | ⚪ proposed | — |
+| Astell Kern Se300 | 4102:1249 | ⚪ proposed | — |
+| Astell Kern Se200 | 4102:1233 | ⚪ proposed | — |
+| Astell Kern Sp2000t | 4102:1236 | ⚪ proposed | — |
+| Astell Kern Kann Alpha | 4102:1238 | ⚪ proposed | — |
+| Astell Kern Kann Max | 4102:1242 | ⚪ proposed | — |
+| Astell Kern Sp3000 | 4102:1251 | ⚪ proposed | — |
+| Fiio M7 | 2972:0011 | ⚪ proposed | — |
+| Fiio M9 | 2972:0013 | ⚪ proposed | — |
+| Fiio M11 | 2972:0015 | ⚪ proposed | — |
+| Fiio M11 Pro | 2972:0017 | ⚪ proposed | — |
+| Fiio M11 Plus | 2972:0019 | ⚪ proposed | — |
+| Fiio M15 | 2972:001b | ⚪ proposed | — |
+| Fiio M17 | 2972:001d | ⚪ proposed | — |
+| Fiio Btr5 | 2972:0031 | ⚪ proposed | — |
+| Fiio Btr7 | 2972:0033 | ⚪ proposed | — |
+| Fiio K9 Pro | 2972:0041 | ⚪ proposed | — |
+| Hiby R6 Iii | 2b24:0003 | ⚪ proposed | — |
+| Hiby R8 | 2b24:0005 | ⚪ proposed | — |
+| Hiby R8 Ii | 2b24:0007 | ⚪ proposed | — |
+| Hiby Rs6 | 2b24:0009 | ⚪ proposed | — |
+| Hiby Rs8 | 2b24:000b | ⚪ proposed | — |
+| Hiby R4 | 2b24:000d | ⚪ proposed | — |
+| Ibasso Dx320 | 2e57:0003 | ⚪ proposed | — |
+| Ibasso Dx300 | 2e57:0005 | ⚪ proposed | — |
+| Ibasso Dx240 | 2e57:0007 | ⚪ proposed | — |
+| Ibasso Dx170 | 2e57:0009 | ⚪ proposed | — |
+| Ibasso Dx160 | 2e57:000b | ⚪ proposed | — |
+| Ibasso Dx220 | 2e57:000d | ⚪ proposed | — |
+| Shanling M7 | 31b2:0003 | ⚪ proposed | — |
+| Shanling M6 Ultra | 31b2:0005 | ⚪ proposed | — |
+| Shanling M3 Ultra | 31b2:0007 | ⚪ proposed | — |
+| Shanling M0 Pro | 31b2:0009 | ⚪ proposed | — |
+| Sony Nw Wm1am2 | 054c:0e6c | ⚪ proposed | — |
+| Sony Nw Wm1zm2 | 054c:0e6d | ⚪ proposed | — |
+| Iriver T20 | 4102:1115 | ⚪ proposed | — |
+| Iriver U10 | 4102:1116 | ⚪ proposed | — |
+| Iriver T10b | 4102:1117 | ⚪ proposed | — |
+| Iriver T20b | 4102:1118 | ⚪ proposed | — |
+| Iriver T10 2gb | 4102:1120 | ⚪ proposed | — |
+| Iriver Clix | 4102:112a | ⚪ proposed | — |
+| Iriver X20 | 4102:1132 | ⚪ proposed | — |
+| Iriver E100 V2 | 4102:1142 | ⚪ proposed | — |
+| Iriver Spinn | 4102:1147 | ⚪ proposed | — |
+| Iriver E50 | 4102:1151 | ⚪ proposed | — |
+| Iriver E150 | 4102:1152 | ⚪ proposed | — |
+| Iriver T5 | 4102:1153 | ⚪ proposed | — |
+| Iriver E30 | 4102:1167 | ⚪ proposed | — |
+| Iriver H10 5gb | 4102:2102 | ⚪ proposed | — |
+| Iriver H10 5 6gb | 4102:2105 | ⚪ proposed | — |
+| Iriver H300 | 1006:3004 | ⚪ proposed | — |
+| Dji Mavic 3 Pro | 2ca3:0027 | ⚪ proposed | — |
+| Dji Mavic 3 Classic | 2ca3:0028 | ⚪ proposed | — |
+| Dji Air 3s | 2ca3:0029 | ⚪ proposed | — |
+| Dji Avata 2 | 2ca3:002a | ⚪ proposed | — |
+| Dji Osmo Action 5 | 2ca3:002b | ⚪ proposed | — |
+| Dji Osmo Pocket 3 Alt | 2ca3:002c | ⚪ proposed | — |
+| Dji Mic 2 | 2ca3:002d | ⚪ proposed | — |
+| Dji Fpv | 2ca3:002e | ⚪ proposed | — |
+| Dji Mini Se | 2ca3:002f | ⚪ proposed | — |
+| Dji Mavic 3 Cine | 2ca3:0030 | ⚪ proposed | — |
+| Dji Avata | 2ca3:0031 | ⚪ proposed | — |
+| Dji Neo | 2ca3:0032 | ⚪ proposed | — |
+| Gopro Hero13 Black | 2672:005d | ⚪ proposed | — |
+| Gopro Hero13 Black Alt | 2672:005e | ⚪ proposed | — |
+| Gopro Max 2 | 2672:005f | ⚪ proposed | — |
+| Gopro Hero 2023 | 2672:0060 | ⚪ proposed | — |
+| Gopro Hero13 Mini | 2672:0061 | ⚪ proposed | — |
+| Insta360 Ace Pro 2 | 2e1a:0012 | ⚪ proposed | — |
+| Insta360 Go 3s | 2e1a:0013 | ⚪ proposed | — |
+| Insta360 One Rs 1inch | 2e1a:0014 | ⚪ proposed | — |
+| Insta360 X3 Alt | 2e1a:0015 | ⚪ proposed | — |
+| Insta360 Flow 2 | 2e1a:0016 | ⚪ proposed | — |
+| Sjcam Sj10 Pro | 1b3f:0201 | ⚪ proposed | — |
+| Sjcam Sj10x | 1b3f:0202 | ⚪ proposed | — |
+| Sjcam C300 | 1b3f:0203 | ⚪ proposed | — |
+| Sjcam A20 | 1b3f:0204 | ⚪ proposed | — |
+| Sjcam Sj8 Pro | 1b3f:0205 | ⚪ proposed | — |
+| Akaso Brave 7 | 3538:0009 | ⚪ proposed | — |
+| Akaso Brave 8 Lite | 3538:000a | ⚪ proposed | — |
+| Akaso Ek7000 Se | 3538:000b | ⚪ proposed | — |
+| Runcam Thumb Pro | 4255:0101 | ⚪ proposed | — |
+| Runcam Split 4 | 4255:0102 | ⚪ proposed | — |
+| Runcam Thumb 2 | 4255:0103 | ⚪ proposed | — |

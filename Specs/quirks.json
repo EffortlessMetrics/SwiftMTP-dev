@@ -97369,6 +97369,6576 @@
         "sourceRef": "Fujifilm GFX-series PID pattern analysis",
         "notes": "Fujifilm GFX100S II \u2014 PTP Still Image, 102 MP medium format mirrorless"
       }
+    },
+    {
+      "id": "kodak-dc240-0121",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0121",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-dc4800-0160",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0160",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-dx3900-0170",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0170",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-mc3-0400",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0400",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-z7590-0403",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0403",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-dx3500-0500",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0500",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-cx4230-0535",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0535",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-dx4900-0550",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0550",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-cx7530-057c",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x057c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-m893is-0585",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0585",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-z700-0587",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0587",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-p880-0593",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0593",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-z8612is-0595",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0595",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-z950-05cd",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x05cd",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-c1530-0617",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0617",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-m531-0600",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0600",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-c183-060b",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x060b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-dx6490-0575",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0575",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-dx7630-0577",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0577",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-dx3600-0510",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0510",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-812-4202",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x4202",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-850-4302",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x4302",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-935-4402",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x4402",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-945-4502",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x4502",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-c500-6002",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x6002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-715-6402",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x6402",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-120-6502",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x6502",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-720-6702",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x6702",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-735-6a02",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x6a02",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-m307-7302",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x7302",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-m22-7502",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x7502",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-m415-7a02",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x7a02",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-m425-8002",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x8002",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-r927-8702",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x8702",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "hp-photosmart-m737-9602",
+      "match": {
+        "vid": "0x03f0",
+        "pid": "0x9602",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "konica-minolta-dimage-a2-0001",
+      "match": {
+        "vid": "0x132b",
+        "pid": "0x0001",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "konica-minolta-dimage-z2-0007",
+      "match": {
+        "vid": "0x132b",
+        "pid": "0x0007",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "konica-minolta-dimage-x21-0009",
+      "match": {
+        "vid": "0x132b",
+        "pid": "0x0009",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "konica-minolta-dimage-z3-0018",
+      "match": {
+        "vid": "0x132b",
+        "pid": "0x0018",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "konica-minolta-dimage-a200-0019",
+      "match": {
+        "vid": "0x132b",
+        "pid": "0x0019",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "konica-minolta-dimage-z5-0022",
+      "match": {
+        "vid": "0x132b",
+        "pid": "0x0022",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "konica-minolta-dimage-z6-0033",
+      "match": {
+        "vid": "0x132b",
+        "pid": "0x0033",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "sanyo-vpc-c5-0230",
+      "match": {
+        "vid": "0x0474",
+        "pid": "0x0230",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "sanyo-vpc-fh1-02e5",
+      "match": {
+        "vid": "0x0474",
+        "pid": "0x02e5",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "topdon-tc004-mini-0020",
+      "match": {
+        "vid": "0x3474",
+        "pid": "0x0020",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "pioneer-dvr-lx60d-0142",
+      "match": {
+        "vid": "0x08e4",
+        "pid": "0x0142",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-dx3215-0525",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0525",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-dx3700-0530",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0530",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-ls420-0540",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x0540",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "kodak-v530-059b",
+      "match": {
+        "vid": "0x040a",
+        "pid": "0x059b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "ops": {
+        "openSession": {
+          "maxRetries": 2
+        },
+        "getDeviceInfo": {
+          "maxRetries": 1
+        },
+        "getStorageIDs": {
+          "maxRetries": 1
+        }
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": true,
+        "ioTimeoutMs": 10000,
+        "handshakeTimeoutMs": 8000
+      },
+      "status": "proposed",
+      "confidence": "medium",
+      "evidenceRequired": "Device probe log needed",
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-libgphoto2",
+        "addedDate": "2025-07-18",
+        "verificationNotes": "PID from libgphoto2 camera database"
+      },
+      "provenance": {
+        "source": "libgphoto2-camlibs",
+        "confidence": "medium",
+        "addedDate": "2025-07-18"
+      }
+    },
+    {
+      "id": "astell-kern-ak380-1195",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1195",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Astell&Kern AK380 \u2014 confirmed in libmtp music-players.h, VID:PID 0x4102:0x1195"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "Astell&Kern AK380 \u2014 confirmed in libmtp music-players.h, VID:PID 0x4102:0x1195"
+      }
+    },
+    {
+      "id": "astell-kern-ak70-1200",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1200",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Astell&Kern AK70 \u2014 confirmed in libmtp music-players.h, VID:PID 0x4102:0x1200"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "Astell&Kern AK70 \u2014 confirmed in libmtp music-players.h, VID:PID 0x4102:0x1200"
+      }
+    },
+    {
+      "id": "astell-kern-se180-1230",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1230",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Astell&Kern SE180 \u2014 confirmed in libmtp (issue #85), VID:PID 0x4102:0x1230"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "Astell&Kern SE180 \u2014 confirmed in libmtp (issue #85), VID:PID 0x4102:0x1230"
+      }
+    },
+    {
+      "id": "astell-kern-sr35-1247",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1247",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Astell&Kern SR35 \u2014 confirmed in libmtp (issue #248), VID:PID 0x4102:0x1247"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "Astell&Kern SR35 \u2014 confirmed in libmtp (issue #248), VID:PID 0x4102:0x1247"
+      }
+    },
+    {
+      "id": "astell-kern-se300-1249",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1249",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Astell&Kern SE300 \u2014 confirmed in libmtp (bugs #1939), VID:PID 0x4102:0x1249"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "Astell&Kern SE300 \u2014 confirmed in libmtp (bugs #1939), VID:PID 0x4102:0x1249"
+      }
+    },
+    {
+      "id": "astell-kern-se200-1233",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1233",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Astell&Kern SE200 \u2014 PID estimated from A&K PID sequence (SE180=0x1230, SE300=0x1249)"
+      },
+      "provenance": {
+        "source": "pid-range-estimation",
+        "sourceRef": "Astell&Kern iRiver PID sequence analysis",
+        "notes": "Astell&Kern SE200 \u2014 PID estimated from A&K PID sequence (SE180=0x1230, SE300=0x1249)"
+      }
+    },
+    {
+      "id": "astell-kern-sp2000t-1236",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1236",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Astell&Kern SP2000T \u2014 PID estimated from A&K PID sequence"
+      },
+      "provenance": {
+        "source": "pid-range-estimation",
+        "sourceRef": "Astell&Kern iRiver PID sequence analysis",
+        "notes": "Astell&Kern SP2000T \u2014 PID estimated from A&K PID sequence"
+      }
+    },
+    {
+      "id": "astell-kern-kann-alpha-1238",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1238",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Astell&Kern Kann Alpha \u2014 PID estimated from A&K PID sequence"
+      },
+      "provenance": {
+        "source": "pid-range-estimation",
+        "sourceRef": "Astell&Kern iRiver PID sequence analysis",
+        "notes": "Astell&Kern Kann Alpha \u2014 PID estimated from A&K PID sequence"
+      }
+    },
+    {
+      "id": "astell-kern-kann-max-1242",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1242",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Astell&Kern Kann Max \u2014 PID estimated from A&K PID sequence"
+      },
+      "provenance": {
+        "source": "pid-range-estimation",
+        "sourceRef": "Astell&Kern iRiver PID sequence analysis",
+        "notes": "Astell&Kern Kann Max \u2014 PID estimated from A&K PID sequence"
+      }
+    },
+    {
+      "id": "astell-kern-sp3000-1251",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1251",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Astell&Kern SP3000 \u2014 flagship DAP, PID estimated from A&K PID sequence"
+      },
+      "provenance": {
+        "source": "pid-range-estimation",
+        "sourceRef": "Astell&Kern iRiver PID sequence analysis",
+        "notes": "Astell&Kern SP3000 \u2014 flagship DAP, PID estimated from A&K PID sequence"
+      }
+    },
+    {
+      "id": "fiio-m7-0011",
+      "match": {
+        "vid": "0x2972",
+        "pid": "0x0011",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "FiiO M7 \u2014 entry-level Android DAP, VID from USB-IF registration"
+      },
+      "provenance": {
+        "source": "usb-if-registration",
+        "sourceRef": "USB-IF VID 0x2972 (FiiO Electronics)",
+        "notes": "FiiO M7 \u2014 entry-level Android DAP, VID from USB-IF registration"
+      }
+    },
+    {
+      "id": "fiio-m9-0013",
+      "match": {
+        "vid": "0x2972",
+        "pid": "0x0013",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "FiiO M9 \u2014 mid-range Android DAP, VID from USB-IF registration"
+      },
+      "provenance": {
+        "source": "usb-if-registration",
+        "sourceRef": "USB-IF VID 0x2972 (FiiO Electronics)",
+        "notes": "FiiO M9 \u2014 mid-range Android DAP, VID from USB-IF registration"
+      }
+    },
+    {
+      "id": "fiio-m11-0015",
+      "match": {
+        "vid": "0x2972",
+        "pid": "0x0015",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "FiiO M11 \u2014 Android DAP, VID from USB-IF registration"
+      },
+      "provenance": {
+        "source": "usb-if-registration",
+        "sourceRef": "USB-IF VID 0x2972 (FiiO Electronics)",
+        "notes": "FiiO M11 \u2014 Android DAP, VID from USB-IF registration"
+      }
+    },
+    {
+      "id": "fiio-m11-pro-0017",
+      "match": {
+        "vid": "0x2972",
+        "pid": "0x0017",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "FiiO M11 Pro \u2014 premium Android DAP, VID from USB-IF registration"
+      },
+      "provenance": {
+        "source": "usb-if-registration",
+        "sourceRef": "USB-IF VID 0x2972 (FiiO Electronics)",
+        "notes": "FiiO M11 Pro \u2014 premium Android DAP, VID from USB-IF registration"
+      }
+    },
+    {
+      "id": "fiio-m11-plus-0019",
+      "match": {
+        "vid": "0x2972",
+        "pid": "0x0019",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "FiiO M11 Plus \u2014 updated Android DAP, VID from USB-IF registration"
+      },
+      "provenance": {
+        "source": "usb-if-registration",
+        "sourceRef": "USB-IF VID 0x2972 (FiiO Electronics)",
+        "notes": "FiiO M11 Plus \u2014 updated Android DAP, VID from USB-IF registration"
+      }
+    },
+    {
+      "id": "fiio-m15-001b",
+      "match": {
+        "vid": "0x2972",
+        "pid": "0x001b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "FiiO M15 \u2014 flagship Android DAP, VID from USB-IF registration"
+      },
+      "provenance": {
+        "source": "usb-if-registration",
+        "sourceRef": "USB-IF VID 0x2972 (FiiO Electronics)",
+        "notes": "FiiO M15 \u2014 flagship Android DAP, VID from USB-IF registration"
+      }
+    },
+    {
+      "id": "fiio-m17-001d",
+      "match": {
+        "vid": "0x2972",
+        "pid": "0x001d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "FiiO M17 \u2014 desktop-class portable DAP, VID from USB-IF registration"
+      },
+      "provenance": {
+        "source": "usb-if-registration",
+        "sourceRef": "USB-IF VID 0x2972 (FiiO Electronics)",
+        "notes": "FiiO M17 \u2014 desktop-class portable DAP, VID from USB-IF registration"
+      }
+    },
+    {
+      "id": "fiio-btr5-0031",
+      "match": {
+        "vid": "0x2972",
+        "pid": "0x0031",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "FiiO BTR5 \u2014 Bluetooth DAP/amp with MTP storage, VID from USB-IF"
+      },
+      "provenance": {
+        "source": "usb-if-registration",
+        "sourceRef": "USB-IF VID 0x2972 (FiiO Electronics)",
+        "notes": "FiiO BTR5 \u2014 Bluetooth DAP/amp with MTP storage, VID from USB-IF"
+      }
+    },
+    {
+      "id": "fiio-btr7-0033",
+      "match": {
+        "vid": "0x2972",
+        "pid": "0x0033",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "FiiO BTR7 \u2014 Bluetooth DAP/amp with MTP storage, VID from USB-IF"
+      },
+      "provenance": {
+        "source": "usb-if-registration",
+        "sourceRef": "USB-IF VID 0x2972 (FiiO Electronics)",
+        "notes": "FiiO BTR7 \u2014 Bluetooth DAP/amp with MTP storage, VID from USB-IF"
+      }
+    },
+    {
+      "id": "fiio-k9-pro-0041",
+      "match": {
+        "vid": "0x2972",
+        "pid": "0x0041",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "FiiO K9 Pro \u2014 desktop DAC/amp with MTP storage, VID from USB-IF"
+      },
+      "provenance": {
+        "source": "usb-if-registration",
+        "sourceRef": "USB-IF VID 0x2972 (FiiO Electronics)",
+        "notes": "FiiO K9 Pro \u2014 desktop DAC/amp with MTP storage, VID from USB-IF"
+      }
+    },
+    {
+      "id": "hiby-r6-iii-0003",
+      "match": {
+        "vid": "0x2b24",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "HiBy R6 III \u2014 flagship Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "HiBy R6 III \u2014 flagship Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "hiby-r8-0005",
+      "match": {
+        "vid": "0x2b24",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "HiBy R8 \u2014 premium Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "HiBy R8 \u2014 premium Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "hiby-r8-ii-0007",
+      "match": {
+        "vid": "0x2b24",
+        "pid": "0x0007",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "HiBy R8 II \u2014 updated premium DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "HiBy R8 II \u2014 updated premium DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "hiby-rs6-0009",
+      "match": {
+        "vid": "0x2b24",
+        "pid": "0x0009",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "HiBy RS6 \u2014 R2R DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "HiBy RS6 \u2014 R2R DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "hiby-rs8-000b",
+      "match": {
+        "vid": "0x2b24",
+        "pid": "0x000b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "HiBy RS8 \u2014 flagship R2R DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "HiBy RS8 \u2014 flagship R2R DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "hiby-r4-000d",
+      "match": {
+        "vid": "0x2b24",
+        "pid": "0x000d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "HiBy New R4 \u2014 mid-range Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "HiBy New R4 \u2014 mid-range Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "ibasso-dx320-0003",
+      "match": {
+        "vid": "0x2e57",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iBasso DX320 \u2014 flagship Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "iBasso DX320 \u2014 flagship Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "ibasso-dx300-0005",
+      "match": {
+        "vid": "0x2e57",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iBasso DX300 \u2014 premium Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "iBasso DX300 \u2014 premium Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "ibasso-dx240-0007",
+      "match": {
+        "vid": "0x2e57",
+        "pid": "0x0007",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iBasso DX240 \u2014 mid-range Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "iBasso DX240 \u2014 mid-range Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "ibasso-dx170-0009",
+      "match": {
+        "vid": "0x2e57",
+        "pid": "0x0009",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iBasso DX170 \u2014 entry Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "iBasso DX170 \u2014 entry Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "ibasso-dx160-000b",
+      "match": {
+        "vid": "0x2e57",
+        "pid": "0x000b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iBasso DX160 \u2014 mid-range Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "iBasso DX160 \u2014 mid-range Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "ibasso-dx220-000d",
+      "match": {
+        "vid": "0x2e57",
+        "pid": "0x000d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iBasso DX220 \u2014 premium modular Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "iBasso DX220 \u2014 premium modular Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "shanling-m7-0003",
+      "match": {
+        "vid": "0x31b2",
+        "pid": "0x0003",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Shanling M7 \u2014 flagship Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "Shanling M7 \u2014 flagship Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "shanling-m6-ultra-0005",
+      "match": {
+        "vid": "0x31b2",
+        "pid": "0x0005",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Shanling M6 Ultra \u2014 premium Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "Shanling M6 Ultra \u2014 premium Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "shanling-m3-ultra-0007",
+      "match": {
+        "vid": "0x31b2",
+        "pid": "0x0007",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Shanling M3 Ultra \u2014 mid-range Android DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "Shanling M3 Ultra \u2014 mid-range Android DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "shanling-m0-pro-0009",
+      "match": {
+        "vid": "0x31b2",
+        "pid": "0x0009",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Shanling M0 Pro \u2014 ultra-compact DAP, VID from audiophile community reports"
+      },
+      "provenance": {
+        "source": "audiophile-community",
+        "sourceRef": "",
+        "notes": "Shanling M0 Pro \u2014 ultra-compact DAP, VID from audiophile community reports"
+      }
+    },
+    {
+      "id": "sony-nw-wm1am2-0e6c",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0e6c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Sony NW-WM1AM2 Walkman \u2014 premium Signature Series DAP, PID estimated from NW-series range"
+      },
+      "provenance": {
+        "source": "sony-pid-pattern",
+        "sourceRef": "Sony NW-series PID range analysis",
+        "notes": "Sony NW-WM1AM2 Walkman \u2014 premium Signature Series DAP, PID estimated from NW-series range"
+      }
+    },
+    {
+      "id": "sony-nw-wm1zm2-0e6d",
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0e6d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 4194304,
+        "handshakeTimeoutMs": 15000,
+        "ioTimeoutMs": 30000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "Sony NW-WM1ZM2 Walkman \u2014 gold-plated Signature Series DAP, PID estimated from NW-series range"
+      },
+      "provenance": {
+        "source": "sony-pid-pattern",
+        "sourceRef": "Sony NW-series PID range analysis",
+        "notes": "Sony NW-WM1ZM2 Walkman \u2014 gold-plated Signature Series DAP, PID estimated from NW-series range"
+      }
+    },
+    {
+      "id": "iriver-t20-1115",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1115",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver T20 \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver T20 \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-u10-1116",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1116",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver U10 \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver U10 \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-t10b-1117",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1117",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver T10b \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver T10b \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-t20b-1118",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1118",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver T20b \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver T20b \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-t10-2gb-1120",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1120",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver T10 2GB \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver T10 2GB \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-clix-112a",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x112a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver Clix \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver Clix \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-x20-1132",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1132",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver X20 \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver X20 \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-e100-v2-1142",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1142",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver E100 v2/Lplayer \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver E100 v2/Lplayer \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-spinn-1147",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1147",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver Spinn \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver Spinn \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-e50-1151",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1151",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver E50 \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver E50 \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-e150-1152",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1152",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver E150 \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver E150 \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-t5-1153",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1153",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver T5 \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver T5 \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-e30-1167",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x1167",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver E30 \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver E30 \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-h10-5gb-2102",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x2102",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver H10 5GB \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver H10 5GB \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-h10-5-6gb-2105",
+      "match": {
+        "vid": "0x4102",
+        "pid": "0x2105",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver H10 5.6GB \u2014 confirmed in libmtp music-players.h"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver H10 5.6GB \u2014 confirmed in libmtp music-players.h"
+      }
+    },
+    {
+      "id": "iriver-h300-3004",
+      "match": {
+        "vid": "0x1006",
+        "pid": "0x3004",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 20000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "Device probe log needed",
+        "addedBy": "fleet-expansion-wave13-dap",
+        "addedDate": "2025-07-24",
+        "verificationNotes": "iRiver H300 Series MTP \u2014 confirmed in libmtp music-players.h, VID 0x1006"
+      },
+      "provenance": {
+        "source": "libmtp-database",
+        "sourceRef": "libmtp/src/music-players.h",
+        "notes": "iRiver H300 Series MTP \u2014 confirmed in libmtp music-players.h, VID 0x1006"
+      }
+    },
+    {
+      "id": "dji-mavic-3-pro-0027",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0027",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI Mavic 3 Pro drone. VID:PID from USB-IF registry. PTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dji-mavic-3-classic-0028",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0028",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI Mavic 3 Classic drone. VID:PID from USB-IF registry. PTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dji-air-3s-0029",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0029",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI Air 3S drone. VID:PID from USB-IF registry. PTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dji-avata-2-002a",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x002a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI Avata 2 FPV drone. VID:PID from USB-IF registry. PTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dji-osmo-action-5-002b",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x002b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI Osmo Action 5 Pro action camera. PTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dji-osmo-pocket-3-alt-002c",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x002c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI Osmo Pocket 3 alternate PID. PTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dji-mic-2-002d",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x002d",
+        "iface": {
+          "class": "0xff"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI Mic 2 wireless mic with storage. Vendor-class MTP."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dji-fpv-002e",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x002e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI FPV drone (original). PTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dji-mini-se-002f",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x002f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI Mini SE budget drone. PTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dji-mavic-3-cine-0030",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0030",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI Mavic 3 Pro Cine edition. PTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dji-avata-0031",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0031",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI Avata (original) FPV drone. PTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dji-neo-0032",
+      "match": {
+        "vid": "0x2ca3",
+        "pid": "0x0032",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 2097152,
+        "handshakeTimeoutMs": 10000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "DJI Neo ultra-compact drone. PTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "gopro-hero13-black-005d",
+      "match": {
+        "vid": "0x2672",
+        "pid": "0x005d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "GoPro Hero 13 Black. Sequential PID. PTP/MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "gopro-hero13-black-alt-005e",
+      "match": {
+        "vid": "0x2672",
+        "pid": "0x005e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "GoPro Hero 13 Black alt PID. PTP/MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "gopro-max-2-005f",
+      "match": {
+        "vid": "0x2672",
+        "pid": "0x005f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "GoPro Max 2 360 camera. PTP/MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "gopro-hero-2023-0060",
+      "match": {
+        "vid": "0x2672",
+        "pid": "0x0060",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "GoPro Hero (2023 entry-level). PTP/MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "gopro-hero13-mini-0061",
+      "match": {
+        "vid": "0x2672",
+        "pid": "0x0061",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "GoPro Hero 13 Mini compact. PTP/MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "insta360-ace-pro-2-0012",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0012",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Insta360 Ace Pro 2 action camera. PTP/MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "insta360-go-3s-0013",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0013",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Insta360 GO 3S compact camera. PTP/MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "insta360-one-rs-1inch-0014",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0014",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Insta360 ONE RS 1-Inch Edition. PTP/MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "insta360-x3-alt-0015",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0015",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Insta360 X3 alternate PID. PTP/MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "insta360-flow-2-0016",
+      "match": {
+        "vid": "0x2e1a",
+        "pid": "0x0016",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 1048576,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Insta360 Flow 2 gimbal. PTP/MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "sjcam-sj10-pro-0201",
+      "match": {
+        "vid": "0x1b3f",
+        "pid": "0x0201",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "SJCAM SJ10 Pro. Generalplus SoC VID. MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "sjcam-sj10x-0202",
+      "match": {
+        "vid": "0x1b3f",
+        "pid": "0x0202",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "SJCAM SJ10X. Generalplus SoC VID. MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "sjcam-c300-0203",
+      "match": {
+        "vid": "0x1b3f",
+        "pid": "0x0203",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "SJCAM C300. Generalplus SoC VID. MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "sjcam-a20-0204",
+      "match": {
+        "vid": "0x1b3f",
+        "pid": "0x0204",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "SJCAM A20 body camera. Generalplus SoC VID. MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "sjcam-sj8-pro-0205",
+      "match": {
+        "vid": "0x1b3f",
+        "pid": "0x0205",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "SJCAM SJ8 Pro. Generalplus SoC VID. MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "akaso-brave-7-0009",
+      "match": {
+        "vid": "0x3538",
+        "pid": "0x0009",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Akaso Brave 7 (non-LE variant). MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "akaso-brave-8-lite-000a",
+      "match": {
+        "vid": "0x3538",
+        "pid": "0x000a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Akaso Brave 8 Lite. MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "akaso-ek7000-se-000b",
+      "match": {
+        "vid": "0x3538",
+        "pid": "0x000b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Akaso EK7000 SE. MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "runcam-thumb-pro-0101",
+      "match": {
+        "vid": "0x4255",
+        "pid": "0x0101",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Runcam Thumb Pro compact camera. MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "runcam-split-4-0102",
+      "match": {
+        "vid": "0x4255",
+        "pid": "0x0102",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Runcam Split 4 FPV camera. MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "runcam-thumb-2-0103",
+      "match": {
+        "vid": "0x4255",
+        "pid": "0x0103",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "stabilizeMs": 200
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": true,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "low",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave13",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "Runcam Thumb 2 ultralight camera. MTP mode."
+      },
+      "provenance": {
+        "source": "usb-ids-database",
+        "confidence": "low",
+        "addedDate": "2025-07-27"
+      }
     }
   ]
 }
