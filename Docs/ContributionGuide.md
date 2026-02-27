@@ -172,11 +172,26 @@ Contributors are recognized through:
 - `CHANGELOG.md` for notable contributions
 - GitHub release notes and PR history
 
+## Contributing Device Data
+
+The easiest way to add support for a new device is via the `add-device` command:
+
+```bash
+swiftmtp add-device --vid 0x1234 --pid 0x5678 --name "My Device" --class android
+```
+
+This generates a ready-to-use quirk entry template. Copy the output into
+`Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json`,
+validate with `./scripts/validate-quirks.sh`, then open a PR.
+
+See [Device Submission Guide](DeviceSubmission.md) for full instructions, device
+class descriptions, and authoritative VID/PID sources.
+
 ## Related Docs
 
 - [Roadmap](ROADMAP.md)
 - [Sprint Playbook](SPRINT-PLAYBOOK.md)
 - [Testing Guide](ROADMAP.testing.md)
-- [Device Submission Guide](ROADMAP.device-submission.md)
+- [Device Submission Guide](DeviceSubmission.md)
 - [Release Checklist](ROADMAP.release-checklist.md)
 - [Troubleshooting](Troubleshooting.md)

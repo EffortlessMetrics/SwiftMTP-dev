@@ -192,6 +192,8 @@ struct SwiftMTPCLI {
         exitNow(.ok)
       }
       await CollectCLICommand.run(args: remainingArgs, flags: flags)
+    case "add-device":
+      AddDeviceCommand.run(flags: flags, args: remainingArgs)
     case "wizard":
       await WizardCommand.run(flags: flags, args: remainingArgs)
     case "submit":
@@ -230,7 +232,7 @@ struct SwiftMTPCLI {
     print("Usage: swift run swiftmtp [flags] <command>")
     print("")
     print(
-      "Commands: probe, usb-dump, device-lab, diag, storages, ls, pull, push, bench, mirror, quirks, health, collect, submit, wizard, delete, move, events, learn-promote, bdd, snapshot, version"
+      "Commands: probe, usb-dump, device-lab, diag, storages, ls, pull, push, bench, mirror, quirks, health, collect, submit, add-device, wizard, delete, move, events, learn-promote, bdd, snapshot, version"
     )
   }
 }
