@@ -3,8 +3,9 @@
 
 import XCTest
 import CucumberSwift
-import SwiftMTPCore
+@testable import SwiftMTPCore
 import SwiftMTPTestKit
+import SwiftMTPQuirks
 
 // MARK: - BDD Entry Points
 
@@ -141,6 +142,178 @@ final class BDDRunner: XCTestCase {
       _ = try await link.getStorageIDs()  // retry succeeds → stall cleared
     }
   }
+
+  // proplist-fast-path.feature – 0x9805 opcode sent when quirk is enabled
+  func testProplistFastPath_SendsCorrectOpcode() async throws {
+    let inner = VirtualMTPLink(config: .pixel7)
+    let capturing = BDDCapturingLink(inner: inner)
+    let transport = BDDInjectedLinkTransport(link: capturing)
+    let summary = MTPDeviceSummary(
+      id: MTPDeviceID(raw: "bdd-proplist-fast"),
+      manufacturer: "Google", model: "Pixel 7",
+      vendorID: 0x18D1, productID: 0x4EE1)
+    let actor = MTPDeviceActor(id: summary.id, summary: summary, transport: transport)
+
+    // Open session so the actor's link and sessionOpen are initialized.
+    try await actor.openIfNeeded()
+
+    // Override policy to enable the fast path via actor-isolated helper.
+    var flags = QuirkFlags()
+    flags.supportsGetObjectPropList = true
+    await actor.bddOverridePolicy(flags: flags)
+
+    // Call getObjectPropList. The fast-path sends 0x9805; parsePropListDataset on the empty
+    // response buffer may throw — suppress that error and only check the captured opcode.
+    try? await actor.getObjectPropList(parentHandle: 0xFFFF_FFFF)
+
+    XCTAssertTrue(
+      capturing.capturedCodes.contains(MTPOp.getObjectPropList.rawValue),
+      "GetObjectPropList opcode (0x9805) must be sent when supportsGetObjectPropList quirk is true"
+    )
+  }
+
+  // proplist-fast-path.feature – 0x9805 opcode NOT sent when quirk is disabled
+  func testProplistFallback_DoesNotSendProplistOpcode() async throws {
+    let inner = VirtualMTPLink(config: .pixel7)
+    let capturing = BDDCapturingLink(inner: inner)
+    let transport = BDDInjectedLinkTransport(link: capturing)
+    let summary = MTPDeviceSummary(
+      id: MTPDeviceID(raw: "bdd-proplist-fallback"),
+      manufacturer: "Unknown", model: "Device",
+      vendorID: 0x0000, productID: 0x0000)
+    let actor = MTPDeviceActor(id: summary.id, summary: summary, transport: transport)
+
+    try await actor.openIfNeeded()
+
+    // Ensure supportsGetObjectPropList is false (default, but set explicitly for clarity).
+    var flags = QuirkFlags()
+    flags.supportsGetObjectPropList = false
+    await actor.bddOverridePolicy(flags: flags)
+
+    try? await actor.getObjectPropList(parentHandle: 0xFFFF_FFFF)
+
+    XCTAssertFalse(
+      capturing.capturedCodes.contains(MTPOp.getObjectPropList.rawValue),
+      "GetObjectPropList opcode (0x9805) must NOT be sent when supportsGetObjectPropList is false"
+    )
+  }
+
+  // quirk-policy.feature – Android quirk (OnePlus 3T) has supportsGetObjectPropList=false
+  // Passes ifaceClass/Subclass/Protocol to satisfy the interface-matching constraint in the DB.
+  func testAndroidQuirk_HasFalseGetObjPropList() throws {
+    let db = try QuirkDatabase.load()
+    // OnePlus 3T (VID=0x2A70, PID=0xF003, iface 0x06/0x01/0x01)
+    guard let quirk = db.match(
+      vid: 0x2A70, pid: 0xF003,
+      bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      throw XCTSkip("oneplus-3t-f003 quirk not found in database")
+    }
+    XCTAssertFalse(
+      quirk.resolvedFlags().supportsGetObjectPropList,
+      "Android OnePlus 3T quirk must have supportsGetObjectPropList=false"
+    )
+  }
+
+  // quirk-policy.feature – Camera quirk (Canon EOS R5) has supportsGetObjectPropList=true
+  // Passes ifaceClass/Subclass/Protocol to satisfy the interface-matching constraint in the DB.
+  func testCameraQuirk_HasTrueGetObjPropList() throws {
+    let db = try QuirkDatabase.load()
+    // Canon EOS R5 (VID=0x04A9, PID=0x32B4, iface 0x06/0x01/0x01)
+    guard let quirk = db.match(
+      vid: 0x04A9, pid: 0x32B4,
+      bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      throw XCTSkip("canon-eos-r5-32b4 quirk not found in database")
+    }
+    XCTAssertTrue(
+      quirk.resolvedFlags().supportsGetObjectPropList,
+      "Canon EOS R5 camera quirk must have supportsGetObjectPropList=true"
+    )
+  }
+}
+
+// MARK: - MTPDeviceActor Test Helper (proplist policy override)
+
+extension MTPDeviceActor {
+  /// Sets the actor's currentPolicy with the given flags, preserving existing tuning.
+  /// For BDD test use only — allows controlling which enumeration path is exercised.
+  func bddOverridePolicy(flags: QuirkFlags) {
+    currentPolicy = DevicePolicy(
+      tuning: currentPolicy?.tuning ?? EffectiveTuning.defaults(),
+      flags: flags)
+  }
+}
+
+// MARK: - BDD Link Helpers (proplist-fast-path / quirk-policy tests)
+
+/// Wraps an MTPLink and records every executeCommand/executeStreamingCommand opcode.
+private final class BDDCapturingLink: MTPLink, @unchecked Sendable {
+  private let inner: any MTPLink
+  private let lock = NSLock()
+  private(set) var capturedCodes: [UInt16] = []
+
+  init(inner: any MTPLink) { self.inner = inner }
+
+  var cachedDeviceInfo: MTPDeviceInfo? { inner.cachedDeviceInfo }
+  var linkDescriptor: MTPLinkDescriptor? { inner.linkDescriptor }
+
+  func openUSBIfNeeded() async throws { try await inner.openUSBIfNeeded() }
+  func openSession(id: UInt32) async throws { try await inner.openSession(id: id) }
+  func closeSession() async throws { try await inner.closeSession() }
+  func close() async { await inner.close() }
+  func getDeviceInfo() async throws -> MTPDeviceInfo { try await inner.getDeviceInfo() }
+  func getStorageIDs() async throws -> [MTPStorageID] { try await inner.getStorageIDs() }
+  func getStorageInfo(id: MTPStorageID) async throws -> MTPStorageInfo {
+    try await inner.getStorageInfo(id: id)
+  }
+  func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws
+    -> [MTPObjectHandle]
+  {
+    try await inner.getObjectHandles(storage: storage, parent: parent)
+  }
+  func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo] {
+    try await inner.getObjectInfos(handles)
+  }
+  func getObjectInfos(storage: MTPStorageID, parent: MTPObjectHandle?, format: UInt16?) async throws
+    -> [MTPObjectInfo]
+  {
+    try await inner.getObjectInfos(storage: storage, parent: parent, format: format)
+  }
+  func resetDevice() async throws { try await inner.resetDevice() }
+  func deleteObject(handle: MTPObjectHandle) async throws {
+    try await inner.deleteObject(handle: handle)
+  }
+  func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?)
+    async throws
+  {
+    try await inner.moveObject(handle: handle, to: storage, parent: parent)
+  }
+  func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
+    lock.withLock { capturedCodes.append(command.code) }
+    return try await inner.executeCommand(command)
+  }
+  func executeStreamingCommand(
+    _ command: PTPContainer,
+    dataPhaseLength: UInt64?,
+    dataInHandler: MTPDataIn?,
+    dataOutHandler: MTPDataOut?
+  ) async throws -> PTPResponseResult {
+    lock.withLock { capturedCodes.append(command.code) }
+    return try await inner.executeStreamingCommand(
+      command, dataPhaseLength: dataPhaseLength,
+      dataInHandler: dataInHandler, dataOutHandler: dataOutHandler)
+  }
+}
+
+/// A minimal MTPTransport that returns a pre-built MTPLink.
+private final class BDDInjectedLinkTransport: MTPTransport, @unchecked Sendable {
+  private let link: any MTPLink
+  init(link: any MTPLink) { self.link = link }
+  func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig) async throws -> any MTPLink {
+    link
+  }
+  func close() async throws {}
 }
 
 // MARK: - Actor-Isolated Scenario State
