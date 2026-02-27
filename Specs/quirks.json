@@ -109361,6 +109361,5956 @@
         "confidence": "low",
         "addedDate": "2026-02-27"
       }
+    },
+    {
+      "id": "dell-dj-2nd-generation-412f",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x412f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dell-dell-pocket-dj-mtp-mode-4132",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4132",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "creative-zen-microphoto-alt-4133",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4133",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "creative-zen-sleek-mtp-mode-4137",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4137",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "creative-zen-v-2gb-4158",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4158",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "creative-zen-x-fi-3-4169",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x4169",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST_ALL."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "ziilabs-zii-egg-6000",
+      "match": {
+        "vid": "0x041e",
+        "pid": "0x6000",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST, DEVICE_FLAG_NO_RELEASE_INTERFACE. NO_RELEASE_INTERFACE flag set in libmtp."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a100-id1-3348",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3348",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a100-id2-3349",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3349",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a101-id1-334a",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x334a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a200-id1-337c",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x337c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a200-id2-337d",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x337d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a510-id1-3389",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3389",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a510-id2-338a",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x338a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-s500-cloudmobile-33aa",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x33aa",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-e350-liquid-gallant-duo-id1-33c3",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x33c3",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-e350-liquid-gallant-duo-id2-33c4",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x33c4",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a210-33cb",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x33cb",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-tab-a110-33d8",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x33d8",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-z120-mt65xx-3473",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3473",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-e2-3514",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3514",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-a1-810-353c",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x353c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-z130-mt65xx-355f",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x355f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-a3-a11-3586",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3586",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-e3-35a8",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x35a8",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-z150-35e4",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x35e4",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-x1-3609",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3609",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-z160-361d",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x361d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-a1-840fhd-362d",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x362d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-e39-3643",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3643",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-e700-3644",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3644",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-one-7-3657",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3657",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-z200-3683",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3683",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-a1-841-365e",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x365e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-s56-3725",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3725",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-z220-id1-374f",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x374f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-z220-id2-3750",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3750",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-z630-37ef",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x37ef",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-z530-3822",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3822",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-z530-16gb-3823",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3823",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-one-10-3841",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3841",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-a3-a40-387a",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x387a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-zest-t06-3886",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3886",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-zest-4g-38a5",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x38a5",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-zest-plus-38bb",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x38bb",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-liquid-z6e-3938",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x3938",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "acer-iconia-one-10-b3-a40-394b",
+      "match": {
+        "vid": "0x0502",
+        "pid": "0x394b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "iriver-portable-media-center-1-4002",
+      "match": {
+        "vid": "0x1006",
+        "pid": "0x4002",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "iriver-portable-media-center-2-4003",
+      "match": {
+        "vid": "0x1006",
+        "pid": "0x4003",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "jvc-alneo-xa-hd500-6105",
+      "match": {
+        "vid": "0x04f1",
+        "pid": "0x6105",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_NONE."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "intex-aqua-fish-0a07",
+      "match": {
+        "vid": "0x05c6",
+        "pid": "0x0a07",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_NONE."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "qualcomm-nokia-5530-xpressmusic-0229",
+      "match": {
+        "vid": "0x05c6",
+        "pid": "0x0229",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_NONE."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "qualcomm-6205-balboa-3196",
+      "match": {
+        "vid": "0x05c6",
+        "pid": "0x3196",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_NONE."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "qualcomm-gsmart-g1342-8800",
+      "match": {
+        "vid": "0x05c6",
+        "pid": "0x8800",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_NONE."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "qualcomm-andromax-u-9025",
+      "match": {
+        "vid": "0x05c6",
+        "pid": "0x9025",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_NONE."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "qualcomm-oneplus-one-mtp-6764",
+      "match": {
+        "vid": "0x05c6",
+        "pid": "0x6764",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "qualcomm-oneplus-one-mtpplusadb-6765",
+      "match": {
+        "vid": "0x05c6",
+        "pid": "0x6765",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "qualcomm-xolo-black-mtp-901b",
+      "match": {
+        "vid": "0x05c6",
+        "pid": "0x901b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "qualcomm-phicomm-c230w-mtp-9039",
+      "match": {
+        "vid": "0x05c6",
+        "pid": "0x9039",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-spod-mtp-mode-1341",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1341",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-5s-it-mtp-mode-1351",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1351",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-5h-it-mtp-mode-1357",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1357",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-48-mtp-mode-1421",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1421",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-arnova-childpad-1458",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1458",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-arnova-8c-g3-145e",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x145e",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-arnova-10bg3-tablet-146b",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x146b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-97-xenon-149a",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x149a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-97-titanium-14ad",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x14ad",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-80-titanium-14bf",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x14bf",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-101-titanium-14b9",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x14b9",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-70b-titanium-14ef",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x14ef",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-8o-g9-mtp-mode-1508",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1508",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-8o-g9-turbo-mtp-mode-1509",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1509",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-80g9-1518",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1518",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-101-g9-id1-1528",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1528",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-101-g9-id2-1529",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1529",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-101-g9-turbo-250-hd-1538",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1538",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-101-g9-turbo-1539",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1539",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-101-xs-1548",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1548",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-70it2-id-1-1568",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1568",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-70it2-id-2-1569",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x1569",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-70-cobalt-15ba",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x15ba",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-50c-2008",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x2008",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-c40-31ab",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x31ab",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-50b-31bd",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x31bd",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-helium-45b-31d8",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x31d8",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-phone-31e1",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x31e1",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-45-neon-31f3",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x31f3",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-50-diamond-3229",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x3229",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-50-diamond-2nd-id-322a",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x322a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-101-g4-4002",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x4002",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-hudl-id1-5008",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x5008",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-hudl-id2-5009",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x5009",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-101d-neon-51c6",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x51c6",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-ac40dti-5217",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x5217",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-50-helium-plus-5229",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x5229",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-50-helium-plus-2nd-id-522a",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x522a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-101-xenon-lite-528c",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x528c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-101-xenon-lite-adb-528d",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x528d",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-40-helium-phone-52c2",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x52c2",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-diamond-s-5305",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x5305",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-50d-neon-5371",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x5371",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-70b-neon-5395",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x5395",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-50-power-53a7",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x53a7",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-101b-oxygen-542f",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x542f",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-55b-platinum-544a",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x544a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-50f-helium-545c",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x545c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-55-diamond-selfie-5465",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x5465",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "archos-core-50p-5603",
+      "match": {
+        "vid": "0x0e79",
+        "pid": "0x5603",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "cowon-iaudio-d2plus-fw-2x-mtp-mode-0861",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0861",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "cowon-iaudio-d2plus-dab-fw-4x-mtp-mode-0871",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0871",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "cowon-iaudio-d2plus-fw-3x-mtp-mode-0881",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0881",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "cowon-iaudio-d2plus-dmb-fw-1x-mtp-mode-0891",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0891",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "cowon-iaudio-9-mtp-mode-0911",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0911",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "cowon-iaudio-c2-mtp-mode-0941",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0941",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "cowon-iaudio-10-mtp-mode-0952",
+      "match": {
+        "vid": "0x0e21",
+        "pid": "0x0952",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_UNLOAD_DRIVER, DEVICE_FLAG_BROKEN_MTPGETOBJPROPLIST."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dell-dell-venue-7-inch-b11a",
+      "match": {
+        "vid": "0x413c",
+        "pid": "0xb11a",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "dell-dell-venue-7-inch-2nd-id-b11b",
+      "match": {
+        "vid": "0x413c",
+        "pid": "0xb11b",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": true,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAGS_ANDROID_BUGS."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
+    },
+    {
+      "id": "iriver-t7-volcano-1143",
+      "match": {
+        "vid": "0x1042",
+        "pid": "0x1143",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0xff",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "stabilizeMs": 300
+      },
+      "ops": {
+        "supportsGetObjectPropList": true,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
+      },
+      "flags": {
+        "requiresKernelDetach": false,
+        "resetOnOpen": false,
+        "writeToSubfolderOnly": false,
+        "cameraClass": false,
+        "supportsGetObjectPropList": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "evidenceRequired": [
+        "probe_log"
+      ],
+      "governance": {
+        "status": "proposed",
+        "evidenceRequired": "",
+        "addedBy": "fleet-expansion-wave14-libmtp",
+        "addedDate": "2025-07-27",
+        "verificationNotes": "From libmtp music-players.h. Flags: DEVICE_FLAG_NONE."
+      },
+      "provenance": {
+        "source": "libmtp",
+        "confidence": "medium",
+        "addedDate": "2025-07-27"
+      }
     }
   ]
 }
