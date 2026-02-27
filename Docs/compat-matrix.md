@@ -2,57 +2,229 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-| Device | VID:PID | Class | GetObjPropList | Status | Notable Quirks |
-|--------|---------|-------|----------------|--------|----------------|
-| `xiaomi-mi-note-2-ff10` | 0x2717:0xff10 | PTP/Camera | No | proposed | — |
-| `xiaomi-mi-note-2-ff40` | 0x2717:0xff40 | Android/MTP | No | proposed | — |
-| `samsung-android-6860` | 0x04e8:0x6860 | Android/MTP | Yes | proposed | getPropList |
-| `oneplus-3t-f003` | 0x2a70:0xf003 | PTP/Camera | No | proposed | — |
-| `google-pixel-7-4ee1` | 0x18d1:0x4ee1 | PTP/Camera | Yes | proposed | getPropList |
-| `canon-eos-rebel-3139` | 0x04a9:0x3139 | PTP/Camera | No | proposed | — |
-| `nikon-dslr-0410` | 0x04b0:0x0410 | PTP/Camera | No | proposed | — |
-| `samsung-galaxy-mtp-adb-685c` | 0x04e8:0x685c | Android/MTP | No | proposed | — |
-| `google-nexus-pixel-mtp-adb-4ee2` | 0x18d1:0x4ee2 | Android/MTP | No | proposed | — |
-| `google-pixel-3-4-4eed` | 0x18d1:0x4eed | PTP/Camera | Yes | proposed | getPropList |
-| `motorola-moto-eg-mtp-2e82` | 0x22b8:0x2e82 | Android/MTP | Yes | proposed | getPropList |
-| `motorola-moto-eg-mtp-adb-2e76` | 0x22b8:0x2e76 | Android/MTP | No | proposed | — |
-| `sony-xperia-z-0193` | 0x0fce:0x0193 | Android/MTP | Yes | proposed | getPropList |
-| `sony-xperia-z3-01ba` | 0x0fce:0x01ba | Android/MTP | Yes | proposed | getPropList |
-| `sony-xperia-xz1-01f3` | 0x0fce:0x01f3 | Android/MTP | Yes | proposed | getPropList |
-| `lg-android-633e` | 0x1004:0x633e | Android/MTP | No | proposed | — |
-| `lg-android-6300` | 0x1004:0x6300 | Android/MTP | No | proposed | — |
-| `htc-android-0f15` | 0x0bb4:0x0f15 | Android/MTP | No | proposed | — |
-| `huawei-android-107e` | 0x12d1:0x107e | Android/MTP | No | proposed | — |
-| `canon-eos-5d3-3234` | 0x04a9:0x3234 | PTP/Camera | Yes | proposed | getPropList |
-| `canon-eos-r5-32b4` | 0x04a9:0x32b4 | PTP/Camera | Yes | proposed | getPropList |
-| `canon-eos-r3-32b5` | 0x04a9:0x32b5 | PTP/Camera | Yes | proposed | getPropList |
-| `nikon-z6-z7-0441` | 0x04b0:0x0441 | PTP/Camera | No | proposed | — |
-| `nikon-z6ii-z7ii-0442` | 0x04b0:0x0442 | PTP/Camera | No | proposed | — |
-| `fujifilm-x-series-0104` | 0x04cb:0x0104 | PTP/Camera | No | proposed | — |
-| `oneplus-9-9011` | 0x2a70:0x9011 | PTP/Camera | Yes | proposed | getPropList |
-| `samsung-galaxy-s20-s21-6866` | 0x04e8:0x6866 | Android/MTP | No | proposed | — |
-| `samsung-galaxy-kies-6877` | 0x04e8:0x6877 | Android/MTP | No | proposed | — |
-| `lg-v20-g5-g6-61f1` | 0x1004:0x61f1 | Android/MTP | No | proposed | — |
-| `lg-g4-v10-61f9` | 0x1004:0x61f9 | Android/MTP | No | proposed | — |
-| `htc-u11-u12-0f91` | 0x0bb4:0x0f91 | Android/MTP | No | proposed | — |
-| `htc-one-m8-m9-0ffe` | 0x0bb4:0x0ffe | Android/MTP | No | proposed | — |
-| `huawei-p9-p10-1052` | 0x12d1:0x1052 | Android/MTP | No | proposed | — |
-| `huawei-p20-pro-mate20-1054` | 0x12d1:0x1054 | Android/MTP | No | proposed | — |
-| `huawei-p30-mate30-10c1` | 0x12d1:0x10c1 | Android/MTP | No | proposed | — |
-| `asus-zenfone-5-7770` | 0x0b05:0x7770 | Android/MTP | No | proposed | — |
-| `asus-zenfone-6-rog-7776` | 0x0b05:0x7776 | Android/MTP | No | proposed | — |
-| `acer-iconia-a500-3325` | 0x0502:0x3325 | Android/MTP | No | proposed | — |
-| `acer-iconia-a700-3378` | 0x0502:0x3378 | Android/MTP | No | proposed | — |
-| `oppo-realme-android-0001` | 0x22d9:0x0001 | Android/MTP | No | proposed | — |
-| `google-nexus-one-4e41` | 0x18d1:0x4e41 | Android/MTP | No | proposed | — |
-| `google-nexus-7-4e42` | 0x18d1:0x4e42 | Android/MTP | No | proposed | — |
-| `sony-xperia-z1-019e` | 0x0fce:0x019e | Android/MTP | Yes | proposed | getPropList |
-| `sony-xperia-z5-01d9` | 0x0fce:0x01d9 | Android/MTP | Yes | proposed | getPropList |
-| `sony-xperia-xz-01e7` | 0x0fce:0x01e7 | Android/MTP | Yes | proposed | getPropList |
-| `sony-alpha-a7iii-0a79` | 0x054c:0x0a79 | PTP/Camera | Yes | proposed | getPropList |
-| `sony-alpha-a7riv-0a6f` | 0x054c:0x0a6f | PTP/Camera | Yes | proposed | getPropList |
-| `panasonic-lumix-g-2372` | 0x04da:0x2372 | PTP/Camera | Yes | proposed | getPropList |
-| `olympus-e-series-0113` | 0x07b4:0x0113 | PTP/Camera | Yes | proposed | getPropList |
-| `ricoh-pentax-k-0001` | 0x25fb:0x0001 | PTP/Camera | Yes | proposed | getPropList |
+| Device / Quirk ID | VID:PID | Class | GetObjPropList | Status |
+|---|---|---|---|---|
+| `xiaomi-mi-note-2-ff10` | 0x2717:0xff10 | PTP | — | promoted |
+| `xiaomi-mi-note-2-ff40` | 0x2717:0xff40 | Android/MTP | — | promoted |
+| `samsung-android-6860` | 0x04e8:0x6860 | Android/MTP | ✅ | promoted |
+| `oneplus-3t-f003` | 0x2a70:0xf003 | PTP | — | promoted |
+| `google-pixel-7-4ee1` | 0x18d1:0x4ee1 | PTP | ✅ | promoted |
+| `canon-eos-rebel-3139` | 0x04a9:0x3139 | PTP | — | promoted |
+| `nikon-dslr-0410` | 0x04b0:0x0410 | PTP | — | promoted |
+| `samsung-galaxy-mtp-adb-685c` | 0x04e8:0x685c | Android/MTP | — | verified |
+| `google-nexus-pixel-mtp-adb-4ee2` | 0x18d1:0x4ee2 | Android/MTP | — | verified |
+| `google-pixel-3-4-4eed` | 0x18d1:0x4eed | PTP | ✅ | proposed |
+| `motorola-moto-eg-mtp-2e82` | 0x22b8:0x2e82 | Android/MTP | ✅ | verified |
+| `motorola-moto-eg-mtp-adb-2e76` | 0x22b8:0x2e76 | Android/MTP | — | verified |
+| `sony-xperia-z-0193` | 0x0fce:0x0193 | Android/MTP | ✅ | verified |
+| `sony-xperia-z3-01ba` | 0x0fce:0x01ba | Android/MTP | ✅ | verified |
+| `sony-xperia-xz1-01f3` | 0x0fce:0x01f3 | Android/MTP | ✅ | proposed |
+| `lg-android-633e` | 0x1004:0x633e | Android/MTP | — | proposed |
+| `lg-android-6300` | 0x1004:0x6300 | Android/MTP | — | proposed |
+| `htc-android-0f15` | 0x0bb4:0x0f15 | Android/MTP | — | proposed |
+| `huawei-android-107e` | 0x12d1:0x107e | Android/MTP | — | proposed |
+| `canon-eos-5d3-3234` | 0x04a9:0x3234 | PTP | ✅ | proposed |
+| `canon-eos-r5-32b4` | 0x04a9:0x32b4 | PTP | ✅ | proposed |
+| `canon-eos-r3-32b5` | 0x04a9:0x32b5 | PTP | ✅ | proposed |
+| `nikon-z6-z7-0441` | 0x04b0:0x0441 | PTP | — | proposed |
+| `nikon-z6ii-z7ii-0442` | 0x04b0:0x0442 | PTP | — | proposed |
+| `fujifilm-x-series-0104` | 0x04cb:0x0104 | PTP | — | proposed |
+| `oneplus-9-9011` | 0x2a70:0x9011 | PTP | ✅ | proposed |
+| `samsung-galaxy-s20-s21-6866` | 0x04e8:0x6866 | Android/MTP | — | proposed |
+| `samsung-galaxy-kies-6877` | 0x04e8:0x6877 | Android/MTP | — | proposed |
+| `lg-v20-g5-g6-61f1` | 0x1004:0x61f1 | Android/MTP | — | proposed |
+| `lg-g4-v10-61f9` | 0x1004:0x61f9 | Android/MTP | — | proposed |
+| `htc-u11-u12-0f91` | 0x0bb4:0x0f91 | Android/MTP | — | proposed |
+| `htc-one-m8-m9-0ffe` | 0x0bb4:0x0ffe | Android/MTP | — | proposed |
+| `huawei-p9-p10-1052` | 0x12d1:0x1052 | Android/MTP | — | proposed |
+| `huawei-p20-pro-mate20-1054` | 0x12d1:0x1054 | Android/MTP | — | proposed |
+| `huawei-p30-mate30-10c1` | 0x12d1:0x10c1 | Android/MTP | — | proposed |
+| `asus-zenfone-5-7770` | 0x0b05:0x7770 | Android/MTP | — | proposed |
+| `asus-zenfone-6-rog-7776` | 0x0b05:0x7776 | Android/MTP | — | proposed |
+| `acer-iconia-a500-3325` | 0x0502:0x3325 | Android/MTP | — | proposed |
+| `acer-iconia-a700-3378` | 0x0502:0x3378 | Android/MTP | — | proposed |
+| `oppo-realme-android-0001` | 0x22d9:0x0001 | Android/MTP | — | proposed |
+| `google-nexus-one-4e41` | 0x18d1:0x4e41 | Android/MTP | — | proposed |
+| `google-nexus-7-4e42` | 0x18d1:0x4e42 | Android/MTP | — | proposed |
+| `sony-xperia-z1-019e` | 0x0fce:0x019e | Android/MTP | ✅ | proposed |
+| `sony-xperia-z5-01d9` | 0x0fce:0x01d9 | Android/MTP | ✅ | proposed |
+| `sony-xperia-xz-01e7` | 0x0fce:0x01e7 | Android/MTP | ✅ | proposed |
+| `sony-alpha-a7iii-0a79` | 0x054c:0x0a79 | PTP | ✅ | proposed |
+| `sony-alpha-a7riv-0a6f` | 0x054c:0x0a6f | PTP | ✅ | proposed |
+| `panasonic-lumix-g-2372` | 0x04da:0x2372 | PTP | ✅ | proposed |
+| `olympus-e-series-0113` | 0x07b4:0x0113 | PTP | ✅ | proposed |
+| `ricoh-pentax-k-0001` | 0x25fb:0x0001 | PTP | ✅ | proposed |
+| `nokia-n8-02fe` | 0x0421:0x02fe | PTP | — | proposed |
+| `nokia-c7-03c1` | 0x0421:0x03c1 | PTP | — | proposed |
+| `nokia-e7-0334` | 0x0421:0x0334 | PTP | — | proposed |
+| `nokia-808-pureview-05d3` | 0x0421:0x05d3 | PTP | — | proposed |
+| `nokia-lumia-wp8-0661` | 0x0421:0x0661 | PTP | — | proposed |
+| `nokia-lumia-rm975-06fc` | 0x0421:0x06fc | PTP | — | proposed |
+| `nokia-android-6-c025` | 0x2e04:0xc025 | Android/MTP | — | proposed |
+| `nokia-android-61-c026` | 0x2e04:0xc026 | Android/MTP | — | proposed |
+| `nokia-android-62-c02a` | 0x2e04:0xc02a | Android/MTP | — | proposed |
+| `zte-blade3-0306` | 0x19d2:0x0306 | Android/MTP | — | proposed |
+| `zte-grand-x-in-0343` | 0x19d2:0x0343 | Android/MTP | — | proposed |
+| `zte-v985-0383` | 0x19d2:0x0383 | Android/MTP | — | proposed |
+| `zte-blade-l3-2008` | 0x19d2:0x2008 | Android/MTP | — | proposed |
+| `zte-v5-ffce` | 0x19d2:0xffce | Android/MTP | — | proposed |
+| `zte-z9-max-ffcf` | 0x19d2:0xffcf | Android/MTP | — | proposed |
+| `amazon-kindle-fire-0007` | 0x1949:0x0007 | Android/MTP | — | proposed |
+| `amazon-kindle-fire-hd6-00f2` | 0x1949:0x00f2 | Android/MTP | — | proposed |
+| `amazon-kindle-fire-7-0221` | 0x1949:0x0221 | Android/MTP | — | proposed |
+| `amazon-kindle-fire-8-0211` | 0x1949:0x0211 | Android/MTP | — | proposed |
+| `amazon-kindle-fire-hd8-0212` | 0x1949:0x0212 | Android/MTP | — | proposed |
+| `amazon-kindle-fire-10hd-0281` | 0x1949:0x0281 | Android/MTP | — | proposed |
+| `amazon-fire-max11-06b1` | 0x1949:0x06b1 | Android/MTP | — | proposed |
+| `lenovo-k1-740a` | 0x17ef:0x740a | Android/MTP | — | proposed |
+| `lenovo-thinkpad-tablet-741c` | 0x17ef:0x741c | Android/MTP | — | proposed |
+| `lenovo-vibe-k5-74ee` | 0x17ef:0x74ee | Android/MTP | — | proposed |
+| `lenovo-k3-note-7883` | 0x17ef:0x7883 | Android/MTP | — | proposed |
+| `lenovo-p70-2008` | 0x17ef:0x2008 | Android/MTP | — | proposed |
+| `blackberry-storm-9650-8007` | 0x0fca:0x8007 | Android/MTP | — | proposed |
+| `blackberry-priv-8031` | 0x0fca:0x8031 | Android/MTP | — | proposed |
+| `blackberry-dtek60-8041` | 0x0fca:0x8041 | Android/MTP | — | proposed |
+| `blackberry-keyone-8042` | 0x0fca:0x8042 | Android/MTP | — | proposed |
+| `meizu-mx-2008` | 0x2a45:0x2008 | Android/MTP | — | proposed |
+| `meizu-mx-adb-0c02` | 0x2a45:0x0c02 | Android/MTP | — | proposed |
+| `vivo-v11-6002` | 0x2d95:0x6002 | Android/MTP | — | proposed |
+| `vivo-v19-6003` | 0x2d95:0x6003 | Android/MTP | — | proposed |
+| `vivo-iqoo-neo9s-6012` | 0x2d95:0x6012 | Android/MTP | — | proposed |
+| `samsung-galaxy-captivate-68a9` | 0x04e8:0x68a9 | Android/MTP | — | proposed |
+| `xiaomi-mi3-0368` | 0x2717:0x0368 | Android/MTP | — | proposed |
+| `xiaomi-mipad-0660` | 0x2717:0x0660 | Android/MTP | — | proposed |
+| `xiaomi-redmi1-1248` | 0x2717:0x1248 | Android/MTP | — | proposed |
+| `xiaomi-redmi1s-1260` | 0x2717:0x1260 | Android/MTP | — | proposed |
+| `xiaomi-mi2s-ff48` | 0x2717:0xff48 | Android/MTP | — | proposed |
+| `xiaomi-redmi2-ff60` | 0x2717:0xff60 | Android/MTP | — | proposed |
+| `motorola-razr-hd-2e32` | 0x22b8:0x2e32 | Android/MTP | — | proposed |
+| `motorola-moto-x-xt1053-2e62` | 0x22b8:0x2e62 | Android/MTP | — | proposed |
+| `motorola-moto-x-xt1080-2e66` | 0x22b8:0x2e66 | Android/MTP | — | proposed |
+| `motorola-moto-z2-2e81` | 0x22b8:0x2e81 | Android/MTP | — | proposed |
+| `motorola-droid-turbo-2ea5` | 0x22b8:0x2ea5 | Android/MTP | — | proposed |
+| `realme-phone-202a` | 0x22d9:0x202a | Android/MTP | — | proposed |
+| `oppo-find5-2764` | 0x22d9:0x2764 | Android/MTP | — | proposed |
+| `oppo-find7-2765` | 0x22d9:0x2765 | Android/MTP | — | proposed |
+| `oppo-find7-2774` | 0x22d9:0x2774 | Android/MTP | — | proposed |
+| `sony-xperia-z2-01af` | 0x0fce:0x01af | Android/MTP | — | proposed |
+| `sony-xperia-z3-compact-01bb` | 0x0fce:0x01bb | Android/MTP | — | proposed |
+| `sony-xperia-z3plus-01c9` | 0x0fce:0x01c9 | Android/MTP | — | proposed |
+| `sony-xperia-xa-01de` | 0x0fce:0x01de | Android/MTP | — | proposed |
+| `sony-xperia-xz2-01fa` | 0x0fce:0x01fa | Android/MTP | — | proposed |
+| `nikon-d90-0421` | 0x04b0:0x0421 | PTP | — | proposed |
+| `nikon-d700-0422` | 0x04b0:0x0422 | PTP | — | proposed |
+| `nikon-d3100-0427` | 0x04b0:0x0427 | PTP | — | proposed |
+| `nikon-d3200-042c` | 0x04b0:0x042c | PTP | — | proposed |
+| `nikon-d3300-0433` | 0x04b0:0x0433 | PTP | — | proposed |
+| `nikon-d3400-043d` | 0x04b0:0x043d | PTP | — | proposed |
+| `nikon-d3500-0445` | 0x04b0:0x0445 | PTP | — | proposed |
+| `nikon-d7000-0428` | 0x04b0:0x0428 | PTP | — | proposed |
+| `nikon-d5100-0429` | 0x04b0:0x0429 | PTP | — | proposed |
+| `nikon-d5200-042f` | 0x04b0:0x042f | PTP | — | proposed |
+| `nikon-d7100-0430` | 0x04b0:0x0430 | PTP | — | proposed |
+| `nikon-d5300-0431` | 0x04b0:0x0431 | PTP | — | proposed |
+| `nikon-d5500-0438` | 0x04b0:0x0438 | PTP | — | proposed |
+| `nikon-d5600-043f` | 0x04b0:0x043f | PTP | — | proposed |
+| `nikon-d7200-0439` | 0x04b0:0x0439 | PTP | — | proposed |
+| `nikon-d7500-0440` | 0x04b0:0x0440 | PTP | — | proposed |
+| `nikon-d800-042a` | 0x04b0:0x042a | PTP | — | proposed |
+| `nikon-d800e-042e` | 0x04b0:0x042e | PTP | — | proposed |
+| `nikon-d600-042d` | 0x04b0:0x042d | PTP | — | proposed |
+| `nikon-d610-0434` | 0x04b0:0x0434 | PTP | — | proposed |
+| `nikon-d750-0437` | 0x04b0:0x0437 | PTP | — | proposed |
+| `nikon-d810-0436` | 0x04b0:0x0436 | PTP | — | proposed |
+| `nikon-d780-0446` | 0x04b0:0x0446 | PTP | — | proposed |
+| `nikon-d4-042b` | 0x04b0:0x042b | PTP | — | proposed |
+| `nikon-d4s-0435` | 0x04b0:0x0435 | PTP | — | proposed |
+| `nikon-d5-043a` | 0x04b0:0x043a | PTP | — | proposed |
+| `nikon-d500-043c` | 0x04b0:0x043c | PTP | — | proposed |
+| `nikon-d6-0447` | 0x04b0:0x0447 | PTP | — | proposed |
+| `nikon-z6-0443` | 0x04b0:0x0443 | PTP | ✅ | proposed |
+| `nikon-z50-0444` | 0x04b0:0x0444 | PTP | ✅ | proposed |
+| `nikon-z5-0448` | 0x04b0:0x0448 | PTP | ✅ | proposed |
+| `nikon-z7-ii-044b` | 0x04b0:0x044b | PTP | ✅ | proposed |
+| `nikon-z6-ii-044c` | 0x04b0:0x044c | PTP | ✅ | proposed |
+| `nikon-zfc-044f` | 0x04b0:0x044f | PTP | ✅ | proposed |
+| `nikon-z30-0452` | 0x04b0:0x0452 | PTP | ✅ | proposed |
+| `nikon-zf-0453` | 0x04b0:0x0453 | PTP | ✅ | proposed |
+| `nikon-z6-iii-0454` | 0x04b0:0x0454 | PTP | ✅ | proposed |
+| `canon-eos-450d-3145` | 0x04a9:0x3145 | PTP | — | proposed |
+| `canon-eos-5d-mark-ii-3199` | 0x04a9:0x3199 | PTP | — | proposed |
+| `canon-eos-7d-319a` | 0x04a9:0x319a | PTP | — | proposed |
+| `canon-eos-500d-31cf` | 0x04a9:0x31cf | PTP | — | proposed |
+| `canon-eos-550d-31ea` | 0x04a9:0x31ea | PTP | — | proposed |
+| `canon-eos-60d-3215` | 0x04a9:0x3215 | PTP | — | proposed |
+| `canon-eos-600d-3218` | 0x04a9:0x3218 | PTP | — | proposed |
+| `canon-eos-6d-3250` | 0x04a9:0x3250 | PTP | — | proposed |
+| `canon-eos-70d-3253` | 0x04a9:0x3253 | PTP | — | proposed |
+| `canon-eos-650d-323b` | 0x04a9:0x323b | PTP | — | proposed |
+| `canon-eos-5d-mark-iii-323a` | 0x04a9:0x323a | PTP | — | proposed |
+| `canon-eos-7d-mark-ii-326f` | 0x04a9:0x326f | PTP | — | proposed |
+| `canon-eos-700d-3272` | 0x04a9:0x3272 | PTP | — | proposed |
+| `canon-eos-760d-3280` | 0x04a9:0x3280 | PTP | — | proposed |
+| `canon-eos-5d-mark-iv-3281` | 0x04a9:0x3281 | PTP | — | proposed |
+| `canon-eos-80d-3294` | 0x04a9:0x3294 | PTP | — | proposed |
+| `canon-eos-750d-32a1` | 0x04a9:0x32a1 | PTP | — | proposed |
+| `canon-eos-800d-32c9` | 0x04a9:0x32c9 | PTP | — | proposed |
+| `canon-eos-6d-mark-ii-32ca` | 0x04a9:0x32ca | PTP | — | proposed |
+| `canon-eos-200d-32cc` | 0x04a9:0x32cc | PTP | — | proposed |
+| `canon-eos-r-32da` | 0x04a9:0x32da | PTP | ✅ | proposed |
+| `canon-eos-rp-32e2` | 0x04a9:0x32e2 | PTP | ✅ | proposed |
+| `canon-eos-250d-32e9` | 0x04a9:0x32e9 | PTP | — | proposed |
+| `canon-eos-90d-32ea` | 0x04a9:0x32ea | PTP | — | proposed |
+| `canon-eos-850d-32f1` | 0x04a9:0x32f1 | PTP | — | proposed |
+| `canon-eos-r6-32f5` | 0x04a9:0x32f5 | PTP | ✅ | proposed |
+| `canon-eos-r7-32f7` | 0x04a9:0x32f7 | PTP | ✅ | proposed |
+| `canon-eos-r10-32f8` | 0x04a9:0x32f8 | PTP | ✅ | proposed |
+| `canon-eos-m50-ii-32f9` | 0x04a9:0x32f9 | PTP | ✅ | proposed |
+| `canon-eos-r6-mark-ii-330b` | 0x04a9:0x330b | PTP | ✅ | proposed |
+| `canon-eos-r8-330c` | 0x04a9:0x330c | PTP | ✅ | proposed |
+| `sony-alpha-a5100-08e7` | 0x054c:0x08e7 | PTP | ✅ | proposed |
+| `sony-alpha-a6000-08b7` | 0x054c:0x08b7 | PTP | ✅ | proposed |
+| `sony-alpha-a6100-0d13` | 0x054c:0x0d13 | PTP | ✅ | proposed |
+| `sony-alpha-a6300-077a` | 0x054c:0x077a | PTP | ✅ | proposed |
+| `sony-alpha-a6500-0784` | 0x054c:0x0784 | PTP | ✅ | proposed |
+| `sony-alpha-a6600-0d0f` | 0x054c:0x0d0f | PTP | ✅ | proposed |
+| `sony-alpha-a6700-0e78` | 0x054c:0x0e78 | PTP | ✅ | proposed |
+| `sony-alpha-a7-094c` | 0x054c:0x094c | PTP | ✅ | proposed |
+| `sony-alpha-a7ii-0a6a` | 0x054c:0x0a6a | PTP | ✅ | proposed |
+| `sony-alpha-a7iii-0c03` | 0x054c:0x0c03 | PTP | ✅ | proposed |
+| `sony-alpha-a7iv-0da6` | 0x054c:0x0da6 | PTP | ✅ | proposed |
+| `sony-alpha-a7r-094d` | 0x054c:0x094d | PTP | ✅ | proposed |
+| `sony-alpha-a7rii-09e7` | 0x054c:0x09e7 | PTP | ✅ | proposed |
+| `sony-alpha-a7riii-0c00` | 0x054c:0x0c00 | PTP | ✅ | proposed |
+| `sony-alpha-a7rv-0e0c` | 0x054c:0x0e0c | PTP | ✅ | proposed |
+| `sony-alpha-a7s-08e2` | 0x054c:0x08e2 | PTP | ✅ | proposed |
+| `sony-alpha-a7sii-0a71` | 0x054c:0x0a71 | PTP | ✅ | proposed |
+| `sony-alpha-a7siii-0d17` | 0x054c:0x0d17 | PTP | ✅ | proposed |
+| `sony-alpha-a9-0c2a` | 0x054c:0x0c2a | PTP | ✅ | proposed |
+| `sony-alpha-a9iii-0e80` | 0x054c:0x0e80 | PTP | ✅ | proposed |
+| `sony-zv1-0c1b` | 0x054c:0x0c1b | PTP | ✅ | proposed |
+| `sony-zv-e10-0de3` | 0x054c:0x0de3 | PTP | ✅ | proposed |
+| `sony-rx100m7-0cae` | 0x054c:0x0cae | PTP | ✅ | proposed |
+| `sony-rx10m4-0c2f` | 0x054c:0x0c2f | PTP | ✅ | proposed |
+| `sony-fx3-0da3` | 0x054c:0x0da3 | PTP | ✅ | proposed |
+| `panasonic-lumix-2374` | 0x04da:0x2374 | PTP | ✅ | proposed |
+| `panasonic-gh5-2382` | 0x04da:0x2382 | PTP | ✅ | proposed |
+| `sigma-fp-c432` | 0x1003:0xc432 | PTP | ✅ | proposed |
+| `sigma-fp-l-c442` | 0x1003:0xc442 | PTP | ✅ | proposed |
+| `leica-m9-0002` | 0x1a98:0x0002 | PTP | — | proposed |
+| `leica-sl-typ601-2041` | 0x1a98:0x2041 | PTP | ✅ | proposed |
+| `leica-m11-monochrom-2083` | 0x1a98:0x2083 | PTP | ✅ | proposed |
+| `leica-q3-2376` | 0x1a98:0x2376 | PTP | ✅ | proposed |
+| `leica-sl3-2382` | 0x1a98:0x2382 | PTP | ✅ | proposed |
+| `ricoh-pentax-k3-0165` | 0x25fb:0x0165 | PTP | ✅ | proposed |
+| `ricoh-pentax-k1-0179` | 0x25fb:0x0179 | PTP | ✅ | proposed |
+| `ricoh-pentax-k3ii-017b` | 0x25fb:0x017b | PTP | ✅ | proposed |
+| `ricoh-pentax-k70-017d` | 0x25fb:0x017d | PTP | ✅ | proposed |
+| `ricoh-pentax-kp-017f` | 0x25fb:0x017f | PTP | ✅ | proposed |
+| `ricoh-wgm2-210b` | 0x25fb:0x210b | PTP | ✅ | proposed |
+| `ricoh-gr-iii-210f` | 0x25fb:0x210f | PTP | ✅ | proposed |
+| `ricoh-gr-iiix-2115` | 0x25fb:0x2115 | PTP | ✅ | proposed |
+| `gopro-max-004b` | 0x2672:0x004b | PTP | ✅ | proposed |
+| `gopro-hero9-black-004d` | 0x2672:0x004d | PTP | ✅ | proposed |
+| `gopro-hero10-black-0056` | 0x2672:0x0056 | PTP | ✅ | proposed |
+| `gopro-hero11-black-0059` | 0x2672:0x0059 | PTP | ✅ | proposed |
+| `gopro-hero11-mini-005a` | 0x2672:0x005a | PTP | ✅ | proposed |
 
-**Total: 50 entries** — last updated from `Specs/quirks.json` (schemaVersion 1.0.0)
+**Total: 222 entries**
