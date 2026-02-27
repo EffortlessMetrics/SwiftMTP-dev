@@ -1,0 +1,14 @@
+{
+  "flagsSource" : "quirk",
+  "ioTimeoutMs" : 30000,
+  "maxChunkBytes" : 1048576,
+  "prefersPropListEnumeration" : true,
+  "quirkID" : "nikon-dslr-0410",
+  "requireStabilization" : false,
+  "requiresKernelDetach" : true,
+  "resetOnOpen" : false,
+  "skipPTPReset" : false,
+  "stabilizeMs" : 300,
+  "supportsGetObjectPropList" : false,
+  "supportsPartialRead64" : true
+}
