@@ -277,6 +277,48 @@ public struct VirtualDeviceConfig: Sendable {
       includePropList: true)
   }
 
+  /// An LG Android phone in MTP mode (VID 0x1004, PID 0x633e).
+  /// GetObjectPropList is broken on LG vendor-class MTP devices.
+  public static var lgAndroid: VirtualDeviceConfig {
+    _androidPreset(
+      rawId: "1004:633e@1:11", vendor: "LG", model: "LG Android",
+      vendorID: 0x1004, productID: 0x633e, serial: "VIRT-LG-633E",
+      includePropList: false)
+  }
+
+  /// An LG Android phone (older) in MTP mode (VID 0x1004, PID 0x6300).
+  public static var lgAndroidOlder: VirtualDeviceConfig {
+    _androidPreset(
+      rawId: "1004:6300@1:12", vendor: "LG", model: "LG Android (older)",
+      vendorID: 0x1004, productID: 0x6300, serial: "VIRT-LG-6300",
+      includePropList: false)
+  }
+
+  /// An HTC Android phone in MTP mode (VID 0x0bb4, PID 0x0f15).
+  /// GetObjectPropList is broken on this HTC MTP device.
+  public static var htcAndroid: VirtualDeviceConfig {
+    _androidPreset(
+      rawId: "0bb4:0f15@1:13", vendor: "HTC", model: "HTC Android",
+      vendorID: 0x0bb4, productID: 0x0f15, serial: "VIRT-HTC-0F15",
+      includePropList: false)
+  }
+
+  /// A Huawei Android phone in MTP mode (VID 0x12d1, PID 0x107e).
+  /// GetObjectPropList is broken on this Huawei MTP device.
+  public static var huaweiAndroid: VirtualDeviceConfig {
+    _androidPreset(
+      rawId: "12d1:107e@1:14", vendor: "Huawei", model: "Huawei Android",
+      vendorID: 0x12d1, productID: 0x107e, serial: "VIRT-HUAWEI-107E",
+      includePropList: false)
+  }
+
+  /// A Fujifilm X-series camera (VID 0x04cb, PID 0x0104). PTP class (0x06/0x01/0x01).
+  public static var fujifilmX: VirtualDeviceConfig {
+    _cameraPreset(
+      rawId: "04cb:0104@1:15", vendor: "Fujifilm", model: "X-series",
+      vendorID: 0x04cb, productID: 0x0104, serial: "VIRT-FUJI-0104")
+  }
+
   // MARK: - Private helpers
 
   private static func _androidPreset(

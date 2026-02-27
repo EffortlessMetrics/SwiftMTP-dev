@@ -375,6 +375,56 @@ final class QuirkMatchingTests: XCTestCase {
     XCTAssertNotNil(match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!))
   }
 
+  func testLGAndroidPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.lgAndroid
+    XCTAssertNotNil(
+      match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!),
+      "lgAndroid preset should match lg-android-633e quirk entry")
+  }
+
+  func testHTCAndroidPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.htcAndroid
+    XCTAssertNotNil(
+      match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!),
+      "htcAndroid preset should match htc-android-0f15 quirk entry")
+  }
+
+  func testHuaweiAndroidPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.huaweiAndroid
+    XCTAssertNotNil(
+      match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!),
+      "huaweiAndroid preset should match huawei-android-107e quirk entry")
+  }
+
+  func testFujifilmXPreset_MatchesQuirk() {
+    let cfg = VirtualDeviceConfig.fujifilmX
+    XCTAssertNotNil(
+      match(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!),
+      "fujifilmX preset should match fujifilm-x-series-0104 quirk entry")
+  }
+
+  func testLGAndroid_NoPropList() {
+    let cfg = VirtualDeviceConfig.lgAndroid
+    XCTAssertFalse(
+      flags(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!).supportsGetObjectPropList)
+    XCTAssertFalse(cfg.info.operationsSupported.contains(0x9805))
+  }
+
+  func testHuawei_NoPropList() {
+    let cfg = VirtualDeviceConfig.huaweiAndroid
+    XCTAssertFalse(
+      flags(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!).supportsGetObjectPropList)
+    XCTAssertFalse(cfg.info.operationsSupported.contains(0x9805))
+  }
+
+  func testFujifilm_SupportsPropList() {
+    // fujifilm-x-series-0104 quirk has supportsGetObjectPropList=false; verify preset is consistent
+    let cfg = VirtualDeviceConfig.fujifilmX
+    let f = flags(vid: cfg.summary.vendorID!, pid: cfg.summary.productID!)
+    let presetHasPropList = cfg.info.operationsSupported.contains(0x9805)
+    XCTAssertEqual(presetHasPropList, f.supportsGetObjectPropList)
+  }
+
   // MARK: - Policy consistency: VirtualDeviceConfig propList support matches quirk
 
   func testSamsungGalaxy_PresetOpsPropListConsistentWithQuirk() {
