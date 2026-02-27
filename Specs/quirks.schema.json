@@ -5,6 +5,10 @@
   "type": "object",
   "required": ["schemaVersion", "version", "entries"],
   "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this schema file"
+    },
     "schemaVersion": {
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
@@ -18,279 +22,182 @@
     "entries": {
       "type": "array",
       "description": "Array of device quirk entries",
-      "items": {
-        "type": "object",
-        "required": ["id", "match", "tuning", "confidence", "status"],
-        "properties": {
-          "id": {
-            "type": "string",
-            "minLength": 1,
-            "description": "Unique identifier for this quirk entry"
+      "items": { "$ref": "#/$defs/quirkEntry" }
+    }
+  },
+  "additionalProperties": false,
+
+  "$defs": {
+    "hexVidPid": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{4}$"
+    },
+    "hexByte": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{2}$"
+    },
+    "statusEnum": {
+      "type": "string",
+      "enum": ["stable", "experimental", "proposed", "blocked", "promoted", "verified"]
+    },
+    "confidenceEnum": {
+      "type": "string",
+      "enum": ["high", "medium", "low"]
+    },
+
+    "quirkEntry": {
+      "type": "object",
+      "required": ["id", "match", "status"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$",
+          "minLength": 1,
+          "description": "Unique kebab-case identifier for this quirk entry"
+        },
+        "match": { "$ref": "#/$defs/matchBlock" },
+        "tuning": { "$ref": "#/$defs/tuningBlock" },
+        "hooks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/hookEntry" }
+        },
+        "ops": {
+          "type": "object",
+          "description": "Operation capability flags — all values must be boolean",
+          "additionalProperties": { "type": "boolean" }
+        },
+        "flags": {
+          "type": "object",
+          "description": "Device behavior flags — all values must be boolean (except preferredWriteFolder)",
+          "properties": {
+            "preferredWriteFolder": {
+              "type": "string",
+              "description": "Preferred folder name for writes when writeToSubfolderOnly is true"
+            }
           },
-          "match": {
+          "additionalProperties": { "type": "boolean" }
+        },
+        "probeLadder": {
+          "type": "object",
+          "description": "Multi-step probe configuration"
+        },
+        "behaviorLimitations": {
+          "type": "array",
+          "items": {
             "type": "object",
-            "description": "Device matching criteria",
             "properties": {
-              "vid": {
-                "type": "string",
-                "pattern": "^0x[0-9a-fA-F]{4}$",
-                "description": "USB Vendor ID (hex format)"
-              },
-              "pid": {
-                "type": "string",
-                "pattern": "^0x[0-9a-fA-F]{4}$",
-                "description": "USB Product ID (hex format)"
-              },
-              "deviceInfoRegex": {
-                "type": "string",
-                "description": "Regular expression to match device info string"
-              },
-              "iface": {
-                "type": "object",
-                "description": "USB interface descriptor",
-                "properties": {
-                  "class": {
-                    "type": "string",
-                    "pattern": "^0x[0-9a-fA-F]{2}$",
-                    "description": "Interface class (hex)"
-                  },
-                  "subclass": {
-                    "type": "string",
-                    "pattern": "^0x[0-9a-fA-F]{2}$",
-                    "description": "Interface subclass (hex)"
-                  },
-                  "protocol": {
-                    "type": "string",
-                    "pattern": "^0x[0-9a-fA-F]{2}$",
-                    "description": "Interface protocol (hex)"
-                  }
-                }
-              },
-              "endpoints": {
-                "type": "object",
-                "description": "USB endpoint addresses",
-                "properties": {
-                  "in": {
-                    "type": "string",
-                    "pattern": "^0x[0-9a-fA-F]{2}$",
-                    "description": "Input endpoint address (hex)"
-                  },
-                  "out": {
-                    "type": "string",
-                    "pattern": "^0x[0-9a-fA-F]{2}$",
-                    "description": "Output endpoint address (hex)"
-                  },
-                  "evt": {
-                    "type": "string",
-                    "pattern": "^0x[0-9a-fA-F]{2}$",
-                    "description": "Event endpoint address (hex)"
-                  }
-                }
-              }
+              "operation": { "type": "string" },
+              "errorCode": { "type": "string" },
+              "description": { "type": "string" },
+              "workaround": { "type": "string" }
             }
-          },
-          "tuning": {
-            "type": "object",
-            "required": ["maxChunkBytes", "handshakeTimeoutMs", "ioTimeoutMs", "inactivityTimeoutMs", "overallDeadlineMs"],
-            "description": "Performance and timeout tuning parameters",
-            "properties": {
-              "maxChunkBytes": {
-                "type": "integer",
-                "minimum": 131072,
-                "maximum": 16777216,
-                "description": "Maximum chunk size for data transfers (bytes)"
-              },
-              "handshakeTimeoutMs": {
-                "type": "integer",
-                "minimum": 1000,
-                "maximum": 60000,
-                "description": "Timeout for initial handshake (milliseconds)"
-              },
-              "ioTimeoutMs": {
-                "type": "integer",
-                "minimum": 1000,
-                "maximum": 60000,
-                "description": "Timeout for individual I/O operations (milliseconds)"
-              },
-              "inactivityTimeoutMs": {
-                "type": "integer",
-                "minimum": 1000,
-                "maximum": 60000,
-                "description": "Timeout for detecting inactive connections (milliseconds)"
-              },
-              "overallDeadlineMs": {
-                "type": "integer",
-                "minimum": 30000,
-                "maximum": 600000,
-                "description": "Overall operation deadline (milliseconds)"
-              },
-              "stabilizeMs": {
-                "type": "integer",
-                "minimum": 0,
-                "maximum": 2000,
-                "description": "Stabilization delay after session open (milliseconds)"
-              },
-              "eventPumpDelayMs": {
-                "type": "integer",
-                "minimum": 0,
-                "maximum": 5000,
-                "description": "Delay between event polling cycles (milliseconds)"
-              }
-            }
-          },
-          "hooks": {
-            "type": "array",
-            "description": "Phase-specific hooks for timing and retry logic",
-            "items": {
-              "type": "object",
-              "required": ["phase"],
-              "properties": {
-                "phase": {
-                  "type": "string",
-                  "enum": [
-                    "postOpenUSB", "postClaimInterface", "postOpenSession",
-                    "beforeGetDeviceInfo", "beforeGetStorageIDs", "beforeGetObjectHandles",
-                    "beforeTransfer", "afterTransfer", "onDeviceBusy", "onDetach"
-                  ],
-                  "description": "Phase in the MTP protocol where the hook applies"
-                },
-                "delayMs": {
-                  "type": "integer",
-                  "minimum": 0,
-                  "maximum": 5000,
-                  "description": "Delay in milliseconds to apply at this phase"
-                },
-                "busyBackoff": {
-                  "type": "object",
-                  "description": "Backoff strategy for DEVICE_BUSY responses",
-                  "properties": {
-                    "retries": {
-                      "type": "integer",
-                      "minimum": 0,
-                      "maximum": 10,
-                      "description": "Maximum number of retry attempts"
-                    },
-                    "baseMs": {
-                      "type": "integer",
-                      "minimum": 100,
-                      "maximum": 5000,
-                      "description": "Base delay in milliseconds"
-                    },
-                    "jitterPct": {
-                      "type": "number",
-                      "minimum": 0.0,
-                      "maximum": 1.0,
-                      "description": "Jitter percentage (0.0-1.0) to randomize delays"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "ops": {
-            "type": "object",
-            "description": "Operation capability flags",
-            "properties": {
-              "supportsGetPartialObject64": {
-                "type": "boolean",
-                "description": "Device supports 64-bit partial object retrieval"
-              },
-              "supportsSendPartialObject": {
-                "type": "boolean",
-                "description": "Device supports partial object sending"
-              },
-              "preferGetObjectPropList": {
-                "type": "boolean",
-                "description": "Prefer GetObjectPropList over GetObjectPropsSupported"
-              },
-              "disableWriteResume": {
-                "type": "boolean",
-                "description": "Disable write resume capability"
-              }
-            }
-          },
-          "confidence": {
-            "type": "string",
-            "enum": ["low", "medium", "high"],
-            "description": "Confidence level in this quirk's correctness"
-          },
-          "status": {
-            "type": "string",
-            "enum": ["experimental", "stable", "deprecated"],
-            "description": "Maturity status of this quirk"
-          },
-          "benchGates": {
-            "type": "object",
-            "description": "Minimum performance thresholds for validation",
-            "properties": {
-              "readMBpsMin": {
-                "type": "number",
-                "minimum": 0,
-                "description": "Minimum read throughput (MB/s)"
-              },
-              "writeMBpsMin": {
-                "type": "number",
-                "minimum": 0,
-                "description": "Minimum write throughput (MB/s)"
-              }
-            }
-          },
-          "notes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Human-readable notes about this device/quirk"
-          },
-          "provenance": {
-            "type": "object",
-            "description": "Metadata about when and how this quirk was created",
-            "properties": {
-              "author": {
-                "type": "string",
-                "description": "Person who created/validated this quirk"
-              },
-              "date": {
-                "type": "string",
-                "format": "date",
-                "description": "Date when quirk was created/validated (YYYY-MM-DD)"
-              },
-              "commit": {
-                "type": "string",
-                "description": "Git commit hash when quirk was added"
-              },
-              "artifacts": {
-                "type": "object",
-                "description": "Paths to evidence artifacts",
-                "properties": {
-                  "probe": {
-                    "type": "string",
-                    "description": "Path to device probe output"
-                  },
-                  "usbDump": {
-                    "type": "string",
-                    "description": "Path to USB dump artifact"
-                  },
-                  "bench100M": {
-                    "type": "string",
-                    "description": "Path to 100MB benchmark results"
-                  },
-                  "bench1G": {
-                    "type": "string",
-                    "description": "Path to 1GB benchmark results"
-                  },
-                  "mirrorLog": {
-                    "type": "string",
-                    "description": "Path to mirror operation log"
-                  }
-                }
-              }
-            }
-          },
-          "status": {
-            "type": "string",
-            "enum": ["experimental", "stable", "deprecated"],
-            "description": "Maturity status of this quirk"
+          }
+        },
+        "evidenceRequired": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of evidence types needed for promotion"
+        },
+        "confidence": { "$ref": "#/$defs/confidenceEnum" },
+        "status": { "$ref": "#/$defs/statusEnum" },
+        "governance": {
+          "type": "object",
+          "properties": {
+            "status": { "$ref": "#/$defs/statusEnum" },
+            "evidenceRequired": { "type": "string" },
+            "addedBy": { "type": "string" },
+            "addedDate": { "type": "string", "format": "date" },
+            "verificationNotes": { "type": "string" }
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "author": { "type": "string" },
+            "date": { "type": "string", "format": "date" },
+            "commit": { "type": "string" },
+            "artifacts": { "type": "object" }
+          }
+        },
+        "benchGates": {
+          "type": "object",
+          "properties": {
+            "readMBpsMin": { "type": "number", "minimum": 0 },
+            "writeMBpsMin": { "type": "number", "minimum": 0 }
+          }
+        },
+        "lastVerifiedDate": { "type": "string", "format": "date" },
+        "lastVerifiedBy": { "type": "string" }
+      }
+    },
+
+    "matchBlock": {
+      "type": "object",
+      "required": ["vid", "pid"],
+      "properties": {
+        "vid": { "$ref": "#/$defs/hexVidPid", "description": "USB Vendor ID (hex)" },
+        "pid": { "$ref": "#/$defs/hexVidPid", "description": "USB Product ID (hex)" },
+        "deviceInfoRegex": { "type": "string" },
+        "iface": {
+          "type": "object",
+          "properties": {
+            "class": { "$ref": "#/$defs/hexByte" },
+            "subclass": { "$ref": "#/$defs/hexByte" },
+            "protocol": { "$ref": "#/$defs/hexByte" }
+          }
+        },
+        "endpoints": {
+          "type": "object",
+          "properties": {
+            "in": { "$ref": "#/$defs/hexByte" },
+            "out": { "$ref": "#/$defs/hexByte" },
+            "evt": { "$ref": "#/$defs/hexByte" }
+          }
+        }
+      }
+    },
+
+    "tuningBlock": {
+      "type": "object",
+      "required": ["maxChunkBytes", "handshakeTimeoutMs", "ioTimeoutMs", "inactivityTimeoutMs", "overallDeadlineMs"],
+      "properties": {
+        "maxChunkBytes": { "type": "integer", "minimum": 131072, "maximum": 16777216 },
+        "handshakeTimeoutMs": { "type": "integer", "minimum": 1000, "maximum": 60000 },
+        "ioTimeoutMs": { "type": "integer", "minimum": 1000, "maximum": 60000 },
+        "inactivityTimeoutMs": { "type": "integer", "minimum": 1000, "maximum": 60000 },
+        "overallDeadlineMs": { "type": "integer", "minimum": 30000, "maximum": 600000 },
+        "stabilizeMs": { "type": "integer", "minimum": 0, "maximum": 2000 },
+        "eventPumpDelayMs": { "type": "integer", "minimum": 0, "maximum": 5000 },
+        "resetOnOpen": { "type": "boolean" },
+        "requiresKernelDetach": { "type": "boolean" },
+        "alternateInterfaceSelection": { "type": "boolean" },
+        "postClaimStabilizeMs": { "type": "integer", "minimum": 0, "maximum": 5000 }
+      }
+    },
+
+    "hookEntry": {
+      "type": "object",
+      "required": ["phase"],
+      "properties": {
+        "phase": {
+          "type": "string",
+          "enum": [
+            "postOpenUSB", "postClaimInterface", "postOpenSession",
+            "beforeGetDeviceInfo", "beforeGetStorageIDs", "beforeGetObjectHandles",
+            "beforeTransfer", "afterTransfer", "onDeviceBusy", "onDetach"
+          ]
+        },
+        "delayMs": { "type": "integer", "minimum": 0, "maximum": 5000 },
+        "busyBackoff": {
+          "type": "object",
+          "properties": {
+            "retries": { "type": "integer", "minimum": 0, "maximum": 10 },
+            "baseMs": { "type": "integer", "minimum": 100, "maximum": 5000 },
+            "jitterPct": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
           }
         }
       }

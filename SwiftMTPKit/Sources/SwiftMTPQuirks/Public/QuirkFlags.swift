@@ -98,6 +98,12 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// When true, interrupted downloads can resume from a byte offset instead of restarting.
   public var supportsGetPartialObject: Bool = false
 
+  // MARK: - Device-class hints
+
+  /// Device is a PTP camera (Still-Image-Capture class).
+  /// Used to select camera-specific defaults and UI presentation.
+  public var cameraClass: Bool = false
+
   public init() {}
 
   /// Reasonable defaults for an unrecognized PTP/Still-Image-Capture class device
@@ -138,6 +144,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case skipGetObjectPropValue
     case supportsGetObjectPropList
     case supportsGetPartialObject
+    case cameraClass
   }
 
   public init(from decoder: Decoder) throws {
@@ -186,6 +193,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .supportsGetObjectPropList) ?? false
     self.supportsGetPartialObject =
       try container.decodeIfPresent(Bool.self, forKey: .supportsGetPartialObject) ?? false
+    self.cameraClass =
+      try container.decodeIfPresent(Bool.self, forKey: .cameraClass) ?? false
   }
 
   public func encode(to encoder: Encoder) throws {
@@ -216,5 +225,6 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(skipGetObjectPropValue, forKey: .skipGetObjectPropValue)
     try container.encodeIfPresent(supportsGetObjectPropList, forKey: .supportsGetObjectPropList)
     try container.encodeIfPresent(supportsGetPartialObject, forKey: .supportsGetPartialObject)
+    try container.encodeIfPresent(cameraClass, forKey: .cameraClass)
   }
 }
