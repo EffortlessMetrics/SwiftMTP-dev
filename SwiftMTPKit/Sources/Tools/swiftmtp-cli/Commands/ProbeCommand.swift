@@ -36,14 +36,23 @@ struct ProbeCommand {
       if let vid = selectedVID, let pid = selectedPID {
         let vidpid = String(format: "0x%04x:0x%04x", vid, pid)
         print("USB ID:  \(vidpid)")
-        if let db = try? QuirkDatabase.load(), let q = db.entries.first(where: { $0.vid == vid && $0.pid == pid }) {
+        if let db = try? QuirkDatabase.load(),
+          let q = db.entries.first(where: { $0.vid == vid && $0.pid == pid })
+        {
           print("Quirk:   \(q.id) [\(q.status?.rawValue ?? "proposed")]")
           if let proplist = q.flags?.supportsGetObjectPropList {
             print("         GetObjectPropList: \(proplist ? "✅ fast-path" : "— fallback only")")
           }
         } else {
-          print("Quirk:   not in database — run: swiftmtp quirks lookup --vid \(String(format:"0x%04x",vid)) --pid \(String(format:"0x%04x",pid))")
-          print("         To contribute this device, see Docs/DeviceSubmission.md")
+          let vidStr = String(format: "0x%04x", vid)
+          let pidStr = String(format: "0x%04x", pid)
+          // Try to infer device class from manufacturer/model (available after probe)
+          // For now note the device class will be guessed; user can correct it
+          print("Quirk:   ⚠️  not in database — connected via heuristic defaults")
+          print(
+            "         Contribute a profile: swiftmtp add-device --vid \(vidStr) --pid \(pidStr) --class android|ptp --name \"<brand model>\""
+          )
+          print("         See Docs/DeviceSubmission.md")
         }
       }
       print("Device: \(info.manufacturer) \(info.model)")
