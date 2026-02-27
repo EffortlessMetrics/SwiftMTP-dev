@@ -498,6 +498,64 @@ final class BDDRunner: XCTestCase {
     else { throw XCTSkip("yota-phone-2-914d not in database") }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
+
+  // MARK: - Wave 14: E-readers, Dashcams, Niche
+
+  func testWave14KoboClara2E() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2237, pid: 0x418c, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("kobo-clara-2e-418c not in database") }
+    XCTAssertFalse(q.resolvedFlags().cameraClass)
+  }
+
+  func testWave14BooxTabUltra() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2207, pid: 0x001a, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("onyx-boox-tab-ultra-001a not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave14KindleFireHD8() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x1949, pid: 0x0006, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("kindle-fire-hd8 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave14GarminDashCam() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x091e, pid: 0x0003, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("garmin-dashcam-0003 not in database") }
+    XCTAssertTrue(q.resolvedFlags().cameraClass)
+  }
+
+  func testWave14FLIRThermal() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x09cb, pid: 0x1007, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("flir-e8-xt-1007 not in database") }
+    XCTAssertTrue(q.resolvedFlags().cameraClass)
+  }
+
+  func testWave14TomTomGO520() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x1390, pid: 0x7474, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("tomtom-go-520 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave14AnbernicRG556() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x1d6b, pid: 0x0104, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("anbernic-rg556 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave14ArchosMTP() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0e79, pid: 0x1307, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("archos-504 not in database") }
+    XCTAssertNotNil(q)
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
