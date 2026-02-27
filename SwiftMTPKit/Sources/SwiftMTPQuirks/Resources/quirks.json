@@ -93103,22 +93103,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93148,22 +93145,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93193,22 +93187,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93238,22 +93229,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93283,22 +93271,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93328,22 +93313,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93373,22 +93355,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93418,22 +93397,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93463,22 +93439,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93508,22 +93481,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93553,22 +93523,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93598,22 +93565,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93643,22 +93607,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93688,22 +93649,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93733,22 +93691,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93778,22 +93733,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93823,22 +93775,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93868,22 +93817,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93913,22 +93859,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -93958,22 +93901,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94003,22 +93943,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94048,22 +93985,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94093,22 +94027,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94138,22 +94069,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94183,22 +94111,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94228,22 +94153,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94273,22 +94195,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94318,22 +94237,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94363,22 +94279,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94408,22 +94321,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94453,22 +94363,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94498,22 +94405,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94543,22 +94447,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94588,22 +94489,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94633,22 +94531,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94678,22 +94573,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94723,22 +94615,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94768,22 +94657,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94813,22 +94699,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94858,22 +94741,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94903,22 +94783,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94948,22 +94825,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -94993,22 +94867,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95038,22 +94909,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95083,22 +94951,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95128,22 +94993,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95173,22 +95035,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95218,22 +95077,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95263,22 +95119,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95308,22 +95161,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95353,22 +95203,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95398,22 +95245,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95443,22 +95287,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95488,22 +95329,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95533,22 +95371,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95578,22 +95413,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95623,22 +95455,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95668,22 +95497,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95713,22 +95539,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95758,22 +95581,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95803,22 +95623,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95848,22 +95665,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95893,22 +95707,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95938,22 +95749,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -95983,22 +95791,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -96028,22 +95833,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -96073,22 +95875,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -96118,22 +95917,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -96163,22 +95959,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": false,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -96208,22 +96001,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -96253,22 +96043,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": true,
         "supportsGetObjectPropList": false,
         "useAndroidExtensions": true,
-        "ioTimeoutMs": 30000,
-        "handshakeTimeoutMs": 15000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97382,22 +97169,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97427,22 +97211,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97472,22 +97253,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97517,22 +97295,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97562,22 +97337,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97607,22 +97379,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97652,22 +97421,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97697,22 +97463,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97742,22 +97505,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97787,22 +97547,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97832,22 +97589,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97877,22 +97631,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97922,22 +97673,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -97967,22 +97715,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98012,22 +97757,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98057,22 +97799,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98102,22 +97841,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98147,22 +97883,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98192,22 +97925,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98237,22 +97967,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98282,22 +98009,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98327,22 +98051,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98372,22 +98093,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98417,22 +98135,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98462,22 +98177,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98507,22 +98219,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98552,22 +98261,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98597,22 +98303,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98642,22 +98345,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98687,22 +98387,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98732,22 +98429,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98777,22 +98471,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98822,22 +98513,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98867,22 +98555,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98912,22 +98597,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -98957,22 +98639,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99002,22 +98681,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99047,22 +98723,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99092,22 +98765,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99137,22 +98807,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99182,22 +98849,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99227,22 +98891,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99272,22 +98933,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99317,22 +98975,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99362,22 +99017,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99407,22 +99059,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99452,22 +99101,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99497,22 +99143,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99542,22 +99185,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",
@@ -99587,22 +99227,19 @@
         }
       },
       "ops": {
-        "openSession": {
-          "maxRetries": 2
-        },
-        "getDeviceInfo": {
-          "maxRetries": 1
-        },
-        "getStorageIDs": {
-          "maxRetries": 1
-        }
+        "supportsGetObjectPropList": false,
+        "preferGetObjectPropList": false,
+        "supportsGetPartialObject64": false,
+        "supportsSendPartialObject": false,
+        "supportsGetPartialObject": false,
+        "disableWriteResume": false
       },
       "flags": {
         "requiresKernelDetach": false,
         "supportsGetObjectPropList": true,
         "preferGetObjectPropList": true,
-        "ioTimeoutMs": 10000,
-        "handshakeTimeoutMs": 8000
+        "ioTimeoutMs": false,
+        "handshakeTimeoutMs": false
       },
       "status": "proposed",
       "confidence": "medium",

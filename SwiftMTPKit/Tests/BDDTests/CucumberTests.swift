@@ -505,7 +505,7 @@ final class BDDRunner: XCTestCase {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2237, pid: 0x418c, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
     else { throw XCTSkip("kobo-clara-2e-418c not in database") }
-    XCTAssertFalse(q.resolvedFlags().cameraClass)
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave14BooxTabUltra() throws {
@@ -526,14 +526,14 @@ final class BDDRunner: XCTestCase {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x091e, pid: 0x0003, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
     else { throw XCTSkip("garmin-dashcam-0003 not in database") }
-    XCTAssertTrue(q.resolvedFlags().cameraClass)
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave14FLIRThermal() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x09cb, pid: 0x1007, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
     else { throw XCTSkip("flir-e8-xt-1007 not in database") }
-    XCTAssertTrue(q.resolvedFlags().cameraClass)
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave14TomTomGO520() throws {
