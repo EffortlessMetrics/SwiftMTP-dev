@@ -60,11 +60,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Multi-device `DeviceServiceRegistry` tests**: 4 new tests covering concurrent registration of 3 devices, isolated detach/reconnect, domain remapping, and remove-one-keeps-others.
 - **FileProvider integration tests**: Replaced 12 all-skipped stubs with 10 real mock-based tests (`FileProviderWriteIntegrationTests`, `MTPFileProviderItemIntegrationTests`) plus 3 correctly-documented sandbox-only skips.
 
-- **Quirk database: 50 → 395 entries** (waves 3 & 4). New VIDs: Alcatel/TCL (0x1bbb), Sharp Aquos (0x04dd), Kyocera (0x0482), Fairphone (0x2ae5), Honor (0x339b), Casio Exilim (0x07cf), Kodak EasyShare (0x040a), OM System (0x33a2). Coverage now spans Android phones, compact/mirrorless/DSLR cameras, action cameras, wearables, and tablets across 38+ USB VIDs.
+- **Quirk database: 50 → 576 entries** (waves 3–5). New VIDs added progressively:
+  - Wave 3/4: Alcatel/TCL (0x1bbb), Sharp Aquos (0x04dd), Kyocera (0x0482), Fairphone (0x2ae5), Honor (0x339b), Casio Exilim (0x07cf), Kodak EasyShare (0x040a), OM System (0x33a2), GoPro (0x2672 more), Garmin (0x091e)
+  - Wave 5: SanDisk media players (0x0781), Creative ZEN (0x041e), iRiver (0x4102), Cowon iAudio (0x0e21), Microsoft Zune (0x045e), Philips GoGear (0x0471), Samsung YP-series media players, Sony NWZ Walkman more, Archos (0x0e79), Amazon Kindle/Fire (0x1949), Barnes & Noble Nook (0x2080), Kobo e-readers (0x2237), MediaTek Android (0x0e8d), Spreadtrum/Transsion (0x1782), LeTV/LeEco (0x2b0e), BLU (0x271d)
+  - Total VIDs now covered: 50+
 - **PTP class heuristic**: Unrecognized USB interface-class 0x06 devices automatically receive proplist-enabled PTP policy — cameras connect without a quirk entry. Auto-disable fallback: `GetObjectPropList` returning `OperationNotSupported` is silently suppressed and the device is downgraded to object-info enumeration.
 - **`swiftmtp quirks lookup --vid 0xXXXX --pid 0xXXXX`**: New CLI subcommand to look up a device by VID/PID and print its quirk ID, governance status, and proplist capability.
 - **`swiftmtp add-device --brand … --model … --vid … --pid … --class android|ptp|unknown`**: Generates a fully-formed quirk entry JSON template for community submission.
-- **`swiftmtp probe` VID/PID annotation**: Probe output now shows USB VID:PID and whether a quirk match was found, making it easy to collect data for device submissions.
+- **`swiftmtp info`**: New CLI command showing database stats (entry count, unique VIDs, proplist-capable count, kernel-detach count, by-status breakdown; `--json` output supported).
+- **`swiftmtp wizard` auto-suggests `add-device`**: When wizard detects an unrecognized device, it now shows the exact `swiftmtp add-device` command to run, with device class inferred from manufacturer/model name.
 - **Contributor tooling**: `Docs/DeviceSubmission.md` step-by-step guide, `Docs/ContributionGuide.md` "Contributing Device Data" section. `validate-quirks.sh` now shows which specific IDs/VID:PID pairs are duplicated instead of a generic error.
 - **BDD scenarios**: 3 new Gherkin feature files — `ptp-class-heuristic.feature`, `auto-disable-proplist.feature`, `device-families-wave4.feature` (17 new scenarios total).
 - **Property tests** (`QuirksDatabasePropertyTests.swift`): 14 new SwiftCheck property tests validating DB integrity invariants (unique IDs, unique VID:PID pairs, consistent PTP/Android flag relationships, EffectiveTuningBuilder monotonicity).
