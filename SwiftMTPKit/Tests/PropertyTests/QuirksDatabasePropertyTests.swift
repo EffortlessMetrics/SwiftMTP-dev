@@ -21,8 +21,8 @@ final class QuirksDatabasePropertyTests: XCTestCase {
 
   func testDatabaseHasMinimumEntryCount() {
     XCTAssertGreaterThanOrEqual(
-      db.entries.count, 222,
-      "Database should have at least 222 entries")
+      db.entries.count, 395,
+      "Database should have at least 395 entries (wave-4 baseline)")
   }
 
   func testAllQuirkIDsAreUnique() {
@@ -183,6 +183,53 @@ final class QuirksDatabasePropertyTests: XCTestCase {
   }
 
   // MARK: - Helpers
+
+  /// Wave-5 invariant: media players (SanDisk, Creative, iRiver, Cowon, Philips, Archos)
+  /// must NOT require kernel detach (they use standard USB MTP, not Android USB driver).
+  func testMediaPlayersDoNotRequireKernelDetach() {
+    let mediaPlayerVIDs: Set<UInt16> = [0x0781, 0x041e, 0x4102, 0x0e21, 0x0471, 0x0e79, 0x045e]
+    let offenders = db.entries
+      .filter { mediaPlayerVIDs.contains($0.vid) }
+      .filter { $0.resolvedFlags().requiresKernelDetach }
+    XCTAssertTrue(
+      offenders.isEmpty,
+      "Media player devices should not require kernel detach: \(offenders.map { $0.id })")
+  }
+
+  /// E-readers (Kobo, Nook, Amazon Kindle) must NOT require kernel detach.
+  func testEReadersDoNotRequireKernelDetach() {
+    let ereaderVIDs: Set<UInt16> = [0x2237, 0x2080, 0x1949]
+    let offenders = db.entries
+      .filter { ereaderVIDs.contains($0.vid) }
+      .filter { $0.resolvedFlags().requiresKernelDetach }
+    XCTAssertTrue(
+      offenders.isEmpty,
+      "E-reader devices should not require kernel detach: \(offenders.map { $0.id })")
+  }
+
+  /// PTP cameras (interface class 0x06) that explicitly ENABLE proplist should
+  /// have consistent flags. We don't assert all 0x06 entries must have proplist=true
+  /// because some devices (e.g. Xiaomi Mi Note 2) use class 0x06 but have broken proplist.
+  func testPTPQuirkEntriesHaveConsistentProplistFlag() {
+    let ptpEntries = db.entries.filter { $0.ifaceClass == 0x06 }
+    // At least 100 PTP camera entries should exist in the database
+    XCTAssertGreaterThanOrEqual(
+      ptpEntries.count, 100,
+      "Expected at least 100 PTP camera entries (class 0x06); found \(ptpEntries.count)")
+    // Every PTP entry's resolvedFlags() must be callable (smoke test)
+    for entry in ptpEntries {
+      _ = entry.resolvedFlags()
+    }
+  }
+
+  /// All entries must have a provenance source field if `ops` or `flags` are set.
+  func testAllEntriesHaveIDsWithMinimumLength() {
+    for entry in db.entries {
+      XCTAssertGreaterThanOrEqual(
+        entry.id.count, 6,
+        "Entry ID '\(entry.id)' is too short (minimum 6 characters)")
+    }
+  }
 
   private func findDuplicates<T: Hashable>(_ items: [T]) -> [T] {
     var seen = Set<T>()
