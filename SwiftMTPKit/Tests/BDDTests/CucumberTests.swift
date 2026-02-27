@@ -198,6 +198,33 @@ final class BDDRunner: XCTestCase {
     )
   }
 
+  // auto-disable-proplist.feature – GetObjectPropList auto-disables on OperationNotSupported (0x2005)
+  func testPropListAutoDisables_OnOperationNotSupported() async throws {
+    let inner = VirtualMTPLink(config: .pixel7)
+    let notSupportedLink = BDDNotSupportedLink(inner: inner)
+    let transport = BDDInjectedLinkTransport(link: notSupportedLink)
+    let summary = MTPDeviceSummary(
+      id: MTPDeviceID(raw: "bdd-auto-disable"),
+      manufacturer: "Test", model: "AutoDisableDevice",
+      vendorID: 0x0000, productID: 0x0001)
+    let actor = MTPDeviceActor(id: summary.id, summary: summary, transport: transport)
+
+    try await actor.openIfNeeded()
+
+    var flags = QuirkFlags()
+    flags.supportsGetObjectPropList = true
+    await actor.bddOverridePolicy(flags: flags)
+
+    // getObjectPropList catches .notSupported and auto-disables the fast-path flag
+    _ = try await actor.getObjectPropList(parentHandle: 0xFFFF_FFFF)
+
+    let policy = await actor.devicePolicy
+    XCTAssertFalse(
+      policy?.flags.supportsGetObjectPropList ?? true,
+      "supportsGetObjectPropList must be auto-disabled after device returns OperationNotSupported"
+    )
+  }
+
   // quirk-policy.feature – Android quirk (OnePlus 3T) has supportsGetObjectPropList=false
   // Passes ifaceClass/Subclass/Protocol to satisfy the interface-matching constraint in the DB.
   func testAndroidQuirk_HasFalseGetObjPropList() throws {
@@ -318,6 +345,63 @@ private final class BDDInjectedLinkTransport: MTPTransport, @unchecked Sendable 
 
 // MARK: - Actor-Isolated Scenario State
 
+/// Returns OperationNotSupported (0x2005) for GetObjectPropList (0x9805); forwards all other calls.
+private final class BDDNotSupportedLink: MTPLink, @unchecked Sendable {
+  private let inner: any MTPLink
+  init(inner: any MTPLink) { self.inner = inner }
+
+  var cachedDeviceInfo: MTPDeviceInfo? { inner.cachedDeviceInfo }
+  var linkDescriptor: MTPLinkDescriptor? { inner.linkDescriptor }
+
+  func openUSBIfNeeded() async throws { try await inner.openUSBIfNeeded() }
+  func openSession(id: UInt32) async throws { try await inner.openSession(id: id) }
+  func closeSession() async throws { try await inner.closeSession() }
+  func close() async { await inner.close() }
+  func getDeviceInfo() async throws -> MTPDeviceInfo { try await inner.getDeviceInfo() }
+  func getStorageIDs() async throws -> [MTPStorageID] { try await inner.getStorageIDs() }
+  func getStorageInfo(id: MTPStorageID) async throws -> MTPStorageInfo {
+    try await inner.getStorageInfo(id: id)
+  }
+  func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws
+    -> [MTPObjectHandle]
+  {
+    try await inner.getObjectHandles(storage: storage, parent: parent)
+  }
+  func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo] {
+    try await inner.getObjectInfos(handles)
+  }
+  func getObjectInfos(storage: MTPStorageID, parent: MTPObjectHandle?, format: UInt16?) async throws
+    -> [MTPObjectInfo]
+  {
+    try await inner.getObjectInfos(storage: storage, parent: parent, format: format)
+  }
+  func resetDevice() async throws { try await inner.resetDevice() }
+  func deleteObject(handle: MTPObjectHandle) async throws {
+    try await inner.deleteObject(handle: handle)
+  }
+  func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?)
+    async throws
+  {
+    try await inner.moveObject(handle: handle, to: storage, parent: parent)
+  }
+  func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
+    try await inner.executeCommand(command)
+  }
+  func executeStreamingCommand(
+    _ command: PTPContainer,
+    dataPhaseLength: UInt64?,
+    dataInHandler: MTPDataIn?,
+    dataOutHandler: MTPDataOut?
+  ) async throws -> PTPResponseResult {
+    if command.code == MTPOp.getObjectPropList.rawValue {
+      return PTPResponseResult(code: 0x2005, txid: command.txid)
+    }
+    return try await inner.executeStreamingCommand(
+      command, dataPhaseLength: dataPhaseLength,
+      dataInHandler: dataInHandler, dataOutHandler: dataOutHandler)
+  }
+}
+
 actor BDDWorld {
   var device: VirtualMTPDevice?
   private var seededHandles: [String: MTPObjectHandle] = [:]
@@ -334,6 +418,13 @@ actor BDDWorld {
   var pathInput: String = ""
   var pathResult: String? = nil
 
+  // MARK: – PTP heuristic / device-families state
+  var pendingIfaceClass: UInt8? = nil
+  var pendingVID: UInt16? = nil
+  var pendingPID: UInt16? = nil
+  var resolvedPolicy: DevicePolicy? = nil
+  var resolvedQuirkID: String? = nil
+
   func reset() {
     device = nil
     seededHandles = [:]
@@ -343,6 +434,11 @@ actor BDDWorld {
     nextPageCursor = nil
     pathInput = ""
     pathResult = nil
+    pendingIfaceClass = nil
+    pendingVID = nil
+    pendingPID = nil
+    resolvedPolicy = nil
+    resolvedQuirkID = nil
   }
 
   func setupVirtualDevice() {
@@ -489,6 +585,60 @@ actor BDDWorld {
 
   func sanitizePath() {
     pathResult = PathSanitizer.sanitize(pathInput)
+  }
+
+  // MARK: – PTP heuristic / device-families helpers
+
+  func setIfaceClass(_ cls: UInt8?) {
+    pendingIfaceClass = cls
+    pendingVID = nil
+    pendingPID = nil
+  }
+
+  func setVIDPID(vid: UInt16, pid: UInt16) {
+    pendingVID = vid
+    pendingPID = pid
+    pendingIfaceClass = nil
+  }
+
+  func resolveDevicePolicy() throws {
+    let db = try QuirkDatabase.load()
+    var quirk: DeviceQuirk? = nil
+    var usedIfaceClass = pendingIfaceClass
+
+    if let vid = pendingVID, let pid = pendingPID {
+      // Try PTP camera iface class (0x06) first
+      quirk = db.match(
+        vid: vid, pid: pid, bcdDevice: nil,
+        ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+      // Try Android-style iface class (0xFF)
+      if quirk == nil {
+        quirk = db.match(
+          vid: vid, pid: pid, bcdDevice: nil,
+          ifaceClass: 0xFF, ifaceSubclass: nil, ifaceProtocol: nil)
+      }
+      // Try unconstrained match
+      if quirk == nil {
+        quirk = db.match(
+          vid: vid, pid: pid, bcdDevice: nil,
+          ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+      }
+    }
+
+    if let q = quirk {
+      resolvedQuirkID = q.id
+      usedIfaceClass = q.ifaceClass
+    } else {
+      resolvedQuirkID = nil
+    }
+
+    resolvedPolicy = EffectiveTuningBuilder.buildPolicy(
+      capabilities: [:],
+      learned: nil,
+      quirk: quirk,
+      overrides: nil,
+      ifaceClass: usedIfaceClass
+    )
   }
 
   // MARK: – write-journal.feature helpers
@@ -848,6 +998,85 @@ extension Cucumber: @retroactive StepImplementation {
         let result = await world.pathResult
         XCTAssertEqual(result, expected, "Sanitized path mismatch")
       }
+    }
+
+    // MARK: ptp-class-heuristic.feature / device-families-wave4.feature
+
+    Given("SwiftMTP is initialized") { _, _ in /* no-op: test host initializes SwiftMTP */ }
+
+    Given("the quirk database is loaded") { _, _ in /* QuirkDatabase.load() is called per step */ }
+
+    Given(
+      "^a USB device with interface class (0x[0-9a-fA-F]+) and no matching quirk entry$"
+    ) { args, step in
+      guard let hexStr = args.first, let cls = UInt8(hexStr.dropFirst(2), radix: 16) else { return }
+      runAsync(step) { await world.setIfaceClass(cls) }
+    }
+
+    Given("a USB device with no interface class information and no matching quirk entry") { _, step in
+      runAsync(step) { await world.setIfaceClass(nil) }
+    }
+
+    Given("^a (?:USB )?device with vid (0x[0-9a-fA-F]+) and pid (0x[0-9a-fA-F]+)$") { args, step in
+      guard args.count >= 2,
+        let vid = UInt16(args[0].dropFirst(2), radix: 16),
+        let pid = UInt16(args[1].dropFirst(2), radix: 16)
+      else { return }
+      runAsync(step) { await world.setVIDPID(vid: vid, pid: pid) }
+    }
+
+    When("the device policy is resolved") { _, step in
+      runAsync(step) { try await world.resolveDevicePolicy() }
+    }
+
+    Then("^supportsGetObjectPropList should be (true|false)$") { args, step in
+      runAsync(step) {
+        let expected = args.first == "true"
+        guard let policy = await world.resolvedPolicy else {
+          XCTFail("No resolved policy — call 'When the device policy is resolved' first")
+          return
+        }
+        XCTAssertEqual(
+          policy.flags.supportsGetObjectPropList, expected,
+          "supportsGetObjectPropList mismatch")
+      }
+    }
+
+    Then("^requiresKernelDetach should be (true|false)$") { args, step in
+      runAsync(step) {
+        let expected = args.first == "true"
+        guard let policy = await world.resolvedPolicy else {
+          XCTFail("No resolved policy — call 'When the device policy is resolved' first")
+          return
+        }
+        XCTAssertEqual(
+          policy.flags.requiresKernelDetach, expected,
+          "requiresKernelDetach mismatch")
+      }
+    }
+
+    Then("prefersPropListEnumeration should be true") { _, step in
+      runAsync(step) {
+        guard let policy = await world.resolvedPolicy else {
+          XCTFail("No resolved policy — call 'When the device policy is resolved' first")
+          return
+        }
+        XCTAssertTrue(policy.flags.prefersPropListEnumeration)
+      }
+    }
+
+    Then("^the matched quirk id should be \"([^\"]*)\"$") { args, step in
+      runAsync(step) {
+        guard let expected = args.first else { return }
+        let actual = await world.resolvedQuirkID
+        XCTAssertEqual(actual, expected, "Matched quirk ID mismatch")
+      }
+    }
+
+    // MARK: auto-disable-proplist.feature background / simple steps
+
+    Given("the initial policy has supportsGetObjectPropList=true") { _, _ in
+      /* enforced in testPropListAutoDisables_OnOperationNotSupported */
     }
 
     // MARK: Pending step fallback — remaining steps pass silently (not yet backed by assertions)
