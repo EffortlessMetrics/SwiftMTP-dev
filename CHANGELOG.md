@@ -60,9 +60,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Multi-device `DeviceServiceRegistry` tests**: 4 new tests covering concurrent registration of 3 devices, isolated detach/reconnect, domain remapping, and remove-one-keeps-others.
 - **FileProvider integration tests**: Replaced 12 all-skipped stubs with 10 real mock-based tests (`FileProviderWriteIntegrationTests`, `MTPFileProviderItemIntegrationTests`) plus 3 correctly-documented sandbox-only skips.
 
-- **Quirk database: 50 → 576 entries** (waves 3–5). New VIDs added progressively:
+- **Quirk database: 50 → 576 → **1,189+ entries** (waves 3–7)**. New VIDs added progressively:
   - Wave 3/4: Alcatel/TCL (0x1bbb), Sharp Aquos (0x04dd), Kyocera (0x0482), Fairphone (0x2ae5), Honor (0x339b), Casio Exilim (0x07cf), Kodak EasyShare (0x040a), OM System (0x33a2), GoPro (0x2672 more), Garmin (0x091e)
   - Wave 5: SanDisk media players (0x0781), Creative ZEN (0x041e), iRiver (0x4102), Cowon iAudio (0x0e21), Microsoft Zune (0x045e), Philips GoGear (0x0471), Samsung YP-series media players, Sony NWZ Walkman more, Archos (0x0e79), Amazon Kindle/Fire (0x1949), Barnes & Noble Nook (0x2080), Kobo e-readers (0x2237), MediaTek Android (0x0e8d), Spreadtrum/Transsion (0x1782), LeTV/LeEco (0x2b0e), BLU (0x271d)
+  - Wave 6: Fujifilm X/GFX full lineup, Nokia Symbian/HMD Android/Lumia, Microsoft KIN/Windows Phone, BlackBerry BB10/DTEK/KEYone, Lenovo MIX/Tab, Sony NWZ more, Garmin wearables more, DJI drones
+  - Wave 7: LG G2-Velvet full series, HTC One/Desire/U-series full, ZTE Blade/Axon/Max, OPPO/Realme/OnePlus N10, vivo/iQOO all models, Xiaomi Mi/Redmi/POCO, BlackBerry BB OS legacy, Insta360 ONE/X/RS/X3/X4/Ace, AKASO EK7000-Brave, DJI Osmo/Pocket/mini drones, Ricoh Theta S/V/Z1/SC2/X, Kodak DC/EasyShare/PIXPRO full, Garmin Dash Cam series, Viofo/Nextbase dashcams, TCL/Alcatel/Wiko/Itel/Tecno/Infinix Android brands
   - Total VIDs now covered: 50+
 - **PTP class heuristic**: Unrecognized USB interface-class 0x06 devices automatically receive proplist-enabled PTP policy — cameras connect without a quirk entry. Auto-disable fallback: `GetObjectPropList` returning `OperationNotSupported` is silently suppressed and the device is downgraded to object-info enumeration.
 - **`swiftmtp quirks lookup --vid 0xXXXX --pid 0xXXXX`**: New CLI subcommand to look up a device by VID/PID and print its quirk ID, governance status, and proplist capability.

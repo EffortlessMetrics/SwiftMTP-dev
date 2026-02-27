@@ -50856,6 +50856,1920 @@
         "addedDate": "2025-07-14",
         "verificationNotes": "Olympus LS-P4 linear PCM recorder in PTP mode"
       }
+    },
+    {
+      "id": "fitbit-ultra-fb01",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb01",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Ultra"
+      }
+    },
+    {
+      "id": "fitbit-one-fb02",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb02",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit One"
+      }
+    },
+    {
+      "id": "fitbit-zip-fb03",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb03",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Zip"
+      }
+    },
+    {
+      "id": "fitbit-flex-fb04",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb04",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Flex"
+      }
+    },
+    {
+      "id": "fitbit-force-fb05",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb05",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Force"
+      }
+    },
+    {
+      "id": "fitbit-charge-hr-fb06",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb06",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Charge HR"
+      }
+    },
+    {
+      "id": "fitbit-surge-fb07",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb07",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Surge"
+      }
+    },
+    {
+      "id": "fitbit-blaze-fb08",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb08",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Blaze"
+      }
+    },
+    {
+      "id": "fitbit-alta-fb09",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb09",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Alta"
+      }
+    },
+    {
+      "id": "fitbit-alta-hr-fb0a",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb0a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Alta HR"
+      }
+    },
+    {
+      "id": "fitbit-ionic-fb0b",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb0b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Ionic"
+      }
+    },
+    {
+      "id": "fitbit-versa-fb0c",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb0c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Versa"
+      }
+    },
+    {
+      "id": "fitbit-versa-2-fb0d",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb0d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Versa 2"
+      }
+    },
+    {
+      "id": "fitbit-charge-3-fb0e",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb0e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Charge 3"
+      }
+    },
+    {
+      "id": "fitbit-charge-4-fb0f",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb0f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Charge 4"
+      }
+    },
+    {
+      "id": "fitbit-sense-fb10",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb10",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Sense"
+      }
+    },
+    {
+      "id": "fitbit-versa-3-fb11",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb11",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Versa 3"
+      }
+    },
+    {
+      "id": "fitbit-luxe-fb12",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb12",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Luxe"
+      }
+    },
+    {
+      "id": "fitbit-charge-5-fb13",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb13",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Charge 5"
+      }
+    },
+    {
+      "id": "fitbit-inspire-3-fb14",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb14",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Inspire 3"
+      }
+    },
+    {
+      "id": "fitbit-versa-4-fb15",
+      "match": {
+        "vid": "0x2687",
+        "pid": "0xfb15",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Fitbit Versa 4"
+      }
+    },
+    {
+      "id": "garmin-forerunner-245-4b1b",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4b1b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Forerunner 245"
+      }
+    },
+    {
+      "id": "garmin-forerunner-945-4b35",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4b35",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Forerunner 945"
+      }
+    },
+    {
+      "id": "garmin-forerunner-55-4b47",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4b47",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Forerunner 55"
+      }
+    },
+    {
+      "id": "garmin-forerunner-255-4b6c",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4b6c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Forerunner 255"
+      }
+    },
+    {
+      "id": "garmin-forerunner-955-4b79",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4b79",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Forerunner 955"
+      }
+    },
+    {
+      "id": "garmin-forerunner-265-4b8c",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4b8c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Forerunner 265"
+      }
+    },
+    {
+      "id": "garmin-forerunner-965-4b9d",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4b9d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Forerunner 965"
+      }
+    },
+    {
+      "id": "garmin-marq-2-4bd5",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4bd5",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin MARQ 2"
+      }
+    },
+    {
+      "id": "garmin-instinct-2-4be0",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4be0",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Instinct 2"
+      }
+    },
+    {
+      "id": "garmin-venu-3-4be5",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4be5",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Venu 3"
+      }
+    },
+    {
+      "id": "garmin-forerunner-165-4bf0",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4bf0",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Forerunner 165"
+      }
+    },
+    {
+      "id": "garmin-fenix-7-pro-4c2b",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4c2b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Fenix 7 Pro"
+      }
+    },
+    {
+      "id": "garmin-fenix-8-4c3a",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4c3a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Fenix 8"
+      }
+    },
+    {
+      "id": "garmin-vivoactive-4-4cc0",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4cc0",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Vivoactive 4"
+      }
+    },
+    {
+      "id": "garmin-vivoactive-5-4cc5",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4cc5",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Vivoactive 5"
+      }
+    },
+    {
+      "id": "garmin-lily-2-4cd0",
+      "match": {
+        "vid": "0x091e",
+        "pid": "0x4cd0",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Garmin Lily 2"
+      }
+    },
+    {
+      "id": "polar-m200-0008",
+      "match": {
+        "vid": "0x0da4",
+        "pid": "0x0008",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Polar M200"
+      }
+    },
+    {
+      "id": "polar-a370-0009",
+      "match": {
+        "vid": "0x0da4",
+        "pid": "0x0009",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Polar A370"
+      }
+    },
+    {
+      "id": "polar-ignite-000a",
+      "match": {
+        "vid": "0x0da4",
+        "pid": "0x000a",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Polar Ignite"
+      }
+    },
+    {
+      "id": "polar-vantage-m-000b",
+      "match": {
+        "vid": "0x0da4",
+        "pid": "0x000b",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Polar Vantage M"
+      }
+    },
+    {
+      "id": "polar-vantage-v2-000c",
+      "match": {
+        "vid": "0x0da4",
+        "pid": "0x000c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Polar Vantage V2"
+      }
+    },
+    {
+      "id": "polar-grit-x-000d",
+      "match": {
+        "vid": "0x0da4",
+        "pid": "0x000d",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Polar Grit X"
+      }
+    },
+    {
+      "id": "polar-pacer-pro-000e",
+      "match": {
+        "vid": "0x0da4",
+        "pid": "0x000e",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Polar Pacer Pro"
+      }
+    },
+    {
+      "id": "polar-vantage-v3-000f",
+      "match": {
+        "vid": "0x0da4",
+        "pid": "0x000f",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Polar Vantage V3"
+      }
+    },
+    {
+      "id": "suunto-ambit3-0041",
+      "match": {
+        "vid": "0x1493",
+        "pid": "0x0041",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Suunto Ambit3"
+      }
+    },
+    {
+      "id": "suunto-9-baro-0044",
+      "match": {
+        "vid": "0x1493",
+        "pid": "0x0044",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Suunto 9 Baro"
+      }
+    },
+    {
+      "id": "suunto-9-peak-pro-0048",
+      "match": {
+        "vid": "0x1493",
+        "pid": "0x0048",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Suunto 9 Peak Pro"
+      }
+    },
+    {
+      "id": "suunto-race-004c",
+      "match": {
+        "vid": "0x1493",
+        "pid": "0x004c",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Suunto Race"
+      }
+    },
+    {
+      "id": "suunto-vertical-0050",
+      "match": {
+        "vid": "0x1493",
+        "pid": "0x0050",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Suunto Vertical"
+      }
+    },
+    {
+      "id": "suunto-5-peak-0054",
+      "match": {
+        "vid": "0x1493",
+        "pid": "0x0054",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Suunto 5 Peak"
+      }
+    },
+    {
+      "id": "suunto-3-0058",
+      "match": {
+        "vid": "0x1493",
+        "pid": "0x0058",
+        "iface": {
+          "class": "0x06",
+          "subclass": "0x01",
+          "protocol": "0x01"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 10000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": false,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": false
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Suunto 3"
+      }
+    },
+    {
+      "id": "samsung-galaxy-watch-active-2-686c",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x686c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0x00",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Watch Active 2"
+      }
+    },
+    {
+      "id": "samsung-galaxy-watch-3-6870",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6870",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0x00",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Watch 3"
+      }
+    },
+    {
+      "id": "samsung-galaxy-watch-4-6874",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6874",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0x00",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Watch 4"
+      }
+    },
+    {
+      "id": "samsung-galaxy-watch-5-6878",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6878",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0x00",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Watch 5"
+      }
+    },
+    {
+      "id": "samsung-galaxy-watch-6-687c",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x687c",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0x00",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Watch 6"
+      }
+    },
+    {
+      "id": "samsung-galaxy-watch-classic-6880",
+      "match": {
+        "vid": "0x04e8",
+        "pid": "0x6880",
+        "iface": {
+          "class": "0xff",
+          "subclass": "0x00",
+          "protocol": "0x00"
+        }
+      },
+      "tuning": {
+        "maxChunkBytes": 524288,
+        "handshakeTimeoutMs": 8000,
+        "ioTimeoutMs": 15000,
+        "inactivityTimeoutMs": 15000,
+        "overallDeadlineMs": 120000
+      },
+      "ops": {
+        "supportsGetObjectPropList": false,
+        "useAndroidExtensions": true,
+        "preferGetObjectPropList": false
+      },
+      "flags": {
+        "requiresKernelDetach": true
+      },
+      "confidence": "medium",
+      "status": "proposed",
+      "provenance": {
+        "source": "libmtp",
+        "notes": "Samsung Galaxy Watch Classic"
+      }
     }
   ]
 }
