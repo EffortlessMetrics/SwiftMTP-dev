@@ -2,7 +2,7 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-**10,840** device entries across **645** vendor IDs and **38** categories.
+**11,403** device entries across **671** vendor IDs and **43** categories.
 
 ## 3D Printer (146)
 
@@ -155,7 +155,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Prusa MK4S | 0x2c99:0x0012 | community | unknown |
 | Prusa XL 5-Toolhead | 0x2c99:0x0013 | community | unknown |
 
-## Access Control (66)
+## Access Control (106)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -219,6 +219,46 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | dormakaba-9042-0001 | 0x2a03:0x0001 | experimental | unknown |
 | dormakaba-matrix-one-0002 | 0x2a03:0x0002 | experimental | unknown |
 | dormakaba-evolo-smart-0003 | 0x2a03:0x0003 | experimental | unknown |
+| zkteco-speedface-m4-0010 | 0x1b55:0x0010 | community | low |
+| zkteco-multibio-800h-0011 | 0x1b55:0x0011 | community | low |
+| zkteco-atlas-400-0012 | 0x1b55:0x0012 | community | low |
+| zkteco-sface-900-0013 | 0x1b55:0x0013 | community | low |
+| zkteco-zk-u160-0014 | 0x1b55:0x0014 | community | low |
+| hid-signo-20b-000c | 0x076b:0x000c | community | low |
+| hid-omnikey-5422-000d | 0x076b:0x000d | community | low |
+| hid-iclass-se-r10-000e | 0x076b:0x000e | community | low |
+| hid-aero-000f | 0x076b:0x000f | community | low |
+| hid-mercury-lp-0010 | 0x076b:0x0010 | community | low |
+| suprema-biostation-a2-000a | 0x16d1:0x000a | community | low |
+| suprema-biolite-n2-000b | 0x16d1:0x000b | community | low |
+| suprema-facestation-f2-v2-000c | 0x16d1:0x000c | community | low |
+| suprema-xpass-d2-000d | 0x16d1:0x000d | community | low |
+| anviz-facedeep-5-irt-0005 | 0x2560:0x0005 | community | low |
+| anviz-c2-pro-0006 | 0x2560:0x0006 | community | low |
+| anviz-ultraface-0007 | 0x2560:0x0007 | community | low |
+| idemia-morphowave-tower-0005 | 0x1188:0x0005 | community | low |
+| idemia-visionpass-sp-0006 | 0x1188:0x0006 | community | low |
+| idemia-sigma-wide-0007 | 0x1188:0x0007 | community | low |
+| salto-xs4-locker-0004 | 0x2ce1:0x0004 | community | low |
+| salto-nebula-0005 | 0x2ce1:0x0005 | community | low |
+| paxton-entry-touch-0004 | 0x2c94:0x0004 | community | low |
+| paxton-net2-nano-0005 | 0x2c94:0x0005 | community | low |
+| gallagher-t30-0004 | 0x21a1:0x0004 | community | low |
+| gallagher-f7000-0005 | 0x21a1:0x0005 | community | low |
+| schlage-engage-0004 | 0x25d0:0x0004 | community | low |
+| schlage-mt20w-0005 | 0x25d0:0x0005 | community | low |
+| cdvi-atrium-krypto-0003 | 0x27b8:0x0003 | community | low |
+| cdvi-ievo-micro-0004 | 0x27b8:0x0004 | community | low |
+| dormakaba-evolo-digital-0004 | 0x2a03:0x0004 | community | low |
+| dormakaba-exos-x1-0005 | 0x2a03:0x0005 | community | low |
+| dormakaba-compact-reader-0006 | 0x2a03:0x0006 | community | low |
+| assa-abloy-vostio-0001 | 0x2da0:0x0001 | community | low |
+| assa-abloy-aperio-h100-0002 | 0x2da0:0x0002 | community | low |
+| assa-abloy-incedo-0003 | 0x2da0:0x0003 | community | low |
+| lenel-ngen-0001 | 0x2da1:0x0001 | community | low |
+| lenel-bluediamond-0002 | 0x2da1:0x0002 | community | low |
+| feitian-r502-cl-0861 | 0x096e:0x0861 | community | low |
+| nedap-aeos-ap-0001 | 0x2da2:0x0001 | community | low |
 | Anviz FaceDeep 5 IRT v2 | 0x1b55:0x0006 | community | unknown |
 | Dahua ASI7223X-A FW2 | 0x2bdf:0x000a | community | unknown |
 | HID Signo 40 Reader FW3 | 0x076b:0x5428 | community | unknown |
@@ -636,7 +676,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Zoom H6essential | 0x1686:0x00d6 | community | unknown |
 | Zoom H8 | 0x1686:0x0028 | experimental | unknown |
 
-## Automotive (153)
+## Automotive (156)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -788,13 +828,59 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | obdlink-ex-f002 | 0x0403:0xf002 | proposed | low |
 | obdlink-lx-f003 | 0x0403:0xf003 | proposed | low |
 | obdlink-sx-f004 | 0x0403:0xf004 | proposed | low |
+| pioneer-avh-mtp-0111 | 0x08e4:0x0111 | experimental | community |
+| pioneer-dmh-mtp-0121 | 0x08e4:0x0121 | experimental | community |
+| pioneer-sph-mtp-0131 | 0x08e4:0x0131 | experimental | community |
 | Autel MaxiSys Elite II | 0x1a86:0x57a6 | community | unknown |
 | Drew Tech CarDAQ-M FW2 | 0x2607:0x0002 | community | unknown |
 | OBDLink MX+ Plus | 0x0403:0x9380 | community | unknown |
 | TOPDON Phoenix Max | 0x1a86:0x57a8 | community | unknown |
 | Vident iAuto 708 Lite | 0x1a86:0x57a7 | community | unknown |
 
-## Body Camera (83)
+## Barcode Scanner (38)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| zebra-ds3678-0800 | 0x05e0:0x0800 | community | low |
+| zebra-ds3678-sr-0801 | 0x05e0:0x0801 | community | low |
+| zebra-ds4608-0900 | 0x05e0:0x0900 | community | low |
+| zebra-ds4608-hd-0901 | 0x05e0:0x0901 | community | low |
+| zebra-ds9908-0a00 | 0x05e0:0x0a00 | community | low |
+| zebra-ds9908-hd-0a01 | 0x05e0:0x0a01 | community | low |
+| zebra-cs6080-0b00 | 0x05e0:0x0b00 | community | low |
+| zebra-cs6080-hc-0b01 | 0x05e0:0x0b01 | community | low |
+| zebra-li4278-0c00 | 0x05e0:0x0c00 | community | low |
+| zebra-ds2278-0d00 | 0x05e0:0x0d00 | community | low |
+| honeywell-voyager-1200g-0600 | 0x0c2e:0x0600 | community | low |
+| honeywell-voyager-1400g-0601 | 0x0c2e:0x0601 | community | low |
+| honeywell-voyager-1472g-0602 | 0x0c2e:0x0602 | community | low |
+| honeywell-granit-1910i-0700 | 0x0c2e:0x0700 | community | low |
+| honeywell-granit-1920i-0701 | 0x0c2e:0x0701 | community | low |
+| honeywell-xenon-1900-0800 | 0x0c2e:0x0800 | community | low |
+| honeywell-xenon-1950g-0801 | 0x0c2e:0x0801 | community | low |
+| honeywell-orbit-7190g-0900 | 0x0c2e:0x0900 | community | low |
+| datalogic-powerscan-pd9500-0500 | 0x05f9:0x0500 | community | low |
+| datalogic-powerscan-pm9600-0501 | 0x05f9:0x0501 | community | low |
+| datalogic-quickscan-qd2500-0600 | 0x05f9:0x0600 | community | low |
+| datalogic-quickscan-qw2520-0601 | 0x05f9:0x0601 | community | low |
+| datalogic-gryphon-gd4500-0700 | 0x05f9:0x0700 | community | low |
+| datalogic-gryphon-gm4500-0701 | 0x05f9:0x0701 | community | low |
+| datalogic-magellan-3450vsi-0800 | 0x05f9:0x0800 | community | low |
+| cognex-dataman-8050-0100 | 0x2040:0x0100 | community | low |
+| cognex-dataman-8070-0101 | 0x2040:0x0101 | community | low |
+| cognex-dataman-370-0200 | 0x2040:0x0200 | community | low |
+| cognex-dataman-280-0201 | 0x2040:0x0201 | community | low |
+| sick-clv630-0b00 | 0x19cf:0x0b00 | community | low |
+| sick-clv650-0b01 | 0x19cf:0x0b01 | community | low |
+| sick-icr890-0c00 | 0x19cf:0x0c00 | community | low |
+| cipherlab-2200-0100 | 0x1eab:0x0100 | community | low |
+| cipherlab-2500-0101 | 0x1eab:0x0101 | community | low |
+| cipherlab-1500p-0200 | 0x1eab:0x0200 | community | low |
+| opticon-opn2500-0100 | 0x065a:0x0100 | community | low |
+| opticon-opn3102-0101 | 0x065a:0x0101 | community | low |
+| opticon-l-46x-0200 | 0x065a:0x0200 | community | low |
+
+## Body Camera (106)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -875,6 +961,29 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | spypoint-force-20-0006 | 0x3590:0x0006 | experimental | low |
 | milesight-c423-0001 | 0x3595:0x0001 | experimental | low |
 | wolfcom-vision-pro-0001 | 0x3596:0x0001 | experimental | low |
+| axon-body-4-lte-0013 | 0x2c55:0x0013 | community | low |
+| axon-body-3-plus-0014 | 0x2c55:0x0014 | community | low |
+| motorola-vt100-7b00 | 0x22b8:0x7b00 | community | low |
+| motorola-v500i-7c00 | 0x22b8:0x7c00 | community | low |
+| motorola-v300d-7d00 | 0x22b8:0x7d00 | community | low |
+| boblov-x1-0006 | 0x3477:0x0006 | community | low |
+| boblov-c18-0007 | 0x3477:0x0007 | community | low |
+| boblov-t5-0008 | 0x3477:0x0008 | community | low |
+| boblov-n9-0009 | 0x3477:0x0009 | community | low |
+| cammpro-m832-0004 | 0x3478:0x0004 | community | low |
+| cammpro-i926-0005 | 0x3478:0x0005 | community | low |
+| hytera-vm780-plus-0004 | 0x238b:0x0004 | community | low |
+| hytera-vm550d-0005 | 0x238b:0x0005 | community | low |
+| hytera-vm685-plus-0006 | 0x238b:0x0006 | community | low |
+| wolfcom-vision-pro-plus-0004 | 0x347a:0x0004 | community | low |
+| wolfcom-mini-0005 | 0x347a:0x0005 | community | low |
+| digital-ally-firstvu-hd2-0004 | 0x347b:0x0004 | community | low |
+| digital-ally-shield-0005 | 0x347b:0x0005 | community | low |
+| getac-bc-05-0004 | 0x3479:0x0004 | community | low |
+| getac-veretos-bw-0005 | 0x3479:0x0005 | community | low |
+| milesight-c426-0002 | 0x3595:0x0002 | community | low |
+| milesight-c430-0003 | 0x3595:0x0003 | community | low |
+| wolfcom-vision-x-0002 | 0x3596:0x0002 | community | low |
 | Axon Body 3 | 0x2c55:0x0001 | experimental | unknown |
 | Axon Body 4 | 0x2bc5:0x0503 | community | unknown |
 | Axon Body 4 Mini | 0x2bc5:0x0504 | community | unknown |
@@ -882,7 +991,87 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | PatrolEyes SC-DV12 | 0x1b3f:0x0c08 | community | unknown |
 | Transcend DrivePro Body 70 | 0x0411:0x02a0 | community | unknown |
 
-## Camera (1426)
+## Broadcast Equipment (75)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| AJA Corvid 44 12G | 0x1f6a:0x0070 | community | community |
+| AJA FS-HDR | 0x1f6a:0x0060 | community | community |
+| AJA HA5-4K | 0x1f6a:0x0050 | community | community |
+| AJA Hi5-4K-Plus | 0x1f6a:0x0051 | community | community |
+| AJA Io 4K Plus | 0x1f6a:0x0010 | community | community |
+| AJA Io IP | 0x1f6a:0x0011 | community | community |
+| AJA Io X3 | 0x1f6a:0x0040 | community | community |
+| AJA Ki Pro GO | 0x1f6a:0x0030 | community | community |
+| AJA Ki Pro Ultra 12G | 0x1f6a:0x0031 | community | community |
+| AJA Ki Pro Ultra Plus | 0x1f6a:0x0032 | community | community |
+| AJA T-TAP Pro | 0x1f6a:0x0020 | community | community |
+| AJA U-TAP HDMI | 0x1f6a:0x0001 | community | community |
+| AJA U-TAP SDI | 0x1f6a:0x0002 | community | community |
+| Atomos Connect H2S | 0x3455:0x0041 | community | community |
+| Atomos Connect S2H | 0x3455:0x0040 | community | community |
+| Atomos Neon 24 | 0x3455:0x0031 | community | community |
+| Atomos Ninja Flame | 0x3455:0x0020 | community | community |
+| Atomos Ninja Inferno | 0x3455:0x0021 | community | community |
+| Atomos Ninja V | 0x3455:0x0001 | community | community |
+| Atomos Ninja V+ | 0x3455:0x0002 | community | community |
+| Atomos Shogun 7 | 0x3455:0x0010 | community | community |
+| Atomos Shogun Connect | 0x3455:0x0011 | community | community |
+| Atomos Shogun Inferno | 0x3455:0x0022 | community | community |
+| Atomos Shogun Ultra | 0x3455:0x0012 | community | community |
+| Atomos Sumo 19SE | 0x3455:0x0030 | community | community |
+| Blackmagic ATEM Mini | 0x1edb:0xbe55 | community | community |
+| Blackmagic ATEM Mini Extreme | 0x1edb:0xbe73 | community | community |
+| Blackmagic ATEM Mini Extreme ISO | 0x1edb:0xbe74 | community | community |
+| Blackmagic ATEM Mini Pro | 0x1edb:0xbe56 | community | community |
+| Blackmagic ATEM Mini Pro ISO | 0x1edb:0xbe57 | community | community |
+| Blackmagic DeckLink Mini Recorder | 0x1edb:0xbd6e | community | community |
+| Blackmagic HyperDeck Studio 4K Pro | 0x1edb:0xbd87 | community | community |
+| Blackmagic HyperDeck Studio HD Mini | 0x1edb:0xbd86 | community | community |
+| Blackmagic HyperDeck Studio Mini | 0x1edb:0xbd85 | community | community |
+| Blackmagic Intensity Shuttle | 0x1edb:0xbd3b | community | community |
+| Blackmagic Intensity Shuttle USB 3.0 | 0x1edb:0xa107 | community | community |
+| Blackmagic Mini Converter Analog to SDI | 0x1edb:0xbd46 | community | community |
+| Blackmagic UltraStudio 4K Mini | 0x1edb:0xbd4f | community | community |
+| Blackmagic UltraStudio HD Mini | 0x1edb:0xbd51 | community | community |
+| Blackmagic UltraStudio Monitor 3G | 0x1edb:0xbd3c | community | community |
+| Blackmagic UltraStudio Recorder 3G | 0x1edb:0xbd37 | community | community |
+| Blackmagic Video Assist 5" 12G HDR | 0x1edb:0xcd00 | community | community |
+| Blackmagic Video Assist 5" 3G | 0x1edb:0xcd03 | community | community |
+| Blackmagic Video Assist 7" 12G HDR | 0x1edb:0xcd01 | community | community |
+| Blackmagic Video Assist 7" 3G | 0x1edb:0xcd04 | community | community |
+| Blackmagic Web Presenter 4K | 0x1edb:0xbe48 | community | community |
+| Blackmagic Web Presenter HD | 0x1edb:0xbe31 | community | community |
+| Datavideo HDR-80 | 0x375c:0x0020 | community | community |
+| Datavideo NVS-40 | 0x375c:0x0030 | community | community |
+| Datavideo SE-2200 | 0x375c:0x0001 | community | community |
+| Datavideo SE-3200 | 0x375c:0x0003 | community | community |
+| Datavideo SE-500HD | 0x375c:0x0002 | community | community |
+| Matrox Convert DVI Plus | 0x18ea:0x0020 | community | community |
+| Matrox Maevex 6020 Remote Recorder | 0x18ea:0x0010 | community | community |
+| Matrox Maevex 6150 Quad 4K Encoder | 0x18ea:0x0011 | community | community |
+| Matrox MicroQuad | 0x18ea:0x0030 | community | community |
+| Matrox Monarch EDGE E4 | 0x18ea:0x0003 | community | community |
+| Matrox Monarch HDX | 0x18ea:0x0001 | community | community |
+| Matrox Monarch LCS | 0x18ea:0x0002 | community | community |
+| Roland P-20HD | 0x0582:0x0520 | community | community |
+| Roland V-02HD MK II | 0x0582:0x0506 | community | community |
+| Roland V-1HD+ | 0x0582:0x0500 | community | community |
+| Roland V-600UHD | 0x0582:0x0504 | community | community |
+| Roland V-8HD | 0x0582:0x0501 | community | community |
+| Roland VC-100UHD | 0x0582:0x0510 | community | community |
+| Roland VR-120HD | 0x0582:0x0505 | community | community |
+| Roland VR-400UHD | 0x0582:0x0503 | community | community |
+| Roland VR-6HD | 0x0582:0x0502 | community | community |
+| Teradek Bolt 4K 1500 | 0x2c52:0x0011 | community | community |
+| Teradek Bolt 4K 750 | 0x2c52:0x0010 | community | community |
+| Teradek Cube 655 | 0x2c52:0x0001 | community | community |
+| Teradek Cube 755 | 0x2c52:0x0002 | community | community |
+| Teradek Prism | 0x2c52:0x0030 | community | community |
+| Teradek Prism Flex | 0x2c52:0x0031 | community | community |
+| Teradek Serv 4K | 0x2c52:0x0020 | community | community |
+
+## Camera (1508)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2265,8 +2454,41 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | canon-eos-r50-3163 | 0x04a9:0x3163 | proposed | low |
 | canon-eos-r100-3164 | 0x04a9:0x3164 | proposed | low |
 | canon-powershot-v10-3165 | 0x04a9:0x3165 | proposed | low |
+| panasonic-lumix-s1-23a2 | 0x04da:0x23a2 | proposed | low |
+| panasonic-lumix-s1h-23a4 | 0x04da:0x23a4 | proposed | low |
+| panasonic-lumix-s5iix-23a6 | 0x04da:0x23a6 | proposed | low |
+| panasonic-lumix-gh5ii-23a8 | 0x04da:0x23a8 | proposed | low |
+| panasonic-lumix-gh6-23a9 | 0x04da:0x23a9 | proposed | low |
+| panasonic-lumix-gh7-23aa | 0x04da:0x23aa | proposed | low |
+| panasonic-lumix-g9-23ab | 0x04da:0x23ab | proposed | low |
+| panasonic-lumix-g9ii-23ac | 0x04da:0x23ac | proposed | low |
+| panasonic-lumix-g100-23ad | 0x04da:0x23ad | proposed | low |
+| panasonic-lumix-gx9-23ae | 0x04da:0x23ae | proposed | low |
+| panasonic-lumix-gx800-23af | 0x04da:0x23af | proposed | low |
+| panasonic-lumix-lx100ii-23b0 | 0x04da:0x23b0 | proposed | low |
+| panasonic-lumix-fz1000ii-23b1 | 0x04da:0x23b1 | proposed | low |
+| panasonic-lumix-fz80-23b2 | 0x04da:0x23b2 | proposed | low |
+| panasonic-lumix-fz80d-23b3 | 0x04da:0x23b3 | proposed | low |
+| panasonic-lumix-tz200-23b4 | 0x04da:0x23b4 | proposed | low |
+| panasonic-lumix-tz95-23b5 | 0x04da:0x23b5 | proposed | low |
+| panasonic-lumix-tz220-23b6 | 0x04da:0x23b6 | proposed | low |
+| ARRI ALEXA 35 | 0x2a13:0x0003 | community | community |
+| ARRI ALEXA 65 | 0x2a13:0x0030 | community | community |
+| ARRI ALEXA LF | 0x2a13:0x0011 | community | community |
+| ARRI ALEXA Mini | 0x2a13:0x0001 | community | community |
+| ARRI ALEXA Mini LF | 0x2a13:0x0002 | community | community |
+| ARRI ALEXA SXT Plus | 0x2a13:0x0012 | community | community |
+| ARRI ALEXA SXT W | 0x2a13:0x0010 | community | community |
+| ARRI AMIRA | 0x2a13:0x0020 | community | community |
+| Canon CR-N700 | 0x04a9:0x3359 | community | community |
 | Canon EOS 1500D | 0x04a9:0x334c | community | unknown |
 | Canon EOS 3000D | 0x04a9:0x334d | community | unknown |
+| Canon EOS C200 | 0x04a9:0x3354 | community | community |
+| Canon EOS C300 Mark III | 0x04a9:0x3352 | community | community |
+| Canon EOS C400 | 0x04a9:0x3356 | community | community |
+| Canon EOS C500 Mark II | 0x04a9:0x3353 | community | community |
+| Canon EOS C70 | 0x04a9:0x3351 | community | community |
+| Canon EOS C80 | 0x04a9:0x3357 | community | community |
 | Canon EOS Kiss M2 | 0x04a9:0x3350 | community | unknown |
 | Canon EOS R1 | 0x04a9:0x3344 | community | unknown |
 | Canon EOS R100 | 0x04a9:0x334a | community | unknown |
@@ -2278,6 +2500,12 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Canon IXUS 320 HS | 0x04a9:0x334e | community | unknown |
 | Canon PowerShot G5 X III | 0x04a9:0x334f | community | unknown |
 | Canon PowerShot V10 | 0x04a9:0x334b | community | unknown |
+| Canon XF605 | 0x04a9:0x3358 | community | community |
+| Canon XF705 | 0x04a9:0x3355 | community | community |
+| Datavideo BC-200 | 0x375c:0x0040 | community | community |
+| Datavideo PTC-150 | 0x375c:0x0010 | community | community |
+| Datavideo PTC-280 | 0x375c:0x0011 | community | community |
+| Datavideo PTC-305 | 0x375c:0x0012 | community | community |
 | Fujifilm GFX50S II FW v2 | 0x04cb:0x02f7 | community | unknown |
 | Fujifilm Instax Mini Evo | 0x04cb:0x02f8 | community | unknown |
 | Fujifilm X-H2S | 0x04cb:0x02f3 | community | unknown |
@@ -2285,6 +2513,13 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Fujifilm X-Pro4 | 0x04cb:0x02f9 | community | unknown |
 | Fujifilm X-T5 FW v2 | 0x04cb:0x02f6 | community | unknown |
 | Fujifilm X100VI | 0x04cb:0x02f1 | community | unknown |
+| JVC GY-HC500 | 0x04f1:0x0440 | community | community |
+| JVC GY-HC550 | 0x04f1:0x0441 | community | community |
+| JVC GY-HC900 | 0x04f1:0x0445 | community | community |
+| JVC GY-HM180 | 0x04f1:0x0443 | community | community |
+| JVC GY-HM250 | 0x04f1:0x0442 | community | community |
+| JVC GY-LS300 | 0x04f1:0x0444 | community | community |
+| JVC KY-PZ400N | 0x04f1:0x0446 | community | community |
 | Nikon Coolpix A1100 | 0x04b0:0x4026 | community | unknown |
 | Nikon Coolpix B700 | 0x04b0:0x4025 | community | unknown |
 | Nikon Coolpix P1100 | 0x04b0:0x4020 | community | unknown |
@@ -2297,19 +2532,55 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Nikon Z8 | 0x04b0:0x401e | community | unknown |
 | Nikon Z9 FW 2.0 | 0x04b0:0x401f | community | unknown |
 | Nikon Zf | 0x04b0:0x401d | community | unknown |
+| Panasonic AG-CX10 | 0x04da:0x402f | community | community |
+| Panasonic AG-CX350 | 0x04da:0x4028 | community | community |
+| Panasonic AG-DVX200 | 0x04da:0x4029 | community | community |
+| Panasonic AG-UX180 | 0x04da:0x402a | community | community |
+| Panasonic AK-UC3300 | 0x04da:0x402c | community | community |
+| Panasonic AK-UC4000 | 0x04da:0x402b | community | community |
+| Panasonic AU-EVA1 | 0x04da:0x4024 | community | community |
+| Panasonic AW-UE100 | 0x04da:0x402e | community | community |
+| Panasonic AW-UE150 | 0x04da:0x402d | community | community |
 | Panasonic Lumix G9 II | 0x04da:0x2411 | community | unknown |
 | Panasonic Lumix GH7 | 0x04da:0x2413 | community | unknown |
 | Panasonic Lumix S5IIX | 0x04da:0x2410 | community | unknown |
 | Panasonic Lumix S9 | 0x04da:0x2412 | community | unknown |
 | Panasonic Lumix SZ80 | 0x04da:0x2414 | community | unknown |
+| Panasonic VariCam 35 | 0x04da:0x4026 | community | community |
+| Panasonic VariCam LT | 0x04da:0x4025 | community | community |
+| Panasonic VariCam Pure | 0x04da:0x4027 | community | community |
+| RED DSMC2 DRAGON-X 5K S35 | 0x1c56:0x0100 | community | community |
+| RED DSMC2 GEMINI 5K S35 | 0x1c56:0x0102 | community | community |
+| RED DSMC2 HELIUM 8K S35 | 0x1c56:0x0101 | community | community |
+| RED DSMC2 MONSTRO 8K VV | 0x1c56:0x0103 | community | community |
+| RED EPIC-W GEMINI 5K S35 | 0x1c56:0x0400 | community | community |
+| RED KOMODO 6K | 0x1c56:0x0300 | community | community |
+| RED KOMODO-X 6K | 0x1c56:0x0301 | community | community |
+| RED RANGER MONSTRO 8K VV | 0x1c56:0x0401 | community | community |
+| RED V-RAPTOR 8K S35 | 0x1c56:0x0200 | community | community |
+| RED V-RAPTOR XL 8K VV | 0x1c56:0x0201 | community | community |
+| RED V-RAPTOR [X] 8K VV RHINO | 0x1c56:0x0202 | community | community |
 | Sony Alpha 1 II | 0x054c:0x12ad | community | unknown |
 | Sony Alpha 6700 | 0x054c:0x12a6 | community | unknown |
 | Sony Alpha 7C II | 0x054c:0x12a5 | community | unknown |
 | Sony Alpha 7CR | 0x054c:0x12a4 | community | unknown |
 | Sony Alpha 9 III | 0x054c:0x12a7 | community | unknown |
+| Sony BURANO | 0x054c:0x0e9a | community | community |
+| Sony FR7 | 0x054c:0x0e9b | community | community |
 | Sony FX30 | 0x054c:0x12aa | community | unknown |
 | Sony FX6 | 0x054c:0x12ab | community | unknown |
+| Sony ILME-FX3 | 0x054c:0x0e9c | community | community |
+| Sony ILME-FX30 | 0x054c:0x0e9d | community | community |
+| Sony PXW-FS7 | 0x054c:0x0e91 | community | community |
+| Sony PXW-FS7 II | 0x054c:0x0e92 | community | community |
+| Sony PXW-FX6 | 0x054c:0x0e93 | community | community |
+| Sony PXW-FX9 | 0x054c:0x0e94 | community | community |
+| Sony PXW-Z280 | 0x054c:0x0e97 | community | community |
+| Sony PXW-Z750 | 0x054c:0x0e98 | community | community |
+| Sony PXW-Z90 | 0x054c:0x0e99 | community | community |
 | Sony RX100 VIII | 0x054c:0x12ac | community | unknown |
+| Sony VENICE | 0x054c:0x0e95 | community | community |
+| Sony VENICE 2 | 0x054c:0x0e96 | community | community |
 | Sony ZV-1 II | 0x054c:0x12a9 | community | unknown |
 | Sony ZV-E10 II | 0x054c:0x12a8 | community | unknown |
 
@@ -2612,7 +2883,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Shanling M9 Plus | 0x20b1:0x0025 | community | unknown |
 | iBasso DX320MAX Ti | 0x2398:0x001e | community | unknown |
 
-## Dashcam (136)
+## Dashcam (137)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2742,6 +3013,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | viofo-a119-mini-2-f003 | 0x0c45:0xf003 | proposed | low |
 | 70mai-a810-f004 | 0x0c45:0xf004 | proposed | low |
 | 70mai-omni-f005 | 0x0c45:0xf005 | proposed | low |
+| garmin-dashcam-mini2-plus-246f | 0x091e:0x246f | experimental | unknown |
 | Garmin Dash Cam 67W | 0x091e:0x0d02 | community | unknown |
 | Garmin Dash Cam Live | 0x091e:0x0d03 | community | unknown |
 | Nextbase 522GW | 0x2c48:0x0006 | community | unknown |
@@ -3100,6 +3372,26 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Waveshare RP2040-LCD-0.96 | 0x2e8a:0x0015 | community | unknown |
 | Waveshare RP2040-Tiny | 0x2e8a:0x0016 | community | unknown |
 | Waveshare RP2040-Zero | 0x2e8a:0x0014 | community | unknown |
+
+## Digital Signage (15)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| brightsign-xd1035-0010 | 0x2184:0x0010 | community | low |
+| brightsign-xd235-0011 | 0x2184:0x0011 | community | low |
+| brightsign-hd225-0020 | 0x2184:0x0020 | community | low |
+| brightsign-ls425-0030 | 0x2184:0x0030 | community | low |
+| brightsign-xt1144-0040 | 0x2184:0x0040 | community | low |
+| samsung-magicinfo-qb13r-a200 | 0x04e8:0xa200 | community | low |
+| samsung-magicinfo-qm55r-a201 | 0x04e8:0xa201 | community | low |
+| samsung-magicinfo-qh55r-a202 | 0x04e8:0xa202 | community | low |
+| lg-webos-signage-55um5n-7200 | 0x043e:0x7200 | community | low |
+| lg-webos-signage-43um5n-7201 | 0x043e:0x7201 | community | low |
+| lg-webos-signage-98uh5j-7202 | 0x043e:0x7202 | community | low |
+| planar-ep5024k-f100 | 0x2b24:0xf100 | community | low |
+| planar-ep5524k-f101 | 0x2b24:0xf101 | community | low |
+| nec-multisync-m551-d100 | 0x1209:0xd100 | community | low |
+| sharp-pn-hs551-d101 | 0x1209:0xd101 | community | low |
 
 ## Drone (134)
 
@@ -4226,7 +4518,33 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Garmin Tread SX | 0x091e:0x0d0e | community | unknown |
 | Garmin Zumo XT2 | 0x091e:0x0d11 | community | unknown |
 
-## Industrial Camera (88)
+## Hearing Aid (21)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| phonak-icube-ii-0100 | 0x20a0:0x0100 | community | low |
+| phonak-noahlink-wireless-0101 | 0x20a0:0x0101 | community | low |
+| phonak-roger-touchscreen-mic-0200 | 0x20a0:0x0200 | community | low |
+| phonak-target-programmer-0201 | 0x20a0:0x0201 | community | low |
+| resound-noahlink-0100 | 0x0b0e:0x0100 | community | low |
+| resound-unite-phone-clip-0101 | 0x0b0e:0x0101 | community | low |
+| resound-multi-mic-0102 | 0x0b0e:0x0102 | community | low |
+| oticon-genie2-programmer-0100 | 0x21b4:0x0100 | community | low |
+| oticon-connectclip-0101 | 0x21b4:0x0101 | community | low |
+| oticon-edumic-0200 | 0x21b4:0x0200 | community | low |
+| widex-compass-programmer-0100 | 0x2308:0x0100 | community | low |
+| widex-rc-dex-0101 | 0x2308:0x0101 | community | low |
+| widex-com-dex-0200 | 0x2308:0x0200 | community | low |
+| signia-connexx-programmer-0100 | 0x0e6a:0x0100 | community | low |
+| signia-streamline-mic-0101 | 0x0e6a:0x0101 | community | low |
+| signia-streamline-tv-0200 | 0x0e6a:0x0200 | community | low |
+| starkey-inspire-programmer-0100 | 0x2abc:0x0100 | community | low |
+| starkey-surflink-remote-0101 | 0x2abc:0x0101 | community | low |
+| starkey-remote-mic-plus-0200 | 0x2abc:0x0200 | community | low |
+| cochlear-nucleus-cr310-0100 | 0x1fc9:0x0100 | community | low |
+| cochlear-baha-programmer-0101 | 0x1fc9:0x0101 | community | low |
+
+## Industrial Camera (104)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -4312,6 +4630,22 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | basler-ace2-a2a2590-0002 | 0x2676:0x0002 | proposed | low |
 | basler-dart-daa4200-0003 | 0x2676:0x0003 | proposed | low |
 | basler-boost-b2a8192-0004 | 0x2676:0x0004 | proposed | low |
+| daheng-mer-0010 | 0x2c48:0x0010 | community | low |
+| daheng-mer2-0020 | 0x2c48:0x0020 | community | low |
+| daheng-mer-color-0030 | 0x2c48:0x0030 | community | low |
+| hikvision-mv-ca050-0010 | 0x2beb:0x0010 | community | low |
+| hikvision-mv-ca013-0020 | 0x2beb:0x0020 | community | low |
+| hikvision-mv-ca023-0030 | 0x2beb:0x0030 | community | low |
+| hikvision-mv-cs060-0040 | 0x2beb:0x0040 | community | low |
+| lucid-triton-tl-0002 | 0x2beb:0x0002 | community | low |
+| lucid-atlas-atl-0003 | 0x2beb:0x0003 | community | low |
+| lucid-phoenix-0004 | 0x2beb:0x0004 | community | low |
+| baumer-vcxu-0010 | 0x2db3:0x0010 | community | low |
+| baumer-vexu-0020 | 0x2db3:0x0020 | community | low |
+| baumer-vlxt-0030 | 0x2db3:0x0030 | community | low |
+| sentech-stc-usb3-0010 | 0x165c:0x0010 | community | low |
+| sentech-stc-sc-0020 | 0x165c:0x0020 | community | low |
+| crevis-mc-usb3-0010 | 0x310e:0x0010 | community | low |
 | Allied Vision Alvium 1800 U-507 | 0x1ab2:0x0002 | community | unknown |
 | Basler ace 2 V USB3 | 0x2676:0x0ba6 | community | unknown |
 | FLIR Blackfly S BFS-U3 | 0x1e10:0x4000 | community | unknown |
@@ -4319,7 +4653,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | LUCID Phoenix PHX050S-Q | 0x2beb:0x0001 | community | unknown |
 | XIMEA MC050CG-SY USB3 | 0x20f7:0x3001 | community | unknown |
 
-## Lab Instrument (224)
+## Lab Instrument (225)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -4532,6 +4866,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | gwinstek-gpd-3303s-0002 | 0x2184:0x0002 | proposed | low |
 | gwinstek-afg-2225-0003 | 0x2184:0x0003 | proposed | low |
 | gwinstek-gdm-9061-0004 | 0x2184:0x0004 | proposed | low |
+| keysight-edux-mtp-0a09 | 0x0957:0x0a09 | experimental | community |
 | Keysight 34465A DMM FW2 | 0x0957:0x179d | community | unknown |
 | Keysight 34470A Digital Multimeter | 0x0957:0x179c | community | unknown |
 | Keysight DSOX1204A Oscilloscope | 0x0957:0x1798 | community | unknown |
@@ -5389,7 +5724,35 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | OMAX A35180U3+ | 0x0547:0x6515 | community | unknown |
 | Zeiss Primostar 3 Camera | 0x1a2c:0x0006 | community | unknown |
 
-## Phone (3634)
+## Payment Terminal (23)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| ingenico-move5000-0a00 | 0x079b:0x0a00 | community | low |
+| ingenico-move3500-0a01 | 0x079b:0x0a01 | community | low |
+| ingenico-desk5000-0b00 | 0x079b:0x0b00 | community | low |
+| ingenico-desk3500-0b01 | 0x079b:0x0b01 | community | low |
+| ingenico-lane5000-0c00 | 0x079b:0x0c00 | community | low |
+| ingenico-lane3000-0c01 | 0x079b:0x0c01 | community | low |
+| ingenico-link2500-0d00 | 0x079b:0x0d00 | community | low |
+| ingenico-axium-dx8000-0e00 | 0x079b:0x0e00 | community | low |
+| verifone-vx520-0b00 | 0x11ca:0x0b00 | community | low |
+| verifone-vx680-0b01 | 0x11ca:0x0b01 | community | low |
+| verifone-vx820-0c00 | 0x11ca:0x0c00 | community | low |
+| verifone-p200-0d00 | 0x11ca:0x0d00 | community | low |
+| verifone-p400-0d01 | 0x11ca:0x0d01 | community | low |
+| verifone-v240m-0e00 | 0x11ca:0x0e00 | community | low |
+| verifone-v400c-0e01 | 0x11ca:0x0e01 | community | low |
+| pax-a920-0100 | 0x251d:0x0100 | community | low |
+| pax-a920pro-0101 | 0x251d:0x0101 | community | low |
+| pax-a80-0200 | 0x251d:0x0200 | community | low |
+| pax-d210-0300 | 0x251d:0x0300 | community | low |
+| castles-vega3000-0100 | 0x2149:0x0100 | community | low |
+| castles-saturn1000-0200 | 0x2149:0x0200 | community | low |
+| newland-n910-0100 | 0x1eef:0x0100 | community | low |
+| newland-sp630-0200 | 0x1eef:0x0200 | community | low |
+
+## Phone (3805)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -8804,11 +9167,31 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | honor-magic7-pro-0002 | 0x256e:0x0002 | proposed | low |
 | honor-200-pro-0003 | 0x256e:0x0003 | proposed | low |
 | honor-x9c-0004 | 0x256e:0x0004 | proposed | low |
+| samsung-galaxy-m16-5g-6977 | 0x04e8:0x6977 | proposed | medium |
+| honor-200-pro-381b | 0x12d1:0x381b | proposed | medium |
+| honor-200-381c | 0x12d1:0x381c | proposed | medium |
 | AGM Glory SE | 0x0e8d:0x2051 | community | community |
 | AGM H5 Pro | 0x0e8d:0x2050 | community | community |
+| Advan G5 | 0x0e8d:0xe602 | community | community |
+| Advan G9 Pro | 0x0e8d:0xe600 | community | community |
+| Advan GX | 0x0e8d:0xe603 | community | community |
+| Advan NASA Plus | 0x0e8d:0xe601 | community | community |
+| Advan S6 Plus | 0x0e8d:0xe604 | community | community |
+| Alcatel 1B (2022) | 0x1bbb:0x9052 | community | community |
+| Alcatel 1S (2021) | 0x1bbb:0x9055 | community | community |
+| Alcatel 1SE (2020) | 0x1bbb:0x9053 | community | community |
+| Alcatel 1V (2021) | 0x1bbb:0x9050 | community | community |
+| Alcatel 3L (2020) | 0x1bbb:0x9051 | community | community |
+| Alcatel 3X (2019) | 0x1bbb:0x9054 | community | community |
+| BLU BOLD N3 | 0x0e8d:0xe5a2 | community | community |
 | BLU Bold N3 | 0x0e8d:0x2062 | community | community |
+| BLU F91 | 0x0e8d:0xe5a3 | community | community |
+| BLU G71L | 0x0e8d:0xe5a5 | community | community |
 | BLU G91 Pro | 0x0e8d:0x2060 | community | community |
+| BLU G91 Pro | 0x0e8d:0xe5a0 | community | community |
+| BLU G93 | 0x0e8d:0xe5a1 | community | community |
 | BLU View 4 | 0x0e8d:0x2061 | community | community |
+| BLU View 4 | 0x0e8d:0xe5a4 | community | community |
 | BlackBerry Bold 9000 | 0x0fca:0x0004 | community | community |
 | BlackBerry Bold 9700 | 0x0fca:0x8002 | community | community |
 | BlackBerry Bold 9900 | 0x0fca:0x8009 | community | community |
@@ -8829,12 +9212,38 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Caterpillar Cat S53 (MTP+ADB) | 0x04b7:0x88f8 | community | community |
 | Caterpillar Cat S62 | 0x04b7:0x88f0 | community | community |
 | Caterpillar Cat S75 (MTP+ADB) | 0x04b7:0x88f7 | community | community |
+| Cherry Mobile Aqua S10 Pro | 0x0e8d:0xe5e0 | community | community |
+| Cherry Mobile Desire R8 | 0x0e8d:0xe5e4 | community | community |
+| Cherry Mobile Flare S8 | 0x0e8d:0xe5e1 | community | community |
+| Cherry Mobile Flare Y7 Pro | 0x0e8d:0xe5e2 | community | community |
+| Cherry Mobile Omega HD5 | 0x0e8d:0xe5e3 | community | community |
 | Coolpad Cool 20 Pro | 0x1ebf:0x0095 | community | community |
 | Coolpad Legacy Go | 0x1ebf:0x0096 | community | community |
 | Coolpad Suva | 0x1ebf:0x0097 | community | community |
+| Cubot KingKong 9 | 0x0e8d:0xe580 | community | community |
+| Cubot KingKong Star | 0x0e8d:0xe583 | community | community |
+| Cubot Note 50 | 0x0e8d:0xe582 | community | community |
+| Cubot P80 | 0x0e8d:0xe581 | community | community |
+| Cubot Pocket 3 | 0x0e8d:0xe584 | community | community |
+| Doogee N50 Pro | 0x0e8d:0xe544 | community | community |
 | Doogee S100 | 0x0e8d:0x204c | community | community |
+| Doogee S100 | 0x0e8d:0xe542 | community | community |
+| Doogee S100 Pro | 0x0e8d:0xe543 | community | community |
+| Doogee S110 | 0x0e8d:0xe547 | community | community |
 | Doogee S98 Pro | 0x0e8d:0x204f | community | community |
+| Doogee T30 Pro | 0x0e8d:0xe545 | community | community |
+| Doogee V20 Pro | 0x0e8d:0xe546 | community | community |
+| Doogee V30 | 0x0e8d:0xe540 | community | community |
+| Doogee V30 Pro | 0x0e8d:0xe541 | community | community |
 | Doogee V31 GT | 0x0e8d:0x204d | community | community |
+| Fairphone 3 | 0x2ae5:0x0001 | community | community |
+| Fairphone 3+ | 0x2ae5:0x0002 | community | community |
+| Fairphone 4 | 0x2ae5:0x0003 | community | community |
+| Fairphone 4 (Qualcomm mode) | 0x05c6:0xf032 | community | community |
+| Fairphone 4 MTP+ADB | 0x2ae5:0x0004 | community | community |
+| Fairphone 5 | 0x2ae5:0x0005 | community | community |
+| Fairphone 5 (Qualcomm mode) | 0x05c6:0xf033 | community | community |
+| Fairphone 5 MTP+ADB | 0x2ae5:0x0006 | community | community |
 | HP iPAQ 100 Classic | 0x03f0:0x1716 | community | community |
 | HP iPAQ 110 Classic | 0x03f0:0x2116 | community | community |
 | HP iPAQ 200 Enterprise | 0x03f0:0x1816 | community | community |
@@ -8874,19 +9283,36 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Infinix Smart 9 | 0x0e8d:0xe516 | community | unknown |
 | Infinix Zero 40 | 0x0e8d:0xe517 | community | unknown |
 | Infinix Zero 40 5G | 0x0e8d:0xe518 | community | unknown |
+| Karbonn Platinum P9 | 0x0e8d:0xe5d3 | community | community |
+| Karbonn Titanium S9 | 0x0e8d:0xe5d0 | community | community |
+| Karbonn Vue 1 | 0x0e8d:0xe5d2 | community | community |
+| Karbonn X21 | 0x0e8d:0xe5d1 | community | community |
 | Kyocera DuraForce Pro 3 | 0x0482:0x0ad0 | community | community |
 | Kyocera DuraForce Ultra 5G (E7110) | 0x0482:0x0ac0 | community | community |
 | Kyocera DuraSport 5G (C6930) | 0x0482:0x0ab0 | community | community |
 | Kyocera Torque G06 (KYG03) | 0x0482:0x0aa0 | community | community |
+| Lava Agni 2 (Qualcomm mode) | 0x05c6:0xf035 | community | community |
+| Lava Agni 2 5G | 0x0e8d:0xe5c2 | community | community |
+| Lava Blaze 2 5G | 0x0e8d:0xe5c4 | community | community |
+| Lava Blaze 5G | 0x0e8d:0xe5c0 | community | community |
 | Lava Blaze Curve 5G | 0x29a9:0x600c | community | community |
+| Lava Blaze Pro 5G | 0x0e8d:0xe5c1 | community | community |
+| Lava O2 | 0x0e8d:0xe5c5 | community | community |
 | Lava Storm 5G | 0x29a9:0x600b | community | community |
 | Lava Yuva 3 Pro | 0x29a9:0x600a | community | community |
+| Lava Yuva 3 Pro | 0x0e8d:0xe5c3 | community | community |
 | LeEco Cool 1 (C106) | 0x2b0e:0x17a0 | community | community |
 | LeEco Le 2 (X620) | 0x2b0e:0x176a | community | community |
 | LeEco Le Max 2 (X820) | 0x2b0e:0x1780 | community | community |
 | LeEco Le Pro 3 (X720) | 0x2b0e:0x1790 | community | community |
 | Micromax Canvas Unite 4 Pro | 0x2a96:0x600a | community | community |
+| Micromax IN 1 | 0x0e8d:0xe5b3 | community | community |
+| Micromax IN 1 (Qualcomm mode) | 0x05c6:0xf034 | community | community |
+| Micromax IN 2b | 0x0e8d:0xe5b2 | community | community |
+| Micromax IN 2c | 0x0e8d:0xe5b0 | community | community |
+| Micromax IN Note 1 | 0x0e8d:0xe5b4 | community | community |
 | Micromax IN Note 1 Pro | 0x2a96:0x6009 | community | community |
+| Micromax IN Note 2 | 0x0e8d:0xe5b1 | community | community |
 | Motorola Edge 50 Fusion | 0x22b8:0x772c | community | unknown |
 | Motorola Edge 50 Pro | 0x22b8:0x772d | community | unknown |
 | Motorola Edge 50 Ultra | 0x22b8:0x772e | community | unknown |
@@ -8904,6 +9330,10 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Motorola Razr 50 | 0x22b8:0x772f | community | unknown |
 | Motorola Razr 50 Ultra | 0x22b8:0x7730 | community | unknown |
 | Motorola SLVR L7 | 0x22b8:0x4903 | community | community |
+| MyPhone DT Smart | 0x0e8d:0xe5f1 | community | community |
+| MyPhone Super D2 | 0x0e8d:0xe5f2 | community | community |
+| MyPhone myA15 | 0x0e8d:0xe5f0 | community | community |
+| MyPhone myX9 | 0x0e8d:0xe5f3 | community | community |
 | Nokia 105 4G 2023 | 0x0421:0x071f | community | unknown |
 | Nokia 110 4G 2023 | 0x0421:0x071e | community | unknown |
 | Nokia 215 4G 2024 | 0x0421:0x0720 | community | unknown |
@@ -8923,12 +9353,38 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Nokia G22 | 0x0421:0x0726 | community | unknown |
 | Nokia G42 5G | 0x0421:0x0723 | community | unknown |
 | Nokia XR30 | 0x0421:0x0727 | community | unknown |
+| Nothing CMF Phone 1 | 0x2970:0x0018 | community | community |
+| Nothing Phone (1) | 0x2970:0x0014 | community | community |
+| Nothing Phone (1) (Qualcomm mode) | 0x05c6:0xf030 | community | community |
+| Nothing Phone (1) MTP+ADB | 0x2970:0x0019 | community | community |
+| Nothing Phone (2) | 0x2970:0x0015 | community | community |
+| Nothing Phone (2) (Qualcomm mode) | 0x05c6:0xf031 | community | community |
+| Nothing Phone (2a) | 0x2970:0x0016 | community | community |
+| Nothing Phone (2a) Plus | 0x2970:0x0017 | community | community |
 | OPPO A3 2024 | 0x22d9:0x28b1 | community | unknown |
 | OPPO A3 Pro | 0x22d9:0x28b2 | community | unknown |
 | OPPO Find X8 | 0x22d9:0x28b5 | community | unknown |
 | OPPO Find X8 Pro | 0x22d9:0x28b6 | community | unknown |
 | OPPO Reno12 | 0x22d9:0x28b4 | community | unknown |
 | OPPO Reno12 Pro | 0x22d9:0x28b3 | community | unknown |
+| Oukitel C36 | 0x0e8d:0xe562 | community | community |
+| Oukitel RT7 Titan | 0x0e8d:0xe563 | community | community |
+| Oukitel WP28 | 0x0e8d:0xe560 | community | community |
+| Oukitel WP30 Pro | 0x0e8d:0xe561 | community | community |
+| Oukitel WP33 Pro | 0x0e8d:0xe564 | community | community |
+| Oukitel WP35 | 0x0e8d:0xe565 | community | community |
+| POCO C65 | 0x2717:0x502b | community | community |
+| POCO F5 | 0x2717:0x5024 | community | community |
+| POCO F5 Pro | 0x2717:0x5025 | community | community |
+| POCO F6 | 0x2717:0x5026 | community | community |
+| POCO F6 Pro | 0x2717:0x5027 | community | community |
+| POCO M5 | 0x2717:0x5028 | community | community |
+| POCO M5s | 0x2717:0x5029 | community | community |
+| POCO M6 Pro | 0x2717:0x502a | community | community |
+| POCO X5 5G | 0x2717:0x5020 | community | community |
+| POCO X5 Pro 5G | 0x2717:0x5021 | community | community |
+| POCO X6 5G | 0x2717:0x5022 | community | community |
+| POCO X6 Pro | 0x2717:0x5023 | community | community |
 | Palm Centro | 0x0830:0x0106 | community | community |
 | Palm Pre 3 | 0x0830:0x0104 | community | community |
 | Palm Treo 650 | 0x0830:0x0050 | community | community |
@@ -8941,15 +9397,35 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Panasonic Eluga Z1 Pro | 0x04da:0x4011 | community | community |
 | Panasonic Toughbook FZ-N1 | 0x04da:0x4001 | community | community |
 | Panasonic Toughbook FZ-T1 | 0x04da:0x4002 | community | community |
+| Polytron Prime 7S | 0x0e8d:0xe612 | community | community |
+| Polytron Prime 8 | 0x0e8d:0xe610 | community | community |
+| Polytron Rocket T10 | 0x0e8d:0xe613 | community | community |
+| Polytron V5 | 0x0e8d:0xe611 | community | community |
+| Realme 10 Pro 5G | 0x2d95:0x803e | community | community |
+| Realme 11 Pro+ | 0x2d95:0x803d | community | community |
 | Realme 12 | 0x22d9:0x28ab | community | unknown |
+| Realme 12 5G | 0x2d95:0x803c | community | community |
 | Realme 12 Pro | 0x22d9:0x28aa | community | unknown |
 | Realme 12 Pro+ | 0x22d9:0x28a9 | community | unknown |
+| Realme 12 Pro+ | 0x2d95:0x803b | community | community |
+| Realme C53 | 0x2d95:0x8039 | community | community |
+| Realme C55 | 0x2d95:0x8038 | community | community |
 | Realme C67 | 0x22d9:0x28a7 | community | unknown |
+| Realme C67 5G | 0x2d95:0x803a | community | community |
 | Realme C75 | 0x22d9:0x28a8 | community | unknown |
+| Realme GT Neo 5 | 0x2d95:0x8030 | community | community |
+| Realme GT Neo 5 SE | 0x2d95:0x8031 | community | community |
+| Realme GT3 | 0x2d95:0x8032 | community | community |
+| Realme GT5 Pro | 0x2d95:0x8033 | community | community |
+| Realme GT5 Pro (Qualcomm mode) | 0x05c6:0xf036 | community | community |
 | Realme GT6 | 0x22d9:0x28ac | community | unknown |
 | Realme GT6T | 0x22d9:0x28ad | community | unknown |
+| Realme Narzo 60 5G | 0x2d95:0x8034 | community | community |
+| Realme Narzo 60 Pro | 0x2d95:0x8035 | community | community |
 | Realme Narzo 70 | 0x22d9:0x28af | community | unknown |
 | Realme Narzo 70 Pro | 0x22d9:0x28ae | community | unknown |
+| Realme Narzo N53 | 0x2d95:0x8036 | community | community |
+| Realme Narzo N55 | 0x2d95:0x8037 | community | community |
 | Realme Note 60 | 0x22d9:0x28b0 | community | unknown |
 | Samsung Galaxy A05 | 0x04e8:0xe24e | community | unknown |
 | Samsung Galaxy A05s | 0x04e8:0xe242 | community | unknown |
@@ -8991,9 +9467,17 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Sony Ericsson W800 Walkman | 0x0fce:0x0070 | community | community |
 | Sony Ericsson W810 Walkman | 0x0fce:0x0073 | community | community |
 | Sony Ericsson W830 Walkman | 0x0fce:0x0074 | community | community |
+| TCL 30 5G | 0x1bbb:0x9040 | community | community |
 | TCL 30 SE | 0x1bbb:0x9030 | community | community |
+| TCL 30 SE | 0x1bbb:0x903f | community | community |
 | TCL 30 V 5G | 0x1bbb:0x9031 | community | community |
+| TCL 305 | 0x1bbb:0x9041 | community | community |
+| TCL 306 | 0x1bbb:0x9042 | community | community |
 | TCL 40 NxtPaper | 0x1bbb:0x9032 | community | community |
+| TCL 40 NxtPaper | 0x1bbb:0x903c | community | community |
+| TCL 40 SE | 0x1bbb:0x903d | community | community |
+| TCL 40 XL | 0x1bbb:0x903e | community | community |
+| TCL 403 | 0x1bbb:0x9043 | community | community |
 | Tecno Camon 30 | 0x0e8d:0xe525 | community | unknown |
 | Tecno Camon 30 Premier | 0x0e8d:0xe526 | community | unknown |
 | Tecno Camon 30 Pro | 0x0e8d:0xe524 | community | unknown |
@@ -9004,9 +9488,40 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Tecno Spark 20 Pro+ | 0x0e8d:0xe520 | community | unknown |
 | Tecno Spark 20C | 0x0e8d:0xe522 | community | unknown |
 | Tecno Spark Go 2025 | 0x0e8d:0xe523 | community | unknown |
+| Ulefone Armor 22 | 0x0e8d:0xe550 | community | community |
+| Ulefone Armor 23 Ultra | 0x0e8d:0xe551 | community | community |
 | Ulefone Armor 24 | 0x0e8d:0x2053 | community | community |
+| Ulefone Armor 24 | 0x0e8d:0xe556 | community | community |
+| Ulefone Armor X13 | 0x0e8d:0xe554 | community | community |
 | Ulefone Note 16 Pro | 0x0e8d:0x2056 | community | community |
+| Ulefone Note 16 Pro | 0x0e8d:0xe553 | community | community |
+| Ulefone Note 17 Pro | 0x0e8d:0xe555 | community | community |
 | Ulefone Power Armor 18T Ultra | 0x0e8d:0x2054 | community | community |
+| Ulefone Power Armor 19 | 0x0e8d:0xe552 | community | community |
+| Umidigi A13 Pro Max | 0x0e8d:0xe574 | community | community |
+| Umidigi A15 | 0x0e8d:0xe570 | community | community |
+| Umidigi Bison 2 Pro | 0x0e8d:0xe572 | community | community |
+| Umidigi F3 SE | 0x0e8d:0xe575 | community | community |
+| Umidigi G5 Mecha | 0x0e8d:0xe571 | community | community |
+| Umidigi Power 7 Max | 0x0e8d:0xe573 | community | community |
+| Vivo V29 5G | 0x2d95:0x8014 | community | community |
+| Vivo V29e | 0x2d95:0x8015 | community | community |
+| Vivo V30 | 0x2d95:0x8018 | community | community |
+| Vivo V30 Pro | 0x2d95:0x8019 | community | community |
+| Vivo X100 | 0x2d95:0x8016 | community | community |
+| Vivo X100 Pro | 0x2d95:0x8017 | community | community |
+| Vivo Y02T | 0x2d95:0x8013 | community | community |
+| Vivo Y100 | 0x2d95:0x801a | community | community |
+| Vivo Y17s | 0x2d95:0x8012 | community | community |
+| Vivo Y27 | 0x2d95:0x8011 | community | community |
+| Vivo Y28 5G | 0x2d95:0x801b | community | community |
+| Vivo Y36 | 0x2d95:0x8010 | community | community |
+| Wiko 10 | 0x0e8d:0xe593 | community | community |
+| Wiko Power U30 | 0x0e8d:0xe590 | community | community |
+| Wiko T50 | 0x0e8d:0xe591 | community | community |
+| Wiko T60 | 0x0e8d:0xe592 | community | community |
+| Wiko View5 Plus | 0x0e8d:0xe594 | community | community |
+| Wiko Y82 | 0x0e8d:0xe595 | community | community |
 | Xiaomi 14T | 0x2717:0xffd5 | community | unknown |
 | Xiaomi 14T Pro | 0x2717:0xffd6 | community | unknown |
 | Xiaomi POCO C65 | 0x2717:0xffd8 | community | unknown |
@@ -9027,8 +9542,27 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Xiaomi Redmi Note 14 | 0x2717:0xffd2 | community | unknown |
 | Xiaomi Redmi Note 14 Pro | 0x2717:0xffd3 | community | unknown |
 | Xiaomi Redmi Note 14 Pro+ | 0x2717:0xffd4 | community | unknown |
+| ZTE Axon 40 Ultra | 0x19d2:0x043a | community | community |
+| ZTE Blade A53 Pro | 0x19d2:0x042c | community | community |
+| ZTE Blade A73 5G | 0x19d2:0x042b | community | community |
+| ZTE Blade V40 | 0x19d2:0x0429 | community | community |
+| ZTE Blade V40 Vita | 0x19d2:0x042a | community | community |
+| ZTE Nubia Neo 5G | 0x19d2:0x042f | community | community |
+| ZTE Nubia Z50 Ultra | 0x19d2:0x042d | community | community |
+| ZTE Nubia Z60 Ultra | 0x19d2:0x042e | community | community |
+| iQOO 11 5G | 0x2d95:0x8050 | community | community |
+| iQOO 12 | 0x2d95:0x8051 | community | community |
+| iQOO 12 (Qualcomm mode) | 0x05c6:0xf037 | community | community |
+| iQOO Neo 8 | 0x2d95:0x8052 | community | community |
+| iQOO Neo 8 Pro | 0x2d95:0x8053 | community | community |
+| iQOO Neo 9 Pro | 0x2d95:0x8054 | community | community |
+| iQOO Z7 5G | 0x2d95:0x8055 | community | community |
+| iQOO Z7 Pro | 0x2d95:0x8056 | community | community |
+| iQOO Z8 5G | 0x2d95:0x8057 | community | community |
+| iQOO Z9 Turbo | 0x2d95:0x8058 | community | community |
+| iQOO Z9x | 0x2d95:0x8059 | community | community |
 
-## Point Of Sale (72)
+## Point Of Sale (92)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -9098,6 +9632,26 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | ingenico-move-5000-0001 | 0x0b00:0x0001 | proposed | low |
 | ingenico-desk-5000-0002 | 0x0b00:0x0002 | proposed | low |
 | ingenico-lane-7000-0003 | 0x0b00:0x0003 | proposed | low |
+| verifone-m440-0f00 | 0x11ca:0x0f00 | community | low |
+| pax-a60-0900 | 0x2fb8:0x0900 | community | low |
+| pax-a80-0a00 | 0x2fb8:0x0a00 | community | low |
+| pax-im30-0b00 | 0x2fb8:0x0b00 | community | low |
+| pax-a920-max-0c00 | 0x2fb8:0x0c00 | community | low |
+| square-terminal-gen2-0400 | 0x28e9:0x0400 | community | low |
+| square-reader-nfc-0500 | 0x28e9:0x0500 | community | low |
+| clover-flex-3-0500 | 0x2182:0x0500 | community | low |
+| clover-station-2-0600 | 0x2182:0x0600 | community | low |
+| clover-kiosk-0700 | 0x2182:0x0700 | community | low |
+| sumup-3g-0300 | 0x34c4:0x0300 | community | low |
+| sumup-solo-lite-0400 | 0x34c4:0x0400 | community | low |
+| epson-tm-p80ii-0915 | 0x04b8:0x0915 | community | low |
+| star-mpop-0500 | 0x0519:0x0500 | community | low |
+| elo-paypoint-3-0400 | 0x04e7:0x0400 | community | low |
+| elo-i-series-5-0500 | 0x04e7:0x0500 | community | low |
+| newland-nquire-1000-0010 | 0x1eab:0x0010 | community | low |
+| newland-mt90-0020 | 0x1eab:0x0020 | community | low |
+| sunmi-v2s-plus-0010 | 0x3576:0x0010 | community | low |
+| sunmi-t3-pro-0020 | 0x3576:0x0020 | community | low |
 | Clover Flex 3 | 0x1fc9:0x00a4 | community | unknown |
 | Ingenico Axium DX8000 v2 | 0x079b:0x0059 | community | unknown |
 | PAX A920 Pro Max | 0x0e8d:0xe535 | community | unknown |
@@ -10339,7 +10893,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Sequential Take 5 | 0x10c4:0xea73 | community | unknown |
 | Teenage Engineering EP-1320 | 0x2367:0x0007 | community | unknown |
 
-## Tablet (164)
+## Tablet (166)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -10494,6 +11048,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | samsung-tab-s10-plus-6c11 | 0x04e8:0x6c11 | experimental | unknown |
 | xiaomi-pad-7-pro-193a | 0x2717:0x193a | experimental | unknown |
 | lenovo-tab-p12-6202 | 0x17ef:0x6202 | experimental | unknown |
+| samsung-galaxy-tab-s9-fe-plus-alt-693e | 0x04e8:0x693e | community | community |
+| samsung-galaxy-tab-a9-lite-693f | 0x04e8:0x693f | community | community |
 | AGM Pad P1 | 0x0e8d:0x2052 | community | community |
 | Alcatel Joy Tab 2 | 0x1bbb:0x9033 | community | community |
 | Blackview Active 8 Pro | 0x0e8d:0x204a | community | community |
@@ -10508,7 +11064,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Xiaomi Pad 7 | 0x2717:0xffdb | community | unknown |
 | Xiaomi Pad 7 Pro | 0x2717:0xffda | community | unknown |
 
-## Telescope (88)
+## Telescope (104)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -10593,6 +11149,22 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | vaonis-vespera-0001 | 0x2f55:0x0001 | experimental | low |
 | vaonis-stellina-0002 | 0x2f55:0x0002 | experimental | low |
 | vaonis-vespera-pro-0003 | 0x2f55:0x0003 | experimental | low |
+| zwo-asi462mc-a462 | 0x03c3:0xa462 | community | low |
+| zwo-asi224mc-a224 | 0x03c3:0xa224 | community | low |
+| zwo-asi290mc-a290 | 0x03c3:0xa290 | community | low |
+| zwo-asi071mc-pro-a071 | 0x03c3:0xa071 | community | low |
+| zwo-asi1600mm-pro-a16f | 0x03c3:0xa16f | community | low |
+| qhy-qhy5iii462c-c462 | 0x1618:0xc462 | community | low |
+| qhy-qhy163c-c163 | 0x1618:0xc163 | community | low |
+| qhy-qhy128c-c128 | 0x1618:0xc128 | community | low |
+| qhy-cfw3-f001 | 0x1618:0xf001 | community | low |
+| playerone-saturn-c-2887 | 0x1bcf:0x2887 | community | low |
+| playerone-ares-c-pro-2888 | 0x1bcf:0x2888 | community | low |
+| playerone-artemis-c-pro-2889 | 0x1bcf:0x2889 | community | low |
+| svbony-sv405cc-0013 | 0x4e4c:0x0013 | community | low |
+| svbony-sv605cc-0014 | 0x4e4c:0x0014 | community | low |
+| unistellar-odyssey-pro-0004 | 0x2f54:0x0004 | community | low |
+| vaonis-vespera-ii-0004 | 0x2f55:0x0004 | community | low |
 | Celestron StarSense Explorer 3 | 0x1546:0x01a8 | community | unknown |
 | Player One Poseidon-C Pro | 0x1bcf:0x2883 | community | unknown |
 | QHY 600 PH Camera | 0x1618:0x0941 | community | unknown |
@@ -10601,7 +11173,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | ZWO ASI2600MM Duo | 0x03c3:0x2602 | community | unknown |
 | ZWO ASI678MC Pro | 0x03c3:0x678c | community | unknown |
 
-## Thermal Camera (90)
+## Thermal Camera (106)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -10690,6 +11262,22 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | guide-c400-0002 | 0x3560:0x0002 | experimental | low |
 | guide-td210-0003 | 0x3560:0x0003 | experimental | low |
 | guide-d384m-0004 | 0x3560:0x0004 | experimental | low |
+| topdon-tc005-0021 | 0x3474:0x0021 | community | low |
+| topdon-tc002-0022 | 0x3474:0x0022 | community | low |
+| topdon-ts004-0023 | 0x3474:0x0023 | community | low |
+| uni-t-uti260b-0010 | 0x1a86:0x0010 | community | low |
+| uni-t-uti120s-0011 | 0x1a86:0x0011 | community | low |
+| uni-t-uti720e-0012 | 0x1a86:0x0012 | community | low |
+| hikmicro-g60-0030 | 0x2955:0x0030 | community | low |
+| hikmicro-g40-0031 | 0x2955:0x0031 | community | low |
+| hikmicro-b10-0032 | 0x2955:0x0032 | community | low |
+| flir-mcs-thermal-1200 | 0x09cb:0x1200 | community | low |
+| flir-duo-pro-r-1210 | 0x09cb:0x1210 | community | low |
+| flir-vue-pro-r-1220 | 0x09cb:0x1220 | community | low |
+| guide-b256v-0005 | 0x3560:0x0005 | community | low |
+| guide-pc210-0006 | 0x3560:0x0006 | community | low |
+| guide-t120h-0007 | 0x3560:0x0007 | community | low |
+| testo-883-0005 | 0x128d:0x0005 | community | low |
 | FLIR ONE Edge Pro v2 | 0x09cb:0x1115 | community | unknown |
 | FLIR ONE Pro LT USB-C | 0x09cb:0x1114 | community | unknown |
 | HIKMICRO Pocket 2 | 0x2bdf:0x0008 | community | unknown |
