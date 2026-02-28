@@ -2,9 +2,9 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-**6,308** device entries across **325** vendor IDs and **35** categories.
+**6,522** device entries across **329** vendor IDs and **35** categories.
 
-## 3D Printer (35)
+## 3D Printer (96)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -43,6 +43,67 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | elegoo-neptune-4-7604 | 0x1a86:0x7604 | community | community |
 | elegoo-saturn-3-7605 | 0x1a86:0x7605 | community | community |
 | creality-ender3-v3-ke-010a | 0x0483:0x010a | community | community |
+| prusa-mk2-5s-0005 | 0x2c99:0x0005 | proposed | low |
+| prusa-sl1-0004 | 0x2c99:0x0004 | proposed | low |
+| prusa-sl1s-speed-0006 | 0x2c99:0x0006 | proposed | low |
+| prusa-mk3-5-000f | 0x2c99:0x000f | proposed | low |
+| prusa-mk3-9-0010 | 0x2c99:0x0010 | proposed | low |
+| prusa-mk4s-0017 | 0x2c99:0x0017 | proposed | low |
+| prusa-core-one-0015 | 0x2c99:0x0015 | proposed | low |
+| prusa-ix-0014 | 0x2c99:0x0014 | proposed | low |
+| bambulab-x1-0006 | 0x3311:0x0006 | proposed | low |
+| bambulab-x1e-0007 | 0x3311:0x0007 | proposed | low |
+| creality-sermoon-v1-pro-010b | 0x0483:0x010b | proposed | low |
+| creality-ender5-s1-5742 | 0x0483:0x5742 | proposed | low |
+| creality-ender3-s1-5740 | 0x0483:0x5740 | proposed | low |
+| creality-cr10-smart-pro-010c | 0x0483:0x010c | proposed | low |
+| creality-halot-mage-010d | 0x0483:0x010d | proposed | low |
+| creality-halot-one-plus-010e | 0x0483:0x010e | proposed | low |
+| creality-ender3-v3-plus-010f | 0x0483:0x010f | proposed | low |
+| creality-k2-plus-0110 | 0x0483:0x0110 | proposed | low |
+| creality-sermoon-d3-0111 | 0x0483:0x0111 | proposed | low |
+| creality-cr6-se-0112 | 0x0483:0x0112 | proposed | low |
+| anycubic-kobra2-0113 | 0x0483:0x0113 | proposed | low |
+| anycubic-kobra2-max-0114 | 0x0483:0x0114 | proposed | low |
+| anycubic-kobra3-0115 | 0x0483:0x0115 | proposed | low |
+| anycubic-photon-mono-m5s-7606 | 0x1a86:0x7606 | proposed | low |
+| anycubic-photon-mono-m7-7607 | 0x1a86:0x7607 | proposed | low |
+| anycubic-kobra2-plus-0116 | 0x0483:0x0116 | proposed | low |
+| elegoo-neptune-4-max-7608 | 0x1a86:0x7608 | proposed | low |
+| elegoo-neptune-4-plus-7609 | 0x1a86:0x7609 | proposed | low |
+| elegoo-mars-4-760a | 0x1a86:0x760a | proposed | low |
+| elegoo-saturn-4-ultra-760b | 0x1a86:0x760b | proposed | low |
+| elegoo-neptune-3-pro-760c | 0x1a86:0x760c | proposed | low |
+| elegoo-centauri-carbon-760d | 0x1a86:0x760d | proposed | low |
+| formlabs-form-3-0e01 | 0x16d0:0x0e01 | proposed | low |
+| formlabs-form-3l-0e02 | 0x16d0:0x0e02 | proposed | low |
+| formlabs-form-3bl-0e03 | 0x16d0:0x0e03 | proposed | low |
+| formlabs-form-4b-0e04 | 0x16d0:0x0e04 | proposed | low |
+| formlabs-form-4l-0e05 | 0x16d0:0x0e05 | proposed | low |
+| flashforge-adventurer-5m-pro-0003 | 0x2b71:0x0003 | proposed | low |
+| flashforge-adventurer-4-0004 | 0x2b71:0x0004 | proposed | low |
+| flashforge-creator-3-pro-0005 | 0x2b71:0x0005 | proposed | low |
+| flashforge-guider-3-plus-0006 | 0x2b71:0x0006 | proposed | low |
+| flashforge-foto-13-3-0007 | 0x2b71:0x0007 | proposed | low |
+| qidi-x-max-3-0117 | 0x0483:0x0117 | proposed | low |
+| qidi-x-plus-3-0118 | 0x0483:0x0118 | proposed | low |
+| qidi-x-smart-3-0119 | 0x0483:0x0119 | proposed | low |
+| qidi-q1-pro-011a | 0x0483:0x011a | proposed | low |
+| btt-octopus-pro-6150 | 0x1d50:0x6150 | proposed | low |
+| btt-manta-m8p-6151 | 0x1d50:0x6151 | proposed | low |
+| btt-skr-mini-e3-v3-6152 | 0x1d50:0x6152 | proposed | low |
+| btt-manta-e3ez-6153 | 0x1d50:0x6153 | proposed | low |
+| ultimaker-s5-0003 | 0x2c8f:0x0003 | proposed | low |
+| ultimaker-s3-0004 | 0x2c8f:0x0004 | proposed | low |
+| ultimaker-s5-pro-bundle-0005 | 0x2c8f:0x0005 | proposed | low |
+| ultimaker-method-0006 | 0x2c8f:0x0006 | proposed | low |
+| raise3d-pro3-0001 | 0x2e3c:0x0001 | proposed | low |
+| raise3d-pro3-plus-0002 | 0x2e3c:0x0002 | proposed | low |
+| raise3d-e2-0003 | 0x2e3c:0x0003 | proposed | low |
+| raise3d-e2cf-0004 | 0x2e3c:0x0004 | proposed | low |
+| snapmaker-artisan-5752 | 0x0483:0x5752 | proposed | low |
+| snapmaker-j1-5753 | 0x0483:0x5753 | proposed | low |
+| snapmaker-a350t-5754 | 0x0483:0x5754 | proposed | low |
 
 ## Action Camera (34)
 
@@ -1679,7 +1740,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Thinkware F200 Pro | 0x2c18:0x0001 | experimental | unknown |
 | Viofo A129 Pro Duo | 0x0c76:0x0001 | experimental | unknown |
 
-## Dev Board (124)
+## Dev Board (130)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1807,6 +1868,12 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | sipeed-tang-mega-138k-mtp-c003 | 0x1209:0xc003 | proposed | low |
 | sipeed-maix-bit-mtp-c004 | 0x1209:0xc004 | proposed | low |
 | sipeed-licheepi-4a-mtp-c005 | 0x1209:0xc005 | proposed | low |
+| nvidia-jetson-agx-xavier-7c18 | 0x0955:0x7c18 | proposed | low |
+| nvidia-jetson-xavier-nx-7019 | 0x0955:0x7019 | proposed | low |
+| nvidia-tegra-x1-dev-7210 | 0x0955:0x7210 | proposed | low |
+| nvidia-jetson-nano-7020 | 0x0955:0x7020 | proposed | low |
+| rpi-usb-gadget-mtp-0104 | 0x1d6b:0x0104 | proposed | low |
+| rpi-usb-gadget-functionfs-0105 | 0x1d6b:0x0105 | proposed | low |
 
 ## Drone (74)
 
@@ -3112,7 +3179,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | keyence-vk-x3000-0002 | 0x1553:0x0002 | proposed | low |
 | keyence-bz-x800-0003 | 0x1553:0x0003 | proposed | low |
 
-## Phone (2666)
+## Phone (2725)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -5727,6 +5794,65 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | crosscall-core-m5-9135 | 0x109b:0x9135 | experimental | unknown |
 | samsung-galaxy-xcover-5-6953 | 0x04e8:0x6953 | experimental | unknown |
 | kyocera-duraforce-ultra-5g-uw-0ae0 | 0x0482:0x0ae0 | experimental | unknown |
+| samsung-galaxy-s7-6954 | 0x04e8:0x6954 | proposed | medium |
+| samsung-galaxy-s10-6955 | 0x04e8:0x6955 | proposed | medium |
+| samsung-galaxy-s10-plus-6956 | 0x04e8:0x6956 | proposed | medium |
+| samsung-galaxy-s10e-6957 | 0x04e8:0x6957 | proposed | medium |
+| samsung-galaxy-s10-5g-6958 | 0x04e8:0x6958 | proposed | medium |
+| samsung-galaxy-s10-lite-6959 | 0x04e8:0x6959 | proposed | medium |
+| samsung-galaxy-s20-695a | 0x04e8:0x695a | proposed | medium |
+| samsung-galaxy-s20-plus-695b | 0x04e8:0x695b | proposed | medium |
+| samsung-galaxy-s20-ultra-695c | 0x04e8:0x695c | proposed | medium |
+| samsung-galaxy-s20-fe-695d | 0x04e8:0x695d | proposed | medium |
+| samsung-galaxy-s21-695e | 0x04e8:0x695e | proposed | medium |
+| samsung-galaxy-s21-plus-695f | 0x04e8:0x695f | proposed | medium |
+| samsung-galaxy-s21-ultra-6960 | 0x04e8:0x6960 | proposed | medium |
+| samsung-galaxy-s22-plus-6961 | 0x04e8:0x6961 | proposed | medium |
+| samsung-galaxy-z-fold-6962 | 0x04e8:0x6962 | proposed | medium |
+| samsung-galaxy-a03-6963 | 0x04e8:0x6963 | proposed | medium |
+| samsung-galaxy-a04-6964 | 0x04e8:0x6964 | proposed | medium |
+| samsung-galaxy-a12-6965 | 0x04e8:0x6965 | proposed | medium |
+| samsung-galaxy-a22-5g-6966 | 0x04e8:0x6966 | proposed | medium |
+| samsung-galaxy-a32-5g-6967 | 0x04e8:0x6967 | proposed | medium |
+| samsung-galaxy-a42-5g-6968 | 0x04e8:0x6968 | proposed | medium |
+| samsung-galaxy-a52s-5g-6969 | 0x04e8:0x6969 | proposed | medium |
+| lg-v50-thinq-lmv500-63ab | 0x1004:0x63ab | proposed | low |
+| lg-g8x-thinq-dual-screen-63ac | 0x1004:0x63ac | proposed | low |
+| lg-velvet-2-pro-63ad | 0x1004:0x63ad | proposed | low |
+| lg-wing-5g-63ae | 0x1004:0x63ae | proposed | low |
+| sony-xperia-1-v-adb-5212 | 0x0fce:0x5212 | proposed | low |
+| sony-xperia-5-v-adb-5213 | 0x0fce:0x5213 | proposed | low |
+| sony-xperia-1-vi-adb-5216 | 0x0fce:0x5216 | proposed | low |
+| sony-xperia-pro-i-adb-5215 | 0x0fce:0x5215 | proposed | low |
+| sharp-aquos-sense8-9662 | 0x04dd:0x9662 | proposed | low |
+| sharp-aquos-sense7-9663 | 0x04dd:0x9663 | proposed | low |
+| sharp-aquos-sense6-9664 | 0x04dd:0x9664 | proposed | low |
+| sharp-aquos-r8-9665 | 0x04dd:0x9665 | proposed | low |
+| sharp-aquos-r8-pro-9666 | 0x04dd:0x9666 | proposed | low |
+| sharp-aquos-r7-9667 | 0x04dd:0x9667 | proposed | low |
+| sharp-aquos-wish3-9668 | 0x04dd:0x9668 | proposed | low |
+| sharp-aquos-wish2-9669 | 0x04dd:0x9669 | proposed | low |
+| kyocera-torque-g06-0b00 | 0x0482:0x0b00 | proposed | low |
+| kyocera-torque-g05-0b01 | 0x0482:0x0b01 | proposed | low |
+| kyocera-torque-g04-0b02 | 0x0482:0x0b02 | proposed | low |
+| kyocera-duraforce-ultra-5g-0b03 | 0x0482:0x0b03 | proposed | low |
+| kyocera-duraforce-pro-3-0b04 | 0x0482:0x0b04 | proposed | low |
+| kyocera-duraforce-pro-2-0b05 | 0x0482:0x0b05 | proposed | low |
+| kyocera-basio-active-0b06 | 0x0482:0x0b06 | proposed | low |
+| kyocera-digno-bx2-0b07 | 0x0482:0x0b07 | proposed | low |
+| fujitsu-arrows-n-f51c-1380 | 0x04c5:0x1380 | proposed | low |
+| fujitsu-arrows-we-f51b-1381 | 0x04c5:0x1381 | proposed | low |
+| fujitsu-arrows-we2-f52d-1382 | 0x04c5:0x1382 | proposed | low |
+| fujitsu-arrows-we2-plus-f53d-1383 | 0x04c5:0x1383 | proposed | low |
+| fujitsu-arrows-be4-plus-f41b-1384 | 0x04c5:0x1384 | proposed | low |
+| fujitsu-arrows-nx9-f52a-1385 | 0x04c5:0x1385 | proposed | low |
+| fujitsu-arrows-5g-f51a-1386 | 0x04c5:0x1386 | proposed | low |
+| panasonic-eluga-ray-550-2500 | 0x04da:0x2500 | proposed | low |
+| panasonic-eluga-x1-pro-2501 | 0x04da:0x2501 | proposed | low |
+| panasonic-eluga-i7-2502 | 0x04da:0x2502 | proposed | low |
+| panasonic-toughbook-fz-t1-2503 | 0x04da:0x2503 | proposed | low |
+| panasonic-toughbook-fz-n1-2504 | 0x04da:0x2504 | proposed | low |
+| panasonic-toughbook-fz-l1-2505 | 0x04da:0x2505 | proposed | low |
 | AGM Glory SE | 0x0e8d:0x2051 | community | community |
 | AGM H5 Pro | 0x0e8d:0x2050 | community | community |
 | BLU Bold N3 | 0x0e8d:0x2062 | community | community |
@@ -5973,7 +6099,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | google-nest-cam-indoor-4ee7 | 0x18d1:0x4ee7 | proposed | medium |
 | google-nest-cam-outdoor-4ee8 | 0x18d1:0x4ee8 | proposed | medium |
 
-## Storage (44)
+## Storage (92)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -6021,8 +6147,56 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | transcend-storejet-25h3-7000 | 0x8564:0x7000 | proposed | low |
 | adata-se880-portable-ssd-a94a | 0x125f:0xa94a | proposed | low |
 | adata-se920-portable-ssd-a95a | 0x125f:0xa95a | proposed | low |
+| wd-my-passport-essential-0702 | 0x1058:0x0702 | proposed | low |
+| wd-my-passport-essential-0704 | 0x1058:0x0704 | proposed | low |
+| wd-my-passport-elite-0705 | 0x1058:0x0705 | proposed | low |
+| wd-my-passport-essential-070a | 0x1058:0x070a | proposed | low |
+| wd-my-passport-essential-se-0900 | 0x1058:0x0900 | proposed | low |
+| wd-my-passport-ultra-metal-0810 | 0x1058:0x0810 | proposed | low |
+| wd-my-passport-ultra-usbc-0820 | 0x1058:0x0820 | proposed | low |
+| wd-my-passport-ssd-0830 | 0x1058:0x0830 | proposed | low |
+| wd-elements-desktop-1003 | 0x1058:0x1003 | proposed | low |
+| wd-elements-portable-1048 | 0x1058:0x1048 | proposed | low |
+| wd-my-book-duo-1078 | 0x1058:0x1078 | proposed | low |
+| wd-my-book-essential-ed2-1100 | 0x1058:0x1100 | proposed | low |
+| wd-my-passport-ssd-nvme-25e1 | 0x1058:0x25e1 | proposed | low |
+| wd-black-p50-game-drive-25e2 | 0x1058:0x25e2 | proposed | low |
+| wd-elements-se-usb3-25a1 | 0x1058:0x25a1 | proposed | low |
+| wd-elements-portable-usb3-25a3 | 0x1058:0x25a3 | proposed | low |
+| wd-my-passport-ultra-usb3-259d | 0x1058:0x259d | proposed | low |
+| wd-easystore-portable-25fa | 0x1058:0x25fa | proposed | low |
+| seagate-freeagent-desktop-0502 | 0x0bc2:0x0502 | proposed | low |
+| seagate-freeagent-go-0503 | 0x0bc2:0x0503 | proposed | low |
+| seagate-expansion-portable-231a | 0x0bc2:0x231a | proposed | low |
+| seagate-expansion-desktop-2321 | 0x0bc2:0x2321 | proposed | low |
+| seagate-expansion-5tb-2340 | 0x0bc2:0x2340 | proposed | low |
+| seagate-expansion-desktop-3312 | 0x0bc2:0x3312 | proposed | low |
+| seagate-game-drive-ps4-5071 | 0x0bc2:0x5071 | proposed | low |
+| seagate-game-drive-xbox-5073 | 0x0bc2:0x5073 | proposed | low |
+| seagate-backup-plus-a003 | 0x0bc2:0xa003 | proposed | low |
+| seagate-backup-plus-slim-usb3-ab2a | 0x0bc2:0xab2a | proposed | low |
+| seagate-backup-plus-desktop-ab31 | 0x0bc2:0xab31 | proposed | low |
+| seagate-backup-plus-portable-ab38 | 0x0bc2:0xab38 | proposed | low |
+| seagate-one-touch-hdd-ab44 | 0x0bc2:0xab44 | proposed | low |
+| seagate-one-touch-hub-ab46 | 0x0bc2:0xab46 | proposed | low |
+| seagate-firecuda-gaming-ssd-ab69 | 0x0bc2:0xab69 | proposed | low |
+| seagate-barracuda-fast-ssd-ab62 | 0x0bc2:0xab62 | proposed | low |
+| samsung-portable-ssd-t3-61f3 | 0x04e8:0x61f3 | proposed | low |
+| samsung-portable-ssd-t5-61f5 | 0x04e8:0x61f5 | proposed | low |
+| toshiba-canvio-basics-0b09 | 0x0930:0x0b09 | proposed | low |
+| toshiba-canvio-ready-0b11 | 0x0930:0x0b11 | proposed | low |
+| toshiba-canvio-advance-0b1a | 0x0930:0x0b1a | proposed | low |
+| toshiba-canvio-premium-0b1b | 0x0930:0x0b1b | proposed | low |
+| toshiba-canvio-slim-0b20 | 0x0930:0x0b20 | proposed | low |
+| kioxia-canvio-flex-0b21 | 0x0930:0x0b21 | proposed | low |
+| lacie-rugged-mini-1064 | 0x059f:0x1064 | proposed | low |
+| lacie-porsche-design-mobile-106d | 0x059f:0x106d | proposed | low |
+| lacie-rugged-thunderbolt-usbc-1083 | 0x059f:0x1083 | proposed | low |
+| lacie-1big-dock-1084 | 0x059f:0x1084 | proposed | low |
+| lacie-2big-dock-1085 | 0x059f:0x1085 | proposed | low |
+| lacie-rugged-boss-ssd-1086 | 0x059f:0x1086 | proposed | low |
 
-## Streaming Device (58)
+## Streaming Device (60)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -6083,6 +6257,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | generic-operator-android-tv-stb-c015 | 0x1b8e:0xc015 | proposed | low |
 | swisscom-tv-box-c016 | 0x1b8e:0xc016 | proposed | low |
 | deutsche-telekom-magenta-tv-box-c017 | 0x1b8e:0xc017 | proposed | low |
+| wd-tv-live-0750 | 0x1058:0x0750 | proposed | low |
+| wd-tv-live-hub-0751 | 0x1058:0x0751 | proposed | low |
 | Roku Streaming Stick 4K | 0x1d5a:0x0001 | experimental | unknown |
 
 ## Synthesizer (32)
@@ -6332,7 +6508,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | hikmicro-pocket1-0006 | 0x2955:0x0006 | proposed | low |
 | hikmicro-mini2-plus-0007 | 0x2955:0x0007 | proposed | low |
 
-## Vr Headset (7)
+## Vr Headset (45)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -6343,6 +6519,44 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | meta-quest-3s-0186 | 0x2833:0x0186 | proposed | low |
 | htc-vive-focus-3-0c98 | 0x0bb4:0x0c98 | proposed | low |
 | htc-vive-xr-elite-0c99 | 0x0bb4:0x0c99 | proposed | low |
+| meta-quest-1-0081 | 0x2833:0x0081 | proposed | low |
+| meta-quest-1-adb-0082 | 0x2833:0x0082 | proposed | low |
+| oculus-rift-s-0051 | 0x2833:0x0051 | blocked | low |
+| oculus-rift-cv1-0031 | 0x2833:0x0031 | blocked | low |
+| oculus-go-0041 | 0x2833:0x0041 | proposed | low |
+| oculus-dk2-0021 | 0x2833:0x0021 | blocked | low |
+| meta-quest-3s-adb-0187 | 0x2833:0x0187 | proposed | low |
+| meta-quest-3-adb-0188 | 0x2833:0x0188 | proposed | low |
+| htc-vive-focus-0c90 | 0x0bb4:0x0c90 | proposed | low |
+| htc-vive-focus-plus-0c94 | 0x0bb4:0x0c94 | proposed | low |
+| htc-vive-flow-0c9b | 0x0bb4:0x0c9b | proposed | low |
+| htc-vive-focus-vision-0c9c | 0x0bb4:0x0c9c | proposed | low |
+| htc-vive-cosmos-0315 | 0x0bb4:0x0315 | blocked | low |
+| htc-vive-pro-2-0342 | 0x0bb4:0x0342 | blocked | low |
+| valve-index-hmd-2000 | 0x28de:0x2000 | blocked | low |
+| valve-index-camera-2101 | 0x28de:0x2101 | blocked | low |
+| sony-psvr-09af | 0x054c:0x09af | blocked | low |
+| sony-psvr2-0ce6 | 0x054c:0x0ce6 | blocked | low |
+| pico-4-5130 | 0x2d40:0x5130 | proposed | low |
+| pico-4-pro-5132 | 0x2d40:0x5132 | proposed | low |
+| pico-4-enterprise-5131 | 0x2d40:0x5131 | proposed | low |
+| pico-4-ultra-5133 | 0x2d40:0x5133 | proposed | low |
+| pico-neo-3-link-5128 | 0x2d40:0x5128 | proposed | low |
+| pico-neo-3-5126 | 0x2d40:0x5126 | proposed | low |
+| pico-g3-5140 | 0x2d40:0x5140 | proposed | low |
+| apple-vision-pro-1471 | 0x05ac:0x1471 | blocked | low |
+| xreal-air-0001 | 0x3318:0x0001 | blocked | low |
+| xreal-air-2-1001 | 0x3318:0x1001 | blocked | low |
+| xreal-air-2-pro-1002 | 0x3318:0x1002 | blocked | low |
+| xreal-air-2-ultra-1003 | 0x3318:0x1003 | blocked | low |
+| lenovo-mirage-solo-7f20 | 0x17ef:0x7f20 | proposed | low |
+| lenovo-thinkreality-vrx-7f21 | 0x17ef:0x7f21 | proposed | low |
+| hp-reverb-g2-0580 | 0x03f0:0x0580 | blocked | low |
+| hp-reverb-g2-v2-0581 | 0x03f0:0x0581 | blocked | low |
+| varjo-aero-0001 | 0x35cf:0x0001 | blocked | low |
+| varjo-xr-4-0002 | 0x35cf:0x0002 | blocked | low |
+| bigscreen-beyond-0001 | 0x3535:0x0001 | blocked | low |
+| pimax-crystal-5760 | 0x0483:0x5760 | blocked | low |
 
 ## Wearable (138)
 
