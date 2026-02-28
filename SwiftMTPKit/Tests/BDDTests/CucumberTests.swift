@@ -1261,6 +1261,285 @@ final class BDDRunner: XCTestCase {
     let cameras = db.entries.filter { $0.category == "camera" }
     XCTAssertGreaterThanOrEqual(cameras.count, 950, "Should have 950+ camera entries after wave 67")
   }
+
+  // MARK: - Device Expansion BDD Scenarios
+
+  // 1. Garmin device matching — Edge, Fenix, GPSMAP
+
+  func testScenario_garminEdgeGPS() throws {
+    // Given the quirk database is loaded
+    let db = try QuirkDatabase.load()
+    // When we look up a Garmin Edge 1040
+    let match = db.match(vid: 0x091e, pid: 0x4f03, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: nil, ifaceProtocol: nil)
+    // Then it should match as gps-navigator
+    XCTAssertNotNil(match, "Garmin Edge 1040 should match")
+    XCTAssertEqual(match?.category, "gps-navigator")
+  }
+
+  func testScenario_garminFenixWearable() throws {
+    // Given the quirk database is loaded
+    let db = try QuirkDatabase.load()
+    // When we look up a Garmin Fenix 7X
+    let match = db.match(vid: 0x091e, pid: 0x4c61, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    // Then it should match as wearable
+    XCTAssertNotNil(match, "Garmin Fenix 7X should match")
+    XCTAssertEqual(match?.category, "wearable")
+  }
+
+  func testScenario_garminGPSMAP() throws {
+    // Given the quirk database is loaded
+    let db = try QuirkDatabase.load()
+    // When we look up a Garmin GPSMAP 67
+    let match = db.match(vid: 0x091e, pid: 0x50f0, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: nil, ifaceProtocol: nil)
+    // Then it should match as gps-navigator
+    XCTAssertNotNil(match, "Garmin GPSMAP 67 should match")
+    XCTAssertEqual(match?.category, "gps-navigator")
+  }
+
+  // 2. Audio recorder matching — Zoom, TASCAM, Sound Devices
+
+  func testScenario_zoomH8AudioRecorder() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x1686, pid: 0x0031, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "Zoom H8 should match")
+    XCTAssertEqual(match?.category, "audio-recorder")
+  }
+
+  func testScenario_tascamDR100() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x06ef, pid: 0x0002, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "TASCAM DR-100mkIII should match")
+    XCTAssertEqual(match?.category, "audio-recorder")
+  }
+
+  func testScenario_soundDevices833() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2af0, pid: 0x0003, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "Sound Devices 833 should match")
+    XCTAssertEqual(match?.category, "audio-recorder")
+  }
+
+  // 3. DAP matching — FiiO, Astell&Kern, Sony Walkman
+
+  func testScenario_fiioM11DAP() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2972, pid: 0x0015, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "FiiO M11 should match")
+    XCTAssertEqual(match?.category, "dap")
+  }
+
+  func testScenario_astellKernSR15() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x4102, pid: 0x1213, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "Astell&Kern SR15 should match")
+    XCTAssertEqual(match?.category, "dap")
+  }
+
+  func testScenario_sonyWalkmanNWA306() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x054c, pid: 0x0e6e, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Sony NW-A306 Walkman should match")
+    XCTAssertEqual(match?.category, "dap")
+  }
+
+  // 4. E-reader matching — Kindle, Kobo, reMarkable
+
+  func testScenario_amazonKindleFire7() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x1949, pid: 0x0221, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(match, "Amazon Kindle Fire 7 should match")
+    XCTAssertEqual(match?.category, "e-reader")
+  }
+
+  func testScenario_koboTouch() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2237, pid: 0x4161, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Kobo Touch should match")
+    XCTAssertEqual(match?.category, "e-reader")
+  }
+
+  func testScenario_remarkable2() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x04b3, pid: 0x0610, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(match, "reMarkable 2 should match")
+    XCTAssertEqual(match?.category, "e-reader")
+  }
+
+  // 5. 3D printer matching — Prusa, Creality, Elegoo
+
+  func testScenario_prusaMK4() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2c99, pid: 0x0016, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Prusa MK4 should match")
+    XCTAssertEqual(match?.category, "3d-printer")
+  }
+
+  func testScenario_crealityK1() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x0483, pid: 0x0105, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Creality K1 should match")
+    XCTAssertEqual(match?.category, "3d-printer")
+  }
+
+  func testScenario_elegooNeptune4Pro() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x1a86, pid: 0x7603, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "Elegoo Neptune 4 Pro should match")
+    XCTAssertEqual(match?.category, "3d-printer")
+  }
+
+  // 6. Drone matching — DJI Mavic, Autel EVO, Parrot ANAFI
+
+  func testScenario_djiMavic3Pro() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2ca3, pid: 0x0027, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "DJI Mavic 3 Pro should match")
+    XCTAssertEqual(match?.category, "drone")
+  }
+
+  func testScenario_autelEvoIIPro() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2f8a, pid: 0x0001, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(match, "Autel EVO II Pro should match")
+    XCTAssertEqual(match?.category, "drone")
+  }
+
+  func testScenario_parrotANAFI() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x19cf, pid: 0x0908, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(match, "Parrot ANAFI should match")
+    XCTAssertEqual(match?.category, "drone")
+  }
+
+  // 7. VR headset matching — Meta Quest, HTC Vive
+
+  func testScenario_metaQuest3() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2833, pid: 0x0184, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Meta Quest 3 should match")
+    XCTAssertEqual(match?.category, "vr-headset")
+  }
+
+  func testScenario_htcViveFocus3() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x0bb4, pid: 0x0c98, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(match, "HTC Vive Focus 3 should match")
+    XCTAssertEqual(match?.category, "vr-headset")
+  }
+
+  // 8. Gaming handheld matching — Steam Deck, Anbernic, Lenovo Legion Go
+
+  func testScenario_steamDeckOLED() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x28de, pid: 0x1003, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Valve Steam Deck OLED should match")
+    XCTAssertEqual(match?.category, "gaming-handheld")
+  }
+
+  func testScenario_anbernicRG556() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x1f3a, pid: 0x6001, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Anbernic RG556 should match")
+    XCTAssertEqual(match?.category, "gaming-handheld")
+  }
+
+  func testScenario_lenovoLegionGo() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x17ef, pid: 0x7f12, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(match, "Lenovo Legion Go should match")
+    XCTAssertEqual(match?.category, "gaming-handheld")
+  }
+
+  // 9. Printer/scanner matching — Canon PIXMA, Epson, Fujitsu ScanSnap
+
+  func testScenario_canonPixmaTR8620() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x04a9, pid: 0x176c, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "Canon PIXMA TR8620 should match")
+    XCTAssertEqual(match?.category, "printer")
+  }
+
+  func testScenario_epsonPerfectionV600() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x04b8, pid: 0x01c1, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "Epson Perfection V600 should match")
+    XCTAssertEqual(match?.category, "printer")
+  }
+
+  func testScenario_fujitsuScanSnapIX1600() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x04c5, pid: 0x132e, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "Fujitsu ScanSnap iX1600 should match")
+    XCTAssertEqual(match?.category, "scanner")
+  }
+
+  // 10. Medical/scientific device matching — microscopes, thermal cameras
+
+  func testScenario_zeissAxiocamMicroscope() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x20ce, pid: 0x0001, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "Zeiss Axiocam 208c should match")
+    XCTAssertEqual(match?.category, "microscope")
+  }
+
+  func testScenario_flirThermalCamera() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x09cb, pid: 0x1009, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "FLIR E4 thermal camera should match")
+    XCTAssertEqual(match?.category, "thermal-camera")
+  }
+
+  func testScenario_phonakMedicalDevice() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2479, pid: 0x0001, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Phonak NoahLink Wireless should match")
+    XCTAssertEqual(match?.category, "medical")
+  }
+
+  // 11. Category count verification for expanded categories
+
+  func testScenario_dapCategoryCount() throws {
+    let db = try QuirkDatabase.load()
+    let daps = db.entries.filter { $0.category == "dap" }
+    XCTAssertGreaterThanOrEqual(daps.count, 35, "Should have 35+ DAP entries")
+  }
+
+  func testScenario_audioRecorderCategoryCount() throws {
+    let db = try QuirkDatabase.load()
+    let recorders = db.entries.filter { $0.category == "audio-recorder" }
+    XCTAssertGreaterThanOrEqual(recorders.count, 20, "Should have 20+ audio-recorder entries")
+  }
+
+  func testScenario_gamingHandheldCategoryCount() throws {
+    let db = try QuirkDatabase.load()
+    let handhelds = db.entries.filter { $0.category == "gaming-handheld" }
+    XCTAssertGreaterThanOrEqual(handhelds.count, 30, "Should have 30+ gaming-handheld entries")
+  }
+
+  func testScenario_droneCategoryCount() throws {
+    let db = try QuirkDatabase.load()
+    let drones = db.entries.filter { $0.category == "drone" }
+    XCTAssertGreaterThanOrEqual(drones.count, 50, "Should have 50+ drone entries")
+  }
+
+  func testScenario_eReaderCategoryCount() throws {
+    let db = try QuirkDatabase.load()
+    let readers = db.entries.filter { $0.category == "e-reader" }
+    XCTAssertGreaterThanOrEqual(readers.count, 100, "Should have 100+ e-reader entries")
+  }
+
+  func testScenario_3dPrinterCategoryCount() throws {
+    let db = try QuirkDatabase.load()
+    let printers = db.entries.filter { $0.category == "3d-printer" }
+    XCTAssertGreaterThanOrEqual(printers.count, 30, "Should have 30+ 3d-printer entries")
+  }
+
+  // 12. Total entry milestone — 5000+ entries
+
+  func testScenario_totalEntryMilestoneAbove5000() throws {
+    let db = try QuirkDatabase.load()
+    XCTAssertGreaterThanOrEqual(db.entries.count, 5000, "Quirk database should have 5000+ entries")
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
