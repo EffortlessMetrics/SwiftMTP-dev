@@ -29,7 +29,13 @@ jobs:
 
       - name: TSAN – CoreTests / IndexTests / ScenarioTests
         working-directory: SwiftMTPKit
-        run: swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
+        run: |
+          # Xcode 26+ may require explicit TSAN library loading
+          TSAN_LIB=$(find "$(xcode-select -p)" -name "libclang_rt.tsan_osx_dynamic.dylib" 2>/dev/null | head -1)
+          if [ -n "$TSAN_LIB" ]; then
+            export DYLD_INSERT_LIBRARIES="$TSAN_LIB"
+          fi
+          swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
 
   compat-matrix:
     name: Compatibility Matrix
