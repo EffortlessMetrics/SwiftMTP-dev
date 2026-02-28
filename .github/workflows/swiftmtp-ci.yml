@@ -37,10 +37,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Swift
-        uses: swift-actions/setup-swift@v2
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-          swift-version: ${{ env.SWIFT_VERSION }}
+          xcode-version: "16.2"
 
       - name: Cache Homebrew packages
         uses: actions/cache@v4
@@ -95,10 +95,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Swift
-        uses: swift-actions/setup-swift@v2
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-          swift-version: ${{ env.SWIFT_VERSION }}
+          xcode-version: "16.2"
 
       - name: Cache Homebrew packages
         uses: actions/cache@v4
@@ -173,10 +173,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Swift
-        uses: swift-actions/setup-swift@v2
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-          swift-version: ${{ env.SWIFT_VERSION }}
+          xcode-version: "16.2"
 
       - name: Cache Homebrew packages
         uses: actions/cache@v4
@@ -229,10 +229,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Swift
-        uses: swift-actions/setup-swift@v2
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-          swift-version: ${{ env.SWIFT_VERSION }}
+          xcode-version: "16.2"
 
       - name: Cache Homebrew packages
         uses: actions/cache@v4
@@ -298,10 +298,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Swift
-        uses: swift-actions/setup-swift@v2
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
         with:
-          swift-version: ${{ env.SWIFT_VERSION }}
+          xcode-version: "16.2"
 
       - name: Cache Homebrew packages
         uses: actions/cache@v4
