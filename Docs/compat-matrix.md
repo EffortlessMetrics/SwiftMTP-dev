@@ -2,9 +2,9 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-**7,897** device entries across **496** vendor IDs and **35** categories.
+**8,320** device entries across **504** vendor IDs and **36** categories.
 
-## 3D Printer (103)
+## 3D Printer (111)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -111,8 +111,16 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | elegoo-saturn-4-760f | 0x1a86:0x760f | community | community |
 | phrozen-sonic-mega-8k-0001 | 0x3284:0x0001 | community | community |
 | phrozen-sonic-mini-8k-s-0002 | 0x3284:0x0002 | community | community |
+| elegoo-saturn-3-7614 | 0x1a86:0x7614 | proposed | low |
+| elegoo-saturn-4-ultra-7615 | 0x1a86:0x7615 | proposed | low |
+| elegoo-mars-5-ultra-7616 | 0x1a86:0x7616 | proposed | low |
+| elegoo-neptune-4-pro-7617 | 0x1a86:0x7617 | proposed | low |
+| anycubic-photon-mono-m7-0008 | 0x3311:0x0008 | proposed | low |
+| anycubic-photon-mono-m5s-0009 | 0x3311:0x0009 | proposed | low |
+| anycubic-kobra-3-000a | 0x3311:0x000a | proposed | low |
+| anycubic-kobra-2-pro-000b | 0x3311:0x000b | proposed | low |
 
-## Action Camera (49)
+## Action Camera (51)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -165,6 +173,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | insta360-ace-2-pro-0024 | 0x2e1a:0x0024 | community | community |
 | insta360-x4-creator-0025 | 0x2e1a:0x0025 | community | community |
 | insta360-flow-pro-0026 | 0x2e1a:0x0026 | community | community |
+| insta360-ace-pro-0027 | 0x2e1a:0x0027 | proposed | low |
+| insta360-go-3s-0028 | 0x2e1a:0x0028 | proposed | low |
 
 ## Audio Interface (34)
 
@@ -205,7 +215,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | native-instruments-traktor-kontrol-s3-1403 | 0x17cc:0x1403 | proposed | medium |
 | Yamaha/Steinberg UR22C | 0x0499:0x7010 | experimental | unknown |
 
-## Audio Recorder (75)
+## Audio Recorder (77)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -265,6 +275,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | olympus-ws-882-0215 | 0x07b4:0x0215 | proposed | low |
 | olympus-dm-720-0216 | 0x07b4:0x0216 | proposed | low |
 | boss-br-80-01db | 0x0582:0x01db | proposed | low |
+| zoom-h6essential-00a0 | 0x1686:0x00a0 | proposed | low |
+| zoom-f3-00a1 | 0x1686:0x00a1 | proposed | low |
 | BOSS BR-800 | 0x0582:0x0131 | experimental | unknown |
 | Roland R-07 | 0x0582:0x012f | experimental | unknown |
 | Roland R-88 | 0x0582:0x0130 | experimental | unknown |
@@ -426,7 +438,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | getac-veretos-mobile-0003 | 0x3479:0x0003 | proposed | medium |
 | Axon Body 3 | 0x2c55:0x0001 | experimental | unknown |
 
-## Camera (1233)
+## Camera (1253)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1663,6 +1675,26 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | spypoint-flex-g36-0001 | 0x3480:0x0001 | proposed | medium |
 | spypoint-force-pro-s-0002 | 0x3480:0x0002 | proposed | medium |
 | spypoint-flex-s-0003 | 0x3480:0x0003 | proposed | medium |
+| panasonic-lumix-s5ii-4012 | 0x04da:0x4012 | proposed | low |
+| panasonic-lumix-s5iix-4013 | 0x04da:0x4013 | proposed | low |
+| panasonic-lumix-s1-4014 | 0x04da:0x4014 | proposed | low |
+| panasonic-lumix-s1r-4015 | 0x04da:0x4015 | proposed | low |
+| panasonic-lumix-s1h-4016 | 0x04da:0x4016 | proposed | low |
+| panasonic-lumix-gh6-4017 | 0x04da:0x4017 | proposed | low |
+| panasonic-lumix-g9ii-4018 | 0x04da:0x4018 | proposed | low |
+| panasonic-lumix-gh7-4019 | 0x04da:0x4019 | proposed | low |
+| om-system-om1-markii-0308 | 0x07b4:0x0308 | proposed | low |
+| om-system-om5-0309 | 0x07b4:0x0309 | proposed | low |
+| om-system-om1-030a | 0x07b4:0x030a | proposed | low |
+| om-system-pen-ef10-030b | 0x07b4:0x030b | proposed | low |
+| nikon-z8-4004 | 0x04b0:0x4004 | proposed | low |
+| nikon-z9-4005 | 0x04b0:0x4005 | proposed | low |
+| nikon-zfc-4006 | 0x04b0:0x4006 | proposed | low |
+| nikon-zf-4007 | 0x04b0:0x4007 | proposed | low |
+| nikon-z50ii-4008 | 0x04b0:0x4008 | proposed | low |
+| nikon-z6iii-4009 | 0x04b0:0x4009 | proposed | low |
+| nikon-z5-400a | 0x04b0:0x400a | proposed | low |
+| nikon-z30-400b | 0x04b0:0x400b | proposed | low |
 
 ## Cnc (53)
 
@@ -1722,7 +1754,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | sculpfun-s30-ultra-0001 | 0x327f:0x0001 | community | community |
 | sculpfun-s9-0002 | 0x327f:0x0002 | community | community |
 
-## Dap (133)
+## Dap (138)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1859,6 +1891,11 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | shanling-h7-0021 | 0x31b2:0x0021 | proposed | low |
 | fiio-m15s-006b | 0x2972:0x006b | proposed | low |
 | fiio-r7-006d | 0x2972:0x006d | proposed | low |
+| sony-walkman-nw-a306-0cf0 | 0x054c:0x0cf0 | proposed | low |
+| sony-walkman-nw-a307-0cf1 | 0x054c:0x0cf1 | proposed | low |
+| sony-walkman-nw-zx707-0cf2 | 0x054c:0x0cf2 | proposed | low |
+| sony-walkman-nw-wm1am2-0cf3 | 0x054c:0x0cf3 | proposed | low |
+| sony-walkman-nw-wm1zm2-0cf4 | 0x054c:0x0cf4 | proposed | low |
 
 ## Dashcam (101)
 
@@ -1966,7 +2003,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Thinkware F200 Pro | 0x2c18:0x0001 | experimental | unknown |
 | Viofo A129 Pro Duo | 0x0c76:0x0001 | experimental | unknown |
 
-## Dev Board (246)
+## Dev Board (277)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2216,8 +2253,39 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | calliope-mini-v2-mtp-0251 | 0x0d28:0x0251 | community | community |
 | calliope-mini-v3-mtp-0252 | 0x0d28:0x0252 | community | community |
 | raspberry-pi-pico-micropython-mtp-4006 | 0x2e8a:0x4006 | community | community |
+| arduino-leonardo-mtp-8036 | 0x2341:0x8036 | experimental | low |
+| arduino-micro-mtp-8037 | 0x2341:0x8037 | experimental | low |
+| arduino-uno-r3-mtp-0043 | 0x2341:0x0043 | experimental | low |
+| arduino-mega-2560-r3-mtp-0010 | 0x2341:0x0010 | experimental | low |
+| arduino-nano-33-iot-mtp-804e | 0x2341:0x804e | experimental | low |
+| teensy-35-mtp-047c | 0x16c0:0x047c | experimental | low |
+| teensy-32-mtp-047d | 0x16c0:0x047d | experimental | low |
+| teensy-40-mtp-serial-047e | 0x16c0:0x047e | experimental | low |
+| adafruit-feather-rp2040-usb-host-mtp-8130 | 0x239a:0x8130 | experimental | low |
+| adafruit-metro-rp2040-mtp-8140 | 0x239a:0x8140 | experimental | low |
+| adafruit-feather-rp2350-hstx-mtp-8142 | 0x239a:0x8142 | experimental | low |
+| adafruit-qtpy-rp2350-mtp-8144 | 0x239a:0x8144 | experimental | low |
+| adafruit-feather-esp32s3-reverse-tft-mtp-8146 | 0x239a:0x8146 | experimental | low |
+| adafruit-metro-esp32s3-mtp-8148 | 0x239a:0x8148 | experimental | low |
+| sparkfun-artemis-redboard-mtp-0030 | 0x1b4f:0x0030 | experimental | low |
+| sparkfun-redboard-turbo-mtp-0032 | 0x1b4f:0x0032 | experimental | low |
+| sparkfun-samd21-mini-mtp-0034 | 0x1b4f:0x0034 | experimental | low |
+| sparkfun-thing-plus-samd51-mtp-0036 | 0x1b4f:0x0036 | experimental | low |
+| sparkfun-micromod-samd51-mtp-0038 | 0x1b4f:0x0038 | experimental | low |
+| sparkfun-thing-plus-matter-mtp-003a | 0x1b4f:0x003a | experimental | low |
+| sparkfun-artemis-nano-mtp-003c | 0x1b4f:0x003c | experimental | low |
+| bbc-microbit-v2-bootloader-0216 | 0x0d28:0x0216 | experimental | low |
+| nvidia-jetson-agx-orin-64gb-mtp-7e25 | 0x0955:0x7e25 | experimental | low |
+| espressif-esp32c2-tinyusb-mtp-4001 | 0x303a:0x4001 | experimental | low |
+| espressif-esp32c5-tinyusb-mtp-4002 | 0x303a:0x4002 | experimental | low |
+| stm32l5-nucleo-mtp-5745 | 0x0483:0x5745 | experimental | low |
+| ti-launchpad-msp430g2-0200 | 0x2047:0x0200 | experimental | low |
+| ti-launchpad-msp432p401r-0201 | 0x2047:0x0201 | experimental | low |
+| ti-launchpad-cc2652r-0300 | 0x2047:0x0300 | experimental | low |
+| ti-launchpad-cc1352p-0301 | 0x2047:0x0301 | experimental | low |
+| ti-launchpad-tms320f28379d-0400 | 0x2047:0x0400 | experimental | low |
 
-## Drone (114)
+## Drone (120)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2335,8 +2403,14 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | holystone-hs175d-0003 | 0x3517:0x0003 | community | community |
 | holystone-hs710-0004 | 0x3517:0x0004 | community | community |
 | holystone-hs600-0005 | 0x3517:0x0005 | community | community |
+| dji-mini-3-1022 | 0x2ca3:0x1022 | proposed | low |
+| dji-mini-3-pro-1023 | 0x2ca3:0x1023 | proposed | low |
+| dji-avata-1024 | 0x2ca3:0x1024 | proposed | low |
+| dji-avata-2-1025 | 0x2ca3:0x1025 | proposed | low |
+| dji-air-3-1026 | 0x2ca3:0x1026 | proposed | low |
+| dji-mini-4-pro-1027 | 0x2ca3:0x1027 | proposed | low |
 
-## E Reader (192)
+## E Reader (197)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2527,13 +2601,18 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | dasung-paperlike-253-0002 | 0x2d20:0x0002 | community | community |
 | dasung-paperlike-color-0003 | 0x2d20:0x0003 | community | community |
 | mira-pro-0001 | 0x3537:0x0001 | community | community |
+| amazon-kindle-2024-0c3c | 0x1949:0x0c3c | proposed | low |
+| amazon-kindle-paperwhite-2024-0c3d | 0x1949:0x0c3d | proposed | low |
+| amazon-kindle-colorsoft-0c3e | 0x1949:0x0c3e | proposed | low |
+| amazon-kindle-scribe-2024-0c3f | 0x1949:0x0c3f | proposed | low |
+| amazon-kindle-oasis-2022-0c40 | 0x1949:0x0c40 | proposed | low |
 | Kobo Clara 2E | 0x2237:0x7010 | experimental | unknown |
 | Kobo Elipsa 2E | 0x2237:0x7013 | experimental | unknown |
 | Kobo Libra 2 | 0x2237:0x7011 | experimental | unknown |
 | Kobo Sage | 0x2237:0x7012 | experimental | unknown |
 | reMarkable 2 | 0x04b3:0x0610 | experimental | unknown |
 
-## Embedded (40)
+## Embedded (65)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2577,6 +2656,31 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | vector-gl2400-datalogger-0102 | 0x1cb1:0x0102 | community | community |
 | peak-pcan-usb-fd-pro-000c | 0x0c72:0x000c | community | community |
 | peak-pcan-router-fd-000d | 0x0c72:0x000d | community | community |
+| irobot-roomba-s9plus-diag-0030 | 0x04d8:0x0030 | experimental | low |
+| irobot-roomba-i7plus-diag-0031 | 0x04d8:0x0031 | experimental | low |
+| irobot-braava-jet-m6-diag-0032 | 0x04d8:0x0032 | experimental | low |
+| irobot-roomba-960-diag-0033 | 0x04d8:0x0033 | experimental | low |
+| irobot-roomba-e5-diag-0034 | 0x04d8:0x0034 | experimental | low |
+| irobot-roomba-j7plus-diag-0035 | 0x04d8:0x0035 | experimental | low |
+| irobot-roomba-694-diag-0036 | 0x04d8:0x0036 | experimental | low |
+| dji-robomaster-s1-1028 | 0x2ca3:0x1028 | experimental | low |
+| dji-robomaster-ep-1029 | 0x2ca3:0x1029 | experimental | low |
+| dji-robomaster-ep-core-102a | 0x2ca3:0x102a | experimental | low |
+| lego-mindstorms-ev3-0005 | 0x0694:0x0005 | experimental | low |
+| lego-mindstorms-robot-inventor-0010 | 0x0694:0x0010 | experimental | low |
+| lego-spike-prime-0011 | 0x0694:0x0011 | experimental | low |
+| lego-spike-essential-0012 | 0x0694:0x0012 | experimental | low |
+| lego-mindstorms-nxt-0013 | 0x0694:0x0013 | experimental | low |
+| makeblock-mbot-ch340-7523 | 0x1a86:0x7523 | experimental | low |
+| makeblock-mbot2-ch340-7524 | 0x1a86:0x7524 | experimental | low |
+| makeblock-codey-rocky-ch340-7525 | 0x1a86:0x7525 | experimental | low |
+| makeblock-cyberpi-ch340-7526 | 0x1a86:0x7526 | experimental | low |
+| flipper-zero-storage-5743 | 0x0483:0x5743 | experimental | low |
+| flipper-zero-mtp-5744 | 0x0483:0x5744 | experimental | low |
+| segway-ninebot-max-g30-diag-0001 | 0x2afe:0x0001 | experimental | low |
+| segway-ninebot-s-diag-0002 | 0x2afe:0x0002 | experimental | low |
+| segway-ninebot-es4-diag-0003 | 0x2afe:0x0003 | experimental | low |
+| segway-loomo-robot-diag-0004 | 0x2afe:0x0004 | experimental | low |
 
 ## Fitness (56)
 
@@ -2639,7 +2743,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | zwift-hub-0002 | 0x36c0:0x0002 | community | community |
 | zwift-play-controller-0003 | 0x36c0:0x0003 | community | community |
 
-## Gaming Handheld (81)
+## Gaming Handheld (83)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2721,11 +2825,13 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | anbernic-rg556-android14-6016 | 0x1f3a:0x6016 | proposed | low |
 | anbernic-rg-arc-d-6017 | 0x1f3a:0x6017 | proposed | low |
 | anbernic-rg-arc-s-6018 | 0x1f3a:0x6018 | proposed | low |
+| ayn-odin-2-1006 | 0x2b4c:0x1006 | proposed | low |
+| ayn-odin-2-mini-1007 | 0x2b4c:0x1007 | proposed | low |
 | Nintendo Switch | 0x057e:0x2000 | experimental | unknown |
 | Nintendo Switch Lite | 0x057e:0x2001 | experimental | unknown |
 | Nintendo Switch OLED | 0x057e:0x2002 | experimental | unknown |
 
-## Gps Navigator (225)
+## Gps Navigator (319)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2953,6 +3059,100 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | landairsea-overdrive-0201 | 0x34c2:0x0201 | proposed | low |
 | landairsea-sync-0202 | 0x34c2:0x0202 | proposed | low |
 | vyncs-gps-tracker-0301 | 0x34c3:0x0301 | proposed | low |
+| garmin-gpsmap-8616xsv-3001 | 0x091e:0x3001 | experimental | unknown |
+| garmin-gpsmap-8612xsv-3002 | 0x091e:0x3002 | experimental | unknown |
+| garmin-gpsmap-8610xsv-3003 | 0x091e:0x3003 | experimental | unknown |
+| garmin-gpsmap-8608xsv-3004 | 0x091e:0x3004 | experimental | unknown |
+| garmin-gpsmap-1243xsv-3005 | 0x091e:0x3005 | experimental | unknown |
+| garmin-gpsmap-1042xsv-3006 | 0x091e:0x3006 | experimental | unknown |
+| garmin-gpsmap-943xsv-3007 | 0x091e:0x3007 | experimental | unknown |
+| garmin-gpsmap-743xsv-3008 | 0x091e:0x3008 | experimental | unknown |
+| garmin-gpsmap-923-3009 | 0x091e:0x3009 | experimental | unknown |
+| garmin-gpsmap-723-300a | 0x091e:0x300a | experimental | unknown |
+| garmin-striker-vivid-9sv-300b | 0x091e:0x300b | experimental | unknown |
+| garmin-striker-vivid-7sv-300c | 0x091e:0x300c | experimental | unknown |
+| garmin-striker-vivid-5cv-300d | 0x091e:0x300d | experimental | unknown |
+| garmin-striker-plus-9sv-300e | 0x091e:0x300e | experimental | unknown |
+| garmin-striker-plus-7sv-300f | 0x091e:0x300f | experimental | unknown |
+| garmin-echomap-uhd2-95sv-3010 | 0x091e:0x3010 | experimental | unknown |
+| garmin-echomap-uhd2-75sv-3011 | 0x091e:0x3011 | experimental | unknown |
+| garmin-echomap-uhd2-65sv-3012 | 0x091e:0x3012 | experimental | unknown |
+| garmin-echomap-uhd2-55cv-3013 | 0x091e:0x3013 | experimental | unknown |
+| garmin-echomap-ultra2-106sv-3014 | 0x091e:0x3014 | experimental | unknown |
+| garmin-aera-760-3020 | 0x091e:0x3020 | experimental | unknown |
+| garmin-aera-660-3021 | 0x091e:0x3021 | experimental | unknown |
+| garmin-gdl-52-3022 | 0x091e:0x3022 | experimental | unknown |
+| garmin-gdl-52r-3023 | 0x091e:0x3023 | experimental | unknown |
+| garmin-gtn-650xi-3024 | 0x091e:0x3024 | experimental | unknown |
+| garmin-gtn-750xi-3025 | 0x091e:0x3025 | experimental | unknown |
+| garmin-gps-175-3026 | 0x091e:0x3026 | experimental | unknown |
+| garmin-gnx-375-3027 | 0x091e:0x3027 | experimental | unknown |
+| garmin-g3x-touch-3028 | 0x091e:0x3028 | experimental | unknown |
+| garmin-d2-mach-1-3029 | 0x091e:0x3029 | experimental | unknown |
+| garmin-inreach-mini-2-3030 | 0x091e:0x3030 | experimental | unknown |
+| garmin-inreach-explorer-plus-3031 | 0x091e:0x3031 | experimental | unknown |
+| garmin-inreach-messenger-3032 | 0x091e:0x3032 | experimental | unknown |
+| garmin-gpsmap-67i-3033 | 0x091e:0x3033 | experimental | unknown |
+| garmin-gpsmap-86sci-3034 | 0x091e:0x3034 | experimental | unknown |
+| garmin-montana-700i-3035 | 0x091e:0x3035 | experimental | unknown |
+| humminbird-helix-12-chirp-mega-a010 | 0x0451:0xa010 | experimental | unknown |
+| humminbird-helix-10-chirp-mega-a011 | 0x0451:0xa011 | experimental | unknown |
+| humminbird-helix-9-chirp-mega-a012 | 0x0451:0xa012 | experimental | unknown |
+| humminbird-helix-7-chirp-mega-a013 | 0x0451:0xa013 | experimental | unknown |
+| humminbird-helix-5-chirp-gps-a014 | 0x0451:0xa014 | experimental | unknown |
+| humminbird-solix-15-chirp-mega-a015 | 0x0451:0xa015 | experimental | unknown |
+| humminbird-solix-12-chirp-mega-a016 | 0x0451:0xa016 | experimental | unknown |
+| humminbird-solix-10-chirp-mega-a017 | 0x0451:0xa017 | experimental | unknown |
+| humminbird-apex-19-mega-a018 | 0x0451:0xa018 | experimental | unknown |
+| humminbird-apex-16-mega-a019 | 0x0451:0xa019 | experimental | unknown |
+| lowrance-hds-16-live-b010 | 0x2047:0xb010 | experimental | unknown |
+| lowrance-hds-12-live-b011 | 0x2047:0xb011 | experimental | unknown |
+| lowrance-hds-9-live-b012 | 0x2047:0xb012 | experimental | unknown |
+| lowrance-hds-7-live-b013 | 0x2047:0xb013 | experimental | unknown |
+| lowrance-hds-pro-16-b014 | 0x2047:0xb014 | experimental | unknown |
+| lowrance-hds-pro-12-b015 | 0x2047:0xb015 | experimental | unknown |
+| lowrance-hds-pro-9-b016 | 0x2047:0xb016 | experimental | unknown |
+| lowrance-hook-reveal-9-b017 | 0x2047:0xb017 | experimental | unknown |
+| lowrance-hook-reveal-7-b018 | 0x2047:0xb018 | experimental | unknown |
+| lowrance-hook-reveal-5-b019 | 0x2047:0xb019 | experimental | unknown |
+| lowrance-elite-fs-9-b01a | 0x2047:0xb01a | experimental | unknown |
+| lowrance-elite-fs-7-b01b | 0x2047:0xb01b | experimental | unknown |
+| raymarine-axiom2-pro-16-c010 | 0x1b67:0xc010 | experimental | unknown |
+| raymarine-axiom2-pro-12-c011 | 0x1b67:0xc011 | experimental | unknown |
+| raymarine-axiom2-pro-9-c012 | 0x1b67:0xc012 | experimental | unknown |
+| raymarine-axiom-xl-22-c013 | 0x1b67:0xc013 | experimental | unknown |
+| raymarine-axiom-xl-16-c014 | 0x1b67:0xc014 | experimental | unknown |
+| raymarine-element-12-hv-c015 | 0x1b67:0xc015 | experimental | unknown |
+| raymarine-element-9-hv-c016 | 0x1b67:0xc016 | experimental | unknown |
+| raymarine-element-7-hv-c017 | 0x1b67:0xc017 | experimental | unknown |
+| simrad-nso-evo3s-16-b030 | 0x2047:0xb030 | experimental | unknown |
+| simrad-nso-evo3s-24-b031 | 0x2047:0xb031 | experimental | unknown |
+| simrad-nss-evo3s-16-b032 | 0x2047:0xb032 | experimental | unknown |
+| simrad-nss-evo3s-12-b033 | 0x2047:0xb033 | experimental | unknown |
+| simrad-nss-evo3s-9-b034 | 0x2047:0xb034 | experimental | unknown |
+| simrad-cruise-9-b035 | 0x2047:0xb035 | experimental | unknown |
+| simrad-cruise-7-b036 | 0x2047:0xb036 | experimental | unknown |
+| bg-zeus-s-12-b040 | 0x2047:0xb040 | experimental | unknown |
+| bg-zeus-s-9-b041 | 0x2047:0xb041 | experimental | unknown |
+| bg-vulcan-12-b042 | 0x2047:0xb042 | experimental | unknown |
+| bg-vulcan-9-b043 | 0x2047:0xb043 | experimental | unknown |
+| bg-vulcan-7-b044 | 0x2047:0xb044 | experimental | unknown |
+| furuno-navnet-tztouch3-16-d010 | 0x1cfa:0xd010 | experimental | unknown |
+| furuno-navnet-tztouch3-12-d011 | 0x1cfa:0xd011 | experimental | unknown |
+| furuno-navnet-tztouch3-9-d012 | 0x1cfa:0xd012 | experimental | unknown |
+| furuno-gp1971f-d013 | 0x1cfa:0xd013 | experimental | unknown |
+| furuno-gp1871f-d014 | 0x1cfa:0xd014 | experimental | unknown |
+| iridium-go-exec-e010 | 0x1bc7:0xe010 | experimental | unknown |
+| iridium-go-e011 | 0x1bc7:0xe011 | experimental | unknown |
+| iridium-9575a-extreme-e012 | 0x1bc7:0xe012 | experimental | unknown |
+| iridium-9555-e013 | 0x1bc7:0xe013 | experimental | unknown |
+| spot-x-2way-messenger-f010 | 0x21a9:0xf010 | experimental | unknown |
+| spot-gen4-f011 | 0x21a9:0xf011 | experimental | unknown |
+| spot-trace-f012 | 0x21a9:0xf012 | experimental | unknown |
+| acr-resqlink-400-plb-f020 | 0x27b6:0xf020 | experimental | unknown |
+| acr-resqlink-view-plb-f021 | 0x27b6:0xf021 | experimental | unknown |
+| acr-globalfix-v5-epirb-f022 | 0x27b6:0xf022 | experimental | unknown |
+| acr-bivy-stick-f023 | 0x27b6:0xf023 | experimental | unknown |
 | Garmin Edge 1040 | 0x091e:0x4c60 | experimental | unknown |
 
 ## Industrial Camera (75)
@@ -3035,7 +3235,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | imaging-source-dfk-zoom-0030 | 0x199e:0x0030 | experimental | community |
 | imaging-source-dmk-usb2-0040 | 0x199e:0x0040 | experimental | community |
 
-## Lab Instrument (106)
+## Lab Instrument (116)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -3145,8 +3345,18 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | ipevo-v4k-pro-document-camera-0001 | 0x1778:0x0001 | community | community |
 | hovercam-solo-8-plus-0001 | 0x1871:0x0001 | community | community |
 | hovercam-ultra-8-0002 | 0x1871:0x0002 | community | community |
+| keysight-dsox1204g-0106 | 0x2a8d:0x0106 | proposed | low |
+| keysight-edux1052a-0107 | 0x2a8d:0x0107 | proposed | low |
+| keysight-n9000b-0108 | 0x2a8d:0x0108 | proposed | low |
+| keysight-34470a-0109 | 0x2a8d:0x0109 | proposed | low |
+| keysight-e36312a-010a | 0x2a8d:0x010a | proposed | low |
+| tektronix-mso24-0524 | 0x0699:0x0524 | proposed | low |
+| tektronix-mso44-0525 | 0x0699:0x0525 | proposed | low |
+| tektronix-afg31252-0526 | 0x0699:0x0526 | proposed | low |
+| tektronix-dmm7510-0527 | 0x0699:0x0527 | proposed | low |
+| tektronix-rsa507a-0528 | 0x0699:0x0528 | proposed | low |
 
-## Media Player (549)
+## Media Player (559)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -3623,6 +3833,16 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | marshall-acton-iii-0017 | 0x2ad9:0x0017 | proposed | low |
 | sony-srs-xg300-0e82 | 0x054c:0x0e82 | proposed | low |
 | sony-srs-xb43-0e84 | 0x054c:0x0e84 | proposed | low |
+| apple-ipod-classic-6g-1261 | 0x05ac:0x1261 | proposed | low |
+| apple-ipod-classic-7g-1263 | 0x05ac:0x1263 | proposed | low |
+| apple-ipod-nano-5g-1265 | 0x05ac:0x1265 | proposed | low |
+| apple-ipod-nano-6g-1266 | 0x05ac:0x1266 | proposed | low |
+| apple-ipod-nano-7g-1267 | 0x05ac:0x1267 | proposed | low |
+| microsoft-zune-4gb-0719 | 0x045e:0x0719 | proposed | low |
+| microsoft-zune-16gb-071a | 0x045e:0x071a | proposed | low |
+| microsoft-zune-120gb-071b | 0x045e:0x071b | proposed | low |
+| microsoft-kin-one-071c | 0x045e:0x071c | proposed | low |
+| microsoft-kin-two-071d | 0x045e:0x071d | proposed | low |
 | Archos 28 Internet Tablet | 0x0e79:0x1413 | community | community |
 | Archos 32 Internet Tablet | 0x0e79:0x1415 | community | community |
 | Archos 35 Internet Tablet | 0x0e79:0x1419 | community | community |
@@ -3849,7 +4069,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | ninyoon-usb-microscope-4k-6368 | 0x0c45:0x6368 | community | community |
 | carson-eflex-digital-microscope-636c | 0x0c45:0x636c | community | community |
 
-## Phone (3065)
+## Phone (3184)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -6803,6 +7023,125 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | nokia-g22-5g-c04b | 0x2e04:0xc04b | proposed | low |
 | nokia-g60-5g-c04c | 0x2e04:0xc04c | proposed | low |
 | nokia-c32-c04d | 0x2e04:0xc04d | proposed | low |
+| google-pixel-8a-4f08 | 0x18d1:0x4f08 | proposed | low |
+| google-pixel-7a-4f09 | 0x18d1:0x4f09 | proposed | low |
+| google-pixel-6a-4f0a | 0x18d1:0x4f0a | proposed | low |
+| google-pixel-fold-4f0b | 0x18d1:0x4f0b | proposed | low |
+| google-pixel-9-4f0c | 0x18d1:0x4f0c | proposed | low |
+| google-pixel-9-pro-4f0d | 0x18d1:0x4f0d | proposed | low |
+| google-pixel-9-pro-fold-4f0e | 0x18d1:0x4f0e | proposed | low |
+| google-pixel-8-pro-4f0f | 0x18d1:0x4f0f | proposed | low |
+| samsung-galaxy-m14-6c08 | 0x04e8:0x6c08 | proposed | low |
+| samsung-galaxy-m34-6c09 | 0x04e8:0x6c09 | proposed | low |
+| samsung-galaxy-m54-6c0a | 0x04e8:0x6c0a | proposed | low |
+| samsung-galaxy-f14-6c0b | 0x04e8:0x6c0b | proposed | low |
+| samsung-galaxy-f34-6c0c | 0x04e8:0x6c0c | proposed | low |
+| samsung-galaxy-f54-6c0d | 0x04e8:0x6c0d | proposed | low |
+| samsung-galaxy-m15-6c0e | 0x04e8:0x6c0e | proposed | low |
+| samsung-galaxy-a05s-6c0f | 0x04e8:0x6c0f | proposed | low |
+| iqoo-neo-9-800b | 0x2d95:0x800b | proposed | low |
+| iqoo-neo-9-pro-800c | 0x2d95:0x800c | proposed | low |
+| iqoo-12-800d | 0x2d95:0x800d | proposed | low |
+| iqoo-z9-turbo-800e | 0x2d95:0x800e | proposed | low |
+| poco-f6-101f | 0x1ebf:0x101f | proposed | low |
+| poco-f6-pro-1020 | 0x1ebf:0x1020 | proposed | low |
+| poco-x6-pro-1021 | 0x1ebf:0x1021 | proposed | low |
+| poco-m6-pro-1022 | 0x1ebf:0x1022 | proposed | low |
+| poco-c65-1023 | 0x1ebf:0x1023 | proposed | low |
+| redmi-k70-ffad | 0x2717:0xffad | proposed | low |
+| redmi-k70-pro-ffae | 0x2717:0xffae | proposed | low |
+| redmi-k60-ultra-ffaf | 0x2717:0xffaf | proposed | low |
+| redmi-note-13-pro-plus-ffb0 | 0x2717:0xffb0 | proposed | low |
+| redmi-13c-ffb1 | 0x2717:0xffb1 | proposed | low |
+| tecno-camon-30-6039 | 0x1d5b:0x6039 | experimental | low |
+| tecno-camon-30-pro-603a | 0x1d5b:0x603a | experimental | low |
+| tecno-camon-30-premier-603b | 0x1d5b:0x603b | experimental | low |
+| tecno-spark-20-603c | 0x1d5b:0x603c | experimental | low |
+| tecno-spark-20-pro-603d | 0x1d5b:0x603d | experimental | low |
+| tecno-spark-20-proplus-603e | 0x1d5b:0x603e | experimental | low |
+| tecno-pova-6-603f | 0x1d5b:0x603f | experimental | low |
+| tecno-pova-6-pro-6040 | 0x1d5b:0x6040 | experimental | low |
+| tecno-phantom-v-fold2-6041 | 0x1d5b:0x6041 | experimental | low |
+| tecno-phantom-x2-pro-6042 | 0x1d5b:0x6042 | experimental | low |
+| infinix-note-40-6033 | 0x1d5c:0x6033 | experimental | low |
+| infinix-note-40-pro-6034 | 0x1d5c:0x6034 | experimental | low |
+| infinix-note-40-proplus-6035 | 0x1d5c:0x6035 | experimental | low |
+| infinix-hot-40-6036 | 0x1d5c:0x6036 | experimental | low |
+| infinix-hot-40-pro-6037 | 0x1d5c:0x6037 | experimental | low |
+| infinix-hot-40i-6038 | 0x1d5c:0x6038 | experimental | low |
+| infinix-zero-40-6039 | 0x1d5c:0x6039 | experimental | low |
+| infinix-zero-40-5g-603a | 0x1d5c:0x603a | experimental | low |
+| infinix-gt-20-pro-603b | 0x1d5c:0x603b | experimental | low |
+| infinix-smart-8-hd-603c | 0x1d5c:0x603c | experimental | low |
+| itel-a70-6032 | 0x1d4d:0x6032 | experimental | low |
+| itel-a70-pro-6033 | 0x1d4d:0x6033 | experimental | low |
+| itel-p55-6034 | 0x1d4d:0x6034 | experimental | low |
+| itel-p55-plus-6035 | 0x1d4d:0x6035 | experimental | low |
+| itel-p55-5g-6036 | 0x1d4d:0x6036 | experimental | low |
+| itel-s24-6037 | 0x1d4d:0x6037 | experimental | low |
+| itel-s24-pro-6038 | 0x1d4d:0x6038 | experimental | low |
+| itel-rs4-6039 | 0x1d4d:0x6039 | experimental | low |
+| oukitel-wp35-20bc | 0x0e8d:0x20bc | experimental | low |
+| oukitel-wp33-pro-20bd | 0x0e8d:0x20bd | experimental | low |
+| oukitel-c36-20be | 0x0e8d:0x20be | experimental | low |
+| oukitel-c35-20bf | 0x0e8d:0x20bf | experimental | low |
+| doogee-s200-20c0 | 0x0e8d:0x20c0 | experimental | low |
+| doogee-n50-pro-20c1 | 0x0e8d:0x20c1 | experimental | low |
+| doogee-n55-20c2 | 0x0e8d:0x20c2 | experimental | low |
+| doogee-t30-ultra-20c3 | 0x0e8d:0x20c3 | experimental | low |
+| doogee-v20s-20c4 | 0x0e8d:0x20c4 | experimental | low |
+| ulefone-armor-25t-pro-20c5 | 0x0e8d:0x20c5 | experimental | low |
+| ulefone-armor-26-ultra-20c6 | 0x0e8d:0x20c6 | experimental | low |
+| ulefone-note-17-pro-20c7 | 0x0e8d:0x20c7 | experimental | low |
+| ulefone-note-16-20c8 | 0x0e8d:0x20c8 | experimental | low |
+| ulefone-power-armor-19s-20c9 | 0x0e8d:0x20c9 | experimental | low |
+| blackview-bv9300-pro-20ca | 0x0e8d:0x20ca | experimental | low |
+| blackview-bv7100-20cb | 0x0e8d:0x20cb | experimental | low |
+| blackview-bv5200-pro-20cc | 0x0e8d:0x20cc | experimental | low |
+| blackview-tab-16-pro-20cd | 0x0e8d:0x20cd | experimental | low |
+| blackview-hero-10-20ce | 0x0e8d:0x20ce | experimental | low |
+| blackview-shark-8-pro-20cf | 0x0e8d:0x20cf | experimental | low |
+| cubot-kingkong-star-2-20d0 | 0x0e8d:0x20d0 | experimental | low |
+| cubot-kingkong-mini-4-20d1 | 0x0e8d:0x20d1 | experimental | low |
+| cubot-note-50-20d2 | 0x0e8d:0x20d2 | experimental | low |
+| cubot-note-40-20d3 | 0x0e8d:0x20d3 | experimental | low |
+| cubot-p80-20d4 | 0x0e8d:0x20d4 | experimental | low |
+| symphony-z50-20d5 | 0x0e8d:0x20d5 | experimental | low |
+| symphony-z55-20d6 | 0x0e8d:0x20d6 | experimental | low |
+| symphony-atom-3-20d7 | 0x0e8d:0x20d7 | experimental | low |
+| symphony-roar-v95-20d8 | 0x0e8d:0x20d8 | experimental | low |
+| walton-primo-s8-20d9 | 0x0e8d:0x20d9 | experimental | low |
+| walton-primo-r8-20da | 0x0e8d:0x20da | experimental | low |
+| walton-primo-e12-20db | 0x0e8d:0x20db | experimental | low |
+| walton-primo-gh10-20dc | 0x0e8d:0x20dc | experimental | low |
+| qmobile-qsmart-hot-pro-20dd | 0x0e8d:0x20dd | experimental | low |
+| qmobile-noir-z9-plus-20de | 0x0e8d:0x20de | experimental | low |
+| qmobile-bolt-t50-20df | 0x0e8d:0x20df | experimental | low |
+| qmobile-smart-view-3-20e0 | 0x0e8d:0x20e0 | experimental | low |
+| safaricom-neon-nova-20e1 | 0x0e8d:0x20e1 | experimental | low |
+| safaricom-neon-ray-pro-20e2 | 0x0e8d:0x20e2 | experimental | low |
+| safaricom-neon-storm-20e3 | 0x0e8d:0x20e3 | experimental | low |
+| safaricom-neon-play-20e4 | 0x0e8d:0x20e4 | experimental | low |
+| condor-allure-a100-20e5 | 0x0e8d:0x20e5 | experimental | low |
+| condor-plume-p10-pro-20e6 | 0x0e8d:0x20e6 | experimental | low |
+| condor-griffe-g6-pro-20e7 | 0x0e8d:0x20e7 | experimental | low |
+| condor-allure-m5-20e8 | 0x0e8d:0x20e8 | experimental | low |
+| oppo-reno12-f-5g-27c2 | 0x22d9:0x27c2 | experimental | low |
+| oppo-reno11-f-27c3 | 0x22d9:0x27c3 | experimental | low |
+| oppo-reno11-a-27c4 | 0x22d9:0x27c4 | experimental | low |
+| oppo-a3x-27c5 | 0x22d9:0x27c5 | experimental | low |
+| oppo-a60-27c6 | 0x22d9:0x27c6 | experimental | low |
+| oppo-a58-5g-27c7 | 0x22d9:0x27c7 | experimental | low |
+| oppo-find-x8-pro-27c8 | 0x22d9:0x27c8 | experimental | low |
+| oppo-find-x8-27c9 | 0x22d9:0x27c9 | experimental | low |
+| vivo-v30-lite-6041 | 0x2d95:0x6041 | experimental | low |
+| vivo-v30e-6042 | 0x2d95:0x6042 | experimental | low |
+| vivo-y100-4g-6043 | 0x2d95:0x6043 | experimental | low |
+| vivo-y100a-6044 | 0x2d95:0x6044 | experimental | low |
+| vivo-y36-4g-6045 | 0x2d95:0x6045 | experimental | low |
+| vivo-y28-5g-6046 | 0x2d95:0x6046 | experimental | low |
+| vivo-y18-6047 | 0x2d95:0x6047 | experimental | low |
+| vivo-y03-6048 | 0x2d95:0x6048 | experimental | low |
 | AGM Glory SE | 0x0e8d:0x2051 | community | community |
 | AGM H5 Pro | 0x0e8d:0x2050 | community | community |
 | BLU Bold N3 | 0x0e8d:0x2062 | community | community |
@@ -7144,6 +7483,52 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | summa-s-class2-t160-0001 | 0x3283:0x0001 | community | community |
 | summa-f-series-f1612-0003 | 0x3283:0x0003 | community | community |
 
+## Projector (41)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| xgimi-halo-plus-0100 | 0x3435:0x0100 | experimental | low |
+| xgimi-halo-plus-4k-0101 | 0x3435:0x0101 | experimental | low |
+| xgimi-mogo-2-pro-0102 | 0x3435:0x0102 | experimental | low |
+| xgimi-mogo-2-0103 | 0x3435:0x0103 | experimental | low |
+| xgimi-horizon-ultra-0104 | 0x3435:0x0104 | experimental | low |
+| xgimi-horizon-pro-0105 | 0x3435:0x0105 | experimental | low |
+| xgimi-elfin-0106 | 0x3435:0x0106 | experimental | low |
+| xgimi-elfin-flip-0107 | 0x3435:0x0107 | experimental | low |
+| xgimi-aura-2-0108 | 0x3435:0x0108 | experimental | low |
+| anker-nebula-capsule3-0100 | 0x291a:0x0100 | experimental | low |
+| anker-nebula-capsule3-laser-0101 | 0x291a:0x0101 | experimental | low |
+| anker-nebula-mars3-0102 | 0x291a:0x0102 | experimental | low |
+| anker-nebula-mars3-air-0103 | 0x291a:0x0103 | experimental | low |
+| anker-nebula-cosmos-0104 | 0x291a:0x0104 | experimental | low |
+| anker-nebula-cosmos-4k-0105 | 0x291a:0x0105 | experimental | low |
+| anker-nebula-cosmos-laser-0106 | 0x291a:0x0106 | experimental | low |
+| anker-nebula-solar-portable-0107 | 0x291a:0x0107 | experimental | low |
+| benq-gv50-0100 | 0x2101:0x0100 | experimental | low |
+| benq-gv30-0101 | 0x2101:0x0101 | experimental | low |
+| benq-gs50-0102 | 0x2101:0x0102 | experimental | low |
+| benq-ew2780u-0103 | 0x2101:0x0103 | experimental | low |
+| benq-gv11-0104 | 0x2101:0x0104 | experimental | low |
+| benq-ew2480-0105 | 0x2101:0x0105 | experimental | low |
+| samsung-freestyle-6881 | 0x04e8:0x6881 | experimental | low |
+| samsung-freestyle-2nd-gen-6888 | 0x04e8:0x6888 | experimental | low |
+| samsung-premiere-lsp9t-6889 | 0x04e8:0x6889 | experimental | low |
+| lg-cinebeam-pf50ka-7100 | 0x043e:0x7100 | experimental | low |
+| lg-cinebeam-hu710pw-7101 | 0x043e:0x7101 | experimental | low |
+| lg-cinebeam-hu915qe-7102 | 0x043e:0x7102 | experimental | low |
+| lg-cinebeam-ph30n-7103 | 0x043e:0x7103 | experimental | low |
+| lg-cinebeam-pf610p-7104 | 0x043e:0x7104 | experimental | low |
+| epson-ef-21-0900 | 0x04b8:0x0900 | experimental | low |
+| epson-ef-12-0905 | 0x04b8:0x0905 | experimental | low |
+| epson-ef-11-0906 | 0x04b8:0x0906 | experimental | low |
+| epson-ef100-0907 | 0x04b8:0x0907 | experimental | low |
+| epson-ls800-0908 | 0x04b8:0x0908 | experimental | low |
+| epson-ls500-0909 | 0x04b8:0x0909 | experimental | low |
+| viewsonic-m1-mini-0220 | 0x0543:0x0220 | experimental | low |
+| viewsonic-m2w-0221 | 0x0543:0x0221 | experimental | low |
+| viewsonic-m10e-0222 | 0x0543:0x0222 | experimental | low |
+| jbl-playlist-proj-0300 | 0x0b0e:0x0300 | experimental | low |
+
 ## Scanner (64)
 
 | Device | VID:PID | Status | Confidence |
@@ -7343,7 +7728,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | petcube-bites-2-0001 | 0x3488:0x0001 | proposed | medium |
 | petcube-play-2-0002 | 0x3488:0x0002 | proposed | medium |
 
-## Storage (92)
+## Storage (107)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -7439,8 +7824,23 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | lacie-1big-dock-1084 | 0x059f:0x1084 | proposed | low |
 | lacie-2big-dock-1085 | 0x059f:0x1085 | proposed | low |
 | lacie-rugged-boss-ssd-1086 | 0x059f:0x1086 | proposed | low |
+| kingston-datatraveler-100-1668 | 0x0951:0x1668 | proposed | low |
+| kingston-datatraveler-exodia-1669 | 0x0951:0x1669 | proposed | low |
+| kingston-datatraveler-max-166a | 0x0951:0x166a | proposed | low |
+| kingston-ironkey-d300s-166b | 0x0951:0x166b | proposed | low |
+| kingston-ironkey-vp50-166c | 0x0951:0x166c | proposed | low |
+| kingston-ironkey-kp200-166d | 0x0951:0x166d | proposed | low |
+| kingston-xs2000-166e | 0x0951:0x166e | proposed | low |
+| crucial-x9-portable-0663 | 0x0634:0x0663 | proposed | low |
+| crucial-x10-pro-0664 | 0x0634:0x0664 | proposed | low |
+| crucial-x6-portable-0665 | 0x0634:0x0665 | proposed | low |
+| micron-2400-usb-0666 | 0x0634:0x0666 | proposed | low |
+| pny-pro-elite-v2-0068 | 0x154b:0x0068 | proposed | low |
+| pny-elite-x-fit-0069 | 0x154b:0x0069 | proposed | low |
+| pny-duo-link-006a | 0x154b:0x006a | proposed | low |
+| pny-cs2060-006b | 0x154b:0x006b | proposed | low |
 
-## Streaming Device (68)
+## Streaming Device (90)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -7511,9 +7911,31 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | sonos-arc-0635 | 0x1e54:0x0635 | proposed | low |
 | sonos-beam-3rd-0636 | 0x1e54:0x0636 | proposed | low |
 | sonos-ace-0637 | 0x1e54:0x0637 | proposed | low |
+| google-chromecast-gtv-4k-4e80 | 0x18d1:0x4e80 | experimental | low |
+| google-chromecast-gtv-hd-4e81 | 0x18d1:0x4e81 | experimental | low |
+| google-chromecast-ultra-4e82 | 0x18d1:0x4e82 | experimental | low |
+| google-chromecast-3rd-gen-4e83 | 0x18d1:0x4e83 | experimental | low |
+| amazon-fire-tv-stick-4k-max-0500 | 0x1949:0x0500 | experimental | low |
+| amazon-fire-tv-stick-4k-0501 | 0x1949:0x0501 | experimental | low |
+| amazon-fire-tv-stick-lite-0503 | 0x1949:0x0503 | experimental | low |
+| amazon-fire-tv-stick-3rd-gen-0504 | 0x1949:0x0504 | experimental | low |
+| amazon-fire-tv-cube-3rd-gen-0505 | 0x1949:0x0505 | experimental | low |
+| amazon-fire-tv-cube-2nd-gen-0506 | 0x1949:0x0506 | experimental | low |
+| amazon-fire-tv-stick-basic-0507 | 0x1949:0x0507 | experimental | low |
+| roku-streaming-stick-4k-plus-0100 | 0x2e52:0x0100 | experimental | low |
+| roku-streaming-stick-4k-0101 | 0x2e52:0x0101 | experimental | low |
+| roku-express-4k-plus-0102 | 0x2e52:0x0102 | experimental | low |
+| roku-express-0103 | 0x2e52:0x0103 | experimental | low |
+| roku-ultra-2022-0104 | 0x2e52:0x0104 | experimental | low |
+| apple-tv-4k-3rd-gen-diag-12c0 | 0x05ac:0x12c0 | experimental | low |
+| apple-tv-4k-2nd-gen-diag-12c1 | 0x05ac:0x12c1 | experimental | low |
+| apple-tv-hd-diag-12c2 | 0x05ac:0x12c2 | experimental | low |
+| nvidia-shield-tv-pro-2019-b410 | 0x0955:0xb410 | experimental | low |
+| nvidia-shield-tv-2019-b411 | 0x0955:0xb411 | experimental | low |
+| nvidia-shield-tv-pro-2017-b412 | 0x0955:0xb412 | experimental | low |
 | Roku Streaming Stick 4K | 0x1d5a:0x0001 | experimental | unknown |
 
-## Synthesizer (91)
+## Synthesizer (93)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -7608,6 +8030,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | native-instruments-komplete-kontrol-s88mk3-1405 | 0x17cc:0x1405 | proposed | medium |
 | akai-mpc-x-se-0074 | 0x09e8:0x0074 | proposed | medium |
 | akai-mpc-studio-mk2-0075 | 0x09e8:0x0075 | proposed | medium |
+| teenage-engineering-ep133-000c | 0x2367:0x000c | proposed | low |
+| teenage-engineering-tx6-000d | 0x2367:0x000d | proposed | low |
 
 ## Tablet (154)
 
@@ -7802,7 +8226,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | ioptron-cem70-mount-0003 | 0x1856:0x0003 | community | community |
 | ioptron-gotostar-hand-ctrl-0010 | 0x1856:0x0010 | community | community |
 
-## Thermal Camera (36)
+## Thermal Camera (38)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -7842,6 +8266,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | hikmicro-explorer-e20-0005 | 0x2955:0x0005 | proposed | low |
 | hikmicro-pocket1-0006 | 0x2955:0x0006 | proposed | low |
 | hikmicro-mini2-plus-0007 | 0x2955:0x0007 | proposed | low |
+| flir-one-pro-1019 | 0x09cb:0x1019 | proposed | low |
+| flir-one-edge-101a | 0x09cb:0x101a | proposed | low |
 
 ## Vr Headset (83)
 
@@ -7931,7 +8357,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | huawei-eyewear-gentle-monster-10a1 | 0x12d1:0x10a1 | community | community |
 | huawei-eyewear-aviator-10a2 | 0x12d1:0x10a2 | community | community |
 
-## Wearable (140)
+## Wearable (142)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -8072,6 +8498,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | suunto-vertical-titanium-0074 | 0x1493:0x0074 | proposed | medium |
 | withings-scanwatch-nova-000c | 0x30b5:0x000c | proposed | low |
 | withings-scanwatch-light-000d | 0x30b5:0x000d | proposed | low |
+| garmin-fenix-8-0b00 | 0x091e:0x0b00 | proposed | low |
+| garmin-enduro-3-0b01 | 0x091e:0x0b01 | proposed | low |
 | Garmin Fenix 7X | 0x091e:0x4c61 | experimental | unknown |
 | Garmin Forerunner 965 | 0x091e:0x4c62 | experimental | unknown |
 | Ray-Ban Meta Smart Glasses | 0x2d40:0x0001 | experimental | unknown |
