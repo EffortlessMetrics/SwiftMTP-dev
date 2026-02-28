@@ -4402,3 +4402,82 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Skydio X2 | 2fde:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
 | Fimi X8se 2022 | 2b4c:0001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
 | Fimi Mini Pro | 2b4c:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Polar Ignite 3 | 0da4:0010 | ⚪ proposed | — |
+| Wahoo Elemnt Roam | 31e0:0001 | ⚪ proposed | — |
+| Wahoo Elemnt Bolt V2 | 31e0:0002 | ⚪ proposed | — |
+| Coros Pace 3 | 3515:0001 | ⚪ proposed | — |
+| Coros Vertix 2s | 3515:0002 | ⚪ proposed | — |
+| Withings Scanwatch | 30b5:0001 | ⚪ proposed | — |
+| Pioneer Avh X4800bs | 08e4:0150 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Pioneer Avh W4500nex | 08e4:0151 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Pioneer Dmh 1770nex | 08e4:0152 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Pioneer Avh 2500nex | 08e4:0153 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Pioneer Dmh Wc6600nex | 08e4:0154 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Pioneer Dmh T450bt | 08e4:0155 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Kenwood Ddx9707s | 04bf:0310 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Kenwood Dnx997xr | 04bf:0311 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Kenwood Dmx1037s | 04bf:0312 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Kenwood Dmx809s | 04bf:0313 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Kenwood Ddx5707s | 04bf:0314 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Kenwood Dnr1007xr | 04bf:0315 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Alpine Ilx W670 | 0a4b:0060 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Alpine Ilx F511 | 0a4b:0061 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Alpine Ute 73bt | 0a4b:0062 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Alpine Ilx 407 | 0a4b:0063 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Alpine Ilx F509 | 0a4b:0064 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Sony Xav Ax5000 | 054c:0f10 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Sony Xav Ax7000 | 054c:0f11 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Sony Xav Ax3200 | 054c:0f12 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Sony Xav Ax150 | 054c:0f13 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Sony Xav Ax8100 | 054c:0f14 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Garmin Drivesmart 66 | 091e:4c50 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Garmin Drivesmart 76 | 091e:4c51 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Garmin Drivecam 76 | 091e:4c52 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Garmin Drive 53 | 091e:4c53 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Garmin Rv 895 | 091e:4c54 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Garmin Dezl Otr1010 | 091e:4c55 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Garmin Overlander 2 | 091e:4c56 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Tomtom Go Classic | 1390:5459 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Tomtom Go Expert | 1390:545a | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Tomtom Go Camper Max | 1390:545b | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Tomtom Go Navigator | 1390:545c | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Tomtom Rider 600 | 1390:545d | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Lenovo Tab P12 Pro | 17ef:7e17 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Lenovo Yoga Tab 13 | 17ef:7c78 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Lenovo Legion Y700 | 17ef:7f01 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Xiaomi Pad 6 | 2717:0670 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Redmi Pad Se | 2717:0680 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Supernote A5x2 | 2207:0032 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Supernote A6x2 | 2207:0033 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Fiio M11 Plus | 2972:0047 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Fiio M15 | 2972:003d | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Fiio M17 | 2972:004f | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Fiio M11s | 2972:0057 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Ibasso Dx320 | 2012:0007 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Ibasso Dx240 | 2012:0006 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Astelkern Kann Ultra | 4102:0341 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Astelkern Sp3000 | 4102:0351 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Astelkern Sr35 | 4102:0361 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Astelkern Sr25 | 4102:0331 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Hiby R6 Iii | 2d95:6003 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Hiby R8 Ii | 2d95:8002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Hiby Rs6 | 2d95:5006 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Hiby New R6 | 2d95:6006 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Lotoo Paw 6000 | 0525:6000 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Lotoo Paw Gold Touch | 0525:a010 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Questyle Qp2r | 262a:2002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Questyle Qpm | 262a:3001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Valve Steam Deck Lcd | 28de:1205 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Valve Steam Deck Oled | 28de:1207 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Asus Rog Ally | 0b05:1abe | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Asus Rog Ally X | 0b05:1abf | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Lenovo Legion Go | 17ef:7f12 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Msi Claw A1m | 1462:1532 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Anbernic Rg353m | 1f3a:6004 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Retroid Pocket 4 | 05c6:f004 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Gpd Win 4 | 2b24:a001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Gpd Win Mini | 2b24:a002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Htc Vive Focus 3 | 0bb4:0c98 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Htc Vive Xr Elite | 0bb4:0c99 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Google Chromecast Gtv 4k | 18d1:4eca | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Google Chromecast Gtv Hd | 18d1:4ecb | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
