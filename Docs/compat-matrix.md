@@ -16241,3 +16241,1191 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Uni T Uti260a T065 | 1a86:d065 | community | — |
 | Uni T Uti120 T066 | 1a86:d066 | community | — |
 | Uni T Uti720e T067 | 1a86:d067 | community | — |
+| Micromax In1 | 2a96:2001 | community | — |
+| Micromax In1b | 2a96:2002 | community | — |
+| Micromax In2b | 2a96:2003 | community | — |
+| Micromax In2c | 2a96:2004 | community | — |
+| Micromax Innote1 | 2a96:2005 | community | — |
+| Micromax Innote2 | 2a96:2006 | community | — |
+| Micromax Canvas6 | 2a96:2007 | community | — |
+| Micromax Canvas5 | 2a96:2008 | community | — |
+| Micromax Canvasinf | 2a96:2009 | community | — |
+| Micromax Evok | 2a96:200a | community | — |
+| Micromax Evokdual | 2a96:200b | community | — |
+| Micromax Bharat5 | 2a96:200c | community | — |
+| Micromax Bharat5pro | 2a96:200d | community | — |
+| Micromax Selfie2 | 2a96:200e | community | — |
+| Micromax Dual5 | 2a96:200f | community | — |
+| Micromax Bolt Q332 | 2a96:2010 | community | — |
+| Micromax Bolt Q370 | 2a96:2011 | community | — |
+| Micromax Bolt Q383 | 2a96:2012 | community | — |
+| Micromax Spark | 2a96:2013 | community | — |
+| Micromax Vdeo5 | 2a96:2014 | community | — |
+| Karbonn Titanium S35 | 0e8d:e001 | community | — |
+| Karbonn Titanium S9 | 0e8d:e002 | community | — |
+| Karbonn Titanium S200 | 0e8d:e003 | community | — |
+| Karbonn Titanium Vista | 0e8d:e004 | community | — |
+| Karbonn Titanium Moghul | 0e8d:e005 | community | — |
+| Karbonn Aura Note | 0e8d:e006 | community | — |
+| Karbonn Aura Power | 0e8d:e007 | community | — |
+| Karbonn Aura Sleek | 0e8d:e008 | community | — |
+| Karbonn Vue1 | 0e8d:e009 | community | — |
+| Karbonn Vue5 | 0e8d:e00a | community | — |
+| Karbonn K9 Smart | 0e8d:e00b | community | — |
+| Karbonn K9 Viraat | 0e8d:e00c | community | — |
+| Karbonn Frames S9 | 0e8d:e00d | community | — |
+| Karbonn Platinum P9 | 0e8d:e00e | community | — |
+| Intex Aqua Strong | 0e8d:e010 | community | — |
+| Intex Aqua Lions | 0e8d:e011 | community | — |
+| Intex Aqua Zenith | 0e8d:e012 | community | — |
+| Intex Aqua S7 | 0e8d:e013 | community | — |
+| Intex Aqua Raze | 0e8d:e014 | community | — |
+| Intex Elyt E7 | 0e8d:e015 | community | — |
+| Intex Elyt Dual | 0e8d:e016 | community | — |
+| Intex Infie 33 | 0e8d:e017 | community | — |
+| Intex Indie 22 | 0e8d:e018 | community | — |
+| Intex Staari 11 | 0e8d:e019 | community | — |
+| Intex Cloud Q11 | 0e8d:e01a | community | — |
+| Intex Cloud S9 | 0e8d:e01b | community | — |
+| Intex Cloud Glory | 0e8d:e01c | community | — |
+| Intex Cloud String | 0e8d:e01d | community | — |
+| Intex Aqua Prime | 0e8d:e01e | community | — |
+| Spice F311 | 0e8d:e020 | community | — |
+| Spice F302 | 0e8d:e021 | community | — |
+| Spice V801 | 0e8d:e022 | community | — |
+| Spice Mi 514 | 0e8d:e023 | community | — |
+| Spice Mi 549 | 0e8d:e024 | community | — |
+| Spice Xlife 512 | 0e8d:e025 | community | — |
+| Spice Stellar 520 | 0e8d:e026 | community | — |
+| Spice Stellar 524 | 0e8d:e027 | community | — |
+| Jio Phone Next | 05c6:9091 | community | — |
+| Jio Bharat B1 | 05c6:9096 | community | — |
+| Jio Bharat B2 | 05c6:9097 | community | — |
+| Jio Bharat V2 | 05c6:9098 | community | — |
+| Jio Bharat K1 | 05c6:9099 | community | — |
+| Jio Phone 5g | 05c6:909a | community | — |
+| Condor Allure A100 | 0e8d:e030 | community | — |
+| Condor Allure A55 | 0e8d:e031 | community | — |
+| Condor Allure A8 | 0e8d:e032 | community | — |
+| Condor Griffe T9 | 0e8d:e033 | community | — |
+| Condor Griffe T7 | 0e8d:e034 | community | — |
+| Condor Griffe G6 | 0e8d:e035 | community | — |
+| Condor Plume L2 | 0e8d:e036 | community | — |
+| Condor Plume P8 | 0e8d:e037 | community | — |
+| Condor Plume H1 | 0e8d:e038 | community | — |
+| Condor Sp 621 | 0e8d:e039 | community | — |
+| Condor Sp 631 | 0e8d:e03a | community | — |
+| Iris Next E1 | 0e8d:e040 | community | — |
+| Iris Next N1 | 0e8d:e041 | community | — |
+| Iris In1 | 0e8d:e042 | community | — |
+| Iris Is4 | 0e8d:e043 | community | — |
+| Iris Sc7 | 0e8d:e044 | community | — |
+| Iris Connect 50 | 0e8d:e045 | community | — |
+| Iris Connect 55 | 0e8d:e046 | community | — |
+| Fly Iq4503 | 2970:2001 | community | — |
+| Fly Iq4505 | 2970:2002 | community | — |
+| Fly Iq4516 | 2970:2003 | community | — |
+| Fly Iq4514 | 2970:2004 | community | — |
+| Fly Iq4412 | 2970:2005 | community | — |
+| Fly Iq4502 | 2970:2006 | community | — |
+| Fly Fs504 | 2970:2007 | community | — |
+| Fly Fs507 | 2970:2009 | community | — |
+| Fly Fs509 | 2970:200a | community | — |
+| Fly Fs511 | 2970:200b | community | — |
+| Fly Fs517 | 2970:200c | community | — |
+| Fly Fs518 | 2970:200d | community | — |
+| Fly Fs520 | 2970:200e | community | — |
+| Fly Fs521 | 2970:200f | community | — |
+| Fly Fs522 | 2970:2010 | community | — |
+| Fly Fs523 | 2970:2011 | community | — |
+| Fly Fs526 | 2970:2012 | community | — |
+| Fly Fs528 | 2970:2013 | community | — |
+| Fly Fs529 | 2970:2014 | community | — |
+| Fly View | 2970:2015 | community | — |
+| Fly View Max | 2970:2016 | community | — |
+| Fly Life Mega | 2970:2017 | community | — |
+| Fly Life Compact | 2970:2018 | community | — |
+| Fly Life Play | 2970:2019 | community | — |
+| Yota Yotaphone3 | 2916:3001 | community | — |
+| Yota Yotaphone3c | 2916:3002 | community | — |
+| Yota Yotaphone C9 | 2916:3003 | community | — |
+| Yota Yotaphone C9d | 2916:3004 | community | — |
+| Bq 6630l Magic | 2a47:a001 | community | — |
+| Bq 6645l Element | 2a47:a002 | community | — |
+| Bq 6868l Wide | 2a47:a003 | community | — |
+| Bq 5765l Clever | 2a47:a004 | community | — |
+| Bq 5740g Spring | 2a47:a005 | community | — |
+| Bq 5745l Clever | 2a47:a006 | community | — |
+| Bq 5560l Trend | 2a47:a007 | community | — |
+| Bq 5535l Strike | 2a47:a008 | community | — |
+| Bq 5518g Jeans | 2a47:a009 | community | — |
+| Bq 5340 Choice | 2a47:a00a | community | — |
+| Bq 5046l Choice | 2a47:a00b | community | — |
+| Bq 5047l Like | 2a47:a00c | community | — |
+| Bq 4030g Nice | 2a47:a00d | community | — |
+| Bq 6061l Slim | 2a47:a00e | community | — |
+| Bq Magic C | 2a47:a00f | community | — |
+| Highscreen Max3 | 0e8d:e050 | community | — |
+| Highscreen Expanse | 0e8d:e051 | community | — |
+| Highscreen Power Five | 0e8d:e052 | community | — |
+| Highscreen Wallet | 0e8d:e053 | community | — |
+| Highscreen Boost3 | 0e8d:e054 | community | — |
+| Highscreen Feast2 | 0e8d:e055 | community | — |
+| Highscreen Easy Xl | 0e8d:e056 | community | — |
+| Highscreen Easy Xl Pro | 0e8d:e057 | community | — |
+| Highscreen Easy F | 0e8d:e058 | community | — |
+| Highscreen Power Rage | 0e8d:e059 | community | — |
+| Highscreen Easy Power | 0e8d:e05a | community | — |
+| Highscreen Easy Power Pro | 0e8d:e05b | community | — |
+| Texet Tm 5084 | 0e8d:e060 | community | — |
+| Texet Tm 5583 | 0e8d:e061 | community | — |
+| Texet Tm 5081 | 0e8d:e062 | community | — |
+| Texet Tm 5077 | 0e8d:e063 | community | — |
+| Texet Tm 5076 | 0e8d:e064 | community | — |
+| Texet Tm 5075 | 0e8d:e065 | community | — |
+| Texet Tm 5074 | 0e8d:e066 | community | — |
+| Texet Tm 5073 | 0e8d:e067 | community | — |
+| Texet Tm 5580 | 0e8d:e068 | community | — |
+| Texet Tm 5070 | 0e8d:e069 | community | — |
+| Vertex Impress Luck | 0e8d:e070 | community | — |
+| Vertex Impress Lion | 0e8d:e071 | community | — |
+| Vertex Impress Zeon | 0e8d:e072 | community | — |
+| Vertex Impress Pluto | 0e8d:e073 | community | — |
+| Vertex Impress Aero | 0e8d:e074 | community | — |
+| Vertex Impress Groove | 0e8d:e075 | community | — |
+| Vertex Impress Play | 0e8d:e076 | community | — |
+| Vertex Impress Click | 0e8d:e077 | community | — |
+| Vertex Impress Sunset | 0e8d:e078 | community | — |
+| Vertex Impress Bear | 0e8d:e079 | community | — |
+| Vertex Pro P300 | 0e8d:e07a | community | — |
+| Vertex Pro P310 | 0e8d:e07b | community | — |
+| Inoi A72 | 0e8d:e080 | community | — |
+| Inoi A83 | 0e8d:e081 | community | — |
+| Inoi A63 | 0e8d:e082 | community | — |
+| Inoi A52 Lite | 0e8d:e083 | community | — |
+| Inoi 7 2021 | 0e8d:e084 | community | — |
+| Inoi 5 2021 | 0e8d:e085 | community | — |
+| Inoi 3 Power | 0e8d:e086 | community | — |
+| Inoi 2 Lite | 0e8d:e087 | community | — |
+| Inoi Note 13s | 0e8d:e088 | community | — |
+| Inoi A62 Lite | 0e8d:e089 | community | — |
+| Dexp Al250 | 0e8d:e090 | community | — |
+| Dexp Al350 | 0e8d:e091 | community | — |
+| Dexp As260 | 0e8d:e092 | community | — |
+| Dexp B355 | 0e8d:e093 | community | — |
+| Dexp B360 | 0e8d:e094 | community | — |
+| Dexp Bl250 | 0e8d:e095 | community | — |
+| Dexp Bl350 | 0e8d:e096 | community | — |
+| Dexp G253 | 0e8d:e097 | community | — |
+| Dexp Gl355 | 0e8d:e098 | community | — |
+| Dexp A340 | 0e8d:e099 | community | — |
+| Dexp A350 Mix | 0e8d:e09a | community | — |
+| Dexp Bs155 | 0e8d:e09b | community | — |
+| Positivo Twist 4g | 1662:4001 | community | — |
+| Positivo Twist 2 Pro | 1662:4002 | community | — |
+| Positivo Twist 3 Fit | 1662:4003 | community | — |
+| Positivo Twist 4 | 1662:4004 | community | — |
+| Positivo Twist 5 Pro | 1662:4005 | community | — |
+| Positivo Twist S509 | 1662:4006 | community | — |
+| Positivo Twist S511 | 1662:4007 | community | — |
+| Positivo Twist S520 | 1662:4008 | community | — |
+| Positivo Twist Metal | 1662:4009 | community | — |
+| Positivo Twist Mini | 1662:400a | community | — |
+| Positivo Twist 2 Fit | 1662:400b | community | — |
+| Positivo Twist 3 Pro | 1662:400c | community | — |
+| Positivo Twist Tab | 1662:400d | community | — |
+| Positivo You2 | 1662:400e | community | — |
+| Multilaser Ms60f | 2c02:5001 | community | — |
+| Multilaser Ms70 | 2c02:5002 | community | — |
+| Multilaser Ms80 | 2c02:5003 | community | — |
+| Multilaser E | 2c02:5004 | community | — |
+| Multilaser E Lite | 2c02:5005 | community | — |
+| Multilaser E2 | 2c02:5006 | community | — |
+| Multilaser G | 2c02:5007 | community | — |
+| Multilaser G Max | 2c02:5008 | community | — |
+| Multilaser G Pro2 | 2c02:5009 | community | — |
+| Multilaser F | 2c02:500a | community | — |
+| Multilaser F Pro2 | 2c02:500b | community | — |
+| Multilaser H | 2c02:500c | community | — |
+| Multilaser Ms50l | 2c02:500d | community | — |
+| Multilaser Ms50x | 2c02:500e | community | — |
+| Quantum Fly | 0e8d:e0a0 | community | — |
+| Quantum Muv | 0e8d:e0a1 | community | — |
+| Quantum Muv Up | 0e8d:e0a2 | community | — |
+| Quantum Go2 | 0e8d:e0a3 | community | — |
+| Quantum You2 | 0e8d:e0a4 | community | — |
+| Quantum You E | 0e8d:e0a5 | community | — |
+| Quantum You L | 0e8d:e0a6 | community | — |
+| Quantum V | 0e8d:e0a7 | community | — |
+| Quantum Sky | 0e8d:e0a8 | community | — |
+| Dl Yzu Ds53 | 0e8d:e0b0 | community | — |
+| Dl Yzu Ds61 | 0e8d:e0b1 | community | — |
+| Dl Spirit Dq5 | 0e8d:e0b2 | community | — |
+| Dl Spirit Ds52 | 0e8d:e0b3 | community | — |
+| Dl Elemental | 0e8d:e0b4 | community | — |
+| Semp Go5e | 0e8d:e0c0 | community | — |
+| Semp Go3c | 0e8d:e0c1 | community | — |
+| Semp Go5c | 0e8d:e0c2 | community | — |
+| Semp Go3e | 0e8d:e0c3 | community | — |
+| Semp Go5i | 0e8d:e0c4 | community | — |
+| Sharp Aquos R7 | 04dd:7001 | community | — |
+| Sharp Aquos R6 | 04dd:7002 | community | — |
+| Sharp Aquos R5g | 04dd:7003 | community | — |
+| Sharp Aquos R3 | 04dd:7004 | community | — |
+| Sharp Aquos R2 | 04dd:7005 | community | — |
+| Sharp Aquos Zero6 | 04dd:7006 | community | — |
+| Sharp Aquos Zero5g | 04dd:7007 | community | — |
+| Sharp Aquos Zero2 | 04dd:7008 | community | — |
+| Sharp Aquos Sense7 | 04dd:7009 | community | — |
+| Sharp Aquos Sense6 | 04dd:700a | community | — |
+| Sharp Aquos Sense5g | 04dd:700b | community | — |
+| Sharp Aquos Sense4 | 04dd:700c | community | — |
+| Sharp Aquos Sense3 | 04dd:700d | community | — |
+| Sharp Aquos Wish2 | 04dd:700e | community | — |
+| Sharp Aquos Wish | 04dd:700f | community | — |
+| Sharp Aquos R8 | 04dd:7010 | community | — |
+| Sharp Aquos R8pro | 04dd:7011 | community | — |
+| Sharp Aquos Sense8 | 04dd:7012 | community | — |
+| Sharp Aquos Wish3 | 04dd:7013 | community | — |
+| Sharp Aquos R9 | 04dd:7014 | community | — |
+| Kyocera Torque G06 | 0482:8001 | community | — |
+| Kyocera Torque 5g | 0482:8002 | community | — |
+| Kyocera Torque G04 | 0482:8003 | community | — |
+| Kyocera Torque G03 | 0482:8004 | community | — |
+| Kyocera Basio4 | 0482:8005 | community | — |
+| Kyocera Basio3 | 0482:8006 | community | — |
+| Kyocera Digno Bx2 | 0482:8007 | community | — |
+| Kyocera Digno Sanga | 0482:8008 | community | — |
+| Kyocera Urbano V04 | 0482:8009 | community | — |
+| Kyocera Android One S9 | 0482:800a | community | — |
+| Kyocera Android One S8 | 0482:800b | community | — |
+| Kyocera Gratina Kyv48 | 0482:800c | community | — |
+| Kyocera Duraforce Ultra | 0482:800d | community | — |
+| Kyocera Duraforce Pro2 | 0482:800e | community | — |
+| Kyocera Digno G | 0482:800f | community | — |
+| Fujitsu Arrows We2 | 04c5:9001 | community | — |
+| Fujitsu Arrows We | 04c5:9002 | community | — |
+| Fujitsu Arrows Nx9 | 04c5:9003 | community | — |
+| Fujitsu Arrows 5g | 04c5:9004 | community | — |
+| Fujitsu Arrows Be4 | 04c5:9005 | community | — |
+| Fujitsu Arrows U | 04c5:9006 | community | — |
+| Fujitsu Arrows J | 04c5:9007 | community | — |
+| Fujitsu Arrows Rx | 04c5:9008 | community | — |
+| Fujitsu Arrows Be3 | 04c5:9009 | community | — |
+| Fujitsu Arrows Be4 Plus | 04c5:900a | community | — |
+| Fujitsu Arrows N | 04c5:900b | community | — |
+| Fujitsu Arrows Sv | 04c5:900c | community | — |
+| Fujitsu Arrows Nx | 04c5:900d | community | — |
+| Fujitsu Arrows Fit | 04c5:900e | community | — |
+| Pantech Vega Iron | 10a9:a001 | community | — |
+| Pantech Vega Iron2 | 10a9:a002 | community | — |
+| Pantech Vega S5 | 10a9:a003 | community | — |
+| Pantech Vega No6 | 10a9:a004 | community | — |
+| Pantech Vega Lte | 10a9:a005 | community | — |
+| Pantech Vega Racer2 | 10a9:a006 | community | — |
+| Pantech Sky Im100 | 10a9:a007 | community | — |
+| Pantech Sky A870 | 10a9:a008 | community | — |
+| Pantech Im A890 | 10a9:a009 | community | — |
+| Pantech Im A880 | 10a9:a00a | community | — |
+| Pantech Im A870 | 10a9:a00b | community | — |
+| Pantech Im A860 | 10a9:a00c | community | — |
+| Pantech Im A850 | 10a9:a00d | community | — |
+| Pantech Im A840 | 10a9:a00e | community | — |
+| Pantech Burst | 10a9:a00f | community | — |
+| Lg Wine Smart | 1004:d486 | community | — |
+| Lg Wine H410 | 1004:d487 | community | — |
+| Lg Classic Flip | 1004:d488 | community | — |
+| Lg Gentle | 1004:d489 | community | — |
+| Lg V60 Thinq | 1004:d48a | community | — |
+| Lg V50s Thinq | 1004:d48b | community | — |
+| Lg V40 Thinq | 1004:d48c | community | — |
+| Lg V35 Thinq | 1004:d48d | community | — |
+| Lg V30s Thinq | 1004:d48e | community | — |
+| Lg Velvet | 1004:d48f | community | — |
+| Lg Wing | 1004:d490 | community | — |
+| Lg G8x Thinq | 1004:d491 | community | — |
+| Lg G8s Thinq | 1004:d492 | community | — |
+| Lg G7 Fit | 1004:d493 | community | — |
+| Lg G7 One | 1004:d494 | community | — |
+| Lg Q92 5g | 1004:d495 | community | — |
+| Lg Q70 | 1004:d496 | community | — |
+| Lg Q61 | 1004:d497 | community | — |
+| Lg Q52 | 1004:d498 | community | — |
+| Lg K92 5g | 1004:d499 | community | — |
+| Meizu 20 Pro | 2a45:b001 | community | — |
+| Meizu 20 | 2a45:b002 | community | — |
+| Meizu 20 Infinity | 2a45:b003 | community | — |
+| Meizu 18x | 2a45:b004 | community | — |
+| Meizu 18s Pro | 2a45:b005 | community | — |
+| Meizu 18s | 2a45:b006 | community | — |
+| Meizu 18 Pro | 2a45:b007 | community | — |
+| Meizu 18 | 2a45:b008 | community | — |
+| Meizu 17 Pro | 2a45:b009 | community | — |
+| Meizu 17 | 2a45:b00a | community | — |
+| Meizu 16t | 2a45:b00b | community | — |
+| Meizu 16xs | 2a45:b00c | community | — |
+| Meizu Note9 | 2a45:b00d | community | — |
+| Meizu Note8 | 2a45:b00e | community | — |
+| Meizu X8 | 2a45:b00f | community | — |
+| Meizu 21 | 2a45:b010 | community | — |
+| Meizu 21 Pro | 2a45:b011 | community | — |
+| Meizu 21 Note | 2a45:b012 | community | — |
+| Coolpad Cool 20 | 268b:c001 | community | — |
+| Coolpad Cool 20 Pro | 268b:c002 | community | — |
+| Coolpad Cool 20s | 268b:c003 | community | — |
+| Coolpad Cool 12a | 268b:c004 | community | — |
+| Coolpad Cool 6 | 268b:c005 | community | — |
+| Coolpad Cool 5 | 268b:c006 | community | — |
+| Coolpad Cool 3 | 268b:c007 | community | — |
+| Coolpad Cool 2 | 268b:c008 | community | — |
+| Coolpad Note5 | 268b:c009 | community | — |
+| Coolpad Note6 | 268b:c00a | community | — |
+| Coolpad Mega5a | 268b:c00b | community | — |
+| Coolpad Legacy Brisa | 268b:c00c | community | — |
+| Coolpad Suva | 268b:c00d | community | — |
+| Coolpad Alchemy | 268b:c00e | community | — |
+| Hisense A9 | 109b:d001 | community | — |
+| Hisense A7 Pro | 109b:d002 | community | — |
+| Hisense A7 Cc | 109b:d003 | community | — |
+| Hisense A5 Pro Cc | 109b:d004 | community | — |
+| Hisense A5 | 109b:d005 | community | — |
+| Hisense Touch | 109b:d006 | community | — |
+| Hisense Touch Lite | 109b:d007 | community | — |
+| Hisense F50 5g | 109b:d008 | community | — |
+| Hisense U50 | 109b:d009 | community | — |
+| Hisense V40i | 109b:d00a | community | — |
+| Hisense H60 | 109b:d00b | community | — |
+| Hisense Infinity H40 | 109b:d00c | community | — |
+| Hisense King Kong | 109b:d00d | community | — |
+| Iqoo 12 Pro | 2d95:f001 | community | — |
+| Iqoo 12 | 2d95:f002 | community | — |
+| Iqoo Neo9 Pro | 2d95:f003 | community | — |
+| Iqoo Neo9 | 2d95:f004 | community | — |
+| Iqoo Neo9s Pro | 2d95:f005 | community | — |
+| Iqoo Z9 Turbo | 2d95:f006 | community | — |
+| Iqoo Z9 | 2d95:f007 | community | — |
+| Iqoo Z9x | 2d95:f008 | community | — |
+| Iqoo Z9s Pro | 2d95:f009 | community | — |
+| Iqoo Z9s | 2d95:f00a | community | — |
+| Iqoo Z9 Lite | 2d95:f00b | community | — |
+| Iqoo 13 | 2d95:f00c | community | — |
+| Iqoo Neo7 Pro | 2d95:f00d | community | — |
+| Redmagic 9 Pro | 19d2:f101 | community | — |
+| Redmagic 9 | 19d2:f102 | community | — |
+| Redmagic 8s Pro | 19d2:f103 | community | — |
+| Redmagic 8 Pro | 19d2:f104 | community | — |
+| Redmagic 8 | 19d2:f105 | community | — |
+| Redmagic 7s Pro | 19d2:f106 | community | — |
+| Redmagic 7 Pro | 19d2:f107 | community | — |
+| Redmagic 7 | 19d2:f108 | community | — |
+| Redmagic 6s Pro | 19d2:f109 | community | — |
+| Redmagic 6 Pro | 19d2:f10a | community | — |
+| Redmagic 6 | 19d2:f10b | community | — |
+| Redmagic 6r | 19d2:f10c | community | — |
+| Redmagic 9s Pro | 19d2:f10d | community | — |
+| Redmagic 9s Plus | 19d2:f10e | community | — |
+| Rog Phone 8 Pro | 0b05:8801 | community | — |
+| Rog Phone 8 | 0b05:8802 | community | — |
+| Rog Phone 7 Ultimate | 0b05:8803 | community | — |
+| Rog Phone 7 | 0b05:8804 | community | — |
+| Rog Phone 6d Ultimate | 0b05:8805 | community | — |
+| Rog Phone 6d | 0b05:8806 | community | — |
+| Rog Phone 6 Pro | 0b05:8807 | community | — |
+| Rog Phone 6 | 0b05:8808 | community | — |
+| Rog Phone 5s Pro | 0b05:8809 | community | — |
+| Rog Phone 5s | 0b05:880a | community | — |
+| Rog Phone 5 Pro | 0b05:880b | community | — |
+| Rog Phone 5 | 0b05:880c | community | — |
+| Rog Phone 3 Strix | 0b05:880d | community | — |
+| Rog Phone 9 Pro | 0b05:880e | community | — |
+| Rog Phone 9 | 0b05:880f | community | — |
+| Realme Gt6 | 22d9:d201 | community | — |
+| Realme Gt5 Pro | 22d9:d202 | community | — |
+| Realme Gt5 | 22d9:d203 | community | — |
+| Realme Gt Neo6 Se | 22d9:d204 | community | — |
+| Realme Gt Neo5 | 22d9:d205 | community | — |
+| Realme Gt Neo3 | 22d9:d206 | community | — |
+| Realme 12 Pro Plus | 22d9:d207 | community | — |
+| Realme 12 Pro | 22d9:d208 | community | — |
+| Realme 12 5g | 22d9:d209 | community | — |
+| Realme 12x | 22d9:d20a | community | — |
+| Realme 11 Pro Plus | 22d9:d20b | community | — |
+| Realme 11 Pro | 22d9:d20c | community | — |
+| Realme 11 5g | 22d9:d20d | community | — |
+| Realme 11x | 22d9:d20e | community | — |
+| Realme C67 | 22d9:d20f | community | — |
+| Realme C65 | 22d9:d210 | community | — |
+| Realme C55 | 22d9:d211 | community | — |
+| Realme C53 | 22d9:d212 | community | — |
+| Realme Narzo 70 Pro | 22d9:d213 | community | — |
+| Realme Narzo 70 | 22d9:d214 | community | — |
+| Realme Narzo 70x | 22d9:d215 | community | — |
+| Realme Narzo 60 Pro | 22d9:d216 | community | — |
+| Realme Narzo 60 | 22d9:d217 | community | — |
+| Realme P1 Pro | 22d9:d218 | community | — |
+| Realme P1 | 22d9:d219 | community | — |
+| Zte Axon 60 Ultra | 19d2:f201 | community | — |
+| Zte Axon 50 Ultra | 19d2:f202 | community | — |
+| Zte Axon 40 Ultra | 19d2:f203 | community | — |
+| Zte Axon 40 Pro | 19d2:f204 | community | — |
+| Zte Axon 30 Ultra | 19d2:f205 | community | — |
+| Zte Blade V50 Design | 19d2:f206 | community | — |
+| Zte Blade V50 Vita | 19d2:f207 | community | — |
+| Zte Blade V50 | 19d2:f208 | community | — |
+| Zte Blade V40 Design | 19d2:f209 | community | — |
+| Zte Blade V40 Vita | 19d2:f20a | community | — |
+| Zte Blade V40 | 19d2:f20b | community | — |
+| Zte Blade A73 | 19d2:f20c | community | — |
+| Zte Blade A72s | 19d2:f20d | community | — |
+| Zte Blade A53 Pro | 19d2:f20e | community | — |
+| Zte Blade A34 | 19d2:f20f | community | — |
+| Tecno Camon 30 Pro | 0e8d:e100 | community | — |
+| Tecno Camon 30 | 0e8d:e101 | community | — |
+| Tecno Camon 30 Premier | 0e8d:e102 | community | — |
+| Tecno Phantom V Fold2 | 0e8d:e103 | community | — |
+| Tecno Phantom V Flip2 | 0e8d:e104 | community | — |
+| Tecno Phantom V Fold | 0e8d:e105 | community | — |
+| Tecno Phantom V Flip | 0e8d:e106 | community | — |
+| Tecno Phantom X2 Pro | 0e8d:e107 | community | — |
+| Tecno Phantom X2 | 0e8d:e108 | community | — |
+| Tecno Pova 6 Pro | 0e8d:e109 | community | — |
+| Tecno Pova 6 Neo | 0e8d:e10a | community | — |
+| Tecno Pova 6 | 0e8d:e10b | community | — |
+| Tecno Pova 5 Pro | 0e8d:e10c | community | — |
+| Tecno Pova 5 | 0e8d:e10d | community | — |
+| Tecno Spark 20 Pro | 0e8d:e10e | community | — |
+| Tecno Spark 20 | 0e8d:e10f | community | — |
+| Tecno Spark 20c | 0e8d:e110 | community | — |
+| Tecno Pop 8 | 0e8d:e111 | community | — |
+| Tecno Pop 8 Pro | 0e8d:e112 | community | — |
+| Tecno Camon 30s Pro | 0e8d:e113 | community | — |
+| Infinix Gt 20 Pro | 0e8d:e120 | community | — |
+| Infinix Gt 10 Pro | 0e8d:e121 | community | — |
+| Infinix Zero 40 5g | 0e8d:e122 | community | — |
+| Infinix Zero 30 5g | 0e8d:e123 | community | — |
+| Infinix Zero Ultra | 0e8d:e124 | community | — |
+| Infinix Note 40 Pro | 0e8d:e125 | community | — |
+| Infinix Note 40 | 0e8d:e126 | community | — |
+| Infinix Note 40 Pro5g | 0e8d:e127 | community | — |
+| Infinix Note 30 Pro | 0e8d:e128 | community | — |
+| Infinix Note 30 5g | 0e8d:e129 | community | — |
+| Infinix Hot 40 Pro | 0e8d:e12a | community | — |
+| Infinix Hot 40i | 0e8d:e12b | community | — |
+| Infinix Hot 40 | 0e8d:e12c | community | — |
+| Infinix Hot 30 Play | 0e8d:e12d | community | — |
+| Infinix Hot 30i | 0e8d:e12e | community | — |
+| Infinix Smart 8 Pro | 0e8d:e12f | community | — |
+| Infinix Smart 8 Hd | 0e8d:e130 | community | — |
+| Infinix Smart 8 | 0e8d:e131 | community | — |
+| Infinix Note 40 Racing | 0e8d:e132 | community | — |
+| Itel P55 5g | 0e8d:e140 | community | — |
+| Itel P55 Plus | 0e8d:e141 | community | — |
+| Itel P55 | 0e8d:e142 | community | — |
+| Itel P55t | 0e8d:e143 | community | — |
+| Itel S24 | 0e8d:e144 | community | — |
+| Itel S23 Plus | 0e8d:e145 | community | — |
+| Itel S23 | 0e8d:e146 | community | — |
+| Itel A70 | 0e8d:e147 | community | — |
+| Itel A60s | 0e8d:e148 | community | — |
+| Itel A60 | 0e8d:e149 | community | — |
+| Itel A50 | 0e8d:e14a | community | — |
+| Itel A50c | 0e8d:e14b | community | — |
+| Itel Rs4 | 0e8d:e14c | community | — |
+| Itel Color Pro | 0e8d:e14d | community | — |
+| Itel P40 Plus | 0e8d:e14e | community | — |
+| Oppo Find X7 Ultra | 22d9:d301 | community | — |
+| Oppo Find X7 | 22d9:d302 | community | — |
+| Oppo Find N3 Flip | 22d9:d303 | community | — |
+| Oppo Find N3 | 22d9:d304 | community | — |
+| Oppo Reno 12 Pro | 22d9:d305 | community | — |
+| Oppo Reno 12 | 22d9:d306 | community | — |
+| Oppo Reno 12f | 22d9:d307 | community | — |
+| Oppo Reno 11 Pro | 22d9:d308 | community | — |
+| Oppo Reno 11 | 22d9:d309 | community | — |
+| Oppo Reno 11f | 22d9:d30a | community | — |
+| Oppo A79 5g | 22d9:d30b | community | — |
+| Oppo A78 | 22d9:d30c | community | — |
+| Oppo A60 | 22d9:d30d | community | — |
+| Oppo A38 | 22d9:d30e | community | — |
+| Oppo A18 | 22d9:d30f | community | — |
+| Oppo A3 Pro | 22d9:d310 | community | — |
+| Oneplus 12r | 2a70:d401 | community | — |
+| Oneplus 12 | 2a70:d402 | community | — |
+| Oneplus Open | 2a70:d403 | community | — |
+| Oneplus Nord Ce4 | 2a70:d404 | community | — |
+| Oneplus Nord Ce4 Lite | 2a70:d405 | community | — |
+| Oneplus Nord 4 | 2a70:d406 | community | — |
+| Oneplus Nord N30 | 2a70:d407 | community | — |
+| Oneplus Ace 3v | 2a70:d408 | community | — |
+| Oneplus Ace 3 | 2a70:d409 | community | — |
+| Oneplus Ace 3 Pro | 2a70:d40a | community | — |
+| Oneplus 13 | 2a70:d40b | community | — |
+| Oneplus 13r | 2a70:d40c | community | — |
+| Vivo X200 Pro | 2d95:d501 | community | — |
+| Vivo X200 | 2d95:d502 | community | — |
+| Vivo X200 Ultra | 2d95:d503 | community | — |
+| Vivo X Fold3 Pro | 2d95:d504 | community | — |
+| Vivo X Fold3 | 2d95:d505 | community | — |
+| Vivo V40 Pro | 2d95:d506 | community | — |
+| Vivo V40 | 2d95:d507 | community | — |
+| Vivo V40 Lite | 2d95:d508 | community | — |
+| Vivo V30 Pro | 2d95:d509 | community | — |
+| Vivo V30 | 2d95:d50a | community | — |
+| Vivo Y200e | 2d95:d50b | community | — |
+| Vivo Y200 | 2d95:d50c | community | — |
+| Vivo Y100 | 2d95:d50d | community | — |
+| Vivo Y58 | 2d95:d50e | community | — |
+| Vivo Y38 | 2d95:d50f | community | — |
+| Vivo Y28 | 2d95:d510 | community | — |
+| Vivo Y18 | 2d95:d511 | community | — |
+| Vivo T3 Ultra | 2d95:d512 | community | — |
+| Vivo T3 Pro | 2d95:d513 | community | — |
+| Vivo T3x | 2d95:d514 | community | — |
+| Honor Magic6 Pro | 12d1:d601 | community | — |
+| Honor Magic6 | 12d1:d602 | community | — |
+| Honor Magic V3 | 12d1:d603 | community | — |
+| Honor Magic V2 | 12d1:d604 | community | — |
+| Honor Magic Vs3 | 12d1:d605 | community | — |
+| Honor 200 Pro | 12d1:d606 | community | — |
+| Honor 200 | 12d1:d607 | community | — |
+| Honor 200 Lite | 12d1:d608 | community | — |
+| Honor X9b | 12d1:d609 | community | — |
+| Honor X8b | 12d1:d60a | community | — |
+| Honor X7b | 12d1:d60b | community | — |
+| Honor X6b | 12d1:d60c | community | — |
+| Honor 90 | 12d1:d60d | community | — |
+| Honor 90 Lite | 12d1:d60e | community | — |
+| Honor X50 | 12d1:d60f | community | — |
+| Huawei Pura 70 Ultra | 12d1:d701 | community | — |
+| Huawei Pura 70 Pro | 12d1:d702 | community | — |
+| Huawei Pura 70 | 12d1:d703 | community | — |
+| Huawei Mate X5 | 12d1:d704 | community | — |
+| Huawei Mate 60 Pro | 12d1:d705 | community | — |
+| Huawei Mate 60 | 12d1:d706 | community | — |
+| Huawei Mate 60 Rs | 12d1:d707 | community | — |
+| Huawei Nova 12 Ultra | 12d1:d708 | community | — |
+| Huawei Nova 12 Pro | 12d1:d709 | community | — |
+| Huawei Nova 12i | 12d1:d70a | community | — |
+| Huawei Nova 12 Lite | 12d1:d70b | community | — |
+| Huawei Enjoy 70 Pro | 12d1:d70c | community | — |
+| Huawei Enjoy 70 | 12d1:d70d | community | — |
+| Motorola Edge 50 Ultra | 22b8:d801 | community | — |
+| Motorola Edge 50 Pro | 22b8:d802 | community | — |
+| Motorola Edge 50 Fusion | 22b8:d803 | community | — |
+| Motorola Edge 50 Neo | 22b8:d804 | community | — |
+| Motorola Razr 50 Ultra | 22b8:d805 | community | — |
+| Motorola Razr 50 | 22b8:d806 | community | — |
+| Motorola Moto G85 | 22b8:d807 | community | — |
+| Motorola Moto G75 | 22b8:d808 | community | — |
+| Motorola Moto G55 | 22b8:d809 | community | — |
+| Motorola Moto G45 | 22b8:d80a | community | — |
+| Motorola Moto G35 | 22b8:d80b | community | — |
+| Motorola Moto G15 | 22b8:d80c | community | — |
+| Motorola Moto G05 | 22b8:d80d | community | — |
+| Motorola Thinkphone25 | 22b8:d80e | community | — |
+| Nokia X50 | 0421:d901 | community | — |
+| Nokia G42 | 0421:d902 | community | — |
+| Nokia G22 | 0421:d903 | community | — |
+| Nokia G21 | 0421:d904 | community | — |
+| Nokia C32 | 0421:d905 | community | — |
+| Nokia C22 | 0421:d906 | community | — |
+| Nokia C12 | 0421:d907 | community | — |
+| Nokia C02 | 0421:d908 | community | — |
+| Hmd Pulse Pro | 0421:d909 | community | — |
+| Hmd Pulse | 0421:d90a | community | — |
+| Hmd Skyline | 0421:d90b | community | — |
+| Hmd Crest | 0421:d90c | community | — |
+| Hmd Crest Max | 0421:d90d | community | — |
+| Tcl 50 5g | 0e8d:da01 | community | — |
+| Tcl 50 Se | 0e8d:da02 | community | — |
+| Tcl 50 Xe | 0e8d:da03 | community | — |
+| Tcl 40 Nxtpaper | 0e8d:da04 | community | — |
+| Tcl 40 Se | 0e8d:da05 | community | — |
+| Tcl 40 Xe | 0e8d:da06 | community | — |
+| Tcl 40 R | 0e8d:da07 | community | — |
+| Tcl 30 5g | 0e8d:da08 | community | — |
+| Tcl 30 Xe | 0e8d:da09 | community | — |
+| Tcl 30 Se | 0e8d:da0a | community | — |
+| Tcl 305 | 0e8d:da0b | community | — |
+| Tcl 306 | 0e8d:da0c | community | — |
+| Tcl 403 | 0e8d:da0d | community | — |
+| Tcl 408 | 0e8d:da0e | community | — |
+| Tcl 501 | 0e8d:da0f | community | — |
+| Alcatel 3x 2020 | 0e8d:db01 | community | — |
+| Alcatel 3l 2020 | 0e8d:db02 | community | — |
+| Alcatel 1se | 0e8d:db03 | community | — |
+| Alcatel 1v 2020 | 0e8d:db04 | community | — |
+| Alcatel 1b 2020 | 0e8d:db05 | community | — |
+| Alcatel 1s 2021 | 0e8d:db06 | community | — |
+| Alcatel 3l 2021 | 0e8d:db07 | community | — |
+| Alcatel 1l Pro | 0e8d:db08 | community | — |
+| Alcatel Joy Tab2 | 0e8d:db09 | community | — |
+| Alcatel Go Flip 4 | 0e8d:db0a | community | — |
+| Umidigi A15 | 0e8d:dc01 | community | — |
+| Umidigi A15 Pro | 0e8d:dc02 | community | — |
+| Umidigi A15t | 0e8d:dc03 | community | — |
+| Umidigi G6 5g | 0e8d:dc04 | community | — |
+| Umidigi G5 Mecha | 0e8d:dc05 | community | — |
+| Umidigi G3 Max | 0e8d:dc06 | community | — |
+| Umidigi C1 Max | 0e8d:dc07 | community | — |
+| Umidigi C2 | 0e8d:dc08 | community | — |
+| Umidigi Power 7 Max | 0e8d:dc09 | community | — |
+| Umidigi Bison 2 | 0e8d:dc0a | community | — |
+| Umidigi Bison 2 Pro | 0e8d:dc0b | community | — |
+| Umidigi F3 Pro | 0e8d:dc0c | community | — |
+| Oukitel Wp30 Pro | 0e8d:dd01 | community | — |
+| Oukitel Wp28 | 0e8d:dd02 | community | — |
+| Oukitel C36 | 0e8d:dd03 | community | — |
+| Oukitel C35 | 0e8d:dd04 | community | — |
+| Oukitel C33 | 0e8d:dd05 | community | — |
+| Oukitel K16 | 0e8d:dd06 | community | — |
+| Oukitel Wp35 | 0e8d:dd07 | community | — |
+| Oukitel Wp36 | 0e8d:dd08 | community | — |
+| Doogee V30 Pro | 0e8d:de01 | community | — |
+| Doogee V20s | 0e8d:de02 | community | — |
+| Doogee S110 | 0e8d:de03 | community | — |
+| Doogee S100 Pro | 0e8d:de04 | community | — |
+| Doogee N50 Pro | 0e8d:de05 | community | — |
+| Doogee N50 | 0e8d:de06 | community | — |
+| Doogee T20s | 0e8d:de07 | community | — |
+| Doogee Blade10 | 0e8d:de08 | community | — |
+| Ulefone Armor 25t Pro | 0e8d:df01 | community | — |
+| Ulefone Armor 24 | 0e8d:df02 | community | — |
+| Ulefone Armor 23 Ultra | 0e8d:df03 | community | — |
+| Ulefone Power Armor 19t | 0e8d:df04 | community | — |
+| Ulefone Note 16 Pro | 0e8d:df05 | community | — |
+| Ulefone Note 15 | 0e8d:df06 | community | — |
+| Ulefone Note 14 Pro | 0e8d:df07 | community | — |
+| Cubot Kingkong Star | 0e8d:e201 | community | — |
+| Cubot Kingkong 9 | 0e8d:e202 | community | — |
+| Cubot P80 | 0e8d:e203 | community | — |
+| Cubot Note 50 | 0e8d:e204 | community | — |
+| Cubot X70 | 0e8d:e205 | community | — |
+| Cubot Tab 60 | 0e8d:e206 | community | — |
+| Cubot Hafury Meet | 0e8d:e207 | community | — |
+| Agm Glory G1s | 0e8d:e210 | community | — |
+| Agm H6 | 0e8d:e211 | community | — |
+| Agm Note N1 | 0e8d:e212 | community | — |
+| Agm H5 Pro | 0e8d:e213 | community | — |
+| Agm Glory Se | 0e8d:e214 | community | — |
+| Blackview Bv9300 Pro | 0e8d:e220 | community | — |
+| Blackview Bv8900 | 0e8d:e221 | community | — |
+| Blackview A200 Pro | 0e8d:e222 | community | — |
+| Blackview A100 | 0e8d:e223 | community | — |
+| Blackview N6000 | 0e8d:e224 | community | — |
+| Blackview Shark8 | 0e8d:e225 | community | — |
+| Blackview Oscal C80 | 0e8d:e226 | community | — |
+| Blackview Hero10 | 0e8d:e227 | community | — |
+| Withings Sleep Analyzer | a000:0001 | community | supportsGetObjectPropList |
+| Withings Scanwatch Nova | a000:0002 | community | supportsGetObjectPropList |
+| Withings Body Scan | a000:0003 | community | supportsGetObjectPropList |
+| Oura Ring Gen4 Dock | a000:0004 | community | supportsGetObjectPropList |
+| Omron Evolv Bp7000 | a000:0005 | community | supportsGetObjectPropList |
+| Omron Complete Bp7900 | a000:0006 | community | supportsGetObjectPropList |
+| Omron Heartguide Bp8000 | a000:0007 | community | supportsGetObjectPropList |
+| Aed Trainer Philips Hs1t | a000:0008 | community | supportsGetObjectPropList |
+| Aed Trainer Zoll Plus | a000:0009 | community | supportsGetObjectPropList |
+| Aed Trainer Physio Cr2t | a000:000a | community | supportsGetObjectPropList |
+| Withings Thermo Temporal | a000:000b | community | supportsGetObjectPropList |
+| Masimo Mightysat Rx | a000:000c | community | supportsGetObjectPropList |
+| Biobeat Bp Patch | a000:000d | community | supportsGetObjectPropList |
+| Emay Portable Ecg 20e | a000:000e | community | supportsGetObjectPropList |
+| Wellue O2ring Continuous | a000:000f | community | supportsGetObjectPropList |
+| Fluke 87v Max Dmm | a000:0010 | community | supportsGetObjectPropList |
+| Fluke 289 Logging Dmm | a000:0011 | community | supportsGetObjectPropList |
+| Keysight U1282a Dmm | a000:0012 | community | supportsGetObjectPropList |
+| Keysight 34470a Dmm | a000:0013 | community | supportsGetObjectPropList |
+| Biorad Cfx Opus Pcr | a000:0014 | community | supportsGetObjectPropList |
+| Thermo Quantstudio 7pro | a000:0015 | community | supportsGetObjectPropList |
+| Eppendorf 5430r Centrifuge | a000:0016 | community | supportsGetObjectPropList |
+| Beckman Microfuge 20r | a000:0017 | community | supportsGetObjectPropList |
+| Siglent Sdm3065x Dmm | a000:0018 | community | supportsGetObjectPropList |
+| Rigol Dm858e Dmm | a000:0019 | community | supportsGetObjectPropList |
+| Applied Biosys Veriti Pcr | a000:001a | community | supportsGetObjectPropList |
+| Qiagen Rotor Gene Q | a000:001b | community | supportsGetObjectPropList |
+| Hettich Mikro 220r | a000:001c | community | supportsGetObjectPropList |
+| Thermo Sorvall St4r | a000:001d | community | supportsGetObjectPropList |
+| Uni T Ut181a Dmm | a000:001e | community | supportsGetObjectPropList |
+| Roborock S8 Maxv Ultra | a000:001f | community | supportsGetObjectPropList |
+| Roborock Q Revo Maxv | a000:0020 | community | supportsGetObjectPropList |
+| Dreame X40 Ultra | a000:0021 | community | supportsGetObjectPropList |
+| Dreame L20 Ultra | a000:0022 | community | supportsGetObjectPropList |
+| Ecovacs X2 Omni | a000:0023 | community | supportsGetObjectPropList |
+| Ecovacs T30s Combo | a000:0024 | community | supportsGetObjectPropList |
+| Amazon Echo Show 15 | a000:0025 | community | supportsGetObjectPropList |
+| Amazon Echo Hub | a000:0026 | community | supportsGetObjectPropList |
+| Google Nest Hub Max 2 | a000:0027 | community | supportsGetObjectPropList |
+| Yale Assure Lock 2 Wifi | a000:0028 | community | supportsGetObjectPropList |
+| Schlage Encode Plus | a000:0029 | community | supportsGetObjectPropList |
+| August Wifi Smart Lock 4 | a000:002a | community | supportsGetObjectPropList |
+| Switchbot Lock Pro | a000:002b | community | supportsGetObjectPropList |
+| Narwal Freo X Ultra | a000:002c | community | supportsGetObjectPropList |
+| Irobot Roomba J9 Combo | a000:002d | community | supportsGetObjectPropList |
+| Synology Ds224plus | a000:002e | community | supportsGetObjectPropList |
+| Synology Ds923plus | a000:002f | community | supportsGetObjectPropList |
+| Synology Ds1522plus | a000:0030 | community | supportsGetObjectPropList |
+| Qnap Ts 464 | a000:0031 | community | supportsGetObjectPropList |
+| Qnap Ts | a000:0032 | community | supportsGetObjectPropList |
+| Qnap Ts 233 | a000:0033 | community | supportsGetObjectPropList |
+| Sabrent Ec Snve | a000:0034 | community | supportsGetObjectPropList |
+| Orico M2pjm C3 | a000:0035 | community | supportsGetObjectPropList |
+| Ugreen Cm642 Ssd Dock | a000:0036 | community | supportsGetObjectPropList |
+| Inateck Fd2002c Hdd | a000:0037 | community | supportsGetObjectPropList |
+| Terramaster D5 | a000:0038 | community | supportsGetObjectPropList |
+| Wd My Cloud Ex2 Ultra | a000:0039 | community | supportsGetObjectPropList |
+| Asustor Drivestor 4pro | a000:003a | community | supportsGetObjectPropList |
+| Startech Sdock2u33v | a000:003b | community | supportsGetObjectPropList |
+| Maiwo K3082cr Raid | a000:003c | community | supportsGetObjectPropList |
+| Oura Ring Gen3 Horizon | a000:003d | community | supportsGetObjectPropList |
+| Ringconn Gen2 Smart Ring | a000:003e | community | supportsGetObjectPropList |
+| Ultrahuman Ring Air | a000:003f | community | supportsGetObjectPropList |
+| Garmin Edge | a000:0040 | community | supportsGetObjectPropList |
+| Garmin Edge 540 Solar | a000:0041 | community | supportsGetObjectPropList |
+| Wahoo Elemnt Roam V2 | a000:0042 | community | supportsGetObjectPropList |
+| Wahoo Elemnt Bolt V2 | a000:0043 | community | supportsGetObjectPropList |
+| Hammerhead Karoo 3 | a000:0044 | community | supportsGetObjectPropList |
+| Concept2 Rower Pm5 USB | a000:0045 | community | supportsGetObjectPropList |
+| Hydrow Rower USB Data | a000:0046 | community | supportsGetObjectPropList |
+| Peloton Row USB Export | a000:0047 | community | supportsGetObjectPropList |
+| Bryton Rider S800 | a000:0048 | community | supportsGetObjectPropList |
+| Stages Dash L200 | a000:0049 | community | supportsGetObjectPropList |
+| Coros Dura Solar Gps | a000:004a | community | supportsGetObjectPropList |
+| Sigma Rox 12 1 Evo | a000:004b | community | supportsGetObjectPropList |
+| Meta Quest 3 512gb | a000:004c | community | supportsGetObjectPropList |
+| Meta Quest 3s 128gb | a000:004d | community | supportsGetObjectPropList |
+| Pico 4 Ultra Enterprise | a000:004e | community | supportsGetObjectPropList |
+| Pico 4 128gb | a000:004f | community | supportsGetObjectPropList |
+| Valve Index Hmd | a000:0050 | community | supportsGetObjectPropList |
+| Htc Vive Xr Elite | a000:0051 | community | supportsGetObjectPropList |
+| Htc Vive Focus 3 | a000:0052 | community | supportsGetObjectPropList |
+| Playstation Vr2 USB | a000:0053 | community | supportsGetObjectPropList |
+| Bigscreen Beyond Hmd | a000:0054 | community | supportsGetObjectPropList |
+| Pimax Crystal Light | a000:0055 | community | supportsGetObjectPropList |
+| Pimax 8kx Dmas | a000:0056 | community | supportsGetObjectPropList |
+| Xreal Air 2 Ultra | a000:0057 | community | supportsGetObjectPropList |
+| Varjo Xr4 Enterprise | a000:0058 | community | supportsGetObjectPropList |
+| Lynx R1 Mixed Reality | a000:0059 | community | supportsGetObjectPropList |
+| Dpvr E4 Enterprise | a000:005a | community | supportsGetObjectPropList |
+| Square Reader Tap | a000:005b | community | supportsGetObjectPropList |
+| Sumup Solo Card Reader | a000:005c | community | supportsGetObjectPropList |
+| Zettle Reader 2 | a000:005d | community | supportsGetObjectPropList |
+| Clover Flex 3 Lte | a000:005e | community | supportsGetObjectPropList |
+| Clover Mini 3 | a000:005f | community | supportsGetObjectPropList |
+| Toast Go 2 Handheld | a000:0060 | community | supportsGetObjectPropList |
+| Shopify Pos Go Reader | a000:0061 | community | supportsGetObjectPropList |
+| Lightspeed Wisepad 3 | a000:0062 | community | supportsGetObjectPropList |
+| Adyen S1f2 Terminal | a000:0063 | community | supportsGetObjectPropList |
+| Worldpay Lane | a000:0064 | community | supportsGetObjectPropList |
+| Verifone V400m Plus | a000:0065 | community | supportsGetObjectPropList |
+| Ingenico Move 5000 5g | a000:0066 | community | supportsGetObjectPropList |
+| Pax A920 Max | a000:0067 | community | supportsGetObjectPropList |
+| Pax Im30 Countertop | a000:0068 | community | supportsGetObjectPropList |
+| Castles Saturn 1000f2 | a000:0069 | community | supportsGetObjectPropList |
+| Newland N910 Smartpos | a000:006a | community | supportsGetObjectPropList |
+| Nexgo N86 Android | a000:006b | community | supportsGetObjectPropList |
+| Miura M020 Compact | a000:006c | community | supportsGetObjectPropList |
+| Ayaneo 2s 7840u | a000:006d | community | supportsGetObjectPropList |
+| Ayaneo Kun 7840hs | a000:006e | community | supportsGetObjectPropList |
+| Gpd Win Mini | a000:006f | community | supportsGetObjectPropList |
+| Gpd Win 4 7840u | a000:0070 | community | supportsGetObjectPropList |
+| Onexplayer Mini Pro | a000:0071 | community | supportsGetObjectPropList |
+| Ayn Loki Max 7840u | a000:0072 | community | supportsGetObjectPropList |
+| Retroid Pocket 4pro | a000:0073 | community | supportsGetObjectPropList |
+| Retroid Pocket Mini | a000:0074 | community | supportsGetObjectPropList |
+| Anbernic Rg556 | a000:0075 | community | supportsGetObjectPropList |
+| Anbernic Rg Arc D | a000:0076 | community | supportsGetObjectPropList |
+| Miyoo A30 | a000:0077 | community | supportsGetObjectPropList |
+| Powkiddy Rgb20sx | a000:0078 | community | supportsGetObjectPropList |
+| Xgimi Horizon Ultra 4k | a000:0079 | community | supportsGetObjectPropList |
+| Xgimi Halo Plus Fhd | a000:007a | community | supportsGetObjectPropList |
+| Xgimi Mogo 2 Pro | a000:007b | community | supportsGetObjectPropList |
+| Benq Gp500 4k Led | a000:007c | community | supportsGetObjectPropList |
+| Benq Ew2880u Smart | a000:007d | community | supportsGetObjectPropList |
+| Lg Cinebeam Hu915qe | a000:007e | community | supportsGetObjectPropList |
+| Lg Cinebeam Pf610p | a000:007f | community | supportsGetObjectPropList |
+| Samsung Freestyle 2 Fhd | a000:0080 | community | supportsGetObjectPropList |
+| Samsung Premiere Lsp9t | a000:0081 | community | supportsGetObjectPropList |
+| Epson Ef 21 Laser | a000:0082 | community | supportsGetObjectPropList |
+| Jmgo N1s Ultra 4k | a000:0083 | community | supportsGetObjectPropList |
+| Dangbei Mars Pro 4k | a000:0084 | community | supportsGetObjectPropList |
+| Awair Element 2 | a000:0085 | community | — |
+| Awair Omni Commercial | a000:0086 | community | — |
+| Iqair Airvisual Pro 2 | a000:0087 | community | — |
+| Davis Vantage Vue USB | a000:0088 | community | — |
+| Davis Vantage Pro2 USB | a000:0089 | community | — |
+| Ecowitt Gw2000 Gateway | a000:008a | community | — |
+| Ecowitt Wn1980 Station | a000:008b | community | — |
+| Temtop M2000 2nd Gen | a000:008c | community | — |
+| Airthings View Plus USB | a000:008d | community | — |
+| Qingping Air Monitor Lite | a000:008e | community | — |
+| Netatmo Weather Station USB | a000:008f | community | — |
+| Sensirion Sen6x Eval | a000:0090 | community | — |
+| Sony A7rv Ilce7rm5 | a000:0091 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A9iii Ilce9m3 | a000:0092 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R1 Pro | a000:0093 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R5 Ii C | a000:0094 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z8 Mirrorless | a000:0095 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Zf Retro Mirr | a000:0096 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm Xh2s Stacked | a000:0097 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X100vi Compact | a000:0098 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix S5iix | a000:0099 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Hasselblad X2d | a000:009a | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Leica Q3 Compact | a000:009b | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Om System Om1 Mark Ii | a000:009c | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Nothing Phone 2a Plus | a000:009d | community | supportsGetObjectPropList |
+| Nothing Phone 3 Cmf | a000:009e | community | supportsGetObjectPropList |
+| Fairphone 5 Modular | a000:009f | community | supportsGetObjectPropList |
+| Asus Zenfone 11 Ultra | a000:00a0 | community | supportsGetObjectPropList |
+| Motorola Edge 50 Ultra V1 | a000:00a1 | community | supportsGetObjectPropList |
+| Honor Magic 7 Pro | a000:00a2 | community | supportsGetObjectPropList |
+| Oppo Find X8 Pro | a000:00a3 | community | supportsGetObjectPropList |
+| Vivo X200 Pro Ultra | a000:00a4 | community | supportsGetObjectPropList |
+| Realme Gt7 Pro | a000:00a5 | community | supportsGetObjectPropList |
+| Nubia Z70 Ultra | a000:00a6 | community | supportsGetObjectPropList |
+| Poco X7 Pro | a000:00a7 | community | supportsGetObjectPropList |
+| Tecno Phantom V Fold2 | a000:00a8 | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab S10 Ultra | a000:00a9 | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab A9 Plus | a000:00aa | community | supportsGetObjectPropList |
+| Lenovo Tab P12 Pro | a000:00ab | community | supportsGetObjectPropList |
+| Xiaomi Pad 7 Pro | a000:00ac | community | supportsGetObjectPropList |
+| Oppo Pad 3 Pro | a000:00ad | community | supportsGetObjectPropList |
+| Honor Pad V9 Pro | a000:00ae | community | supportsGetObjectPropList |
+| Nokia T21 Tablet | a000:00af | community | supportsGetObjectPropList |
+| Tcl Nxtpaper 14 Pro | a000:00b0 | community | supportsGetObjectPropList |
+| Huawei Matepad Pro 136 | a000:00b1 | community | supportsGetObjectPropList |
+| Blackview Tab 18 Rugged | a000:00b2 | community | supportsGetObjectPropList |
+| Garmin Fenix 8 Amoled | a000:00b3 | community | supportsGetObjectPropList |
+| Garmin Enduro 3 Solar | a000:00b4 | community | supportsGetObjectPropList |
+| Apple Watch Ultra 2 USB | a000:00b5 | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch 7 | a000:00b6 | community | supportsGetObjectPropList |
+| Amazfit T Rex 3 | a000:00b7 | community | supportsGetObjectPropList |
+| Suunto Race S | a000:00b8 | community | supportsGetObjectPropList |
+| Coros Pace 3 Gps | a000:00b9 | community | supportsGetObjectPropList |
+| Polar Vantage V3 | a000:00ba | community | supportsGetObjectPropList |
+| Xiaomi Watch 2 Pro | a000:00bb | community | supportsGetObjectPropList |
+| Ticwatch Pro 5 Endo | a000:00bc | community | supportsGetObjectPropList |
+| Ssl 2 Plus Usbc | a000:00bd | community | supportsGetObjectPropList |
+| Audient Id44 Mkii | a000:00be | community | supportsGetObjectPropList |
+| Motu M6 USB Audio | a000:00bf | community | supportsGetObjectPropList |
+| Rme Babyface Pro Fs | a000:00c0 | community | supportsGetObjectPropList |
+| Presonus Quantum Hd8 | a000:00c1 | community | supportsGetObjectPropList |
+| Tascam Series 208i | a000:00c2 | community | supportsGetObjectPropList |
+| Arturia Minifuse 4 | a000:00c3 | community | supportsGetObjectPropList |
+| Steinberg Ur44c Mkii | a000:00c4 | community | supportsGetObjectPropList |
+| Antelope Zen Go Synergy | a000:00c5 | community | supportsGetObjectPropList |
+| Esi U86 Xt USB | a000:00c6 | community | supportsGetObjectPropList |
+| Zoom H6 Essential | a000:00c7 | community | supportsGetObjectPropList |
+| Zoom F3 Field Recorder | a000:00c8 | community | supportsGetObjectPropList |
+| Tascam Portacapture X8 | a000:00c9 | community | supportsGetObjectPropList |
+| Tascam Dr 40x | a000:00ca | community | supportsGetObjectPropList |
+| Sound Devices Mixpre 6m | a000:00cb | community | supportsGetObjectPropList |
+| Zoom M4 Mictrak | a000:00cc | community | supportsGetObjectPropList |
+| Roland R 07 Portable | a000:00cd | community | supportsGetObjectPropList |
+| Sony Pcm A10 Linear | a000:00ce | community | supportsGetObjectPropList |
+| Dji Air 3s | a000:00cf | community | supportsGetObjectPropList |
+| Dji Mini 4 Pro | a000:00d0 | community | supportsGetObjectPropList |
+| Dji Matrice 4t Ent | a000:00d1 | community | supportsGetObjectPropList |
+| Autel Evo Max 4n | a000:00d2 | community | supportsGetObjectPropList |
+| Autel Evo Lite Plus V3 | a000:00d3 | community | supportsGetObjectPropList |
+| Skydio X10d Defense | a000:00d4 | community | supportsGetObjectPropList |
+| Fimi X8 Mini V2 | a000:00d5 | community | supportsGetObjectPropList |
+| Hubsan Zino Mini Se R | a000:00d6 | community | supportsGetObjectPropList |
+| Gopro Hero 13 Black | a000:00d7 | community | supportsGetObjectPropList |
+| Gopro Max 360 | a000:00d8 | community | supportsGetObjectPropList |
+| Dji Osmo Action 5 Pro | a000:00d9 | community | supportsGetObjectPropList |
+| Insta360 Ace Pro 2 | a000:00da | community | supportsGetObjectPropList |
+| Insta360 X4 360 | a000:00db | community | supportsGetObjectPropList |
+| Akaso Brave 9 4k | a000:00dc | community | supportsGetObjectPropList |
+| Sjcam Sj20 Dual Lens | a000:00dd | community | supportsGetObjectPropList |
+| Runcam Thumb 3 | a000:00de | community | supportsGetObjectPropList |
+| Garmin Drivesmart 76 | a000:00df | community | — |
+| Garmin Tread Xse Offroad | a000:00e0 | community | — |
+| Garmin Overlander 2 | a000:00e1 | community | — |
+| Garmin Dezl Lgv1010 | a000:00e2 | community | — |
+| Tomtom Go Expert 7 | a000:00e3 | community | — |
+| Tomtom Go Camper Max 7 | a000:00e4 | community | — |
+| Garmin Gpsmap 67i Sat | a000:00e5 | community | — |
+| Garmin Montana 800i | a000:00e6 | community | — |
+| Kobo Libra Colour | a000:00e7 | community | supportsGetObjectPropList |
+| Kobo Clara Bw | a000:00e8 | community | supportsGetObjectPropList |
+| Amazon Kindle Colorsoft | a000:00e9 | community | supportsGetObjectPropList |
+| Amazon Kindle Scribe 2 | a000:00ea | community | supportsGetObjectPropList |
+| Boox Tab Ultra C Pro | a000:00eb | community | supportsGetObjectPropList |
+| Boox Poke 5e | a000:00ec | community | supportsGetObjectPropList |
+| Pocketbook Inkpad 4 | a000:00ed | community | supportsGetObjectPropList |
+| Remarkable Paper Pro | a000:00ee | community | supportsGetObjectPropList |
+| Rpi Pico 2 W Rp2350 | a000:00ef | community | supportsGetObjectPropList |
+| Arduino Uno R4 Wifi V2 | a000:00f0 | community | supportsGetObjectPropList |
+| Espressif Esp32 C6 Devkit | a000:00f1 | community | supportsGetObjectPropList |
+| Espressif Esp32 P4 Eval | a000:00f2 | community | supportsGetObjectPropList |
+| Adafruit Feather Rp2350 | a000:00f3 | community | supportsGetObjectPropList |
+| Seeed Xiao Ra4m1 | a000:00f4 | community | supportsGetObjectPropList |
+| Stm32 Nucleo U5a5zj Q | a000:00f5 | community | supportsGetObjectPropList |
+| Ti Launchpad Cc2340r5 | a000:00f6 | community | supportsGetObjectPropList |
+| Nordic Dk Nrf54l15 | a000:00f7 | community | supportsGetObjectPropList |
+| Pine64 Star64 Riscv | a000:00f8 | community | supportsGetObjectPropList |
+| Fiio M23 Thx Balanced | a000:00f9 | community | supportsGetObjectPropList |
+| Shanling M9 Plus | a000:00fa | community | supportsGetObjectPropList |
+| Astell Kern Sp3000t | a000:00fb | community | supportsGetObjectPropList |
+| Ibasso Dx 340 | a000:00fc | community | supportsGetObjectPropList |
+| Hiby Rs8 Darwin | a000:00fd | community | supportsGetObjectPropList |
+| Cayin N8ii Tube | a000:00fe | community | supportsGetObjectPropList |
+| Lotoo Paw 6000 | a000:00ff | community | supportsGetObjectPropList |
+| Moondrop Miad02 Dap | a000:0100 | community | supportsGetObjectPropList |
+| Viofo A229 Pro Duo | a000:0101 | community | supportsGetObjectPropList |
+| Viofo A329 3ch 4k | a000:0102 | community | supportsGetObjectPropList |
+| Garmin Dash Cam 67w | a000:0103 | community | supportsGetObjectPropList |
+| Nextbase 622gw 4k | a000:0104 | community | supportsGetObjectPropList |
+| Thinkware Q1000 2ch | a000:0105 | community | supportsGetObjectPropList |
+| Blackvue Dr970x 2ch Lte | a000:0106 | community | supportsGetObjectPropList |
+| Ddpai Mini5 4k Gps | a000:0107 | community | supportsGetObjectPropList |
+| Redtiger F7np Front Rear | a000:0108 | community | supportsGetObjectPropList |
+| Nvidia Shield Tv Pro | a000:0109 | community | supportsGetObjectPropList |
+| Apple Tv 4k 2024 Usbc | a000:010a | community | supportsGetObjectPropList |
+| Amazon Fire Tv Stick 4k Max 2 | a000:010b | community | supportsGetObjectPropList |
+| Roku Ultra | a000:010c | community | supportsGetObjectPropList |
+| Google Tv Streamer 4k | a000:010d | community | supportsGetObjectPropList |
+| Xiaomi Tv Box S 2nd Gen | a000:010e | community | supportsGetObjectPropList |
+| Mecool Km2 Plus Deluxe | a000:010f | community | supportsGetObjectPropList |
+| Dune Hd Real Vision 4k | a000:0110 | community | supportsGetObjectPropList |
+| Sequential Prophet Rev2 16 | a000:0111 | community | supportsGetObjectPropList |
+| Sequential Ob 6 Mkii | a000:0112 | community | supportsGetObjectPropList |
+| Moog Matriarch Dark | a000:0113 | community | supportsGetObjectPropList |
+| Arturia Polybrute 12 | a000:0114 | community | supportsGetObjectPropList |
+| Korg Modwave Mkii | a000:0115 | community | supportsGetObjectPropList |
+| Waldorf M Wavetable | a000:0116 | community | supportsGetObjectPropList |
+| Novation Summit X | a000:0117 | community | supportsGetObjectPropList |
+| Oberheim Ob X8 Mkii | a000:0118 | community | supportsGetObjectPropList |
+| Epson Es C380w Portable | a000:0119 | community | supportsGetObjectPropList |
+| Fujitsu Scansnap Ix1700 | a000:011a | community | supportsGetObjectPropList |
+| Brother Ads 4900w Dept | a000:011b | community | supportsGetObjectPropList |
+| Canon Imageformula R50 | a000:011c | community | supportsGetObjectPropList |
+| Plustek Opticslim 2680h | a000:011d | community | supportsGetObjectPropList |
+| Avision An360w Network | a000:011e | community | supportsGetObjectPropList |
+| Kodak Alaris S2070 Sheet | a000:011f | community | supportsGetObjectPropList |
+| Bambu Lab A1 Mini Combo | a000:0120 | community | supportsGetObjectPropList |
+| Hp Smart Tank | a000:0121 | community | supportsGetObjectPropList |
+| Epson Ecotank Et 16650 | a000:0122 | community | supportsGetObjectPropList |
+| Brother Mfc J4535dw | a000:0123 | community | supportsGetObjectPropList |
+| Canon Pixma G7020 Mega | a000:0124 | community | supportsGetObjectPropList |
+| Xerox C235 Color Mfp | a000:0125 | community | supportsGetObjectPropList |
+| Dymo Labelwriter 550 USB | a000:0126 | community | supportsGetObjectPropList |
+| Bambu Lab X1e Industrial | a000:0127 | community | supportsGetObjectPropList |
+| Bambu Lab P1s Combo | a000:0128 | community | supportsGetObjectPropList |
+| Creality K2 Plus Corexy | a000:0129 | community | supportsGetObjectPropList |
+| Prusa Mk4s Nextgen | a000:012a | community | supportsGetObjectPropList |
+| Anycubic Kobra 3 Combo | a000:012b | community | supportsGetObjectPropList |
+| Elegoo Neptune 4 Max | a000:012c | community | supportsGetObjectPropList |
+| Flashforge Adventurer 5m Pro | a000:012d | community | supportsGetObjectPropList |
+| Carbide3d Shapeoko 5 Pro | a000:012e | community | supportsGetObjectPropList |
+| Onefinity Foreman Elite | a000:012f | community | supportsGetObjectPropList |
+| Snapmaker Artisan 3in1 | a000:0130 | community | supportsGetObjectPropList |
+| Openbuilds Lead | a000:0131 | community | supportsGetObjectPropList |
+| Sainsmart Genmitsu Prover Xl | a000:0132 | community | supportsGetObjectPropList |
+| Stepcraft D600 Desktop | a000:0133 | community | supportsGetObjectPropList |
+| Inventables X Carve Pro | a000:0134 | community | supportsGetObjectPropList |
+| Portenta X8 Industrial | a000:0135 | community | supportsGetObjectPropList |
+| Toradex Verdin Imx95 | a000:0136 | community | supportsGetObjectPropList |
+| Phytec Phyboard Polis 2 | a000:0137 | community | supportsGetObjectPropList |
+| Kontron Smarc Sal Mx95 | a000:0138 | community | supportsGetObjectPropList |
+| Variscite Dart Mx93 | a000:0139 | community | supportsGetObjectPropList |
+| Compulab Ucm Imx95 | a000:013a | community | supportsGetObjectPropList |
+| Boundary Devices Nitrogen 95 | a000:013b | community | supportsGetObjectPropList |
+| Solid Run Hummingboard Pulse | a000:013c | community | supportsGetObjectPropList |
+| Tesla Model3 USB Diag | a000:013d | community | supportsGetObjectPropList |
+| Obdlink Mx Plus V3 | a000:013e | community | supportsGetObjectPropList |
+| Vgate Vlinker Mc Bt | a000:013f | community | supportsGetObjectPropList |
+| Autel Maxicom Mk906 Pro | a000:0140 | community | supportsGetObjectPropList |
+| Launch X431 V Plus 5 | a000:0141 | community | supportsGetObjectPropList |
+| Topdon Artipad I Diag | a000:0142 | community | supportsGetObjectPropList |
+| Thinkcar Thinktool Max | a000:0143 | community | supportsGetObjectPropList |
+| Innova 5610 Pro Obd | a000:0144 | community | supportsGetObjectPropList |
+| Basler Ace 2 Pro A2040 | a000:0145 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Flir Bfs U3 244s8m C | a000:0146 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Ids U3 36c0xcp Rev22 | a000:0147 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Allied Vision Alvium 1800 U | a000:0148 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Ximea Mq022cg Cm Usb3 | a000:0149 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Lucid Triton 2 Tri250s | a000:014a | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Daheng Mer2 2000 19u3m | a000:014b | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Flir One Edge Pro Usbc | a000:014c | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Seek Thermal Shotpro USB | a000:014d | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Hikmicro Pocket 2 Plus | a000:014e | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Fluke Tix 580 Pro | a000:014f | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Infiray P2 Pro Phone | a000:0150 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Guide Sensmart P120v | a000:0151 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Uni T Uti720e Thermal | a000:0152 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Zeiss Axio Observer 7 USB | a000:0153 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Leica Dmi8 Inverted | a000:0154 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Olympus Bx53m Metallurgical | a000:0155 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Eclipse Ni U USB | a000:0156 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Keyence Vhx 7100 Digital | a000:0157 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Dino Lite Am73915mztl | a000:0158 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Amscope T720q Trinocular | a000:0159 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Celestron Nexstar 8se Wifi | a000:015a | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Meade Lx850 Acf Gps | a000:015b | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Skywatcher Eq6 R Pro USB | a000:015c | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Zwo Am5 Harmonic Mount | a000:015d | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Zwo Asi 2600mc Duo | a000:015e | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Player One Poseidon C Pro | a000:015f | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Pegasus Astro Uc Hub | a000:0160 | community | supportsGetObjectPropList, preferGetObjectPropList |
+| Blackmagic Atem Mini Pro Iso | a000:0161 | community | supportsGetObjectPropList |
+| Blackmagic Web Presenter 4k | a000:0162 | community | supportsGetObjectPropList |
+| Roland Vr 6hd Switcher | a000:0163 | community | supportsGetObjectPropList |
+| Aja Helo Plus Streaming | a000:0164 | community | supportsGetObjectPropList |
+| Teradek Prism Flex Ii | a000:0165 | community | supportsGetObjectPropList |
+| Magewell Ultra Stream Hdmi | a000:0166 | community | supportsGetObjectPropList |
+| Epiphan Pearl Nano 2 | a000:0167 | community | supportsGetObjectPropList |
+| Elgato Stream Deck Neo | a000:0168 | community | supportsGetObjectPropList |
+| Elgato Facecam Mk2 | a000:0169 | community | supportsGetObjectPropList |
+| Elgato Prompter Usbc | a000:016a | community | supportsGetObjectPropList |
+| Logitech Mevo Core 4k | a000:016b | community | supportsGetObjectPropList |
+| Razer Kiyo Ultra 4k | a000:016c | community | supportsGetObjectPropList |
+| Insta360 Link 2 Ptz | a000:016d | community | supportsGetObjectPropList |
+| Obsbot Tail 2 Ai Cam | a000:016e | community | supportsGetObjectPropList |
+| Reolink Argus 4 Pro Solar | a000:016f | community | supportsGetObjectPropList |
+| Eufy S350 Dual Cam | a000:0170 | community | supportsGetObjectPropList |
+| Arlo Ultra 2 Xl USB | a000:0171 | community | supportsGetObjectPropList |
+| Wyze Cam Og USB Backup | a000:0172 | community | supportsGetObjectPropList |
+| Annke Nc800 4k Poe USB | a000:0173 | community | supportsGetObjectPropList |
+| Hikvision Ds 2cd2387g2p | a000:0174 | community | supportsGetObjectPropList |
+| Dahua Ipc Hdbw3849r1 | a000:0175 | community | supportsGetObjectPropList |
+| Axon Body 4 Wifi6 | a000:0176 | community | supportsGetObjectPropList |
+| Motorola Si750 Bodycam | a000:0177 | community | supportsGetObjectPropList |
+| Hytera Vm780 Lte Body | a000:0178 | community | supportsGetObjectPropList |
+| Reveal D7 Bodycam USB | a000:0179 | community | supportsGetObjectPropList |
+| Wolfcom Vision Pro 4k | a000:017a | community | supportsGetObjectPropList |
+| Getac Veretos Bc 04 | a000:017b | community | supportsGetObjectPropList |
+| Transcend Drivepro Body 70 | a000:017c | community | supportsGetObjectPropList |
+| Brightsign Xd1035 Pro | a000:017d | community | supportsGetObjectPropList |
+| Samsung Qbr Series USB | a000:017e | community | supportsGetObjectPropList |
+| Lg Webos Signage USB | a000:017f | community | supportsGetObjectPropList |
+| Philips Dline 4568t | a000:0180 | community | supportsGetObjectPropList |
+| Iadea Xds 2388 Android | a000:0181 | community | supportsGetObjectPropList |
+| Spinetix Hmp400 Player | a000:0182 | community | supportsGetObjectPropList |
+| Screenly Player Max | a000:0183 | community | supportsGetObjectPropList |
+| Zebra Ds3678 Dp Ultra | a000:0184 | community | — |
+| Honeywell Voyager 1472g2d | a000:0185 | community | — |
+| Datalogic Gryphon Gd4590 | a000:0186 | community | — |
+| Newland Hr5280 Bt Ring | a000:0187 | community | — |
+| Socket Mobile S760 Bt | a000:0188 | community | — |
+| Unitech Ms852 Plus Lrc | a000:0189 | community | — |
+| Cipherlab 2564 Bt Pock | a000:018a | community | — |
+| Impinj Speedway R420 USB | a000:018b | community | — |
+| Zebra Fx9600 Fixed USB | a000:018c | community | — |
+| Alien Alr F800 X USB | a000:018d | community | — |
+| Chainway C72 Uhf Handheld | a000:018e | community | — |
+| Feig Iru3500 Mid Range | a000:018f | community | — |
+| Nordic Id Eid2 Handheld | a000:0190 | community | — |
+| Times 7 A5010 Slim Uhf | a000:0191 | community | — |
+| Phonak Lumity L90 Rechg | a000:0192 | community | supportsGetObjectPropList |
+| Oticon Intent 1 Minirite | a000:0193 | community | supportsGetObjectPropList |
+| Widex Smartric 440 | a000:0194 | community | supportsGetObjectPropList |
+| Signia Ix 7ax Cic | a000:0195 | community | supportsGetObjectPropList |
+| Starkey Genesis Ai | a000:0196 | community | supportsGetObjectPropList |
+| Resound Nexia 9 M R | a000:0197 | community | supportsGetObjectPropList |
+| Unitron Vivante Moxi Fit | a000:0198 | community | supportsGetObjectPropList |
+| Tobii Dynavox I 16 Eye | a000:0199 | community | supportsGetObjectPropList |
+| Orcam Read 3 Text To Speech | a000:019a | community | supportsGetObjectPropList |
+| Humanware Brailliant Bi 40x | a000:019b | community | supportsGetObjectPropList |
+| Hims Polaris Mini Braille | a000:019c | community | supportsGetObjectPropList |
+| Aac Saltillo Nova Chat 15 | a000:019d | community | supportsGetObjectPropList |
+| Ablenet Blue2 Switch | a000:019e | community | supportsGetObjectPropList |
+| Jouse3 Mouth Joystick | a000:019f | community | supportsGetObjectPropList |
+| Ubiquiti Dream Machine Se | a000:01a0 | community | supportsGetObjectPropList |
+| Mikrotik Rb5009ug S In | a000:01a1 | community | supportsGetObjectPropList |
+| Gl Inet Flint 2 Ax6000 | a000:01a2 | community | supportsGetObjectPropList |
+| Peplink Max Br1 Pro 5g | a000:01a3 | community | supportsGetObjectPropList |
+| Netgate 6100 Pfsense | a000:01a4 | community | supportsGetObjectPropList |
+| Cisco C1111 4p Isr | a000:01a5 | community | supportsGetObjectPropList |
+| Aruba Instant On Ap32 | a000:01a6 | community | supportsGetObjectPropList |
+| Quectel Rm520n Gl 5g | a000:01a7 | community | supportsGetObjectPropList |
+| Sierra Wireless Em9291 5g | a000:01a8 | community | supportsGetObjectPropList |
+| Fibocom Fm160 Na 5g | a000:01a9 | community | supportsGetObjectPropList |
+| Telit Fn990a28 5g M2 | a000:01aa | community | supportsGetObjectPropList |
+| Netgear Nighthawk M6 Pro | a000:01ab | community | supportsGetObjectPropList |
+| Tp Link Deco X50 5g USB | a000:01ac | community | supportsGetObjectPropList |
+| Huawei 5g Cpe Pro 3 | a000:01ad | community | supportsGetObjectPropList |
+| Airspy Hf Plus Discovery | a000:01ae | community | supportsGetObjectPropList |
+| Sdrplay Rspdx R2 | a000:01af | community | supportsGetObjectPropList |
+| Rtl Sdr Blog V4 USB | a000:01b0 | community | supportsGetObjectPropList |
+| Hackrf One Plus | a000:01b1 | community | supportsGetObjectPropList |
+| Adalm Pluto Plus Sdr | a000:01b2 | community | supportsGetObjectPropList |
+| Lime Microsystems Limesdr X3 | a000:01b3 | community | supportsGetObjectPropList |
+| Funcube Dongle Pro Plus V2 | a000:01b4 | community | supportsGetObjectPropList |
+| Tinysa Ultra 6ghz | a000:01b5 | community | supportsGetObjectPropList |
+| Siglent Ssa3075x Plus | a000:01b6 | community | supportsGetObjectPropList |
+| Rigol Dsa815 Tg 1500mhz | a000:01b7 | community | supportsGetObjectPropList |
+| Rohde Schwarz Fpc1500 | a000:01b8 | community | supportsGetObjectPropList |
+| Keysight N9918b Fh | a000:01b9 | community | supportsGetObjectPropList |
+| Anritsu Ms2090a Field | a000:01ba | community | supportsGetObjectPropList |
+| Signal Hound Bb60d USB | a000:01bb | community | supportsGetObjectPropList |
+| Icom Ic 905 Shf Vhf | a000:01bc | community | supportsGetObjectPropList |
+| Yaesu Ft 710 Aess Hf | a000:01bd | community | supportsGetObjectPropList |
+| Kenwood Ts 890s Hf USB | a000:01be | community | supportsGetObjectPropList |
+| Flexradio Flex 6400m | a000:01bf | community | supportsGetObjectPropList |
+| Elecraft K4d Hf 6m | a000:01c0 | community | supportsGetObjectPropList |
+| Xiegu X6200 Portable | a000:01c1 | community | supportsGetObjectPropList |
+| Lab599 Tx 500p Discovery | a000:01c2 | community | supportsGetObjectPropList |
+| Motorola R7 Fkp Uhf | a000:01c3 | community | supportsGetObjectPropList |
+| Hytera Hp702 Dmr Uhf | a000:01c4 | community | supportsGetObjectPropList |
+| Kenwood Nx 5400 Nxdn | a000:01c5 | community | supportsGetObjectPropList |
+| Icom Ic F7510 P25 Uhf | a000:01c6 | community | supportsGetObjectPropList |
+| Tait Tp9600 P25 Phase2 | a000:01c7 | community | supportsGetObjectPropList |
+| Sepura Sc2120 Tetra | a000:01c8 | community | supportsGetObjectPropList |
+| Harris Xg 75p P25 Port | a000:01c9 | community | supportsGetObjectPropList |
+| Icom Ic M510 Vhf Ais | a000:01ca | community | supportsGetObjectPropList |
+| Standard Horizon Gx6500 | a000:01cb | community | supportsGetObjectPropList |
+| Garmin Vhf 315i Ais | a000:01cc | community | supportsGetObjectPropList |
+| Simrad Rs100 Vhf USB | a000:01cd | community | supportsGetObjectPropList |
+| Raymarine Ray 73 Vhf | a000:01ce | community | supportsGetObjectPropList |
+| Furuno Fm 4800 Vhf | a000:01cf | community | supportsGetObjectPropList |
+| Cobham Sailor 6248 Vhf | a000:01d0 | community | supportsGetObjectPropList |
+| Garmin Echomap Uhd2 93sv V1 | a000:01d1 | community | supportsGetObjectPropList |
+| Lowrance Hds Live 12 USB | a000:01d2 | community | supportsGetObjectPropList |
+| Simrad Nso Evo3s Mfd | a000:01d3 | community | supportsGetObjectPropList |
+| Raymarine Axiom2 Pro 16s | a000:01d4 | community | supportsGetObjectPropList |
+| Humminbird Solix 15 Chirp | a000:01d5 | community | supportsGetObjectPropList |
+| Furuno Tztl15f Navnet | a000:01d6 | community | supportsGetObjectPropList |
+| B And G Zeus S 12 USB | a000:01d7 | community | supportsGetObjectPropList |
+| Rak Wisgate Edge Pro 2 | a000:01d8 | community | — |
+| Milesight Ug67 Outdoor | a000:01d9 | community | — |
+| Kerlink Wirnet Ifemtocell | a000:01da | community | — |
+| Dragino Lg308 Indoor Gw | a000:01db | community | — |
+| Seeed Sensecap M2 Multi | a000:01dc | community | — |
+| Laird Sentrius Rg191 USB | a000:01dd | community | — |
+| Browan Mng Tab Outdoor Gw | a000:01de | community | — |
+| Garmin Inreach Messenger 2 | a000:01df | community | supportsGetObjectPropList |
+| Garmin Inreach Mini 3 | a000:01e0 | community | supportsGetObjectPropList |
+| Zoleo 2 Satellite Comm | a000:01e1 | community | supportsGetObjectPropList |
+| Somewear Labs Hotspot V2 | a000:01e2 | community | supportsGetObjectPropList |
+| Bivy Stick 2 Satellite | a000:01e3 | community | supportsGetObjectPropList |
+| Globalstar Spot X2 | a000:01e4 | community | supportsGetObjectPropList |
+| Iridium Go Exec Satphone | a000:01e5 | community | supportsGetObjectPropList |
+| Hikvision Ds K1t680mf USB | a000:01e6 | community | supportsGetObjectPropList |
+| Zkteco Speedface V5l Td | a000:01e7 | community | supportsGetObjectPropList |
+| Suprema Biostation 3 USB | a000:01e8 | community | supportsGetObjectPropList |
+| Hid Signo 40 Reader USB | a000:01e9 | community | supportsGetObjectPropList |
+| Dahua Asi7214y V3 | a000:01ea | community | supportsGetObjectPropList |
+| Anviz Facedeep 5 Irt | a000:01eb | community | supportsGetObjectPropList |
+| Idemia Morphowave Xp USB | a000:01ec | community | supportsGetObjectPropList |
+| Zebra Tc58 Rugged Mobile | a000:01ed | community | supportsGetObjectPropList |
+| Honeywell Ct47 Xp Ultra | a000:01ee | community | supportsGetObjectPropList |
+| Datalogic Memor 35 Android | a000:01ef | community | supportsGetObjectPropList |
+| Panasonic Toughbook G2 Mk2 | a000:01f0 | community | supportsGetObjectPropList |
+| Getac F110 G7 Tablet | a000:01f1 | community | supportsGetObjectPropList |
+| Point Mobile Pm560 Wlan | a000:01f2 | community | supportsGetObjectPropList |
+| Unitech Ea630 Plus Ent | a000:01f3 | community | supportsGetObjectPropList |
+| Eaton 5px G2 3000 USB | a000:01f4 | community | — |
+| Apc Smart Ups Srt 3000 USB | a000:01f5 | community | — |
+| Cyberpower Or2200pfcrt2u | a000:01f6 | community | — |
+| Vertiv Liebert Gxt5 | a000:01f7 | community | — |
+| Tripp Lite Su3000rtxr3u | a000:01f8 | community | — |
+| Riello Sentinel Pro | a000:01f9 | community | — |
+| Salicru Slc 6000 Twin Rt3 | a000:01fa | community | — |
+| John Deere Starfire | a000:01fb | community | supportsGetObjectPropList |
+| Trimble Gfx 1260 Display V1 | a000:01fc | community | supportsGetObjectPropList |
+| Ag Leader Incommand | a000:01fd | community | supportsGetObjectPropList |
+| Topcon X35i Touchscreen | a000:01fe | community | supportsGetObjectPropList |
+| Raven Cr12 Field Comp | a000:01ff | community | supportsGetObjectPropList |
+| Hemisphere A631 Receiver | a000:0200 | community | supportsGetObjectPropList |
+| Agtron Soil Scanner USB | a000:0201 | community | supportsGetObjectPropList |
