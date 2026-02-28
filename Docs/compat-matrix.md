@@ -4481,3 +4481,78 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Htc Vive Xr Elite | 0bb4:0c99 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
 | Google Chromecast Gtv 4k | 18d1:4eca | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
 | Google Chromecast Gtv Hd | 18d1:4ecb | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Raspberry Pi Pico Rp2040 MTP | 2e8a:4000 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Raspberry Pi Pico W MTP | 2e8a:4001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Raspberry Pi Pico2 Rp2350 MTP | 2e8a:4010 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Raspberry Pi Zero2w Gadget MTP | 2e8a:4020 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Espressif Esp32s2 Tinyusb MTP | 303a:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Espressif Esp32s3 Tinyusb MTP | 303a:1001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Espressif Esp32s3 Devkitc MTP | 303a:1002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Stm32 USB MTP | 0483:572b | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Stm32 Nucleo MTP | 0483:572c | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Stm32 Discovery MTP | 0483:572d | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Bambulab P1p | 3311:0005 | ⚪ proposed | — |
+| Creality Ender3 V3 | 0483:0106 | ⚪ proposed | — |
+| Creality K1 Max | 0483:0107 | ⚪ proposed | — |
+| Creality K1c | 0483:0108 | ⚪ proposed | — |
+| Creality Cr10 Se | 0483:0109 | ⚪ proposed | — |
+| Elegoo Mars 4 Ultra | 1a86:7601 | ⚪ proposed | — |
+| Elegoo Saturn 3 Ultra | 1a86:7602 | ⚪ proposed | — |
+| Ankermake M5 | 291a:0010 | ⚪ proposed | — |
+| Ankermake M5c | 291a:0011 | ⚪ proposed | — |
+| Flashforge Adventurer 5m | 2b71:0001 | ⚪ proposed | — |
+| Flashforge Creator 4 | 2b71:0002 | ⚪ proposed | — |
+| Snapmaker Artisan | 0483:5750 | ⚪ proposed | — |
+| Snapmaker J1s | 0483:5751 | ⚪ proposed | — |
+| Formlabs Form 4 | 16d0:0e00 | ⚪ proposed | — |
+| Ultimaker S7 | 2c8f:0001 | ⚪ proposed | — |
+| Ultimaker Method Xl | 2c8f:0002 | ⚪ proposed | — |
+| Biqu Btt Cb1 | 1d50:614e | ⚪ proposed | — |
+| Biqu Btt Cb2 | 1d50:614f | ⚪ proposed | — |
+| Zeiss Axiocam 208c | 20ce:0001 | ⚪ proposed | — |
+| Zeiss Axiocam 305c | 20ce:0002 | ⚪ proposed | — |
+| Zeiss Axiocam 712 Mono | 20ce:0003 | ⚪ proposed | — |
+| Zeiss Primo Star Cam | 20ce:0004 | ⚪ proposed | — |
+| Leica Microsystems Dfc7000t | 1038:0001 | ⚪ proposed | — |
+| Leica Microsystems Dmi8 Cam | 1038:0002 | ⚪ proposed | — |
+| Leica Microsystems Flexacam C1 | 1038:0003 | ⚪ proposed | — |
+| Leica Microsystems Dfc9000gt | 1038:0004 | ⚪ proposed | — |
+| Olympus Dp74 Microscope | 07b4:0300 | ⚪ proposed | — |
+| Olympus Dp27 Microscope | 07b4:0301 | ⚪ proposed | — |
+| Olympus Dp23 Microscope | 07b4:0302 | ⚪ proposed | — |
+| Olympus Dp73 Microscope | 07b4:0303 | ⚪ proposed | — |
+| Olympus Dp80 Microscope | 07b4:0304 | ⚪ proposed | — |
+| Celestron Neximage 5 | 1546:0001 | ⚪ proposed | — |
+| Celestron Neximage Burst | 1546:0002 | ⚪ proposed | — |
+| Celestron Skyris 445m | 1546:0003 | ⚪ proposed | — |
+| Celestron Cpc 1100 Cam | 1546:0004 | ⚪ proposed | — |
+| Celestron Starsense Explorer | 1546:0005 | ⚪ proposed | — |
+| Flir E4 | 09cb:1009 | ⚪ proposed | — |
+| Flir E54 | 09cb:100a | ⚪ proposed | — |
+| Flir T840 | 09cb:1013 | ⚪ proposed | — |
+| Flir T860 | 09cb:1014 | ⚪ proposed | — |
+| Flir T620 | 09cb:1015 | ⚪ proposed | — |
+| Flir E75 | 09cb:1016 | ⚪ proposed | — |
+| Flir E85 | 09cb:1017 | ⚪ proposed | — |
+| Flir E95 | 09cb:1018 | ⚪ proposed | — |
+| Seek Thermal Reveal Pro | 289d:0013 | ⚪ proposed | — |
+| Seek Thermal Reveal Firepro | 289d:0014 | ⚪ proposed | — |
+| Rigol Ds2072a Oscilloscope | 1ab1:04c0 | ⚪ proposed | — |
+| Rigol Ds2102a Oscilloscope | 1ab1:04c2 | ⚪ proposed | — |
+| Rigol Mso5074 Oscilloscope | 1ab1:04d0 | ⚪ proposed | — |
+| Rigol Mso5104 Oscilloscope | 1ab1:04d1 | ⚪ proposed | — |
+| Rigol Dsa815 Spectrum Analyzer | 1ab1:04b1 | ⚪ proposed | — |
+| Rigol Dg1022z Generator | 1ab1:0641 | ⚪ proposed | — |
+| Keysight Msox3054t Oscilloscope | 2a8d:0101 | ⚪ proposed | — |
+| Keysight Msox4104a Oscilloscope | 2a8d:0102 | ⚪ proposed | — |
+| Keysight Dsox1204g Oscilloscope | 2a8d:0103 | ⚪ proposed | — |
+| Keysight N9000b Cxa Analyzer | 2a8d:0104 | ⚪ proposed | — |
+| Keysight Edux1052a Oscilloscope | 2a8d:0105 | ⚪ proposed | — |
+| Tektronix Mso44 Oscilloscope | 0699:0520 | ⚪ proposed | — |
+| Tektronix Mso46 Oscilloscope | 0699:0521 | ⚪ proposed | — |
+| Tektronix Mdo3024 Oscilloscope | 0699:0413 | ⚪ proposed | — |
+| Tektronix Tbs2104 Oscilloscope | 0699:0522 | ⚪ proposed | — |
+| Tektronix Mso24 Oscilloscope | 0699:0523 | ⚪ proposed | — |
+| Roper Scientific Pixis 400 | 0bd7:0001 | ⚪ proposed | — |
+| Roper Scientific Proem 512 | 0bd7:0002 | ⚪ proposed | — |
+| Roper Scientific Pixis 2048 | 0bd7:0003 | ⚪ proposed | — |
