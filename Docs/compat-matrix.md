@@ -2,7 +2,7 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-**5,549** device entries across **296** vendor IDs and **34** categories.
+**5,738** device entries across **297** vendor IDs and **34** categories.
 
 ## 3D Printer (35)
 
@@ -1437,7 +1437,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Thinkware F200 Pro | 0x2c18:0x0001 | experimental | unknown |
 | Viofo A129 Pro Duo | 0x0c76:0x0001 | experimental | unknown |
 
-## Dev Board (82)
+## Dev Board (124)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1523,6 +1523,48 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | seeed-xiao-nrf52840-sense-mtp-0045 | 0x2886:0x0045 | proposed | low |
 | seeed-wio-terminal-mtp-802d | 0x2886:0x802d | proposed | low |
 | seeed-xiao-samd21-mtp-802f | 0x2886:0x802f | proposed | low |
+| raspberry-pi-pico-debug-mtp-4002 | 0x2e8a:0x4002 | proposed | low |
+| raspberry-pi-pico-w-mtp-alt-4003 | 0x2e8a:0x4003 | proposed | low |
+| raspberry-pi-pico2-rp2350-mtp-alt-4011 | 0x2e8a:0x4011 | proposed | low |
+| raspberry-pi-zero2w-gadget-alt-4021 | 0x2e8a:0x4021 | proposed | low |
+| raspberry-pi-4b-gadget-mtp-4030 | 0x2e8a:0x4030 | proposed | low |
+| raspberry-pi-5-gadget-mtp-4040 | 0x2e8a:0x4040 | proposed | low |
+| raspberry-pi-cm4-gadget-mtp-4050 | 0x2e8a:0x4050 | proposed | low |
+| espressif-esp32s2-saola-mtp-0003 | 0x303a:0x0003 | proposed | low |
+| espressif-esp32s2-kaluga-mtp-0004 | 0x303a:0x0004 | proposed | low |
+| espressif-esp32s3-eye-mtp-1003 | 0x303a:0x1003 | proposed | low |
+| espressif-esp32s3-box-mtp-1004 | 0x303a:0x1004 | proposed | low |
+| espressif-esp32s3-korvo-mtp-1005 | 0x303a:0x1005 | proposed | low |
+| stm32f4-discovery-mtp-572e | 0x0483:0x572e | proposed | low |
+| stm32h7-nucleo-mtp-572f | 0x0483:0x572f | proposed | low |
+| stm32l4-nucleo-mtp-5730 | 0x0483:0x5730 | proposed | low |
+| stm32u5-nucleo-mtp-5731 | 0x0483:0x5731 | proposed | low |
+| stm32mp1-dk2-mtp-5732 | 0x0483:0x5732 | proposed | low |
+| pine64-pinephone-mtp-5100 | 0x1209:0x5100 | proposed | low |
+| pine64-pinephone-pro-mtp-5101 | 0x1209:0x5101 | proposed | low |
+| pine64-pinetab2-mtp-5102 | 0x1209:0x5102 | proposed | low |
+| beaglebone-black-gadget-mtp-0100 | 0x1d6b:0x0100 | proposed | low |
+| beaglebone-ai64-gadget-mtp-0102 | 0x1d6b:0x0102 | proposed | low |
+| beagleplay-gadget-mtp-0103 | 0x1d6b:0x0103 | proposed | low |
+| nvidia-jetson-nano-mtp-7e19 | 0x0955:0x7e19 | proposed | low |
+| nvidia-jetson-orin-nano-mtp-7e20 | 0x0955:0x7e20 | proposed | low |
+| nvidia-jetson-orin-nx-mtp-7e21 | 0x0955:0x7e21 | proposed | low |
+| orangepi-zero2-gadget-mtp-1020 | 0x1f3a:0x1020 | proposed | low |
+| orangepi-5-gadget-mtp-1021 | 0x1f3a:0x1021 | proposed | low |
+| orangepi-3b-gadget-mtp-1022 | 0x1f3a:0x1022 | proposed | low |
+| bananapi-m2-zero-gadget-mtp-1030 | 0x1f3a:0x1030 | proposed | low |
+| bananapi-m5-gadget-mtp-1031 | 0x1f3a:0x1031 | proposed | low |
+| lattepanda-delta-gadget-mtp-0110 | 0x1d6b:0x0110 | proposed | low |
+| lattepanda-sigma-gadget-mtp-0111 | 0x1d6b:0x0111 | proposed | low |
+| milkv-duo-gadget-mtp-d001 | 0x1209:0xd001 | proposed | low |
+| milkv-duo-s-gadget-mtp-d002 | 0x1209:0xd002 | proposed | low |
+| milkv-mars-gadget-mtp-d003 | 0x1209:0xd003 | proposed | low |
+| milkv-pioneer-gadget-mtp-d004 | 0x1209:0xd004 | proposed | low |
+| sipeed-lichee-rv-gadget-mtp-c001 | 0x1209:0xc001 | proposed | low |
+| sipeed-tang-nano-9k-mtp-c002 | 0x1209:0xc002 | proposed | low |
+| sipeed-tang-mega-138k-mtp-c003 | 0x1209:0xc003 | proposed | low |
+| sipeed-maix-bit-mtp-c004 | 0x1209:0xc004 | proposed | low |
+| sipeed-licheepi-4a-mtp-c005 | 0x1209:0xc005 | proposed | low |
 
 ## Drone (74)
 
@@ -1745,7 +1787,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Kobo Sage | 0x2237:0x7012 | experimental | unknown |
 | reMarkable 2 | 0x04b3:0x0610 | experimental | unknown |
 
-## Embedded (4)
+## Embedded (9)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1753,6 +1795,11 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | livescribe-pulse-smartpen-0002 | 0x1ccb:0x0002 | proposed | low |
 | livescribe-3-smartpen-0003 | 0x1ccb:0x0003 | proposed | low |
 | raspberry-pi-zero2w-gadget-mtp-4020 | 0x2e8a:0x4020 | proposed | low |
+| wch-ch552-mtp-8000 | 0x1a86:0x8000 | proposed | low |
+| wch-ch32v003-mtp-8001 | 0x1a86:0x8001 | proposed | low |
+| wch-ch32v307-mtp-8002 | 0x1a86:0x8002 | proposed | low |
+| wch-ch32x035-mtp-8003 | 0x1a86:0x8003 | proposed | low |
+| pine64-pinetime-mtp-5103 | 0x1209:0x5103 | proposed | low |
 
 ## Fitness (18)
 
@@ -2091,7 +2138,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | rohdeschwarz-fpc1500-01d9 | 0x0aad:0x01d9 | community | community |
 | rohdeschwarz-rth1004-01da | 0x0aad:0x01da | community | community |
 
-## Media Player (470)
+## Media Player (538)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2490,6 +2537,74 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | cowon-iaudio-d2-0601 | 0x0e21:0x0601 | proposed | low |
 | cowon-iaudio-j3-0700 | 0x0e21:0x0700 | proposed | low |
 | philips-gogear-ariaz-2034 | 0x0471:0x2034 | proposed | low |
+| dell-axim-x3-4103 | 0x413c:0x4103 | legacy | unknown |
+| dell-axim-x30-4104 | 0x413c:0x4104 | legacy | unknown |
+| dell-axim-x50-4105 | 0x413c:0x4105 | legacy | unknown |
+| dell-axim-x50v-4107 | 0x413c:0x4107 | legacy | unknown |
+| dell-axim-x51v-4108 | 0x413c:0x4108 | legacy | unknown |
+| cowon-plenue-d-0a11 | 0x0e21:0x0a11 | legacy | unknown |
+| cowon-plenue-d2-0a21 | 0x0e21:0x0a21 | legacy | unknown |
+| cowon-plenue-1-0a31 | 0x0e21:0x0a31 | legacy | unknown |
+| cowon-plenue-m-0a41 | 0x0e21:0x0a41 | legacy | unknown |
+| cowon-plenue-r-0a51 | 0x0e21:0x0a51 | legacy | unknown |
+| cowon-plenue-v-0a61 | 0x0e21:0x0a61 | legacy | unknown |
+| cowon-plenue-m2-0a71 | 0x0e21:0x0a71 | legacy | unknown |
+| coby-mp620-6510 | 0x1e74:0x6510 | legacy | unknown |
+| coby-mp707-6513 | 0x1e74:0x6513 | legacy | unknown |
+| coby-mp715-6514 | 0x1e74:0x6514 | legacy | unknown |
+| coby-mp727-6515 | 0x1e74:0x6515 | legacy | unknown |
+| coby-mp800-6520 | 0x1e74:0x6520 | legacy | unknown |
+| coby-mp815-6521 | 0x1e74:0x6521 | legacy | unknown |
+| coby-mp828-6522 | 0x1e74:0x6522 | legacy | unknown |
+| coby-mp957-6530 | 0x1e74:0x6530 | legacy | unknown |
+| gpx-ml751b-0101 | 0x0aa6:0x0101 | legacy | unknown |
+| gpx-ml761b-0102 | 0x0aa6:0x0102 | legacy | unknown |
+| gpx-mw238b-0103 | 0x0aa6:0x0103 | legacy | unknown |
+| gpx-mw240b-0104 | 0x0aa6:0x0104 | legacy | unknown |
+| gpx-mw352b-0105 | 0x0aa6:0x0105 | legacy | unknown |
+| gpx-mw359b-0106 | 0x0aa6:0x0106 | legacy | unknown |
+| insignia-pilot-2gb-0308 | 0x19ff:0x0308 | legacy | unknown |
+| insignia-kix-0310 | 0x19ff:0x0310 | legacy | unknown |
+| insignia-ns-hd01a-0311 | 0x19ff:0x0311 | legacy | unknown |
+| insignia-ns-hd02a-0312 | 0x19ff:0x0312 | legacy | unknown |
+| creative-nomad-jukebox-3-411d | 0x041e:0x411d | legacy | unknown |
+| creative-zen-x-fi-2-416f | 0x041e:0x416f | legacy | unknown |
+| creative-muvo-squared-4173 | 0x041e:0x4173 | legacy | unknown |
+| creative-muvo-t200-4174 | 0x041e:0x4174 | legacy | unknown |
+| creative-zen-clear-4175 | 0x041e:0x4175 | legacy | unknown |
+| creative-zen-widescreen-4176 | 0x041e:0x4176 | legacy | unknown |
+| iriver-h110-3001 | 0x4102:0x3001 | legacy | unknown |
+| iriver-h120-3002 | 0x4102:0x3002 | legacy | unknown |
+| iriver-h140-3003 | 0x4102:0x3003 | legacy | unknown |
+| iriver-h10jr-2106 | 0x4102:0x2106 | legacy | unknown |
+| toshiba-gigabeat-s30-0012 | 0x0930:0x0012 | legacy | unknown |
+| toshiba-gigabeat-s30-v2-0013 | 0x0930:0x0013 | legacy | unknown |
+| toshiba-gigabeat-t400-001e | 0x0930:0x001e | legacy | unknown |
+| toshiba-gigabeat-t800-001f | 0x0930:0x001f | legacy | unknown |
+| archos-jukebox-recorder-1201 | 0x0e79:0x1201 | legacy | unknown |
+| archos-jukebox-fm-1202 | 0x0e79:0x1202 | legacy | unknown |
+| archos-jukebox-multimedia-1203 | 0x0e79:0x1203 | legacy | unknown |
+| archos-gmini-402-1204 | 0x0e79:0x1204 | legacy | unknown |
+| archos-gmini-xs202s-1206 | 0x0e79:0x1206 | legacy | unknown |
+| philips-gogear-sa2200-20e2 | 0x0471:0x20e2 | legacy | unknown |
+| philips-gogear-sa2225-20e3 | 0x0471:0x20e3 | legacy | unknown |
+| philips-gogear-sa3125-20e4 | 0x0471:0x20e4 | legacy | unknown |
+| philips-gogear-sa4200-20e6 | 0x0471:0x20e6 | legacy | unknown |
+| philips-gogear-sa4300-20e7 | 0x0471:0x20e7 | legacy | unknown |
+| philips-gogear-sa4400-20e8 | 0x0471:0x20e8 | legacy | unknown |
+| sandisk-sansa-m230-v2-7402 | 0x0781:0x7402 | legacy | unknown |
+| sandisk-sansa-e250-v2-7423 | 0x0781:0x7423 | legacy | unknown |
+| sandisk-sansa-clip-sport-74e5 | 0x0781:0x74e5 | legacy | unknown |
+| sandisk-sansa-clip-jam-74e6 | 0x0781:0x74e6 | legacy | unknown |
+| sandisk-sansa-clip-sport-plus-74e7 | 0x0781:0x74e7 | legacy | unknown |
+| rio-rio-500-5001 | 0x045a:0x5001 | legacy | unknown |
+| palm-tungsten-e2-0107 | 0x0830:0x0107 | legacy | unknown |
+| palm-lifedrive-0108 | 0x0830:0x0108 | legacy | unknown |
+| palm-tx-0109 | 0x0830:0x0109 | legacy | unknown |
+| palm-z22-010a | 0x0830:0x010a | legacy | unknown |
+| microsoft-zune-4gb-v2-0716 | 0x045e:0x0716 | legacy | unknown |
+| microsoft-zune-hd-32gb-0717 | 0x045e:0x0717 | legacy | unknown |
+| microsoft-zune-hd-64gb-0718 | 0x045e:0x0718 | legacy | unknown |
 | Archos 28 Internet Tablet | 0x0e79:0x1413 | community | community |
 | Archos 32 Internet Tablet | 0x0e79:0x1415 | community | community |
 | Archos 35 Internet Tablet | 0x0e79:0x1419 | community | community |
@@ -2630,7 +2745,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | dinolite-am7515-0022 | 0x0856:0x0022 | community | community |
 | dinolite-am4113zt-0023 | 0x0856:0x0023 | community | community |
 
-## Phone (2553)
+## Phone (2627)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -5132,6 +5247,80 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | huawei-enjoy-60x-1063 | 0x12d1:0x1063 | proposed | medium |
 | huawei-pura-70-1064 | 0x12d1:0x1064 | proposed | medium |
 | huawei-pura-70-pro-1065 | 0x12d1:0x1065 | proposed | medium |
+| tecno-spark-30-ultra-602d | 0x1d5b:0x602d | proposed | low |
+| tecno-camon-30-5g-602e | 0x1d5b:0x602e | proposed | low |
+| tecno-phantom-x2-602f | 0x1d5b:0x602f | proposed | low |
+| tecno-camon-40-pro-6030 | 0x1d5b:0x6030 | proposed | low |
+| tecno-spark-30c-6031 | 0x1d5b:0x6031 | proposed | low |
+| infinix-note-40-5g-602a | 0x1d5c:0x602a | proposed | low |
+| infinix-hot-50-pro-max-602b | 0x1d5c:0x602b | proposed | low |
+| infinix-zero-40-4g-602c | 0x1d5c:0x602c | proposed | low |
+| infinix-smart-9-hd-602d | 0x1d5c:0x602d | proposed | low |
+| itel-a80-6029 | 0x1d4d:0x6029 | proposed | low |
+| itel-s25-ultra-602a | 0x1d4d:0x602a | proposed | low |
+| itel-p65-5g-602b | 0x1d4d:0x602b | proposed | low |
+| itel-p40-pro-602c | 0x1d4d:0x602c | proposed | low |
+| micromax-in-3-600b | 0x2a96:0x600b | proposed | low |
+| micromax-canvas-unite-5-600c | 0x2a96:0x600c | proposed | low |
+| lava-blaze-2-5g-600d | 0x29a9:0x600d | proposed | low |
+| lava-yuva-3-600e | 0x29a9:0x600e | proposed | low |
+| lava-o2-600f | 0x29a9:0x600f | proposed | low |
+| lava-agni-3-6010 | 0x29a9:0x6010 | proposed | low |
+| karbonn-titanium-s9-2057 | 0x0e8d:0x2057 | proposed | low |
+| karbonn-platinum-p9-2058 | 0x0e8d:0x2058 | proposed | low |
+| karbonn-titanium-s35-2059 | 0x0e8d:0x2059 | proposed | low |
+| karbonn-titanium-vista-205a | 0x0e8d:0x205a | proposed | low |
+| karbonn-titanium-frames-s7-205b | 0x0e8d:0x205b | proposed | low |
+| karbonn-aura-note-2-205c | 0x0e8d:0x205c | proposed | low |
+| walton-primo-nf4-205d | 0x0e8d:0x205d | proposed | low |
+| walton-primo-nh4-205e | 0x0e8d:0x205e | proposed | low |
+| walton-primo-r7-205f | 0x0e8d:0x205f | proposed | low |
+| walton-primo-e12-2063 | 0x0e8d:0x2063 | proposed | low |
+| walton-primo-h10-2064 | 0x0e8d:0x2064 | proposed | low |
+| symphony-z45-5008 | 0x1782:0x5008 | proposed | low |
+| symphony-z50-5009 | 0x1782:0x5009 | proposed | low |
+| symphony-z40-pro-500a | 0x1782:0x500a | proposed | low |
+| doogee-v-max-2065 | 0x0e8d:0x2065 | proposed | low |
+| doogee-n50-2066 | 0x0e8d:0x2066 | proposed | low |
+| doogee-v30-pro-2067 | 0x0e8d:0x2067 | proposed | low |
+| doogee-t20-mini-2068 | 0x0e8d:0x2068 | proposed | low |
+| ulefone-armor-25t-ultra-2069 | 0x0e8d:0x2069 | proposed | low |
+| ulefone-armor-x14-206a | 0x0e8d:0x206a | proposed | low |
+| ulefone-power-armor-19-206b | 0x0e8d:0x206b | proposed | low |
+| ulefone-note-17-pro-206c | 0x0e8d:0x206c | proposed | low |
+| cubot-kingkong-star-206d | 0x0e8d:0x206d | proposed | low |
+| cubot-kingkong-9-206e | 0x0e8d:0x206e | proposed | low |
+| cubot-kingkong-ax-206f | 0x0e8d:0x206f | proposed | low |
+| cubot-pocket-3-2070 | 0x0e8d:0x2070 | proposed | low |
+| cubot-note-50-2071 | 0x0e8d:0x2071 | proposed | low |
+| cubot-max-3-2072 | 0x0e8d:0x2072 | proposed | low |
+| oukitel-wp35-2073 | 0x0e8d:0x2073 | proposed | low |
+| oukitel-c35-2074 | 0x0e8d:0x2074 | proposed | low |
+| umidigi-a15-2075 | 0x0e8d:0x2075 | proposed | low |
+| umidigi-g5-mecha-2076 | 0x0e8d:0x2076 | proposed | low |
+| umidigi-a13-pro-2077 | 0x0e8d:0x2077 | proposed | low |
+| umidigi-bison-x20-2078 | 0x0e8d:0x2078 | proposed | low |
+| umidigi-power-7-max-2079 | 0x0e8d:0x2079 | proposed | low |
+| umidigi-g3-max-207a | 0x0e8d:0x207a | proposed | low |
+| wiko-view-5-1017 | 0x1ebf:0x1017 | proposed | low |
+| wiko-power-u20-1018 | 0x1ebf:0x1018 | proposed | low |
+| alcatel-1b-2022-9034 | 0x1bbb:0x9034 | proposed | low |
+| alcatel-3l-2023-9035 | 0x1bbb:0x9035 | proposed | low |
+| alcatel-1-2022-9036 | 0x1bbb:0x9036 | proposed | low |
+| blu-g91-max-4021 | 0x271d:0x4021 | proposed | low |
+| blu-m8l-plus-4022 | 0x271d:0x4022 | proposed | low |
+| blu-g73-4023 | 0x271d:0x4023 | proposed | low |
+| htc-touch-elf-0a01 | 0x0bb4:0x0a01 | legacy | unknown |
+| htc-touch-diamond-0a02 | 0x0bb4:0x0a02 | legacy | unknown |
+| htc-touch-pro-0a03 | 0x0bb4:0x0a03 | legacy | unknown |
+| htc-touch-hd-0a04 | 0x0bb4:0x0a04 | legacy | unknown |
+| htc-hd2-leo-0a05 | 0x0bb4:0x0a05 | legacy | unknown |
+| htc-touch-diamond2-0b01 | 0x0bb4:0x0b01 | legacy | unknown |
+| htc-touch-pro2-0b02 | 0x0bb4:0x0b02 | legacy | unknown |
+| htc-tytn-ii-0b03 | 0x0bb4:0x0b03 | legacy | unknown |
+| htc-touch-cruise-0b04 | 0x0bb4:0x0b04 | legacy | unknown |
+| htc-touch-3g-0b05 | 0x0bb4:0x0b05 | legacy | unknown |
+| htc-snap-0b06 | 0x0bb4:0x0b06 | legacy | unknown |
 | AGM Glory SE | 0x0e8d:0x2051 | community | community |
 | AGM H5 Pro | 0x0e8d:0x2050 | community | community |
 | BLU Bold N3 | 0x0e8d:0x2062 | community | community |
