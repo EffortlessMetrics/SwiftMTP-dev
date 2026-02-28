@@ -1177,6 +1177,90 @@ final class BDDRunner: XCTestCase {
     let named = db.entries.filter { $0.deviceName != nil && !$0.deviceName!.isEmpty }
     XCTAssertGreaterThanOrEqual(named.count, 30, "Expected at least 30 named entries")
   }
+
+  // MARK: - Wave 64-67 Device Tests
+
+  func testWave64ArduinoTinyUSBMTP() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2341, pid: 0x0069, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Arduino Nano RP2040 Connect should match")
+    XCTAssertEqual(match?.category, "dev-board")
+  }
+
+  func testWave64TeensyMTP() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x16c0, pid: 0x0478, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Teensy 4.x MTP should match")
+    XCTAssertEqual(match?.category, "dev-board")
+  }
+
+  func testWave64AdafruitCircuitPython() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x239a, pid: 0x80f4, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Adafruit Feather RP2040 should match")
+    XCTAssertEqual(match?.category, "dev-board")
+  }
+
+  func testWave65VintageCreativeZen() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x041e, pid: 0x4157, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Creative Zen should match")
+    XCTAssertEqual(match?.category, "media-player")
+  }
+
+  func testWave65VintageZune() throws {
+    let db = try QuirkDatabase.load()
+    let matches = db.entries.filter { $0.vid == 0x045e && $0.category == "media-player" }
+    XCTAssertGreaterThan(matches.count, 0, "Should have Zune entries")
+  }
+
+  func testWave65VintagePalm() throws {
+    let db = try QuirkDatabase.load()
+    let matches = db.entries.filter { $0.vid == 0x0830 }
+    XCTAssertGreaterThan(matches.count, 0, "Should have Palm entries")
+  }
+
+  func testWave66NoUnknownCategories() throws {
+    let db = try QuirkDatabase.load()
+    let unknowns = db.entries.filter { $0.category == "unknown" || $0.category == nil }
+    XCTAssertEqual(unknowns.count, 0, "All entries should be categorized (wave 66 eliminated unknowns)")
+  }
+
+  func testWave67HasselbladMediumFormat() throws {
+    let db = try QuirkDatabase.load()
+    let matches = db.entries.filter { $0.vid == 0x04a0 && $0.category == "camera" }
+    XCTAssertGreaterThan(matches.count, 0, "Should have Hasselblad entries")
+  }
+
+  func testWave67REDCinemaCamera() throws {
+    let db = try QuirkDatabase.load()
+    let matches = db.entries.filter { $0.vid == 0x1419 && $0.category == "camera" }
+    XCTAssertGreaterThan(matches.count, 0, "Should have RED camera entries")
+  }
+
+  func testWave67BlackmagicDesign() throws {
+    let db = try QuirkDatabase.load()
+    let matches = db.entries.filter { $0.vid == 0x1edb && $0.category == "camera" }
+    XCTAssertGreaterThan(matches.count, 0, "Should have Blackmagic entries")
+  }
+
+  func testDevBoardCountAbove80() throws {
+    let db = try QuirkDatabase.load()
+    let devBoards = db.entries.filter { $0.category == "dev-board" }
+    XCTAssertGreaterThanOrEqual(devBoards.count, 80, "Should have 80+ dev-board entries after wave 64")
+  }
+
+  func testMediaPlayerCountAbove450() throws {
+    let db = try QuirkDatabase.load()
+    let players = db.entries.filter { $0.category == "media-player" }
+    XCTAssertGreaterThanOrEqual(players.count, 450, "Should have 450+ media-player entries after wave 65")
+  }
+
+  func testCameraCountAbove950() throws {
+    let db = try QuirkDatabase.load()
+    let cameras = db.entries.filter { $0.category == "camera" }
+    XCTAssertGreaterThanOrEqual(cameras.count, 950, "Should have 950+ camera entries after wave 67")
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)

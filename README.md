@@ -74,7 +74,7 @@ SwiftMTP is built with modern Swift 6 concurrency patterns:
 ### Key Features
 
 - **Privacy-First Design**: Read-only collection mode with strict defaults
-- **Device Quirks System**: Learned profiles and static quirks for 4,747+ devices across 268 VIDs and 31 categories
+- **Device Quirks System**: Learned profiles and static quirks for 4,700+ devices across 25+ categories
 - **Transfer Journaling**: Resumable operations with automatic recovery
 - **File Provider Integration**: Native Finder integration on macOS (XPC service)
 - **Benchmarking Suite**: Performance profiling with p50/p95 metrics
@@ -228,17 +228,10 @@ The quirks database covers devices across the following categories:
 | calculator | Graphing calculators (TI, HP, Casio) |
 | smart-home | Smart displays and home hubs |
 | automotive | In-vehicle infotainment and dashcams |
-| dashcam | Standalone dashboard cameras |
 | gps-navigator | Garmin, TomTom, and other GPS units |
 | 3d-printer | 3D printers with USB file transfer |
 | lab-instrument | Scientific instruments and data loggers |
-| microscope | Digital microscopes with USB transfer |
-| telescope | Smart telescopes and astrophotography |
-| thermal-camera | FLIR, InfiRay, Seek thermal imagers |
-| audio-recorder | Zoom, TASCAM, Roland field recorders |
-| audio-interface | USB audio interfaces with storage |
-| body-camera | Law enforcement and security cameras |
-| cnc | CNC machines with USB file transfer |
+| industrial | Industrial controllers and HMI panels |
 | embedded | Embedded systems and SBCs |
 | dev-board | Development boards with MTP firmware |
 
