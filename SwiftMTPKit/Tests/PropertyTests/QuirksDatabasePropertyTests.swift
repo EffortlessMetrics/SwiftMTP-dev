@@ -325,6 +325,132 @@ final class QuirksDatabasePropertyTests: XCTestCase {
       "At least some entries should have a deviceName")
   }
 
+  // MARK: - 6000-Entry Milestone Invariants
+
+  func testAllEntriesHaveNonEmptyNotes() throws {
+    // Verify that entries carrying a "notes" field in the raw JSON are non-empty.
+    let fm = FileManager.default
+    let candidates: [String] = [
+      "Specs/quirks.json",
+      "../Specs/quirks.json",
+      "SwiftMTPKit/Specs/quirks.json",
+    ]
+    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }) else {
+      throw XCTSkip("quirks.json not found for raw JSON notes check")
+    }
+    let data = try Data(contentsOf: URL(fileURLWithPath: path))
+    let raw = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] ?? []
+    let emptyNotes = raw.filter { entry in
+      guard let notes = entry["notes"] as? String else { return false }
+      return notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    XCTAssertTrue(
+      emptyNotes.isEmpty,
+      "Entries with empty notes: \(emptyNotes.compactMap { $0["id"] as? String }.prefix(10))")
+  }
+
+  func testAllEntriesHaveValidStatus() {
+    let validStatuses: Set<String> = ["proposed", "verified", "promoted", "experimental", "community", "legacy"]
+    let fm = FileManager.default
+    let candidates: [String] = [
+      "Specs/quirks.json",
+      "../Specs/quirks.json",
+      "SwiftMTPKit/Specs/quirks.json",
+    ]
+    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }),
+      let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
+      let raw = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
+    else { return }
+    let invalid = raw.filter { entry in
+      guard let status = entry["status"] as? String else { return false }
+      return !validStatuses.contains(status)
+    }
+    XCTAssertTrue(
+      invalid.isEmpty,
+      "Entries with invalid status: \(invalid.compactMap { $0["id"] as? String }.prefix(10))")
+  }
+
+  func testAllTuningValuesReasonable() {
+    for entry in db.entries {
+      if let chunk = entry.maxChunkBytes {
+        XCTAssertGreaterThanOrEqual(
+          chunk, 4096,
+          "Entry '\(entry.id)' has maxChunkBytes \(chunk) < 4096")
+      }
+      if let timeout = entry.ioTimeoutMs {
+        XCTAssertGreaterThanOrEqual(
+          timeout, 1000,
+          "Entry '\(entry.id)' has ioTimeoutMs \(timeout) < 1000")
+      }
+    }
+  }
+
+  func testNoCategoryMisspellings() {
+    let validCategories: Set<String> = [
+      "3d-printer", "action-camera", "audio-interface", "audio-recorder", "automotive",
+      "body-camera", "camera", "cnc", "dap", "dashcam", "dev-board", "drone", "e-reader",
+      "embedded", "fitness", "gaming-handheld", "gps-navigator", "industrial-camera",
+      "lab-instrument", "media-player", "medical", "microscope", "phone", "point-of-sale",
+      "printer", "scanner", "smart-home", "storage", "streaming-device", "synthesizer",
+      "tablet", "telescope", "thermal-camera", "vr-headset", "wearable",
+    ]
+    let invalid = db.entries.filter { entry in
+      guard let cat = entry.category else { return false }
+      return !validCategories.contains(cat)
+    }
+    XCTAssertTrue(
+      invalid.isEmpty,
+      "Entries with unknown category: \(invalid.prefix(10).map { "\($0.id)=\($0.category ?? "nil")" })")
+  }
+
+  func testVIDFormatConsistency() throws {
+    let fm = FileManager.default
+    let candidates: [String] = [
+      "Specs/quirks.json",
+      "../Specs/quirks.json",
+      "SwiftMTPKit/Specs/quirks.json",
+    ]
+    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }) else {
+      throw XCTSkip("quirks.json not found for VID format check")
+    }
+    let data = try Data(contentsOf: URL(fileURLWithPath: path))
+    let raw = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] ?? []
+    let hexPattern = try NSRegularExpression(pattern: "^0x[0-9a-f]{4}$")
+    let invalid = raw.filter { entry in
+      guard let match = entry["match"] as? [String: Any],
+        let vid = match["vid"] as? String
+      else { return true }
+      return hexPattern.firstMatch(in: vid, range: NSRange(vid.startIndex..., in: vid)) == nil
+    }
+    XCTAssertTrue(
+      invalid.isEmpty,
+      "Entries with invalid VID format: \(invalid.compactMap { $0["id"] as? String }.prefix(10))")
+  }
+
+  func testPIDFormatConsistency() throws {
+    let fm = FileManager.default
+    let candidates: [String] = [
+      "Specs/quirks.json",
+      "../Specs/quirks.json",
+      "SwiftMTPKit/Specs/quirks.json",
+    ]
+    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }) else {
+      throw XCTSkip("quirks.json not found for PID format check")
+    }
+    let data = try Data(contentsOf: URL(fileURLWithPath: path))
+    let raw = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] ?? []
+    let hexPattern = try NSRegularExpression(pattern: "^0x[0-9a-f]{4}$")
+    let invalid = raw.filter { entry in
+      guard let match = entry["match"] as? [String: Any],
+        let pid = match["pid"] as? String
+      else { return true }
+      return hexPattern.firstMatch(in: pid, range: NSRange(pid.startIndex..., in: pid)) == nil
+    }
+    XCTAssertTrue(
+      invalid.isEmpty,
+      "Entries with invalid PID format: \(invalid.compactMap { $0["id"] as? String }.prefix(10))")
+  }
+
   private func findDuplicates<T: Hashable>(_ items: [T]) -> [T] {
     var seen = Set<T>()
     var duplicates = Set<T>()
