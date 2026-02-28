@@ -1647,6 +1647,91 @@ final class BDDRunner: XCTestCase {
     let unknown = db.entries.filter { $0.category == "unknown" }
     XCTAssertTrue(unknown.isEmpty, "No entries should have category 'unknown': \(unknown.map { $0.id })")
   }
+
+  // MARK: - Database milestones (6000+ entries, 300+ VIDs, 35 categories)
+
+  func testScenario_6000EntryMilestone() throws {
+    let db = try QuirkDatabase.load()
+    XCTAssertGreaterThanOrEqual(db.entries.count, 6000, "Quirk database should have 6000+ entries")
+  }
+
+  func testScenario_300VIDMilestone() throws {
+    let db = try QuirkDatabase.load()
+    let uniqueVIDs = Set(db.entries.map { $0.vid })
+    XCTAssertGreaterThanOrEqual(uniqueVIDs.count, 300, "Should have 300+ unique VIDs")
+  }
+
+  func testScenario_TabletCategoryExpansion() throws {
+    let db = try QuirkDatabase.load()
+    let tablets = db.entries.filter { $0.category == "tablet" }
+    XCTAssertGreaterThanOrEqual(tablets.count, 100, "Should have 100+ tablet entries")
+  }
+
+  func testScenario_GamingHandheldVariety() throws {
+    let db = try QuirkDatabase.load()
+    let handhelds = db.entries.filter { $0.category == "gaming-handheld" }
+    XCTAssertGreaterThanOrEqual(handhelds.count, 80, "Should have 80+ gaming-handheld entries")
+  }
+
+  func testScenario_DashcamCategory() throws {
+    let db = try QuirkDatabase.load()
+    let dashcams = db.entries.filter { $0.category == "dashcam" }
+    XCTAssertGreaterThanOrEqual(dashcams.count, 30, "Should have 30+ dashcam entries")
+  }
+
+  func testScenario_AutomotiveCategory() throws {
+    let db = try QuirkDatabase.load()
+    let automotive = db.entries.filter { $0.category == "automotive" }
+    XCTAssertGreaterThanOrEqual(automotive.count, 40, "Should have 40+ automotive entries")
+  }
+
+  func testScenario_SonyCameraRange() throws {
+    let db = try QuirkDatabase.load()
+    let sony = db.entries.filter { $0.vid == 0x054c }
+    XCTAssertGreaterThan(sony.count, 0, "Sony camera entries (VID 0x054c) should exist")
+  }
+
+  func testScenario_OlympusCameraPresence() throws {
+    let db = try QuirkDatabase.load()
+    let olympus = db.entries.filter { $0.vid == 0x07b4 }
+    XCTAssertGreaterThan(olympus.count, 0, "Olympus entries (VID 0x07b4) should exist")
+  }
+
+  func testScenario_SteamDeckPresence() throws {
+    let db = try QuirkDatabase.load()
+    let steamDeck = db.entries.filter { $0.vid == 0x28de }
+    XCTAssertGreaterThan(steamDeck.count, 0, "Steam Deck entry (VID 0x28de) should exist")
+  }
+
+  func testScenario_FitnessDeviceRange() throws {
+    let db = try QuirkDatabase.load()
+    let fitness = db.entries.filter { $0.category == "fitness" || $0.category == "wearable" }
+    XCTAssertGreaterThanOrEqual(fitness.count, 80, "Should have 80+ fitness/wearable entries combined")
+  }
+
+  func testScenario_AllCategoriesHaveEntries() throws {
+    let db = try QuirkDatabase.load()
+    let expectedCategories: Set<String> = [
+      "3d-printer", "action-camera", "audio-interface", "audio-recorder", "automotive",
+      "body-camera", "camera", "cnc", "dap", "dashcam", "dev-board", "drone", "e-reader",
+      "embedded", "fitness", "gaming-handheld", "gps-navigator", "industrial-camera",
+      "lab-instrument", "media-player", "medical", "microscope", "phone", "point-of-sale",
+      "printer", "scanner", "smart-home", "storage", "streaming-device", "synthesizer",
+      "tablet", "telescope", "thermal-camera", "vr-headset", "wearable",
+    ]
+    let presentCategories = Set(db.entries.compactMap { $0.category })
+    for cat in expectedCategories {
+      XCTAssertTrue(presentCategories.contains(cat), "Category '\(cat)' should have at least 1 entry")
+    }
+  }
+
+  func testScenario_AudioEquipmentRange() throws {
+    let db = try QuirkDatabase.load()
+    let audio = db.entries.filter {
+      $0.category == "dap" || $0.category == "audio-recorder" || $0.category == "audio-interface"
+    }
+    XCTAssertGreaterThanOrEqual(audio.count, 150, "Should have 150+ dap + audio-recorder + audio-interface entries")
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
