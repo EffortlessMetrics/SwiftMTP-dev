@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Wave 42-50: Gaming handhelds, VR, hi-fi DAPs, embedded dev boards, 3D printers, lab instruments
+- Wave 52-53: Device category assignment — 97% of entries now categorized (phones, cameras, media players, GPS, etc.)
+- Wave 54: 19 audio recorder entries (Zoom H1n/H4n/H5/H6/H8/F3/F6/F8n, TASCAM DR-40X/DR-100mkIII/X6/X8, Roland R-07/R-88, BOSS BR-800, Sound Devices MixPre-3II/6II, Olympus LS-P4/P5, Sony recorders)
+- Wave 56: Final categorization pass — 4,418 of 4,571 entries have device categories
+- Wave 59: Nintendo Switch (3), Kobo e-readers (4), dashcams, Garmin wearables (3), reMarkable 2, more
+- **🎉 Device Quirks Database: 4,588 entries across 250+ VIDs and 28 device categories**
+
 - Wave 33: 17 vintage/legacy media player entries (Palm, Creative, Archos, Cowon, Philips, Rio)
 - Wave 34: 25 printer/scanner entries (Canon, Epson, HP, Kodak, Brother, Fujitsu, Polaroid)
 - Wave 35: 11 drone/robotic camera entries (DJI, Parrot, Autel, Insta360, Skydio, Fimi)
@@ -15,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Wave 39: 6 medical/fitness entries (Polar, Wahoo, Coros, Withings)
 - Wave 40: 7 tablet/e-reader entries (Lenovo, Xiaomi, Supernote)
 
-- **🎉 Device Quirks Database: 3,945+ entries** (up from 2,055): Massive expansion through waves 11–20:
+- **🎉 Device Quirks Database: 4,588 entries across 250+ VIDs** (up from 2,055): Massive expansion through waves 11–59:
   - **Smartphones**: Samsung Galaxy S/A/M/F/Z (120+), Xiaomi/Redmi/POCO (136+), Huawei P/Mate/nova (68+), Honor (16+), OnePlus (28+), Google Pixel/Nexus (35+), Sony Xperia (312+), LG (73+), HTC (82+), OPPO/Realme (62+), vivo (24+), ZTE/nubia (29+), ASUS ZenFone/ROG (24+), Motorola Edge/Moto G/Razr (61+), Nokia/HMD (96+), BlackBerry (20+), Fairphone (3), Nothing Phone (5), Meizu (14+), Sharp Aquos (13+), Kyocera DuraForce (7+), CAT Rugged (5+), Razer (2), Lenovo (56+), Acer (48+), Essential (2+)
   - **Cameras (PTP/MTP)**: Canon EOS/R-series (163+), Nikon D/Z-series (96+), Sony Alpha (147+), Fujifilm X-series (69+), Olympus/OM System (66+), Panasonic Lumix (42+), Sigma (13+), Hasselblad (8+), Leica M/Q/SL (17+), Pentax (6+), Phase One (5+), GoPro Hero (12+), Insta360 (13+), DJI drones (13+), Blackmagic BMPCC (5+), FLIR/InfiRay/Seek thermal (14+)
   - **E-readers**: Kindle/Fire (67+), Kobo (14+), Onyx Boox (17+), PocketBook (14+), Barnes & Noble Nook (11+), Tolino (8+)
