@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **🎉 18,000+-Entry Milestone**: Device quirks database reaches 18,000+ entries — baselines bumped to 18,000 entries / 1,090 VIDs
+- Filled small categories to 50+: trail-camera (56), webcam (56), ptz-camera (55)
+- Added brands: Browning, Wildgame, Spypoint (trail-camera); Razer, Elgato, AVerMedia, Poly, Jabra (webcam); Sony BRC, Panasonic AW, PTZOptics, Vaddio, Datavideo, Marshall (ptz-camera)
+- Milestone BDD tests: `testDatabaseHas18000PlusEntries`, `testDatabaseHas1090PlusVIDsMilestone18000`
+- Core baseline bumped from 17,000 → 18,000 in `QuirkMatchingTests`
+- Compat matrix regenerated for 18,000+ entries
 - **🎉 17,425-Entry Milestone**: Device quirks database reaches 17,425 entries — baselines bumped to 17,000 entries / 1,080 VIDs
 - Milestone BDD test: `testDatabaseHas17000PlusEntries`, `testDatabaseHas1080PlusVIDsMilestone17000`
 - Core baseline bumped from 16,000 → 17,000 in `QuirkMatchingTests`
