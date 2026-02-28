@@ -2,7 +2,7 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-**8,320** device entries across **504** vendor IDs and **36** categories.
+**8,539** device entries across **515** vendor IDs and **36** categories.
 
 ## 3D Printer (111)
 
@@ -176,7 +176,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | insta360-ace-pro-0027 | 0x2e1a:0x0027 | proposed | low |
 | insta360-go-3s-0028 | 0x2e1a:0x0028 | proposed | low |
 
-## Audio Interface (34)
+## Audio Interface (86)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -213,9 +213,61 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | pioneer-dj-ddj-flx6-0016 | 0x2b73:0x0016 | proposed | medium |
 | native-instruments-traktor-kontrol-s2mk3-1402 | 0x17cc:0x1402 | proposed | medium |
 | native-instruments-traktor-kontrol-s3-1403 | 0x17cc:0x1403 | proposed | medium |
+| focusrite-scarlett-solo-4th-8210 | 0x1235:0x8210 | experimental | unknown |
+| focusrite-scarlett-4i4-4th-8211 | 0x1235:0x8211 | experimental | unknown |
+| focusrite-scarlett-8i6-4th-8212 | 0x1235:0x8212 | experimental | unknown |
+| focusrite-scarlett-18i8-4th-8213 | 0x1235:0x8213 | experimental | unknown |
+| focusrite-scarlett-18i20-4th-8214 | 0x1235:0x8214 | experimental | unknown |
+| focusrite-vocaster-one-8216 | 0x1235:0x8216 | experimental | unknown |
+| focusrite-clarett-plus-4pre-8218 | 0x1235:0x8218 | experimental | unknown |
+| focusrite-clarett-plus-8pre-8219 | 0x1235:0x8219 | experimental | unknown |
+| universal-audio-apollo-twin-x-0101 | 0x2944:0x0101 | experimental | unknown |
+| universal-audio-apollo-x4-0102 | 0x2944:0x0102 | experimental | unknown |
+| universal-audio-apollo-x6-0103 | 0x2944:0x0103 | experimental | unknown |
+| universal-audio-apollo-x8-0104 | 0x2944:0x0104 | experimental | unknown |
+| universal-audio-apollo-x8p-0105 | 0x2944:0x0105 | experimental | unknown |
+| universal-audio-apollo-x16-0106 | 0x2944:0x0106 | experimental | unknown |
+| universal-audio-volt-1-0107 | 0x2944:0x0107 | experimental | unknown |
+| universal-audio-volt-2-0108 | 0x2944:0x0108 | experimental | unknown |
+| universal-audio-volt-4-0109 | 0x2944:0x0109 | experimental | unknown |
+| universal-audio-volt-176-010a | 0x2944:0x010a | experimental | unknown |
+| universal-audio-volt-476-010b | 0x2944:0x010b | experimental | unknown |
+| pioneer-dj-djm-v10-0017 | 0x2b73:0x0017 | experimental | unknown |
+| pioneer-dj-djm-900nxs2-0018 | 0x2b73:0x0018 | experimental | unknown |
+| pioneer-dj-opus-quad-0019 | 0x2b73:0x0019 | experimental | unknown |
+| pioneer-dj-cdj-2000nxs2-001a | 0x2b73:0x001a | experimental | unknown |
+| pioneer-dj-ddj-400-001b | 0x2b73:0x001b | experimental | unknown |
+| pioneer-dj-ddj-800-001c | 0x2b73:0x001c | experimental | unknown |
+| pioneer-dj-ddj-sx3-001d | 0x2b73:0x001d | experimental | unknown |
+| denon-dj-sc6000m-0501 | 0x0b48:0x0501 | experimental | unknown |
+| denon-dj-sc6000-0502 | 0x0b48:0x0502 | experimental | unknown |
+| denon-dj-prime-4-plus-0503 | 0x0b48:0x0503 | experimental | unknown |
+| denon-dj-prime-go-plus-0504 | 0x0b48:0x0504 | experimental | unknown |
+| denon-dj-sc-live-4-0505 | 0x0b48:0x0505 | experimental | unknown |
+| denon-dj-sc-live-2-0506 | 0x0b48:0x0506 | experimental | unknown |
+| denon-dj-prime-2-0507 | 0x0b48:0x0507 | experimental | unknown |
+| denon-dj-lc6000-prime-0508 | 0x0b48:0x0508 | experimental | unknown |
+| allen-heath-sq5-0601 | 0x1a4a:0x0601 | experimental | unknown |
+| allen-heath-sq6-0602 | 0x1a4a:0x0602 | experimental | unknown |
+| allen-heath-sq7-0603 | 0x1a4a:0x0603 | experimental | unknown |
+| allen-heath-xone-96-0604 | 0x1a4a:0x0604 | experimental | unknown |
+| allen-heath-dlive-s5000-0605 | 0x1a4a:0x0605 | experimental | unknown |
+| allen-heath-avantis-0606 | 0x1a4a:0x0606 | experimental | unknown |
+| allen-heath-cq-18t-0607 | 0x1a4a:0x0607 | experimental | unknown |
+| behringer-x32-rack-0004 | 0x1397:0x0004 | experimental | unknown |
+| behringer-x32-compact-0007 | 0x1397:0x0007 | experimental | unknown |
+| behringer-x32-producer-0008 | 0x1397:0x0008 | experimental | unknown |
+| behringer-wing-rack-0009 | 0x1397:0x0009 | experimental | unknown |
+| rode-ai-1-0020 | 0x19f7:0x0020 | experimental | unknown |
+| rode-ai-micro-0021 | 0x19f7:0x0021 | experimental | unknown |
+| rode-streamer-x-0022 | 0x19f7:0x0022 | experimental | unknown |
+| steinberg-ur24c-7019 | 0x0499:0x7019 | experimental | unknown |
+| steinberg-axr4u-701a | 0x0499:0x701a | experimental | unknown |
+| steinberg-ici4-701b | 0x0499:0x701b | experimental | unknown |
+| steinberg-ici6-701c | 0x0499:0x701c | experimental | unknown |
 | Yamaha/Steinberg UR22C | 0x0499:0x7010 | experimental | unknown |
 
-## Audio Recorder (77)
+## Audio Recorder (87)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -277,6 +329,16 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | boss-br-80-01db | 0x0582:0x01db | proposed | low |
 | zoom-h6essential-00a0 | 0x1686:0x00a0 | proposed | low |
 | zoom-f3-00a1 | 0x1686:0x00a1 | proposed | low |
+| sound-devices-mixpre-3-ii-0301 | 0x0926:0x0301 | experimental | unknown |
+| sound-devices-mixpre-6-ii-0302 | 0x0926:0x0302 | experimental | unknown |
+| sound-devices-mixpre-10-ii-0303 | 0x0926:0x0303 | experimental | unknown |
+| sound-devices-833-0304 | 0x0926:0x0304 | experimental | unknown |
+| sound-devices-888-0305 | 0x0926:0x0305 | experimental | unknown |
+| sound-devices-scorpio-0306 | 0x0926:0x0306 | experimental | unknown |
+| sound-devices-a20-nexus-0307 | 0x0926:0x0307 | experimental | unknown |
+| rode-wireless-go-ii-001e | 0x19f7:0x001e | experimental | unknown |
+| rode-nt-usb-mini-001f | 0x19f7:0x001f | experimental | unknown |
+| rode-podmic-usb-0023 | 0x19f7:0x0023 | experimental | unknown |
 | BOSS BR-800 | 0x0582:0x0131 | experimental | unknown |
 | Roland R-07 | 0x0582:0x012f | experimental | unknown |
 | Roland R-88 | 0x0582:0x0130 | experimental | unknown |
@@ -3235,7 +3297,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | imaging-source-dfk-zoom-0030 | 0x199e:0x0030 | experimental | community |
 | imaging-source-dmk-usb2-0040 | 0x199e:0x0040 | experimental | community |
 
-## Lab Instrument (116)
+## Lab Instrument (189)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -3355,8 +3417,81 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | tektronix-afg31252-0526 | 0x0699:0x0526 | proposed | low |
 | tektronix-dmm7510-0527 | 0x0699:0x0527 | proposed | low |
 | tektronix-rsa507a-0528 | 0x0699:0x0528 | proposed | low |
+| keysight-dsox3104t-010b | 0x2a8d:0x010b | proposed | low |
+| keysight-dsox6004a-010c | 0x2a8d:0x010c | proposed | low |
+| keysight-msox6004t-010d | 0x2a8d:0x010d | proposed | low |
+| keysight-n9010b-exa-010e | 0x2a8d:0x010e | proposed | low |
+| keysight-n9020b-mxa-010f | 0x2a8d:0x010f | proposed | low |
+| keysight-n9030b-pxa-0110 | 0x2a8d:0x0110 | proposed | low |
+| keysight-34465a-dmm-0111 | 0x2a8d:0x0111 | proposed | low |
+| keysight-n9040b-uxa-0112 | 0x2a8d:0x0112 | proposed | low |
+| keysight-34465a-legacy-1b07 | 0x0957:0x1b07 | proposed | low |
+| keysight-u3606b-dmm-2d18 | 0x0957:0x2d18 | proposed | low |
+| keysight-e4980a-lcr-2e18 | 0x0957:0x2e18 | proposed | low |
+| tektronix-tbs1052c-0529 | 0x0699:0x0529 | proposed | low |
+| tektronix-tbs2074b-052a | 0x0699:0x052a | proposed | low |
+| tektronix-mso58-052b | 0x0699:0x052b | proposed | low |
+| tektronix-mso64b-052c | 0x0699:0x052c | proposed | low |
+| tektronix-mdo34-052d | 0x0699:0x052d | proposed | low |
+| tektronix-afg31051-052e | 0x0699:0x052e | proposed | low |
+| tektronix-tds3054c-052f | 0x0699:0x052f | proposed | low |
+| rohdeschwarz-rtb2004-01db | 0x0aad:0x01db | proposed | low |
+| rohdeschwarz-mxo4-01dc | 0x0aad:0x01dc | proposed | low |
+| rohdeschwarz-fsw-01dd | 0x0aad:0x01dd | proposed | low |
+| rohdeschwarz-cmw500-01de | 0x0aad:0x01de | proposed | low |
+| rohdeschwarz-znb20-01df | 0x0aad:0x01df | proposed | low |
+| rohdeschwarz-rth2004-01e0 | 0x0aad:0x01e0 | proposed | low |
+| rohdeschwarz-fpl1003-01e1 | 0x0aad:0x01e1 | proposed | low |
+| rigol-dg4162-0602 | 0x1ab1:0x0602 | proposed | low |
+| rigol-dm3068-0603 | 0x1ab1:0x0603 | proposed | low |
+| rigol-dsa832e-0604 | 0x1ab1:0x0604 | proposed | low |
+| rigol-dp831a-0605 | 0x1ab1:0x0605 | proposed | low |
+| rigol-mso5354-04d7 | 0x1ab1:0x04d7 | proposed | low |
+| siglent-sds1104x-e-ee3e | 0xf4ec:0xee3e | proposed | low |
+| siglent-sds1204x-e-ee3f | 0xf4ec:0xee3f | proposed | low |
+| siglent-sdg2042x-ee40 | 0xf4ec:0xee40 | proposed | low |
+| siglent-spd3303x-e-ee41 | 0xf4ec:0xee41 | proposed | low |
+| siglent-ssa3032x-ee42 | 0xf4ec:0xee42 | proposed | low |
+| siglent-sds2354x-hd-ee43 | 0xf4ec:0xee43 | proposed | low |
+| siglent-sdm3055-ee44 | 0xf4ec:0xee44 | proposed | low |
+| ni-gpib-usb-hs-709b | 0x3923:0x709b | proposed | low |
+| ni-gpib-usb-hs-plus-7618 | 0x3923:0x7618 | proposed | low |
+| ni-usb-6009-7167 | 0x3923:0x7167 | proposed | low |
+| ni-usb-6008-7168 | 0x3923:0x7168 | proposed | low |
+| ni-mydaq-7169 | 0x3923:0x7169 | proposed | low |
+| ni-usb-tc01-716a | 0x3923:0x716a | proposed | low |
+| fluke-87v-dmm-0100 | 0x1168:0x0100 | proposed | low |
+| fluke-289-dmm-0101 | 0x1168:0x0101 | proposed | low |
+| fluke-tis60plus-0102 | 0x1168:0x0102 | proposed | low |
+| fluke-8845a-bench-0103 | 0x1168:0x0103 | proposed | low |
+| fluke-190-204-scopemeter-0104 | 0x1168:0x0104 | proposed | low |
+| hioki-dt4282-dmm-0001 | 0x0d71:0x0001 | proposed | low |
+| hioki-im3536-lcr-0002 | 0x0d71:0x0002 | proposed | low |
+| hioki-pw3390-power-0003 | 0x0d71:0x0003 | proposed | low |
+| hioki-rm3545-resistance-0004 | 0x0d71:0x0004 | proposed | low |
+| anritsu-ms2720t-0001 | 0x0b5b:0x0001 | proposed | low |
+| anritsu-ms2090a-0002 | 0x0b5b:0x0002 | proposed | low |
+| anritsu-ms46122b-vna-0003 | 0x0b5b:0x0003 | proposed | low |
+| anritsu-mt8821c-0004 | 0x0b5b:0x0004 | proposed | low |
+| minicircuits-pwr-6ghz-0012 | 0x20ce:0x0012 | proposed | low |
+| minicircuits-rcdat-0022 | 0x20ce:0x0022 | proposed | low |
+| minicircuits-ssg-6400hs-0032 | 0x20ce:0x0032 | proposed | low |
+| digilent-digital-discovery-0008 | 0x1443:0x0008 | proposed | low |
+| digilent-analog-discovery-3-0009 | 0x1443:0x0009 | proposed | low |
+| digilent-analog-discovery-pro-000a | 0x1443:0x000a | proposed | low |
+| saleae-logic-8-1001 | 0x21a9:0x1001 | proposed | low |
+| saleae-logic-pro-8-1003 | 0x21a9:0x1003 | proposed | low |
+| saleae-logic-pro-16-1004 | 0x21a9:0x1004 | proposed | low |
+| totalphase-beagle-usb12-2001 | 0x1679:0x2001 | proposed | low |
+| totalphase-beagle-usb480-2002 | 0x1679:0x2002 | proposed | low |
+| totalphase-beagle-usb5000-2003 | 0x1679:0x2003 | proposed | low |
+| totalphase-aardvark-i2c-2004 | 0x1679:0x2004 | proposed | low |
+| lecroy-waverunner-9404-0100 | 0x05ff:0x0100 | proposed | low |
+| lecroy-wavesurfer-3024z-0101 | 0x05ff:0x0101 | proposed | low |
+| lecroy-hdo9404-0102 | 0x05ff:0x0102 | proposed | low |
+| lecroy-waveace-2034-0103 | 0x05ff:0x0103 | proposed | low |
 
-## Media Player (559)
+## Media Player (575)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -3843,6 +3978,22 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | microsoft-zune-120gb-071b | 0x045e:0x071b | proposed | low |
 | microsoft-kin-one-071c | 0x045e:0x071c | proposed | low |
 | microsoft-kin-two-071d | 0x045e:0x071d | proposed | low |
+| microsoft-zune-hd-16gb-0625 | 0x045e:0x0625 | experimental | unknown |
+| microsoft-zune-hd-32gb-0626 | 0x045e:0x0626 | experimental | unknown |
+| creative-zen-vision-m-4135 | 0x041e:0x4135 | experimental | unknown |
+| creative-zen-xfi-4138 | 0x041e:0x4138 | experimental | unknown |
+| creative-zen-v-plus-4140 | 0x041e:0x4140 | experimental | unknown |
+| creative-zen-mozaic-4141 | 0x041e:0x4141 | experimental | unknown |
+| iriver-h340-1121 | 0x4102:0x1121 | experimental | unknown |
+| iriver-t30-1123 | 0x4102:0x1123 | experimental | unknown |
+| iriver-t50-1124 | 0x4102:0x1124 | experimental | unknown |
+| archos-5-1401 | 0x0e79:0x1401 | experimental | unknown |
+| archos-7-1402 | 0x0e79:0x1402 | experimental | unknown |
+| rio-karma-0001 | 0x0841:0x0001 | experimental | unknown |
+| rio-carbon-0002 | 0x0841:0x0002 | experimental | unknown |
+| rio-forge-0003 | 0x0841:0x0003 | experimental | unknown |
+| diamond-rio-pmp300-0010 | 0x0b48:0x0010 | experimental | unknown |
+| diamond-rio-500-0011 | 0x0b48:0x0011 | experimental | unknown |
 | Archos 28 Internet Tablet | 0x0e79:0x1413 | community | community |
 | Archos 32 Internet Tablet | 0x0e79:0x1415 | community | community |
 | Archos 35 Internet Tablet | 0x0e79:0x1419 | community | community |
@@ -4069,7 +4220,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | ninyoon-usb-microscope-4k-6368 | 0x0c45:0x6368 | community | community |
 | carson-eflex-digital-microscope-636c | 0x0c45:0x636c | community | community |
 
-## Phone (3184)
+## Phone (3244)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -7142,6 +7293,66 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | vivo-y28-5g-6046 | 0x2d95:0x6046 | experimental | low |
 | vivo-y18-6047 | 0x2d95:0x6047 | experimental | low |
 | vivo-y03-6048 | 0x2d95:0x6048 | experimental | low |
+| hp-ipaq-hx2490-1c1a | 0x03f0:0x1c1a | experimental | unknown |
+| hp-ipaq-hx4700-1d1a | 0x03f0:0x1d1a | experimental | unknown |
+| hp-ipaq-6915-1e1a | 0x03f0:0x1e1a | experimental | unknown |
+| dell-axim-x50-4110 | 0x413c:0x4110 | experimental | unknown |
+| dell-axim-x51v-4111 | 0x413c:0x4111 | experimental | unknown |
+| htc-tytn-0a06 | 0x0bb4:0x0a06 | experimental | unknown |
+| htc-tytn-ii-0a07 | 0x0bb4:0x0a07 | experimental | unknown |
+| palm-treo-680-0062 | 0x0830:0x0062 | experimental | unknown |
+| palm-treo-700p-0063 | 0x0830:0x0063 | experimental | unknown |
+| palm-treo-755p-0064 | 0x0830:0x0064 | experimental | unknown |
+| palm-centro-0065 | 0x0830:0x0065 | experimental | unknown |
+| palm-pre-plus-8005 | 0x0830:0x8005 | experimental | unknown |
+| palm-pre-2-8006 | 0x0830:0x8006 | experimental | unknown |
+| palm-pixi-8007 | 0x0830:0x8007 | experimental | unknown |
+| palm-pixi-plus-8008 | 0x0830:0x8008 | experimental | unknown |
+| sonyericsson-k800i-0077 | 0x0fce:0x0077 | experimental | unknown |
+| sonyericsson-w810i-0078 | 0x0fce:0x0078 | experimental | unknown |
+| sonyericsson-w580i-0079 | 0x0fce:0x0079 | experimental | unknown |
+| sonyericsson-w850i-007a | 0x0fce:0x007a | experimental | unknown |
+| sonyericsson-k750i-007b | 0x0fce:0x007b | experimental | unknown |
+| sonyericsson-w950i-007c | 0x0fce:0x007c | experimental | unknown |
+| sonyericsson-w880i-007d | 0x0fce:0x007d | experimental | unknown |
+| sonyericsson-k850i-007e | 0x0fce:0x007e | experimental | unknown |
+| nokia-n95-0091 | 0x0421:0x0091 | experimental | unknown |
+| nokia-n82-0093 | 0x0421:0x0093 | experimental | unknown |
+| nokia-n73-0094 | 0x0421:0x0094 | experimental | unknown |
+| nokia-n70-0095 | 0x0421:0x0095 | experimental | unknown |
+| nokia-n80-0096 | 0x0421:0x0096 | experimental | unknown |
+| nokia-n93-0097 | 0x0421:0x0097 | experimental | unknown |
+| nokia-n91-0099 | 0x0421:0x0099 | experimental | unknown |
+| nokia-n72-009a | 0x0421:0x009a | experimental | unknown |
+| nokia-e71-00e6 | 0x0421:0x00e6 | experimental | unknown |
+| nokia-e72-00e7 | 0x0421:0x00e7 | experimental | unknown |
+| nokia-e75-00e8 | 0x0421:0x00e8 | experimental | unknown |
+| nokia-e90-communicator-00e9 | 0x0421:0x00e9 | experimental | unknown |
+| nokia-e65-00eb | 0x0421:0x00eb | experimental | unknown |
+| nokia-e51-00ec | 0x0421:0x00ec | experimental | unknown |
+| motorola-razr-v3-4181 | 0x22b8:0x4181 | experimental | unknown |
+| motorola-razr-v3i-4182 | 0x22b8:0x4182 | experimental | unknown |
+| motorola-slvr-l7-4183 | 0x22b8:0x4183 | experimental | unknown |
+| motorola-rokr-e1-4184 | 0x22b8:0x4184 | experimental | unknown |
+| motorola-rokr-e2-4185 | 0x22b8:0x4185 | experimental | unknown |
+| motorola-krzr-k1-4186 | 0x22b8:0x4186 | experimental | unknown |
+| motorola-razr-v3xx-4187 | 0x22b8:0x4187 | experimental | unknown |
+| htc-dream-g1-0c03 | 0x0bb4:0x0c03 | experimental | unknown |
+| htc-magic-0c04 | 0x0bb4:0x0c04 | experimental | unknown |
+| htc-nexus-one-0c05 | 0x0bb4:0x0c05 | experimental | unknown |
+| samsung-nexus-s-4004 | 0x04e8:0x4004 | experimental | unknown |
+| microsoft-kin-one-0623 | 0x045e:0x0623 | experimental | unknown |
+| microsoft-kin-two-0624 | 0x045e:0x0624 | experimental | unknown |
+| samsung-sgh-d800-5010 | 0x04e8:0x5010 | experimental | unknown |
+| samsung-sgh-e900-5011 | 0x04e8:0x5011 | experimental | unknown |
+| samsung-sgh-d900-5012 | 0x04e8:0x5012 | experimental | unknown |
+| samsung-sgh-u600-5013 | 0x04e8:0x5013 | experimental | unknown |
+| samsung-sgh-f480-5014 | 0x04e8:0x5014 | experimental | unknown |
+| lg-chocolate-vx8500-6011 | 0x1004:0x6011 | experimental | unknown |
+| lg-voyager-vx10000-6012 | 0x1004:0x6012 | experimental | unknown |
+| lg-env-vx9900-6013 | 0x1004:0x6013 | experimental | unknown |
+| lg-env2-vx9100-6014 | 0x1004:0x6014 | experimental | unknown |
+| lg-env-touch-vx11000-6015 | 0x1004:0x6015 | experimental | unknown |
 | AGM Glory SE | 0x0e8d:0x2051 | community | community |
 | AGM H5 Pro | 0x0e8d:0x2050 | community | community |
 | BLU Bold N3 | 0x0e8d:0x2062 | community | community |
@@ -7935,7 +8146,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | nvidia-shield-tv-pro-2017-b412 | 0x0955:0xb412 | experimental | low |
 | Roku Streaming Stick 4K | 0x1d5a:0x0001 | experimental | unknown |
 
-## Synthesizer (93)
+## Synthesizer (101)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -8032,6 +8243,14 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | akai-mpc-studio-mk2-0075 | 0x09e8:0x0075 | proposed | medium |
 | teenage-engineering-ep133-000c | 0x2367:0x000c | proposed | low |
 | teenage-engineering-tx6-000d | 0x2367:0x000d | proposed | low |
+| ableton-push-3-standalone-0301 | 0x2982:0x0301 | experimental | unknown |
+| ableton-push-3-controller-0302 | 0x2982:0x0302 | experimental | unknown |
+| pioneer-dj-toraiz-sp-16-001e | 0x2b73:0x001e | experimental | unknown |
+| pioneer-dj-toraiz-squid-001f | 0x2b73:0x001f | experimental | unknown |
+| behringer-deepmind-6-000a | 0x1397:0x000a | experimental | unknown |
+| behringer-poly-d-000b | 0x1397:0x000b | experimental | unknown |
+| behringer-model-d-000c | 0x1397:0x000c | experimental | unknown |
+| behringer-ub-xa-000d | 0x1397:0x000d | experimental | unknown |
 
 ## Tablet (154)
 
