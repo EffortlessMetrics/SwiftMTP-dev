@@ -451,6 +451,46 @@ final class QuirksDatabasePropertyTests: XCTestCase {
       "Entries with invalid PID format: \(invalid.compactMap { $0["id"] as? String }.prefix(10))")
   }
 
+  // MARK: - 7000-Entry Milestone Invariants
+
+  func testAllEntriesHaveValidChunkSize() {
+    let maxChunk = 16 * 1024 * 1024  // 16 MB
+    for entry in db.entries {
+      guard let chunk = entry.maxChunkBytes else { continue }
+      XCTAssertGreaterThanOrEqual(
+        chunk, 4096,
+        "Entry '\(entry.id)' has maxChunkBytes \(chunk) < 4096")
+      XCTAssertLessThanOrEqual(
+        chunk, maxChunk,
+        "Entry '\(entry.id)' has maxChunkBytes \(chunk) > 16 MB")
+      XCTAssertEqual(
+        chunk & (chunk - 1), 0,
+        "Entry '\(entry.id)' has maxChunkBytes \(chunk) which is not a power of 2")
+    }
+  }
+
+  func testAllEntriesHaveReasonableTimeout() {
+    for entry in db.entries {
+      guard let timeout = entry.ioTimeoutMs else { continue }
+      XCTAssertGreaterThanOrEqual(
+        timeout, 1000,
+        "Entry '\(entry.id)' has ioTimeoutMs \(timeout) < 1000")
+      XCTAssertLessThanOrEqual(
+        timeout, 120_000,
+        "Entry '\(entry.id)' has ioTimeoutMs \(timeout) > 120000")
+    }
+  }
+
+  func testIDMatchesNamingConvention() {
+    let pattern = try! NSRegularExpression(pattern: "^[a-z0-9-]+$")
+    for entry in db.entries {
+      let range = NSRange(entry.id.startIndex..., in: entry.id)
+      XCTAssertNotNil(
+        pattern.firstMatch(in: entry.id, range: range),
+        "Entry ID '\(entry.id)' does not match [a-z0-9-]+ pattern")
+    }
+  }
+
   private func findDuplicates<T: Hashable>(_ items: [T]) -> [T] {
     var seen = Set<T>()
     var duplicates = Set<T>()
