@@ -2,7 +2,7 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-**5,738** device entries across **297** vendor IDs and **34** categories.
+**5,862** device entries across **303** vendor IDs and **35** categories.
 
 ## 3D Printer (35)
 
@@ -83,7 +83,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | caddx-walnut-0002 | 0x4b4e:0x0002 | community | community |
 | caddx-gofilm20-0003 | 0x4b4e:0x0003 | community | community |
 
-## Audio Interface (5)
+## Audio Interface (11)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -91,6 +91,12 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | teenage-engineering-op-xy-0021 | 0x2367:0x0021 | proposed | medium |
 | icom-ic-r30-receiver-002b | 0x0c26:0x002b | proposed | low |
 | icom-ic-7300-transceiver-0018 | 0x0c26:0x0018 | proposed | low |
+| boss-rc-505mkii-01d5 | 0x0582:0x01d5 | proposed | medium |
+| boss-gt-1000-01d6 | 0x0582:0x01d6 | proposed | medium |
+| boss-gt-1000core-01d7 | 0x0582:0x01d7 | proposed | medium |
+| behringer-x32-0001 | 0x1397:0x0001 | proposed | medium |
+| behringer-wing-0002 | 0x1397:0x0002 | proposed | medium |
+| native-instruments-traktor-kontrol-s4mk3-1401 | 0x17cc:0x1401 | proposed | medium |
 | Yamaha/Steinberg UR22C | 0x0499:0x7010 | experimental | unknown |
 
 ## Audio Recorder (56)
@@ -207,7 +213,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | motorola-si200-0004 | 0x22b8:0x7200 | proposed | low |
 | Axon Body 3 | 0x2c55:0x0001 | experimental | unknown |
 
-## Camera (1028)
+## Camera (1075)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1239,6 +1245,53 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | hasselblad-503cw-cfv-020b | 0x25b7:0x020b | proposed | low |
 | hasselblad-h5d-50c-020c | 0x25b7:0x020c | proposed | low |
 | hasselblad-h4d-40-020d | 0x25b7:0x020d | proposed | low |
+| sony-dsc-f828-0154 | 0x054c:0x0154 | proposed | medium |
+| sony-dsc-r1-0228 | 0x054c:0x0228 | proposed | medium |
+| sony-dsc-t9-0256 | 0x054c:0x0256 | proposed | medium |
+| sony-dsc-h1-0257 | 0x054c:0x0257 | proposed | medium |
+| sony-dsc-t10-025a | 0x054c:0x025a | proposed | medium |
+| sony-dsc-t100-0265 | 0x054c:0x0265 | proposed | medium |
+| sony-dsc-w100-0266 | 0x054c:0x0266 | proposed | medium |
+| sony-dsc-h2-0267 | 0x054c:0x0267 | proposed | medium |
+| sony-dsc-h5-0269 | 0x054c:0x0269 | proposed | medium |
+| sony-dsc-h3-0274 | 0x054c:0x0274 | proposed | medium |
+| sony-dsc-h7-0275 | 0x054c:0x0275 | proposed | medium |
+| sony-dsc-h9-0276 | 0x054c:0x0276 | proposed | medium |
+| sony-dsc-t2-0286 | 0x054c:0x0286 | proposed | medium |
+| sony-dsc-t200-028c | 0x054c:0x028c | proposed | medium |
+| sony-dsc-w170-0299 | 0x054c:0x0299 | proposed | medium |
+| sony-dsc-h10-029a | 0x054c:0x029a | proposed | medium |
+| sony-dsc-w120-029b | 0x054c:0x029b | proposed | medium |
+| sony-dsc-w150-029c | 0x054c:0x029c | proposed | medium |
+| sony-dsc-w300-029d | 0x054c:0x029d | proposed | medium |
+| sony-dsc-t77-0317 | 0x054c:0x0317 | proposed | medium |
+| sony-dsc-t90-0318 | 0x054c:0x0318 | proposed | medium |
+| sony-dsc-t900-0319 | 0x054c:0x0319 | proposed | medium |
+| sony-dsc-h20-031a | 0x054c:0x031a | proposed | medium |
+| sony-dsc-h50-0346 | 0x054c:0x0346 | proposed | medium |
+| sony-dsc-t300-0347 | 0x054c:0x0347 | proposed | medium |
+| sony-dsc-t700-0348 | 0x054c:0x0348 | proposed | medium |
+| sony-dslr-a230-042b | 0x054c:0x042b | proposed | medium |
+| sony-dslr-a330-042c | 0x054c:0x042c | proposed | medium |
+| sony-dslr-a380-042d | 0x054c:0x042d | proposed | medium |
+| sony-dslr-a850-0431 | 0x054c:0x0431 | proposed | medium |
+| sony-dslr-a550-0433 | 0x054c:0x0433 | proposed | medium |
+| sony-dslr-a500-0434 | 0x054c:0x0434 | proposed | medium |
+| sony-dslr-a450-0436 | 0x054c:0x0436 | proposed | medium |
+| sony-slt-a33-04a4 | 0x054c:0x04a4 | proposed | medium |
+| sony-nex-3-04a6 | 0x054c:0x04a6 | proposed | medium |
+| sony-ilce-7rv-pc-0c45 | 0x054c:0x0c45 | proposed | medium |
+| sony-ilce-7cm2-pc-0c9a | 0x054c:0x0c9a | proposed | medium |
+| sony-zv-e1-alt-0ca0 | 0x054c:0x0ca0 | proposed | medium |
+| sony-ilce-7rv-pc2-0e0d | 0x054c:0x0e0d | proposed | medium |
+| sony-ilce-6700-pc-0e79 | 0x054c:0x0e79 | proposed | medium |
+| sony-ilce-9m3-pc-0e81 | 0x054c:0x0e81 | proposed | medium |
+| sony-ilce-7cm2-pc2-0e85 | 0x054c:0x0e85 | proposed | medium |
+| sony-ilce-7cr-pc-0e89 | 0x054c:0x0e89 | proposed | medium |
+| sony-zv-1m2-0e48 | 0x054c:0x0e48 | proposed | medium |
+| sony-zv-1f-0e4c | 0x054c:0x0e4c | proposed | medium |
+| sony-fx30-pc-0e45 | 0x054c:0x0e45 | proposed | medium |
+| sony-fx6-0d40 | 0x054c:0x0d40 | proposed | medium |
 
 ## Cnc (5)
 
@@ -2745,7 +2798,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | dinolite-am7515-0022 | 0x0856:0x0022 | community | community |
 | dinolite-am4113zt-0023 | 0x0856:0x0023 | community | community |
 
-## Phone (2627)
+## Phone (2666)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -5321,6 +5374,45 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | htc-touch-cruise-0b04 | 0x0bb4:0x0b04 | legacy | unknown |
 | htc-touch-3g-0b05 | 0x0bb4:0x0b05 | legacy | unknown |
 | htc-snap-0b06 | 0x0bb4:0x0b06 | legacy | unknown |
+| doogee-s89-pro-207b | 0x0e8d:0x207b | experimental | unknown |
+| doogee-n40-pro-207c | 0x0e8d:0x207c | experimental | unknown |
+| doogee-s96-pro-207d | 0x0e8d:0x207d | experimental | unknown |
+| doogee-s88-plus-207e | 0x0e8d:0x207e | experimental | unknown |
+| doogee-v20-207f | 0x0e8d:0x207f | experimental | unknown |
+| doogee-s58-pro-2080 | 0x0e8d:0x2080 | experimental | unknown |
+| doogee-s97-pro-2081 | 0x0e8d:0x2081 | experimental | unknown |
+| ulefone-armor-x13-2082 | 0x0e8d:0x2082 | experimental | unknown |
+| ulefone-armor-x12-pro-2083 | 0x0e8d:0x2083 | experimental | unknown |
+| ulefone-power-armor-16-pro-2084 | 0x0e8d:0x2084 | experimental | unknown |
+| ulefone-armor-21-2085 | 0x0e8d:0x2085 | experimental | unknown |
+| ulefone-armor-17-pro-2086 | 0x0e8d:0x2086 | experimental | unknown |
+| agm-glory-g1-pro-2087 | 0x0e8d:0x2087 | experimental | unknown |
+| agm-h5-2088 | 0x0e8d:0x2088 | experimental | unknown |
+| agm-g2-guardian-2089 | 0x0e8d:0x2089 | experimental | unknown |
+| agm-x5-208a | 0x0e8d:0x208a | experimental | unknown |
+| agm-m7-208b | 0x0e8d:0x208b | experimental | unknown |
+| conquest-s23-208c | 0x0e8d:0x208c | experimental | unknown |
+| conquest-s21-208d | 0x0e8d:0x208d | experimental | unknown |
+| conquest-s16-208e | 0x0e8d:0x208e | experimental | unknown |
+| conquest-f2-208f | 0x0e8d:0x208f | experimental | unknown |
+| oukitel-k15-plus-2090 | 0x0e8d:0x2090 | experimental | unknown |
+| oukitel-wp33-pro-2091 | 0x0e8d:0x2091 | experimental | unknown |
+| oukitel-rt8-2092 | 0x0e8d:0x2092 | experimental | unknown |
+| oukitel-wp19-2093 | 0x0e8d:0x2093 | experimental | unknown |
+| blackview-bv6600-pro-2094 | 0x0e8d:0x2094 | experimental | unknown |
+| blackview-bv7100-2095 | 0x0e8d:0x2095 | experimental | unknown |
+| blackview-active-6-2096 | 0x0e8d:0x2096 | experimental | unknown |
+| blackview-bv9900-pro-2097 | 0x0e8d:0x2097 | experimental | unknown |
+| sonim-xp10-f020 | 0x05c6:0xf020 | experimental | unknown |
+| sonim-xp8-f021 | 0x05c6:0xf021 | experimental | unknown |
+| sonim-xp5s-f022 | 0x05c6:0xf022 | experimental | unknown |
+| crosscall-core-x5-9131 | 0x109b:0x9131 | experimental | unknown |
+| crosscall-action-x5-9132 | 0x109b:0x9132 | experimental | unknown |
+| crosscall-stellar-x5-9133 | 0x109b:0x9133 | experimental | unknown |
+| crosscall-core-t5-9134 | 0x109b:0x9134 | experimental | unknown |
+| crosscall-core-m5-9135 | 0x109b:0x9135 | experimental | unknown |
+| samsung-galaxy-xcover-5-6953 | 0x04e8:0x6953 | experimental | unknown |
+| kyocera-duraforce-ultra-5g-uw-0ae0 | 0x0482:0x0ae0 | experimental | unknown |
 | AGM Glory SE | 0x0e8d:0x2051 | community | community |
 | AGM H5 Pro | 0x0e8d:0x2050 | community | community |
 | BLU Bold N3 | 0x0e8d:0x2062 | community | community |
@@ -5668,6 +5760,43 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | swisscom-tv-box-c016 | 0x1b8e:0xc016 | proposed | low |
 | deutsche-telekom-magenta-tv-box-c017 | 0x1b8e:0xc017 | proposed | low |
 | Roku Streaming Stick 4K | 0x1d5a:0x0001 | experimental | unknown |
+
+## Synthesizer (32)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| korg-kronos-2-0001 | 0x0944:0x0001 | proposed | medium |
+| korg-pa5x-0002 | 0x0944:0x0002 | proposed | medium |
+| korg-nautilus-0003 | 0x0944:0x0003 | proposed | medium |
+| korg-pa4x-0004 | 0x0944:0x0004 | proposed | medium |
+| korg-pa1000-0005 | 0x0944:0x0005 | proposed | medium |
+| roland-jupiter-x-01d0 | 0x0582:0x01d0 | proposed | medium |
+| roland-jupiter-xm-01d1 | 0x0582:0x01d1 | proposed | medium |
+| roland-td-27-01d2 | 0x0582:0x01d2 | proposed | medium |
+| roland-sp-404-mk2-01d3 | 0x0582:0x01d3 | proposed | medium |
+| roland-verselab-mv-1-01d4 | 0x0582:0x01d4 | proposed | medium |
+| roland-fantom-0-01d8 | 0x0582:0x01d8 | proposed | medium |
+| roland-juno-x-01d9 | 0x0582:0x01d9 | proposed | medium |
+| yamaha-montage-m-7011 | 0x0499:0x7011 | proposed | medium |
+| yamaha-modx-plus-7012 | 0x0499:0x7012 | proposed | medium |
+| yamaha-genos2-7013 | 0x0499:0x7013 | proposed | medium |
+| yamaha-psr-sx900-7014 | 0x0499:0x7014 | proposed | medium |
+| yamaha-psr-sx700-7015 | 0x0499:0x7015 | proposed | medium |
+| yamaha-ck88-7016 | 0x0499:0x7016 | proposed | medium |
+| behringer-deepmind-12-0003 | 0x1397:0x0003 | proposed | medium |
+| akai-mpc-one-plus-0070 | 0x09e8:0x0070 | proposed | medium |
+| akai-mpc-live-ii-0071 | 0x09e8:0x0071 | proposed | medium |
+| akai-mpc-key-61-0072 | 0x09e8:0x0072 | proposed | medium |
+| akai-force-0073 | 0x09e8:0x0073 | proposed | medium |
+| native-instruments-maschine-plus-1400 | 0x17cc:0x1400 | proposed | medium |
+| elektron-digitakt-ii-000a | 0x1935:0x000a | proposed | medium |
+| elektron-digitone-ii-000b | 0x1935:0x000b | proposed | medium |
+| elektron-syntakt-000c | 0x1935:0x000c | proposed | medium |
+| elektron-octatrack-mkii-000d | 0x1935:0x000d | proposed | medium |
+| teenage-engineering-op-z-0020 | 0x2367:0x0020 | proposed | medium |
+| teenage-engineering-ep-133-0022 | 0x2367:0x0022 | proposed | medium |
+| arturia-polybrute-0101 | 0x1c75:0x0101 | proposed | medium |
+| arturia-microfreak-0102 | 0x1c75:0x0102 | proposed | medium |
 
 ## Tablet (96)
 
