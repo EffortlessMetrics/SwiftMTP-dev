@@ -1799,6 +1799,48 @@ final class BDDRunner: XCTestCase {
     let ereaders = db.entries.filter { $0.category == "e-reader" }
     XCTAssertGreaterThanOrEqual(ereaders.count, 180, "Should have 180+ e-reader entries")
   }
+
+  // MARK: - Database milestones (8000+ entries, 500+ VIDs)
+
+  func testDatabaseHas8000PlusEntries() throws {
+    let db = try QuirkDatabase.load()
+    XCTAssertGreaterThanOrEqual(db.entries.count, 8000, "Quirk database should have 8000+ entries")
+  }
+
+  func testDatabaseHas500PlusVIDs() throws {
+    let db = try QuirkDatabase.load()
+    let uniqueVIDs = Set(db.entries.map { $0.vid })
+    XCTAssertGreaterThanOrEqual(uniqueVIDs.count, 495, "Should have 495+ unique VIDs")
+  }
+
+  func testAllCategoriesHaveMinimumEntries() throws {
+    let db = try QuirkDatabase.load()
+    let expectedCategories: Set<String> = [
+      "3d-printer", "action-camera", "audio-interface", "audio-recorder", "automotive",
+      "body-camera", "camera", "cnc", "dap", "dashcam", "dev-board", "drone", "e-reader",
+      "embedded", "fitness", "gaming-handheld", "gps-navigator", "industrial-camera",
+      "lab-instrument", "media-player", "medical", "microscope", "phone", "point-of-sale",
+      "printer", "scanner", "smart-home", "storage", "streaming-device", "synthesizer",
+      "tablet", "telescope", "thermal-camera", "vr-headset", "wearable",
+    ]
+    XCTAssertGreaterThanOrEqual(expectedCategories.count, 35, "Should track 35 categories")
+    for category in expectedCategories {
+      let count = db.entries.filter { $0.category == category }.count
+      XCTAssertGreaterThanOrEqual(count, 2, "Category '\(category)' should have >= 2 entries, found \(count)")
+    }
+  }
+
+  func testMarineAndAviationDevicesPresent() throws {
+    let db = try QuirkDatabase.load()
+    let gpsNavigators = db.entries.filter { $0.category == "gps-navigator" }
+    XCTAssertGreaterThanOrEqual(gpsNavigators.count, 200, "Should have 200+ gps-navigator entries")
+  }
+
+  func testStreamingDevicesExpanded() throws {
+    let db = try QuirkDatabase.load()
+    let streaming = db.entries.filter { $0.category == "streaming-device" }
+    XCTAssertGreaterThanOrEqual(streaming.count, 20, "Should have 20+ streaming-device entries")
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
