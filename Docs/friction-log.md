@@ -35,6 +35,7 @@ Ongoing record of issues, paper cuts, and improvement opportunities encountered 
 | 2026-02-27 | 🟠 P1 | `Docs/benchmarks/probes/` is gitignored but quirk entries reference artifacts in it. `git add -f` required. Fragile. | ✅ Fixed probe files. **TODO**: un-gitignore `Docs/benchmarks/probes/` or add a CI check that artifact refs map to tracked files. |
 | 2026-02-27 | 🟠 P1 | `scripts/check-changelog.sh` fails on shallow clones (CI) because `git describe --tags` can't find tags. | ✅ Fixed — added fallback to accept `[Unreleased]` section. |
 | 2026-02-27 | 🟢 P3 | `generate-compat-matrix.sh` output drifts from committed `Docs/compat-matrix.md` after every quirks addition. No automation to keep them in sync. | **TODO**: add a `post-commit` or CI step that auto-regenerates and commits, or make the CI check advisory-only. |
+| 2026-02-27 | 🔴 P0 | `Package.swift` set `platforms: [.macOS(.v26), .iOS(.v26)]` but CI runners are macOS 15. Binaries built for macOS 26 cannot execute on macOS 15 — `Library not loaded: libswift_DarwinFoundation2.dylib`. | ✅ Fixed — lowered to `.macOS(.v15), .iOS(.v18)`. No macOS-26-only APIs were in use. |
 
 ## Device Onboarding
 

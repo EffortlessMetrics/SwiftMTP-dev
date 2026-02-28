@@ -3949,3 +3949,301 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Tivo Stream 4k | 1b8e:c006 | ⚪ proposed | — |
 | Realme Tv Stick | 22d9:278a | ⚪ proposed | — |
 | Oppo Smart Tv K9 | 22d9:278b | ⚪ proposed | — |
+| Garmin Virb Elite | 091e:2464 | ⚪ proposed | — |
+| Garmin Virb X | 091e:2466 | ⚪ proposed | — |
+| Garmin Virb Xe | 091e:2467 | ⚪ proposed | — |
+| Garmin Virb Ultra30 | 091e:2468 | ⚪ proposed | — |
+| Garmin Virb 360 | 091e:2469 | ⚪ proposed | — |
+| Dji Osmo Action | 2ca3:0033 | ⚪ proposed | — |
+| Dji Osmo Pocket | 2ca3:0034 | ⚪ proposed | — |
+| Dji Mavic Air | 2ca3:0035 | ⚪ proposed | — |
+| Dji Mavic Air 2 | 2ca3:0036 | ⚪ proposed | — |
+| Dji Mavic Mini | 2ca3:0037 | ⚪ proposed | — |
+| Dji Mavic Pro | 2ca3:0038 | ⚪ proposed | — |
+| Dji Mavic 2 Pro | 2ca3:0039 | ⚪ proposed | — |
+| Dji Mavic 2 Zoom | 2ca3:003a | ⚪ proposed | — |
+| Dji Action 3 Alt | 2ca3:003b | ⚪ proposed | — |
+| Dji Action 4 Alt | 2ca3:003c | ⚪ proposed | — |
+| Dji Pocket 1 | 2ca3:003d | ⚪ proposed | — |
+| Dji Mini 2 Se | 2ca3:003e | ⚪ proposed | — |
+| Dji Mavic 3 | 2ca3:003f | ⚪ proposed | — |
+| Eken H9r | 1f3a:1000 | ⚪ proposed | — |
+| Eken H5s Plus | 1f3a:1001 | ⚪ proposed | — |
+| Eken H6s | 1f3a:1002 | ⚪ proposed | — |
+| Eken H7s | 1f3a:1003 | ⚪ proposed | — |
+| Eken Alfawise V50 Pro | 1f3a:1004 | ⚪ proposed | — |
+| Yi Action Camera | 2dbd:0001 | ⚪ proposed | — |
+| Yi 4k Action Camera | 2dbd:0002 | ⚪ proposed | — |
+| Yi 4k Plus | 2dbd:0003 | ⚪ proposed | — |
+| Yi Lite | 2dbd:0004 | ⚪ proposed | — |
+| Yi Discovery | 2dbd:0005 | ⚪ proposed | — |
+| Sjcam Sj12 Pro | 1b3f:0206 | ⚪ proposed | — |
+| Sjcam Sj12 Titan | 1b3f:0207 | ⚪ proposed | — |
+| Akaso V50 Pro | 3538:000c | ⚪ proposed | — |
+| Akaso V50 Pro Se | 3538:000d | ⚪ proposed | — |
+| Akaso V50 Elite | 3538:000e | ⚪ proposed | — |
+| Runcam 5 Orange | 4255:0104 | ⚪ proposed | — |
+| Runcam Thumb | 4255:0105 | ⚪ proposed | — |
+| Cayin N6ii | 2d87:0003 | ⚪ proposed | — |
+| Cayin N8ii | 2d87:0005 | ⚪ proposed | — |
+| Shanling M6 | 31b2:000b | ⚪ proposed | — |
+| Shanling M8 | 31b2:000d | ⚪ proposed | — |
+| Shanling M3x | 31b2:000f | ⚪ proposed | — |
+| Onkyo Dp X1 | 0746:a011 | ⚪ proposed | — |
+| Onkyo Dp X1a | 0746:a013 | ⚪ proposed | — |
+| Pioneer Xdp 30r | 0746:a033 | ⚪ proposed | — |
+| Marshall Emberton | 2ad9:000d | ⚪ proposed | — |
+| Marshall Emberton Ii | 2ad9:000f | ⚪ proposed | — |
+| Jbl Charge5 | 0ecb:2070 | ⚪ proposed | — |
+| Jbl Flip6 | 0ecb:2072 | ⚪ proposed | — |
+| Jbl Partybox310 | 0ecb:2074 | ⚪ proposed | — |
+| Bose Qc35ii | 05a7:4002 | ⚪ proposed | — |
+| Bose Nc700 | 05a7:4004 | ⚪ proposed | — |
+| Bose Qc45 | 05a7:4006 | ⚪ proposed | — |
+| Bose Qc Ultra | 05a7:4008 | ⚪ proposed | — |
+| Bose Soundlink Flex | 05a7:40fe | ⚪ proposed | — |
+| Keysight U2702a Oscilloscope | 0957:2918 | ⚪ proposed | — |
+| Keysight 34410a Multimeter | 0957:0607 | ⚪ proposed | — |
+| Keysight 34411a Multimeter | 0957:0a07 | ⚪ proposed | — |
+| Keysight 34461a Multimeter | 0957:1a07 | ⚪ proposed | — |
+| Keysight 33220a Waveform Generator | 0957:0407 | ⚪ proposed | — |
+| Keysight 33210a Waveform Generator | 0957:1507 | ⚪ proposed | — |
+| Keysight 53230a Frequency Counter | 0957:1907 | ⚪ proposed | — |
+| Keysight Ivi Tmc Device | 0957:1745 | ⚪ proposed | — |
+| Tektronix Afg3022b | 0699:0347 | ⚪ proposed | — |
+| Tektronix Tds2004b Oscilloscope | 0699:0365 | ⚪ proposed | — |
+| Tektronix Tds2024b Oscilloscope | 0699:036a | ⚪ proposed | — |
+| Rohdeschwarz Hmo Oscilloscope | 0aad:0117 | ⚪ proposed | — |
+| Rohdeschwarz Hmo Oscilloscope | 0aad:0118 | ⚪ proposed | — |
+| Rohdeschwarz Hmo Oscilloscope | 0aad:0119 | ⚪ proposed | — |
+| Prusa I3 Mk2s | 2c99:0001 | ⚪ proposed | — |
+| Prusa I3 Mk3 | 2c99:0002 | ⚪ proposed | — |
+| Prusa Mini | 2c99:000c | ⚪ proposed | — |
+| Prusa Mk4 | 2c99:0016 | ⚪ proposed | — |
+| Prusa Xl | 2c99:000d | ⚪ proposed | — |
+| Bambulab X1 Carbon | 3311:0001 | ⚪ proposed | — |
+| Bambulab P1s | 3311:0002 | ⚪ proposed | — |
+| Bambulab A1 Mini | 3311:0003 | ⚪ proposed | — |
+| Bambulab A1 | 3311:0004 | ⚪ proposed | — |
+| Creality K1 3dprinter | 0483:0105 | ⚪ proposed | — |
+| Creality Ender3 S1 Pro | 0483:5741 | ⚪ proposed | — |
+| Anycubic Kobra2 Pro | 0483:0104 | ⚪ proposed | — |
+| Rigol Ds6000 Oscilloscope | 1ab1:04b0 | ⚪ proposed | — |
+| Rigol Ds4000 Oscilloscope | 1ab1:04be | ⚪ proposed | — |
+| Rigol Ds1054z Oscilloscope | 1ab1:04ce | ⚪ proposed | — |
+| Rigol Ds1000 Oscilloscope | 1ab1:0588 | ⚪ proposed | — |
+| Siglent Dso Oscilloscope | f4ec:ee38 | ⚪ proposed | — |
+| Onset Hobo U12 Datalogger | 1941:0001 | ⚪ proposed | — |
+| Onset Hobo Ux100 Datalogger | 1941:0002 | ⚪ proposed | — |
+| Onset Hobo Mx Datalogger | 1941:0003 | ⚪ proposed | — |
+| Omega Om El USB 1 Datalogger | 1cbe:0001 | ⚪ proposed | — |
+| Omega Om El USB 2 Datalogger | 1cbe:0002 | ⚪ proposed | — |
+| Phonak Noahlink Wireless | 2479:0001 | ⚪ proposed | — |
+| Phonak Target Icube Ii | 2479:0002 | ⚪ proposed | — |
+| Signia Connexx Programmer | 247a:0001 | ⚪ proposed | — |
+| Signia Easytek | 247a:0002 | ⚪ proposed | — |
+| Resound Noahlink | 247b:0001 | ⚪ proposed | — |
+| Resound Multi Mic | 247b:0002 | ⚪ proposed | — |
+| Dexcom G6 Receiver | 22a3:0003 | ⚪ proposed | — |
+| Dexcom G7 Receiver | 22a3:0047 | ⚪ proposed | — |
+| Abbott Freestyle Libre Reader | 1a61:0001 | ⚪ proposed | — |
+| Abbott Freestyle Libre2 Reader | 1a61:0002 | ⚪ proposed | — |
+| Flir A320 Thermal | 09cb:1020 | ⚪ proposed | — |
+| Flir A70 Thermal | 09cb:1021 | ⚪ proposed | — |
+| Flir Cx5 Thermal | 09cb:1030 | ⚪ proposed | — |
+| Seek Thermal Compact | 289d:0012 | ⚪ proposed | — |
+| Infiray Xinfrared T3s | 2bdf:0004 | ⚪ proposed | — |
+| Infiray P200 | 2bdf:0005 | ⚪ proposed | — |
+| Xtool D1 Pro Laser | 7523:0001 | ⚪ proposed | — |
+| Xtool M1 Laser | 7523:0002 | ⚪ proposed | — |
+| Ortur Laser Master3 | 7524:0001 | ⚪ proposed | — |
+| Ortur Aufero2 Laser | 7524:0002 | ⚪ proposed | — |
+| Yaesu Ft991a Transceiver | 10c4:0023 | ⚪ proposed | — |
+| Yaesu Ftdx10 Transceiver | 10c4:0024 | ⚪ proposed | — |
+| Icom Ic R30 Receiver | 0c26:002b | ⚪ proposed | — |
+| Icom Ic 7300 Transceiver | 0c26:0018 | ⚪ proposed | — |
+| Kenwood Ts590sg Transceiver | 0b28:100d | ⚪ proposed | — |
+| Kenwood Ts890s Transceiver | 0b28:100e | ⚪ proposed | — |
+| Livescribe Pulse Smartpen | 1ccb:0002 | ⚪ proposed | — |
+| Livescribe 3 Smartpen | 1ccb:0003 | ⚪ proposed | — |
+| Remarkable Tablet | 2d01:4001 | ⚪ proposed | — |
+| Remarkable2 Tablet | 2d01:4002 | ⚪ proposed | — |
+| Smartthings Hub V3 | 10c4:8a2a | ⚪ proposed | — |
+| Hubitat Elevation C7 | 10c4:ea60 | ⚪ proposed | — |
+| Hubitat Elevation C8 | 10c4:ea61 | ⚪ proposed | — |
+| Microsoft Zune 8gb | 045e:0711 | ⚪ proposed | — |
+| Microsoft Zune 80gb | 045e:0712 | ⚪ proposed | — |
+| Microsoft Zune 16gb | 045e:0714 | ⚪ proposed | — |
+| Microsoft Zune 120gb | 045e:0715 | ⚪ proposed | — |
+| Microsoft Zune Hd 16gb | 045e:063f | ⚪ proposed | — |
+| Microsoft Kin One MTP | 045e:0643 | ⚪ proposed | — |
+| Microsoft Kin Two MTP | 045e:0644 | ⚪ proposed | — |
+| Microsoft Lumia Alt | 045e:04ed | ⚪ proposed | — |
+| Microsoft Surface Duo | 045e:0c26 | ⚪ proposed | — |
+| Microsoft Surface Duo 2 | 045e:0c27 | ⚪ proposed | — |
+| Creative Zen Xfi | 041e:4159 | ⚪ proposed | — |
+| Creative Zen Xfi2 | 041e:2020 | ⚪ proposed | — |
+| Creative Zen Xfi3 | 041e:415a | ⚪ proposed | — |
+| Creative Zen Style | 041e:415b | ⚪ proposed | — |
+| Creative Zen Touch2 | 041e:415c | ⚪ proposed | — |
+| Creative Zen Mozaic | 041e:415d | ⚪ proposed | — |
+| Creative Ziio 7 | 041e:2029 | ⚪ proposed | — |
+| Creative Ziio 10 | 041e:202a | ⚪ proposed | — |
+| Creative Zen Wav | 041e:4160 | ⚪ proposed | — |
+| Creative Zen Neeon | 041e:4134 | ⚪ proposed | — |
+| Creative Zen Nano | 041e:4139 | ⚪ proposed | — |
+| Creative Zen Microphoto Alt | 041e:413f | ⚪ proposed | — |
+| Creative Muvo V100 | 041e:200c | ⚪ proposed | — |
+| Creative Zen Sleek | 041e:4136 | ⚪ proposed | — |
+| Motorola Moto G Power 2021 | 22b8:2e94 | ⚪ proposed | — |
+| Motorola Moto G Power 2022 | 22b8:2e95 | ⚪ proposed | — |
+| Motorola Moto G Power 2023 | 22b8:2e96 | ⚪ proposed | — |
+| Motorola Moto G Power 5g | 22b8:2e97 | ⚪ proposed | — |
+| Motorola Edge 2020 | 22b8:2e98 | ⚪ proposed | — |
+| Motorola Edge Plus 2020 | 22b8:2e99 | ⚪ proposed | — |
+| Motorola Edge 2021 | 22b8:2e9a | ⚪ proposed | — |
+| Motorola Edge 2022 | 22b8:2e9b | ⚪ proposed | — |
+| Motorola Edge 30 | 22b8:2e9c | ⚪ proposed | — |
+| Motorola Edge 30 Pro | 22b8:2e9d | ⚪ proposed | — |
+| Motorola Edge 30 Ultra | 22b8:2e9e | ⚪ proposed | — |
+| Motorola Edge 40 | 22b8:2e9f | ⚪ proposed | — |
+| Motorola Edge 40 Pro | 22b8:2ea0 | ⚪ proposed | — |
+| Motorola Edge 50 | 22b8:2ea1 | ⚪ proposed | — |
+| Motorola Edge 50 Pro | 22b8:2ea2 | ⚪ proposed | — |
+| Motorola Edge 50 Ultra | 22b8:2ea3 | ⚪ proposed | — |
+| Motorola Razr 2020 | 22b8:2ea6 | ⚪ proposed | — |
+| Motorola Razr 2022 | 22b8:2ea7 | ⚪ proposed | — |
+| Motorola Razr Plus 2023 | 22b8:2ea9 | ⚪ proposed | — |
+| Motorola Razr 2023 | 22b8:2eaa | ⚪ proposed | — |
+| Motorola Razr Plus 2024 | 22b8:2eab | ⚪ proposed | — |
+| Motorola Moto G Stylus 2021 | 22b8:2eac | ⚪ proposed | — |
+| Motorola Moto G Stylus 2022 | 22b8:2ead | ⚪ proposed | — |
+| Motorola Moto G Stylus 2023 | 22b8:2eae | ⚪ proposed | — |
+| Motorola Moto G Play 2021 | 22b8:2eaf | ⚪ proposed | — |
+| Motorola Moto G Play 2023 | 22b8:2eb0 | ⚪ proposed | — |
+| Motorola Moto G Play 2024 | 22b8:2eb1 | ⚪ proposed | — |
+| Motorola Moto G Pure | 22b8:2eb2 | ⚪ proposed | — |
+| Motorola Moto G 5g 2023 | 22b8:2eb3 | ⚪ proposed | — |
+| Motorola Moto G 5g 2024 | 22b8:2eb4 | ⚪ proposed | — |
+| Motorola Thinkphone | 22b8:2eb5 | ⚪ proposed | — |
+| Samsung Galaxy Tab S7 | 04e8:6b0d | ⚪ proposed | — |
+| Samsung Galaxy Tab S7 Plus | 04e8:6b0e | ⚪ proposed | — |
+| Samsung Galaxy Tab S7 Fe | 04e8:6b0f | ⚪ proposed | — |
+| Samsung Galaxy Tab S8 | 04e8:6b10 | ⚪ proposed | — |
+| Samsung Galaxy Tab S8 Plus | 04e8:6b11 | ⚪ proposed | — |
+| Samsung Galaxy Tab S8 Ultra | 04e8:6b12 | ⚪ proposed | — |
+| Samsung Galaxy Tab S9 | 04e8:6b13 | ⚪ proposed | — |
+| Samsung Galaxy Tab S9 Plus | 04e8:6b14 | ⚪ proposed | — |
+| Samsung Galaxy Tab S9 Ultra | 04e8:6b15 | ⚪ proposed | — |
+| Samsung Galaxy Tab S9 Fe | 04e8:6b16 | ⚪ proposed | — |
+| Samsung Galaxy Tab S9 Fe Plus | 04e8:6b17 | ⚪ proposed | — |
+| Samsung Galaxy Tab A7 Lite | 04e8:6b18 | ⚪ proposed | — |
+| Samsung Galaxy Tab A8 2022 | 04e8:6b19 | ⚪ proposed | — |
+| Samsung Galaxy Tab A9 | 04e8:6b1a | ⚪ proposed | — |
+| Samsung Galaxy Tab A9 Plus | 04e8:6b1b | ⚪ proposed | — |
+| Samsung Galaxy Tab Active4 Pro | 04e8:6b1c | ⚪ proposed | — |
+| Samsung Galaxy Tab Active5 | 04e8:6b1d | ⚪ proposed | — |
+| Amazon Echo Show 5 2nd | 1949:0801 | ⚪ proposed | — |
+| Amazon Echo Show 8 2nd | 1949:0802 | ⚪ proposed | — |
+| Amazon Echo Show 10 3rd | 1949:0803 | ⚪ proposed | — |
+| Amazon Echo Show 15 | 1949:0804 | ⚪ proposed | — |
+| Amazon Echo Show 5 3rd | 1949:0805 | ⚪ proposed | — |
+| Amazon Echo Show 8 3rd | 1949:0806 | ⚪ proposed | — |
+| Amazon Fire Max 11 | 1949:0807 | ⚪ proposed | — |
+| Amazon Fire Hd 8 2022 | 1949:0808 | ⚪ proposed | — |
+| Amazon Fire Hd 10 2023 | 1949:0809 | ⚪ proposed | — |
+| Amazon Fire 7 2022 | 1949:080a | ⚪ proposed | — |
+| Wd My Passport Ultra | 1058:0821 | ⚪ proposed | — |
+| Wd My Passport Ssd Gen2 | 1058:25f4 | ⚪ proposed | — |
+| Wd Easystore 5tb | 1058:25fb | ⚪ proposed | — |
+| Wd My Passport Go | 1058:25f5 | ⚪ proposed | — |
+| Wd Elements Se Alt | 1058:10a9 | ⚪ proposed | — |
+| Wd My Book 6tb | 1058:1236 | ⚪ proposed | — |
+| Seagate Backup Plus Slim | 0bc2:ab29 | ⚪ proposed | — |
+| Seagate One Touch Ssd | 0bc2:ab60 | ⚪ proposed | — |
+| Seagate Expansion 4tb | 0bc2:2323 | ⚪ proposed | — |
+| Seagate Firecuda Gaming | 0bc2:ab61 | ⚪ proposed | — |
+| Seagate Basic Portable | 0bc2:aa16 | ⚪ proposed | — |
+| Seagate Backup Plus Hub | 0bc2:ab39 | ⚪ proposed | — |
+| Pioneer Appradio Sph Da110 | 08e4:0100 | ⚪ proposed | — |
+| Pioneer Appradio Sph Da120 | 08e4:0101 | ⚪ proposed | — |
+| Pioneer Appradio Sph Da210 | 08e4:0102 | ⚪ proposed | — |
+| Pioneer Avh X8800bt | 08e4:0110 | ⚪ proposed | — |
+| Pioneer Dmh Wt8600nex | 08e4:0120 | ⚪ proposed | — |
+| Pioneer Sph 10bt | 08e4:0130 | ⚪ proposed | — |
+| Kenwood Ddx9707s | 0b28:0100 | ⚪ proposed | — |
+| Kenwood Dmx907s | 0b28:0101 | ⚪ proposed | — |
+| Kenwood Dnx577s | 0b28:0102 | ⚪ proposed | — |
+| Kenwood Excelon Dmx1057xr | 0b28:0110 | ⚪ proposed | — |
+| Alpine Ilx W670 | 044e:0100 | ⚪ proposed | — |
+| Alpine Ilx F511 | 044e:0101 | ⚪ proposed | — |
+| Alpine Ilx F409 | 044e:0102 | ⚪ proposed | — |
+| Alpine Ilx 507 | 044e:0103 | ⚪ proposed | — |
+| Xgimi Halo Plus | 2e04:0001 | ⚪ proposed | — |
+| Xgimi Mogo 2 Pro | 2e04:0002 | ⚪ proposed | — |
+| Xgimi Horizon Pro | 2e04:0003 | ⚪ proposed | — |
+| Xgimi Elfin | 2e04:0004 | ⚪ proposed | — |
+| Xgimi Horizon Ultra | 2e04:0005 | ⚪ proposed | — |
+| Anker Nebula Capsule 3 | 291a:0001 | ⚪ proposed | — |
+| Anker Nebula Mars 3 | 291a:0002 | ⚪ proposed | — |
+| Anker Nebula Cosmos Max | 291a:0003 | ⚪ proposed | — |
+| Anker Nebula Capsule 3 Laser | 291a:0004 | ⚪ proposed | — |
+| Viewsonic M1 Mini Plus | 0543:0210 | ⚪ proposed | — |
+| Viewsonic M2e | 0543:0211 | ⚪ proposed | — |
+| Viewsonic X1 4k | 0543:0212 | ⚪ proposed | — |
+| Garmin Forerunner 965 | 091e:5225 | ⚪ proposed | — |
+| Garmin Forerunner 955 | 091e:5226 | ⚪ proposed | — |
+| Garmin Forerunner 265 | 091e:5227 | ⚪ proposed | — |
+| Garmin Forerunner 165 | 091e:5228 | ⚪ proposed | — |
+| Garmin Fenix 8 | 091e:5240 | ⚪ proposed | — |
+| Garmin Enduro 3 | 091e:5241 | ⚪ proposed | — |
+| Garmin Epix Pro | 091e:5242 | ⚪ proposed | — |
+| Garmin Instinct 2x | 091e:5243 | ⚪ proposed | — |
+| Garmin Venu 3 | 091e:5244 | ⚪ proposed | — |
+| Garmin Venu 3s | 091e:5245 | ⚪ proposed | — |
+| Garmin Vivoactive 5 | 091e:5246 | ⚪ proposed | — |
+| Garmin Lily 2 | 091e:5247 | ⚪ proposed | — |
+| Garmin Marq Gen2 | 091e:5248 | ⚪ proposed | — |
+| Garmin Descent G1 Solar | 091e:5249 | ⚪ proposed | — |
+| Garmin Tactix 7 Pro | 091e:524a | ⚪ proposed | — |
+| Teclast T40 Pro | 0e8d:201c | ⚪ proposed | — |
+| Teclast T50 Pro | 0e8d:201e | ⚪ proposed | — |
+| Teclast T60 | 0e8d:201f | ⚪ proposed | — |
+| Teclast M40 Plus | 0e8d:2020 | ⚪ proposed | — |
+| Teclast P30s | 0e8d:2021 | ⚪ proposed | — |
+| Teclast P40hd | 0e8d:2022 | ⚪ proposed | — |
+| Alldocube Iplay 50 Pro | 0e8d:2023 | ⚪ proposed | — |
+| Alldocube Iplay 50 Mini | 0e8d:2024 | ⚪ proposed | — |
+| Alldocube Iplay 60 | 0e8d:2025 | ⚪ proposed | — |
+| Jumper Ezpad M10 | 0e8d:2027 | ⚪ proposed | — |
+| Jumper Ezpad M11 | 0e8d:2028 | ⚪ proposed | — |
+| Jumper Ezpad Plus | 0e8d:2029 | ⚪ proposed | — |
+| Chuwi Hipad Xpro | 0e8d:202a | ⚪ proposed | — |
+| Chuwi Hipad Air | 0e8d:202b | ⚪ proposed | — |
+| Chuwi Hipad Max | 0e8d:202c | ⚪ proposed | — |
+| Chuwi Hipad Plus | 0e8d:202d | ⚪ proposed | — |
+| Fitbit Ionic | 2687:0001 | ⚪ proposed | — |
+| Fitbit Versa 3 | 2687:0002 | ⚪ proposed | — |
+| Fitbit Sense | 2687:0003 | ⚪ proposed | — |
+| Fitbit Sense 2 | 2687:0004 | ⚪ proposed | — |
+| Archos 101 Oxygen | 0e79:5604 | ⚪ proposed | — |
+| Archos Diamond Tab | 0e79:5605 | ⚪ proposed | — |
+| Archos 101b Oxygen | 0e79:5606 | ⚪ proposed | — |
+| Archos T80 Wifi | 0e79:5607 | ⚪ proposed | — |
+| Archos T101 Wifi | 0e79:5608 | ⚪ proposed | — |
+| Google Nest Hub Max | 18d1:4ee3 | ⚪ proposed | — |
+| Google Nest Hub 2nd | 18d1:4ee4 | ⚪ proposed | — |
+| Meta Portal Go | 2c6a:0001 | ⚪ proposed | — |
+| Meta Portal Plus | 2c6a:0002 | ⚪ proposed | — |
+| Meta Portal 10 | 2c6a:0003 | ⚪ proposed | — |
+| Lacie Rugged USB C | 059f:1079 | ⚪ proposed | — |
+| Lacie Mobile Drive | 059f:107a | ⚪ proposed | — |
+| Lacie Portable Ssd | 059f:107b | ⚪ proposed | — |
+| Lacie Drive Mini | 059f:107c | ⚪ proposed | — |
+| Omsystem Om1 33a2 | 33a2:0135 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Omsystem Om5 33a2 | 33a2:0137 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Omsystem Tg7 33a2 | 33a2:0138 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Pentax K3 Markiii Mono | 25fb:0007 | ⚪ proposed | — |
+| Leica M11 P | 1a98:0013 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Leica D Lux 8 | 1a98:0014 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Leica Q3 43 | 1a98:0015 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
