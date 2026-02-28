@@ -174,9 +174,25 @@ Contributors are recognized through:
 
 ## Contributing Device Quirks
 
-### Quick path
+### Adding a New Device Entry
 
-The easiest way to add support for a new device is via the `add-device` command:
+The easiest way to add a new MTP device:
+
+1. **Interactive**: Run `./scripts/add-device.sh` and follow the prompts
+2. **Manual**: Add an entry to `Specs/quirks.json` following the format below
+3. **Validate**: Run `./scripts/validate-device-entry.sh <your-entry-id>`
+4. **Test**: Run `swift test --filter QuirkMatchingTests` in SwiftMTPKit/
+5. **Submit**: Create a PR with your changes
+
+#### Finding VID:PID
+
+- **macOS**: System Information → USB → check Vendor ID and Product ID
+- **Linux**: `lsusb` command
+- **Windows**: Device Manager → Properties → Hardware Ids
+
+#### CLI alternative
+
+You can also use the `add-device` CLI subcommand:
 
 ```bash
 swiftmtp add-device --vid 0x1234 --pid 0x5678 --name "My Device" --class android
