@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Wave 33: 17 vintage/legacy media player entries (Palm, Creative, Archos, Cowon, Philips, Rio)
+- Wave 34: 25 printer/scanner entries (Canon, Epson, HP, Kodak, Brother, Fujitsu, Polaroid)
+- Wave 35: 11 drone/robotic camera entries (DJI, Parrot, Autel, Insta360, Skydio, Fimi)
+- Wave 38: 34 automotive/GPS entries (Pioneer, Kenwood, Alpine, Sony, Garmin, TomTom)
+- Wave 39: 6 medical/fitness entries (Polar, Wahoo, Coros, Withings)
+- Wave 40: 7 tablet/e-reader entries (Lenovo, Xiaomi, Supernote)
 
 - **🎉 Device Quirks Database: 3,945+ entries** (up from 2,055): Massive expansion through waves 11–20:
   - **Smartphones**: Samsung Galaxy S/A/M/F/Z (120+), Xiaomi/Redmi/POCO (136+), Huawei P/Mate/nova (68+), Honor (16+), OnePlus (28+), Google Pixel/Nexus (35+), Sony Xperia (312+), LG (73+), HTC (82+), OPPO/Realme (62+), vivo (24+), ZTE/nubia (29+), ASUS ZenFone/ROG (24+), Motorola Edge/Moto G/Razr (61+), Nokia/HMD (96+), BlackBerry (20+), Fairphone (3), Nothing Phone (5), Meizu (14+), Sharp Aquos (13+), Kyocera DuraForce (7+), CAT Rugged (5+), Razer (2), Lenovo (56+), Acer (48+), Essential (2+)
