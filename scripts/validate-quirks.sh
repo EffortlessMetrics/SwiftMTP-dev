@@ -123,6 +123,25 @@ fi
 
 echo "✅ All VID:PID pairs are unique"
 
+# Validate hooks format (must be array, not dict or null-typed)
+echo "🔍 Checking hooks format..."
+HOOKS_ERRORS=$(python3 -c "
+import json
+with open('$QUIRKS_FILE') as f:
+    d = json.load(f)
+errors = []
+for i, e in enumerate(d['entries']):
+    hooks = e.get('hooks')
+    if hooks is not None and not isinstance(hooks, list):
+        errors.append(f'Entry {e[\"id\"]}: hooks is {type(hooks).__name__}, expected list')
+if errors:
+    for err in errors:
+        print(err)
+    exit(1)
+print(f'All {len(d[\"entries\"])} entries have valid hooks format')
+")
+echo "$HOOKS_ERRORS"
+
 # Check that all entries have a governance status field
 echo "🔍 Checking governance status field..."
 missing_status=$(jq -r '.entries[] | select(.status == null) | .id' "$QUIRKS_FILE")

@@ -270,6 +270,18 @@ final class QuirksDatabasePropertyTests: XCTestCase {
     }
   }
 
+  /// Every entry's hooks field, when present, must be an array (decoded as [QuirkHook]).
+  func testAllHooksFieldsAreArrays() {
+    for entry in db.entries {
+      if let hooks = entry.hooks {
+        // If decoding succeeded the type is already [QuirkHook]; verify it is non-nil array.
+        XCTAssertTrue(
+          type(of: hooks) == [QuirkHook].self,
+          "Entry '\(entry.id)': hooks should be [QuirkHook], got \(type(of: hooks))")
+      }
+    }
+  }
+
   /// All VIDs should be non-zero (no placeholder 0x0000 entries).
   func testAllVIDsAreNonZero() {
     let zeroVIDs = db.entries.filter { $0.vid == 0x0000 }
