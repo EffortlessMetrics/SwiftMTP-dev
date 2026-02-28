@@ -1985,6 +1985,19 @@ final class BDDRunner: XCTestCase {
     XCTAssertGreaterThanOrEqual(uniqueVIDs.count, 900, "Should have 900+ unique VIDs at 13,500+ milestone")
   }
 
+  // MARK: - 🎉 14,000-Entry Milestone
+
+  func testDatabaseHas14000PlusEntries() throws {
+    let db = try QuirkDatabase.load()
+    XCTAssertGreaterThanOrEqual(db.entries.count, 14000, "Quirk database should have 14,000+ entries")
+  }
+
+  func testDatabaseHas950PlusVIDsMilestone14000() throws {
+    let db = try QuirkDatabase.load()
+    let uniqueVIDs = Set(db.entries.map { $0.vid })
+    XCTAssertGreaterThanOrEqual(uniqueVIDs.count, 950, "Should have 950+ unique VIDs at 14,000+ milestone")
+  }
+
   func testAllCategoriesHave100PlusEntries() throws {
     let db = try QuirkDatabase.load()
     let categoryCounts = Dictionary(grouping: db.entries, by: { $0.category ?? "unknown" })
