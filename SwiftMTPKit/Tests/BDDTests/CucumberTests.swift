@@ -630,6 +630,50 @@ final class BDDRunner: XCTestCase {
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
+  // MARK: - Wave 25-28: Cameras, Industrial, Medical, Media Players, Phones
+
+  func testWave25OMSystem() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x33a2, pid: 0x0135, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("om-system not in database") }
+    XCTAssertTrue(q.resolvedFlags().cameraClass)
+  }
+
+  func testWave25LeicaM11P() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x1a98, pid: 0x0013, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("leica-m11-p not in database") }
+    XCTAssertTrue(q.resolvedFlags().cameraClass)
+  }
+
+  func testWave26BambuLabX1Carbon() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x3311, pid: 0x0001, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("bambulab-x1-carbon not in database") }
+    XCTAssertFalse(q.resolvedFlags().cameraClass)
+  }
+
+  func testWave26DexcomG6() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x22a3, pid: 0x0003, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("dexcom-g6 not in database") }
+    XCTAssertFalse(q.resolvedFlags().cameraClass)
+  }
+
+  func testWave27ZuneHD() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x045e, pid: 0x0710, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("zune-hd not in database") }
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave28MotorolaEdge() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x22b8, pid: 0x2e81, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("motorola-edge not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
   // MARK: - Audio Devices: Fiio DAPs
 
   func testAudioFiioDAPM7() throws {
