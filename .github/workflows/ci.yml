@@ -29,7 +29,7 @@ jobs:
       - name: Validate UX touch policy
         run: ./scripts/validate-ux-touch.sh
       - name: Ensure UX map schema tooling
-        run: python3 -m pip install jsonschema
+        run: python3 -m pip install --break-system-packages jsonschema
       - name: Validate UX interaction map
         run: ./scripts/validate-ux-map.sh
       - name: Critical UX UI lane (mock deterministic)

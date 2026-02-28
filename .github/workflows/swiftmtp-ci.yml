@@ -137,8 +137,11 @@ jobs:
           # Get binary path
           BIN=$(swift build --show-bin-path)/SwiftMTPFuzz
 
-          # Run fuzzing for 10 minutes with timeout
-          timeout 600 $BIN fuzz_input.bin || {
+          # Run fuzzing for 10 minutes with timeout (gtimeout on macOS)
+          TIMEOUT_CMD="timeout"
+          command -v gtimeout &>/dev/null && TIMEOUT_CMD="gtimeout"
+          command -v $TIMEOUT_CMD &>/dev/null || { brew install coreutils; TIMEOUT_CMD="gtimeout"; }
+          $TIMEOUT_CMD 600 $BIN fuzz_input.bin || {
             EXIT_CODE=$?
             if [ $EXIT_CODE -eq 124 ]; then
               echo "Fuzzing completed (timeout after 10 min)"
