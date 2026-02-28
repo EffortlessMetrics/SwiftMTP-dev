@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **🎉 16,237-Entry Milestone**: Device quirks database reaches 16,237 entries across 1,088 VIDs and 59 device categories — all categories 50+
+- Milestone BDD tests: `testDatabaseHas16000PlusEntries`, `testDatabaseHas1075PlusVIDsMilestone16000`, `testAllCategoriesHave50PlusEntries`
+- Core baseline bumped from 15,000 → 16,000 in `QuirkMatchingTests`
+- Compat matrix regenerated for 16,237 entries
 - **🎉 15,500+-Entry Milestone**: Device quirks database reaches 15,508 entries across 1,073 VIDs and 59 device categories
 - Milestone BDD tests: `testDatabaseHas15000PlusEntries`, `testDatabaseHas1050PlusVIDsMilestone15000`
 - Core baseline bumped from 14,500 → 15,000 in `QuirkMatchingTests`
