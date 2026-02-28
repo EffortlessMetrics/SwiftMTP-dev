@@ -40,6 +40,32 @@
 9. ~~`FallbackAllFailedError` not tested~~  
    **DONE** — `FallbackAllFailedErrorTests` (8 tests) in `ErrorHandlingTests`.
 
-10. ~~SwiftCheck signal-5 crash in `UInt64 idempotence` test~~  
+10. ~~SwiftCheck signal-5 crash in `UInt64 idempotence` test~~
     **DONE** — Replaced `property/forAll` with explicit boundary value loop
     using Swift Testing `#expect`. Root cause: XCTest+Swift-Testing mixing.
+
+## Device expansion epic — friction items
+
+### hooks encoding (dict vs array)
+- **Issue**: Some device waves added `"hooks": {}` (empty dict) instead of `"hooks": []` (empty array)
+- **Impact**: 57 entries caused JSON decode failures; QuirkMatchingTests and BDD tests broke
+- **Fix**: Normalized all `hooks` fields to arrays via python3 script (PR #66)
+- **Prevention**: Add hooks format validation to validate-quirks CI step; add test that verifies all hooks are arrays
+
+### Dedup rebase pattern for device waves
+- **Issue**: Multiple parallel agents modifying quirks.json cause merge conflicts
+- **Pattern**: Extract new entries by ID diffing against main, append to main's entries array
+- **Note**: Must handle category corrections (entries exist in both but different categories)
+
+### VID:PID duplicate detection
+- **Issue**: HiBy R6 III used estimated PID under Vivo's VID (PR #62)
+- **Prevention**: validate-quirks CI already checks; entries with estimated PIDs should be flagged
+
+### CI TSAN interceptor failure
+- **Issue**: Xcode 26.3 RC2 breaks TSAN with "Interceptors are not working"
+- **Fix**: Pin Xcode 16.2 + continue-on-error + setup-swift for Swift 6.2 toolchain
+- **Note**: Monitor Xcode 26.x releases for fix
+
+### Gaming handheld/VR entries already in main
+- **Issue**: Wave 84 gaming handheld entries ended up with 0 new entries after dedup because they were already captured in main via prior waves
+- **Prevention**: Agents should query main branch state before generating entries
