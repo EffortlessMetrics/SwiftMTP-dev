@@ -2,4752 +2,5012 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-| Device | VID:PID | Status | Quirks |
-|--------|---------|--------|--------|
-| Xiaomi Mi Note 2 | 2717:ff10 | ✅ promoted | supportsGetPartialObject64, supportsSendPartialObject |
-| Xiaomi Mi Note 2 | 2717:ff40 | ✅ promoted | supportsGetPartialObject64, supportsSendPartialObject |
-| Samsung Android | 04e8:6860 | ✅ promoted | supportsGetPartialObject64, preferGetObjectPropList, supportsGetObjectPropList, supportsGetPartialObject, disableWriteResume |
-| Oneplus 3t | 2a70:f003 | ✅ promoted | supportsGetPartialObject64, supportsSendPartialObject, preferGetObjectPropList, supportsGetPartialObject, supportsEvents |
-| Google Pixel 7 | 18d1:4ee1 | ✅ promoted | supportsGetObjectPropList, supportsGetPartialObject |
-| Canon EOS Rebel | 04a9:3139 | ✅ promoted | disableWriteResume |
-| Nikon DSLR | 04b0:0410 | ✅ promoted | disableWriteResume |
-| Samsung Galaxy MTP Adb | 04e8:685c | ✓ verified | — |
-| Google Nexus Pixel MTP Adb | 18d1:4ee2 | ✓ verified | — |
-| Google Pixel 3 4 | 18d1:4eed | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Motorola Moto Eg MTP | 22b8:2e82 | ✓ verified | supportsGetObjectPropList, preferGetObjectPropList |
-| Motorola Moto Eg MTP Adb | 22b8:2e76 | ✓ verified | — |
-| Sony Xperia Z | 0fce:0193 | ✓ verified | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Z3 | 0fce:01ba | ✓ verified | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xz1 | 0fce:01f3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Lg Android | 1004:633e | ⚪ proposed | — |
-| Lg Android | 1004:6300 | ⚪ proposed | — |
-| Htc Android | 0bb4:0f15 | ⚪ proposed | — |
-| Huawei Android | 12d1:107e | ⚪ proposed | — |
-| Canon EOS 5d3 | 04a9:3234 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS R5 | 04a9:32b4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS R3 | 04a9:32b5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Nikon Z6 Z7 | 04b0:0441 | ⚪ proposed | disableWriteResume |
-| Nikon Z6ii Z7ii | 04b0:0442 | ⚪ proposed | disableWriteResume |
-| Fujifilm X Series | 04cb:0104 | ⚪ proposed | disableWriteResume |
-| Oneplus 9 | 2a70:9011 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Samsung Galaxy S20 S21 | 04e8:6866 | ⚪ proposed | — |
-| Samsung Galaxy Kies | 04e8:6877 | ⚪ proposed | — |
-| Lg V20 G5 G6 | 1004:61f1 | ⚪ proposed | — |
-| Lg G4 V10 | 1004:61f9 | ⚪ proposed | — |
-| Htc U11 U12 | 0bb4:0f91 | ⚪ proposed | — |
-| Htc One M8 M9 | 0bb4:0ffe | ⚪ proposed | — |
-| Huawei P9 P10 | 12d1:1052 | ⚪ proposed | — |
-| Huawei P20 Pro Mate20 | 12d1:1054 | ⚪ proposed | — |
-| Huawei P30 Mate30 | 12d1:10c1 | ⚪ proposed | — |
-| Asus Zenfone 5 | 0b05:7770 | ⚪ proposed | — |
-| Asus Zenfone 6 Rog | 0b05:7776 | ⚪ proposed | — |
-| Acer Iconia A500 | 0502:3325 | ⚪ proposed | — |
-| Acer Iconia A700 | 0502:3378 | ⚪ proposed | — |
-| Oppo Realme Android | 22d9:0001 | ⚪ proposed | — |
-| Google Nexus One | 18d1:4e41 | ⚪ proposed | — |
-| Google Nexus 7 | 18d1:4e42 | ⚪ proposed | — |
-| Sony Xperia Z1 | 0fce:019e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Z5 | 0fce:01d9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xz | 0fce:01e7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A7iii | 054c:0a79 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Alpha A7riv | 054c:0a6f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Panasonic Lumix G | 04da:2372 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Olympus E Series | 07b4:0113 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Ricoh Pentax K | 25fb:0001 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Nokia N8 | 0421:02fe | ⚪ proposed | — |
-| Nokia C7 | 0421:03c1 | ⚪ proposed | — |
-| Nokia E7 | 0421:0334 | ⚪ proposed | — |
-| Nokia 808 Pureview | 0421:05d3 | ⚪ proposed | — |
-| Nokia Lumia Wp8 | 0421:0661 | ⚪ proposed | — |
-| Nokia Lumia Rm975 | 0421:06fc | ⚪ proposed | — |
-| Nokia Android 6 | 2e04:c025 | ⚪ proposed | — |
-| Nokia Android 61 | 2e04:c026 | ⚪ proposed | — |
-| Nokia Android 62 | 2e04:c02a | ⚪ proposed | — |
-| Zte Blade3 | 19d2:0306 | ⚪ proposed | — |
-| Zte Grand X In | 19d2:0343 | ⚪ proposed | — |
-| Zte V985 | 19d2:0383 | ⚪ proposed | — |
-| Zte Blade L3 | 19d2:2008 | ⚪ proposed | — |
-| Zte V5 | 19d2:ffce | ⚪ proposed | — |
-| Zte Z9 Max | 19d2:ffcf | ⚪ proposed | — |
-| Amazon Kindle Fire | 1949:0007 | ⚪ proposed | — |
-| Amazon Kindle Fire Hd6 | 1949:00f2 | ⚪ proposed | — |
-| Amazon Kindle Fire 7 | 1949:0221 | ⚪ proposed | — |
-| Amazon Kindle Fire 8 | 1949:0211 | ⚪ proposed | — |
-| Amazon Kindle Fire Hd8 | 1949:0212 | ⚪ proposed | — |
-| Amazon Kindle Fire 10hd | 1949:0281 | ⚪ proposed | — |
-| Amazon Fire Max11 | 1949:06b1 | ⚪ proposed | — |
-| Lenovo K1 | 17ef:740a | ⚪ proposed | — |
-| Lenovo Thinkpad Tablet | 17ef:741c | ⚪ proposed | — |
-| Lenovo Vibe K5 | 17ef:74ee | ⚪ proposed | — |
-| Lenovo K3 Note | 17ef:7883 | ⚪ proposed | — |
-| Lenovo P70 | 17ef:2008 | ⚪ proposed | — |
-| Blackberry Storm 9650 | 0fca:8007 | ⚪ proposed | — |
-| Blackberry Priv | 0fca:8031 | ⚪ proposed | — |
-| Blackberry Dtek60 | 0fca:8041 | ⚪ proposed | — |
-| Blackberry Keyone | 0fca:8042 | ⚪ proposed | — |
-| Meizu Mx | 2a45:2008 | ⚪ proposed | — |
-| Meizu Mx Adb | 2a45:0c02 | ⚪ proposed | — |
-| Vivo V11 | 2d95:6002 | ⚪ proposed | — |
-| Vivo V19 | 2d95:6003 | ⚪ proposed | — |
-| Vivo Iqoo Neo9s | 2d95:6012 | ⚪ proposed | — |
-| Samsung Galaxy Captivate | 04e8:68a9 | ⚪ proposed | — |
-| Xiaomi Mi3 | 2717:0368 | ⚪ proposed | — |
-| Xiaomi Mipad | 2717:0660 | ⚪ proposed | — |
-| Xiaomi Redmi1 | 2717:1248 | ⚪ proposed | — |
-| Xiaomi Redmi1s | 2717:1260 | ⚪ proposed | — |
-| Xiaomi Mi2s | 2717:ff48 | ⚪ proposed | — |
-| Xiaomi Redmi2 | 2717:ff60 | ⚪ proposed | — |
-| Motorola Razr Hd | 22b8:2e32 | ⚪ proposed | — |
-| Motorola Moto X Xt1053 | 22b8:2e62 | ⚪ proposed | — |
-| Motorola Moto X Xt1080 | 22b8:2e66 | ⚪ proposed | — |
-| Motorola Moto Z2 | 22b8:2e81 | ⚪ proposed | — |
-| Motorola Droid Turbo | 22b8:2ea5 | ⚪ proposed | — |
-| Realme Phone | 22d9:202a | ⚪ proposed | — |
-| Oppo Find5 | 22d9:2764 | ⚪ proposed | — |
-| Oppo Find7 | 22d9:2765 | ⚪ proposed | — |
-| Oppo Find7 | 22d9:2774 | ⚪ proposed | — |
-| Sony Xperia Z2 | 0fce:01af | ⚪ proposed | — |
-| Sony Xperia Z3 Compact | 0fce:01bb | ⚪ proposed | — |
-| Sony Xperia Z3plus | 0fce:01c9 | ⚪ proposed | — |
-| Sony Xperia Xa | 0fce:01de | ⚪ proposed | — |
-| Sony Xperia Xz2 | 0fce:01fa | ⚪ proposed | — |
-| Nikon D90 | 04b0:0421 | ⚪ proposed | disableWriteResume |
-| Nikon D700 | 04b0:0422 | ⚪ proposed | disableWriteResume |
-| Nikon D3100 | 04b0:0427 | ⚪ proposed | disableWriteResume |
-| Nikon D3200 | 04b0:042c | ⚪ proposed | disableWriteResume |
-| Nikon D3300 | 04b0:0433 | ⚪ proposed | disableWriteResume |
-| Nikon D3400 | 04b0:043d | ⚪ proposed | disableWriteResume |
-| Nikon D3500 | 04b0:0445 | ⚪ proposed | disableWriteResume |
-| Nikon D7000 | 04b0:0428 | ⚪ proposed | disableWriteResume |
-| Nikon D5100 | 04b0:0429 | ⚪ proposed | disableWriteResume |
-| Nikon D5200 | 04b0:042f | ⚪ proposed | disableWriteResume |
-| Nikon D7100 | 04b0:0430 | ⚪ proposed | disableWriteResume |
-| Nikon D5300 | 04b0:0431 | ⚪ proposed | disableWriteResume |
-| Nikon D5500 | 04b0:0438 | ⚪ proposed | disableWriteResume |
-| Nikon D5600 | 04b0:043f | ⚪ proposed | disableWriteResume |
-| Nikon D7200 | 04b0:0439 | ⚪ proposed | disableWriteResume |
-| Nikon D7500 | 04b0:0440 | ⚪ proposed | disableWriteResume |
-| Nikon D800 | 04b0:042a | ⚪ proposed | disableWriteResume |
-| Nikon D800e | 04b0:042e | ⚪ proposed | disableWriteResume |
-| Nikon D600 | 04b0:042d | ⚪ proposed | disableWriteResume |
-| Nikon D610 | 04b0:0434 | ⚪ proposed | disableWriteResume |
-| Nikon D750 | 04b0:0437 | ⚪ proposed | disableWriteResume |
-| Nikon D810 | 04b0:0436 | ⚪ proposed | disableWriteResume |
-| Nikon D780 | 04b0:0446 | ⚪ proposed | disableWriteResume |
-| Nikon D4 | 04b0:042b | ⚪ proposed | disableWriteResume |
-| Nikon D4s | 04b0:0435 | ⚪ proposed | disableWriteResume |
-| Nikon D5 | 04b0:043a | ⚪ proposed | disableWriteResume |
-| Nikon D500 | 04b0:043c | ⚪ proposed | disableWriteResume |
-| Nikon D6 | 04b0:0447 | ⚪ proposed | disableWriteResume |
-| Nikon Z6 | 04b0:0443 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Nikon Z50 | 04b0:0444 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Nikon Z5 | 04b0:0448 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Nikon Z7 Ii | 04b0:044b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Nikon Z6 Ii | 04b0:044c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Nikon Zfc | 04b0:044f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Nikon Z30 | 04b0:0452 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Nikon Zf | 04b0:0453 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Nikon Z6 Iii | 04b0:0454 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Canon EOS 450d | 04a9:3145 | ⚪ proposed | disableWriteResume |
-| Canon EOS 5d Mark Ii | 04a9:3199 | ⚪ proposed | disableWriteResume |
-| Canon EOS 7d | 04a9:319a | ⚪ proposed | disableWriteResume |
-| Canon EOS 500d | 04a9:31cf | ⚪ proposed | disableWriteResume |
-| Canon EOS 550d | 04a9:31ea | ⚪ proposed | disableWriteResume |
-| Canon EOS 60d | 04a9:3215 | ⚪ proposed | disableWriteResume |
-| Canon EOS 600d | 04a9:3218 | ⚪ proposed | disableWriteResume |
-| Canon EOS 6d | 04a9:3250 | ⚪ proposed | disableWriteResume |
-| Canon EOS 70d | 04a9:3253 | ⚪ proposed | disableWriteResume |
-| Canon EOS 650d | 04a9:323b | ⚪ proposed | disableWriteResume |
-| Canon EOS 5d Mark Iii | 04a9:323a | ⚪ proposed | disableWriteResume |
-| Canon EOS 7d Mark Ii | 04a9:326f | ⚪ proposed | disableWriteResume |
-| Canon EOS 700d | 04a9:3272 | ⚪ proposed | disableWriteResume |
-| Canon EOS 760d | 04a9:3280 | ⚪ proposed | disableWriteResume |
-| Canon EOS 5d Mark Iv | 04a9:3281 | ⚪ proposed | disableWriteResume |
-| Canon EOS 80d | 04a9:3294 | ⚪ proposed | disableWriteResume |
-| Canon EOS 750d | 04a9:32a1 | ⚪ proposed | disableWriteResume |
-| Canon EOS 800d | 04a9:32c9 | ⚪ proposed | disableWriteResume |
-| Canon EOS 6d Mark Ii | 04a9:32ca | ⚪ proposed | disableWriteResume |
-| Canon EOS 200d | 04a9:32cc | ⚪ proposed | disableWriteResume |
-| Canon EOS R | 04a9:32da | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Canon EOS Rp | 04a9:32e2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Canon EOS 250d | 04a9:32e9 | ⚪ proposed | disableWriteResume |
-| Canon EOS 90d | 04a9:32ea | ⚪ proposed | disableWriteResume |
-| Canon EOS 850d | 04a9:32f1 | ⚪ proposed | disableWriteResume |
-| Canon EOS R6 | 04a9:32f5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Canon EOS R7 | 04a9:32f7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Canon EOS R10 | 04a9:32f8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Canon EOS M50 Ii | 04a9:32f9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Canon EOS R6 Mark Ii | 04a9:330b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Canon EOS R8 | 04a9:330c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Sony Alpha A5100 | 054c:08e7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A6000 | 054c:08b7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A6100 | 054c:0d13 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A6300 | 054c:077a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A6500 | 054c:0784 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A6600 | 054c:0d0f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A6700 | 054c:0e78 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7 | 054c:094c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7ii | 054c:0a6a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7iii | 054c:0c03 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7iv | 054c:0da6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7r | 054c:094d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7rii | 054c:09e7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7riii | 054c:0c00 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7rv | 054c:0e0c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7s | 054c:08e2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7sii | 054c:0a71 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7siii | 054c:0d17 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A9 | 054c:0c2a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A9iii | 054c:0e80 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Zv1 | 054c:0c1b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Zv E10 | 054c:0de3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Rx100m7 | 054c:0cae | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Rx10m4 | 054c:0c2f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Fx3 | 054c:0da3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Panasonic Lumix | 04da:2374 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Panasonic Gh5 | 04da:2382 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sigma Fp | 1003:c432 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sigma Fp L | 1003:c442 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Leica M9 | 1a98:0002 | ⚪ proposed | disableWriteResume |
-| Leica Sl Typ601 | 1a98:2041 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Leica M11 Monochrom | 1a98:2083 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Leica Q3 | 1a98:2376 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Leica Sl3 | 1a98:2382 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Ricoh Pentax K3 | 25fb:0165 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Ricoh Pentax K1 | 25fb:0179 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Ricoh Pentax K3ii | 25fb:017b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Ricoh Pentax K70 | 25fb:017d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Ricoh Pentax Kp | 25fb:017f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Ricoh Wgm2 | 25fb:210b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Ricoh Gr Iii | 25fb:210f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Ricoh Gr Iiix | 25fb:2115 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Gopro Max | 2672:004b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero9 Black | 2672:004d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero10 Black | 2672:0056 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero11 Black | 2672:0059 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero11 Mini | 2672:005a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Tcl S950 6010d | 1bbb:0167 | ⚪ proposed | — |
-| Alcatel One Touch 997d | 1bbb:0c02 | ⚪ proposed | — |
-| Alcatel One Touch 997d | 1bbb:2008 | ⚪ proposed | — |
-| Alcatel A405dl | 1bbb:901b | ⚪ proposed | — |
-| Alcatel Bs472 | 1bbb:904d | ⚪ proposed | — |
-| Alcatel One Touch 5042d | 1bbb:a00e | ⚪ proposed | — |
-| Alcatel Idol3 Id2 | 1bbb:af00 | ⚪ proposed | — |
-| Alcatel Idol3 Small | 1bbb:af2a | ⚪ proposed | — |
-| Alcatel Idol3 | 1bbb:af2b | ⚪ proposed | — |
-| Alcatel 6034r | 1bbb:f003 | ⚪ proposed | — |
-| Sharp Sbm203sh | 04dd:9661 | ⚪ proposed | — |
-| Sharp Sh06e | 04dd:96ca | ⚪ proposed | — |
-| Sharp Shv35 Aquos U | 04dd:99d2 | ⚪ proposed | — |
-| Sharp Android One S5 | 04dd:9c90 | ⚪ proposed | — |
-| Sharp S7 Sh | 04dd:9d6e | ⚪ proposed | — |
-| Kyocera Rise | 0482:0571 | ⚪ proposed | — |
-| Kyocera Event | 0482:0591 | ⚪ proposed | — |
-| Kyocera Torque E6715 | 0482:059a | ⚪ proposed | — |
-| Kyocera Hydro Elite C6750 | 0482:073c | ⚪ proposed | — |
-| Kyocera Hydro Icon | 0482:085e | ⚪ proposed | — |
-| Kyocera Duraforce | 0482:0979 | ⚪ proposed | — |
-| Kyocera Kc S701 | 0482:09cb | ⚪ proposed | — |
-| Kyocera Duraforce Xd | 0482:0a9a | ⚪ proposed | — |
-| Fairphone 2 Id2 | 2ae5:6764 | ⚪ proposed | — |
-| Fairphone 2 | 2ae5:f003 | ⚪ proposed | — |
-| Fairphone 2 Os | 2ae5:9039 | ⚪ proposed | — |
-| Honor X8 X9 5g | 339b:107d | ⚪ proposed | — |
-| Honor X6a | 339b:107f | ⚪ proposed | — |
-| Htc M9 | 0bb4:0401 | ⚪ proposed | — |
-| Htc One | 0bb4:0dda | ⚪ proposed | — |
-| Htc One M8 | 0bb4:0f25 | ⚪ proposed | — |
-| Htc Desire 310 | 0bb4:0ec6 | ⚪ proposed | — |
-| Lg G2 Vs980 | 1004:621c | ⚪ proposed | — |
-| Lg G3 | 1004:627f | ⚪ proposed | — |
-| Lg G6 | 1004:62c9 | ⚪ proposed | — |
-| Lg G5 | 1004:62ce | ⚪ proposed | — |
-| Huawei Android | 12d1:1051 | ⚪ proposed | — |
-| Huawei Honor 7 | 12d1:1074 | ⚪ proposed | — |
-| Huawei Y5 2017 | 12d1:107f | ⚪ proposed | — |
-| Huawei Ascend P8 | 12d1:1082 | ⚪ proposed | — |
-| Xiaomi Mi 3w MTP | 2717:0360 | ⚪ proposed | — |
-| Xiaomi Mipad | 2717:0668 | ⚪ proposed | — |
-| Xiaomi Hm 1s | 2717:1268 | ⚪ proposed | — |
-| Xiaomi Redmi 2 | 2717:ff68 | ⚪ proposed | — |
-| Motorola Atrix Razr Hd | 22b8:2e33 | ⚪ proposed | — |
-| Motorola Droid Turbo 2 | 22b8:2e61 | ⚪ proposed | — |
-| Motorola Moto X Xt1058 | 22b8:2e63 | ⚪ proposed | — |
-| Motorola Droid Turbo Vzw | 22b8:2ea8 | ⚪ proposed | — |
-| Nikon Z9 | 04b0:0450 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Nikon Z8 | 04b0:0451 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Nikon Z50 V2 | 04b0:0455 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon Powershot G7x Mark Ii | 04a9:32bc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon Powershot Sx540hs | 04a9:32be | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS M6 | 04a9:32c5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon Powershot G9x Mark Ii | 04a9:32c7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS M50 | 04a9:32d2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon Powershot Sx730hs | 04a9:32d6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon Powershot Sx740hs | 04a9:32e4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS M6 Mark Ii | 04a9:32e7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS 1dx Mark Iii | 04a9:32e8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon Powershot Sx70hs | 04a9:32ee | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS M200 | 04a9:32ef | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon Powershot G7x Mark Iii | 04a9:32f0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS R5 | 04a9:32f4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS R3 | 04a9:32fc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS R5c | 04a9:3303 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS R50 | 04a9:330d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS R100 | 04a9:3312 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS R1 | 04a9:3313 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS R5 Mark Ii | 04a9:3314 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xt10 | 04cb:02c8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xt2 | 04cb:02cd | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm X100f | 04cb:02d1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Gfx50s | 04cb:02d3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xt20 | 04cb:02d4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xe3 | 04cb:02d6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xh1 | 04cb:02d7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xt3 | 04cb:02dd | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Gfx100 | 04cb:02de | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xt30 | 04cb:02e3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm X100v | 04cb:02e5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xt4 | 04cb:02e6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xe4 | 04cb:02e8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xs10 | 04cb:02ea | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xt5 | 04cb:02fc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm X100vi | 04cb:0305 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xm5 | 04cb:030c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Casio Exilim | 07cf:1042 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Casio Exilim | 07cf:1049 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Casio Exilim | 07cf:104c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Casio Exilim | 07cf:104d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Casio Exilim | 07cf:117a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Kodak Easyshare | 040a:057f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Kodak Easyshare | 040a:0580 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Kodak Easyshare | 040a:0588 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Kodak Easyshare | 040a:0589 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Kodak Easyshare | 040a:059d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Kodak Easyshare | 040a:059e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Kodak Easyshare | 040a:05b4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Kodak Easyshare | 040a:0613 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero | 2672:000c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero4 Silver | 2672:000d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero4 Black | 2672:000e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero3plus | 2672:0011 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero Plus | 2672:0021 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero5 Black | 2672:0027 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero5 Session | 2672:0029 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero6 Black | 2672:0037 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero7 White | 2672:0042 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero7 Silver | 2672:0043 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero7 Black | 2672:0047 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero8 Black | 2672:0049 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Gopro Hero12 Black | 2672:005c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Garmin Forerunner 645 Music | 091e:4b48 | ⚪ proposed | disableWriteResume |
-| Garmin Forerunner 945 | 091e:4c29 | ⚪ proposed | disableWriteResume |
-| Garmin Fenix6 Pro | 091e:4cda | ⚪ proposed | disableWriteResume |
-| Garmin Venu | 091e:4c9a | ⚪ proposed | disableWriteResume |
-| Garmin Epix2 | 091e:4f67 | ⚪ proposed | disableWriteResume |
-| Sony Dsc Rx0 Pc | 054c:0c32 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 7rm3 Pc | 054c:0c33 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 7m3 Pc | 054c:0c34 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Dsc Rx100m6 Pc | 054c:0c38 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Zv1 Pc | 054c:0c44 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Dsc Rx0ii Pc | 054c:0ca6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 6400 Pc | 054c:0caa | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Dsc Rx100m5a MTP | 054c:0cb1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Dsc Rx100m5a Pc | 054c:0cb2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 7rm4 Pc | 054c:0ccc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 6600 Pc | 054c:0d10 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 6100 Pc | 054c:0d14 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 7sm3 Pc | 054c:0d18 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 1 Pc | 054c:0d1c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 7c Pc | 054c:0d2b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Zv E10 Pc | 054c:0d97 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 7rm3a Pc | 054c:0d9b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 7rm4a Pc | 054c:0d9f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 7m4 Pc | 054c:0da7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilx Lr1 Pc | 054c:0e90 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Zv E10m2 MTP | 054c:0ee7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Sony Ilce 1m2 Pc | 054c:0eed | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Olympus Compact 07b4 | 07b4:0114 | ⚪ proposed | — |
-| Olympus Compact 07b4 | 07b4:0116 | ⚪ proposed | — |
-| Olympus Tg620 07b4 | 07b4:0125 | ⚪ proposed | — |
-| Olympus Em5 Epl5 07b4 | 07b4:012f | ⚪ proposed | — |
-| Olympus Em1 Em5mkii 07b4 | 07b4:0130 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Em1mkiii 07b4 | 07b4:0135 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om1 07b4 | 07b4:0136 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Omsystem Om1mkii 33a2 | 33a2:0136 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Amazon Kindle Fire | 1949:0008 | ⚪ proposed | — |
-| Amazon Kindle Fire 7 | 1949:0121 | ⚪ proposed | — |
-| Amazon Kindle Fire 5 | 1949:0222 | ⚪ proposed | — |
-| Amazon Kindle Fire 8 | 1949:0231 | ⚪ proposed | — |
-| Amazon Kindle Fire 8 | 1949:0261 | ⚪ proposed | — |
-| Amazon Kindle Fire 7 | 1949:0271 | ⚪ proposed | — |
-| Amazon Kindle Fire Hd8 | 1949:0331 | ⚪ proposed | — |
-| Amazon Fire Hd8 Plus | 1949:0581 | ⚪ proposed | — |
-| Amazon Fire Hd10 Plus | 1949:05e1 | ⚪ proposed | — |
-| Amazon Kindle Scribe | 1949:9981 | ⚪ proposed | — |
-| Google Nexus One | 18d1:4e12 | ⚪ proposed | — |
-| Google Pixel C | 18d1:5202 | ⚪ proposed | — |
-| Google Pixel C Adb | 18d1:5203 | ⚪ proposed | — |
-| Google Oneplus 6t | 18d1:7169 | ⚪ proposed | — |
-| Huawei Honor H60 | 12d1:1079 | ⚪ proposed | — |
-| Huawei Nova | 12d1:107d | ⚪ proposed | — |
-| Huawei Nova14 | 12d1:1101 | ⚪ proposed | — |
-| Huawei Y600 | 12d1:2008 | ⚪ proposed | — |
-| Huawei Honor 3c | 12d1:2012 | ⚪ proposed | — |
-| Huawei Mediapad | 12d1:360f | ⚪ proposed | — |
-| Huawei Mediapad | 12d1:361f | ⚪ proposed | — |
-| Zte V55 | 19d2:0244 | ⚪ proposed | — |
-| Zte V55 | 19d2:0245 | ⚪ proposed | — |
-| Zte V880e | 19d2:0307 | ⚪ proposed | — |
-| Oppo X9006 | 22d9:2773 | ⚪ proposed | — |
-| Nikon Coolpix Coolpix Aw100 | 04b0:0188 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix P7100 | 04b0:018b | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix L820 | 04b0:0192 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix S9500 | 04b0:0193 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix Aw110 | 04b0:0194 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix Aw130 | 04b0:0198 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix P900 | 04b0:019c | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix A900 | 04b0:019e | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix P510 | 04b0:0223 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix P7700 | 04b0:0225 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix A | 04b0:0226 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix P330 | 04b0:0227 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix P520 | 04b0:0228 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix P7800 | 04b0:0229 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix B700 | 04b0:0231 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix P1000 | 04b0:0232 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix P1100 | 04b0:0234 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix S9700 | 04b0:034b | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix L840 | 04b0:035a | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix L340 | 04b0:0361 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix B500 | 04b0:0362 | ⚪ proposed | supportsGetObjectPropList |
-| Nikon Coolpix Coolpix P950 | 04b0:036d | ⚪ proposed | supportsGetObjectPropList |
-| Canon Powershot G1 X | 04a9:3233 | ⚪ proposed | disableWriteResume |
-| Canon Powershot S100 | 04a9:3236 | ⚪ proposed | disableWriteResume |
-| Canon Powershot G15 | 04a9:3258 | ⚪ proposed | disableWriteResume |
-| Canon Powershot S110 | 04a9:325b | ⚪ proposed | disableWriteResume |
-| Canon Powershot G16 | 04a9:3274 | ⚪ proposed | disableWriteResume |
-| Canon Powershot S120 | 04a9:3275 | ⚪ proposed | disableWriteResume |
-| Canon Powershot Sx600 Hs | 04a9:3286 | ⚪ proposed | disableWriteResume |
-| Canon Powershot Elph 135 | 04a9:3288 | ⚪ proposed | disableWriteResume |
-| Canon Powershot Elph 340 Hs | 04a9:3289 | ⚪ proposed | disableWriteResume |
-| Canon Powershot Sx60 Hs | 04a9:329a | ⚪ proposed | disableWriteResume |
-| Canon Powershot Sx520 Hs | 04a9:329b | ⚪ proposed | disableWriteResume |
-| Canon Powershot G7 X | 04a9:329d | ⚪ proposed | disableWriteResume |
-| Canon Powershot Sx530 Hs | 04a9:329f | ⚪ proposed | disableWriteResume |
-| Canon EOS EOS M10 | 04a9:32a0 | ⚪ proposed | disableWriteResume |
-| Canon Powershot G3 X | 04a9:32a8 | ⚪ proposed | disableWriteResume |
-| Canon Ixus Ixus 165 | 04a9:32a9 | ⚪ proposed | disableWriteResume |
-| Canon Ixus Ixus 160 | 04a9:32aa | ⚪ proposed | disableWriteResume |
-| Canon Powershot Elph 350 Hs | 04a9:32ab | ⚪ proposed | disableWriteResume |
-| Canon Powershot G5 X | 04a9:32b3 | ⚪ proposed | disableWriteResume |
-| Canon Ixus Ixus 180 | 04a9:32c0 | ⚪ proposed | disableWriteResume |
-| Canon Powershot Sx720 Hs | 04a9:32c2 | ⚪ proposed | disableWriteResume |
-| Canon Powershot Sx620 Hs | 04a9:32c3 | ⚪ proposed | disableWriteResume |
-| Sandisk Sansa M230 | 0781:7400 | ⚪ proposed | — |
-| Sandisk Sansa C150 | 0781:7410 | ⚪ proposed | — |
-| Sandisk Sansa E200 | 0781:7420 | ⚪ proposed | — |
-| Sandisk Sansa E260 V2 | 0781:7422 | ⚪ proposed | — |
-| Sandisk Sansa Clip | 0781:7432 | ⚪ proposed | — |
-| Sandisk Sansa Clip V2 | 0781:7434 | ⚪ proposed | — |
-| Sandisk Sansa C240 | 0781:7450 | ⚪ proposed | — |
-| Sandisk Sansa Connect | 0781:7480 | ⚪ proposed | supportsGetObjectPropList |
-| Sandisk Sansa View | 0781:74b0 | ⚪ proposed | — |
-| Sandisk Sansa Fuze | 0781:74c0 | ⚪ proposed | — |
-| Sandisk Sansa Fuze V2 | 0781:74c2 | ⚪ proposed | — |
-| Sandisk Sansa Clip Plus | 0781:74d0 | ⚪ proposed | — |
-| Sandisk Sansa Fuze Plus | 0781:74e0 | ⚪ proposed | — |
-| Sandisk Sansa Clip Zip | 0781:74e4 | ⚪ proposed | — |
-| Creative Zen Micro | 041e:411e | ⚪ proposed | — |
-| Creative Zen Vision | 041e:411f | ⚪ proposed | — |
-| Creative Zen Touch | 041e:4131 | ⚪ proposed | — |
-| Creative Zen Microphoto | 041e:413c | ⚪ proposed | — |
-| Creative Zen Sleek Photo | 041e:413d | ⚪ proposed | — |
-| Creative Zen Vision M | 041e:413e | ⚪ proposed | — |
-| Creative Zen V | 041e:4150 | ⚪ proposed | — |
-| Creative Zen | 041e:4157 | ⚪ proposed | — |
-| Creative Zen Mozaic | 041e:4161 | ⚪ proposed | — |
-| Creative Zen Xfi | 041e:4162 | ⚪ proposed | — |
-| Iriver Ifp 880 | 4102:1008 | ⚪ proposed | — |
-| Iriver T10 | 4102:1113 | ⚪ proposed | — |
-| Iriver T20 | 4102:1114 | ⚪ proposed | — |
-| Iriver T30 | 4102:1119 | ⚪ proposed | — |
-| Iriver Clix2 | 4102:1126 | ⚪ proposed | supportsGetObjectPropList |
-| Iriver T60 | 4102:1134 | ⚪ proposed | — |
-| Iriver E100 | 4102:1141 | ⚪ proposed | — |
-| Iriver H10 | 4102:2101 | ⚪ proposed | — |
-| Cowon Iaudio U3 | 0e21:0701 | ⚪ proposed | — |
-| Cowon Iaudio 6 | 0e21:0711 | ⚪ proposed | — |
-| Cowon Iaudio D2 | 0e21:0801 | ⚪ proposed | — |
-| Cowon Iaudio S9 | 0e21:0901 | ⚪ proposed | — |
-| Cowon Iaudio J3 | 0e21:0921 | ⚪ proposed | — |
-| Cowon Iaudio X7 | 0e21:0931 | ⚪ proposed | — |
-| Microsoft Zune | 045e:0710 | ⚪ proposed | supportsGetObjectPropList |
-| Microsoft Zune Hd | 045e:063e | ⚪ proposed | supportsGetObjectPropList |
-| Philips Hdd6320 | 0471:014b | ⚪ proposed | — |
-| Philips Gogear Sa9200 | 0471:014f | ⚪ proposed | — |
-| Philips Gogear Sa6014 | 0471:084e | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Sa5145 | 0471:0857 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Sa6125 | 0471:2002 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp Z5 | 04e8:503c | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp T9 | 04e8:507f | ⚪ proposed | — |
-| Samsung Yp P2 | 04e8:5083 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp U4 | 04e8:5093 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp Q2 | 04e8:511d | ⚪ proposed | — |
-| Samsung Yp U5 | 04e8:5121 | ⚪ proposed | — |
-| Samsung Yp R0 | 04e8:5125 | ⚪ proposed | — |
-| Samsung Yp Q3 | 04e8:5130 | ⚪ proposed | — |
-| Sony Nwz A815 | 054c:0325 | ⚪ proposed | — |
-| Sony Nwz S615f | 054c:0327 | ⚪ proposed | — |
-| Sony Nwz A826 | 054c:035b | ⚪ proposed | — |
-| Sony Nwz A726 | 054c:035c | ⚪ proposed | — |
-| Sony Nwz E436f | 054c:0385 | ⚪ proposed | — |
-| Sony Nwz E344 | 054c:03fc | ⚪ proposed | — |
-| Sony Nwz E354 | 054c:04cb | ⚪ proposed | — |
-| Sony Nw A45 | 054c:0c71 | ⚪ proposed | — |
-| Sony Nw A105 | 054c:0d00 | ⚪ proposed | — |
-| Sony Nw Zx500 | 054c:0d01 | ⚪ proposed | — |
-| Sony Nw A306 | 054c:0e6e | ⚪ proposed | — |
-| Sony Nw Zx700 | 054c:0e6f | ⚪ proposed | — |
-| Archos 404 | 0e79:1301 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 504 | 0e79:1307 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 604 | 0e79:1309 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 5 | 0e79:1331 | ⚪ proposed | supportsGetObjectPropList |
-| Amazon Kindle | 1949:0005 | ⚪ proposed | — |
-| Amazon Kindle | 1949:000a | ⚪ proposed | — |
-| Amazon Kindle | 1949:000b | ⚪ proposed | — |
-| Amazon Kindle | 1949:000c | ⚪ proposed | — |
-| Amazon Kindle | 1949:000d | ⚪ proposed | — |
-| Amazon Kindle | 1949:0012 | ⚪ proposed | — |
-| Amazon Kindle | 1949:0232 | ⚪ proposed | — |
-| Amazon Kindle | 1949:0233 | ⚪ proposed | — |
-| Amazon Kindle | 1949:0234 | ⚪ proposed | — |
-| Amazon Kindle | 1949:0262 | ⚪ proposed | — |
-| Amazon Kindle | 1949:0272 | ⚪ proposed | — |
-| Amazon Kindle | 1949:0332 | ⚪ proposed | — |
-| Amazon Kindle | 1949:03f1 | ⚪ proposed | — |
-| Amazon Kindle | 1949:0582 | ⚪ proposed | — |
-| Amazon Kindle | 1949:0583 | ⚪ proposed | — |
-| Amazon Kindle | 1949:0584 | ⚪ proposed | — |
-| Amazon Kindle | 1949:05e2 | ⚪ proposed | — |
-| Amazon Kindle | 1949:05e3 | ⚪ proposed | — |
-| Amazon Kindle | 1949:05e4 | ⚪ proposed | — |
-| Amazon Kindle | 1949:06f1 | ⚪ proposed | — |
-| Amazon Kindle | 1949:0800 | ⚪ proposed | — |
-| Amazon Kindle | 1949:0c31 | ⚪ proposed | — |
-| Barnesnoble Nook | 2080:0005 | ⚪ proposed | — |
-| Barnesnoble Nook | 2080:0006 | ⚪ proposed | — |
-| Barnesnoble Nook | 2080:000a | ⚪ proposed | — |
-| Kobo Arc Android | 2237:b108 | ⚪ proposed | — |
-| Kobo Arc Android | 2237:d108 | ⚪ proposed | — |
-| Kobo Arc Android | 2237:d109 | ⚪ proposed | — |
-| Kobo Kobo Touch | 2237:4161 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Kobo Mini | 2237:4163 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Kobo Glo | 2237:4165 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Kobo Aura | 2237:4168 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Kobo Aura Hd | 2237:4169 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Kobo Aura H2o | 2237:416b | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Kobo Aura One | 2237:4173 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Kobo Clara Hd | 2237:4179 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Kobo Forma | 2237:417f | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Kobo Libra H2o | 2237:4184 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Kobo Nia | 2237:4186 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Kobo Libra 2 | 2237:4187 | ⚪ proposed | supportsGetObjectPropList |
-| Mediatek Mt5xx | 0e8d:0050 | ⚪ proposed | — |
-| Mediatek Mt65xx MTP | 0e8d:2008 | ⚪ proposed | — |
-| Mediatek Mt65xx MTP Cdc Adb | 0e8d:200a | ⚪ proposed | — |
-| Mediatek Mt65xx MTP Adb | 0e8d:201d | ⚪ proposed | — |
-| Mediatek Wiko Sunny | 0e8d:4001 | ⚪ proposed | — |
-| Vivo Y21 Mediatek | 0e8d:ff00 | ⚪ proposed | — |
-| Oneplus 9 5g | 2a70:9012 | ⚪ proposed | — |
-| Asus Zenfone Go | 0b05:2008 | ⚪ proposed | — |
-| Asus Zenfone5 MTP | 0b05:5480 | ⚪ proposed | — |
-| Asus Zenfone6 MTP | 0b05:5490 | ⚪ proposed | — |
-| Asus Zenfone2 MTP | 0b05:5600 | ⚪ proposed | — |
-| Asus Zenfone5 A500kl | 0b05:7780 | ⚪ proposed | — |
-| Asus Memopad7 Me572cl | 0b05:7772 | ⚪ proposed | — |
-| Asus Fonepad7 Fe375cxg | 0b05:7773 | ⚪ proposed | — |
-| Unisoc Android MTP | 1782:4001 | ⚪ proposed | — |
-| Unisoc Android MTP Adb | 1782:4002 | ⚪ proposed | — |
-| Unisoc Android MTP Adb | 1782:4003 | ⚪ proposed | — |
-| Xiaomi Hongmi MTP Adb | 2717:1240 | ⚪ proposed | — |
-| Xiaomi Hm Note 1ltew | 2717:1360 | ⚪ proposed | — |
-| Xiaomi Mi2 MTP Adb | 2717:9039 | ⚪ proposed | — |
-| Xiaomi Mi2 MTP | 2717:f003 | ⚪ proposed | — |
-| Alcatel 6030a | 1bbb:0168 | ⚪ proposed | — |
-| Htc One U11 | 0bb4:0f26 | ⚪ proposed | — |
-| Kyocera 302kc | 0482:09fc | ⚪ proposed | — |
-| Kyocera C6740n | 0482:0a73 | ⚪ proposed | — |
-| Letv X5001s | 2b0e:1700 | ⚪ proposed | — |
-| Letv 1s | 2b0e:1704 | ⚪ proposed | — |
-| Blu Vivo Xl | 271d:4008 | ⚪ proposed | — |
-| Leica Dlux2 04da | 04da:2375 | ⚪ proposed | disableWriteResume |
-| Leica Sl 04da | 04da:2041 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Pentax Optio 43wr | 0a17:000d | ⚪ proposed | disableWriteResume |
-| Pentax Optio W90 | 0a17:00f7 | ⚪ proposed | disableWriteResume |
-| Ricoh Theta M15 | 05ca:0365 | ⚪ proposed | supportsGetObjectPropList |
-| Ricoh Theta S | 05ca:0366 | ⚪ proposed | supportsGetObjectPropList |
-| Ricoh Theta Sc | 05ca:0367 | ⚪ proposed | supportsGetObjectPropList |
-| Ricoh Theta V | 05ca:0368 | ⚪ proposed | supportsGetObjectPropList |
-| Ricoh Theta Z1 | 05ca:036d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Ricoh Caplio R5 | 05ca:0110 | ⚪ proposed | disableWriteResume |
-| Ricoh Caplio Gx | 05ca:0325 | ⚪ proposed | disableWriteResume |
-| Ricoh Caplio R1v | 05ca:032b | ⚪ proposed | disableWriteResume |
-| Ricoh Caplio R3 | 05ca:032f | ⚪ proposed | disableWriteResume |
-| Ricoh Caplio Gx8 | 05ca:032d | ⚪ proposed | disableWriteResume |
-| Ricoh Caplio Rr750 | 05ca:033d | ⚪ proposed | disableWriteResume |
-| Sea And Sea 5000g | 05ca:0327 | ⚪ proposed | disableWriteResume |
-| Sea And Sea 2g | 05ca:0353 | ⚪ proposed | disableWriteResume |
-| Rollei Dr5 | 05ca:220f | ⚪ proposed | disableWriteResume |
-| Parrot Sequoia 19cf | 19cf:5039 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Garmin Monterra | 091e:2585 | ⚪ proposed | disableWriteResume |
-| Garmin Drivesmart 55 | 091e:4bf9 | ⚪ proposed | disableWriteResume |
-| Garmin Zumo Xt | 091e:4d9c | ⚪ proposed | disableWriteResume |
-| Garmin Edge 1040 | 091e:4f03 | ⚪ proposed | disableWriteResume |
-| Garmin Edge 540 | 091e:4fdd | ⚪ proposed | disableWriteResume |
-| Garmin Edge 840 | 091e:4fde | ⚪ proposed | disableWriteResume |
-| Garmin Edge Explore 2 | 091e:5049 | ⚪ proposed | disableWriteResume |
-| Garmin Gpsmap 67 | 091e:50f0 | ⚪ proposed | disableWriteResume |
-| Garmin Edge 850 | 091e:521a | ⚪ proposed | disableWriteResume |
-| Tomtom Rider 40 | 1390:5455 | ⚪ proposed | disableWriteResume |
-| Nintendo Switch Switch Lite | 057e:201d | ⚪ proposed | — |
-| Nintendo Switch 2 | 057e:2061 | ⚪ proposed | — |
-| Dji Controller 2 | 2ca3:1021 | ⚪ proposed | — |
-| Onyx Boox Max 2 | 2207:000b | ⚪ proposed | — |
-| Onyx Boox Max 2 Pro | 2207:000c | ⚪ proposed | — |
-| Onyx Boox Note | 2207:000d | ⚪ proposed | — |
-| Onyx Boox Nova | 2207:0014 | ⚪ proposed | — |
-| Onyx Boox Nova Pro | 2207:0015 | ⚪ proposed | — |
-| Tolino Vision 4 Hd | 1f85:6056 | ⚪ proposed | — |
-| Tolino Vision 6 | 4173:8000 | ⚪ proposed | — |
-| Garmin Fenix 5 Plus | 091e:4b54 | ⚪ proposed | disableWriteResume |
-| Garmin Vivoactive 3 | 091e:4bac | ⚪ proposed | disableWriteResume |
-| Garmin Forerunner 245 Music | 091e:4c05 | ⚪ proposed | disableWriteResume |
-| Garmin Fenix 6x Pro | 091e:4cdb | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D100 | 04b0:0402 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D2h | 04b0:0404 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D70 | 04b0:0406 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D2x | 04b0:0408 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D50 | 04b0:040a | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D2hs | 04b0:040c | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D70s | 04b0:040e | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D80 | 04b0:0412 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D40 | 04b0:0414 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D2xs | 04b0:0416 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D40x | 04b0:0418 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D300 | 04b0:041a | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D3 | 04b0:041c | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D60 | 04b0:041e | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D3x | 04b0:0420 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D5000 | 04b0:0423 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D3000 | 04b0:0424 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D300s | 04b0:0425 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D3s | 04b0:0426 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc Df | 04b0:0432 | ⚪ proposed | disableWriteResume |
-| Nikon Dsc D810a | 04b0:043b | ⚪ proposed | disableWriteResume |
-| Nikon 1 V1 | 04b0:0601 | ⚪ proposed | disableWriteResume |
-| Nikon 1 J1 | 04b0:0602 | ⚪ proposed | disableWriteResume |
-| Nikon 1 J2 | 04b0:0603 | ⚪ proposed | disableWriteResume |
-| Nikon 1 V2 | 04b0:0604 | ⚪ proposed | disableWriteResume |
-| Nikon 1 J3 | 04b0:0605 | ⚪ proposed | disableWriteResume |
-| Nikon 1 S1 | 04b0:0606 | ⚪ proposed | disableWriteResume |
-| Nikon 1 S2 | 04b0:0608 | ⚪ proposed | disableWriteResume |
-| Nikon 1 J4 | 04b0:0609 | ⚪ proposed | disableWriteResume |
-| Nikon 1 V3 | 04b0:060a | ⚪ proposed | disableWriteResume |
-| Nikon 1 J5 | 04b0:060b | ⚪ proposed | disableWriteResume |
-| Canon EOS 300d | 04a9:3099 | ⚪ proposed | disableWriteResume |
-| Canon EOS 10d | 04a9:30bc | ⚪ proposed | disableWriteResume |
-| Canon EOS 1d Mark Ii | 04a9:30ea | ⚪ proposed | disableWriteResume |
-| Canon EOS 20d | 04a9:30ec | ⚪ proposed | disableWriteResume |
-| Canon EOS 30d | 04a9:3113 | ⚪ proposed | disableWriteResume |
-| Canon EOS 40d | 04a9:3146 | ⚪ proposed | disableWriteResume |
-| Canon EOS 1d Mark Iii | 04a9:3147 | ⚪ proposed | disableWriteResume |
-| Canon EOS 1000d | 04a9:317b | ⚪ proposed | disableWriteResume |
-| Canon EOS 50d | 04a9:319b | ⚪ proposed | disableWriteResume |
-| Canon EOS 1d Mark Iv | 04a9:31d0 | ⚪ proposed | disableWriteResume |
-| Canon EOS 1100d | 04a9:3217 | ⚪ proposed | disableWriteResume |
-| Canon EOS 1dx | 04a9:3219 | ⚪ proposed | disableWriteResume |
-| Canon EOS 1dc | 04a9:3252 | ⚪ proposed | disableWriteResume |
-| Canon EOS 100d | 04a9:3270 | ⚪ proposed | disableWriteResume |
-| Canon EOS M | 04a9:323d | ⚪ proposed | disableWriteResume |
-| Canon EOS M2 | 04a9:3273 | ⚪ proposed | disableWriteResume |
-| Canon EOS 1200d | 04a9:327f | ⚪ proposed | disableWriteResume |
-| Canon EOS 1dx Mark Ii | 04a9:3292 | ⚪ proposed | disableWriteResume |
-| Canon EOS 5ds | 04a9:3295 | ⚪ proposed | disableWriteResume |
-| Canon EOS M3 | 04a9:3299 | ⚪ proposed | disableWriteResume |
-| Canon EOS M5 | 04a9:32bb | ⚪ proposed | disableWriteResume |
-| Canon EOS 77d | 04a9:32cb | ⚪ proposed | disableWriteResume |
-| Canon EOS M100 | 04a9:32d1 | ⚪ proposed | disableWriteResume |
-| Canon Ixus 185 | 04a9:32d4 | ⚪ proposed | disableWriteResume |
-| Canon EOS 4000d | 04a9:32d9 | ⚪ proposed | disableWriteResume |
-| Canon EOS 2000d | 04a9:32e1 | ⚪ proposed | disableWriteResume |
-| Canon EOS R50v | 04a9:3320 | ⚪ proposed | disableWriteResume |
-| Canon EOS R6 Mark Iii | 04a9:3323 | ⚪ proposed | disableWriteResume |
-| Canon Powershot G10 | 04a9:318f | ⚪ proposed | disableWriteResume |
-| Canon Powershot G11 | 04a9:31df | ⚪ proposed | disableWriteResume |
-| Canon Powershot G12 | 04a9:320f | ⚪ proposed | disableWriteResume |
-| Canon Powershot S95 | 04a9:3212 | ⚪ proposed | disableWriteResume |
-| Sony Xperia Ion | 0fce:0177 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia T | 0fce:0182 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia V | 0fce:0186 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Sp | 0fce:0195 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia M | 0fce:019b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia C | 0fce:01a3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Z1 Compact | 0fce:01a7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia T2 Ultra | 0fce:01a9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia M2 | 0fce:01aa | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia E3 | 0fce:01bc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia M4 Aqua | 0fce:01c4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia E4g | 0fce:01cb | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia C4 Dual | 0fce:01d2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia M5 | 0fce:01d6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Z5 Compact | 0fce:01da | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Z5 Premium | 0fce:01db | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia X | 0fce:01e0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia X Compact | 0fce:01e8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xa1 | 0fce:01eb | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xa1 Ultra | 0fce:01ef | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xz Premium | 0fce:01f1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xz1 Compact | 0fce:01f4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia L2 | 0fce:01f6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xa2 Compact | 0fce:01f7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xa2 Ultra | 0fce:01f8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xz2 Compact | 0fce:01f9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xz2 Premium | 0fce:01fb | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xz3 | 0fce:01ff | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 10 | 0fce:0201 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 1 | 0fce:0205 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia L3 | 0fce:0207 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 5 | 0fce:020a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 10 V | 0fce:020c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 5 Ii | 0fce:020d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 10 Vi | 0fce:020e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Nwz S516 | 054c:0326 | ⚪ proposed | — |
-| Sony Nwz S716f | 054c:035a | ⚪ proposed | — |
-| Sony Nwz B135 | 054c:036e | ⚪ proposed | — |
-| Sony Nwz W202 | 054c:0388 | ⚪ proposed | — |
-| Sony Nwz S739f | 054c:038c | ⚪ proposed | — |
-| Sony Nwz S638f | 054c:038e | ⚪ proposed | — |
-| Sony Nwz X1050 | 054c:0397 | ⚪ proposed | — |
-| Sony Nwz X1051 | 054c:0398 | ⚪ proposed | — |
-| Sony Nwz B142f | 054c:03d8 | ⚪ proposed | — |
-| Sony Nwz E445 | 054c:03fd | ⚪ proposed | — |
-| Sony Nwz S545 | 054c:03fe | ⚪ proposed | — |
-| Sony Nwz W252b | 054c:04bb | ⚪ proposed | — |
-| Sony Nwz B153f | 054c:04be | ⚪ proposed | — |
-| Sony Nwz S754 | 054c:04cc | ⚪ proposed | — |
-| Sony Nwz B163f | 054c:059a | ⚪ proposed | — |
-| Lenovo P70 A | 17ef:0c02 | ⚪ proposed | — |
-| Lenovo P700 | 17ef:7497 | ⚪ proposed | — |
-| Lenovo P780 | 17ef:74a6 | ⚪ proposed | — |
-| Lenovo K900 | 17ef:75b5 | ⚪ proposed | — |
-| Lenovo K920 | 17ef:778f | ⚪ proposed | — |
-| Lenovo Vibe Z2 | 17ef:77ea | ⚪ proposed | — |
-| Lenovo Vibe Shot | 17ef:78a7 | ⚪ proposed | — |
-| Lenovo A7000 A | 17ef:7882 | ⚪ proposed | — |
-| Lenovo Phab Plus | 17ef:78d1 | ⚪ proposed | — |
-| Lenovo Vibe K5 Note | 17ef:7999 | ⚪ proposed | — |
-| Lenovo K6 Power | 17ef:7a2a | ⚪ proposed | — |
-| Lenovo Tab M10 | 17ef:7bdf | ⚪ proposed | — |
-| Motorola Xt1524 MTP | 22b8:002e | ⚪ proposed | — |
-| Motorola Razr M Xt907 MTP | 22b8:2e50 | ⚪ proposed | — |
-| Motorola Razr M Xt907 Adb | 22b8:2e51 | ⚪ proposed | — |
-| Motorola Droid Maxx | 22b8:2e67 | ⚪ proposed | — |
-| Motorola Droid Ultra | 22b8:2e68 | ⚪ proposed | — |
-| Motorola Moto Z Ptp | 22b8:2e83 | ⚪ proposed | — |
-| Motorola Moto Maxx Xt1225 | 22b8:2ea4 | ⚪ proposed | — |
-| Motorola Xoom MTP | 22b8:70a8 | ⚪ proposed | — |
-| Meizu Pro5 Ubuntu | 18d1:d001 | ⚪ proposed | — |
-| Sony Nwz E464 | 054c:05a6 | ⚪ proposed | — |
-| Sony Nwz S765 | 054c:05a8 | ⚪ proposed | — |
-| Sony Nwz B173f | 054c:0689 | ⚪ proposed | — |
-| Sony Nwz E474 | 054c:06a9 | ⚪ proposed | — |
-| Nokia N81 | 0421:000a | ⚪ proposed | — |
-| Nokia 6120c | 0421:002e | ⚪ proposed | — |
-| Nokia N96 | 0421:0039 | ⚪ proposed | — |
-| Nokia 6500c | 0421:003c | ⚪ proposed | — |
-| Nokia 5310 Xpressmusic | 0421:006c | ⚪ proposed | — |
-| Nokia N95 8gb | 0421:006e | ⚪ proposed | — |
-| Nokia N82 | 0421:0074 | ⚪ proposed | — |
-| Nokia N78 | 0421:0079 | ⚪ proposed | — |
-| Nokia N85 | 0421:0092 | ⚪ proposed | — |
-| Nokia E71 | 0421:00e4 | ⚪ proposed | — |
-| Nokia E66 | 0421:00e5 | ⚪ proposed | — |
-| Nokia 5800 Xpressmusic | 0421:0154 | ⚪ proposed | — |
-| Nokia N97 | 0421:01f5 | ⚪ proposed | — |
-| Nokia E72 | 0421:0221 | ⚪ proposed | — |
-| Nokia 5230 | 0421:02e2 | ⚪ proposed | — |
-| Nokia N95 | 0421:04ef | ⚪ proposed | — |
-| Nokia N9 | 0421:051a | ⚪ proposed | — |
-| Nokia 701 | 0421:0530 | ⚪ proposed | — |
-| Nokia C5 00 | 0421:0592 | ⚪ proposed | — |
-| Nokia Lumia 301 | 0421:0666 | ⚪ proposed | — |
-| Nokia Xl | 0421:06e8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Microsoft Windows Phone | 045e:04ec | ⚪ proposed | supportsGetObjectPropList |
-| Microsoft Kin One | 045e:0640 | ⚪ proposed | supportsGetObjectPropList |
-| Microsoft Kin Twom | 045e:0641 | ⚪ proposed | supportsGetObjectPropList |
-| Microsoft Lumia 950 Xl Ds | 045e:0a00 | ⚪ proposed | supportsGetObjectPropList |
-| Blackberry Z10 | 0fca:8004 | ⚪ proposed | — |
-| Blackberry Q10 | 0fca:8006 | ⚪ proposed | — |
-| Blackberry Z30 | 0fca:8020 | ⚪ proposed | — |
-| Blackberry Passport | 0fca:8025 | ⚪ proposed | — |
-| Blackberry Classic | 0fca:8030 | ⚪ proposed | — |
-| Fujifilm Finepix S7000 | 04cb:0142 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix A330 | 04cb:014a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix S9500 | 04cb:018f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix E900 | 04cb:0193 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix F30 | 04cb:019b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix S6500fd | 04cb:01bf | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix F20 | 04cb:01c0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix F31fd | 04cb:01c1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm S5pro | 04cb:01c3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix S5700 | 04cb:01c4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix F40fd | 04cb:01c5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix A610 | 04cb:01d0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix A800 | 04cb:01d2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix F50fd | 04cb:01d4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix Z100fd | 04cb:01d8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix S100fs | 04cb:01db | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix S1000fd | 04cb:01dd | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix F100fd | 04cb:01e0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix F200exr | 04cb:01e4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix S1500 | 04cb:01ef | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix F70exr | 04cb:01fa | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix F80exr | 04cb:020e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix S2500hd | 04cb:0209 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix Z700exr | 04cb:020d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix H20exr | 04cb:022d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix S2950 | 04cb:0240 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix X10 | 04cb:0263 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix Xs1 | 04cb:026e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xe1 | 04cb:0283 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix Xf1 | 04cb:0288 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix Sl1000 | 04cb:029c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm X20 | 04cb:02a6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xe2 | 04cb:02b5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xm1 | 04cb:02b6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Finepix S8600 | 04cb:02b9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm X70 | 04cb:02ba | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xt1 | 04cb:02bf | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm X30 | 04cb:02c1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xa2 | 04cb:02c6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xpro2 | 04cb:02cb | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xa5 | 04cb:02d5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Gfx50r | 04cb:02dc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xpro3 | 04cb:02e4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Gfx100s Alt | 04cb:02e9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xh2s | 04cb:02f0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xh2 | 04cb:02f2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Gfx100ii | 04cb:02fe | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xe5 | 04cb:0313 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E Series Xml Control | 07b4:0110 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Lg P500 | 1004:618e | ⚪ proposed | — |
-| Lg G2 D800 | 1004:6344 | ⚪ proposed | — |
-| Lg G2 D802 | 1004:6345 | ⚪ proposed | — |
-| Lg G2 D801 | 1004:6347 | ⚪ proposed | — |
-| Lg G2 Vs980 | 1004:634e | ⚪ proposed | — |
-| Lg G4 H810 | 1004:6355 | ⚪ proposed | — |
-| Lg G4 H811 | 1004:6356 | ⚪ proposed | — |
-| Lg G4 H815 | 1004:6357 | ⚪ proposed | — |
-| Lg G4 Vs986 | 1004:6358 | ⚪ proposed | — |
-| Lg G5 H830 | 1004:6365 | ⚪ proposed | — |
-| Lg G5 H820 | 1004:6366 | ⚪ proposed | — |
-| Lg G5 H850 | 1004:6368 | ⚪ proposed | — |
-| Lg G5 Vs987 | 1004:6369 | ⚪ proposed | — |
-| Lg G6 H870 | 1004:6370 | ⚪ proposed | — |
-| Lg G6 H872 | 1004:6372 | ⚪ proposed | — |
-| Lg G6 Us997 | 1004:6375 | ⚪ proposed | — |
-| Lg V10 H900 | 1004:6380 | ⚪ proposed | — |
-| Lg V10 H901 | 1004:6382 | ⚪ proposed | — |
-| Lg V20 H910 | 1004:6388 | ⚪ proposed | — |
-| Lg V20 H918 | 1004:6389 | ⚪ proposed | — |
-| Lg V20 H990 | 1004:638a | ⚪ proposed | — |
-| Lg V30 H930 | 1004:6395 | ⚪ proposed | — |
-| Lg V30 H933 | 1004:6396 | ⚪ proposed | — |
-| Lg V30 Us998 | 1004:6398 | ⚪ proposed | — |
-| Lg V40 V405qa7 | 1004:63a2 | ⚪ proposed | — |
-| Lg V50 Lmv500n | 1004:63a3 | ⚪ proposed | — |
-| Lg Velvet Lmg910 | 1004:63a8 | ⚪ proposed | — |
-| Lg K7 | 1004:63b0 | ⚪ proposed | — |
-| Lg K8 | 1004:63b1 | ⚪ proposed | — |
-| Lg K10 | 1004:63b5 | ⚪ proposed | — |
-| Lg K20 | 1004:63b6 | ⚪ proposed | — |
-| Lg K30 | 1004:63b8 | ⚪ proposed | — |
-| Lg K40 | 1004:63bb | ⚪ proposed | — |
-| Lg K50 | 1004:63bc | ⚪ proposed | — |
-| Lg Stylo3 M430 | 1004:63c0 | ⚪ proposed | — |
-| Lg Stylo4 Q710al | 1004:63c1 | ⚪ proposed | — |
-| Lg Stylo5 Q720al | 1004:63c2 | ⚪ proposed | — |
-| Lg Q6 M700a | 1004:63c5 | ⚪ proposed | — |
-| Lg Q7 Q610ma | 1004:63c6 | ⚪ proposed | — |
-| Lg Q8 H970 | 1004:63ca | ⚪ proposed | — |
-| Lg Xpower K220 | 1004:63d0 | ⚪ proposed | — |
-| Lg Xmach K600y | 1004:63d1 | ⚪ proposed | — |
-| Lg Xstyle K200ds | 1004:63d2 | ⚪ proposed | — |
-| Lg Aristo Ms210 | 1004:63d5 | ⚪ proposed | — |
-| Lg Aristo2 X212 | 1004:63d6 | ⚪ proposed | — |
-| Lg Nexus5 D820 | 1004:63e0 | ⚪ proposed | — |
-| Lg Nexus5x H790 | 1004:63e1 | ⚪ proposed | — |
-| Lg Watch Urbane W150 | 1004:6400 | ⚪ proposed | — |
-| Lg Watch W7 | 1004:6404 | ⚪ proposed | — |
-| Htc One M7 Mtpplusadb | 0bb4:0c01 | ⚪ proposed | — |
-| Htc One M7 | 0bb4:0c02 | ⚪ proposed | — |
-| Htc One M9 | 0bb4:0c93 | ⚪ proposed | — |
-| Htc Desire 610 | 0bb4:0c97 | ⚪ proposed | — |
-| Htc Desire 820 | 0bb4:0c9e | ⚪ proposed | — |
-| Htc Desire 526g | 0bb4:0ca2 | ⚪ proposed | — |
-| Htc One M8 | 0bb4:0ca3 | ⚪ proposed | — |
-| Htc Desire 630 | 0bb4:0ca9 | ⚪ proposed | — |
-| Htc Desire 10 | 0bb4:0cae | ⚪ proposed | — |
-| Htc One A9 | 0bb4:0cb3 | ⚪ proposed | — |
-| Htc 10 M10h | 0bb4:0cb5 | ⚪ proposed | — |
-| Htc One X10 E66 | 0bb4:0cba | ⚪ proposed | — |
-| Htc U11 | 0bb4:0cbe | ⚪ proposed | — |
-| Htc U11 Plus | 0bb4:0cc0 | ⚪ proposed | — |
-| Htc U12 Plus | 0bb4:0cc7 | ⚪ proposed | — |
-| Htc Android Mtpplusadb | 0bb4:0f63 | ⚪ proposed | — |
-| Htc Hero | 0bb4:0f87 | ⚪ proposed | — |
-| Htc Wildfire | 0bb4:0f9a | ⚪ proposed | — |
-| Htc Desire Hd A9191 | 0bb4:0ff8 | ⚪ proposed | — |
-| Htc Desire Z T8788 | 0bb4:0ff9 | ⚪ proposed | — |
-| Nokia N8 New | 0421:0610 | ⚪ proposed | supportsGetObjectPropList |
-| Nokia E7 New | 0421:0612 | ⚪ proposed | supportsGetObjectPropList |
-| Nokia N950 Prototype | 0421:0613 | ⚪ proposed | supportsGetObjectPropList |
-| Nokia 6 2018 | 0421:05af | ⚪ proposed | — |
-| Nokia 7 Plus | 0421:05b3 | ⚪ proposed | — |
-| Nokia 8 Sirocco | 0421:05b6 | ⚪ proposed | — |
-| Nokia 3 1 | 0421:05b7 | ⚪ proposed | — |
-| Nokia 5 1 | 0421:05b8 | ⚪ proposed | — |
-| Nokia 7 1 | 0421:05ba | ⚪ proposed | — |
-| Nokia 8 1 | 0421:05bb | ⚪ proposed | — |
-| Nokia 6 1 Plus | 0421:05bc | ⚪ proposed | — |
-| Nokia 9 Pureview | 0421:05bd | ⚪ proposed | — |
-| Nokia 3 2 | 0421:05be | ⚪ proposed | — |
-| Nokia 4 2 | 0421:05bf | ⚪ proposed | — |
-| Nokia 2 2 | 0421:05c0 | ⚪ proposed | — |
-| Nokia 1 Plus | 0421:05c2 | ⚪ proposed | — |
-| Nokia 6 2 7 2 | 0421:05c5 | ⚪ proposed | — |
-| Nokia 2 3 | 0421:05c8 | ⚪ proposed | — |
-| Nokia 5 3 | 0421:05ca | ⚪ proposed | — |
-| Nokia C3 | 0421:05cb | ⚪ proposed | — |
-| Nokia G10 G20 | 0421:05cc | ⚪ proposed | — |
-| Nokia G50 5g | 0421:05cd | ⚪ proposed | — |
-| Nokia X20 X10 | 0421:05ce | ⚪ proposed | — |
-| Nokia Lumia 800 | 0421:0668 | ⚪ proposed | — |
-| Nokia Lumia 710 | 0421:066e | ⚪ proposed | — |
-| Nokia Lumia 900 | 0421:0670 | ⚪ proposed | — |
-| Nokia Lumia 920 | 0421:0671 | ⚪ proposed | — |
-| Nokia Lumia 920 Alt | 0421:0672 | ⚪ proposed | — |
-| Nokia Lumia 1520 | 0421:06fd | ⚪ proposed | — |
-| Nokia Lumia 925 | 0421:0700 | ⚪ proposed | — |
-| Nokia Lumia 630 635 | 0421:0702 | ⚪ proposed | — |
-| Blackberry Pearl 3g 9100 | 0fca:8010 | ⚪ proposed | — |
-| Blackberry Torch 9800 | 0fca:8013 | ⚪ proposed | — |
-| Blackberry Bold 9780 | 0fca:8014 | ⚪ proposed | — |
-| Blackberry Bold 9650 | 0fca:8015 | ⚪ proposed | — |
-| Blackberry Style 9670 | 0fca:8016 | ⚪ proposed | — |
-| Blackberry Torch 9860 9850 | 0fca:8017 | ⚪ proposed | — |
-| Blackberry Torch 9810 | 0fca:8018 | ⚪ proposed | — |
-| Blackberry Q10 | 0fca:8040 | ⚪ proposed | — |
-| Blackberry Classic Q20 | 0fca:8045 | ⚪ proposed | — |
-| Blackberry Passport | 0fca:8050 | ⚪ proposed | — |
-| Blackberry Priv | 0fca:8055 | ⚪ proposed | — |
-| Blackberry Dtek50 | 0fca:8060 | ⚪ proposed | — |
-| Blackberry Dtek60 | 0fca:8065 | ⚪ proposed | — |
-| Blackberry Keyone | 0fca:8070 | ⚪ proposed | — |
-| Blackberry Motion | 0fca:8072 | ⚪ proposed | — |
-| Blackberry Key2 | 0fca:8075 | ⚪ proposed | — |
-| Zte Grandx U970 | 19d2:0367 | ⚪ proposed | useAndroidExtensions |
-| Zte Blade3 | 19d2:0386 | ⚪ proposed | useAndroidExtensions |
-| Zte Grandx2 | 19d2:03a8 | ⚪ proposed | useAndroidExtensions |
-| Zte Grands | 19d2:03c8 | ⚪ proposed | useAndroidExtensions |
-| Zte Grandmemo | 19d2:03c9 | ⚪ proposed | useAndroidExtensions |
-| Zte Bladev V9180 | 19d2:03d3 | ⚪ proposed | useAndroidExtensions |
-| Zte Bladel3 | 19d2:03d5 | ⚪ proposed | useAndroidExtensions |
-| Zte Blades6 | 19d2:03e1 | ⚪ proposed | useAndroidExtensions |
-| Zte Axon7 A2017 | 19d2:03e5 | ⚪ proposed | useAndroidExtensions |
-| Zte Bladev7max | 19d2:03e7 | ⚪ proposed | useAndroidExtensions |
-| Zte Axonm Z999 | 19d2:03ee | ⚪ proposed | useAndroidExtensions |
-| Zte Bladezmax | 19d2:03f1 | ⚪ proposed | useAndroidExtensions |
-| Zte Zmaxpro Z981 | 19d2:03f3 | ⚪ proposed | useAndroidExtensions |
-| Zte Z557 | 19d2:03f5 | ⚪ proposed | useAndroidExtensions |
-| Zte Z971 | 19d2:03f8 | ⚪ proposed | useAndroidExtensions |
-| Zte Zfiveg Z557bl | 19d2:0402 | ⚪ proposed | useAndroidExtensions |
-| Zte Bladex1 5g | 19d2:0405 | ⚪ proposed | useAndroidExtensions |
-| Zte Z957 Cricket | 19d2:0408 | ⚪ proposed | useAndroidExtensions |
-| Zte Zmax10 Z6250 | 19d2:0412 | ⚪ proposed | useAndroidExtensions |
-| Zte Bladev2020 | 19d2:0415 | ⚪ proposed | useAndroidExtensions |
-| Oppo A5 A9 | 22d9:2768 | ⚪ proposed | — |
-| Oppo Findx | 22d9:276a | ⚪ proposed | — |
-| Oppo Reno | 22d9:276b | ⚪ proposed | — |
-| Oppo Reno2 | 22d9:276c | ⚪ proposed | — |
-| Oppo A91 F15 | 22d9:276d | ⚪ proposed | — |
-| Oppo F11pro | 22d9:276e | ⚪ proposed | — |
-| Oppo A31 | 22d9:2770 | ⚪ proposed | — |
-| Oppo A52 | 22d9:2771 | ⚪ proposed | — |
-| Oppo A72 | 22d9:2772 | ⚪ proposed | — |
-| Oppo A53s | 22d9:2775 | ⚪ proposed | — |
-| Oppo Reno5pro | 22d9:2776 | ⚪ proposed | — |
-| Oppo A74 | 22d9:2777 | ⚪ proposed | — |
-| Oppo Findx3pro | 22d9:2778 | ⚪ proposed | — |
-| Oppo Findx3neo | 22d9:2779 | ⚪ proposed | — |
-| Oppo Reno6proplus | 22d9:277a | ⚪ proposed | — |
-| Oppo A95 | 22d9:277b | ⚪ proposed | — |
-| Oppo Findx5pro | 22d9:277c | ⚪ proposed | — |
-| Oppo A96 | 22d9:277d | ⚪ proposed | — |
-| Realme 3pro | 22d9:2780 | ⚪ proposed | — |
-| Realme 5pro | 22d9:2781 | ⚪ proposed | — |
-| Realme 6pro | 22d9:2782 | ⚪ proposed | — |
-| Realme 7pro | 22d9:2783 | ⚪ proposed | — |
-| Realme 8pro | 22d9:2784 | ⚪ proposed | — |
-| Realme 9proplus | 22d9:2785 | ⚪ proposed | — |
-| Realme Gt | 22d9:2786 | ⚪ proposed | — |
-| Realme Gt2pro | 22d9:2787 | ⚪ proposed | — |
-| Realme C35 | 22d9:2788 | ⚪ proposed | — |
-| Oneplus N10 5g | 22d9:2789 | ⚪ proposed | — |
-| Vivo Y91i | 2d95:600c | ⚪ proposed | — |
-| Vivo V17pro | 2d95:600d | ⚪ proposed | — |
-| Vivo S1pro | 2d95:600e | ⚪ proposed | — |
-| Vivo X30pro | 2d95:600f | ⚪ proposed | — |
-| Vivo X50pro | 2d95:6010 | ⚪ proposed | — |
-| Vivo X51 5g | 2d95:6011 | ⚪ proposed | — |
-| Vivo V21 5g | 2d95:6013 | ⚪ proposed | — |
-| Vivo X60proplus | 2d95:6014 | ⚪ proposed | — |
-| Vivo V23pro | 2d95:6015 | ⚪ proposed | — |
-| Vivo X70proplus | 2d95:6016 | ⚪ proposed | — |
-| Vivo V25pro | 2d95:6017 | ⚪ proposed | — |
-| Vivo X80pro | 2d95:6018 | ⚪ proposed | — |
-| Vivo X90proplus | 2d95:6019 | ⚪ proposed | — |
-| Iqoo 9pro | 2d95:601a | ⚪ proposed | — |
-| Iqoo 10pro | 2d95:601b | ⚪ proposed | — |
-| Iqoo Neo7 | 2d95:601c | ⚪ proposed | — |
-| Iqoo Z6pro | 2d95:601d | ⚪ proposed | — |
-| Vivo Y76s 5g | 2d95:601e | ⚪ proposed | — |
-| Vivo Y75 5g | 2d95:601f | ⚪ proposed | — |
-| Vivo Y33s | 2d95:6020 | ⚪ proposed | — |
-| Vivo T1 5g | 2d95:6022 | ⚪ proposed | — |
-| Insta360 One | 2e1a:0003 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 One X | 2e1a:0005 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 Evo | 2e1a:0006 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 One R | 2e1a:0007 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 Go 2 | 2e1a:0009 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 One X2 | 2e1a:000a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 Rs | 2e1a:000b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 X3 | 2e1a:000c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 Go 3 | 2e1a:000d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 X4 | 2e1a:000e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 Ace Pro | 2e1a:000f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 Flow | 2e1a:0010 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Insta360 Link | 2e1a:0011 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Akaso Ek7000 | 3538:0001 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Akaso Ek7000 Pro | 3538:0002 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Akaso Brave 4 | 3538:0003 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Akaso Brave 7 Le | 3538:0004 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Akaso V50x | 3538:0005 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Akaso Brave 4 Pro | 3538:0006 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Akaso Brave 8 | 3538:0007 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Akaso Enduro | 3538:0008 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Dji Osmo Action 3 | 2ca3:001f | ⚪ proposed | — |
-| Dji Osmo Action 4 | 2ca3:0020 | ⚪ proposed | — |
-| Dji Action 2 | 2ca3:0021 | ⚪ proposed | — |
-| Dji Pocket 2 | 2ca3:0022 | ⚪ proposed | — |
-| Dji Pocket 3 | 2ca3:0023 | ⚪ proposed | — |
-| Dji Mini 3 | 2ca3:0024 | ⚪ proposed | — |
-| Dji Mini 4 Pro | 2ca3:0025 | ⚪ proposed | — |
-| Dji Air 3 | 2ca3:0026 | ⚪ proposed | — |
-| Xiaomi Action Camera 4k | 2717:d001 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Xiaomi Sphere Camera | 2717:d002 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Fdr X3000 | 054c:0a7b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Hdr As300 | 054c:0a7c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Rx0 Ii | 054c:0a7d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Zv 1 | 054c:0a7e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Zv E10 | 054c:0a7f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Zv E1 | 054c:0a80 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Ricoh Theta Sc2 | 05ca:0369 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Ricoh Theta X | 05ca:036a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Tcl 10 Pro | 2a49:9008 | ⚪ proposed | — |
-| Tcl 10l 10 5g | 2a49:9009 | ⚪ proposed | — |
-| Tcl 20 Pro 5g | 2a49:900a | ⚪ proposed | — |
-| Tcl 20l Plus | 2a49:900b | ⚪ proposed | — |
-| Tcl 20 Se | 2a49:900c | ⚪ proposed | — |
-| Tcl 30 5g | 2a49:900d | ⚪ proposed | — |
-| Tcl 30 Se | 2a49:900e | ⚪ proposed | — |
-| Tcl 30 Plus | 2a49:900f | ⚪ proposed | — |
-| Tcl 30 V 5g | 2a49:9010 | ⚪ proposed | — |
-| Tcl 40 Nxtpaper | 2a49:9011 | ⚪ proposed | — |
-| Tcl 40 Se | 2a49:9012 | ⚪ proposed | — |
-| Tcl Flip 2 | 2a49:9013 | ⚪ proposed | — |
-| Alcatel A3 Xl | 1bbb:901c | ⚪ proposed | — |
-| Alcatel 3x 2020 | 1bbb:901d | ⚪ proposed | — |
-| Alcatel 3l 2021 | 1bbb:901e | ⚪ proposed | — |
-| Alcatel 1se 5g | 1bbb:901f | ⚪ proposed | — |
-| Alcatel 3t 10 | 1bbb:9020 | ⚪ proposed | — |
-| Alcatel 1l Pro | 1bbb:9021 | ⚪ proposed | — |
-| Alcatel 1v 2021 | 1bbb:9022 | ⚪ proposed | — |
-| Alcatel 1 2021 | 1bbb:9023 | ⚪ proposed | — |
-| Alcatel Pop 4 Plus | 1bbb:9024 | ⚪ proposed | — |
-| Alcatel Fierce 4 | 1bbb:9025 | ⚪ proposed | — |
-| Wiko Lenny | 1ebf:1001 | ⚪ proposed | — |
-| Wiko Kite | 1ebf:1002 | ⚪ proposed | — |
-| Wiko Pulp | 1ebf:1003 | ⚪ proposed | — |
-| Wiko Rainbow | 1ebf:1004 | ⚪ proposed | — |
-| Wiko Tommy | 1ebf:1005 | ⚪ proposed | — |
-| Wiko Sunny | 1ebf:1006 | ⚪ proposed | — |
-| Wiko Jerry | 1ebf:1007 | ⚪ proposed | — |
-| Wiko Harry | 1ebf:1008 | ⚪ proposed | — |
-| Wiko Lenny 4 | 1ebf:1009 | ⚪ proposed | — |
-| Wiko View | 1ebf:100a | ⚪ proposed | — |
-| Wiko View 2 | 1ebf:100b | ⚪ proposed | — |
-| Wiko View Xl | 1ebf:100c | ⚪ proposed | — |
-| Wiko Ride | 1ebf:100d | ⚪ proposed | — |
-| Wiko T10 | 1ebf:100e | ⚪ proposed | — |
-| Wiko Y62 | 1ebf:100f | ⚪ proposed | — |
-| Wiko Power U10 | 1ebf:1010 | ⚪ proposed | — |
-| Wiko T3 | 1ebf:1011 | ⚪ proposed | — |
-| Itel A23 | 1d4d:6001 | ⚪ proposed | — |
-| Itel A25 | 1d4d:6002 | ⚪ proposed | — |
-| Itel A56 | 1d4d:6003 | ⚪ proposed | — |
-| Itel A58 | 1d4d:6004 | ⚪ proposed | — |
-| Itel P38 | 1d4d:6005 | ⚪ proposed | — |
-| Itel P55 5g | 1d4d:6006 | ⚪ proposed | — |
-| Itel S18 | 1d4d:6007 | ⚪ proposed | — |
-| Itel S19 | 1d4d:6008 | ⚪ proposed | — |
-| Tecno Camon 15 | 1d5b:6001 | ⚪ proposed | — |
-| Tecno Spark 5 Pro | 1d5b:6002 | ⚪ proposed | — |
-| Tecno Camon 17 Pro | 1d5b:6003 | ⚪ proposed | — |
-| Tecno Phantom X | 1d5b:6004 | ⚪ proposed | — |
-| Tecno Spark 8 Pro | 1d5b:6005 | ⚪ proposed | — |
-| Tecno Pova 3 | 1d5b:6006 | ⚪ proposed | — |
-| Tecno Camon 19 Pro | 1d5b:6007 | ⚪ proposed | — |
-| Tecno Phantom V Fold | 1d5b:6008 | ⚪ proposed | — |
-| Tecno Camon 20 Pro | 1d5b:6009 | ⚪ proposed | — |
-| Infinix Hot 11 | 1d5c:6001 | ⚪ proposed | — |
-| Infinix Note 11 | 1d5c:6002 | ⚪ proposed | — |
-| Infinix Zero X Pro | 1d5c:6003 | ⚪ proposed | — |
-| Infinix Hot 12 Play | 1d5c:6004 | ⚪ proposed | — |
-| Infinix Zero 5g | 1d5c:6005 | ⚪ proposed | — |
-| Infinix Note 12 | 1d5c:6006 | ⚪ proposed | — |
-| Infinix Hot 20 | 1d5c:6007 | ⚪ proposed | — |
-| Lexar Jumpdrives75 | 05dc:b013 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Lexar Jumpdrives80 | 05dc:b014 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Lexar Jumpdrives47 | 05dc:b017 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Lexar Jumpdrives35 | 05dc:b019 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Lexar Professional1000x | 05dc:b020 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Transcend Storejet25 | 8644:8003 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Transcend Storejetsm3s | 8644:8004 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Verbatim Mediasharemini | 18a5:0301 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Verbatim Storegngo | 18a5:0302 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Verbatim Smartdisk | 18a5:0303 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Kodak Dc4800 | 040d:0011 | ⚪ proposed | — |
-| Kodak Dc220 | 040d:0018 | ⚪ proposed | — |
-| Kodak Dc240 | 040d:0019 | ⚪ proposed | — |
-| Kodak Dc280 | 040d:001a | ⚪ proposed | — |
-| Kodak Dc3400 | 040d:001b | ⚪ proposed | — |
-| Kodak Easyshare Cx3700 | 040d:001e | ⚪ proposed | — |
-| Kodak Easyshare Ls443 | 040d:0020 | ⚪ proposed | — |
-| Kodak Easyshare C310 | 040d:0022 | ⚪ proposed | — |
-| Kodak Easyshare C330 | 040d:0023 | ⚪ proposed | — |
-| Kodak Easyshare C340 | 040d:0024 | ⚪ proposed | — |
-| Kodak Easyshare C360 | 040d:0025 | ⚪ proposed | — |
-| Kodak Easyshare C530 | 040d:0026 | ⚪ proposed | — |
-| Kodak Easyshare C875 | 040d:0027 | ⚪ proposed | — |
-| Kodak Easyshare Z612 | 040d:0028 | ⚪ proposed | — |
-| Kodak Easyshare Z1012is | 040d:0029 | ⚪ proposed | — |
-| Kodak Easyshare Z1485is | 040d:002a | ⚪ proposed | — |
-| Kodak Easyshare Z650 | 040d:002b | ⚪ proposed | — |
-| Kodak Easyshare M753 | 040d:002c | ⚪ proposed | — |
-| Kodak Easyshare M763 | 040d:002d | ⚪ proposed | — |
-| Kodak Easyshare Z885 | 040d:002e | ⚪ proposed | — |
-| Kodak Easyshare M1063 | 040d:002f | ⚪ proposed | — |
-| Kodak Easyshare M1073 | 040d:0030 | ⚪ proposed | — |
-| Kodak Easyshare Z915 | 040d:0031 | ⚪ proposed | — |
-| Kodak Easyshare M380 | 040d:0032 | ⚪ proposed | — |
-| Kodak Pixpro Az251 | 040d:0033 | ⚪ proposed | — |
-| Kodak Pixpro Az521 | 040d:0034 | ⚪ proposed | — |
-| Kodak Pixpro Fz151 | 040d:0035 | ⚪ proposed | — |
-| Viofo A119mini2 | 0c45:a801 | ⚪ proposed | — |
-| Viofo A229pro | 0c45:a802 | ⚪ proposed | — |
-| Viofo A239pro | 0c45:a803 | ⚪ proposed | — |
-| Viofo T130 | 0c45:a804 | ⚪ proposed | — |
-| Viofo Wm1 | 0c45:a805 | ⚪ proposed | — |
-| Viofo A139pro | 0c45:a806 | ⚪ proposed | — |
-| Nextbase 322gw | 2b24:1001 | ⚪ proposed | — |
-| Nextbase 422gw | 2b24:1002 | ⚪ proposed | — |
-| Nextbase 522gw | 2b24:1003 | ⚪ proposed | — |
-| Nextbase 622gw | 2b24:1004 | ⚪ proposed | — |
-| Nextbase 122hd | 2b24:1005 | ⚪ proposed | — |
-| Nextbase 222x | 2b24:1006 | ⚪ proposed | — |
-| Nextbase 522gw Alt | 2b24:1007 | ⚪ proposed | — |
-| Nextbase Duohd | 2b24:1008 | ⚪ proposed | — |
-| Garmin Dashcam55 | 091e:2458 | ⚪ proposed | — |
-| Garmin Dashcam65w | 091e:2459 | ⚪ proposed | — |
-| Garmin Dashcammini2 | 091e:245a | ⚪ proposed | — |
-| Garmin Dashcam67w | 091e:245b | ⚪ proposed | — |
-| Garmin Dashcamtandem | 091e:245c | ⚪ proposed | — |
-| Garmin Dashcammini | 091e:245d | ⚪ proposed | — |
-| Garmin Dashcam57 | 091e:245e | ⚪ proposed | — |
-| Action Digitalframe7 | 0835:2000 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Action Digitalframe10 | 0835:2001 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Pandigital Novel | 0835:2002 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Pandigital Photoframe8 | 0835:2003 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Ds2500 | 07b4:020f | ⚪ proposed | — |
-| Olympus Ds7000 | 07b4:0210 | ⚪ proposed | — |
-| Olympus Ws852 | 07b4:0211 | ⚪ proposed | — |
-| Olympus Lsp4 | 07b4:0212 | ⚪ proposed | — |
-| Fitbit Ultra | 2687:fb01 | ⚪ proposed | — |
-| Fitbit One | 2687:fb02 | ⚪ proposed | — |
-| Fitbit Zip | 2687:fb03 | ⚪ proposed | — |
-| Fitbit Flex | 2687:fb04 | ⚪ proposed | — |
-| Fitbit Force | 2687:fb05 | ⚪ proposed | — |
-| Fitbit Charge Hr | 2687:fb06 | ⚪ proposed | — |
-| Fitbit Surge | 2687:fb07 | ⚪ proposed | — |
-| Fitbit Blaze | 2687:fb08 | ⚪ proposed | — |
-| Fitbit Alta | 2687:fb09 | ⚪ proposed | — |
-| Fitbit Alta Hr | 2687:fb0a | ⚪ proposed | — |
-| Fitbit Ionic | 2687:fb0b | ⚪ proposed | — |
-| Fitbit Versa | 2687:fb0c | ⚪ proposed | — |
-| Fitbit Versa 2 | 2687:fb0d | ⚪ proposed | — |
-| Fitbit Charge 3 | 2687:fb0e | ⚪ proposed | — |
-| Fitbit Charge 4 | 2687:fb0f | ⚪ proposed | — |
-| Fitbit Sense | 2687:fb10 | ⚪ proposed | — |
-| Fitbit Versa 3 | 2687:fb11 | ⚪ proposed | — |
-| Fitbit Luxe | 2687:fb12 | ⚪ proposed | — |
-| Fitbit Charge 5 | 2687:fb13 | ⚪ proposed | — |
-| Fitbit Inspire 3 | 2687:fb14 | ⚪ proposed | — |
-| Fitbit Versa 4 | 2687:fb15 | ⚪ proposed | — |
-| Garmin Forerunner 245 | 091e:4b1b | ⚪ proposed | — |
-| Garmin Forerunner 945 | 091e:4b35 | ⚪ proposed | — |
-| Garmin Forerunner 55 | 091e:4b47 | ⚪ proposed | — |
-| Garmin Forerunner 255 | 091e:4b6c | ⚪ proposed | — |
-| Garmin Forerunner 955 | 091e:4b79 | ⚪ proposed | — |
-| Garmin Forerunner 265 | 091e:4b8c | ⚪ proposed | — |
-| Garmin Forerunner 965 | 091e:4b9d | ⚪ proposed | — |
-| Garmin Marq 2 | 091e:4bd5 | ⚪ proposed | — |
-| Garmin Instinct 2 | 091e:4be0 | ⚪ proposed | — |
-| Garmin Venu 3 | 091e:4be5 | ⚪ proposed | — |
-| Garmin Forerunner 165 | 091e:4bf0 | ⚪ proposed | — |
-| Garmin Fenix 7 Pro | 091e:4c2b | ⚪ proposed | — |
-| Garmin Fenix 8 | 091e:4c3a | ⚪ proposed | — |
-| Garmin Vivoactive 4 | 091e:4cc0 | ⚪ proposed | — |
-| Garmin Vivoactive 5 | 091e:4cc5 | ⚪ proposed | — |
-| Garmin Lily 2 | 091e:4cd0 | ⚪ proposed | — |
-| Polar M200 | 0da4:0008 | ⚪ proposed | — |
-| Polar A370 | 0da4:0009 | ⚪ proposed | — |
-| Polar Ignite | 0da4:000a | ⚪ proposed | — |
-| Polar Vantage M | 0da4:000b | ⚪ proposed | — |
-| Polar Vantage V2 | 0da4:000c | ⚪ proposed | — |
-| Polar Grit X | 0da4:000d | ⚪ proposed | — |
-| Polar Pacer Pro | 0da4:000e | ⚪ proposed | — |
-| Polar Vantage V3 | 0da4:000f | ⚪ proposed | — |
-| Suunto Ambit3 | 1493:0041 | ⚪ proposed | — |
-| Suunto 9 Baro | 1493:0044 | ⚪ proposed | — |
-| Suunto 9 Peak Pro | 1493:0048 | ⚪ proposed | — |
-| Suunto Race | 1493:004c | ⚪ proposed | — |
-| Suunto Vertical | 1493:0050 | ⚪ proposed | — |
-| Suunto 5 Peak | 1493:0054 | ⚪ proposed | — |
-| Suunto 3 | 1493:0058 | ⚪ proposed | — |
-| Samsung Galaxy Watch Active 2 | 04e8:686c | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Watch 3 | 04e8:6870 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Watch 4 | 04e8:6874 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Watch 5 | 04e8:6878 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Watch 6 | 04e8:687c | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Watch Classic | 04e8:6880 | ⚪ proposed | useAndroidExtensions |
-| Panasonic Dmcfz50 | 04da:2370 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcl1 | 04da:2371 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmclx2 | 04da:2373 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcfx55 | 04da:2376 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcg1 | 04da:2377 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcgh1 | 04da:2378 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmctz5 | 04da:2379 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcfx150 | 04da:237a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcg10 | 04da:237b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmclx5 | 04da:237c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcgf1 | 04da:237d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcgh2 | 04da:237e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcfz100 | 04da:237f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcg3 | 04da:2380 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcgf3 | 04da:2381 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcg5 | 04da:2383 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcgh3 | 04da:2384 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcgx1 | 04da:2385 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcg6 | 04da:2386 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcgf6 | 04da:2387 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcgx7 | 04da:2388 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcgh4 | 04da:2389 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcgx8 | 04da:238a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcg80 G85 | 04da:238b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dmcgx9 | 04da:238c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcg9 | 04da:238d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcgh5 | 04da:238e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcg90 G91 | 04da:238f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcg95 G90 G91 | 04da:2390 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcgh5s | 04da:2391 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcgh5 Ii | 04da:2392 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcgh6 | 04da:2393 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcg9 Ii | 04da:2394 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcgh7 | 04da:2395 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcs5 | 04da:2396 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcs5 Ii | 04da:2397 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcs5 Iix | 04da:2398 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcs1 | 04da:2399 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcs1h | 04da:239a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcs1r | 04da:239b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Dcs9 | 04da:239c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix S Full Frame | 04da:239d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Dp1 Merrill | 0b0e:0026 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Dp2 Merrill | 0b0e:0027 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Dp3 Merrill | 0b0e:0028 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Dp0 Quattro | 0b0e:0029 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Dp1 Quattro | 0b0e:002a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Dp2 Quattro | 0b0e:002b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Dp3 Quattro | 0b0e:002c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Dp2 Quattro Se | 0b0e:002d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Sd Quattro | 0b0e:002e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Sd Quattro H | 0b0e:002f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Fp | 0b0e:0031 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Fp L | 0b0e:0032 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sigma Bf | 0b0e:0033 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Hasselblad Cfv 50c | 4566:0200 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Hasselblad Cfv 100c | 4566:0201 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Hasselblad H6d 100c | 4566:0202 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Hasselblad H6d 50c | 4566:0203 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Hasselblad X1d | 4566:0204 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Hasselblad X1d Ii 50c | 4566:0205 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Hasselblad X2d 100c | 4566:0206 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Hasselblad 907x 50c | 4566:0207 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E 510 07b4 | 07b4:0118 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E 410 07b4 | 07b4:011a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E 420 07b4 | 07b4:011c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E 520 07b4 | 07b4:011e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E 620 07b4 | 07b4:0120 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E 450 07b4 | 07b4:0122 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E 30 07b4 | 07b4:0123 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E 3 07b4 | 07b4:0124 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E 5 07b4 | 07b4:0126 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E Pl1 07b4 | 07b4:0127 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E Pl2 07b4 | 07b4:0128 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E P1 07b4 | 07b4:0129 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E P2 07b4 | 07b4:012a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E P3 07b4 | 07b4:012b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E Pl3 07b4 | 07b4:012c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E Pm1 07b4 | 07b4:012d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E Pl1s 07b4 | 07b4:012e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E Pl6 07b4 | 07b4:0131 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E Pm2 07b4 | 07b4:0132 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E Pl7 07b4 | 07b4:0133 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E Pl8 07b4 | 07b4:0134 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E P5 07b4 | 07b4:0137 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E P6 07b4 | 07b4:0138 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus E P7 07b4 | 07b4:0139 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M5 07b4 | 07b4:013a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M5 Ii 07b4 | 07b4:013b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M5 Iii 07b4 | 07b4:013c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M1 07b4 | 07b4:013d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M1 Ii 07b4 | 07b4:013e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M1 Iii 07b4 | 07b4:013f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M1x 07b4 | 07b4:0140 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M10 07b4 | 07b4:0141 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M10 Ii 07b4 | 07b4:0142 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M10 Iii 07b4 | 07b4:0143 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M10 Iiis 07b4 | 07b4:0144 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M10 Iv 07b4 | 07b4:0145 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om D E M10 V 07b4 | 07b4:0146 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Stylus 1 07b4 | 07b4:0147 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om System Om 5 07b4 | 07b4:0150 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om System Om 1 07b4 | 07b4:0151 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om System Om 1 Mark Ii 07b4 | 07b4:0152 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om System Om 3 07b4 | 07b4:0153 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om System Om 1r 07b4 | 07b4:0154 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om System Tg 7 07b4 | 07b4:0155 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om System Tg 6 07b4 | 07b4:0156 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om System E M1 Mark Ii Alt 07b4 | 07b4:0157 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Om System Sh 3 07b4 | 07b4:0158 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Stylus Tg 1 07b4 | 07b4:0200 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Stylus Tg 2 07b4 | 07b4:0201 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Stylus Tg 3 07b4 | 07b4:0202 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Stylus Tg 4 07b4 | 07b4:0203 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Stylus Tg 5 07b4 | 07b4:0204 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Olympus Stylus Tg 6 Alt 07b4 | 07b4:0205 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Xiaomi Mi4 | 2717:1368 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi4i | 2717:1388 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi4c | 2717:13c8 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi5 | 2717:1440 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi5s | 2717:1460 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi5splus | 2717:1480 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi6 | 2717:1490 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi6x | 2717:14a0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi8 | 2717:14b0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi8se | 2717:14c0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi8pro | 2717:14d0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi8ex | 2717:14e0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi9 | 2717:14f0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi9se | 2717:1500 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi9t | 2717:1510 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi9pro5g | 2717:1520 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi10 | 2717:1530 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi10pro | 2717:1540 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi10ultra | 2717:1550 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi10t | 2717:1560 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi10tpro | 2717:1570 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi11 | 2717:1580 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi11ultra | 2717:1590 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mi11tpro | 2717:15a0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi12 | 2717:15b0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi12pro | 2717:15c0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi12tpro | 2717:15d0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi13 | 2717:15e0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi13pro | 2717:15f0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi14 | 2717:1600 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi14pro | 2717:1610 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi14ultra | 2717:1620 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote5 | 2717:1700 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote7 | 2717:1710 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote8 | 2717:1720 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote9 | 2717:1730 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote9pro | 2717:1740 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote10 | 2717:1750 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote10pro | 2717:1760 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote11 | 2717:1770 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote11pro | 2717:1780 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote12 | 2717:1790 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote13 | 2717:17a0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redmi9 | 2717:17b0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redmi9a | 2717:17c0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redmi10 | 2717:17d0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redmi12 | 2717:17e0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redmi13c | 2717:17f0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Pocox3 | 2717:1800 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Pocox3pro | 2717:1810 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Pocof3 | 2717:1820 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Pocom3 | 2717:1830 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Pocom4pro | 2717:1840 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Pocox4gt | 2717:1850 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Pocof4gt | 2717:1860 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Pocox5pro | 2717:1870 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Blackshark3 | 2717:1900 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Blackshark4 | 2717:1910 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Blackshark5pro | 2717:1920 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S3 | 04e8:685e | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S4 | 04e8:685f | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S4 Adb | 04e8:6861 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S5 | 04e8:6862 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S5 Adb | 04e8:6863 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S6 | 04e8:6864 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S6 Edge | 04e8:6865 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S7 Edge | 04e8:6867 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S8 | 04e8:6868 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S8 Plus | 04e8:6869 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S9 | 04e8:686a | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S9 Plus | 04e8:686b | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S21 Fe | 04e8:686d | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S22 | 04e8:686e | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S22 Ultra | 04e8:686f | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S23 | 04e8:6871 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S23 Ultra | 04e8:6872 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S24 | 04e8:6873 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Z Fold 2 | 04e8:6875 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Z Fold 3 | 04e8:6876 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Z Flip | 04e8:6879 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Z Flip 3 | 04e8:687a | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Z Flip 4 | 04e8:687b | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Note 2 | 04e8:6900 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Note 3 | 04e8:6901 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Note 4 | 04e8:6902 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Note 5 | 04e8:6903 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Note 8 | 04e8:6904 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Note 9 | 04e8:6905 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Note 10 | 04e8:6906 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Note 10 Plus | 04e8:6907 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Note 20 Ultra | 04e8:6908 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A5 2017 | 04e8:6a00 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A7 2017 | 04e8:6a01 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A8 Plus | 04e8:6a02 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A50 | 04e8:6a03 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A51 | 04e8:6a04 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A52 | 04e8:6a05 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A53 5g | 04e8:6a06 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A54 5g | 04e8:6a07 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A71 | 04e8:6a08 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A72 | 04e8:6a09 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A34 5g | 04e8:6a0a | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S | 04e8:6b00 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S2 | 04e8:6b01 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S3 | 04e8:6b02 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S4 | 04e8:6b03 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S5e | 04e8:6b04 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S6 | 04e8:6b05 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S6 Lite | 04e8:6b06 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S7 | 04e8:6b07 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S7 Fe | 04e8:6b08 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S8 | 04e8:6b09 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S8 Ultra | 04e8:6b0a | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S9 | 04e8:6b0b | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S9 Ultra | 04e8:6b0c | ⚪ proposed | useAndroidExtensions |
-| Sony Dsc W350 | 054c:06e1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Dsc W380 | 054c:06e2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Dsc W560 | 054c:06e3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Dsc Hx9v | 054c:06e4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Dsc Hx100v | 054c:06e5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Nex 5n | 054c:06e6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Nex 7 | 054c:06e7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Slt A65 | 054c:06e8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Slt A77 | 054c:06e9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha Nex 5r | 054c:06ea | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha Slt A37 | 054c:06eb | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Rx1 | 054c:06ec | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Dsc Hx20v | 054c:06ed | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha Nex 6 | 054c:06ef | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha Slt A99 | 054c:06f0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A58 | 054c:06f1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A3000 | 054c:06f2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A7 | 054c:06f3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A7r | 054c:06f4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A6000 | 054c:06f5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A5000 | 054c:06f6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A5100 | 054c:06f7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A6300 | 054c:06f8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A6500 | 054c:06f9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A68 | 054c:06fa | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A77ii | 054c:06fb | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A99ii | 054c:06fc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A6100 | 054c:06fd | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A6400 | 054c:06fe | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A6600 | 054c:06ff | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A7c | 054c:0700 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A7cii | 054c:0701 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A7cr | 054c:0702 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A6700 | 054c:0703 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A7iv | 054c:0704 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A7siii | 054c:0705 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A1 | 054c:0706 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A9iii | 054c:0707 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Zv E10ii | 054c:0708 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A7rv | 054c:0709 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A7riv | 054c:070a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A7riii | 054c:070b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha A9ii | 054c:070c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha Fx3 | 054c:070d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha Fx30 | 054c:070e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha Fx9 | 054c:070f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Alpha Zv E1 | 054c:0710 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Google Nexus One Htc | 18d1:4e11 | ⚪ proposed | — |
-| Google Nexus S | 18d1:4e21 | ⚪ proposed | — |
-| Google Nexus 4 Lg | 18d1:4e61 | ⚪ proposed | — |
-| Google Nexus 7 2012 | 18d1:4e02 | ⚪ proposed | — |
-| Google Nexus 10 Samsung | 18d1:4e03 | ⚪ proposed | — |
-| Google Nexus 7 2013 | 18d1:4e04 | ⚪ proposed | — |
-| Google Nexus 9 Htc | 18d1:4e05 | ⚪ proposed | — |
-| Google Pixel 3 4 Xl | 18d1:4eee | ⚪ proposed | — |
-| Google Pixel 4a | 18d1:4eef | ⚪ proposed | — |
-| Google Pixel 5 | 18d1:4ef0 | ⚪ proposed | — |
-| Google Pixel 5a | 18d1:4ef1 | ⚪ proposed | — |
-| Google Pixel 6 | 18d1:4ef2 | ⚪ proposed | — |
-| Google Pixel 6 Pro | 18d1:4ef3 | ⚪ proposed | — |
-| Google Pixel 6a | 18d1:4ef4 | ⚪ proposed | — |
-| Google Pixel 7 Pro | 18d1:4ef5 | ⚪ proposed | — |
-| Google Pixel 7a | 18d1:4ef6 | ⚪ proposed | — |
-| Google Pixel 8 | 18d1:4ef7 | ⚪ proposed | — |
-| Google Pixel 8 Pro | 18d1:4ef8 | ⚪ proposed | — |
-| Google Pixel 8a | 18d1:4ef9 | ⚪ proposed | — |
-| Google Pixel 9 | 18d1:4efa | ⚪ proposed | — |
-| Google Pixel 9 Pro | 18d1:4efb | ⚪ proposed | — |
-| Google Pixel 9 Pro Xl | 18d1:4efc | ⚪ proposed | — |
-| Google Pixel 9 Pro Fold | 18d1:4efd | ⚪ proposed | — |
-| Google Pixel Fold | 18d1:4efe | ⚪ proposed | — |
-| Google Pixel Tablet | 18d1:4eff | ⚪ proposed | — |
-| Oneplus One | 2a70:f001 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 2 | 2a70:f002 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 5 | 2a70:f004 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 5t | 2a70:f005 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 6 | 2a70:f006 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 6t | 2a70:f007 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 7 | 2a70:f008 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 7 Pro | 2a70:f009 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 7t | 2a70:f00a | ⚪ proposed | useAndroidExtensions |
-| Oneplus 7t Pro | 2a70:f00b | ⚪ proposed | useAndroidExtensions |
-| Oneplus 8 | 2a70:f00c | ⚪ proposed | useAndroidExtensions |
-| Oneplus 8 Pro | 2a70:f00d | ⚪ proposed | useAndroidExtensions |
-| Oneplus 8t | 2a70:f00e | ⚪ proposed | useAndroidExtensions |
-| Oneplus 9 | 2a70:f00f | ⚪ proposed | useAndroidExtensions |
-| Oneplus 9 Pro | 2a70:f010 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 9r | 2a70:f011 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 10 Pro | 2a70:f012 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 10t | 2a70:f013 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 11 | 2a70:f014 | ⚪ proposed | useAndroidExtensions |
-| Oneplus 12 | 2a70:f015 | ⚪ proposed | useAndroidExtensions |
-| Oneplus Nord | 2a70:f016 | ⚪ proposed | useAndroidExtensions |
-| Oneplus Nord 2 | 2a70:f017 | ⚪ proposed | useAndroidExtensions |
-| Oneplus Nord Ce 3 | 2a70:f018 | ⚪ proposed | useAndroidExtensions |
-| Oneplus Nord 3 | 2a70:f019 | ⚪ proposed | useAndroidExtensions |
-| Oneplus Open | 2a70:f01a | ⚪ proposed | useAndroidExtensions |
-| Asus Zenfone 3 Ze552kl | 0b05:4daf | ⚪ proposed | useAndroidExtensions |
-| Asus Zenfone 4 Ze554kl | 0b05:4db0 | ⚪ proposed | useAndroidExtensions |
-| Asus Zenfone 5 Ze620kl | 0b05:4db1 | ⚪ proposed | useAndroidExtensions |
-| Asus Zenfone 5z | 0b05:4db2 | ⚪ proposed | useAndroidExtensions |
-| Asus Zenfone 6 Zs630kl | 0b05:4db3 | ⚪ proposed | useAndroidExtensions |
-| Asus Rog Phone 2 | 0b05:4db4 | ⚪ proposed | useAndroidExtensions |
-| Asus Rog Phone 3 | 0b05:4db5 | ⚪ proposed | useAndroidExtensions |
-| Asus Zenfone 7 Pro | 0b05:4db6 | ⚪ proposed | useAndroidExtensions |
-| Asus Zenfone 8 | 0b05:4db7 | ⚪ proposed | useAndroidExtensions |
-| Asus Rog Phone 5 | 0b05:4db8 | ⚪ proposed | useAndroidExtensions |
-| Asus Zenfone 9 | 0b05:4db9 | ⚪ proposed | useAndroidExtensions |
-| Asus Rog Phone 6 | 0b05:4dba | ⚪ proposed | useAndroidExtensions |
-| Asus Zenfone 10 | 0b05:4dbb | ⚪ proposed | useAndroidExtensions |
-| Asus Rog Phone 7 Ultimate | 0b05:4dbc | ⚪ proposed | useAndroidExtensions |
-| Asus Rog Phone 8 | 0b05:4dbd | ⚪ proposed | useAndroidExtensions |
-| Motorola Moto G Stylus | 22b8:2e84 | ⚪ proposed | useAndroidExtensions |
-| Motorola Moto G Play 2021 | 22b8:2e85 | ⚪ proposed | useAndroidExtensions |
-| Motorola Edge 2021 | 22b8:2e86 | ⚪ proposed | useAndroidExtensions |
-| Motorola Edge Plus 2021 | 22b8:2e87 | ⚪ proposed | useAndroidExtensions |
-| Motorola Edge 20 | 22b8:2e88 | ⚪ proposed | useAndroidExtensions |
-| Motorola Edge 30 Pro | 22b8:2e89 | ⚪ proposed | useAndroidExtensions |
-| Motorola Moto G52 | 22b8:2e8a | ⚪ proposed | useAndroidExtensions |
-| Motorola Moto G62 5g | 22b8:2e8b | ⚪ proposed | useAndroidExtensions |
-| Motorola Moto G82 5g | 22b8:2e8c | ⚪ proposed | useAndroidExtensions |
-| Motorola Edge 40 Pro | 22b8:2e8d | ⚪ proposed | useAndroidExtensions |
-| Motorola Edge Plus 2023 | 22b8:2e8e | ⚪ proposed | useAndroidExtensions |
-| Motorola Moto G54 | 22b8:2e8f | ⚪ proposed | useAndroidExtensions |
-| Motorola Moto G84 | 22b8:2e90 | ⚪ proposed | useAndroidExtensions |
-| Motorola Edge 50 Pro | 22b8:2e91 | ⚪ proposed | useAndroidExtensions |
-| Motorola Razr 2023 | 22b8:2e92 | ⚪ proposed | useAndroidExtensions |
-| Motorola Razr 40 Ultra | 22b8:2e93 | ⚪ proposed | useAndroidExtensions |
-| Huawei P9 Plus | 12d1:1053 | ⚪ proposed | — |
-| Huawei P10 Plus | 12d1:1055 | ⚪ proposed | — |
-| Huawei P20 | 12d1:1056 | ⚪ proposed | — |
-| Huawei P20 Pro | 12d1:1057 | ⚪ proposed | — |
-| Huawei P20 Lite | 12d1:1058 | ⚪ proposed | — |
-| Huawei P30 | 12d1:1059 | ⚪ proposed | — |
-| Huawei P30 Pro | 12d1:105a | ⚪ proposed | — |
-| Huawei P30 Lite | 12d1:105b | ⚪ proposed | — |
-| Huawei P40 | 12d1:105c | ⚪ proposed | — |
-| Huawei P40 Pro | 12d1:105d | ⚪ proposed | — |
-| Huawei P40 Lite | 12d1:105e | ⚪ proposed | — |
-| Huawei P50 Pro | 12d1:105f | ⚪ proposed | — |
-| Huawei P60 Pro | 12d1:1060 | ⚪ proposed | — |
-| Huawei Mate 9 | 12d1:107a | ⚪ proposed | — |
-| Huawei Mate 10 | 12d1:107b | ⚪ proposed | — |
-| Huawei Mate 10 Pro | 12d1:107c | ⚪ proposed | — |
-| Huawei Mate 20 X | 12d1:1080 | ⚪ proposed | — |
-| Huawei Mate 30 Pro | 12d1:1081 | ⚪ proposed | — |
-| Huawei Mate 50 Pro | 12d1:1083 | ⚪ proposed | — |
-| Huawei Mate 60 Pro | 12d1:1084 | ⚪ proposed | — |
-| Huawei Mate X Foldable | 12d1:1085 | ⚪ proposed | — |
-| Huawei Mate Xs2 | 12d1:1086 | ⚪ proposed | — |
-| Huawei Nova 3 | 12d1:1090 | ⚪ proposed | — |
-| Huawei Nova 3i | 12d1:1091 | ⚪ proposed | — |
-| Huawei Nova 5t | 12d1:1092 | ⚪ proposed | — |
-| Huawei Nova 7 Se | 12d1:1093 | ⚪ proposed | — |
-| Huawei Nova 8 Pro | 12d1:1094 | ⚪ proposed | — |
-| Huawei Nova 9 | 12d1:1095 | ⚪ proposed | — |
-| Huawei Mediapad M5 | 12d1:3803 | ⚪ proposed | — |
-| Huawei Mediapad M6 | 12d1:3804 | ⚪ proposed | — |
-| Huawei Matepad Pro 108 | 12d1:3805 | ⚪ proposed | — |
-| Huawei Matepad 11 | 12d1:3806 | ⚪ proposed | — |
-| Huawei Matepad Pro 126 | 12d1:3807 | ⚪ proposed | — |
-| Honor 8 | 339b:0001 | ⚪ proposed | — |
-| Honor 9 | 339b:0002 | ⚪ proposed | — |
-| Honor 10 | 339b:0003 | ⚪ proposed | — |
-| Honor 20 | 339b:0004 | ⚪ proposed | — |
-| Honor 30 Pro | 339b:0005 | ⚪ proposed | — |
-| Honor 50 | 339b:0006 | ⚪ proposed | — |
-| Honor 70 | 339b:0007 | ⚪ proposed | — |
-| Honor 90 | 339b:0008 | ⚪ proposed | — |
-| Honor Magic4 Pro | 339b:0009 | ⚪ proposed | — |
-| Honor Magic5 Pro | 339b:000a | ⚪ proposed | — |
-| Honor Magic6 Pro | 339b:000b | ⚪ proposed | — |
-| Honor X8 | 339b:000c | ⚪ proposed | — |
-| Honor X9 | 339b:000d | ⚪ proposed | — |
-| Honor X9b | 339b:000e | ⚪ proposed | — |
-| Sony Xperia Z2 | 0fce:01ad | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Z3 | 0fce:01b9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Z4 | 0fce:01c5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia M4 Aqua | 0fce:01d0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Z5 | 0fce:01d3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xa2 | 0fce:01e3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xa2 Ultra | 0fce:01e4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xz | 0fce:01e5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xz Premium | 0fce:01ea | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia Xz1 Compact | 0fce:01f5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 1 | 0fce:0200 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 10 | 0fce:0202 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 10 Plus | 0fce:0203 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia L3 | 0fce:0204 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 1 Ii | 0fce:0206 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 10 Ii | 0fce:0208 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 5 Iii | 0fce:020b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 5 Iv | 0fce:020f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 10 Iv | 0fce:0210 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 1 V | 0fce:0212 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 5 V | 0fce:0213 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 10 V | 0fce:0214 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 1 Vi | 0fce:0216 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 10 Vi | 0fce:0217 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Sony Xperia 5 Vi | 0fce:0218 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica M10 | 1a98:0001 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica M10 P | 1a98:0003 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica M10 R | 1a98:0004 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica M11 | 1a98:0005 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica M11 Monochrom | 1a98:0006 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica Q | 1a98:0007 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica Q2 | 1a98:0008 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica Q3 | 1a98:0009 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica Sl Typ601 | 1a98:000a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica Sl2 | 1a98:000b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica Sl2 S | 1a98:000c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica Sl3 | 1a98:000d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica S Typ007 | 1a98:000e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica S3 | 1a98:000f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica X E | 1a98:0010 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica V Lux 5 | 1a98:0011 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica D Lux 7 | 1a98:0012 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Phaseone Iq3 100mp | 04bc:0001 | ⚪ proposed | — |
-| Phaseone Iq4 150mp | 04bc:0002 | ⚪ proposed | — |
-| Phaseone Xt | 04bc:0003 | ⚪ proposed | — |
-| Phaseone Xf Iq4 | 04bc:0004 | ⚪ proposed | — |
-| Phaseone P65plus | 04bc:0005 | ⚪ proposed | — |
-| Mamiya Dm33 | 04f1:4001 | ⚪ proposed | — |
-| Leaf Credo 80 | 04f1:4002 | ⚪ proposed | — |
-| Pentax K1 Markii | 25fb:0002 | ⚪ proposed | — |
-| Pentax K3 Markiii | 25fb:0003 | ⚪ proposed | — |
-| Pentax K70 | 25fb:0004 | ⚪ proposed | — |
-| Pentax Kf | 25fb:0005 | ⚪ proposed | — |
-| Pentax 645z | 25fb:0006 | ⚪ proposed | — |
-| Casio Ex Zr200 | 07cf:4001 | ⚪ proposed | — |
-| Casio Ex Zr1000 | 07cf:4002 | ⚪ proposed | — |
-| Casio Ex 10 | 07cf:4003 | ⚪ proposed | — |
-| Casio Ex Tr70 | 07cf:4004 | ⚪ proposed | — |
-| Casio Ex Fr200 | 07cf:4005 | ⚪ proposed | — |
-| Minolta Dimage 7i | 0686:4001 | ⚪ proposed | — |
-| Minolta Dimage A1 | 0686:4002 | ⚪ proposed | — |
-| Konica Minolta Dimage Z5 | 0686:4003 | ⚪ proposed | — |
-| Konica Minolta Dimage A200 | 0686:4004 | ⚪ proposed | — |
-| Nothing Phone 1 | 2b0e:0001 | ⚪ proposed | useAndroidExtensions |
-| Nothing Phone 2 | 2b0e:0002 | ⚪ proposed | useAndroidExtensions |
-| Nothing Phone 2a | 2b0e:0003 | ⚪ proposed | useAndroidExtensions |
-| Nothing Phone 2a Plus | 2b0e:0004 | ⚪ proposed | useAndroidExtensions |
-| Nothing Cmf Phone 1 | 2b0e:0005 | ⚪ proposed | useAndroidExtensions |
-| Realme C11 Da09 | da09:0001 | ⚪ proposed | useAndroidExtensions |
-| Realme C12 Da09 | da09:0002 | ⚪ proposed | useAndroidExtensions |
-| Realme C15 Da09 | da09:0003 | ⚪ proposed | useAndroidExtensions |
-| Realme C20 Da09 | da09:0004 | ⚪ proposed | useAndroidExtensions |
-| Realme C21y Da09 | da09:0005 | ⚪ proposed | useAndroidExtensions |
-| Realme C25y Da09 | da09:0006 | ⚪ proposed | useAndroidExtensions |
-| Realme C31 Da09 | da09:0007 | ⚪ proposed | useAndroidExtensions |
-| Realme C33 Da09 | da09:0008 | ⚪ proposed | useAndroidExtensions |
-| Realme C51 Da09 | da09:0009 | ⚪ proposed | useAndroidExtensions |
-| Realme C67 Da09 | da09:000a | ⚪ proposed | useAndroidExtensions |
-| Meizu Mx4 2a45 | 2a45:0001 | ⚪ proposed | — |
-| Meizu Mx4 Pro 2a45 | 2a45:0002 | ⚪ proposed | — |
-| Meizu M2 Note 2a45 | 2a45:0003 | ⚪ proposed | — |
-| Meizu M3 Note 2a45 | 2a45:0004 | ⚪ proposed | — |
-| Meizu M5 2a45 | 2a45:0005 | ⚪ proposed | — |
-| Meizu M5 Note 2a45 | 2a45:0006 | ⚪ proposed | — |
-| Meizu Pro 6 2a45 | 2a45:0007 | ⚪ proposed | — |
-| Meizu 16 2a45 | 2a45:0008 | ⚪ proposed | — |
-| Meizu 16s 2a45 | 2a45:0009 | ⚪ proposed | — |
-| Meizu 17 2a45 | 2a45:000a | ⚪ proposed | — |
-| Meizu 18 2a45 | 2a45:000b | ⚪ proposed | — |
-| Meizu 20 2a45 | 2a45:000c | ⚪ proposed | — |
-| Sharp Aquos R3 04dd | 04dd:9871 | ⚪ proposed | — |
-| Sharp Aquos R5g 04dd | 04dd:9872 | ⚪ proposed | — |
-| Sharp Aquos R6 04dd | 04dd:9873 | ⚪ proposed | — |
-| Sharp Aquos R7 04dd | 04dd:9874 | ⚪ proposed | — |
-| Sharp Aquos Sense6 04dd | 04dd:9875 | ⚪ proposed | — |
-| Sharp Aquos Sense7 04dd | 04dd:9876 | ⚪ proposed | — |
-| Sharp Aquos Zero6 04dd | 04dd:9877 | ⚪ proposed | — |
-| Sharp Aquos Zero7 04dd | 04dd:9878 | ⚪ proposed | — |
-| Acer Iconia Tab A510 | 0502:3326 | ⚪ proposed | — |
-| Acer Iconia One 8 | 0502:3327 | ⚪ proposed | — |
-| Acer Iconia Tab 10 | 0502:3328 | ⚪ proposed | — |
-| Asus Zenpad 3s10 | 0b05:4c80 | ⚪ proposed | useAndroidExtensions |
-| Asus Zenpad10 Z301m | 0b05:4c81 | ⚪ proposed | useAndroidExtensions |
-| Asus Zenpad8 Z380kl | 0b05:4c82 | ⚪ proposed | useAndroidExtensions |
-| Asus Transformer Pad | 0b05:4c83 | ⚪ proposed | useAndroidExtensions |
-| Asus Zenpad Z10 | 0b05:4c84 | ⚪ proposed | useAndroidExtensions |
-| Asus Vivotab Note8 | 0b05:4c85 | ⚪ proposed | useAndroidExtensions |
-| Asus Memopad7 | 0b05:7777 | ⚪ proposed | useAndroidExtensions |
-| Asus Memopad8 | 0b05:7778 | ⚪ proposed | useAndroidExtensions |
-| Asus Fonepad7 | 0b05:7779 | ⚪ proposed | useAndroidExtensions |
-| Asus Padfone2 | 0b05:777a | ⚪ proposed | useAndroidExtensions |
-| Lenovo Tab P11 Gen2 | 17ef:7498 | ⚪ proposed | useAndroidExtensions |
-| Lenovo Tab M10 Plus | 17ef:7499 | ⚪ proposed | useAndroidExtensions |
-| Lenovo Tab P11 Plus | 17ef:749a | ⚪ proposed | useAndroidExtensions |
-| Lenovo Tab M8 Hd | 17ef:749b | ⚪ proposed | useAndroidExtensions |
-| Lenovo Tab M9 | 17ef:749c | ⚪ proposed | useAndroidExtensions |
-| Lenovo K9 | 17ef:749d | ⚪ proposed | useAndroidExtensions |
-| Lenovo Z6 | 17ef:749e | ⚪ proposed | useAndroidExtensions |
-| Lenovo Z6 Pro | 17ef:749f | ⚪ proposed | useAndroidExtensions |
-| Coolpad Legacy | 1ebf:0090 | ⚪ proposed | useAndroidExtensions |
-| Coolpad Legacy Brisa | 1ebf:0091 | ⚪ proposed | useAndroidExtensions |
-| Coolpad Cool3 | 1ebf:0092 | ⚪ proposed | useAndroidExtensions |
-| Coolpad Cool5 | 1ebf:0093 | ⚪ proposed | useAndroidExtensions |
-| Coolpad Legacy S | 1ebf:0094 | ⚪ proposed | useAndroidExtensions |
-| Mediatek Mt6765 Helio P35 | 0e8d:2009 | ⚪ proposed | useAndroidExtensions |
-| Mediatek Mt6853 Dimensity720 | 0e8d:200b | ⚪ proposed | useAndroidExtensions |
-| Mediatek Mt6877 Dimensity900 | 0e8d:200c | ⚪ proposed | useAndroidExtensions |
-| Mediatek Mt6879 Dimensity1050 | 0e8d:200d | ⚪ proposed | useAndroidExtensions |
-| Mediatek Mt6885 Dimensity1000l | 0e8d:200e | ⚪ proposed | useAndroidExtensions |
-| Mediatek Mt6893 Dimensity1200 | 0e8d:200f | ⚪ proposed | useAndroidExtensions |
-| Kyocera Duraforce Xd New | 0482:0091 | ⚪ proposed | useAndroidExtensions |
-| Kyocera Duraforce Pro2 | 0482:0092 | ⚪ proposed | useAndroidExtensions |
-| Kyocera Duraforce Ultra5g | 0482:0093 | ⚪ proposed | useAndroidExtensions |
-| Kyocera Torque G05 | 0482:0094 | ⚪ proposed | useAndroidExtensions |
-| Kyocera Digno Bx2 | 0482:0095 | ⚪ proposed | useAndroidExtensions |
-| Kyocera Basio4 | 0482:0096 | ⚪ proposed | useAndroidExtensions |
-| Kyocera Gratina | 0482:0097 | ⚪ proposed | useAndroidExtensions |
-| Cat S61 | 1e3e:0001 | ⚪ proposed | useAndroidExtensions |
-| Cat S62 Pro | 1e3e:0002 | ⚪ proposed | useAndroidExtensions |
-| Cat S42 | 1e3e:0003 | ⚪ proposed | useAndroidExtensions |
-| Cat S48c | 1e3e:0004 | ⚪ proposed | useAndroidExtensions |
-| Cat S22 Flip | 1e3e:0005 | ⚪ proposed | useAndroidExtensions |
-| Canon EOS 5ds | 04a9:3278 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS 5dsr | 04a9:3279 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS 80d | 04a9:327c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS 800d | 04a9:3285 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS 77d | 04a9:3287 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS 4000d | 04a9:328e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS Rp | 04a9:32a2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS M50ii | 04a9:32a6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS R6ii | 04a9:32b0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS R7 | 04a9:32b2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS R8 | 04a9:32b6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS R50 | 04a9:32b8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Canon EOS R100 | 04a9:32ba | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Gopro Hero3 | 2672:0040 | ⚪ proposed | — |
-| Gopro Hero3plus | 2672:0041 | ⚪ proposed | — |
-| Gopro Hero6 | 2672:0044 | ⚪ proposed | — |
-| Gopro Hero7 | 2672:0045 | ⚪ proposed | — |
-| Gopro Hero8 | 2672:0046 | ⚪ proposed | — |
-| Gopro Hero10 | 2672:0048 | ⚪ proposed | — |
-| Gopro Hero12 | 2672:004a | ⚪ proposed | — |
-| Razer Phone 2017 | 1532:9002 | ⚪ proposed | — |
-| Razer Phone 2 2018 | 1532:9003 | ⚪ proposed | — |
-| Sony Psp 1000 | 054c:005f | ⚪ proposed | — |
-| Sony Psp 3000 | 054c:01c8 | ⚪ proposed | — |
-| Sony Psp Go | 054c:0268 | ⚪ proposed | — |
-| Sony Psp E1000 | 054c:02e7 | ⚪ proposed | — |
-| Sony Ps Vita Pch1000 | 054c:04e3 | ⚪ proposed | — |
-| Sony Ps4 Ext Media | 054c:0951 | ⚪ proposed | — |
-| Amazon Kindle Fire Orig | 1949:0006 | ⚪ proposed | — |
-| Amazon Kindle Fire Hdx89 | 1949:0009 | ⚪ proposed | — |
-| Amazon Fire Hd10 2015 | 1949:000e | ⚪ proposed | — |
-| Amazon Fire Hd8 2017 | 1949:000f | ⚪ proposed | — |
-| Amazon Fire Hd10 2017 | 1949:0010 | ⚪ proposed | — |
-| Amazon Fire 7 2017 | 1949:0011 | ⚪ proposed | — |
-| Amazon Fire Hd10 2019 | 1949:0013 | ⚪ proposed | — |
-| Amazon Fire Hd8plus 2020 | 1949:0014 | ⚪ proposed | — |
-| Amazon Fire Hd8 2022 | 1949:0015 | ⚪ proposed | — |
-| Amazon Fire Hd10 2023 | 1949:0016 | ⚪ proposed | — |
-| Microsoft Surface Duo | 045e:091e | ⚪ proposed | — |
-| Microsoft Surface Duo2 | 045e:091f | ⚪ proposed | — |
-| Palm Phone 2018 | 2d06:0001 | ⚪ proposed | — |
-| Fairphone 4 | 0489:e0a1 | ⚪ proposed | — |
-| Fairphone 5 | 0489:e0a2 | ⚪ proposed | — |
-| Fairphone 3 | 0489:e0a3 | ⚪ proposed | — |
-| Shiftphone 6m | 1fc9:0090 | ⚪ proposed | — |
-| Shiftphone 8 | 1fc9:0091 | ⚪ proposed | — |
-| Roland R 26 Field Recorder | 0582:0093 | ⚪ proposed | — |
-| Roland R 44 Field Recorder | 0582:0094 | ⚪ proposed | — |
-| Roland Go Piano | 0582:014e | ⚪ proposed | — |
-| Roland Fantom 06 | 0582:0150 | ⚪ proposed | — |
-| Roland Fantom 07 | 0582:0151 | ⚪ proposed | — |
-| Roland Fantom 08 | 0582:0152 | ⚪ proposed | — |
-| Roland Rd 88 | 0582:016f | ⚪ proposed | — |
-| Roland Rd 2000 Ex | 0582:0170 | ⚪ proposed | — |
-| Roland Mc 707 | 0582:0199 | ⚪ proposed | — |
-| Roland Mc 101 | 0582:019a | ⚪ proposed | — |
-| Roland Zc 1 V Piano | 0582:01b9 | ⚪ proposed | — |
-| Roland Spd Sx Pro | 0582:01c6 | ⚪ proposed | — |
-| Zoom H6 | 1686:0030 | ⚪ proposed | — |
-| Zoom H8 | 1686:0031 | ⚪ proposed | — |
-| Zoom Q8n 4k | 1686:0032 | ⚪ proposed | — |
-| Zoom L 8 | 1686:0033 | ⚪ proposed | — |
-| Zoom H3 Vr | 1686:0034 | ⚪ proposed | — |
-| Zoom H6essential | 1686:0035 | ⚪ proposed | — |
-| Zoom H1essential | 1686:0036 | ⚪ proposed | — |
-| Tascam Dr 40 | 06ef:0001 | ⚪ proposed | — |
-| Tascam Dr 100mkiii | 06ef:0002 | ⚪ proposed | — |
-| Tascam Dr 701d | 06ef:0003 | ⚪ proposed | — |
-| Tascam Dr 44wl | 06ef:0004 | ⚪ proposed | — |
-| Tascam Dr 05x | 06ef:0005 | ⚪ proposed | — |
-| Tascam Dr 10l | 06ef:0006 | ⚪ proposed | — |
-| Tascam Portacapture X8 | 06ef:0007 | ⚪ proposed | — |
-| Sony Icd Tx660 | 054c:0a5d | ⚪ proposed | — |
-| Sony Icd Sx2000 | 054c:0a5e | ⚪ proposed | — |
-| Sony Icd Ux570f | 054c:0a5f | ⚪ proposed | — |
-| Sony Icd Tx800 | 054c:0a60 | ⚪ proposed | — |
-| Sony Pcm A10 | 054c:0a61 | ⚪ proposed | — |
-| Sony Pcm D10 | 054c:0a62 | ⚪ proposed | — |
-| Sandisk Sansa Fuze | 0781:74c4 | ⚪ proposed | — |
-| Sandisk Sansa Clip | 0781:74c8 | ⚪ proposed | — |
-| Sandisk Sansa E200 | 0781:74e8 | ⚪ proposed | — |
-| Sandisk Sansa View | 0781:7494 | ⚪ proposed | — |
-| Creative Zen V | 041e:4151 | ⚪ proposed | — |
-| Creative Zen | 041e:4152 | ⚪ proposed | — |
-| Creative Zen M | 041e:4153 | ⚪ proposed | — |
-| Creative Zen X Fi | 041e:4154 | ⚪ proposed | — |
-| Creative Zen Stone | 041e:4155 | ⚪ proposed | — |
-| Creative Zen Style M300 | 041e:415e | ⚪ proposed | — |
-| Epson Perfection V39 | 04b8:01be | ⚪ proposed | — |
-| Epson Perfection V370 | 04b8:01bf | ⚪ proposed | — |
-| Epson Perfection V550 | 04b8:01c0 | ⚪ proposed | — |
-| Epson Perfection V600 | 04b8:01c1 | ⚪ proposed | — |
-| Epson Fastfoto Ff 680w | 04b8:01c2 | ⚪ proposed | — |
-| Epson Ds 80w | 04b8:01c3 | ⚪ proposed | — |
-| Epson Ds 575w | 04b8:01c4 | ⚪ proposed | — |
-| Epson Ds 770 | 04b8:01c5 | ⚪ proposed | — |
-| Epson Es 50 | 04b8:01c6 | ⚪ proposed | — |
-| Canon Canoscan Lide 300 | 04a9:190a | ⚪ proposed | — |
-| Canon Canoscan Lide 400 | 04a9:190b | ⚪ proposed | — |
-| Canon Canoscan Lide 30 | 04a9:190c | ⚪ proposed | — |
-| Canon Canoscan Lide 220 | 04a9:190d | ⚪ proposed | — |
-| Canon Canoscan 9000f Mark Ii | 04a9:190e | ⚪ proposed | — |
-| Hp Elite X3 | 03f0:5411 | ⚪ proposed | — |
-| Hp Elitepad 1000 G2 | 03f0:5412 | ⚪ proposed | — |
-| Hp Pro Slate 8 | 03f0:5413 | ⚪ proposed | — |
-| Hp Photosmart 380 | 03f0:4205 | ⚪ proposed | — |
-| Hp Photosmart 470 | 03f0:4305 | ⚪ proposed | — |
-| Hp Photosmart 618 | 03f0:4505 | ⚪ proposed | — |
-| Hp Photosmart M23 | 03f0:7505 | ⚪ proposed | — |
-| Blackmagic Pocket Cinema Camera 4k | 1edb:0001 | ⚪ proposed | — |
-| Blackmagic Pocket Cinema Camera 6k | 1edb:0002 | ⚪ proposed | — |
-| Blackmagic Pocket Cinema Camera 6k G2 | 1edb:0003 | ⚪ proposed | — |
-| Blackmagic Pocket Cinema Camera 6k Pro | 1edb:0004 | ⚪ proposed | — |
-| Blackmagic Pocket Cinema Camera 4k G2 | 1edb:0005 | ⚪ proposed | — |
-| Dji Mini 2 | 2ca3:0019 | ⚪ proposed | — |
-| Dji Mini 3 | 2ca3:001b | ⚪ proposed | — |
-| Dji Mini 3 Pro | 2ca3:001c | ⚪ proposed | — |
-| Dji Mini 4 Pro | 2ca3:001d | ⚪ proposed | — |
-| Dji Air 2s | 2ca3:001e | ⚪ proposed | — |
-| Flir One | 09cb:1001 | ⚪ proposed | — |
-| Flir One Pro | 09cb:1002 | ⚪ proposed | — |
-| Flir One Pro Lt | 09cb:1003 | ⚪ proposed | — |
-| Flir Vue Pro | 09cb:1004 | ⚪ proposed | — |
-| Samsung Galaxy A35 5g | 04e8:6909 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A55 5g | 04e8:690a | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A15 5g | 04e8:690b | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A23 5g | 04e8:690c | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A33 5g | 04e8:690d | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A53 5g | 04e8:690e | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A73 5g | 04e8:690f | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy M53 5g | 04e8:6910 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy M33 5g | 04e8:6911 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy M23 | 04e8:6912 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy F23 | 04e8:6913 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy F53 5g | 04e8:6914 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Xcover 6 Pro | 04e8:6915 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Xcover 7 | 04e8:6916 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Z Flip 4 | 04e8:6917 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Z Flip 5 | 04e8:6918 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Z Flip 6 | 04e8:6919 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Z Fold 6 | 04e8:691a | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S23 Fe | 04e8:691b | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S24 Fe | 04e8:691c | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S24 Ultra | 04e8:691d | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S24 Plus | 04e8:691e | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A06 | 04e8:691f | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy M34 5g | 04e8:6920 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy M54 5g | 04e8:6921 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab A9 | 04e8:6930 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab A9 Plus | 04e8:6931 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S9 Fe | 04e8:6932 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab Active5 | 04e8:6933 | ⚪ proposed | useAndroidExtensions |
-| Apple Iphone Ptp | 05ac:12a8 | ⚪ proposed | — |
-| Apple Ipad Ptp | 05ac:12ab | ⚪ proposed | — |
-| Apple Ipod Nano Ptp | 05ac:12ac | ⚪ proposed | — |
-| Apple Tv Ptp | 05ac:12aa | ⚪ proposed | — |
-| Apple Ipod Classic MTP | 05ac:1280 | ⚪ proposed | — |
-| Apple Ipod Classic 2g MTP | 05ac:1281 | ⚪ proposed | — |
-| Apple Ipod Nano 3g MTP | 05ac:1291 | ⚪ proposed | — |
-| Apple Ipod Nano 4g MTP | 05ac:1293 | ⚪ proposed | — |
-| Apple Ipod Nano 5g MTP | 05ac:1299 | ⚪ proposed | — |
-| Apple Ipod Nano 6g MTP | 05ac:129a | ⚪ proposed | — |
-| Apple Ipod Touch 3g MTP | 05ac:129e | ⚪ proposed | — |
-| Xiaomi 12 Pro | 2717:ff4a | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 12 Ultra | 2717:ff4b | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 12s | 2717:ff4c | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 12s Pro | 2717:ff4d | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 12s Ultra | 2717:ff4e | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 12t | 2717:ff4f | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 12t Pro | 2717:ff50 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 13 | 2717:ff51 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 13 Pro | 2717:ff52 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 13 Ultra | 2717:ff53 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 13t | 2717:ff54 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 13t Pro | 2717:ff55 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 14 | 2717:ff56 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 14 Pro | 2717:ff57 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 14 Ultra | 2717:ff58 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 14t | 2717:ff59 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 14t Pro | 2717:ff5a | ⚪ proposed | useAndroidExtensions |
-| Redmi Note 12 Pro | 2717:ff5b | ⚪ proposed | useAndroidExtensions |
-| Redmi Note 12 Pro Plus | 2717:ff5c | ⚪ proposed | useAndroidExtensions |
-| Redmi Note 12 Turbo | 2717:ff5d | ⚪ proposed | useAndroidExtensions |
-| Redmi Note 13 | 2717:ff5e | ⚪ proposed | useAndroidExtensions |
-| Redmi Note 13 Pro | 2717:ff5f | ⚪ proposed | useAndroidExtensions |
-| Redmi 12 | 2717:ff61 | ⚪ proposed | useAndroidExtensions |
-| Redmi 12c | 2717:ff62 | ⚪ proposed | useAndroidExtensions |
-| Redmi 13 | 2717:ff63 | ⚪ proposed | useAndroidExtensions |
-| Redmi 13c | 2717:ff64 | ⚪ proposed | useAndroidExtensions |
-| Redmi A2 | 2717:ff65 | ⚪ proposed | useAndroidExtensions |
-| Redmi A2 Plus | 2717:ff66 | ⚪ proposed | useAndroidExtensions |
-| Poco X5 | 2717:ff67 | ⚪ proposed | useAndroidExtensions |
-| Poco X6 | 2717:ff69 | ⚪ proposed | useAndroidExtensions |
-| Poco X6 Pro | 2717:ff6a | ⚪ proposed | useAndroidExtensions |
-| Poco M5 | 2717:ff6b | ⚪ proposed | useAndroidExtensions |
-| Poco M5s | 2717:ff6c | ⚪ proposed | useAndroidExtensions |
-| Poco M6 Pro | 2717:ff6d | ⚪ proposed | useAndroidExtensions |
-| Poco F5 | 2717:ff6e | ⚪ proposed | useAndroidExtensions |
-| Poco F5 Pro | 2717:ff6f | ⚪ proposed | useAndroidExtensions |
-| Poco F6 | 2717:ff70 | ⚪ proposed | useAndroidExtensions |
-| Poco F6 Pro | 2717:ff71 | ⚪ proposed | useAndroidExtensions |
-| Poco C65 | 2717:ff72 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mix Fold 3 | 2717:ff73 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mix Fold 4 | 2717:ff74 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Mix Flip | 2717:ff75 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Civi 3 | 2717:ff76 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Civi 4 Pro | 2717:ff77 | ⚪ proposed | useAndroidExtensions |
-| Fossil Gen5 | 2ba0:0001 | ⚪ proposed | — |
-| Fossil Gen5e | 2ba0:0002 | ⚪ proposed | — |
-| Fossil Gen6 | 2ba0:0003 | ⚪ proposed | — |
-| Fossil Gen6 Wellness | 2ba0:0004 | ⚪ proposed | — |
-| Fossil Sport | 2ba0:0005 | ⚪ proposed | — |
-| Skagen Falster3 | 2ba0:0006 | ⚪ proposed | — |
-| Skagen Falster4 | 2ba0:0007 | ⚪ proposed | — |
-| Ticwatch Pro3 | 1d5b:0001 | ⚪ proposed | — |
-| Ticwatch Pro3ultra | 1d5b:0002 | ⚪ proposed | — |
-| Ticwatch E3 | 1d5b:0003 | ⚪ proposed | — |
-| Ticwatch Pro5 | 1d5b:0004 | ⚪ proposed | — |
-| Sonyericsson Xperia X8 | 0fce:0187 | ⚪ proposed | useAndroidExtensions |
-| Sonyericsson Xperia X10mini | 0fce:0188 | ⚪ proposed | useAndroidExtensions |
-| Sonyericsson Xperia Arc | 0fce:0189 | ⚪ proposed | useAndroidExtensions |
-| Sonyericsson Xperia Neo | 0fce:018a | ⚪ proposed | useAndroidExtensions |
-| Sonyericsson Xperia Ray | 0fce:018b | ⚪ proposed | useAndroidExtensions |
-| Sonyericsson Xperia Minipro | 0fce:018c | ⚪ proposed | useAndroidExtensions |
-| Sony Xperia L4 | 0fce:01f0 | ⚪ proposed | useAndroidExtensions |
-| Sony Xperia L3 | 0fce:01f2 | ⚪ proposed | useAndroidExtensions |
-| Sennheiser Momentum4 | 1395:006c | ⚪ proposed | — |
-| Sennheiser Hd450bt | 1395:006d | ⚪ proposed | — |
-| Sennheiser Hd560s | 1395:006e | ⚪ proposed | — |
-| Sennheiser Accentum | 1395:006f | ⚪ proposed | — |
-| Oppo Find N3flip | 22d9:276f | ⚪ proposed | useAndroidExtensions |
-| Mkors Access Gen5e | 2ba0:0008 | ⚪ proposed | — |
-| Mkors Access Gen6 | 2ba0:0009 | ⚪ proposed | — |
-| Diesel Fullguard3 | 2ba0:000a | ⚪ proposed | — |
-| Diesel Fadelite | 2ba0:000b | ⚪ proposed | — |
-| Emporio Armani Connected3 | 2ba0:000c | ⚪ proposed | — |
-| Armani Exchange Connected | 2ba0:000d | ⚪ proposed | — |
-| Kate Spade Scallop2 | 2ba0:000e | ⚪ proposed | — |
-| Hugo Boss Smartwatch1 | 2ba0:000f | ⚪ proposed | — |
-| Puma Smartwatch | 2ba0:0010 | ⚪ proposed | — |
-| Misfit Vaporx | 2ba0:0011 | ⚪ proposed | — |
-| Fossil Gen4 | 2ba0:0012 | ⚪ proposed | — |
-| Fossil Gen3 | 2ba0:0013 | ⚪ proposed | — |
-| Skagen Falster2 | 2ba0:0014 | ⚪ proposed | — |
-| Skagen Falster1 | 2ba0:0015 | ⚪ proposed | — |
-| Diesel Fullguard25 | 2ba0:0016 | ⚪ proposed | — |
-| Mkors Sofie | 2ba0:0017 | ⚪ proposed | — |
-| Emporio Armani Smartwatch3 | 2ba0:0018 | ⚪ proposed | — |
-| Sennheiser Hd350bt | 1395:0070 | ⚪ proposed | — |
-| Sennheiser Ie300 | 1395:0071 | ⚪ proposed | — |
-| Sennheiser Cxtw | 1395:0072 | ⚪ proposed | — |
-| Sennheiser Sc230 | 1395:0073 | ⚪ proposed | — |
-| Sennheiser Mb360uc | 1395:0074 | ⚪ proposed | — |
-| Sennheiser Hd206 | 1395:0075 | ⚪ proposed | — |
-| Oppo Reno6pro | 22d9:2766 | ⚪ proposed | useAndroidExtensions |
-| Oppo A74 | 22d9:2767 | ⚪ proposed | useAndroidExtensions |
-| Oppo A55 5g | 22d9:2769 | ⚪ proposed | useAndroidExtensions |
-| Ticwatch Gtx | 1d5b:0005 | ⚪ proposed | — |
-| Ticwatch C2plus | 1d5b:0006 | ⚪ proposed | — |
-| Ticwatch S2 | 1d5b:0007 | ⚪ proposed | — |
-| Tecno Camon 30 | 1d5b:600a | ⚪ proposed | — |
-| Tecno Camon 30 Pro | 1d5b:600b | ⚪ proposed | — |
-| Tecno Camon 30 Premier | 1d5b:600c | ⚪ proposed | — |
-| Tecno Phantom V Flip | 1d5b:600d | ⚪ proposed | — |
-| Tecno Phantom V Fold2 | 1d5b:600e | ⚪ proposed | — |
-| Tecno Phantom X2 Pro | 1d5b:600f | ⚪ proposed | — |
-| Tecno Spark 20 | 1d5b:6010 | ⚪ proposed | — |
-| Tecno Spark 20 Pro | 1d5b:6011 | ⚪ proposed | — |
-| Tecno Spark 20 Pro Plus | 1d5b:6012 | ⚪ proposed | — |
-| Tecno Spark Go 2024 | 1d5b:6013 | ⚪ proposed | — |
-| Tecno Pova 5 | 1d5b:6014 | ⚪ proposed | — |
-| Tecno Pova 5 Pro | 1d5b:6015 | ⚪ proposed | — |
-| Tecno Pova 6 | 1d5b:6016 | ⚪ proposed | — |
-| Tecno Pova 6 Pro | 1d5b:6017 | ⚪ proposed | — |
-| Tecno Pop 8 | 1d5b:6018 | ⚪ proposed | — |
-| Tecno Pop 8 Pro | 1d5b:6019 | ⚪ proposed | — |
-| Tecno Camon 20 | 1d5b:601a | ⚪ proposed | — |
-| Tecno Camon 20 Premier | 1d5b:601b | ⚪ proposed | — |
-| Tecno Spark 10 Pro | 1d5b:601c | ⚪ proposed | — |
-| Tecno Phantom Ultimate | 1d5b:601d | ⚪ proposed | — |
-| Infinix Note 40 | 1d5c:6008 | ⚪ proposed | — |
-| Infinix Note 40 Pro | 1d5c:6009 | ⚪ proposed | — |
-| Infinix Note 40 Pro Plus | 1d5c:600a | ⚪ proposed | — |
-| Infinix Hot 40 | 1d5c:600b | ⚪ proposed | — |
-| Infinix Hot 40 Pro | 1d5c:600c | ⚪ proposed | — |
-| Infinix Hot 40i | 1d5c:600d | ⚪ proposed | — |
-| Infinix Zero 30 | 1d5c:600e | ⚪ proposed | — |
-| Infinix Zero 30 5g | 1d5c:600f | ⚪ proposed | — |
-| Infinix Gt 20 Pro | 1d5c:6010 | ⚪ proposed | — |
-| Infinix Smart 8 | 1d5c:6011 | ⚪ proposed | — |
-| Infinix Smart 8 Hd | 1d5c:6012 | ⚪ proposed | — |
-| Infinix Smart 8 Plus | 1d5c:6013 | ⚪ proposed | — |
-| Infinix Note 30 | 1d5c:6014 | ⚪ proposed | — |
-| Infinix Note 30 Pro | 1d5c:6015 | ⚪ proposed | — |
-| Infinix Hot 30 | 1d5c:6016 | ⚪ proposed | — |
-| Infinix Hot 30i | 1d5c:6017 | ⚪ proposed | — |
-| Infinix Zero Ultra | 1d5c:6018 | ⚪ proposed | — |
-| Infinix Gt 10 Pro | 1d5c:6019 | ⚪ proposed | — |
-| Infinix Note 12 Pro | 1d5c:601a | ⚪ proposed | — |
-| Infinix Hot 20s | 1d5c:601b | ⚪ proposed | — |
-| Itel A70 | 1d4d:6009 | ⚪ proposed | — |
-| Itel A70s | 1d4d:600a | ⚪ proposed | — |
-| Itel P55 Plus | 1d4d:600b | ⚪ proposed | — |
-| Itel P55 5g Plus | 1d4d:600c | ⚪ proposed | — |
-| Itel S24 | 1d4d:600d | ⚪ proposed | — |
-| Itel S24 Pro | 1d4d:600e | ⚪ proposed | — |
-| Itel Vision 5 | 1d4d:600f | ⚪ proposed | — |
-| Itel A60s | 1d4d:6010 | ⚪ proposed | — |
-| Itel A60 | 1d4d:6011 | ⚪ proposed | — |
-| Itel P40 | 1d4d:6012 | ⚪ proposed | — |
-| Itel P40 Plus | 1d4d:6013 | ⚪ proposed | — |
-| Itel S23 | 1d4d:6014 | ⚪ proposed | — |
-| Itel S23 Plus | 1d4d:6015 | ⚪ proposed | — |
-| Itel A27 | 1d4d:6016 | ⚪ proposed | — |
-| Itel A49 | 1d4d:6017 | ⚪ proposed | — |
-| Itel Vision 3 | 1d4d:6018 | ⚪ proposed | — |
-| Itel Vision 3 Plus | 1d4d:6019 | ⚪ proposed | — |
-| Itel A05s | 1d4d:601a | ⚪ proposed | — |
-| Itel P33 | 1d4d:601b | ⚪ proposed | — |
-| Valve Steam Deck Lcd | 28de:1002 | ⚪ proposed | — |
-| Valve Steam Deck Oled | 28de:1003 | ⚪ proposed | — |
-| Meta Quest 2 | 2833:0182 | ⚪ proposed | useAndroidExtensions |
-| Meta Quest 2 Alt | 2833:0183 | ⚪ proposed | useAndroidExtensions |
-| Meta Quest 3 | 2833:0184 | ⚪ proposed | useAndroidExtensions |
-| Meta Quest Pro | 2833:0185 | ⚪ proposed | useAndroidExtensions |
-| Meta Quest 3s | 2833:0186 | ⚪ proposed | useAndroidExtensions |
-| Razer Edge Gaming Tablet | 1532:9004 | ⚪ proposed | useAndroidExtensions |
-| Microsoft Bandon Pmc | 045e:00c9 | ⚪ proposed | supportsGetObjectPropList |
-| Microsoft MTP Simulator | 045e:0622 | ⚪ proposed | supportsGetObjectPropList |
-| Microsoft Kin | 045e:0642 | ⚪ proposed | supportsGetObjectPropList |
-| Microsoft Htc 8s | 045e:f0ca | ⚪ proposed | supportsGetObjectPropList |
-| Toshiba Gigabeat Megf40 | 0930:0009 | ⚪ proposed | supportsGetObjectPropList |
-| Toshiba Gigabeat | 0930:000c | ⚪ proposed | supportsGetObjectPropList |
-| Toshiba Gigabeat P20 | 0930:000f | ⚪ proposed | supportsGetObjectPropList |
-| Toshiba Gigabeat S | 0930:0010 | ⚪ proposed | — |
-| Toshiba Gigabeat P10 | 0930:0011 | ⚪ proposed | supportsGetObjectPropList |
-| Toshiba Gigabeat V30 | 0930:0014 | ⚪ proposed | supportsGetObjectPropList |
-| Toshiba Gigabeat U | 0930:0016 | ⚪ proposed | supportsGetObjectPropList |
-| Toshiba Gigabeat Meu202 | 0930:0018 | ⚪ proposed | supportsGetObjectPropList |
-| Toshiba Gigabeat T | 0930:0019 | ⚪ proposed | supportsGetObjectPropList |
-| Toshiba Gigabeat Meu201 | 0930:001a | ⚪ proposed | supportsGetObjectPropList |
-| Toshiba Gigabeat Met401 | 0930:001d | ⚪ proposed | supportsGetObjectPropList |
-| Toshiba Excite At200 | 0930:0960 | ⚪ proposed | — |
-| Toshiba Excite At300 | 0930:0963 | ⚪ proposed | — |
-| Toshiba Thrive At100 | 0930:7100 | ⚪ proposed | — |
-| Philips Hdd14xx | 0471:014c | ⚪ proposed | supportsGetObjectPropList |
-| Philips Hdd085 | 0471:014d | ⚪ proposed | supportsGetObjectPropList |
-| Philips Sa1115 | 0471:0164 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Audio | 0471:0165 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Shoqbox | 0471:0172 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Psa610 | 0471:0181 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Hdd6320 | 0471:01eb | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Sa3345 | 0471:2004 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Vibe | 0471:2075 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Muse | 0471:2077 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Vibe08 | 0471:207b | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Aria | 0471:207c | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Vibe Sa2vbe | 0471:20b7 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Ariaz | 0471:20b9 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Vibe02 | 0471:20e5 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Ariaz97 | 0471:2138 | ⚪ proposed | supportsGetObjectPropList |
-| Yota Phone C9660 | 2916:9039 | ⚪ proposed | — |
-| Yota Phone | 2916:9139 | ⚪ proposed | — |
-| Yota Phone 2 | 2916:914d | ⚪ proposed | — |
-| Yota Phone 2 | 2916:f003 | ⚪ proposed | — |
-| Wileyfox Spark | 2970:201d | ⚪ proposed | — |
-| Wileyfox Swift | 2970:2281 | ⚪ proposed | — |
-| Wileyfox Swift2 | 2970:2282 | ⚪ proposed | — |
-| Archos Gmini Xs100 | 0e79:1207 | ⚪ proposed | supportsGetObjectPropList |
-| Archos Xs202 | 0e79:1208 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 104 | 0e79:120a | ⚪ proposed | supportsGetObjectPropList |
-| Archos 204 | 0e79:120c | ⚪ proposed | supportsGetObjectPropList |
-| Archos 404cam | 0e79:1303 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 604wifi | 0e79:130b | ⚪ proposed | supportsGetObjectPropList |
-| Archos 704 Dvr | 0e79:130d | ⚪ proposed | supportsGetObjectPropList |
-| Archos 704tv | 0e79:130f | ⚪ proposed | supportsGetObjectPropList |
-| Archos 405 | 0e79:1311 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 605 | 0e79:1313 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 605f | 0e79:1315 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 705 | 0e79:1319 | ⚪ proposed | supportsGetObjectPropList |
-| Archos Tvplus | 0e79:131b | ⚪ proposed | supportsGetObjectPropList |
-| Archos 105 | 0e79:131d | ⚪ proposed | supportsGetObjectPropList |
-| Archos 405hdd | 0e79:1321 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 5 Mode2 | 0e79:1333 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 7 | 0e79:1335 | ⚪ proposed | supportsGetObjectPropList |
-| Astell Kern Ak120ii | 4102:1192 | ⚪ proposed | — |
-| Astell Kern Sr15 | 4102:1213 | ⚪ proposed | — |
-| Acer Iconia Tab A500 Id2 | 0502:3341 | ⚪ proposed | — |
-| Acer Iconia Tab A501 Id1 | 0502:3344 | ⚪ proposed | — |
-| Acer Iconia Tab A501 Id2 | 0502:3345 | ⚪ proposed | — |
-| Asus Tf700 Transformer MTP | 0b05:4c90 | ⚪ proposed | — |
-| Asus Tf700 Transformer MTP Adb | 0b05:4c91 | ⚪ proposed | — |
-| Asus Tf701t Transformer Pad MTP | 0b05:4ca0 | ⚪ proposed | — |
-| Asus Tf701t Transformer Pad MTP Adb | 0b05:4ca1 | ⚪ proposed | — |
-| Caterpillar Cat S50 | 04b7:88a9 | ⚪ proposed | — |
-| Caterpillar Cat S50 2nd Id | 04b7:88aa | ⚪ proposed | — |
-| Cowon Iaudio 7 MTP Mode | 0e21:0751 | ⚪ proposed | — |
-| Cowon Iaudio U5 MTP Mode | 0e21:0761 | ⚪ proposed | — |
-| Creative Portable Media Center | 041e:4123 | ⚪ proposed | — |
-| Creative Zen Xtra MTP Mode | 041e:4128 | ⚪ proposed | — |
-| Creative Zen Micro MTP Mode | 041e:4130 | ⚪ proposed | — |
-| Dell Dj Itty | 413c:4500 | ⚪ proposed | — |
-| Dell Dell Streak 7 | 413c:b10b | ⚪ proposed | — |
-| Garmin D2 Air | 091e:488b | ⚪ proposed | — |
-| Garmin Vivoactive 3 Music Lte | 091e:4bfa | ⚪ proposed | — |
-| Garmin D2 Delta Delta S Delta Px | 091e:4c7c | ⚪ proposed | — |
-| Garmin Vivoactive 4s | 091e:4c98 | ⚪ proposed | — |
-| Garmin Vivoactive 4 | 091e:4c99 | ⚪ proposed | — |
-| Htc One M9 1st Id | 0bb4:040b | ⚪ proposed | — |
-| Htc Spreadtrum Sh57myz03342 MTP | 0bb4:05e3 | ⚪ proposed | — |
-| Htc Desire 626g MTP | 0bb4:05f0 | ⚪ proposed | — |
-| Htc Desire 510 MTP Adb | 0bb4:05fd | ⚪ proposed | — |
-| Htc One M8 Google Play Edition MTP Adb | 0bb4:060b | ⚪ proposed | — |
-| Huawei Y320 U10 | 12d1:2406 | ⚪ proposed | — |
-| Huawei Y625 U03 | 12d1:255d | ⚪ proposed | — |
-| Huawei Y360 U61 | 12d1:2567 | ⚪ proposed | — |
-| Huawei Y360 U03 | 12d1:256b | ⚪ proposed | — |
-| Huawei Y541 U02 | 12d1:257c | ⚪ proposed | — |
-| Iriver Tolino Tab 7 | 1e68:1002 | ⚪ proposed | — |
-| Iriver Tolino Tab 8 | 1e68:1007 | ⚪ proposed | — |
-| Kyocera Kyl22 | 0482:0810 | ⚪ proposed | — |
-| Lenovo Lifetab S9512 | 17ef:74cc | ⚪ proposed | — |
-| Lenovo S660 | 17ef:74f8 | ⚪ proposed | — |
-| Lenovo Ideatab A2109a | 17ef:7542 | ⚪ proposed | — |
-| Lenovo Ideatab S2210a | 17ef:757d | ⚪ proposed | — |
-| Lenovo K900 Id2 | 17ef:75b3 | ⚪ proposed | — |
-| Lg Vx8550 V Cast Mobile Phone | 1004:6010 | ⚪ proposed | — |
-| Lg Kc910 Renoir Mobile Phone | 1004:608f | ⚪ proposed | — |
-| Lg Gr 500 Music Player | 1004:611b | ⚪ proposed | — |
-| Lg Km900 | 1004:6132 | ⚪ proposed | — |
-| Lg Lg8575 | 1004:619a | ⚪ proposed | — |
-| Motorola V3m V750 Verizon | 22b8:2a65 | ⚪ proposed | — |
-| Motorola Mb632 | 22b8:2dff | ⚪ proposed | — |
-| Motorola X 2nd Edition Xt1097 MTP | 22b8:2e24 | ⚪ proposed | — |
-| Motorola Xoom 2 Media Edition Id3 | 22b8:41cf | ⚪ proposed | — |
-| Motorola Droid X Mb525 Defy | 22b8:41d6 | ⚪ proposed | — |
-| Motorola Droid2 Id1 | 22b8:41da | ⚪ proposed | — |
-| Nokia 3110c Mobile Phone | 0421:005f | ⚪ proposed | — |
-| Nokia 3109c Mobile Phone | 0421:0065 | ⚪ proposed | — |
-| Nokia 6220 Classic | 0421:008d | ⚪ proposed | — |
-| Nokia 6210 Navigator | 0421:0098 | ⚪ proposed | — |
-| Nvidia Cm9 Adam | 0955:70a9 | ⚪ proposed | — |
-| Oneplus Oneplus 7 Pro MTP | 05c6:f000 | ⚪ proposed | — |
-| Samsung Yp 900 | 04e8:0409 | ⚪ proposed | — |
-| Samsung I550w Phone | 04e8:04a4 | ⚪ proposed | — |
-| Samsung Jet S8000 | 04e8:4f1f | ⚪ proposed | — |
-| Samsung Yh 920 501d | 04e8:501d | ⚪ proposed | — |
-| Samsung Yh 920 5022 | 04e8:5022 | ⚪ proposed | — |
-| Samsung Yh 925gs | 04e8:5024 | ⚪ proposed | — |
-| Samsung Yh 820 | 04e8:502e | ⚪ proposed | — |
-| Samsung Yh 925 Gs | 04e8:502f | ⚪ proposed | — |
-| Sandisk Sansa M200 Tcc MTP Mode | 0781:7401 | ⚪ proposed | — |
-| Sandisk Sansa M240 M250 | 0781:7430 | ⚪ proposed | — |
-| Sandisk Sansa C250 V2 | 0781:7452 | ⚪ proposed | — |
-| Xiaomi Mi 3w Ptp | 2717:0318 | ⚪ proposed | — |
-| Xiaomi Mi 2 Ptp | 2717:904d | ⚪ proposed | — |
-| Samsung Galaxy S25 | 04e8:6934 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S25 Plus | 04e8:6935 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S25 Ultra | 04e8:6936 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S10 | 04e8:6937 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy Tab S10 Plus | 04e8:6938 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A56 | 04e8:6939 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A36 | 04e8:693a | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy A16 | 04e8:693b | ⚪ proposed | useAndroidExtensions |
-| Google Pixel 9a | 18d1:4f00 | ⚪ proposed | — |
-| Oneplus 13 | 2a70:f01b | ⚪ proposed | useAndroidExtensions |
-| Oneplus 13r | 2a70:f01c | ⚪ proposed | useAndroidExtensions |
-| Oneplus Open 2 | 2a70:f01d | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 15 | 2717:ff78 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 15 Pro | 2717:ff79 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi 15 Ultra | 2717:ff7a | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redmi Note 14 Pro | 2717:ff7b | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redmi Note 14 Pro Plus | 2717:ff7c | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Poco X7 | 2717:ff7d | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Poco X7 Pro | 2717:ff7e | ⚪ proposed | useAndroidExtensions |
-| Nothing Phone 3 | 2b0e:0006 | ⚪ proposed | useAndroidExtensions |
-| Canon EOS R7 Mark Ii | 04a9:3319 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon Powershot V10 | 04a9:3316 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xs20 | 04cb:02f4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xt50 | 04cb:0307 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Gfx100sii | 04cb:0306 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Kodak Dc240 | 040a:0121 | ⚪ proposed | — |
-| Kodak Dc4800 | 040a:0160 | ⚪ proposed | — |
-| Kodak Dx3900 | 040a:0170 | ⚪ proposed | — |
-| Kodak Mc3 | 040a:0400 | ⚪ proposed | — |
-| Kodak Z7590 | 040a:0403 | ⚪ proposed | — |
-| Kodak Dx3500 | 040a:0500 | ⚪ proposed | — |
-| Kodak Cx4230 | 040a:0535 | ⚪ proposed | — |
-| Kodak Dx4900 | 040a:0550 | ⚪ proposed | — |
-| Kodak Cx7530 | 040a:057c | ⚪ proposed | — |
-| Kodak M893is | 040a:0585 | ⚪ proposed | — |
-| Kodak Z700 | 040a:0587 | ⚪ proposed | — |
-| Kodak P880 | 040a:0593 | ⚪ proposed | — |
-| Kodak Z8612is | 040a:0595 | ⚪ proposed | — |
-| Kodak Z950 | 040a:05cd | ⚪ proposed | — |
-| Kodak C1530 | 040a:0617 | ⚪ proposed | — |
-| Kodak M531 | 040a:0600 | ⚪ proposed | — |
-| Kodak C183 | 040a:060b | ⚪ proposed | — |
-| Kodak Dx6490 | 040a:0575 | ⚪ proposed | — |
-| Kodak Dx7630 | 040a:0577 | ⚪ proposed | — |
-| Kodak Dx3600 | 040a:0510 | ⚪ proposed | — |
-| Hp Photosmart 812 | 03f0:4202 | ⚪ proposed | — |
-| Hp Photosmart 850 | 03f0:4302 | ⚪ proposed | — |
-| Hp Photosmart 935 | 03f0:4402 | ⚪ proposed | — |
-| Hp Photosmart 945 | 03f0:4502 | ⚪ proposed | — |
-| Hp Photosmart C500 | 03f0:6002 | ⚪ proposed | — |
-| Hp Photosmart 715 | 03f0:6402 | ⚪ proposed | — |
-| Hp Photosmart 120 | 03f0:6502 | ⚪ proposed | — |
-| Hp Photosmart 720 | 03f0:6702 | ⚪ proposed | — |
-| Hp Photosmart 735 | 03f0:6a02 | ⚪ proposed | — |
-| Hp Photosmart M307 | 03f0:7302 | ⚪ proposed | — |
-| Hp Photosmart M22 | 03f0:7502 | ⚪ proposed | — |
-| Hp Photosmart M415 | 03f0:7a02 | ⚪ proposed | — |
-| Hp Photosmart M425 | 03f0:8002 | ⚪ proposed | — |
-| Hp Photosmart R927 | 03f0:8702 | ⚪ proposed | — |
-| Hp Photosmart M737 | 03f0:9602 | ⚪ proposed | — |
-| Konica Minolta Dimage A2 | 132b:0001 | ⚪ proposed | — |
-| Konica Minolta Dimage Z2 | 132b:0007 | ⚪ proposed | — |
-| Konica Minolta Dimage X21 | 132b:0009 | ⚪ proposed | — |
-| Konica Minolta Dimage Z3 | 132b:0018 | ⚪ proposed | — |
-| Konica Minolta Dimage A200 | 132b:0019 | ⚪ proposed | — |
-| Konica Minolta Dimage Z5 | 132b:0022 | ⚪ proposed | — |
-| Konica Minolta Dimage Z6 | 132b:0033 | ⚪ proposed | — |
-| Sanyo Vpc C5 | 0474:0230 | ⚪ proposed | — |
-| Sanyo Vpc Fh1 | 0474:02e5 | ⚪ proposed | — |
-| Topdon Tc004 Mini | 3474:0020 | ⚪ proposed | — |
-| Pioneer Dvr Lx60d | 08e4:0142 | ⚪ proposed | — |
-| Kodak Dx3215 | 040a:0525 | ⚪ proposed | — |
-| Kodak Dx3700 | 040a:0530 | ⚪ proposed | — |
-| Kodak Ls420 | 040a:0540 | ⚪ proposed | — |
-| Kodak V530 | 040a:059b | ⚪ proposed | — |
-| Astell Kern Ak380 | 4102:1195 | ⚪ proposed | — |
-| Astell Kern Ak70 | 4102:1200 | ⚪ proposed | — |
-| Astell Kern Se180 | 4102:1230 | ⚪ proposed | — |
-| Astell Kern Sr35 | 4102:1247 | ⚪ proposed | — |
-| Astell Kern Se300 | 4102:1249 | ⚪ proposed | — |
-| Astell Kern Se200 | 4102:1233 | ⚪ proposed | — |
-| Astell Kern Sp2000t | 4102:1236 | ⚪ proposed | — |
-| Astell Kern Kann Alpha | 4102:1238 | ⚪ proposed | — |
-| Astell Kern Kann Max | 4102:1242 | ⚪ proposed | — |
-| Astell Kern Sp3000 | 4102:1251 | ⚪ proposed | — |
-| Fiio M7 | 2972:0011 | ⚪ proposed | — |
-| Fiio M9 | 2972:0013 | ⚪ proposed | — |
-| Fiio M11 | 2972:0015 | ⚪ proposed | — |
-| Fiio M11 Pro | 2972:0017 | ⚪ proposed | — |
-| Fiio M11 Plus | 2972:0019 | ⚪ proposed | — |
-| Fiio M15 | 2972:001b | ⚪ proposed | — |
-| Fiio M17 | 2972:001d | ⚪ proposed | — |
-| Fiio Btr5 | 2972:0031 | ⚪ proposed | — |
-| Fiio Btr7 | 2972:0033 | ⚪ proposed | — |
-| Fiio K9 Pro | 2972:0041 | ⚪ proposed | — |
-| Hiby R6 Iii | 2b24:0003 | ⚪ proposed | — |
-| Hiby R8 | 2b24:0005 | ⚪ proposed | — |
-| Hiby R8 Ii | 2b24:0007 | ⚪ proposed | — |
-| Hiby Rs6 | 2b24:0009 | ⚪ proposed | — |
-| Hiby Rs8 | 2b24:000b | ⚪ proposed | — |
-| Hiby R4 | 2b24:000d | ⚪ proposed | — |
-| Ibasso Dx320 | 2e57:0003 | ⚪ proposed | — |
-| Ibasso Dx300 | 2e57:0005 | ⚪ proposed | — |
-| Ibasso Dx240 | 2e57:0007 | ⚪ proposed | — |
-| Ibasso Dx170 | 2e57:0009 | ⚪ proposed | — |
-| Ibasso Dx160 | 2e57:000b | ⚪ proposed | — |
-| Ibasso Dx220 | 2e57:000d | ⚪ proposed | — |
-| Shanling M7 | 31b2:0003 | ⚪ proposed | — |
-| Shanling M6 Ultra | 31b2:0005 | ⚪ proposed | — |
-| Shanling M3 Ultra | 31b2:0007 | ⚪ proposed | — |
-| Shanling M0 Pro | 31b2:0009 | ⚪ proposed | — |
-| Sony Nw Wm1am2 | 054c:0e6c | ⚪ proposed | — |
-| Sony Nw Wm1zm2 | 054c:0e6d | ⚪ proposed | — |
-| Iriver T20 | 4102:1115 | ⚪ proposed | — |
-| Iriver U10 | 4102:1116 | ⚪ proposed | — |
-| Iriver T10b | 4102:1117 | ⚪ proposed | — |
-| Iriver T20b | 4102:1118 | ⚪ proposed | — |
-| Iriver T10 2gb | 4102:1120 | ⚪ proposed | — |
-| Iriver Clix | 4102:112a | ⚪ proposed | — |
-| Iriver X20 | 4102:1132 | ⚪ proposed | — |
-| Iriver E100 V2 | 4102:1142 | ⚪ proposed | — |
-| Iriver Spinn | 4102:1147 | ⚪ proposed | — |
-| Iriver E50 | 4102:1151 | ⚪ proposed | — |
-| Iriver E150 | 4102:1152 | ⚪ proposed | — |
-| Iriver T5 | 4102:1153 | ⚪ proposed | — |
-| Iriver E30 | 4102:1167 | ⚪ proposed | — |
-| Iriver H10 5gb | 4102:2102 | ⚪ proposed | — |
-| Iriver H10 5 6gb | 4102:2105 | ⚪ proposed | — |
-| Iriver H300 | 1006:3004 | ⚪ proposed | — |
-| Dji Mavic 3 Pro | 2ca3:0027 | ⚪ proposed | — |
-| Dji Mavic 3 Classic | 2ca3:0028 | ⚪ proposed | — |
-| Dji Air 3s | 2ca3:0029 | ⚪ proposed | — |
-| Dji Avata 2 | 2ca3:002a | ⚪ proposed | — |
-| Dji Osmo Action 5 | 2ca3:002b | ⚪ proposed | — |
-| Dji Osmo Pocket 3 Alt | 2ca3:002c | ⚪ proposed | — |
-| Dji Mic 2 | 2ca3:002d | ⚪ proposed | — |
-| Dji Fpv | 2ca3:002e | ⚪ proposed | — |
-| Dji Mini Se | 2ca3:002f | ⚪ proposed | — |
-| Dji Mavic 3 Cine | 2ca3:0030 | ⚪ proposed | — |
-| Dji Avata | 2ca3:0031 | ⚪ proposed | — |
-| Dji Neo | 2ca3:0032 | ⚪ proposed | — |
-| Gopro Hero13 Black | 2672:005d | ⚪ proposed | — |
-| Gopro Hero13 Black Alt | 2672:005e | ⚪ proposed | — |
-| Gopro Max 2 | 2672:005f | ⚪ proposed | — |
-| Gopro Hero 2023 | 2672:0060 | ⚪ proposed | — |
-| Gopro Hero13 Mini | 2672:0061 | ⚪ proposed | — |
-| Insta360 Ace Pro 2 | 2e1a:0012 | ⚪ proposed | — |
-| Insta360 Go 3s | 2e1a:0013 | ⚪ proposed | — |
-| Insta360 One Rs 1inch | 2e1a:0014 | ⚪ proposed | — |
-| Insta360 X3 Alt | 2e1a:0015 | ⚪ proposed | — |
-| Insta360 Flow 2 | 2e1a:0016 | ⚪ proposed | — |
-| Sjcam Sj10 Pro | 1b3f:0201 | ⚪ proposed | — |
-| Sjcam Sj10x | 1b3f:0202 | ⚪ proposed | — |
-| Sjcam C300 | 1b3f:0203 | ⚪ proposed | — |
-| Sjcam A20 | 1b3f:0204 | ⚪ proposed | — |
-| Sjcam Sj8 Pro | 1b3f:0205 | ⚪ proposed | — |
-| Akaso Brave 7 | 3538:0009 | ⚪ proposed | — |
-| Akaso Brave 8 Lite | 3538:000a | ⚪ proposed | — |
-| Akaso Ek7000 Se | 3538:000b | ⚪ proposed | — |
-| Runcam Thumb Pro | 4255:0101 | ⚪ proposed | — |
-| Runcam Split 4 | 4255:0102 | ⚪ proposed | — |
-| Runcam Thumb 2 | 4255:0103 | ⚪ proposed | — |
-| Kobo Glo Hd | 2237:4167 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Aura Edition 2 | 2237:4175 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Aura H2o Edition 2 | 2237:4177 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Sage | 2237:4188 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Elipsa | 2237:4189 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Clara 2e | 2237:418c | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Elipsa 2e | 2237:418d | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Libra Colour | 2237:418e | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Clara Bw | 2237:418f | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Clara Colour | 2237:4190 | ⚪ proposed | supportsGetObjectPropList |
-| Onyx Boox Note Air | 2207:0016 | ⚪ proposed | — |
-| Onyx Boox Note Air 2 | 2207:0017 | ⚪ proposed | — |
-| Onyx Boox Note Air 3 | 2207:0018 | ⚪ proposed | — |
-| Onyx Boox Note Air 3c | 2207:0019 | ⚪ proposed | — |
-| Onyx Boox Tab Ultra | 2207:001a | ⚪ proposed | — |
-| Onyx Boox Tab Ultra C Pro | 2207:001b | ⚪ proposed | — |
-| Onyx Boox Poke5 | 2207:001c | ⚪ proposed | — |
-| Onyx Boox Page | 2207:001d | ⚪ proposed | — |
-| Onyx Boox Note X | 2207:001e | ⚪ proposed | — |
-| Onyx Boox Nova Air | 2207:001f | ⚪ proposed | — |
-| Onyx Boox Nova Air 2 | 2207:0020 | ⚪ proposed | — |
-| Pocketbook Inkpad 4 | 0525:a4a5 | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Inkpad Color 3 | 0525:a4a6 | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Era | 0525:a4a7 | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Touch Hd 3 | 0525:a4a8 | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Verse Pro | 0525:a4a9 | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Touch Lux 5 | 0525:a4aa | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Inkpad 3 | 0525:a4ab | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Color | 0525:a4ac | ⚪ proposed | supportsGetObjectPropList |
-| Barnesnoble Nook Simple Touch | 2080:0002 | ⚪ proposed | — |
-| Barnesnoble Nook Glowlight Plus | 2080:0003 | ⚪ proposed | — |
-| Barnesnoble Nook Glowlight 4 | 2080:0007 | ⚪ proposed | — |
-| Barnesnoble Nook Glowlight 4e | 2080:0008 | ⚪ proposed | — |
-| Barnesnoble Nook Hd | 2080:000b | ⚪ proposed | — |
-| Barnesnoble Nook Hdplus | 2080:000c | ⚪ proposed | — |
-| Tolino Shine 4 | 1f85:6058 | ⚪ proposed | supportsGetObjectPropList |
-| Tolino Page 2 | 1f85:605a | ⚪ proposed | supportsGetObjectPropList |
-| Tolino Epos 3 | 1f85:605c | ⚪ proposed | supportsGetObjectPropList |
-| Tolino Vision 5 | 1f85:605e | ⚪ proposed | supportsGetObjectPropList |
-| Amazon Kindle 2 | 1949:0002 | ⚪ proposed | — |
-| Amazon Kindle Dx | 1949:0003 | ⚪ proposed | — |
-| Amazon Kindle Keyboard | 1949:0004 | ⚪ proposed | — |
-| Amazon Kindle Pw4 | 1949:0402 | ⚪ proposed | — |
-| Amazon Kindle Basic 10th | 1949:0502 | ⚪ proposed | — |
-| Amazon Kindle 11th 2022 | 1949:0632 | ⚪ proposed | — |
-| Amazon Kindle Pw Sig Edition | 1949:0642 | ⚪ proposed | — |
-| Garmin Dashcam47 | 091e:245f | ⚪ proposed | — |
-| Garmin Dashcam46 | 091e:2460 | ⚪ proposed | — |
-| Garmin Dashcam56 | 091e:2461 | ⚪ proposed | — |
-| Garmin Dashcam66w | 091e:2462 | ⚪ proposed | — |
-| Garmin Dashcamlive | 091e:2463 | ⚪ proposed | — |
-| Blackvue Dr900x 2ch | 0603:d901 | ⚪ proposed | — |
-| Blackvue Dr770x 2ch | 0603:d771 | ⚪ proposed | — |
-| Blackvue Dr750x 2ch | 0603:d751 | ⚪ proposed | — |
-| Blackvue Dr900s 2ch | 0603:d900 | ⚪ proposed | — |
-| Blackvue Dr590x 2ch | 0603:d591 | ⚪ proposed | — |
-| Blackvue Dr770x 1ch | 0603:d770 | ⚪ proposed | — |
-| Thinkware U1000 | 1eac:0100 | ⚪ proposed | — |
-| Thinkware Q1000 | 1eac:0200 | ⚪ proposed | — |
-| Thinkware F200pro | 1eac:0300 | ⚪ proposed | — |
-| Thinkware F70pro | 1eac:0400 | ⚪ proposed | — |
-| Thinkware X1000 | 1eac:0500 | ⚪ proposed | — |
-| Thinkware T700 | 1eac:0600 | ⚪ proposed | — |
-| 70mai A800s 4k | 2717:7001 | ⚪ proposed | — |
-| 70mai A810 | 2717:7002 | ⚪ proposed | — |
-| 70mai Omni X200 | 2717:7003 | ⚪ proposed | — |
-| 70mai A500s | 2717:7004 | ⚪ proposed | — |
-| 70mai M300 | 2717:7005 | ⚪ proposed | — |
-| Rexing V1 4k | 0603:e001 | ⚪ proposed | — |
-| Rexing V1p Pro | 0603:e002 | ⚪ proposed | — |
-| Rexing V3 | 0603:e003 | ⚪ proposed | — |
-| Rexing V5 | 0603:e004 | ⚪ proposed | — |
-| Vantrue N4 | 0603:f001 | ⚪ proposed | — |
-| Vantrue N2s | 0603:f002 | ⚪ proposed | — |
-| Vantrue S1 | 0603:f003 | ⚪ proposed | — |
-| Vantrue E1 | 0603:f004 | ⚪ proposed | — |
-| Vantrue N5 | 0603:f005 | ⚪ proposed | — |
-| Vantrue X4s | 0603:f006 | ⚪ proposed | — |
-| Flir E8 Xt | 09cb:1005 | ⚪ proposed | — |
-| Flir E6 Xt | 09cb:1006 | ⚪ proposed | — |
-| Flir E5 Xt | 09cb:1007 | ⚪ proposed | — |
-| Flir C5 | 09cb:1008 | ⚪ proposed | — |
-| Flir One Edge Pro | 09cb:1996 | ⚪ proposed | — |
-| Flir Breach Ptq136 | 09cb:4007 | ⚪ proposed | — |
-| Flir T530 | 09cb:1010 | ⚪ proposed | — |
-| Flir T540 | 09cb:1011 | ⚪ proposed | — |
-| Flir T560 | 09cb:1012 | ⚪ proposed | — |
-| Infiray P2 Pro | 2bdf:0001 | ⚪ proposed | — |
-| Infiray T2l | 2bdf:0002 | ⚪ proposed | — |
-| Infiray T2s Plus | 2bdf:0003 | ⚪ proposed | — |
-| Seek Thermal Compact Pro | 289d:0010 | ⚪ proposed | — |
-| Seek Thermal Shotpro | 289d:0011 | ⚪ proposed | — |
-| Tomtom Go 520 | 1390:0001 | ⚪ proposed | — |
-| Tomtom Runner Gps Watch | 1390:7474 | ⚪ proposed | — |
-| Tomtom Bandit Action Cam | 1390:a001 | ⚪ proposed | — |
-| Tomtom Go 5200 | 1390:5456 | ⚪ proposed | — |
-| Tomtom Go Discover | 1390:5457 | ⚪ proposed | — |
-| Tomtom Rider 550 | 1390:5458 | ⚪ proposed | — |
-| Garmin Drive 5 | 091e:28db | ⚪ proposed | — |
-| Garmin Nuvicam | 091e:47fb | ⚪ proposed | — |
-| Garmin Nuvi 2505 | 091e:255b | ⚪ proposed | — |
-| Garmin Nuvi 55 | 091e:26a1 | ⚪ proposed | — |
-| Garmin Etrex 30 | 091e:2519 | ⚪ proposed | — |
-| Garmin Gpsmap 62sc | 091e:253c | ⚪ proposed | — |
-| Garmin Oregon Series | 091e:2380 | ⚪ proposed | — |
-| Garmin Nuvi 1350 | 091e:23cc | ⚪ proposed | — |
-| Anbernic Rg556 | 1f3a:6001 | ⚪ proposed | — |
-| Anbernic Rg505 | 1f3a:6002 | ⚪ proposed | — |
-| Anbernic Rg353v | 1f3a:6003 | ⚪ proposed | — |
-| Retroid Pocket 4 Pro | 05c6:f001 | ⚪ proposed | — |
-| Retroid Pocket 3 Plus | 05c6:f002 | ⚪ proposed | — |
-| Retroid Pocket Mini | 05c6:f003 | ⚪ proposed | — |
-| Ayn Odin 2 | 05c6:f010 | ⚪ proposed | — |
-| Ayn Odin 2 Mini | 05c6:f011 | ⚪ proposed | — |
-| Ayn Odin 2 Portal | 05c6:f012 | ⚪ proposed | — |
-| Wd My Passport Wireless Pro | 1058:0730 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Wd My Passport Wireless Ssd | 1058:0740 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Seagate Wireless Plus | 0bc2:5580 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Seagate Wireless Mobile | 0bc2:5581 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Dell Dj 2nd Generation | 041e:412f | ⚪ proposed | — |
-| Dell Dell Pocket Dj MTP Mode | 041e:4132 | ⚪ proposed | — |
-| Creative Zen Microphoto Alt | 041e:4133 | ⚪ proposed | — |
-| Creative Zen Sleek MTP Mode | 041e:4137 | ⚪ proposed | — |
-| Creative Zen V 2gb | 041e:4158 | ⚪ proposed | — |
-| Creative Zen X Fi 3 | 041e:4169 | ⚪ proposed | — |
-| Ziilabs Zii Egg | 041e:6000 | ⚪ proposed | — |
-| Acer Iconia Tab A100 Id1 | 0502:3348 | ⚪ proposed | — |
-| Acer Iconia Tab A100 Id2 | 0502:3349 | ⚪ proposed | — |
-| Acer Iconia Tab A101 Id1 | 0502:334a | ⚪ proposed | — |
-| Acer Iconia Tab A200 Id1 | 0502:337c | ⚪ proposed | — |
-| Acer Iconia Tab A200 Id2 | 0502:337d | ⚪ proposed | — |
-| Acer Iconia Tab A510 Id1 | 0502:3389 | ⚪ proposed | — |
-| Acer Iconia Tab A510 Id2 | 0502:338a | ⚪ proposed | — |
-| Acer S500 Cloudmobile | 0502:33aa | ⚪ proposed | — |
-| Acer E350 Liquid Gallant Duo Id1 | 0502:33c3 | ⚪ proposed | — |
-| Acer E350 Liquid Gallant Duo Id2 | 0502:33c4 | ⚪ proposed | — |
-| Acer Iconia Tab A210 | 0502:33cb | ⚪ proposed | — |
-| Acer Iconia Tab A110 | 0502:33d8 | ⚪ proposed | — |
-| Acer Liquid Z120 Mt65xx | 0502:3473 | ⚪ proposed | — |
-| Acer Liquid E2 | 0502:3514 | ⚪ proposed | — |
-| Acer Iconia A1 810 | 0502:353c | ⚪ proposed | — |
-| Acer Liquid Z130 Mt65xx | 0502:355f | ⚪ proposed | — |
-| Acer Iconia A3 A11 | 0502:3586 | ⚪ proposed | — |
-| Acer Liquid E3 | 0502:35a8 | ⚪ proposed | — |
-| Acer Z150 | 0502:35e4 | ⚪ proposed | — |
-| Acer Liquid X1 | 0502:3609 | ⚪ proposed | — |
-| Acer Z160 | 0502:361d | ⚪ proposed | — |
-| Acer Iconia A1 840fhd | 0502:362d | ⚪ proposed | — |
-| Acer E39 | 0502:3643 | ⚪ proposed | — |
-| Acer Liquid E700 | 0502:3644 | ⚪ proposed | — |
-| Acer One 7 | 0502:3657 | ⚪ proposed | — |
-| Acer Z200 | 0502:3683 | ⚪ proposed | — |
-| Acer A1 841 | 0502:365e | ⚪ proposed | — |
-| Acer Liquid S56 | 0502:3725 | ⚪ proposed | — |
-| Acer Liquid Z220 Id1 | 0502:374f | ⚪ proposed | — |
-| Acer Liquid Z220 Id2 | 0502:3750 | ⚪ proposed | — |
-| Acer Liquid Z630 | 0502:37ef | ⚪ proposed | — |
-| Acer Z530 | 0502:3822 | ⚪ proposed | — |
-| Acer Z530 16gb | 0502:3823 | ⚪ proposed | — |
-| Acer Iconia One 10 | 0502:3841 | ⚪ proposed | — |
-| Acer A3 A40 | 0502:387a | ⚪ proposed | — |
-| Acer Zest T06 | 0502:3886 | ⚪ proposed | — |
-| Acer Liquid Zest 4g | 0502:38a5 | ⚪ proposed | — |
-| Acer Liquid Zest Plus | 0502:38bb | ⚪ proposed | — |
-| Acer Liquid Z6e | 0502:3938 | ⚪ proposed | — |
-| Acer Iconia One 10 B3 A40 | 0502:394b | ⚪ proposed | — |
-| Iriver Portable Media Center 1 | 1006:4002 | ⚪ proposed | — |
-| Iriver Portable Media Center 2 | 1006:4003 | ⚪ proposed | — |
-| Jvc Alneo Xa Hd500 | 04f1:6105 | ⚪ proposed | supportsGetObjectPropList |
-| Intex Aqua Fish | 05c6:0a07 | ⚪ proposed | supportsGetObjectPropList |
-| Qualcomm Nokia 5530 Xpressmusic | 05c6:0229 | ⚪ proposed | supportsGetObjectPropList |
-| Qualcomm 6205 Balboa | 05c6:3196 | ⚪ proposed | supportsGetObjectPropList |
-| Qualcomm Gsmart G1342 | 05c6:8800 | ⚪ proposed | supportsGetObjectPropList |
-| Qualcomm Andromax U | 05c6:9025 | ⚪ proposed | supportsGetObjectPropList |
-| Qualcomm Oneplus One MTP | 05c6:6764 | ⚪ proposed | — |
-| Qualcomm Oneplus One Mtpplusadb | 05c6:6765 | ⚪ proposed | — |
-| Qualcomm Xolo Black MTP | 05c6:901b | ⚪ proposed | — |
-| Qualcomm Phicomm C230w MTP | 05c6:9039 | ⚪ proposed | — |
-| Archos Spod MTP Mode | 0e79:1341 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 5s It MTP Mode | 0e79:1351 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 5h It MTP Mode | 0e79:1357 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 48 MTP Mode | 0e79:1421 | ⚪ proposed | — |
-| Archos Arnova Childpad | 0e79:1458 | ⚪ proposed | — |
-| Archos Arnova 8c G3 | 0e79:145e | ⚪ proposed | — |
-| Archos Arnova 10bg3 Tablet | 0e79:146b | ⚪ proposed | — |
-| Archos 97 Xenon | 0e79:149a | ⚪ proposed | — |
-| Archos 97 Titanium | 0e79:14ad | ⚪ proposed | — |
-| Archos 80 Titanium | 0e79:14bf | ⚪ proposed | — |
-| Archos 101 Titanium | 0e79:14b9 | ⚪ proposed | — |
-| Archos 70b Titanium | 0e79:14ef | ⚪ proposed | — |
-| Archos 8o G9 MTP Mode | 0e79:1508 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 8o G9 Turbo MTP Mode | 0e79:1509 | ⚪ proposed | supportsGetObjectPropList |
-| Archos 80g9 | 0e79:1518 | ⚪ proposed | — |
-| Archos 101 G9 Id1 | 0e79:1528 | ⚪ proposed | — |
-| Archos 101 G9 Id2 | 0e79:1529 | ⚪ proposed | — |
-| Archos 101 G9 Turbo 250 Hd | 0e79:1538 | ⚪ proposed | — |
-| Archos 101 G9 Turbo | 0e79:1539 | ⚪ proposed | — |
-| Archos 101 Xs | 0e79:1548 | ⚪ proposed | — |
-| Archos 70it2 Id 1 | 0e79:1568 | ⚪ proposed | — |
-| Archos 70it2 Id 2 | 0e79:1569 | ⚪ proposed | — |
-| Archos 70 Cobalt | 0e79:15ba | ⚪ proposed | — |
-| Archos 50c | 0e79:2008 | ⚪ proposed | — |
-| Archos C40 | 0e79:31ab | ⚪ proposed | — |
-| Archos 50b | 0e79:31bd | ⚪ proposed | — |
-| Archos Helium 45b | 0e79:31d8 | ⚪ proposed | — |
-| Archos Phone | 0e79:31e1 | ⚪ proposed | — |
-| Archos 45 Neon | 0e79:31f3 | ⚪ proposed | — |
-| Archos 50 Diamond | 0e79:3229 | ⚪ proposed | — |
-| Archos 50 Diamond 2nd Id | 0e79:322a | ⚪ proposed | — |
-| Archos 101 G4 | 0e79:4002 | ⚪ proposed | — |
-| Archos Hudl Id1 | 0e79:5008 | ⚪ proposed | — |
-| Archos Hudl Id2 | 0e79:5009 | ⚪ proposed | — |
-| Archos 101d Neon | 0e79:51c6 | ⚪ proposed | — |
-| Archos Ac40dti | 0e79:5217 | ⚪ proposed | — |
-| Archos 50 Helium Plus | 0e79:5229 | ⚪ proposed | — |
-| Archos 50 Helium Plus 2nd Id | 0e79:522a | ⚪ proposed | — |
-| Archos 101 Xenon Lite | 0e79:528c | ⚪ proposed | — |
-| Archos 101 Xenon Lite Adb | 0e79:528d | ⚪ proposed | — |
-| Archos 40 Helium Phone | 0e79:52c2 | ⚪ proposed | — |
-| Archos Diamond S | 0e79:5305 | ⚪ proposed | — |
-| Archos 50d Neon | 0e79:5371 | ⚪ proposed | — |
-| Archos 70b Neon | 0e79:5395 | ⚪ proposed | — |
-| Archos 50 Power | 0e79:53a7 | ⚪ proposed | — |
-| Archos 101b Oxygen | 0e79:542f | ⚪ proposed | — |
-| Archos 55b Platinum | 0e79:544a | ⚪ proposed | — |
-| Archos 50f Helium | 0e79:545c | ⚪ proposed | — |
-| Archos 55 Diamond Selfie | 0e79:5465 | ⚪ proposed | — |
-| Archos Core 50p | 0e79:5603 | ⚪ proposed | — |
-| Cowon Iaudio D2plus Fw 2x MTP Mode | 0e21:0861 | ⚪ proposed | — |
-| Cowon Iaudio D2plus Dab Fw 4x MTP Mode | 0e21:0871 | ⚪ proposed | — |
-| Cowon Iaudio D2plus Fw 3x MTP Mode | 0e21:0881 | ⚪ proposed | — |
-| Cowon Iaudio D2plus Dmb Fw 1x MTP Mode | 0e21:0891 | ⚪ proposed | — |
-| Cowon Iaudio 9 MTP Mode | 0e21:0911 | ⚪ proposed | — |
-| Cowon Iaudio C2 MTP Mode | 0e21:0941 | ⚪ proposed | — |
-| Cowon Iaudio 10 MTP Mode | 0e21:0952 | ⚪ proposed | — |
-| Dell Dell Venue 7 Inch | 413c:b11a | ⚪ proposed | — |
-| Dell Dell Venue 7 Inch 2nd Id | 413c:b11b | ⚪ proposed | — |
-| Iriver T7 Volcano | 1042:1143 | ⚪ proposed | supportsGetObjectPropList |
-| Barnesnoble Nook 1st Edition | 2080:0001 | ⚪ proposed | — |
-| Barnesnoble Nook Tablet | 2080:0004 | ⚪ proposed | — |
-| Barnesnoble Nook Hd | 2080:0009 | ⚪ proposed | — |
-| Barnesnoble Nook 10 | 2080:000d | ⚪ proposed | — |
-| Google Nook Tablet MTP | 18d1:685c | ⚪ proposed | — |
-| Onyx Boox Tab X | 2207:0021 | ⚪ proposed | — |
-| Onyx Boox Go 103 | 2207:0022 | ⚪ proposed | — |
-| Onyx Boox Tab Mini C | 2207:0023 | ⚪ proposed | — |
-| Onyx Boox Note X3 | 2207:0024 | ⚪ proposed | — |
-| Onyx Boox Poke5 | 2207:0025 | ⚪ proposed | — |
-| Onyx Boox Page | 2207:0026 | ⚪ proposed | — |
-| Pocketbook Touch Lux 4 | 0525:a4a1 | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Aqua 2 | 0525:a4a2 | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Inkpad 3 Pro | 0525:a4a3 | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Era | 0525:a4a4 | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Inkpad Eo | 0525:a4ad | ⚪ proposed | supportsGetObjectPropList |
-| Pocketbook Inkpad X Pro | 0525:a4ae | ⚪ proposed | supportsGetObjectPropList |
-| Tolino Shine 5 | 1f85:6060 | ⚪ proposed | — |
-| Tolino Vision 7 | 1f85:6062 | ⚪ proposed | — |
-| Tolino Page 3 | 1f85:6064 | ⚪ proposed | — |
-| Tolino Epos 4 | 1f85:6066 | ⚪ proposed | — |
-| Kobo Libra Colour | 2237:4191 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Clara Bw | 2237:4192 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Nia 2 | 2237:4193 | ⚪ proposed | supportsGetObjectPropList |
-| Kobo Sage 2 | 2237:4194 | ⚪ proposed | supportsGetObjectPropList |
-| Amazon Fire Hdx 7 MTP | 1949:0041 | ⚪ proposed | — |
-| Amazon Fire Hdx 7 Adb | 1949:0042 | ⚪ proposed | — |
-| Amazon Fire Hdx 89 MTP | 1949:0091 | ⚪ proposed | — |
-| Amazon Fire Hdx 89 Adb | 1949:0092 | ⚪ proposed | — |
-| Amazon Fire 5th MTP | 1949:0201 | ⚪ proposed | — |
-| Amazon Fire 5th Adb | 1949:0202 | ⚪ proposed | — |
-| Amazon Fire 7 2022 MTP | 1949:03c1 | ⚪ proposed | — |
-| Amazon Fire 7 2022 Adb | 1949:03c2 | ⚪ proposed | — |
-| Amazon Fire Hd8 2022 MTP | 1949:0651 | ⚪ proposed | — |
-| Amazon Fire Hd8 2022 Adb | 1949:0652 | ⚪ proposed | — |
-| Amazon Fire Hd10 2023 Adb | 1949:06f2 | ⚪ proposed | — |
-| Lenovo Yoga Tablet 10 | 17ef:76fe | ⚪ proposed | — |
-| Lenovo Tab2 A7 | 17ef:785f | ⚪ proposed | — |
-| Lenovo Tab2 A8 | 17ef:78da | ⚪ proposed | — |
-| Lenovo Yoga Tab Yt3 | 17ef:7932 | ⚪ proposed | — |
-| Lenovo Tab2 A10 | 17ef:7949 | ⚪ proposed | — |
-| Lenovo Yoga Tab3 Pro | 17ef:795c | ⚪ proposed | — |
-| Lenovo Tab3 7 | 17ef:79a2 | ⚪ proposed | — |
-| Lenovo Yoga Book | 17ef:79af | ⚪ proposed | — |
-| Lenovo Tab3 10plus | 17ef:79de | ⚪ proposed | — |
-| Lenovo Tab 10 | 17ef:7a50 | ⚪ proposed | — |
-| Lenovo Tab3 8plus | 17ef:7a6b | ⚪ proposed | — |
-| Lenovo Tab4 10 | 17ef:7ac5 | ⚪ proposed | — |
-| Lenovo Tab4 10plus | 17ef:7ad0 | ⚪ proposed | — |
-| Lenovo Tab X704a | 17ef:7b25 | ⚪ proposed | — |
-| Lenovo Tab7 Essential | 17ef:7b3c | ⚪ proposed | — |
-| Lenovo Tab E8 | 17ef:7b84 | ⚪ proposed | — |
-| Lenovo Tab4 10 Alt | 17ef:7bc7 | ⚪ proposed | — |
-| Lenovo Tab P10 | 17ef:7bd3 | ⚪ proposed | — |
-| Lenovo Tab V7 | 17ef:7beb | ⚪ proposed | — |
-| Lenovo Yoga Smart Tab | 17ef:7c12 | ⚪ proposed | — |
-| Lenovo Tab M10 Fhd | 17ef:7c45 | ⚪ proposed | — |
-| Lenovo Tab M10 Fhdplus | 17ef:7c46 | ⚪ proposed | — |
-| Lenovo Tab P11 | 17ef:7c6f | ⚪ proposed | — |
-| Lenovo Tab M10hd Gen2 | 17ef:7c97 | ⚪ proposed | — |
-| Lenovo Tab M7 Gen3 | 17ef:7cb3 | ⚪ proposed | — |
-| Lenovo Tab P11plus | 17ef:7d4b | ⚪ proposed | — |
-| Lenovo Tab P11pro Gen2 | 17ef:7da5 | ⚪ proposed | — |
-| Lenovo Tab P12 | 17ef:7e16 | ⚪ proposed | — |
-| Lenovo Tab M11 | 17ef:7e7c | ⚪ proposed | — |
-| Lenovo Tab Plus | 17ef:7ea5 | ⚪ proposed | — |
-| Huawei Y560 | 12d1:259c | ⚪ proposed | — |
-| Huawei Cun U29 | 12d1:2608 | ⚪ proposed | — |
-| Huawei Lua L02 | 12d1:260b | ⚪ proposed | — |
-| Alcatel Popo4 | 1bbb:a00f | ⚪ proposed | — |
-| Tcl Alcatel Ot986 | 0451:d108 | ⚪ proposed | — |
-| Essential Ph1a | 2e17:c030 | ⚪ proposed | — |
-| Essential Ph1 | 2e17:c033 | ⚪ proposed | — |
-| Chuwi Vi8 Tablet | 8087:0a5f | ⚪ proposed | — |
-| Garmin Gps Generic | 091e:0003 | ⚪ proposed | — |
-| Garmin Etrex Cx | 091e:21a5 | ⚪ proposed | — |
-| Garmin Nuvi 360 | 091e:2236 | ⚪ proposed | — |
-| Garmin Edge 605 | 091e:2271 | ⚪ proposed | — |
-| Garmin Colorado 300 | 091e:2295 | ⚪ proposed | — |
-| Garmin Etrex Vista Hcx | 091e:22b6 | ⚪ proposed | — |
-| Garmin Oregon 400t | 091e:231b | ⚪ proposed | — |
-| Garmin Nuvi 205t | 091e:2353 | ⚪ proposed | — |
-| Garmin Edge 800 | 091e:2491 | ⚪ proposed | — |
-| Garmin Etrex 10 | 091e:2518 | ⚪ proposed | — |
-| Garmin Edge 800 Alt | 091e:2535 | ⚪ proposed | — |
-| Garmin Edge 200 | 091e:2613 | ⚪ proposed | — |
-| Garmin Drive 52m | 091e:2bf5 | ⚪ proposed | — |
-| Tomtom Blue Me | 1390:5454 | ⚪ proposed | — |
-| Magellan Roadmate 1475t | 120f:524e | ⚪ proposed | — |
-| Magellan Triton Series | 120f:5260 | ⚪ proposed | — |
-| Magellan Explorist Gc | 1dab:0001 | ⚪ proposed | — |
-| Magellan Crossover Gps | 1dab:0002 | ⚪ proposed | — |
-| 70mai Dashcam Pro Plus | 3361:7001 | ⚪ proposed | — |
-| 70mai Dashcam 4k | 3361:7002 | ⚪ proposed | — |
-| 70mai Dashcam Lite | 3361:7003 | ⚪ proposed | — |
-| 70mai Dashcam A800s | 3361:7004 | ⚪ proposed | — |
-| 70mai Dashcam M300 | 3361:7005 | ⚪ proposed | — |
-| Sandisk Sansa Express | 0781:7460 | ⚪ proposed | — |
-| Iriver N12 | 4102:1122 | ⚪ proposed | — |
-| Thomson Em28 Series | 069b:0774 | ⚪ proposed | supportsGetObjectPropList |
-| Thomson Opal  Lyra Mc4002 | 069b:0777 | ⚪ proposed | supportsGetObjectPropList |
-| Thomson Lyra Mc5104b M51 Series | 069b:077c | ⚪ proposed | supportsGetObjectPropList |
-| Thomson Rca H106 | 069b:301a | ⚪ proposed | supportsGetObjectPropList |
-| Thomson Scenium E308 | 069b:3028 | ⚪ proposed | supportsGetObjectPropList |
-| Thomson Lyra Hc308a | 069b:3035 | ⚪ proposed | supportsGetObjectPropList |
-| Coby Coby Mp705 | 1e74:6512 | ⚪ proposed | supportsGetObjectPropList |
-| Bravis A401 Neo | 0e8d:0c03 | ⚪ proposed | supportsGetObjectPropList |
-| Mediatek Mt65xx 67xx Mtppluscdc Mode | 0e8d:2012 | ⚪ proposed | supportsGetObjectPropList |
-| Mediatek Qin Phone F21 Pro | 0e8d:2026 | ⚪ proposed | supportsGetObjectPropList |
-| Lenovo Tab P12 2nd Id | 0e8d:7e16 | ⚪ proposed | supportsGetObjectPropList |
-| Trekstor Vibez 8 12gb | 066f:842a | ⚪ proposed | — |
-| Medion Md8333 Id1 | 066f:8550 | ⚪ proposed | — |
-| Medion Md8333 Id2 | 066f:8588 | ⚪ proposed | — |
-| Maxfield G Flash Ng 1gb | 066f:846c | ⚪ proposed | — |
-| Sigmatel Mtpmscn Audio Player | 066f:a010 | ⚪ proposed | — |
-| Disney Mixmax | 0aa6:6021 | ⚪ proposed | supportsGetObjectPropList |
-| Tevion Md 81488 | 0aa6:3011 | ⚪ proposed | supportsGetObjectPropList |
-| Mymusix Pd 6070 | 0aa6:9601 | ⚪ proposed | — |
-| Perception Digital Gigaware Gx400 | 0aa6:9702 | ⚪ proposed | supportsGetObjectPropList |
-| Insignia Ns Dv45 | 19ff:0303 | ⚪ proposed | supportsGetObjectPropList |
-| Insignia Sport Player | 19ff:0307 | ⚪ proposed | supportsGetObjectPropList |
-| Insignia Pilot 4gb | 19ff:0309 | ⚪ proposed | supportsGetObjectPropList |
-| Lg T54 | 043e:7040 | ⚪ proposed | supportsGetObjectPropList |
-| Lg Up3 | 043e:70b1 | ⚪ proposed | supportsGetObjectPropList |
-| Dunlop Mp3 Player 1gb  Egoman Md223afd | 10d6:2200 | ⚪ proposed | supportsGetObjectPropList |
-| Memorex Mmp 8585 8586 Or Iriver E200 | 10d6:2300 | ⚪ proposed | supportsGetObjectPropList |
-| Sirius Stiletto | 18f6:0102 | ⚪ proposed | supportsGetObjectPropList |
-| Sirius Stiletto 2 | 18f6:0110 | ⚪ proposed | supportsGetObjectPropList |
-| Trekstor I Beat Sweez Fm | 0402:0611 | ⚪ proposed | supportsGetObjectPropList |
-| Nextar Ma715a 8r | 0402:5668 | ⚪ proposed | supportsGetObjectPropList |
-| Kenwood Media Keg Hd10gb7 | 0b28:100c | ⚪ proposed | supportsGetObjectPropList |
-| Msi P610 Model Ms 5557 | 0db0:5572 | ⚪ proposed | supportsGetObjectPropList |
-| Foma D905i | 06d3:21ba | ⚪ proposed | supportsGetObjectPropList |
-| Haier Ibiza Rhapsody 1 | 1302:1016 | ⚪ proposed | supportsGetObjectPropList |
-| Haier Ibiza Rhapsody 2 | 1302:1017 | ⚪ proposed | supportsGetObjectPropList |
-| Polaroid Freescape Mpu 433158 | 0546:2035 | ⚪ proposed | supportsGetObjectPropList |
-| Slacker Slacker Portable Media Player | 1bdc:fabf | ⚪ proposed | — |
-| Conceptronic Cmtd2 | 1e53:0005 | ⚪ proposed | — |
-| O2 Sistemas Zoltartv | 1e53:0006 | ⚪ proposed | — |
-| Wyplay Wyplayer | 1e53:0007 | ⚪ proposed | — |
-| Normsoft Pocket Tunes | 1703:0001 | ⚪ proposed | supportsGetObjectPropList |
-| Normsoft Pocket Tunes 4 | 1703:0002 | ⚪ proposed | supportsGetObjectPropList |
-| Logik Log Dax Mp3 And Dab Player | 13d1:7002 | ⚪ proposed | supportsGetObjectPropList |
-| Technika Mp 709 | 13d1:7017 | ⚪ proposed | supportsGetObjectPropList |
-| Philips I908 | 0471:190b | ⚪ proposed | supportsGetObjectPropList |
-| Philips W6610 | 0471:2008 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Sa5285 | 0471:2022 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Gogear Sa1vbe08kx 78 | 0471:208e | ⚪ proposed | supportsGetObjectPropList |
-| Philips Pi3900b2 58 | 0471:2190 | ⚪ proposed | supportsGetObjectPropList |
-| Philips Psa235 | 0471:7e01 | ⚪ proposed | supportsGetObjectPropList |
-| Trekstor I Beat Organix 2 0 | 1e68:0002 | ⚪ proposed | — |
-| Marshall London | 2ad9:000b | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Marq | 091e:4cae | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Marq Aviator | 091e:4caf | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Descent Mk2 Mk2i | 091e:4cba | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Fenix 6s Pro Sapphire | 091e:4cd8 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Rey | 091e:4daa | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Darth Vader | 091e:4dab | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Captain Marvel | 091e:4dac | ⚪ proposed | supportsGetObjectPropList |
-| Garmin First Avenger | 091e:4dad | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Descent Mk2s | 091e:4dd7 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Forerunner 745 | 091e:4e05 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Venu Sq Music | 091e:4e0c | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Forerunner 945 Lte | 091e:4e44 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Venu 2 | 091e:4e77 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Venu 2s | 091e:4e78 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Venu Mercedes Benz | 091e:4e9c | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Venu 2 Plus | 091e:4f0b | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Fenix 7s | 091e:4f41 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Fenix 7 Sapphire Solar | 091e:4f42 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Enduro 2 Fenix 7x | 091e:4f43 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Forerunner 265 | 091e:50a1 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Forerunner 265s | 091e:50a2 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Venu 3s | 091e:50a5 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Epix Pro Gen 2 | 091e:50d8 | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Forerunner 965 | 091e:50db | ⚪ proposed | supportsGetObjectPropList |
-| Garmin Fenix 8 Amoled | 091e:51b8 | ⚪ proposed | supportsGetObjectPropList |
-| Canon Cp 10 | 04a9:304a | ⚪ proposed | disableWriteResume |
-| Canon Cp 100 | 04a9:3063 | ⚪ proposed | disableWriteResume |
-| Canon Cp 200 | 04a9:307c | ⚪ proposed | disableWriteResume |
-| Canon Cp 300 | 04a9:307d | ⚪ proposed | disableWriteResume |
-| Canon Cp 220 | 04a9:30bd | ⚪ proposed | disableWriteResume |
-| Canon Cp 330 | 04a9:30be | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp500 | 04a9:30f5 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp400 | 04a9:30f6 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp600 | 04a9:310b | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp710 | 04a9:3127 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp510 | 04a9:3128 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Es1 | 04a9:3141 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp730 | 04a9:3142 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp720 | 04a9:3143 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp750 | 04a9:3170 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp740 | 04a9:3171 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp520 | 04a9:3172 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Es2 | 04a9:3185 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Es20 | 04a9:3186 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp770 | 04a9:31aa | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp760 | 04a9:31ab | ⚪ proposed | disableWriteResume |
-| Canon Selphy Es3 | 04a9:31af | ⚪ proposed | disableWriteResume |
-| Canon Selphy Es30 | 04a9:31b0 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp530 | 04a9:31b1 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp780 | 04a9:31dd | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp790 | 04a9:31e7 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Es40 | 04a9:31ee | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp800 | 04a9:3214 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp900 | 04a9:3255 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp810 | 04a9:3256 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp910 | 04a9:327a | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp820 | 04a9:327b | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp1200 | 04a9:32b1 | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp1300 | 04a9:32db | ⚪ proposed | disableWriteResume |
-| Canon Selphy Cp1500 | 04a9:3302 | ⚪ proposed | disableWriteResume |
-| Hp Color Laserjet Pro M478f | 03f0:c52a | ⚪ proposed | disableWriteResume |
-| Nokia Nokia 5320 Xpressmusic | 0421:00ea | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia 5800 Xpressmusic V2 | 0421:0155 | ⚪ proposed | supportsGetPartialObject |
-| Nokia Nokia 5800 Xpressmusic V3 | 0421:0159 | ⚪ proposed | supportsGetPartialObject |
-| Nokia Nokia E63 | 0421:0179 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N79 | 0421:0186 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia E71x | 0421:01a1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia E52 | 0421:01cf | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia 3710 | 0421:01ee | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N97 1 | 0421:01f4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia 5130 Xpressmusic | 0421:0209 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia 5530 | 0421:0229 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia E6 | 0421:032f | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N97 Mini | 0421:026b | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia X6 | 0421:0274 | ⚪ proposed | supportsGetPartialObject |
-| Nokia Nokia 6600i | 0421:0297 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia 2710 | 0421:02c1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N8 Ovi Mode | 0421:0302 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia E7 Ovi Mode | 0421:0335 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia C7 Id2 | 0421:03cd | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N950 | 0421:03d2 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia 3250 Mobile Phone | 0421:0462 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N93 Mobile Phone | 0421:0478 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia 5500 Sport Mobile Phone | 0421:047e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N91 Mobile Phone | 0421:0485 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia 5700 Xpressmusic Mobile Phone | 0421:04b4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia 5300 Mobile Phone | 0421:04ba | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia 5200 Mobile Phone | 0421:04be | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N73 Mobile Phone | 0421:04d1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N75 Mobile Phone | 0421:04e1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N93i Mobile Phone | 0421:04e5 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N80 Internet Edition Media Player | 0421:04f1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia N300 | 0421:0524 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia C5 00 Id2 | 0421:0595 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Nokia Nokia X2 Dual Sim | 0421:0708 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Lg Lg Electronics Inc G2 | 1004:6225 | ⚪ proposed | supportsGetPartialObject |
-| Lg Lg Electronics Inc Lg Vs950 | 1004:622a | ⚪ proposed | supportsGetPartialObject |
-| Lg Lg Electronics Inc Lg Vs870 | 1004:6239 | ⚪ proposed | supportsGetPartialObject |
-| Lg Lg Electronics Inc Lg Vs890 | 1004:623d | ⚪ proposed | supportsGetPartialObject |
-| Lg Lg Electronics Inc Lg Optimus Zone 2 | 1004:6259 | ⚪ proposed | supportsGetPartialObject |
-| Lg Lg Electronics Inc 810 Tablet | 1004:6263 | ⚪ proposed | supportsGetPartialObject |
-| Lg Lg Electronics Inc Vk810 | 1004:6265 | ⚪ proposed | supportsGetPartialObject |
-| Lg Lg Electronics Inc G3 Vs985 | 1004:626e | ⚪ proposed | supportsGetPartialObject |
-| Lg Lg Electronics Inc Transpyre | 1004:628a | ⚪ proposed | supportsGetPartialObject |
-| Lg Lg Electronics Inc Various E And P Models | 1004:631c | ⚪ proposed | supportsGetPartialObject |
-| Lg Lg Electronics Inc Lg G3 F460s | 1004:633f | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson K850i | 0fce:0075 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson W910 | 0fce:0076 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson W890i | 0fce:00b3 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson W760i | 0fce:00c6 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson C902 | 0fce:00d4 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson C702 | 0fce:00d9 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson W980 | 0fce:00da | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson C905 | 0fce:00ef | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson W595 | 0fce:00f3 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson W902 | 0fce:00f5 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson T700 | 0fce:00fb | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson W705 W715 | 0fce:0105 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson W995 | 0fce:0112 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson U5 | 0fce:0133 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson U8i | 0fce:013a | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson J10i2 Elm | 0fce:0144 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson J108i Cedar | 0fce:014e | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson W302 | 0fce:10c8 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson J10i Elm | 0fce:d144 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson K550i | 0fce:e000 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sonyericsson Xperia Dual E MTP | 0fce:0146 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Lt15i Xperia Arc S MTP | 0fce:014f | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Mt11i Xperia Neo MTP | 0fce:0156 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Is12s Xperia Acro MTP | 0fce:0157 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Mk16i Xperia MTP | 0fce:015a | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson R800 R88i Xperia Play MTP | 0fce:015d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson St18a Xperia Ray MTP | 0fce:0161 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Sk17i Xperia Mini Pro MTP | 0fce:0166 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson St15i Xperia Mini MTP | 0fce:0167 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson St17i Xperia Active MTP | 0fce:0168 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt26i Xperia S MTP | 0fce:0169 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Wt19i Live Walkman MTP | 0fce:016d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St21i Xperia Tipo MTP | 0fce:0170 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St15i Xperia U MTP | 0fce:0171 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt22i Xperia P MTP | 0fce:0172 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Mt27i Xperia Sola MTP | 0fce:0173 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt26w Xperia Acro Hd Is12s MTP | 0fce:0175 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt26w Xperia Acro Hd So 03d MTP | 0fce:0176 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt29i Xperia Gx MTP | 0fce:0178 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St27i St27a Xperia Go MTP | 0fce:017e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St23i Xperia Miro MTP | 0fce:0180 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony So 05d Xperia Sx MTP | 0fce:0181 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Tablet Z MTP 1 | 0fce:018d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia L MTP | 0fce:0192 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Tablet Z MTP 2 | 0fce:0194 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z Ultra MTP Id2 | 0fce:0196 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia Zr MTP | 0fce:0197 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia A MTP | 0fce:0198 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia Z Ultra MTP Id3 | 0fce:019c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia M2 Dual MTP | 0fce:01ab | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z3v MTP | 0fce:01b0 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia Z2 Tablet MTP | 0fce:01b1 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia E1 MTP | 0fce:01b5 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia Z Ultra MTP | 0fce:01b6 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia M2 Aqua MTP | 0fce:01b8 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia Z3 Tablet MTP | 0fce:01c0 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Sov33 | 0fce:01e1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz | 0fce:01ed | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xa2 Jolla Sailfish | 0fce:0a07 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Is12s Xperia Acro MTP Cdrom | 0fce:4157 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson St17i Xperia Active MTP Cdrom | 0fce:4168 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt26i Xperia S MTP Cdrom | 0fce:4169 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St21i Xperia Tipo MTP Cdrom | 0fce:4170 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St25i Xperia U MTP Cdrom | 0fce:4171 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt22i Xperia P MTP Cdrom | 0fce:4172 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Mt27i Xperia Sola MTP Cdrom | 0fce:4173 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt26w Xperia Acro Hd Is12s MTP Cdrom | 0fce:4175 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt26w Xperia Acro Hd So 03d MTP Cdrom | 0fce:4176 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt28at Xperia Ion MTP Cdrom | 0fce:4177 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt29i Xperia Gx MTP Cdrom | 0fce:4178 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St27i St27a Xperia Go MTP Cdrom | 0fce:417e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St23i Xperia Miro MTP Cdrom | 0fce:4180 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony So 05d Xperia Sx MTP Cdrom | 0fce:4181 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt30p Xperia T MTP Cdrom | 0fce:4182 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt25i Xperia V MTP Cdrom | 0fce:4186 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia J MTP Cdrom | 0fce:4188 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Zl MTP Cdrom | 0fce:4189 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia E MTP Cdrom | 0fce:418c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Tablet Z MTP Cdrom 1 | 0fce:418d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia L MTP Cdrom | 0fce:4192 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z MTP Cdrom | 0fce:4193 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Tablet Z MTP Cdrom 2 | 0fce:4194 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Sp MTP Cdrom | 0fce:4195 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia M MTP Cdrom | 0fce:419b | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z Ultra MTP Cdrom Id3 | 0fce:419c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z1 MTP Cdrom | 0fce:419e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia C MTP Cdrom | 0fce:41a3 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z1 Compact D5503 MTP Cdrom | 0fce:41a7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia T2 Ultra MTP Cdrom | 0fce:41a9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia M2 MTP Cdrom | 0fce:41aa | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia M2 Dual MTP Cdrom | 0fce:41ab | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z2 MTP Cdrom | 0fce:41af | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z3v MTP Cdrom | 0fce:41b0 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia Z2 Tablet MTP Cdrom | 0fce:41b1 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia E1 MTP Cdrom | 0fce:41b5 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia Z Ultra MTP Cdrom | 0fce:41b6 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia M2 Aqua MTP Cdrom | 0fce:41b8 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia Z3 MTP Cdrom | 0fce:41ba | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z3 Compact MTP Cdrom | 0fce:41bb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia E3 MTP Cdrom | 0fce:41bc | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z3 Tablet MTP Cdrom | 0fce:41c0 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia M4 Aqua Dual MTP Cdrom | 0fce:41c4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia E4 Dual MTP Cdrom | 0fce:41c5 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z3 MTP Cdrom | 0fce:41c9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia E4g MTP Cdrom | 0fce:41cb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia C4 Dual MTP Cdrom | 0fce:41d2 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia M5 MTP Cdrom | 0fce:41d6 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z5 MTP Cdrom | 0fce:41d9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z5 Compact MTP Cdrom | 0fce:41da | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z5 Premium Dual Sim MTP Cdrom | 0fce:41db | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xa MTP Cdrom | 0fce:41de | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia X MTP Cdrom | 0fce:41e0 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Sov33 MTP Cdrom | 0fce:41e1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz MTP Cdrom | 0fce:41e7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia X Compact MTP Cdrom | 0fce:41e8 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xa1 MTP Cdrom | 0fce:41eb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz Cdrom | 0fce:41ed | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xa1 Ultra MTP Cdrom | 0fce:41ef | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz Premium MTP Cdrom | 0fce:41f1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz1 MTP Cdrom | 0fce:41f3 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz1 Compact MTP Cdrom | 0fce:41f4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia L2 MTP Cdrom | 0fce:41f6 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xa2 Compact MTP Cdrom | 0fce:41f7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xa2 Ultra MTP Cdrom | 0fce:41f8 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz2 Compact Dual Sim MTP Cdrom | 0fce:41f9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz2 H8266 MTP Cdrom | 0fce:41fa | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz2 Premium MTP Cdrom | 0fce:41fb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz3 Dual Sim H9436 MTP Cdrom | 0fce:41ff | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 10 I4113 MTP Cdrom | 0fce:4201 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 1 J9110 MTP Cdrom | 0fce:4205 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia L3 MTP Cdrom | 0fce:4207 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 5 MTP Cdrom | 0fce:420a | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 10 V Phone MTP Cdrom | 0fce:420c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 5 Ii Phone MTP Cdrom | 0fce:420d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 10 Vi MTP Cdrom | 0fce:420e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Xperia Dual E MTP Adb | 0fce:5146 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Lt15i Xperia Arc MTP Adb | 0fce:514f | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Mt11i Xperia Neo MTP Adb | 0fce:5156 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Is12s Xperia Acro MTP Adb | 0fce:5157 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Mk16i Xperia MTP Adb | 0fce:515a | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson R800 R88i Xperia Play MTP Adb | 0fce:515d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson St18i Xperia Ray MTP Adb | 0fce:5161 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Sk17i Xperia Mini Pro MTP Adb | 0fce:5166 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson St15i Xperia Mini MTP Adb | 0fce:5167 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson St17i Xperia Active MTP Adb | 0fce:5168 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt26i Xperia S MTP Adb | 0fce:5169 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sonyericsson Wt19i Live Walkman MTP Adb | 0fce:516d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St21i Xperia Tipo MTP Adb | 0fce:5170 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St25i Xperia U MTP Adb | 0fce:5171 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt22i Xperia P MTP Adb | 0fce:5172 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Mt27i Xperia Sola MTP Adb | 0fce:5173 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Is12s Xperia Acro Hd MTP Adb | 0fce:5175 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony So 03d Xperia Acro Hd MTP Adb | 0fce:5176 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt28at Xperia Ion MTP Adb | 0fce:5177 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt29i Xperia Gx MTP Adb | 0fce:5178 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St27i St27a Xperia Go MTP Adb | 0fce:517e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St23i Xperia Miro MTP Adb | 0fce:5180 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony So 05d Xperia Sx MTP Adb | 0fce:5181 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt30p Xperia T MTP Adb | 0fce:5182 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt25i Xperia V MTP Adb | 0fce:5186 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia J MTP Adb | 0fce:5188 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Zl MTP Adb | 0fce:5189 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia E MTP Adb | 0fce:518c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Tablet Z MTP Adb 1 | 0fce:518d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia L MTP Adb | 0fce:5192 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z MTP Adb | 0fce:5193 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Tablet Z MTP Adb 2 | 0fce:5194 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Sp MTP Adb | 0fce:5195 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z Ultra MTP Adb Id2 | 0fce:5196 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Zr MTP Adb | 0fce:5197 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia A MTP Adb | 0fce:5198 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia M MTP Adb | 0fce:519b | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z Ultra MTP Adb Id3 | 0fce:519c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z1 MTP Adb | 0fce:519e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia C MTP Adb | 0fce:51a3 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z1 Compact MTP Adb | 0fce:51a7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia T2 Ultra MTP Adb | 0fce:51a9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia M2 MTP Adb | 0fce:51aa | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia M2 Dual MTP Adb | 0fce:51ab | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z2 MTP Adb | 0fce:51af | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z3v MTP Adb | 0fce:51b0 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia Z2 Tablet MTP Adb | 0fce:51b1 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia E1 MTP Adb | 0fce:51b5 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia Z Ultra MTP Adb | 0fce:51b6 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia M2 Aqua MTP Adb | 0fce:51b8 | ⚪ proposed | supportsGetPartialObject |
-| Sony Sony Xperia Z3 MTP Adb | 0fce:51ba | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z3 Compact MTP Adb | 0fce:51bb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia E3 MTP Adb | 0fce:51bc | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z3 Tablet MTP Adb | 0fce:51c0 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia M4 Aqua Dual MTP Adb | 0fce:51c4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia E4 Dual MTP Adb | 0fce:51c5 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z3 MTP Adb | 0fce:51c9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia E4g MTP Adb | 0fce:51cb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia C4 Dual MTP Adb | 0fce:51d2 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia M5 MTP Adb | 0fce:51d6 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z5 MTP Adb | 0fce:51d9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z5 Compact MTP Adb | 0fce:51da | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Z5 Premium Dual Sim MTP Adb | 0fce:51db | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xa MTP Adb | 0fce:51de | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia X MTP Adb | 0fce:51e0 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Sov33 MTP Adb | 0fce:51e1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz MTP Adb | 0fce:51e7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia X Compact MTP Adb | 0fce:51e8 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xa1 MTP Adb | 0fce:51eb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz Adb | 0fce:51ed | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xa1 Ultra MTP Adb | 0fce:51ef | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz Premium MTP Adb | 0fce:51f1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz1 Adb | 0fce:51f3 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz1 Compact MTP Adb | 0fce:51f4 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia L2 MTP Adb | 0fce:51f6 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xa2 Compact MTP Adb | 0fce:51f7 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xa2 Ultra MTP Adb | 0fce:51f8 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz2 Compact Dual Sim MTP Adb | 0fce:51f9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz2 H8266 MTP Adb | 0fce:51fa | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz2 Premium MTP Adb | 0fce:51fb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia Xz3 Dual Sim H9436 MTP Adb | 0fce:51ff | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 10 I4113 MTP Adb | 0fce:5201 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 1 J9110 MTP Adb | 0fce:5205 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia L3 MTP Adb | 0fce:5207 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 5 MTP Adb | 0fce:520a | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 10 V Phone MTP Adb | 0fce:520c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 5 Ii Phone MTP Adb | 0fce:520d | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Xperia 10 Vi MTP Adb | 0fce:520e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Mt27i Xperia Sola MTP Ums | 0fce:a173 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Is12s Xperia Acro Hd MTP Ums | 0fce:a175 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony So 03d Xperia Acro Hd MTP Ums | 0fce:a176 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt28at Xperia Ion MTP Ums | 0fce:a177 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St27i St27a Xperia Go MTP Ums | 0fce:a17e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Mt27i Xperia Sola MTP Ums Adb | 0fce:b173 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Is12s Xperia Acro MTP Ums Adb | 0fce:b175 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony So 03d Xperia Acro MTP Ums Adb | 0fce:b176 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony Lt28at Xperia Ion MTP Ums Adb | 0fce:b177 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Sony Sony St27i St27a Xperia Go MTP Ums Adb | 0fce:b17e | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Motorola Motorola Milestone Verizon Droid | 22b8:41dc | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Droid2 Id2 | 22b8:42a7 | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Xoom 2 Media Edition Id2 | 22b8:4306 | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Xoom 2 Media Edition | 22b8:4311 | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Xt912 Xt928 | 22b8:4362 | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Droid4 Ptp | 22b8:4373 | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Droid4 | 22b8:437f | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Ideapad K1 | 22b8:4811 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Motorola Motorola A1200 | 22b8:60ca | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Motorola Motorola MTP Test Command Interface | 22b8:6413 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Motorola Motorola Razr2 V8 U9 Z6 | 22b8:6415 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Motorola Motorola Razr D1 D3 I MTP | 22b8:64b5 | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Razr D1 D3 I MTP | 22b8:64b6 | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Atrix Xt687 MTP | 22b8:64cf | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Atrix Mb860 MTP | 22b8:7088 | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Xoom Factory Test | 22b8:70a3 | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Xoom MTP Adb | 22b8:70a9 | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Milestone X2 | 22b8:70ca | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Xt890 907 Razr MTP | 22b8:710d | ⚪ proposed | supportsGetPartialObject |
-| Motorola Motorola Xt890 907 Razr MTP Adb | 22b8:710e | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Allwinner A31 Soc | 18d1:0006 | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Ainol Novo Fire Flame | 18d1:0007 | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Sony S1 | 18d1:05b3 | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Fairphone Fairphone 2 | 18d1:0a07 | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Barnes Noble Nook Color | 18d1:2d02 | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Asus Tf201 Transformer | 18d1:4d00 | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Asus Tf101 Transformer | 18d1:4e0f | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc Nexus Pixel Ptp | 18d1:4ee5 | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc Nexus Pixel Ptp Adb | 18d1:4ee6 | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Motorola Xoom Mz604 | 18d1:70a8 | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Toshiba Thrive 7 At105 | 18d1:7102 | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Lenovo Ideapad K1 | 18d1:740a | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Medion Md99000 P9514 | 18d1:b00a | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Lg Electronics P990 Optimus Cyanoge | 18d1:d109 | ⚪ proposed | supportsGetPartialObject |
-| Google Google Inc For Lg Electronics P990 Optimus | 18d1:d10a | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc One Mini 2 MTP | 0bb4:0629 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Htc Htc One M9 2nd Id | 0bb4:065c | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Htc Htc Desire 626s MTP | 0bb4:0668 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Htc Htc Htc Desire 520 | 0bb4:0670 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc6515lvw One Remix | 0bb4:07d8 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Htc Htc Htc X920e | 0bb4:07a1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Htc Htc Htc One Htc6500lvw | 0bb4:07ae | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Htc Htc Htc One M8 Htc6525lvw | 0bb4:07ca | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Htc Htc Htc One M8 Verizon Htc6525lvw | 0bb4:07cb | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Htc Htc Htc One Remix Htc6515lvw | 0bb4:07d9 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Htc Htc Windows Phone 8x Id1 | 0bb4:0ba1 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Htc Htc Windows Phone 8x Id2 | 0bb4:0ba2 | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Htc Dexp Ixion Xl145 Snatch | 0bb4:0c08 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Evo 4g Lte One V Id2 | 0bb4:0ca8 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One S Id1 | 0bb4:0cec | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc One Mini Id1 | 0bb4:0dcd | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One 802w Id1 | 0bb4:0dd2 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc Desire X | 0bb4:0dd5 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc Butterfly X290d | 0bb4:0de4 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One MTP Ums Adb | 0bb4:0dea | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc Evo 4g Lte Id1 | 0bb4:0df5 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One S Id2 | 0bb4:0df8 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One S Id3 | 0bb4:0df9 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One X Id1 | 0bb4:0dfa | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One X Id2 | 0bb4:0dfb | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One X Id3 | 0bb4:0dfc | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One X Id4 | 0bb4:0dfd | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc Butterfly Id1 | 0bb4:0dfe | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Droid Dna MTP Ums Adb | 0bb4:0dff | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc Droid Incredible 4g Lte MTP | 0bb4:0e31 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc Droid Incredible 4g Lte MTP Adb | 0bb4:0e32 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Droid Dna MTP Ums | 0bb4:0ebd | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Desire 310 2nd Id MTP | 0bb4:0ec7 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Desire 816g MTP | 0bb4:0edb | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Desire 626g Dual Sim MTP | 0bb4:0edd | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One MTP Adb Cdc | 0bb4:0f5f | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One MTP Cdc | 0bb4:0f60 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One MTP | 0bb4:0f64 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One M8 MTP Adb | 0bb4:061a | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One M8 MTP Ums | 0bb4:0fb5 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Htc One M8 MTP Adb Ums | 0bb4:0fb4 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Android Device Id2 Zopo Hd2 | 0bb4:2008 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Motorola Razr D1 | 0bb4:2012 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Motorola P98 4g | 0bb4:201d | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc One M9 3rd Id | 0bb4:4ee1 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc One M9 4th Id | 0bb4:4ee2 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc For Hewlett Packard Hp Touchpad MTP | 0bb4:685c | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc For Hewlett Packard Hp Touchpad MTP Adb | 0bb4:6860 | ⚪ proposed | supportsGetPartialObject |
-| Htc Htc Windows Phone 8s Id1 | 0bb4:f0ca | ⚪ proposed | supportsGetObjectPropList, supportsGetPartialObject |
-| Xiaomi Xiaomi Mi 2 Ptp Adb | 2717:904e | ⚪ proposed | supportsGetPartialObject |
-| Samsung Yh J70j | 04e8:5033 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp T7j | 04e8:5047 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp U2j Yp U2jxb Xaa | 04e8:5054 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp F2j | 04e8:5057 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp K5 | 04e8:505a | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp U3 | 04e8:507d | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp K3 | 04e8:5081 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp T10 | 04e8:508a | ⚪ proposed | — |
-| Samsung Yp S5 | 04e8:508b | ⚪ proposed | — |
-| Samsung Yp S3 | 04e8:5091 | ⚪ proposed | — |
-| Samsung Yp R1 | 04e8:510f | ⚪ proposed | — |
-| Samsung Yp Q1 | 04e8:5115 | ⚪ proposed | — |
-| Samsung Yp M1 | 04e8:5118 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Yp P3 | 04e8:511a | ⚪ proposed | — |
-| Samsung Yp R2 | 04e8:512e | ⚪ proposed | — |
-| Samsung Yp Z3 | 04e8:5137 | ⚪ proposed | — |
-| Samsung Yh 999 Portable Media Center Sgh A707 Sg | 04e8:5a0f | ⚪ proposed | — |
-| Samsung Z170 Mobile Phone | 04e8:6601 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung E250 Mobile Phone | 04e8:663e | ⚪ proposed | supportsGetObjectPropList |
-| Samsung M7600 Beat Gt S8300t Sgh F490 S8300 | 04e8:6642 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung X830 Mobile Phone | 04e8:6702 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung U600 Mobile Phone | 04e8:6709 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung F250 Mobile Phone | 04e8:6727 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Juke Sch U470 | 04e8:6734 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Gt B2700 | 04e8:6752 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Samsung Trance | 04e8:6763 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Gt S8500 | 04e8:6819 | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Gt B2710 Xcover 271 | 04e8:68af | ⚪ proposed | supportsGetObjectPropList |
-| Samsung Gt S5230 | 04e8:e20c | ⚪ proposed | supportsGetObjectPropList |
-| Fujitsu Ltd F903ix High Speed | 04c5:1140 | ⚪ proposed | supportsGetObjectPropList |
-| Fujitsu Ltd Stylistic M532 | 04c5:133b | ⚪ proposed | — |
-| Fujitsu Ltd F02 E | 04c5:1378 | ⚪ proposed | — |
-| Fujitsu Ltd Arrows 202f | 04c5:13dd | ⚪ proposed | — |
-| Fujitsu Ltd Tone M17 | 04c5:158c | ⚪ proposed | — |
-| Verizon Ellipsis 7 | 0408:3899 | ⚪ proposed | — |
-| Medion Md99000 P9514 Olivetti Olipad 110 | 0408:b009 | ⚪ proposed | — |
-| Medion Lifetab P9514 | 0408:b00a | ⚪ proposed | — |
-| Trekstor Surftab Breeze 70 Quad 3g | 1e68:1045 | ⚪ proposed | — |
-| Sony Nwz A845 | 054c:0404 | ⚪ proposed | supportsGetObjectPropList |
-| Sony Sony Tablet P1 | 054c:04d1 | ⚪ proposed | — |
-| Sony Sony Tablet S | 054c:05b3 | ⚪ proposed | — |
-| Sony Sony Tablet S1 | 054c:05b4 | ⚪ proposed | — |
-| Sony Xperia Tablet S Sgpt12 | 054c:06ac | ⚪ proposed | supportsGetObjectPropList |
-| Sony Nwz E384 | 054c:0882 | ⚪ proposed | supportsGetObjectPropList |
-| Sony Dcr Sr75 | 054c:1294 | ⚪ proposed | supportsGetObjectPropList |
-| Panasonic P905i | 04da:2145 | ⚪ proposed | supportsGetObjectPropList |
-| Panasonic P906i | 04da:2158 | ⚪ proposed | supportsGetObjectPropList |
-| Pioneer Xmp3 | 08e4:0148 | ⚪ proposed | supportsGetObjectPropList |
-| Curitel Communications Inc Verizon Wireless Device | 106c:3215 | ⚪ proposed | supportsGetObjectPropList |
-| Pantech Crux | 106c:f003 | ⚪ proposed | supportsGetObjectPropList |
-| Asus Me302kl Memo Pad Fhd10 MTP | 0b05:4cc0 | ⚪ proposed | — |
-| Asus Me302kl Memo Pad Fhd10 Mtpadb | 0b05:4cc1 | ⚪ proposed | — |
-| Asus Me301t Memo Pad Smart 10 MTP | 0b05:4cd0 | ⚪ proposed | — |
-| Asus Me301t Memo Pad Smart 10 Mtpadb | 0b05:4cd1 | ⚪ proposed | — |
-| Asus Asus Fonepad Note 6 MTP | 0b05:4ce0 | ⚪ proposed | — |
-| Asus Asus Fonepad Note 6 Mtpadb | 0b05:4ce1 | ⚪ proposed | — |
-| Asus Tf201 Transformer Prime Keyboard Dock | 0b05:4d00 | ⚪ proposed | — |
-| Asus Tf201 Transformer Prime Tablet Only | 0b05:4d01 | ⚪ proposed | — |
-| Asus Sl101 MTP | 0b05:4e00 | ⚪ proposed | — |
-| Asus Sl101 Mtpadb | 0b05:4e01 | ⚪ proposed | — |
-| Asus Tf101 Eeepad Transformer MTP | 0b05:4e0f | ⚪ proposed | — |
-| Asus Tf101 Eeepad Transformer Mtpadb | 0b05:4e1f | ⚪ proposed | — |
-| Asus Fonepad | 0b05:514f | ⚪ proposed | — |
-| Asus Padfone MTP | 0b05:5200 | ⚪ proposed | — |
-| Asus Padfone Mtpadb | 0b05:5201 | ⚪ proposed | — |
-| Asus Me302c Memopad MTP | 0b05:520f | ⚪ proposed | — |
-| Asus Padfone 2 MTP | 0b05:5210 | ⚪ proposed | — |
-| Asus Padfone 2 Mtpadb | 0b05:5211 | ⚪ proposed | — |
-| Asus Padfone 2 Ptp | 0b05:5214 | ⚪ proposed | — |
-| Asus Me302c Memopad MTP | 0b05:521f | ⚪ proposed | — |
-| Asus Padfone Infinity 2nd Id MTP | 0b05:5220 | ⚪ proposed | — |
-| Asus Padfone Infinity 2nd Id Mtpadb | 0b05:5221 | ⚪ proposed | — |
-| Asus Padfone Infinity MTP | 0b05:5230 | ⚪ proposed | — |
-| Asus Padfone Infinity Mtpadb | 0b05:5231 | ⚪ proposed | — |
-| Asus Memo Me172v MTP | 0b05:5400 | ⚪ proposed | — |
-| Asus Fonepad 7 Lte Me372cl MTP | 0b05:540f | ⚪ proposed | — |
-| Asus Memo Me173x MTP | 0b05:5410 | ⚪ proposed | — |
-| Asus Memo Me173x Mtpadb | 0b05:5411 | ⚪ proposed | — |
-| Asus Fonepad 7 Lte Me372cl Mtpadb | 0b05:541f | ⚪ proposed | — |
-| Asus Memo K00f MTP | 0b05:5460 | ⚪ proposed | — |
-| Asus Memo Pad 8 MTP | 0b05:5466 | ⚪ proposed | — |
-| Asus Memo K00f Mtpadb | 0b05:5468 | ⚪ proposed | — |
-| Asus Zenfone 5 Mtpadb | 0b05:5481 | ⚪ proposed | — |
-| Asus Zenfone 6 Mtpadb | 0b05:5491 | ⚪ proposed | — |
-| Asus K010 MTP | 0b05:5500 | ⚪ proposed | — |
-| Asus Memopad 7 Mtpadb | 0b05:5506 | ⚪ proposed | — |
-| Asus K00e Mtpadb | 0b05:550f | ⚪ proposed | — |
-| Asus Memopad 8 Me181 Cx MTP | 0b05:5561 | ⚪ proposed | — |
-| Asus Z00ad MTP | 0b05:5601 | ⚪ proposed | — |
-| Asus Tx201la MTP | 0b05:561f | ⚪ proposed | — |
-| Asus Zenfone 4 MTP | 0b05:580f | ⚪ proposed | — |
-| Asus Zenfone 4 A400cg MTP | 0b05:581f | ⚪ proposed | — |
-| Asus Asus Fonepad 8 Fe380cg MTP | 0b05:590f | ⚪ proposed | — |
-| Asus A450cg MTP | 0b05:5a0f | ⚪ proposed | — |
-| Asus Zenpad 80 MTP | 0b05:5e0f | ⚪ proposed | — |
-| Asus Zenfone 2 Ze550ml MTP | 0b05:5f02 | ⚪ proposed | — |
-| Asus Zenfone 2 Ze551ml MTP | 0b05:5f03 | ⚪ proposed | — |
-| Asus Zenpad 10 | 0b05:600f | ⚪ proposed | — |
-| Asus Zenfone V MTP | 0b05:610f | ⚪ proposed | — |
-| Asus Zenfone 5 A500kl Mtpadb | 0b05:7781 | ⚪ proposed | — |
-| Medion Lifetab P9516 | 17ef:7483 | ⚪ proposed | — |
-| Lenovo Ideapad A3000 Id1 | 17ef:75bc | ⚪ proposed | — |
-| Lenovo Ideapad A3000 Id2 | 17ef:75be | ⚪ proposed | — |
-| Lenovo A706 | 17ef:7614 | ⚪ proposed | — |
-| Lenovo Ideatab S5000 | 17ef:76e8 | ⚪ proposed | — |
-| Lenovo Toga Tablet B6000 F | 17ef:76f2 | ⚪ proposed | — |
-| Lenovo Yoga Tablet 10 B8000 H | 17ef:76ff | ⚪ proposed | — |
-| Lenovo S960 | 17ef:770a | ⚪ proposed | — |
-| Lenovo K910ss | 17ef:7713 | ⚪ proposed | — |
-| Lenovo S930 | 17ef:7718 | ⚪ proposed | — |
-| Lenovo A5500 H | 17ef:772a | ⚪ proposed | — |
-| Lenovo A5500 F | 17ef:772b | ⚪ proposed | — |
-| Lenovo A7600 F | 17ef:7730 | ⚪ proposed | — |
-| Lenovo A7600 F 2nd | 17ef:7731 | ⚪ proposed | — |
-| Lenovo A3500 F | 17ef:7737 | ⚪ proposed | — |
-| Lenovo A3500 Fl | 17ef:7738 | ⚪ proposed | — |
-| Lenovo Lifetab E733x | 17ef:775a | ⚪ proposed | — |
-| Lenovo Yoga Tablet 2 1050f | 17ef:77a4 | ⚪ proposed | — |
-| Lenovo Yoga Tablet 2 | 17ef:77a5 | ⚪ proposed | — |
-| Lenovo Yoga Tablet 2 Pro | 17ef:77b1 | ⚪ proposed | — |
-| Lenovo Tab S8 50f | 17ef:77d8 | ⚪ proposed | — |
-| Lenovo S60 A | 17ef:7802 | ⚪ proposed | — |
-| Lenovo A7 30hc | 17ef:7852 | ⚪ proposed | — |
-| Lenovo A7 30gc | 17ef:7853 | ⚪ proposed | — |
-| Lenovo A10 70f | 17ef:789a | ⚪ proposed | — |
-| Lenovo A10 70l | 17ef:789b | ⚪ proposed | — |
-| Medion P8312 Tablet | 17ef:78ae | ⚪ proposed | — |
-| Lenovo Lifetab S1034x | 17ef:78b0 | ⚪ proposed | — |
-| Lenovo Vibe K4 Note | 17ef:78f6 | ⚪ proposed | — |
-| Lenovo Vibe P1 Pro | 17ef:78fc | ⚪ proposed | — |
-| Lenovo Vibe X | 17ef:7902 | ⚪ proposed | — |
-| Lenovo P1ma40 2nd Id | 17ef:7920 | ⚪ proposed | — |
-| Lenovo P1ma40 | 17ef:7921 | ⚪ proposed | — |
-| Lenovo A1000 Smartphone | 17ef:7928 | ⚪ proposed | — |
-| Lenovo A1000 Smartphone Adb | 17ef:7929 | ⚪ proposed | — |
-| Lenovo K5 | 17ef:7993 | ⚪ proposed | — |
-| Lenovo Vibe K4 | 17ef:79b7 | ⚪ proposed | — |
-| Lenovo B Smartphone | 17ef:7a18 | ⚪ proposed | — |
-| Lenovo C2 | 17ef:7a36 | ⚪ proposed | — |
-| Lenovo P1060x | 17ef:9039 | ⚪ proposed | — |
-| Medion P10606 | 17ef:f003 | ⚪ proposed | — |
-| Nec Foma N01a | 0409:0242 | ⚪ proposed | supportsGetObjectPropList |
-| Casio Gzone Commando C771 | 0409:02ed | ⚪ proposed | supportsGetObjectPropList |
-| Nec Casio C811 | 0409:0326 | ⚪ proposed | supportsGetObjectPropList |
-| Nec Casio Ca 201l | 0409:0432 | ⚪ proposed | supportsGetObjectPropList |
-| Nvidia Various Tablets Id1 | 0955:7100 | ⚪ proposed | — |
-| Nvidia Various Tablets Id2 | 0955:7102 | ⚪ proposed | — |
-| Nvidia Jetson Tx1 | 0955:7721 | ⚪ proposed | — |
-| Nvidia Shield Mtpadb | 0955:b400 | ⚪ proposed | — |
-| Nvidia Shield MTP | 0955:b401 | ⚪ proposed | — |
-| Nvidia Shield Android Tv Pro MTP | 0955:b42a | ⚪ proposed | — |
-| Nvidia Tegra Note | 0955:cf02 | ⚪ proposed | — |
-| Nvidia Shield Tablet Mtpadb | 0955:cf05 | ⚪ proposed | — |
-| Nvidia Shield Tablet MTP | 0955:cf07 | ⚪ proposed | — |
-| Foxconn For Nokia N1 | 0489:1ab0 | ⚪ proposed | — |
-| Foxconn For Infocus M808 | 0489:c00b | ⚪ proposed | — |
-| Foxconn For Infocus M810 | 0489:c025 | ⚪ proposed | — |
-| Foxconn For Vizio Unknown 1 | 0489:c026 | ⚪ proposed | — |
-| Sharp Aquos Wish2 | 0489:c030 | ⚪ proposed | — |
-| Sharp Aquos Wish3 | 0489:c033 | ⚪ proposed | — |
-| Foxconn For Vizio Vtab1008 | 0489:e040 | ⚪ proposed | — |
-| Various Viewpia Dr Bq Kepler | 2207:0001 | ⚪ proposed | — |
-| Yifang Bq Tesla | 2207:0006 | ⚪ proposed | — |
-| Various Anbernic Rg353p MTP | 2207:0007 | ⚪ proposed | — |
-| Various Anbernic Rg353p Ptpadb | 2207:0008 | ⚪ proposed | — |
-| Various Viewpia Dr Bq Kepler Debugging | 2207:0011 | ⚪ proposed | — |
-| Supernote A5x | 2207:0031 | ⚪ proposed | — |
-| Hisense Sero 7 Pro | 109b:9105 | ⚪ proposed | — |
-| Hisense E860 Id1 | 109b:9106 | ⚪ proposed | — |
-| Hisense E860 Id2 | 109b:9109 | ⚪ proposed | — |
-| Crosscall Trekker M1 Core | 109b:9130 | ⚪ proposed | — |
-| Intel Point Of View Tab I847 | 8087:092a | ⚪ proposed | — |
-| Intel Xolo 900 Az210a | 8087:09fb | ⚪ proposed | — |
-| Intel Noblex T7a21 | 8087:0a16 | ⚪ proposed | — |
-| Intel Foxconn Iview I700 | 8087:0a15 | ⚪ proposed | — |
-| Intel Telcast Air 3g | 8087:0a5e | ⚪ proposed | — |
-| Xiaomi Mi 9 M1902f1g Or Poco X3 Pro MTP | 0a9d:ff40 | ⚪ proposed | — |
-| Acromag Inc Xo Learning Tablet Mtpadb | 16d5:8005 | ⚪ proposed | — |
-| Acromag Inc Xo Learning Tablet MTP | 16d5:8006 | ⚪ proposed | — |
-| Hewlett Packard Slate 7 4600 | 03f0:5c1d | ⚪ proposed | — |
-| Hewlett Packard Slate 7 2800 | 03f0:5d1d | ⚪ proposed | — |
-| Hewlett Packard Slate 10 Hd | 03f0:7e1d | ⚪ proposed | — |
-| Jolla Sailfish Id1 | 2931:0a01 | ⚪ proposed | — |
-| Jolla Sailfish Id2 | 2931:0a05 | ⚪ proposed | — |
-| Jolla Sailfish Id3 | 2931:0a07 | ⚪ proposed | — |
-| Garmin Descent Mk2 Mk2i Apac | 091e:4e76 | ⚪ proposed | — |
-| Garmin Descent Mk2s Apac | 091e:4f5a | ⚪ proposed | — |
-| Garmin Forerunner 255m | 091e:4f96 | ⚪ proposed | — |
-| Garmin Forerunner 255 | 091e:4f98 | ⚪ proposed | — |
-| Garmin Forerunner 255s Music | 091e:4f97 | ⚪ proposed | — |
-| Garmin Forerunner 255s | 091e:4f99 | ⚪ proposed | — |
-| Garmin Forerunner 955 Solar | 091e:4fb8 | ⚪ proposed | — |
-| Garmin Venu Sq 2 Music | 091e:5014 | ⚪ proposed | — |
-| Garmin Tactix 7 | 091e:5027 | ⚪ proposed | — |
-| Garmin Descent Mk3 Mk3i 43mm | 091e:507e | ⚪ proposed | — |
-| Garmin Descent Mk3i 51mm | 091e:507f | ⚪ proposed | — |
-| Garmin Epix Pro | 091e:50d9 | ⚪ proposed | — |
-| Garmin Epix Pro Gen 2 51mm | 091e:50da | ⚪ proposed | — |
-| Garmin Fenix 7s Pro Sapphire Solar | 091e:5116 | ⚪ proposed | — |
-| Garmin Fenix 7 Pro Solar | 091e:5117 | ⚪ proposed | — |
-| Garmin Fenix8 | 091e:51b6 | ⚪ proposed | — |
-| Garmin Fenix 8 Solar Sapphire | 091e:51b5 | ⚪ proposed | — |
-| Garmin Tactix 7 Amoled | 091e:51be | ⚪ proposed | — |
-| Garmin Forerunner 970 | 091e:51d5 | ⚪ proposed | — |
-| Garmin Forerunner 570 | 091e:51de | ⚪ proposed | — |
-| Garmin Venu X1 | 091e:51fb | ⚪ proposed | — |
-| Garmin Vivoactive 6 | 091e:5211 | ⚪ proposed | — |
-| Garmin Venu 4 41mm | 091e:5224 | ⚪ proposed | — |
-| Garmin Instinct 3 Solar | 091e:5297 | ⚪ proposed | — |
-| Wacom Cintiq Companion Hybrid Mtpadb | 0531:2001 | ⚪ proposed | — |
-| Kurio 7s | 1f3a:1006 | ⚪ proposed | — |
-| Irulu X1s | 1f3a:1007 | ⚪ proposed | — |
-| Digiland Dl701q | 1f3a:0c02 | ⚪ proposed | — |
-| Allwinner It701a | 1f3a:4ee1 | ⚪ proposed | — |
-| Bq Krillin Mtpadb | 2a47:0c02 | ⚪ proposed | — |
-| Bq Krillin MTP | 2a47:2008 | ⚪ proposed | — |
-| Bq Aquaris M10 MTP | 2a47:200d | ⚪ proposed | — |
-| Bq Avila Cooler MTP | 2a47:201d | ⚪ proposed | — |
-| Bq Aquaris X5 MTP | 2a47:3003 | ⚪ proposed | — |
-| Bq Aquaris X2 MTP | 2a47:4ee1 | ⚪ proposed | — |
-| Bq Aquarius E5 4g | 2a47:7f10 | ⚪ proposed | — |
-| Bq Aquarius X5 MTP Id2 | 2a47:7f11 | ⚪ proposed | — |
-| Bq Aquarius M55 | 2a47:901b | ⚪ proposed | — |
-| Bq Aquarius U | 2a47:9039 | ⚪ proposed | — |
-| Bq Aquarius U 2nd Id | 2a47:903a | ⚪ proposed | — |
-| Bq U Plus | 2a47:f003 | ⚪ proposed | — |
-| Prestigio 5505 Duo | 29e4:1103 | ⚪ proposed | — |
-| Mediatek 5508 Duo | 29e4:1201 | ⚪ proposed | — |
-| Prestigio 5504 Duo | 29e4:1203 | ⚪ proposed | — |
-| Prestigio 3405 Duo | 29e4:3201 | ⚪ proposed | — |
-| Prestigio Multipad Color 8 | 29e4:b001 | ⚪ proposed | — |
-| Prestigio Multipad Color 70 | 29e4:b003 | ⚪ proposed | — |
-| Megafon Mflogin3t | 201e:42ab | ⚪ proposed | — |
-| Haier Ct715 | 201e:a0c1 | ⚪ proposed | — |
-| Gensis Gt 7305 | 040d:885c | ⚪ proposed | — |
-| Gigabyte Rct6773w22 Mtpadb | 0414:0c02 | ⚪ proposed | — |
-| Gigabyte Rct6773w22 MTP | 0414:2008 | ⚪ proposed | — |
-| Caterpillar Cat S40 | 04b7:88b0 | ⚪ proposed | — |
-| Caterpillar Cat S30 | 04b7:88b9 | ⚪ proposed | — |
-| Caterpillar Cat S60 | 04b7:88c0 | ⚪ proposed | — |
-| Caterpillar Cat S60 2nd Id | 04b7:88c1 | ⚪ proposed | — |
-| Caterpillar Cat S41 | 04b7:88c6 | ⚪ proposed | — |
-| Caterpillar Cat S31 | 04b7:88d0 | ⚪ proposed | — |
-| Caterpillar Cat S61 | 04b7:88d6 | ⚪ proposed | — |
-| Caterpillar Cat S62 Pro | 04b7:88f1 | ⚪ proposed | — |
-| Pegatron Chagall Adb | 1d4d:5035 | ⚪ proposed | — |
-| Pegatron Chagall | 1d4d:5036 | ⚪ proposed | — |
-| Pegatron Hudl 2 | 1d4d:504a | ⚪ proposed | — |
-| Fly Evo Tech 4 | 2970:2008 | ⚪ proposed | — |
-| Fly Nimbus 3 | 2970:4001 | ⚪ proposed | — |
-| Fly 5s | 2970:4002 | ⚪ proposed | — |
-| Kazam Trooper 650 4g | 2970:9039 | ⚪ proposed | — |
-| Megafon Login | 1271:2012 | ⚪ proposed | — |
-| Fly Iq4415 Era Style 3 | 2970:0c02 | ⚪ proposed | — |
-| Yu Yureka Vodafone Smart Turbo 4 | 1ebf:7f29 | ⚪ proposed | — |
-| Coolpad 801es | 1ebf:7029 | ⚪ proposed | — |
-| Benq F5 | 1d45:459d | ⚪ proposed | — |
-| Ouya Videogame Console | 2836:0010 | ⚪ proposed | — |
-| Parrot Bebop Drone | 19cf:5038 | ⚪ proposed | — |
-| Gopro Hero4 Session | 2672:000f | ⚪ proposed | supportsGetObjectPropList |
-| Gopro Hero 2018 | 2672:002d | ⚪ proposed | supportsGetObjectPropList |
-| Gopro Fusion Back | 2672:0032 | ⚪ proposed | supportsGetObjectPropList |
-| Gopro Fusion Front | 2672:0035 | ⚪ proposed | supportsGetObjectPropList |
-| Allview Energy P5 | 271d:4016 | ⚪ proposed | — |
-| Blu Studio Energy 2 | 271d:4017 | ⚪ proposed | — |
-| Zuk Z1 | 2b4c:1004 | ⚪ proposed | — |
-| Zuk Z1 2nd Id | 2b4c:1005 | ⚪ proposed | — |
-| Zuk Z2 Pro | 2b4c:1013 | ⚪ proposed | — |
-| Zuk Z2 | 2b4c:101a | ⚪ proposed | — |
-| Lemobile Le 2 | 2b0e:1714 | ⚪ proposed | — |
-| Lemobile Le 2 Id2 | 2b0e:171b | ⚪ proposed | — |
-| Letv Leeco Le 1s | 2b0e:1768 | ⚪ proposed | — |
-| Letv Leeco Le 2 Pro | 2b0e:1778 | ⚪ proposed | — |
-| Letv X800 Id1 | 2b0e:182c | ⚪ proposed | — |
-| Letv X800 Id2 | 2b0e:1830 | ⚪ proposed | — |
-| Letv Le Max2 | 2b0e:1840 | ⚪ proposed | — |
-| Letv Le Max2 Id2 | 2b0e:1844 | ⚪ proposed | — |
-| Tp Link Neffos C5 MTP | 2357:0314 | ⚪ proposed | — |
-| Tp Link Neffos C5 Max MTP | 2357:031a | ⚪ proposed | — |
-| Tp Link Neffos Y5l MTP | 2357:0320 | ⚪ proposed | — |
-| Tp Link Neffos Y5 MTP | 2357:0328 | ⚪ proposed | — |
-| Tp Link Neffos X1 MTP | 2357:033c | ⚪ proposed | — |
-| Tp Link Neffos Y5s MTP | 2357:038c | ⚪ proposed | — |
-| Recon Instruments Jet | 2523:d209 | ⚪ proposed | — |
-| Recon Instruments Snow2 Hud | 2523:d109 | ⚪ proposed | — |
-| Nextbit Robin | 2c3f:0001 | ⚪ proposed | — |
-| Vega R3 | 10a9:1105 | ⚪ proposed | — |
-| Op Innovations Xdp 100r | 0746:a003 | ⚪ proposed | — |
-| Pioneer Xdp 300r | 0746:a023 | ⚪ proposed | — |
-| Niteto Adf Drive | 16c0:0489 | ⚪ proposed | — |
-| Longcheer D | 1c9e:f003 | ⚪ proposed | — |
-| Vtevch Storio Max Xl 20 | 0f88:0684 | ⚪ proposed | — |
-| Netronix E60qh2 | 1f85:6a12 | ⚪ proposed | — |
-| Mooink Plus 2 | 1f85:2571 | ⚪ proposed | — |
-| Doro Phone 8030 Dsb 0010 | 2b43:0006 | ⚪ proposed | — |
-| Isabella Her Prototype | 0b20:ddee | ⚪ proposed | supportsGetObjectPropList |
-| Nox A1 | 1e0a:1001 | ⚪ proposed | supportsGetObjectPropList |
-| Mudita Pure Phone | 3310:0100 | ⚪ proposed | supportsGetObjectPropList |
-| Flir C5 | 09cb:100b | ⚪ proposed | — |
-| Shift Shift6m | 3360:2008 | ⚪ proposed | — |
-| Teenage Engineering Tp 7 | 2367:0019 | ⚪ proposed | — |
-| Teenage Engineering Op 1 Field | 2367:0102 | ⚪ proposed | — |
-| Teenage Engineering Op Xy | 2367:0021 | ⚪ proposed | — |
-| Rohdeschwarz Rtx Oscilloscope | 0aad:01d7 | ⚪ proposed | — |
-| Polar Grit X2 Pro | 0da4:0014 | ⚪ proposed | — |
-| Hawkeye Ai15 | 1d6b:0101 | ⚪ proposed | — |
-| Qemu Virtual MTP | 46f4:0004 | ⚪ proposed | supportsGetObjectPropList |
-| Canon Powershot S45 | 04a9:306d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot G3 | 04a9:306f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot S230 | 04a9:3071 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus Ii | 04a9:3072 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A70 | 04a9:3073 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A60 | 04a9:3074 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 400 | 04a9:3075 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A300 | 04a9:3076 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot S50 | 04a9:3077 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot G5 | 04a9:3085 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A80 | 04a9:309a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus I | 04a9:309b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot S1 Is | 04a9:309c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot S70 | 04a9:30b1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot S60 | 04a9:30b2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot G6 | 04a9:30b3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 500 | 04a9:30b4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A75 | 04a9:30b5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sd110 | 04a9:30b6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A400 | 04a9:30b7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A310 | 04a9:30b8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A85 | 04a9:30b9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 430 | 04a9:30ba | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A95 | 04a9:30bb | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 40 | 04a9:30bf | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sd200 | 04a9:30c0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A520 | 04a9:30c1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A510 | 04a9:30c2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon EOS 350d | 04a9:30ee | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon EOS 350d | 04a9:30ef | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot S2 Is | 04a9:30f0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sd430 | 04a9:30f1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 700 | 04a9:30f2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus Iz | 04a9:30f4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A430 | 04a9:30f8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A410 | 04a9:30f9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot S80 | 04a9:30fa | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A620 | 04a9:30fc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A610 | 04a9:30fd | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sd630 | 04a9:30fe | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 55 | 04a9:30ff | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon EOS 5d | 04a9:3102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 50 | 04a9:310e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A420 | 04a9:310f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon EOS 400d | 04a9:3110 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 900ti | 04a9:3115 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 750 | 04a9:3116 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A700 | 04a9:3117 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sd700 | 04a9:3119 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot S3 Is | 04a9:311a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A540 | 04a9:311b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 60 | 04a9:311c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot G7 | 04a9:3125 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A530 | 04a9:3126 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 850 Is | 04a9:3136 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sd40 | 04a9:3137 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A710 Is | 04a9:3138 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A630 | 04a9:313a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot S5 Is | 04a9:3148 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A460 | 04a9:3149 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 950 Is | 04a9:314b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A570 Is | 04a9:314c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A560 | 04a9:314d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 75 | 04a9:314e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 70 | 04a9:314f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A550 | 04a9:3150 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A450 | 04a9:3155 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot G9 | 04a9:315a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A650is | 04a9:315b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A720 Is | 04a9:315d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx100 Is | 04a9:315e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 960 Is | 04a9:315f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 860 Is | 04a9:3160 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 970 Is | 04a9:3173 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 90 Is | 04a9:3174 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sd770 Is | 04a9:3175 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A590 Is | 04a9:3176 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A580 | 04a9:3177 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A470 | 04a9:317a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 80 Is | 04a9:3184 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx10 Is | 04a9:318d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A1000 Is | 04a9:318e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A2000 Is | 04a9:3191 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx110 Is | 04a9:3192 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 980 Is | 04a9:3193 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sd880 Is | 04a9:3196 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot D10 | 04a9:31bc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 110 Is | 04a9:31bd | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A2100 Is | 04a9:31be | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A480 | 04a9:31bf | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx200 Is | 04a9:31c0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 990 Is | 04a9:31c1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 100 Is | 04a9:31c2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A1100 Is | 04a9:31c3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sd1200 Is | 04a9:31c4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx120 Is | 04a9:31e0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx20 Is | 04a9:31e4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Ixy 220 Is | 04a9:31e6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A495 | 04a9:31ef | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A3100 Is | 04a9:31f1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A3000 Is | 04a9:31f2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 130 | 04a9:31f3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sd1300 Is | 04a9:31f4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx210 Is | 04a9:31f6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 300 Hs | 04a9:31f7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx130 Is | 04a9:3211 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Ixus 310is | 04a9:3225 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A800 | 04a9:3226 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx230hs | 04a9:3228 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A2200 | 04a9:322a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx220hs | 04a9:322c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx40hs | 04a9:3238 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A1300is | 04a9:323e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A810 | 04a9:323f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Ixus 125hs | 04a9:3241 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A4000is | 04a9:3243 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx260hs | 04a9:3244 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx240hs | 04a9:3245 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A2400is | 04a9:3249 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A2300is | 04a9:324a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx160is | 04a9:325a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx500is | 04a9:325c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx280hs | 04a9:325f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A3500is | 04a9:3261 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A2600 | 04a9:3262 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A1400 | 04a9:3264 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 255hs | 04a9:3268 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot A2500 | 04a9:3271 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx170 Is | 04a9:3276 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Powershot Sx510 Hs | 04a9:3277 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon Digital Ixus 132 | 04a9:327d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Canon EOS 5ds R | 04a9:32af | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 2500 | 04b0:0109 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 4500 | 04b0:010b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 5700 | 04b0:010d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 4300 | 04b0:010f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 3500 | 04b0:0111 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 885 | 04b0:0112 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 5000 | 04b0:0113 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 3100 | 04b0:0115 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 2100 | 04b0:0117 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 5400 | 04b0:0119 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 3700 | 04b0:011d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 8700 | 04b0:011f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 3200 | 04b0:0121 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 2200 | 04b0:0122 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 2200v11 | 04b0:0123 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 8800 | 04b0:0127 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 4800 | 04b0:0129 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 4100 | 04b0:012d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 5600 | 04b0:012e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 4600 | 04b0:0130 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 4600a | 04b0:0131 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 5900 | 04b0:0135 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 7900 | 04b0:0137 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 7600 | 04b0:0139 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P1 | 04b0:0140 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P2 | 04b0:0142 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S4 | 04b0:0144 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S2 | 04b0:014e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S7c | 04b0:0157 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P5000 | 04b0:015b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S500 | 04b0:015d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L12 | 04b0:015f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S200 | 04b0:0161 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P5100 | 04b0:0163 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P50 | 04b0:0169 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P80 | 04b0:016b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P80 V11 | 04b0:016c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P6000 | 04b0:016f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S60 | 04b0:0171 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P90 | 04b0:0173 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L100 | 04b0:0174 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S220 | 04b0:0177 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S225 | 04b0:0178 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P100 | 04b0:017d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L110 | 04b0:017e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P7000 | 04b0:017f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P500 | 04b0:0184 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L120 | 04b0:0185 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S9100 | 04b0:0186 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 9400 | 04b0:0191 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Keymission 360 | 04b0:019f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix Sq | 04b0:0202 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 4200 | 04b0:0204 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 5200 | 04b0:0206 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L1 | 04b0:0208 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P4 | 04b0:020c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S620 | 04b0:021c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S6000 | 04b0:021e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S8000 | 04b0:021f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S5100 | 04b0:0220 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P300 | 04b0:0221 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S8200 | 04b0:0222 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix 2000 | 04b0:0302 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L4 | 04b0:0305 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L11 | 04b0:0309 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L10 | 04b0:030b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix P60 | 04b0:0311 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L16 | 04b0:0315 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L20 | 04b0:0317 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L19 | 04b0:0318 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S3000 | 04b0:031b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S3100 | 04b0:0320 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S2500 | 04b0:0321 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L23 | 04b0:0324 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S4300 | 04b0:0329 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S3300 | 04b0:032a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S6300 | 04b0:032c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S2600 | 04b0:032d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L810 | 04b0:032f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S3200 | 04b0:0334 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S01 | 04b0:0337 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S3500 | 04b0:033b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S2700 | 04b0:033f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix L27 | 04b0:0343 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S02 | 04b0:0346 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S6800 | 04b0:0350 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S3600 | 04b0:0353 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S3700 | 04b0:035c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Coolpix S2900 | 04b0:035e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Nikon Keymission 170 | 04b0:0364 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix A820 | 04cb:01c6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix A920 | 04cb:01d3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix S5800 | 04cb:01d7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix F60fd | 04cb:01e6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix S2000hd | 04cb:01e8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Fujifilm A220 | 04cb:01fe | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix S1800 | 04cb:0200 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix Z35 | 04cb:0201 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix Av 150 | 04cb:021b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix T200 | 04cb:0233 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix Jx370 | 04cb:0250 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix S4200 | 04cb:0264 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix S4300 | 04cb:0265 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix Hs30exr | 04cb:0271 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix S2980 | 04cb:027d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Fuji Finepix S4850 | 04cb:0298 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Ptp | 054c:004e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc S730 | 054c:0296 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc A100 | 054c:02c0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc W200 | 054c:02f8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Slt A350 | 054c:0321 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc W130 | 054c:0343 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Hx5v | 054c:0491 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Slt A55 | 054c:04a3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Nex5 | 054c:04a5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Slt A35 | 054c:04a7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Rx100 | 054c:052a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Rx1 | 054c:052b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc W510 | 054c:053c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Hx100v | 054c:0543 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Slt A65v | 054c:0574 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Slt A77v | 054c:0577 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Nex 5n | 054c:0579 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Nex 7 | 054c:057d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Hx20v | 054c:061c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Hx200v | 054c:061f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Slt A99v | 054c:0641 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Slt A57 | 054c:0669 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Nex 5r | 054c:066f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Slt A99v | 054c:0675 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Nex 6 | 054c:0678 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Hx300 | 054c:06ee | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Nex 3n | 054c:072f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Slt A58 | 054c:0736 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Slt A58 | 054c:0737 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Rx100m2 | 054c:074b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A3000 | 054c:074e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A68 | 054c:0779 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Hx80 | 054c:0780 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A68 | 054c:079b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A6300 | 054c:079c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Rx10m3 | 054c:079d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A99 M2 | 054c:079e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Rx100v | 054c:07a3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A6500 | 054c:07a4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A5000 | 054c:07c6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Rx100m6 | 054c:0830 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Hx400v | 054c:08ac | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Hx60v | 054c:08ad | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Wx350 | 054c:08b0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Wx220 | 054c:08d7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Rx100m3 | 054c:08e3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A6000 | 054c:094e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A77 M2 | 054c:0953 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7s | 054c:0954 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A5100 | 054c:0957 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7iii | 054c:096f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Hx90v | 054c:09e8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7r Ii | 054c:0a6b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Rx100m4 | 054c:0a6d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha Rx1r Ii | 054c:0a70 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Qx30u | 054c:0a77 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Dsc Rx0 | 054c:0bfd | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Lava Z1 | 29a9:6001 | ⚪ proposed | — |
-| Lava Z2 | 29a9:6002 | ⚪ proposed | — |
-| Lava Z3 | 29a9:6003 | ⚪ proposed | — |
-| Lava Z6 | 29a9:6004 | ⚪ proposed | — |
-| Lava Agni 5g | 29a9:6005 | ⚪ proposed | — |
-| Lava Blaze | 29a9:6006 | ⚪ proposed | — |
-| Lava Blaze 5g | 29a9:6007 | ⚪ proposed | — |
-| Lava Blaze Pro | 29a9:6008 | ⚪ proposed | — |
-| Lava Agni 2 | 29a9:6009 | ⚪ proposed | — |
-| Symphony Z10 | 1782:5001 | ⚪ proposed | — |
-| Symphony Z15 | 1782:5002 | ⚪ proposed | — |
-| Symphony Z25 | 1782:5003 | ⚪ proposed | — |
-| Symphony Z30 | 1782:5004 | ⚪ proposed | — |
-| Symphony I18 | 1782:5005 | ⚪ proposed | — |
-| Symphony I75 | 1782:5006 | ⚪ proposed | — |
-| Symphony V155 | 1782:5007 | ⚪ proposed | — |
-| Micromax In Note 1 | 2a96:6001 | ⚪ proposed | — |
-| Micromax In 1b | 2a96:6002 | ⚪ proposed | — |
-| Micromax In Note 2 | 2a96:6003 | ⚪ proposed | — |
-| Micromax In 2b | 2a96:6004 | ⚪ proposed | — |
-| Micromax In 2c | 2a96:6005 | ⚪ proposed | — |
-| Micromax Canvas Infinity | 2a96:6006 | ⚪ proposed | — |
-| Micromax Bharat 5 | 2a96:6007 | ⚪ proposed | — |
-| Micromax Canvas 6 Pro | 2a96:6008 | ⚪ proposed | — |
-| Condor Allure A55 | 0e8d:2030 | ⚪ proposed | — |
-| Condor Plume L2 Pro | 0e8d:2031 | ⚪ proposed | — |
-| Condor Griffe T9 | 0e8d:2032 | ⚪ proposed | — |
-| Condor Allure M3 | 0e8d:2033 | ⚪ proposed | — |
-| Condor Plume P8 Pro | 0e8d:2034 | ⚪ proposed | — |
-| Tmobile Revvl 6 5g | 1bbb:a101 | ⚪ proposed | — |
-| Tmobile Revvl 6 Pro | 1bbb:a102 | ⚪ proposed | — |
-| Tmobile Revvl V Plus 5g | 1bbb:a103 | ⚪ proposed | — |
-| Tmobile Revvl 5g | 1bbb:a104 | ⚪ proposed | — |
-| Tmobile Revvl 4 | 1bbb:a105 | ⚪ proposed | — |
-| Tmobile Revvl 4 Plus | 1bbb:a106 | ⚪ proposed | — |
-| Tmobile Revvl Tab 5g | 1bbb:a107 | ⚪ proposed | — |
-| Att Calypso 3 | 1bbb:a201 | ⚪ proposed | — |
-| Att Maestro Max | 1bbb:a202 | ⚪ proposed | — |
-| Att Motivate 2 | 1bbb:a203 | ⚪ proposed | — |
-| Att Radiant Max 5g | 1bbb:a204 | ⚪ proposed | — |
-| Att Fusion 5g | 1bbb:a205 | ⚪ proposed | — |
-| Verizon Orbic Joy | 05c6:a301 | ⚪ proposed | — |
-| Verizon Orbic Myra 5g | 05c6:a302 | ⚪ proposed | — |
-| Verizon Tcl 30 Xe 5g | 1bbb:a303 | ⚪ proposed | — |
-| Verizon Tcl 50 Xl Nxtpaper | 1bbb:a304 | ⚪ proposed | — |
-| Cricket Dream 5g | 1bbb:a401 | ⚪ proposed | — |
-| Cricket Icon 5 | 1bbb:a402 | ⚪ proposed | — |
-| Cricket Magic 5g | 1bbb:a403 | ⚪ proposed | — |
-| Cricket Ovation 3 | 1bbb:a404 | ⚪ proposed | — |
-| Cricket Debut S2 | 1bbb:a405 | ⚪ proposed | — |
-| Blu G91 Pro | 271d:4018 | ⚪ proposed | — |
-| Blu G91s | 271d:4019 | ⚪ proposed | — |
-| Blu View 4 | 271d:401a | ⚪ proposed | — |
-| Blu Bold N2 | 271d:401b | ⚪ proposed | — |
-| Blu G93 | 271d:401c | ⚪ proposed | — |
-| Blu F91 | 271d:401d | ⚪ proposed | — |
-| Blu View 3 | 271d:401e | ⚪ proposed | — |
-| Blu G71 | 271d:401f | ⚪ proposed | — |
-| Blu Bold N3 | 271d:4020 | ⚪ proposed | — |
-| Wiko Power U30 | 1ebf:1012 | ⚪ proposed | — |
-| Wiko T50 | 1ebf:1013 | ⚪ proposed | — |
-| Wiko T60 | 1ebf:1014 | ⚪ proposed | — |
-| Wiko 10 | 1ebf:1015 | ⚪ proposed | — |
-| Wiko View 5 Plus | 1ebf:1016 | ⚪ proposed | — |
-| Infinix Gt 20 Pro | 1d5c:601c | ⚪ proposed | — |
-| Infinix Note 40 Pro | 1d5c:601d | ⚪ proposed | — |
-| Infinix Hot 40 Pro | 1d5c:601e | ⚪ proposed | — |
-| Infinix Zero 30 5g | 1d5c:601f | ⚪ proposed | — |
-| Infinix Smart 8 | 1d5c:6020 | ⚪ proposed | — |
-| Itel S24 | 1d4d:601c | ⚪ proposed | — |
-| Itel A70 | 1d4d:601d | ⚪ proposed | — |
-| Itel P55 5g | 1d4d:601e | ⚪ proposed | — |
-| Itel Rs4 | 1d4d:601f | ⚪ proposed | — |
-| Itel A60s | 1d4d:6020 | ⚪ proposed | — |
-| Tecno Camon 30 Pro | 1d5b:601e | ⚪ proposed | — |
-| Tecno Phantom V Fold | 1d5b:601f | ⚪ proposed | — |
-| Tecno Spark 20 Pro | 1d5b:6020 | ⚪ proposed | — |
-| Tecno Pova 6 Pro | 1d5b:6021 | ⚪ proposed | — |
-| Tecno Phantom X2 Pro | 1d5b:6022 | ⚪ proposed | — |
-| Doogee S100 Pro | 0e8d:2035 | ⚪ proposed | — |
-| Doogee V30 | 0e8d:2036 | ⚪ proposed | — |
-| Doogee S110 | 0e8d:2037 | ⚪ proposed | — |
-| Ulefone Armor 23 Ultra | 0e8d:2038 | ⚪ proposed | — |
-| Ulefone Armor 22 | 0e8d:2039 | ⚪ proposed | — |
-| Ulefone Power Armor 19t | 0e8d:203a | ⚪ proposed | — |
-| Oukitel Wp28 | 0e8d:203b | ⚪ proposed | — |
-| Oukitel Wp30 Pro | 0e8d:203c | ⚪ proposed | — |
-| Oukitel Rt7 | 0e8d:203d | ⚪ proposed | — |
-| Agm Glory G1s | 0e8d:203e | ⚪ proposed | — |
-| Agm H6 | 0e8d:203f | ⚪ proposed | — |
-| Agm Note N1 | 0e8d:2040 | ⚪ proposed | — |
-| Blackview Bv9300 | 0e8d:2041 | ⚪ proposed | — |
-| Blackview Bv8900 | 0e8d:2042 | ⚪ proposed | — |
-| Blackview Bl9000 | 0e8d:2043 | ⚪ proposed | — |
-| Blackview Bv7200 | 0e8d:2044 | ⚪ proposed | — |
-| Blackview Tab 18 | 0e8d:2045 | ⚪ proposed | — |
-| Blackview N6000 | 0e8d:2046 | ⚪ proposed | — |
-| Nvidia Shield Tablet | 0955:cf06 | ⚪ proposed | — |
-| Nvidia Shield Tablet Ptp | 0955:cf08 | ⚪ proposed | — |
-| Amazon Fire Tv Stick 1gen | 1949:02a1 | ⚪ proposed | — |
-| Amazon Fire Tv Stick 2gen | 1949:0311 | ⚪ proposed | — |
-| Amazon Fire Tv Stick 4k | 1949:0441 | ⚪ proposed | — |
-| Amazon Fire Tv Stick 4kmax | 1949:0461 | ⚪ proposed | — |
-| Amazon Fire Tv Cube 2gen | 1949:0381 | ⚪ proposed | — |
-| Amazon Fire Tv Cube 3gen | 1949:0741 | ⚪ proposed | — |
-| Xiaomi Mi Box S | 2717:5001 | ⚪ proposed | — |
-| Xiaomi Mi Box 4 | 2717:5002 | ⚪ proposed | — |
-| Xiaomi Mi Tv Stick | 2717:5003 | ⚪ proposed | — |
-| Amlogic S905x Tvbox | 1b8e:c003 | ⚪ proposed | — |
-| Amlogic S905x3 Tvbox | 1b8e:c004 | ⚪ proposed | — |
-| Amlogic S905x4 Tvbox | 1b8e:c005 | ⚪ proposed | — |
-| Rockchip Rk3328 Tvbox | 2207:0030 | ⚪ proposed | — |
-| Allwinner H616 Tvbox | 1f3a:6010 | ⚪ proposed | — |
-| Tivo Stream 4k | 1b8e:c006 | ⚪ proposed | — |
-| Realme Tv Stick | 22d9:278a | ⚪ proposed | — |
-| Oppo Smart Tv K9 | 22d9:278b | ⚪ proposed | — |
-| Garmin Virb Elite | 091e:2464 | ⚪ proposed | — |
-| Garmin Virb X | 091e:2466 | ⚪ proposed | — |
-| Garmin Virb Xe | 091e:2467 | ⚪ proposed | — |
-| Garmin Virb Ultra30 | 091e:2468 | ⚪ proposed | — |
-| Garmin Virb 360 | 091e:2469 | ⚪ proposed | — |
-| Dji Osmo Action | 2ca3:0033 | ⚪ proposed | — |
-| Dji Osmo Pocket | 2ca3:0034 | ⚪ proposed | — |
-| Dji Mavic Air | 2ca3:0035 | ⚪ proposed | — |
-| Dji Mavic Air 2 | 2ca3:0036 | ⚪ proposed | — |
-| Dji Mavic Mini | 2ca3:0037 | ⚪ proposed | — |
-| Dji Mavic Pro | 2ca3:0038 | ⚪ proposed | — |
-| Dji Mavic 2 Pro | 2ca3:0039 | ⚪ proposed | — |
-| Dji Mavic 2 Zoom | 2ca3:003a | ⚪ proposed | — |
-| Dji Action 3 Alt | 2ca3:003b | ⚪ proposed | — |
-| Dji Action 4 Alt | 2ca3:003c | ⚪ proposed | — |
-| Dji Pocket 1 | 2ca3:003d | ⚪ proposed | — |
-| Dji Mini 2 Se | 2ca3:003e | ⚪ proposed | — |
-| Dji Mavic 3 | 2ca3:003f | ⚪ proposed | — |
-| Eken H9r | 1f3a:1000 | ⚪ proposed | — |
-| Eken H5s Plus | 1f3a:1001 | ⚪ proposed | — |
-| Eken H6s | 1f3a:1002 | ⚪ proposed | — |
-| Eken H7s | 1f3a:1003 | ⚪ proposed | — |
-| Eken Alfawise V50 Pro | 1f3a:1004 | ⚪ proposed | — |
-| Yi Action Camera | 2dbd:0001 | ⚪ proposed | — |
-| Yi 4k Action Camera | 2dbd:0002 | ⚪ proposed | — |
-| Yi 4k Plus | 2dbd:0003 | ⚪ proposed | — |
-| Yi Lite | 2dbd:0004 | ⚪ proposed | — |
-| Yi Discovery | 2dbd:0005 | ⚪ proposed | — |
-| Sjcam Sj12 Pro | 1b3f:0206 | ⚪ proposed | — |
-| Sjcam Sj12 Titan | 1b3f:0207 | ⚪ proposed | — |
-| Akaso V50 Pro | 3538:000c | ⚪ proposed | — |
-| Akaso V50 Pro Se | 3538:000d | ⚪ proposed | — |
-| Akaso V50 Elite | 3538:000e | ⚪ proposed | — |
-| Runcam 5 Orange | 4255:0104 | ⚪ proposed | — |
-| Runcam Thumb | 4255:0105 | ⚪ proposed | — |
-| Cayin N6ii | 2d87:0003 | ⚪ proposed | — |
-| Cayin N8ii | 2d87:0005 | ⚪ proposed | — |
-| Shanling M6 | 31b2:000b | ⚪ proposed | — |
-| Shanling M8 | 31b2:000d | ⚪ proposed | — |
-| Shanling M3x | 31b2:000f | ⚪ proposed | — |
-| Onkyo Dp X1 | 0746:a011 | ⚪ proposed | — |
-| Onkyo Dp X1a | 0746:a013 | ⚪ proposed | — |
-| Pioneer Xdp 30r | 0746:a033 | ⚪ proposed | — |
-| Marshall Emberton | 2ad9:000d | ⚪ proposed | — |
-| Marshall Emberton Ii | 2ad9:000f | ⚪ proposed | — |
-| Jbl Charge5 | 0ecb:2070 | ⚪ proposed | — |
-| Jbl Flip6 | 0ecb:2072 | ⚪ proposed | — |
-| Jbl Partybox310 | 0ecb:2074 | ⚪ proposed | — |
-| Bose Qc35ii | 05a7:4002 | ⚪ proposed | — |
-| Bose Nc700 | 05a7:4004 | ⚪ proposed | — |
-| Bose Qc45 | 05a7:4006 | ⚪ proposed | — |
-| Bose Qc Ultra | 05a7:4008 | ⚪ proposed | — |
-| Bose Soundlink Flex | 05a7:40fe | ⚪ proposed | — |
-| Keysight U2702a Oscilloscope | 0957:2918 | ⚪ proposed | — |
-| Keysight 34410a Multimeter | 0957:0607 | ⚪ proposed | — |
-| Keysight 34411a Multimeter | 0957:0a07 | ⚪ proposed | — |
-| Keysight 34461a Multimeter | 0957:1a07 | ⚪ proposed | — |
-| Keysight 33220a Waveform Generator | 0957:0407 | ⚪ proposed | — |
-| Keysight 33210a Waveform Generator | 0957:1507 | ⚪ proposed | — |
-| Keysight 53230a Frequency Counter | 0957:1907 | ⚪ proposed | — |
-| Keysight Ivi Tmc Device | 0957:1745 | ⚪ proposed | — |
-| Tektronix Afg3022b | 0699:0347 | ⚪ proposed | — |
-| Tektronix Tds2004b Oscilloscope | 0699:0365 | ⚪ proposed | — |
-| Tektronix Tds2024b Oscilloscope | 0699:036a | ⚪ proposed | — |
-| Rohdeschwarz Hmo Oscilloscope | 0aad:0117 | ⚪ proposed | — |
-| Rohdeschwarz Hmo Oscilloscope | 0aad:0118 | ⚪ proposed | — |
-| Rohdeschwarz Hmo Oscilloscope | 0aad:0119 | ⚪ proposed | — |
-| Prusa I3 Mk2s | 2c99:0001 | ⚪ proposed | — |
-| Prusa I3 Mk3 | 2c99:0002 | ⚪ proposed | — |
-| Prusa Mini | 2c99:000c | ⚪ proposed | — |
-| Prusa Mk4 | 2c99:0016 | ⚪ proposed | — |
-| Prusa Xl | 2c99:000d | ⚪ proposed | — |
-| Bambulab X1 Carbon | 3311:0001 | ⚪ proposed | — |
-| Bambulab P1s | 3311:0002 | ⚪ proposed | — |
-| Bambulab A1 Mini | 3311:0003 | ⚪ proposed | — |
-| Bambulab A1 | 3311:0004 | ⚪ proposed | — |
-| Creality K1 3dprinter | 0483:0105 | ⚪ proposed | — |
-| Creality Ender3 S1 Pro | 0483:5741 | ⚪ proposed | — |
-| Anycubic Kobra2 Pro | 0483:0104 | ⚪ proposed | — |
-| Rigol Ds6000 Oscilloscope | 1ab1:04b0 | ⚪ proposed | — |
-| Rigol Ds4000 Oscilloscope | 1ab1:04be | ⚪ proposed | — |
-| Rigol Ds1054z Oscilloscope | 1ab1:04ce | ⚪ proposed | — |
-| Rigol Ds1000 Oscilloscope | 1ab1:0588 | ⚪ proposed | — |
-| Siglent Dso Oscilloscope | f4ec:ee38 | ⚪ proposed | — |
-| Onset Hobo U12 Datalogger | 1941:0001 | ⚪ proposed | — |
-| Onset Hobo Ux100 Datalogger | 1941:0002 | ⚪ proposed | — |
-| Onset Hobo Mx Datalogger | 1941:0003 | ⚪ proposed | — |
-| Omega Om El USB 1 Datalogger | 1cbe:0001 | ⚪ proposed | — |
-| Omega Om El USB 2 Datalogger | 1cbe:0002 | ⚪ proposed | — |
-| Phonak Noahlink Wireless | 2479:0001 | ⚪ proposed | — |
-| Phonak Target Icube Ii | 2479:0002 | ⚪ proposed | — |
-| Signia Connexx Programmer | 247a:0001 | ⚪ proposed | — |
-| Signia Easytek | 247a:0002 | ⚪ proposed | — |
-| Resound Noahlink | 247b:0001 | ⚪ proposed | — |
-| Resound Multi Mic | 247b:0002 | ⚪ proposed | — |
-| Dexcom G6 Receiver | 22a3:0003 | ⚪ proposed | — |
-| Dexcom G7 Receiver | 22a3:0047 | ⚪ proposed | — |
-| Abbott Freestyle Libre Reader | 1a61:0001 | ⚪ proposed | — |
-| Abbott Freestyle Libre2 Reader | 1a61:0002 | ⚪ proposed | — |
-| Flir A320 Thermal | 09cb:1020 | ⚪ proposed | — |
-| Flir A70 Thermal | 09cb:1021 | ⚪ proposed | — |
-| Flir Cx5 Thermal | 09cb:1030 | ⚪ proposed | — |
-| Seek Thermal Compact | 289d:0012 | ⚪ proposed | — |
-| Infiray Xinfrared T3s | 2bdf:0004 | ⚪ proposed | — |
-| Infiray P200 | 2bdf:0005 | ⚪ proposed | — |
-| Xtool D1 Pro Laser | 7523:0001 | ⚪ proposed | — |
-| Xtool M1 Laser | 7523:0002 | ⚪ proposed | — |
-| Ortur Laser Master3 | 7524:0001 | ⚪ proposed | — |
-| Ortur Aufero2 Laser | 7524:0002 | ⚪ proposed | — |
-| Yaesu Ft991a Transceiver | 10c4:0023 | ⚪ proposed | — |
-| Yaesu Ftdx10 Transceiver | 10c4:0024 | ⚪ proposed | — |
-| Icom Ic R30 Receiver | 0c26:002b | ⚪ proposed | — |
-| Icom Ic 7300 Transceiver | 0c26:0018 | ⚪ proposed | — |
-| Kenwood Ts590sg Transceiver | 0b28:100d | ⚪ proposed | — |
-| Kenwood Ts890s Transceiver | 0b28:100e | ⚪ proposed | — |
-| Livescribe Pulse Smartpen | 1ccb:0002 | ⚪ proposed | — |
-| Livescribe 3 Smartpen | 1ccb:0003 | ⚪ proposed | — |
-| Remarkable Tablet | 2d01:4001 | ⚪ proposed | — |
-| Remarkable2 Tablet | 2d01:4002 | ⚪ proposed | — |
-| Smartthings Hub V3 | 10c4:8a2a | ⚪ proposed | — |
-| Hubitat Elevation C7 | 10c4:ea60 | ⚪ proposed | — |
-| Hubitat Elevation C8 | 10c4:ea61 | ⚪ proposed | — |
-| Microsoft Zune 8gb | 045e:0711 | ⚪ proposed | — |
-| Microsoft Zune 80gb | 045e:0712 | ⚪ proposed | — |
-| Microsoft Zune 16gb | 045e:0714 | ⚪ proposed | — |
-| Microsoft Zune 120gb | 045e:0715 | ⚪ proposed | — |
-| Microsoft Zune Hd 16gb | 045e:063f | ⚪ proposed | — |
-| Microsoft Kin One MTP | 045e:0643 | ⚪ proposed | — |
-| Microsoft Kin Two MTP | 045e:0644 | ⚪ proposed | — |
-| Microsoft Lumia Alt | 045e:04ed | ⚪ proposed | — |
-| Microsoft Surface Duo | 045e:0c26 | ⚪ proposed | — |
-| Microsoft Surface Duo 2 | 045e:0c27 | ⚪ proposed | — |
-| Creative Zen Xfi | 041e:4159 | ⚪ proposed | — |
-| Creative Zen Xfi2 | 041e:2020 | ⚪ proposed | — |
-| Creative Zen Xfi3 | 041e:415a | ⚪ proposed | — |
-| Creative Zen Style | 041e:415b | ⚪ proposed | — |
-| Creative Zen Touch2 | 041e:415c | ⚪ proposed | — |
-| Creative Zen Mozaic | 041e:415d | ⚪ proposed | — |
-| Creative Ziio 7 | 041e:2029 | ⚪ proposed | — |
-| Creative Ziio 10 | 041e:202a | ⚪ proposed | — |
-| Creative Zen Wav | 041e:4160 | ⚪ proposed | — |
-| Creative Zen Neeon | 041e:4134 | ⚪ proposed | — |
-| Creative Zen Nano | 041e:4139 | ⚪ proposed | — |
-| Creative Zen Microphoto Alt | 041e:413f | ⚪ proposed | — |
-| Creative Muvo V100 | 041e:200c | ⚪ proposed | — |
-| Creative Zen Sleek | 041e:4136 | ⚪ proposed | — |
-| Motorola Moto G Power 2021 | 22b8:2e94 | ⚪ proposed | — |
-| Motorola Moto G Power 2022 | 22b8:2e95 | ⚪ proposed | — |
-| Motorola Moto G Power 2023 | 22b8:2e96 | ⚪ proposed | — |
-| Motorola Moto G Power 5g | 22b8:2e97 | ⚪ proposed | — |
-| Motorola Edge 2020 | 22b8:2e98 | ⚪ proposed | — |
-| Motorola Edge Plus 2020 | 22b8:2e99 | ⚪ proposed | — |
-| Motorola Edge 2021 | 22b8:2e9a | ⚪ proposed | — |
-| Motorola Edge 2022 | 22b8:2e9b | ⚪ proposed | — |
-| Motorola Edge 30 | 22b8:2e9c | ⚪ proposed | — |
-| Motorola Edge 30 Pro | 22b8:2e9d | ⚪ proposed | — |
-| Motorola Edge 30 Ultra | 22b8:2e9e | ⚪ proposed | — |
-| Motorola Edge 40 | 22b8:2e9f | ⚪ proposed | — |
-| Motorola Edge 40 Pro | 22b8:2ea0 | ⚪ proposed | — |
-| Motorola Edge 50 | 22b8:2ea1 | ⚪ proposed | — |
-| Motorola Edge 50 Pro | 22b8:2ea2 | ⚪ proposed | — |
-| Motorola Edge 50 Ultra | 22b8:2ea3 | ⚪ proposed | — |
-| Motorola Razr 2020 | 22b8:2ea6 | ⚪ proposed | — |
-| Motorola Razr 2022 | 22b8:2ea7 | ⚪ proposed | — |
-| Motorola Razr Plus 2023 | 22b8:2ea9 | ⚪ proposed | — |
-| Motorola Razr 2023 | 22b8:2eaa | ⚪ proposed | — |
-| Motorola Razr Plus 2024 | 22b8:2eab | ⚪ proposed | — |
-| Motorola Moto G Stylus 2021 | 22b8:2eac | ⚪ proposed | — |
-| Motorola Moto G Stylus 2022 | 22b8:2ead | ⚪ proposed | — |
-| Motorola Moto G Stylus 2023 | 22b8:2eae | ⚪ proposed | — |
-| Motorola Moto G Play 2021 | 22b8:2eaf | ⚪ proposed | — |
-| Motorola Moto G Play 2023 | 22b8:2eb0 | ⚪ proposed | — |
-| Motorola Moto G Play 2024 | 22b8:2eb1 | ⚪ proposed | — |
-| Motorola Moto G Pure | 22b8:2eb2 | ⚪ proposed | — |
-| Motorola Moto G 5g 2023 | 22b8:2eb3 | ⚪ proposed | — |
-| Motorola Moto G 5g 2024 | 22b8:2eb4 | ⚪ proposed | — |
-| Motorola Thinkphone | 22b8:2eb5 | ⚪ proposed | — |
-| Samsung Galaxy Tab S7 | 04e8:6b0d | ⚪ proposed | — |
-| Samsung Galaxy Tab S7 Plus | 04e8:6b0e | ⚪ proposed | — |
-| Samsung Galaxy Tab S7 Fe | 04e8:6b0f | ⚪ proposed | — |
-| Samsung Galaxy Tab S8 | 04e8:6b10 | ⚪ proposed | — |
-| Samsung Galaxy Tab S8 Plus | 04e8:6b11 | ⚪ proposed | — |
-| Samsung Galaxy Tab S8 Ultra | 04e8:6b12 | ⚪ proposed | — |
-| Samsung Galaxy Tab S9 | 04e8:6b13 | ⚪ proposed | — |
-| Samsung Galaxy Tab S9 Plus | 04e8:6b14 | ⚪ proposed | — |
-| Samsung Galaxy Tab S9 Ultra | 04e8:6b15 | ⚪ proposed | — |
-| Samsung Galaxy Tab S9 Fe | 04e8:6b16 | ⚪ proposed | — |
-| Samsung Galaxy Tab S9 Fe Plus | 04e8:6b17 | ⚪ proposed | — |
-| Samsung Galaxy Tab A7 Lite | 04e8:6b18 | ⚪ proposed | — |
-| Samsung Galaxy Tab A8 2022 | 04e8:6b19 | ⚪ proposed | — |
-| Samsung Galaxy Tab A9 | 04e8:6b1a | ⚪ proposed | — |
-| Samsung Galaxy Tab A9 Plus | 04e8:6b1b | ⚪ proposed | — |
-| Samsung Galaxy Tab Active4 Pro | 04e8:6b1c | ⚪ proposed | — |
-| Samsung Galaxy Tab Active5 | 04e8:6b1d | ⚪ proposed | — |
-| Amazon Echo Show 5 2nd | 1949:0801 | ⚪ proposed | — |
-| Amazon Echo Show 8 2nd | 1949:0802 | ⚪ proposed | — |
-| Amazon Echo Show 10 3rd | 1949:0803 | ⚪ proposed | — |
-| Amazon Echo Show 15 | 1949:0804 | ⚪ proposed | — |
-| Amazon Echo Show 5 3rd | 1949:0805 | ⚪ proposed | — |
-| Amazon Echo Show 8 3rd | 1949:0806 | ⚪ proposed | — |
-| Amazon Fire Max 11 | 1949:0807 | ⚪ proposed | — |
-| Amazon Fire Hd 8 2022 | 1949:0808 | ⚪ proposed | — |
-| Amazon Fire Hd 10 2023 | 1949:0809 | ⚪ proposed | — |
-| Amazon Fire 7 2022 | 1949:080a | ⚪ proposed | — |
-| Wd My Passport Ultra | 1058:0821 | ⚪ proposed | — |
-| Wd My Passport Ssd Gen2 | 1058:25f4 | ⚪ proposed | — |
-| Wd Easystore 5tb | 1058:25fb | ⚪ proposed | — |
-| Wd My Passport Go | 1058:25f5 | ⚪ proposed | — |
-| Wd Elements Se Alt | 1058:10a9 | ⚪ proposed | — |
-| Wd My Book 6tb | 1058:1236 | ⚪ proposed | — |
-| Seagate Backup Plus Slim | 0bc2:ab29 | ⚪ proposed | — |
-| Seagate One Touch Ssd | 0bc2:ab60 | ⚪ proposed | — |
-| Seagate Expansion 4tb | 0bc2:2323 | ⚪ proposed | — |
-| Seagate Firecuda Gaming | 0bc2:ab61 | ⚪ proposed | — |
-| Seagate Basic Portable | 0bc2:aa16 | ⚪ proposed | — |
-| Seagate Backup Plus Hub | 0bc2:ab39 | ⚪ proposed | — |
-| Pioneer Appradio Sph Da110 | 08e4:0100 | ⚪ proposed | — |
-| Pioneer Appradio Sph Da120 | 08e4:0101 | ⚪ proposed | — |
-| Pioneer Appradio Sph Da210 | 08e4:0102 | ⚪ proposed | — |
-| Pioneer Avh X8800bt | 08e4:0110 | ⚪ proposed | — |
-| Pioneer Dmh Wt8600nex | 08e4:0120 | ⚪ proposed | — |
-| Pioneer Sph 10bt | 08e4:0130 | ⚪ proposed | — |
-| Kenwood Ddx9707s | 0b28:0100 | ⚪ proposed | — |
-| Kenwood Dmx907s | 0b28:0101 | ⚪ proposed | — |
-| Kenwood Dnx577s | 0b28:0102 | ⚪ proposed | — |
-| Kenwood Excelon Dmx1057xr | 0b28:0110 | ⚪ proposed | — |
-| Alpine Ilx W670 | 044e:0100 | ⚪ proposed | — |
-| Alpine Ilx F511 | 044e:0101 | ⚪ proposed | — |
-| Alpine Ilx F409 | 044e:0102 | ⚪ proposed | — |
-| Alpine Ilx 507 | 044e:0103 | ⚪ proposed | — |
-| Xgimi Halo Plus | 2e04:0001 | ⚪ proposed | — |
-| Xgimi Mogo 2 Pro | 2e04:0002 | ⚪ proposed | — |
-| Xgimi Horizon Pro | 2e04:0003 | ⚪ proposed | — |
-| Xgimi Elfin | 2e04:0004 | ⚪ proposed | — |
-| Xgimi Horizon Ultra | 2e04:0005 | ⚪ proposed | — |
-| Anker Nebula Capsule 3 | 291a:0001 | ⚪ proposed | — |
-| Anker Nebula Mars 3 | 291a:0002 | ⚪ proposed | — |
-| Anker Nebula Cosmos Max | 291a:0003 | ⚪ proposed | — |
-| Anker Nebula Capsule 3 Laser | 291a:0004 | ⚪ proposed | — |
-| Viewsonic M1 Mini Plus | 0543:0210 | ⚪ proposed | — |
-| Viewsonic M2e | 0543:0211 | ⚪ proposed | — |
-| Viewsonic X1 4k | 0543:0212 | ⚪ proposed | — |
-| Garmin Forerunner 965 | 091e:5225 | ⚪ proposed | — |
-| Garmin Forerunner 955 | 091e:5226 | ⚪ proposed | — |
-| Garmin Forerunner 265 | 091e:5227 | ⚪ proposed | — |
-| Garmin Forerunner 165 | 091e:5228 | ⚪ proposed | — |
-| Garmin Fenix 8 | 091e:5240 | ⚪ proposed | — |
-| Garmin Enduro 3 | 091e:5241 | ⚪ proposed | — |
-| Garmin Epix Pro | 091e:5242 | ⚪ proposed | — |
-| Garmin Instinct 2x | 091e:5243 | ⚪ proposed | — |
-| Garmin Venu 3 | 091e:5244 | ⚪ proposed | — |
-| Garmin Venu 3s | 091e:5245 | ⚪ proposed | — |
-| Garmin Vivoactive 5 | 091e:5246 | ⚪ proposed | — |
-| Garmin Lily 2 | 091e:5247 | ⚪ proposed | — |
-| Garmin Marq Gen2 | 091e:5248 | ⚪ proposed | — |
-| Garmin Descent G1 Solar | 091e:5249 | ⚪ proposed | — |
-| Garmin Tactix 7 Pro | 091e:524a | ⚪ proposed | — |
-| Teclast T40 Pro | 0e8d:201c | ⚪ proposed | — |
-| Teclast T50 Pro | 0e8d:201e | ⚪ proposed | — |
-| Teclast T60 | 0e8d:201f | ⚪ proposed | — |
-| Teclast M40 Plus | 0e8d:2020 | ⚪ proposed | — |
-| Teclast P30s | 0e8d:2021 | ⚪ proposed | — |
-| Teclast P40hd | 0e8d:2022 | ⚪ proposed | — |
-| Alldocube Iplay 50 Pro | 0e8d:2023 | ⚪ proposed | — |
-| Alldocube Iplay 50 Mini | 0e8d:2024 | ⚪ proposed | — |
-| Alldocube Iplay 60 | 0e8d:2025 | ⚪ proposed | — |
-| Jumper Ezpad M10 | 0e8d:2027 | ⚪ proposed | — |
-| Jumper Ezpad M11 | 0e8d:2028 | ⚪ proposed | — |
-| Jumper Ezpad Plus | 0e8d:2029 | ⚪ proposed | — |
-| Chuwi Hipad Xpro | 0e8d:202a | ⚪ proposed | — |
-| Chuwi Hipad Air | 0e8d:202b | ⚪ proposed | — |
-| Chuwi Hipad Max | 0e8d:202c | ⚪ proposed | — |
-| Chuwi Hipad Plus | 0e8d:202d | ⚪ proposed | — |
-| Fitbit Ionic | 2687:0001 | ⚪ proposed | — |
-| Fitbit Versa 3 | 2687:0002 | ⚪ proposed | — |
-| Fitbit Sense | 2687:0003 | ⚪ proposed | — |
-| Fitbit Sense 2 | 2687:0004 | ⚪ proposed | — |
-| Archos 101 Oxygen | 0e79:5604 | ⚪ proposed | — |
-| Archos Diamond Tab | 0e79:5605 | ⚪ proposed | — |
-| Archos 101b Oxygen | 0e79:5606 | ⚪ proposed | — |
-| Archos T80 Wifi | 0e79:5607 | ⚪ proposed | — |
-| Archos T101 Wifi | 0e79:5608 | ⚪ proposed | — |
-| Google Nest Hub Max | 18d1:4ee3 | ⚪ proposed | — |
-| Google Nest Hub 2nd | 18d1:4ee4 | ⚪ proposed | — |
-| Meta Portal Go | 2c6a:0001 | ⚪ proposed | — |
-| Meta Portal Plus | 2c6a:0002 | ⚪ proposed | — |
-| Meta Portal 10 | 2c6a:0003 | ⚪ proposed | — |
-| Lacie Rugged USB C | 059f:1079 | ⚪ proposed | — |
-| Lacie Mobile Drive | 059f:107a | ⚪ proposed | — |
-| Lacie Portable Ssd | 059f:107b | ⚪ proposed | — |
-| Lacie Drive Mini | 059f:107c | ⚪ proposed | — |
-| Omsystem Om1 33a2 | 33a2:0135 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Omsystem Om5 33a2 | 33a2:0137 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Omsystem Tg7 33a2 | 33a2:0138 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Pentax K3 Markiii Mono | 25fb:0007 | ⚪ proposed | — |
-| Leica M11 P | 1a98:0013 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica D Lux 8 | 1a98:0014 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Leica Q3 43 | 1a98:0015 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Nokia X10 | 2e04:c02b | ⚪ proposed | — |
-| Nokia X20 | 2e04:c02c | ⚪ proposed | — |
-| Nokia G60 | 2e04:c02d | ⚪ proposed | — |
-| Nokia C32 | 2e04:c02e | ⚪ proposed | — |
-| Nokia G22 | 2e04:c02f | ⚪ proposed | — |
-| Nokia X30 | 2e04:c030 | ⚪ proposed | — |
-| Nothing Phone 1 | 2a70:f01e | ⚪ proposed | — |
-| Nothing Phone 2 | 2a70:f01f | ⚪ proposed | — |
-| Nothing Phone 2a | 2a70:f020 | ⚪ proposed | — |
-| Nothing Phone 2a Plus | 2a70:f021 | ⚪ proposed | — |
-| Fairphone 4 | 2ae5:f004 | ⚪ proposed | — |
-| Fairphone 5 | 2ae5:f005 | ⚪ proposed | — |
-| Fairphone 4 MTP | 2ae5:2008 | ⚪ proposed | — |
-| Poco X5 | 2717:ff7f | ⚪ proposed | — |
-| Poco X5 Pro | 2717:ff80 | ⚪ proposed | — |
-| Poco X6 | 2717:ff81 | ⚪ proposed | — |
-| Poco X6 Pro | 2717:ff82 | ⚪ proposed | — |
-| Poco F5 | 2717:ff83 | ⚪ proposed | — |
-| Poco F5 Pro | 2717:ff84 | ⚪ proposed | — |
-| Poco M5 | 2717:ff85 | ⚪ proposed | — |
-| Poco M5s | 2717:ff86 | ⚪ proposed | — |
-| Poco C65 | 2717:ff87 | ⚪ proposed | — |
-| Iqoo 11 | 2d95:6023 | ⚪ proposed | — |
-| Iqoo 11 Pro | 2d95:6024 | ⚪ proposed | — |
-| Iqoo 12 | 2d95:6025 | ⚪ proposed | — |
-| Iqoo 12 Pro | 2d95:6026 | ⚪ proposed | — |
-| Iqoo Neo8 | 2d95:6027 | ⚪ proposed | — |
-| Iqoo Neo8 Pro | 2d95:6028 | ⚪ proposed | — |
-| Iqoo Z7 | 2d95:6029 | ⚪ proposed | — |
-| Iqoo Z7x | 2d95:602a | ⚪ proposed | — |
-| Realme 11 Pro | 22d9:278c | ⚪ proposed | — |
-| Realme 11 Pro Plus | 22d9:278d | ⚪ proposed | — |
-| Realme Gt5 | 22d9:278e | ⚪ proposed | — |
-| Realme Gt5 Pro | 22d9:278f | ⚪ proposed | — |
-| Realme Narzo 60 | 22d9:2790 | ⚪ proposed | — |
-| Realme Narzo 60 Pro | 22d9:2791 | ⚪ proposed | — |
-| Realme C55 | 22d9:2792 | ⚪ proposed | — |
-| Realme 12 Pro | 22d9:2793 | ⚪ proposed | — |
-| Honor Magic6 | 12d1:3808 | ⚪ proposed | — |
-| Honor Magic6 Pro | 12d1:3809 | ⚪ proposed | — |
-| Honor 90 | 12d1:380a | ⚪ proposed | — |
-| Honor 90 Pro | 12d1:380b | ⚪ proposed | — |
-| Honor X9b | 12d1:380c | ⚪ proposed | — |
-| Honor Magic5 Pro | 12d1:380d | ⚪ proposed | — |
-| Honor X8b | 12d1:380e | ⚪ proposed | — |
-| Tcl 40 Se | 1bbb:a406 | ⚪ proposed | — |
-| Tcl 40 Nxtpaper | 1bbb:a407 | ⚪ proposed | — |
-| Tcl 50 Xl | 1bbb:a408 | ⚪ proposed | — |
-| Tcl 50 5g | 1bbb:a409 | ⚪ proposed | — |
-| Tcl Tab 10s | 1bbb:a40a | ⚪ proposed | — |
-| Tcl 30 Se | 1bbb:a40b | ⚪ proposed | — |
-| Zte Blade V50 | 19d2:0418 | ⚪ proposed | — |
-| Zte Blade V50 Vita | 19d2:0419 | ⚪ proposed | — |
-| Zte Axon 50 | 19d2:041a | ⚪ proposed | — |
-| Zte Axon 50 Pro | 19d2:041b | ⚪ proposed | — |
-| Nubia Z60 Ultra | 19d2:041c | ⚪ proposed | — |
-| Nubia Z50s Pro | 19d2:041d | ⚪ proposed | — |
-| Nubia Redmagic 9 Pro | 19d2:041e | ⚪ proposed | — |
-| Meizu 20 | 2a45:000d | ⚪ proposed | — |
-| Meizu 20 Pro | 2a45:000e | ⚪ proposed | — |
-| Meizu 21 | 2a45:000f | ⚪ proposed | — |
-| Meizu 21 Pro | 2a45:0010 | ⚪ proposed | — |
-| Meizu 20 Infinity | 2a45:0011 | ⚪ proposed | — |
-| Caterpillar Cat S75 | 04b7:88f2 | ⚪ proposed | — |
-| Caterpillar Cat S62 Pro | 04b7:88f3 | ⚪ proposed | — |
-| Caterpillar Cat S53 | 04b7:88f4 | ⚪ proposed | — |
-| Caterpillar Cat S42 H | 04b7:88f5 | ⚪ proposed | — |
-| Sharp Aquos R8 | 04dd:9d6f | ⚪ proposed | — |
-| Sharp Aquos R8 Pro | 04dd:9d70 | ⚪ proposed | — |
-| Sharp Aquos Wish3 | 04dd:9d71 | ⚪ proposed | — |
-| Sharp Aquos Sense8 | 04dd:9d72 | ⚪ proposed | — |
-| Sharp Aquos R9 | 04dd:9d73 | ⚪ proposed | — |
-| Sandisk Extreme Portable Ssd | 0781:558c | ⚪ proposed | — |
-| Sandisk Ultra Dual Drive | 0781:5590 | ⚪ proposed | — |
-| Sandisk Ixpand Flash Drive | 0781:55a3 | ⚪ proposed | — |
-| Sandisk Extreme Pro Ssd | 0781:55af | ⚪ proposed | — |
-| Samsung T7 Portable Ssd | 04e8:4001 | ⚪ proposed | — |
-| Samsung T7 Shield Ssd | 04e8:4002 | ⚪ proposed | — |
-| Samsung T9 Portable Ssd | 04e8:4003 | ⚪ proposed | — |
-| Wd My Passport | 1058:25a2 | ⚪ proposed | — |
-| Wd My Book Desktop | 1058:1230 | ⚪ proposed | — |
-| Seagate One Touch Hdd | 0bc2:ab24 | ⚪ proposed | — |
-| Seagate Expansion Portable | 0bc2:2322 | ⚪ proposed | — |
-| Kingston Datatraveler 100 G3 | 0951:1666 | ⚪ proposed | — |
-| Kingston Xs2000 Portable Ssd | 0951:1697 | ⚪ proposed | — |
-| Kingston Datatraveler Max | 0951:177f | ⚪ proposed | — |
-| Crucial X6 Portable Ssd | 0634:0660 | ⚪ proposed | — |
-| Crucial X8 Portable Ssd | 0634:0661 | ⚪ proposed | — |
-| Crucial X9 Portable Ssd | 0634:0662 | ⚪ proposed | — |
-| Pny Elite X Fit Ssd | 154b:0065 | ⚪ proposed | — |
-| Pny Pro Elite V2 Ssd | 154b:0067 | ⚪ proposed | — |
-| Transcend Esd310c Ssd | 8564:7100 | ⚪ proposed | — |
-| Transcend Storejet 25h3 | 8564:7000 | ⚪ proposed | — |
-| Adata Se880 Portable Ssd | 125f:a94a | ⚪ proposed | — |
-| Adata Se920 Portable Ssd | 125f:a95a | ⚪ proposed | — |
-| Ti 84 Plus Calculator | 0451:e003 | ⚪ proposed | — |
-| Ti 84 Plus Silver Calculator | 0451:e008 | ⚪ proposed | — |
-| Ti Nspire Calculator | 0451:e012 | ⚪ proposed | — |
-| Casio Fx 9750gii Calculator | 07cf:6101 | ⚪ proposed | — |
-| Casio Fx Cp400 Calculator | 07cf:6102 | ⚪ proposed | — |
-| Casio Fx Cg50 Calculator | 07cf:6103 | ⚪ proposed | — |
-| Digilent Analog Discovery 2 | 1443:0007 | ⚪ proposed | — |
-| Palm Pre | 0830:0101 | ⚪ proposed | — |
-| Palm Pre Plus | 0830:0102 | ⚪ proposed | — |
-| Palm Pre 2 | 0830:0103 | ⚪ proposed | — |
-| Palm Pixi | 0830:8002 | ⚪ proposed | — |
-| Palm Pixi Plus | 0830:8003 | ⚪ proposed | — |
-| Microsoft Windows Phone 8 | 045e:04ef | ⚪ proposed | — |
-| Creative Zen Stone | 041e:4149 | ⚪ proposed | — |
-| Archos 604 Wifi | 0e79:1332 | ⚪ proposed | — |
-| Archos 5 | 0e79:1420 | ⚪ proposed | — |
-| Archos 70 It | 0e79:1488 | ⚪ proposed | — |
-| Archos 101 It | 0e79:148a | ⚪ proposed | — |
-| Cowon Iaudio X5 | 0e21:0510 | ⚪ proposed | — |
-| Cowon Iaudio D2 | 0e21:0601 | ⚪ proposed | — |
-| Cowon Iaudio J3 | 0e21:0700 | ⚪ proposed | — |
-| Philips Gogear Ariaz | 0471:2034 | ⚪ proposed | — |
-| Rio Karma | 045a:5210 | ⚪ proposed | — |
-| Rio Carbon | 045a:5220 | ⚪ proposed | — |
-| Canon Pixma Mg3620 | 04a9:1754 | ⚪ proposed | — |
-| Canon Pixma Ts3420 | 04a9:177b | ⚪ proposed | — |
-| Canon Pixma Ts6320 | 04a9:1796 | ⚪ proposed | — |
-| Canon Pixma Tr8620 | 04a9:176c | ⚪ proposed | — |
-| Canon Pixma Pro 200 | 04a9:1787 | ⚪ proposed | — |
-| Epson Ecotank Et 2800 | 04b8:0112 | ⚪ proposed | — |
-| Epson Ecotank Et 4850 | 04b8:0113 | ⚪ proposed | — |
-| Epson Surecolor P700 | 04b8:0114 | ⚪ proposed | — |
-| Epson Expression Photo Xp 970 | 04b8:0115 | ⚪ proposed | — |
-| Hp Envy Photo 7855 | 03f0:c811 | ⚪ proposed | — |
-| Hp Envy Inspire 7955e | 03f0:c911 | ⚪ proposed | — |
-| Hp Envy Photo 6255 | 03f0:ca11 | ⚪ proposed | — |
-| Hp Sprocket Plus | 03f0:cb11 | ⚪ proposed | — |
-| Kodak Dock Plus | 040a:4043 | ⚪ proposed | — |
-| Kodak Dock Pro | 040a:4044 | ⚪ proposed | — |
-| Kodak Mini 2 Retro | 040a:4049 | ⚪ proposed | — |
-| Kodak Mini Shot 3 Retro | 040a:4050 | ⚪ proposed | — |
-| Brother Mfc J4335dw | 04f9:0420 | ⚪ proposed | — |
-| Brother Mfc J4535dw | 04f9:0421 | ⚪ proposed | — |
-| Brother Mfc J5945dw | 04f9:0422 | ⚪ proposed | — |
-| Fujitsu Scansnap Ix1600 | 04c5:132e | ⚪ proposed | — |
-| Fujitsu Scansnap Ix1400 | 04c5:132f | ⚪ proposed | — |
-| Fujitsu Scansnap Ix1300 | 04c5:1330 | ⚪ proposed | — |
-| Polaroid Zip Printer | 0546:0001 | ⚪ proposed | — |
-| Polaroid Lab Printer | 0546:0002 | ⚪ proposed | — |
-| Dji Phantom 4 Pro | 2ca3:0040 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Parrot Bebop 2 | 19cf:0903 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Parrot Disco | 19cf:0907 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Autel Evo Ii Pro | 2f8a:0001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Autel Evo Lite | 2f8a:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Autel Evo Nano | 2f8a:0003 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Insta360 One X3 | 2e1a:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Skydio 2 Plus | 2fde:0001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Skydio X2 | 2fde:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Fimi X8se 2022 | 2b4c:0001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Fimi Mini Pro | 2b4c:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Polar Ignite 3 | 0da4:0010 | ⚪ proposed | — |
-| Wahoo Elemnt Roam | 31e0:0001 | ⚪ proposed | — |
-| Wahoo Elemnt Bolt V2 | 31e0:0002 | ⚪ proposed | — |
-| Coros Pace 3 | 3515:0001 | ⚪ proposed | — |
-| Coros Vertix 2s | 3515:0002 | ⚪ proposed | — |
-| Withings Scanwatch | 30b5:0001 | ⚪ proposed | — |
-| Pioneer Avh X4800bs | 08e4:0150 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Pioneer Avh W4500nex | 08e4:0151 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Pioneer Dmh 1770nex | 08e4:0152 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Pioneer Avh 2500nex | 08e4:0153 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Pioneer Dmh Wc6600nex | 08e4:0154 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Pioneer Dmh T450bt | 08e4:0155 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Kenwood Ddx9707s | 04bf:0310 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Kenwood Dnx997xr | 04bf:0311 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Kenwood Dmx1037s | 04bf:0312 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Kenwood Dmx809s | 04bf:0313 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Kenwood Ddx5707s | 04bf:0314 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Kenwood Dnr1007xr | 04bf:0315 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Alpine Ilx W670 | 0a4b:0060 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Alpine Ilx F511 | 0a4b:0061 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Alpine Ute 73bt | 0a4b:0062 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Alpine Ilx 407 | 0a4b:0063 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Alpine Ilx F509 | 0a4b:0064 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Sony Xav Ax5000 | 054c:0f10 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Sony Xav Ax7000 | 054c:0f11 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Sony Xav Ax3200 | 054c:0f12 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Sony Xav Ax150 | 054c:0f13 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Sony Xav Ax8100 | 054c:0f14 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Garmin Drivesmart 66 | 091e:4c50 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Garmin Drivesmart 76 | 091e:4c51 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Garmin Drivecam 76 | 091e:4c52 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Garmin Drive 53 | 091e:4c53 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Garmin Rv 895 | 091e:4c54 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Garmin Dezl Otr1010 | 091e:4c55 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Garmin Overlander 2 | 091e:4c56 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Tomtom Go Classic | 1390:5459 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Tomtom Go Expert | 1390:545a | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Tomtom Go Camper Max | 1390:545b | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Tomtom Go Navigator | 1390:545c | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Tomtom Rider 600 | 1390:545d | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Lenovo Tab P12 Pro | 17ef:7e17 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Lenovo Yoga Tab 13 | 17ef:7c78 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Lenovo Legion Y700 | 17ef:7f01 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Xiaomi Pad 6 | 2717:0670 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Redmi Pad Se | 2717:0680 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Supernote A5x2 | 2207:0032 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Supernote A6x2 | 2207:0033 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Fiio M11 Plus | 2972:0047 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Fiio M15 | 2972:003d | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Fiio M17 | 2972:004f | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Fiio M11s | 2972:0057 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Ibasso Dx320 | 2012:0007 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Ibasso Dx240 | 2012:0006 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Astelkern Kann Ultra | 4102:0341 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Astelkern Sp3000 | 4102:0351 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Astelkern Sr35 | 4102:0361 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Astelkern Sr25 | 4102:0331 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Hiby R6 Iii | 2d95:6003 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Hiby R8 Ii | 2d95:8002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Hiby Rs6 | 2d95:5006 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Hiby New R6 | 2d95:6006 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Lotoo Paw 6000 | 0525:6000 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Lotoo Paw Gold Touch | 0525:a010 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Questyle Qp2r | 262a:2002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Questyle Qpm | 262a:3001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Valve Steam Deck Lcd | 28de:1205 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Valve Steam Deck Oled | 28de:1207 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Asus Rog Ally | 0b05:1abe | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Asus Rog Ally X | 0b05:1abf | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Lenovo Legion Go | 17ef:7f12 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Msi Claw A1m | 1462:1532 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Anbernic Rg353m | 1f3a:6004 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Retroid Pocket 4 | 05c6:f004 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Gpd Win 4 | 2b24:a001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Gpd Win Mini | 2b24:a002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Htc Vive Focus 3 | 0bb4:0c98 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Htc Vive Xr Elite | 0bb4:0c99 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Google Chromecast Gtv 4k | 18d1:4eca | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Google Chromecast Gtv Hd | 18d1:4ecb | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Raspberry Pi Pico Rp2040 MTP | 2e8a:4000 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Raspberry Pi Pico W MTP | 2e8a:4001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Raspberry Pi Pico2 Rp2350 MTP | 2e8a:4010 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Raspberry Pi Zero2w Gadget MTP | 2e8a:4020 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Espressif Esp32s2 Tinyusb MTP | 303a:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Espressif Esp32s3 Tinyusb MTP | 303a:1001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Espressif Esp32s3 Devkitc MTP | 303a:1002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Stm32 USB MTP | 0483:572b | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Stm32 Nucleo MTP | 0483:572c | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Stm32 Discovery MTP | 0483:572d | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
-| Bambulab P1p | 3311:0005 | ⚪ proposed | — |
-| Creality Ender3 V3 | 0483:0106 | ⚪ proposed | — |
-| Creality K1 Max | 0483:0107 | ⚪ proposed | — |
-| Creality K1c | 0483:0108 | ⚪ proposed | — |
-| Creality Cr10 Se | 0483:0109 | ⚪ proposed | — |
-| Elegoo Mars 4 Ultra | 1a86:7601 | ⚪ proposed | — |
-| Elegoo Saturn 3 Ultra | 1a86:7602 | ⚪ proposed | — |
-| Ankermake M5 | 291a:0010 | ⚪ proposed | — |
-| Ankermake M5c | 291a:0011 | ⚪ proposed | — |
-| Flashforge Adventurer 5m | 2b71:0001 | ⚪ proposed | — |
-| Flashforge Creator 4 | 2b71:0002 | ⚪ proposed | — |
-| Snapmaker Artisan | 0483:5750 | ⚪ proposed | — |
-| Snapmaker J1s | 0483:5751 | ⚪ proposed | — |
-| Formlabs Form 4 | 16d0:0e00 | ⚪ proposed | — |
-| Ultimaker S7 | 2c8f:0001 | ⚪ proposed | — |
-| Ultimaker Method Xl | 2c8f:0002 | ⚪ proposed | — |
-| Biqu Btt Cb1 | 1d50:614e | ⚪ proposed | — |
-| Biqu Btt Cb2 | 1d50:614f | ⚪ proposed | — |
-| Zeiss Axiocam 208c | 20ce:0001 | ⚪ proposed | — |
-| Zeiss Axiocam 305c | 20ce:0002 | ⚪ proposed | — |
-| Zeiss Axiocam 712 Mono | 20ce:0003 | ⚪ proposed | — |
-| Zeiss Primo Star Cam | 20ce:0004 | ⚪ proposed | — |
-| Leica Microsystems Dfc7000t | 1038:0001 | ⚪ proposed | — |
-| Leica Microsystems Dmi8 Cam | 1038:0002 | ⚪ proposed | — |
-| Leica Microsystems Flexacam C1 | 1038:0003 | ⚪ proposed | — |
-| Leica Microsystems Dfc9000gt | 1038:0004 | ⚪ proposed | — |
-| Olympus Dp74 Microscope | 07b4:0300 | ⚪ proposed | — |
-| Olympus Dp27 Microscope | 07b4:0301 | ⚪ proposed | — |
-| Olympus Dp23 Microscope | 07b4:0302 | ⚪ proposed | — |
-| Olympus Dp73 Microscope | 07b4:0303 | ⚪ proposed | — |
-| Olympus Dp80 Microscope | 07b4:0304 | ⚪ proposed | — |
-| Celestron Neximage 5 | 1546:0001 | ⚪ proposed | — |
-| Celestron Neximage Burst | 1546:0002 | ⚪ proposed | — |
-| Celestron Skyris 445m | 1546:0003 | ⚪ proposed | — |
-| Celestron Cpc 1100 Cam | 1546:0004 | ⚪ proposed | — |
-| Celestron Starsense Explorer | 1546:0005 | ⚪ proposed | — |
-| Flir E4 | 09cb:1009 | ⚪ proposed | — |
-| Flir E54 | 09cb:100a | ⚪ proposed | — |
-| Flir T840 | 09cb:1013 | ⚪ proposed | — |
-| Flir T860 | 09cb:1014 | ⚪ proposed | — |
-| Flir T620 | 09cb:1015 | ⚪ proposed | — |
-| Flir E75 | 09cb:1016 | ⚪ proposed | — |
-| Flir E85 | 09cb:1017 | ⚪ proposed | — |
-| Flir E95 | 09cb:1018 | ⚪ proposed | — |
-| Seek Thermal Reveal Pro | 289d:0013 | ⚪ proposed | — |
-| Seek Thermal Reveal Firepro | 289d:0014 | ⚪ proposed | — |
-| Rigol Ds2072a Oscilloscope | 1ab1:04c0 | ⚪ proposed | — |
-| Rigol Ds2102a Oscilloscope | 1ab1:04c2 | ⚪ proposed | — |
-| Rigol Mso5074 Oscilloscope | 1ab1:04d0 | ⚪ proposed | — |
-| Rigol Mso5104 Oscilloscope | 1ab1:04d1 | ⚪ proposed | — |
-| Rigol Dsa815 Spectrum Analyzer | 1ab1:04b1 | ⚪ proposed | — |
-| Rigol Dg1022z Generator | 1ab1:0641 | ⚪ proposed | — |
-| Keysight Msox3054t Oscilloscope | 2a8d:0101 | ⚪ proposed | — |
-| Keysight Msox4104a Oscilloscope | 2a8d:0102 | ⚪ proposed | — |
-| Keysight Dsox1204g Oscilloscope | 2a8d:0103 | ⚪ proposed | — |
-| Keysight N9000b Cxa Analyzer | 2a8d:0104 | ⚪ proposed | — |
-| Keysight Edux1052a Oscilloscope | 2a8d:0105 | ⚪ proposed | — |
-| Tektronix Mso44 Oscilloscope | 0699:0520 | ⚪ proposed | — |
-| Tektronix Mso46 Oscilloscope | 0699:0521 | ⚪ proposed | — |
-| Tektronix Mdo3024 Oscilloscope | 0699:0413 | ⚪ proposed | — |
-| Tektronix Tbs2104 Oscilloscope | 0699:0522 | ⚪ proposed | — |
-| Tektronix Mso24 Oscilloscope | 0699:0523 | ⚪ proposed | — |
-| Roper Scientific Pixis 400 | 0bd7:0001 | ⚪ proposed | — |
-| Roper Scientific Proem 512 | 0bd7:0002 | ⚪ proposed | — |
-| Roper Scientific Pixis 2048 | 0bd7:0003 | ⚪ proposed | — |
-| Zoom H1n | 1686:0024 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Zoom H4n Pro | 1686:0025 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Zoom H5 | 1686:0026 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Zoom H6 | 1686:0027 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Zoom H8 | 1686:0028 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Zoom F3 | 1686:002a | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Zoom F6 | 1686:002b | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Zoom F8n | 1686:002c | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Tascam Dr 40x | 0644:0049 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Tascam Dr 100mkiii | 0644:004a | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Tascam Portacapture X6 | 0644:004b | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Tascam Portacapture X8 | 0644:004c | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Roland R 07 | 0582:012f | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Roland R 88 | 0582:0130 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Boss Br 800 | 0582:0131 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Sound Devices Mixpre 3 Ii | 2af0:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Sound Devices Mixpre 6 Ii | 2af0:0002 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Sony Icd Ux570 | 054c:00a1 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Sony Pcm D10 | 054c:00a2 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Yamaha Steinberg Ur22c | 0499:7010 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Nintendo Switch | 057e:2000 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Nintendo Switch Lite | 057e:2001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Nintendo Switch Oled | 057e:2002 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Kobo Clara 2e | 2237:7010 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
-| Kobo Libra 2 | 2237:7011 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
-| Kobo Sage | 2237:7012 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
-| Kobo Elipsa 2e | 2237:7013 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
-| Viofo A129 Pro | 0c76:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, deleteObject |
-| Thinkware F200 Pro | 2c18:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, deleteObject |
-| Ray Ban Meta | 2d40:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Remarkable 2 | 04b3:0610 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
-| Roku Streaming Stick | 1d5a:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Garmin Edge 1040 | 091e:4c60 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
-| Garmin Fenix 7x | 091e:4c61 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
-| Garmin Forerunner 965 | 091e:4c62 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
-| Axon Body 3 | 2c55:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
-| Arduino Uno R4 Minima MTP | 2341:0069 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Arduino Uno R4 Wifi MTP | 2341:006a | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Arduino Nano 33 Ble MTP | 2341:005e | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Arduino Nano 33 Ble Sense MTP | 2341:0064 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Arduino Nano Rp2040 Connect MTP | 2341:005f | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Arduino Portenta H7 MTP | 2341:025b | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Arduino Portenta C33 MTP | 2341:0068 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Arduino Giga R1 Wifi MTP | 2341:0266 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Arduino Nano Esp32 MTP | 2341:0070 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Teensy 40 MTP | 16c0:0478 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Teensy 41 MTP | 16c0:0479 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Teensy 41 MTP Serial | 16c0:047a | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Teensy Mm MTP | 16c0:047b | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Feather Rp2040 MTP | 239a:80f4 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Qtpy Rp2040 MTP | 239a:80f8 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Feather Esp32s2 MTP | 239a:8111 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Feather Esp32s3 MTP | 239a:8113 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Qtpy Esp32s2 MTP | 239a:8121 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Qtpy Esp32s3 MTP | 239a:8123 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Macropad Rp2040 MTP | 239a:8108 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Itsybitsy Rp2040 MTP | 239a:80fc | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Metro Esp32s2 MTP | 239a:8115 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Trinkey Qt2040 MTP | 239a:8109 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Feather Nrf52840 MTP | 239a:8029 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Adafruit Clue Nrf52840 MTP | 239a:8071 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Nordic Nrf52840 Dk MTP | 1915:520f | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Nordic Nrf52840 Dongle MTP | 1915:520e | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Nordic Nrf5340 Dk MTP | 1915:5310 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Seeed Xiao Rp2040 MTP | 2886:0028 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Seeed Xiao Esp32s3 MTP | 2886:0056 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Seeed Xiao Nrf52840 MTP | 2886:0044 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Seeed Xiao Nrf52840 Sense MTP | 2886:0045 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Seeed Wio Terminal MTP | 2886:802d | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Seeed Xiao Samd21 MTP | 2886:802f | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
-| Palm Touchpad | 0830:0200 | community | — |
-| Palm Touchpad Alt | 0830:8004 | community | — |
-| Palm Pre 3 | 0830:0104 | community | — |
-| Palm Treo Pro | 0830:0105 | community | — |
-| Palm Centro | 0830:0106 | community | — |
-| Creative Zen Style 100 | 041e:4170 | community | — |
-| Creative Zen Style 200 | 041e:4171 | community | — |
-| Creative Zen Style 300 | 041e:4172 | community | — |
-| Creative Zen Xfi Style | 041e:4168 | community | — |
-| Creative Zen V Plus | 041e:4156 | community | — |
-| Creative Zen Micro Photo 5gb | 041e:413a | community | — |
-| Creative Zen Nano Plus | 041e:413b | community | — |
-| Creative Zen Neeon2 | 041e:4163 | community | — |
-| Creative Zen Stone Plus | 041e:4164 | community | — |
-| Creative Zen Mozaic Ez300 | 041e:4165 | community | — |
-| Creative Muvo Slim | 041e:200b | community | — |
-| Creative Muvo Tx Fm | 041e:200d | community | — |
-| Creative Muvo N200 | 041e:200e | community | — |
-| Iriver H340 | 1006:3005 | community | — |
-| Iriver H320 | 1006:3006 | community | — |
-| Iriver H10 6gb | 4102:2103 | community | — |
-| Iriver H10 20gb | 4102:2104 | community | — |
-| Iriver E200 | 4102:1143 | community | — |
-| Iriver P7 | 4102:1160 | community | — |
-| Iriver E300 | 4102:1168 | community | — |
-| Iriver T6 | 4102:1154 | community | — |
-| Iriver Clix Plus | 4102:112b | community | — |
-| Iriver Lplayer | 4102:1155 | community | — |
-| Archos 43 It | 0e79:1417 | community | — |
-| Archos 43 | 0e79:1411 | community | — |
-| Archos 28 It | 0e79:1413 | community | — |
-| Archos 32 It | 0e79:1415 | community | — |
-| Archos 70 It2 | 0e79:1567 | community | — |
-| Archos 35 It | 0e79:1419 | community | — |
-| Cowon Iaudio Z2 | 0e21:0971 | community | — |
-| Cowon Iaudio C2 | 0e21:0961 | community | — |
-| Cowon Iaudio D3 | 0e21:0981 | community | — |
-| Cowon Iaudio M2 | 0e21:0991 | community | — |
-| Cowon Iaudio P1 | 0e21:0a01 | community | — |
-| Microsoft Zune 4gb | 045e:0713 | community | — |
-| Sony Nwz E435f | 054c:0383 | community | — |
-| Sony Nwz E438f | 054c:0386 | community | — |
-| Sony Nwz A728 | 054c:035d | community | — |
-| Sony Nwz A729 | 054c:035e | community | — |
-| Sony Nwz S515 | 054c:0328 | community | — |
-| Sony Nwz S518 | 054c:0329 | community | — |
-| Sony Nwz A728b | 054c:035f | community | — |
-| Sony Nwz E443 | 054c:03fb | community | — |
-| Sony Nwz S544 | 054c:03ff | community | — |
-| Sony Nwz E353 | 054c:04ca | community | — |
-| Sony Nwz W273s | 054c:0591 | community | — |
-| Sony Nwz E463 | 054c:05a5 | community | — |
-| Sony Nwz A864 | 054c:05a7 | community | — |
-| Sony Nwz E373 | 054c:068a | community | — |
-| Sony Nwz E474 Alt | 054c:06aa | community | — |
-| Sony Nwz A15 | 054c:0c6f | community | — |
-| Sony Nwz A17 | 054c:0c70 | community | — |
-| Philips Gogear Mix | 0471:207f | community | — |
-| Philips Gogear Sa5dot | 0471:2083 | community | — |
-| Philips Gogear Raga | 0471:2085 | community | — |
-| Philips Gogear Spark | 0471:2089 | community | — |
-| Philips Gogear Cam | 0471:2099 | community | — |
-| Philips Gogear Sa5285 | 0471:20a3 | community | — |
-| Philips Gogear Vibe 4gb | 0471:20b1 | community | — |
-| Philips Gogear Sa4 | 0471:20c5 | community | — |
-| Philips Gogear Muse 2 | 0471:20e1 | community | — |
-| Rio Nitrus | 045a:5202 | community | — |
-| Rio Forge | 045a:5231 | community | — |
-| Rio Eigen | 045a:5232 | community | — |
-| Rio Ce2100 | 045a:5250 | community | — |
-| Rio Chiba | 045a:5201 | community | — |
-| Dell Dj 1st Gen | 413c:4100 | community | — |
-| Dell Dj 20gb | 413c:4101 | community | — |
-| Dell Dj Explorer | 413c:4106 | community | — |
-| Toshiba Gigabeat F40 | 0930:000a | community | — |
-| Toshiba Gigabeat F20 | 0930:000b | community | — |
-| Toshiba Gigabeat F10 | 0930:000d | community | — |
-| Toshiba Gigabeat S60 | 0930:0015 | community | — |
-| Toshiba Gigabeat T401 | 0930:001b | community | — |
-| Toshiba Gigabeat Mev30k | 0930:001c | community | — |
-| Hasselblad Cfv Ii 50c | 04a0:0208 | experimental | supportsGetPartialObject, disableWriteResume |
-| Hasselblad 907x Cfv 100c | 04a0:0209 | experimental | supportsGetPartialObject, disableWriteResume |
-| Hasselblad X1d Ii 50c | 04a0:020a | experimental | supportsGetPartialObject, disableWriteResume |
-| Phaseone Iq4 100mp Trichromatic | 0e70:0006 | experimental | supportsGetPartialObject, disableWriteResume |
-| Phaseone Iq3 50mp | 0e70:0007 | experimental | supportsGetPartialObject, disableWriteResume |
-| Phaseone Iq4 Achromatic | 0e70:0008 | experimental | supportsGetPartialObject, disableWriteResume |
-| Sigma Sd Quattro H Alt | 1003:0030 | experimental | supportsGetPartialObject, disableWriteResume |
-| Sigma Fp Alt | 1003:0033 | experimental | supportsGetPartialObject, disableWriteResume |
-| Mamiya Dm40 | 0e70:4002 | experimental | supportsGetPartialObject, disableWriteResume |
-| Mamiya Dm28 | 0e70:4003 | experimental | supportsGetPartialObject, disableWriteResume |
-| Mamiya Leaf Credo 80 | 0e70:4004 | experimental | supportsGetPartialObject, disableWriteResume |
-| Dji Air 3 | 2ca3:0041 | experimental | supportsGetPartialObject, disableWriteResume |
-| Insta360 One Rs 360 | 2e1a:0017 | experimental | supportsGetPartialObject, disableWriteResume |
-| Insta360 X4 | 2e1a:0018 | experimental | supportsGetPartialObject, disableWriteResume |
-| Kodak Pixpro Az901 | 040a:0036 | experimental | supportsGetPartialObject, disableWriteResume |
-| Kodak Pixpro Wpz2 | 040a:0037 | experimental | supportsGetPartialObject, disableWriteResume |
-| Kodak Pixpro Fz55 | 040a:0038 | experimental | supportsGetPartialObject, disableWriteResume |
-| Panasonic Dcs5ii | 04da:239e | experimental | supportsGetPartialObject, disableWriteResume |
-| Panasonic Dcs5iix | 04da:239f | experimental | supportsGetPartialObject, disableWriteResume |
-| Panasonic Dcg9m2 | 04da:23a0 | experimental | supportsGetPartialObject, disableWriteResume |
-| Panasonic Dcgh7 | 04da:23a1 | experimental | supportsGetPartialObject, disableWriteResume |
-| Ricoh Pentax K3iii | 04f2:0186 | experimental | supportsGetPartialObject, disableWriteResume |
-| Ricoh Pentax K3iii Mono | 04f2:0187 | experimental | supportsGetPartialObject, disableWriteResume |
-| Ricoh Griii | 04f2:0188 | experimental | supportsGetPartialObject, disableWriteResume |
-| Ricoh Griiix | 04f2:0189 | experimental | supportsGetPartialObject, disableWriteResume |
-| Ricoh Griii Hdf | 04f2:018a | experimental | supportsGetPartialObject, disableWriteResume |
-| Blackmagic Ursa Mini Pro 12k | 1edb:0006 | experimental | supportsGetPartialObject, disableWriteResume |
-| Blackmagic Ursa Mini Pro G2 | 1edb:0007 | experimental | supportsGetPartialObject, disableWriteResume |
-| Blackmagic Cinema Camera 6k | 1edb:0008 | experimental | supportsGetPartialObject, disableWriteResume |
-| Red Dsmc2 Monstro 8k | 1419:0001 | experimental | supportsGetPartialObject, disableWriteResume |
-| Red Dsmc2 Helium 8k | 1419:0002 | experimental | supportsGetPartialObject, disableWriteResume |
-| Red Komodo 6k | 1419:0003 | experimental | supportsGetPartialObject, disableWriteResume |
-| Red V Raptor 8k | 1419:0004 | experimental | supportsGetPartialObject, disableWriteResume |
-| Red Komodo X 6k | 1419:0005 | experimental | supportsGetPartialObject, disableWriteResume |
-| Gopro Hero 2024 | 2672:0062 | experimental | supportsGetPartialObject, disableWriteResume |
-| Yi 4k Plus Alt | 2970:0005 | experimental | supportsGetPartialObject, disableWriteResume |
-| Yi Horizon Vr180 | 2970:0006 | experimental | supportsGetPartialObject, disableWriteResume |
-| Sjcam Sj8 Plus | 1224:0208 | experimental | supportsGetPartialObject, disableWriteResume |
-| Sjcam Sj20 | 1224:0209 | experimental | supportsGetPartialObject, disableWriteResume |
-| Fujifilm Xt5 Alt | 04cb:0308 | experimental | supportsGetPartialObject, disableWriteResume |
-| Fujifilm Xh2 | 04cb:0309 | experimental | supportsGetPartialObject, disableWriteResume |
-| Fujifilm Gfx100sii | 04cb:030a | experimental | supportsGetPartialObject, disableWriteResume |
-| Fujifilm X100vi | 04cb:030b | experimental | supportsGetPartialObject, disableWriteResume |
-| Leica Sl3 | 1a98:0060 | experimental | supportsGetPartialObject, disableWriteResume |
-| Leica Q3 | 1a98:0061 | experimental | supportsGetPartialObject, disableWriteResume |
+**4,842** device entries across **281** vendor IDs and **33** categories.
+
+## 3D Printer (29)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| prusa-i3-mk2s-0001 | 0x2c99:0x0001 | proposed | low |
+| prusa-i3-mk3-0002 | 0x2c99:0x0002 | proposed | low |
+| prusa-mini-000c | 0x2c99:0x000c | proposed | low |
+| prusa-mk4-0016 | 0x2c99:0x0016 | proposed | low |
+| prusa-xl-000d | 0x2c99:0x000d | proposed | low |
+| bambulab-x1-carbon-0001 | 0x3311:0x0001 | proposed | low |
+| bambulab-p1s-0002 | 0x3311:0x0002 | proposed | low |
+| bambulab-a1-mini-0003 | 0x3311:0x0003 | proposed | low |
+| bambulab-a1-0004 | 0x3311:0x0004 | proposed | low |
+| creality-k1-3dprinter-0105 | 0x0483:0x0105 | proposed | low |
+| creality-ender3-s1-pro-5741 | 0x0483:0x5741 | proposed | low |
+| anycubic-kobra2-pro-0104 | 0x0483:0x0104 | proposed | low |
+| bambulab-p1p-0005 | 0x3311:0x0005 | proposed | low |
+| creality-ender3-v3-0106 | 0x0483:0x0106 | proposed | low |
+| creality-k1-max-0107 | 0x0483:0x0107 | proposed | low |
+| creality-k1c-0108 | 0x0483:0x0108 | proposed | low |
+| creality-cr10-se-0109 | 0x0483:0x0109 | proposed | low |
+| elegoo-mars-4-ultra-7601 | 0x1a86:0x7601 | proposed | low |
+| elegoo-saturn-3-ultra-7602 | 0x1a86:0x7602 | proposed | low |
+| ankermake-m5-0010 | 0x291a:0x0010 | proposed | low |
+| ankermake-m5c-0011 | 0x291a:0x0011 | proposed | low |
+| flashforge-adventurer-5m-0001 | 0x2b71:0x0001 | proposed | low |
+| flashforge-creator-4-0002 | 0x2b71:0x0002 | proposed | low |
+| snapmaker-j1s-5751 | 0x0483:0x5751 | proposed | low |
+| formlabs-form-4-0e00 | 0x16d0:0x0e00 | proposed | low |
+| ultimaker-s7-0001 | 0x2c8f:0x0001 | proposed | low |
+| ultimaker-method-xl-0002 | 0x2c8f:0x0002 | proposed | low |
+| biqu-btt-cb1-614e | 0x1d50:0x614e | proposed | low |
+| biqu-btt-cb2-614f | 0x1d50:0x614f | proposed | low |
+
+## Action Camera (10)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| hawkeye-ai15-0101 | 0x1d6b:0x0101 | proposed | medium |
+| insta360-one-x3-0002 | 0x2e1a:0x0002 | proposed | low |
+| dji-air-3-0041 | 0x2ca3:0x0041 | experimental | community |
+| insta360-one-rs-360-0017 | 0x2e1a:0x0017 | experimental | community |
+| insta360-x4-0018 | 0x2e1a:0x0018 | experimental | community |
+| gopro-hero-2024-0062 | 0x2672:0x0062 | experimental | community |
+| yi-4k-plus-alt-0005 | 0x2970:0x0005 | experimental | community |
+| yi-horizon-vr180-0006 | 0x2970:0x0006 | experimental | community |
+| sjcam-sj8-plus-0208 | 0x1224:0x0208 | experimental | community |
+| sjcam-sj20-0209 | 0x1224:0x0209 | experimental | community |
+
+## Audio Interface (5)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| teenage-engineering-op-1-field-0102 | 0x2367:0x0102 | proposed | medium |
+| teenage-engineering-op-xy-0021 | 0x2367:0x0021 | proposed | medium |
+| icom-ic-r30-receiver-002b | 0x0c26:0x002b | proposed | low |
+| icom-ic-7300-transceiver-0018 | 0x0c26:0x0018 | proposed | low |
+| Yamaha/Steinberg UR22C | 0x0499:0x7010 | experimental | unknown |
+
+## Audio Recorder (27)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| zoom-h6-0030 | 0x1686:0x0030 | proposed | low |
+| zoom-h8-0031 | 0x1686:0x0031 | proposed | low |
+| zoom-q8n-4k-0032 | 0x1686:0x0032 | proposed | low |
+| zoom-l-8-0033 | 0x1686:0x0033 | proposed | low |
+| zoom-h3-vr-0034 | 0x1686:0x0034 | proposed | low |
+| zoom-h6essential-0035 | 0x1686:0x0035 | proposed | low |
+| zoom-h1essential-0036 | 0x1686:0x0036 | proposed | low |
+| teenage-engineering-tp-7-0019 | 0x2367:0x0019 | proposed | medium |
+| BOSS BR-800 | 0x0582:0x0131 | experimental | unknown |
+| Roland R-07 | 0x0582:0x012f | experimental | unknown |
+| Roland R-88 | 0x0582:0x0130 | experimental | unknown |
+| Sony ICD-UX570 | 0x054c:0x00a1 | experimental | unknown |
+| Sony PCM-D10 | 0x054c:0x00a2 | experimental | unknown |
+| Sound Devices MixPre-3 II | 0x2af0:0x0001 | experimental | unknown |
+| Sound Devices MixPre-6 II | 0x2af0:0x0002 | experimental | unknown |
+| TASCAM DR-100mkIII | 0x0644:0x004a | experimental | unknown |
+| TASCAM DR-40X | 0x0644:0x0049 | experimental | unknown |
+| TASCAM Portacapture X6 | 0x0644:0x004b | experimental | unknown |
+| TASCAM Portacapture X8 | 0x0644:0x004c | experimental | unknown |
+| Zoom F3 | 0x1686:0x002a | experimental | unknown |
+| Zoom F6 | 0x1686:0x002b | experimental | unknown |
+| Zoom F8n | 0x1686:0x002c | experimental | unknown |
+| Zoom H1n | 0x1686:0x0024 | experimental | unknown |
+| Zoom H4n Pro | 0x1686:0x0025 | experimental | unknown |
+| Zoom H5 | 0x1686:0x0026 | experimental | unknown |
+| Zoom H6 | 0x1686:0x0027 | experimental | unknown |
+| Zoom H8 | 0x1686:0x0028 | experimental | unknown |
+
+## Automotive (34)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| pioneer-avh-x4800bs-0150 | 0x08e4:0x0150 | proposed | low |
+| pioneer-avh-w4500nex-0151 | 0x08e4:0x0151 | proposed | low |
+| pioneer-dmh-1770nex-0152 | 0x08e4:0x0152 | proposed | low |
+| pioneer-avh-2500nex-0153 | 0x08e4:0x0153 | proposed | low |
+| pioneer-dmh-wc6600nex-0154 | 0x08e4:0x0154 | proposed | low |
+| pioneer-dmh-t450bt-0155 | 0x08e4:0x0155 | proposed | low |
+| kenwood-ddx9707s-0310 | 0x04bf:0x0310 | proposed | low |
+| kenwood-dnx997xr-0311 | 0x04bf:0x0311 | proposed | low |
+| kenwood-dmx1037s-0312 | 0x04bf:0x0312 | proposed | low |
+| kenwood-dmx809s-0313 | 0x04bf:0x0313 | proposed | low |
+| kenwood-ddx5707s-0314 | 0x04bf:0x0314 | proposed | low |
+| kenwood-dnr1007xr-0315 | 0x04bf:0x0315 | proposed | low |
+| alpine-ilx-w670-0060 | 0x0a4b:0x0060 | proposed | low |
+| alpine-ilx-f511-0061 | 0x0a4b:0x0061 | proposed | low |
+| alpine-ute-73bt-0062 | 0x0a4b:0x0062 | proposed | low |
+| alpine-ilx-407-0063 | 0x0a4b:0x0063 | proposed | low |
+| alpine-ilx-f509-0064 | 0x0a4b:0x0064 | proposed | low |
+| sony-xav-ax5000-0f10 | 0x054c:0x0f10 | proposed | low |
+| sony-xav-ax7000-0f11 | 0x054c:0x0f11 | proposed | low |
+| sony-xav-ax3200-0f12 | 0x054c:0x0f12 | proposed | low |
+| sony-xav-ax150-0f13 | 0x054c:0x0f13 | proposed | low |
+| sony-xav-ax8100-0f14 | 0x054c:0x0f14 | proposed | low |
+| tesla-model-s-mtp-ee01 | 0x0bda:0xee01 | experimental | community |
+| tesla-mcu2-mtp-ee02 | 0x0bda:0xee02 | experimental | community |
+| pioneer-avh-mtp-0110 | 0x08e4:0x0110 | experimental | community |
+| pioneer-dmh-mtp-0120 | 0x08e4:0x0120 | experimental | community |
+| pioneer-sph-mtp-0130 | 0x08e4:0x0130 | experimental | community |
+| kenwood-dmx-mtp-0210 | 0x0b67:0x0210 | experimental | community |
+| kenwood-dnx-mtp-0220 | 0x0b67:0x0220 | experimental | community |
+| kenwood-excelon-mtp-0230 | 0x0b67:0x0230 | experimental | community |
+| alpine-ilx-mtp-0310 | 0x0db6:0x0310 | experimental | community |
+| alpine-halo-mtp-0320 | 0x0db6:0x0320 | experimental | community |
+| jvc-kw-mtp-0410 | 0x04f1:0x0410 | experimental | community |
+| jvc-kd-mtp-0420 | 0x04f1:0x0420 | experimental | community |
+
+## Body Camera (1)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| Axon Body 3 | 0x2c55:0x0001 | experimental | unknown |
+
+## Camera (968)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| canon-eos-rebel-3139 | 0x04a9:0x3139 | promoted | medium |
+| nikon-dslr-0410 | 0x04b0:0x0410 | promoted | medium |
+| canon-eos-5d3-3234 | 0x04a9:0x3234 | proposed | medium |
+| canon-eos-r5-32b4 | 0x04a9:0x32b4 | proposed | medium |
+| canon-eos-r3-32b5 | 0x04a9:0x32b5 | proposed | low |
+| nikon-z6-z7-0441 | 0x04b0:0x0441 | proposed | medium |
+| nikon-z6ii-z7ii-0442 | 0x04b0:0x0442 | proposed | medium |
+| fujifilm-x-series-0104 | 0x04cb:0x0104 | proposed | low |
+| sony-alpha-a7iii-0a79 | 0x054c:0x0a79 | proposed | low |
+| sony-alpha-a7riv-0a6f | 0x054c:0x0a6f | proposed | low |
+| panasonic-lumix-g-2372 | 0x04da:0x2372 | proposed | low |
+| olympus-e-series-0113 | 0x07b4:0x0113 | proposed | low |
+| nikon-d90-0421 | 0x04b0:0x0421 | proposed | medium |
+| nikon-d700-0422 | 0x04b0:0x0422 | proposed | medium |
+| nikon-d3100-0427 | 0x04b0:0x0427 | proposed | medium |
+| nikon-d3200-042c | 0x04b0:0x042c | proposed | medium |
+| nikon-d3300-0433 | 0x04b0:0x0433 | proposed | medium |
+| nikon-d3400-043d | 0x04b0:0x043d | proposed | medium |
+| nikon-d3500-0445 | 0x04b0:0x0445 | proposed | medium |
+| nikon-d7000-0428 | 0x04b0:0x0428 | proposed | medium |
+| nikon-d5100-0429 | 0x04b0:0x0429 | proposed | medium |
+| nikon-d5200-042f | 0x04b0:0x042f | proposed | medium |
+| nikon-d7100-0430 | 0x04b0:0x0430 | proposed | medium |
+| nikon-d5300-0431 | 0x04b0:0x0431 | proposed | medium |
+| nikon-d5500-0438 | 0x04b0:0x0438 | proposed | medium |
+| nikon-d5600-043f | 0x04b0:0x043f | proposed | medium |
+| nikon-d7200-0439 | 0x04b0:0x0439 | proposed | medium |
+| nikon-d7500-0440 | 0x04b0:0x0440 | proposed | medium |
+| nikon-d800-042a | 0x04b0:0x042a | proposed | medium |
+| nikon-d800e-042e | 0x04b0:0x042e | proposed | medium |
+| nikon-d600-042d | 0x04b0:0x042d | proposed | medium |
+| nikon-d610-0434 | 0x04b0:0x0434 | proposed | medium |
+| nikon-d750-0437 | 0x04b0:0x0437 | proposed | medium |
+| nikon-d810-0436 | 0x04b0:0x0436 | proposed | medium |
+| nikon-d780-0446 | 0x04b0:0x0446 | proposed | medium |
+| nikon-d4-042b | 0x04b0:0x042b | proposed | medium |
+| nikon-d4s-0435 | 0x04b0:0x0435 | proposed | medium |
+| nikon-d5-043a | 0x04b0:0x043a | proposed | medium |
+| nikon-d500-043c | 0x04b0:0x043c | proposed | medium |
+| nikon-d6-0447 | 0x04b0:0x0447 | proposed | medium |
+| nikon-z6-0443 | 0x04b0:0x0443 | proposed | medium |
+| nikon-z50-0444 | 0x04b0:0x0444 | proposed | medium |
+| nikon-z5-0448 | 0x04b0:0x0448 | proposed | medium |
+| nikon-z7-ii-044b | 0x04b0:0x044b | proposed | medium |
+| nikon-z6-ii-044c | 0x04b0:0x044c | proposed | medium |
+| nikon-zfc-044f | 0x04b0:0x044f | proposed | medium |
+| nikon-z30-0452 | 0x04b0:0x0452 | proposed | medium |
+| nikon-zf-0453 | 0x04b0:0x0453 | proposed | medium |
+| nikon-z6-iii-0454 | 0x04b0:0x0454 | proposed | medium |
+| canon-eos-450d-3145 | 0x04a9:0x3145 | proposed | medium |
+| canon-eos-5d-mark-ii-3199 | 0x04a9:0x3199 | proposed | medium |
+| canon-eos-7d-319a | 0x04a9:0x319a | proposed | medium |
+| canon-eos-500d-31cf | 0x04a9:0x31cf | proposed | medium |
+| canon-eos-550d-31ea | 0x04a9:0x31ea | proposed | medium |
+| canon-eos-60d-3215 | 0x04a9:0x3215 | proposed | medium |
+| canon-eos-600d-3218 | 0x04a9:0x3218 | proposed | medium |
+| canon-eos-6d-3250 | 0x04a9:0x3250 | proposed | medium |
+| canon-eos-70d-3253 | 0x04a9:0x3253 | proposed | medium |
+| canon-eos-650d-323b | 0x04a9:0x323b | proposed | medium |
+| canon-eos-5d-mark-iii-323a | 0x04a9:0x323a | proposed | medium |
+| canon-eos-7d-mark-ii-326f | 0x04a9:0x326f | proposed | medium |
+| canon-eos-700d-3272 | 0x04a9:0x3272 | proposed | medium |
+| canon-eos-760d-3280 | 0x04a9:0x3280 | proposed | medium |
+| canon-eos-5d-mark-iv-3281 | 0x04a9:0x3281 | proposed | medium |
+| canon-eos-80d-3294 | 0x04a9:0x3294 | proposed | medium |
+| canon-eos-750d-32a1 | 0x04a9:0x32a1 | proposed | medium |
+| canon-eos-800d-32c9 | 0x04a9:0x32c9 | proposed | medium |
+| canon-eos-6d-mark-ii-32ca | 0x04a9:0x32ca | proposed | medium |
+| canon-eos-200d-32cc | 0x04a9:0x32cc | proposed | medium |
+| canon-eos-r-32da | 0x04a9:0x32da | proposed | medium |
+| canon-eos-rp-32e2 | 0x04a9:0x32e2 | proposed | medium |
+| canon-eos-250d-32e9 | 0x04a9:0x32e9 | proposed | medium |
+| canon-eos-90d-32ea | 0x04a9:0x32ea | proposed | medium |
+| canon-eos-850d-32f1 | 0x04a9:0x32f1 | proposed | medium |
+| canon-eos-r6-32f5 | 0x04a9:0x32f5 | proposed | medium |
+| canon-eos-r7-32f7 | 0x04a9:0x32f7 | proposed | medium |
+| canon-eos-r10-32f8 | 0x04a9:0x32f8 | proposed | medium |
+| canon-eos-m50-ii-32f9 | 0x04a9:0x32f9 | proposed | medium |
+| canon-eos-r6-mark-ii-330b | 0x04a9:0x330b | proposed | medium |
+| canon-eos-r8-330c | 0x04a9:0x330c | proposed | medium |
+| sony-alpha-a5100-08e7 | 0x054c:0x08e7 | proposed | medium |
+| sony-alpha-a6000-08b7 | 0x054c:0x08b7 | proposed | medium |
+| sony-alpha-a6100-0d13 | 0x054c:0x0d13 | proposed | medium |
+| sony-alpha-a6300-077a | 0x054c:0x077a | proposed | medium |
+| sony-alpha-a6500-0784 | 0x054c:0x0784 | proposed | medium |
+| sony-alpha-a6600-0d0f | 0x054c:0x0d0f | proposed | medium |
+| sony-alpha-a6700-0e78 | 0x054c:0x0e78 | proposed | medium |
+| sony-alpha-a7-094c | 0x054c:0x094c | proposed | medium |
+| sony-alpha-a7ii-0a6a | 0x054c:0x0a6a | proposed | medium |
+| sony-alpha-a7iii-0c03 | 0x054c:0x0c03 | proposed | medium |
+| sony-alpha-a7iv-0da6 | 0x054c:0x0da6 | proposed | medium |
+| sony-alpha-a7r-094d | 0x054c:0x094d | proposed | medium |
+| sony-alpha-a7rii-09e7 | 0x054c:0x09e7 | proposed | medium |
+| sony-alpha-a7riii-0c00 | 0x054c:0x0c00 | proposed | medium |
+| sony-alpha-a7rv-0e0c | 0x054c:0x0e0c | proposed | medium |
+| sony-alpha-a7s-08e2 | 0x054c:0x08e2 | proposed | medium |
+| sony-alpha-a7sii-0a71 | 0x054c:0x0a71 | proposed | medium |
+| sony-alpha-a7siii-0d17 | 0x054c:0x0d17 | proposed | medium |
+| sony-alpha-a9-0c2a | 0x054c:0x0c2a | proposed | medium |
+| sony-alpha-a9iii-0e80 | 0x054c:0x0e80 | proposed | medium |
+| sony-zv1-0c1b | 0x054c:0x0c1b | proposed | medium |
+| sony-zv-e10-0de3 | 0x054c:0x0de3 | proposed | medium |
+| sony-rx100m7-0cae | 0x054c:0x0cae | proposed | medium |
+| sony-rx10m4-0c2f | 0x054c:0x0c2f | proposed | medium |
+| sony-fx3-0da3 | 0x054c:0x0da3 | proposed | medium |
+| panasonic-lumix-2374 | 0x04da:0x2374 | proposed | medium |
+| panasonic-gh5-2382 | 0x04da:0x2382 | proposed | medium |
+| sigma-fp-c432 | 0x1003:0xc432 | proposed | low |
+| sigma-fp-l-c442 | 0x1003:0xc442 | proposed | low |
+| nikon-z9-0450 | 0x04b0:0x0450 | proposed | low |
+| nikon-z8-0451 | 0x04b0:0x0451 | proposed | low |
+| nikon-z50-v2-0455 | 0x04b0:0x0455 | proposed | low |
+| canon-powershot-g7x-mark-ii-32bc | 0x04a9:0x32bc | proposed | low |
+| canon-powershot-sx540hs-32be | 0x04a9:0x32be | proposed | low |
+| canon-eos-m6-32c5 | 0x04a9:0x32c5 | proposed | low |
+| canon-powershot-g9x-mark-ii-32c7 | 0x04a9:0x32c7 | proposed | low |
+| canon-eos-m50-32d2 | 0x04a9:0x32d2 | proposed | low |
+| canon-powershot-sx730hs-32d6 | 0x04a9:0x32d6 | proposed | low |
+| canon-powershot-sx740hs-32e4 | 0x04a9:0x32e4 | proposed | low |
+| canon-eos-m6-mark-ii-32e7 | 0x04a9:0x32e7 | proposed | low |
+| canon-eos-1dx-mark-iii-32e8 | 0x04a9:0x32e8 | proposed | low |
+| canon-powershot-sx70hs-32ee | 0x04a9:0x32ee | proposed | low |
+| canon-eos-m200-32ef | 0x04a9:0x32ef | proposed | low |
+| canon-powershot-g7x-mark-iii-32f0 | 0x04a9:0x32f0 | proposed | low |
+| canon-eos-r5-32f4 | 0x04a9:0x32f4 | proposed | low |
+| canon-eos-r3-32fc | 0x04a9:0x32fc | proposed | low |
+| canon-eos-r5c-3303 | 0x04a9:0x3303 | proposed | low |
+| canon-eos-r50-330d | 0x04a9:0x330d | proposed | low |
+| canon-eos-r100-3312 | 0x04a9:0x3312 | proposed | low |
+| canon-eos-r1-3313 | 0x04a9:0x3313 | proposed | low |
+| canon-eos-r5-mark-ii-3314 | 0x04a9:0x3314 | proposed | low |
+| fujifilm-xt10-02c8 | 0x04cb:0x02c8 | proposed | low |
+| fujifilm-xt2-02cd | 0x04cb:0x02cd | proposed | low |
+| fujifilm-x100f-02d1 | 0x04cb:0x02d1 | proposed | low |
+| fujifilm-gfx50s-02d3 | 0x04cb:0x02d3 | proposed | low |
+| fujifilm-xt20-02d4 | 0x04cb:0x02d4 | proposed | low |
+| fujifilm-xe3-02d6 | 0x04cb:0x02d6 | proposed | low |
+| fujifilm-xh1-02d7 | 0x04cb:0x02d7 | proposed | low |
+| fujifilm-xt3-02dd | 0x04cb:0x02dd | proposed | low |
+| fujifilm-gfx100-02de | 0x04cb:0x02de | proposed | low |
+| fujifilm-xt30-02e3 | 0x04cb:0x02e3 | proposed | low |
+| fujifilm-x100v-02e5 | 0x04cb:0x02e5 | proposed | low |
+| fujifilm-xt4-02e6 | 0x04cb:0x02e6 | proposed | low |
+| fujifilm-xe4-02e8 | 0x04cb:0x02e8 | proposed | low |
+| fujifilm-xs10-02ea | 0x04cb:0x02ea | proposed | low |
+| fujifilm-xt5-02fc | 0x04cb:0x02fc | proposed | low |
+| fujifilm-x100vi-0305 | 0x04cb:0x0305 | proposed | low |
+| fujifilm-xm5-030c | 0x04cb:0x030c | proposed | low |
+| kodak-easyshare-057f | 0x040a:0x057f | proposed | low |
+| kodak-easyshare-0580 | 0x040a:0x0580 | proposed | low |
+| kodak-easyshare-0588 | 0x040a:0x0588 | proposed | low |
+| kodak-easyshare-0589 | 0x040a:0x0589 | proposed | low |
+| kodak-easyshare-059d | 0x040a:0x059d | proposed | low |
+| kodak-easyshare-059e | 0x040a:0x059e | proposed | low |
+| kodak-easyshare-05b4 | 0x040a:0x05b4 | proposed | low |
+| kodak-easyshare-0613 | 0x040a:0x0613 | proposed | low |
+| sony-dsc-rx0-pc-0c32 | 0x054c:0x0c32 | proposed | low |
+| sony-ilce-7rm3-pc-0c33 | 0x054c:0x0c33 | proposed | low |
+| sony-ilce-7m3-pc-0c34 | 0x054c:0x0c34 | proposed | low |
+| sony-dsc-rx100m6-pc-0c38 | 0x054c:0x0c38 | proposed | low |
+| sony-zv1-pc-0c44 | 0x054c:0x0c44 | proposed | low |
+| sony-dsc-rx0ii-pc-0ca6 | 0x054c:0x0ca6 | proposed | low |
+| sony-ilce-6400-pc-0caa | 0x054c:0x0caa | proposed | low |
+| sony-dsc-rx100m5a-mtp-0cb1 | 0x054c:0x0cb1 | proposed | low |
+| sony-dsc-rx100m5a-pc-0cb2 | 0x054c:0x0cb2 | proposed | low |
+| sony-ilce-7rm4-pc-0ccc | 0x054c:0x0ccc | proposed | low |
+| sony-ilce-6600-pc-0d10 | 0x054c:0x0d10 | proposed | low |
+| sony-ilce-6100-pc-0d14 | 0x054c:0x0d14 | proposed | low |
+| sony-ilce-7sm3-pc-0d18 | 0x054c:0x0d18 | proposed | low |
+| sony-ilce-1-pc-0d1c | 0x054c:0x0d1c | proposed | low |
+| sony-ilce-7c-pc-0d2b | 0x054c:0x0d2b | proposed | low |
+| sony-zv-e10-pc-0d97 | 0x054c:0x0d97 | proposed | low |
+| sony-ilce-7rm3a-pc-0d9b | 0x054c:0x0d9b | proposed | low |
+| sony-ilce-7rm4a-pc-0d9f | 0x054c:0x0d9f | proposed | low |
+| sony-ilce-7m4-pc-0da7 | 0x054c:0x0da7 | proposed | low |
+| sony-ilx-lr1-pc-0e90 | 0x054c:0x0e90 | proposed | low |
+| sony-zv-e10m2-mtp-0ee7 | 0x054c:0x0ee7 | proposed | low |
+| sony-ilce-1m2-pc-0eed | 0x054c:0x0eed | proposed | low |
+| olympus-compact-07b4-0114 | 0x07b4:0x0114 | proposed | low |
+| olympus-compact-07b4-0116 | 0x07b4:0x0116 | proposed | low |
+| olympus-tg620-07b4-0125 | 0x07b4:0x0125 | proposed | low |
+| olympus-em5-epl5-07b4-012f | 0x07b4:0x012f | proposed | low |
+| olympus-em1-em5mkii-07b4-0130 | 0x07b4:0x0130 | proposed | low |
+| olympus-em1mkiii-07b4-0135 | 0x07b4:0x0135 | proposed | low |
+| olympus-om1-07b4-0136 | 0x07b4:0x0136 | proposed | low |
+| nikon-coolpix-coolpix-aw100-0188 | 0x04b0:0x0188 | proposed | medium |
+| nikon-coolpix-coolpix-p7100-018b | 0x04b0:0x018b | proposed | medium |
+| nikon-coolpix-coolpix-l820-0192 | 0x04b0:0x0192 | proposed | medium |
+| nikon-coolpix-coolpix-s9500-0193 | 0x04b0:0x0193 | proposed | medium |
+| nikon-coolpix-coolpix-aw110-0194 | 0x04b0:0x0194 | proposed | medium |
+| nikon-coolpix-coolpix-aw130-0198 | 0x04b0:0x0198 | proposed | medium |
+| nikon-coolpix-coolpix-p900-019c | 0x04b0:0x019c | proposed | medium |
+| nikon-coolpix-coolpix-a900-019e | 0x04b0:0x019e | proposed | medium |
+| nikon-coolpix-coolpix-p510-0223 | 0x04b0:0x0223 | proposed | medium |
+| nikon-coolpix-coolpix-p7700-0225 | 0x04b0:0x0225 | proposed | medium |
+| nikon-coolpix-coolpix-a-0226 | 0x04b0:0x0226 | proposed | medium |
+| nikon-coolpix-coolpix-p330-0227 | 0x04b0:0x0227 | proposed | medium |
+| nikon-coolpix-coolpix-p520-0228 | 0x04b0:0x0228 | proposed | medium |
+| nikon-coolpix-coolpix-p7800-0229 | 0x04b0:0x0229 | proposed | medium |
+| nikon-coolpix-coolpix-b700-0231 | 0x04b0:0x0231 | proposed | medium |
+| nikon-coolpix-coolpix-p1000-0232 | 0x04b0:0x0232 | proposed | medium |
+| nikon-coolpix-coolpix-p1100-0234 | 0x04b0:0x0234 | proposed | medium |
+| nikon-coolpix-coolpix-s9700-034b | 0x04b0:0x034b | proposed | medium |
+| nikon-coolpix-coolpix-l840-035a | 0x04b0:0x035a | proposed | medium |
+| nikon-coolpix-coolpix-l340-0361 | 0x04b0:0x0361 | proposed | medium |
+| nikon-coolpix-coolpix-b500-0362 | 0x04b0:0x0362 | proposed | medium |
+| nikon-coolpix-coolpix-p950-036d | 0x04b0:0x036d | proposed | medium |
+| canon-powershot-g1-x-3233 | 0x04a9:0x3233 | proposed | medium |
+| canon-powershot-s100-3236 | 0x04a9:0x3236 | proposed | medium |
+| canon-powershot-g15-3258 | 0x04a9:0x3258 | proposed | medium |
+| canon-powershot-s110-325b | 0x04a9:0x325b | proposed | medium |
+| canon-powershot-g16-3274 | 0x04a9:0x3274 | proposed | medium |
+| canon-powershot-s120-3275 | 0x04a9:0x3275 | proposed | medium |
+| canon-powershot-sx600-hs-3286 | 0x04a9:0x3286 | proposed | medium |
+| canon-powershot-elph-135-3288 | 0x04a9:0x3288 | proposed | medium |
+| canon-powershot-elph-340-hs-3289 | 0x04a9:0x3289 | proposed | medium |
+| canon-powershot-sx60-hs-329a | 0x04a9:0x329a | proposed | medium |
+| canon-powershot-sx520-hs-329b | 0x04a9:0x329b | proposed | medium |
+| canon-powershot-g7-x-329d | 0x04a9:0x329d | proposed | medium |
+| canon-powershot-sx530-hs-329f | 0x04a9:0x329f | proposed | medium |
+| canon-eos-eos-m10-32a0 | 0x04a9:0x32a0 | proposed | medium |
+| canon-powershot-g3-x-32a8 | 0x04a9:0x32a8 | proposed | medium |
+| canon-ixus-ixus-165-32a9 | 0x04a9:0x32a9 | proposed | medium |
+| canon-ixus-ixus-160-32aa | 0x04a9:0x32aa | proposed | medium |
+| canon-powershot-elph-350-hs-32ab | 0x04a9:0x32ab | proposed | medium |
+| canon-powershot-g5-x-32b3 | 0x04a9:0x32b3 | proposed | medium |
+| canon-ixus-ixus-180-32c0 | 0x04a9:0x32c0 | proposed | medium |
+| canon-powershot-sx720-hs-32c2 | 0x04a9:0x32c2 | proposed | medium |
+| canon-powershot-sx620-hs-32c3 | 0x04a9:0x32c3 | proposed | medium |
+| sony-nwz-a815-0325 | 0x054c:0x0325 | proposed | low |
+| sony-nwz-s615f-0327 | 0x054c:0x0327 | proposed | low |
+| sony-nwz-a826-035b | 0x054c:0x035b | proposed | low |
+| sony-nwz-a726-035c | 0x054c:0x035c | proposed | low |
+| sony-nwz-e436f-0385 | 0x054c:0x0385 | proposed | low |
+| sony-nwz-e344-03fc | 0x054c:0x03fc | proposed | low |
+| sony-nwz-e354-04cb | 0x054c:0x04cb | proposed | low |
+| leica-dlux2-04da-2375 | 0x04da:0x2375 | proposed | low |
+| leica-sl-04da-2041 | 0x04da:0x2041 | proposed | low |
+| pentax-optio-43wr-000d | 0x0a17:0x000d | proposed | low |
+| pentax-optio-w90-00f7 | 0x0a17:0x00f7 | proposed | low |
+| parrot-sequoia-19cf-5039 | 0x19cf:0x5039 | proposed | low |
+| nikon-dsc-d100-0402 | 0x04b0:0x0402 | proposed | low |
+| nikon-dsc-d2h-0404 | 0x04b0:0x0404 | proposed | low |
+| nikon-dsc-d70-0406 | 0x04b0:0x0406 | proposed | low |
+| nikon-dsc-d2x-0408 | 0x04b0:0x0408 | proposed | low |
+| nikon-dsc-d50-040a | 0x04b0:0x040a | proposed | low |
+| nikon-dsc-d2hs-040c | 0x04b0:0x040c | proposed | low |
+| nikon-dsc-d70s-040e | 0x04b0:0x040e | proposed | low |
+| nikon-dsc-d80-0412 | 0x04b0:0x0412 | proposed | low |
+| nikon-dsc-d40-0414 | 0x04b0:0x0414 | proposed | low |
+| nikon-dsc-d2xs-0416 | 0x04b0:0x0416 | proposed | low |
+| nikon-dsc-d40x-0418 | 0x04b0:0x0418 | proposed | low |
+| nikon-dsc-d300-041a | 0x04b0:0x041a | proposed | low |
+| nikon-dsc-d3-041c | 0x04b0:0x041c | proposed | low |
+| nikon-dsc-d60-041e | 0x04b0:0x041e | proposed | low |
+| nikon-dsc-d3x-0420 | 0x04b0:0x0420 | proposed | low |
+| nikon-dsc-d5000-0423 | 0x04b0:0x0423 | proposed | low |
+| nikon-dsc-d3000-0424 | 0x04b0:0x0424 | proposed | low |
+| nikon-dsc-d300s-0425 | 0x04b0:0x0425 | proposed | low |
+| nikon-dsc-d3s-0426 | 0x04b0:0x0426 | proposed | low |
+| nikon-dsc-df-0432 | 0x04b0:0x0432 | proposed | low |
+| nikon-dsc-d810a-043b | 0x04b0:0x043b | proposed | low |
+| nikon-1-v1-0601 | 0x04b0:0x0601 | proposed | low |
+| nikon-1-j1-0602 | 0x04b0:0x0602 | proposed | low |
+| nikon-1-j2-0603 | 0x04b0:0x0603 | proposed | low |
+| nikon-1-v2-0604 | 0x04b0:0x0604 | proposed | low |
+| nikon-1-j3-0605 | 0x04b0:0x0605 | proposed | low |
+| nikon-1-s1-0606 | 0x04b0:0x0606 | proposed | low |
+| nikon-1-s2-0608 | 0x04b0:0x0608 | proposed | low |
+| nikon-1-j4-0609 | 0x04b0:0x0609 | proposed | low |
+| nikon-1-v3-060a | 0x04b0:0x060a | proposed | low |
+| nikon-1-j5-060b | 0x04b0:0x060b | proposed | low |
+| canon-eos-300d-3099 | 0x04a9:0x3099 | proposed | low |
+| canon-eos-10d-30bc | 0x04a9:0x30bc | proposed | low |
+| canon-eos-1d-mark-ii-30ea | 0x04a9:0x30ea | proposed | low |
+| canon-eos-20d-30ec | 0x04a9:0x30ec | proposed | low |
+| canon-eos-30d-3113 | 0x04a9:0x3113 | proposed | low |
+| canon-eos-40d-3146 | 0x04a9:0x3146 | proposed | low |
+| canon-eos-1d-mark-iii-3147 | 0x04a9:0x3147 | proposed | low |
+| canon-eos-1000d-317b | 0x04a9:0x317b | proposed | low |
+| canon-eos-50d-319b | 0x04a9:0x319b | proposed | low |
+| canon-eos-1d-mark-iv-31d0 | 0x04a9:0x31d0 | proposed | low |
+| canon-eos-1100d-3217 | 0x04a9:0x3217 | proposed | low |
+| canon-eos-1dx-3219 | 0x04a9:0x3219 | proposed | low |
+| canon-eos-1dc-3252 | 0x04a9:0x3252 | proposed | low |
+| canon-eos-100d-3270 | 0x04a9:0x3270 | proposed | low |
+| canon-eos-m-323d | 0x04a9:0x323d | proposed | low |
+| canon-eos-m2-3273 | 0x04a9:0x3273 | proposed | low |
+| canon-eos-1200d-327f | 0x04a9:0x327f | proposed | low |
+| canon-eos-1dx-mark-ii-3292 | 0x04a9:0x3292 | proposed | low |
+| canon-eos-5ds-3295 | 0x04a9:0x3295 | proposed | low |
+| canon-eos-m3-3299 | 0x04a9:0x3299 | proposed | low |
+| canon-eos-m5-32bb | 0x04a9:0x32bb | proposed | low |
+| canon-eos-77d-32cb | 0x04a9:0x32cb | proposed | low |
+| canon-eos-m100-32d1 | 0x04a9:0x32d1 | proposed | low |
+| canon-ixus-185-32d4 | 0x04a9:0x32d4 | proposed | low |
+| canon-eos-4000d-32d9 | 0x04a9:0x32d9 | proposed | low |
+| canon-eos-2000d-32e1 | 0x04a9:0x32e1 | proposed | low |
+| canon-eos-r50v-3320 | 0x04a9:0x3320 | proposed | low |
+| canon-eos-r6-mark-iii-3323 | 0x04a9:0x3323 | proposed | low |
+| canon-powershot-g10-318f | 0x04a9:0x318f | proposed | low |
+| canon-powershot-g11-31df | 0x04a9:0x31df | proposed | low |
+| canon-powershot-g12-320f | 0x04a9:0x320f | proposed | low |
+| canon-powershot-s95-3212 | 0x04a9:0x3212 | proposed | low |
+| sony-nwz-s516-0326 | 0x054c:0x0326 | proposed | low |
+| sony-nwz-s716f-035a | 0x054c:0x035a | proposed | low |
+| sony-nwz-b135-036e | 0x054c:0x036e | proposed | low |
+| sony-nwz-w202-0388 | 0x054c:0x0388 | proposed | low |
+| sony-nwz-s739f-038c | 0x054c:0x038c | proposed | low |
+| sony-nwz-s638f-038e | 0x054c:0x038e | proposed | low |
+| sony-nwz-x1050-0397 | 0x054c:0x0397 | proposed | low |
+| sony-nwz-x1051-0398 | 0x054c:0x0398 | proposed | low |
+| sony-nwz-b142f-03d8 | 0x054c:0x03d8 | proposed | low |
+| sony-nwz-e445-03fd | 0x054c:0x03fd | proposed | low |
+| sony-nwz-s545-03fe | 0x054c:0x03fe | proposed | low |
+| sony-nwz-w252b-04bb | 0x054c:0x04bb | proposed | low |
+| sony-nwz-b153f-04be | 0x054c:0x04be | proposed | low |
+| sony-nwz-s754-04cc | 0x054c:0x04cc | proposed | low |
+| sony-nwz-b163f-059a | 0x054c:0x059a | proposed | low |
+| sony-nwz-e464-05a6 | 0x054c:0x05a6 | proposed | low |
+| sony-nwz-s765-05a8 | 0x054c:0x05a8 | proposed | low |
+| sony-nwz-b173f-0689 | 0x054c:0x0689 | proposed | low |
+| sony-nwz-e474-06a9 | 0x054c:0x06a9 | proposed | low |
+| fujifilm-finepix-s7000-0142 | 0x04cb:0x0142 | proposed | low |
+| fujifilm-finepix-a330-014a | 0x04cb:0x014a | proposed | low |
+| fujifilm-finepix-s9500-018f | 0x04cb:0x018f | proposed | low |
+| fujifilm-finepix-e900-0193 | 0x04cb:0x0193 | proposed | low |
+| fujifilm-finepix-f30-019b | 0x04cb:0x019b | proposed | low |
+| fujifilm-finepix-s6500fd-01bf | 0x04cb:0x01bf | proposed | low |
+| fujifilm-finepix-f20-01c0 | 0x04cb:0x01c0 | proposed | low |
+| fujifilm-finepix-f31fd-01c1 | 0x04cb:0x01c1 | proposed | low |
+| fujifilm-s5pro-01c3 | 0x04cb:0x01c3 | proposed | low |
+| fujifilm-finepix-s5700-01c4 | 0x04cb:0x01c4 | proposed | low |
+| fujifilm-finepix-f40fd-01c5 | 0x04cb:0x01c5 | proposed | low |
+| fujifilm-finepix-a610-01d0 | 0x04cb:0x01d0 | proposed | low |
+| fujifilm-finepix-a800-01d2 | 0x04cb:0x01d2 | proposed | low |
+| fujifilm-finepix-f50fd-01d4 | 0x04cb:0x01d4 | proposed | low |
+| fujifilm-finepix-z100fd-01d8 | 0x04cb:0x01d8 | proposed | low |
+| fujifilm-finepix-s100fs-01db | 0x04cb:0x01db | proposed | low |
+| fujifilm-finepix-s1000fd-01dd | 0x04cb:0x01dd | proposed | low |
+| fujifilm-finepix-f100fd-01e0 | 0x04cb:0x01e0 | proposed | low |
+| fujifilm-finepix-f200exr-01e4 | 0x04cb:0x01e4 | proposed | low |
+| fujifilm-finepix-s1500-01ef | 0x04cb:0x01ef | proposed | low |
+| fujifilm-finepix-f70exr-01fa | 0x04cb:0x01fa | proposed | low |
+| fujifilm-finepix-f80exr-020e | 0x04cb:0x020e | proposed | low |
+| fujifilm-finepix-s2500hd-0209 | 0x04cb:0x0209 | proposed | low |
+| fujifilm-finepix-z700exr-020d | 0x04cb:0x020d | proposed | low |
+| fujifilm-finepix-h20exr-022d | 0x04cb:0x022d | proposed | low |
+| fujifilm-finepix-s2950-0240 | 0x04cb:0x0240 | proposed | low |
+| fujifilm-finepix-x10-0263 | 0x04cb:0x0263 | proposed | low |
+| fujifilm-finepix-xs1-026e | 0x04cb:0x026e | proposed | low |
+| fujifilm-xe1-0283 | 0x04cb:0x0283 | proposed | low |
+| fujifilm-finepix-xf1-0288 | 0x04cb:0x0288 | proposed | low |
+| fujifilm-finepix-sl1000-029c | 0x04cb:0x029c | proposed | low |
+| fujifilm-x20-02a6 | 0x04cb:0x02a6 | proposed | low |
+| fujifilm-xe2-02b5 | 0x04cb:0x02b5 | proposed | low |
+| fujifilm-xm1-02b6 | 0x04cb:0x02b6 | proposed | low |
+| fujifilm-finepix-s8600-02b9 | 0x04cb:0x02b9 | proposed | low |
+| fujifilm-x70-02ba | 0x04cb:0x02ba | proposed | low |
+| fujifilm-xt1-02bf | 0x04cb:0x02bf | proposed | low |
+| fujifilm-x30-02c1 | 0x04cb:0x02c1 | proposed | low |
+| fujifilm-xa2-02c6 | 0x04cb:0x02c6 | proposed | low |
+| fujifilm-xpro2-02cb | 0x04cb:0x02cb | proposed | low |
+| fujifilm-xa5-02d5 | 0x04cb:0x02d5 | proposed | low |
+| fujifilm-gfx50r-02dc | 0x04cb:0x02dc | proposed | low |
+| fujifilm-xpro3-02e4 | 0x04cb:0x02e4 | proposed | low |
+| fujifilm-gfx100s-alt-02e9 | 0x04cb:0x02e9 | proposed | low |
+| fujifilm-xh2s-02f0 | 0x04cb:0x02f0 | proposed | low |
+| fujifilm-xh2-02f2 | 0x04cb:0x02f2 | proposed | low |
+| fujifilm-gfx100ii-02fe | 0x04cb:0x02fe | proposed | low |
+| fujifilm-xe5-0313 | 0x04cb:0x0313 | proposed | low |
+| olympus-e-series-xml-control-0110 | 0x07b4:0x0110 | proposed | low |
+| sony-fdr-x3000-0a7b | 0x054c:0x0a7b | proposed | low |
+| sony-hdr-as300-0a7c | 0x054c:0x0a7c | proposed | low |
+| sony-rx0-ii-0a7d | 0x054c:0x0a7d | proposed | low |
+| sony-zv-1-0a7e | 0x054c:0x0a7e | proposed | low |
+| sony-zv-e10-0a7f | 0x054c:0x0a7f | proposed | low |
+| sony-zv-e1-0a80 | 0x054c:0x0a80 | proposed | low |
+| olympus-ds2500-020f | 0x07b4:0x020f | proposed | low |
+| olympus-ds7000-0210 | 0x07b4:0x0210 | proposed | low |
+| olympus-ws852-0211 | 0x07b4:0x0211 | proposed | low |
+| olympus-lsp4-0212 | 0x07b4:0x0212 | proposed | low |
+| panasonic-dmcfz50-2370 | 0x04da:0x2370 | proposed | medium |
+| panasonic-dmcl1-2371 | 0x04da:0x2371 | proposed | medium |
+| panasonic-dmclx2-2373 | 0x04da:0x2373 | proposed | medium |
+| panasonic-dmcfx55-2376 | 0x04da:0x2376 | proposed | medium |
+| panasonic-dmcg1-2377 | 0x04da:0x2377 | proposed | medium |
+| panasonic-dmcgh1-2378 | 0x04da:0x2378 | proposed | medium |
+| panasonic-dmctz5-2379 | 0x04da:0x2379 | proposed | medium |
+| panasonic-dmcfx150-237a | 0x04da:0x237a | proposed | medium |
+| panasonic-dmcg10-237b | 0x04da:0x237b | proposed | medium |
+| panasonic-dmclx5-237c | 0x04da:0x237c | proposed | medium |
+| panasonic-dmcgf1-237d | 0x04da:0x237d | proposed | medium |
+| panasonic-dmcgh2-237e | 0x04da:0x237e | proposed | medium |
+| panasonic-dmcfz100-237f | 0x04da:0x237f | proposed | medium |
+| panasonic-dmcg3-2380 | 0x04da:0x2380 | proposed | medium |
+| panasonic-dmcgf3-2381 | 0x04da:0x2381 | proposed | medium |
+| panasonic-dmcg5-2383 | 0x04da:0x2383 | proposed | medium |
+| panasonic-dmcgh3-2384 | 0x04da:0x2384 | proposed | medium |
+| panasonic-dmcgx1-2385 | 0x04da:0x2385 | proposed | medium |
+| panasonic-dmcg6-2386 | 0x04da:0x2386 | proposed | medium |
+| panasonic-dmcgf6-2387 | 0x04da:0x2387 | proposed | medium |
+| panasonic-dmcgx7-2388 | 0x04da:0x2388 | proposed | medium |
+| panasonic-dmcgh4-2389 | 0x04da:0x2389 | proposed | medium |
+| panasonic-dmcgx8-238a | 0x04da:0x238a | proposed | medium |
+| panasonic-dmcg80-g85-238b | 0x04da:0x238b | proposed | medium |
+| panasonic-dmcgx9-238c | 0x04da:0x238c | proposed | medium |
+| panasonic-dcg9-238d | 0x04da:0x238d | proposed | medium |
+| panasonic-dcgh5-238e | 0x04da:0x238e | proposed | medium |
+| panasonic-dcg90-g91-238f | 0x04da:0x238f | proposed | medium |
+| panasonic-dcg95-g90-g91-2390 | 0x04da:0x2390 | proposed | medium |
+| panasonic-dcgh5s-2391 | 0x04da:0x2391 | proposed | medium |
+| panasonic-dcgh5-ii-2392 | 0x04da:0x2392 | proposed | medium |
+| panasonic-dcgh6-2393 | 0x04da:0x2393 | proposed | medium |
+| panasonic-dcg9-ii-2394 | 0x04da:0x2394 | proposed | medium |
+| panasonic-dcgh7-2395 | 0x04da:0x2395 | proposed | medium |
+| panasonic-dcs5-2396 | 0x04da:0x2396 | proposed | medium |
+| panasonic-dcs5-ii-2397 | 0x04da:0x2397 | proposed | medium |
+| panasonic-dcs5-iix-2398 | 0x04da:0x2398 | proposed | medium |
+| panasonic-dcs1-2399 | 0x04da:0x2399 | proposed | medium |
+| panasonic-dcs1h-239a | 0x04da:0x239a | proposed | medium |
+| panasonic-dcs1r-239b | 0x04da:0x239b | proposed | medium |
+| panasonic-dcs9-239c | 0x04da:0x239c | proposed | medium |
+| panasonic-lumix-s-full-frame-239d | 0x04da:0x239d | proposed | medium |
+| olympus-e-510-07b4-0118 | 0x07b4:0x0118 | proposed | medium |
+| olympus-e-410-07b4-011a | 0x07b4:0x011a | proposed | medium |
+| olympus-e-420-07b4-011c | 0x07b4:0x011c | proposed | medium |
+| olympus-e-520-07b4-011e | 0x07b4:0x011e | proposed | medium |
+| olympus-e-620-07b4-0120 | 0x07b4:0x0120 | proposed | medium |
+| olympus-e-450-07b4-0122 | 0x07b4:0x0122 | proposed | medium |
+| olympus-e-30-07b4-0123 | 0x07b4:0x0123 | proposed | medium |
+| olympus-e-3-07b4-0124 | 0x07b4:0x0124 | proposed | medium |
+| olympus-e-5-07b4-0126 | 0x07b4:0x0126 | proposed | medium |
+| olympus-e-pl1-07b4-0127 | 0x07b4:0x0127 | proposed | medium |
+| olympus-e-pl2-07b4-0128 | 0x07b4:0x0128 | proposed | medium |
+| olympus-e-p1-07b4-0129 | 0x07b4:0x0129 | proposed | medium |
+| olympus-e-p2-07b4-012a | 0x07b4:0x012a | proposed | medium |
+| olympus-e-p3-07b4-012b | 0x07b4:0x012b | proposed | medium |
+| olympus-e-pl3-07b4-012c | 0x07b4:0x012c | proposed | medium |
+| olympus-e-pm1-07b4-012d | 0x07b4:0x012d | proposed | medium |
+| olympus-e-pl1s-07b4-012e | 0x07b4:0x012e | proposed | medium |
+| olympus-e-pl6-07b4-0131 | 0x07b4:0x0131 | proposed | medium |
+| olympus-e-pm2-07b4-0132 | 0x07b4:0x0132 | proposed | medium |
+| olympus-e-pl7-07b4-0133 | 0x07b4:0x0133 | proposed | medium |
+| olympus-e-pl8-07b4-0134 | 0x07b4:0x0134 | proposed | medium |
+| olympus-e-p5-07b4-0137 | 0x07b4:0x0137 | proposed | medium |
+| olympus-e-p6-07b4-0138 | 0x07b4:0x0138 | proposed | medium |
+| olympus-e-p7-07b4-0139 | 0x07b4:0x0139 | proposed | medium |
+| olympus-om-d-e-m5-07b4-013a | 0x07b4:0x013a | proposed | medium |
+| olympus-om-d-e-m5-ii-07b4-013b | 0x07b4:0x013b | proposed | medium |
+| olympus-om-d-e-m5-iii-07b4-013c | 0x07b4:0x013c | proposed | medium |
+| olympus-om-d-e-m1-07b4-013d | 0x07b4:0x013d | proposed | medium |
+| olympus-om-d-e-m1-ii-07b4-013e | 0x07b4:0x013e | proposed | medium |
+| olympus-om-d-e-m1-iii-07b4-013f | 0x07b4:0x013f | proposed | medium |
+| olympus-om-d-e-m1x-07b4-0140 | 0x07b4:0x0140 | proposed | medium |
+| olympus-om-d-e-m10-07b4-0141 | 0x07b4:0x0141 | proposed | medium |
+| olympus-om-d-e-m10-ii-07b4-0142 | 0x07b4:0x0142 | proposed | medium |
+| olympus-om-d-e-m10-iii-07b4-0143 | 0x07b4:0x0143 | proposed | medium |
+| olympus-om-d-e-m10-iiis-07b4-0144 | 0x07b4:0x0144 | proposed | medium |
+| olympus-om-d-e-m10-iv-07b4-0145 | 0x07b4:0x0145 | proposed | medium |
+| olympus-om-d-e-m10-v-07b4-0146 | 0x07b4:0x0146 | proposed | medium |
+| olympus-stylus-1-07b4-0147 | 0x07b4:0x0147 | proposed | medium |
+| olympus-om-system-om-5-07b4-0150 | 0x07b4:0x0150 | proposed | medium |
+| olympus-om-system-om-1-07b4-0151 | 0x07b4:0x0151 | proposed | medium |
+| olympus-om-system-om-1-mark-ii-07b4-0152 | 0x07b4:0x0152 | proposed | medium |
+| olympus-om-system-om-3-07b4-0153 | 0x07b4:0x0153 | proposed | medium |
+| olympus-om-system-om-1r-07b4-0154 | 0x07b4:0x0154 | proposed | medium |
+| olympus-om-system-tg-7-07b4-0155 | 0x07b4:0x0155 | proposed | medium |
+| olympus-om-system-tg-6-07b4-0156 | 0x07b4:0x0156 | proposed | medium |
+| olympus-om-system-e-m1-mark-ii-alt-07b4-0157 | 0x07b4:0x0157 | proposed | medium |
+| olympus-om-system-sh-3-07b4-0158 | 0x07b4:0x0158 | proposed | medium |
+| olympus-stylus-tg-1-07b4-0200 | 0x07b4:0x0200 | proposed | medium |
+| olympus-stylus-tg-2-07b4-0201 | 0x07b4:0x0201 | proposed | medium |
+| olympus-stylus-tg-3-07b4-0202 | 0x07b4:0x0202 | proposed | medium |
+| olympus-stylus-tg-4-07b4-0203 | 0x07b4:0x0203 | proposed | medium |
+| olympus-stylus-tg-5-07b4-0204 | 0x07b4:0x0204 | proposed | medium |
+| olympus-stylus-tg-6-alt-07b4-0205 | 0x07b4:0x0205 | proposed | medium |
+| sony-dsc-w350-06e1 | 0x054c:0x06e1 | proposed | medium |
+| sony-dsc-w380-06e2 | 0x054c:0x06e2 | proposed | medium |
+| sony-dsc-w560-06e3 | 0x054c:0x06e3 | proposed | medium |
+| sony-dsc-hx9v-06e4 | 0x054c:0x06e4 | proposed | medium |
+| sony-dsc-hx100v-06e5 | 0x054c:0x06e5 | proposed | medium |
+| sony-nex-5n-06e6 | 0x054c:0x06e6 | proposed | medium |
+| sony-nex-7-06e7 | 0x054c:0x06e7 | proposed | medium |
+| sony-slt-a65-06e8 | 0x054c:0x06e8 | proposed | medium |
+| sony-slt-a77-06e9 | 0x054c:0x06e9 | proposed | medium |
+| sony-alpha-nex-5r-06ea | 0x054c:0x06ea | proposed | medium |
+| sony-alpha-slt-a37-06eb | 0x054c:0x06eb | proposed | medium |
+| sony-rx1-06ec | 0x054c:0x06ec | proposed | medium |
+| sony-dsc-hx20v-06ed | 0x054c:0x06ed | proposed | medium |
+| sony-alpha-nex-6-06ef | 0x054c:0x06ef | proposed | medium |
+| sony-alpha-slt-a99-06f0 | 0x054c:0x06f0 | proposed | medium |
+| sony-alpha-a58-06f1 | 0x054c:0x06f1 | proposed | medium |
+| sony-alpha-a3000-06f2 | 0x054c:0x06f2 | proposed | medium |
+| sony-alpha-a7-06f3 | 0x054c:0x06f3 | proposed | medium |
+| sony-alpha-a7r-06f4 | 0x054c:0x06f4 | proposed | medium |
+| sony-alpha-a6000-06f5 | 0x054c:0x06f5 | proposed | medium |
+| sony-alpha-a5000-06f6 | 0x054c:0x06f6 | proposed | medium |
+| sony-alpha-a5100-06f7 | 0x054c:0x06f7 | proposed | medium |
+| sony-alpha-a6300-06f8 | 0x054c:0x06f8 | proposed | medium |
+| sony-alpha-a6500-06f9 | 0x054c:0x06f9 | proposed | medium |
+| sony-alpha-a68-06fa | 0x054c:0x06fa | proposed | medium |
+| sony-alpha-a77ii-06fb | 0x054c:0x06fb | proposed | medium |
+| sony-alpha-a99ii-06fc | 0x054c:0x06fc | proposed | medium |
+| sony-alpha-a6100-06fd | 0x054c:0x06fd | proposed | medium |
+| sony-alpha-a6400-06fe | 0x054c:0x06fe | proposed | medium |
+| sony-alpha-a6600-06ff | 0x054c:0x06ff | proposed | medium |
+| sony-alpha-a7c-0700 | 0x054c:0x0700 | proposed | medium |
+| sony-alpha-a7cii-0701 | 0x054c:0x0701 | proposed | medium |
+| sony-alpha-a7cr-0702 | 0x054c:0x0702 | proposed | medium |
+| sony-alpha-a6700-0703 | 0x054c:0x0703 | proposed | medium |
+| sony-alpha-a7iv-0704 | 0x054c:0x0704 | proposed | medium |
+| sony-alpha-a7siii-0705 | 0x054c:0x0705 | proposed | medium |
+| sony-alpha-a1-0706 | 0x054c:0x0706 | proposed | medium |
+| sony-alpha-a9iii-0707 | 0x054c:0x0707 | proposed | medium |
+| sony-zv-e10ii-0708 | 0x054c:0x0708 | proposed | medium |
+| sony-alpha-a7rv-0709 | 0x054c:0x0709 | proposed | medium |
+| sony-alpha-a7riv-070a | 0x054c:0x070a | proposed | medium |
+| sony-alpha-a7riii-070b | 0x054c:0x070b | proposed | medium |
+| sony-alpha-a9ii-070c | 0x054c:0x070c | proposed | medium |
+| sony-alpha-fx3-070d | 0x054c:0x070d | proposed | medium |
+| sony-alpha-fx30-070e | 0x054c:0x070e | proposed | medium |
+| sony-alpha-fx9-070f | 0x054c:0x070f | proposed | medium |
+| sony-alpha-zv-e1-0710 | 0x054c:0x0710 | proposed | medium |
+| mamiya-dm33-4001 | 0x04f1:0x4001 | proposed | low |
+| leaf-credo-80-4002 | 0x04f1:0x4002 | proposed | low |
+| minolta-dimage-7i-4001 | 0x0686:0x4001 | proposed | low |
+| minolta-dimage-a1-4002 | 0x0686:0x4002 | proposed | low |
+| konica-minolta-dimage-z5-4003 | 0x0686:0x4003 | proposed | low |
+| konica-minolta-dimage-a200-4004 | 0x0686:0x4004 | proposed | low |
+| canon-eos-5ds-3278 | 0x04a9:0x3278 | proposed | medium |
+| canon-eos-5dsr-3279 | 0x04a9:0x3279 | proposed | medium |
+| canon-eos-80d-327c | 0x04a9:0x327c | proposed | medium |
+| canon-eos-800d-3285 | 0x04a9:0x3285 | proposed | medium |
+| canon-eos-77d-3287 | 0x04a9:0x3287 | proposed | medium |
+| canon-eos-4000d-328e | 0x04a9:0x328e | proposed | medium |
+| canon-eos-rp-32a2 | 0x04a9:0x32a2 | proposed | medium |
+| canon-eos-m50ii-32a6 | 0x04a9:0x32a6 | proposed | medium |
+| canon-eos-r6ii-32b0 | 0x04a9:0x32b0 | proposed | medium |
+| canon-eos-r7-32b2 | 0x04a9:0x32b2 | proposed | medium |
+| canon-eos-r8-32b6 | 0x04a9:0x32b6 | proposed | medium |
+| canon-eos-r50-32b8 | 0x04a9:0x32b8 | proposed | medium |
+| canon-eos-r100-32ba | 0x04a9:0x32ba | proposed | medium |
+| sony-psp-1000-005f | 0x054c:0x005f | proposed | medium |
+| sony-psp-3000-01c8 | 0x054c:0x01c8 | proposed | medium |
+| sony-psp-go-0268 | 0x054c:0x0268 | proposed | medium |
+| sony-psp-e1000-02e7 | 0x054c:0x02e7 | proposed | medium |
+| sony-ps4-ext-media-0951 | 0x054c:0x0951 | proposed | medium |
+| sony-icd-tx660-0a5d | 0x054c:0x0a5d | proposed | low |
+| sony-icd-sx2000-0a5e | 0x054c:0x0a5e | proposed | low |
+| sony-icd-ux570f-0a5f | 0x054c:0x0a5f | proposed | low |
+| sony-icd-tx800-0a60 | 0x054c:0x0a60 | proposed | low |
+| sony-pcm-a10-0a61 | 0x054c:0x0a61 | proposed | low |
+| sony-pcm-d10-0a62 | 0x054c:0x0a62 | proposed | low |
+| canon-canoscan-lide-300-190a | 0x04a9:0x190a | proposed | low |
+| canon-canoscan-lide-400-190b | 0x04a9:0x190b | proposed | low |
+| canon-canoscan-lide-30-190c | 0x04a9:0x190c | proposed | low |
+| canon-canoscan-lide-220-190d | 0x04a9:0x190d | proposed | low |
+| canon-canoscan-9000f-mark-ii-190e | 0x04a9:0x190e | proposed | low |
+| canon-eos-r7-mark-ii-3319 | 0x04a9:0x3319 | proposed | low |
+| canon-powershot-v10-3316 | 0x04a9:0x3316 | proposed | low |
+| fujifilm-xs20-02f4 | 0x04cb:0x02f4 | proposed | low |
+| fujifilm-xt50-0307 | 0x04cb:0x0307 | proposed | low |
+| fujifilm-gfx100sii-0306 | 0x04cb:0x0306 | proposed | low |
+| kodak-dc240-0121 | 0x040a:0x0121 | proposed | medium |
+| kodak-dc4800-0160 | 0x040a:0x0160 | proposed | medium |
+| kodak-dx3900-0170 | 0x040a:0x0170 | proposed | medium |
+| kodak-mc3-0400 | 0x040a:0x0400 | proposed | medium |
+| kodak-z7590-0403 | 0x040a:0x0403 | proposed | medium |
+| kodak-dx3500-0500 | 0x040a:0x0500 | proposed | medium |
+| kodak-cx4230-0535 | 0x040a:0x0535 | proposed | medium |
+| kodak-dx4900-0550 | 0x040a:0x0550 | proposed | medium |
+| kodak-cx7530-057c | 0x040a:0x057c | proposed | medium |
+| kodak-m893is-0585 | 0x040a:0x0585 | proposed | medium |
+| kodak-z700-0587 | 0x040a:0x0587 | proposed | medium |
+| kodak-p880-0593 | 0x040a:0x0593 | proposed | medium |
+| kodak-z8612is-0595 | 0x040a:0x0595 | proposed | medium |
+| kodak-z950-05cd | 0x040a:0x05cd | proposed | medium |
+| kodak-c1530-0617 | 0x040a:0x0617 | proposed | medium |
+| kodak-m531-0600 | 0x040a:0x0600 | proposed | medium |
+| kodak-c183-060b | 0x040a:0x060b | proposed | medium |
+| kodak-dx6490-0575 | 0x040a:0x0575 | proposed | medium |
+| kodak-dx7630-0577 | 0x040a:0x0577 | proposed | medium |
+| kodak-dx3600-0510 | 0x040a:0x0510 | proposed | medium |
+| sanyo-vpc-c5-0230 | 0x0474:0x0230 | proposed | medium |
+| sanyo-vpc-fh1-02e5 | 0x0474:0x02e5 | proposed | medium |
+| kodak-dx3215-0525 | 0x040a:0x0525 | proposed | medium |
+| kodak-dx3700-0530 | 0x040a:0x0530 | proposed | medium |
+| kodak-ls420-0540 | 0x040a:0x0540 | proposed | medium |
+| kodak-v530-059b | 0x040a:0x059b | proposed | medium |
+| insignia-ns-dv45-0303 | 0x19ff:0x0303 | proposed | medium |
+| polaroid-freescape-mpu-433158-2035 | 0x0546:0x2035 | proposed | medium |
+| canon-cp-10-304a | 0x04a9:0x304a | proposed | low |
+| canon-cp-100-3063 | 0x04a9:0x3063 | proposed | low |
+| canon-cp-200-307c | 0x04a9:0x307c | proposed | low |
+| canon-cp-300-307d | 0x04a9:0x307d | proposed | low |
+| canon-cp-220-30bd | 0x04a9:0x30bd | proposed | low |
+| canon-cp-330-30be | 0x04a9:0x30be | proposed | low |
+| canon-selphy-cp500-30f5 | 0x04a9:0x30f5 | proposed | low |
+| canon-selphy-cp400-30f6 | 0x04a9:0x30f6 | proposed | low |
+| canon-selphy-cp600-310b | 0x04a9:0x310b | proposed | low |
+| canon-selphy-cp710-3127 | 0x04a9:0x3127 | proposed | low |
+| canon-selphy-cp510-3128 | 0x04a9:0x3128 | proposed | low |
+| canon-selphy-es1-3141 | 0x04a9:0x3141 | proposed | low |
+| canon-selphy-cp730-3142 | 0x04a9:0x3142 | proposed | low |
+| canon-selphy-cp720-3143 | 0x04a9:0x3143 | proposed | low |
+| canon-selphy-cp750-3170 | 0x04a9:0x3170 | proposed | low |
+| canon-selphy-cp740-3171 | 0x04a9:0x3171 | proposed | low |
+| canon-selphy-cp520-3172 | 0x04a9:0x3172 | proposed | low |
+| canon-selphy-es2-3185 | 0x04a9:0x3185 | proposed | low |
+| canon-selphy-es20-3186 | 0x04a9:0x3186 | proposed | low |
+| canon-selphy-cp770-31aa | 0x04a9:0x31aa | proposed | low |
+| canon-selphy-cp760-31ab | 0x04a9:0x31ab | proposed | low |
+| canon-selphy-es3-31af | 0x04a9:0x31af | proposed | low |
+| canon-selphy-es30-31b0 | 0x04a9:0x31b0 | proposed | low |
+| canon-selphy-cp530-31b1 | 0x04a9:0x31b1 | proposed | low |
+| canon-selphy-cp780-31dd | 0x04a9:0x31dd | proposed | low |
+| canon-selphy-cp790-31e7 | 0x04a9:0x31e7 | proposed | low |
+| canon-selphy-es40-31ee | 0x04a9:0x31ee | proposed | low |
+| canon-selphy-cp800-3214 | 0x04a9:0x3214 | proposed | low |
+| canon-selphy-cp900-3255 | 0x04a9:0x3255 | proposed | low |
+| canon-selphy-cp810-3256 | 0x04a9:0x3256 | proposed | low |
+| canon-selphy-cp910-327a | 0x04a9:0x327a | proposed | low |
+| canon-selphy-cp820-327b | 0x04a9:0x327b | proposed | low |
+| canon-selphy-cp1200-32b1 | 0x04a9:0x32b1 | proposed | low |
+| canon-selphy-cp1300-32db | 0x04a9:0x32db | proposed | low |
+| canon-selphy-cp1500-3302 | 0x04a9:0x3302 | proposed | low |
+| sony-nwz-a845-0404 | 0x054c:0x0404 | proposed | medium |
+| sony-sony-tablet-p1-04d1 | 0x054c:0x04d1 | proposed | medium |
+| sony-sony-tablet-s-05b3 | 0x054c:0x05b3 | proposed | medium |
+| sony-sony-tablet-s1-05b4 | 0x054c:0x05b4 | proposed | medium |
+| sony-xperia-tablet-s-sgpt12-06ac | 0x054c:0x06ac | proposed | medium |
+| sony-nwz-e384-0882 | 0x054c:0x0882 | proposed | medium |
+| sony-dcr-sr75-1294 | 0x054c:0x1294 | proposed | medium |
+| panasonic-p905i-2145 | 0x04da:0x2145 | proposed | medium |
+| panasonic-p906i-2158 | 0x04da:0x2158 | proposed | medium |
+| canon-powershot-s45-306d | 0x04a9:0x306d | proposed | medium |
+| canon-powershot-g3-306f | 0x04a9:0x306f | proposed | medium |
+| canon-powershot-s230-3071 | 0x04a9:0x3071 | proposed | medium |
+| canon-digital-ixus-ii-3072 | 0x04a9:0x3072 | proposed | medium |
+| canon-powershot-a70-3073 | 0x04a9:0x3073 | proposed | medium |
+| canon-powershot-a60-3074 | 0x04a9:0x3074 | proposed | medium |
+| canon-digital-ixus-400-3075 | 0x04a9:0x3075 | proposed | medium |
+| canon-powershot-a300-3076 | 0x04a9:0x3076 | proposed | medium |
+| canon-powershot-s50-3077 | 0x04a9:0x3077 | proposed | medium |
+| canon-powershot-g5-3085 | 0x04a9:0x3085 | proposed | medium |
+| canon-powershot-a80-309a | 0x04a9:0x309a | proposed | medium |
+| canon-digital-ixus-i-309b | 0x04a9:0x309b | proposed | medium |
+| canon-powershot-s1-is-309c | 0x04a9:0x309c | proposed | medium |
+| canon-powershot-s70-30b1 | 0x04a9:0x30b1 | proposed | medium |
+| canon-powershot-s60-30b2 | 0x04a9:0x30b2 | proposed | medium |
+| canon-powershot-g6-30b3 | 0x04a9:0x30b3 | proposed | medium |
+| canon-digital-ixus-500-30b4 | 0x04a9:0x30b4 | proposed | medium |
+| canon-powershot-a75-30b5 | 0x04a9:0x30b5 | proposed | medium |
+| canon-powershot-sd110-30b6 | 0x04a9:0x30b6 | proposed | medium |
+| canon-powershot-a400-30b7 | 0x04a9:0x30b7 | proposed | medium |
+| canon-powershot-a310-30b8 | 0x04a9:0x30b8 | proposed | medium |
+| canon-powershot-a85-30b9 | 0x04a9:0x30b9 | proposed | medium |
+| canon-digital-ixus-430-30ba | 0x04a9:0x30ba | proposed | medium |
+| canon-powershot-a95-30bb | 0x04a9:0x30bb | proposed | medium |
+| canon-digital-ixus-40-30bf | 0x04a9:0x30bf | proposed | medium |
+| canon-powershot-sd200-30c0 | 0x04a9:0x30c0 | proposed | medium |
+| canon-powershot-a520-30c1 | 0x04a9:0x30c1 | proposed | medium |
+| canon-powershot-a510-30c2 | 0x04a9:0x30c2 | proposed | medium |
+| canon-eos-350d-30ee | 0x04a9:0x30ee | proposed | medium |
+| canon-eos-350d-30ef | 0x04a9:0x30ef | proposed | medium |
+| canon-powershot-s2-is-30f0 | 0x04a9:0x30f0 | proposed | medium |
+| canon-powershot-sd430-30f1 | 0x04a9:0x30f1 | proposed | medium |
+| canon-digital-ixus-700-30f2 | 0x04a9:0x30f2 | proposed | medium |
+| canon-digital-ixus-iz-30f4 | 0x04a9:0x30f4 | proposed | medium |
+| canon-powershot-a430-30f8 | 0x04a9:0x30f8 | proposed | medium |
+| canon-powershot-a410-30f9 | 0x04a9:0x30f9 | proposed | medium |
+| canon-powershot-s80-30fa | 0x04a9:0x30fa | proposed | medium |
+| canon-powershot-a620-30fc | 0x04a9:0x30fc | proposed | medium |
+| canon-powershot-a610-30fd | 0x04a9:0x30fd | proposed | medium |
+| canon-powershot-sd630-30fe | 0x04a9:0x30fe | proposed | medium |
+| canon-digital-ixus-55-30ff | 0x04a9:0x30ff | proposed | medium |
+| canon-eos-5d-3102 | 0x04a9:0x3102 | proposed | medium |
+| canon-digital-ixus-50-310e | 0x04a9:0x310e | proposed | medium |
+| canon-powershot-a420-310f | 0x04a9:0x310f | proposed | medium |
+| canon-eos-400d-3110 | 0x04a9:0x3110 | proposed | medium |
+| canon-digital-ixus-900ti-3115 | 0x04a9:0x3115 | proposed | medium |
+| canon-digital-ixus-750-3116 | 0x04a9:0x3116 | proposed | medium |
+| canon-powershot-a700-3117 | 0x04a9:0x3117 | proposed | medium |
+| canon-powershot-sd700-3119 | 0x04a9:0x3119 | proposed | medium |
+| canon-powershot-s3-is-311a | 0x04a9:0x311a | proposed | medium |
+| canon-powershot-a540-311b | 0x04a9:0x311b | proposed | medium |
+| canon-digital-ixus-60-311c | 0x04a9:0x311c | proposed | medium |
+| canon-powershot-g7-3125 | 0x04a9:0x3125 | proposed | medium |
+| canon-powershot-a530-3126 | 0x04a9:0x3126 | proposed | medium |
+| canon-digital-ixus-850-is-3136 | 0x04a9:0x3136 | proposed | medium |
+| canon-powershot-sd40-3137 | 0x04a9:0x3137 | proposed | medium |
+| canon-powershot-a710-is-3138 | 0x04a9:0x3138 | proposed | medium |
+| canon-powershot-a630-313a | 0x04a9:0x313a | proposed | medium |
+| canon-powershot-s5-is-3148 | 0x04a9:0x3148 | proposed | medium |
+| canon-powershot-a460-3149 | 0x04a9:0x3149 | proposed | medium |
+| canon-digital-ixus-950-is-314b | 0x04a9:0x314b | proposed | medium |
+| canon-powershot-a570-is-314c | 0x04a9:0x314c | proposed | medium |
+| canon-powershot-a560-314d | 0x04a9:0x314d | proposed | medium |
+| canon-digital-ixus-75-314e | 0x04a9:0x314e | proposed | medium |
+| canon-digital-ixus-70-314f | 0x04a9:0x314f | proposed | medium |
+| canon-powershot-a550-3150 | 0x04a9:0x3150 | proposed | medium |
+| canon-powershot-a450-3155 | 0x04a9:0x3155 | proposed | medium |
+| canon-powershot-g9-315a | 0x04a9:0x315a | proposed | medium |
+| canon-powershot-a650is-315b | 0x04a9:0x315b | proposed | medium |
+| canon-powershot-a720-is-315d | 0x04a9:0x315d | proposed | medium |
+| canon-powershot-sx100-is-315e | 0x04a9:0x315e | proposed | medium |
+| canon-digital-ixus-960-is-315f | 0x04a9:0x315f | proposed | medium |
+| canon-digital-ixus-860-is-3160 | 0x04a9:0x3160 | proposed | medium |
+| canon-digital-ixus-970-is-3173 | 0x04a9:0x3173 | proposed | medium |
+| canon-digital-ixus-90-is-3174 | 0x04a9:0x3174 | proposed | medium |
+| canon-powershot-sd770-is-3175 | 0x04a9:0x3175 | proposed | medium |
+| canon-powershot-a590-is-3176 | 0x04a9:0x3176 | proposed | medium |
+| canon-powershot-a580-3177 | 0x04a9:0x3177 | proposed | medium |
+| canon-powershot-a470-317a | 0x04a9:0x317a | proposed | medium |
+| canon-digital-ixus-80-is-3184 | 0x04a9:0x3184 | proposed | medium |
+| canon-powershot-sx10-is-318d | 0x04a9:0x318d | proposed | medium |
+| canon-powershot-a1000-is-318e | 0x04a9:0x318e | proposed | medium |
+| canon-powershot-a2000-is-3191 | 0x04a9:0x3191 | proposed | medium |
+| canon-powershot-sx110-is-3192 | 0x04a9:0x3192 | proposed | medium |
+| canon-digital-ixus-980-is-3193 | 0x04a9:0x3193 | proposed | medium |
+| canon-powershot-sd880-is-3196 | 0x04a9:0x3196 | proposed | medium |
+| canon-powershot-d10-31bc | 0x04a9:0x31bc | proposed | medium |
+| canon-digital-ixus-110-is-31bd | 0x04a9:0x31bd | proposed | medium |
+| canon-powershot-a2100-is-31be | 0x04a9:0x31be | proposed | medium |
+| canon-powershot-a480-31bf | 0x04a9:0x31bf | proposed | medium |
+| canon-powershot-sx200-is-31c0 | 0x04a9:0x31c0 | proposed | medium |
+| canon-digital-ixus-990-is-31c1 | 0x04a9:0x31c1 | proposed | medium |
+| canon-digital-ixus-100-is-31c2 | 0x04a9:0x31c2 | proposed | medium |
+| canon-powershot-a1100-is-31c3 | 0x04a9:0x31c3 | proposed | medium |
+| canon-powershot-sd1200-is-31c4 | 0x04a9:0x31c4 | proposed | medium |
+| canon-powershot-sx120-is-31e0 | 0x04a9:0x31e0 | proposed | medium |
+| canon-powershot-sx20-is-31e4 | 0x04a9:0x31e4 | proposed | medium |
+| canon-ixy-220-is-31e6 | 0x04a9:0x31e6 | proposed | medium |
+| canon-powershot-a495-31ef | 0x04a9:0x31ef | proposed | medium |
+| canon-powershot-a3100-is-31f1 | 0x04a9:0x31f1 | proposed | medium |
+| canon-powershot-a3000-is-31f2 | 0x04a9:0x31f2 | proposed | medium |
+| canon-digital-ixus-130-31f3 | 0x04a9:0x31f3 | proposed | medium |
+| canon-powershot-sd1300-is-31f4 | 0x04a9:0x31f4 | proposed | medium |
+| canon-powershot-sx210-is-31f6 | 0x04a9:0x31f6 | proposed | medium |
+| canon-digital-ixus-300-hs-31f7 | 0x04a9:0x31f7 | proposed | medium |
+| canon-powershot-sx130-is-3211 | 0x04a9:0x3211 | proposed | medium |
+| canon-ixus-310is-3225 | 0x04a9:0x3225 | proposed | medium |
+| canon-powershot-a800-3226 | 0x04a9:0x3226 | proposed | medium |
+| canon-powershot-sx230hs-3228 | 0x04a9:0x3228 | proposed | medium |
+| canon-powershot-a2200-322a | 0x04a9:0x322a | proposed | medium |
+| canon-powershot-sx220hs-322c | 0x04a9:0x322c | proposed | medium |
+| canon-powershot-sx40hs-3238 | 0x04a9:0x3238 | proposed | medium |
+| canon-powershot-a1300is-323e | 0x04a9:0x323e | proposed | medium |
+| canon-powershot-a810-323f | 0x04a9:0x323f | proposed | medium |
+| canon-ixus-125hs-3241 | 0x04a9:0x3241 | proposed | medium |
+| canon-powershot-a4000is-3243 | 0x04a9:0x3243 | proposed | medium |
+| canon-powershot-sx260hs-3244 | 0x04a9:0x3244 | proposed | medium |
+| canon-powershot-sx240hs-3245 | 0x04a9:0x3245 | proposed | medium |
+| canon-powershot-a2400is-3249 | 0x04a9:0x3249 | proposed | medium |
+| canon-powershot-a2300is-324a | 0x04a9:0x324a | proposed | medium |
+| canon-powershot-sx160is-325a | 0x04a9:0x325a | proposed | medium |
+| canon-powershot-sx500is-325c | 0x04a9:0x325c | proposed | medium |
+| canon-powershot-sx280hs-325f | 0x04a9:0x325f | proposed | medium |
+| canon-powershot-a3500is-3261 | 0x04a9:0x3261 | proposed | medium |
+| canon-powershot-a2600-3262 | 0x04a9:0x3262 | proposed | medium |
+| canon-powershot-a1400-3264 | 0x04a9:0x3264 | proposed | medium |
+| canon-digital-ixus-255hs-3268 | 0x04a9:0x3268 | proposed | medium |
+| canon-powershot-a2500-3271 | 0x04a9:0x3271 | proposed | medium |
+| canon-powershot-sx170-is-3276 | 0x04a9:0x3276 | proposed | medium |
+| canon-powershot-sx510-hs-3277 | 0x04a9:0x3277 | proposed | medium |
+| canon-digital-ixus-132-327d | 0x04a9:0x327d | proposed | medium |
+| canon-eos-5ds-r-32af | 0x04a9:0x32af | proposed | medium |
+| nikon-coolpix-2500-0109 | 0x04b0:0x0109 | proposed | medium |
+| nikon-coolpix-4500-010b | 0x04b0:0x010b | proposed | medium |
+| nikon-coolpix-5700-010d | 0x04b0:0x010d | proposed | medium |
+| nikon-coolpix-4300-010f | 0x04b0:0x010f | proposed | medium |
+| nikon-coolpix-3500-0111 | 0x04b0:0x0111 | proposed | medium |
+| nikon-coolpix-885-0112 | 0x04b0:0x0112 | proposed | medium |
+| nikon-coolpix-5000-0113 | 0x04b0:0x0113 | proposed | medium |
+| nikon-coolpix-3100-0115 | 0x04b0:0x0115 | proposed | medium |
+| nikon-coolpix-2100-0117 | 0x04b0:0x0117 | proposed | medium |
+| nikon-coolpix-5400-0119 | 0x04b0:0x0119 | proposed | medium |
+| nikon-coolpix-3700-011d | 0x04b0:0x011d | proposed | medium |
+| nikon-coolpix-8700-011f | 0x04b0:0x011f | proposed | medium |
+| nikon-coolpix-3200-0121 | 0x04b0:0x0121 | proposed | medium |
+| nikon-coolpix-2200-0122 | 0x04b0:0x0122 | proposed | medium |
+| nikon-coolpix-2200v11-0123 | 0x04b0:0x0123 | proposed | medium |
+| nikon-coolpix-8800-0127 | 0x04b0:0x0127 | proposed | medium |
+| nikon-coolpix-4800-0129 | 0x04b0:0x0129 | proposed | medium |
+| nikon-coolpix-4100-012d | 0x04b0:0x012d | proposed | medium |
+| nikon-coolpix-5600-012e | 0x04b0:0x012e | proposed | medium |
+| nikon-coolpix-4600-0130 | 0x04b0:0x0130 | proposed | medium |
+| nikon-coolpix-4600a-0131 | 0x04b0:0x0131 | proposed | medium |
+| nikon-coolpix-5900-0135 | 0x04b0:0x0135 | proposed | medium |
+| nikon-coolpix-7900-0137 | 0x04b0:0x0137 | proposed | medium |
+| nikon-coolpix-7600-0139 | 0x04b0:0x0139 | proposed | medium |
+| nikon-coolpix-p1-0140 | 0x04b0:0x0140 | proposed | medium |
+| nikon-coolpix-p2-0142 | 0x04b0:0x0142 | proposed | medium |
+| nikon-coolpix-s4-0144 | 0x04b0:0x0144 | proposed | medium |
+| nikon-coolpix-s2-014e | 0x04b0:0x014e | proposed | medium |
+| nikon-coolpix-s7c-0157 | 0x04b0:0x0157 | proposed | medium |
+| nikon-coolpix-p5000-015b | 0x04b0:0x015b | proposed | medium |
+| nikon-coolpix-s500-015d | 0x04b0:0x015d | proposed | medium |
+| nikon-coolpix-l12-015f | 0x04b0:0x015f | proposed | medium |
+| nikon-coolpix-s200-0161 | 0x04b0:0x0161 | proposed | medium |
+| nikon-coolpix-p5100-0163 | 0x04b0:0x0163 | proposed | medium |
+| nikon-coolpix-p50-0169 | 0x04b0:0x0169 | proposed | medium |
+| nikon-coolpix-p80-016b | 0x04b0:0x016b | proposed | medium |
+| nikon-coolpix-p80-v11-016c | 0x04b0:0x016c | proposed | medium |
+| nikon-coolpix-p6000-016f | 0x04b0:0x016f | proposed | medium |
+| nikon-coolpix-s60-0171 | 0x04b0:0x0171 | proposed | medium |
+| nikon-coolpix-p90-0173 | 0x04b0:0x0173 | proposed | medium |
+| nikon-coolpix-l100-0174 | 0x04b0:0x0174 | proposed | medium |
+| nikon-coolpix-s220-0177 | 0x04b0:0x0177 | proposed | medium |
+| nikon-coolpix-s225-0178 | 0x04b0:0x0178 | proposed | medium |
+| nikon-coolpix-p100-017d | 0x04b0:0x017d | proposed | medium |
+| nikon-coolpix-l110-017e | 0x04b0:0x017e | proposed | medium |
+| nikon-coolpix-p7000-017f | 0x04b0:0x017f | proposed | medium |
+| nikon-coolpix-p500-0184 | 0x04b0:0x0184 | proposed | medium |
+| nikon-coolpix-l120-0185 | 0x04b0:0x0185 | proposed | medium |
+| nikon-coolpix-s9100-0186 | 0x04b0:0x0186 | proposed | medium |
+| nikon-coolpix-9400-0191 | 0x04b0:0x0191 | proposed | medium |
+| nikon-keymission-360-019f | 0x04b0:0x019f | proposed | medium |
+| nikon-coolpix-sq-0202 | 0x04b0:0x0202 | proposed | medium |
+| nikon-coolpix-4200-0204 | 0x04b0:0x0204 | proposed | medium |
+| nikon-coolpix-5200-0206 | 0x04b0:0x0206 | proposed | medium |
+| nikon-coolpix-l1-0208 | 0x04b0:0x0208 | proposed | medium |
+| nikon-coolpix-p4-020c | 0x04b0:0x020c | proposed | medium |
+| nikon-coolpix-s620-021c | 0x04b0:0x021c | proposed | medium |
+| nikon-coolpix-s6000-021e | 0x04b0:0x021e | proposed | medium |
+| nikon-coolpix-s8000-021f | 0x04b0:0x021f | proposed | medium |
+| nikon-coolpix-s5100-0220 | 0x04b0:0x0220 | proposed | medium |
+| nikon-coolpix-p300-0221 | 0x04b0:0x0221 | proposed | medium |
+| nikon-coolpix-s8200-0222 | 0x04b0:0x0222 | proposed | medium |
+| nikon-coolpix-2000-0302 | 0x04b0:0x0302 | proposed | medium |
+| nikon-coolpix-l4-0305 | 0x04b0:0x0305 | proposed | medium |
+| nikon-coolpix-l11-0309 | 0x04b0:0x0309 | proposed | medium |
+| nikon-coolpix-l10-030b | 0x04b0:0x030b | proposed | medium |
+| nikon-coolpix-p60-0311 | 0x04b0:0x0311 | proposed | medium |
+| nikon-coolpix-l16-0315 | 0x04b0:0x0315 | proposed | medium |
+| nikon-coolpix-l20-0317 | 0x04b0:0x0317 | proposed | medium |
+| nikon-coolpix-l19-0318 | 0x04b0:0x0318 | proposed | medium |
+| nikon-coolpix-s3000-031b | 0x04b0:0x031b | proposed | medium |
+| nikon-coolpix-s3100-0320 | 0x04b0:0x0320 | proposed | medium |
+| nikon-coolpix-s2500-0321 | 0x04b0:0x0321 | proposed | medium |
+| nikon-coolpix-l23-0324 | 0x04b0:0x0324 | proposed | medium |
+| nikon-coolpix-s4300-0329 | 0x04b0:0x0329 | proposed | medium |
+| nikon-coolpix-s3300-032a | 0x04b0:0x032a | proposed | medium |
+| nikon-coolpix-s6300-032c | 0x04b0:0x032c | proposed | medium |
+| nikon-coolpix-s2600-032d | 0x04b0:0x032d | proposed | medium |
+| nikon-coolpix-l810-032f | 0x04b0:0x032f | proposed | medium |
+| nikon-coolpix-s3200-0334 | 0x04b0:0x0334 | proposed | medium |
+| nikon-coolpix-s01-0337 | 0x04b0:0x0337 | proposed | medium |
+| nikon-coolpix-s3500-033b | 0x04b0:0x033b | proposed | medium |
+| nikon-coolpix-s2700-033f | 0x04b0:0x033f | proposed | medium |
+| nikon-coolpix-l27-0343 | 0x04b0:0x0343 | proposed | medium |
+| nikon-coolpix-s02-0346 | 0x04b0:0x0346 | proposed | medium |
+| nikon-coolpix-s6800-0350 | 0x04b0:0x0350 | proposed | medium |
+| nikon-coolpix-s3600-0353 | 0x04b0:0x0353 | proposed | medium |
+| nikon-coolpix-s3700-035c | 0x04b0:0x035c | proposed | medium |
+| nikon-coolpix-s2900-035e | 0x04b0:0x035e | proposed | medium |
+| nikon-keymission-170-0364 | 0x04b0:0x0364 | proposed | medium |
+| fuji-finepix-a820-01c6 | 0x04cb:0x01c6 | proposed | medium |
+| fuji-finepix-a920-01d3 | 0x04cb:0x01d3 | proposed | medium |
+| fuji-finepix-s5800-01d7 | 0x04cb:0x01d7 | proposed | medium |
+| fuji-finepix-f60fd-01e6 | 0x04cb:0x01e6 | proposed | medium |
+| fuji-finepix-s2000hd-01e8 | 0x04cb:0x01e8 | proposed | medium |
+| fuji-fujifilm-a220-01fe | 0x04cb:0x01fe | proposed | medium |
+| fuji-finepix-s1800-0200 | 0x04cb:0x0200 | proposed | medium |
+| fuji-finepix-z35-0201 | 0x04cb:0x0201 | proposed | medium |
+| fuji-finepix-av-150-021b | 0x04cb:0x021b | proposed | medium |
+| fuji-finepix-t200-0233 | 0x04cb:0x0233 | proposed | medium |
+| fuji-finepix-jx370-0250 | 0x04cb:0x0250 | proposed | medium |
+| fuji-finepix-s4200-0264 | 0x04cb:0x0264 | proposed | medium |
+| fuji-finepix-s4300-0265 | 0x04cb:0x0265 | proposed | medium |
+| fuji-finepix-hs30exr-0271 | 0x04cb:0x0271 | proposed | medium |
+| fuji-finepix-s2980-027d | 0x04cb:0x027d | proposed | medium |
+| fuji-finepix-s4850-0298 | 0x04cb:0x0298 | proposed | medium |
+| sony-ptp-004e | 0x054c:0x004e | proposed | medium |
+| sony-dsc-s730-0296 | 0x054c:0x0296 | proposed | medium |
+| sony-dsc-a100-02c0 | 0x054c:0x02c0 | proposed | medium |
+| sony-dsc-w200-02f8 | 0x054c:0x02f8 | proposed | medium |
+| sony-slt-a350-0321 | 0x054c:0x0321 | proposed | medium |
+| sony-dsc-w130-0343 | 0x054c:0x0343 | proposed | medium |
+| sony-dsc-hx5v-0491 | 0x054c:0x0491 | proposed | medium |
+| sony-slt-a55-04a3 | 0x054c:0x04a3 | proposed | medium |
+| sony-nex5-04a5 | 0x054c:0x04a5 | proposed | medium |
+| sony-slt-a35-04a7 | 0x054c:0x04a7 | proposed | medium |
+| sony-dsc-rx100-052a | 0x054c:0x052a | proposed | medium |
+| sony-dsc-rx1-052b | 0x054c:0x052b | proposed | medium |
+| sony-dsc-w510-053c | 0x054c:0x053c | proposed | medium |
+| sony-dsc-hx100v-0543 | 0x054c:0x0543 | proposed | medium |
+| sony-slt-a65v-0574 | 0x054c:0x0574 | proposed | medium |
+| sony-slt-a77v-0577 | 0x054c:0x0577 | proposed | medium |
+| sony-nex-5n-0579 | 0x054c:0x0579 | proposed | medium |
+| sony-nex-7-057d | 0x054c:0x057d | proposed | medium |
+| sony-dsc-hx20v-061c | 0x054c:0x061c | proposed | medium |
+| sony-dsc-hx200v-061f | 0x054c:0x061f | proposed | medium |
+| sony-slt-a99v-0641 | 0x054c:0x0641 | proposed | medium |
+| sony-slt-a57-0669 | 0x054c:0x0669 | proposed | medium |
+| sony-nex-5r-066f | 0x054c:0x066f | proposed | medium |
+| sony-slt-a99v-0675 | 0x054c:0x0675 | proposed | medium |
+| sony-nex-6-0678 | 0x054c:0x0678 | proposed | medium |
+| sony-dsc-hx300-06ee | 0x054c:0x06ee | proposed | medium |
+| sony-nex-3n-072f | 0x054c:0x072f | proposed | medium |
+| sony-slt-a58-0736 | 0x054c:0x0736 | proposed | medium |
+| sony-slt-a58-0737 | 0x054c:0x0737 | proposed | medium |
+| sony-dsc-rx100m2-074b | 0x054c:0x074b | proposed | medium |
+| sony-alpha-a3000-074e | 0x054c:0x074e | proposed | medium |
+| sony-alpha-a68-0779 | 0x054c:0x0779 | proposed | medium |
+| sony-dsc-hx80-0780 | 0x054c:0x0780 | proposed | medium |
+| sony-alpha-a68-079b | 0x054c:0x079b | proposed | medium |
+| sony-alpha-a6300-079c | 0x054c:0x079c | proposed | medium |
+| sony-dsc-rx10m3-079d | 0x054c:0x079d | proposed | medium |
+| sony-alpha-a99-m2-079e | 0x054c:0x079e | proposed | medium |
+| sony-dsc-rx100v-07a3 | 0x054c:0x07a3 | proposed | medium |
+| sony-alpha-a6500-07a4 | 0x054c:0x07a4 | proposed | medium |
+| sony-alpha-a5000-07c6 | 0x054c:0x07c6 | proposed | medium |
+| sony-dsc-rx100m6-0830 | 0x054c:0x0830 | proposed | medium |
+| sony-dsc-hx400v-08ac | 0x054c:0x08ac | proposed | medium |
+| sony-dsc-hx60v-08ad | 0x054c:0x08ad | proposed | medium |
+| sony-dsc-wx350-08b0 | 0x054c:0x08b0 | proposed | medium |
+| sony-dsc-wx220-08d7 | 0x054c:0x08d7 | proposed | medium |
+| sony-rx100m3-08e3 | 0x054c:0x08e3 | proposed | medium |
+| sony-alpha-a6000-094e | 0x054c:0x094e | proposed | medium |
+| sony-alpha-a77-m2-0953 | 0x054c:0x0953 | proposed | medium |
+| sony-alpha-a7s-0954 | 0x054c:0x0954 | proposed | medium |
+| sony-alpha-a5100-0957 | 0x054c:0x0957 | proposed | medium |
+| sony-alpha-a7iii-096f | 0x054c:0x096f | proposed | medium |
+| sony-dsc-hx90v-09e8 | 0x054c:0x09e8 | proposed | medium |
+| sony-alpha-a7r-ii-0a6b | 0x054c:0x0a6b | proposed | medium |
+| sony-dsc-rx100m4-0a6d | 0x054c:0x0a6d | proposed | medium |
+| sony-alpha-rx1r-ii-0a70 | 0x054c:0x0a70 | proposed | medium |
+| sony-dsc-qx30u-0a77 | 0x054c:0x0a77 | proposed | medium |
+| sony-dsc-rx0-0bfd | 0x054c:0x0bfd | proposed | medium |
+| hasselblad-cfv-ii-50c-0208 | 0x04a0:0x0208 | experimental | community |
+| hasselblad-907x-cfv-100c-0209 | 0x04a0:0x0209 | experimental | community |
+| hasselblad-x1d-ii-50c-020a | 0x04a0:0x020a | experimental | community |
+| phaseone-iq4-100mp-trichromatic-0006 | 0x0e70:0x0006 | experimental | community |
+| phaseone-iq3-50mp-0007 | 0x0e70:0x0007 | experimental | community |
+| phaseone-iq4-achromatic-0008 | 0x0e70:0x0008 | experimental | community |
+| sigma-sd-quattro-h-alt-0030 | 0x1003:0x0030 | experimental | community |
+| sigma-fp-alt-0033 | 0x1003:0x0033 | experimental | community |
+| mamiya-dm40-4002 | 0x0e70:0x4002 | experimental | community |
+| mamiya-dm28-4003 | 0x0e70:0x4003 | experimental | community |
+| mamiya-leaf-credo-80-4004 | 0x0e70:0x4004 | experimental | community |
+| kodak-pixpro-az901-0036 | 0x040a:0x0036 | experimental | community |
+| kodak-pixpro-wpz2-0037 | 0x040a:0x0037 | experimental | community |
+| kodak-pixpro-fz55-0038 | 0x040a:0x0038 | experimental | community |
+| panasonic-dcs5ii-239e | 0x04da:0x239e | experimental | community |
+| panasonic-dcs5iix-239f | 0x04da:0x239f | experimental | community |
+| panasonic-dcg9m2-23a0 | 0x04da:0x23a0 | experimental | community |
+| panasonic-dcgh7-23a1 | 0x04da:0x23a1 | experimental | community |
+| ricoh-pentax-k3iii-0186 | 0x04f2:0x0186 | experimental | community |
+| ricoh-pentax-k3iii-mono-0187 | 0x04f2:0x0187 | experimental | community |
+| ricoh-griii-0188 | 0x04f2:0x0188 | experimental | community |
+| ricoh-griiix-0189 | 0x04f2:0x0189 | experimental | community |
+| ricoh-griii-hdf-018a | 0x04f2:0x018a | experimental | community |
+| blackmagic-ursa-mini-pro-12k-0006 | 0x1edb:0x0006 | experimental | community |
+| blackmagic-ursa-mini-pro-g2-0007 | 0x1edb:0x0007 | experimental | community |
+| blackmagic-cinema-camera-6k-0008 | 0x1edb:0x0008 | experimental | community |
+| red-dsmc2-monstro-8k-0001 | 0x1419:0x0001 | experimental | community |
+| red-dsmc2-helium-8k-0002 | 0x1419:0x0002 | experimental | community |
+| red-komodo-6k-0003 | 0x1419:0x0003 | experimental | community |
+| red-v-raptor-8k-0004 | 0x1419:0x0004 | experimental | community |
+| red-komodo-x-6k-0005 | 0x1419:0x0005 | experimental | community |
+| fujifilm-xt5-alt-0308 | 0x04cb:0x0308 | experimental | community |
+| fujifilm-xh2-0309 | 0x04cb:0x0309 | experimental | community |
+| fujifilm-gfx100sii-030a | 0x04cb:0x030a | experimental | community |
+| fujifilm-x100vi-030b | 0x04cb:0x030b | experimental | community |
+| leica-sl3-0060 | 0x1a98:0x0060 | experimental | community |
+| leica-q3-0061 | 0x1a98:0x0061 | experimental | community |
+
+## Cnc (5)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| xtool-d1-pro-laser-0001 | 0x7523:0x0001 | proposed | low |
+| xtool-m1-laser-0002 | 0x7523:0x0002 | proposed | low |
+| ortur-laser-master3-0001 | 0x7524:0x0001 | proposed | low |
+| ortur-aufero2-laser-0002 | 0x7524:0x0002 | proposed | low |
+| snapmaker-artisan-5750 | 0x0483:0x5750 | proposed | low |
+
+## Dap (41)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| sony-nw-a45-0c71 | 0x054c:0x0c71 | proposed | low |
+| sony-nw-a105-0d00 | 0x054c:0x0d00 | proposed | low |
+| sony-nw-zx500-0d01 | 0x054c:0x0d01 | proposed | low |
+| sony-nw-a306-0e6e | 0x054c:0x0e6e | proposed | low |
+| sony-nw-zx700-0e6f | 0x054c:0x0e6f | proposed | low |
+| fiio-m7-0011 | 0x2972:0x0011 | proposed | low |
+| ibasso-dx300-0005 | 0x2e57:0x0005 | proposed | low |
+| ibasso-dx170-0009 | 0x2e57:0x0009 | proposed | low |
+| sony-nw-wm1am2-0e6c | 0x054c:0x0e6c | proposed | low |
+| sony-nw-wm1zm2-0e6d | 0x054c:0x0e6d | proposed | low |
+| iriver-h300-3004 | 0x1006:0x3004 | proposed | medium |
+| jvc-alneo-xa-hd500-6105 | 0x04f1:0x6105 | proposed | medium |
+| iriver-t7-volcano-1143 | 0x1042:0x1143 | proposed | medium |
+| lg-t54-7040 | 0x043e:0x7040 | proposed | medium |
+| lg-up3-70b1 | 0x043e:0x70b1 | proposed | medium |
+| trekstor-i-beat-sweez-fm-0611 | 0x0402:0x0611 | proposed | medium |
+| haier-ibiza-rhapsody-1-1016 | 0x1302:0x1016 | proposed | medium |
+| haier-ibiza-rhapsody-2-1017 | 0x1302:0x1017 | proposed | medium |
+| logik-log-dax-mp3-and-dab-player-7002 | 0x13d1:0x7002 | proposed | medium |
+| cayin-n6ii-0003 | 0x2d87:0x0003 | proposed | medium |
+| cayin-n8ii-0005 | 0x2d87:0x0005 | proposed | medium |
+| rio-karma-5210 | 0x045a:0x5210 | proposed | low |
+| rio-carbon-5220 | 0x045a:0x5220 | proposed | low |
+| fiio-m11-plus-0047 | 0x2972:0x0047 | proposed | low |
+| fiio-m15-003d | 0x2972:0x003d | proposed | low |
+| fiio-m17-004f | 0x2972:0x004f | proposed | low |
+| fiio-m11s-0057 | 0x2972:0x0057 | proposed | low |
+| ibasso-dx320-0007 | 0x2012:0x0007 | proposed | low |
+| ibasso-dx240-0006 | 0x2012:0x0006 | proposed | low |
+| astelkern-kann-ultra-0341 | 0x4102:0x0341 | proposed | low |
+| astelkern-sp3000-0351 | 0x4102:0x0351 | proposed | low |
+| astelkern-sr35-0361 | 0x4102:0x0361 | proposed | low |
+| astelkern-sr25-0331 | 0x4102:0x0331 | proposed | low |
+| hiby-r8-ii-8002 | 0x2d95:0x8002 | proposed | low |
+| hiby-rs6-5006 | 0x2d95:0x5006 | proposed | low |
+| hiby-new-r6-6006 | 0x2d95:0x6006 | proposed | low |
+| lotoo-paw-6000-6000 | 0x0525:0x6000 | proposed | low |
+| lotoo-paw-gold-touch-a010 | 0x0525:0xa010 | proposed | low |
+| questyle-qp2r-2002 | 0x262a:0x2002 | proposed | low |
+| questyle-qpm-3001 | 0x262a:0x3001 | proposed | low |
+| hiby-r6-iii-6003 | 0x2d95:0x6003 | proposed | low |
+
+## Dashcam (2)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| Thinkware F200 Pro | 0x2c18:0x0001 | experimental | unknown |
+| Viofo A129 Pro Duo | 0x0c76:0x0001 | experimental | unknown |
+
+## Dev Board (85)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| nvidia-cm9-adam-70a9 | 0x0955:0x70a9 | proposed | medium |
+| pocketbook-inkpad-4-a4a5 | 0x0525:0xa4a5 | proposed | medium |
+| pocketbook-inkpad-color-3-a4a6 | 0x0525:0xa4a6 | proposed | medium |
+| pocketbook-era-a4a7 | 0x0525:0xa4a7 | proposed | medium |
+| pocketbook-touch-hd-3-a4a8 | 0x0525:0xa4a8 | proposed | medium |
+| pocketbook-verse-pro-a4a9 | 0x0525:0xa4a9 | proposed | medium |
+| pocketbook-touch-lux-5-a4aa | 0x0525:0xa4aa | proposed | medium |
+| pocketbook-inkpad-3-a4ab | 0x0525:0xa4ab | proposed | medium |
+| pocketbook-color-a4ac | 0x0525:0xa4ac | proposed | medium |
+| pocketbook-touch-lux-4-a4a1 | 0x0525:0xa4a1 | proposed | low |
+| pocketbook-aqua-2-a4a2 | 0x0525:0xa4a2 | proposed | low |
+| pocketbook-inkpad-3-pro-a4a3 | 0x0525:0xa4a3 | proposed | low |
+| pocketbook-era-a4a4 | 0x0525:0xa4a4 | proposed | low |
+| pocketbook-inkpad-eo-a4ad | 0x0525:0xa4ad | proposed | low |
+| pocketbook-inkpad-x-pro-a4ae | 0x0525:0xa4ae | proposed | low |
+| tcl-alcatel-ot986-d108 | 0x0451:0xd108 | proposed | low |
+| chuwi-vi8-tablet-0a5f | 0x8087:0x0a5f | proposed | low |
+| nvidia-various-tablets-id1-7100 | 0x0955:0x7100 | proposed | medium |
+| nvidia-various-tablets-id2-7102 | 0x0955:0x7102 | proposed | medium |
+| nvidia-jetson-tx1-7721 | 0x0955:0x7721 | proposed | medium |
+| nvidia-shield-mtpadb-b400 | 0x0955:0xb400 | proposed | medium |
+| nvidia-shield-mtp-b401 | 0x0955:0xb401 | proposed | medium |
+| nvidia-shield-android-tv-pro-mtp-b42a | 0x0955:0xb42a | proposed | medium |
+| nvidia-tegra-note-cf02 | 0x0955:0xcf02 | proposed | medium |
+| nvidia-shield-tablet-mtpadb-cf05 | 0x0955:0xcf05 | proposed | medium |
+| nvidia-shield-tablet-mtp-cf07 | 0x0955:0xcf07 | proposed | medium |
+| intel-point-of-view-tab-i847-092a | 0x8087:0x092a | proposed | medium |
+| intel-xolo-900-az210a-09fb | 0x8087:0x09fb | proposed | medium |
+| intel-noblex-t7a21-0a16 | 0x8087:0x0a16 | proposed | medium |
+| intel-foxconn-iview-i700-0a15 | 0x8087:0x0a15 | proposed | medium |
+| intel-telcast-air-3g-0a5e | 0x8087:0x0a5e | proposed | medium |
+| qemu-virtual-mtp-0004 | 0x46f4:0x0004 | proposed | medium |
+| nvidia-shield-tablet-cf06 | 0x0955:0xcf06 | proposed | medium |
+| nvidia-shield-tablet-ptp-cf08 | 0x0955:0xcf08 | proposed | medium |
+| yaesu-ft991a-transceiver-0023 | 0x10c4:0x0023 | proposed | low |
+| yaesu-ftdx10-transceiver-0024 | 0x10c4:0x0024 | proposed | low |
+| smartthings-hub-v3-0001 | 0x10c4:0x8a2a | proposed | low |
+| hubitat-elevation-c7-0001 | 0x10c4:0xea60 | proposed | low |
+| hubitat-elevation-c8-0002 | 0x10c4:0xea61 | proposed | low |
+| ti-84-plus-calculator-e003 | 0x0451:0xe003 | proposed | low |
+| ti-84-plus-silver-calculator-e008 | 0x0451:0xe008 | proposed | low |
+| ti-nspire-calculator-e012 | 0x0451:0xe012 | proposed | low |
+| raspberry-pi-pico-rp2040-mtp-4000 | 0x2e8a:0x4000 | proposed | low |
+| raspberry-pi-pico-w-mtp-4001 | 0x2e8a:0x4001 | proposed | low |
+| raspberry-pi-pico2-rp2350-mtp-4010 | 0x2e8a:0x4010 | proposed | low |
+| espressif-esp32s2-tinyusb-mtp-0002 | 0x303a:0x0002 | proposed | low |
+| espressif-esp32s3-tinyusb-mtp-1001 | 0x303a:0x1001 | proposed | low |
+| espressif-esp32s3-devkitc-mtp-1002 | 0x303a:0x1002 | proposed | low |
+| stm32-usb-mtp-572b | 0x0483:0x572b | proposed | low |
+| stm32-nucleo-mtp-572c | 0x0483:0x572c | proposed | low |
+| stm32-discovery-mtp-572d | 0x0483:0x572d | proposed | low |
+| arduino-uno-r4-minima-mtp-0069 | 0x2341:0x0069 | proposed | low |
+| arduino-uno-r4-wifi-mtp-006a | 0x2341:0x006a | proposed | low |
+| arduino-nano-33-ble-mtp-005e | 0x2341:0x005e | proposed | low |
+| arduino-nano-33-ble-sense-mtp-0064 | 0x2341:0x0064 | proposed | low |
+| arduino-nano-rp2040-connect-mtp-005f | 0x2341:0x005f | proposed | low |
+| arduino-portenta-h7-mtp-025b | 0x2341:0x025b | proposed | low |
+| arduino-portenta-c33-mtp-0068 | 0x2341:0x0068 | proposed | low |
+| arduino-giga-r1-wifi-mtp-0266 | 0x2341:0x0266 | proposed | low |
+| arduino-nano-esp32-mtp-0070 | 0x2341:0x0070 | proposed | low |
+| teensy-40-mtp-0478 | 0x16c0:0x0478 | proposed | low |
+| teensy-41-mtp-0478 | 0x16c0:0x0479 | proposed | low |
+| teensy-41-mtp-serial-047a | 0x16c0:0x047a | proposed | low |
+| teensy-mm-mtp-047b | 0x16c0:0x047b | proposed | low |
+| adafruit-feather-rp2040-mtp-80f4 | 0x239a:0x80f4 | proposed | low |
+| adafruit-qtpy-rp2040-mtp-80f8 | 0x239a:0x80f8 | proposed | low |
+| adafruit-feather-esp32s2-mtp-8111 | 0x239a:0x8111 | proposed | low |
+| adafruit-feather-esp32s3-mtp-8113 | 0x239a:0x8113 | proposed | low |
+| adafruit-qtpy-esp32s2-mtp-8121 | 0x239a:0x8121 | proposed | low |
+| adafruit-qtpy-esp32s3-mtp-8123 | 0x239a:0x8123 | proposed | low |
+| adafruit-macropad-rp2040-mtp-8108 | 0x239a:0x8108 | proposed | low |
+| adafruit-itsybitsy-rp2040-mtp-80fc | 0x239a:0x80fc | proposed | low |
+| adafruit-metro-esp32s2-mtp-8115 | 0x239a:0x8115 | proposed | low |
+| adafruit-trinkey-qt2040-mtp-8109 | 0x239a:0x8109 | proposed | low |
+| adafruit-feather-nrf52840-mtp-8029 | 0x239a:0x8029 | proposed | low |
+| adafruit-clue-nrf52840-mtp-8071 | 0x239a:0x8071 | proposed | low |
+| nordic-nrf52840-dk-mtp-520f | 0x1915:0x520f | proposed | low |
+| nordic-nrf52840-dongle-mtp-520e | 0x1915:0x520e | proposed | low |
+| nordic-nrf5340-dk-mtp-5310 | 0x1915:0x5310 | proposed | low |
+| seeed-xiao-rp2040-mtp-0028 | 0x2886:0x0028 | proposed | low |
+| seeed-xiao-esp32s3-mtp-0056 | 0x2886:0x0056 | proposed | low |
+| seeed-xiao-nrf52840-mtp-0044 | 0x2886:0x0044 | proposed | low |
+| seeed-xiao-nrf52840-sense-mtp-0045 | 0x2886:0x0045 | proposed | low |
+| seeed-wio-terminal-mtp-802d | 0x2886:0x802d | proposed | low |
+| seeed-xiao-samd21-mtp-802f | 0x2886:0x802f | proposed | low |
+
+## Drone (50)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| dji-controller-2-1021 | 0x2ca3:0x1021 | proposed | low |
+| dji-osmo-action-3-001f | 0x2ca3:0x001f | proposed | low |
+| dji-osmo-action-4-0020 | 0x2ca3:0x0020 | proposed | low |
+| dji-action-2-0021 | 0x2ca3:0x0021 | proposed | low |
+| dji-pocket-2-0022 | 0x2ca3:0x0022 | proposed | low |
+| dji-pocket-3-0023 | 0x2ca3:0x0023 | proposed | low |
+| dji-mini-3-0024 | 0x2ca3:0x0024 | proposed | low |
+| dji-mini-4-pro-0025 | 0x2ca3:0x0025 | proposed | low |
+| dji-air-3-0026 | 0x2ca3:0x0026 | proposed | low |
+| dji-mini-2-0019 | 0x2ca3:0x0019 | proposed | low |
+| dji-mini-3-001b | 0x2ca3:0x001b | proposed | low |
+| dji-mini-3-pro-001c | 0x2ca3:0x001c | proposed | low |
+| dji-mini-4-pro-001d | 0x2ca3:0x001d | proposed | low |
+| dji-air-2s-001e | 0x2ca3:0x001e | proposed | low |
+| dji-mavic-3-pro-0027 | 0x2ca3:0x0027 | proposed | low |
+| dji-mavic-3-classic-0028 | 0x2ca3:0x0028 | proposed | low |
+| dji-air-3s-0029 | 0x2ca3:0x0029 | proposed | low |
+| dji-avata-2-002a | 0x2ca3:0x002a | proposed | low |
+| dji-osmo-action-5-002b | 0x2ca3:0x002b | proposed | low |
+| dji-osmo-pocket-3-alt-002c | 0x2ca3:0x002c | proposed | low |
+| dji-mic-2-002d | 0x2ca3:0x002d | proposed | low |
+| dji-fpv-002e | 0x2ca3:0x002e | proposed | low |
+| dji-mini-se-002f | 0x2ca3:0x002f | proposed | low |
+| dji-mavic-3-cine-0030 | 0x2ca3:0x0030 | proposed | low |
+| dji-avata-0031 | 0x2ca3:0x0031 | proposed | low |
+| dji-neo-0032 | 0x2ca3:0x0032 | proposed | low |
+| parrot-bebop-drone-5038 | 0x19cf:0x5038 | proposed | medium |
+| dji-osmo-action-0033 | 0x2ca3:0x0033 | proposed | medium |
+| dji-osmo-pocket-0034 | 0x2ca3:0x0034 | proposed | medium |
+| dji-mavic-air-0035 | 0x2ca3:0x0035 | proposed | medium |
+| dji-mavic-air-2-0036 | 0x2ca3:0x0036 | proposed | medium |
+| dji-mavic-mini-0037 | 0x2ca3:0x0037 | proposed | medium |
+| dji-mavic-pro-0038 | 0x2ca3:0x0038 | proposed | medium |
+| dji-mavic-2-pro-0039 | 0x2ca3:0x0039 | proposed | medium |
+| dji-mavic-2-zoom-003a | 0x2ca3:0x003a | proposed | medium |
+| dji-action-3-alt-003b | 0x2ca3:0x003b | proposed | medium |
+| dji-action-4-alt-003c | 0x2ca3:0x003c | proposed | medium |
+| dji-pocket-1-003d | 0x2ca3:0x003d | proposed | medium |
+| dji-mini-2-se-003e | 0x2ca3:0x003e | proposed | medium |
+| dji-mavic-3-003f | 0x2ca3:0x003f | proposed | medium |
+| dji-phantom-4-pro-0040 | 0x2ca3:0x0040 | proposed | low |
+| parrot-bebop-2-0903 | 0x19cf:0x0903 | proposed | low |
+| parrot-disco-0907 | 0x19cf:0x0907 | proposed | low |
+| autel-evo-ii-pro-0001 | 0x2f8a:0x0001 | proposed | low |
+| autel-evo-lite-0002 | 0x2f8a:0x0002 | proposed | low |
+| autel-evo-nano-0003 | 0x2f8a:0x0003 | proposed | low |
+| skydio-2-plus-0001 | 0x2fde:0x0001 | proposed | low |
+| skydio-x2-0002 | 0x2fde:0x0002 | proposed | low |
+| fimi-x8se-2022-0001 | 0x2b4c:0x0001 | proposed | low |
+| fimi-mini-pro-0002 | 0x2b4c:0x0002 | proposed | low |
+
+## E Reader (120)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| amazon-kindle-fire-0007 | 0x1949:0x0007 | proposed | medium |
+| amazon-kindle-fire-hd6-00f2 | 0x1949:0x00f2 | proposed | medium |
+| amazon-kindle-fire-7-0221 | 0x1949:0x0221 | proposed | medium |
+| amazon-kindle-fire-8-0211 | 0x1949:0x0211 | proposed | medium |
+| amazon-kindle-fire-hd8-0212 | 0x1949:0x0212 | proposed | medium |
+| amazon-kindle-fire-10hd-0281 | 0x1949:0x0281 | proposed | medium |
+| amazon-fire-max11-06b1 | 0x1949:0x06b1 | proposed | medium |
+| amazon-kindle-fire-0008 | 0x1949:0x0008 | proposed | low |
+| amazon-kindle-fire-7-0121 | 0x1949:0x0121 | proposed | low |
+| amazon-kindle-fire-5-0222 | 0x1949:0x0222 | proposed | low |
+| amazon-kindle-fire-8-0231 | 0x1949:0x0231 | proposed | low |
+| amazon-kindle-fire-8-0261 | 0x1949:0x0261 | proposed | low |
+| amazon-kindle-fire-7-0271 | 0x1949:0x0271 | proposed | low |
+| amazon-kindle-fire-hd8-0331 | 0x1949:0x0331 | proposed | low |
+| amazon-fire-hd8-plus-0581 | 0x1949:0x0581 | proposed | low |
+| amazon-fire-hd10-plus-05e1 | 0x1949:0x05e1 | proposed | low |
+| amazon-kindle-scribe-9981 | 0x1949:0x9981 | proposed | low |
+| amazon-kindle-0005 | 0x1949:0x0005 | proposed | low |
+| amazon-kindle-000a | 0x1949:0x000a | proposed | low |
+| amazon-kindle-000b | 0x1949:0x000b | proposed | low |
+| amazon-kindle-000c | 0x1949:0x000c | proposed | low |
+| amazon-kindle-000d | 0x1949:0x000d | proposed | low |
+| amazon-kindle-0012 | 0x1949:0x0012 | proposed | low |
+| amazon-kindle-0232 | 0x1949:0x0232 | proposed | low |
+| amazon-kindle-0233 | 0x1949:0x0233 | proposed | low |
+| amazon-kindle-0234 | 0x1949:0x0234 | proposed | low |
+| amazon-kindle-0262 | 0x1949:0x0262 | proposed | low |
+| amazon-kindle-0272 | 0x1949:0x0272 | proposed | low |
+| amazon-kindle-0332 | 0x1949:0x0332 | proposed | low |
+| amazon-kindle-03f1 | 0x1949:0x03f1 | proposed | low |
+| amazon-kindle-0582 | 0x1949:0x0582 | proposed | low |
+| amazon-kindle-0583 | 0x1949:0x0583 | proposed | low |
+| amazon-kindle-0584 | 0x1949:0x0584 | proposed | low |
+| amazon-kindle-05e2 | 0x1949:0x05e2 | proposed | low |
+| amazon-kindle-05e3 | 0x1949:0x05e3 | proposed | low |
+| amazon-kindle-05e4 | 0x1949:0x05e4 | proposed | low |
+| amazon-kindle-06f1 | 0x1949:0x06f1 | proposed | low |
+| amazon-kindle-0800 | 0x1949:0x0800 | proposed | low |
+| amazon-kindle-0c31 | 0x1949:0x0c31 | proposed | low |
+| kobo-arc-android-b108 | 0x2237:0xb108 | proposed | low |
+| kobo-arc-android-d108 | 0x2237:0xd108 | proposed | low |
+| kobo-arc-android-d109 | 0x2237:0xd109 | proposed | low |
+| kobo-kobo-touch-4161 | 0x2237:0x4161 | proposed | low |
+| kobo-kobo-mini-4163 | 0x2237:0x4163 | proposed | low |
+| kobo-kobo-glo-4165 | 0x2237:0x4165 | proposed | low |
+| kobo-kobo-aura-4168 | 0x2237:0x4168 | proposed | low |
+| kobo-kobo-aura-hd-4169 | 0x2237:0x4169 | proposed | low |
+| kobo-kobo-aura-h2o-416b | 0x2237:0x416b | proposed | low |
+| kobo-kobo-aura-one-4173 | 0x2237:0x4173 | proposed | low |
+| kobo-kobo-clara-hd-4179 | 0x2237:0x4179 | proposed | low |
+| kobo-kobo-forma-417f | 0x2237:0x417f | proposed | low |
+| kobo-kobo-libra-h2o-4184 | 0x2237:0x4184 | proposed | low |
+| kobo-kobo-nia-4186 | 0x2237:0x4186 | proposed | low |
+| kobo-kobo-libra-2-4187 | 0x2237:0x4187 | proposed | low |
+| tolino-vision-6-8000 | 0x4173:0x8000 | proposed | low |
+| amazon-kindle-fire-orig-0006 | 0x1949:0x0006 | proposed | medium |
+| amazon-kindle-fire-hdx89-0009 | 0x1949:0x0009 | proposed | medium |
+| amazon-fire-hd10-2015-000e | 0x1949:0x000e | proposed | medium |
+| amazon-fire-hd8-2017-000f | 0x1949:0x000f | proposed | medium |
+| amazon-fire-hd10-2017-0010 | 0x1949:0x0010 | proposed | medium |
+| amazon-fire-7-2017-0011 | 0x1949:0x0011 | proposed | medium |
+| amazon-fire-hd10-2019-0013 | 0x1949:0x0013 | proposed | medium |
+| amazon-fire-hd8plus-2020-0014 | 0x1949:0x0014 | proposed | medium |
+| amazon-fire-hd8-2022-0015 | 0x1949:0x0015 | proposed | medium |
+| amazon-fire-hd10-2023-0016 | 0x1949:0x0016 | proposed | medium |
+| kobo-glo-hd-4167 | 0x2237:0x4167 | proposed | medium |
+| kobo-aura-edition-2-4175 | 0x2237:0x4175 | proposed | medium |
+| kobo-aura-h2o-edition-2-4177 | 0x2237:0x4177 | proposed | medium |
+| kobo-sage-4188 | 0x2237:0x4188 | proposed | medium |
+| kobo-elipsa-4189 | 0x2237:0x4189 | proposed | medium |
+| kobo-clara-2e-418c | 0x2237:0x418c | proposed | medium |
+| kobo-elipsa-2e-418d | 0x2237:0x418d | proposed | medium |
+| kobo-libra-colour-418e | 0x2237:0x418e | proposed | medium |
+| kobo-clara-bw-418f | 0x2237:0x418f | proposed | medium |
+| kobo-clara-colour-4190 | 0x2237:0x4190 | proposed | medium |
+| amazon-kindle-2-0002 | 0x1949:0x0002 | proposed | medium |
+| amazon-kindle-dx-0003 | 0x1949:0x0003 | proposed | medium |
+| amazon-kindle-keyboard-0004 | 0x1949:0x0004 | proposed | medium |
+| amazon-kindle-pw4-0402 | 0x1949:0x0402 | proposed | medium |
+| amazon-kindle-basic-10th-0502 | 0x1949:0x0502 | proposed | medium |
+| amazon-kindle-11th-2022-0632 | 0x1949:0x0632 | proposed | medium |
+| amazon-kindle-pw-sig-edition-0642 | 0x1949:0x0642 | proposed | medium |
+| kobo-libra-colour-4191 | 0x2237:0x4191 | proposed | low |
+| kobo-clara-bw-4192 | 0x2237:0x4192 | proposed | low |
+| kobo-nia-2-4193 | 0x2237:0x4193 | proposed | low |
+| kobo-sage-2-4194 | 0x2237:0x4194 | proposed | low |
+| amazon-fire-hdx-7-mtp-0041 | 0x1949:0x0041 | proposed | low |
+| amazon-fire-hdx-7-adb-0042 | 0x1949:0x0042 | proposed | low |
+| amazon-fire-hdx-89-mtp-0091 | 0x1949:0x0091 | proposed | low |
+| amazon-fire-hdx-89-adb-0092 | 0x1949:0x0092 | proposed | low |
+| amazon-fire-5th-mtp-0201 | 0x1949:0x0201 | proposed | low |
+| amazon-fire-5th-adb-0202 | 0x1949:0x0202 | proposed | low |
+| amazon-fire-7-2022-mtp-03c1 | 0x1949:0x03c1 | proposed | low |
+| amazon-fire-7-2022-adb-03c2 | 0x1949:0x03c2 | proposed | low |
+| amazon-fire-hd8-2022-mtp-0651 | 0x1949:0x0651 | proposed | low |
+| amazon-fire-hd8-2022-adb-0652 | 0x1949:0x0652 | proposed | low |
+| amazon-fire-hd10-2023-adb-06f2 | 0x1949:0x06f2 | proposed | low |
+| amazon-fire-tv-stick-1gen-02a1 | 0x1949:0x02a1 | proposed | medium |
+| amazon-fire-tv-stick-2gen-0311 | 0x1949:0x0311 | proposed | medium |
+| amazon-fire-tv-stick-4k-0441 | 0x1949:0x0441 | proposed | medium |
+| amazon-fire-tv-stick-4kmax-0461 | 0x1949:0x0461 | proposed | medium |
+| amazon-fire-tv-cube-2gen-0381 | 0x1949:0x0381 | proposed | medium |
+| amazon-fire-tv-cube-3gen-0741 | 0x1949:0x0741 | proposed | medium |
+| amazon-echo-show-5-2nd-0801 | 0x1949:0x0801 | proposed | medium |
+| amazon-echo-show-8-2nd-0802 | 0x1949:0x0802 | proposed | medium |
+| amazon-echo-show-10-3rd-0803 | 0x1949:0x0803 | proposed | medium |
+| amazon-echo-show-15-0804 | 0x1949:0x0804 | proposed | medium |
+| amazon-echo-show-5-3rd-0805 | 0x1949:0x0805 | proposed | medium |
+| amazon-echo-show-8-3rd-0806 | 0x1949:0x0806 | proposed | medium |
+| amazon-fire-max-11-0807 | 0x1949:0x0807 | proposed | medium |
+| amazon-fire-hd-8-2022-0808 | 0x1949:0x0808 | proposed | medium |
+| amazon-fire-hd-10-2023-0809 | 0x1949:0x0809 | proposed | medium |
+| amazon-fire-7-2022-080a | 0x1949:0x080a | proposed | medium |
+| supernote-a5x2-0032 | 0x2207:0x0032 | proposed | low |
+| supernote-a6x2-0033 | 0x2207:0x0033 | proposed | low |
+| Kobo Clara 2E | 0x2237:0x7010 | experimental | unknown |
+| Kobo Elipsa 2E | 0x2237:0x7013 | experimental | unknown |
+| Kobo Libra 2 | 0x2237:0x7011 | experimental | unknown |
+| Kobo Sage | 0x2237:0x7012 | experimental | unknown |
+| reMarkable 2 | 0x04b3:0x0610 | experimental | unknown |
+
+## Embedded (4)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| isabella-her-prototype-ddee | 0x0b20:0xddee | proposed | medium |
+| livescribe-pulse-smartpen-0002 | 0x1ccb:0x0002 | proposed | low |
+| livescribe-3-smartpen-0003 | 0x1ccb:0x0003 | proposed | low |
+| raspberry-pi-zero2w-gadget-mtp-4020 | 0x2e8a:0x4020 | proposed | low |
+
+## Fitness (2)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| wahoo-elemnt-roam-0001 | 0x31e0:0x0001 | proposed | low |
+| wahoo-elemnt-bolt-v2-0002 | 0x31e0:0x0002 | proposed | low |
+
+## Gaming Handheld (31)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| nintendo-switch-switch-lite-201d | 0x057e:0x201d | proposed | low |
+| nintendo-switch-2-2061 | 0x057e:0x2061 | proposed | low |
+| sony-ps-vita-pch1000-04e3 | 0x054c:0x04e3 | proposed | medium |
+| valve-steam-deck-lcd-1002 | 0x28de:0x1002 | proposed | low |
+| valve-steam-deck-oled-1003 | 0x28de:0x1003 | proposed | low |
+| razer-edge-gaming-tablet-9004 | 0x1532:0x9004 | proposed | low |
+| anbernic-rg556-6001 | 0x1f3a:0x6001 | proposed | low |
+| anbernic-rg505-6002 | 0x1f3a:0x6002 | proposed | low |
+| anbernic-rg353v-6003 | 0x1f3a:0x6003 | proposed | low |
+| retroid-pocket-4-pro-f001 | 0x05c6:0xf001 | proposed | low |
+| retroid-pocket-3-plus-f002 | 0x05c6:0xf002 | proposed | low |
+| retroid-pocket-mini-f003 | 0x05c6:0xf003 | proposed | low |
+| ayn-odin-2-f010 | 0x05c6:0xf010 | proposed | low |
+| ayn-odin-2-mini-f011 | 0x05c6:0xf011 | proposed | low |
+| ayn-odin-2-portal-f012 | 0x05c6:0xf012 | proposed | low |
+| various-anbernic-rg353p-mtp-0007 | 0x2207:0x0007 | proposed | medium |
+| various-anbernic-rg353p-ptpadb-0008 | 0x2207:0x0008 | proposed | medium |
+| ouya-videogame-console-0010 | 0x2836:0x0010 | proposed | medium |
+| valve-steam-deck-lcd-1205 | 0x28de:0x1205 | proposed | low |
+| valve-steam-deck-oled-1207 | 0x28de:0x1207 | proposed | low |
+| asus-rog-ally-1abe | 0x0b05:0x1abe | proposed | low |
+| asus-rog-ally-x-1abf | 0x0b05:0x1abf | proposed | low |
+| lenovo-legion-go-7f12 | 0x17ef:0x7f12 | proposed | low |
+| msi-claw-a1m-1532 | 0x1462:0x1532 | proposed | low |
+| anbernic-rg353m-6004 | 0x1f3a:0x6004 | proposed | low |
+| retroid-pocket-4-f004 | 0x05c6:0xf004 | proposed | low |
+| gpd-win-4-a001 | 0x2b24:0xa001 | proposed | low |
+| gpd-win-mini-a002 | 0x2b24:0xa002 | proposed | low |
+| Nintendo Switch | 0x057e:0x2000 | experimental | unknown |
+| Nintendo Switch Lite | 0x057e:0x2001 | experimental | unknown |
+| Nintendo Switch OLED | 0x057e:0x2002 | experimental | unknown |
+
+## Gps Navigator (158)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| garmin-forerunner-645-music-4b48 | 0x091e:0x4b48 | proposed | low |
+| garmin-forerunner-945-4c29 | 0x091e:0x4c29 | proposed | low |
+| garmin-fenix6-pro-4cda | 0x091e:0x4cda | proposed | low |
+| garmin-venu-4c9a | 0x091e:0x4c9a | proposed | low |
+| garmin-epix2-4f67 | 0x091e:0x4f67 | proposed | low |
+| garmin-monterra-2585 | 0x091e:0x2585 | proposed | low |
+| garmin-drivesmart-55-4bf9 | 0x091e:0x4bf9 | proposed | low |
+| garmin-zumo-xt-4d9c | 0x091e:0x4d9c | proposed | low |
+| garmin-edge-1040-4f03 | 0x091e:0x4f03 | proposed | low |
+| garmin-edge-540-4fdd | 0x091e:0x4fdd | proposed | low |
+| garmin-edge-840-4fde | 0x091e:0x4fde | proposed | low |
+| garmin-edge-explore-2-5049 | 0x091e:0x5049 | proposed | low |
+| garmin-gpsmap-67-50f0 | 0x091e:0x50f0 | proposed | low |
+| garmin-edge-850-521a | 0x091e:0x521a | proposed | low |
+| garmin-fenix-5-plus-4b54 | 0x091e:0x4b54 | proposed | low |
+| garmin-vivoactive-3-4bac | 0x091e:0x4bac | proposed | low |
+| garmin-forerunner-245-music-4c05 | 0x091e:0x4c05 | proposed | low |
+| garmin-fenix-6x-pro-4cdb | 0x091e:0x4cdb | proposed | low |
+| garmin-dashcam55-2458 | 0x091e:0x2458 | proposed | low |
+| garmin-dashcam65w-2459 | 0x091e:0x2459 | proposed | low |
+| garmin-dashcammini2-245a | 0x091e:0x245a | proposed | low |
+| garmin-dashcam67w-245b | 0x091e:0x245b | proposed | low |
+| garmin-dashcamtandem-245c | 0x091e:0x245c | proposed | low |
+| garmin-dashcammini-245d | 0x091e:0x245d | proposed | low |
+| garmin-dashcam57-245e | 0x091e:0x245e | proposed | low |
+| garmin-forerunner-245-4b1b | 0x091e:0x4b1b | proposed | medium |
+| garmin-forerunner-945-4b35 | 0x091e:0x4b35 | proposed | medium |
+| garmin-forerunner-55-4b47 | 0x091e:0x4b47 | proposed | medium |
+| garmin-forerunner-255-4b6c | 0x091e:0x4b6c | proposed | medium |
+| garmin-forerunner-955-4b79 | 0x091e:0x4b79 | proposed | medium |
+| garmin-forerunner-265-4b8c | 0x091e:0x4b8c | proposed | medium |
+| garmin-forerunner-965-4b9d | 0x091e:0x4b9d | proposed | medium |
+| garmin-marq-2-4bd5 | 0x091e:0x4bd5 | proposed | medium |
+| garmin-instinct-2-4be0 | 0x091e:0x4be0 | proposed | medium |
+| garmin-venu-3-4be5 | 0x091e:0x4be5 | proposed | medium |
+| garmin-forerunner-165-4bf0 | 0x091e:0x4bf0 | proposed | medium |
+| garmin-fenix-7-pro-4c2b | 0x091e:0x4c2b | proposed | medium |
+| garmin-fenix-8-4c3a | 0x091e:0x4c3a | proposed | medium |
+| garmin-vivoactive-4-4cc0 | 0x091e:0x4cc0 | proposed | medium |
+| garmin-vivoactive-5-4cc5 | 0x091e:0x4cc5 | proposed | medium |
+| garmin-lily-2-4cd0 | 0x091e:0x4cd0 | proposed | medium |
+| garmin-d2-air-488b | 0x091e:0x488b | proposed | medium |
+| garmin-vivoactive-3-music-lte-4bfa | 0x091e:0x4bfa | proposed | medium |
+| garmin-d2-delta-delta-s-delta-px-4c7c | 0x091e:0x4c7c | proposed | medium |
+| garmin-vivoactive-4s-4c98 | 0x091e:0x4c98 | proposed | medium |
+| garmin-vivoactive-4-4c99 | 0x091e:0x4c99 | proposed | medium |
+| garmin-dashcam47-245f | 0x091e:0x245f | proposed | low |
+| garmin-dashcam46-2460 | 0x091e:0x2460 | proposed | low |
+| garmin-dashcam56-2461 | 0x091e:0x2461 | proposed | low |
+| garmin-dashcam66w-2462 | 0x091e:0x2462 | proposed | low |
+| garmin-dashcamlive-2463 | 0x091e:0x2463 | proposed | low |
+| garmin-drive-5-28db | 0x091e:0x28db | proposed | low |
+| garmin-nuvicam-47fb | 0x091e:0x47fb | proposed | low |
+| garmin-nuvi-2505-255b | 0x091e:0x255b | proposed | low |
+| garmin-nuvi-55-26a1 | 0x091e:0x26a1 | proposed | low |
+| garmin-etrex-30-2519 | 0x091e:0x2519 | proposed | low |
+| garmin-gpsmap-62sc-253c | 0x091e:0x253c | proposed | low |
+| garmin-oregon-series-2380 | 0x091e:0x2380 | proposed | low |
+| garmin-nuvi-1350-23cc | 0x091e:0x23cc | proposed | low |
+| garmin-gps-generic-0003 | 0x091e:0x0003 | proposed | low |
+| garmin-etrex-cx-21a5 | 0x091e:0x21a5 | proposed | low |
+| garmin-nuvi-360-2236 | 0x091e:0x2236 | proposed | low |
+| garmin-edge-605-2271 | 0x091e:0x2271 | proposed | low |
+| garmin-colorado-300-2295 | 0x091e:0x2295 | proposed | low |
+| garmin-etrex-vista-hcx-22b6 | 0x091e:0x22b6 | proposed | low |
+| garmin-oregon-400t-231b | 0x091e:0x231b | proposed | low |
+| garmin-nuvi-205t-2353 | 0x091e:0x2353 | proposed | low |
+| garmin-edge-800-2491 | 0x091e:0x2491 | proposed | low |
+| garmin-etrex-10-2518 | 0x091e:0x2518 | proposed | low |
+| garmin-edge-800-alt-2535 | 0x091e:0x2535 | proposed | low |
+| garmin-edge-200-2613 | 0x091e:0x2613 | proposed | low |
+| garmin-drive-52m-2bf5 | 0x091e:0x2bf5 | proposed | low |
+| magellan-roadmate-1475t-524e | 0x120f:0x524e | proposed | low |
+| magellan-triton-series-5260 | 0x120f:0x5260 | proposed | low |
+| magellan-explorist-gc-0001 | 0x1dab:0x0001 | proposed | low |
+| magellan-crossover-gps-0002 | 0x1dab:0x0002 | proposed | low |
+| garmin-marq-4cae | 0x091e:0x4cae | proposed | medium |
+| garmin-marq-aviator-4caf | 0x091e:0x4caf | proposed | medium |
+| garmin-descent-mk2-mk2i-4cba | 0x091e:0x4cba | proposed | medium |
+| garmin-fenix-6s-pro-sapphire-4cd8 | 0x091e:0x4cd8 | proposed | medium |
+| garmin-rey-4daa | 0x091e:0x4daa | proposed | medium |
+| garmin-darth-vader-4dab | 0x091e:0x4dab | proposed | medium |
+| garmin-captain-marvel-4dac | 0x091e:0x4dac | proposed | medium |
+| garmin-first-avenger-4dad | 0x091e:0x4dad | proposed | medium |
+| garmin-descent-mk2s-4dd7 | 0x091e:0x4dd7 | proposed | medium |
+| garmin-forerunner-745-4e05 | 0x091e:0x4e05 | proposed | medium |
+| garmin-venu-sq-music-4e0c | 0x091e:0x4e0c | proposed | medium |
+| garmin-forerunner-945-lte-4e44 | 0x091e:0x4e44 | proposed | medium |
+| garmin-venu-2-4e77 | 0x091e:0x4e77 | proposed | medium |
+| garmin-venu-2s-4e78 | 0x091e:0x4e78 | proposed | medium |
+| garmin-venu-mercedes-benz-4e9c | 0x091e:0x4e9c | proposed | medium |
+| garmin-venu-2-plus-4f0b | 0x091e:0x4f0b | proposed | medium |
+| garmin-fenix-7s-4f41 | 0x091e:0x4f41 | proposed | medium |
+| garmin-fenix-7-sapphire-solar-4f42 | 0x091e:0x4f42 | proposed | medium |
+| garmin-enduro-2-fenix-7x-4f43 | 0x091e:0x4f43 | proposed | medium |
+| garmin-forerunner-265-50a1 | 0x091e:0x50a1 | proposed | medium |
+| garmin-forerunner-265s-50a2 | 0x091e:0x50a2 | proposed | medium |
+| garmin-venu-3s-50a5 | 0x091e:0x50a5 | proposed | medium |
+| garmin-epix-pro-gen-2-50d8 | 0x091e:0x50d8 | proposed | medium |
+| garmin-forerunner-965-50db | 0x091e:0x50db | proposed | medium |
+| garmin-fenix-8-amoled-51b8 | 0x091e:0x51b8 | proposed | medium |
+| garmin-descent-mk2-mk2i-apac-4e76 | 0x091e:0x4e76 | proposed | medium |
+| garmin-descent-mk2s-apac-4f5a | 0x091e:0x4f5a | proposed | medium |
+| garmin-forerunner-255m-4f96 | 0x091e:0x4f96 | proposed | medium |
+| garmin-forerunner-255-4f98 | 0x091e:0x4f98 | proposed | medium |
+| garmin-forerunner-255s-music-4f97 | 0x091e:0x4f97 | proposed | medium |
+| garmin-forerunner-255s-4f99 | 0x091e:0x4f99 | proposed | medium |
+| garmin-forerunner-955-solar-4fb8 | 0x091e:0x4fb8 | proposed | medium |
+| garmin-venu-sq-2-music-5014 | 0x091e:0x5014 | proposed | medium |
+| garmin-tactix-7-5027 | 0x091e:0x5027 | proposed | medium |
+| garmin-descent-mk3-mk3i-43mm-507e | 0x091e:0x507e | proposed | medium |
+| garmin-descent-mk3i-51mm-507f | 0x091e:0x507f | proposed | medium |
+| garmin-epix-pro-50d9 | 0x091e:0x50d9 | proposed | medium |
+| garmin-epix-pro-gen-2-51mm-50da | 0x091e:0x50da | proposed | medium |
+| garmin-fenix-7s-pro-sapphire-solar-5116 | 0x091e:0x5116 | proposed | medium |
+| garmin-fenix-7-pro-solar-5117 | 0x091e:0x5117 | proposed | medium |
+| garmin-fenix8-51b6 | 0x091e:0x51b6 | proposed | medium |
+| garmin-fenix-8-solar-sapphire-51b5 | 0x091e:0x51b5 | proposed | medium |
+| garmin-tactix-7-amoled-51be | 0x091e:0x51be | proposed | medium |
+| garmin-forerunner-970-51d5 | 0x091e:0x51d5 | proposed | medium |
+| garmin-forerunner-570-51de | 0x091e:0x51de | proposed | medium |
+| garmin-venu-x1-51fb | 0x091e:0x51fb | proposed | medium |
+| garmin-vivoactive-6-5211 | 0x091e:0x5211 | proposed | medium |
+| garmin-venu-4-41mm-5224 | 0x091e:0x5224 | proposed | medium |
+| garmin-instinct-3-solar-5297 | 0x091e:0x5297 | proposed | medium |
+| garmin-virb-elite-2464 | 0x091e:0x2464 | proposed | medium |
+| garmin-virb-x-2466 | 0x091e:0x2466 | proposed | medium |
+| garmin-virb-xe-2467 | 0x091e:0x2467 | proposed | medium |
+| garmin-virb-ultra30-2468 | 0x091e:0x2468 | proposed | medium |
+| garmin-virb-360-2469 | 0x091e:0x2469 | proposed | medium |
+| garmin-forerunner-965-5225 | 0x091e:0x5225 | proposed | medium |
+| garmin-forerunner-955-5226 | 0x091e:0x5226 | proposed | medium |
+| garmin-forerunner-265-5227 | 0x091e:0x5227 | proposed | medium |
+| garmin-forerunner-165-5228 | 0x091e:0x5228 | proposed | medium |
+| garmin-fenix-8-5240 | 0x091e:0x5240 | proposed | medium |
+| garmin-enduro-3-5241 | 0x091e:0x5241 | proposed | medium |
+| garmin-epix-pro-5242 | 0x091e:0x5242 | proposed | medium |
+| garmin-instinct-2x-5243 | 0x091e:0x5243 | proposed | medium |
+| garmin-venu-3-5244 | 0x091e:0x5244 | proposed | medium |
+| garmin-venu-3s-5245 | 0x091e:0x5245 | proposed | medium |
+| garmin-vivoactive-5-5246 | 0x091e:0x5246 | proposed | medium |
+| garmin-lily-2-5247 | 0x091e:0x5247 | proposed | medium |
+| garmin-marq-gen2-5248 | 0x091e:0x5248 | proposed | medium |
+| garmin-descent-g1-solar-5249 | 0x091e:0x5249 | proposed | medium |
+| garmin-tactix-7-pro-524a | 0x091e:0x524a | proposed | medium |
+| garmin-drivesmart-66-4c50 | 0x091e:0x4c50 | proposed | low |
+| garmin-drivesmart-76-4c51 | 0x091e:0x4c51 | proposed | low |
+| garmin-drivecam-76-4c52 | 0x091e:0x4c52 | proposed | low |
+| garmin-drive-53-4c53 | 0x091e:0x4c53 | proposed | low |
+| garmin-rv-895-4c54 | 0x091e:0x4c54 | proposed | low |
+| garmin-dezl-otr1010-4c55 | 0x091e:0x4c55 | proposed | low |
+| garmin-overlander-2-4c56 | 0x091e:0x4c56 | proposed | low |
+| tomtom-go-classic-5459 | 0x1390:0x5459 | proposed | low |
+| tomtom-go-expert-545a | 0x1390:0x545a | proposed | low |
+| tomtom-go-camper-max-545b | 0x1390:0x545b | proposed | low |
+| tomtom-go-navigator-545c | 0x1390:0x545c | proposed | low |
+| tomtom-rider-600-545d | 0x1390:0x545d | proposed | low |
+| Garmin Edge 1040 | 0x091e:0x4c60 | experimental | unknown |
+
+## Industrial Camera (4)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| flir-e-series-mtp-0100 | 0x09cb:0x0100 | experimental | community |
+| flir-t-series-mtp-0200 | 0x09cb:0x0200 | experimental | community |
+| basler-ace2-mtp-0010 | 0x2676:0x0010 | experimental | community |
+| allied-vision-alvium-mtp-0010 | 0x1ab2:0x0010 | experimental | community |
+
+## Lab Instrument (47)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| keysight-u2702a-oscilloscope-2918 | 0x0957:0x2918 | proposed | low |
+| keysight-34410a-multimeter-0607 | 0x0957:0x0607 | proposed | low |
+| keysight-34411a-multimeter-0a07 | 0x0957:0x0a07 | proposed | low |
+| keysight-34461a-multimeter-1a07 | 0x0957:0x1a07 | proposed | low |
+| keysight-33220a-waveform-generator-0407 | 0x0957:0x0407 | proposed | low |
+| keysight-33210a-waveform-generator-1507 | 0x0957:0x1507 | proposed | low |
+| keysight-53230a-frequency-counter-1907 | 0x0957:0x1907 | proposed | low |
+| keysight-ivi-tmc-device-1745 | 0x0957:0x1745 | proposed | low |
+| tektronix-afg3022b-0347 | 0x0699:0x0347 | proposed | low |
+| tektronix-tds2004b-oscilloscope-0365 | 0x0699:0x0365 | proposed | low |
+| tektronix-tds2024b-oscilloscope-036a | 0x0699:0x036a | proposed | low |
+| siglent-dso-oscilloscope-ee38 | 0xf4ec:0xee38 | proposed | low |
+| onset-hobo-u12-datalogger-0001 | 0x1941:0x0001 | proposed | low |
+| onset-hobo-ux100-datalogger-0002 | 0x1941:0x0002 | proposed | low |
+| onset-hobo-mx-datalogger-0003 | 0x1941:0x0003 | proposed | low |
+| omega-om-el-usb-1-datalogger-0001 | 0x1cbe:0x0001 | proposed | low |
+| omega-om-el-usb-2-datalogger-0002 | 0x1cbe:0x0002 | proposed | low |
+| digilent-analog-discovery-2-0007 | 0x1443:0x0007 | proposed | low |
+| rigol-ds2072a-oscilloscope-04c0 | 0x1ab1:0x04c0 | proposed | low |
+| rigol-ds2102a-oscilloscope-04c2 | 0x1ab1:0x04c2 | proposed | low |
+| rigol-mso5074-oscilloscope-04d0 | 0x1ab1:0x04d0 | proposed | low |
+| rigol-mso5104-oscilloscope-04d1 | 0x1ab1:0x04d1 | proposed | low |
+| rigol-dsa815-spectrum-analyzer-04b1 | 0x1ab1:0x04b1 | proposed | low |
+| rigol-dg1022z-generator-0641 | 0x1ab1:0x0641 | proposed | low |
+| keysight-msox3054t-oscilloscope-0101 | 0x2a8d:0x0101 | proposed | low |
+| keysight-msox4104a-oscilloscope-0102 | 0x2a8d:0x0102 | proposed | low |
+| keysight-dsox1204g-oscilloscope-0103 | 0x2a8d:0x0103 | proposed | low |
+| keysight-n9000b-cxa-analyzer-0104 | 0x2a8d:0x0104 | proposed | low |
+| keysight-edux1052a-oscilloscope-0105 | 0x2a8d:0x0105 | proposed | low |
+| tektronix-mso44-oscilloscope-0520 | 0x0699:0x0520 | proposed | low |
+| tektronix-mso46-oscilloscope-0521 | 0x0699:0x0521 | proposed | low |
+| tektronix-mdo3024-oscilloscope-0413 | 0x0699:0x0413 | proposed | low |
+| tektronix-tbs2104-oscilloscope-0522 | 0x0699:0x0522 | proposed | low |
+| tektronix-mso24-oscilloscope-0523 | 0x0699:0x0523 | proposed | low |
+| roper-scientific-pixis-400-0001 | 0x0bd7:0x0001 | proposed | low |
+| roper-scientific-proem-512-0002 | 0x0bd7:0x0002 | proposed | low |
+| roper-scientific-pixis-2048-0003 | 0x0bd7:0x0003 | proposed | low |
+| rigol-ds1054z-mtp-0514 | 0x1ab1:0x0514 | experimental | community |
+| rigol-mso5000-mtp-0515 | 0x1ab1:0x0515 | experimental | community |
+| rigol-dg4000-mtp-0516 | 0x1ab1:0x0516 | experimental | community |
+| keysight-dsox-mtp-0a07 | 0x0957:0x0a07 | experimental | community |
+| keysight-edux-mtp-0a08 | 0x0957:0x0a08 | experimental | community |
+| tektronix-tbs2000-mtp-0368 | 0x0699:0x0368 | experimental | community |
+| tektronix-mso2-mtp-0369 | 0x0699:0x0369 | experimental | community |
+| ni-usb-daq-mtp-7166 | 0x3923:0x7166 | experimental | community |
+| keithley-dmm6500-mtp-6500 | 0x05e6:0x6500 | experimental | community |
+| keithley-2450-mtp-2450 | 0x05e6:0x2450 | experimental | community |
+
+## Media Player (494)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| sandisk-sansa-m230-7400 | 0x0781:0x7400 | proposed | low |
+| sandisk-sansa-c150-7410 | 0x0781:0x7410 | proposed | low |
+| sandisk-sansa-e200-7420 | 0x0781:0x7420 | proposed | low |
+| sandisk-sansa-e260-v2-7422 | 0x0781:0x7422 | proposed | low |
+| sandisk-sansa-clip-7432 | 0x0781:0x7432 | proposed | low |
+| sandisk-sansa-clip-v2-7434 | 0x0781:0x7434 | proposed | low |
+| sandisk-sansa-c240-7450 | 0x0781:0x7450 | proposed | low |
+| sandisk-sansa-connect-7480 | 0x0781:0x7480 | proposed | low |
+| sandisk-sansa-view-74b0 | 0x0781:0x74b0 | proposed | low |
+| sandisk-sansa-fuze-74c0 | 0x0781:0x74c0 | proposed | low |
+| sandisk-sansa-fuze-v2-74c2 | 0x0781:0x74c2 | proposed | low |
+| sandisk-sansa-clip-plus-74d0 | 0x0781:0x74d0 | proposed | low |
+| sandisk-sansa-fuze-plus-74e0 | 0x0781:0x74e0 | proposed | low |
+| sandisk-sansa-clip-zip-74e4 | 0x0781:0x74e4 | proposed | low |
+| creative-zen-micro-411e | 0x041e:0x411e | proposed | low |
+| creative-zen-vision-411f | 0x041e:0x411f | proposed | low |
+| creative-zen-touch-4131 | 0x041e:0x4131 | proposed | low |
+| creative-zen-microphoto-413c | 0x041e:0x413c | proposed | low |
+| creative-zen-sleek-photo-413d | 0x041e:0x413d | proposed | low |
+| creative-zen-vision-m-413e | 0x041e:0x413e | proposed | low |
+| creative-zen-v-4150 | 0x041e:0x4150 | proposed | low |
+| creative-zen-4157 | 0x041e:0x4157 | proposed | low |
+| creative-zen-mozaic-4161 | 0x041e:0x4161 | proposed | low |
+| creative-zen-xfi-4162 | 0x041e:0x4162 | proposed | low |
+| iriver-ifp-880-1008 | 0x4102:0x1008 | proposed | low |
+| iriver-t10-1113 | 0x4102:0x1113 | proposed | low |
+| iriver-t20-1114 | 0x4102:0x1114 | proposed | low |
+| iriver-t30-1119 | 0x4102:0x1119 | proposed | low |
+| iriver-clix2-1126 | 0x4102:0x1126 | proposed | low |
+| iriver-t60-1134 | 0x4102:0x1134 | proposed | low |
+| iriver-e100-1141 | 0x4102:0x1141 | proposed | low |
+| iriver-h10-2101 | 0x4102:0x2101 | proposed | low |
+| cowon-iaudio-u3-0701 | 0x0e21:0x0701 | proposed | low |
+| cowon-iaudio-6-0711 | 0x0e21:0x0711 | proposed | low |
+| cowon-iaudio-d2-0801 | 0x0e21:0x0801 | proposed | low |
+| cowon-iaudio-s9-0901 | 0x0e21:0x0901 | proposed | low |
+| cowon-iaudio-j3-0921 | 0x0e21:0x0921 | proposed | low |
+| cowon-iaudio-x7-0931 | 0x0e21:0x0931 | proposed | low |
+| microsoft-zune-0710 | 0x045e:0x0710 | proposed | low |
+| microsoft-zune-hd-063e | 0x045e:0x063e | proposed | low |
+| philips-hdd6320-014b | 0x0471:0x014b | proposed | low |
+| philips-gogear-sa9200-014f | 0x0471:0x014f | proposed | low |
+| philips-gogear-sa6014-084e | 0x0471:0x084e | proposed | low |
+| philips-gogear-sa5145-0857 | 0x0471:0x0857 | proposed | low |
+| philips-gogear-sa6125-2002 | 0x0471:0x2002 | proposed | low |
+| archos-404-1301 | 0x0e79:0x1301 | proposed | low |
+| archos-504-1307 | 0x0e79:0x1307 | proposed | low |
+| archos-604-1309 | 0x0e79:0x1309 | proposed | low |
+| archos-5-1331 | 0x0e79:0x1331 | proposed | low |
+| onyx-boox-max-2-000b | 0x2207:0x000b | proposed | medium |
+| onyx-boox-max-2-pro-000c | 0x2207:0x000c | proposed | medium |
+| onyx-boox-note-000d | 0x2207:0x000d | proposed | medium |
+| onyx-boox-nova-0014 | 0x2207:0x0014 | proposed | medium |
+| onyx-boox-nova-pro-0015 | 0x2207:0x0015 | proposed | medium |
+| microsoft-windows-phone-04ec | 0x045e:0x04ec | proposed | low |
+| microsoft-kin-one-0640 | 0x045e:0x0640 | proposed | low |
+| microsoft-kin-twom-0641 | 0x045e:0x0641 | proposed | low |
+| microsoft-lumia-950-xl-ds-0a00 | 0x045e:0x0a00 | proposed | low |
+| infinix-hot-11-6001 | 0x1d5c:0x6001 | proposed | low |
+| infinix-note-11-6002 | 0x1d5c:0x6002 | proposed | low |
+| infinix-zero-x-pro-6003 | 0x1d5c:0x6003 | proposed | low |
+| infinix-hot-12-play-6004 | 0x1d5c:0x6004 | proposed | low |
+| infinix-zero-5g-6005 | 0x1d5c:0x6005 | proposed | low |
+| infinix-note-12-6006 | 0x1d5c:0x6006 | proposed | low |
+| infinix-hot-20-6007 | 0x1d5c:0x6007 | proposed | low |
+| sigma-dp1-merrill-0026 | 0x0b0e:0x0026 | proposed | medium |
+| sigma-dp2-merrill-0027 | 0x0b0e:0x0027 | proposed | medium |
+| sigma-dp3-merrill-0028 | 0x0b0e:0x0028 | proposed | medium |
+| sigma-dp0-quattro-0029 | 0x0b0e:0x0029 | proposed | medium |
+| sigma-dp1-quattro-002a | 0x0b0e:0x002a | proposed | medium |
+| sigma-dp2-quattro-002b | 0x0b0e:0x002b | proposed | medium |
+| sigma-dp3-quattro-002c | 0x0b0e:0x002c | proposed | medium |
+| sigma-dp2-quattro-se-002d | 0x0b0e:0x002d | proposed | medium |
+| sigma-sd-quattro-002e | 0x0b0e:0x002e | proposed | medium |
+| sigma-sd-quattro-h-002f | 0x0b0e:0x002f | proposed | medium |
+| sigma-fp-0031 | 0x0b0e:0x0031 | proposed | medium |
+| sigma-fp-l-0032 | 0x0b0e:0x0032 | proposed | medium |
+| sigma-bf-0033 | 0x0b0e:0x0033 | proposed | medium |
+| microsoft-surface-duo-091e | 0x045e:0x091e | proposed | medium |
+| microsoft-surface-duo2-091f | 0x045e:0x091f | proposed | medium |
+| roland-r-26-field-recorder-0093 | 0x0582:0x0093 | proposed | low |
+| roland-r-44-field-recorder-0094 | 0x0582:0x0094 | proposed | low |
+| roland-go-piano-014e | 0x0582:0x014e | proposed | low |
+| roland-fantom-06-0150 | 0x0582:0x0150 | proposed | low |
+| roland-fantom-07-0151 | 0x0582:0x0151 | proposed | low |
+| roland-fantom-08-0152 | 0x0582:0x0152 | proposed | low |
+| roland-rd-88-016f | 0x0582:0x016f | proposed | low |
+| roland-rd-2000-ex-0170 | 0x0582:0x0170 | proposed | low |
+| roland-mc-707-0199 | 0x0582:0x0199 | proposed | low |
+| roland-mc-101-019a | 0x0582:0x019a | proposed | low |
+| roland-zc-1-v-piano-01b9 | 0x0582:0x01b9 | proposed | low |
+| roland-spd-sx-pro-01c6 | 0x0582:0x01c6 | proposed | low |
+| sandisk-sansa-fuze-74c4 | 0x0781:0x74c4 | proposed | medium |
+| sandisk-sansa-clip-74c8 | 0x0781:0x74c8 | proposed | medium |
+| sandisk-sansa-e200-74e8 | 0x0781:0x74e8 | proposed | medium |
+| sandisk-sansa-view-7494 | 0x0781:0x7494 | proposed | medium |
+| creative-zen-v-4151 | 0x041e:0x4151 | proposed | medium |
+| creative-zen-4152 | 0x041e:0x4152 | proposed | medium |
+| creative-zen-m-4153 | 0x041e:0x4153 | proposed | medium |
+| creative-zen-x-fi-4154 | 0x041e:0x4154 | proposed | medium |
+| creative-zen-stone-4155 | 0x041e:0x4155 | proposed | medium |
+| creative-zen-style-m300-415e | 0x041e:0x415e | proposed | medium |
+| apple-iphone-ptp-12a8 | 0x05ac:0x12a8 | proposed | low |
+| apple-ipad-ptp-12ab | 0x05ac:0x12ab | proposed | low |
+| apple-ipod-nano-ptp-12ac | 0x05ac:0x12ac | proposed | low |
+| apple-tv-ptp-12aa | 0x05ac:0x12aa | proposed | low |
+| apple-ipod-classic-mtp-1280 | 0x05ac:0x1280 | proposed | low |
+| apple-ipod-classic-2g-mtp-1281 | 0x05ac:0x1281 | proposed | low |
+| apple-ipod-nano-3g-mtp-1291 | 0x05ac:0x1291 | proposed | low |
+| apple-ipod-nano-4g-mtp-1293 | 0x05ac:0x1293 | proposed | low |
+| apple-ipod-nano-5g-mtp-1299 | 0x05ac:0x1299 | proposed | low |
+| apple-ipod-nano-6g-mtp-129a | 0x05ac:0x129a | proposed | low |
+| apple-ipod-touch-3g-mtp-129e | 0x05ac:0x129e | proposed | low |
+| infinix-note-40-6008 | 0x1d5c:0x6008 | proposed | low |
+| infinix-note-40-pro-6009 | 0x1d5c:0x6009 | proposed | low |
+| infinix-note-40-pro-plus-600a | 0x1d5c:0x600a | proposed | low |
+| infinix-hot-40-600b | 0x1d5c:0x600b | proposed | low |
+| infinix-hot-40-pro-600c | 0x1d5c:0x600c | proposed | low |
+| infinix-hot-40i-600d | 0x1d5c:0x600d | proposed | low |
+| infinix-zero-30-600e | 0x1d5c:0x600e | proposed | low |
+| infinix-zero-30-5g-600f | 0x1d5c:0x600f | proposed | low |
+| infinix-gt-20-pro-6010 | 0x1d5c:0x6010 | proposed | low |
+| infinix-smart-8-6011 | 0x1d5c:0x6011 | proposed | low |
+| infinix-smart-8-hd-6012 | 0x1d5c:0x6012 | proposed | low |
+| infinix-smart-8-plus-6013 | 0x1d5c:0x6013 | proposed | low |
+| infinix-note-30-6014 | 0x1d5c:0x6014 | proposed | low |
+| infinix-note-30-pro-6015 | 0x1d5c:0x6015 | proposed | low |
+| infinix-hot-30-6016 | 0x1d5c:0x6016 | proposed | low |
+| infinix-hot-30i-6017 | 0x1d5c:0x6017 | proposed | low |
+| infinix-zero-ultra-6018 | 0x1d5c:0x6018 | proposed | low |
+| infinix-gt-10-pro-6019 | 0x1d5c:0x6019 | proposed | low |
+| infinix-note-12-pro-601a | 0x1d5c:0x601a | proposed | low |
+| infinix-hot-20s-601b | 0x1d5c:0x601b | proposed | low |
+| microsoft-bandon-pmc-00c9 | 0x045e:0x00c9 | proposed | low |
+| microsoft-mtp-simulator-0622 | 0x045e:0x0622 | proposed | low |
+| microsoft-kin-0642 | 0x045e:0x0642 | proposed | low |
+| microsoft-htc-8s-f0ca | 0x045e:0xf0ca | proposed | low |
+| toshiba-gigabeat-megf40-0009 | 0x0930:0x0009 | proposed | low |
+| toshiba-gigabeat-000c | 0x0930:0x000c | proposed | low |
+| toshiba-gigabeat-p20-000f | 0x0930:0x000f | proposed | low |
+| toshiba-gigabeat-s-0010 | 0x0930:0x0010 | proposed | low |
+| toshiba-gigabeat-p10-0011 | 0x0930:0x0011 | proposed | low |
+| toshiba-gigabeat-v30-0014 | 0x0930:0x0014 | proposed | low |
+| toshiba-gigabeat-u-0016 | 0x0930:0x0016 | proposed | low |
+| toshiba-gigabeat-meu202-0018 | 0x0930:0x0018 | proposed | low |
+| toshiba-gigabeat-t-0019 | 0x0930:0x0019 | proposed | low |
+| toshiba-gigabeat-meu201-001a | 0x0930:0x001a | proposed | low |
+| toshiba-gigabeat-met401-001d | 0x0930:0x001d | proposed | low |
+| toshiba-excite-at200-0960 | 0x0930:0x0960 | proposed | medium |
+| toshiba-excite-at300-0963 | 0x0930:0x0963 | proposed | medium |
+| toshiba-thrive-at100-7100 | 0x0930:0x7100 | proposed | medium |
+| philips-hdd14xx-014c | 0x0471:0x014c | proposed | low |
+| philips-hdd085-014d | 0x0471:0x014d | proposed | low |
+| philips-sa1115-0164 | 0x0471:0x0164 | proposed | low |
+| philips-gogear-audio-0165 | 0x0471:0x0165 | proposed | low |
+| philips-shoqbox-0172 | 0x0471:0x0172 | proposed | low |
+| philips-psa610-0181 | 0x0471:0x0181 | proposed | low |
+| philips-hdd6320-01eb | 0x0471:0x01eb | proposed | low |
+| philips-gogear-sa3345-2004 | 0x0471:0x2004 | proposed | low |
+| philips-gogear-vibe-2075 | 0x0471:0x2075 | proposed | low |
+| philips-gogear-muse-2077 | 0x0471:0x2077 | proposed | low |
+| philips-gogear-vibe08-207b | 0x0471:0x207b | proposed | low |
+| philips-gogear-aria-207c | 0x0471:0x207c | proposed | low |
+| philips-gogear-vibe-sa2vbe-20b7 | 0x0471:0x20b7 | proposed | low |
+| philips-gogear-ariaz-20b9 | 0x0471:0x20b9 | proposed | low |
+| philips-gogear-vibe02-20e5 | 0x0471:0x20e5 | proposed | low |
+| philips-gogear-ariaz97-2138 | 0x0471:0x2138 | proposed | low |
+| archos-gmini-xs100-1207 | 0x0e79:0x1207 | proposed | low |
+| archos-xs202-1208 | 0x0e79:0x1208 | proposed | low |
+| archos-104-120a | 0x0e79:0x120a | proposed | low |
+| archos-204-120c | 0x0e79:0x120c | proposed | low |
+| archos-404cam-1303 | 0x0e79:0x1303 | proposed | low |
+| archos-604wifi-130b | 0x0e79:0x130b | proposed | low |
+| archos-704-dvr-130d | 0x0e79:0x130d | proposed | low |
+| archos-704tv-130f | 0x0e79:0x130f | proposed | low |
+| archos-405-1311 | 0x0e79:0x1311 | proposed | low |
+| archos-605-1313 | 0x0e79:0x1313 | proposed | low |
+| archos-605f-1315 | 0x0e79:0x1315 | proposed | low |
+| archos-705-1319 | 0x0e79:0x1319 | proposed | low |
+| archos-tvplus-131b | 0x0e79:0x131b | proposed | low |
+| archos-105-131d | 0x0e79:0x131d | proposed | low |
+| archos-405hdd-1321 | 0x0e79:0x1321 | proposed | low |
+| archos-5-mode2-1333 | 0x0e79:0x1333 | proposed | low |
+| archos-7-1335 | 0x0e79:0x1335 | proposed | low |
+| astell-kern-ak120ii-1192 | 0x4102:0x1192 | proposed | medium |
+| astell-kern-sr15-1213 | 0x4102:0x1213 | proposed | medium |
+| cowon-iaudio-7-mtp-mode-0751 | 0x0e21:0x0751 | proposed | medium |
+| cowon-iaudio-u5-mtp-mode-0761 | 0x0e21:0x0761 | proposed | medium |
+| creative-portable-media-center-4123 | 0x041e:0x4123 | proposed | medium |
+| creative-zen-xtra-mtp-mode-4128 | 0x041e:0x4128 | proposed | medium |
+| creative-zen-micro-mtp-mode-4130 | 0x041e:0x4130 | proposed | medium |
+| dell-dj-itty-4500 | 0x413c:0x4500 | proposed | medium |
+| sandisk-sansa-m200-tcc-mtp-mode-7401 | 0x0781:0x7401 | proposed | medium |
+| sandisk-sansa-m240-m250-7430 | 0x0781:0x7430 | proposed | medium |
+| sandisk-sansa-c250-v2-7452 | 0x0781:0x7452 | proposed | medium |
+| astell-kern-ak380-1195 | 0x4102:0x1195 | proposed | medium |
+| astell-kern-ak70-1200 | 0x4102:0x1200 | proposed | medium |
+| astell-kern-se180-1230 | 0x4102:0x1230 | proposed | medium |
+| astell-kern-sr35-1247 | 0x4102:0x1247 | proposed | medium |
+| astell-kern-se300-1249 | 0x4102:0x1249 | proposed | medium |
+| astell-kern-se200-1233 | 0x4102:0x1233 | proposed | low |
+| astell-kern-sp2000t-1236 | 0x4102:0x1236 | proposed | low |
+| astell-kern-kann-alpha-1238 | 0x4102:0x1238 | proposed | low |
+| astell-kern-kann-max-1242 | 0x4102:0x1242 | proposed | low |
+| astell-kern-sp3000-1251 | 0x4102:0x1251 | proposed | low |
+| iriver-t20-1115 | 0x4102:0x1115 | proposed | medium |
+| iriver-u10-1116 | 0x4102:0x1116 | proposed | medium |
+| iriver-t10b-1117 | 0x4102:0x1117 | proposed | medium |
+| iriver-t20b-1118 | 0x4102:0x1118 | proposed | medium |
+| iriver-t10-2gb-1120 | 0x4102:0x1120 | proposed | medium |
+| iriver-clix-112a | 0x4102:0x112a | proposed | medium |
+| iriver-x20-1132 | 0x4102:0x1132 | proposed | medium |
+| iriver-e100-v2-1142 | 0x4102:0x1142 | proposed | medium |
+| iriver-spinn-1147 | 0x4102:0x1147 | proposed | medium |
+| iriver-e50-1151 | 0x4102:0x1151 | proposed | medium |
+| iriver-e150-1152 | 0x4102:0x1152 | proposed | medium |
+| iriver-t5-1153 | 0x4102:0x1153 | proposed | medium |
+| iriver-e30-1167 | 0x4102:0x1167 | proposed | medium |
+| iriver-h10-5gb-2102 | 0x4102:0x2102 | proposed | medium |
+| iriver-h10-5-6gb-2105 | 0x4102:0x2105 | proposed | medium |
+| onyx-boox-note-air-0016 | 0x2207:0x0016 | proposed | medium |
+| onyx-boox-note-air-2-0017 | 0x2207:0x0017 | proposed | medium |
+| onyx-boox-note-air-3-0018 | 0x2207:0x0018 | proposed | medium |
+| onyx-boox-note-air-3c-0019 | 0x2207:0x0019 | proposed | medium |
+| onyx-boox-tab-ultra-001a | 0x2207:0x001a | proposed | medium |
+| onyx-boox-tab-ultra-c-pro-001b | 0x2207:0x001b | proposed | medium |
+| onyx-boox-poke5-001c | 0x2207:0x001c | proposed | medium |
+| onyx-boox-page-001d | 0x2207:0x001d | proposed | medium |
+| onyx-boox-note-x-001e | 0x2207:0x001e | proposed | medium |
+| onyx-boox-nova-air-001f | 0x2207:0x001f | proposed | medium |
+| onyx-boox-nova-air-2-0020 | 0x2207:0x0020 | proposed | medium |
+| blackvue-dr900x-2ch-d901 | 0x0603:0xd901 | proposed | low |
+| blackvue-dr770x-2ch-d771 | 0x0603:0xd771 | proposed | low |
+| blackvue-dr750x-2ch-d751 | 0x0603:0xd751 | proposed | low |
+| blackvue-dr900s-2ch-d900 | 0x0603:0xd900 | proposed | low |
+| blackvue-dr590x-2ch-d591 | 0x0603:0xd591 | proposed | low |
+| blackvue-dr770x-1ch-d770 | 0x0603:0xd770 | proposed | low |
+| rexing-v1-4k-e001 | 0x0603:0xe001 | proposed | low |
+| rexing-v1p-pro-e002 | 0x0603:0xe002 | proposed | low |
+| rexing-v3-e003 | 0x0603:0xe003 | proposed | low |
+| rexing-v5-e004 | 0x0603:0xe004 | proposed | low |
+| vantrue-n4-f001 | 0x0603:0xf001 | proposed | low |
+| vantrue-n2s-f002 | 0x0603:0xf002 | proposed | low |
+| vantrue-s1-f003 | 0x0603:0xf003 | proposed | low |
+| vantrue-e1-f004 | 0x0603:0xf004 | proposed | low |
+| vantrue-n5-f005 | 0x0603:0xf005 | proposed | low |
+| vantrue-x4s-f006 | 0x0603:0xf006 | proposed | low |
+| dell-dj-2nd-generation-412f | 0x041e:0x412f | proposed | medium |
+| dell-dell-pocket-dj-mtp-mode-4132 | 0x041e:0x4132 | proposed | medium |
+| creative-zen-microphoto-alt-4133 | 0x041e:0x4133 | proposed | medium |
+| creative-zen-sleek-mtp-mode-4137 | 0x041e:0x4137 | proposed | medium |
+| creative-zen-v-2gb-4158 | 0x041e:0x4158 | proposed | medium |
+| creative-zen-x-fi-3-4169 | 0x041e:0x4169 | proposed | medium |
+| ziilabs-zii-egg-6000 | 0x041e:0x6000 | proposed | medium |
+| iriver-portable-media-center-1-4002 | 0x1006:0x4002 | proposed | medium |
+| iriver-portable-media-center-2-4003 | 0x1006:0x4003 | proposed | medium |
+| archos-spod-mtp-mode-1341 | 0x0e79:0x1341 | proposed | medium |
+| archos-5s-it-mtp-mode-1351 | 0x0e79:0x1351 | proposed | medium |
+| archos-5h-it-mtp-mode-1357 | 0x0e79:0x1357 | proposed | medium |
+| archos-48-mtp-mode-1421 | 0x0e79:0x1421 | proposed | medium |
+| archos-arnova-childpad-1458 | 0x0e79:0x1458 | proposed | medium |
+| archos-arnova-8c-g3-145e | 0x0e79:0x145e | proposed | medium |
+| archos-arnova-10bg3-tablet-146b | 0x0e79:0x146b | proposed | medium |
+| archos-97-xenon-149a | 0x0e79:0x149a | proposed | medium |
+| archos-97-titanium-14ad | 0x0e79:0x14ad | proposed | medium |
+| archos-80-titanium-14bf | 0x0e79:0x14bf | proposed | medium |
+| archos-101-titanium-14b9 | 0x0e79:0x14b9 | proposed | medium |
+| archos-70b-titanium-14ef | 0x0e79:0x14ef | proposed | medium |
+| archos-8o-g9-mtp-mode-1508 | 0x0e79:0x1508 | proposed | medium |
+| archos-8o-g9-turbo-mtp-mode-1509 | 0x0e79:0x1509 | proposed | medium |
+| archos-80g9-1518 | 0x0e79:0x1518 | proposed | medium |
+| archos-101-g9-id1-1528 | 0x0e79:0x1528 | proposed | medium |
+| archos-101-g9-id2-1529 | 0x0e79:0x1529 | proposed | medium |
+| archos-101-g9-turbo-250-hd-1538 | 0x0e79:0x1538 | proposed | medium |
+| archos-101-g9-turbo-1539 | 0x0e79:0x1539 | proposed | medium |
+| archos-101-xs-1548 | 0x0e79:0x1548 | proposed | medium |
+| archos-70it2-id-1-1568 | 0x0e79:0x1568 | proposed | medium |
+| archos-70it2-id-2-1569 | 0x0e79:0x1569 | proposed | medium |
+| archos-70-cobalt-15ba | 0x0e79:0x15ba | proposed | medium |
+| archos-50c-2008 | 0x0e79:0x2008 | proposed | medium |
+| archos-c40-31ab | 0x0e79:0x31ab | proposed | medium |
+| archos-50b-31bd | 0x0e79:0x31bd | proposed | medium |
+| archos-helium-45b-31d8 | 0x0e79:0x31d8 | proposed | medium |
+| archos-phone-31e1 | 0x0e79:0x31e1 | proposed | medium |
+| archos-45-neon-31f3 | 0x0e79:0x31f3 | proposed | medium |
+| archos-50-diamond-3229 | 0x0e79:0x3229 | proposed | medium |
+| archos-50-diamond-2nd-id-322a | 0x0e79:0x322a | proposed | medium |
+| archos-101-g4-4002 | 0x0e79:0x4002 | proposed | medium |
+| archos-hudl-id1-5008 | 0x0e79:0x5008 | proposed | medium |
+| archos-hudl-id2-5009 | 0x0e79:0x5009 | proposed | medium |
+| archos-101d-neon-51c6 | 0x0e79:0x51c6 | proposed | medium |
+| archos-ac40dti-5217 | 0x0e79:0x5217 | proposed | medium |
+| archos-50-helium-plus-5229 | 0x0e79:0x5229 | proposed | medium |
+| archos-50-helium-plus-2nd-id-522a | 0x0e79:0x522a | proposed | medium |
+| archos-101-xenon-lite-528c | 0x0e79:0x528c | proposed | medium |
+| archos-101-xenon-lite-adb-528d | 0x0e79:0x528d | proposed | medium |
+| archos-40-helium-phone-52c2 | 0x0e79:0x52c2 | proposed | medium |
+| archos-diamond-s-5305 | 0x0e79:0x5305 | proposed | medium |
+| archos-50d-neon-5371 | 0x0e79:0x5371 | proposed | medium |
+| archos-70b-neon-5395 | 0x0e79:0x5395 | proposed | medium |
+| archos-50-power-53a7 | 0x0e79:0x53a7 | proposed | medium |
+| archos-101b-oxygen-542f | 0x0e79:0x542f | proposed | medium |
+| archos-55b-platinum-544a | 0x0e79:0x544a | proposed | medium |
+| archos-50f-helium-545c | 0x0e79:0x545c | proposed | medium |
+| archos-55-diamond-selfie-5465 | 0x0e79:0x5465 | proposed | medium |
+| archos-core-50p-5603 | 0x0e79:0x5603 | proposed | medium |
+| cowon-iaudio-d2plus-fw-2x-mtp-mode-0861 | 0x0e21:0x0861 | proposed | medium |
+| cowon-iaudio-d2plus-dab-fw-4x-mtp-mode-0871 | 0x0e21:0x0871 | proposed | medium |
+| cowon-iaudio-d2plus-fw-3x-mtp-mode-0881 | 0x0e21:0x0881 | proposed | medium |
+| cowon-iaudio-d2plus-dmb-fw-1x-mtp-mode-0891 | 0x0e21:0x0891 | proposed | medium |
+| cowon-iaudio-9-mtp-mode-0911 | 0x0e21:0x0911 | proposed | medium |
+| cowon-iaudio-c2-mtp-mode-0941 | 0x0e21:0x0941 | proposed | medium |
+| cowon-iaudio-10-mtp-mode-0952 | 0x0e21:0x0952 | proposed | medium |
+| onyx-boox-tab-x-0021 | 0x2207:0x0021 | proposed | low |
+| onyx-boox-go-103-0022 | 0x2207:0x0022 | proposed | low |
+| onyx-boox-tab-mini-c-0023 | 0x2207:0x0023 | proposed | low |
+| onyx-boox-note-x3-0024 | 0x2207:0x0024 | proposed | low |
+| onyx-boox-poke5-0025 | 0x2207:0x0025 | proposed | low |
+| onyx-boox-page-0026 | 0x2207:0x0026 | proposed | low |
+| sandisk-sansa-express-7460 | 0x0781:0x7460 | proposed | medium |
+| iriver-n12-1122 | 0x4102:0x1122 | proposed | medium |
+| coby-coby-mp705-6512 | 0x1e74:0x6512 | proposed | medium |
+| trekstor-vibez-8-12gb-842a | 0x066f:0x842a | proposed | medium |
+| medion-md8333-id1-8550 | 0x066f:0x8550 | proposed | medium |
+| medion-md8333-id2-8588 | 0x066f:0x8588 | proposed | medium |
+| maxfield-g-flash-ng-1gb-846c | 0x066f:0x846c | proposed | medium |
+| sigmatel-mtpmscn-audio-player-a010 | 0x066f:0xa010 | proposed | medium |
+| insignia-sport-player-0307 | 0x19ff:0x0307 | proposed | medium |
+| insignia-pilot-4gb-0309 | 0x19ff:0x0309 | proposed | medium |
+| dunlop-mp3-player-1gb--egoman-md223afd-2200 | 0x10d6:0x2200 | proposed | medium |
+| memorex-mmp-8585-8586-or-iriver-e200-2300 | 0x10d6:0x2300 | proposed | medium |
+| sirius-stiletto-0102 | 0x18f6:0x0102 | proposed | medium |
+| sirius-stiletto-2-0110 | 0x18f6:0x0110 | proposed | medium |
+| nextar-ma715a-8r-5668 | 0x0402:0x5668 | proposed | medium |
+| msi-p610-model-ms-5557-5572 | 0x0db0:0x5572 | proposed | medium |
+| slacker-slacker-portable-media-player-fabf | 0x1bdc:0xfabf | proposed | medium |
+| conceptronic-cmtd2-0005 | 0x1e53:0x0005 | proposed | medium |
+| o2-sistemas-zoltartv-0006 | 0x1e53:0x0006 | proposed | medium |
+| wyplay-wyplayer-0007 | 0x1e53:0x0007 | proposed | medium |
+| normsoft-pocket-tunes-0001 | 0x1703:0x0001 | proposed | medium |
+| normsoft-pocket-tunes-4-0002 | 0x1703:0x0002 | proposed | medium |
+| technika-mp-709-7017 | 0x13d1:0x7017 | proposed | medium |
+| philips-i908-190b | 0x0471:0x190b | proposed | medium |
+| philips-w6610-2008 | 0x0471:0x2008 | proposed | medium |
+| philips-sa5285-2022 | 0x0471:0x2022 | proposed | medium |
+| philips-gogear-sa1vbe08kx-78-208e | 0x0471:0x208e | proposed | medium |
+| philips-pi3900b2-58-2190 | 0x0471:0x2190 | proposed | medium |
+| philips-psa235-7e01 | 0x0471:0x7e01 | proposed | medium |
+| various-viewpia-dr-bq-kepler-0001 | 0x2207:0x0001 | proposed | medium |
+| yifang-bq-tesla-0006 | 0x2207:0x0006 | proposed | medium |
+| various-viewpia-dr-bq-kepler-debugging-0011 | 0x2207:0x0011 | proposed | medium |
+| supernote-a5x-0031 | 0x2207:0x0031 | proposed | medium |
+| kurio-7s-1006 | 0x1f3a:0x1006 | proposed | medium |
+| irulu-x1s-1007 | 0x1f3a:0x1007 | proposed | medium |
+| digiland-dl701q-0c02 | 0x1f3a:0x0c02 | proposed | medium |
+| allwinner-it701a-4ee1 | 0x1f3a:0x4ee1 | proposed | medium |
+| infinix-gt-20-pro-601c | 0x1d5c:0x601c | proposed | low |
+| infinix-note-40-pro-601d | 0x1d5c:0x601d | proposed | low |
+| infinix-hot-40-pro-601e | 0x1d5c:0x601e | proposed | low |
+| infinix-zero-30-5g-601f | 0x1d5c:0x601f | proposed | low |
+| infinix-smart-8-6020 | 0x1d5c:0x6020 | proposed | low |
+| rockchip-rk3328-tvbox-0030 | 0x2207:0x0030 | proposed | medium |
+| allwinner-h616-tvbox-6010 | 0x1f3a:0x6010 | proposed | medium |
+| eken-h9r-1000 | 0x1f3a:0x1000 | proposed | medium |
+| eken-h5s-plus-1001 | 0x1f3a:0x1001 | proposed | medium |
+| eken-h6s-1002 | 0x1f3a:0x1002 | proposed | medium |
+| eken-h7s-1003 | 0x1f3a:0x1003 | proposed | medium |
+| eken-alfawise-v50-pro-1004 | 0x1f3a:0x1004 | proposed | medium |
+| marshall-emberton-000d | 0x2ad9:0x000d | proposed | medium |
+| marshall-emberton-ii-000f | 0x2ad9:0x000f | proposed | medium |
+| jbl-charge5-2070 | 0x0ecb:0x2070 | proposed | medium |
+| jbl-flip6-2072 | 0x0ecb:0x2072 | proposed | medium |
+| jbl-partybox310-2074 | 0x0ecb:0x2074 | proposed | medium |
+| microsoft-zune-8gb-0711 | 0x045e:0x0711 | proposed | medium |
+| microsoft-zune-80gb-0712 | 0x045e:0x0712 | proposed | medium |
+| microsoft-zune-16gb-0714 | 0x045e:0x0714 | proposed | medium |
+| microsoft-zune-120gb-0715 | 0x045e:0x0715 | proposed | medium |
+| microsoft-zune-hd-16gb-063f | 0x045e:0x063f | proposed | medium |
+| microsoft-kin-one-mtp-0643 | 0x045e:0x0643 | proposed | medium |
+| microsoft-kin-two-mtp-0644 | 0x045e:0x0644 | proposed | medium |
+| microsoft-lumia-alt-04ed | 0x045e:0x04ed | proposed | medium |
+| microsoft-surface-duo-0c26 | 0x045e:0x0c26 | proposed | medium |
+| microsoft-surface-duo-2-0c27 | 0x045e:0x0c27 | proposed | medium |
+| creative-zen-xfi-4159 | 0x041e:0x4159 | proposed | medium |
+| creative-zen-xfi2-2020 | 0x041e:0x2020 | proposed | medium |
+| creative-zen-xfi3-415a | 0x041e:0x415a | proposed | medium |
+| creative-zen-style-415b | 0x041e:0x415b | proposed | medium |
+| creative-zen-touch2-415c | 0x041e:0x415c | proposed | medium |
+| creative-zen-mozaic-415d | 0x041e:0x415d | proposed | medium |
+| creative-ziio-7-2029 | 0x041e:0x2029 | proposed | medium |
+| creative-ziio-10-202a | 0x041e:0x202a | proposed | medium |
+| creative-zen-wav-4160 | 0x041e:0x4160 | proposed | medium |
+| creative-zen-neeon-4134 | 0x041e:0x4134 | proposed | medium |
+| creative-zen-nano-4139 | 0x041e:0x4139 | proposed | medium |
+| creative-zen-microphoto-alt-413f | 0x041e:0x413f | proposed | medium |
+| creative-muvo-v100-200c | 0x041e:0x200c | proposed | medium |
+| creative-zen-sleek-4136 | 0x041e:0x4136 | proposed | medium |
+| viewsonic-m1-mini-plus-0210 | 0x0543:0x0210 | proposed | medium |
+| viewsonic-m2e-0211 | 0x0543:0x0211 | proposed | medium |
+| viewsonic-x1-4k-0212 | 0x0543:0x0212 | proposed | medium |
+| archos-101-oxygen-5604 | 0x0e79:0x5604 | proposed | medium |
+| archos-diamond-tab-5605 | 0x0e79:0x5605 | proposed | medium |
+| archos-101b-oxygen-5606 | 0x0e79:0x5606 | proposed | medium |
+| archos-t80-wifi-5607 | 0x0e79:0x5607 | proposed | medium |
+| archos-t101-wifi-5608 | 0x0e79:0x5608 | proposed | medium |
+| sandisk-extreme-portable-ssd-558c | 0x0781:0x558c | proposed | low |
+| sandisk-ultra-dual-drive-5590 | 0x0781:0x5590 | proposed | low |
+| sandisk-ixpand-flash-drive-55a3 | 0x0781:0x55a3 | proposed | low |
+| sandisk-extreme-pro-ssd-55af | 0x0781:0x55af | proposed | low |
+| microsoft-windows-phone-8-04ef | 0x045e:0x04ef | proposed | low |
+| creative-zen-stone-4149 | 0x041e:0x4149 | proposed | low |
+| archos-604-wifi-1332 | 0x0e79:0x1332 | proposed | low |
+| archos-5-1420 | 0x0e79:0x1420 | proposed | low |
+| archos-70-it-1488 | 0x0e79:0x1488 | proposed | low |
+| archos-101-it-148a | 0x0e79:0x148a | proposed | low |
+| cowon-iaudio-x5-0510 | 0x0e21:0x0510 | proposed | low |
+| cowon-iaudio-d2-0601 | 0x0e21:0x0601 | proposed | low |
+| cowon-iaudio-j3-0700 | 0x0e21:0x0700 | proposed | low |
+| philips-gogear-ariaz-2034 | 0x0471:0x2034 | proposed | low |
+| Archos 28 Internet Tablet | 0x0e79:0x1413 | community | community |
+| Archos 32 Internet Tablet | 0x0e79:0x1415 | community | community |
+| Archos 35 Internet Tablet | 0x0e79:0x1419 | community | community |
+| Archos 43 | 0x0e79:0x1411 | community | community |
+| Archos 43 Internet Tablet | 0x0e79:0x1417 | community | community |
+| Archos 70 Internet Tablet 2 | 0x0e79:0x1567 | community | community |
+| Cowon iAudio C2 | 0x0e21:0x0961 | community | community |
+| Cowon iAudio D3 | 0x0e21:0x0981 | community | community |
+| Cowon iAudio M2 | 0x0e21:0x0991 | community | community |
+| Cowon iAudio P1 | 0x0e21:0x0a01 | community | community |
+| Cowon iAudio Z2 | 0x0e21:0x0971 | community | community |
+| Creative MuVo N200 | 0x041e:0x200e | community | community |
+| Creative MuVo Slim | 0x041e:0x200b | community | community |
+| Creative MuVo TX FM | 0x041e:0x200d | community | community |
+| Creative ZEN MicroPhoto 5GB | 0x041e:0x413a | community | community |
+| Creative ZEN Mozaic EZ300 | 0x041e:0x4165 | community | community |
+| Creative ZEN Nano Plus | 0x041e:0x413b | community | community |
+| Creative ZEN Neeon 2 | 0x041e:0x4163 | community | community |
+| Creative ZEN Stone Plus | 0x041e:0x4164 | community | community |
+| Creative ZEN Style 100 | 0x041e:0x4170 | community | community |
+| Creative ZEN Style 200 | 0x041e:0x4171 | community | community |
+| Creative ZEN Style 300 | 0x041e:0x4172 | community | community |
+| Creative ZEN V Plus | 0x041e:0x4156 | community | community |
+| Creative ZEN X-Fi Style | 0x041e:0x4168 | community | community |
+| Dell DJ (1st Generation) | 0x413c:0x4100 | community | community |
+| Dell DJ 20GB | 0x413c:0x4101 | community | community |
+| Dell DJ Explorer | 0x413c:0x4106 | community | community |
+| Microsoft Zune 4GB | 0x045e:0x0713 | community | community |
+| Philips GoGear CAM | 0x0471:0x2099 | community | community |
+| Philips GoGear Mix | 0x0471:0x207f | community | community |
+| Philips GoGear Muse 2 | 0x0471:0x20e1 | community | community |
+| Philips GoGear RaGa | 0x0471:0x2085 | community | community |
+| Philips GoGear SA4 | 0x0471:0x20c5 | community | community |
+| Philips GoGear SA5285 | 0x0471:0x20a3 | community | community |
+| Philips GoGear SA5DOT | 0x0471:0x2083 | community | community |
+| Philips GoGear Spark | 0x0471:0x2089 | community | community |
+| Philips GoGear Vibe 4GB | 0x0471:0x20b1 | community | community |
+| Rio CE2100 | 0x045a:0x5250 | community | community |
+| Rio Chiba | 0x045a:0x5201 | community | community |
+| Rio Eigen | 0x045a:0x5232 | community | community |
+| Rio Forge | 0x045a:0x5231 | community | community |
+| Rio Nitrus | 0x045a:0x5202 | community | community |
+| Sony NWZ-A15 Walkman | 0x054c:0x0c6f | community | community |
+| Sony NWZ-A17 Walkman | 0x054c:0x0c70 | community | community |
+| Sony NWZ-A728 Walkman | 0x054c:0x035d | community | community |
+| Sony NWZ-A728B Walkman | 0x054c:0x035f | community | community |
+| Sony NWZ-A729 Walkman | 0x054c:0x035e | community | community |
+| Sony NWZ-A864 Walkman | 0x054c:0x05a7 | community | community |
+| Sony NWZ-E353 Walkman | 0x054c:0x04ca | community | community |
+| Sony NWZ-E373 Walkman | 0x054c:0x068a | community | community |
+| Sony NWZ-E435F Walkman | 0x054c:0x0383 | community | community |
+| Sony NWZ-E438F Walkman | 0x054c:0x0386 | community | community |
+| Sony NWZ-E443 Walkman | 0x054c:0x03fb | community | community |
+| Sony NWZ-E463 Walkman | 0x054c:0x05a5 | community | community |
+| Sony NWZ-E474 Walkman (alt) | 0x054c:0x06aa | community | community |
+| Sony NWZ-S515 Walkman | 0x054c:0x0328 | community | community |
+| Sony NWZ-S518 Walkman | 0x054c:0x0329 | community | community |
+| Sony NWZ-S544 Walkman | 0x054c:0x03ff | community | community |
+| Sony NWZ-W273S Walkman | 0x054c:0x0591 | community | community |
+| Toshiba Gigabeat F10 | 0x0930:0x000d | community | community |
+| Toshiba Gigabeat F20 | 0x0930:0x000b | community | community |
+| Toshiba Gigabeat F40 | 0x0930:0x000a | community | community |
+| Toshiba Gigabeat MEV30K | 0x0930:0x001c | community | community |
+| Toshiba Gigabeat S60 | 0x0930:0x0015 | community | community |
+| Toshiba Gigabeat T401 | 0x0930:0x001b | community | community |
+| iRiver E200 | 0x4102:0x1143 | community | community |
+| iRiver E300 | 0x4102:0x1168 | community | community |
+| iRiver H10 20GB | 0x4102:0x2104 | community | community |
+| iRiver H10 6GB | 0x4102:0x2103 | community | community |
+| iRiver H320 | 0x1006:0x3006 | community | community |
+| iRiver H340 | 0x1006:0x3005 | community | community |
+| iRiver Lplayer | 0x4102:0x1155 | community | community |
+| iRiver P7 | 0x4102:0x1160 | community | community |
+| iRiver T6 | 0x4102:0x1154 | community | community |
+| iRiver clix+ | 0x4102:0x112b | community | community |
+
+## Medical (11)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| phonak-noahlink-wireless-0001 | 0x2479:0x0001 | proposed | low |
+| phonak-target-icube-ii-0002 | 0x2479:0x0002 | proposed | low |
+| signia-connexx-programmer-0001 | 0x247a:0x0001 | proposed | low |
+| signia-easytek-0002 | 0x247a:0x0002 | proposed | low |
+| resound-noahlink-0001 | 0x247b:0x0001 | proposed | low |
+| resound-multi-mic-0002 | 0x247b:0x0002 | proposed | low |
+| dexcom-g6-receiver-0003 | 0x22a3:0x0003 | proposed | low |
+| dexcom-g7-receiver-0047 | 0x22a3:0x0047 | proposed | low |
+| abbott-freestyle-libre-reader-0001 | 0x1a61:0x0001 | proposed | low |
+| abbott-freestyle-libre2-reader-0002 | 0x1a61:0x0002 | proposed | low |
+| withings-scanwatch-0001 | 0x30b5:0x0001 | proposed | low |
+
+## Microscope (13)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| zeiss-axiocam-208c-0001 | 0x20ce:0x0001 | proposed | low |
+| zeiss-axiocam-305c-0002 | 0x20ce:0x0002 | proposed | low |
+| zeiss-axiocam-712-mono-0003 | 0x20ce:0x0003 | proposed | low |
+| zeiss-primo-star-cam-0004 | 0x20ce:0x0004 | proposed | low |
+| leica-microsystems-dfc7000t-0001 | 0x1038:0x0001 | proposed | low |
+| leica-microsystems-dmi8-cam-0002 | 0x1038:0x0002 | proposed | low |
+| leica-microsystems-flexacam-c1-0003 | 0x1038:0x0003 | proposed | low |
+| leica-microsystems-dfc9000gt-0004 | 0x1038:0x0004 | proposed | low |
+| olympus-dp74-microscope-0300 | 0x07b4:0x0300 | proposed | low |
+| olympus-dp27-microscope-0301 | 0x07b4:0x0301 | proposed | low |
+| olympus-dp23-microscope-0302 | 0x07b4:0x0302 | proposed | low |
+| olympus-dp73-microscope-0303 | 0x07b4:0x0303 | proposed | low |
+| olympus-dp80-microscope-0304 | 0x07b4:0x0304 | proposed | low |
+
+## Phone (2438)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| xiaomi-mi-note-2-ff10 | 0x2717:0xff10 | promoted | unknown |
+| xiaomi-mi-note-2-ff40 | 0x2717:0xff40 | promoted | high |
+| samsung-android-6860 | 0x04e8:0x6860 | promoted | medium |
+| oneplus-3t-f003 | 0x2a70:0xf003 | promoted | high |
+| google-pixel-7-4ee1 | 0x18d1:0x4ee1 | promoted | low |
+| samsung-galaxy-mtp-adb-685c | 0x04e8:0x685c | verified | high |
+| google-nexus-pixel-mtp-adb-4ee2 | 0x18d1:0x4ee2 | verified | high |
+| google-pixel-3-4-4eed | 0x18d1:0x4eed | proposed | medium |
+| motorola-moto-eg-mtp-2e82 | 0x22b8:0x2e82 | verified | high |
+| motorola-moto-eg-mtp-adb-2e76 | 0x22b8:0x2e76 | verified | medium |
+| sony-xperia-z-0193 | 0x0fce:0x0193 | verified | high |
+| sony-xperia-z3-01ba | 0x0fce:0x01ba | verified | high |
+| sony-xperia-xz1-01f3 | 0x0fce:0x01f3 | proposed | medium |
+| lg-android-633e | 0x1004:0x633e | proposed | medium |
+| lg-android-6300 | 0x1004:0x6300 | proposed | low |
+| htc-android-0f15 | 0x0bb4:0x0f15 | proposed | low |
+| huawei-android-107e | 0x12d1:0x107e | proposed | low |
+| oneplus-9-9011 | 0x2a70:0x9011 | proposed | medium |
+| samsung-galaxy-s20-s21-6866 | 0x04e8:0x6866 | proposed | low |
+| samsung-galaxy-kies-6877 | 0x04e8:0x6877 | proposed | low |
+| lg-v20-g5-g6-61f1 | 0x1004:0x61f1 | proposed | low |
+| lg-g4-v10-61f9 | 0x1004:0x61f9 | proposed | low |
+| htc-u11-u12-0f91 | 0x0bb4:0x0f91 | proposed | low |
+| htc-one-m8-m9-0ffe | 0x0bb4:0x0ffe | proposed | low |
+| huawei-p9-p10-1052 | 0x12d1:0x1052 | proposed | low |
+| huawei-p20-pro-mate20-1054 | 0x12d1:0x1054 | proposed | low |
+| huawei-p30-mate30-10c1 | 0x12d1:0x10c1 | proposed | low |
+| asus-zenfone-5-7770 | 0x0b05:0x7770 | proposed | low |
+| asus-zenfone-6-rog-7776 | 0x0b05:0x7776 | proposed | low |
+| acer-iconia-a500-3325 | 0x0502:0x3325 | proposed | low |
+| acer-iconia-a700-3378 | 0x0502:0x3378 | proposed | low |
+| oppo-realme-android-0001 | 0x22d9:0x0001 | proposed | low |
+| google-nexus-one-4e41 | 0x18d1:0x4e41 | proposed | low |
+| google-nexus-7-4e42 | 0x18d1:0x4e42 | proposed | low |
+| sony-xperia-z1-019e | 0x0fce:0x019e | proposed | low |
+| sony-xperia-z5-01d9 | 0x0fce:0x01d9 | proposed | low |
+| sony-xperia-xz-01e7 | 0x0fce:0x01e7 | proposed | low |
+| ricoh-pentax-k-0001 | 0x25fb:0x0001 | proposed | low |
+| nokia-n8-02fe | 0x0421:0x02fe | proposed | medium |
+| nokia-c7-03c1 | 0x0421:0x03c1 | proposed | medium |
+| nokia-e7-0334 | 0x0421:0x0334 | proposed | medium |
+| nokia-808-pureview-05d3 | 0x0421:0x05d3 | proposed | medium |
+| nokia-lumia-wp8-0661 | 0x0421:0x0661 | proposed | medium |
+| nokia-lumia-rm975-06fc | 0x0421:0x06fc | proposed | medium |
+| nokia-android-6-c025 | 0x2e04:0xc025 | proposed | medium |
+| nokia-android-61-c026 | 0x2e04:0xc026 | proposed | medium |
+| nokia-android-62-c02a | 0x2e04:0xc02a | proposed | medium |
+| zte-blade3-0306 | 0x19d2:0x0306 | proposed | medium |
+| zte-grand-x-in-0343 | 0x19d2:0x0343 | proposed | medium |
+| zte-v985-0383 | 0x19d2:0x0383 | proposed | medium |
+| zte-blade-l3-2008 | 0x19d2:0x2008 | proposed | medium |
+| zte-v5-ffce | 0x19d2:0xffce | proposed | medium |
+| zte-z9-max-ffcf | 0x19d2:0xffcf | proposed | medium |
+| lenovo-k1-740a | 0x17ef:0x740a | proposed | medium |
+| lenovo-thinkpad-tablet-741c | 0x17ef:0x741c | proposed | medium |
+| lenovo-vibe-k5-74ee | 0x17ef:0x74ee | proposed | medium |
+| lenovo-k3-note-7883 | 0x17ef:0x7883 | proposed | medium |
+| lenovo-p70-2008 | 0x17ef:0x2008 | proposed | medium |
+| blackberry-storm-9650-8007 | 0x0fca:0x8007 | proposed | medium |
+| blackberry-priv-8031 | 0x0fca:0x8031 | proposed | medium |
+| blackberry-dtek60-8041 | 0x0fca:0x8041 | proposed | medium |
+| blackberry-keyone-8042 | 0x0fca:0x8042 | proposed | medium |
+| meizu-mx-2008 | 0x2a45:0x2008 | proposed | medium |
+| meizu-mx-adb-0c02 | 0x2a45:0x0c02 | proposed | medium |
+| vivo-v11-6002 | 0x2d95:0x6002 | proposed | medium |
+| vivo-v19-6003 | 0x2d95:0x6003 | proposed | medium |
+| vivo-iqoo-neo9s-6012 | 0x2d95:0x6012 | proposed | medium |
+| samsung-galaxy-captivate-68a9 | 0x04e8:0x68a9 | proposed | medium |
+| xiaomi-mi3-0368 | 0x2717:0x0368 | proposed | medium |
+| xiaomi-redmi1-1248 | 0x2717:0x1248 | proposed | medium |
+| xiaomi-redmi1s-1260 | 0x2717:0x1260 | proposed | medium |
+| xiaomi-mi2s-ff48 | 0x2717:0xff48 | proposed | medium |
+| xiaomi-redmi2-ff60 | 0x2717:0xff60 | proposed | medium |
+| motorola-razr-hd-2e32 | 0x22b8:0x2e32 | proposed | medium |
+| motorola-moto-x-xt1053-2e62 | 0x22b8:0x2e62 | proposed | medium |
+| motorola-moto-x-xt1080-2e66 | 0x22b8:0x2e66 | proposed | medium |
+| motorola-moto-z2-2e81 | 0x22b8:0x2e81 | proposed | medium |
+| motorola-droid-turbo-2ea5 | 0x22b8:0x2ea5 | proposed | medium |
+| realme-phone-202a | 0x22d9:0x202a | proposed | medium |
+| oppo-find5-2764 | 0x22d9:0x2764 | proposed | medium |
+| oppo-find7-2765 | 0x22d9:0x2765 | proposed | medium |
+| oppo-find7-2774 | 0x22d9:0x2774 | proposed | medium |
+| sony-xperia-z2-01af | 0x0fce:0x01af | proposed | medium |
+| sony-xperia-z3-compact-01bb | 0x0fce:0x01bb | proposed | medium |
+| sony-xperia-z3plus-01c9 | 0x0fce:0x01c9 | proposed | medium |
+| sony-xperia-xa-01de | 0x0fce:0x01de | proposed | medium |
+| sony-xperia-xz2-01fa | 0x0fce:0x01fa | proposed | medium |
+| leica-m9-0002 | 0x1a98:0x0002 | proposed | low |
+| leica-sl-typ601-2041 | 0x1a98:0x2041 | proposed | low |
+| leica-m11-monochrom-2083 | 0x1a98:0x2083 | proposed | low |
+| leica-q3-2376 | 0x1a98:0x2376 | proposed | low |
+| leica-sl3-2382 | 0x1a98:0x2382 | proposed | low |
+| ricoh-pentax-k3-0165 | 0x25fb:0x0165 | proposed | low |
+| ricoh-pentax-k1-0179 | 0x25fb:0x0179 | proposed | low |
+| ricoh-pentax-k3ii-017b | 0x25fb:0x017b | proposed | low |
+| ricoh-pentax-k70-017d | 0x25fb:0x017d | proposed | low |
+| ricoh-pentax-kp-017f | 0x25fb:0x017f | proposed | low |
+| ricoh-wgm2-210b | 0x25fb:0x210b | proposed | low |
+| ricoh-gr-iii-210f | 0x25fb:0x210f | proposed | low |
+| ricoh-gr-iiix-2115 | 0x25fb:0x2115 | proposed | low |
+| gopro-max-004b | 0x2672:0x004b | proposed | low |
+| gopro-hero9-black-004d | 0x2672:0x004d | proposed | low |
+| gopro-hero10-black-0056 | 0x2672:0x0056 | proposed | low |
+| gopro-hero11-black-0059 | 0x2672:0x0059 | proposed | low |
+| gopro-hero11-mini-005a | 0x2672:0x005a | proposed | low |
+| tcl-s950-6010d-0167 | 0x1bbb:0x0167 | proposed | low |
+| alcatel-one-touch-997d-0c02 | 0x1bbb:0x0c02 | proposed | low |
+| alcatel-one-touch-997d-2008 | 0x1bbb:0x2008 | proposed | low |
+| alcatel-a405dl-901b | 0x1bbb:0x901b | proposed | low |
+| alcatel-bs472-904d | 0x1bbb:0x904d | proposed | low |
+| alcatel-one-touch-5042d-a00e | 0x1bbb:0xa00e | proposed | low |
+| alcatel-idol3-id2-af00 | 0x1bbb:0xaf00 | proposed | low |
+| alcatel-idol3-small-af2a | 0x1bbb:0xaf2a | proposed | low |
+| alcatel-idol3-af2b | 0x1bbb:0xaf2b | proposed | low |
+| alcatel-6034r-f003 | 0x1bbb:0xf003 | proposed | low |
+| sharp-sbm203sh-9661 | 0x04dd:0x9661 | proposed | low |
+| sharp-sh06e-96ca | 0x04dd:0x96ca | proposed | low |
+| sharp-shv35-aquos-u-99d2 | 0x04dd:0x99d2 | proposed | low |
+| sharp-android-one-s5-9c90 | 0x04dd:0x9c90 | proposed | low |
+| sharp-s7-sh-9d6e | 0x04dd:0x9d6e | proposed | low |
+| kyocera-rise-0571 | 0x0482:0x0571 | proposed | low |
+| kyocera-event-0591 | 0x0482:0x0591 | proposed | low |
+| kyocera-torque-e6715-059a | 0x0482:0x059a | proposed | low |
+| kyocera-hydro-elite-c6750-073c | 0x0482:0x073c | proposed | low |
+| kyocera-hydro-icon-085e | 0x0482:0x085e | proposed | low |
+| kyocera-duraforce-0979 | 0x0482:0x0979 | proposed | low |
+| kyocera-kc-s701-09cb | 0x0482:0x09cb | proposed | low |
+| kyocera-duraforce-xd-0a9a | 0x0482:0x0a9a | proposed | low |
+| fairphone-2-id2-6764 | 0x2ae5:0x6764 | proposed | low |
+| fairphone-2-f003 | 0x2ae5:0xf003 | proposed | low |
+| fairphone-2-os-9039 | 0x2ae5:0x9039 | proposed | low |
+| honor-x8-x9-5g-107d | 0x339b:0x107d | proposed | low |
+| honor-x6a-107f | 0x339b:0x107f | proposed | low |
+| htc-m9-0401 | 0x0bb4:0x0401 | proposed | low |
+| htc-one-0dda | 0x0bb4:0x0dda | proposed | low |
+| htc-one-m8-0f25 | 0x0bb4:0x0f25 | proposed | low |
+| htc-desire-310-0ec6 | 0x0bb4:0x0ec6 | proposed | low |
+| lg-g2-vs980-621c | 0x1004:0x621c | proposed | low |
+| lg-g3-627f | 0x1004:0x627f | proposed | low |
+| lg-g6-62c9 | 0x1004:0x62c9 | proposed | low |
+| lg-g5-62ce | 0x1004:0x62ce | proposed | low |
+| huawei-android-1051 | 0x12d1:0x1051 | proposed | low |
+| huawei-honor-7-1074 | 0x12d1:0x1074 | proposed | low |
+| huawei-y5-2017-107f | 0x12d1:0x107f | proposed | low |
+| huawei-ascend-p8-1082 | 0x12d1:0x1082 | proposed | low |
+| xiaomi-mi-3w-mtp-0360 | 0x2717:0x0360 | proposed | low |
+| xiaomi-hm-1s-1268 | 0x2717:0x1268 | proposed | low |
+| xiaomi-redmi-2-ff68 | 0x2717:0xff68 | proposed | low |
+| motorola-atrix-razr-hd-2e33 | 0x22b8:0x2e33 | proposed | low |
+| motorola-droid-turbo-2-2e61 | 0x22b8:0x2e61 | proposed | low |
+| motorola-moto-x-xt1058-2e63 | 0x22b8:0x2e63 | proposed | low |
+| motorola-droid-turbo-vzw-2ea8 | 0x22b8:0x2ea8 | proposed | low |
+| casio-exilim-1042 | 0x07cf:0x1042 | proposed | low |
+| casio-exilim-1049 | 0x07cf:0x1049 | proposed | low |
+| casio-exilim-104c | 0x07cf:0x104c | proposed | low |
+| casio-exilim-104d | 0x07cf:0x104d | proposed | low |
+| casio-exilim-117a | 0x07cf:0x117a | proposed | low |
+| gopro-hero-000c | 0x2672:0x000c | proposed | low |
+| gopro-hero4-silver-000d | 0x2672:0x000d | proposed | low |
+| gopro-hero4-black-000e | 0x2672:0x000e | proposed | low |
+| gopro-hero3plus-0011 | 0x2672:0x0011 | proposed | low |
+| gopro-hero-plus-0021 | 0x2672:0x0021 | proposed | low |
+| gopro-hero5-black-0027 | 0x2672:0x0027 | proposed | low |
+| gopro-hero5-session-0029 | 0x2672:0x0029 | proposed | low |
+| gopro-hero6-black-0037 | 0x2672:0x0037 | proposed | low |
+| gopro-hero7-white-0042 | 0x2672:0x0042 | proposed | low |
+| gopro-hero7-silver-0043 | 0x2672:0x0043 | proposed | low |
+| gopro-hero7-black-0047 | 0x2672:0x0047 | proposed | low |
+| gopro-hero8-black-0049 | 0x2672:0x0049 | proposed | low |
+| gopro-hero12-black-005c | 0x2672:0x005c | proposed | low |
+| omsystem-om1mkii-33a2-0136 | 0x33a2:0x0136 | proposed | low |
+| google-nexus-one-4e12 | 0x18d1:0x4e12 | proposed | low |
+| google-pixel-c-5202 | 0x18d1:0x5202 | proposed | low |
+| google-pixel-c-adb-5203 | 0x18d1:0x5203 | proposed | low |
+| google-oneplus-6t-7169 | 0x18d1:0x7169 | proposed | low |
+| huawei-honor-h60-1079 | 0x12d1:0x1079 | proposed | low |
+| huawei-nova-107d | 0x12d1:0x107d | proposed | low |
+| huawei-nova14-1101 | 0x12d1:0x1101 | proposed | low |
+| huawei-y600-2008 | 0x12d1:0x2008 | proposed | low |
+| huawei-honor-3c-2012 | 0x12d1:0x2012 | proposed | low |
+| zte-v55-0244 | 0x19d2:0x0244 | proposed | low |
+| zte-v55-0245 | 0x19d2:0x0245 | proposed | low |
+| zte-v880e-0307 | 0x19d2:0x0307 | proposed | low |
+| oppo-x9006-2773 | 0x22d9:0x2773 | proposed | low |
+| samsung-yp-z5-503c | 0x04e8:0x503c | proposed | low |
+| samsung-yp-t9-507f | 0x04e8:0x507f | proposed | low |
+| samsung-yp-p2-5083 | 0x04e8:0x5083 | proposed | low |
+| samsung-yp-u4-5093 | 0x04e8:0x5093 | proposed | low |
+| samsung-yp-q2-511d | 0x04e8:0x511d | proposed | low |
+| samsung-yp-u5-5121 | 0x04e8:0x5121 | proposed | low |
+| samsung-yp-r0-5125 | 0x04e8:0x5125 | proposed | low |
+| samsung-yp-q3-5130 | 0x04e8:0x5130 | proposed | low |
+| barnesnoble-nook-0005 | 0x2080:0x0005 | proposed | low |
+| barnesnoble-nook-0006 | 0x2080:0x0006 | proposed | low |
+| barnesnoble-nook-000a | 0x2080:0x000a | proposed | low |
+| mediatek-mt5xx-0050 | 0x0e8d:0x0050 | proposed | low |
+| mediatek-mt65xx-mtp-2008 | 0x0e8d:0x2008 | proposed | low |
+| mediatek-mt65xx-mtp-cdc-adb-200a | 0x0e8d:0x200a | proposed | low |
+| mediatek-mt65xx-mtp-adb-201d | 0x0e8d:0x201d | proposed | low |
+| mediatek-wiko-sunny-4001 | 0x0e8d:0x4001 | proposed | low |
+| vivo-y21-mediatek-ff00 | 0x0e8d:0xff00 | proposed | low |
+| oneplus-9-5g-9012 | 0x2a70:0x9012 | proposed | low |
+| asus-zenfone-go-2008 | 0x0b05:0x2008 | proposed | low |
+| asus-zenfone5-mtp-5480 | 0x0b05:0x5480 | proposed | low |
+| asus-zenfone6-mtp-5490 | 0x0b05:0x5490 | proposed | low |
+| asus-zenfone2-mtp-5600 | 0x0b05:0x5600 | proposed | low |
+| asus-zenfone5-a500kl-7780 | 0x0b05:0x7780 | proposed | low |
+| asus-memopad7-me572cl-7772 | 0x0b05:0x7772 | proposed | low |
+| asus-fonepad7-fe375cxg-7773 | 0x0b05:0x7773 | proposed | low |
+| unisoc-android-mtp-4001 | 0x1782:0x4001 | proposed | low |
+| unisoc-android-mtp-adb-4002 | 0x1782:0x4002 | proposed | low |
+| unisoc-android-mtp-adb-4003 | 0x1782:0x4003 | proposed | low |
+| xiaomi-hongmi-mtp-adb-1240 | 0x2717:0x1240 | proposed | low |
+| xiaomi-hm-note-1ltew-1360 | 0x2717:0x1360 | proposed | low |
+| xiaomi-mi2-mtp-adb-9039 | 0x2717:0x9039 | proposed | low |
+| xiaomi-mi2-mtp-f003 | 0x2717:0xf003 | proposed | low |
+| alcatel-6030a-0168 | 0x1bbb:0x0168 | proposed | low |
+| htc-one-u11-0f26 | 0x0bb4:0x0f26 | proposed | low |
+| kyocera-302kc-09fc | 0x0482:0x09fc | proposed | low |
+| kyocera-c6740n-0a73 | 0x0482:0x0a73 | proposed | low |
+| letv-x5001s-1700 | 0x2b0e:0x1700 | proposed | low |
+| letv-1s-1704 | 0x2b0e:0x1704 | proposed | low |
+| blu-vivo-xl-4008 | 0x271d:0x4008 | proposed | low |
+| tomtom-rider-40-5455 | 0x1390:0x5455 | proposed | low |
+| tolino-vision-4-hd-6056 | 0x1f85:0x6056 | proposed | low |
+| sony-xperia-ion-0177 | 0x0fce:0x0177 | proposed | low |
+| sony-xperia-t-0182 | 0x0fce:0x0182 | proposed | low |
+| sony-xperia-v-0186 | 0x0fce:0x0186 | proposed | low |
+| sony-xperia-sp-0195 | 0x0fce:0x0195 | proposed | low |
+| sony-xperia-m-019b | 0x0fce:0x019b | proposed | low |
+| sony-xperia-c-01a3 | 0x0fce:0x01a3 | proposed | low |
+| sony-xperia-z1-compact-01a7 | 0x0fce:0x01a7 | proposed | low |
+| sony-xperia-t2-ultra-01a9 | 0x0fce:0x01a9 | proposed | low |
+| sony-xperia-m2-01aa | 0x0fce:0x01aa | proposed | low |
+| sony-xperia-e3-01bc | 0x0fce:0x01bc | proposed | low |
+| sony-xperia-m4-aqua-01c4 | 0x0fce:0x01c4 | proposed | low |
+| sony-xperia-e4g-01cb | 0x0fce:0x01cb | proposed | low |
+| sony-xperia-c4-dual-01d2 | 0x0fce:0x01d2 | proposed | low |
+| sony-xperia-m5-01d6 | 0x0fce:0x01d6 | proposed | low |
+| sony-xperia-z5-compact-01da | 0x0fce:0x01da | proposed | low |
+| sony-xperia-z5-premium-01db | 0x0fce:0x01db | proposed | low |
+| sony-xperia-x-01e0 | 0x0fce:0x01e0 | proposed | low |
+| sony-xperia-x-compact-01e8 | 0x0fce:0x01e8 | proposed | low |
+| sony-xperia-xa1-01eb | 0x0fce:0x01eb | proposed | low |
+| sony-xperia-xa1-ultra-01ef | 0x0fce:0x01ef | proposed | low |
+| sony-xperia-xz-premium-01f1 | 0x0fce:0x01f1 | proposed | low |
+| sony-xperia-xz1-compact-01f4 | 0x0fce:0x01f4 | proposed | low |
+| sony-xperia-l2-01f6 | 0x0fce:0x01f6 | proposed | low |
+| sony-xperia-xa2-compact-01f7 | 0x0fce:0x01f7 | proposed | low |
+| sony-xperia-xa2-ultra-01f8 | 0x0fce:0x01f8 | proposed | low |
+| sony-xperia-xz2-compact-01f9 | 0x0fce:0x01f9 | proposed | low |
+| sony-xperia-xz2-premium-01fb | 0x0fce:0x01fb | proposed | low |
+| sony-xperia-xz3-01ff | 0x0fce:0x01ff | proposed | low |
+| sony-xperia-10-0201 | 0x0fce:0x0201 | proposed | low |
+| sony-xperia-1-0205 | 0x0fce:0x0205 | proposed | low |
+| sony-xperia-l3-0207 | 0x0fce:0x0207 | proposed | low |
+| sony-xperia-5-020a | 0x0fce:0x020a | proposed | low |
+| sony-xperia-10-v-020c | 0x0fce:0x020c | proposed | low |
+| sony-xperia-5-ii-020d | 0x0fce:0x020d | proposed | low |
+| sony-xperia-10-vi-020e | 0x0fce:0x020e | proposed | low |
+| lenovo-p70-a-0c02 | 0x17ef:0x0c02 | proposed | medium |
+| lenovo-p700-7497 | 0x17ef:0x7497 | proposed | medium |
+| lenovo-p780-74a6 | 0x17ef:0x74a6 | proposed | medium |
+| lenovo-k900-75b5 | 0x17ef:0x75b5 | proposed | medium |
+| lenovo-k920-778f | 0x17ef:0x778f | proposed | medium |
+| lenovo-vibe-z2-77ea | 0x17ef:0x77ea | proposed | medium |
+| lenovo-vibe-shot-78a7 | 0x17ef:0x78a7 | proposed | medium |
+| lenovo-a7000-a-7882 | 0x17ef:0x7882 | proposed | medium |
+| lenovo-phab-plus-78d1 | 0x17ef:0x78d1 | proposed | medium |
+| lenovo-vibe-k5-note-7999 | 0x17ef:0x7999 | proposed | medium |
+| lenovo-k6-power-7a2a | 0x17ef:0x7a2a | proposed | medium |
+| lenovo-tab-m10-7bdf | 0x17ef:0x7bdf | proposed | medium |
+| motorola-xt1524-mtp-002e | 0x22b8:0x002e | proposed | medium |
+| motorola-razr-m-xt907-mtp-2e50 | 0x22b8:0x2e50 | proposed | medium |
+| motorola-razr-m-xt907-adb-2e51 | 0x22b8:0x2e51 | proposed | medium |
+| motorola-droid-maxx-2e67 | 0x22b8:0x2e67 | proposed | medium |
+| motorola-droid-ultra-2e68 | 0x22b8:0x2e68 | proposed | medium |
+| motorola-moto-z-ptp-2e83 | 0x22b8:0x2e83 | proposed | medium |
+| motorola-moto-maxx-xt1225-2ea4 | 0x22b8:0x2ea4 | proposed | medium |
+| motorola-xoom-mtp-70a8 | 0x22b8:0x70a8 | proposed | medium |
+| meizu-pro5-ubuntu-d001 | 0x18d1:0xd001 | proposed | medium |
+| nokia-n81-000a | 0x0421:0x000a | proposed | medium |
+| nokia-6120c-002e | 0x0421:0x002e | proposed | medium |
+| nokia-n96-0039 | 0x0421:0x0039 | proposed | medium |
+| nokia-6500c-003c | 0x0421:0x003c | proposed | medium |
+| nokia-5310-xpressmusic-006c | 0x0421:0x006c | proposed | medium |
+| nokia-n95-8gb-006e | 0x0421:0x006e | proposed | medium |
+| nokia-n82-0074 | 0x0421:0x0074 | proposed | medium |
+| nokia-n78-0079 | 0x0421:0x0079 | proposed | medium |
+| nokia-n85-0092 | 0x0421:0x0092 | proposed | medium |
+| nokia-e71-00e4 | 0x0421:0x00e4 | proposed | medium |
+| nokia-e66-00e5 | 0x0421:0x00e5 | proposed | medium |
+| nokia-5800-xpressmusic-0154 | 0x0421:0x0154 | proposed | medium |
+| nokia-n97-01f5 | 0x0421:0x01f5 | proposed | medium |
+| nokia-e72-0221 | 0x0421:0x0221 | proposed | medium |
+| nokia-5230-02e2 | 0x0421:0x02e2 | proposed | medium |
+| nokia-n95-04ef | 0x0421:0x04ef | proposed | medium |
+| nokia-n9-051a | 0x0421:0x051a | proposed | medium |
+| nokia-701-0530 | 0x0421:0x0530 | proposed | medium |
+| nokia-c5-00-0592 | 0x0421:0x0592 | proposed | medium |
+| nokia-lumia-301-0666 | 0x0421:0x0666 | proposed | medium |
+| nokia-xl-06e8 | 0x0421:0x06e8 | proposed | medium |
+| blackberry-z10-8004 | 0x0fca:0x8004 | proposed | low |
+| blackberry-q10-8006 | 0x0fca:0x8006 | proposed | low |
+| blackberry-z30-8020 | 0x0fca:0x8020 | proposed | low |
+| blackberry-passport-8025 | 0x0fca:0x8025 | proposed | low |
+| blackberry-classic-8030 | 0x0fca:0x8030 | proposed | low |
+| lg-p500-618e | 0x1004:0x618e | proposed | medium |
+| lg-g2-d800-6344 | 0x1004:0x6344 | proposed | medium |
+| lg-g2-d802-6345 | 0x1004:0x6345 | proposed | medium |
+| lg-g2-d801-6347 | 0x1004:0x6347 | proposed | medium |
+| lg-g2-vs980-634e | 0x1004:0x634e | proposed | medium |
+| lg-g4-h810-6355 | 0x1004:0x6355 | proposed | medium |
+| lg-g4-h811-6356 | 0x1004:0x6356 | proposed | medium |
+| lg-g4-h815-6357 | 0x1004:0x6357 | proposed | medium |
+| lg-g4-vs986-6358 | 0x1004:0x6358 | proposed | medium |
+| lg-g5-h830-6365 | 0x1004:0x6365 | proposed | medium |
+| lg-g5-h820-6366 | 0x1004:0x6366 | proposed | medium |
+| lg-g5-h850-6368 | 0x1004:0x6368 | proposed | medium |
+| lg-g5-vs987-6369 | 0x1004:0x6369 | proposed | medium |
+| lg-g6-h870-6370 | 0x1004:0x6370 | proposed | medium |
+| lg-g6-h872-6372 | 0x1004:0x6372 | proposed | medium |
+| lg-g6-us997-6375 | 0x1004:0x6375 | proposed | medium |
+| lg-v10-h900-6380 | 0x1004:0x6380 | proposed | medium |
+| lg-v10-h901-6382 | 0x1004:0x6382 | proposed | medium |
+| lg-v20-h910-6388 | 0x1004:0x6388 | proposed | medium |
+| lg-v20-h918-6389 | 0x1004:0x6389 | proposed | medium |
+| lg-v20-h990-638a | 0x1004:0x638a | proposed | medium |
+| lg-v30-h930-6395 | 0x1004:0x6395 | proposed | medium |
+| lg-v30-h933-6396 | 0x1004:0x6396 | proposed | medium |
+| lg-v30-us998-6398 | 0x1004:0x6398 | proposed | medium |
+| lg-v40-v405qa7-63a2 | 0x1004:0x63a2 | proposed | medium |
+| lg-v50-lmv500n-63a3 | 0x1004:0x63a3 | proposed | medium |
+| lg-velvet-lmg910-63a8 | 0x1004:0x63a8 | proposed | medium |
+| lg-k7-63b0 | 0x1004:0x63b0 | proposed | medium |
+| lg-k8-63b1 | 0x1004:0x63b1 | proposed | medium |
+| lg-k10-63b5 | 0x1004:0x63b5 | proposed | medium |
+| lg-k20-63b6 | 0x1004:0x63b6 | proposed | medium |
+| lg-k30-63b8 | 0x1004:0x63b8 | proposed | medium |
+| lg-k40-63bb | 0x1004:0x63bb | proposed | medium |
+| lg-k50-63bc | 0x1004:0x63bc | proposed | medium |
+| lg-stylo3-m430-63c0 | 0x1004:0x63c0 | proposed | medium |
+| lg-stylo4-q710al-63c1 | 0x1004:0x63c1 | proposed | medium |
+| lg-stylo5-q720al-63c2 | 0x1004:0x63c2 | proposed | medium |
+| lg-q6-m700a-63c5 | 0x1004:0x63c5 | proposed | medium |
+| lg-q7-q610ma-63c6 | 0x1004:0x63c6 | proposed | medium |
+| lg-q8-h970-63ca | 0x1004:0x63ca | proposed | medium |
+| lg-xpower-k220-63d0 | 0x1004:0x63d0 | proposed | medium |
+| lg-xmach-k600y-63d1 | 0x1004:0x63d1 | proposed | medium |
+| lg-xstyle-k200ds-63d2 | 0x1004:0x63d2 | proposed | medium |
+| lg-aristo-ms210-63d5 | 0x1004:0x63d5 | proposed | medium |
+| lg-aristo2-x212-63d6 | 0x1004:0x63d6 | proposed | medium |
+| lg-nexus5-d820-63e0 | 0x1004:0x63e0 | proposed | medium |
+| lg-nexus5x-h790-63e1 | 0x1004:0x63e1 | proposed | medium |
+| lg-watch-urbane-w150-6400 | 0x1004:0x6400 | proposed | medium |
+| lg-watch-w7-6404 | 0x1004:0x6404 | proposed | medium |
+| htc-one-m7-mtpplusadb-0c01 | 0x0bb4:0x0c01 | proposed | medium |
+| htc-one-m7-0c02 | 0x0bb4:0x0c02 | proposed | medium |
+| htc-one-m9-0c93 | 0x0bb4:0x0c93 | proposed | medium |
+| htc-desire-610-0c97 | 0x0bb4:0x0c97 | proposed | medium |
+| htc-desire-820-0c9e | 0x0bb4:0x0c9e | proposed | medium |
+| htc-desire-526g-0ca2 | 0x0bb4:0x0ca2 | proposed | medium |
+| htc-one-m8-0ca3 | 0x0bb4:0x0ca3 | proposed | medium |
+| htc-desire-630-0ca9 | 0x0bb4:0x0ca9 | proposed | medium |
+| htc-desire-10-0cae | 0x0bb4:0x0cae | proposed | medium |
+| htc-one-a9-0cb3 | 0x0bb4:0x0cb3 | proposed | medium |
+| htc-10-m10h-0cb5 | 0x0bb4:0x0cb5 | proposed | medium |
+| htc-one-x10-e66-0cba | 0x0bb4:0x0cba | proposed | medium |
+| htc-u11-0cbe | 0x0bb4:0x0cbe | proposed | medium |
+| htc-u11-plus-0cc0 | 0x0bb4:0x0cc0 | proposed | medium |
+| htc-u12-plus-0cc7 | 0x0bb4:0x0cc7 | proposed | medium |
+| htc-android-mtpplusadb-0f63 | 0x0bb4:0x0f63 | proposed | medium |
+| htc-hero-0f87 | 0x0bb4:0x0f87 | proposed | medium |
+| htc-wildfire-0f9a | 0x0bb4:0x0f9a | proposed | medium |
+| htc-desire-hd-a9191-0ff8 | 0x0bb4:0x0ff8 | proposed | medium |
+| htc-desire-z-t8788-0ff9 | 0x0bb4:0x0ff9 | proposed | medium |
+| nokia-n8-new-0610 | 0x0421:0x0610 | proposed | medium |
+| nokia-e7-new-0612 | 0x0421:0x0612 | proposed | medium |
+| nokia-n950-prototype-0613 | 0x0421:0x0613 | proposed | medium |
+| nokia-6-2018-05af | 0x0421:0x05af | proposed | medium |
+| nokia-7-plus-05b3 | 0x0421:0x05b3 | proposed | medium |
+| nokia-8-sirocco-05b6 | 0x0421:0x05b6 | proposed | medium |
+| nokia-3-1-05b7 | 0x0421:0x05b7 | proposed | medium |
+| nokia-5-1-05b8 | 0x0421:0x05b8 | proposed | medium |
+| nokia-7-1-05ba | 0x0421:0x05ba | proposed | medium |
+| nokia-8-1-05bb | 0x0421:0x05bb | proposed | medium |
+| nokia-6-1-plus-05bc | 0x0421:0x05bc | proposed | medium |
+| nokia-9-pureview-05bd | 0x0421:0x05bd | proposed | medium |
+| nokia-3-2-05be | 0x0421:0x05be | proposed | medium |
+| nokia-4-2-05bf | 0x0421:0x05bf | proposed | medium |
+| nokia-2-2-05c0 | 0x0421:0x05c0 | proposed | medium |
+| nokia-1-plus-05c2 | 0x0421:0x05c2 | proposed | medium |
+| nokia-6-2-7-2-05c5 | 0x0421:0x05c5 | proposed | medium |
+| nokia-2-3-05c8 | 0x0421:0x05c8 | proposed | medium |
+| nokia-5-3-05ca | 0x0421:0x05ca | proposed | medium |
+| nokia-c3-05cb | 0x0421:0x05cb | proposed | medium |
+| nokia-g10-g20-05cc | 0x0421:0x05cc | proposed | medium |
+| nokia-g50-5g-05cd | 0x0421:0x05cd | proposed | medium |
+| nokia-x20-x10-05ce | 0x0421:0x05ce | proposed | medium |
+| nokia-lumia-800-0668 | 0x0421:0x0668 | proposed | medium |
+| nokia-lumia-710-066e | 0x0421:0x066e | proposed | medium |
+| nokia-lumia-900-0670 | 0x0421:0x0670 | proposed | medium |
+| nokia-lumia-920-0671 | 0x0421:0x0671 | proposed | medium |
+| nokia-lumia-920-alt-0672 | 0x0421:0x0672 | proposed | medium |
+| nokia-lumia-1520-06fd | 0x0421:0x06fd | proposed | medium |
+| nokia-lumia-925-0700 | 0x0421:0x0700 | proposed | medium |
+| nokia-lumia-630-635-0702 | 0x0421:0x0702 | proposed | medium |
+| blackberry-pearl-3g-9100-8010 | 0x0fca:0x8010 | proposed | medium |
+| blackberry-torch-9800-8013 | 0x0fca:0x8013 | proposed | medium |
+| blackberry-bold-9780-8014 | 0x0fca:0x8014 | proposed | medium |
+| blackberry-bold-9650-8015 | 0x0fca:0x8015 | proposed | medium |
+| blackberry-style-9670-8016 | 0x0fca:0x8016 | proposed | medium |
+| blackberry-torch-9860-9850-8017 | 0x0fca:0x8017 | proposed | medium |
+| blackberry-torch-9810-8018 | 0x0fca:0x8018 | proposed | medium |
+| blackberry-q10-8040 | 0x0fca:0x8040 | proposed | medium |
+| blackberry-classic-q20-8045 | 0x0fca:0x8045 | proposed | medium |
+| blackberry-passport-8050 | 0x0fca:0x8050 | proposed | medium |
+| blackberry-priv-8055 | 0x0fca:0x8055 | proposed | medium |
+| blackberry-dtek50-8060 | 0x0fca:0x8060 | proposed | medium |
+| blackberry-dtek60-8065 | 0x0fca:0x8065 | proposed | medium |
+| blackberry-keyone-8070 | 0x0fca:0x8070 | proposed | medium |
+| blackberry-motion-8072 | 0x0fca:0x8072 | proposed | medium |
+| blackberry-key2-8075 | 0x0fca:0x8075 | proposed | medium |
+| zte-grandx-u970-0367 | 0x19d2:0x0367 | proposed | medium |
+| zte-blade3-0386 | 0x19d2:0x0386 | proposed | medium |
+| zte-grandx2-03a8 | 0x19d2:0x03a8 | proposed | medium |
+| zte-grands-03c8 | 0x19d2:0x03c8 | proposed | medium |
+| zte-grandmemo-03c9 | 0x19d2:0x03c9 | proposed | medium |
+| zte-bladev-v9180-03d3 | 0x19d2:0x03d3 | proposed | medium |
+| zte-bladel3-03d5 | 0x19d2:0x03d5 | proposed | medium |
+| zte-blades6-03e1 | 0x19d2:0x03e1 | proposed | medium |
+| zte-axon7-a2017-03e5 | 0x19d2:0x03e5 | proposed | medium |
+| zte-bladev7max-03e7 | 0x19d2:0x03e7 | proposed | medium |
+| zte-axonm-z999-03ee | 0x19d2:0x03ee | proposed | medium |
+| zte-bladezmax-03f1 | 0x19d2:0x03f1 | proposed | medium |
+| zte-zmaxpro-z981-03f3 | 0x19d2:0x03f3 | proposed | medium |
+| zte-z557-03f5 | 0x19d2:0x03f5 | proposed | medium |
+| zte-z971-03f8 | 0x19d2:0x03f8 | proposed | medium |
+| zte-zfiveg-z557bl-0402 | 0x19d2:0x0402 | proposed | medium |
+| zte-bladex1-5g-0405 | 0x19d2:0x0405 | proposed | medium |
+| zte-z957-cricket-0408 | 0x19d2:0x0408 | proposed | medium |
+| zte-zmax10-z6250-0412 | 0x19d2:0x0412 | proposed | medium |
+| zte-bladev2020-0415 | 0x19d2:0x0415 | proposed | medium |
+| oppo-a5-a9-2768 | 0x22d9:0x2768 | proposed | medium |
+| oppo-findx-276a | 0x22d9:0x276a | proposed | medium |
+| oppo-reno-276b | 0x22d9:0x276b | proposed | medium |
+| oppo-reno2-276c | 0x22d9:0x276c | proposed | medium |
+| oppo-a91-f15-276d | 0x22d9:0x276d | proposed | medium |
+| oppo-f11pro-276e | 0x22d9:0x276e | proposed | medium |
+| oppo-a31-2770 | 0x22d9:0x2770 | proposed | medium |
+| oppo-a52-2771 | 0x22d9:0x2771 | proposed | medium |
+| oppo-a72-2772 | 0x22d9:0x2772 | proposed | medium |
+| oppo-a53s-2775 | 0x22d9:0x2775 | proposed | medium |
+| oppo-reno5pro-2776 | 0x22d9:0x2776 | proposed | medium |
+| oppo-a74-2777 | 0x22d9:0x2777 | proposed | medium |
+| oppo-findx3pro-2778 | 0x22d9:0x2778 | proposed | medium |
+| oppo-findx3neo-2779 | 0x22d9:0x2779 | proposed | medium |
+| oppo-reno6proplus-277a | 0x22d9:0x277a | proposed | medium |
+| oppo-a95-277b | 0x22d9:0x277b | proposed | medium |
+| oppo-findx5pro-277c | 0x22d9:0x277c | proposed | medium |
+| oppo-a96-277d | 0x22d9:0x277d | proposed | medium |
+| realme-3pro-2780 | 0x22d9:0x2780 | proposed | medium |
+| realme-5pro-2781 | 0x22d9:0x2781 | proposed | medium |
+| realme-6pro-2782 | 0x22d9:0x2782 | proposed | medium |
+| realme-7pro-2783 | 0x22d9:0x2783 | proposed | medium |
+| realme-8pro-2784 | 0x22d9:0x2784 | proposed | medium |
+| realme-9proplus-2785 | 0x22d9:0x2785 | proposed | medium |
+| realme-gt-2786 | 0x22d9:0x2786 | proposed | medium |
+| realme-gt2pro-2787 | 0x22d9:0x2787 | proposed | medium |
+| realme-c35-2788 | 0x22d9:0x2788 | proposed | medium |
+| oneplus-n10-5g-2789 | 0x22d9:0x2789 | proposed | medium |
+| vivo-y91i-600c | 0x2d95:0x600c | proposed | medium |
+| vivo-v17pro-600d | 0x2d95:0x600d | proposed | medium |
+| vivo-s1pro-600e | 0x2d95:0x600e | proposed | medium |
+| vivo-x30pro-600f | 0x2d95:0x600f | proposed | medium |
+| vivo-x50pro-6010 | 0x2d95:0x6010 | proposed | medium |
+| vivo-x51-5g-6011 | 0x2d95:0x6011 | proposed | medium |
+| vivo-v21-5g-6013 | 0x2d95:0x6013 | proposed | medium |
+| vivo-x60proplus-6014 | 0x2d95:0x6014 | proposed | medium |
+| vivo-v23pro-6015 | 0x2d95:0x6015 | proposed | medium |
+| vivo-x70proplus-6016 | 0x2d95:0x6016 | proposed | medium |
+| vivo-v25pro-6017 | 0x2d95:0x6017 | proposed | medium |
+| vivo-x80pro-6018 | 0x2d95:0x6018 | proposed | medium |
+| vivo-x90proplus-6019 | 0x2d95:0x6019 | proposed | medium |
+| iqoo-9pro-601a | 0x2d95:0x601a | proposed | medium |
+| iqoo-10pro-601b | 0x2d95:0x601b | proposed | medium |
+| iqoo-neo7-601c | 0x2d95:0x601c | proposed | medium |
+| iqoo-z6pro-601d | 0x2d95:0x601d | proposed | medium |
+| vivo-y76s-5g-601e | 0x2d95:0x601e | proposed | medium |
+| vivo-y75-5g-601f | 0x2d95:0x601f | proposed | medium |
+| vivo-y33s-6020 | 0x2d95:0x6020 | proposed | medium |
+| vivo-t1-5g-6022 | 0x2d95:0x6022 | proposed | medium |
+| insta360-one-0003 | 0x2e1a:0x0003 | proposed | low |
+| insta360-one-x-0005 | 0x2e1a:0x0005 | proposed | low |
+| insta360-evo-0006 | 0x2e1a:0x0006 | proposed | low |
+| insta360-one-r-0007 | 0x2e1a:0x0007 | proposed | low |
+| insta360-go-2-0009 | 0x2e1a:0x0009 | proposed | low |
+| insta360-one-x2-000a | 0x2e1a:0x000a | proposed | low |
+| insta360-rs-000b | 0x2e1a:0x000b | proposed | low |
+| insta360-x3-000c | 0x2e1a:0x000c | proposed | low |
+| insta360-go-3-000d | 0x2e1a:0x000d | proposed | low |
+| insta360-x4-000e | 0x2e1a:0x000e | proposed | low |
+| insta360-ace-pro-000f | 0x2e1a:0x000f | proposed | low |
+| insta360-flow-0010 | 0x2e1a:0x0010 | proposed | low |
+| insta360-link-0011 | 0x2e1a:0x0011 | proposed | low |
+| akaso-ek7000-0001 | 0x3538:0x0001 | proposed | low |
+| akaso-ek7000-pro-0002 | 0x3538:0x0002 | proposed | low |
+| akaso-brave-4-0003 | 0x3538:0x0003 | proposed | low |
+| akaso-brave-7-le-0004 | 0x3538:0x0004 | proposed | low |
+| akaso-v50x-0005 | 0x3538:0x0005 | proposed | low |
+| akaso-brave-4-pro-0006 | 0x3538:0x0006 | proposed | low |
+| akaso-brave-8-0007 | 0x3538:0x0007 | proposed | low |
+| akaso-enduro-0008 | 0x3538:0x0008 | proposed | low |
+| xiaomi-action-camera-4k-d001 | 0x2717:0xd001 | proposed | low |
+| xiaomi-sphere-camera-d002 | 0x2717:0xd002 | proposed | low |
+| tcl-10-pro-9008 | 0x2a49:0x9008 | proposed | low |
+| tcl-10l-10-5g-9009 | 0x2a49:0x9009 | proposed | low |
+| tcl-20-pro-5g-900a | 0x2a49:0x900a | proposed | low |
+| tcl-20l-plus-900b | 0x2a49:0x900b | proposed | low |
+| tcl-20-se-900c | 0x2a49:0x900c | proposed | low |
+| tcl-30-5g-900d | 0x2a49:0x900d | proposed | low |
+| tcl-30-se-900e | 0x2a49:0x900e | proposed | low |
+| tcl-30-plus-900f | 0x2a49:0x900f | proposed | low |
+| tcl-30-v-5g-9010 | 0x2a49:0x9010 | proposed | low |
+| tcl-40-nxtpaper-9011 | 0x2a49:0x9011 | proposed | low |
+| tcl-40-se-9012 | 0x2a49:0x9012 | proposed | low |
+| tcl-flip-2-9013 | 0x2a49:0x9013 | proposed | low |
+| alcatel-a3-xl-901c | 0x1bbb:0x901c | proposed | low |
+| alcatel-3x-2020-901d | 0x1bbb:0x901d | proposed | low |
+| alcatel-3l-2021-901e | 0x1bbb:0x901e | proposed | low |
+| alcatel-1se-5g-901f | 0x1bbb:0x901f | proposed | low |
+| alcatel-3t-10-9020 | 0x1bbb:0x9020 | proposed | low |
+| alcatel-1l-pro-9021 | 0x1bbb:0x9021 | proposed | low |
+| alcatel-1v-2021-9022 | 0x1bbb:0x9022 | proposed | low |
+| alcatel-1-2021-9023 | 0x1bbb:0x9023 | proposed | low |
+| alcatel-pop-4-plus-9024 | 0x1bbb:0x9024 | proposed | low |
+| alcatel-fierce-4-9025 | 0x1bbb:0x9025 | proposed | low |
+| wiko-lenny-1001 | 0x1ebf:0x1001 | proposed | low |
+| wiko-kite-1002 | 0x1ebf:0x1002 | proposed | low |
+| wiko-pulp-1003 | 0x1ebf:0x1003 | proposed | low |
+| wiko-rainbow-1004 | 0x1ebf:0x1004 | proposed | low |
+| wiko-tommy-1005 | 0x1ebf:0x1005 | proposed | low |
+| wiko-sunny-1006 | 0x1ebf:0x1006 | proposed | low |
+| wiko-jerry-1007 | 0x1ebf:0x1007 | proposed | low |
+| wiko-harry-1008 | 0x1ebf:0x1008 | proposed | low |
+| wiko-lenny-4-1009 | 0x1ebf:0x1009 | proposed | low |
+| wiko-view-100a | 0x1ebf:0x100a | proposed | low |
+| wiko-view-2-100b | 0x1ebf:0x100b | proposed | low |
+| wiko-view-xl-100c | 0x1ebf:0x100c | proposed | low |
+| wiko-ride-100d | 0x1ebf:0x100d | proposed | low |
+| wiko-t10-100e | 0x1ebf:0x100e | proposed | low |
+| wiko-y62-100f | 0x1ebf:0x100f | proposed | low |
+| wiko-power-u10-1010 | 0x1ebf:0x1010 | proposed | low |
+| wiko-t3-1011 | 0x1ebf:0x1011 | proposed | low |
+| itel-a23-6001 | 0x1d4d:0x6001 | proposed | low |
+| itel-a25-6002 | 0x1d4d:0x6002 | proposed | low |
+| itel-a56-6003 | 0x1d4d:0x6003 | proposed | low |
+| itel-a58-6004 | 0x1d4d:0x6004 | proposed | low |
+| itel-p38-6005 | 0x1d4d:0x6005 | proposed | low |
+| itel-p55-5g-6006 | 0x1d4d:0x6006 | proposed | low |
+| itel-s18-6007 | 0x1d4d:0x6007 | proposed | low |
+| itel-s19-6008 | 0x1d4d:0x6008 | proposed | low |
+| tecno-camon-15-6001 | 0x1d5b:0x6001 | proposed | low |
+| tecno-spark-5-pro-6002 | 0x1d5b:0x6002 | proposed | low |
+| tecno-camon-17-pro-6003 | 0x1d5b:0x6003 | proposed | low |
+| tecno-phantom-x-6004 | 0x1d5b:0x6004 | proposed | low |
+| tecno-spark-8-pro-6005 | 0x1d5b:0x6005 | proposed | low |
+| tecno-pova-3-6006 | 0x1d5b:0x6006 | proposed | low |
+| tecno-camon-19-pro-6007 | 0x1d5b:0x6007 | proposed | low |
+| tecno-phantom-v-fold-6008 | 0x1d5b:0x6008 | proposed | low |
+| tecno-camon-20-pro-6009 | 0x1d5b:0x6009 | proposed | low |
+| verbatim-mediasharemini-0301 | 0x18a5:0x0301 | proposed | low |
+| verbatim-storegngo-0302 | 0x18a5:0x0302 | proposed | low |
+| verbatim-smartdisk-0303 | 0x18a5:0x0303 | proposed | low |
+| kodak-dc4800-0011 | 0x040d:0x0011 | proposed | low |
+| kodak-dc220-0018 | 0x040d:0x0018 | proposed | low |
+| kodak-dc240-0019 | 0x040d:0x0019 | proposed | low |
+| kodak-dc280-001a | 0x040d:0x001a | proposed | low |
+| kodak-dc3400-001b | 0x040d:0x001b | proposed | low |
+| kodak-easyshare-cx3700-001e | 0x040d:0x001e | proposed | low |
+| kodak-easyshare-ls443-0020 | 0x040d:0x0020 | proposed | low |
+| kodak-easyshare-c310-0022 | 0x040d:0x0022 | proposed | low |
+| kodak-easyshare-c330-0023 | 0x040d:0x0023 | proposed | low |
+| kodak-easyshare-c340-0024 | 0x040d:0x0024 | proposed | low |
+| kodak-easyshare-c360-0025 | 0x040d:0x0025 | proposed | low |
+| kodak-easyshare-c530-0026 | 0x040d:0x0026 | proposed | low |
+| kodak-easyshare-c875-0027 | 0x040d:0x0027 | proposed | low |
+| kodak-easyshare-z612-0028 | 0x040d:0x0028 | proposed | low |
+| kodak-easyshare-z1012is-0029 | 0x040d:0x0029 | proposed | low |
+| kodak-easyshare-z1485is-002a | 0x040d:0x002a | proposed | low |
+| kodak-easyshare-z650-002b | 0x040d:0x002b | proposed | low |
+| kodak-easyshare-m753-002c | 0x040d:0x002c | proposed | low |
+| kodak-easyshare-m763-002d | 0x040d:0x002d | proposed | low |
+| kodak-easyshare-z885-002e | 0x040d:0x002e | proposed | low |
+| kodak-easyshare-m1063-002f | 0x040d:0x002f | proposed | low |
+| kodak-easyshare-m1073-0030 | 0x040d:0x0030 | proposed | low |
+| kodak-easyshare-z915-0031 | 0x040d:0x0031 | proposed | low |
+| kodak-easyshare-m380-0032 | 0x040d:0x0032 | proposed | low |
+| kodak-pixpro-az251-0033 | 0x040d:0x0033 | proposed | low |
+| kodak-pixpro-az521-0034 | 0x040d:0x0034 | proposed | low |
+| kodak-pixpro-fz151-0035 | 0x040d:0x0035 | proposed | low |
+| viofo-a119mini2-a801 | 0x0c45:0xa801 | proposed | low |
+| viofo-a229pro-a802 | 0x0c45:0xa802 | proposed | low |
+| viofo-a239pro-a803 | 0x0c45:0xa803 | proposed | low |
+| viofo-t130-a804 | 0x0c45:0xa804 | proposed | low |
+| viofo-wm1-a805 | 0x0c45:0xa805 | proposed | low |
+| viofo-a139pro-a806 | 0x0c45:0xa806 | proposed | low |
+| nextbase-322gw-1001 | 0x2b24:0x1001 | proposed | low |
+| nextbase-422gw-1002 | 0x2b24:0x1002 | proposed | low |
+| nextbase-522gw-1003 | 0x2b24:0x1003 | proposed | low |
+| nextbase-622gw-1004 | 0x2b24:0x1004 | proposed | low |
+| nextbase-122hd-1005 | 0x2b24:0x1005 | proposed | low |
+| nextbase-222x-1006 | 0x2b24:0x1006 | proposed | low |
+| nextbase-522gw-alt-1007 | 0x2b24:0x1007 | proposed | low |
+| nextbase-duohd-1008 | 0x2b24:0x1008 | proposed | low |
+| action-digitalframe7-2000 | 0x0835:0x2000 | proposed | low |
+| action-digitalframe10-2001 | 0x0835:0x2001 | proposed | low |
+| pandigital-novel-2002 | 0x0835:0x2002 | proposed | low |
+| pandigital-photoframe8-2003 | 0x0835:0x2003 | proposed | low |
+| fitbit-ultra-fb01 | 0x2687:0xfb01 | proposed | medium |
+| fitbit-one-fb02 | 0x2687:0xfb02 | proposed | medium |
+| fitbit-zip-fb03 | 0x2687:0xfb03 | proposed | medium |
+| fitbit-flex-fb04 | 0x2687:0xfb04 | proposed | medium |
+| fitbit-force-fb05 | 0x2687:0xfb05 | proposed | medium |
+| fitbit-charge-hr-fb06 | 0x2687:0xfb06 | proposed | medium |
+| fitbit-surge-fb07 | 0x2687:0xfb07 | proposed | medium |
+| fitbit-blaze-fb08 | 0x2687:0xfb08 | proposed | medium |
+| fitbit-alta-fb09 | 0x2687:0xfb09 | proposed | medium |
+| fitbit-alta-hr-fb0a | 0x2687:0xfb0a | proposed | medium |
+| fitbit-ionic-fb0b | 0x2687:0xfb0b | proposed | medium |
+| fitbit-versa-fb0c | 0x2687:0xfb0c | proposed | medium |
+| fitbit-versa-2-fb0d | 0x2687:0xfb0d | proposed | medium |
+| fitbit-charge-3-fb0e | 0x2687:0xfb0e | proposed | medium |
+| fitbit-charge-4-fb0f | 0x2687:0xfb0f | proposed | medium |
+| fitbit-sense-fb10 | 0x2687:0xfb10 | proposed | medium |
+| fitbit-versa-3-fb11 | 0x2687:0xfb11 | proposed | medium |
+| fitbit-luxe-fb12 | 0x2687:0xfb12 | proposed | medium |
+| fitbit-charge-5-fb13 | 0x2687:0xfb13 | proposed | medium |
+| fitbit-inspire-3-fb14 | 0x2687:0xfb14 | proposed | medium |
+| fitbit-versa-4-fb15 | 0x2687:0xfb15 | proposed | medium |
+| polar-m200-0008 | 0x0da4:0x0008 | proposed | medium |
+| polar-a370-0009 | 0x0da4:0x0009 | proposed | medium |
+| polar-ignite-000a | 0x0da4:0x000a | proposed | medium |
+| polar-vantage-m-000b | 0x0da4:0x000b | proposed | medium |
+| polar-vantage-v2-000c | 0x0da4:0x000c | proposed | medium |
+| polar-grit-x-000d | 0x0da4:0x000d | proposed | medium |
+| polar-pacer-pro-000e | 0x0da4:0x000e | proposed | medium |
+| polar-vantage-v3-000f | 0x0da4:0x000f | proposed | medium |
+| samsung-galaxy-watch-active-2-686c | 0x04e8:0x686c | proposed | medium |
+| samsung-galaxy-watch-3-6870 | 0x04e8:0x6870 | proposed | medium |
+| samsung-galaxy-watch-4-6874 | 0x04e8:0x6874 | proposed | medium |
+| samsung-galaxy-watch-5-6878 | 0x04e8:0x6878 | proposed | medium |
+| samsung-galaxy-watch-6-687c | 0x04e8:0x687c | proposed | medium |
+| samsung-galaxy-watch-classic-6880 | 0x04e8:0x6880 | proposed | medium |
+| xiaomi-mi4-1368 | 0x2717:0x1368 | proposed | medium |
+| xiaomi-mi4i-1388 | 0x2717:0x1388 | proposed | medium |
+| xiaomi-mi4c-13c8 | 0x2717:0x13c8 | proposed | medium |
+| xiaomi-mi5-1440 | 0x2717:0x1440 | proposed | medium |
+| xiaomi-mi5s-1460 | 0x2717:0x1460 | proposed | medium |
+| xiaomi-mi5splus-1480 | 0x2717:0x1480 | proposed | medium |
+| xiaomi-mi6-1490 | 0x2717:0x1490 | proposed | medium |
+| xiaomi-mi6x-14a0 | 0x2717:0x14a0 | proposed | medium |
+| xiaomi-mi8-14b0 | 0x2717:0x14b0 | proposed | medium |
+| xiaomi-mi8se-14c0 | 0x2717:0x14c0 | proposed | medium |
+| xiaomi-mi8pro-14d0 | 0x2717:0x14d0 | proposed | medium |
+| xiaomi-mi8ex-14e0 | 0x2717:0x14e0 | proposed | medium |
+| xiaomi-mi9-14f0 | 0x2717:0x14f0 | proposed | medium |
+| xiaomi-mi9se-1500 | 0x2717:0x1500 | proposed | medium |
+| xiaomi-mi9t-1510 | 0x2717:0x1510 | proposed | medium |
+| xiaomi-mi9pro5g-1520 | 0x2717:0x1520 | proposed | medium |
+| xiaomi-mi10-1530 | 0x2717:0x1530 | proposed | medium |
+| xiaomi-mi10pro-1540 | 0x2717:0x1540 | proposed | medium |
+| xiaomi-mi10ultra-1550 | 0x2717:0x1550 | proposed | medium |
+| xiaomi-mi10t-1560 | 0x2717:0x1560 | proposed | medium |
+| xiaomi-mi10tpro-1570 | 0x2717:0x1570 | proposed | medium |
+| xiaomi-mi11-1580 | 0x2717:0x1580 | proposed | medium |
+| xiaomi-mi11ultra-1590 | 0x2717:0x1590 | proposed | medium |
+| xiaomi-mi11tpro-15a0 | 0x2717:0x15a0 | proposed | medium |
+| xiaomi-xiaomi12-15b0 | 0x2717:0x15b0 | proposed | medium |
+| xiaomi-xiaomi12pro-15c0 | 0x2717:0x15c0 | proposed | medium |
+| xiaomi-xiaomi12tpro-15d0 | 0x2717:0x15d0 | proposed | medium |
+| xiaomi-xiaomi13-15e0 | 0x2717:0x15e0 | proposed | medium |
+| xiaomi-xiaomi13pro-15f0 | 0x2717:0x15f0 | proposed | medium |
+| xiaomi-xiaomi14-1600 | 0x2717:0x1600 | proposed | medium |
+| xiaomi-xiaomi14pro-1610 | 0x2717:0x1610 | proposed | medium |
+| xiaomi-xiaomi14ultra-1620 | 0x2717:0x1620 | proposed | medium |
+| xiaomi-redminote5-1700 | 0x2717:0x1700 | proposed | medium |
+| xiaomi-redminote7-1710 | 0x2717:0x1710 | proposed | medium |
+| xiaomi-redminote8-1720 | 0x2717:0x1720 | proposed | medium |
+| xiaomi-redminote9-1730 | 0x2717:0x1730 | proposed | medium |
+| xiaomi-redminote9pro-1740 | 0x2717:0x1740 | proposed | medium |
+| xiaomi-redminote10-1750 | 0x2717:0x1750 | proposed | medium |
+| xiaomi-redminote10pro-1760 | 0x2717:0x1760 | proposed | medium |
+| xiaomi-redminote11-1770 | 0x2717:0x1770 | proposed | medium |
+| xiaomi-redminote11pro-1780 | 0x2717:0x1780 | proposed | medium |
+| xiaomi-redminote12-1790 | 0x2717:0x1790 | proposed | medium |
+| xiaomi-redminote13-17a0 | 0x2717:0x17a0 | proposed | medium |
+| xiaomi-redmi9-17b0 | 0x2717:0x17b0 | proposed | medium |
+| xiaomi-redmi9a-17c0 | 0x2717:0x17c0 | proposed | medium |
+| xiaomi-redmi10-17d0 | 0x2717:0x17d0 | proposed | medium |
+| xiaomi-redmi12-17e0 | 0x2717:0x17e0 | proposed | medium |
+| xiaomi-redmi13c-17f0 | 0x2717:0x17f0 | proposed | medium |
+| xiaomi-pocox3-1800 | 0x2717:0x1800 | proposed | medium |
+| xiaomi-pocox3pro-1810 | 0x2717:0x1810 | proposed | medium |
+| xiaomi-pocof3-1820 | 0x2717:0x1820 | proposed | medium |
+| xiaomi-pocom3-1830 | 0x2717:0x1830 | proposed | medium |
+| xiaomi-pocom4pro-1840 | 0x2717:0x1840 | proposed | medium |
+| xiaomi-pocox4gt-1850 | 0x2717:0x1850 | proposed | medium |
+| xiaomi-pocof4gt-1860 | 0x2717:0x1860 | proposed | medium |
+| xiaomi-pocox5pro-1870 | 0x2717:0x1870 | proposed | medium |
+| xiaomi-blackshark3-1900 | 0x2717:0x1900 | proposed | medium |
+| xiaomi-blackshark4-1910 | 0x2717:0x1910 | proposed | medium |
+| xiaomi-blackshark5pro-1920 | 0x2717:0x1920 | proposed | medium |
+| samsung-galaxy-s3-685e | 0x04e8:0x685e | proposed | medium |
+| samsung-galaxy-s4-685f | 0x04e8:0x685f | proposed | medium |
+| samsung-galaxy-s4-adb-6861 | 0x04e8:0x6861 | proposed | medium |
+| samsung-galaxy-s5-6862 | 0x04e8:0x6862 | proposed | medium |
+| samsung-galaxy-s5-adb-6863 | 0x04e8:0x6863 | proposed | medium |
+| samsung-galaxy-s6-6864 | 0x04e8:0x6864 | proposed | medium |
+| samsung-galaxy-s6-edge-6865 | 0x04e8:0x6865 | proposed | medium |
+| samsung-galaxy-s7-edge-6867 | 0x04e8:0x6867 | proposed | medium |
+| samsung-galaxy-s8-6868 | 0x04e8:0x6868 | proposed | medium |
+| samsung-galaxy-s8-plus-6869 | 0x04e8:0x6869 | proposed | medium |
+| samsung-galaxy-s9-686a | 0x04e8:0x686a | proposed | medium |
+| samsung-galaxy-s9-plus-686b | 0x04e8:0x686b | proposed | medium |
+| samsung-galaxy-s21-fe-686d | 0x04e8:0x686d | proposed | medium |
+| samsung-galaxy-s22-686e | 0x04e8:0x686e | proposed | medium |
+| samsung-galaxy-s22-ultra-686f | 0x04e8:0x686f | proposed | medium |
+| samsung-galaxy-s23-6871 | 0x04e8:0x6871 | proposed | medium |
+| samsung-galaxy-s23-ultra-6872 | 0x04e8:0x6872 | proposed | medium |
+| samsung-galaxy-s24-6873 | 0x04e8:0x6873 | proposed | medium |
+| samsung-galaxy-z-fold-2-6875 | 0x04e8:0x6875 | proposed | medium |
+| samsung-galaxy-z-fold-3-6876 | 0x04e8:0x6876 | proposed | medium |
+| samsung-galaxy-z-flip-6879 | 0x04e8:0x6879 | proposed | medium |
+| samsung-galaxy-z-flip-3-687a | 0x04e8:0x687a | proposed | medium |
+| samsung-galaxy-z-flip-4-687b | 0x04e8:0x687b | proposed | medium |
+| samsung-galaxy-note-2-6900 | 0x04e8:0x6900 | proposed | medium |
+| samsung-galaxy-note-3-6901 | 0x04e8:0x6901 | proposed | medium |
+| samsung-galaxy-note-4-6902 | 0x04e8:0x6902 | proposed | medium |
+| samsung-galaxy-note-5-6903 | 0x04e8:0x6903 | proposed | medium |
+| samsung-galaxy-note-8-6904 | 0x04e8:0x6904 | proposed | medium |
+| samsung-galaxy-note-9-6905 | 0x04e8:0x6905 | proposed | medium |
+| samsung-galaxy-note-10-6906 | 0x04e8:0x6906 | proposed | medium |
+| samsung-galaxy-note-10-plus-6907 | 0x04e8:0x6907 | proposed | medium |
+| samsung-galaxy-note-20-ultra-6908 | 0x04e8:0x6908 | proposed | medium |
+| samsung-galaxy-a5-2017-6a00 | 0x04e8:0x6a00 | proposed | medium |
+| samsung-galaxy-a7-2017-6a01 | 0x04e8:0x6a01 | proposed | medium |
+| samsung-galaxy-a8-plus-6a02 | 0x04e8:0x6a02 | proposed | medium |
+| samsung-galaxy-a50-6a03 | 0x04e8:0x6a03 | proposed | medium |
+| samsung-galaxy-a51-6a04 | 0x04e8:0x6a04 | proposed | medium |
+| samsung-galaxy-a52-6a05 | 0x04e8:0x6a05 | proposed | medium |
+| samsung-galaxy-a53-5g-6a06 | 0x04e8:0x6a06 | proposed | medium |
+| samsung-galaxy-a54-5g-6a07 | 0x04e8:0x6a07 | proposed | medium |
+| samsung-galaxy-a71-6a08 | 0x04e8:0x6a08 | proposed | medium |
+| samsung-galaxy-a72-6a09 | 0x04e8:0x6a09 | proposed | medium |
+| samsung-galaxy-a34-5g-6a0a | 0x04e8:0x6a0a | proposed | medium |
+| google-nexus-one-htc-4e11 | 0x18d1:0x4e11 | proposed | medium |
+| google-nexus-s-4e21 | 0x18d1:0x4e21 | proposed | medium |
+| google-nexus-4-lg-4e61 | 0x18d1:0x4e61 | proposed | medium |
+| google-nexus-7-2012-4e02 | 0x18d1:0x4e02 | proposed | medium |
+| google-nexus-10-samsung-4e03 | 0x18d1:0x4e03 | proposed | medium |
+| google-nexus-7-2013-4e04 | 0x18d1:0x4e04 | proposed | medium |
+| google-nexus-9-htc-4e05 | 0x18d1:0x4e05 | proposed | medium |
+| google-pixel-3-4-xl-4eee | 0x18d1:0x4eee | proposed | medium |
+| google-pixel-4a-4eef | 0x18d1:0x4eef | proposed | medium |
+| google-pixel-5-4ef0 | 0x18d1:0x4ef0 | proposed | medium |
+| google-pixel-5a-4ef1 | 0x18d1:0x4ef1 | proposed | medium |
+| google-pixel-6-4ef2 | 0x18d1:0x4ef2 | proposed | medium |
+| google-pixel-6-pro-4ef3 | 0x18d1:0x4ef3 | proposed | medium |
+| google-pixel-6a-4ef4 | 0x18d1:0x4ef4 | proposed | medium |
+| google-pixel-7-pro-4ef5 | 0x18d1:0x4ef5 | proposed | medium |
+| google-pixel-7a-4ef6 | 0x18d1:0x4ef6 | proposed | medium |
+| google-pixel-8-4ef7 | 0x18d1:0x4ef7 | proposed | medium |
+| google-pixel-8-pro-4ef8 | 0x18d1:0x4ef8 | proposed | medium |
+| google-pixel-8a-4ef9 | 0x18d1:0x4ef9 | proposed | medium |
+| google-pixel-9-4efa | 0x18d1:0x4efa | proposed | medium |
+| google-pixel-9-pro-4efb | 0x18d1:0x4efb | proposed | medium |
+| google-pixel-9-pro-xl-4efc | 0x18d1:0x4efc | proposed | medium |
+| google-pixel-9-pro-fold-4efd | 0x18d1:0x4efd | proposed | medium |
+| google-pixel-fold-4efe | 0x18d1:0x4efe | proposed | medium |
+| oneplus-one-f001 | 0x2a70:0xf001 | proposed | medium |
+| oneplus-2-f002 | 0x2a70:0xf002 | proposed | medium |
+| oneplus-5-f004 | 0x2a70:0xf004 | proposed | medium |
+| oneplus-5t-f005 | 0x2a70:0xf005 | proposed | medium |
+| oneplus-6-f006 | 0x2a70:0xf006 | proposed | medium |
+| oneplus-6t-f007 | 0x2a70:0xf007 | proposed | medium |
+| oneplus-7-f008 | 0x2a70:0xf008 | proposed | medium |
+| oneplus-7-pro-f009 | 0x2a70:0xf009 | proposed | medium |
+| oneplus-7t-f00a | 0x2a70:0xf00a | proposed | medium |
+| oneplus-7t-pro-f00b | 0x2a70:0xf00b | proposed | medium |
+| oneplus-8-f00c | 0x2a70:0xf00c | proposed | medium |
+| oneplus-8-pro-f00d | 0x2a70:0xf00d | proposed | medium |
+| oneplus-8t-f00e | 0x2a70:0xf00e | proposed | medium |
+| oneplus-9-f00f | 0x2a70:0xf00f | proposed | medium |
+| oneplus-9-pro-f010 | 0x2a70:0xf010 | proposed | medium |
+| oneplus-9r-f011 | 0x2a70:0xf011 | proposed | medium |
+| oneplus-10-pro-f012 | 0x2a70:0xf012 | proposed | medium |
+| oneplus-10t-f013 | 0x2a70:0xf013 | proposed | medium |
+| oneplus-11-f014 | 0x2a70:0xf014 | proposed | medium |
+| oneplus-12-f015 | 0x2a70:0xf015 | proposed | medium |
+| oneplus-nord-f016 | 0x2a70:0xf016 | proposed | medium |
+| oneplus-nord-2-f017 | 0x2a70:0xf017 | proposed | medium |
+| oneplus-nord-ce-3-f018 | 0x2a70:0xf018 | proposed | medium |
+| oneplus-nord-3-f019 | 0x2a70:0xf019 | proposed | medium |
+| oneplus-open-f01a | 0x2a70:0xf01a | proposed | medium |
+| asus-zenfone-3-ze552kl-4daf | 0x0b05:0x4daf | proposed | medium |
+| asus-zenfone-4-ze554kl-4db0 | 0x0b05:0x4db0 | proposed | medium |
+| asus-zenfone-5-ze620kl-4db1 | 0x0b05:0x4db1 | proposed | medium |
+| asus-zenfone-5z-4db2 | 0x0b05:0x4db2 | proposed | medium |
+| asus-zenfone-6-zs630kl-4db3 | 0x0b05:0x4db3 | proposed | medium |
+| asus-rog-phone-2-4db4 | 0x0b05:0x4db4 | proposed | medium |
+| asus-rog-phone-3-4db5 | 0x0b05:0x4db5 | proposed | medium |
+| asus-zenfone-7-pro-4db6 | 0x0b05:0x4db6 | proposed | medium |
+| asus-zenfone-8-4db7 | 0x0b05:0x4db7 | proposed | medium |
+| asus-rog-phone-5-4db8 | 0x0b05:0x4db8 | proposed | medium |
+| asus-zenfone-9-4db9 | 0x0b05:0x4db9 | proposed | medium |
+| asus-rog-phone-6-4dba | 0x0b05:0x4dba | proposed | medium |
+| asus-zenfone-10-4dbb | 0x0b05:0x4dbb | proposed | medium |
+| asus-rog-phone-7-ultimate-4dbc | 0x0b05:0x4dbc | proposed | medium |
+| asus-rog-phone-8-4dbd | 0x0b05:0x4dbd | proposed | medium |
+| motorola-moto-g-stylus-2e84 | 0x22b8:0x2e84 | proposed | medium |
+| motorola-moto-g-play-2021-2e85 | 0x22b8:0x2e85 | proposed | medium |
+| motorola-edge-2021-2e86 | 0x22b8:0x2e86 | proposed | medium |
+| motorola-edge-plus-2021-2e87 | 0x22b8:0x2e87 | proposed | medium |
+| motorola-edge-20-2e88 | 0x22b8:0x2e88 | proposed | medium |
+| motorola-edge-30-pro-2e89 | 0x22b8:0x2e89 | proposed | medium |
+| motorola-moto-g52-2e8a | 0x22b8:0x2e8a | proposed | medium |
+| motorola-moto-g62-5g-2e8b | 0x22b8:0x2e8b | proposed | medium |
+| motorola-moto-g82-5g-2e8c | 0x22b8:0x2e8c | proposed | medium |
+| motorola-edge-40-pro-2e8d | 0x22b8:0x2e8d | proposed | medium |
+| motorola-edge-plus-2023-2e8e | 0x22b8:0x2e8e | proposed | medium |
+| motorola-moto-g54-2e8f | 0x22b8:0x2e8f | proposed | medium |
+| motorola-moto-g84-2e90 | 0x22b8:0x2e90 | proposed | medium |
+| motorola-edge-50-pro-2e91 | 0x22b8:0x2e91 | proposed | medium |
+| motorola-razr-2023-2e92 | 0x22b8:0x2e92 | proposed | medium |
+| motorola-razr-40-ultra-2e93 | 0x22b8:0x2e93 | proposed | medium |
+| huawei-p9-plus-1053 | 0x12d1:0x1053 | proposed | medium |
+| huawei-p10-plus-1055 | 0x12d1:0x1055 | proposed | medium |
+| huawei-p20-1056 | 0x12d1:0x1056 | proposed | medium |
+| huawei-p20-pro-1057 | 0x12d1:0x1057 | proposed | medium |
+| huawei-p20-lite-1058 | 0x12d1:0x1058 | proposed | medium |
+| huawei-p30-1059 | 0x12d1:0x1059 | proposed | medium |
+| huawei-p30-pro-105a | 0x12d1:0x105a | proposed | medium |
+| huawei-p30-lite-105b | 0x12d1:0x105b | proposed | medium |
+| huawei-p40-105c | 0x12d1:0x105c | proposed | medium |
+| huawei-p40-pro-105d | 0x12d1:0x105d | proposed | medium |
+| huawei-p40-lite-105e | 0x12d1:0x105e | proposed | medium |
+| huawei-p50-pro-105f | 0x12d1:0x105f | proposed | medium |
+| huawei-p60-pro-1060 | 0x12d1:0x1060 | proposed | medium |
+| huawei-mate-9-107a | 0x12d1:0x107a | proposed | medium |
+| huawei-mate-10-107b | 0x12d1:0x107b | proposed | medium |
+| huawei-mate-10-pro-107c | 0x12d1:0x107c | proposed | medium |
+| huawei-mate-20-x-1080 | 0x12d1:0x1080 | proposed | medium |
+| huawei-mate-30-pro-1081 | 0x12d1:0x1081 | proposed | medium |
+| huawei-mate-50-pro-1083 | 0x12d1:0x1083 | proposed | medium |
+| huawei-mate-60-pro-1084 | 0x12d1:0x1084 | proposed | medium |
+| huawei-mate-x-foldable-1085 | 0x12d1:0x1085 | proposed | medium |
+| huawei-mate-xs2-1086 | 0x12d1:0x1086 | proposed | medium |
+| huawei-nova-3-1090 | 0x12d1:0x1090 | proposed | medium |
+| huawei-nova-3i-1091 | 0x12d1:0x1091 | proposed | medium |
+| huawei-nova-5t-1092 | 0x12d1:0x1092 | proposed | medium |
+| huawei-nova-7-se-1093 | 0x12d1:0x1093 | proposed | medium |
+| huawei-nova-8-pro-1094 | 0x12d1:0x1094 | proposed | medium |
+| huawei-nova-9-1095 | 0x12d1:0x1095 | proposed | medium |
+| honor-8-0001 | 0x339b:0x0001 | proposed | medium |
+| honor-9-0002 | 0x339b:0x0002 | proposed | medium |
+| honor-10-0003 | 0x339b:0x0003 | proposed | medium |
+| honor-20-0004 | 0x339b:0x0004 | proposed | medium |
+| honor-30-pro-0005 | 0x339b:0x0005 | proposed | medium |
+| honor-50-0006 | 0x339b:0x0006 | proposed | medium |
+| honor-70-0007 | 0x339b:0x0007 | proposed | medium |
+| honor-90-0008 | 0x339b:0x0008 | proposed | medium |
+| honor-magic4-pro-0009 | 0x339b:0x0009 | proposed | medium |
+| honor-magic5-pro-000a | 0x339b:0x000a | proposed | medium |
+| honor-magic6-pro-000b | 0x339b:0x000b | proposed | medium |
+| honor-x8-000c | 0x339b:0x000c | proposed | medium |
+| honor-x9-000d | 0x339b:0x000d | proposed | medium |
+| honor-x9b-000e | 0x339b:0x000e | proposed | medium |
+| sony-xperia-z2-01ad | 0x0fce:0x01ad | proposed | medium |
+| sony-xperia-z3-01b9 | 0x0fce:0x01b9 | proposed | medium |
+| sony-xperia-z4-01c5 | 0x0fce:0x01c5 | proposed | medium |
+| sony-xperia-m4-aqua-01d0 | 0x0fce:0x01d0 | proposed | medium |
+| sony-xperia-z5-01d3 | 0x0fce:0x01d3 | proposed | medium |
+| sony-xperia-xa2-01e3 | 0x0fce:0x01e3 | proposed | medium |
+| sony-xperia-xa2-ultra-01e4 | 0x0fce:0x01e4 | proposed | medium |
+| sony-xperia-xz-01e5 | 0x0fce:0x01e5 | proposed | medium |
+| sony-xperia-xz-premium-01ea | 0x0fce:0x01ea | proposed | medium |
+| sony-xperia-xz1-compact-01f5 | 0x0fce:0x01f5 | proposed | medium |
+| sony-xperia-1-0200 | 0x0fce:0x0200 | proposed | medium |
+| sony-xperia-10-0202 | 0x0fce:0x0202 | proposed | medium |
+| sony-xperia-10-plus-0203 | 0x0fce:0x0203 | proposed | medium |
+| sony-xperia-l3-0204 | 0x0fce:0x0204 | proposed | medium |
+| sony-xperia-1-ii-0206 | 0x0fce:0x0206 | proposed | medium |
+| sony-xperia-10-ii-0208 | 0x0fce:0x0208 | proposed | medium |
+| sony-xperia-5-iii-020b | 0x0fce:0x020b | proposed | medium |
+| sony-xperia-5-iv-020f | 0x0fce:0x020f | proposed | medium |
+| sony-xperia-10-iv-0210 | 0x0fce:0x0210 | proposed | medium |
+| sony-xperia-1-v-0212 | 0x0fce:0x0212 | proposed | medium |
+| sony-xperia-5-v-0213 | 0x0fce:0x0213 | proposed | medium |
+| sony-xperia-10-v-0214 | 0x0fce:0x0214 | proposed | medium |
+| sony-xperia-1-vi-0216 | 0x0fce:0x0216 | proposed | medium |
+| sony-xperia-10-vi-0217 | 0x0fce:0x0217 | proposed | medium |
+| sony-xperia-5-vi-0218 | 0x0fce:0x0218 | proposed | medium |
+| leica-m10-0001 | 0x1a98:0x0001 | proposed | low |
+| leica-m10-p-0003 | 0x1a98:0x0003 | proposed | low |
+| leica-m10-r-0004 | 0x1a98:0x0004 | proposed | low |
+| leica-m11-0005 | 0x1a98:0x0005 | proposed | low |
+| leica-m11-monochrom-0006 | 0x1a98:0x0006 | proposed | low |
+| leica-q-0007 | 0x1a98:0x0007 | proposed | low |
+| leica-q2-0008 | 0x1a98:0x0008 | proposed | low |
+| leica-q3-0009 | 0x1a98:0x0009 | proposed | low |
+| leica-sl-typ601-000a | 0x1a98:0x000a | proposed | low |
+| leica-sl2-000b | 0x1a98:0x000b | proposed | low |
+| leica-sl2-s-000c | 0x1a98:0x000c | proposed | low |
+| leica-sl3-000d | 0x1a98:0x000d | proposed | low |
+| leica-s-typ007-000e | 0x1a98:0x000e | proposed | low |
+| leica-s3-000f | 0x1a98:0x000f | proposed | low |
+| leica-x-e-0010 | 0x1a98:0x0010 | proposed | low |
+| leica-v-lux-5-0011 | 0x1a98:0x0011 | proposed | low |
+| leica-d-lux-7-0012 | 0x1a98:0x0012 | proposed | low |
+| pentax-k1-markii-0002 | 0x25fb:0x0002 | proposed | low |
+| pentax-k3-markiii-0003 | 0x25fb:0x0003 | proposed | low |
+| pentax-k70-0004 | 0x25fb:0x0004 | proposed | low |
+| pentax-kf-0005 | 0x25fb:0x0005 | proposed | low |
+| pentax-645z-0006 | 0x25fb:0x0006 | proposed | low |
+| casio-ex-zr200-4001 | 0x07cf:0x4001 | proposed | low |
+| casio-ex-zr1000-4002 | 0x07cf:0x4002 | proposed | low |
+| casio-ex-10-4003 | 0x07cf:0x4003 | proposed | low |
+| casio-ex-tr70-4004 | 0x07cf:0x4004 | proposed | low |
+| casio-ex-fr200-4005 | 0x07cf:0x4005 | proposed | low |
+| nothing-phone-1-0001 | 0x2b0e:0x0001 | proposed | low |
+| nothing-phone-2-0002 | 0x2b0e:0x0002 | proposed | low |
+| nothing-phone-2a-0003 | 0x2b0e:0x0003 | proposed | low |
+| nothing-phone-2a-plus-0004 | 0x2b0e:0x0004 | proposed | low |
+| nothing-cmf-phone-1-0005 | 0x2b0e:0x0005 | proposed | low |
+| realme-c11-da09-0001 | 0xda09:0x0001 | proposed | low |
+| realme-c12-da09-0002 | 0xda09:0x0002 | proposed | low |
+| realme-c15-da09-0003 | 0xda09:0x0003 | proposed | low |
+| realme-c20-da09-0004 | 0xda09:0x0004 | proposed | low |
+| realme-c21y-da09-0005 | 0xda09:0x0005 | proposed | low |
+| realme-c25y-da09-0006 | 0xda09:0x0006 | proposed | low |
+| realme-c31-da09-0007 | 0xda09:0x0007 | proposed | low |
+| realme-c33-da09-0008 | 0xda09:0x0008 | proposed | low |
+| realme-c51-da09-0009 | 0xda09:0x0009 | proposed | low |
+| realme-c67-da09-000a | 0xda09:0x000a | proposed | low |
+| meizu-mx4-2a45-0001 | 0x2a45:0x0001 | proposed | low |
+| meizu-mx4-pro-2a45-0002 | 0x2a45:0x0002 | proposed | low |
+| meizu-m2-note-2a45-0003 | 0x2a45:0x0003 | proposed | low |
+| meizu-m3-note-2a45-0004 | 0x2a45:0x0004 | proposed | low |
+| meizu-m5-2a45-0005 | 0x2a45:0x0005 | proposed | low |
+| meizu-m5-note-2a45-0006 | 0x2a45:0x0006 | proposed | low |
+| meizu-pro-6-2a45-0007 | 0x2a45:0x0007 | proposed | low |
+| meizu-16-2a45-0008 | 0x2a45:0x0008 | proposed | low |
+| meizu-16s-2a45-0009 | 0x2a45:0x0009 | proposed | low |
+| meizu-17-2a45-000a | 0x2a45:0x000a | proposed | low |
+| meizu-18-2a45-000b | 0x2a45:0x000b | proposed | low |
+| meizu-20-2a45-000c | 0x2a45:0x000c | proposed | low |
+| sharp-aquos-r3-04dd-9871 | 0x04dd:0x9871 | proposed | low |
+| sharp-aquos-r5g-04dd-9872 | 0x04dd:0x9872 | proposed | low |
+| sharp-aquos-r6-04dd-9873 | 0x04dd:0x9873 | proposed | low |
+| sharp-aquos-r7-04dd-9874 | 0x04dd:0x9874 | proposed | low |
+| sharp-aquos-sense6-04dd-9875 | 0x04dd:0x9875 | proposed | low |
+| sharp-aquos-sense7-04dd-9876 | 0x04dd:0x9876 | proposed | low |
+| sharp-aquos-zero6-04dd-9877 | 0x04dd:0x9877 | proposed | low |
+| sharp-aquos-zero7-04dd-9878 | 0x04dd:0x9878 | proposed | low |
+| acer-iconia-tab-a510-3326 | 0x0502:0x3326 | proposed | low |
+| acer-iconia-one-8-3327 | 0x0502:0x3327 | proposed | low |
+| acer-iconia-tab-10-3328 | 0x0502:0x3328 | proposed | low |
+| asus-zenpad-3s10-4c80 | 0x0b05:0x4c80 | proposed | low |
+| asus-zenpad10-z301m-4c81 | 0x0b05:0x4c81 | proposed | low |
+| asus-zenpad8-z380kl-4c82 | 0x0b05:0x4c82 | proposed | low |
+| asus-transformer-pad-4c83 | 0x0b05:0x4c83 | proposed | low |
+| asus-zenpad-z10-4c84 | 0x0b05:0x4c84 | proposed | low |
+| asus-vivotab-note8-4c85 | 0x0b05:0x4c85 | proposed | low |
+| asus-memopad7-7777 | 0x0b05:0x7777 | proposed | low |
+| asus-memopad8-7778 | 0x0b05:0x7778 | proposed | low |
+| asus-fonepad7-7779 | 0x0b05:0x7779 | proposed | low |
+| asus-padfone2-777a | 0x0b05:0x777a | proposed | low |
+| lenovo-tab-p11-gen2-7498 | 0x17ef:0x7498 | proposed | low |
+| lenovo-tab-m10-plus-7499 | 0x17ef:0x7499 | proposed | low |
+| lenovo-tab-p11-plus-749a | 0x17ef:0x749a | proposed | low |
+| lenovo-tab-m8-hd-749b | 0x17ef:0x749b | proposed | low |
+| lenovo-tab-m9-749c | 0x17ef:0x749c | proposed | low |
+| lenovo-k9-749d | 0x17ef:0x749d | proposed | low |
+| lenovo-z6-749e | 0x17ef:0x749e | proposed | low |
+| lenovo-z6-pro-749f | 0x17ef:0x749f | proposed | low |
+| coolpad-legacy-0090 | 0x1ebf:0x0090 | proposed | low |
+| coolpad-legacy-brisa-0091 | 0x1ebf:0x0091 | proposed | low |
+| coolpad-cool3-0092 | 0x1ebf:0x0092 | proposed | low |
+| coolpad-cool5-0093 | 0x1ebf:0x0093 | proposed | low |
+| coolpad-legacy-s-0094 | 0x1ebf:0x0094 | proposed | low |
+| mediatek-mt6765-helio-p35-2009 | 0x0e8d:0x2009 | proposed | low |
+| mediatek-mt6853-dimensity720-200b | 0x0e8d:0x200b | proposed | low |
+| mediatek-mt6877-dimensity900-200c | 0x0e8d:0x200c | proposed | low |
+| mediatek-mt6879-dimensity1050-200d | 0x0e8d:0x200d | proposed | low |
+| mediatek-mt6885-dimensity1000l-200e | 0x0e8d:0x200e | proposed | low |
+| mediatek-mt6893-dimensity1200-200f | 0x0e8d:0x200f | proposed | low |
+| kyocera-duraforce-xd-new-0091 | 0x0482:0x0091 | proposed | low |
+| kyocera-duraforce-pro2-0092 | 0x0482:0x0092 | proposed | low |
+| kyocera-duraforce-ultra5g-0093 | 0x0482:0x0093 | proposed | low |
+| kyocera-torque-g05-0094 | 0x0482:0x0094 | proposed | low |
+| kyocera-digno-bx2-0095 | 0x0482:0x0095 | proposed | low |
+| kyocera-basio4-0096 | 0x0482:0x0096 | proposed | low |
+| kyocera-gratina-0097 | 0x0482:0x0097 | proposed | low |
+| cat-s61-0001 | 0x1e3e:0x0001 | proposed | low |
+| cat-s62-pro-0002 | 0x1e3e:0x0002 | proposed | low |
+| cat-s42-0003 | 0x1e3e:0x0003 | proposed | low |
+| cat-s48c-0004 | 0x1e3e:0x0004 | proposed | low |
+| cat-s22-flip-0005 | 0x1e3e:0x0005 | proposed | low |
+| gopro-hero3-0040 | 0x2672:0x0040 | proposed | low |
+| gopro-hero3plus-0041 | 0x2672:0x0041 | proposed | low |
+| gopro-hero6-0044 | 0x2672:0x0044 | proposed | low |
+| gopro-hero7-0045 | 0x2672:0x0045 | proposed | low |
+| gopro-hero8-0046 | 0x2672:0x0046 | proposed | low |
+| gopro-hero10-0048 | 0x2672:0x0048 | proposed | low |
+| gopro-hero12-004a | 0x2672:0x004a | proposed | low |
+| razer-phone-2017-9002 | 0x1532:0x9002 | proposed | medium |
+| razer-phone-2-2018-9003 | 0x1532:0x9003 | proposed | medium |
+| palm-phone-2018-0001 | 0x2d06:0x0001 | proposed | medium |
+| fairphone-4-e0a1 | 0x0489:0xe0a1 | proposed | medium |
+| fairphone-5-e0a2 | 0x0489:0xe0a2 | proposed | medium |
+| fairphone-3-e0a3 | 0x0489:0xe0a3 | proposed | medium |
+| shiftphone-6m-0090 | 0x1fc9:0x0090 | proposed | medium |
+| shiftphone-8-0091 | 0x1fc9:0x0091 | proposed | medium |
+| tascam-dr-40-0001 | 0x06ef:0x0001 | proposed | low |
+| tascam-dr-100mkiii-0002 | 0x06ef:0x0002 | proposed | low |
+| tascam-dr-701d-0003 | 0x06ef:0x0003 | proposed | low |
+| tascam-dr-44wl-0004 | 0x06ef:0x0004 | proposed | low |
+| tascam-dr-05x-0005 | 0x06ef:0x0005 | proposed | low |
+| tascam-dr-10l-0006 | 0x06ef:0x0006 | proposed | low |
+| tascam-portacapture-x8-0007 | 0x06ef:0x0007 | proposed | low |
+| blackmagic-pocket-cinema-camera-4k-0001 | 0x1edb:0x0001 | proposed | low |
+| blackmagic-pocket-cinema-camera-6k-0002 | 0x1edb:0x0002 | proposed | low |
+| blackmagic-pocket-cinema-camera-6k-g2-0003 | 0x1edb:0x0003 | proposed | low |
+| blackmagic-pocket-cinema-camera-6k-pro-0004 | 0x1edb:0x0004 | proposed | low |
+| blackmagic-pocket-cinema-camera-4k-g2-0005 | 0x1edb:0x0005 | proposed | low |
+| flir-one-1001 | 0x09cb:0x1001 | proposed | low |
+| flir-one-pro-1002 | 0x09cb:0x1002 | proposed | low |
+| flir-one-pro-lt-1003 | 0x09cb:0x1003 | proposed | low |
+| flir-vue-pro-1004 | 0x09cb:0x1004 | proposed | low |
+| samsung-galaxy-a35-5g-6909 | 0x04e8:0x6909 | proposed | medium |
+| samsung-galaxy-a55-5g-690a | 0x04e8:0x690a | proposed | medium |
+| samsung-galaxy-a15-5g-690b | 0x04e8:0x690b | proposed | medium |
+| samsung-galaxy-a23-5g-690c | 0x04e8:0x690c | proposed | medium |
+| samsung-galaxy-a33-5g-690d | 0x04e8:0x690d | proposed | medium |
+| samsung-galaxy-a53-5g-690e | 0x04e8:0x690e | proposed | medium |
+| samsung-galaxy-a73-5g-690f | 0x04e8:0x690f | proposed | medium |
+| samsung-galaxy-m53-5g-6910 | 0x04e8:0x6910 | proposed | medium |
+| samsung-galaxy-m33-5g-6911 | 0x04e8:0x6911 | proposed | medium |
+| samsung-galaxy-m23-6912 | 0x04e8:0x6912 | proposed | medium |
+| samsung-galaxy-f23-6913 | 0x04e8:0x6913 | proposed | medium |
+| samsung-galaxy-f53-5g-6914 | 0x04e8:0x6914 | proposed | medium |
+| samsung-galaxy-xcover-6-pro-6915 | 0x04e8:0x6915 | proposed | medium |
+| samsung-galaxy-xcover-7-6916 | 0x04e8:0x6916 | proposed | medium |
+| samsung-galaxy-z-flip-4-6917 | 0x04e8:0x6917 | proposed | medium |
+| samsung-galaxy-z-flip-5-6918 | 0x04e8:0x6918 | proposed | medium |
+| samsung-galaxy-z-flip-6-6919 | 0x04e8:0x6919 | proposed | medium |
+| samsung-galaxy-z-fold-6-691a | 0x04e8:0x691a | proposed | medium |
+| samsung-galaxy-s23-fe-691b | 0x04e8:0x691b | proposed | medium |
+| samsung-galaxy-s24-fe-691c | 0x04e8:0x691c | proposed | medium |
+| samsung-galaxy-s24-ultra-691d | 0x04e8:0x691d | proposed | medium |
+| samsung-galaxy-s24-plus-691e | 0x04e8:0x691e | proposed | medium |
+| samsung-galaxy-a06-691f | 0x04e8:0x691f | proposed | medium |
+| samsung-galaxy-m34-5g-6920 | 0x04e8:0x6920 | proposed | medium |
+| samsung-galaxy-m54-5g-6921 | 0x04e8:0x6921 | proposed | medium |
+| xiaomi-12-pro-ff4a | 0x2717:0xff4a | proposed | medium |
+| xiaomi-12-ultra-ff4b | 0x2717:0xff4b | proposed | medium |
+| xiaomi-12s-ff4c | 0x2717:0xff4c | proposed | medium |
+| xiaomi-12s-pro-ff4d | 0x2717:0xff4d | proposed | medium |
+| xiaomi-12s-ultra-ff4e | 0x2717:0xff4e | proposed | medium |
+| xiaomi-12t-ff4f | 0x2717:0xff4f | proposed | medium |
+| xiaomi-12t-pro-ff50 | 0x2717:0xff50 | proposed | medium |
+| xiaomi-13-ff51 | 0x2717:0xff51 | proposed | medium |
+| xiaomi-13-pro-ff52 | 0x2717:0xff52 | proposed | medium |
+| xiaomi-13-ultra-ff53 | 0x2717:0xff53 | proposed | medium |
+| xiaomi-13t-ff54 | 0x2717:0xff54 | proposed | medium |
+| xiaomi-13t-pro-ff55 | 0x2717:0xff55 | proposed | medium |
+| xiaomi-14-ff56 | 0x2717:0xff56 | proposed | medium |
+| xiaomi-14-pro-ff57 | 0x2717:0xff57 | proposed | medium |
+| xiaomi-14-ultra-ff58 | 0x2717:0xff58 | proposed | medium |
+| xiaomi-14t-ff59 | 0x2717:0xff59 | proposed | medium |
+| xiaomi-14t-pro-ff5a | 0x2717:0xff5a | proposed | medium |
+| redmi-note-12-pro-ff5b | 0x2717:0xff5b | proposed | medium |
+| redmi-note-12-pro-plus-ff5c | 0x2717:0xff5c | proposed | medium |
+| redmi-note-12-turbo-ff5d | 0x2717:0xff5d | proposed | medium |
+| redmi-note-13-ff5e | 0x2717:0xff5e | proposed | medium |
+| redmi-note-13-pro-ff5f | 0x2717:0xff5f | proposed | medium |
+| redmi-12-ff61 | 0x2717:0xff61 | proposed | medium |
+| redmi-12c-ff62 | 0x2717:0xff62 | proposed | medium |
+| redmi-13-ff63 | 0x2717:0xff63 | proposed | medium |
+| redmi-13c-ff64 | 0x2717:0xff64 | proposed | medium |
+| redmi-a2-ff65 | 0x2717:0xff65 | proposed | medium |
+| redmi-a2-plus-ff66 | 0x2717:0xff66 | proposed | medium |
+| poco-x5-ff67 | 0x2717:0xff67 | proposed | medium |
+| poco-x6-ff69 | 0x2717:0xff69 | proposed | medium |
+| poco-x6-pro-ff6a | 0x2717:0xff6a | proposed | medium |
+| poco-m5-ff6b | 0x2717:0xff6b | proposed | medium |
+| poco-m5s-ff6c | 0x2717:0xff6c | proposed | medium |
+| poco-m6-pro-ff6d | 0x2717:0xff6d | proposed | medium |
+| poco-f5-ff6e | 0x2717:0xff6e | proposed | medium |
+| poco-f5-pro-ff6f | 0x2717:0xff6f | proposed | medium |
+| poco-f6-ff70 | 0x2717:0xff70 | proposed | medium |
+| poco-f6-pro-ff71 | 0x2717:0xff71 | proposed | medium |
+| poco-c65-ff72 | 0x2717:0xff72 | proposed | medium |
+| xiaomi-mix-fold-3-ff73 | 0x2717:0xff73 | proposed | medium |
+| xiaomi-mix-fold-4-ff74 | 0x2717:0xff74 | proposed | medium |
+| xiaomi-mix-flip-ff75 | 0x2717:0xff75 | proposed | medium |
+| xiaomi-civi-3-ff76 | 0x2717:0xff76 | proposed | medium |
+| xiaomi-civi-4-pro-ff77 | 0x2717:0xff77 | proposed | medium |
+| fossil-gen5-0001 | 0x2ba0:0x0001 | proposed | low |
+| fossil-gen5e-0002 | 0x2ba0:0x0002 | proposed | low |
+| fossil-gen6-0003 | 0x2ba0:0x0003 | proposed | low |
+| fossil-gen6-wellness-0004 | 0x2ba0:0x0004 | proposed | low |
+| fossil-sport-0005 | 0x2ba0:0x0005 | proposed | low |
+| skagen-falster3-0006 | 0x2ba0:0x0006 | proposed | low |
+| skagen-falster4-0007 | 0x2ba0:0x0007 | proposed | low |
+| ticwatch-pro3-0001 | 0x1d5b:0x0001 | proposed | low |
+| ticwatch-pro3ultra-0002 | 0x1d5b:0x0002 | proposed | low |
+| ticwatch-e3-0003 | 0x1d5b:0x0003 | proposed | low |
+| ticwatch-pro5-0004 | 0x1d5b:0x0004 | proposed | low |
+| sonyericsson-xperia-x8-0187 | 0x0fce:0x0187 | proposed | low |
+| sonyericsson-xperia-x10mini-0188 | 0x0fce:0x0188 | proposed | low |
+| sonyericsson-xperia-arc-0189 | 0x0fce:0x0189 | proposed | low |
+| sonyericsson-xperia-neo-018a | 0x0fce:0x018a | proposed | low |
+| sonyericsson-xperia-ray-018b | 0x0fce:0x018b | proposed | low |
+| sonyericsson-xperia-minipro-018c | 0x0fce:0x018c | proposed | low |
+| sony-xperia-l4-01f0 | 0x0fce:0x01f0 | proposed | low |
+| sony-xperia-l3-01f2 | 0x0fce:0x01f2 | proposed | low |
+| sennheiser-momentum4-006c | 0x1395:0x006c | proposed | low |
+| sennheiser-hd450bt-006d | 0x1395:0x006d | proposed | low |
+| sennheiser-hd560s-006e | 0x1395:0x006e | proposed | low |
+| sennheiser-accentum-006f | 0x1395:0x006f | proposed | low |
+| oppo-find-n3flip-276f | 0x22d9:0x276f | proposed | low |
+| mkors-access-gen5e-0008 | 0x2ba0:0x0008 | proposed | low |
+| mkors-access-gen6-0009 | 0x2ba0:0x0009 | proposed | low |
+| diesel-fullguard3-000a | 0x2ba0:0x000a | proposed | low |
+| diesel-fadelite-000b | 0x2ba0:0x000b | proposed | low |
+| emporio-armani-connected3-000c | 0x2ba0:0x000c | proposed | low |
+| armani-exchange-connected-000d | 0x2ba0:0x000d | proposed | low |
+| kate-spade-scallop2-000e | 0x2ba0:0x000e | proposed | low |
+| hugo-boss-smartwatch1-000f | 0x2ba0:0x000f | proposed | low |
+| puma-smartwatch-0010 | 0x2ba0:0x0010 | proposed | low |
+| misfit-vaporx-0011 | 0x2ba0:0x0011 | proposed | low |
+| fossil-gen4-0012 | 0x2ba0:0x0012 | proposed | low |
+| fossil-gen3-0013 | 0x2ba0:0x0013 | proposed | low |
+| skagen-falster2-0014 | 0x2ba0:0x0014 | proposed | low |
+| skagen-falster1-0015 | 0x2ba0:0x0015 | proposed | low |
+| diesel-fullguard25-0016 | 0x2ba0:0x0016 | proposed | low |
+| mkors-sofie-0017 | 0x2ba0:0x0017 | proposed | low |
+| emporio-armani-smartwatch3-0018 | 0x2ba0:0x0018 | proposed | low |
+| sennheiser-hd350bt-0070 | 0x1395:0x0070 | proposed | low |
+| sennheiser-ie300-0071 | 0x1395:0x0071 | proposed | low |
+| sennheiser-cxtw-0072 | 0x1395:0x0072 | proposed | low |
+| sennheiser-sc230-0073 | 0x1395:0x0073 | proposed | low |
+| sennheiser-mb360uc-0074 | 0x1395:0x0074 | proposed | low |
+| sennheiser-hd206-0075 | 0x1395:0x0075 | proposed | low |
+| oppo-reno6pro-2766 | 0x22d9:0x2766 | proposed | low |
+| oppo-a74-2767 | 0x22d9:0x2767 | proposed | low |
+| oppo-a55-5g-2769 | 0x22d9:0x2769 | proposed | low |
+| ticwatch-gtx-0005 | 0x1d5b:0x0005 | proposed | low |
+| ticwatch-c2plus-0006 | 0x1d5b:0x0006 | proposed | low |
+| ticwatch-s2-0007 | 0x1d5b:0x0007 | proposed | low |
+| tecno-camon-30-600a | 0x1d5b:0x600a | proposed | low |
+| tecno-camon-30-pro-600b | 0x1d5b:0x600b | proposed | low |
+| tecno-camon-30-premier-600c | 0x1d5b:0x600c | proposed | low |
+| tecno-phantom-v-flip-600d | 0x1d5b:0x600d | proposed | low |
+| tecno-phantom-v-fold2-600e | 0x1d5b:0x600e | proposed | low |
+| tecno-phantom-x2-pro-600f | 0x1d5b:0x600f | proposed | low |
+| tecno-spark-20-6010 | 0x1d5b:0x6010 | proposed | low |
+| tecno-spark-20-pro-6011 | 0x1d5b:0x6011 | proposed | low |
+| tecno-spark-20-pro-plus-6012 | 0x1d5b:0x6012 | proposed | low |
+| tecno-spark-go-2024-6013 | 0x1d5b:0x6013 | proposed | low |
+| tecno-pova-5-6014 | 0x1d5b:0x6014 | proposed | low |
+| tecno-pova-5-pro-6015 | 0x1d5b:0x6015 | proposed | low |
+| tecno-pova-6-6016 | 0x1d5b:0x6016 | proposed | low |
+| tecno-pova-6-pro-6017 | 0x1d5b:0x6017 | proposed | low |
+| tecno-pop-8-6018 | 0x1d5b:0x6018 | proposed | low |
+| tecno-pop-8-pro-6019 | 0x1d5b:0x6019 | proposed | low |
+| tecno-camon-20-601a | 0x1d5b:0x601a | proposed | low |
+| tecno-camon-20-premier-601b | 0x1d5b:0x601b | proposed | low |
+| tecno-spark-10-pro-601c | 0x1d5b:0x601c | proposed | low |
+| tecno-phantom-ultimate-601d | 0x1d5b:0x601d | proposed | low |
+| itel-a70-6009 | 0x1d4d:0x6009 | proposed | low |
+| itel-a70s-600a | 0x1d4d:0x600a | proposed | low |
+| itel-p55-plus-600b | 0x1d4d:0x600b | proposed | low |
+| itel-p55-5g-plus-600c | 0x1d4d:0x600c | proposed | low |
+| itel-s24-600d | 0x1d4d:0x600d | proposed | low |
+| itel-s24-pro-600e | 0x1d4d:0x600e | proposed | low |
+| itel-vision-5-600f | 0x1d4d:0x600f | proposed | low |
+| itel-a60s-6010 | 0x1d4d:0x6010 | proposed | low |
+| itel-a60-6011 | 0x1d4d:0x6011 | proposed | low |
+| itel-p40-6012 | 0x1d4d:0x6012 | proposed | low |
+| itel-p40-plus-6013 | 0x1d4d:0x6013 | proposed | low |
+| itel-s23-6014 | 0x1d4d:0x6014 | proposed | low |
+| itel-s23-plus-6015 | 0x1d4d:0x6015 | proposed | low |
+| itel-a27-6016 | 0x1d4d:0x6016 | proposed | low |
+| itel-a49-6017 | 0x1d4d:0x6017 | proposed | low |
+| itel-vision-3-6018 | 0x1d4d:0x6018 | proposed | low |
+| itel-vision-3-plus-6019 | 0x1d4d:0x6019 | proposed | low |
+| itel-a05s-601a | 0x1d4d:0x601a | proposed | low |
+| itel-p33-601b | 0x1d4d:0x601b | proposed | low |
+| yota-phone-c9660-9039 | 0x2916:0x9039 | proposed | medium |
+| yota-phone-9139 | 0x2916:0x9139 | proposed | medium |
+| yota-phone-2-914d | 0x2916:0x914d | proposed | medium |
+| yota-phone-2-f003 | 0x2916:0xf003 | proposed | medium |
+| wileyfox-spark-201d | 0x2970:0x201d | proposed | medium |
+| wileyfox-swift-2281 | 0x2970:0x2281 | proposed | medium |
+| wileyfox-swift2-2282 | 0x2970:0x2282 | proposed | medium |
+| acer-iconia-tab-a500-id2-3341 | 0x0502:0x3341 | proposed | medium |
+| acer-iconia-tab-a501-id1-3344 | 0x0502:0x3344 | proposed | medium |
+| acer-iconia-tab-a501-id2-3345 | 0x0502:0x3345 | proposed | medium |
+| asus-tf700-transformer-mtp-4c90 | 0x0b05:0x4c90 | proposed | medium |
+| asus-tf700-transformer-mtp-adb-4c91 | 0x0b05:0x4c91 | proposed | medium |
+| asus-tf701t-transformer-pad-mtp-4ca0 | 0x0b05:0x4ca0 | proposed | medium |
+| asus-tf701t-transformer-pad-mtp-adb-4ca1 | 0x0b05:0x4ca1 | proposed | medium |
+| caterpillar-cat-s50-88a9 | 0x04b7:0x88a9 | proposed | medium |
+| caterpillar-cat-s50-2nd-id-88aa | 0x04b7:0x88aa | proposed | medium |
+| dell-dell-streak-7-b10b | 0x413c:0xb10b | proposed | medium |
+| htc-one-m9-1st-id-040b | 0x0bb4:0x040b | proposed | medium |
+| htc-spreadtrum-sh57myz03342-mtp-05e3 | 0x0bb4:0x05e3 | proposed | medium |
+| htc-desire-626g-mtp-05f0 | 0x0bb4:0x05f0 | proposed | medium |
+| htc-desire-510-mtp-adb-05fd | 0x0bb4:0x05fd | proposed | medium |
+| htc-one-m8-google-play-edition-mtp-adb-060b | 0x0bb4:0x060b | proposed | medium |
+| huawei-y320-u10-2406 | 0x12d1:0x2406 | proposed | medium |
+| huawei-y625-u03-255d | 0x12d1:0x255d | proposed | medium |
+| huawei-y360-u61-2567 | 0x12d1:0x2567 | proposed | medium |
+| huawei-y360-u03-256b | 0x12d1:0x256b | proposed | medium |
+| huawei-y541-u02-257c | 0x12d1:0x257c | proposed | medium |
+| iriver-tolino-tab-7-1002 | 0x1e68:0x1002 | proposed | medium |
+| iriver-tolino-tab-8-1007 | 0x1e68:0x1007 | proposed | medium |
+| kyocera-kyl22-0810 | 0x0482:0x0810 | proposed | medium |
+| lenovo-lifetab-s9512-74cc | 0x17ef:0x74cc | proposed | medium |
+| lenovo-s660-74f8 | 0x17ef:0x74f8 | proposed | medium |
+| lenovo-ideatab-a2109a-7542 | 0x17ef:0x7542 | proposed | medium |
+| lenovo-ideatab-s2210a-757d | 0x17ef:0x757d | proposed | medium |
+| lenovo-k900-id2-75b3 | 0x17ef:0x75b3 | proposed | medium |
+| lg-vx8550-v-cast-mobile-phone-6010 | 0x1004:0x6010 | proposed | medium |
+| lg-kc910-renoir-mobile-phone-608f | 0x1004:0x608f | proposed | medium |
+| lg-gr-500-music-player-611b | 0x1004:0x611b | proposed | medium |
+| lg-km900-6132 | 0x1004:0x6132 | proposed | medium |
+| lg-lg8575-619a | 0x1004:0x619a | proposed | medium |
+| motorola-v3m-v750-verizon-2a65 | 0x22b8:0x2a65 | proposed | medium |
+| motorola-mb632-2dff | 0x22b8:0x2dff | proposed | medium |
+| motorola-x-2nd-edition-xt1097-mtp-2e24 | 0x22b8:0x2e24 | proposed | medium |
+| motorola-xoom-2-media-edition-id3-41cf | 0x22b8:0x41cf | proposed | medium |
+| motorola-droid-x-mb525-defy-41d6 | 0x22b8:0x41d6 | proposed | medium |
+| motorola-droid2-id1-41da | 0x22b8:0x41da | proposed | medium |
+| nokia-3110c-mobile-phone-005f | 0x0421:0x005f | proposed | medium |
+| nokia-3109c-mobile-phone-0065 | 0x0421:0x0065 | proposed | medium |
+| nokia-6220-classic-008d | 0x0421:0x008d | proposed | medium |
+| nokia-6210-navigator-0098 | 0x0421:0x0098 | proposed | medium |
+| oneplus-oneplus-7-pro-mtp-f000 | 0x05c6:0xf000 | proposed | medium |
+| samsung-yp-900-0409 | 0x04e8:0x0409 | proposed | medium |
+| samsung-i550w-phone-04a4 | 0x04e8:0x04a4 | proposed | medium |
+| samsung-jet-s8000-4f1f | 0x04e8:0x4f1f | proposed | medium |
+| samsung-yh-920-501d-501d | 0x04e8:0x501d | proposed | medium |
+| samsung-yh-920-5022-5022 | 0x04e8:0x5022 | proposed | medium |
+| samsung-yh-925gs-5024 | 0x04e8:0x5024 | proposed | medium |
+| samsung-yh-820-502e | 0x04e8:0x502e | proposed | medium |
+| samsung-yh-925-gs-502f | 0x04e8:0x502f | proposed | medium |
+| xiaomi-mi-3w-ptp-0318 | 0x2717:0x0318 | proposed | medium |
+| xiaomi-mi-2-ptp-904d | 0x2717:0x904d | proposed | medium |
+| samsung-galaxy-s25-6934 | 0x04e8:0x6934 | proposed | medium |
+| samsung-galaxy-s25-plus-6935 | 0x04e8:0x6935 | proposed | medium |
+| samsung-galaxy-s25-ultra-6936 | 0x04e8:0x6936 | proposed | medium |
+| samsung-galaxy-a56-6939 | 0x04e8:0x6939 | proposed | medium |
+| samsung-galaxy-a36-693a | 0x04e8:0x693a | proposed | medium |
+| samsung-galaxy-a16-693b | 0x04e8:0x693b | proposed | medium |
+| google-pixel-9a-4f00 | 0x18d1:0x4f00 | proposed | medium |
+| oneplus-13-f01b | 0x2a70:0xf01b | proposed | medium |
+| oneplus-13r-f01c | 0x2a70:0xf01c | proposed | medium |
+| oneplus-open-2-f01d | 0x2a70:0xf01d | proposed | medium |
+| xiaomi-15-ff78 | 0x2717:0xff78 | proposed | low |
+| xiaomi-15-pro-ff79 | 0x2717:0xff79 | proposed | low |
+| xiaomi-15-ultra-ff7a | 0x2717:0xff7a | proposed | low |
+| xiaomi-redmi-note-14-pro-ff7b | 0x2717:0xff7b | proposed | low |
+| xiaomi-redmi-note-14-pro-plus-ff7c | 0x2717:0xff7c | proposed | low |
+| xiaomi-poco-x7-ff7d | 0x2717:0xff7d | proposed | low |
+| xiaomi-poco-x7-pro-ff7e | 0x2717:0xff7e | proposed | low |
+| nothing-phone-3-0006 | 0x2b0e:0x0006 | proposed | low |
+| konica-minolta-dimage-a2-0001 | 0x132b:0x0001 | proposed | medium |
+| konica-minolta-dimage-z2-0007 | 0x132b:0x0007 | proposed | medium |
+| konica-minolta-dimage-x21-0009 | 0x132b:0x0009 | proposed | medium |
+| konica-minolta-dimage-z3-0018 | 0x132b:0x0018 | proposed | medium |
+| konica-minolta-dimage-a200-0019 | 0x132b:0x0019 | proposed | medium |
+| konica-minolta-dimage-z5-0022 | 0x132b:0x0022 | proposed | medium |
+| konica-minolta-dimage-z6-0033 | 0x132b:0x0033 | proposed | medium |
+| pioneer-dvr-lx60d-0142 | 0x08e4:0x0142 | proposed | medium |
+| fiio-m9-0013 | 0x2972:0x0013 | proposed | low |
+| fiio-m11-0015 | 0x2972:0x0015 | proposed | low |
+| fiio-m11-pro-0017 | 0x2972:0x0017 | proposed | low |
+| fiio-m11-plus-0019 | 0x2972:0x0019 | proposed | low |
+| fiio-m15-001b | 0x2972:0x001b | proposed | low |
+| fiio-m17-001d | 0x2972:0x001d | proposed | low |
+| fiio-btr5-0031 | 0x2972:0x0031 | proposed | low |
+| fiio-btr7-0033 | 0x2972:0x0033 | proposed | low |
+| fiio-k9-pro-0041 | 0x2972:0x0041 | proposed | low |
+| hiby-r6-iii-0003 | 0x2b24:0x0003 | proposed | low |
+| hiby-r8-0005 | 0x2b24:0x0005 | proposed | low |
+| hiby-r8-ii-0007 | 0x2b24:0x0007 | proposed | low |
+| hiby-rs6-0009 | 0x2b24:0x0009 | proposed | low |
+| hiby-rs8-000b | 0x2b24:0x000b | proposed | low |
+| hiby-r4-000d | 0x2b24:0x000d | proposed | low |
+| ibasso-dx320-0003 | 0x2e57:0x0003 | proposed | low |
+| ibasso-dx240-0007 | 0x2e57:0x0007 | proposed | low |
+| ibasso-dx160-000b | 0x2e57:0x000b | proposed | low |
+| ibasso-dx220-000d | 0x2e57:0x000d | proposed | low |
+| shanling-m7-0003 | 0x31b2:0x0003 | proposed | low |
+| shanling-m6-ultra-0005 | 0x31b2:0x0005 | proposed | low |
+| shanling-m3-ultra-0007 | 0x31b2:0x0007 | proposed | low |
+| shanling-m0-pro-0009 | 0x31b2:0x0009 | proposed | low |
+| gopro-hero13-black-005d | 0x2672:0x005d | proposed | low |
+| gopro-hero13-black-alt-005e | 0x2672:0x005e | proposed | low |
+| gopro-max-2-005f | 0x2672:0x005f | proposed | low |
+| gopro-hero-2023-0060 | 0x2672:0x0060 | proposed | low |
+| gopro-hero13-mini-0061 | 0x2672:0x0061 | proposed | low |
+| insta360-ace-pro-2-0012 | 0x2e1a:0x0012 | proposed | low |
+| insta360-go-3s-0013 | 0x2e1a:0x0013 | proposed | low |
+| insta360-one-rs-1inch-0014 | 0x2e1a:0x0014 | proposed | low |
+| insta360-x3-alt-0015 | 0x2e1a:0x0015 | proposed | low |
+| insta360-flow-2-0016 | 0x2e1a:0x0016 | proposed | low |
+| sjcam-sj10-pro-0201 | 0x1b3f:0x0201 | proposed | low |
+| sjcam-sj10x-0202 | 0x1b3f:0x0202 | proposed | low |
+| sjcam-c300-0203 | 0x1b3f:0x0203 | proposed | low |
+| sjcam-a20-0204 | 0x1b3f:0x0204 | proposed | low |
+| sjcam-sj8-pro-0205 | 0x1b3f:0x0205 | proposed | low |
+| akaso-brave-7-0009 | 0x3538:0x0009 | proposed | low |
+| akaso-brave-8-lite-000a | 0x3538:0x000a | proposed | low |
+| akaso-ek7000-se-000b | 0x3538:0x000b | proposed | low |
+| runcam-thumb-pro-0101 | 0x4255:0x0101 | proposed | low |
+| runcam-split-4-0102 | 0x4255:0x0102 | proposed | low |
+| runcam-thumb-2-0103 | 0x4255:0x0103 | proposed | low |
+| barnesnoble-nook-simple-touch-0002 | 0x2080:0x0002 | proposed | medium |
+| barnesnoble-nook-glowlight-plus-0003 | 0x2080:0x0003 | proposed | medium |
+| barnesnoble-nook-glowlight-4-0007 | 0x2080:0x0007 | proposed | medium |
+| barnesnoble-nook-glowlight-4e-0008 | 0x2080:0x0008 | proposed | medium |
+| barnesnoble-nook-hd-000b | 0x2080:0x000b | proposed | medium |
+| barnesnoble-nook-hdplus-000c | 0x2080:0x000c | proposed | medium |
+| tolino-shine-4-6058 | 0x1f85:0x6058 | proposed | medium |
+| tolino-page-2-605a | 0x1f85:0x605a | proposed | medium |
+| tolino-epos-3-605c | 0x1f85:0x605c | proposed | medium |
+| tolino-vision-5-605e | 0x1f85:0x605e | proposed | medium |
+| thinkware-u1000-0100 | 0x1eac:0x0100 | proposed | low |
+| thinkware-q1000-0200 | 0x1eac:0x0200 | proposed | low |
+| thinkware-f200pro-0300 | 0x1eac:0x0300 | proposed | low |
+| thinkware-f70pro-0400 | 0x1eac:0x0400 | proposed | low |
+| thinkware-x1000-0500 | 0x1eac:0x0500 | proposed | low |
+| thinkware-t700-0600 | 0x1eac:0x0600 | proposed | low |
+| 70mai-a800s-4k-7001 | 0x2717:0x7001 | proposed | low |
+| 70mai-a810-7002 | 0x2717:0x7002 | proposed | low |
+| 70mai-omni-x200-7003 | 0x2717:0x7003 | proposed | low |
+| 70mai-a500s-7004 | 0x2717:0x7004 | proposed | low |
+| 70mai-m300-7005 | 0x2717:0x7005 | proposed | low |
+| flir-e8-xt-1005 | 0x09cb:0x1005 | proposed | low |
+| flir-e6-xt-1006 | 0x09cb:0x1006 | proposed | low |
+| flir-e5-xt-1007 | 0x09cb:0x1007 | proposed | low |
+| flir-c5-1008 | 0x09cb:0x1008 | proposed | low |
+| flir-one-edge-pro-1996 | 0x09cb:0x1996 | proposed | low |
+| flir-breach-ptq136-4007 | 0x09cb:0x4007 | proposed | low |
+| flir-t530-1010 | 0x09cb:0x1010 | proposed | low |
+| flir-t540-1011 | 0x09cb:0x1011 | proposed | low |
+| flir-t560-1012 | 0x09cb:0x1012 | proposed | low |
+| infiray-p2-pro-0001 | 0x2bdf:0x0001 | proposed | low |
+| infiray-t2l-0002 | 0x2bdf:0x0002 | proposed | low |
+| infiray-t2s-plus-0003 | 0x2bdf:0x0003 | proposed | low |
+| tomtom-go-520-0001 | 0x1390:0x0001 | proposed | low |
+| tomtom-runner-gps-watch-7474 | 0x1390:0x7474 | proposed | low |
+| tomtom-bandit-action-cam-a001 | 0x1390:0xa001 | proposed | low |
+| tomtom-go-5200-5456 | 0x1390:0x5456 | proposed | low |
+| tomtom-go-discover-5457 | 0x1390:0x5457 | proposed | low |
+| tomtom-rider-550-5458 | 0x1390:0x5458 | proposed | low |
+| acer-iconia-tab-a100-id1-3348 | 0x0502:0x3348 | proposed | medium |
+| acer-iconia-tab-a100-id2-3349 | 0x0502:0x3349 | proposed | medium |
+| acer-iconia-tab-a101-id1-334a | 0x0502:0x334a | proposed | medium |
+| acer-iconia-tab-a200-id1-337c | 0x0502:0x337c | proposed | medium |
+| acer-iconia-tab-a200-id2-337d | 0x0502:0x337d | proposed | medium |
+| acer-iconia-tab-a510-id1-3389 | 0x0502:0x3389 | proposed | medium |
+| acer-iconia-tab-a510-id2-338a | 0x0502:0x338a | proposed | medium |
+| acer-s500-cloudmobile-33aa | 0x0502:0x33aa | proposed | medium |
+| acer-e350-liquid-gallant-duo-id1-33c3 | 0x0502:0x33c3 | proposed | medium |
+| acer-e350-liquid-gallant-duo-id2-33c4 | 0x0502:0x33c4 | proposed | medium |
+| acer-iconia-tab-a210-33cb | 0x0502:0x33cb | proposed | medium |
+| acer-iconia-tab-a110-33d8 | 0x0502:0x33d8 | proposed | medium |
+| acer-liquid-z120-mt65xx-3473 | 0x0502:0x3473 | proposed | medium |
+| acer-liquid-e2-3514 | 0x0502:0x3514 | proposed | medium |
+| acer-iconia-a1-810-353c | 0x0502:0x353c | proposed | medium |
+| acer-liquid-z130-mt65xx-355f | 0x0502:0x355f | proposed | medium |
+| acer-iconia-a3-a11-3586 | 0x0502:0x3586 | proposed | medium |
+| acer-liquid-e3-35a8 | 0x0502:0x35a8 | proposed | medium |
+| acer-z150-35e4 | 0x0502:0x35e4 | proposed | medium |
+| acer-liquid-x1-3609 | 0x0502:0x3609 | proposed | medium |
+| acer-z160-361d | 0x0502:0x361d | proposed | medium |
+| acer-iconia-a1-840fhd-362d | 0x0502:0x362d | proposed | medium |
+| acer-e39-3643 | 0x0502:0x3643 | proposed | medium |
+| acer-liquid-e700-3644 | 0x0502:0x3644 | proposed | medium |
+| acer-one-7-3657 | 0x0502:0x3657 | proposed | medium |
+| acer-z200-3683 | 0x0502:0x3683 | proposed | medium |
+| acer-a1-841-365e | 0x0502:0x365e | proposed | medium |
+| acer-liquid-s56-3725 | 0x0502:0x3725 | proposed | medium |
+| acer-liquid-z220-id1-374f | 0x0502:0x374f | proposed | medium |
+| acer-liquid-z220-id2-3750 | 0x0502:0x3750 | proposed | medium |
+| acer-liquid-z630-37ef | 0x0502:0x37ef | proposed | medium |
+| acer-z530-3822 | 0x0502:0x3822 | proposed | medium |
+| acer-z530-16gb-3823 | 0x0502:0x3823 | proposed | medium |
+| acer-iconia-one-10-3841 | 0x0502:0x3841 | proposed | medium |
+| acer-a3-a40-387a | 0x0502:0x387a | proposed | medium |
+| acer-zest-t06-3886 | 0x0502:0x3886 | proposed | medium |
+| acer-liquid-zest-4g-38a5 | 0x0502:0x38a5 | proposed | medium |
+| acer-liquid-zest-plus-38bb | 0x0502:0x38bb | proposed | medium |
+| acer-liquid-z6e-3938 | 0x0502:0x3938 | proposed | medium |
+| acer-iconia-one-10-b3-a40-394b | 0x0502:0x394b | proposed | medium |
+| intex-aqua-fish-0a07 | 0x05c6:0x0a07 | proposed | medium |
+| qualcomm-nokia-5530-xpressmusic-0229 | 0x05c6:0x0229 | proposed | medium |
+| qualcomm-6205-balboa-3196 | 0x05c6:0x3196 | proposed | medium |
+| qualcomm-gsmart-g1342-8800 | 0x05c6:0x8800 | proposed | medium |
+| qualcomm-andromax-u-9025 | 0x05c6:0x9025 | proposed | medium |
+| qualcomm-oneplus-one-mtp-6764 | 0x05c6:0x6764 | proposed | medium |
+| qualcomm-oneplus-one-mtpplusadb-6765 | 0x05c6:0x6765 | proposed | medium |
+| qualcomm-xolo-black-mtp-901b | 0x05c6:0x901b | proposed | medium |
+| qualcomm-phicomm-c230w-mtp-9039 | 0x05c6:0x9039 | proposed | medium |
+| dell-dell-venue-7-inch-b11a | 0x413c:0xb11a | proposed | medium |
+| dell-dell-venue-7-inch-2nd-id-b11b | 0x413c:0xb11b | proposed | medium |
+| barnesnoble-nook-1st-edition-0001 | 0x2080:0x0001 | proposed | low |
+| barnesnoble-nook-tablet-0004 | 0x2080:0x0004 | proposed | low |
+| barnesnoble-nook-hd-0009 | 0x2080:0x0009 | proposed | low |
+| barnesnoble-nook-10-000d | 0x2080:0x000d | proposed | low |
+| google-nook-tablet-mtp-685c | 0x18d1:0x685c | proposed | low |
+| tolino-shine-5-6060 | 0x1f85:0x6060 | proposed | low |
+| tolino-vision-7-6062 | 0x1f85:0x6062 | proposed | low |
+| tolino-page-3-6064 | 0x1f85:0x6064 | proposed | low |
+| tolino-epos-4-6066 | 0x1f85:0x6066 | proposed | low |
+| lenovo-yoga-tablet-10-76fe | 0x17ef:0x76fe | proposed | low |
+| lenovo-tab2-a7-785f | 0x17ef:0x785f | proposed | low |
+| lenovo-tab2-a8-78da | 0x17ef:0x78da | proposed | low |
+| lenovo-yoga-tab-yt3-7932 | 0x17ef:0x7932 | proposed | low |
+| lenovo-tab2-a10-7949 | 0x17ef:0x7949 | proposed | low |
+| lenovo-yoga-tab3-pro-795c | 0x17ef:0x795c | proposed | low |
+| lenovo-tab3-7-79a2 | 0x17ef:0x79a2 | proposed | low |
+| lenovo-yoga-book-79af | 0x17ef:0x79af | proposed | low |
+| lenovo-tab3-10plus-79de | 0x17ef:0x79de | proposed | low |
+| lenovo-tab-10-7a50 | 0x17ef:0x7a50 | proposed | low |
+| lenovo-tab3-8plus-7a6b | 0x17ef:0x7a6b | proposed | low |
+| lenovo-tab4-10-7ac5 | 0x17ef:0x7ac5 | proposed | low |
+| lenovo-tab4-10plus-7ad0 | 0x17ef:0x7ad0 | proposed | low |
+| lenovo-tab-x704a-7b25 | 0x17ef:0x7b25 | proposed | low |
+| lenovo-tab7-essential-7b3c | 0x17ef:0x7b3c | proposed | low |
+| lenovo-tab-e8-7b84 | 0x17ef:0x7b84 | proposed | low |
+| lenovo-tab4-10-alt-7bc7 | 0x17ef:0x7bc7 | proposed | low |
+| lenovo-tab-p10-7bd3 | 0x17ef:0x7bd3 | proposed | low |
+| lenovo-tab-v7-7beb | 0x17ef:0x7beb | proposed | low |
+| lenovo-yoga-smart-tab-7c12 | 0x17ef:0x7c12 | proposed | low |
+| lenovo-tab-m10-fhd-7c45 | 0x17ef:0x7c45 | proposed | low |
+| lenovo-tab-m10-fhdplus-7c46 | 0x17ef:0x7c46 | proposed | low |
+| lenovo-tab-p11-7c6f | 0x17ef:0x7c6f | proposed | low |
+| lenovo-tab-m10hd-gen2-7c97 | 0x17ef:0x7c97 | proposed | low |
+| lenovo-tab-m7-gen3-7cb3 | 0x17ef:0x7cb3 | proposed | low |
+| lenovo-tab-p11plus-7d4b | 0x17ef:0x7d4b | proposed | low |
+| lenovo-tab-p11pro-gen2-7da5 | 0x17ef:0x7da5 | proposed | low |
+| lenovo-tab-p12-7e16 | 0x17ef:0x7e16 | proposed | low |
+| lenovo-tab-m11-7e7c | 0x17ef:0x7e7c | proposed | low |
+| lenovo-tab-plus-7ea5 | 0x17ef:0x7ea5 | proposed | low |
+| huawei-y560-259c | 0x12d1:0x259c | proposed | low |
+| huawei-cun-u29-2608 | 0x12d1:0x2608 | proposed | low |
+| huawei-lua-l02-260b | 0x12d1:0x260b | proposed | low |
+| alcatel-popo4-a00f | 0x1bbb:0xa00f | proposed | low |
+| essential-ph1a-c030 | 0x2e17:0xc030 | proposed | low |
+| essential-ph1-c033 | 0x2e17:0xc033 | proposed | low |
+| tomtom-blue-me-5454 | 0x1390:0x5454 | proposed | low |
+| 70mai-dashcam-pro-plus-7001 | 0x3361:0x7001 | proposed | low |
+| 70mai-dashcam-4k-7002 | 0x3361:0x7002 | proposed | low |
+| 70mai-dashcam-lite-7003 | 0x3361:0x7003 | proposed | low |
+| 70mai-dashcam-a800s-7004 | 0x3361:0x7004 | proposed | low |
+| 70mai-dashcam-m300-7005 | 0x3361:0x7005 | proposed | low |
+| thomson-em28-series-0774 | 0x069b:0x0774 | proposed | medium |
+| thomson-opal--lyra-mc4002-0777 | 0x069b:0x0777 | proposed | medium |
+| thomson-lyra-mc5104b-m51-series-077c | 0x069b:0x077c | proposed | medium |
+| thomson-rca-h106-301a | 0x069b:0x301a | proposed | medium |
+| thomson-scenium-e308-3028 | 0x069b:0x3028 | proposed | medium |
+| thomson-lyra-hc308a-3035 | 0x069b:0x3035 | proposed | medium |
+| bravis-a401-neo-0c03 | 0x0e8d:0x0c03 | proposed | medium |
+| mediatek-mt65xx-67xx-mtppluscdc-mode-2012 | 0x0e8d:0x2012 | proposed | medium |
+| mediatek-qin-phone-f21-pro-2026 | 0x0e8d:0x2026 | proposed | medium |
+| lenovo-tab-p12-2nd-id-7e16 | 0x0e8d:0x7e16 | proposed | medium |
+| disney-mixmax-6021 | 0x0aa6:0x6021 | proposed | medium |
+| tevion-md-81488-3011 | 0x0aa6:0x3011 | proposed | medium |
+| mymusix-pd-6070-9601 | 0x0aa6:0x9601 | proposed | medium |
+| perception-digital-gigaware-gx400-9702 | 0x0aa6:0x9702 | proposed | medium |
+| kenwood-media-keg-hd10gb7-100c | 0x0b28:0x100c | proposed | medium |
+| foma-d905i-21ba | 0x06d3:0x21ba | proposed | medium |
+| trekstor-i-beat-organix-2-0-0002 | 0x1e68:0x0002 | proposed | medium |
+| marshall-london-000b | 0x2ad9:0x000b | proposed | medium |
+| nokia-nokia-5320-xpressmusic-00ea | 0x0421:0x00ea | proposed | low |
+| nokia-nokia-5800-xpressmusic-v2-0155 | 0x0421:0x0155 | proposed | low |
+| nokia-nokia-5800-xpressmusic-v3-0159 | 0x0421:0x0159 | proposed | low |
+| nokia-nokia-e63-0179 | 0x0421:0x0179 | proposed | low |
+| nokia-nokia-n79-0186 | 0x0421:0x0186 | proposed | low |
+| nokia-nokia-e71x-01a1 | 0x0421:0x01a1 | proposed | low |
+| nokia-nokia-e52-01cf | 0x0421:0x01cf | proposed | low |
+| nokia-nokia-3710-01ee | 0x0421:0x01ee | proposed | low |
+| nokia-nokia-n97-1-01f4 | 0x0421:0x01f4 | proposed | low |
+| nokia-nokia-5130-xpressmusic-0209 | 0x0421:0x0209 | proposed | low |
+| nokia-nokia-5530-0229 | 0x0421:0x0229 | proposed | low |
+| nokia-nokia-e6-032f | 0x0421:0x032f | proposed | low |
+| nokia-nokia-n97-mini-026b | 0x0421:0x026b | proposed | low |
+| nokia-nokia-x6-0274 | 0x0421:0x0274 | proposed | low |
+| nokia-nokia-6600i-0297 | 0x0421:0x0297 | proposed | low |
+| nokia-nokia-2710-02c1 | 0x0421:0x02c1 | proposed | low |
+| nokia-nokia-n8-ovi-mode-0302 | 0x0421:0x0302 | proposed | low |
+| nokia-nokia-e7-ovi-mode-0335 | 0x0421:0x0335 | proposed | low |
+| nokia-nokia-c7-id2-03cd | 0x0421:0x03cd | proposed | low |
+| nokia-nokia-n950-03d2 | 0x0421:0x03d2 | proposed | low |
+| nokia-nokia-3250-mobile-phone-0462 | 0x0421:0x0462 | proposed | low |
+| nokia-nokia-n93-mobile-phone-0478 | 0x0421:0x0478 | proposed | low |
+| nokia-nokia-5500-sport-mobile-phone-047e | 0x0421:0x047e | proposed | low |
+| nokia-nokia-n91-mobile-phone-0485 | 0x0421:0x0485 | proposed | low |
+| nokia-nokia-5700-xpressmusic-mobile-phone-04b4 | 0x0421:0x04b4 | proposed | low |
+| nokia-nokia-5300-mobile-phone-04ba | 0x0421:0x04ba | proposed | low |
+| nokia-nokia-5200-mobile-phone-04be | 0x0421:0x04be | proposed | low |
+| nokia-nokia-n73-mobile-phone-04d1 | 0x0421:0x04d1 | proposed | low |
+| nokia-nokia-n75-mobile-phone-04e1 | 0x0421:0x04e1 | proposed | low |
+| nokia-nokia-n93i-mobile-phone-04e5 | 0x0421:0x04e5 | proposed | low |
+| nokia-nokia-n80-internet-edition-media-player-04f1 | 0x0421:0x04f1 | proposed | low |
+| nokia-nokia-n300-0524 | 0x0421:0x0524 | proposed | low |
+| nokia-nokia-c5-00-id2-0595 | 0x0421:0x0595 | proposed | low |
+| nokia-nokia-x2-dual-sim-0708 | 0x0421:0x0708 | proposed | low |
+| lg-lg-electronics-inc-g2-6225 | 0x1004:0x6225 | proposed | low |
+| lg-lg-electronics-inc-lg-vs950-622a | 0x1004:0x622a | proposed | low |
+| lg-lg-electronics-inc-lg-vs870-6239 | 0x1004:0x6239 | proposed | low |
+| lg-lg-electronics-inc-lg-vs890-623d | 0x1004:0x623d | proposed | low |
+| lg-lg-electronics-inc-lg-optimus-zone-2-6259 | 0x1004:0x6259 | proposed | low |
+| lg-lg-electronics-inc-810-tablet-6263 | 0x1004:0x6263 | proposed | low |
+| lg-lg-electronics-inc-vk810-6265 | 0x1004:0x6265 | proposed | low |
+| lg-lg-electronics-inc-g3-vs985-626e | 0x1004:0x626e | proposed | low |
+| lg-lg-electronics-inc-transpyre-628a | 0x1004:0x628a | proposed | low |
+| lg-lg-electronics-inc-various-e-and-p-models-631c | 0x1004:0x631c | proposed | low |
+| lg-lg-electronics-inc-lg-g3-f460s-633f | 0x1004:0x633f | proposed | low |
+| sony-sonyericsson-k850i-0075 | 0x0fce:0x0075 | proposed | low |
+| sony-sonyericsson-w910-0076 | 0x0fce:0x0076 | proposed | low |
+| sony-sonyericsson-w890i-00b3 | 0x0fce:0x00b3 | proposed | low |
+| sony-sonyericsson-w760i-00c6 | 0x0fce:0x00c6 | proposed | low |
+| sony-sonyericsson-c902-00d4 | 0x0fce:0x00d4 | proposed | low |
+| sony-sonyericsson-c702-00d9 | 0x0fce:0x00d9 | proposed | low |
+| sony-sonyericsson-w980-00da | 0x0fce:0x00da | proposed | low |
+| sony-sonyericsson-c905-00ef | 0x0fce:0x00ef | proposed | low |
+| sony-sonyericsson-w595-00f3 | 0x0fce:0x00f3 | proposed | low |
+| sony-sonyericsson-w902-00f5 | 0x0fce:0x00f5 | proposed | low |
+| sony-sonyericsson-t700-00fb | 0x0fce:0x00fb | proposed | low |
+| sony-sonyericsson-w705-w715-0105 | 0x0fce:0x0105 | proposed | low |
+| sony-sonyericsson-w995-0112 | 0x0fce:0x0112 | proposed | low |
+| sony-sonyericsson-u5-0133 | 0x0fce:0x0133 | proposed | low |
+| sony-sonyericsson-u8i-013a | 0x0fce:0x013a | proposed | low |
+| sony-sonyericsson-j10i2-elm-0144 | 0x0fce:0x0144 | proposed | low |
+| sony-sonyericsson-j108i-cedar-014e | 0x0fce:0x014e | proposed | low |
+| sony-sonyericsson-w302-10c8 | 0x0fce:0x10c8 | proposed | low |
+| sony-sonyericsson-j10i-elm-d144 | 0x0fce:0xd144 | proposed | low |
+| sony-sonyericsson-k550i-e000 | 0x0fce:0xe000 | proposed | low |
+| sony-sonyericsson-xperia-dual-e-mtp-0146 | 0x0fce:0x0146 | proposed | low |
+| sony-sonyericsson-lt15i-xperia-arc-s-mtp-014f | 0x0fce:0x014f | proposed | low |
+| sony-sonyericsson-mt11i-xperia-neo-mtp-0156 | 0x0fce:0x0156 | proposed | low |
+| sony-sonyericsson-is12s-xperia-acro-mtp-0157 | 0x0fce:0x0157 | proposed | low |
+| sony-sonyericsson-mk16i-xperia-mtp-015a | 0x0fce:0x015a | proposed | low |
+| sony-sonyericsson-r800-r88i-xperia-play-mtp-015d | 0x0fce:0x015d | proposed | low |
+| sony-sonyericsson-st18a-xperia-ray-mtp-0161 | 0x0fce:0x0161 | proposed | low |
+| sony-sonyericsson-sk17i-xperia-mini-pro-mtp-0166 | 0x0fce:0x0166 | proposed | low |
+| sony-sonyericsson-st15i-xperia-mini-mtp-0167 | 0x0fce:0x0167 | proposed | low |
+| sony-sonyericsson-st17i-xperia-active-mtp-0168 | 0x0fce:0x0168 | proposed | low |
+| sony-sony-lt26i-xperia-s-mtp-0169 | 0x0fce:0x0169 | proposed | low |
+| sony-sony-wt19i-live-walkman-mtp-016d | 0x0fce:0x016d | proposed | low |
+| sony-sony-st21i-xperia-tipo-mtp-0170 | 0x0fce:0x0170 | proposed | low |
+| sony-sony-st15i-xperia-u-mtp-0171 | 0x0fce:0x0171 | proposed | low |
+| sony-sony-lt22i-xperia-p-mtp-0172 | 0x0fce:0x0172 | proposed | low |
+| sony-sony-mt27i-xperia-sola-mtp-0173 | 0x0fce:0x0173 | proposed | low |
+| sony-sony-lt26w-xperia-acro-hd-is12s-mtp-0175 | 0x0fce:0x0175 | proposed | low |
+| sony-sony-lt26w-xperia-acro-hd-so-03d-mtp-0176 | 0x0fce:0x0176 | proposed | low |
+| sony-sony-lt29i-xperia-gx-mtp-0178 | 0x0fce:0x0178 | proposed | low |
+| sony-sony-st27i-st27a-xperia-go-mtp-017e | 0x0fce:0x017e | proposed | low |
+| sony-sony-st23i-xperia-miro-mtp-0180 | 0x0fce:0x0180 | proposed | low |
+| sony-sony-so-05d-xperia-sx-mtp-0181 | 0x0fce:0x0181 | proposed | low |
+| sony-sony-xperia-tablet-z-mtp-1-018d | 0x0fce:0x018d | proposed | low |
+| sony-sony-xperia-l-mtp-0192 | 0x0fce:0x0192 | proposed | low |
+| sony-sony-xperia-tablet-z-mtp-2-0194 | 0x0fce:0x0194 | proposed | low |
+| sony-sony-xperia-z-ultra-mtp-id2-0196 | 0x0fce:0x0196 | proposed | low |
+| sony-sony-xperia-zr-mtp-0197 | 0x0fce:0x0197 | proposed | low |
+| sony-sony-xperia-a-mtp-0198 | 0x0fce:0x0198 | proposed | low |
+| sony-sony-xperia-z-ultra-mtp-id3-019c | 0x0fce:0x019c | proposed | low |
+| sony-sony-xperia-m2-dual-mtp-01ab | 0x0fce:0x01ab | proposed | low |
+| sony-sony-xperia-z3v-mtp-01b0 | 0x0fce:0x01b0 | proposed | low |
+| sony-sony-xperia-z2-tablet-mtp-01b1 | 0x0fce:0x01b1 | proposed | low |
+| sony-sony-xperia-e1-mtp-01b5 | 0x0fce:0x01b5 | proposed | low |
+| sony-sony-xperia-z-ultra-mtp-01b6 | 0x0fce:0x01b6 | proposed | low |
+| sony-sony-xperia-m2-aqua-mtp-01b8 | 0x0fce:0x01b8 | proposed | low |
+| sony-sony-xperia-z3-tablet-mtp-01c0 | 0x0fce:0x01c0 | proposed | low |
+| sony-sony-xperia-sov33-01e1 | 0x0fce:0x01e1 | proposed | low |
+| sony-sony-xperia-xz-01ed | 0x0fce:0x01ed | proposed | low |
+| sony-sony-xperia-xa2-jolla-sailfish-0a07 | 0x0fce:0x0a07 | proposed | low |
+| sony-sonyericsson-is12s-xperia-acro-mtp-cdrom-4157 | 0x0fce:0x4157 | proposed | low |
+| sony-sonyericsson-st17i-xperia-active-mtp-cdrom-4168 | 0x0fce:0x4168 | proposed | low |
+| sony-sony-lt26i-xperia-s-mtp-cdrom-4169 | 0x0fce:0x4169 | proposed | low |
+| sony-sony-st21i-xperia-tipo-mtp-cdrom-4170 | 0x0fce:0x4170 | proposed | low |
+| sony-sony-st25i-xperia-u-mtp-cdrom-4171 | 0x0fce:0x4171 | proposed | low |
+| sony-sony-lt22i-xperia-p-mtp-cdrom-4172 | 0x0fce:0x4172 | proposed | low |
+| sony-sony-mt27i-xperia-sola-mtp-cdrom-4173 | 0x0fce:0x4173 | proposed | low |
+| sony-sony-lt26w-xperia-acro-hd-is12s-mtp-cdrom-4175 | 0x0fce:0x4175 | proposed | low |
+| sony-sony-lt26w-xperia-acro-hd-so-03d-mtp-cdrom-4176 | 0x0fce:0x4176 | proposed | low |
+| sony-sony-lt28at-xperia-ion-mtp-cdrom-4177 | 0x0fce:0x4177 | proposed | low |
+| sony-sony-lt29i-xperia-gx-mtp-cdrom-4178 | 0x0fce:0x4178 | proposed | low |
+| sony-sony-st27i-st27a-xperia-go-mtp-cdrom-417e | 0x0fce:0x417e | proposed | low |
+| sony-sony-st23i-xperia-miro-mtp-cdrom-4180 | 0x0fce:0x4180 | proposed | low |
+| sony-sony-so-05d-xperia-sx-mtp-cdrom-4181 | 0x0fce:0x4181 | proposed | low |
+| sony-sony-lt30p-xperia-t-mtp-cdrom-4182 | 0x0fce:0x4182 | proposed | low |
+| sony-sony-lt25i-xperia-v-mtp-cdrom-4186 | 0x0fce:0x4186 | proposed | low |
+| sony-sony-xperia-j-mtp-cdrom-4188 | 0x0fce:0x4188 | proposed | low |
+| sony-sony-xperia-zl-mtp-cdrom-4189 | 0x0fce:0x4189 | proposed | low |
+| sony-sony-xperia-e-mtp-cdrom-418c | 0x0fce:0x418c | proposed | low |
+| sony-sony-xperia-tablet-z-mtp-cdrom-1-418d | 0x0fce:0x418d | proposed | low |
+| sony-sony-xperia-l-mtp-cdrom-4192 | 0x0fce:0x4192 | proposed | low |
+| sony-sony-xperia-z-mtp-cdrom-4193 | 0x0fce:0x4193 | proposed | low |
+| sony-sony-xperia-tablet-z-mtp-cdrom-2-4194 | 0x0fce:0x4194 | proposed | low |
+| sony-sony-xperia-sp-mtp-cdrom-4195 | 0x0fce:0x4195 | proposed | low |
+| sony-sony-xperia-m-mtp-cdrom-419b | 0x0fce:0x419b | proposed | low |
+| sony-sony-xperia-z-ultra-mtp-cdrom-id3-419c | 0x0fce:0x419c | proposed | low |
+| sony-sony-xperia-z1-mtp-cdrom-419e | 0x0fce:0x419e | proposed | low |
+| sony-sony-xperia-c-mtp-cdrom-41a3 | 0x0fce:0x41a3 | proposed | low |
+| sony-sony-xperia-z1-compact-d5503-mtp-cdrom-41a7 | 0x0fce:0x41a7 | proposed | low |
+| sony-sony-xperia-t2-ultra-mtp-cdrom-41a9 | 0x0fce:0x41a9 | proposed | low |
+| sony-sony-xperia-m2-mtp-cdrom-41aa | 0x0fce:0x41aa | proposed | low |
+| sony-sony-xperia-m2-dual-mtp-cdrom-41ab | 0x0fce:0x41ab | proposed | low |
+| sony-sony-xperia-z2-mtp-cdrom-41af | 0x0fce:0x41af | proposed | low |
+| sony-sony-xperia-z3v-mtp-cdrom-41b0 | 0x0fce:0x41b0 | proposed | low |
+| sony-sony-xperia-z2-tablet-mtp-cdrom-41b1 | 0x0fce:0x41b1 | proposed | low |
+| sony-sony-xperia-e1-mtp-cdrom-41b5 | 0x0fce:0x41b5 | proposed | low |
+| sony-sony-xperia-z-ultra-mtp-cdrom-41b6 | 0x0fce:0x41b6 | proposed | low |
+| sony-sony-xperia-m2-aqua-mtp-cdrom-41b8 | 0x0fce:0x41b8 | proposed | low |
+| sony-sony-xperia-z3-mtp-cdrom-41ba | 0x0fce:0x41ba | proposed | low |
+| sony-sony-xperia-z3-compact-mtp-cdrom-41bb | 0x0fce:0x41bb | proposed | low |
+| sony-sony-xperia-e3-mtp-cdrom-41bc | 0x0fce:0x41bc | proposed | low |
+| sony-sony-xperia-z3-tablet-mtp-cdrom-41c0 | 0x0fce:0x41c0 | proposed | low |
+| sony-sony-xperia-m4-aqua-dual-mtp-cdrom-41c4 | 0x0fce:0x41c4 | proposed | low |
+| sony-sony-xperia-e4-dual-mtp-cdrom-41c5 | 0x0fce:0x41c5 | proposed | low |
+| sony-sony-xperia-z3-mtp-cdrom-41c9 | 0x0fce:0x41c9 | proposed | low |
+| sony-sony-xperia-e4g-mtp-cdrom-41cb | 0x0fce:0x41cb | proposed | low |
+| sony-sony-xperia-c4-dual-mtp-cdrom-41d2 | 0x0fce:0x41d2 | proposed | low |
+| sony-sony-xperia-m5-mtp-cdrom-41d6 | 0x0fce:0x41d6 | proposed | low |
+| sony-sony-xperia-z5-mtp-cdrom-41d9 | 0x0fce:0x41d9 | proposed | low |
+| sony-sony-xperia-z5-compact-mtp-cdrom-41da | 0x0fce:0x41da | proposed | low |
+| sony-sony-xperia-z5-premium-dual-sim-mtp-cdrom-41db | 0x0fce:0x41db | proposed | low |
+| sony-sony-xperia-xa-mtp-cdrom-41de | 0x0fce:0x41de | proposed | low |
+| sony-sony-xperia-x-mtp-cdrom-41e0 | 0x0fce:0x41e0 | proposed | low |
+| sony-sony-xperia-sov33-mtp-cdrom-41e1 | 0x0fce:0x41e1 | proposed | low |
+| sony-sony-xperia-xz-mtp-cdrom-41e7 | 0x0fce:0x41e7 | proposed | low |
+| sony-sony-xperia-x-compact-mtp-cdrom-41e8 | 0x0fce:0x41e8 | proposed | low |
+| sony-sony-xperia-xa1-mtp-cdrom-41eb | 0x0fce:0x41eb | proposed | low |
+| sony-sony-xperia-xz-cdrom-41ed | 0x0fce:0x41ed | proposed | low |
+| sony-sony-xperia-xa1-ultra-mtp-cdrom-41ef | 0x0fce:0x41ef | proposed | low |
+| sony-sony-xperia-xz-premium-mtp-cdrom-41f1 | 0x0fce:0x41f1 | proposed | low |
+| sony-sony-xperia-xz1-mtp-cdrom-41f3 | 0x0fce:0x41f3 | proposed | low |
+| sony-sony-xperia-xz1-compact-mtp-cdrom-41f4 | 0x0fce:0x41f4 | proposed | low |
+| sony-sony-xperia-l2-mtp-cdrom-41f6 | 0x0fce:0x41f6 | proposed | low |
+| sony-sony-xperia-xa2-compact-mtp-cdrom-41f7 | 0x0fce:0x41f7 | proposed | low |
+| sony-sony-xperia-xa2-ultra-mtp-cdrom-41f8 | 0x0fce:0x41f8 | proposed | low |
+| sony-sony-xperia-xz2-compact-dual-sim-mtp-cdrom-41f9 | 0x0fce:0x41f9 | proposed | low |
+| sony-sony-xperia-xz2-h8266-mtp-cdrom-41fa | 0x0fce:0x41fa | proposed | low |
+| sony-sony-xperia-xz2-premium-mtp-cdrom-41fb | 0x0fce:0x41fb | proposed | low |
+| sony-sony-xperia-xz3-dual-sim-h9436-mtp-cdrom-41ff | 0x0fce:0x41ff | proposed | low |
+| sony-sony-xperia-10-i4113-mtp-cdrom-4201 | 0x0fce:0x4201 | proposed | low |
+| sony-sony-xperia-1-j9110-mtp-cdrom-4205 | 0x0fce:0x4205 | proposed | low |
+| sony-sony-xperia-l3-mtp-cdrom-4207 | 0x0fce:0x4207 | proposed | low |
+| sony-sony-xperia-5-mtp-cdrom-420a | 0x0fce:0x420a | proposed | low |
+| sony-sony-xperia-10-v-phone-mtp-cdrom-420c | 0x0fce:0x420c | proposed | low |
+| sony-sony-xperia-5-ii-phone-mtp-cdrom-420d | 0x0fce:0x420d | proposed | low |
+| sony-sony-xperia-10-vi-mtp-cdrom-420e | 0x0fce:0x420e | proposed | low |
+| sony-sonyericsson-xperia-dual-e-mtp-adb-5146 | 0x0fce:0x5146 | proposed | low |
+| sony-sonyericsson-lt15i-xperia-arc-mtp-adb-514f | 0x0fce:0x514f | proposed | low |
+| sony-sonyericsson-mt11i-xperia-neo-mtp-adb-5156 | 0x0fce:0x5156 | proposed | low |
+| sony-sonyericsson-is12s-xperia-acro-mtp-adb-5157 | 0x0fce:0x5157 | proposed | low |
+| sony-sonyericsson-mk16i-xperia-mtp-adb-515a | 0x0fce:0x515a | proposed | low |
+| sony-sonyericsson-r800-r88i-xperia-play-mtp-adb-515d | 0x0fce:0x515d | proposed | low |
+| sony-sonyericsson-st18i-xperia-ray-mtp-adb-5161 | 0x0fce:0x5161 | proposed | low |
+| sony-sonyericsson-sk17i-xperia-mini-pro-mtp-adb-5166 | 0x0fce:0x5166 | proposed | low |
+| sony-sonyericsson-st15i-xperia-mini-mtp-adb-5167 | 0x0fce:0x5167 | proposed | low |
+| sony-sonyericsson-st17i-xperia-active-mtp-adb-5168 | 0x0fce:0x5168 | proposed | low |
+| sony-sony-lt26i-xperia-s-mtp-adb-5169 | 0x0fce:0x5169 | proposed | low |
+| sony-sonyericsson-wt19i-live-walkman-mtp-adb-516d | 0x0fce:0x516d | proposed | low |
+| sony-sony-st21i-xperia-tipo-mtp-adb-5170 | 0x0fce:0x5170 | proposed | low |
+| sony-sony-st25i-xperia-u-mtp-adb-5171 | 0x0fce:0x5171 | proposed | low |
+| sony-sony-lt22i-xperia-p-mtp-adb-5172 | 0x0fce:0x5172 | proposed | low |
+| sony-sony-mt27i-xperia-sola-mtp-adb-5173 | 0x0fce:0x5173 | proposed | low |
+| sony-sony-is12s-xperia-acro-hd-mtp-adb-5175 | 0x0fce:0x5175 | proposed | low |
+| sony-sony-so-03d-xperia-acro-hd-mtp-adb-5176 | 0x0fce:0x5176 | proposed | low |
+| sony-sony-lt28at-xperia-ion-mtp-adb-5177 | 0x0fce:0x5177 | proposed | low |
+| sony-sony-lt29i-xperia-gx-mtp-adb-5178 | 0x0fce:0x5178 | proposed | low |
+| sony-sony-st27i-st27a-xperia-go-mtp-adb-517e | 0x0fce:0x517e | proposed | low |
+| sony-sony-st23i-xperia-miro-mtp-adb-5180 | 0x0fce:0x5180 | proposed | low |
+| sony-sony-so-05d-xperia-sx-mtp-adb-5181 | 0x0fce:0x5181 | proposed | low |
+| sony-sony-lt30p-xperia-t-mtp-adb-5182 | 0x0fce:0x5182 | proposed | low |
+| sony-sony-lt25i-xperia-v-mtp-adb-5186 | 0x0fce:0x5186 | proposed | low |
+| sony-sony-xperia-j-mtp-adb-5188 | 0x0fce:0x5188 | proposed | low |
+| sony-sony-xperia-zl-mtp-adb-5189 | 0x0fce:0x5189 | proposed | low |
+| sony-sony-xperia-e-mtp-adb-518c | 0x0fce:0x518c | proposed | low |
+| sony-sony-xperia-tablet-z-mtp-adb-1-518d | 0x0fce:0x518d | proposed | low |
+| sony-sony-xperia-l-mtp-adb-5192 | 0x0fce:0x5192 | proposed | low |
+| sony-sony-xperia-z-mtp-adb-5193 | 0x0fce:0x5193 | proposed | low |
+| sony-sony-xperia-tablet-z-mtp-adb-2-5194 | 0x0fce:0x5194 | proposed | low |
+| sony-sony-xperia-sp-mtp-adb-5195 | 0x0fce:0x5195 | proposed | low |
+| sony-sony-xperia-z-ultra-mtp-adb-id2-5196 | 0x0fce:0x5196 | proposed | low |
+| sony-sony-xperia-zr-mtp-adb-5197 | 0x0fce:0x5197 | proposed | low |
+| sony-sony-xperia-a-mtp-adb-5198 | 0x0fce:0x5198 | proposed | low |
+| sony-sony-xperia-m-mtp-adb-519b | 0x0fce:0x519b | proposed | low |
+| sony-sony-xperia-z-ultra-mtp-adb-id3-519c | 0x0fce:0x519c | proposed | low |
+| sony-sony-xperia-z1-mtp-adb-519e | 0x0fce:0x519e | proposed | low |
+| sony-sony-xperia-c-mtp-adb-51a3 | 0x0fce:0x51a3 | proposed | low |
+| sony-sony-xperia-z1-compact-mtp-adb-51a7 | 0x0fce:0x51a7 | proposed | low |
+| sony-sony-xperia-t2-ultra-mtp-adb-51a9 | 0x0fce:0x51a9 | proposed | low |
+| sony-sony-xperia-m2-mtp-adb-51aa | 0x0fce:0x51aa | proposed | low |
+| sony-sony-xperia-m2-dual-mtp-adb-51ab | 0x0fce:0x51ab | proposed | low |
+| sony-sony-xperia-z2-mtp-adb-51af | 0x0fce:0x51af | proposed | low |
+| sony-sony-xperia-z3v-mtp-adb-51b0 | 0x0fce:0x51b0 | proposed | low |
+| sony-sony-xperia-z2-tablet-mtp-adb-51b1 | 0x0fce:0x51b1 | proposed | low |
+| sony-sony-xperia-e1-mtp-adb-51b5 | 0x0fce:0x51b5 | proposed | low |
+| sony-sony-xperia-z-ultra-mtp-adb-51b6 | 0x0fce:0x51b6 | proposed | low |
+| sony-sony-xperia-m2-aqua-mtp-adb-51b8 | 0x0fce:0x51b8 | proposed | low |
+| sony-sony-xperia-z3-mtp-adb-51ba | 0x0fce:0x51ba | proposed | low |
+| sony-sony-xperia-z3-compact-mtp-adb-51bb | 0x0fce:0x51bb | proposed | low |
+| sony-sony-xperia-e3-mtp-adb-51bc | 0x0fce:0x51bc | proposed | low |
+| sony-sony-xperia-z3-tablet-mtp-adb-51c0 | 0x0fce:0x51c0 | proposed | low |
+| sony-sony-xperia-m4-aqua-dual-mtp-adb-51c4 | 0x0fce:0x51c4 | proposed | low |
+| sony-sony-xperia-e4-dual-mtp-adb-51c5 | 0x0fce:0x51c5 | proposed | low |
+| sony-sony-xperia-z3-mtp-adb-51c9 | 0x0fce:0x51c9 | proposed | low |
+| sony-sony-xperia-e4g-mtp-adb-51cb | 0x0fce:0x51cb | proposed | low |
+| sony-sony-xperia-c4-dual-mtp-adb-51d2 | 0x0fce:0x51d2 | proposed | low |
+| sony-sony-xperia-m5-mtp-adb-51d6 | 0x0fce:0x51d6 | proposed | low |
+| sony-sony-xperia-z5-mtp-adb-51d9 | 0x0fce:0x51d9 | proposed | low |
+| sony-sony-xperia-z5-compact-mtp-adb-51da | 0x0fce:0x51da | proposed | low |
+| sony-sony-xperia-z5-premium-dual-sim-mtp-adb-51db | 0x0fce:0x51db | proposed | low |
+| sony-sony-xperia-xa-mtp-adb-51de | 0x0fce:0x51de | proposed | low |
+| sony-sony-xperia-x-mtp-adb-51e0 | 0x0fce:0x51e0 | proposed | low |
+| sony-sony-xperia-sov33-mtp-adb-51e1 | 0x0fce:0x51e1 | proposed | low |
+| sony-sony-xperia-xz-mtp-adb-51e7 | 0x0fce:0x51e7 | proposed | low |
+| sony-sony-xperia-x-compact-mtp-adb-51e8 | 0x0fce:0x51e8 | proposed | low |
+| sony-sony-xperia-xa1-mtp-adb-51eb | 0x0fce:0x51eb | proposed | low |
+| sony-sony-xperia-xz-adb-51ed | 0x0fce:0x51ed | proposed | low |
+| sony-sony-xperia-xa1-ultra-mtp-adb-51ef | 0x0fce:0x51ef | proposed | low |
+| sony-sony-xperia-xz-premium-mtp-adb-51f1 | 0x0fce:0x51f1 | proposed | low |
+| sony-sony-xperia-xz1-adb-51f3 | 0x0fce:0x51f3 | proposed | low |
+| sony-sony-xperia-xz1-compact-mtp-adb-51f4 | 0x0fce:0x51f4 | proposed | low |
+| sony-sony-xperia-l2-mtp-adb-51f6 | 0x0fce:0x51f6 | proposed | low |
+| sony-sony-xperia-xa2-compact-mtp-adb-51f7 | 0x0fce:0x51f7 | proposed | low |
+| sony-sony-xperia-xa2-ultra-mtp-adb-51f8 | 0x0fce:0x51f8 | proposed | low |
+| sony-sony-xperia-xz2-compact-dual-sim-mtp-adb-51f9 | 0x0fce:0x51f9 | proposed | low |
+| sony-sony-xperia-xz2-h8266-mtp-adb-51fa | 0x0fce:0x51fa | proposed | low |
+| sony-sony-xperia-xz2-premium-mtp-adb-51fb | 0x0fce:0x51fb | proposed | low |
+| sony-sony-xperia-xz3-dual-sim-h9436-mtp-adb-51ff | 0x0fce:0x51ff | proposed | low |
+| sony-sony-xperia-10-i4113-mtp-adb-5201 | 0x0fce:0x5201 | proposed | low |
+| sony-sony-xperia-1-j9110-mtp-adb-5205 | 0x0fce:0x5205 | proposed | low |
+| sony-sony-xperia-l3-mtp-adb-5207 | 0x0fce:0x5207 | proposed | low |
+| sony-sony-xperia-5-mtp-adb-520a | 0x0fce:0x520a | proposed | low |
+| sony-sony-xperia-10-v-phone-mtp-adb-520c | 0x0fce:0x520c | proposed | low |
+| sony-sony-xperia-5-ii-phone-mtp-adb-520d | 0x0fce:0x520d | proposed | low |
+| sony-sony-xperia-10-vi-mtp-adb-520e | 0x0fce:0x520e | proposed | low |
+| sony-sony-mt27i-xperia-sola-mtp-ums-a173 | 0x0fce:0xa173 | proposed | low |
+| sony-sony-is12s-xperia-acro-hd-mtp-ums-a175 | 0x0fce:0xa175 | proposed | low |
+| sony-sony-so-03d-xperia-acro-hd-mtp-ums-a176 | 0x0fce:0xa176 | proposed | low |
+| sony-sony-lt28at-xperia-ion-mtp-ums-a177 | 0x0fce:0xa177 | proposed | low |
+| sony-sony-st27i-st27a-xperia-go-mtp-ums-a17e | 0x0fce:0xa17e | proposed | low |
+| sony-sony-mt27i-xperia-sola-mtp-ums-adb-b173 | 0x0fce:0xb173 | proposed | low |
+| sony-sony-is12s-xperia-acro-mtp-ums-adb-b175 | 0x0fce:0xb175 | proposed | low |
+| sony-sony-so-03d-xperia-acro-mtp-ums-adb-b176 | 0x0fce:0xb176 | proposed | low |
+| sony-sony-lt28at-xperia-ion-mtp-ums-adb-b177 | 0x0fce:0xb177 | proposed | low |
+| sony-sony-st27i-st27a-xperia-go-mtp-ums-adb-b17e | 0x0fce:0xb17e | proposed | low |
+| motorola-motorola-milestone-verizon-droid-41dc | 0x22b8:0x41dc | proposed | low |
+| motorola-motorola-droid2-id2-42a7 | 0x22b8:0x42a7 | proposed | low |
+| motorola-motorola-xoom-2-media-edition-id2-4306 | 0x22b8:0x4306 | proposed | low |
+| motorola-motorola-xoom-2-media-edition-4311 | 0x22b8:0x4311 | proposed | low |
+| motorola-motorola-xt912-xt928-4362 | 0x22b8:0x4362 | proposed | low |
+| motorola-motorola-droid4-ptp-4373 | 0x22b8:0x4373 | proposed | low |
+| motorola-motorola-droid4-437f | 0x22b8:0x437f | proposed | low |
+| motorola-motorola-ideapad-k1-4811 | 0x22b8:0x4811 | proposed | low |
+| motorola-motorola-a1200-60ca | 0x22b8:0x60ca | proposed | low |
+| motorola-motorola-mtp-test-command-interface-6413 | 0x22b8:0x6413 | proposed | low |
+| motorola-motorola-razr2-v8-u9-z6-6415 | 0x22b8:0x6415 | proposed | low |
+| motorola-motorola-razr-d1-d3-i-mtp-64b5 | 0x22b8:0x64b5 | proposed | low |
+| motorola-motorola-razr-d1-d3-i-mtp-64b6 | 0x22b8:0x64b6 | proposed | low |
+| motorola-motorola-atrix-xt687-mtp-64cf | 0x22b8:0x64cf | proposed | low |
+| motorola-motorola-atrix-mb860-mtp-7088 | 0x22b8:0x7088 | proposed | low |
+| motorola-motorola-xoom-factory-test-70a3 | 0x22b8:0x70a3 | proposed | low |
+| motorola-motorola-xoom-mtp-adb-70a9 | 0x22b8:0x70a9 | proposed | low |
+| motorola-motorola-milestone-x2-70ca | 0x22b8:0x70ca | proposed | low |
+| motorola-motorola-xt890-907-razr-mtp-710d | 0x22b8:0x710d | proposed | low |
+| motorola-motorola-xt890-907-razr-mtp-adb-710e | 0x22b8:0x710e | proposed | low |
+| google-google-inc-for-allwinner-a31-soc-0006 | 0x18d1:0x0006 | proposed | low |
+| google-google-inc-for-ainol-novo-fire-flame-0007 | 0x18d1:0x0007 | proposed | low |
+| google-google-inc-for-sony-s1-05b3 | 0x18d1:0x05b3 | proposed | low |
+| google-google-inc-for-fairphone-fairphone-2-0a07 | 0x18d1:0x0a07 | proposed | low |
+| google-google-inc-for-barnes-noble-nook-color-2d02 | 0x18d1:0x2d02 | proposed | low |
+| google-google-inc-for-asus-tf201-transformer-4d00 | 0x18d1:0x4d00 | proposed | low |
+| google-google-inc-for-asus-tf101-transformer-4e0f | 0x18d1:0x4e0f | proposed | low |
+| google-google-inc-nexus-pixel-ptp-4ee5 | 0x18d1:0x4ee5 | proposed | low |
+| google-google-inc-nexus-pixel-ptp-adb-4ee6 | 0x18d1:0x4ee6 | proposed | low |
+| google-google-inc-for-motorola-xoom-mz604-70a8 | 0x18d1:0x70a8 | proposed | low |
+| google-google-inc-for-toshiba-thrive-7-at105-7102 | 0x18d1:0x7102 | proposed | low |
+| google-google-inc-for-lenovo-ideapad-k1-740a | 0x18d1:0x740a | proposed | low |
+| google-google-inc-for-medion-md99000-p9514-b00a | 0x18d1:0xb00a | proposed | low |
+| google-google-inc-for-lg-electronics-p990-optimus-cyanoge-d109 | 0x18d1:0xd109 | proposed | low |
+| google-google-inc-for-lg-electronics-p990-optimus-d10a | 0x18d1:0xd10a | proposed | low |
+| htc-htc-one-mini-2-mtp-0629 | 0x0bb4:0x0629 | proposed | low |
+| htc-htc-one-m9-2nd-id-065c | 0x0bb4:0x065c | proposed | low |
+| htc-htc-desire-626s-mtp-0668 | 0x0bb4:0x0668 | proposed | low |
+| htc-htc-htc-desire-520-0670 | 0x0bb4:0x0670 | proposed | low |
+| htc-htc-htc6515lvw-one-remix-07d8 | 0x0bb4:0x07d8 | proposed | low |
+| htc-htc-htc-x920e-07a1 | 0x0bb4:0x07a1 | proposed | low |
+| htc-htc-htc-one-htc6500lvw-07ae | 0x0bb4:0x07ae | proposed | low |
+| htc-htc-htc-one-m8-htc6525lvw-07ca | 0x0bb4:0x07ca | proposed | low |
+| htc-htc-htc-one-m8-verizon-htc6525lvw-07cb | 0x0bb4:0x07cb | proposed | low |
+| htc-htc-htc-one-remix-htc6515lvw-07d9 | 0x0bb4:0x07d9 | proposed | low |
+| htc-htc-windows-phone-8x-id1-0ba1 | 0x0bb4:0x0ba1 | proposed | low |
+| htc-htc-windows-phone-8x-id2-0ba2 | 0x0bb4:0x0ba2 | proposed | low |
+| htc-dexp-ixion-xl145-snatch-0c08 | 0x0bb4:0x0c08 | proposed | low |
+| htc-htc-evo-4g-lte-one-v-id2-0ca8 | 0x0bb4:0x0ca8 | proposed | low |
+| htc-htc-htc-one-s-id1-0cec | 0x0bb4:0x0cec | proposed | low |
+| htc-htc-one-mini-id1-0dcd | 0x0bb4:0x0dcd | proposed | low |
+| htc-htc-htc-one-802w-id1-0dd2 | 0x0bb4:0x0dd2 | proposed | low |
+| htc-htc-htc-desire-x-0dd5 | 0x0bb4:0x0dd5 | proposed | low |
+| htc-htc-htc-butterfly-x290d-0de4 | 0x0bb4:0x0de4 | proposed | low |
+| htc-htc-htc-one-mtp-ums-adb-0dea | 0x0bb4:0x0dea | proposed | low |
+| htc-htc-htc-evo-4g-lte-id1-0df5 | 0x0bb4:0x0df5 | proposed | low |
+| htc-htc-htc-one-s-id2-0df8 | 0x0bb4:0x0df8 | proposed | low |
+| htc-htc-htc-one-s-id3-0df9 | 0x0bb4:0x0df9 | proposed | low |
+| htc-htc-htc-one-x-id1-0dfa | 0x0bb4:0x0dfa | proposed | low |
+| htc-htc-htc-one-x-id2-0dfb | 0x0bb4:0x0dfb | proposed | low |
+| htc-htc-htc-one-x-id3-0dfc | 0x0bb4:0x0dfc | proposed | low |
+| htc-htc-htc-one-x-id4-0dfd | 0x0bb4:0x0dfd | proposed | low |
+| htc-htc-htc-butterfly-id1-0dfe | 0x0bb4:0x0dfe | proposed | low |
+| htc-htc-droid-dna-mtp-ums-adb-0dff | 0x0bb4:0x0dff | proposed | low |
+| htc-htc-htc-droid-incredible-4g-lte-mtp-0e31 | 0x0bb4:0x0e31 | proposed | low |
+| htc-htc-htc-droid-incredible-4g-lte-mtp-adb-0e32 | 0x0bb4:0x0e32 | proposed | low |
+| htc-htc-droid-dna-mtp-ums-0ebd | 0x0bb4:0x0ebd | proposed | low |
+| htc-htc-desire-310-2nd-id-mtp-0ec7 | 0x0bb4:0x0ec7 | proposed | low |
+| htc-htc-desire-816g-mtp-0edb | 0x0bb4:0x0edb | proposed | low |
+| htc-htc-desire-626g-dual-sim-mtp-0edd | 0x0bb4:0x0edd | proposed | low |
+| htc-htc-htc-one-mtp-adb-cdc-0f5f | 0x0bb4:0x0f5f | proposed | low |
+| htc-htc-htc-one-mtp-cdc-0f60 | 0x0bb4:0x0f60 | proposed | low |
+| htc-htc-htc-one-mtp-0f64 | 0x0bb4:0x0f64 | proposed | low |
+| htc-htc-htc-one-m8-mtp-adb-061a | 0x0bb4:0x061a | proposed | low |
+| htc-htc-htc-one-m8-mtp-ums-0fb5 | 0x0bb4:0x0fb5 | proposed | low |
+| htc-htc-htc-one-m8-mtp-adb-ums-0fb4 | 0x0bb4:0x0fb4 | proposed | low |
+| htc-htc-android-device-id2-zopo-hd2-2008 | 0x0bb4:0x2008 | proposed | low |
+| htc-htc-motorola-razr-d1-2012 | 0x0bb4:0x2012 | proposed | low |
+| htc-htc-motorola-p98-4g-201d | 0x0bb4:0x201d | proposed | low |
+| htc-htc-one-m9-3rd-id-4ee1 | 0x0bb4:0x4ee1 | proposed | low |
+| htc-htc-one-m9-4th-id-4ee2 | 0x0bb4:0x4ee2 | proposed | low |
+| htc-htc-for-hewlett-packard-hp-touchpad-mtp-685c | 0x0bb4:0x685c | proposed | low |
+| htc-htc-for-hewlett-packard-hp-touchpad-mtp-adb-6860 | 0x0bb4:0x6860 | proposed | low |
+| htc-htc-windows-phone-8s-id1-f0ca | 0x0bb4:0xf0ca | proposed | low |
+| xiaomi-xiaomi-mi-2-ptp-adb-904e | 0x2717:0x904e | proposed | low |
+| samsung-yh-j70j-5033 | 0x04e8:0x5033 | proposed | medium |
+| samsung-yp-t7j-5047 | 0x04e8:0x5047 | proposed | medium |
+| samsung-yp-u2j-yp-u2jxb-xaa-5054 | 0x04e8:0x5054 | proposed | medium |
+| samsung-yp-f2j-5057 | 0x04e8:0x5057 | proposed | medium |
+| samsung-yp-k5-505a | 0x04e8:0x505a | proposed | medium |
+| samsung-yp-u3-507d | 0x04e8:0x507d | proposed | medium |
+| samsung-yp-k3-5081 | 0x04e8:0x5081 | proposed | medium |
+| samsung-yp-t10-508a | 0x04e8:0x508a | proposed | medium |
+| samsung-yp-s5-508b | 0x04e8:0x508b | proposed | medium |
+| samsung-yp-s3-5091 | 0x04e8:0x5091 | proposed | medium |
+| samsung-yp-r1-510f | 0x04e8:0x510f | proposed | medium |
+| samsung-yp-q1-5115 | 0x04e8:0x5115 | proposed | medium |
+| samsung-yp-m1-5118 | 0x04e8:0x5118 | proposed | medium |
+| samsung-yp-p3-511a | 0x04e8:0x511a | proposed | medium |
+| samsung-yp-r2-512e | 0x04e8:0x512e | proposed | medium |
+| samsung-yp-z3-5137 | 0x04e8:0x5137 | proposed | medium |
+| samsung-yh-999-portable-media-center-sgh-a707-sg-5a0f | 0x04e8:0x5a0f | proposed | medium |
+| samsung-z170-mobile-phone-6601 | 0x04e8:0x6601 | proposed | medium |
+| samsung-e250-mobile-phone-663e | 0x04e8:0x663e | proposed | medium |
+| samsung-m7600-beat-gt-s8300t-sgh-f490-s8300-6642 | 0x04e8:0x6642 | proposed | medium |
+| samsung-x830-mobile-phone-6702 | 0x04e8:0x6702 | proposed | medium |
+| samsung-u600-mobile-phone-6709 | 0x04e8:0x6709 | proposed | medium |
+| samsung-f250-mobile-phone-6727 | 0x04e8:0x6727 | proposed | medium |
+| samsung-juke-sch-u470-6734 | 0x04e8:0x6734 | proposed | medium |
+| samsung-gt-b2700-6752 | 0x04e8:0x6752 | proposed | medium |
+| samsung-samsung-trance-6763 | 0x04e8:0x6763 | proposed | medium |
+| samsung-gt-s8500-6819 | 0x04e8:0x6819 | proposed | medium |
+| samsung-gt-b2710-xcover-271-68af | 0x04e8:0x68af | proposed | medium |
+| samsung-gt-s5230-e20c | 0x04e8:0xe20c | proposed | medium |
+| fujitsu-ltd-f903ix-high-speed-1140 | 0x04c5:0x1140 | proposed | medium |
+| fujitsu-ltd-stylistic-m532-133b | 0x04c5:0x133b | proposed | medium |
+| fujitsu-ltd-f02-e-1378 | 0x04c5:0x1378 | proposed | medium |
+| fujitsu-ltd-arrows-202f-13dd | 0x04c5:0x13dd | proposed | medium |
+| fujitsu-ltd-tone-m17-158c | 0x04c5:0x158c | proposed | medium |
+| trekstor-surftab-breeze-70-quad-3g-1045 | 0x1e68:0x1045 | proposed | medium |
+| pioneer-xmp3-0148 | 0x08e4:0x0148 | proposed | medium |
+| curitel-communications-inc-verizon-wireless-device-3215 | 0x106c:0x3215 | proposed | medium |
+| pantech-crux-f003 | 0x106c:0xf003 | proposed | medium |
+| asus-me302kl-memo-pad-fhd10-mtp-4cc0 | 0x0b05:0x4cc0 | proposed | medium |
+| asus-me302kl-memo-pad-fhd10-mtpadb-4cc1 | 0x0b05:0x4cc1 | proposed | medium |
+| asus-me301t-memo-pad-smart-10-mtp-4cd0 | 0x0b05:0x4cd0 | proposed | medium |
+| asus-me301t-memo-pad-smart-10-mtpadb-4cd1 | 0x0b05:0x4cd1 | proposed | medium |
+| asus-asus-fonepad-note-6-mtp-4ce0 | 0x0b05:0x4ce0 | proposed | medium |
+| asus-asus-fonepad-note-6-mtpadb-4ce1 | 0x0b05:0x4ce1 | proposed | medium |
+| asus-tf201-transformer-prime-keyboard-dock-4d00 | 0x0b05:0x4d00 | proposed | medium |
+| asus-tf201-transformer-prime-tablet-only-4d01 | 0x0b05:0x4d01 | proposed | medium |
+| asus-sl101-mtp-4e00 | 0x0b05:0x4e00 | proposed | medium |
+| asus-sl101-mtpadb-4e01 | 0x0b05:0x4e01 | proposed | medium |
+| asus-tf101-eeepad-transformer-mtp-4e0f | 0x0b05:0x4e0f | proposed | medium |
+| asus-tf101-eeepad-transformer-mtpadb-4e1f | 0x0b05:0x4e1f | proposed | medium |
+| asus-fonepad-514f | 0x0b05:0x514f | proposed | medium |
+| asus-padfone-mtp-5200 | 0x0b05:0x5200 | proposed | medium |
+| asus-padfone-mtpadb-5201 | 0x0b05:0x5201 | proposed | medium |
+| asus-me302c-memopad-mtp-520f | 0x0b05:0x520f | proposed | medium |
+| asus-padfone-2-mtp-5210 | 0x0b05:0x5210 | proposed | medium |
+| asus-padfone-2-mtpadb-5211 | 0x0b05:0x5211 | proposed | medium |
+| asus-padfone-2-ptp-5214 | 0x0b05:0x5214 | proposed | medium |
+| asus-me302c-memopad-mtp-521f | 0x0b05:0x521f | proposed | medium |
+| asus-padfone-infinity-2nd-id-mtp-5220 | 0x0b05:0x5220 | proposed | medium |
+| asus-padfone-infinity-2nd-id-mtpadb-5221 | 0x0b05:0x5221 | proposed | medium |
+| asus-padfone-infinity-mtp-5230 | 0x0b05:0x5230 | proposed | medium |
+| asus-padfone-infinity-mtpadb-5231 | 0x0b05:0x5231 | proposed | medium |
+| asus-memo-me172v-mtp-5400 | 0x0b05:0x5400 | proposed | medium |
+| asus-fonepad-7-lte-me372cl-mtp-540f | 0x0b05:0x540f | proposed | medium |
+| asus-memo-me173x-mtp-5410 | 0x0b05:0x5410 | proposed | medium |
+| asus-memo-me173x-mtpadb-5411 | 0x0b05:0x5411 | proposed | medium |
+| asus-fonepad-7-lte-me372cl-mtpadb-541f | 0x0b05:0x541f | proposed | medium |
+| asus-memo-k00f-mtp-5460 | 0x0b05:0x5460 | proposed | medium |
+| asus-memo-pad-8-mtp-5466 | 0x0b05:0x5466 | proposed | medium |
+| asus-memo-k00f-mtpadb-5468 | 0x0b05:0x5468 | proposed | medium |
+| asus-zenfone-5-mtpadb-5481 | 0x0b05:0x5481 | proposed | medium |
+| asus-zenfone-6-mtpadb-5491 | 0x0b05:0x5491 | proposed | medium |
+| asus-k010-mtp-5500 | 0x0b05:0x5500 | proposed | medium |
+| asus-memopad-7-mtpadb-5506 | 0x0b05:0x5506 | proposed | medium |
+| asus-k00e-mtpadb-550f | 0x0b05:0x550f | proposed | medium |
+| asus-memopad-8-me181-cx-mtp-5561 | 0x0b05:0x5561 | proposed | medium |
+| asus-z00ad-mtp-5601 | 0x0b05:0x5601 | proposed | medium |
+| asus-tx201la-mtp-561f | 0x0b05:0x561f | proposed | medium |
+| asus-zenfone-4-mtp-580f | 0x0b05:0x580f | proposed | medium |
+| asus-zenfone-4-a400cg-mtp-581f | 0x0b05:0x581f | proposed | medium |
+| asus-asus-fonepad-8-fe380cg-mtp-590f | 0x0b05:0x590f | proposed | medium |
+| asus-a450cg-mtp-5a0f | 0x0b05:0x5a0f | proposed | medium |
+| asus-zenpad-80-mtp-5e0f | 0x0b05:0x5e0f | proposed | medium |
+| asus-zenfone-2-ze550ml-mtp-5f02 | 0x0b05:0x5f02 | proposed | medium |
+| asus-zenfone-2-ze551ml-mtp-5f03 | 0x0b05:0x5f03 | proposed | medium |
+| asus-zenpad-10-600f | 0x0b05:0x600f | proposed | medium |
+| asus-zenfone-v-mtp-610f | 0x0b05:0x610f | proposed | medium |
+| asus-zenfone-5-a500kl-mtpadb-7781 | 0x0b05:0x7781 | proposed | medium |
+| medion-lifetab-p9516-7483 | 0x17ef:0x7483 | proposed | medium |
+| lenovo-ideapad-a3000-id1-75bc | 0x17ef:0x75bc | proposed | medium |
+| lenovo-ideapad-a3000-id2-75be | 0x17ef:0x75be | proposed | medium |
+| lenovo-a706-7614 | 0x17ef:0x7614 | proposed | medium |
+| lenovo-ideatab-s5000-76e8 | 0x17ef:0x76e8 | proposed | medium |
+| lenovo-toga-tablet-b6000-f-76f2 | 0x17ef:0x76f2 | proposed | medium |
+| lenovo-yoga-tablet-10-b8000-h-76ff | 0x17ef:0x76ff | proposed | medium |
+| lenovo-s960-770a | 0x17ef:0x770a | proposed | medium |
+| lenovo-k910ss-7713 | 0x17ef:0x7713 | proposed | medium |
+| lenovo-s930-7718 | 0x17ef:0x7718 | proposed | medium |
+| lenovo-a5500-h-772a | 0x17ef:0x772a | proposed | medium |
+| lenovo-a5500-f-772b | 0x17ef:0x772b | proposed | medium |
+| lenovo-a7600-f-7730 | 0x17ef:0x7730 | proposed | medium |
+| lenovo-a7600-f-2nd-7731 | 0x17ef:0x7731 | proposed | medium |
+| lenovo-a3500-f-7737 | 0x17ef:0x7737 | proposed | medium |
+| lenovo-a3500-fl-7738 | 0x17ef:0x7738 | proposed | medium |
+| lenovo-lifetab-e733x-775a | 0x17ef:0x775a | proposed | medium |
+| lenovo-yoga-tablet-2-1050f-77a4 | 0x17ef:0x77a4 | proposed | medium |
+| lenovo-yoga-tablet-2-77a5 | 0x17ef:0x77a5 | proposed | medium |
+| lenovo-yoga-tablet-2-pro-77b1 | 0x17ef:0x77b1 | proposed | medium |
+| lenovo-tab-s8-50f-77d8 | 0x17ef:0x77d8 | proposed | medium |
+| lenovo-s60-a-7802 | 0x17ef:0x7802 | proposed | medium |
+| lenovo-a7-30hc-7852 | 0x17ef:0x7852 | proposed | medium |
+| lenovo-a7-30gc-7853 | 0x17ef:0x7853 | proposed | medium |
+| lenovo-a10-70f-789a | 0x17ef:0x789a | proposed | medium |
+| lenovo-a10-70l-789b | 0x17ef:0x789b | proposed | medium |
+| medion-p8312-tablet-78ae | 0x17ef:0x78ae | proposed | medium |
+| lenovo-lifetab-s1034x-78b0 | 0x17ef:0x78b0 | proposed | medium |
+| lenovo-vibe-k4-note-78f6 | 0x17ef:0x78f6 | proposed | medium |
+| lenovo-vibe-p1-pro-78fc | 0x17ef:0x78fc | proposed | medium |
+| lenovo-vibe-x-7902 | 0x17ef:0x7902 | proposed | medium |
+| lenovo-p1ma40-2nd-id-7920 | 0x17ef:0x7920 | proposed | medium |
+| lenovo-p1ma40-7921 | 0x17ef:0x7921 | proposed | medium |
+| lenovo-a1000-smartphone-7928 | 0x17ef:0x7928 | proposed | medium |
+| lenovo-a1000-smartphone-adb-7929 | 0x17ef:0x7929 | proposed | medium |
+| lenovo-k5-7993 | 0x17ef:0x7993 | proposed | medium |
+| lenovo-vibe-k4-79b7 | 0x17ef:0x79b7 | proposed | medium |
+| lenovo-b-smartphone-7a18 | 0x17ef:0x7a18 | proposed | medium |
+| lenovo-c2-7a36 | 0x17ef:0x7a36 | proposed | medium |
+| lenovo-p1060x-9039 | 0x17ef:0x9039 | proposed | medium |
+| medion-p10606-f003 | 0x17ef:0xf003 | proposed | medium |
+| nec-foma-n01a-0242 | 0x0409:0x0242 | proposed | medium |
+| casio-gzone-commando-c771-02ed | 0x0409:0x02ed | proposed | medium |
+| nec-casio-c811-0326 | 0x0409:0x0326 | proposed | medium |
+| nec-casio-ca-201l-0432 | 0x0409:0x0432 | proposed | medium |
+| foxconn-for-nokia-n1-1ab0 | 0x0489:0x1ab0 | proposed | medium |
+| foxconn-for-infocus-m808-c00b | 0x0489:0xc00b | proposed | medium |
+| foxconn-for-infocus-m810-c025 | 0x0489:0xc025 | proposed | medium |
+| foxconn-for-vizio-unknown-1-c026 | 0x0489:0xc026 | proposed | medium |
+| sharp-aquos-wish2-c030 | 0x0489:0xc030 | proposed | medium |
+| sharp-aquos-wish3-c033 | 0x0489:0xc033 | proposed | medium |
+| foxconn-for-vizio-vtab1008-e040 | 0x0489:0xe040 | proposed | medium |
+| hisense-sero-7-pro-9105 | 0x109b:0x9105 | proposed | medium |
+| hisense-e860-id1-9106 | 0x109b:0x9106 | proposed | medium |
+| hisense-e860-id2-9109 | 0x109b:0x9109 | proposed | medium |
+| crosscall-trekker-m1-core-9130 | 0x109b:0x9130 | proposed | medium |
+| xiaomi-mi-9-m1902f1g-or-poco-x3-pro-mtp-ff40 | 0x0a9d:0xff40 | proposed | medium |
+| jolla-sailfish-id1-0a01 | 0x2931:0x0a01 | proposed | medium |
+| jolla-sailfish-id2-0a05 | 0x2931:0x0a05 | proposed | medium |
+| jolla-sailfish-id3-0a07 | 0x2931:0x0a07 | proposed | medium |
+| bq-krillin-mtpadb-0c02 | 0x2a47:0x0c02 | proposed | medium |
+| bq-krillin-mtp-2008 | 0x2a47:0x2008 | proposed | medium |
+| bq-aquaris-m10-mtp-200d | 0x2a47:0x200d | proposed | medium |
+| bq-avila-cooler-mtp-201d | 0x2a47:0x201d | proposed | medium |
+| bq-aquaris-x5-mtp-3003 | 0x2a47:0x3003 | proposed | medium |
+| bq-aquaris-x2-mtp-4ee1 | 0x2a47:0x4ee1 | proposed | medium |
+| bq-aquarius-e5-4g-7f10 | 0x2a47:0x7f10 | proposed | medium |
+| bq-aquarius-x5-mtp-id2-7f11 | 0x2a47:0x7f11 | proposed | medium |
+| bq-aquarius-m55-901b | 0x2a47:0x901b | proposed | medium |
+| bq-aquarius-u-9039 | 0x2a47:0x9039 | proposed | medium |
+| bq-aquarius-u-2nd-id-903a | 0x2a47:0x903a | proposed | medium |
+| bq-u-plus-f003 | 0x2a47:0xf003 | proposed | medium |
+| prestigio-5505-duo-1103 | 0x29e4:0x1103 | proposed | medium |
+| mediatek-5508-duo-1201 | 0x29e4:0x1201 | proposed | medium |
+| prestigio-5504-duo-1203 | 0x29e4:0x1203 | proposed | medium |
+| prestigio-3405-duo-3201 | 0x29e4:0x3201 | proposed | medium |
+| prestigio-multipad-color-8-b001 | 0x29e4:0xb001 | proposed | medium |
+| prestigio-multipad-color-70-b003 | 0x29e4:0xb003 | proposed | medium |
+| gensis-gt-7305-885c | 0x040d:0x885c | proposed | medium |
+| caterpillar-cat-s40-88b0 | 0x04b7:0x88b0 | proposed | medium |
+| caterpillar-cat-s30-88b9 | 0x04b7:0x88b9 | proposed | medium |
+| caterpillar-cat-s60-88c0 | 0x04b7:0x88c0 | proposed | medium |
+| caterpillar-cat-s60-2nd-id-88c1 | 0x04b7:0x88c1 | proposed | medium |
+| caterpillar-cat-s41-88c6 | 0x04b7:0x88c6 | proposed | medium |
+| caterpillar-cat-s31-88d0 | 0x04b7:0x88d0 | proposed | medium |
+| caterpillar-cat-s61-88d6 | 0x04b7:0x88d6 | proposed | medium |
+| caterpillar-cat-s62-pro-88f1 | 0x04b7:0x88f1 | proposed | medium |
+| pegatron-chagall-adb-5035 | 0x1d4d:0x5035 | proposed | medium |
+| pegatron-chagall-5036 | 0x1d4d:0x5036 | proposed | medium |
+| pegatron-hudl-2-504a | 0x1d4d:0x504a | proposed | medium |
+| fly-evo-tech-4-2008 | 0x2970:0x2008 | proposed | medium |
+| fly-nimbus-3-4001 | 0x2970:0x4001 | proposed | medium |
+| fly-5s-4002 | 0x2970:0x4002 | proposed | medium |
+| kazam-trooper-650-4g-9039 | 0x2970:0x9039 | proposed | medium |
+| megafon-login-2012 | 0x1271:0x2012 | proposed | medium |
+| fly-iq4415-era-style-3-0c02 | 0x2970:0x0c02 | proposed | medium |
+| yu-yureka-vodafone-smart-turbo-4-7f29 | 0x1ebf:0x7f29 | proposed | medium |
+| coolpad-801es-7029 | 0x1ebf:0x7029 | proposed | medium |
+| benq-f5-459d | 0x1d45:0x459d | proposed | medium |
+| gopro-hero4-session-000f | 0x2672:0x000f | proposed | medium |
+| gopro-hero-2018-002d | 0x2672:0x002d | proposed | medium |
+| gopro-fusion-back-0032 | 0x2672:0x0032 | proposed | medium |
+| gopro-fusion-front-0035 | 0x2672:0x0035 | proposed | medium |
+| allview-energy-p5-4016 | 0x271d:0x4016 | proposed | medium |
+| blu-studio-energy-2-4017 | 0x271d:0x4017 | proposed | medium |
+| zuk-z1-1004 | 0x2b4c:0x1004 | proposed | medium |
+| zuk-z1-2nd-id-1005 | 0x2b4c:0x1005 | proposed | medium |
+| zuk-z2-pro-1013 | 0x2b4c:0x1013 | proposed | medium |
+| zuk-z2-101a | 0x2b4c:0x101a | proposed | medium |
+| lemobile-le-2-1714 | 0x2b0e:0x1714 | proposed | medium |
+| lemobile-le-2-id2-171b | 0x2b0e:0x171b | proposed | medium |
+| letv-leeco-le-1s-1768 | 0x2b0e:0x1768 | proposed | medium |
+| letv-leeco-le-2-pro-1778 | 0x2b0e:0x1778 | proposed | medium |
+| letv-x800-id1-182c | 0x2b0e:0x182c | proposed | medium |
+| letv-x800-id2-1830 | 0x2b0e:0x1830 | proposed | medium |
+| letv-le-max2-1840 | 0x2b0e:0x1840 | proposed | medium |
+| letv-le-max2-id2-1844 | 0x2b0e:0x1844 | proposed | medium |
+| tp-link-neffos-c5-mtp-0314 | 0x2357:0x0314 | proposed | medium |
+| tp-link-neffos-c5-max-mtp-031a | 0x2357:0x031a | proposed | medium |
+| tp-link-neffos-y5l-mtp-0320 | 0x2357:0x0320 | proposed | medium |
+| tp-link-neffos-y5-mtp-0328 | 0x2357:0x0328 | proposed | medium |
+| tp-link-neffos-x1-mtp-033c | 0x2357:0x033c | proposed | medium |
+| tp-link-neffos-y5s-mtp-038c | 0x2357:0x038c | proposed | medium |
+| nextbit-robin-0001 | 0x2c3f:0x0001 | proposed | medium |
+| vega-r3-1105 | 0x10a9:0x1105 | proposed | medium |
+| op-innovations-xdp-100r-a003 | 0x0746:0xa003 | proposed | medium |
+| pioneer-xdp-300r-a023 | 0x0746:0xa023 | proposed | medium |
+| longcheer-d-f003 | 0x1c9e:0xf003 | proposed | medium |
+| netronix-e60qh2-6a12 | 0x1f85:0x6a12 | proposed | medium |
+| mooink-plus-2-2571 | 0x1f85:0x2571 | proposed | medium |
+| doro-phone-8030-dsb-0010-0006 | 0x2b43:0x0006 | proposed | medium |
+| nox-a1-1001 | 0x1e0a:0x1001 | proposed | medium |
+| mudita-pure-phone-0100 | 0x3310:0x0100 | proposed | medium |
+| flir-c5-100b | 0x09cb:0x100b | proposed | medium |
+| shift-shift6m-2008 | 0x3360:0x2008 | proposed | medium |
+| rohdeschwarz-rtx-oscilloscope-01d7 | 0x0aad:0x01d7 | proposed | medium |
+| polar-grit-x2-pro-0014 | 0x0da4:0x0014 | proposed | medium |
+| lava-z1-6001 | 0x29a9:0x6001 | proposed | low |
+| lava-z2-6002 | 0x29a9:0x6002 | proposed | low |
+| lava-z3-6003 | 0x29a9:0x6003 | proposed | low |
+| lava-z6-6004 | 0x29a9:0x6004 | proposed | low |
+| lava-agni-5g-6005 | 0x29a9:0x6005 | proposed | low |
+| lava-blaze-6006 | 0x29a9:0x6006 | proposed | low |
+| lava-blaze-5g-6007 | 0x29a9:0x6007 | proposed | low |
+| lava-blaze-pro-6008 | 0x29a9:0x6008 | proposed | low |
+| lava-agni-2-6009 | 0x29a9:0x6009 | proposed | low |
+| symphony-z10-5001 | 0x1782:0x5001 | proposed | low |
+| symphony-z15-5002 | 0x1782:0x5002 | proposed | low |
+| symphony-z25-5003 | 0x1782:0x5003 | proposed | low |
+| symphony-z30-5004 | 0x1782:0x5004 | proposed | low |
+| symphony-i18-5005 | 0x1782:0x5005 | proposed | low |
+| symphony-i75-5006 | 0x1782:0x5006 | proposed | low |
+| symphony-v155-5007 | 0x1782:0x5007 | proposed | low |
+| micromax-in-note-1-6001 | 0x2a96:0x6001 | proposed | low |
+| micromax-in-1b-6002 | 0x2a96:0x6002 | proposed | low |
+| micromax-in-note-2-6003 | 0x2a96:0x6003 | proposed | low |
+| micromax-in-2b-6004 | 0x2a96:0x6004 | proposed | low |
+| micromax-in-2c-6005 | 0x2a96:0x6005 | proposed | low |
+| micromax-canvas-infinity-6006 | 0x2a96:0x6006 | proposed | low |
+| micromax-bharat-5-6007 | 0x2a96:0x6007 | proposed | low |
+| micromax-canvas-6-pro-6008 | 0x2a96:0x6008 | proposed | low |
+| condor-allure-a55-2030 | 0x0e8d:0x2030 | proposed | low |
+| condor-plume-l2-pro-2031 | 0x0e8d:0x2031 | proposed | low |
+| condor-griffe-t9-2032 | 0x0e8d:0x2032 | proposed | low |
+| condor-allure-m3-2033 | 0x0e8d:0x2033 | proposed | low |
+| condor-plume-p8-pro-2034 | 0x0e8d:0x2034 | proposed | low |
+| tmobile-revvl-6-5g-a101 | 0x1bbb:0xa101 | proposed | low |
+| tmobile-revvl-6-pro-a102 | 0x1bbb:0xa102 | proposed | low |
+| tmobile-revvl-v-plus-5g-a103 | 0x1bbb:0xa103 | proposed | low |
+| tmobile-revvl-5g-a104 | 0x1bbb:0xa104 | proposed | low |
+| tmobile-revvl-4-a105 | 0x1bbb:0xa105 | proposed | low |
+| tmobile-revvl-4-plus-a106 | 0x1bbb:0xa106 | proposed | low |
+| tmobile-revvl-tab-5g-a107 | 0x1bbb:0xa107 | proposed | low |
+| att-calypso-3-a201 | 0x1bbb:0xa201 | proposed | low |
+| att-maestro-max-a202 | 0x1bbb:0xa202 | proposed | low |
+| att-motivate-2-a203 | 0x1bbb:0xa203 | proposed | low |
+| att-radiant-max-5g-a204 | 0x1bbb:0xa204 | proposed | low |
+| att-fusion-5g-a205 | 0x1bbb:0xa205 | proposed | low |
+| verizon-orbic-joy-a301 | 0x05c6:0xa301 | proposed | low |
+| verizon-orbic-myra-5g-a302 | 0x05c6:0xa302 | proposed | low |
+| verizon-tcl-30-xe-5g-a303 | 0x1bbb:0xa303 | proposed | low |
+| verizon-tcl-50-xl-nxtpaper-a304 | 0x1bbb:0xa304 | proposed | low |
+| cricket-dream-5g-a401 | 0x1bbb:0xa401 | proposed | low |
+| cricket-icon-5-a402 | 0x1bbb:0xa402 | proposed | low |
+| cricket-magic-5g-a403 | 0x1bbb:0xa403 | proposed | low |
+| cricket-ovation-3-a404 | 0x1bbb:0xa404 | proposed | low |
+| cricket-debut-s2-a405 | 0x1bbb:0xa405 | proposed | low |
+| blu-g91-pro-4018 | 0x271d:0x4018 | proposed | low |
+| blu-g91s-4019 | 0x271d:0x4019 | proposed | low |
+| blu-view-4-401a | 0x271d:0x401a | proposed | low |
+| blu-bold-n2-401b | 0x271d:0x401b | proposed | low |
+| blu-g93-401c | 0x271d:0x401c | proposed | low |
+| blu-f91-401d | 0x271d:0x401d | proposed | low |
+| blu-view-3-401e | 0x271d:0x401e | proposed | low |
+| blu-g71-401f | 0x271d:0x401f | proposed | low |
+| blu-bold-n3-4020 | 0x271d:0x4020 | proposed | low |
+| wiko-power-u30-1012 | 0x1ebf:0x1012 | proposed | low |
+| wiko-t50-1013 | 0x1ebf:0x1013 | proposed | low |
+| wiko-t60-1014 | 0x1ebf:0x1014 | proposed | low |
+| wiko-10-1015 | 0x1ebf:0x1015 | proposed | low |
+| wiko-view-5-plus-1016 | 0x1ebf:0x1016 | proposed | low |
+| itel-s24-601c | 0x1d4d:0x601c | proposed | low |
+| itel-a70-601d | 0x1d4d:0x601d | proposed | low |
+| itel-p55-5g-601e | 0x1d4d:0x601e | proposed | low |
+| itel-rs4-601f | 0x1d4d:0x601f | proposed | low |
+| itel-a60s-6020 | 0x1d4d:0x6020 | proposed | low |
+| tecno-camon-30-pro-601e | 0x1d5b:0x601e | proposed | low |
+| tecno-phantom-v-fold-601f | 0x1d5b:0x601f | proposed | low |
+| tecno-spark-20-pro-6020 | 0x1d5b:0x6020 | proposed | low |
+| tecno-pova-6-pro-6021 | 0x1d5b:0x6021 | proposed | low |
+| tecno-phantom-x2-pro-6022 | 0x1d5b:0x6022 | proposed | low |
+| doogee-s100-pro-2035 | 0x0e8d:0x2035 | proposed | low |
+| doogee-v30-2036 | 0x0e8d:0x2036 | proposed | low |
+| doogee-s110-2037 | 0x0e8d:0x2037 | proposed | low |
+| ulefone-armor-23-ultra-2038 | 0x0e8d:0x2038 | proposed | low |
+| ulefone-armor-22-2039 | 0x0e8d:0x2039 | proposed | low |
+| ulefone-power-armor-19t-203a | 0x0e8d:0x203a | proposed | low |
+| oukitel-wp28-203b | 0x0e8d:0x203b | proposed | low |
+| oukitel-wp30-pro-203c | 0x0e8d:0x203c | proposed | low |
+| oukitel-rt7-203d | 0x0e8d:0x203d | proposed | low |
+| agm-glory-g1s-203e | 0x0e8d:0x203e | proposed | low |
+| agm-h6-203f | 0x0e8d:0x203f | proposed | low |
+| agm-note-n1-2040 | 0x0e8d:0x2040 | proposed | low |
+| blackview-bv9300-2041 | 0x0e8d:0x2041 | proposed | low |
+| blackview-bv8900-2042 | 0x0e8d:0x2042 | proposed | low |
+| blackview-bl9000-2043 | 0x0e8d:0x2043 | proposed | low |
+| blackview-bv7200-2044 | 0x0e8d:0x2044 | proposed | low |
+| blackview-tab-18-2045 | 0x0e8d:0x2045 | proposed | low |
+| blackview-n6000-2046 | 0x0e8d:0x2046 | proposed | low |
+| xiaomi-mi-box-s-5001 | 0x2717:0x5001 | proposed | medium |
+| xiaomi-mi-box-4-5002 | 0x2717:0x5002 | proposed | medium |
+| xiaomi-mi-tv-stick-5003 | 0x2717:0x5003 | proposed | medium |
+| amlogic-s905x-tvbox-c003 | 0x1b8e:0xc003 | proposed | medium |
+| amlogic-s905x3-tvbox-c004 | 0x1b8e:0xc004 | proposed | medium |
+| amlogic-s905x4-tvbox-c005 | 0x1b8e:0xc005 | proposed | medium |
+| tivo-stream-4k-c006 | 0x1b8e:0xc006 | proposed | medium |
+| realme-tv-stick-278a | 0x22d9:0x278a | proposed | medium |
+| oppo-smart-tv-k9-278b | 0x22d9:0x278b | proposed | medium |
+| yi-action-camera-0001 | 0x2dbd:0x0001 | proposed | medium |
+| yi-4k-action-camera-0002 | 0x2dbd:0x0002 | proposed | medium |
+| yi-4k-plus-0003 | 0x2dbd:0x0003 | proposed | medium |
+| yi-lite-0004 | 0x2dbd:0x0004 | proposed | medium |
+| yi-discovery-0005 | 0x2dbd:0x0005 | proposed | medium |
+| sjcam-sj12-pro-0206 | 0x1b3f:0x0206 | proposed | medium |
+| sjcam-sj12-titan-0207 | 0x1b3f:0x0207 | proposed | medium |
+| akaso-v50-pro-000c | 0x3538:0x000c | proposed | medium |
+| akaso-v50-pro-se-000d | 0x3538:0x000d | proposed | medium |
+| akaso-v50-elite-000e | 0x3538:0x000e | proposed | medium |
+| runcam-5-orange-0104 | 0x4255:0x0104 | proposed | medium |
+| runcam-thumb-0105 | 0x4255:0x0105 | proposed | medium |
+| shanling-m6-000b | 0x31b2:0x000b | proposed | medium |
+| shanling-m8-000d | 0x31b2:0x000d | proposed | medium |
+| shanling-m3x-000f | 0x31b2:0x000f | proposed | medium |
+| onkyo-dp-x1-a011 | 0x0746:0xa011 | proposed | medium |
+| onkyo-dp-x1a-a013 | 0x0746:0xa013 | proposed | medium |
+| pioneer-xdp-30r-a033 | 0x0746:0xa033 | proposed | medium |
+| bose-qc35ii-4002 | 0x05a7:0x4002 | proposed | medium |
+| bose-nc700-4004 | 0x05a7:0x4004 | proposed | medium |
+| bose-qc45-4006 | 0x05a7:0x4006 | proposed | medium |
+| bose-qc-ultra-4008 | 0x05a7:0x4008 | proposed | medium |
+| bose-soundlink-flex-40fe | 0x05a7:0x40fe | proposed | medium |
+| rohdeschwarz-hmo-oscilloscope-0117 | 0x0aad:0x0117 | proposed | low |
+| rohdeschwarz-hmo-oscilloscope-0118 | 0x0aad:0x0118 | proposed | low |
+| rohdeschwarz-hmo-oscilloscope-0119 | 0x0aad:0x0119 | proposed | low |
+| rigol-ds6000-oscilloscope-04b0 | 0x1ab1:0x04b0 | proposed | low |
+| rigol-ds4000-oscilloscope-04be | 0x1ab1:0x04be | proposed | low |
+| rigol-ds1054z-oscilloscope-04ce | 0x1ab1:0x04ce | proposed | low |
+| rigol-ds1000-oscilloscope-0588 | 0x1ab1:0x0588 | proposed | low |
+| flir-a320-thermal-1020 | 0x09cb:0x1020 | proposed | low |
+| flir-a70-thermal-1021 | 0x09cb:0x1021 | proposed | low |
+| flir-cx5-thermal-1030 | 0x09cb:0x1030 | proposed | low |
+| infiray-xinfrared-t3s-0004 | 0x2bdf:0x0004 | proposed | low |
+| infiray-p200-0005 | 0x2bdf:0x0005 | proposed | low |
+| kenwood-ts590sg-transceiver-100d | 0x0b28:0x100d | proposed | low |
+| kenwood-ts890s-transceiver-100e | 0x0b28:0x100e | proposed | low |
+| motorola-moto-g-power-2021-2e94 | 0x22b8:0x2e94 | proposed | medium |
+| motorola-moto-g-power-2022-2e95 | 0x22b8:0x2e95 | proposed | medium |
+| motorola-moto-g-power-2023-2e96 | 0x22b8:0x2e96 | proposed | medium |
+| motorola-moto-g-power-5g-2e97 | 0x22b8:0x2e97 | proposed | medium |
+| motorola-edge-2020-2e98 | 0x22b8:0x2e98 | proposed | medium |
+| motorola-edge-plus-2020-2e99 | 0x22b8:0x2e99 | proposed | medium |
+| motorola-edge-2021-2e9a | 0x22b8:0x2e9a | proposed | medium |
+| motorola-edge-2022-2e9b | 0x22b8:0x2e9b | proposed | medium |
+| motorola-edge-30-2e9c | 0x22b8:0x2e9c | proposed | medium |
+| motorola-edge-30-pro-2e9d | 0x22b8:0x2e9d | proposed | medium |
+| motorola-edge-30-ultra-2e9e | 0x22b8:0x2e9e | proposed | medium |
+| motorola-edge-40-2e9f | 0x22b8:0x2e9f | proposed | medium |
+| motorola-edge-40-pro-2ea0 | 0x22b8:0x2ea0 | proposed | medium |
+| motorola-edge-50-2ea1 | 0x22b8:0x2ea1 | proposed | medium |
+| motorola-edge-50-pro-2ea2 | 0x22b8:0x2ea2 | proposed | medium |
+| motorola-edge-50-ultra-2ea3 | 0x22b8:0x2ea3 | proposed | medium |
+| motorola-razr-2020-2ea6 | 0x22b8:0x2ea6 | proposed | medium |
+| motorola-razr-2022-2ea7 | 0x22b8:0x2ea7 | proposed | medium |
+| motorola-razr-plus-2023-2ea9 | 0x22b8:0x2ea9 | proposed | medium |
+| motorola-razr-2023-2eaa | 0x22b8:0x2eaa | proposed | medium |
+| motorola-razr-plus-2024-2eab | 0x22b8:0x2eab | proposed | medium |
+| motorola-moto-g-stylus-2021-2eac | 0x22b8:0x2eac | proposed | medium |
+| motorola-moto-g-stylus-2022-2ead | 0x22b8:0x2ead | proposed | medium |
+| motorola-moto-g-stylus-2023-2eae | 0x22b8:0x2eae | proposed | medium |
+| motorola-moto-g-play-2021-2eaf | 0x22b8:0x2eaf | proposed | medium |
+| motorola-moto-g-play-2023-2eb0 | 0x22b8:0x2eb0 | proposed | medium |
+| motorola-moto-g-play-2024-2eb1 | 0x22b8:0x2eb1 | proposed | medium |
+| motorola-moto-g-pure-2eb2 | 0x22b8:0x2eb2 | proposed | medium |
+| motorola-moto-g-5g-2023-2eb3 | 0x22b8:0x2eb3 | proposed | medium |
+| motorola-moto-g-5g-2024-2eb4 | 0x22b8:0x2eb4 | proposed | medium |
+| motorola-thinkphone-2eb5 | 0x22b8:0x2eb5 | proposed | medium |
+| pioneer-appradio-sph-da110-0100 | 0x08e4:0x0100 | proposed | medium |
+| pioneer-appradio-sph-da120-0101 | 0x08e4:0x0101 | proposed | medium |
+| pioneer-appradio-sph-da210-0102 | 0x08e4:0x0102 | proposed | medium |
+| pioneer-avh-x8800bt-0110 | 0x08e4:0x0110 | proposed | medium |
+| pioneer-dmh-wt8600nex-0120 | 0x08e4:0x0120 | proposed | medium |
+| pioneer-sph-10bt-0130 | 0x08e4:0x0130 | proposed | medium |
+| kenwood-ddx9707s-0100 | 0x0b28:0x0100 | proposed | medium |
+| kenwood-dmx907s-0101 | 0x0b28:0x0101 | proposed | medium |
+| kenwood-dnx577s-0102 | 0x0b28:0x0102 | proposed | medium |
+| kenwood-excelon-dmx1057xr-0110 | 0x0b28:0x0110 | proposed | medium |
+| alpine-ilx-w670-0100 | 0x044e:0x0100 | proposed | medium |
+| alpine-ilx-f511-0101 | 0x044e:0x0101 | proposed | medium |
+| alpine-ilx-f409-0102 | 0x044e:0x0102 | proposed | medium |
+| alpine-ilx-507-0103 | 0x044e:0x0103 | proposed | medium |
+| xgimi-halo-plus-0001 | 0x2e04:0x0001 | proposed | medium |
+| xgimi-mogo-2-pro-0002 | 0x2e04:0x0002 | proposed | medium |
+| xgimi-horizon-pro-0003 | 0x2e04:0x0003 | proposed | medium |
+| xgimi-elfin-0004 | 0x2e04:0x0004 | proposed | medium |
+| xgimi-horizon-ultra-0005 | 0x2e04:0x0005 | proposed | medium |
+| anker-nebula-capsule-3-0001 | 0x291a:0x0001 | proposed | medium |
+| anker-nebula-mars-3-0002 | 0x291a:0x0002 | proposed | medium |
+| anker-nebula-cosmos-max-0003 | 0x291a:0x0003 | proposed | medium |
+| anker-nebula-capsule-3-laser-0004 | 0x291a:0x0004 | proposed | medium |
+| teclast-t40-pro-201c | 0x0e8d:0x201c | proposed | medium |
+| teclast-t50-pro-201e | 0x0e8d:0x201e | proposed | medium |
+| teclast-t60-201f | 0x0e8d:0x201f | proposed | medium |
+| teclast-m40-plus-2020 | 0x0e8d:0x2020 | proposed | medium |
+| teclast-p30s-2021 | 0x0e8d:0x2021 | proposed | medium |
+| teclast-p40hd-2022 | 0x0e8d:0x2022 | proposed | medium |
+| alldocube-iplay-50-pro-2023 | 0x0e8d:0x2023 | proposed | medium |
+| alldocube-iplay-50-mini-2024 | 0x0e8d:0x2024 | proposed | medium |
+| alldocube-iplay-60-2025 | 0x0e8d:0x2025 | proposed | medium |
+| jumper-ezpad-m10-2027 | 0x0e8d:0x2027 | proposed | medium |
+| jumper-ezpad-m11-2028 | 0x0e8d:0x2028 | proposed | medium |
+| jumper-ezpad-plus-2029 | 0x0e8d:0x2029 | proposed | medium |
+| chuwi-hipad-xpro-202a | 0x0e8d:0x202a | proposed | medium |
+| chuwi-hipad-air-202b | 0x0e8d:0x202b | proposed | medium |
+| chuwi-hipad-max-202c | 0x0e8d:0x202c | proposed | medium |
+| chuwi-hipad-plus-202d | 0x0e8d:0x202d | proposed | medium |
+| fitbit-ionic-0001 | 0x2687:0x0001 | proposed | medium |
+| fitbit-versa-3-0002 | 0x2687:0x0002 | proposed | medium |
+| fitbit-sense-0003 | 0x2687:0x0003 | proposed | medium |
+| fitbit-sense-2-0004 | 0x2687:0x0004 | proposed | medium |
+| google-nest-hub-max-4ee3 | 0x18d1:0x4ee3 | proposed | medium |
+| google-nest-hub-2nd-4ee4 | 0x18d1:0x4ee4 | proposed | medium |
+| omsystem-om1-33a2-0135 | 0x33a2:0x0135 | proposed | low |
+| omsystem-om5-33a2-0137 | 0x33a2:0x0137 | proposed | low |
+| omsystem-tg7-33a2-0138 | 0x33a2:0x0138 | proposed | low |
+| pentax-k3-markiii-mono-0007 | 0x25fb:0x0007 | proposed | low |
+| leica-m11-p-0013 | 0x1a98:0x0013 | proposed | low |
+| leica-d-lux-8-0014 | 0x1a98:0x0014 | proposed | low |
+| leica-q3-43-0015 | 0x1a98:0x0015 | proposed | low |
+| nokia-x10-c02b | 0x2e04:0xc02b | proposed | low |
+| nokia-x20-c02c | 0x2e04:0xc02c | proposed | low |
+| nokia-g60-c02d | 0x2e04:0xc02d | proposed | low |
+| nokia-c32-c02e | 0x2e04:0xc02e | proposed | low |
+| nokia-g22-c02f | 0x2e04:0xc02f | proposed | low |
+| nokia-x30-c030 | 0x2e04:0xc030 | proposed | low |
+| nothing-phone-1-f01e | 0x2a70:0xf01e | proposed | low |
+| nothing-phone-2-f01f | 0x2a70:0xf01f | proposed | low |
+| nothing-phone-2a-f020 | 0x2a70:0xf020 | proposed | low |
+| nothing-phone-2a-plus-f021 | 0x2a70:0xf021 | proposed | low |
+| fairphone-4-f004 | 0x2ae5:0xf004 | proposed | low |
+| fairphone-5-f005 | 0x2ae5:0xf005 | proposed | low |
+| fairphone-4-mtp-2008 | 0x2ae5:0x2008 | proposed | low |
+| poco-x5-ff7f | 0x2717:0xff7f | proposed | low |
+| poco-x5-pro-ff80 | 0x2717:0xff80 | proposed | low |
+| poco-x6-ff81 | 0x2717:0xff81 | proposed | low |
+| poco-x6-pro-ff82 | 0x2717:0xff82 | proposed | low |
+| poco-f5-ff83 | 0x2717:0xff83 | proposed | low |
+| poco-f5-pro-ff84 | 0x2717:0xff84 | proposed | low |
+| poco-m5-ff85 | 0x2717:0xff85 | proposed | low |
+| poco-m5s-ff86 | 0x2717:0xff86 | proposed | low |
+| poco-c65-ff87 | 0x2717:0xff87 | proposed | low |
+| iqoo-11-6023 | 0x2d95:0x6023 | proposed | low |
+| iqoo-11-pro-6024 | 0x2d95:0x6024 | proposed | low |
+| iqoo-12-6025 | 0x2d95:0x6025 | proposed | low |
+| iqoo-12-pro-6026 | 0x2d95:0x6026 | proposed | low |
+| iqoo-neo8-6027 | 0x2d95:0x6027 | proposed | low |
+| iqoo-neo8-pro-6028 | 0x2d95:0x6028 | proposed | low |
+| iqoo-z7-6029 | 0x2d95:0x6029 | proposed | low |
+| iqoo-z7x-602a | 0x2d95:0x602a | proposed | low |
+| realme-11-pro-278c | 0x22d9:0x278c | proposed | low |
+| realme-11-pro-plus-278d | 0x22d9:0x278d | proposed | low |
+| realme-gt5-278e | 0x22d9:0x278e | proposed | low |
+| realme-gt5-pro-278f | 0x22d9:0x278f | proposed | low |
+| realme-narzo-60-2790 | 0x22d9:0x2790 | proposed | low |
+| realme-narzo-60-pro-2791 | 0x22d9:0x2791 | proposed | low |
+| realme-c55-2792 | 0x22d9:0x2792 | proposed | low |
+| realme-12-pro-2793 | 0x22d9:0x2793 | proposed | low |
+| honor-magic6-3808 | 0x12d1:0x3808 | proposed | low |
+| honor-magic6-pro-3809 | 0x12d1:0x3809 | proposed | low |
+| honor-90-380a | 0x12d1:0x380a | proposed | low |
+| honor-90-pro-380b | 0x12d1:0x380b | proposed | low |
+| honor-x9b-380c | 0x12d1:0x380c | proposed | low |
+| honor-magic5-pro-380d | 0x12d1:0x380d | proposed | low |
+| honor-x8b-380e | 0x12d1:0x380e | proposed | low |
+| tcl-40-se-a406 | 0x1bbb:0xa406 | proposed | low |
+| tcl-40-nxtpaper-a407 | 0x1bbb:0xa407 | proposed | low |
+| tcl-50-xl-a408 | 0x1bbb:0xa408 | proposed | low |
+| tcl-50-5g-a409 | 0x1bbb:0xa409 | proposed | low |
+| tcl-tab-10s-a40a | 0x1bbb:0xa40a | proposed | low |
+| tcl-30-se-a40b | 0x1bbb:0xa40b | proposed | low |
+| zte-blade-v50-0418 | 0x19d2:0x0418 | proposed | low |
+| zte-blade-v50-vita-0419 | 0x19d2:0x0419 | proposed | low |
+| zte-axon-50-041a | 0x19d2:0x041a | proposed | low |
+| zte-axon-50-pro-041b | 0x19d2:0x041b | proposed | low |
+| nubia-z60-ultra-041c | 0x19d2:0x041c | proposed | low |
+| nubia-z50s-pro-041d | 0x19d2:0x041d | proposed | low |
+| nubia-redmagic-9-pro-041e | 0x19d2:0x041e | proposed | low |
+| meizu-20-000d | 0x2a45:0x000d | proposed | low |
+| meizu-20-pro-000e | 0x2a45:0x000e | proposed | low |
+| meizu-21-000f | 0x2a45:0x000f | proposed | low |
+| meizu-21-pro-0010 | 0x2a45:0x0010 | proposed | low |
+| meizu-20-infinity-0011 | 0x2a45:0x0011 | proposed | low |
+| caterpillar-cat-s75-88f2 | 0x04b7:0x88f2 | proposed | low |
+| caterpillar-cat-s62-pro-88f3 | 0x04b7:0x88f3 | proposed | low |
+| caterpillar-cat-s53-88f4 | 0x04b7:0x88f4 | proposed | low |
+| caterpillar-cat-s42-h-88f5 | 0x04b7:0x88f5 | proposed | low |
+| sharp-aquos-r8-9d6f | 0x04dd:0x9d6f | proposed | low |
+| sharp-aquos-r8-pro-9d70 | 0x04dd:0x9d70 | proposed | low |
+| sharp-aquos-wish3-9d71 | 0x04dd:0x9d71 | proposed | low |
+| sharp-aquos-sense8-9d72 | 0x04dd:0x9d72 | proposed | low |
+| sharp-aquos-r9-9d73 | 0x04dd:0x9d73 | proposed | low |
+| samsung-t7-portable-ssd-4001 | 0x04e8:0x4001 | proposed | low |
+| samsung-t7-shield-ssd-4002 | 0x04e8:0x4002 | proposed | low |
+| samsung-t9-portable-ssd-4003 | 0x04e8:0x4003 | proposed | low |
+| casio-fx-9750gii-calculator-6101 | 0x07cf:0x6101 | proposed | low |
+| casio-fx-cp400-calculator-6102 | 0x07cf:0x6102 | proposed | low |
+| casio-fx-cg50-calculator-6103 | 0x07cf:0x6103 | proposed | low |
+| palm-pre-0101 | 0x0830:0x0101 | proposed | low |
+| palm-pre-plus-0102 | 0x0830:0x0102 | proposed | low |
+| palm-pre-2-0103 | 0x0830:0x0103 | proposed | low |
+| palm-pixi-8002 | 0x0830:0x8002 | proposed | low |
+| palm-pixi-plus-8003 | 0x0830:0x8003 | proposed | low |
+| AGM Glory SE | 0x0e8d:0x2051 | community | community |
+| AGM H5 Pro | 0x0e8d:0x2050 | community | community |
+| BLU Bold N3 | 0x0e8d:0x2062 | community | community |
+| BLU G91 Pro | 0x0e8d:0x2060 | community | community |
+| BLU View 4 | 0x0e8d:0x2061 | community | community |
+| Blackview BL8800 Pro 5G | 0x0e8d:0x2049 | community | community |
+| Blackview BV5300 Pro | 0x0e8d:0x2048 | community | community |
+| Blackview BV9200 | 0x0e8d:0x2047 | community | community |
+| Blackview Oscal Tiger 12 | 0x0e8d:0x204b | community | community |
+| Caterpillar Cat B40 | 0x04b7:0x88e0 | community | community |
+| Caterpillar Cat S22 Flip (MTP) | 0x04b7:0x88da | community | community |
+| Caterpillar Cat S42 H+ | 0x04b7:0x88f6 | community | community |
+| Caterpillar Cat S53 (MTP+ADB) | 0x04b7:0x88f8 | community | community |
+| Caterpillar Cat S62 | 0x04b7:0x88f0 | community | community |
+| Caterpillar Cat S75 (MTP+ADB) | 0x04b7:0x88f7 | community | community |
+| Coolpad Cool 20 Pro | 0x1ebf:0x0095 | community | community |
+| Coolpad Legacy Go | 0x1ebf:0x0096 | community | community |
+| Coolpad Suva | 0x1ebf:0x0097 | community | community |
+| Doogee S100 | 0x0e8d:0x204c | community | community |
+| Doogee S98 Pro | 0x0e8d:0x204f | community | community |
+| Doogee V31 GT | 0x0e8d:0x204d | community | community |
+| Kyocera DuraForce Pro 3 | 0x0482:0x0ad0 | community | community |
+| Kyocera DuraForce Ultra 5G (E7110) | 0x0482:0x0ac0 | community | community |
+| Kyocera DuraSport 5G (C6930) | 0x0482:0x0ab0 | community | community |
+| Kyocera Torque G06 (KYG03) | 0x0482:0x0aa0 | community | community |
+| Lava Blaze Curve 5G | 0x29a9:0x600c | community | community |
+| Lava Storm 5G | 0x29a9:0x600b | community | community |
+| Lava Yuva 3 Pro | 0x29a9:0x600a | community | community |
+| LeEco Cool 1 (C106) | 0x2b0e:0x17a0 | community | community |
+| LeEco Le 2 (X620) | 0x2b0e:0x176a | community | community |
+| LeEco Le Max 2 (X820) | 0x2b0e:0x1780 | community | community |
+| LeEco Le Pro 3 (X720) | 0x2b0e:0x1790 | community | community |
+| Micromax Canvas Unite 4 Pro | 0x2a96:0x600a | community | community |
+| Micromax IN Note 1 Pro | 0x2a96:0x6009 | community | community |
+| Nokia 2720 Flip | 0x0421:0x05d0 | community | community |
+| Nokia 800 Tough | 0x0421:0x05d1 | community | community |
+| Nokia 8110 4G | 0x0421:0x05d2 | community | community |
+| Palm Centro | 0x0830:0x0106 | community | community |
+| Palm Pre 3 | 0x0830:0x0104 | community | community |
+| Palm Treo Pro | 0x0830:0x0105 | community | community |
+| Panasonic Eluga Ray 550 | 0x04da:0x4010 | community | community |
+| Panasonic Eluga Z1 Pro | 0x04da:0x4011 | community | community |
+| Panasonic Toughbook FZ-N1 | 0x04da:0x4001 | community | community |
+| Panasonic Toughbook FZ-T1 | 0x04da:0x4002 | community | community |
+| Sharp Aquos R7 (SH-52C) | 0x04dd:0x9e20 | community | community |
+| Sharp Aquos R8 Pro (SH-51D) | 0x04dd:0x9e40 | community | community |
+| Sharp Aquos Sense 6 (SH-54B) | 0x04dd:0x9e00 | community | community |
+| Sharp Aquos Sense 7 (SH-53C) | 0x04dd:0x9e10 | community | community |
+| Sharp Aquos Wish 3 (SH-53D) | 0x04dd:0x9e30 | community | community |
+| TCL 30 SE | 0x1bbb:0x9030 | community | community |
+| TCL 30 V 5G | 0x1bbb:0x9031 | community | community |
+| TCL 40 NxtPaper | 0x1bbb:0x9032 | community | community |
+| Ulefone Armor 24 | 0x0e8d:0x2053 | community | community |
+| Ulefone Note 16 Pro | 0x0e8d:0x2056 | community | community |
+| Ulefone Power Armor 18T Ultra | 0x0e8d:0x2054 | community | community |
+
+## Point Of Sale (4)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| verifone-vx520-mtp-0100 | 0x11ca:0x0100 | experimental | community |
+| verifone-p400-mtp-0200 | 0x11ca:0x0200 | experimental | community |
+| ingenico-move5000-mtp-0100 | 0x079b:0x0100 | experimental | community |
+| ingenico-lane3000-mtp-0200 | 0x079b:0x0200 | experimental | community |
+
+## Printer (57)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| epson-perfection-v39-01be | 0x04b8:0x01be | proposed | low |
+| epson-perfection-v370-01bf | 0x04b8:0x01bf | proposed | low |
+| epson-perfection-v550-01c0 | 0x04b8:0x01c0 | proposed | low |
+| epson-perfection-v600-01c1 | 0x04b8:0x01c1 | proposed | low |
+| epson-fastfoto-ff-680w-01c2 | 0x04b8:0x01c2 | proposed | low |
+| epson-ds-80w-01c3 | 0x04b8:0x01c3 | proposed | low |
+| epson-ds-575w-01c4 | 0x04b8:0x01c4 | proposed | low |
+| epson-ds-770-01c5 | 0x04b8:0x01c5 | proposed | low |
+| epson-es-50-01c6 | 0x04b8:0x01c6 | proposed | low |
+| hp-elite-x3-5411 | 0x03f0:0x5411 | proposed | low |
+| hp-elitepad-1000-g2-5412 | 0x03f0:0x5412 | proposed | low |
+| hp-pro-slate-8-5413 | 0x03f0:0x5413 | proposed | low |
+| hp-photosmart-380-4205 | 0x03f0:0x4205 | proposed | low |
+| hp-photosmart-470-4305 | 0x03f0:0x4305 | proposed | low |
+| hp-photosmart-618-4505 | 0x03f0:0x4505 | proposed | low |
+| hp-photosmart-m23-7505 | 0x03f0:0x7505 | proposed | low |
+| hp-photosmart-812-4202 | 0x03f0:0x4202 | proposed | medium |
+| hp-photosmart-850-4302 | 0x03f0:0x4302 | proposed | medium |
+| hp-photosmart-935-4402 | 0x03f0:0x4402 | proposed | medium |
+| hp-photosmart-945-4502 | 0x03f0:0x4502 | proposed | medium |
+| hp-photosmart-c500-6002 | 0x03f0:0x6002 | proposed | medium |
+| hp-photosmart-715-6402 | 0x03f0:0x6402 | proposed | medium |
+| hp-photosmart-120-6502 | 0x03f0:0x6502 | proposed | medium |
+| hp-photosmart-720-6702 | 0x03f0:0x6702 | proposed | medium |
+| hp-photosmart-735-6a02 | 0x03f0:0x6a02 | proposed | medium |
+| hp-photosmart-m307-7302 | 0x03f0:0x7302 | proposed | medium |
+| hp-photosmart-m22-7502 | 0x03f0:0x7502 | proposed | medium |
+| hp-photosmart-m415-7a02 | 0x03f0:0x7a02 | proposed | medium |
+| hp-photosmart-m425-8002 | 0x03f0:0x8002 | proposed | medium |
+| hp-photosmart-r927-8702 | 0x03f0:0x8702 | proposed | medium |
+| hp-photosmart-m737-9602 | 0x03f0:0x9602 | proposed | medium |
+| hp-color-laserjet-pro-m478f-c52a | 0x03f0:0xc52a | proposed | low |
+| hewlett-packard-slate-7-4600-5c1d | 0x03f0:0x5c1d | proposed | medium |
+| hewlett-packard-slate-7-2800-5d1d | 0x03f0:0x5d1d | proposed | medium |
+| hewlett-packard-slate-10-hd-7e1d | 0x03f0:0x7e1d | proposed | medium |
+| canon-pixma-mg3620-1754 | 0x04a9:0x1754 | proposed | low |
+| canon-pixma-ts3420-177b | 0x04a9:0x177b | proposed | low |
+| canon-pixma-ts6320-1796 | 0x04a9:0x1796 | proposed | low |
+| canon-pixma-tr8620-176c | 0x04a9:0x176c | proposed | low |
+| canon-pixma-pro-200-1787 | 0x04a9:0x1787 | proposed | low |
+| epson-ecotank-et-2800-0112 | 0x04b8:0x0112 | proposed | low |
+| epson-ecotank-et-4850-0113 | 0x04b8:0x0113 | proposed | low |
+| epson-surecolor-p700-0114 | 0x04b8:0x0114 | proposed | low |
+| epson-expression-photo-xp-970-0115 | 0x04b8:0x0115 | proposed | low |
+| hp-envy-photo-7855-c811 | 0x03f0:0xc811 | proposed | low |
+| hp-envy-inspire-7955e-c911 | 0x03f0:0xc911 | proposed | low |
+| hp-envy-photo-6255-ca11 | 0x03f0:0xca11 | proposed | low |
+| hp-sprocket-plus-cb11 | 0x03f0:0xcb11 | proposed | low |
+| kodak-dock-plus-4043 | 0x040a:0x4043 | proposed | low |
+| kodak-dock-pro-4044 | 0x040a:0x4044 | proposed | low |
+| kodak-mini-2-retro-4049 | 0x040a:0x4049 | proposed | low |
+| kodak-mini-shot-3-retro-4050 | 0x040a:0x4050 | proposed | low |
+| brother-mfc-j4335dw-0420 | 0x04f9:0x0420 | proposed | low |
+| brother-mfc-j4535dw-0421 | 0x04f9:0x0421 | proposed | low |
+| brother-mfc-j5945dw-0422 | 0x04f9:0x0422 | proposed | low |
+| polaroid-zip-printer-0001 | 0x0546:0x0001 | proposed | low |
+| polaroid-lab-printer-0002 | 0x0546:0x0002 | proposed | low |
+
+## Scanner (24)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| ricoh-theta-m15-0365 | 0x05ca:0x0365 | proposed | low |
+| ricoh-theta-s-0366 | 0x05ca:0x0366 | proposed | low |
+| ricoh-theta-sc-0367 | 0x05ca:0x0367 | proposed | low |
+| ricoh-theta-v-0368 | 0x05ca:0x0368 | proposed | low |
+| ricoh-theta-z1-036d | 0x05ca:0x036d | proposed | low |
+| ricoh-caplio-r5-0110 | 0x05ca:0x0110 | proposed | low |
+| ricoh-caplio-gx-0325 | 0x05ca:0x0325 | proposed | low |
+| ricoh-caplio-r1v-032b | 0x05ca:0x032b | proposed | low |
+| ricoh-caplio-r3-032f | 0x05ca:0x032f | proposed | low |
+| ricoh-caplio-gx8-032d | 0x05ca:0x032d | proposed | low |
+| ricoh-caplio-rr750-033d | 0x05ca:0x033d | proposed | low |
+| sea-and-sea-5000g-0327 | 0x05ca:0x0327 | proposed | low |
+| sea-and-sea-2g-0353 | 0x05ca:0x0353 | proposed | low |
+| rollei-dr5-220f | 0x05ca:0x220f | proposed | low |
+| ricoh-theta-sc2-0369 | 0x05ca:0x0369 | proposed | low |
+| ricoh-theta-x-036a | 0x05ca:0x036a | proposed | low |
+| phaseone-iq3-100mp-0001 | 0x04bc:0x0001 | proposed | low |
+| phaseone-iq4-150mp-0002 | 0x04bc:0x0002 | proposed | low |
+| phaseone-xt-0003 | 0x04bc:0x0003 | proposed | low |
+| phaseone-xf-iq4-0004 | 0x04bc:0x0004 | proposed | low |
+| phaseone-p65plus-0005 | 0x04bc:0x0005 | proposed | low |
+| fujitsu-scansnap-ix1600-132e | 0x04c5:0x132e | proposed | low |
+| fujitsu-scansnap-ix1400-132f | 0x04c5:0x132f | proposed | low |
+| fujitsu-scansnap-ix1300-1330 | 0x04c5:0x1330 | proposed | low |
+
+## Smart Home (14)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| meta-portal-go-0001 | 0x2c6a:0x0001 | proposed | medium |
+| meta-portal-plus-0002 | 0x2c6a:0x0002 | proposed | medium |
+| meta-portal-10-0003 | 0x2c6a:0x0003 | proposed | medium |
+| google-chromecast-gtv-4k-4eca | 0x18d1:0x4eca | proposed | low |
+| google-chromecast-gtv-hd-4ecb | 0x18d1:0x4ecb | proposed | low |
+| denon-heos-mtp-0510 | 0x154e:0x0510 | experimental | community |
+| marantz-heos-mtp-0520 | 0x154e:0x0520 | experimental | community |
+| sonos-roam-mtp-0610 | 0x1e54:0x0610 | experimental | community |
+| sonos-move-mtp-0620 | 0x1e54:0x0620 | experimental | community |
+| bo-beosound-level-mtp-0710 | 0x0cd4:0x0710 | experimental | community |
+| bo-beosound-a1-mtp-0720 | 0x0cd4:0x0720 | experimental | community |
+| marshall-emberton-mtp-0810 | 0x2c97:0x0810 | experimental | community |
+| marshall-stanmore-mtp-0820 | 0x2c97:0x0820 | experimental | community |
+| Roku Streaming Stick 4K | 0x1d5a:0x0001 | experimental | unknown |
+
+## Storage (44)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| lexar-jumpdrives75-b013 | 0x05dc:0xb013 | proposed | low |
+| lexar-jumpdrives80-b014 | 0x05dc:0xb014 | proposed | low |
+| lexar-jumpdrives47-b017 | 0x05dc:0xb017 | proposed | low |
+| lexar-jumpdrives35-b019 | 0x05dc:0xb019 | proposed | low |
+| lexar-professional1000x-b020 | 0x05dc:0xb020 | proposed | low |
+| transcend-storejet25-8003 | 0x8644:0x8003 | proposed | low |
+| transcend-storejetsm3s-8004 | 0x8644:0x8004 | proposed | low |
+| wd-my-passport-wireless-pro-0730 | 0x1058:0x0730 | proposed | low |
+| wd-my-passport-wireless-ssd-0740 | 0x1058:0x0740 | proposed | low |
+| seagate-wireless-plus-5580 | 0x0bc2:0x5580 | proposed | low |
+| seagate-wireless-mobile-5581 | 0x0bc2:0x5581 | proposed | low |
+| niteto-adf-drive-0489 | 0x16c0:0x0489 | proposed | medium |
+| wd-my-passport-ultra-0821 | 0x1058:0x0821 | proposed | medium |
+| wd-my-passport-ssd-gen2-25f4 | 0x1058:0x25f4 | proposed | medium |
+| wd-easystore-5tb-25fb | 0x1058:0x25fb | proposed | medium |
+| wd-my-passport-go-25f5 | 0x1058:0x25f5 | proposed | medium |
+| wd-elements-se-alt-10a9 | 0x1058:0x10a9 | proposed | medium |
+| wd-my-book-6tb-1236 | 0x1058:0x1236 | proposed | medium |
+| seagate-backup-plus-slim-ab29 | 0x0bc2:0xab29 | proposed | medium |
+| seagate-one-touch-ssd-ab60 | 0x0bc2:0xab60 | proposed | medium |
+| seagate-expansion-4tb-2323 | 0x0bc2:0x2323 | proposed | medium |
+| seagate-firecuda-gaming-ab61 | 0x0bc2:0xab61 | proposed | medium |
+| seagate-basic-portable-aa16 | 0x0bc2:0xaa16 | proposed | medium |
+| seagate-backup-plus-hub-ab39 | 0x0bc2:0xab39 | proposed | medium |
+| lacie-rugged-usb-c-1079 | 0x059f:0x1079 | proposed | medium |
+| lacie-mobile-drive-107a | 0x059f:0x107a | proposed | medium |
+| lacie-portable-ssd-107b | 0x059f:0x107b | proposed | medium |
+| lacie-drive-mini-107c | 0x059f:0x107c | proposed | medium |
+| wd-my-passport-25a2 | 0x1058:0x25a2 | proposed | low |
+| wd-my-book-desktop-1230 | 0x1058:0x1230 | proposed | low |
+| seagate-one-touch-hdd-ab24 | 0x0bc2:0xab24 | proposed | low |
+| seagate-expansion-portable-2322 | 0x0bc2:0x2322 | proposed | low |
+| kingston-datatraveler-100-g3-1666 | 0x0951:0x1666 | proposed | low |
+| kingston-xs2000-portable-ssd-1697 | 0x0951:0x1697 | proposed | low |
+| kingston-datatraveler-max-177f | 0x0951:0x177f | proposed | low |
+| crucial-x6-portable-ssd-0660 | 0x0634:0x0660 | proposed | low |
+| crucial-x8-portable-ssd-0661 | 0x0634:0x0661 | proposed | low |
+| crucial-x9-portable-ssd-0662 | 0x0634:0x0662 | proposed | low |
+| pny-elite-x-fit-ssd-0065 | 0x154b:0x0065 | proposed | low |
+| pny-pro-elite-v2-ssd-0067 | 0x154b:0x0067 | proposed | low |
+| transcend-esd310c-ssd-7100 | 0x8564:0x7100 | proposed | low |
+| transcend-storejet-25h3-7000 | 0x8564:0x7000 | proposed | low |
+| adata-se880-portable-ssd-a94a | 0x125f:0xa94a | proposed | low |
+| adata-se920-portable-ssd-a95a | 0x125f:0xa95a | proposed | low |
+
+## Tablet (71)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| xiaomi-mipad-0660 | 0x2717:0x0660 | proposed | medium |
+| xiaomi-mipad-0668 | 0x2717:0x0668 | proposed | low |
+| huawei-mediapad-360f | 0x12d1:0x360f | proposed | low |
+| huawei-mediapad-361f | 0x12d1:0x361f | proposed | low |
+| samsung-galaxy-tab-s-6b00 | 0x04e8:0x6b00 | proposed | medium |
+| samsung-galaxy-tab-s2-6b01 | 0x04e8:0x6b01 | proposed | medium |
+| samsung-galaxy-tab-s3-6b02 | 0x04e8:0x6b02 | proposed | medium |
+| samsung-galaxy-tab-s4-6b03 | 0x04e8:0x6b03 | proposed | medium |
+| samsung-galaxy-tab-s5e-6b04 | 0x04e8:0x6b04 | proposed | medium |
+| samsung-galaxy-tab-s6-6b05 | 0x04e8:0x6b05 | proposed | medium |
+| samsung-galaxy-tab-s6-lite-6b06 | 0x04e8:0x6b06 | proposed | medium |
+| samsung-galaxy-tab-s7-6b07 | 0x04e8:0x6b07 | proposed | medium |
+| samsung-galaxy-tab-s7-fe-6b08 | 0x04e8:0x6b08 | proposed | medium |
+| samsung-galaxy-tab-s8-6b09 | 0x04e8:0x6b09 | proposed | medium |
+| samsung-galaxy-tab-s8-ultra-6b0a | 0x04e8:0x6b0a | proposed | medium |
+| samsung-galaxy-tab-s9-6b0b | 0x04e8:0x6b0b | proposed | medium |
+| samsung-galaxy-tab-s9-ultra-6b0c | 0x04e8:0x6b0c | proposed | medium |
+| google-pixel-tablet-4eff | 0x18d1:0x4eff | proposed | medium |
+| huawei-mediapad-m5-3803 | 0x12d1:0x3803 | proposed | medium |
+| huawei-mediapad-m6-3804 | 0x12d1:0x3804 | proposed | medium |
+| huawei-matepad-pro-108-3805 | 0x12d1:0x3805 | proposed | medium |
+| huawei-matepad-11-3806 | 0x12d1:0x3806 | proposed | medium |
+| huawei-matepad-pro-126-3807 | 0x12d1:0x3807 | proposed | medium |
+| samsung-galaxy-tab-a9-6930 | 0x04e8:0x6930 | proposed | medium |
+| samsung-galaxy-tab-a9-plus-6931 | 0x04e8:0x6931 | proposed | medium |
+| samsung-galaxy-tab-s9-fe-6932 | 0x04e8:0x6932 | proposed | medium |
+| samsung-galaxy-tab-active5-6933 | 0x04e8:0x6933 | proposed | medium |
+| samsung-galaxy-tab-s10-6937 | 0x04e8:0x6937 | proposed | medium |
+| samsung-galaxy-tab-s10-plus-6938 | 0x04e8:0x6938 | proposed | medium |
+| verizon-ellipsis-7-3899 | 0x0408:0x3899 | proposed | medium |
+| medion-md99000-p9514-olivetti-olipad-110-b009 | 0x0408:0xb009 | proposed | medium |
+| medion-lifetab-p9514-b00a | 0x0408:0xb00a | proposed | medium |
+| acromag-inc-xo-learning-tablet-mtpadb-8005 | 0x16d5:0x8005 | proposed | medium |
+| acromag-inc-xo-learning-tablet-mtp-8006 | 0x16d5:0x8006 | proposed | medium |
+| wacom-cintiq-companion-hybrid-mtpadb-2001 | 0x0531:0x2001 | proposed | medium |
+| megafon-mflogin3t-42ab | 0x201e:0x42ab | proposed | medium |
+| haier-ct715-a0c1 | 0x201e:0xa0c1 | proposed | medium |
+| gigabyte-rct6773w22-mtpadb-0c02 | 0x0414:0x0c02 | proposed | medium |
+| gigabyte-rct6773w22-mtp-2008 | 0x0414:0x2008 | proposed | medium |
+| vtevch-storio-max-xl-20-0684 | 0x0f88:0x0684 | proposed | medium |
+| remarkable-tablet-4001 | 0x2d01:0x4001 | proposed | low |
+| remarkable2-tablet-4002 | 0x2d01:0x4002 | proposed | low |
+| samsung-galaxy-tab-s7-6b0d | 0x04e8:0x6b0d | proposed | medium |
+| samsung-galaxy-tab-s7-plus-6b0e | 0x04e8:0x6b0e | proposed | medium |
+| samsung-galaxy-tab-s7-fe-6b0f | 0x04e8:0x6b0f | proposed | medium |
+| samsung-galaxy-tab-s8-6b10 | 0x04e8:0x6b10 | proposed | medium |
+| samsung-galaxy-tab-s8-plus-6b11 | 0x04e8:0x6b11 | proposed | medium |
+| samsung-galaxy-tab-s8-ultra-6b12 | 0x04e8:0x6b12 | proposed | medium |
+| samsung-galaxy-tab-s9-6b13 | 0x04e8:0x6b13 | proposed | medium |
+| samsung-galaxy-tab-s9-plus-6b14 | 0x04e8:0x6b14 | proposed | medium |
+| samsung-galaxy-tab-s9-ultra-6b15 | 0x04e8:0x6b15 | proposed | medium |
+| samsung-galaxy-tab-s9-fe-6b16 | 0x04e8:0x6b16 | proposed | medium |
+| samsung-galaxy-tab-s9-fe-plus-6b17 | 0x04e8:0x6b17 | proposed | medium |
+| samsung-galaxy-tab-a7-lite-6b18 | 0x04e8:0x6b18 | proposed | medium |
+| samsung-galaxy-tab-a8-2022-6b19 | 0x04e8:0x6b19 | proposed | medium |
+| samsung-galaxy-tab-a9-6b1a | 0x04e8:0x6b1a | proposed | medium |
+| samsung-galaxy-tab-a9-plus-6b1b | 0x04e8:0x6b1b | proposed | medium |
+| samsung-galaxy-tab-active4-pro-6b1c | 0x04e8:0x6b1c | proposed | medium |
+| samsung-galaxy-tab-active5-6b1d | 0x04e8:0x6b1d | proposed | medium |
+| lenovo-tab-p12-pro-7e17 | 0x17ef:0x7e17 | proposed | low |
+| lenovo-yoga-tab-13-7c78 | 0x17ef:0x7c78 | proposed | low |
+| lenovo-legion-y700-7f01 | 0x17ef:0x7f01 | proposed | low |
+| xiaomi-pad-6-0670 | 0x2717:0x0670 | proposed | low |
+| redmi-pad-se-0680 | 0x2717:0x0680 | proposed | low |
+| AGM Pad P1 | 0x0e8d:0x2052 | community | community |
+| Alcatel Joy Tab 2 | 0x1bbb:0x9033 | community | community |
+| Blackview Active 8 Pro | 0x0e8d:0x204a | community | community |
+| Doogee T30 Pro | 0x0e8d:0x204e | community | community |
+| HP/Palm TouchPad | 0x0830:0x0200 | community | community |
+| HP/Palm TouchPad (alt PID) | 0x0830:0x8004 | community | community |
+| Ulefone Armor Pad 3 Pro | 0x0e8d:0x2055 | community | community |
+
+## Telescope (5)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| celestron-neximage-5-0001 | 0x1546:0x0001 | proposed | low |
+| celestron-neximage-burst-0002 | 0x1546:0x0002 | proposed | low |
+| celestron-skyris-445m-0003 | 0x1546:0x0003 | proposed | low |
+| celestron-cpc-1100-cam-0004 | 0x1546:0x0004 | proposed | low |
+| celestron-starsense-explorer-0005 | 0x1546:0x0005 | proposed | low |
+
+## Thermal Camera (14)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| topdon-tc004-mini-0020 | 0x3474:0x0020 | proposed | medium |
+| seek-thermal-compact-pro-0010 | 0x289d:0x0010 | proposed | low |
+| seek-thermal-shotpro-0011 | 0x289d:0x0011 | proposed | low |
+| seek-thermal-compact-0012 | 0x289d:0x0012 | proposed | low |
+| flir-e4-1009 | 0x09cb:0x1009 | proposed | low |
+| flir-e54-100a | 0x09cb:0x100a | proposed | low |
+| flir-t840-1013 | 0x09cb:0x1013 | proposed | low |
+| flir-t860-1014 | 0x09cb:0x1014 | proposed | low |
+| flir-t620-1015 | 0x09cb:0x1015 | proposed | low |
+| flir-e75-1016 | 0x09cb:0x1016 | proposed | low |
+| flir-e85-1017 | 0x09cb:0x1017 | proposed | low |
+| flir-e95-1018 | 0x09cb:0x1018 | proposed | low |
+| seek-thermal-reveal-pro-0013 | 0x289d:0x0013 | proposed | low |
+| seek-thermal-reveal-firepro-0014 | 0x289d:0x0014 | proposed | low |
+
+## Vr Headset (7)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| meta-quest-2-0182 | 0x2833:0x0182 | proposed | low |
+| meta-quest-2-alt-0183 | 0x2833:0x0183 | proposed | low |
+| meta-quest-3-0184 | 0x2833:0x0184 | proposed | low |
+| meta-quest-pro-0185 | 0x2833:0x0185 | proposed | low |
+| meta-quest-3s-0186 | 0x2833:0x0186 | proposed | low |
+| htc-vive-focus-3-0c98 | 0x0bb4:0x0c98 | proposed | low |
+| htc-vive-xr-elite-0c99 | 0x0bb4:0x0c99 | proposed | low |
+
+## Wearable (23)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| suunto-ambit3-0041 | 0x1493:0x0041 | proposed | medium |
+| suunto-9-baro-0044 | 0x1493:0x0044 | proposed | medium |
+| suunto-9-peak-pro-0048 | 0x1493:0x0048 | proposed | medium |
+| suunto-race-004c | 0x1493:0x004c | proposed | medium |
+| suunto-vertical-0050 | 0x1493:0x0050 | proposed | medium |
+| suunto-5-peak-0054 | 0x1493:0x0054 | proposed | medium |
+| suunto-3-0058 | 0x1493:0x0058 | proposed | medium |
+| hasselblad-cfv-50c-0200 | 0x4566:0x0200 | proposed | low |
+| hasselblad-cfv-100c-0201 | 0x4566:0x0201 | proposed | low |
+| hasselblad-h6d-100c-0202 | 0x4566:0x0202 | proposed | low |
+| hasselblad-h6d-50c-0203 | 0x4566:0x0203 | proposed | low |
+| hasselblad-x1d-0204 | 0x4566:0x0204 | proposed | low |
+| hasselblad-x1d-ii-50c-0205 | 0x4566:0x0205 | proposed | low |
+| hasselblad-x2d-100c-0206 | 0x4566:0x0206 | proposed | low |
+| hasselblad-907x-50c-0207 | 0x4566:0x0207 | proposed | low |
+| recon-instruments-jet-d209 | 0x2523:0xd209 | proposed | medium |
+| recon-instruments-snow2-hud-d109 | 0x2523:0xd109 | proposed | medium |
+| polar-ignite-3-0010 | 0x0da4:0x0010 | proposed | low |
+| coros-pace-3-0001 | 0x3515:0x0001 | proposed | low |
+| coros-vertix-2s-0002 | 0x3515:0x0002 | proposed | low |
+| Garmin Fenix 7X | 0x091e:0x4c61 | experimental | unknown |
+| Garmin Forerunner 965 | 0x091e:0x4c62 | experimental | unknown |
+| Ray-Ban Meta Smart Glasses | 0x2d40:0x0001 | experimental | unknown |
+

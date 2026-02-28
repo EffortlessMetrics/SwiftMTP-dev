@@ -11,13 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Wave 63: CI fixes — Xcode 16.2 + Swift 6.2 toolchain setup, workflow stabilization
 - Wave 64: IoT/embedded device entries — smart home hubs, embedded SBCs, dev boards
 - Wave 65: Vintage media player expansion — legacy PMP and DAP entries
-- Wave 66: 100% category coverage — all 4,700+ entries assigned to a device category (0 unknown)
+- Wave 66: 100% category coverage — all 4,840+ entries assigned to a device category (0 unknown)
 - Wave 67: Camera expansion — thermal cameras, microscopes, telescopes, body cameras
 - Wave 68: Test baseline + BDD updates — property test baseline bumps, new Gherkin scenarios
 - Wave 69: Phone brand expansion — additional regional/carrier phone models
 - Wave 70: Automotive/industrial entries — dashcams, CNC, audio interfaces
 - Wave 71: Documentation refresh — compat matrix regeneration, CHANGELOG + README updates
-- **🎉 Device Quirks Database: 4,747 entries across 268 VIDs and 31 device categories**
+- **🎉 Device Quirks Database: 4,842 entries across 281 VIDs and 33 device categories**
 
 - Wave 42-50: Gaming handhelds, VR, hi-fi DAPs, embedded dev boards, 3D printers, lab instruments
 - Wave 52-53: Device category assignment — 97% of entries now categorized (phones, cameras, media players, GPS, etc.)
@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Wave 39: 6 medical/fitness entries (Polar, Wahoo, Coros, Withings)
 - Wave 40: 7 tablet/e-reader entries (Lenovo, Xiaomi, Supernote)
 
-- **🎉 Device Quirks Database: 4,747 entries across 268 VIDs** (up from 2,055): Massive expansion through waves 11–71:
+- **🎉 Device Quirks Database: 4,842 entries across 281 VIDs** (up from 2,055): Massive expansion through waves 11–75:
   - **Smartphones**: Samsung Galaxy S/A/M/F/Z (120+), Xiaomi/Redmi/POCO (136+), Huawei P/Mate/nova (68+), Honor (16+), OnePlus (28+), Google Pixel/Nexus (35+), Sony Xperia (312+), LG (73+), HTC (82+), OPPO/Realme (62+), vivo (24+), ZTE/nubia (29+), ASUS ZenFone/ROG (24+), Motorola Edge/Moto G/Razr (61+), Nokia/HMD (96+), BlackBerry (20+), Fairphone (3), Nothing Phone (5), Meizu (14+), Sharp Aquos (13+), Kyocera DuraForce (7+), CAT Rugged (5+), Razer (2), Lenovo (56+), Acer (48+), Essential (2+)
   - **Cameras (PTP/MTP)**: Canon EOS/R-series (163+), Nikon D/Z-series (96+), Sony Alpha (147+), Fujifilm X-series (69+), Olympus/OM System (66+), Panasonic Lumix (42+), Sigma (13+), Hasselblad (8+), Leica M/Q/SL (17+), Pentax (6+), Phase One (5+), GoPro Hero (12+), Insta360 (13+), DJI drones (13+), Blackmagic BMPCC (5+), FLIR/InfiRay/Seek thermal (14+)
   - **E-readers**: Kindle/Fire (67+), Kobo (14+), Onyx Boox (17+), PocketBook (14+), Barnes & Noble Nook (11+), Tolino (8+)
@@ -57,7 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Property tests**: 4 new invariants; baseline bumped from 395 → 3200
 - **Friction log**: `Docs/friction-log.md` tracking 24+ improvement opportunities (P0–P3)
 - **iOS-Compatibility.md**: Explains PTP-only camera roll access vs full MTP limitation for iOS users
-- **Compat matrix**: Regenerated with 4,747 entries and 268 VIDs
+- **Compat matrix**: Regenerated with 4,842 entries and 281 VIDs
 
 
 - **`MTPError.sessionBusy`**: New error case for transaction contention detection.
