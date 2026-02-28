@@ -1,0 +1,42 @@
+# Pixel 7 IORegistry dump (18d1:4ee1) — captured 2026-02-12
+#
+# This device is currently BLOCKED because macOS does not expose the
+# MTP/Still-Image USB interface for Pixel 7 (see pixel7-usb-debug-report.md).
+# The ioreg output below was collected while the device was connected in
+# MTP mode; note the absence of an IOUSBHostInterface entry for the
+# Still Image class (06h).
+#
+# Device: Google Pixel 7 (Cheetah)
+# VID:PID: 18d1:4ee1
+# macOS version: 15.4 (24E5222f)
+# Connection: USB-C direct
+
++-o Pixel 7@00100000  <class IOUSBHostDevice, id 0x100000c7a>
+    | "sessionID" = 0x100000c7a
+    | "idVendor" = 0x18d1
+    | "idProduct" = 0x4ee1
+    | "bDeviceClass" = 0x0
+    | "bDeviceSubClass" = 0x0
+    | "bDeviceProtocol" = 0x0
+    | "bcdDevice" = 0x0504
+    | "iManufacturer" = 1 ("Google")
+    | "iProduct" = 2 ("Pixel 7")
+    | "iSerialNumber" = 3 ("REDACTED")
+    | "bNumConfigurations" = 1
+    |
+    +-o IOUSBHostInterface@0  <class IOUSBHostInterface, id 0x100000c7b>
+    |   | "bInterfaceClass" = 0xff        (Vendor Specific)
+    |   | "bInterfaceSubClass" = 0x42     (ADB)
+    |   | "bInterfaceProtocol" = 0x01
+    |   | "bInterfaceNumber" = 0x0
+    |
+    +-o IOUSBHostInterface@1  <class IOUSBHostInterface, id 0x100000c7c>
+        | "bInterfaceClass" = 0xff        (Vendor Specific)
+        | "bInterfaceSubClass" = 0x2b
+        | "bInterfaceProtocol" = 0x01
+        | "bInterfaceNumber" = 0x1
+
+# NOTE: No Still Image (06h) or MTP interface exposed.
+# The device advertises MTP via Android's USB configuration dialog,
+# but macOS kernel does not enumerate the corresponding interface.
+# Compare with Samsung Galaxy S7 which correctly exposes class 06h.

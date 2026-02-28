@@ -4349,3 +4349,56 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Casio Fx Cp400 Calculator | 07cf:6102 | ⚪ proposed | — |
 | Casio Fx Cg50 Calculator | 07cf:6103 | ⚪ proposed | — |
 | Digilent Analog Discovery 2 | 1443:0007 | ⚪ proposed | — |
+| Palm Pre | 0830:0101 | ⚪ proposed | — |
+| Palm Pre Plus | 0830:0102 | ⚪ proposed | — |
+| Palm Pre 2 | 0830:0103 | ⚪ proposed | — |
+| Palm Pixi | 0830:8002 | ⚪ proposed | — |
+| Palm Pixi Plus | 0830:8003 | ⚪ proposed | — |
+| Microsoft Windows Phone 8 | 045e:04ef | ⚪ proposed | — |
+| Creative Zen Stone | 041e:4149 | ⚪ proposed | — |
+| Archos 604 Wifi | 0e79:1332 | ⚪ proposed | — |
+| Archos 5 | 0e79:1420 | ⚪ proposed | — |
+| Archos 70 It | 0e79:1488 | ⚪ proposed | — |
+| Archos 101 It | 0e79:148a | ⚪ proposed | — |
+| Cowon Iaudio X5 | 0e21:0510 | ⚪ proposed | — |
+| Cowon Iaudio D2 | 0e21:0601 | ⚪ proposed | — |
+| Cowon Iaudio J3 | 0e21:0700 | ⚪ proposed | — |
+| Philips Gogear Ariaz | 0471:2034 | ⚪ proposed | — |
+| Rio Karma | 045a:5210 | ⚪ proposed | — |
+| Rio Carbon | 045a:5220 | ⚪ proposed | — |
+| Canon Pixma Mg3620 | 04a9:1754 | ⚪ proposed | — |
+| Canon Pixma Ts3420 | 04a9:177b | ⚪ proposed | — |
+| Canon Pixma Ts6320 | 04a9:1796 | ⚪ proposed | — |
+| Canon Pixma Tr8620 | 04a9:176c | ⚪ proposed | — |
+| Canon Pixma Pro 200 | 04a9:1787 | ⚪ proposed | — |
+| Epson Ecotank Et 2800 | 04b8:0112 | ⚪ proposed | — |
+| Epson Ecotank Et 4850 | 04b8:0113 | ⚪ proposed | — |
+| Epson Surecolor P700 | 04b8:0114 | ⚪ proposed | — |
+| Epson Expression Photo Xp 970 | 04b8:0115 | ⚪ proposed | — |
+| Hp Envy Photo 7855 | 03f0:c811 | ⚪ proposed | — |
+| Hp Envy Inspire 7955e | 03f0:c911 | ⚪ proposed | — |
+| Hp Envy Photo 6255 | 03f0:ca11 | ⚪ proposed | — |
+| Hp Sprocket Plus | 03f0:cb11 | ⚪ proposed | — |
+| Kodak Dock Plus | 040a:4043 | ⚪ proposed | — |
+| Kodak Dock Pro | 040a:4044 | ⚪ proposed | — |
+| Kodak Mini 2 Retro | 040a:4049 | ⚪ proposed | — |
+| Kodak Mini Shot 3 Retro | 040a:4050 | ⚪ proposed | — |
+| Brother Mfc J4335dw | 04f9:0420 | ⚪ proposed | — |
+| Brother Mfc J4535dw | 04f9:0421 | ⚪ proposed | — |
+| Brother Mfc J5945dw | 04f9:0422 | ⚪ proposed | — |
+| Fujitsu Scansnap Ix1600 | 04c5:132e | ⚪ proposed | — |
+| Fujitsu Scansnap Ix1400 | 04c5:132f | ⚪ proposed | — |
+| Fujitsu Scansnap Ix1300 | 04c5:1330 | ⚪ proposed | — |
+| Polaroid Zip Printer | 0546:0001 | ⚪ proposed | — |
+| Polaroid Lab Printer | 0546:0002 | ⚪ proposed | — |
+| Dji Phantom 4 Pro | 2ca3:0040 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Parrot Bebop 2 | 19cf:0903 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Parrot Disco | 19cf:0907 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Autel Evo Ii Pro | 2f8a:0001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Autel Evo Lite | 2f8a:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Autel Evo Nano | 2f8a:0003 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Insta360 One X3 | 2e1a:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Skydio 2 Plus | 2fde:0001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Skydio X2 | 2fde:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Fimi X8se 2022 | 2b4c:0001 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Fimi Mini Pro | 2b4c:0002 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |

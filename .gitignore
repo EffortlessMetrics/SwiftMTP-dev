@@ -118,6 +118,7 @@ Docs/benchmarks/probes/
 
 # Benchmark artifacts (may contain absolute paths)
 Docs/benchmarks/**/*.txt
+!Docs/benchmarks/pixel7/ioreg-dump.txt
 Docs/benchmarks/**/*.json
 Docs/benchmarks/**/connected-lab/**
 
