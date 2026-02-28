@@ -2,7 +2,7 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-**9,270** device entries across **568** vendor IDs and **38** categories.
+**9,603** device entries across **568** vendor IDs and **38** categories.
 
 ## 3D Printer (122)
 
@@ -153,7 +153,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | suprema-biostation3-0802 | 0x2bdf:0x0802 | experimental | unknown |
 | zkteco-speedface-0803 | 0x2bdf:0x0803 | experimental | unknown |
 
-## Action Camera (56)
+## Action Camera (81)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -213,6 +213,31 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | gopro-max2-0070 | 0x2672:0x0070 | experimental | unknown |
 | gopro-hero11mini-0071 | 0x2672:0x0071 | experimental | unknown |
 | gopro-hero13c-0072 | 0x2672:0x0072 | experimental | unknown |
+| gopro-hero13-black-0073 | 0x2672:0x73 | proposed | medium |
+| gopro-hero12-black-0074 | 0x2672:0x74 | proposed | medium |
+| gopro-hero11-mini-0075 | 0x2672:0x75 | proposed | medium |
+| gopro-max-0076 | 0x2672:0x76 | proposed | medium |
+| gopro-hero13-white-0077 | 0x2672:0x77 | proposed | medium |
+| gopro-hero11-black-0078 | 0x2672:0x78 | proposed | medium |
+| gopro-hero10-black-0079 | 0x2672:0x79 | proposed | medium |
+| gopro-hero9-black-007a | 0x2672:0x7a | proposed | medium |
+| gopro-hero13-creator-007b | 0x2672:0x7b | proposed | medium |
+| gopro-hero12-creator-007c | 0x2672:0x7c | proposed | medium |
+| dji-osmo-action-5-pro-102b | 0x2ca3:0x102b | proposed | medium |
+| dji-osmo-pocket-3-102c | 0x2ca3:0x102c | proposed | medium |
+| dji-action-4-102d | 0x2ca3:0x102d | proposed | medium |
+| dji-osmo-action-4-102e | 0x2ca3:0x102e | proposed | medium |
+| dji-pocket-2-102f | 0x2ca3:0x102f | proposed | medium |
+| dji-action-3-1030 | 0x2ca3:0x1030 | proposed | medium |
+| dji-osmo-pocket-1031 | 0x2ca3:0x1031 | proposed | medium |
+| dji-action-2-1032 | 0x2ca3:0x1032 | proposed | medium |
+| dji-osmo-action-1033 | 0x2ca3:0x1033 | proposed | medium |
+| dji-osmo-pocket-3-creator-1034 | 0x2ca3:0x1034 | proposed | medium |
+| insta360-x4-0029 | 0x2e1a:0x29 | proposed | medium |
+| insta360-ace-pro-2-002a | 0x2e1a:0x2a | proposed | medium |
+| insta360-go-3s-002b | 0x2e1a:0x2b | proposed | medium |
+| insta360-flow-2-pro-002c | 0x2e1a:0x2c | proposed | medium |
+| insta360-one-x3-002d | 0x2e1a:0x2d | proposed | medium |
 
 ## Audio Interface (86)
 
@@ -305,7 +330,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | steinberg-ici6-701c | 0x0499:0x701c | experimental | unknown |
 | Yamaha/Steinberg UR22C | 0x0499:0x7010 | experimental | unknown |
 
-## Audio Recorder (90)
+## Audio Recorder (114)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -380,6 +405,30 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | zoom-h6essential-0051 | 0x1686:0x0051 | experimental | unknown |
 | zoom-h1essential-0052 | 0x1686:0x0052 | experimental | unknown |
 | tascam-x6-0057 | 0x0644:0x0057 | experimental | unknown |
+| zoom-h1-xlr-0041 | 0x1686:0x0041 | experimental | unknown |
+| zoom-r12-0042 | 0x1686:0x0042 | experimental | unknown |
+| zoom-r20-0043 | 0x1686:0x0043 | experimental | unknown |
+| zoom-r24-0044 | 0x1686:0x0044 | experimental | unknown |
+| zoom-h2next-0045 | 0x1686:0x0045 | experimental | unknown |
+| zoom-iq7-0046 | 0x1686:0x0046 | experimental | unknown |
+| zoom-q2n-4k-0047 | 0x1686:0x0047 | experimental | unknown |
+| zoom-livetrak-l12-0048 | 0x1686:0x0048 | experimental | unknown |
+| tascam-dr-10l-0058 | 0x0644:0x0058 | experimental | unknown |
+| tascam-dr-22wl-0059 | 0x0644:0x0059 | experimental | unknown |
+| tascam-dr-60dmkii-005a | 0x0644:0x005a | experimental | unknown |
+| tascam-dr-701d-005b | 0x0644:0x005b | experimental | unknown |
+| tascam-ss-r250n-005c | 0x0644:0x005c | experimental | unknown |
+| tascam-mixcast4-005d | 0x0644:0x005d | experimental | unknown |
+| sony-pcm-d100-0a63 | 0x054c:0x0a63 | experimental | unknown |
+| sony-icd-px470-0a64 | 0x054c:0x0a64 | experimental | unknown |
+| sony-icd-tx650-0a65 | 0x054c:0x0a65 | experimental | unknown |
+| sony-walkman-nw-a55-0cf6 | 0x054c:0x0cf6 | experimental | unknown |
+| sony-walkman-nw-zx300-0cf7 | 0x054c:0x0cf7 | experimental | unknown |
+| sony-walkman-nw-a105-0cf8 | 0x054c:0x0cf8 | experimental | unknown |
+| olympus-ls-p4-0217 | 0x07b4:0x0217 | experimental | unknown |
+| olympus-ws-853-0218 | 0x07b4:0x0218 | experimental | unknown |
+| om-digital-ls-p5-v2-0219 | 0x07b4:0x0219 | experimental | unknown |
+| olympus-vn-541pc-021a | 0x07b4:0x021a | experimental | unknown |
 | BOSS BR-800 | 0x0582:0x0131 | experimental | unknown |
 | Roland R-07 | 0x0582:0x012f | experimental | unknown |
 | Roland R-88 | 0x0582:0x0130 | experimental | unknown |
@@ -588,7 +637,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | getac-veretos-mobile-0003 | 0x3479:0x0003 | proposed | medium |
 | Axon Body 3 | 0x2c55:0x0001 | experimental | unknown |
 
-## Camera (1278)
+## Camera (1353)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1870,6 +1919,81 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | nikon-z8-0500 | 0x04b0:0x0500 | experimental | unknown |
 | nikon-z6iii-0501 | 0x04b0:0x0501 | experimental | unknown |
 | nikon-zf-0502 | 0x04b0:0x0502 | experimental | unknown |
+| canon-eos-r1-fw2-3330 | 0x04a9:0x3330 | proposed | medium |
+| canon-eos-r5ii-fw2-3331 | 0x04a9:0x3331 | proposed | medium |
+| canon-eos-r6iii-fw2-3332 | 0x04a9:0x3332 | proposed | medium |
+| canon-eos-r7-fw3-3333 | 0x04a9:0x3333 | proposed | medium |
+| canon-eos-r10-fw2-3334 | 0x04a9:0x3334 | proposed | medium |
+| canon-eos-r50-fw2-3335 | 0x04a9:0x3335 | proposed | medium |
+| canon-eos-r100-fw2-3336 | 0x04a9:0x3336 | proposed | medium |
+| canon-powershot-v10-fw2-3337 | 0x04a9:0x3337 | proposed | medium |
+| canon-powershot-g7x-iii-fw2-3338 | 0x04a9:0x3338 | proposed | medium |
+| canon-eos-r8-3339 | 0x04a9:0x3339 | proposed | medium |
+| canon-eos-r3-333a | 0x04a9:0x333a | proposed | medium |
+| canon-eos-rp-333b | 0x04a9:0x333b | proposed | medium |
+| canon-eos-r-333c | 0x04a9:0x333c | proposed | medium |
+| canon-eos-r5c-fw2-333d | 0x04a9:0x333d | proposed | medium |
+| canon-eos-r7ii-333e | 0x04a9:0x333e | proposed | medium |
+| canon-eos-r10ii-333f | 0x04a9:0x333f | proposed | medium |
+| canon-powershot-v1-3340 | 0x04a9:0x3340 | proposed | medium |
+| canon-powershot-g5x-iii-3341 | 0x04a9:0x3341 | proposed | medium |
+| canon-eos-m200-3342 | 0x04a9:0x3342 | proposed | medium |
+| canon-eos-m50-mark-ii-3343 | 0x04a9:0x3343 | proposed | medium |
+| nikon-z9-fw5-400c | 0x04b0:0x400c | proposed | medium |
+| nikon-z8-fw2-400d | 0x04b0:0x400d | proposed | medium |
+| nikon-zf-400e | 0x04b0:0x400e | proposed | medium |
+| nikon-zfc-400f | 0x04b0:0x400f | proposed | medium |
+| nikon-z30-4010 | 0x04b0:0x4010 | proposed | medium |
+| nikon-z50-ii-4011 | 0x04b0:0x4011 | proposed | medium |
+| nikon-coolpix-p1000-4012 | 0x04b0:0x4012 | proposed | medium |
+| nikon-z5-ii-4013 | 0x04b0:0x4013 | proposed | medium |
+| nikon-z6-iii-4014 | 0x04b0:0x4014 | proposed | medium |
+| nikon-z7-iii-4015 | 0x04b0:0x4015 | proposed | medium |
+| nikon-z9-fw6-4016 | 0x04b0:0x4016 | proposed | medium |
+| nikon-coolpix-p950-4017 | 0x04b0:0x4017 | proposed | medium |
+| nikon-coolpix-a1000-4018 | 0x04b0:0x4018 | proposed | medium |
+| nikon-z-mount-next-4019 | 0x04b0:0x4019 | proposed | medium |
+| nikon-coolpix-w300-401a | 0x04b0:0x401a | proposed | medium |
+| sony-a9-iii-1295 | 0x054c:0x1295 | proposed | medium |
+| sony-a7r-v-1296 | 0x054c:0x1296 | proposed | medium |
+| sony-a7cr-1297 | 0x054c:0x1297 | proposed | medium |
+| sony-a6700-1298 | 0x054c:0x1298 | proposed | medium |
+| sony-zv-e1-1299 | 0x054c:0x1299 | proposed | medium |
+| sony-zv-e10-ii-129a | 0x054c:0x129a | proposed | medium |
+| sony-rx100-vii-129b | 0x054c:0x129b | proposed | medium |
+| sony-a7-iv-129c | 0x054c:0x129c | proposed | medium |
+| sony-a7c-ii-129d | 0x054c:0x129d | proposed | medium |
+| sony-a1-129e | 0x054c:0x129e | proposed | medium |
+| sony-a6400-129f | 0x054c:0x129f | proposed | medium |
+| sony-zv-1-ii-12a0 | 0x054c:0x12a0 | proposed | medium |
+| sony-fx3-12a1 | 0x054c:0x12a1 | proposed | medium |
+| sony-fx30-12a2 | 0x054c:0x12a2 | proposed | medium |
+| sony-a7s-iii-12a3 | 0x054c:0x12a3 | proposed | medium |
+| fujifilm-x-t5-0314 | 0x04cb:0x314 | proposed | medium |
+| fujifilm-x-s20-0315 | 0x04cb:0x315 | proposed | medium |
+| fujifilm-x-h2s-0316 | 0x04cb:0x316 | proposed | medium |
+| fujifilm-x-h2-0317 | 0x04cb:0x317 | proposed | medium |
+| fujifilm-gfx100-ii-0318 | 0x04cb:0x318 | proposed | medium |
+| fujifilm-gfx100s-ii-0319 | 0x04cb:0x319 | proposed | medium |
+| fujifilm-x-t50-031a | 0x04cb:0x31a | proposed | medium |
+| fujifilm-x-s10-031b | 0x04cb:0x31b | proposed | medium |
+| fujifilm-x-e4-031c | 0x04cb:0x31c | proposed | medium |
+| fujifilm-x100vi-031d | 0x04cb:0x31d | proposed | medium |
+| fujifilm-x100v-031e | 0x04cb:0x31e | proposed | medium |
+| fujifilm-gfx50s-ii-031f | 0x04cb:0x31f | proposed | medium |
+| fujifilm-x-pro3-0320 | 0x04cb:0x320 | proposed | medium |
+| fujifilm-x-t4-0321 | 0x04cb:0x321 | proposed | medium |
+| fujifilm-x-t30-ii-0322 | 0x04cb:0x322 | proposed | medium |
+| panasonic-s5-iix-401a | 0x04da:0x401a | proposed | medium |
+| panasonic-s5-ii-401b | 0x04da:0x401b | proposed | medium |
+| panasonic-gh7-401c | 0x04da:0x401c | proposed | medium |
+| panasonic-g9-ii-401d | 0x04da:0x401d | proposed | medium |
+| panasonic-zs200-401e | 0x04da:0x401e | proposed | medium |
+| panasonic-s1r-401f | 0x04da:0x401f | proposed | medium |
+| panasonic-s1h-4020 | 0x04da:0x4020 | proposed | medium |
+| panasonic-gh6-4021 | 0x04da:0x4021 | proposed | medium |
+| panasonic-g100-4022 | 0x04da:0x4022 | proposed | medium |
+| panasonic-fz1000-ii-4023 | 0x04da:0x4023 | proposed | medium |
 
 ## Cnc (54)
 
@@ -1930,7 +2054,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | sculpfun-s9-0002 | 0x327f:0x0002 | community | community |
 | sainsmart-3018-prover-7534 | 0x1a86:0x7534 | experimental | unknown |
 
-## Dap (138)
+## Dap (176)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2072,6 +2196,44 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | sony-walkman-nw-zx707-0cf2 | 0x054c:0x0cf2 | proposed | low |
 | sony-walkman-nw-wm1am2-0cf3 | 0x054c:0x0cf3 | proposed | low |
 | sony-walkman-nw-wm1zm2-0cf4 | 0x054c:0x0cf4 | proposed | low |
+| fiio-k9-pro-ess-006f | 0x2972:0x006f | experimental | unknown |
+| fiio-btr13-0071 | 0x2972:0x0071 | experimental | unknown |
+| fiio-sp3-bt-0073 | 0x2972:0x0073 | experimental | unknown |
+| fiio-q15-0075 | 0x2972:0x0075 | experimental | unknown |
+| fiio-r9-0077 | 0x2972:0x0077 | experimental | unknown |
+| fiio-m23-ess-0079 | 0x2972:0x0079 | experimental | unknown |
+| fiio-ka13-007b | 0x2972:0x007b | experimental | unknown |
+| fiio-jm21-007d | 0x2972:0x007d | experimental | unknown |
+| shanling-m9-ultra-0023 | 0x31b2:0x0023 | experimental | unknown |
+| shanling-m1-ultra-0025 | 0x31b2:0x0025 | experimental | unknown |
+| shanling-m6-pro-21-0027 | 0x31b2:0x0027 | experimental | unknown |
+| shanling-ua5-0029 | 0x31b2:0x0029 | experimental | unknown |
+| shanling-h5-002b | 0x31b2:0x002b | experimental | unknown |
+| shanling-m7-plus-002d | 0x31b2:0x002d | experimental | unknown |
+| shanling-m0-se-002f | 0x31b2:0x002f | experimental | unknown |
+| ibasso-dx320max-001d | 0x2e57:0x001d | experimental | unknown |
+| ibasso-dc07-001f | 0x2e57:0x001f | experimental | unknown |
+| ibasso-dx100-0021 | 0x2e57:0x0021 | experimental | unknown |
+| ibasso-dc04pro-0023 | 0x2e57:0x0023 | experimental | unknown |
+| ibasso-dx80-0025 | 0x2e57:0x0025 | experimental | unknown |
+| astell-kern-ak-hb1-1253 | 0x4102:0x1253 | experimental | unknown |
+| astell-kern-ak100ii-1255 | 0x4102:0x1255 | experimental | unknown |
+| astell-kern-kann-ultra-1257 | 0x4102:0x1257 | experimental | unknown |
+| astell-kern-ak70-mkii-1259 | 0x4102:0x1259 | experimental | unknown |
+| astell-kern-sr25-1261 | 0x4102:0x1261 | experimental | unknown |
+| hiby-digital-001b | 0x2b24:0x001b | experimental | unknown |
+| hiby-r5-ii-001d | 0x2b24:0x001d | experimental | unknown |
+| hiby-r6-pro-max-001f | 0x2b24:0x001f | experimental | unknown |
+| hiby-rs2-0021 | 0x2b24:0x0021 | experimental | unknown |
+| hiby-wh3-0023 | 0x2b24:0x0023 | experimental | unknown |
+| cayin-ru6-0013 | 0x2d87:0x0013 | experimental | unknown |
+| cayin-n6iii-le-0017 | 0x2d87:0x0017 | experimental | unknown |
+| cayin-n30le-0019 | 0x2d87:0x0019 | experimental | unknown |
+| cayin-yd01-001b | 0x2d87:0x001b | experimental | unknown |
+| cayin-n3-001d | 0x2d87:0x001d | experimental | unknown |
+| lotoo-paw-s2-a020 | 0x0525:0xa020 | experimental | unknown |
+| lotoo-paw-s1-a030 | 0x0525:0xa030 | experimental | unknown |
+| lotoo-paw-gold-a040 | 0x0525:0xa040 | experimental | unknown |
 
 ## Dashcam (123)
 
@@ -3818,7 +3980,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | rs-nge100b-0122 | 0x0aad:0x0122 | experimental | unknown |
 | rs-fsh20-0123 | 0x0aad:0x0123 | experimental | unknown |
 
-## Media Player (575)
+## Media Player (605)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -4321,6 +4483,36 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | rio-forge-0003 | 0x0841:0x0003 | experimental | unknown |
 | diamond-rio-pmp300-0010 | 0x0b48:0x0010 | experimental | unknown |
 | diamond-rio-500-0011 | 0x0b48:0x0011 | experimental | unknown |
+| sandisk-clip-sport-go-74e9 | 0x0781:0x74e9 | experimental | unknown |
+| sandisk-sansa-fuze-plus-v2-74ea | 0x0781:0x74ea | experimental | unknown |
+| sandisk-sansa-view-74eb | 0x0781:0x74eb | experimental | unknown |
+| sandisk-sansa-e280-v2-74ec | 0x0781:0x74ec | experimental | unknown |
+| sandisk-connect-wireless-74ed | 0x0781:0x74ed | experimental | unknown |
+| sandisk-clip-voice-74ee | 0x0781:0x74ee | experimental | unknown |
+| creative-zen-x-fi3-4190 | 0x041e:0x4190 | experimental | unknown |
+| creative-zen-style-m100-4191 | 0x041e:0x4191 | experimental | unknown |
+| creative-zen-style-m300-4192 | 0x041e:0x4192 | experimental | unknown |
+| creative-zen-stone-plus-4193 | 0x041e:0x4193 | experimental | unknown |
+| creative-zen-mozaic-ez100-4194 | 0x041e:0x4194 | experimental | unknown |
+| creative-zen-mozaic-ez300-4195 | 0x041e:0x4195 | experimental | unknown |
+| creative-zen-air-4196 | 0x041e:0x4196 | experimental | unknown |
+| creative-muvo-v200-4197 | 0x041e:0x4197 | experimental | unknown |
+| cowon-plenue-l-0a81 | 0x0e21:0x0a81 | experimental | unknown |
+| cowon-plenue-s-0a91 | 0x0e21:0x0a91 | experimental | unknown |
+| cowon-plenue-w-0aa1 | 0x0e21:0x0aa1 | experimental | unknown |
+| cowon-plenue-r2-0ab1 | 0x0e21:0x0ab1 | experimental | unknown |
+| cowon-plenue-j-0ac1 | 0x0e21:0x0ac1 | experimental | unknown |
+| cowon-iaudio-e3-0ad1 | 0x0e21:0x0ad1 | experimental | unknown |
+| cowon-plenue-2-mkii-0ae1 | 0x0e21:0x0ae1 | experimental | unknown |
+| cowon-plenue-mini-0af1 | 0x0e21:0x0af1 | experimental | unknown |
+| apple-ipod-nano-7g-mtp-129b | 0x05ac:0x129b | experimental | unknown |
+| apple-ipod-shuffle-4g-mtp-129c | 0x05ac:0x129c | experimental | unknown |
+| apple-ipod-touch-4g-mtp-129f | 0x05ac:0x129f | experimental | unknown |
+| apple-ipod-touch-5g-mtp-12a0 | 0x05ac:0x12a0 | experimental | unknown |
+| apple-ipod-touch-6g-mtp-12a1 | 0x05ac:0x12a1 | experimental | unknown |
+| apple-ipod-touch-7g-mtp-12a2 | 0x05ac:0x12a2 | experimental | unknown |
+| apple-ipod-classic-5g-mtp-12a3 | 0x05ac:0x12a3 | experimental | unknown |
+| apple-ipod-nano-4g-alt-12a4 | 0x05ac:0x12a4 | experimental | unknown |
 | Archos 28 Internet Tablet | 0x0e79:0x1413 | community | community |
 | Archos 32 Internet Tablet | 0x0e79:0x1415 | community | community |
 | Archos 35 Internet Tablet | 0x0e79:0x1419 | community | community |
@@ -4562,7 +4754,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | dino-lite-edge-0302 | 0x0547:0x0302 | experimental | unknown |
 | celestron-microfi-0303 | 0x0547:0x0303 | experimental | unknown |
 
-## Phone (3365)
+## Phone (3506)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -7816,6 +8008,147 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | asus-rog8-7782 | 0x0b05:0x7782 | experimental | unknown |
 | asus-rog8pro-7783 | 0x0b05:0x7783 | experimental | unknown |
 | asus-rog7u-7784 | 0x0b05:0x7784 | experimental | unknown |
+| samsung-galaxy-s24-fe-e220 | 0x04e8:0xe220 | experimental | unknown |
+| samsung-galaxy-s24-ultra-e221 | 0x04e8:0xe221 | experimental | unknown |
+| samsung-galaxy-s24-plus-e222 | 0x04e8:0xe222 | experimental | unknown |
+| samsung-galaxy-s23-fe-e223 | 0x04e8:0xe223 | experimental | unknown |
+| samsung-galaxy-zflip6-e224 | 0x04e8:0xe224 | experimental | unknown |
+| samsung-galaxy-zfold6-e225 | 0x04e8:0xe225 | experimental | unknown |
+| samsung-galaxy-zflip5-e226 | 0x04e8:0xe226 | experimental | unknown |
+| samsung-galaxy-zfold5-e227 | 0x04e8:0xe227 | experimental | unknown |
+| samsung-galaxy-m55-e228 | 0x04e8:0xe228 | experimental | unknown |
+| samsung-galaxy-m35-e229 | 0x04e8:0xe229 | experimental | unknown |
+| samsung-galaxy-m15-e22a | 0x04e8:0xe22a | experimental | unknown |
+| samsung-galaxy-m54-e22b | 0x04e8:0xe22b | experimental | unknown |
+| samsung-galaxy-f55-e22c | 0x04e8:0xe22c | experimental | unknown |
+| samsung-galaxy-f35-e22d | 0x04e8:0xe22d | experimental | unknown |
+| samsung-galaxy-f15-e22e | 0x04e8:0xe22e | experimental | unknown |
+| samsung-galaxy-a55-e22f | 0x04e8:0xe22f | experimental | unknown |
+| samsung-galaxy-a35-e230 | 0x04e8:0xe230 | experimental | unknown |
+| samsung-galaxy-a25-e231 | 0x04e8:0xe231 | experimental | unknown |
+| samsung-galaxy-a15-e232 | 0x04e8:0xe232 | experimental | unknown |
+| samsung-galaxy-a16-e233 | 0x04e8:0xe233 | experimental | unknown |
+| samsung-galaxy-s24-e234 | 0x04e8:0xe234 | experimental | unknown |
+| samsung-galaxy-a05s-e235 | 0x04e8:0xe235 | experimental | unknown |
+| samsung-galaxy-a06-e236 | 0x04e8:0xe236 | experimental | unknown |
+| samsung-galaxy-m14-e237 | 0x04e8:0xe237 | experimental | unknown |
+| samsung-galaxy-xcover7-e238 | 0x04e8:0xe238 | experimental | unknown |
+| samsung-galaxy-s23-ultra-e239 | 0x04e8:0xe239 | experimental | unknown |
+| samsung-galaxy-a54-e23a | 0x04e8:0xe23a | experimental | unknown |
+| samsung-galaxy-a34-e23b | 0x04e8:0xe23b | experimental | unknown |
+| samsung-galaxy-a14-e23c | 0x04e8:0xe23c | experimental | unknown |
+| samsung-galaxy-s21-fe-e23d | 0x04e8:0xe23d | experimental | unknown |
+| xiaomi-14-se-ffb2 | 0x2717:0xffb2 | experimental | unknown |
+| xiaomi-14-ultra-ffb3 | 0x2717:0xffb3 | experimental | unknown |
+| xiaomi-14-pro-ffb4 | 0x2717:0xffb4 | experimental | unknown |
+| xiaomi-13t-pro-ffb5 | 0x2717:0xffb5 | experimental | unknown |
+| xiaomi-13t-ffb6 | 0x2717:0xffb6 | experimental | unknown |
+| xiaomi-redmi-13-ffb7 | 0x2717:0xffb7 | experimental | unknown |
+| xiaomi-redmi-13c-ffb8 | 0x2717:0xffb8 | experimental | unknown |
+| xiaomi-redmi-note-13-ffb9 | 0x2717:0xffb9 | experimental | unknown |
+| xiaomi-redmi-note-13-pro-ffba | 0x2717:0xffba | experimental | unknown |
+| xiaomi-poco-c65-ffbb | 0x2717:0xffbb | experimental | unknown |
+| xiaomi-poco-m6-ffbc | 0x2717:0xffbc | experimental | unknown |
+| xiaomi-poco-m6-pro-ffbd | 0x2717:0xffbd | experimental | unknown |
+| xiaomi-poco-x6-ffbe | 0x2717:0xffbe | experimental | unknown |
+| xiaomi-poco-f6-pro-ffbf | 0x2717:0xffbf | experimental | unknown |
+| xiaomi-redmi-a3-ffc0 | 0x2717:0xffc0 | experimental | unknown |
+| xiaomi-14-ffc1 | 0x2717:0xffc1 | experimental | unknown |
+| xiaomi-civi-4-ffc2 | 0x2717:0xffc2 | experimental | unknown |
+| xiaomi-redmi-note-14-ffc3 | 0x2717:0xffc3 | experimental | unknown |
+| xiaomi-redmi-note-14-pro-ffc4 | 0x2717:0xffc4 | experimental | unknown |
+| xiaomi-redmi-note-14-pro-plus-ffc5 | 0x2717:0xffc5 | experimental | unknown |
+| motorola-moto-g-stylus-2024-7715 | 0x22b8:0x7715 | experimental | unknown |
+| motorola-moto-g-power-2024-7716 | 0x22b8:0x7716 | experimental | unknown |
+| motorola-edge-50-fusion-7717 | 0x22b8:0x7717 | experimental | unknown |
+| motorola-edge-50-pro-7718 | 0x22b8:0x7718 | experimental | unknown |
+| motorola-edge-50-ultra-7719 | 0x22b8:0x7719 | experimental | unknown |
+| motorola-razr-50-771a | 0x22b8:0x771a | experimental | unknown |
+| motorola-razr-50-ultra-771b | 0x22b8:0x771b | experimental | unknown |
+| motorola-moto-g45-771c | 0x22b8:0x771c | experimental | unknown |
+| motorola-moto-g55-771d | 0x22b8:0x771d | experimental | unknown |
+| motorola-moto-g35-771e | 0x22b8:0x771e | experimental | unknown |
+| motorola-moto-g15-771f | 0x22b8:0x771f | experimental | unknown |
+| motorola-thinkphone-2025-7720 | 0x22b8:0x7720 | experimental | unknown |
+| motorola-edge-2024-7721 | 0x22b8:0x7721 | experimental | unknown |
+| motorola-moto-g-play-2024-7722 | 0x22b8:0x7722 | experimental | unknown |
+| motorola-moto-g04s-7723 | 0x22b8:0x7723 | experimental | unknown |
+| nokia-g42-0710 | 0x0421:0x0710 | experimental | unknown |
+| nokia-c32-0711 | 0x0421:0x0711 | experimental | unknown |
+| nokia-x30-0712 | 0x0421:0x0712 | experimental | unknown |
+| nokia-g22-0713 | 0x0421:0x0713 | experimental | unknown |
+| nokia-c22-0714 | 0x0421:0x0714 | experimental | unknown |
+| hmd-pulse-pro-0715 | 0x0421:0x0715 | experimental | unknown |
+| hmd-pulse-plus-0716 | 0x0421:0x0716 | experimental | unknown |
+| hmd-skyline-0717 | 0x0421:0x0717 | experimental | unknown |
+| nokia-g60-0718 | 0x0421:0x0718 | experimental | unknown |
+| hmd-crest-0719 | 0x0421:0x0719 | experimental | unknown |
+| lg-v60-thinq-6410 | 0x1004:0x6410 | experimental | unknown |
+| lg-wing-6411 | 0x1004:0x6411 | experimental | unknown |
+| lg-velvet-6412 | 0x1004:0x6412 | experimental | unknown |
+| lg-stylo-6-6413 | 0x1004:0x6413 | experimental | unknown |
+| lg-k92-6414 | 0x1004:0x6414 | experimental | unknown |
+| lg-velvet-2-pro-6415 | 0x1004:0x6415 | experimental | unknown |
+| lg-rollable-6416 | 0x1004:0x6416 | experimental | unknown |
+| lg-q92-6417 | 0x1004:0x6417 | experimental | unknown |
+| lg-k52-6418 | 0x1004:0x6418 | experimental | unknown |
+| lg-k42-6419 | 0x1004:0x6419 | experimental | unknown |
+| huawei-pura-70-ultra-502c | 0x12d1:0x502c | experimental | unknown |
+| huawei-pura-70-pro-502d | 0x12d1:0x502d | experimental | unknown |
+| huawei-pura-70-502e | 0x12d1:0x502e | experimental | unknown |
+| huawei-pura-70-pro-plus-502f | 0x12d1:0x502f | experimental | unknown |
+| huawei-nova-12-ultra-5030 | 0x12d1:0x5030 | experimental | unknown |
+| huawei-nova-12-pro-5031 | 0x12d1:0x5031 | experimental | unknown |
+| huawei-nova-12-5032 | 0x12d1:0x5032 | experimental | unknown |
+| huawei-nova-12-se-5033 | 0x12d1:0x5033 | experimental | unknown |
+| huawei-nova-12i-5034 | 0x12d1:0x5034 | experimental | unknown |
+| huawei-mate-60-pro-5035 | 0x12d1:0x5035 | experimental | unknown |
+| huawei-mate-60-5036 | 0x12d1:0x5036 | experimental | unknown |
+| huawei-mate-60-rs-5037 | 0x12d1:0x5037 | experimental | unknown |
+| huawei-y6s-5038 | 0x12d1:0x5038 | experimental | unknown |
+| huawei-y7a-5039 | 0x12d1:0x5039 | experimental | unknown |
+| huawei-y9a-503a | 0x12d1:0x503a | experimental | unknown |
+| google-pixel-9-pro-xl-d10b | 0x18d1:0xd10b | experimental | unknown |
+| google-pixel-9-pro-d10c | 0x18d1:0xd10c | experimental | unknown |
+| google-pixel-9-d10d | 0x18d1:0xd10d | experimental | unknown |
+| google-pixel-9-pro-fold-d10e | 0x18d1:0xd10e | experimental | unknown |
+| google-pixel-8a-d10f | 0x18d1:0xd10f | experimental | unknown |
+| google-pixel-7a-d110 | 0x18d1:0xd110 | experimental | unknown |
+| google-pixel-8-d111 | 0x18d1:0xd111 | experimental | unknown |
+| google-pixel-8-pro-d112 | 0x18d1:0xd112 | experimental | unknown |
+| google-pixel-fold-d113 | 0x18d1:0xd113 | experimental | unknown |
+| google-pixel-6a-d114 | 0x18d1:0xd114 | experimental | unknown |
+| apple-iphone-15-pro-max-1a02 | 0x05ac:0x1a02 | experimental | unknown |
+| apple-iphone-15-1a03 | 0x05ac:0x1a03 | experimental | unknown |
+| apple-iphone-se3-1a04 | 0x05ac:0x1a04 | experimental | unknown |
+| apple-iphone-14-pro-1a05 | 0x05ac:0x1a05 | experimental | unknown |
+| apple-iphone-16-pro-1a06 | 0x05ac:0x1a06 | experimental | unknown |
+| fairphone-5-f007 | 0x2ae5:0xf007 | experimental | unknown |
+| fairphone-4-f008 | 0x2ae5:0xf008 | experimental | unknown |
+| cat-s75-0501 | 0x0489:0x0501 | experimental | unknown |
+| cat-s62-pro-0502 | 0x0489:0x0502 | experimental | unknown |
+| cat-s53-0503 | 0x0489:0x0503 | experimental | unknown |
+| agm-h6-e501 | 0x0e8d:0xe501 | experimental | unknown |
+| agm-glory-g1s-e502 | 0x0e8d:0xe502 | experimental | unknown |
+| agm-h5-e503 | 0x0e8d:0xe503 | experimental | unknown |
+| doogee-v-max-e504 | 0x0e8d:0xe504 | experimental | unknown |
+| doogee-s110-e505 | 0x0e8d:0xe505 | experimental | unknown |
+| doogee-v30-pro-e506 | 0x0e8d:0xe506 | experimental | unknown |
+| oscal-tiger-13-e507 | 0x0e8d:0xe507 | experimental | unknown |
+| oscal-pilot-2-e508 | 0x0e8d:0xe508 | experimental | unknown |
+| blackview-bv9300-pro-e509 | 0x0e8d:0xe509 | experimental | unknown |
+| blackview-bv8900-e50a | 0x0e8d:0xe50a | experimental | unknown |
+| blackview-n6000-e50b | 0x0e8d:0xe50b | experimental | unknown |
+| ulefone-armor-24-e50c | 0x0e8d:0xe50c | experimental | unknown |
+| ulefone-power-armor-19t-e50d | 0x0e8d:0xe50d | experimental | unknown |
+| oukitel-wp28-e50e | 0x0e8d:0xe50e | experimental | unknown |
+| oukitel-rt7-titan-e50f | 0x0e8d:0xe50f | experimental | unknown |
+| nothing-phone-2a-e510 | 0x2970:0xe510 | experimental | unknown |
+| nothing-phone-2-e511 | 0x2970:0xe511 | experimental | unknown |
+| nothing-phone-1-e512 | 0x2970:0xe512 | experimental | unknown |
+| honor-magic6-pro-503b | 0x12d1:0x503b | experimental | unknown |
+| honor-magic6-503c | 0x12d1:0x503c | experimental | unknown |
+| honor-200-lite-503d | 0x12d1:0x503d | experimental | unknown |
 | AGM Glory SE | 0x0e8d:0x2051 | community | community |
 | AGM H5 Pro | 0x0e8d:0x2050 | community | community |
 | BLU Bold N3 | 0x0e8d:0x2062 | community | community |
