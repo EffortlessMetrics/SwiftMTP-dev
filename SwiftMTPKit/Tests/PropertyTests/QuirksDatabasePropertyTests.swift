@@ -387,12 +387,13 @@ final class QuirksDatabasePropertyTests: XCTestCase {
 
   func testNoCategoryMisspellings() {
     let validCategories: Set<String> = [
-      "3d-printer", "action-camera", "audio-interface", "audio-recorder", "automotive",
-      "body-camera", "camera", "cnc", "dap", "dashcam", "dev-board", "drone", "e-reader",
-      "embedded", "fitness", "gaming-handheld", "gps-navigator", "industrial-camera",
+      "3d-printer", "access-control", "action-camera", "audio-interface", "audio-recorder",
+      "automotive", "body-camera", "camera", "cnc", "dap", "dashcam", "dev-board", "drone",
+      "e-reader", "embedded", "fitness", "gaming-handheld", "gps-navigator", "industrial-camera",
       "lab-instrument", "media-player", "medical", "microscope", "phone", "point-of-sale",
-      "printer", "scanner", "smart-home", "storage", "streaming-device", "synthesizer",
-      "tablet", "telescope", "thermal-camera", "vr-headset", "wearable",
+      "printer", "projector", "scanner", "security-camera", "smart-home", "storage",
+      "streaming-device", "synthesizer", "tablet", "telescope", "thermal-camera", "vr-headset",
+      "wearable",
     ]
     let invalid = db.entries.filter { entry in
       guard let cat = entry.category else { return false }
@@ -527,6 +528,67 @@ final class QuirksDatabasePropertyTests: XCTestCase {
         pattern.firstMatch(in: entry.id, range: range),
         "Entry ID '\(entry.id)' does not match [a-z0-9-]+ pattern")
     }
+  }
+
+  // MARK: - 8500-Entry Milestone Invariants
+
+  func testAllCategoriesNonEmpty() {
+    let categoryGroups = Dictionary(grouping: db.entries, by: { $0.category ?? "" })
+    for (category, entries) in categoryGroups where !category.isEmpty {
+      XCTAssertGreaterThanOrEqual(
+        entries.count, 1,
+        "Category '\(category)' should have at least 1 entry")
+    }
+  }
+
+  func testAllVIDsHaveValidFormat() throws {
+    let fm = FileManager.default
+    let candidates: [String] = [
+      "Specs/quirks.json",
+      "../Specs/quirks.json",
+      "SwiftMTPKit/Specs/quirks.json",
+    ]
+    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }) else {
+      throw XCTSkip("quirks.json not found for VID format check")
+    }
+    let data = try Data(contentsOf: URL(fileURLWithPath: path))
+    let raw = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+    let entries = raw?["entries"] as? [[String: Any]] ?? []
+    let hexPattern = try NSRegularExpression(pattern: "^0x[0-9a-fA-F]{4}$")
+    let invalid = entries.filter { entry in
+      guard let match = entry["match"] as? [String: Any],
+        let vid = match["vid"] as? String
+      else { return true }
+      return hexPattern.firstMatch(in: vid, range: NSRange(vid.startIndex..., in: vid)) == nil
+    }
+    XCTAssertTrue(
+      invalid.isEmpty,
+      "Entries with invalid VID format: \(invalid.compactMap { $0["id"] as? String }.prefix(10))")
+  }
+
+  func testAllPIDsHaveValidFormat() throws {
+    let fm = FileManager.default
+    let candidates: [String] = [
+      "Specs/quirks.json",
+      "../Specs/quirks.json",
+      "SwiftMTPKit/Specs/quirks.json",
+    ]
+    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }) else {
+      throw XCTSkip("quirks.json not found for PID format check")
+    }
+    let data = try Data(contentsOf: URL(fileURLWithPath: path))
+    let raw = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+    let entries = raw?["entries"] as? [[String: Any]] ?? []
+    let hexPattern = try NSRegularExpression(pattern: "^0x[0-9a-fA-F]{4}$")
+    let invalid = entries.filter { entry in
+      guard let match = entry["match"] as? [String: Any],
+        let pid = match["pid"] as? String
+      else { return true }
+      return hexPattern.firstMatch(in: pid, range: NSRange(pid.startIndex..., in: pid)) == nil
+    }
+    XCTAssertTrue(
+      invalid.isEmpty,
+      "Entries with invalid PID format: \(invalid.compactMap { $0["id"] as? String }.prefix(10))")
   }
 
   private func findDuplicates<T: Hashable>(_ items: [T]) -> [T] {
