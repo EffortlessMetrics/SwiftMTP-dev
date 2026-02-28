@@ -14694,3 +14694,821 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Owon Xds3104ae Ow01 | 5345:1234 | community | — |
 | Lattice Icestick Lt01 | 0403:6010 | community | — |
 | Gowin Tang Nano 20k Gw01 | 2fa4:0401 | community | — |
+| Freedom Scientific Focus80 | 0f4e:c021 | ⚪ proposed | — |
+| Freedom Scientific Focus40 | 0f4e:c022 | ⚪ proposed | — |
+| Freedom Scientific Pacmate | 0f4e:c023 | ⚪ proposed | — |
+| Humanware Brailliant B80 | 1c71:c008 | ⚪ proposed | — |
+| Humanware Braillenote Touch | 1c71:c009 | ⚪ proposed | — |
+| Humanware Chameleon | 1c71:c00b | ⚪ proposed | — |
+| Hims Braille Sense6 | 045e:0612 | ⚪ proposed | — |
+| Hims Braille Edge40 | 045e:0613 | ⚪ proposed | — |
+| Hims Smart Beetle | 045e:0614 | ⚪ proposed | — |
+| Baum Varioconnect | 0904:0801 | ⚪ proposed | — |
+| Baum Varioultra | 0904:0802 | ⚪ proposed | — |
+| Baum Pronto | 0904:0803 | ⚪ proposed | — |
+| Papenmeier Braillex El80 | 0403:0a01 | ⚪ proposed | — |
+| Papenmeier Braillex El40 | 0403:0a02 | ⚪ proposed | — |
+| Papenmeier Braillex Trio | 0403:0a03 | ⚪ proposed | — |
+| Eurobraille Esys40 | 1c71:b001 | ⚪ proposed | — |
+| Eurobraille Esytime Evo | 1c71:b002 | ⚪ proposed | — |
+| Nippon Telesoft Seika Mini24 | 10c4:d001 | ⚪ proposed | — |
+| Nippon Telesoft Seika80 | 10c4:d002 | ⚪ proposed | — |
+| Optelec Alva Bc680 | 0798:0681 | ⚪ proposed | — |
+| Optelec Alva Bc640 | 0798:0682 | ⚪ proposed | — |
+| Orbit Reader 20 | 2341:e001 | ⚪ proposed | — |
+| Orbit Reader 40 | 2341:e002 | ⚪ proposed | — |
+| Abledata Braille Me | 2341:e003 | ⚪ proposed | — |
+| Tobii Dynavox I15 | 2104:0301 | ⚪ proposed | — |
+| Tobii Dynavox I13 | 2104:0302 | ⚪ proposed | — |
+| Tobii Eyetracker 5 | 2104:0303 | ⚪ proposed | — |
+| Prentke Romich Accent1400 | 0d8c:0501 | ⚪ proposed | — |
+| Ablenet Blue2 Switch | 0d8c:0601 | ⚪ proposed | — |
+| Sdrplay Rspdx | 1df7:2501 | ⚪ proposed | — |
+| Sdrplay Rspduo | 1df7:2502 | ⚪ proposed | — |
+| Sdrplay Rsp1b | 1df7:2503 | ⚪ proposed | — |
+| Funcube Dongle Pro | 04d8:0011 | ⚪ proposed | — |
+| Funcube Dongle Proplus | 04d8:fb32 | ⚪ proposed | — |
+| Hackrf One Alt | 1d50:604d | ⚪ proposed | — |
+| Hackrf Jawbreaker | 1d50:604e | ⚪ proposed | — |
+| Limesdr Mini | 1d50:601e | ⚪ proposed | — |
+| Limesdr USB | 1d50:601f | ⚪ proposed | — |
+| Msi Sdr | 0bda:2e00 | ⚪ proposed | — |
+| Afedri Sdr Net | 255a:0701 | ⚪ proposed | — |
+| Rfspace Sdr Iq | 255a:0702 | ⚪ proposed | — |
+| Elad Fdm Duo | 255a:0703 | ⚪ proposed | — |
+| Colibri Nano Sdr | 255a:0704 | ⚪ proposed | — |
+| Perseus Sdr USB | 255a:0705 | ⚪ proposed | — |
+| Bladerfx40 | 2cf0:0780 | ⚪ proposed | — |
+| Bladerfx115 | 2cf0:0781 | ⚪ proposed | — |
+| Icom Ic7300 | 0c26:0e01 | ⚪ proposed | — |
+| Icom Ic7610 | 0c26:0e02 | ⚪ proposed | — |
+| Icom Ic9700 | 0c26:0e03 | ⚪ proposed | — |
+| Icom Ic705 | 0c26:0e04 | ⚪ proposed | — |
+| Icom Ic7100 | 0c26:0e05 | ⚪ proposed | — |
+| Kenwood Ts890s | 0c26:0401 | ⚪ proposed | — |
+| Kenwood Ts590sg | 0c26:0402 | ⚪ proposed | — |
+| Kenwood Th D75a 0403k | 0c26:0403 | ⚪ proposed | — |
+| Yaesu Ftdx10 | 0965:0024 | ⚪ proposed | — |
+| Elecraft Kx3 0501e | 04d8:0501 | ⚪ proposed | — |
+| Elecraft Kx2 0502e | 04d8:0502 | ⚪ proposed | — |
+| Elecraft K4 0503e | 04d8:0503 | ⚪ proposed | — |
+| Flexradio Flex6600 0601f | 1781:0601 | ⚪ proposed | — |
+| Flexradio Flex6400 0602f | 1781:0602 | ⚪ proposed | — |
+| Alinco Dx Sr9t 0701a | 2341:0701 | ⚪ proposed | — |
+| Xiegu G90 0801x | 1a86:0801 | ⚪ proposed | — |
+| Xiegu X6100 0802x | 1a86:0802 | ⚪ proposed | — |
+| Lab599 Tx500 0901l | 1a86:0901 | ⚪ proposed | — |
+| Qrp Labs Qmx 0a01q | 1a86:0a01 | ⚪ proposed | — |
+| Huawei E5577 | 12d1:1f02 | ⚪ proposed | — |
+| Huawei E3531 | 12d1:1f03 | ⚪ proposed | — |
+| Zte Mf833v | 19d2:0040 | ⚪ proposed | — |
+| Zte Mf79u | 19d2:0041 | ⚪ proposed | — |
+| Zte Mf833u | 19d2:0042 | ⚪ proposed | — |
+| Zte Mf190 0043z | 19d2:0043 | ⚪ proposed | — |
+| Sierra Em9191 | 1199:90d2 | ⚪ proposed | — |
+| Sierra Mc7710 | 1199:68a2 | ⚪ proposed | — |
+| Quectel Ep06 | 2c7c:0126 | ⚪ proposed | — |
+| Quectel Em06 | 2c7c:030c | ⚪ proposed | — |
+| Quectel Eg25g | 2c7c:0122 | ⚪ proposed | — |
+| Fibocom L850 | 2cb7:d081 | ⚪ proposed | — |
+| Fibocom Fm350 | 2cb7:d091 | ⚪ proposed | — |
+| Telit Fn990a28 | 1bc7:1202 | ⚪ proposed | — |
+| Simcom Sim7600 | 1e0e:9001 | ⚪ proposed | — |
+| Simcom Sim8200ea | 1e0e:9002 | ⚪ proposed | — |
+| Alcatel Ik41uc | 1bbb:a001 | ⚪ proposed | — |
+| D Link Dwm222 B001d | 2001:b001 | ⚪ proposed | — |
+| Icom Ic M510 | 0c26:0f01 | ⚪ proposed | — |
+| Icom Ic M605 | 0c26:0f02 | ⚪ proposed | — |
+| Icom Ic M330g | 0c26:0f03 | ⚪ proposed | — |
+| Icom Ic M94d | 0c26:0f04 | ⚪ proposed | — |
+| Icom Ic M37 | 0c26:0f05 | ⚪ proposed | — |
+| Garmin Vhf215i | 091e:0a11 | ⚪ proposed | — |
+| Garmin Vhf315i | 091e:0a12 | ⚪ proposed | — |
+| Garmin Vhf115i | 091e:0a13 | ⚪ proposed | — |
+| Simrad Rs40 B 0b01s | 0961:0b01 | ⚪ proposed | — |
+| Simrad Rs100 0b02s | 0961:0b02 | ⚪ proposed | — |
+| Raymarine Ray73 0c01r | 0961:0c01 | ⚪ proposed | — |
+| Raymarine Ray63 0c02r | 0961:0c02 | ⚪ proposed | — |
+| Raymarine Ray53 0c03r | 0961:0c03 | ⚪ proposed | — |
+| Furuno Fm4800 0d01f | 0961:0d01 | ⚪ proposed | — |
+| Furuno Fm8900s 0d02f | 0961:0d02 | ⚪ proposed | — |
+| Cobham Sailor 6222 0e01c | 0961:0e01 | ⚪ proposed | — |
+| Cobham Sailor 6248 0e02c | 0961:0e02 | ⚪ proposed | — |
+| Lowrance Link9 0f01l | 0961:0f01 | ⚪ proposed | — |
+| Uniden Um785g 0f02u | 0961:0f02 | ⚪ proposed | — |
+| Impinj Speedway R220 | 05e0:0802 | ⚪ proposed | — |
+| Impinj Xarray | 05e0:0803 | ⚪ proposed | — |
+| Thingmagic M6e | 2008:0901 | ⚪ proposed | — |
+| Thingmagic Micro | 2008:0902 | ⚪ proposed | — |
+| Thingmagic Usbrp | 2008:0903 | ⚪ proposed | — |
+| Alien Alr 9680 | 2008:0a01 | ⚪ proposed | — |
+| Alien Alr 9900 | 2008:0a02 | ⚪ proposed | — |
+| Honeywell If61 0b01h | 0c2e:0b01 | ⚪ proposed | — |
+| Honeywell Ip30 0b02h | 0c2e:0b02 | ⚪ proposed | — |
+| Feig Id Isc Lru3500 | 0ab1:0c01 | ⚪ proposed | — |
+| Feig Id Isc Lrmu | 0ab1:0c02 | ⚪ proposed | — |
+| Tsl 1166 Rfid | 0d2a:0d01 | ⚪ proposed | — |
+| Tsl 2128p Rfid | 0d2a:0d02 | ⚪ proposed | — |
+| Nordic Id Sampo | 1915:0e01 | ⚪ proposed | — |
+| Nordic Id Eia | 1915:0e02 | ⚪ proposed | — |
+| Caen Rfid R4300p 0f01c | 21e1:0f01 | ⚪ proposed | — |
+| Caen Rfid Ion 0f02c | 21e1:0f02 | ⚪ proposed | — |
+| Times7 A5010 | 21e1:1001 | ⚪ proposed | — |
+| Chainway C72 | 21e1:1002 | ⚪ proposed | — |
+| Denso Wave Sp1 | 21e1:1003 | ⚪ proposed | — |
+| Convergence Cs108 | 21e1:1004 | ⚪ proposed | — |
+| Kathrein Aru3560 | 21e1:1005 | ⚪ proposed | — |
+| Sirit Infinity 610 | 21e1:1006 | ⚪ proposed | — |
+| Davis Vantage Pro2 | 10c4:a001 | ⚪ proposed | — |
+| Davis Vantage Vue | 10c4:a002 | ⚪ proposed | — |
+| Davis Enviromonitor | 10c4:a003 | ⚪ proposed | — |
+| Onset Hobo Mx2301a | 0403:b001 | ⚪ proposed | — |
+| Onset Hobo U12 | 0403:b002 | ⚪ proposed | — |
+| Onset Hobo Watertemp | 0403:b003 | ⚪ proposed | — |
+| Vaisala Hmp155 | 0403:c001 | ⚪ proposed | — |
+| Vaisala Gmp252 | 0403:c002 | ⚪ proposed | — |
+| Vaisala Wxt536 | 0403:c003 | ⚪ proposed | — |
+| Lufft Ws600 | 0403:d001 | ⚪ proposed | — |
+| Lufft Opus20 | 0403:d002 | ⚪ proposed | — |
+| Gill Maximet Gmx600 E001g | 0403:e001 | ⚪ proposed | — |
+| Gill Windsonic E002g | 0403:e002 | ⚪ proposed | — |
+| Rotronic Hc2a S | 0403:0301 | ⚪ proposed | — |
+| Campbell Cr6 | 0403:0302 | ⚪ proposed | — |
+| Campbell Cr1000x | 0403:0303 | ⚪ proposed | — |
+| Decagon Em50 | 0403:0304 | ⚪ proposed | — |
+| Apogee Sq520 | 0403:0305 | ⚪ proposed | — |
+| Omega Om Cp Temp | 0403:0306 | ⚪ proposed | — |
+| Testo 174h | 128d:0307 | ⚪ proposed | — |
+| Extech Sd700 | 128d:0308 | ⚪ proposed | — |
+| Co2meter Cm 200 | 04d8:0309 | ⚪ proposed | — |
+| Mikrotik Rb750gr3 | 0e8d:2001 | ⚪ proposed | — |
+| Mikrotik Rb5009 | 0e8d:2002 | ⚪ proposed | — |
+| Mikrotik Crs326 | 0e8d:2003 | ⚪ proposed | — |
+| Tp Link Er605 | 2357:3001 | ⚪ proposed | — |
+| Tp Link Sg2428p | 2357:3002 | ⚪ proposed | — |
+| Netgear Gs308epp | 0846:4001 | ⚪ proposed | — |
+| Netgear Gs724tpp | 0846:4002 | ⚪ proposed | — |
+| Aruba Ap515 | 0e8d:5001 | ⚪ proposed | — |
+| Aruba Ap555 | 0e8d:5002 | ⚪ proposed | — |
+| Ruckus R750 | 0e8d:6001 | ⚪ proposed | — |
+| Ruckus T750 | 0e8d:6002 | ⚪ proposed | — |
+| Cisco Meraki Mr46 | 0e8d:7001 | ⚪ proposed | — |
+| Cisco Catalyst 9120 | 0e8d:7002 | ⚪ proposed | — |
+| Juniper Mist Ap45 | 0e8d:8001 | ⚪ proposed | — |
+| Juniper Mist Ap34 | 0e8d:8002 | ⚪ proposed | — |
+| Draytek Vigor2927 9001d | 0e8d:9001 | ⚪ proposed | — |
+| Peplink Balance 20x 9002p | 0e8d:9002 | ⚪ proposed | — |
+| Peplink Max Br1 Mini | 0e8d:9003 | ⚪ proposed | — |
+| Cradlepoint Ibr900 | 0e8d:9004 | ⚪ proposed | — |
+| Cambium Epmp 3000 | 0e8d:9005 | ⚪ proposed | — |
+| Engenius Ews377ap | 0e8d:9006 | ⚪ proposed | — |
+| Fortinet Fortiap 231g | 0e8d:9007 | ⚪ proposed | — |
+| Heltec Wifi Lora32 V3 | 303a:aa01 | ⚪ proposed | — |
+| Heltec Cubecell | 303a:aa02 | ⚪ proposed | — |
+| Heltec Wireless Stick V3 | 303a:aa03 | ⚪ proposed | — |
+| Lilygo T Beam Supreme | 303a:bb01 | ⚪ proposed | — |
+| Lilygo T Lora V2 | 303a:bb02 | ⚪ proposed | — |
+| Rak Wisblock 4631 | 239a:cc01 | ⚪ proposed | — |
+| Rak Wisgate Edge | 239a:cc02 | ⚪ proposed | — |
+| Rak Wisnode Lora | 239a:cc03 | ⚪ proposed | — |
+| Dragino Lgt92 | 0483:dd01 | ⚪ proposed | — |
+| Dragino Lg308 | 0483:dd02 | ⚪ proposed | — |
+| Dragino Lht65 | 0483:dd03 | ⚪ proposed | — |
+| Semtech Sx1262 Devkit | 0483:ee01 | ⚪ proposed | — |
+| Kerlink Wirnet Ifemto | 0483:ee02 | ⚪ proposed | — |
+| Multitech Conduit Ff01m | 0403:ff01 | ⚪ proposed | — |
+| Multitech Mdot Ff02m | 0403:ff02 | ⚪ proposed | — |
+| Laird Rm126x | 0403:ff03 | ⚪ proposed | — |
+| Seeed Wio E5 Mini | 2886:ff04 | ⚪ proposed | — |
+| Seeed Sensecap M2 | 2886:ff05 | ⚪ proposed | — |
+| Sparkfun Explorable | 1b4f:ff06 | ⚪ proposed | — |
+| Adafruit Rfm95w Lora | 239a:ff07 | ⚪ proposed | — |
+| Garmin Inreach Mini2 | 091e:0a14 | ⚪ proposed | — |
+| Garmin Inreach Explorer | 091e:0a15 | ⚪ proposed | — |
+| Garmin Gpsmap 66i | 091e:0a16 | ⚪ proposed | — |
+| Garmin Montana 700i | 091e:0a17 | ⚪ proposed | — |
+| Globalstar Spot X 0b01g | 1519:0b01 | ⚪ proposed | — |
+| Globalstar Spot Gen4 0b02g | 1519:0b02 | ⚪ proposed | — |
+| Iridium Go Exec 0c01i | 1519:0c01 | ⚪ proposed | — |
+| Iridium 9575a 0c02i | 1519:0c02 | ⚪ proposed | — |
+| Iridium 9555 0c03i | 1519:0c03 | ⚪ proposed | — |
+| Thuraya X5 Touch | 1519:0d01 | ⚪ proposed | — |
+| Thuraya Xt Pro | 1519:0d02 | ⚪ proposed | — |
+| Somewear Labs Hotspot 0e01s | 1519:0e01 | ⚪ proposed | — |
+| Bivy Stick 0e02b | 1519:0e02 | ⚪ proposed | — |
+| Zoleo Satellite Comm | 1519:0e03 | ⚪ proposed | — |
+| Inmarsat Isatphone2 0f01i | 1519:0f01 | ⚪ proposed | — |
+| Bgan Explorer 710 0f02b | 1519:0f02 | ⚪ proposed | — |
+| Acr Resqlink View | 1519:0f03 | ⚪ proposed | — |
+| Mcmurdo Smartfind G8 | 1519:0f04 | ⚪ proposed | — |
+| Rigol Dsa815 | 1ab1:5001 | ⚪ proposed | — |
+| Rigol Dsa832e | 1ab1:5002 | ⚪ proposed | — |
+| Rigol Rsa5065 | 1ab1:5003 | ⚪ proposed | — |
+| Siglent Ssa3021x | f4ec:6001 | ⚪ proposed | — |
+| Siglent Ssa3032x | f4ec:6002 | ⚪ proposed | — |
+| Siglent Ssa3075x | f4ec:6003 | ⚪ proposed | — |
+| Keysight N9322c | 0957:7001 | ⚪ proposed | — |
+| Keysight N9000b | 0957:7002 | ⚪ proposed | — |
+| Keysight N9040b | 0957:7003 | ⚪ proposed | — |
+| Rohde Schwarz Fpc1500 | 0aad:8001 | ⚪ proposed | — |
+| Rohde Schwarz Fsw | 0aad:8002 | ⚪ proposed | — |
+| Rohde Schwarz Fsh8 | 0aad:8003 | ⚪ proposed | — |
+| Tektronix Rsa306b 9001t | 0699:9001 | ⚪ proposed | — |
+| Tektronix Rsa503a 9002t | 0699:9002 | ⚪ proposed | — |
+| Tektronix Rsa507a 9003t | 0699:9003 | ⚪ proposed | — |
+| Anritsu Ms2720t A001a | 0b5b:a001 | ⚪ proposed | — |
+| Anritsu Ms2090a A002a | 0b5b:a002 | ⚪ proposed | — |
+| Signal Hound Bb60c B001s | 2aec:b001 | ⚪ proposed | — |
+| Signal Hound Sm200a B002s | 2aec:b002 | ⚪ proposed | — |
+| Motorola Dp4800e | 0451:0201 | ⚪ proposed | — |
+| Motorola Dp3661e | 0451:0202 | ⚪ proposed | — |
+| Motorola Sl2600 | 0451:0203 | ⚪ proposed | — |
+| Motorola Ion | 0451:0204 | ⚪ proposed | — |
+| Motorola R7 | 0451:0205 | ⚪ proposed | — |
+| Hytera Pd685 0301h | 238b:0301 | ⚪ proposed | — |
+| Hytera Hp685 0302h | 238b:0302 | ⚪ proposed | — |
+| Hytera Pd985 0303h | 238b:0303 | ⚪ proposed | — |
+| Kenwood Nx5200 0404k | 0c26:0404 | ⚪ proposed | — |
+| Kenwood Nx1300 0405k | 0c26:0405 | ⚪ proposed | — |
+| Vertex Evx534 | 0c26:0406 | ⚪ proposed | — |
+| Tait Tp9600 0501t | 04b4:0501 | ⚪ proposed | — |
+| Tait Tm9400 0502t | 04b4:0502 | ⚪ proposed | — |
+| Harris Xg75pe 0601h | 04b4:0601 | ⚪ proposed | — |
+| Harris Xl200p 0602h | 04b4:0602 | ⚪ proposed | — |
+| Sepura Sc21 0701s | 04b4:0701 | ⚪ proposed | — |
+| Sepura Stp9200 0702s | 04b4:0702 | ⚪ proposed | — |
+| Bfdx Bf Td950 0801b | 04b4:0801 | ⚪ proposed | — |
+| Kirisun Dp990 0802k | 04b4:0802 | ⚪ proposed | — |
+| Phonak Marvel M90 | 0a12:a101 | ⚪ proposed | — |
+| Widex Moment 440 | 0a12:a102 | ⚪ proposed | — |
+| Signia Pure 7ax | 0a12:a103 | ⚪ proposed | — |
+| Starkey Genesis Ai | 0a12:a104 | ⚪ proposed | — |
+| Unitron Vivante | 0a12:a105 | ⚪ proposed | — |
+| Datalogic Gryphon Gd4590 | 05f9:c201 | ⚪ proposed | — |
+| Honeywell Xenon 1952g | 0c2e:c202 | ⚪ proposed | — |
+| Zebra Ds9908 | 05e0:c203 | ⚪ proposed | — |
+| Socket Mobile S740 | 0c2e:c204 | ⚪ proposed | — |
+| Newland Hr52 | 1eab:c205 | ⚪ proposed | — |
+| Brightsign Xt1145 | 2708:d301 | ⚪ proposed | — |
+| Brightsign Xd235 | 2708:d302 | ⚪ proposed | — |
+| Brightsign Hd225 | 2708:d303 | ⚪ proposed | — |
+| Lg Webos Signage Box | 043e:d304 | ⚪ proposed | — |
+| Samsung Sssp6 | 04e8:d305 | ⚪ proposed | — |
+| Basler Ace2 A2a1920 | 2676:e401 | ⚪ proposed | — |
+| Flir Blackfly S | 1e10:e402 | ⚪ proposed | — |
+| Ids U3 3860cp | 1409:e403 | ⚪ proposed | — |
+| Allied Vision Alvium | 1ab2:e404 | ⚪ proposed | — |
+| Hikrobot Mv Ce013 | 2bdf:e405 | ⚪ proposed | — |
+| Celestron Nexstar 8se | 2116:f501 | ⚪ proposed | — |
+| Sky Watcher Az Gti | 067b:f502 | ⚪ proposed | — |
+| Meade Lx850 | 067b:f503 | ⚪ proposed | — |
+| Ioptron Cem70 | 067b:f504 | ⚪ proposed | — |
+| Zwo Am5 | 03c3:f505 | ⚪ proposed | — |
+| Ingenico Move5000 | 0b00:a601 | ⚪ proposed | — |
+| Verifone V400m | 11ca:a602 | ⚪ proposed | — |
+| Pax A920 | 2fb2:a603 | ⚪ proposed | — |
+| Castles Saturn 1000 | 2fb2:a604 | ⚪ proposed | — |
+| Newland Sp930 | 1eab:a605 | ⚪ proposed | — |
+| Thorlabs Cs895mu | 1313:b701 | ⚪ proposed | — |
+| Amscope Mu2003 | 0547:b702 | ⚪ proposed | — |
+| Leica Dm6b | 0547:b703 | ⚪ proposed | — |
+| Zeiss Primostar3 | 0547:b704 | ⚪ proposed | — |
+| Olympus Cx43 | 0547:b705 | ⚪ proposed | — |
+| Hid Pivclass R40 | 076b:c801 | ⚪ proposed | — |
+| Hid Signo 40 | 076b:c802 | ⚪ proposed | — |
+| Suprema Biostation3 | 16d1:c803 | ⚪ proposed | — |
+| Zkteco Inbio460 | 16d1:c804 | ⚪ proposed | — |
+| Dormakaba Evolo | 16d1:c805 | ⚪ proposed | — |
+| Axon Body4 | 2bc5:d901 | ⚪ proposed | — |
+| Motorola V700 | 2bc5:d902 | ⚪ proposed | — |
+| Reveal D5 | 2bc5:d903 | ⚪ proposed | — |
+| Hytera Vm780 | 238b:d904 | ⚪ proposed | — |
+| Pinnacle Pr7 | 2bc5:d905 | ⚪ proposed | — |
+| Blackmagic Web Presenter Hd E001a | 1edb:e001 | ⚪ proposed | — |
+| Blackmagic Atem Mini Extreme E002a | 1edb:e002 | ⚪ proposed | — |
+| Aja U Tap Sdi E003a | 0bd7:e003 | ⚪ proposed | — |
+| Magewell Ultra Stream E004a | 2935:e004 | ⚪ proposed | — |
+| Matrox Monarch Hdx E005a | 102b:e005 | ⚪ proposed | — |
+| Epson Tm M30ii | 04b8:f101 | ⚪ proposed | — |
+| Star Micronics Tsp143iv | 0519:f102 | ⚪ proposed | — |
+| Bixolon Srp 380 | 1504:f103 | ⚪ proposed | — |
+| Citizen Ct E651 | 1d90:f104 | ⚪ proposed | — |
+| Elo 1509l Touchmonitor | 04e7:f105 | ⚪ proposed | — |
+| Epson Eb Pu2220b | 04b8:f201 | ⚪ proposed | — |
+| Benq Th685p | 0d3d:f202 | ⚪ proposed | — |
+| Sony Vpl Xw5000es | 054c:f203 | ⚪ proposed | — |
+| Optoma Uhd55 | 0b49:f204 | ⚪ proposed | — |
+| Viewsonic Px748 4k | 0543:f205 | ⚪ proposed | — |
+| Flir E8 Xt | 09cb:a301 | ⚪ proposed | — |
+| Flir T540 | 09cb:a302 | ⚪ proposed | — |
+| Seek Thermal Shotpro | 289d:a303 | ⚪ proposed | — |
+| Hikmicro M30 | 2bdf:a304 | ⚪ proposed | — |
+| Infiray T2s Plus | 2bdf:a305 | ⚪ proposed | — |
+| Garmin Forerunner 965 | 091e:0a18 | ⚪ proposed | — |
+| Garmin Enduro3 | 091e:0a19 | ⚪ proposed | — |
+| Polar Vantage V3 | 0da4:0b11 | ⚪ proposed | — |
+| Suunto Race | 1493:0c11 | ⚪ proposed | — |
+| Coros Vertix2s | 0483:0d11 | ⚪ proposed | — |
+| Carbide3d Shapeoko5 | 1a86:b401 | ⚪ proposed | — |
+| Onefinity Woodworker | 1a86:b402 | ⚪ proposed | — |
+| Haas Umc500 | 1a86:b403 | ⚪ proposed | — |
+| Avid Cnc Pro4824 | 1a86:b404 | ⚪ proposed | — |
+| Openbuilds Lead 1515 | 1a86:b405 | ⚪ proposed | — |
+| Dahua Ipc Hdbw5449r | 2bdf:c501 | ⚪ proposed | — |
+| Hikvision Ds 2cd2387g2 | 2bdf:c502 | ⚪ proposed | — |
+| Axis P3265 V | 0bd5:c503 | ⚪ proposed | — |
+| Vivotek Fd9189 Ht V2 | 0bd5:c504 | ⚪ proposed | — |
+| Hanwha Xnv 9083r | 0bd5:c505 | ⚪ proposed | — |
+| Fujitsu Ix1600 | 04c5:d601 | ⚪ proposed | — |
+| Brother Ads4900w | 04f9:d602 | ⚪ proposed | — |
+| Epson Ds870 | 04b8:d603 | ⚪ proposed | — |
+| Canon Dr G2140 | 04a9:d604 | ⚪ proposed | — |
+| Kodak S3120 | 040a:d605 | ⚪ proposed | — |
+| Nonin 3150 | 0d8c:e701 | ⚪ proposed | — |
+| Masimo Rad97 | 0d8c:e702 | ⚪ proposed | — |
+| Welch Allyn Connex | 0d8c:e703 | ⚪ proposed | — |
+| Mindray Vs900 | 0d8c:e704 | ⚪ proposed | — |
+| Contec Cms50d | 0d8c:e705 | ⚪ proposed | — |
+| Meta Quest3s | 2833:f801 | ⚪ proposed | — |
+| Htc Vive Xr Elite | 0bb4:f802 | ⚪ proposed | — |
+| Pico 4 Ultra | 2d40:f803 | ⚪ proposed | — |
+| Bigscreen Beyond | 2d40:f804 | ⚪ proposed | — |
+| Pimax Crystal | 2d40:f805 | ⚪ proposed | — |
+| Elgato Hd60x | 0fd9:a401 | ⚪ proposed | — |
+| Avermedia Gc575 | 07ca:a402 | ⚪ proposed | — |
+| Magewell Pro Capture Hdmi | 2935:a403 | ⚪ proposed | — |
+| Razer Ripsaw Hd | 1532:a404 | ⚪ proposed | — |
+| Pengo 4k Hdmi Grabber | 0c45:a405 | ⚪ proposed | — |
+| Zoom H6essential | 1686:b501 | ⚪ proposed | — |
+| Tascam Portacapture X8 | 0644:b502 | ⚪ proposed | — |
+| Sound Devices Mixpre 6m | 0644:b503 | ⚪ proposed | — |
+| Olympus Ls P5 | 07b4:b504 | ⚪ proposed | — |
+| Sony Pcm A10 | 054c:b505 | ⚪ proposed | — |
+| Segger J Link Ultra | 1366:c601 | ⚪ proposed | — |
+| Segger J Link Edu | 1366:c602 | ⚪ proposed | — |
+| Lauterbach Powertrace | 0403:c603 | ⚪ proposed | — |
+| Totalphase Beagle Usb5000 | 0403:c604 | ⚪ proposed | — |
+| Xmos Xtag4 | 20b1:c605 | ⚪ proposed | — |
+| Insta360 X4 | 2e1a:d701 | ⚪ proposed | — |
+| Insta360 Go3s | 2e1a:d702 | ⚪ proposed | — |
+| Dji Action5 Pro | 2ca3:d703 | ⚪ proposed | — |
+| Akaso Brave8 Lite | 4255:d704 | ⚪ proposed | — |
+| Sjcam Sj11 Active | 4255:d705 | ⚪ proposed | — |
+| Dji Mini4 Pro | 2ca3:e801 | ⚪ proposed | — |
+| Dji Air3 | 2ca3:e802 | ⚪ proposed | — |
+| Autel Evo Lite | 2ca3:e803 | ⚪ proposed | — |
+| Parrot Anafi Usa | 19cf:e804 | ⚪ proposed | — |
+| Skydio X10 | 2ca3:e805 | ⚪ proposed | — |
+| Hp Laserjet M404dn | 03f0:f901 | ⚪ proposed | — |
+| Brother Hl L6210dw | 04f9:f902 | ⚪ proposed | — |
+| Canon Maxify Gx7021 | 04a9:f903 | ⚪ proposed | — |
+| Epson Ecotank Et 5850 | 04b8:f904 | ⚪ proposed | — |
+| Lexmark Mc3326i | 043d:f905 | ⚪ proposed | — |
+| Samsung Tab S9 Ultra | 04e8:aa11 | ⚪ proposed | — |
+| Lenovo Tab P12 Pro | 17ef:aa12 | ⚪ proposed | — |
+| Huawei Matepad Pro 13 | 12d1:aa13 | ⚪ proposed | — |
+| Xiaomi Pad6s Pro | 2717:aa14 | ⚪ proposed | — |
+| Oppo Pad3 | 22d9:aa15 | ⚪ proposed | — |
+| Viofo A229 Pro Duo | 0c45:bb11 | ⚪ proposed | — |
+| Blackvue Dr770x | 0c45:bb12 | ⚪ proposed | — |
+| Thinkware U3000 | 0c45:bb13 | ⚪ proposed | — |
+| Garmin Dashcam 67w | 091e:0a1a | ⚪ proposed | — |
+| Nextbase 622gw | 0c45:bb15 | ⚪ proposed | — |
+| Bambu Lab X1e | 1d6b:cc11 | ⚪ proposed | — |
+| Bambu Lab A1 Mini | 1d6b:cc12 | ⚪ proposed | — |
+| Prusa Mk4s | 2c99:cc13 | ⚪ proposed | — |
+| Creality K1c | 1d6b:cc14 | ⚪ proposed | — |
+| Elegoo Saturn4 Ultra | 1d6b:cc15 | ⚪ proposed | — |
+| Fiio M23 | 2972:dd11 | ⚪ proposed | — |
+| Astell Kern Se300 | 2a47:dd12 | ⚪ proposed | — |
+| Shanling M9 Plus | 2a47:dd13 | ⚪ proposed | — |
+| Ibasso Dx320max | 2a47:dd14 | ⚪ proposed | — |
+| Hiby R4 | 2a47:dd15 | ⚪ proposed | — |
+| Sequential Prophet Rev2 | 2408:ee11 | ⚪ proposed | — |
+| Moog Subsequent37 | 2408:ee12 | ⚪ proposed | — |
+| Arturia Polybrute12 | 1c75:ee13 | ⚪ proposed | — |
+| Oberheim Ob X8 | 2408:ee14 | ⚪ proposed | — |
+| Waldorf Iridium Core | 2408:ee15 | ⚪ proposed | — |
+| Valve Steam Deck Oled | 28de:ff11 | ⚪ proposed | — |
+| Asus Rog Ally X | 0b05:ff12 | ⚪ proposed | — |
+| Lenovo Legion Go S | 17ef:ff13 | ⚪ proposed | — |
+| Msi Claw 8 | 1462:ff14 | ⚪ proposed | — |
+| Ayaneo 2s | 1462:ff15 | ⚪ proposed | — |
+| Samsung Galaxy Watch7 | 04e8:aa21 | ⚪ proposed | — |
+| Google Pixel Watch3 | 18d1:aa22 | ⚪ proposed | — |
+| Apple Watch Ultra2 Cellular | 05ac:aa23 | ⚪ proposed | — |
+| Huawei Watch Gt5 Pro | 12d1:aa24 | ⚪ proposed | — |
+| Garmin Venu3s | 091e:0a1b | ⚪ proposed | — |
+| Samsung T9 Portable Ssd | 04e8:bb21 | ⚪ proposed | — |
+| Sandisk Extreme Pro Ssd | 0781:bb22 | ⚪ proposed | — |
+| Crucial X10 Pro | 0634:bb23 | ⚪ proposed | — |
+| Seagate One Touch Ssd | 0bc2:bb24 | ⚪ proposed | — |
+| Wd Black P40 Game Drive | 1058:bb25 | ⚪ proposed | — |
+| Universal Audio Apollo Twin | 2a39:cc21 | ⚪ proposed | — |
+| Rme Babyface Pro Fs | 2a39:cc22 | ⚪ proposed | — |
+| Motu M4 | 07fd:cc23 | ⚪ proposed | — |
+| Audient Id44 Mk2 | 2a39:cc24 | ⚪ proposed | — |
+| Presonus Quantum Es4 | 194f:cc25 | ⚪ proposed | — |
+| Home Assistant Skyconnect | 10c4:dd21 | ⚪ proposed | — |
+| Sonoff Zbdongle E | 1a86:dd22 | ⚪ proposed | — |
+| Conbee Iii | 1cf1:dd23 | ⚪ proposed | — |
+| Nortek Husbzb1 | 10c4:dd24 | ⚪ proposed | — |
+| Aeotec Z Pi7 | 0658:dd25 | ⚪ proposed | — |
+| Kobo Elipsa2e | 2237:ee21 | ⚪ proposed | — |
+| Kobo Libra Colour | 2237:ee22 | ⚪ proposed | — |
+| Pocketbook Inkpad Color3 | 0525:ee23 | ⚪ proposed | — |
+| Boox Tab Ultra C Pro | 0525:ee24 | ⚪ proposed | — |
+| Remarkable Paper Pro | 0525:ee25 | ⚪ proposed | — |
+| Obd Link Mx Wifi | 0403:ff21 | ⚪ proposed | — |
+| Vgate Vlinker Fs | 0403:ff22 | ⚪ proposed | — |
+| Autel Maxisys Ms906bt | 0403:ff23 | ⚪ proposed | — |
+| Launch X431 Pad V | 0403:ff24 | ⚪ proposed | — |
+| Bosch Kts 590 | 0403:ff25 | ⚪ proposed | — |
+| Garmin Drivesmart 76 | 091e:0a1c | ⚪ proposed | — |
+| Garmin Zumo Xt2 | 091e:0a1d | ⚪ proposed | — |
+| Garmin Tread Overland | 091e:0a1e | ⚪ proposed | — |
+| Tomtom Go Expert 7 | 1390:aa31 | ⚪ proposed | — |
+| Garmin Rv895 | 091e:0a1f | ⚪ proposed | — |
+| Keysight U1253b | 0957:bb31 | ⚪ proposed | — |
+| Tektronix Mdo34 | 0699:bb32 | ⚪ proposed | — |
+| Rohde Schwarz Rtb2004 | 0aad:bb33 | ⚪ proposed | — |
+| Siglent Sds2104x Hd | f4ec:bb34 | ⚪ proposed | — |
+| Rigol Dg4162 | 1ab1:bb35 | ⚪ proposed | — |
+| Espressif Esp32 C6 | 303a:cc31 | ⚪ proposed | — |
+| Espressif Esp32 H2 | 303a:cc32 | ⚪ proposed | — |
+| Seeed Xiao Esp32s3 | 2886:cc33 | ⚪ proposed | — |
+| Arduino Nano Esp32 | 2341:cc34 | ⚪ proposed | — |
+| Adafruit Feather Rp2350 | 239a:cc35 | ⚪ proposed | — |
+| Roku Streaming Stick 4k | 0b48:dd31 | ⚪ proposed | — |
+| Amazon Fire Tv Stick 4k Max | 1949:dd32 | ⚪ proposed | — |
+| Chromecast Google Tv 4k | 18d1:dd33 | ⚪ proposed | — |
+| Nvidia Shield Tv Pro | 0955:dd34 | ⚪ proposed | — |
+| Apple Tv 4k 3gen | 05ac:dd35 | ⚪ proposed | — |
+| Nikon Z6iii | 04b0:ee31 | ⚪ proposed | — |
+| Canon EOS R1 | 04a9:ee32 | ⚪ proposed | — |
+| Sony A9iii | 054c:ee33 | ⚪ proposed | — |
+| Fujifilm Gfx100sii | 04cb:ee34 | ⚪ proposed | — |
+| Panasonic Lumix S5iix | 04da:ee35 | ⚪ proposed | — |
+| Samsung Galaxy S25 Ultra | 04e8:ff31 | ⚪ proposed | — |
+| Google Pixel 9 Pro Xl | 18d1:ff32 | ⚪ proposed | — |
+| Oneplus 13 | 2a70:ff33 | ⚪ proposed | — |
+| Xiaomi 15 Ultra | 2717:ff34 | ⚪ proposed | — |
+| Nothing Phone3 | 2a70:ff35 | ⚪ proposed | — |
+| Lenovo Thinkpad Usbc Dock Gen2 | 17ef:3060 | community | — |
+| Lenovo Thinkpad Tb3 Dock | 17ef:3069 | community | — |
+| Lenovo Thinkpad Usb3 Prodock | 17ef:1010 | community | — |
+| Lenovo Thinkpad Usb3 Ultradock | 17ef:1012 | community | — |
+| Lenovo Thinkplus Usbc Hub | 17ef:3099 | community | — |
+| Lenovo Thinkpad Hybrid Dock | 17ef:30b0 | community | — |
+| Lenovo Thinkpad Basic Dock | 17ef:1014 | community | — |
+| Lenovo Thinkpad Usbc Travel | 17ef:30bb | community | — |
+| Lenovo Thinkpad 40ay Dock | 17ef:30e3 | community | — |
+| Lenovo Go Usbc Hub | 17ef:30e5 | community | — |
+| Lenovo Thinkpad T14s Webcam | 17ef:30d1 | community | — |
+| Lenovo Thinkpad X1carbon Cam | 17ef:30d3 | community | — |
+| Lenovo Thinkpad X1yoga Cam | 17ef:30d5 | community | — |
+| Lenovo Thinkpad Fingerprint | 17ef:6099 | community | — |
+| Lenovo Thinkpad Smartcard | 17ef:6007 | community | — |
+| Dell Wd19tb Dock | 413c:b06e | community | — |
+| Dell Wd19s Dock | 413c:b06f | community | — |
+| Dell Wd22tb4 Dock | 413c:b09d | community | — |
+| Dell D6000 Dock | 413c:b05e | community | — |
+| Dell D3100 Dock | 413c:2107 | community | — |
+| Dell Da310 Adapter | 413c:b097 | community | — |
+| Dell Da300 Adapter | 413c:b09a | community | — |
+| Dell Wd19dcs Dock | 413c:b0a0 | community | — |
+| Dell Latitude Webcam | 413c:2182 | community | — |
+| Dell Ultrasharp Webcam | 413c:2184 | community | — |
+| Dell Ms819 Mouse | 413c:301a | community | — |
+| Dell Kb900 Keyboard | 413c:2190 | community | — |
+| Dell Wd15 Dock | 413c:b05f | community | — |
+| Hp Usbc Dock G5 | 03f0:0867 | community | — |
+| Hp Thunderbolt Dock G4 | 03f0:0a6b | community | — |
+| Hp Usbc Hub G3 | 03f0:0c6b | community | — |
+| Hp E24d G4 Monitor | 03f0:0e67 | community | — |
+| Hp E27d G4 Monitor | 03f0:0e69 | community | — |
+| Hp 960 Webcam | 03f0:0c67 | community | — |
+| Hp 925 Ergo Mouse | 03f0:4c42 | community | — |
+| Hp Z24m Monitor Hub | 03f0:1267 | community | — |
+| Hp Elitebook Ir Cam | 03f0:0e6b | community | — |
+| Hp Probook Cam | 03f0:0e6d | community | — |
+| Hp Engage Go Mobile | 03f0:1a67 | community | — |
+| Hp Engage One Prime | 03f0:1c67 | community | — |
+| Hp Essential Dock | 03f0:1e67 | community | — |
+| Trimble R10 Gnss | 1781:0a01 | community | — |
+| Trimble R12i Gnss | 1781:0a03 | community | — |
+| Trimble R2 Gnss | 1781:0a05 | community | — |
+| Trimble Catalyst Da2 | 1781:0a07 | community | — |
+| Trimble Gfx 750 Display | 1781:0b01 | community | — |
+| Trimble Gfx 1260 Display | 1781:0b03 | community | — |
+| Trimble Tmx 2050 Display | 1781:0b05 | community | — |
+| Trimble Nav 900 Controller | 1781:0c01 | community | — |
+| Trimble Fieldiq Controller | 1781:0c03 | community | — |
+| Trimble Field Level Ii | 1781:0c05 | community | — |
+| Trimble Agps332 Receiver | 1781:0a09 | community | — |
+| Trimble Ez Guide 250 | 1781:0b07 | community | — |
+| Trimble Trucount Monitor | 1781:0c07 | community | — |
+| Agleader Incommand | 0403:e8a1 | community | — |
+| Agleader Incommand 800 | 0403:e8a3 | community | — |
+| Agleader Compass | 0403:e8a5 | community | — |
+| Agleader Steercommand | 0403:e8a7 | community | — |
+| Agleader Surepoint Gnss | 0403:e8a9 | community | — |
+| Agleader Directcommand | 0403:e8ab | community | — |
+| Agleader Seedcommand | 0403:e8ad | community | — |
+| Agleader Optrx Sensor | 0403:e8af | community | — |
+| Raven Viper4 Display | 0403:e9a1 | community | — |
+| Raven Viper4plus Display | 0403:e9a3 | community | — |
+| Raven Rs1 Steering | 0403:e9a5 | community | — |
+| Raven Hawkeye Nozzle | 0403:e9a7 | community | — |
+| Raven Cruizer Ii | 0403:e9a9 | community | — |
+| Raven Scs5000 Console | 0403:e9ab | community | — |
+| Raven Envizio Pro | 0403:e9ad | community | — |
+| Jd Starfire6000 Receiver | 0403:eaa1 | community | — |
+| Jd Starfire3000 Receiver | 0403:eaa3 | community | — |
+| Jd 4640 Display | 0403:eaa5 | community | — |
+| Jd 2630 Display | 0403:eaa7 | community | — |
+| Jd Gen4 Display | 0403:eaa9 | community | — |
+| Jd Fieldconnect Gateway | 0403:eaab | community | — |
+| Jd Swath Control Pro | 0403:eaad | community | — |
+| Jd Autotrac Controller | 0403:eaaf | community | — |
+| Jd Harvestlab | 0403:eab1 | community | — |
+| Jd Machine Sync Radio | 0403:eab3 | community | — |
+| Zwo Asi294mc Pro | 03c3:294e | community | — |
+| Zwo Asi533mc Pro | 03c3:533e | community | — |
+| Zwo Asi2600mc Pro | 03c3:2601 | community | — |
+| Zwo Asi6200mc Pro | 03c3:6201 | community | — |
+| Zwo Asi462mc | 03c3:4621 | community | — |
+| Zwo Asi174mm | 03c3:1741 | community | — |
+| Zwo Asi120mm Mini | 03c3:120a | community | — |
+| Zwo Asi290mm Mini | 03c3:290a | community | — |
+| Zwo Asi385mc | 03c3:3851 | community | — |
+| Zwo Eaf Focuser | 03c3:eaf1 | community | — |
+| Zwo Am5 Mount | 03c3:a051 | community | — |
+| Zwo Am3 Mount | 03c3:a031 | community | — |
+| Zwo Asiair Pro | 03c3:a101 | community | — |
+| Zwo Asiair Plus | 03c3:a103 | community | — |
+| Zwo Asi2400mc Pro | 03c3:2401 | community | — |
+| Zwo Asi678mc | 03c3:6781 | community | — |
+| Qhy Qhy600m Ph | 1618:6001 | community | — |
+| Qhy Qhy268c | 1618:2681 | community | — |
+| Qhy Qhy5iii533c | 1618:5331 | community | — |
+| Qhy Qhy5iii174m | 1618:1740 | community | — |
+| Qhy Qhy294m Pro | 1618:2941 | community | — |
+| Qhy Qhy5iii462c | 1618:4620 | community | — |
+| Qhy Cfw3 Filterwheel | 1618:cf01 | community | — |
+| Qhy Polemaster | 1618:d001 | community | — |
+| Celestron Nexstar Evolution | 067b:23c3 | community | — |
+| Celestron Cge Pro Mount | 067b:23c5 | community | — |
+| Celestron Avx Mount | 067b:23c7 | community | — |
+| Celestron Cgx Mount | 067b:23c9 | community | — |
+| Celestron Cgx L Mount | 067b:23cb | community | — |
+| Celestron Starsense Explorer | 067b:23cd | community | — |
+| Celestron Focusmotor | 067b:23cf | community | — |
+| Pegasus Ppba Hub | 0403:eb01 | community | — |
+| Pegasus Ufhub Focuser | 0403:eb03 | community | — |
+| Pegasus Falcon Rotator | 0403:eb05 | community | — |
+| Pegasus Flatmaster | 0403:eb07 | community | — |
+| Pegasus Pocketpowerbox | 0403:eb09 | community | — |
+| Pegasus Scopeoasis | 0403:eb0b | community | — |
+| Sbig Stf8300m | 0d39:0105 | community | — |
+| Sbig Stx16803 | 0d39:0107 | community | — |
+| Sbig Aluma Ac694 | 0d39:0109 | community | — |
+| Playerone Mars C Ii | 1bcf:a001 | community | — |
+| Playerone Neptune C Ii | 1bcf:a003 | community | — |
+| Playerone Poseidon C Pro | 1bcf:a005 | community | — |
+| Paralenz Vaquita | 1fc9:d001 | community | — |
+| Paralenz Divecam Plus | 1fc9:d003 | community | — |
+| Chasing M2 Pro | 2e3c:0301 | community | — |
+| Chasing M2 Pro Max | 2e3c:0303 | community | — |
+| Chasing Gladius Mini S | 2e3c:0305 | community | — |
+| Chasing Dory | 2e3c:0307 | community | — |
+| Qysea Fifish V6 Plus | 2e3c:0401 | community | — |
+| Qysea Fifish V6 Expert | 2e3c:0403 | community | — |
+| Qysea Fifish W6 | 2e3c:0405 | community | — |
+| Qysea Fifish V Evo | 2e3c:0407 | community | — |
+| Garmin Echomap Uhd2 73cv | 091e:4c01 | community | — |
+| Garmin Echomap Uhd2 93sv | 091e:4c03 | community | — |
+| Garmin Gpsmap 8616xsv | 091e:4c07 | community | — |
+| Garmin Livescope Plus | 091e:4c09 | community | — |
+| Garmin Quatix 7 Solar | 091e:4c0b | community | — |
+| Garmin Inreach Mini2 | 091e:4c0d | community | — |
+| Garmin Descent Mk3i | 091e:4c0f | community | — |
+| Lowrance Hds Live 12 | 099f:0101 | community | — |
+| Lowrance Hds Pro 16 | 099f:0103 | community | — |
+| Lowrance Elite Fs 9 | 099f:0105 | community | — |
+| Lowrance Hook Reveal 7 | 099f:0107 | community | — |
+| Lowrance Activetarget2 | 099f:0109 | community | — |
+| Humminbird Helix 12 Mega | 099f:0201 | community | — |
+| Humminbird Solix 15 Mega | 099f:0203 | community | — |
+| Humminbird Apex 16 Mega | 099f:0205 | community | — |
+| Tilta Nucleus M Fiz | 2e3a:0101 | community | — |
+| Tilta Nucleus Nano Ii | 2e3a:0103 | community | — |
+| Tilta Nucleus M Ctrl | 2e3a:0105 | community | — |
+| Tilta Hydra Alien Gimbal | 2e3a:0107 | community | — |
+| Tilta Gravity G2x | 2e3a:0109 | community | — |
+| Tilta Mirage Motor | 2e3a:010b | community | — |
+| Hollyland Mars4k | 2e3b:0201 | community | — |
+| Hollyland Mars300 Pro Ii | 2e3b:0203 | community | — |
+| Hollyland Cosmo C1 | 2e3b:0205 | community | — |
+| Hollyland Mars M1 Monitor | 2e3b:0207 | community | — |
+| Hollyland Pyro H | 2e3b:0209 | community | — |
+| Hollyland Solidcom C1 Pro | 2e3b:020b | community | — |
+| Hollyland Lark M2s | 2e3b:020d | community | — |
+| Accsoon Cineeye 2s Pro | 2e3b:0301 | community | — |
+| Accsoon Cineview Quad | 2e3b:0303 | community | — |
+| Accsoon Cineview He | 2e3b:0305 | community | — |
+| Accsoon Seemo Monitor | 2e3b:0307 | community | — |
+| Accsoon Cineeye Pocket | 2e3b:0309 | community | — |
+| Teradek Bolt 4k 750 Tx | 0403:ec01 | community | — |
+| Teradek Bolt 4k 1500 Tx | 0403:ec03 | community | — |
+| Teradek Serv 4k | 0403:ec05 | community | — |
+| Teradek Cube 755 Encoder | 0403:ec07 | community | — |
+| Teradek Ranger Micro | 0403:ec09 | community | — |
+| Bmd Atem Mini Extreme Iso | 1edb:bf01 | community | — |
+| Bmd Decklink Mini Monitor4k | 1edb:bf03 | community | — |
+| Bmd Decklink Mini Rec4k | 1edb:bf05 | community | — |
+| Bmd Web Presenter 4k | 1edb:bf07 | community | — |
+| Bmd Ultrastudio Rec3g | 1edb:bf09 | community | — |
+| Bmd Hyperdeck Shuttle Hd | 1edb:bf0b | community | — |
+| Bmd Video Assist 5in | 1edb:bf0d | community | — |
+| Bmd Camera Control Panel | 1edb:bf0f | community | — |
+| Smallhd Indie 7 | 2e3a:0201 | community | — |
+| Smallhd Cine 13 4k | 2e3a:0203 | community | — |
+| Smallhd Ultra 7 | 2e3a:0205 | community | — |
+| Atomos Ninja V Plus | 20b4:0301 | community | — |
+| Atomos Shogun Connect | 20b4:0303 | community | — |
+| Atomos Ninja Ultra | 20b4:0305 | community | — |
+| Biosemi Activetwo Mk2 | 0bfe:0001 | community | — |
+| Biosemi Activetwo Mk1 | 0bfe:0003 | community | — |
+| Brainproducts Liveamp 8 | 1103:0a01 | community | — |
+| Brainproducts Liveamp 32 | 1103:0a03 | community | — |
+| Brainproducts Liveamp 64 | 1103:0a05 | community | — |
+| Brainproducts Acticap Snap | 1103:0a07 | community | — |
+| Brainproducts Brainamp Dc | 1103:0a09 | community | — |
+| Brainproducts Triggerbox | 1103:0a0b | community | — |
+| Emotiv Mn8 | 21a1:0007 | community | — |
+| Neuroscan Synamps Rt | 04d8:f001 | community | — |
+| Neuroscan Nuamps Express | 04d8:f003 | community | — |
+| Neuroscan Grael 4k | 04d8:f005 | community | — |
+| Neuroscan Curry 9 Dongle | 04d8:f007 | community | — |
+| Gtec Unicorn Hybrid Black | 153a:0001 | community | — |
+| Gtec Gusbamp | 153a:0003 | community | — |
+| Gtec Ghiamp | 153a:0005 | community | — |
+| Gtec Nautilus Research | 153a:0007 | community | — |
+| Thoughttech Procomp Inf | 067b:a001 | community | — |
+| Thoughttech Myotrac | 067b:a003 | community | — |
+| Hocoma Lokomat USB | 067b:a005 | community | — |
+| Biodex System4 USB | 067b:a007 | community | — |
+| Noraxon Ultium Emg | 067b:a009 | community | — |
+| Delsys Trigno Avanti | 067b:a00b | community | — |
+| Deconz Conbee Iii | 1cf1:0032 | community | — |
+| Ti Cc2531 Zigbee | 0451:16a8 | community | — |
+| Ti Cc2652rb Launchpad | 0451:bef4 | community | — |
+| Ti Cc1352p Launchpad | 0451:bef6 | community | — |
+| Silabs Efr32 Thread Br | 10c4:8a2c | community | — |
+| Nabu Skyconnect | 10c4:8a2e | community | — |
+| Nordic Nrf52840 Zigbee | 1915:521d | community | — |
+| Slaesh Cc2652rb Stick | 10c4:8a34 | community | — |
+| Codm Cc2652p Zigbee | 10c4:8a36 | community | — |
+| Rfxcom Rfxtrx433xl | 0403:ed01 | community | — |
+| Rfxcom Rfxtrx868 | 0403:ed03 | community | — |
+| Enocean USB 300 | 0403:ed05 | community | — |
+| Enocean USB 310 | 0403:ed07 | community | — |
+| Insteon Plm 2413u | 10bf:0004 | community | — |
+| Insteon Serial 2413s | 0403:ed09 | community | — |
+| Lutron Caseta Bridge | 0403:ed0b | community | — |
+| Philips Hue Bridge V2 | 0403:ed0d | community | — |
+| Apc Back Ups Xs | 051d:0002 | community | — |
+| Apc Smart Ups | 051d:0003 | community | — |
+| Apc Back Ups Pro | 051d:0004 | community | — |
+| Apc Smart Ups | 051d:0005 | community | — |
+| Apc Back Ups Es 750 | 051d:0006 | community | — |
+| Apc Back Ups Pro 900 | 051d:0007 | community | — |
+| Apc Smart Ups 750 | 051d:0008 | community | — |
+| Apc Back Ups 650 | 051d:0009 | community | — |
+| Apc Smart Ups Srt | 051d:000a | community | — |
+| Apc Smart Ups C1000 | 051d:000b | community | — |
+| Cyberpower Cp1000avrlcd | 0764:0503 | community | — |
+| Cyberpower Cp1350avrlcd2 | 0764:0505 | community | — |
+| Cyberpower Pr1500lcd | 0764:0507 | community | — |
+| Cyberpower Or1500lcdrm1u | 0764:0509 | community | — |
+| Cyberpower Cp850pfclcd | 0764:050b | community | — |
+| Cyberpower Cp600lcd | 0764:050d | community | — |
+| Cyberpower Ol3000rtxl2u | 0764:050f | community | — |
+| Eaton 5p 1550i | 0463:ffff | community | — |
+| Eaton 5e 850i USB | 0463:fffe | community | — |
+| Eaton 5sc 1500i | 0463:fffd | community | — |
+| Eaton 9px 3000irt2u | 0463:fffc | community | — |
+| Eaton Ellipse Eco 800 | 0463:fffb | community | — |
+| Eaton Ellipse Pro | 0463:fffa | community | — |
+| Eaton 3s 700i | 0463:fff9 | community | — |
+| Tripplite Smart1500lcdt | 09ae:2012 | community | — |
+| Tripplite Avr900u | 09ae:2014 | community | — |
+| Tripplite Smart1000lcd | 09ae:2016 | community | — |
+| Tripplite Su1500xlcd | 09ae:2018 | community | — |
+| Tripplite Eco900lcd | 09ae:201a | community | — |
+| Renogy Wanderer 30a | 0403:ee13 | community | — |
+| Renogy One Core M | 0403:ee15 | community | — |
+| Epever Tracer 4210an | 0403:ee17 | community | — |
+| Epever Tracer 1210an | 0403:ee19 | community | — |
+| Epever Xtra 3210n | 0403:ee1b | community | — |
+| Schiit Modius E | 0d8c:0106 | community | — |
+| Schiit Modi 3e | 0d8c:0108 | community | — |
+| Schiit Bifrost 2 64 | 0d8c:010a | community | — |
+| Schiit Gungnir Multibit | 0d8c:010c | community | — |
+| Schiit Yggdrasil Lim | 0d8c:010e | community | — |
+| Schiit Magni Piety | 0d8c:0110 | community | — |
+| Schiit Hel 2e | 0d8c:0112 | community | — |
+| Schiit Fulla 4 | 0d8c:0114 | community | — |
+| Ifi Zen Dac V2 | 20b1:3086 | community | — |
+| Ifi Zen Can Sig | 20b1:3088 | community | — |
+| Ifi Hip | 20b1:308a | community | — |
+| Ifi Micro Idsd Sig | 20b1:308c | community | — |
+| Ifi Neo Idsd2 | 20b1:308e | community | — |
+| Ifi Gryphon | 20b1:3090 | community | — |
+| Ifi Go Link | 20b1:3092 | community | — |
+| Ifi Uno | 20b1:3094 | community | — |
+| Topping D90se | 152a:8a01 | community | — |
+| Topping D70s Pro | 152a:8a03 | community | — |
+| Topping Dx5 | 152a:8a05 | community | — |
+| Topping E50 | 152a:8a07 | community | — |
+| Topping L70 | 152a:8a09 | community | — |
+| Topping D10s | 152a:8a0b | community | — |
+| Topping D50s | 152a:8a0d | community | — |
+| Topping Dx3 Pro Plus | 152a:8a0f | community | — |
+| Topping Pa5 Ii | 152a:8a11 | community | — |
+| Fiio K9 Pro Ess | 2972:0049 | community | — |
+| Fiio Ka5 | 2972:004b | community | — |
+| Fiio Ka3 | 2972:004d | community | — |
+| Smsl Su 9n | 152a:8a21 | community | — |
+| Smsl Do400 | 152a:8a23 | community | — |
+| Smsl Ho200 | 152a:8a25 | community | — |
+| Genelec 8341a Sam | 20b1:a001 | community | — |
+| Genelec 8351b Sam | 20b1:a003 | community | — |
+| Genelec 8361a Sam | 20b1:a005 | community | — |
+| Ik Iloud Mtm Mkii | 1963:00c1 | community | — |
+| Ik Iloud Precision 5 | 1963:00c3 | community | — |
+| Ik Iloud Precision 6 | 1963:00c5 | community | — |
+| Chord Mojo 2 | 20b1:b001 | community | — |
+| Chord Hugo 2 | 20b1:b003 | community | — |
+| Chord Qutest | 20b1:b005 | community | — |
+| Chord Dave | 20b1:b007 | community | — |
+| Chord Hugo Tt2 | 20b1:b009 | community | — |
+| Sony Mz N1 Minidisc | 054c:0075 | community | — |
+| Sony Mz N505 Minidisc | 054c:0113 | community | — |
+| Sony Mz N707 Minidisc | 054c:0119 | community | — |
+| Sony Mz N10 Minidisc | 054c:0188 | community | — |
+| Sony Mz N910 Minidisc | 054c:017e | community | — |
+| Sony Mz Rh910 Himd | 054c:0287 | community | — |
+| Sony Mz Rh1 Himd | 054c:0368 | community | — |
+| Sony Mz Nh1 Himd | 054c:0289 | community | — |
+| Sony Mz Nh700 Himd | 054c:028b | community | — |
+| Sony Mz Nh600 Himd | 054c:028d | community | — |
+| Sony Mz M200 Himd | 054c:028f | community | — |
+| Sony Mz Dh10p Himd | 054c:0291 | community | — |
+| Sony Mds Je480 Minidisc | 054c:0180 | community | — |
+| Sony Mds Je780 Minidisc | 054c:0182 | community | — |
+| Sharp Im Dr410 Minidisc | 04dd:9131 | community | — |
+| Sharp Im Dr420 Minidisc | 04dd:9133 | community | — |
+| Sharp Im Dr580 Minidisc | 04dd:9135 | community | — |
+| Sony Pcm R500 Dat | 054c:0293 | community | — |
+| Sony Pcm R700 Dat | 054c:0295 | community | — |
+| Tascam Da | 0644:8049 | community | — |
+| Tascam Ss R250n | 0644:804b | community | — |
+| Tascam Cd Rw900mkii | 0644:804d | community | — |
+| Tascam Ss Cdr250n | 0644:804f | community | — |
+| Tascam Da | 0644:8051 | community | — |
+| Denon Dn 500c Cd | 154e:5003 | community | — |
+| Denon Dn 700c Cd | 154e:5005 | community | — |
+| Marantz Pmd661mkiii | 154e:5007 | community | — |
+| Marantz Pmd706 | 154e:5009 | community | — |
+| Fostex Fr 2le | 1aad:0003 | community | — |
+| Fostex Pd 606 | 1aad:0005 | community | — |
+| Nagra Seven | 2e51:0701 | community | — |
+| Nagra Vi | 2e51:0703 | community | — |
+| Korg Mr 2000s | 0944:0201 | community | — |
+| Korg Mr | 0944:0203 | community | — |
+| Marantz Sa Ki Ruby | 154e:500b | community | — |
+| Technics Sl G700m2 | 04da:3f01 | community | — |
+| Behringer Uca222 | 08bb:2902 | community | — |
+| Art Usbmix4 | 08bb:2904 | community | — |
+| Smlight Slzb 06m | 10c4:8a38 | community | — |
+| Smlight Slzb 07 | 10c4:8a3a | community | — |
+| Simrad Nss16 Evo3s | 099f:0301 | community | — |
+| Simrad Go9 Xse | 099f:0303 | community | — |
+| Raymarine Axiom2 Pro 16 | 099f:0401 | community | — |
+| Raymarine Element 12 Hv | 099f:0403 | community | — |
+| Furuno Navnet Tztouch3 | 099f:0501 | community | — |
+| Kensington Sd5700t Dock | 17ef:30f1 | community | — |
+| Caldigit Ts4 Dock | 058f:a001 | community | — |
+| Plugable Usbc Triple Dock | 17e9:6015 | community | — |
+| Liebert Psi5 | 0463:fff8 | community | — |
+| Liebert Gxt5 | 0463:fff7 | community | — |
+| Morningstar Tristar Ts Mppt 60 | 0403:ee1d | community | — |
+| Morningstar Sunsaver Mppt 15 | 0403:ee1f | community | — |
+| Midnite Classic 150 | 0403:ee21 | community | — |
+| Meade Lx600 Mount | 067b:23d1 | community | — |
+| Meade Lx200 Mount | 067b:23d3 | community | — |
+| Skywatcher Eq6r Pro | 067b:23d5 | community | — |
+| Skywatcher Az Gti | 067b:23d7 | community | — |
+| Ioptron Cem70g Mount | 067b:23d9 | community | — |
