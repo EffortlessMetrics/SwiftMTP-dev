@@ -46,6 +46,8 @@ public enum QuirkStatus: String, Codable, Sendable {
 
 public struct DeviceQuirk: Codable, Sendable {
   public var id: String  // e.g. "xiaomi-mi-note-2-ff10"
+  public var deviceName: String?  // Human-readable device name
+  public var category: String?  // Device category (e.g. "phone", "camera", "media-player")
   public var vid: UInt16
   public var pid: UInt16
   public var bcdDevice: UInt16?
@@ -73,6 +75,8 @@ public struct DeviceQuirk: Codable, Sendable {
 
   public init(
     id: String,
+    deviceName: String? = nil,
+    category: String? = nil,
     vid: UInt16,
     pid: UInt16,
     bcdDevice: UInt16? = nil,
@@ -99,6 +103,8 @@ public struct DeviceQuirk: Codable, Sendable {
     lastVerifiedBy: String? = nil
   ) {
     self.id = id
+    self.deviceName = deviceName
+    self.category = category
     self.vid = vid
     self.pid = pid
     self.bcdDevice = bcdDevice
@@ -148,13 +154,15 @@ public struct DeviceQuirk: Codable, Sendable {
   }
 
   private enum CodingKeys: String, CodingKey {
-    case id, match, tuning, hooks, ops, flags, status, confidence
-    case evidenceRequired, lastVerifiedDate, lastVerifiedBy
+    case id, deviceName, category, match, tuning, hooks, ops, flags, status, confidence
+    case evidenceRequired, lastVerifiedDate, lastVerifiedBy, notes
   }
 
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     id = try container.decode(String.self, forKey: .id)
+    deviceName = try container.decodeIfPresent(String.self, forKey: .deviceName)
+    category = try container.decodeIfPresent(String.self, forKey: .category)
     // Decode status: unknown raw values (legacy "stable"/"experimental") default to .proposed
     status = try container.decodeIfPresent(QuirkStatus.self, forKey: .status)
     confidence = try container.decodeIfPresent(String.self, forKey: .confidence)
@@ -192,6 +200,8 @@ public struct DeviceQuirk: Codable, Sendable {
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(id, forKey: .id)
+    try container.encodeIfPresent(deviceName, forKey: .deviceName)
+    try container.encodeIfPresent(category, forKey: .category)
     try container.encodeIfPresent(status, forKey: .status)
     try container.encodeIfPresent(confidence, forKey: .confidence)
     try container.encodeIfPresent(hooks, forKey: .hooks)
