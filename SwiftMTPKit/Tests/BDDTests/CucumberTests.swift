@@ -1161,6 +1161,22 @@ final class BDDRunner: XCTestCase {
     let recorders = db.entries.filter { recorderVids.contains($0.vid) }
     XCTAssertGreaterThanOrEqual(recorders.count, 10, "Expected at least 10 audio recorder entries")
   }
+
+  func testWave61CategoryFieldDecoded() throws {
+    let db = try QuirkDatabase.load()
+    let categorized = db.entries.filter { $0.category != nil }
+    XCTAssertGreaterThanOrEqual(categorized.count, 4000, "Expected at least 4000 categorized entries")
+    let phones = db.entries.filter { $0.category == "phone" }
+    XCTAssertGreaterThanOrEqual(phones.count, 2000, "Expected at least 2000 phone entries")
+    let cameras = db.entries.filter { $0.category == "camera" }
+    XCTAssertGreaterThanOrEqual(cameras.count, 800, "Expected at least 800 camera entries")
+  }
+
+  func testWave61DeviceNameDecoded() throws {
+    let db = try QuirkDatabase.load()
+    let named = db.entries.filter { $0.deviceName != nil && !$0.deviceName!.isEmpty }
+    XCTAssertGreaterThanOrEqual(named.count, 30, "Expected at least 30 named entries")
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
