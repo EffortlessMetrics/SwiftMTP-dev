@@ -164,7 +164,7 @@ final class BDDRunner: XCTestCase {
 
     // Call getObjectPropList. The fast-path sends 0x9805; parsePropListDataset on the empty
     // response buffer may throw — suppress that error and only check the captured opcode.
-    try? await actor.getObjectPropList(parentHandle: 0xFFFF_FFFF)
+    _ = try? await actor.getObjectPropList(parentHandle: 0xFFFF_FFFF)
 
     XCTAssertTrue(
       capturing.capturedCodes.contains(MTPOp.getObjectPropList.rawValue),
@@ -190,7 +190,7 @@ final class BDDRunner: XCTestCase {
     flags.supportsGetObjectPropList = false
     await actor.bddOverridePolicy(flags: flags)
 
-    try? await actor.getObjectPropList(parentHandle: 0xFFFF_FFFF)
+    _ = try? await actor.getObjectPropList(parentHandle: 0xFFFF_FFFF)
 
     XCTAssertFalse(
       capturing.capturedCodes.contains(MTPOp.getObjectPropList.rawValue),
@@ -2209,7 +2209,7 @@ actor BDDWorld {
     }
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-\(UUID().uuidString)")
-    try await device.read(handle: handle, range: nil, to: url)
+    _ = try await device.read(handle: handle, range: nil, to: url)
     let actual = try Data(contentsOf: url)
     try? FileManager.default.removeItem(at: url)
     XCTAssertEqual(actual, expected)
@@ -2425,7 +2425,7 @@ private final class InMemoryJournal: TransferJournal, @unchecked Sendable {
   }
 
   func complete(id: String) async throws {
-    lock.withLock { records.removeValue(forKey: id) }
+    _ = lock.withLock { records.removeValue(forKey: id) }
   }
 
   func recordRemoteHandle(id: String, handle: UInt32) async throws {

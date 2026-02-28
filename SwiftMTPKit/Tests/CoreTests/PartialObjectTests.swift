@@ -56,7 +56,7 @@ final class PartialObjectTests: XCTestCase {
     )
 
     // Actor with nil policy (supportsGetPartialObject defaults to false)
-    let actor = MTPDeviceActor(id: summary.id, summary: summary, transport: transport)
+    _ = MTPDeviceActor(id: summary.id, summary: summary, transport: transport)
 
     // Even with a non-zero offset, if quirk is disabled, don't use GetPartialObject
     // We call resumeRead directly to verify it still sends the command (it's unconditional)
