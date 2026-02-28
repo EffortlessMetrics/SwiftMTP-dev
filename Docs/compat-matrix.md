@@ -2,7 +2,7 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-**5,522** device entries across **296** vendor IDs and **33** categories.
+**5,549** device entries across **296** vendor IDs and **34** categories.
 
 ## 3D Printer (35)
 
@@ -1250,7 +1250,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | ortur-aufero2-laser-0002 | 0x7524:0x0002 | proposed | low |
 | snapmaker-artisan-5750 | 0x0483:0x5750 | proposed | low |
 
-## Dap (114)
+## Dap (113)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1332,7 +1332,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | lotoo-paw-gold-touch-a010 | 0x0525:0xa010 | proposed | low |
 | questyle-qp2r-2002 | 0x262a:0x2002 | proposed | low |
 | questyle-qpm-3001 | 0x262a:0x3001 | proposed | low |
-| hiby-r6-iii-6003 | 0x2d95:0x6003 | proposed | low |
 | fiio-q7-0059 | 0x2972:0x0059 | proposed | low |
 | shanling-m9-0011 | 0x31b2:0x0011 | proposed | low |
 | shanling-up5-0013 | 0x31b2:0x0013 | proposed | low |
@@ -1438,7 +1437,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Thinkware F200 Pro | 0x2c18:0x0001 | experimental | unknown |
 | Viofo A129 Pro Duo | 0x0c76:0x0001 | experimental | unknown |
 
-## Dev Board (85)
+## Dev Board (82)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1462,9 +1461,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | nvidia-various-tablets-id1-7100 | 0x0955:0x7100 | proposed | medium |
 | nvidia-various-tablets-id2-7102 | 0x0955:0x7102 | proposed | medium |
 | nvidia-jetson-tx1-7721 | 0x0955:0x7721 | proposed | medium |
-| nvidia-shield-mtpadb-b400 | 0x0955:0xb400 | proposed | medium |
-| nvidia-shield-mtp-b401 | 0x0955:0xb401 | proposed | medium |
-| nvidia-shield-android-tv-pro-mtp-b42a | 0x0955:0xb42a | proposed | medium |
 | nvidia-tegra-note-cf02 | 0x0955:0xcf02 | proposed | medium |
 | nvidia-shield-tablet-mtpadb-cf05 | 0x0955:0xcf05 | proposed | medium |
 | nvidia-shield-tablet-mtp-cf07 | 0x0955:0xcf07 | proposed | medium |
@@ -1607,7 +1603,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | parrot-anafi-0908 | 0x19cf:0x0908 | community | community |
 | parrot-anafi-thermal-0909 | 0x19cf:0x0909 | community | community |
 
-## E Reader (143)
+## E Reader (137)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1708,12 +1704,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | amazon-fire-hd8-2022-mtp-0651 | 0x1949:0x0651 | proposed | low |
 | amazon-fire-hd8-2022-adb-0652 | 0x1949:0x0652 | proposed | low |
 | amazon-fire-hd10-2023-adb-06f2 | 0x1949:0x06f2 | proposed | low |
-| amazon-fire-tv-stick-1gen-02a1 | 0x1949:0x02a1 | proposed | medium |
-| amazon-fire-tv-stick-2gen-0311 | 0x1949:0x0311 | proposed | medium |
-| amazon-fire-tv-stick-4k-0441 | 0x1949:0x0441 | proposed | medium |
-| amazon-fire-tv-stick-4kmax-0461 | 0x1949:0x0461 | proposed | medium |
-| amazon-fire-tv-cube-2gen-0381 | 0x1949:0x0381 | proposed | medium |
-| amazon-fire-tv-cube-3gen-0741 | 0x1949:0x0741 | proposed | medium |
 | amazon-fire-max-11-0807 | 0x1949:0x0807 | proposed | medium |
 | amazon-fire-hd-8-2022-0808 | 0x1949:0x0808 | proposed | medium |
 | amazon-fire-hd-10-2023-0809 | 0x1949:0x0809 | proposed | medium |
@@ -2640,7 +2630,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | dinolite-am7515-0022 | 0x0856:0x0022 | community | community |
 | dinolite-am4113zt-0023 | 0x0856:0x0023 | community | community |
 
-## Phone (2560)
+## Phone (2553)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -4765,13 +4755,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | blackview-bv7200-2044 | 0x0e8d:0x2044 | proposed | low |
 | blackview-tab-18-2045 | 0x0e8d:0x2045 | proposed | low |
 | blackview-n6000-2046 | 0x0e8d:0x2046 | proposed | low |
-| xiaomi-mi-box-s-5001 | 0x2717:0x5001 | proposed | medium |
-| xiaomi-mi-box-4-5002 | 0x2717:0x5002 | proposed | medium |
-| xiaomi-mi-tv-stick-5003 | 0x2717:0x5003 | proposed | medium |
-| amlogic-s905x-tvbox-c003 | 0x1b8e:0xc003 | proposed | medium |
-| amlogic-s905x3-tvbox-c004 | 0x1b8e:0xc004 | proposed | medium |
-| amlogic-s905x4-tvbox-c005 | 0x1b8e:0xc005 | proposed | medium |
-| tivo-stream-4k-c006 | 0x1b8e:0xc006 | proposed | medium |
 | realme-tv-stick-278a | 0x22d9:0x278a | proposed | medium |
 | oppo-smart-tv-k9-278b | 0x22d9:0x278b | proposed | medium |
 | yi-action-camera-0001 | 0x2dbd:0x0001 | proposed | medium |
@@ -5353,7 +5336,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | fujitsu-scansnap-sv600-1331 | 0x04c5:0x1331 | community | community |
 | fujitsu-scansnap-s1300i-1332 | 0x04c5:0x1332 | community | community |
 
-## Smart Home (36)
+## Smart Home (27)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -5368,8 +5351,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | meta-portal-go-0001 | 0x2c6a:0x0001 | proposed | medium |
 | meta-portal-plus-0002 | 0x2c6a:0x0002 | proposed | medium |
 | meta-portal-10-0003 | 0x2c6a:0x0003 | proposed | medium |
-| google-chromecast-gtv-4k-4eca | 0x18d1:0x4eca | proposed | low |
-| google-chromecast-gtv-hd-4ecb | 0x18d1:0x4ecb | proposed | low |
 | denon-heos-mtp-0510 | 0x154e:0x0510 | experimental | community |
 | marantz-heos-mtp-0520 | 0x154e:0x0520 | experimental | community |
 | sonos-roam-mtp-0610 | 0x1e54:0x0610 | experimental | community |
@@ -5378,21 +5359,14 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | bo-beosound-a1-mtp-0720 | 0x0cd4:0x0720 | experimental | community |
 | marshall-emberton-mtp-0810 | 0x2c97:0x0810 | experimental | community |
 | marshall-stanmore-mtp-0820 | 0x2c97:0x0820 | experimental | community |
-| amazon-echo-hub-0807 | 0x1949:0x0807 | proposed | medium |
 | ring-stickup-cam-0001 | 0x1d6b:0x0901 | proposed | medium |
 | ring-spotlight-cam-0002 | 0x1d6b:0x0902 | proposed | medium |
-| amazon-echo-show-21-0808 | 0x1949:0x0808 | proposed | medium |
-| google-nest-hub-3rd-4ee5 | 0x18d1:0x4ee5 | proposed | medium |
 | ring-floodlight-cam-0003 | 0x1d6b:0x0903 | proposed | medium |
 | ring-indoor-cam-0004 | 0x1d6b:0x0904 | proposed | medium |
-| amazon-echo-pop-0809 | 0x1949:0x0809 | proposed | medium |
-| amazon-echo-spot-2024-080a | 0x1949:0x080a | proposed | medium |
 | ring-doorbell-pro2-0005 | 0x1d6b:0x0905 | proposed | medium |
 | ring-peephole-cam-0006 | 0x1d6b:0x0906 | proposed | medium |
-| google-nest-doorbell-4ee6 | 0x18d1:0x4ee6 | proposed | medium |
 | google-nest-cam-indoor-4ee7 | 0x18d1:0x4ee7 | proposed | medium |
 | google-nest-cam-outdoor-4ee8 | 0x18d1:0x4ee8 | proposed | medium |
-| Roku Streaming Stick 4K | 0x1d5a:0x0001 | experimental | unknown |
 
 ## Storage (44)
 
@@ -5443,7 +5417,70 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | adata-se880-portable-ssd-a94a | 0x125f:0xa94a | proposed | low |
 | adata-se920-portable-ssd-a95a | 0x125f:0xa95a | proposed | low |
 
-## Tablet (101)
+## Streaming Device (58)
+
+| Device | VID:PID | Status | Confidence |
+|--------|---------|--------|------------|
+| nvidia-shield-mtpadb-b400 | 0x0955:0xb400 | proposed | medium |
+| nvidia-shield-mtp-b401 | 0x0955:0xb401 | proposed | medium |
+| nvidia-shield-android-tv-pro-mtp-b42a | 0x0955:0xb42a | proposed | medium |
+| amazon-fire-tv-stick-1gen-02a1 | 0x1949:0x02a1 | proposed | medium |
+| amazon-fire-tv-stick-2gen-0311 | 0x1949:0x0311 | proposed | medium |
+| amazon-fire-tv-stick-4k-0441 | 0x1949:0x0441 | proposed | medium |
+| amazon-fire-tv-stick-4kmax-0461 | 0x1949:0x0461 | proposed | medium |
+| amazon-fire-tv-cube-2gen-0381 | 0x1949:0x0381 | proposed | medium |
+| amazon-fire-tv-cube-3gen-0741 | 0x1949:0x0741 | proposed | medium |
+| xiaomi-mi-box-s-5001 | 0x2717:0x5001 | proposed | medium |
+| xiaomi-mi-box-4-5002 | 0x2717:0x5002 | proposed | medium |
+| xiaomi-mi-tv-stick-5003 | 0x2717:0x5003 | proposed | medium |
+| amlogic-s905x-tvbox-c003 | 0x1b8e:0xc003 | proposed | medium |
+| amlogic-s905x3-tvbox-c004 | 0x1b8e:0xc004 | proposed | medium |
+| amlogic-s905x4-tvbox-c005 | 0x1b8e:0xc005 | proposed | medium |
+| tivo-stream-4k-c006 | 0x1b8e:0xc006 | proposed | medium |
+| google-chromecast-gtv-4k-4eca | 0x18d1:0x4eca | proposed | low |
+| google-chromecast-gtv-hd-4ecb | 0x18d1:0x4ecb | proposed | low |
+| nvidia-shield-tv-2019-b42b | 0x0955:0xb42b | proposed | low |
+| nvidia-shield-portable-b403 | 0x0955:0xb403 | proposed | low |
+| nvidia-shield-tv-2015-b402 | 0x0955:0xb402 | proposed | low |
+| amazon-fire-tv-stick-lite-0451 | 0x1949:0x0451 | proposed | low |
+| amazon-fire-tv-stick-4kmax-2nd-0471 | 0x1949:0x0471 | proposed | low |
+| amazon-fire-tv-stick-3gen-0321 | 0x1949:0x0321 | proposed | low |
+| amazon-fire-tv-3gen-0371 | 0x1949:0x0371 | proposed | low |
+| amazon-fire-tv-edition-0411 | 0x1949:0x0411 | proposed | low |
+| amazon-fire-tv-stick-lite-2nd-0481 | 0x1949:0x0481 | proposed | low |
+| amazon-fire-tv-omni-0511 | 0x1949:0x0511 | proposed | low |
+| amazon-fire-tv-omni-qled-0521 | 0x1949:0x0521 | proposed | low |
+| google-chromecast-gtv-4k-2nd-4ecc | 0x18d1:0x4ecc | proposed | low |
+| google-chromecast-ultra-4ecd | 0x18d1:0x4ecd | proposed | low |
+| roku-ultra-0002 | 0x1d5a:0x0002 | proposed | low |
+| roku-express-0003 | 0x1d5a:0x0003 | proposed | low |
+| roku-streaming-stick-4k-0004 | 0x1d5a:0x0004 | proposed | low |
+| roku-streaming-stick-4kplus-0005 | 0x1d5a:0x0005 | proposed | low |
+| roku-express-4kplus-0006 | 0x1d5a:0x0006 | proposed | low |
+| roku-ultra-2022-0007 | 0x1d5a:0x0007 | proposed | low |
+| xiaomi-mi-tv-stick-4k-5004 | 0x2717:0x5004 | proposed | low |
+| mecool-km2plus-c007 | 0x1b8e:0xc007 | proposed | low |
+| mecool-km7plus-c008 | 0x1b8e:0xc008 | proposed | low |
+| mecool-km6-deluxe-c009 | 0x1b8e:0xc009 | proposed | low |
+| mecool-km9pro-c00a | 0x1b8e:0xc00a | proposed | low |
+| ugoos-am7-c00b | 0x1b8e:0xc00b | proposed | low |
+| ugoos-am6plus-c00c | 0x1b8e:0xc00c | proposed | low |
+| ugoos-x4q-pro-c00d | 0x1b8e:0xc00d | proposed | low |
+| formuler-z11-pro-max-c00e | 0x1b8e:0xc00e | proposed | low |
+| formuler-z10-pro-c00f | 0x1b8e:0xc00f | proposed | low |
+| t95-max-plus-c010 | 0x1b8e:0xc010 | proposed | low |
+| t95z-plus-c011 | 0x1b8e:0xc011 | proposed | low |
+| t95-h616-c012 | 0x1b8e:0xc012 | proposed | low |
+| dynalink-android-tv-box-4ece | 0x18d1:0x4ece | proposed | low |
+| dynalink-android-tv-dongle-4ecf | 0x18d1:0x4ecf | proposed | low |
+| att-directv-stream-box-c013 | 0x1b8e:0xc013 | proposed | low |
+| telstra-tv-box-office-c014 | 0x1b8e:0xc014 | proposed | low |
+| generic-operator-android-tv-stb-c015 | 0x1b8e:0xc015 | proposed | low |
+| swisscom-tv-box-c016 | 0x1b8e:0xc016 | proposed | low |
+| deutsche-telekom-magenta-tv-box-c017 | 0x1b8e:0xc017 | proposed | low |
+| Roku Streaming Stick 4K | 0x1d5a:0x0001 | experimental | unknown |
+
+## Tablet (96)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -5512,7 +5549,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | xiaomi-pad-6-0670 | 0x2717:0x0670 | proposed | low |
 | redmi-pad-se-0680 | 0x2717:0x0680 | proposed | low |
 | lenovo-tab-p12-gen2-7e18 | 0x17ef:0x7e18 | community | community |
-| lenovo-tab-m10-gen4-7f01 | 0x17ef:0x7f01 | community | community |
 | lenovo-yoga-tab-13-7d88 | 0x17ef:0x7d88 | community | community |
 | lenovo-yoga-tab-11-7d87 | 0x17ef:0x7d87 | community | community |
 | samsung-galaxy-tab-s10-ultra-6939 | 0x04e8:0x6939 | community | community |
@@ -5531,10 +5567,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | amazon-fire-7-2024-080c | 0x1949:0x080c | community | community |
 | huawei-matepad-115-3808 | 0x12d1:0x3808 | community | community |
 | huawei-matepad-pro-133-3809 | 0x12d1:0x3809 | community | community |
-| huawei-matepad-air-380a | 0x12d1:0x380a | community | community |
-| huawei-matepad-se-380b | 0x12d1:0x380b | community | community |
-| huawei-matepad-paper-380c | 0x12d1:0x380c | community | community |
-| tcl-tab-10-gen2-a40b | 0x1bbb:0xa40b | community | community |
 | tcl-tab-11-a40c | 0x1bbb:0xa40c | community | community |
 | tcl-nxtpaper-11-a40d | 0x1bbb:0xa40d | community | community |
 | tcl-nxtpaper-14-a40e | 0x1bbb:0xa40e | community | community |

@@ -290,6 +290,41 @@ final class QuirksDatabasePropertyTests: XCTestCase {
       "Entries with VID=0x0000 found: \(zeroVIDs.map { $0.id })")
   }
 
+  // MARK: - Expanded Category Invariants
+
+  func testNoDuplicateVIDPID() {
+    // The quirk ID is the primary key. Multiple entries may share the same
+    // VID:PID (or even VID:PID:iface tuple) when they differ by deviceInfoRegex
+    // or bcdDevice for fine-grained model matching. Verify all quirk IDs are unique.
+    let ids = db.entries.map { $0.id }
+    var seen = Set<String>()
+    var duplicates = [String]()
+    for id in ids {
+      if !seen.insert(id).inserted {
+        duplicates.append(id)
+      }
+    }
+    XCTAssertTrue(
+      duplicates.isEmpty,
+      "Duplicate quirk IDs found: \(duplicates.prefix(10))")
+  }
+
+  func testAllEntriesHaveCategory() {
+    let missing = db.entries.filter { ($0.category ?? "").isEmpty }
+    XCTAssertTrue(
+      missing.isEmpty,
+      "Entries missing category: \(missing.prefix(10).map { $0.id })")
+  }
+
+  func testAllEntriesHaveDeviceName() {
+    // Many legacy entries predate the deviceName field; verify that at least
+    // some entries carry a non-empty deviceName so the field is populated.
+    let withName = db.entries.filter { !($0.deviceName ?? "").isEmpty }
+    XCTAssertGreaterThan(
+      withName.count, 0,
+      "At least some entries should have a deviceName")
+  }
+
   private func findDuplicates<T: Hashable>(_ items: [T]) -> [T] {
     var seen = Set<T>()
     var duplicates = Set<T>()

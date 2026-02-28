@@ -1540,6 +1540,113 @@ final class BDDRunner: XCTestCase {
     let db = try QuirkDatabase.load()
     XCTAssertGreaterThanOrEqual(db.entries.count, 5000, "Quirk database should have 5000+ entries")
   }
+
+  // MARK: - Streaming-device category
+
+  func testScenario_nvidiaShieldStreamingDevice() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x0955, pid: 0xb400, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "NVIDIA Shield should match")
+    XCTAssertEqual(match?.category, "streaming-device")
+  }
+
+  func testScenario_fireTVStickStreamingDevice() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x1949, pid: 0x02a1, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    XCTAssertNotNil(match, "Amazon Fire TV Stick should match")
+    XCTAssertEqual(match?.category, "streaming-device")
+  }
+
+  func testScenario_streamingDeviceCategoryCount() throws {
+    let db = try QuirkDatabase.load()
+    let streaming = db.entries.filter { $0.category == "streaming-device" }
+    XCTAssertGreaterThanOrEqual(streaming.count, 10, "Should have 10+ streaming-device entries")
+  }
+
+  // MARK: - Dashcam category
+
+  func testScenario_garminDashCamEntry() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x091e, pid: 0x2458, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "Garmin Dash Cam 55 should match")
+    XCTAssertEqual(match?.category, "dashcam")
+  }
+
+  func testScenario_nextbaseDashCamEntry() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2b24, pid: 0x1001, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "Nextbase 322GW should match")
+    XCTAssertEqual(match?.category, "dashcam")
+  }
+
+  func testScenario_dashcamCategoryCount() throws {
+    let db = try QuirkDatabase.load()
+    let dashcams = db.entries.filter { $0.category == "dashcam" }
+    XCTAssertGreaterThanOrEqual(dashcams.count, 30, "Should have 30+ dashcam entries")
+  }
+
+  // MARK: - Body-camera category
+
+  func testScenario_axonBody3Entry() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2c55, pid: 0x0001, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(match, "Axon Body 3 should match")
+    XCTAssertEqual(match?.category, "body-camera")
+  }
+
+  func testScenario_axonBody4Entry() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2c55, pid: 0x0002, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(match, "Axon Body 4 should match")
+    XCTAssertEqual(match?.category, "body-camera")
+  }
+
+  func testScenario_bodyCameraCategoryCount() throws {
+    let db = try QuirkDatabase.load()
+    let bodycams = db.entries.filter { $0.category == "body-camera" }
+    XCTAssertGreaterThanOrEqual(bodycams.count, 5, "Should have 5+ body-camera entries")
+  }
+
+  // MARK: - Audio-recorder expansion
+
+  func testScenario_soundDevicesMixPreEntry() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x2af0, pid: 0x0001, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(match, "Sound Devices MixPre-3 II should match")
+    XCTAssertEqual(match?.category, "audio-recorder")
+  }
+
+  func testScenario_rodeRodeCasterEntry() throws {
+    let db = try QuirkDatabase.load()
+    let match = db.match(vid: 0x19f7, pid: 0x0015, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    XCTAssertNotNil(match, "Rode RodeCaster Pro II should match")
+    XCTAssertEqual(match?.category, "audio-recorder")
+  }
+
+  // MARK: - Database milestones (5500+ entries, 290+ VIDs, 34+ categories)
+
+  func testScenario_totalEntryMilestoneAbove5500() throws {
+    let db = try QuirkDatabase.load()
+    XCTAssertGreaterThanOrEqual(db.entries.count, 5500, "Quirk database should have 5500+ entries")
+  }
+
+  func testScenario_vidCountAbove290() throws {
+    let db = try QuirkDatabase.load()
+    let uniqueVIDs = Set(db.entries.map { $0.vid })
+    XCTAssertGreaterThanOrEqual(uniqueVIDs.count, 290, "Should have 290+ unique VIDs")
+  }
+
+  func testScenario_categoryCountAbove34() throws {
+    let db = try QuirkDatabase.load()
+    let uniqueCategories = Set(db.entries.compactMap { $0.category })
+    XCTAssertGreaterThanOrEqual(uniqueCategories.count, 34, "Should have 34+ unique categories")
+  }
+
+  func testScenario_noUnknownCategory() throws {
+    let db = try QuirkDatabase.load()
+    let unknown = db.entries.filter { $0.category == "unknown" }
+    XCTAssertTrue(unknown.isEmpty, "No entries should have category 'unknown': \(unknown.map { $0.id })")
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
