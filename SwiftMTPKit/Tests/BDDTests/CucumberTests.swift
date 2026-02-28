@@ -1732,6 +1732,73 @@ final class BDDRunner: XCTestCase {
     }
     XCTAssertGreaterThanOrEqual(audio.count, 150, "Should have 150+ dap + audio-recorder + audio-interface entries")
   }
+
+  // MARK: - Database milestones (7000+ entries, 350+ VIDs)
+
+  func testScenario_7000EntryMilestone() throws {
+    let db = try QuirkDatabase.load()
+    XCTAssertGreaterThanOrEqual(db.entries.count, 7000, "Quirk database should have 7000+ entries")
+  }
+
+  func testScenario_350VIDMilestone() throws {
+    let db = try QuirkDatabase.load()
+    let uniqueVIDs = Set(db.entries.map { $0.vid })
+    XCTAssertGreaterThanOrEqual(uniqueVIDs.count, 350, "Should have 350+ unique VIDs")
+  }
+
+  func testScenario_DevBoardExpansion() throws {
+    let db = try QuirkDatabase.load()
+    let devBoards = db.entries.filter { $0.category == "dev-board" }
+    XCTAssertGreaterThanOrEqual(devBoards.count, 200, "Should have 200+ dev-board entries")
+  }
+
+  func testScenario_3DPrinterExpansion() throws {
+    let db = try QuirkDatabase.load()
+    let printers = db.entries.filter { $0.category == "3d-printer" }
+    XCTAssertGreaterThanOrEqual(printers.count, 90, "Should have 90+ 3d-printer entries")
+  }
+
+  func testScenario_MedicalDeviceRange() throws {
+    let db = try QuirkDatabase.load()
+    let medical = db.entries.filter { $0.category == "medical" }
+    XCTAssertGreaterThanOrEqual(medical.count, 80, "Should have 80+ medical entries")
+  }
+
+  func testScenario_StorageDeviceRange() throws {
+    let db = try QuirkDatabase.load()
+    let storage = db.entries.filter { $0.category == "storage" }
+    XCTAssertGreaterThanOrEqual(storage.count, 80, "Should have 80+ storage entries")
+  }
+
+  func testScenario_DroneExpansion() throws {
+    let db = try QuirkDatabase.load()
+    let drones = db.entries.filter { $0.category == "drone" }
+    XCTAssertGreaterThanOrEqual(drones.count, 100, "Should have 100+ drone entries")
+  }
+
+  func testScenario_VRHeadsetExpansion() throws {
+    let db = try QuirkDatabase.load()
+    let vrHeadsets = db.entries.filter { $0.category == "vr-headset" }
+    XCTAssertGreaterThanOrEqual(vrHeadsets.count, 40, "Should have 40+ vr-headset entries")
+  }
+
+  func testScenario_LeicaCameraPresence() throws {
+    let db = try QuirkDatabase.load()
+    let leica = db.entries.filter { $0.vid == 0x1a98 }
+    XCTAssertGreaterThan(leica.count, 0, "Leica entries (VID 0x1a98) should exist")
+  }
+
+  func testScenario_PremiumCamerasRange() throws {
+    let db = try QuirkDatabase.load()
+    let cameras = db.entries.filter { $0.category == "camera" }
+    XCTAssertGreaterThanOrEqual(cameras.count, 1200, "Should have 1200+ camera entries")
+  }
+
+  func testScenario_EReaderExpansion() throws {
+    let db = try QuirkDatabase.load()
+    let ereaders = db.entries.filter { $0.category == "e-reader" }
+    XCTAssertGreaterThanOrEqual(ereaders.count, 180, "Should have 180+ e-reader entries")
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
