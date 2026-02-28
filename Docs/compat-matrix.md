@@ -4592,3 +4592,162 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Garmin Fenix 7x | 091e:4c61 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
 | Garmin Forerunner 965 | 091e:4c62 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
 | Axon Body 3 | 2c55:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Arduino Uno R4 Minima MTP | 2341:0069 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Arduino Uno R4 Wifi MTP | 2341:006a | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Arduino Nano 33 Ble MTP | 2341:005e | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Arduino Nano 33 Ble Sense MTP | 2341:0064 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Arduino Nano Rp2040 Connect MTP | 2341:005f | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Arduino Portenta H7 MTP | 2341:025b | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Arduino Portenta C33 MTP | 2341:0068 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Arduino Giga R1 Wifi MTP | 2341:0266 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Arduino Nano Esp32 MTP | 2341:0070 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Teensy 40 MTP | 16c0:0478 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Teensy 41 MTP | 16c0:0479 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Teensy 41 MTP Serial | 16c0:047a | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Teensy Mm MTP | 16c0:047b | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Feather Rp2040 MTP | 239a:80f4 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Qtpy Rp2040 MTP | 239a:80f8 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Feather Esp32s2 MTP | 239a:8111 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Feather Esp32s3 MTP | 239a:8113 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Qtpy Esp32s2 MTP | 239a:8121 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Qtpy Esp32s3 MTP | 239a:8123 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Macropad Rp2040 MTP | 239a:8108 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Itsybitsy Rp2040 MTP | 239a:80fc | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Metro Esp32s2 MTP | 239a:8115 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Trinkey Qt2040 MTP | 239a:8109 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Feather Nrf52840 MTP | 239a:8029 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Adafruit Clue Nrf52840 MTP | 239a:8071 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Nordic Nrf52840 Dk MTP | 1915:520f | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Nordic Nrf52840 Dongle MTP | 1915:520e | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Nordic Nrf5340 Dk MTP | 1915:5310 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Seeed Xiao Rp2040 MTP | 2886:0028 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Seeed Xiao Esp32s3 MTP | 2886:0056 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Seeed Xiao Nrf52840 MTP | 2886:0044 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Seeed Xiao Nrf52840 Sense MTP | 2886:0045 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Seeed Wio Terminal MTP | 2886:802d | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Seeed Xiao Samd21 MTP | 2886:802f | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Palm Touchpad | 0830:0200 | community | — |
+| Palm Touchpad Alt | 0830:8004 | community | — |
+| Palm Pre 3 | 0830:0104 | community | — |
+| Palm Treo Pro | 0830:0105 | community | — |
+| Palm Centro | 0830:0106 | community | — |
+| Creative Zen Style 100 | 041e:4170 | community | — |
+| Creative Zen Style 200 | 041e:4171 | community | — |
+| Creative Zen Style 300 | 041e:4172 | community | — |
+| Creative Zen Xfi Style | 041e:4168 | community | — |
+| Creative Zen V Plus | 041e:4156 | community | — |
+| Creative Zen Micro Photo 5gb | 041e:413a | community | — |
+| Creative Zen Nano Plus | 041e:413b | community | — |
+| Creative Zen Neeon2 | 041e:4163 | community | — |
+| Creative Zen Stone Plus | 041e:4164 | community | — |
+| Creative Zen Mozaic Ez300 | 041e:4165 | community | — |
+| Creative Muvo Slim | 041e:200b | community | — |
+| Creative Muvo Tx Fm | 041e:200d | community | — |
+| Creative Muvo N200 | 041e:200e | community | — |
+| Iriver H340 | 1006:3005 | community | — |
+| Iriver H320 | 1006:3006 | community | — |
+| Iriver H10 6gb | 4102:2103 | community | — |
+| Iriver H10 20gb | 4102:2104 | community | — |
+| Iriver E200 | 4102:1143 | community | — |
+| Iriver P7 | 4102:1160 | community | — |
+| Iriver E300 | 4102:1168 | community | — |
+| Iriver T6 | 4102:1154 | community | — |
+| Iriver Clix Plus | 4102:112b | community | — |
+| Iriver Lplayer | 4102:1155 | community | — |
+| Archos 43 It | 0e79:1417 | community | — |
+| Archos 43 | 0e79:1411 | community | — |
+| Archos 28 It | 0e79:1413 | community | — |
+| Archos 32 It | 0e79:1415 | community | — |
+| Archos 70 It2 | 0e79:1567 | community | — |
+| Archos 35 It | 0e79:1419 | community | — |
+| Cowon Iaudio Z2 | 0e21:0971 | community | — |
+| Cowon Iaudio C2 | 0e21:0961 | community | — |
+| Cowon Iaudio D3 | 0e21:0981 | community | — |
+| Cowon Iaudio M2 | 0e21:0991 | community | — |
+| Cowon Iaudio P1 | 0e21:0a01 | community | — |
+| Microsoft Zune 4gb | 045e:0713 | community | — |
+| Sony Nwz E435f | 054c:0383 | community | — |
+| Sony Nwz E438f | 054c:0386 | community | — |
+| Sony Nwz A728 | 054c:035d | community | — |
+| Sony Nwz A729 | 054c:035e | community | — |
+| Sony Nwz S515 | 054c:0328 | community | — |
+| Sony Nwz S518 | 054c:0329 | community | — |
+| Sony Nwz A728b | 054c:035f | community | — |
+| Sony Nwz E443 | 054c:03fb | community | — |
+| Sony Nwz S544 | 054c:03ff | community | — |
+| Sony Nwz E353 | 054c:04ca | community | — |
+| Sony Nwz W273s | 054c:0591 | community | — |
+| Sony Nwz E463 | 054c:05a5 | community | — |
+| Sony Nwz A864 | 054c:05a7 | community | — |
+| Sony Nwz E373 | 054c:068a | community | — |
+| Sony Nwz E474 Alt | 054c:06aa | community | — |
+| Sony Nwz A15 | 054c:0c6f | community | — |
+| Sony Nwz A17 | 054c:0c70 | community | — |
+| Philips Gogear Mix | 0471:207f | community | — |
+| Philips Gogear Sa5dot | 0471:2083 | community | — |
+| Philips Gogear Raga | 0471:2085 | community | — |
+| Philips Gogear Spark | 0471:2089 | community | — |
+| Philips Gogear Cam | 0471:2099 | community | — |
+| Philips Gogear Sa5285 | 0471:20a3 | community | — |
+| Philips Gogear Vibe 4gb | 0471:20b1 | community | — |
+| Philips Gogear Sa4 | 0471:20c5 | community | — |
+| Philips Gogear Muse 2 | 0471:20e1 | community | — |
+| Rio Nitrus | 045a:5202 | community | — |
+| Rio Forge | 045a:5231 | community | — |
+| Rio Eigen | 045a:5232 | community | — |
+| Rio Ce2100 | 045a:5250 | community | — |
+| Rio Chiba | 045a:5201 | community | — |
+| Dell Dj 1st Gen | 413c:4100 | community | — |
+| Dell Dj 20gb | 413c:4101 | community | — |
+| Dell Dj Explorer | 413c:4106 | community | — |
+| Toshiba Gigabeat F40 | 0930:000a | community | — |
+| Toshiba Gigabeat F20 | 0930:000b | community | — |
+| Toshiba Gigabeat F10 | 0930:000d | community | — |
+| Toshiba Gigabeat S60 | 0930:0015 | community | — |
+| Toshiba Gigabeat T401 | 0930:001b | community | — |
+| Toshiba Gigabeat Mev30k | 0930:001c | community | — |
+| Hasselblad Cfv Ii 50c | 04a0:0208 | experimental | supportsGetPartialObject, disableWriteResume |
+| Hasselblad 907x Cfv 100c | 04a0:0209 | experimental | supportsGetPartialObject, disableWriteResume |
+| Hasselblad X1d Ii 50c | 04a0:020a | experimental | supportsGetPartialObject, disableWriteResume |
+| Phaseone Iq4 100mp Trichromatic | 0e70:0006 | experimental | supportsGetPartialObject, disableWriteResume |
+| Phaseone Iq3 50mp | 0e70:0007 | experimental | supportsGetPartialObject, disableWriteResume |
+| Phaseone Iq4 Achromatic | 0e70:0008 | experimental | supportsGetPartialObject, disableWriteResume |
+| Sigma Sd Quattro H Alt | 1003:0030 | experimental | supportsGetPartialObject, disableWriteResume |
+| Sigma Fp Alt | 1003:0033 | experimental | supportsGetPartialObject, disableWriteResume |
+| Mamiya Dm40 | 0e70:4002 | experimental | supportsGetPartialObject, disableWriteResume |
+| Mamiya Dm28 | 0e70:4003 | experimental | supportsGetPartialObject, disableWriteResume |
+| Mamiya Leaf Credo 80 | 0e70:4004 | experimental | supportsGetPartialObject, disableWriteResume |
+| Dji Air 3 | 2ca3:0041 | experimental | supportsGetPartialObject, disableWriteResume |
+| Insta360 One Rs 360 | 2e1a:0017 | experimental | supportsGetPartialObject, disableWriteResume |
+| Insta360 X4 | 2e1a:0018 | experimental | supportsGetPartialObject, disableWriteResume |
+| Kodak Pixpro Az901 | 040a:0036 | experimental | supportsGetPartialObject, disableWriteResume |
+| Kodak Pixpro Wpz2 | 040a:0037 | experimental | supportsGetPartialObject, disableWriteResume |
+| Kodak Pixpro Fz55 | 040a:0038 | experimental | supportsGetPartialObject, disableWriteResume |
+| Panasonic Dcs5ii | 04da:239e | experimental | supportsGetPartialObject, disableWriteResume |
+| Panasonic Dcs5iix | 04da:239f | experimental | supportsGetPartialObject, disableWriteResume |
+| Panasonic Dcg9m2 | 04da:23a0 | experimental | supportsGetPartialObject, disableWriteResume |
+| Panasonic Dcgh7 | 04da:23a1 | experimental | supportsGetPartialObject, disableWriteResume |
+| Ricoh Pentax K3iii | 04f2:0186 | experimental | supportsGetPartialObject, disableWriteResume |
+| Ricoh Pentax K3iii Mono | 04f2:0187 | experimental | supportsGetPartialObject, disableWriteResume |
+| Ricoh Griii | 04f2:0188 | experimental | supportsGetPartialObject, disableWriteResume |
+| Ricoh Griiix | 04f2:0189 | experimental | supportsGetPartialObject, disableWriteResume |
+| Ricoh Griii Hdf | 04f2:018a | experimental | supportsGetPartialObject, disableWriteResume |
+| Blackmagic Ursa Mini Pro 12k | 1edb:0006 | experimental | supportsGetPartialObject, disableWriteResume |
+| Blackmagic Ursa Mini Pro G2 | 1edb:0007 | experimental | supportsGetPartialObject, disableWriteResume |
+| Blackmagic Cinema Camera 6k | 1edb:0008 | experimental | supportsGetPartialObject, disableWriteResume |
+| Red Dsmc2 Monstro 8k | 1419:0001 | experimental | supportsGetPartialObject, disableWriteResume |
+| Red Dsmc2 Helium 8k | 1419:0002 | experimental | supportsGetPartialObject, disableWriteResume |
+| Red Komodo 6k | 1419:0003 | experimental | supportsGetPartialObject, disableWriteResume |
+| Red V Raptor 8k | 1419:0004 | experimental | supportsGetPartialObject, disableWriteResume |
+| Red Komodo X 6k | 1419:0005 | experimental | supportsGetPartialObject, disableWriteResume |
+| Gopro Hero 2024 | 2672:0062 | experimental | supportsGetPartialObject, disableWriteResume |
+| Yi 4k Plus Alt | 2970:0005 | experimental | supportsGetPartialObject, disableWriteResume |
+| Yi Horizon Vr180 | 2970:0006 | experimental | supportsGetPartialObject, disableWriteResume |
+| Sjcam Sj8 Plus | 1224:0208 | experimental | supportsGetPartialObject, disableWriteResume |
+| Sjcam Sj20 | 1224:0209 | experimental | supportsGetPartialObject, disableWriteResume |
+| Fujifilm Xt5 Alt | 04cb:0308 | experimental | supportsGetPartialObject, disableWriteResume |
+| Fujifilm Xh2 | 04cb:0309 | experimental | supportsGetPartialObject, disableWriteResume |
+| Fujifilm Gfx100sii | 04cb:030a | experimental | supportsGetPartialObject, disableWriteResume |
+| Fujifilm X100vi | 04cb:030b | experimental | supportsGetPartialObject, disableWriteResume |
+| Leica Sl3 | 1a98:0060 | experimental | supportsGetPartialObject, disableWriteResume |
+| Leica Q3 | 1a98:0061 | experimental | supportsGetPartialObject, disableWriteResume |
