@@ -1028,6 +1028,50 @@ final class BDDRunner: XCTestCase {
     else { throw XCTSkip("xiaomi-mi-box-4-5002 not in database") }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
+
+  // MARK: - Wave 29-31 Expansion
+
+  func testWave29NokiaHMDPhone() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0421, pid: 0x06fc, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("nokia-lumia-rm975-06fc not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave29FairphoneEthicalPhone() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2ae5, pid: 0x9039, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("fairphone-2-os-9039 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave30SanDiskPortableSSD() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0781, pid: 0x558c, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("sandisk-extreme-portable-ssd-558c not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave30TI84PlusCalculator() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0451, pid: 0xe008, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0x01, ifaceProtocol: 0x00)
+    else { throw XCTSkip("ti-84-plus-silver-calculator-e008 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave31CasioGraphingCalculator() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x07cf, pid: 0x6102, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0x00, ifaceProtocol: 0x00)
+    else { throw XCTSkip("casio-fx-cp400-calculator-6102 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave31NothingPhone() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2a70, pid: 0xf01e, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("nothing-phone-1-f01e not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
