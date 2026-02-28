@@ -103,6 +103,111 @@ final class QuirkPolicySnapshotTests: XCTestCase {
     )
   }
 
+  // MARK: - Device Category Snapshots: Audio Devices
+
+  /// Fiio M11 DAP — Android-based audio player with kernel detach requirement.
+  func testFiioM11DAPPolicy() throws {
+    let db = try QuirkDatabase.load()
+    assertSnapshot(
+      of: policySnapshot(vid: "2972", pid: "0015", ifaceClass: "ff", database: db),
+      as: .json, named: "policy-fiio-m11-dap"
+    )
+  }
+
+  /// Sony NW-A105 Walkman — Android-based portable audio player.
+  func testSonyWalkmanNWA105Policy() throws {
+    let db = try QuirkDatabase.load()
+    assertSnapshot(
+      of: policySnapshot(vid: "054c", pid: "0d00", ifaceClass: "ff", database: db),
+      as: .json, named: "policy-sony-walkman-nwa105"
+    )
+  }
+
+  /// Bose QC Ultra headphone — PTP-class audio accessory with firmware update MTP.
+  func testBoseQCUltraPolicy() throws {
+    let db = try QuirkDatabase.load()
+    assertSnapshot(
+      of: policySnapshot(vid: "05a7", pid: "4008", database: db),
+      as: .json, named: "policy-bose-qc-ultra"
+    )
+  }
+
+  /// JBL Charge 5 speaker — PTP-class audio device.
+  func testJBLCharge5Policy() throws {
+    let db = try QuirkDatabase.load()
+    assertSnapshot(
+      of: policySnapshot(vid: "0ecb", pid: "2070", database: db),
+      as: .json, named: "policy-jbl-charge5"
+    )
+  }
+
+  // MARK: - Device Category Snapshots: Action Cameras
+
+  /// GoPro Hero 13 Black — latest GoPro action camera.
+  func testGoProHero13BlackPolicy() throws {
+    let db = try QuirkDatabase.load()
+    assertSnapshot(
+      of: policySnapshot(vid: "2672", pid: "005d", database: db),
+      as: .json, named: "policy-gopro-hero13-black"
+    )
+  }
+
+  /// DJI Mini 3 Pro — drone with PTP camera interface.
+  func testDJIMini3ProPolicy() throws {
+    let db = try QuirkDatabase.load()
+    assertSnapshot(
+      of: policySnapshot(vid: "2ca3", pid: "001c", database: db),
+      as: .json, named: "policy-dji-mini-3-pro"
+    )
+  }
+
+  /// Insta360 X3 — 360-degree action camera.
+  func testInsta360X3Policy() throws {
+    let db = try QuirkDatabase.load()
+    assertSnapshot(
+      of: policySnapshot(vid: "2e1a", pid: "000c", database: db),
+      as: .json, named: "policy-insta360-x3"
+    )
+  }
+
+  /// Akaso EK7000 — budget action camera.
+  func testAkasoEK7000Policy() throws {
+    let db = try QuirkDatabase.load()
+    assertSnapshot(
+      of: policySnapshot(vid: "3538", pid: "0001", database: db),
+      as: .json, named: "policy-akaso-ek7000"
+    )
+  }
+
+  // MARK: - Device Category Snapshots: Android TV / Streaming
+
+  /// Nvidia Shield TV Pro — Android TV with kernel detach.
+  func testNvidiaShieldTVProPolicy() throws {
+    let db = try QuirkDatabase.load()
+    assertSnapshot(
+      of: policySnapshot(vid: "0955", pid: "b42a", ifaceClass: "ff", database: db),
+      as: .json, named: "policy-nvidia-shield-tv-pro"
+    )
+  }
+
+  /// Amazon Fire TV Stick 4K — streaming device, no kernel detach.
+  func testFireTVStick4KPolicy() throws {
+    let db = try QuirkDatabase.load()
+    assertSnapshot(
+      of: policySnapshot(vid: "1949", pid: "0441", ifaceClass: "ff", database: db),
+      as: .json, named: "policy-fire-tv-stick-4k"
+    )
+  }
+
+  /// Xiaomi Mi Box S — Android TV box.
+  func testXiaomiMiBoxSPolicy() throws {
+    let db = try QuirkDatabase.load()
+    assertSnapshot(
+      of: policySnapshot(vid: "2717", pid: "5001", ifaceClass: "ff", database: db),
+      as: .json, named: "policy-xiaomi-mi-box-s"
+    )
+  }
+
   // MARK: - Helpers
 
   /// Build a `PolicySnapshot` for the given VID/PID using the live quirk database.
