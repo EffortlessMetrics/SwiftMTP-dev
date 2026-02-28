@@ -451,6 +451,44 @@ final class QuirksDatabasePropertyTests: XCTestCase {
       "Entries with invalid PID format: \(invalid.compactMap { $0["id"] as? String }.prefix(10))")
   }
 
+  // MARK: - 8000-Entry Milestone Invariants
+
+  func testAllEntriesHaveValidChunkSizeRange() {
+    let minChunk = 4096
+    let maxChunk = 16_777_216  // 16 MB
+    for entry in db.entries {
+      guard let chunk = entry.maxChunkBytes else { continue }
+      XCTAssertGreaterThanOrEqual(
+        chunk, minChunk,
+        "Entry '\(entry.id)' has maxChunkBytes \(chunk) below minimum \(minChunk)")
+      XCTAssertLessThanOrEqual(
+        chunk, maxChunk,
+        "Entry '\(entry.id)' has maxChunkBytes \(chunk) above maximum \(maxChunk)")
+    }
+  }
+
+  func testAllEntriesHaveValidTimeout() {
+    let minTimeout = 1000
+    let maxTimeout = 60_000
+    for entry in db.entries {
+      guard let timeout = entry.ioTimeoutMs else { continue }
+      XCTAssertGreaterThanOrEqual(
+        timeout, minTimeout,
+        "Entry '\(entry.id)' has ioTimeoutMs \(timeout) below minimum \(minTimeout)")
+      XCTAssertLessThanOrEqual(
+        timeout, maxTimeout,
+        "Entry '\(entry.id)' has ioTimeoutMs \(timeout) above maximum \(maxTimeout)")
+    }
+  }
+
+  func testNoDuplicateEntryNames() {
+    let names = db.entries.compactMap { $0.deviceName }
+    let duplicates = findDuplicates(names)
+    XCTAssertTrue(
+      duplicates.isEmpty,
+      "Duplicate device names found: \(duplicates.prefix(10))")
+  }
+
   // MARK: - 7000-Entry Milestone Invariants
 
   func testAllEntriesHaveValidChunkSize() {
