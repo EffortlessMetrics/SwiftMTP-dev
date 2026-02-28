@@ -17429,3 +17429,1682 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Raven Cr12 Field Comp | a000:01ff | community | supportsGetObjectPropList |
 | Hemisphere A631 Receiver | a000:0200 | community | supportsGetObjectPropList |
 | Agtron Soil Scanner USB | a000:0201 | community | supportsGetObjectPropList |
+| Canon EOS R3 Mk2 | 04a9:3380 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R5 Mk2 | 04a9:3381 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R5c Cine | 04a9:3382 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R6 Mk3 | 04a9:3383 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R7 Mk2 | 04a9:3384 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R8 Fw2 | 04a9:3385 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R10 Mk2 | 04a9:3386 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R50 Mk2 | 04a9:3387 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R100 Mk2 | 04a9:3388 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R1 Fw2 | 04a9:3389 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R5c Raw | 04a9:338a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R6 Iii | 04a9:338b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx740 | 04a9:338c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx70 | 04a9:338d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot G7x Iii | 04a9:338e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot G5x Ii | 04a9:338f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot V10 | 04a9:3390 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot V1 | 04a9:3391 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Zoom | 04a9:3392 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Pick | 04a9:3393 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot G1x Iii | 04a9:3394 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot G9x Ii | 04a9:3395 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx620 | 04a9:3396 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx730 | 04a9:3397 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx540 | 04a9:3398 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx430 | 04a9:3399 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx420 | 04a9:339a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Elph 360 | 04a9:339b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Elph 190 | 04a9:339c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Elph 180 | 04a9:339d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot N2 | 04a9:339e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 285 | 04a9:339f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 190 | 04a9:33a0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 185 | 04a9:33a1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 180 | 04a9:33a2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 175 | 04a9:33a3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 170 | 04a9:33a4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 160 | 04a9:33a5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 155 | 04a9:33a6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 145 | 04a9:33a7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 265 | 04a9:33a8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 255 | 04a9:33a9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 140 | 04a9:33aa | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 135 | 04a9:33ab | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Ixus 132 | 04a9:33ac | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS C70 | 04a9:33ad | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS C300 Iii | 04a9:33ae | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS C500 Ii | 04a9:33af | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS C400 | 04a9:33b0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS C200 | 04a9:33b1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS C80 | 04a9:33b2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS M200 | 04a9:33b3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS M50 Legacy | 04a9:33b4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS M6 Ii | 04a9:33b5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS M5 Legacy | 04a9:33b6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS 1dx Iii | 04a9:33b7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS 2000d | 04a9:33b8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS 4000d | 04a9:33b9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS M100 | 04a9:33ba | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS M3 | 04a9:33bb | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS M10 | 04a9:33bc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx60 | 04a9:33bd | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx50 | 04a9:33be | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx530 | 04a9:33bf | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot G16 | 04a9:33c0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot G15 | 04a9:33c1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot S120 | 04a9:33c2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot S110 | 04a9:33c3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx280 | 04a9:33c4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx260 | 04a9:33c5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx710 | 04a9:33c6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx700 | 04a9:33c7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx610 | 04a9:33c8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx600 | 04a9:33c9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx510 | 04a9:33ca | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx500 | 04a9:33cb | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx410 | 04a9:33cc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Powershot Sx400 | 04a9:33cd | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS Rebel Sl3 | 04a9:33ce | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS Rebel T8i | 04a9:33cf | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Z8 Mk2 | 04b0:0460 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Z9 Fw7 | 04b0:0461 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Zf Fw2 | 04b0:0462 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Zfc Fw2 | 04b0:0463 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Z30 Fw2 | 04b0:0464 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Z50 Ii Fw2 | 04b0:0465 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Z5 Iii | 04b0:0466 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Z6 Iv | 04b0:0467 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Z7 Iii | 04b0:0468 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Z30 Ii | 04b0:0469 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Zfc Ii | 04b0:046a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Z Mount Adapter | 04b0:046b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P1000 | 04b0:046c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P950 | 04b0:046d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P900 | 04b0:046e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix B600 | 04b0:046f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix B500 | 04b0:0471 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix A1000 | 04b0:0473 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix A900 | 04b0:0475 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix A300 | 04b0:0477 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix W150 | 04b0:0479 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix W300 | 04b0:047a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix S7000 | 04b0:047b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix S3700 | 04b0:047c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix L340 | 04b0:047d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix L32 | 04b0:047e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P610 | 04b0:047f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P340 | 04b0:0480 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix Aw130 | 04b0:0481 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix Aw120 | 04b0:0482 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix S9900 | 04b0:0483 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix S9700 | 04b0:0484 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix L840 | 04b0:0485 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix L830 | 04b0:0486 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P530 | 04b0:0487 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P520 | 04b0:0488 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix B700 | 04b0:0489 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Keymission 360 | 04b0:048a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Keymission 170 | 04b0:048b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Keymission 80 | 04b0:048c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D3 | 04b0:048d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D3s | 04b0:048e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D3x | 04b0:048f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D300 | 04b0:0495 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D300s | 04b0:0496 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D200 | 04b0:0497 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D80 | 04b0:0498 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D70 | 04b0:0499 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D70s | 04b0:049a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D60 | 04b0:049b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D40 | 04b0:049c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D40x | 04b0:049d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon D50 | 04b0:049e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix S9500 | 04b0:049f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix S6900 | 04b0:04a0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P7800 | 04b0:04a1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P7700 | 04b0:04a2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P7100 | 04b0:04a3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P7000 | 04b0:04a4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P330 | 04b0:04a5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P510 | 04b0:04a6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix P500 | 04b0:04a7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Coolpix A | 04b0:04a8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A1 Mk2 | 054c:0e9e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A9 Iii Fw2 | 054c:0e9f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A7rv Fw2 | 054c:0ea0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A7c Ii Fw2 | 054c:0ea1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A6700 Fw2 | 054c:0ea2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A7iv Fw2 | 054c:0ea3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A7siii Fw3 | 054c:0ea4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Zv E1 Fw2 | 054c:0ea5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Zv E10 Ii Fw2 | 054c:0ea6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Zv 1 Ii | 054c:0ea7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Zv 1f | 054c:0ea8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Zv E10 Orig | 054c:0ea9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Zv 1 Orig | 054c:0eaa | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Rx100 Vii | 054c:0eab | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Rx100 Vi | 054c:0eac | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Rx100 Va | 054c:0ead | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Rx100 Iv | 054c:0eae | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Rx100 Iii | 054c:0eaf | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Rx1r Ii | 054c:0eb0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Rx10 Iv | 054c:0eb1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Rx10 Iii | 054c:0eb2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Rx0 Ii | 054c:0eb3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Fx3 | 054c:0eb4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Fx30 | 054c:0eb5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Fx6 | 054c:0eb6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Fx9 | 054c:0eb7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Fx6 Ii | 054c:0eb8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Venice 2 | 054c:0eb9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Burano | 054c:0eba | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A7c Orig | 054c:0ebb | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A7cr Fw2 | 054c:0ebc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A6600 Fw2 | 054c:0ebd | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A6400 | 054c:0ebe | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A6100 Fw2 | 054c:0ebf | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A5100 Fw2 | 054c:0ec0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A68 | 054c:0ec1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A99 Ii | 054c:0ec2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A77 Ii | 054c:0ec3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Hx99 | 054c:0ec4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Hx400v | 054c:0ec5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Hx350 | 054c:0ec6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Wx500 | 054c:0ec7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Wx350 | 054c:0ec8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc W830 | 054c:0ec9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc W810 | 054c:0eca | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Hx90v | 054c:0ecb | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Hx80 | 054c:0ecc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Hx60v | 054c:0ecd | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Hx300 | 054c:0ece | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Hx200v | 054c:0ecf | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Wx800 | 054c:0ed0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Wx700 | 054c:0ed1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Hx60 | 054c:0ed2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Hx50v | 054c:0ed3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Rx100 Ii | 054c:0ed4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Rx100 Orig | 054c:0ed5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Rx10 Ii | 054c:0ed6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Rx10 Orig | 054c:0ed7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Rx1 | 054c:0ed8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Dsc Rx1r | 054c:0ed9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Pxw Fx9 | 054c:0eda | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Pxw Fx6 | 054c:0edb | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Pxw Z280 | 054c:0edc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Pxw Z190 | 054c:0edd | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Pxw Z90 | 054c:0ede | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Pxw Z150 | 054c:0edf | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X T5 Fw2 | 04cb:0340 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X H2 Fw2 | 04cb:0341 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X H2s Fw2 | 04cb:0342 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X S20 Fw2 | 04cb:0343 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X T50 Fw2 | 04cb:0344 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X M5 Fw2 | 04cb:0345 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X T4 | 04cb:0346 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X T3 | 04cb:0347 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X T30 Ii | 04cb:0348 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X T200 | 04cb:0349 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X E4 | 04cb:034a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X Pro3 | 04cb:034b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X A7 | 04cb:034c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X S10 | 04cb:034d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X100vi | 04cb:034e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X100v | 04cb:034f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X T5 Mk2 | 04cb:0350 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm Gfx100 Ii Fw2 | 04cb:0351 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm Gfx50s Ii Fw2 | 04cb:0352 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm Gfx100s | 04cb:0353 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm Gfx50r | 04cb:0354 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm Gfx50s | 04cb:0355 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm Gfx100 | 04cb:0356 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm Xf10 | 04cb:0357 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm Instax Mini Evo | 04cb:0358 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm Instax Mini Liplay | 04cb:0359 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm Instax Wide Evo | 04cb:035a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Om System Om 1 Ii Fw2 | 07b4:0320 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Om System Om 5 Fw2 | 07b4:0321 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Om System Om 1 Orig | 07b4:0322 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Om System Pen E P7 | 07b4:0323 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus E M1x | 07b4:0324 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus E M1 Iii | 07b4:0325 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus E M5 Iii | 07b4:0326 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus E M10 Iv | 07b4:0327 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus E M10 Iii | 07b4:0328 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus Pen E Pl10 | 07b4:0329 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus Pen E Pl9 | 07b4:032a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus Tg 6 | 07b4:032b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Om System Tg 7 Fw2 | 07b4:032c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus Sp 100ee | 07b4:032d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus Sh 3 | 07b4:032e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus Tg Tracker | 07b4:032f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Om System Om 3 | 07b4:0330 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix S5iix Fw2 | 04da:2420 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix S5ii Fw2 | 04da:2421 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix S1h Fw2 | 04da:2422 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix S1r | 04da:2423 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix S1 Fw2 | 04da:2424 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix S5 | 04da:2425 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix S9 | 04da:2426 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix S1h Ii | 04da:2427 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Gh6 Fw2 | 04da:2428 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix G9 Ii Fw2 | 04da:2429 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Gh5 Ii | 04da:242a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Gh5s | 04da:242b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Gh5 | 04da:242c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix G95 | 04da:242d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix G100 | 04da:242e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Gx9 | 04da:242f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Gx85 | 04da:2430 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix G7 | 04da:2431 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Gf10 | 04da:2432 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix G85 | 04da:2433 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Fz1000 Ii | 04da:2434 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Fz300 | 04da:2435 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Fz80 | 04da:2436 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Tz220 | 04da:2437 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Tz200 | 04da:2438 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Tz100 | 04da:2439 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Tz95 | 04da:243a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Tz90 | 04da:243b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Lx100 Ii | 04da:243c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Lx15 | 04da:243d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Bgh1 | 04da:243e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix Bs1h | 04da:243f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica Q3 43 Fw2 | 1a98:0080 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica M11 Fw3 | 1a98:0081 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica Sl3 Fw2 | 1a98:0082 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica M11 D | 1a98:0083 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica M11 P Fw2 | 1a98:0084 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica Sl3 S Fw2 | 1a98:0085 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica Q2 Monochrom Fw2 | 1a98:0086 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica Q2 Fw2 | 1a98:0087 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica Cl Fw3 | 1a98:0088 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica Tl2 Fw2 | 1a98:0089 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica D Lux 8 Fw2 | 1a98:008a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica V Lux 5 Fw3 | 1a98:008b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica C Lux Fw2 | 1a98:008c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica S3 Fw2 | 1a98:008d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica M10 R Fw3 | 1a98:008e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica M10 Monochrom | 1a98:008f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Osmo Action 4 | 2ca3:0a60 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Osmo Action 5 Alt | 2ca3:0a61 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Pocket 3 | 2ca3:0a62 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Pocket 2 | 2ca3:0a63 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Osmo Action 3 | 2ca3:0a64 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Action 2 | 2ca3:0a65 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Pocket S | 2ca3:0a66 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Osmo Action Orig | 2ca3:0a67 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Osmo Pocket Orig | 2ca3:0a68 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Mic 2 | 2ca3:0a69 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Mic Mini | 2ca3:0a6a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Ronin 4d | 2ca3:0a6b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Ronin 4d 8k | 2ca3:0a6c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero13 Black Fw2 | 2672:0090 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero12 Black Fw2 | 2672:0091 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Max Fw2 | 2672:0092 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Bones | 2672:0093 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero11 Black | 2672:0094 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero11 Mini | 2672:0095 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero10 Black | 2672:0096 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero9 Black | 2672:0097 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero8 Black | 2672:0098 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero7 Black | 2672:0099 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero7 Silver | 2672:009a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero7 White | 2672:009b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero6 Black | 2672:009c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero5 Black | 2672:009d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero5 Session | 2672:009e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Fusion | 2672:009f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero 2023 | 2672:00a0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Max Lens Mod | 2672:00a1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gopro Hero13 White | 2672:00a2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 X4 Fw3 | 2e1a:0040 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 One Rs Fw4 | 2e1a:0041 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 Ace Pro Fw3 | 2e1a:0042 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 Ace Pro 2 Fw2 | 2e1a:0043 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 Go 3s Fw3 | 2e1a:0044 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 One X3 Fw3 | 2e1a:0045 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 Flow 2 Pro Fw2 | 2e1a:0046 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 Link 2 Fw2 | 2e1a:0047 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 Link 2c | 2e1a:0048 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 Sphere | 2e1a:0049 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 One R Twin Fw3 | 2e1a:004a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 One X2 Fw3 | 2e1a:004b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 Evo Fw2 | 2e1a:004c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ricoh Gr Iii Fw2 | 05ca:0701 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ricoh Gr Iiix Fw2 | 05ca:0702 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ricoh Gr Iii Hdf | 05ca:0703 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ricoh Gr Iiix Hdf | 05ca:0704 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ricoh Theta Z1 | 05ca:0705 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ricoh Theta X | 05ca:0706 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ricoh Theta Sc2 | 05ca:0707 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ricoh Theta V | 05ca:0708 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ricoh Wg 80 | 05ca:0709 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ricoh Wg 70 | 05ca:070a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ricoh Wg 7 | 05ca:070b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Pentax K 3 Iii Mono | 0a17:0301 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Pentax K 3 Iii | 0a17:0302 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Pentax K 1 Ii | 0a17:0303 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Pentax Kf | 0a17:0304 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Pentax K 70 | 0a17:0305 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Pentax 645z | 0a17:0306 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Pentax 17 Film | 0a17:0307 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hasselblad X2d 100c | 25b7:0020 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hasselblad X1d Ii | 25b7:0021 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hasselblad 907x 50c | 25b7:0022 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hasselblad Cfv 100c | 25b7:0023 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hasselblad H6d 100c | 25b7:0024 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hasselblad H6d 400c Ms | 25b7:0025 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hasselblad X2d Fw2 | 25b7:0026 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sigma Fp | 1003:0201 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sigma Fp L | 1003:0202 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sigma Dp0 Quattro | 1003:0203 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sigma Dp1 Quattro | 1003:0204 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sigma Dp2 Quattro | 1003:0205 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sigma Dp3 Quattro | 1003:0206 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sigma Sd Quattro | 1003:0207 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sigma Sd Quattro H | 1003:0208 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Birddog P400 | 3355:0101 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Birddog P240 | 3355:0102 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Birddog P200 | 3355:0103 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Birddog P4k | 3355:0104 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Birddog A200 | 3355:0105 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Birddog A300 | 3355:0106 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Birddog Eyes A200 Gen2 | 3355:0107 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Birddog Mini | 3355:0108 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Birddog 4k Quad | 3355:0109 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Birddog Flex 4k | 3355:010a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Streamcam | 046d:0900 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Brio 4k | 046d:0901 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Brio 500 | 046d:0902 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Brio 300 | 046d:0903 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Brio 100 | 046d:0904 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech C920s | 046d:0905 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech C922 Pro | 046d:0906 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech C930e | 046d:0907 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech C925e | 046d:0908 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech C920 | 046d:0909 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech C615 | 046d:090a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech C310 | 046d:090b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech C270 | 046d:090c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Rally Bar | 046d:090d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Rally Bar Mini | 046d:090e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Rally Camera | 046d:090f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Meetup | 046d:0910 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Ptz Pro 2 | 046d:0911 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Sight | 046d:0912 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Brio 505 | 046d:0913 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Mevo Start | 046d:0914 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Mevo Core | 046d:0915 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Obsbot Tiny 2 | 3527:0101 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Obsbot Tiny 2 Lite | 3527:0102 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Obsbot Tiny Orig | 3527:0103 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Obsbot Meet 2 | 3527:0104 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Obsbot Meet Orig | 3527:0105 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Obsbot Me | 3527:0106 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Obsbot Tail Air | 3527:0107 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Obsbot Tiny 4k | 3527:0108 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Viofo A229 Pro Duo | 4255:0201 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Viofo A229 Plus Duo | 4255:0202 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Viofo A229 Duo | 4255:0203 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Viofo A139 Pro 3ch | 4255:0204 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Viofo A139 Pro Duo | 4255:0205 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Viofo A129 Pro Duo | 4255:0206 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Viofo A119 Mini 2 | 4255:0207 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Viofo Vs1 Mini | 4255:0208 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Viofo T130 3ch | 4255:0209 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Viofo Wm1 | 4255:020a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackvue Dr970x 2ch Plus | 3011:0101 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackvue Dr770x 2ch | 3011:0102 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackvue Dr770x 1ch | 3011:0103 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackvue Dr900x 2ch Plus | 3011:0104 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackvue Dr750x 2ch Plus | 3011:0105 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackvue Dr590x 2ch | 3011:0106 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackvue Dr250 1ch | 3011:0107 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Thinkware U3000 2ch | 3012:0101 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Thinkware Q1000 2ch | 3012:0102 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Thinkware X1000 2ch | 3012:0103 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Thinkware F200 Pro | 3012:0104 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Thinkware F70 Pro | 3012:0105 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Thinkware T700 | 3012:0106 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Dash Cam 67w | 091e:d001 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Dash Cam 57 | 091e:d002 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Dash Cam Mini 2 | 091e:d003 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Dash Cam Tandem | 091e:d004 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Dash Cam Live | 091e:d005 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Dash Cam 47 | 091e:d006 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Dash Cam 66w | 091e:d007 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Dash Cam 56 | 091e:d008 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Dash Cam 46 | 091e:d009 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stealth Cam Fusion X Pro | 3301:0101 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stealth Cam Fusion X | 3301:0102 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stealth Cam Fusion Max | 3301:0103 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stealth Cam Ds4k Max | 3301:0104 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stealth Cam Ds4k | 3301:0105 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stealth Cam Qv30 | 3301:0106 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stealth Cam Qs24 | 3301:0107 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stealth Cam Trail Hawk | 3301:0108 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stealth Cam Command Pro | 3301:0109 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stealth Cam Browtine | 3301:010a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bushnell Core Ds 4k No Glow | 3302:0101 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bushnell Core Ds No Glow | 3302:0102 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bushnell Core S No Glow | 3302:0103 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bushnell Prime Low Glow | 3302:0104 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bushnell Cellucore 30 | 3302:0105 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bushnell Cellucore 20 | 3302:0106 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bushnell Impulse Cellular | 3302:0107 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bushnell Aggressor | 3302:0108 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bushnell Trophy Cam | 3302:0109 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Moultrie Mobile Edge Pro | 3303:0101 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Moultrie Mobile Edge | 3303:0102 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Moultrie Mobile Delta Base | 3303:0103 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Moultrie Micro 42 Kit | 3303:0104 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Moultrie Micro 32i Kit | 3303:0105 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Moultrie A 700i | 3303:0106 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Moultrie A 900i | 3303:0107 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Moultrie S 50i | 3303:0108 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Moultrie Xl 7000i | 3303:0109 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Reconyx Hyperfire 2 Hp2x | 3304:0101 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Reconyx Hyperfire 2 Hs2x | 3304:0102 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Reconyx Ultrafire Xr6 | 3304:0103 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Reconyx Ultrafire Xs8 | 3304:0104 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Reconyx Hyperfire Hfg | 3304:0105 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Reconyx Microfire Gen2 | 3304:0106 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Reconyx Xp9 Ultrafire | 3304:0107 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Reconyx Hp2a | 3304:0108 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Pocket 6k G2 | 1edb:0501 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Pocket 6k Pro | 1edb:0502 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Pocket 4k | 1edb:0503 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Cinema 6k | 1edb:0504 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Ursa Mini Pro 12k | 1edb:0505 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Ursa Mini Pro G2 | 1edb:0506 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Ursa Cine 12k | 1edb:0507 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Ursa Broadcast G2 | 1edb:0508 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Studio 4k Plus | 1edb:0509 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Studio 4k Pro | 1edb:050a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Studio 6k Pro | 1edb:050b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Micro Studio 4k | 1edb:050c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Pyxis 6k | 1edb:050d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bluedriver Pro Obd2 | a000:0202 | community | supportsGetObjectPropList |
+| Bluedriver Lsb2 Obd2 | a000:0203 | community | supportsGetObjectPropList |
+| Obdlink Mxplus Obd2 | a000:0204 | community | supportsGetObjectPropList |
+| Obdlink Cx Obd2 | a000:0205 | community | supportsGetObjectPropList |
+| Obdlink Lx Obd2 | a000:0206 | community | supportsGetObjectPropList |
+| Obdlink Sx Obd2 | a000:0207 | community | supportsGetObjectPropList |
+| Obdlink Ex Obd2 | a000:0208 | community | supportsGetObjectPropList |
+| Carista Evo Obd2 | a000:0209 | community | supportsGetObjectPropList |
+| Carista Pro Obd2 | a000:020a | community | supportsGetObjectPropList |
+| Tesla Model3 Diag USB | a000:020b | community | supportsGetObjectPropList |
+| Tesla Modely Diag USB | a000:020c | community | supportsGetObjectPropList |
+| Tesla Models Diag USB | a000:020d | community | supportsGetObjectPropList |
+| Tesla Modelx Diag USB | a000:020e | community | supportsGetObjectPropList |
+| Tesla Cybertruck Diag USB | a000:020f | community | supportsGetObjectPropList |
+| Autel Maxicom Mk808bt | a000:0210 | community | supportsGetObjectPropList |
+| Autel Maxisys Ms906pro | a000:0211 | community | supportsGetObjectPropList |
+| Autel Maxiap Ap200 | a000:0212 | community | supportsGetObjectPropList |
+| Launch Crp123x Obd2 | a000:0213 | community | supportsGetObjectPropList |
+| Launch Crp919x Obd2 | a000:0214 | community | supportsGetObjectPropList |
+| Launch X431 V Plus | a000:0215 | community | supportsGetObjectPropList |
+| Foxwell Nt301 Obd2 | a000:0216 | community | supportsGetObjectPropList |
+| Foxwell Nt710 Obd2 | a000:0217 | community | supportsGetObjectPropList |
+| Ancel Bd310 Obd2 | a000:0218 | community | supportsGetObjectPropList |
+| Ancel Fx9000 Obd2 | a000:0219 | community | supportsGetObjectPropList |
+| Topdon Artidiag800bt | a000:021a | community | supportsGetObjectPropList |
+| Topdon Phoenix Max | a000:021b | community | supportsGetObjectPropList |
+| Chargepoint Home Flex USB | a000:021c | community | supportsGetObjectPropList |
+| Chargepoint Cpf50 USB | a000:021d | community | supportsGetObjectPropList |
+| Juicebox 48a Ev Charger | a000:021e | community | supportsGetObjectPropList |
+| Wallbox Pulsar Plus USB | a000:021f | community | supportsGetObjectPropList |
+| Grizzl E Classic Ev USB | a000:0220 | community | supportsGetObjectPropList |
+| Clipper Creek Hcs 40 USB | a000:0221 | community | supportsGetObjectPropList |
+| Emporia Ev Charger USB | a000:0222 | community | supportsGetObjectPropList |
+| Lectron V Box Ev USB | a000:0223 | community | supportsGetObjectPropList |
+| Mustart Level2 Ev USB | a000:0224 | community | supportsGetObjectPropList |
+| Blink Hq200 Ev USB | a000:0225 | community | supportsGetObjectPropList |
+| Vevor J1772 Ev USB | a000:0226 | community | supportsGetObjectPropList |
+| Konnwei Kw600 Battery | a000:0227 | community | supportsGetObjectPropList |
+| Konnwei Kw902 Obd2 | a000:0228 | community | supportsGetObjectPropList |
+| Elm327 V15 Obd2 USB | a000:0229 | community | supportsGetObjectPropList |
+| Vgate Icar Pro Obd2 | a000:022a | community | supportsGetObjectPropList |
+| Fixd Gen2 Obd2 | a000:022b | community | supportsGetObjectPropList |
+| Innova 6100p Obd2 | a000:022c | community | supportsGetObjectPropList |
+| Innova 5210 Obd2 | a000:022d | community | supportsGetObjectPropList |
+| Actron Cp9690 Obd2 | a000:022e | community | supportsGetObjectPropList |
+| Zurich Zr15 Obd2 | a000:022f | community | supportsGetObjectPropList |
+| Bosch Obd 1350 USB | a000:0230 | community | supportsGetObjectPropList |
+| Xtool D9pro Scanner | a000:0231 | community | supportsGetObjectPropList |
+| Thinkcar Thinktool Max V2 | a000:0232 | community | supportsGetObjectPropList |
+| Ev Charger Tesla Wall V3 | a000:0233 | community | supportsGetObjectPropList |
+| Ticwatch Pro 5 Gps | a000:0234 | community | supportsGetObjectPropList |
+| Ticwatch Pro 3 Ultra Gps | a000:0235 | community | supportsGetObjectPropList |
+| Ticwatch E3 Wearos | a000:0236 | community | supportsGetObjectPropList |
+| Ticwatch Gth2 Fitness | a000:0237 | community | supportsGetObjectPropList |
+| Ticwatch Pro X | a000:0238 | community | supportsGetObjectPropList |
+| Amazfit Trex 3 | a000:0239 | community | supportsGetObjectPropList |
+| Amazfit Trex Ultra | a000:023a | community | supportsGetObjectPropList |
+| Amazfit Bip 5 Unity | a000:023b | community | supportsGetObjectPropList |
+| Amazfit Gts 4 Mini | a000:023c | community | supportsGetObjectPropList |
+| Amazfit Gtr 4 Limited | a000:023d | community | supportsGetObjectPropList |
+| Amazfit Falcon Titanium | a000:023e | community | supportsGetObjectPropList |
+| Amazfit Cheetah Pro | a000:023f | community | supportsGetObjectPropList |
+| Amazfit Balance Watch | a000:0240 | community | supportsGetObjectPropList |
+| Amazfit Active Edge | a000:0241 | community | supportsGetObjectPropList |
+| Amazfit Helio Ring | a000:0242 | community | supportsGetObjectPropList |
+| Garmin Venu 3s | a000:0243 | community | supportsGetObjectPropList |
+| Garmin Venu Sq2 Music | a000:0244 | community | supportsGetObjectPropList |
+| Garmin Vivoactive 5 | a000:0245 | community | supportsGetObjectPropList |
+| Garmin Forerunner 165 | a000:0246 | community | supportsGetObjectPropList |
+| Garmin Forerunner 265s | a000:0247 | community | supportsGetObjectPropList |
+| Garmin Forerunner 965 | a000:0248 | community | supportsGetObjectPropList |
+| Garmin Fenix 8 Solar | a000:0249 | community | supportsGetObjectPropList |
+| Garmin Fenix 8 Amoled 51 | a000:024a | community | supportsGetObjectPropList |
+| Garmin Epix Pro 51mm | a000:024b | community | supportsGetObjectPropList |
+| Garmin Enduro 3 | a000:024c | community | supportsGetObjectPropList |
+| Garmin Instinct 3 Solar | a000:024d | community | supportsGetObjectPropList |
+| Garmin Lily 2 Classic | a000:024e | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch7 44 | a000:024f | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch7 40 | a000:0250 | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch Fe | a000:0251 | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch Ultra | a000:0252 | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch6 Classic 47 | a000:0253 | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch6 Classic 43 | a000:0254 | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch6 44 | a000:0255 | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch6 40 | a000:0256 | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch5 Pro Lte | a000:0257 | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch5 44 Bt | a000:0258 | community | supportsGetObjectPropList |
+| Samsung Galaxy Watch4 Classic 46 | a000:0259 | community | supportsGetObjectPropList |
+| Samsung Galaxy Fit3 | a000:025a | community | supportsGetObjectPropList |
+| Google Pixel Watch 3 45mm | a000:025b | community | supportsGetObjectPropList |
+| Google Pixel Watch 3 41mm | a000:025c | community | supportsGetObjectPropList |
+| Google Pixel Watch 2 Lte | a000:025d | community | supportsGetObjectPropList |
+| Fossil Gen6 Wellness | a000:025e | community | supportsGetObjectPropList |
+| Fossil Gen6 Hybrid | a000:025f | community | supportsGetObjectPropList |
+| Suunto Vertical Titanium | a000:0260 | community | supportsGetObjectPropList |
+| Suunto Race S Gps | a000:0261 | community | supportsGetObjectPropList |
+| Coros Pace 3 Wearos | a000:0262 | community | supportsGetObjectPropList |
+| Coros Vertix 2s | a000:0263 | community | supportsGetObjectPropList |
+| Coros Apex 2 Pro | a000:0264 | community | supportsGetObjectPropList |
+| Withings Scanwatch 2 | a000:0265 | community | supportsGetObjectPropList |
+| Valve Steam Deck Oled 1tb | a000:0266 | community | supportsGetObjectPropList |
+| Valve Steam Deck Oled 512 | a000:0267 | community | supportsGetObjectPropList |
+| Asus Rog Ally Z1extreme | a000:0268 | community | supportsGetObjectPropList |
+| Asus Rog Ally Z1 | a000:0269 | community | supportsGetObjectPropList |
+| Asus Rog Ally X | a000:026a | community | supportsGetObjectPropList |
+| Lenovo Legion Go 8apu1 | a000:026b | community | supportsGetObjectPropList |
+| Lenovo Legion Go S | a000:026c | community | supportsGetObjectPropList |
+| Lenovo Legion Go S Steamos | a000:026d | community | supportsGetObjectPropList |
+| Msi Claw A1m Meteor | a000:026e | community | supportsGetObjectPropList |
+| Msi Claw 8 Ai Plus | a000:026f | community | supportsGetObjectPropList |
+| Msi Claw 7 Ai Plus | a000:0270 | community | supportsGetObjectPropList |
+| Ayaneo 2s Ryzen7 | a000:0271 | community | supportsGetObjectPropList |
+| Ayaneo Air 1s Oled | a000:0272 | community | supportsGetObjectPropList |
+| Ayaneo Pocket S | a000:0273 | community | supportsGetObjectPropList |
+| Ayaneo Kun Amd | a000:0274 | community | supportsGetObjectPropList |
+| Ayaneo Flip Ds | a000:0275 | community | supportsGetObjectPropList |
+| Ayaneo Slide 6800u | a000:0276 | community | supportsGetObjectPropList |
+| Gpd Win4 2024 8840u | a000:0277 | community | supportsGetObjectPropList |
+| Gpd Win Mini 2024 8840u | a000:0278 | community | supportsGetObjectPropList |
+| Gpd Win Max 2 | a000:0279 | community | supportsGetObjectPropList |
+| Gpd Pocket 4 | a000:027a | community | supportsGetObjectPropList |
+| Onexplayer 2 Pro Amd | a000:027b | community | supportsGetObjectPropList |
+| Onexplayer X1 Amd | a000:027c | community | supportsGetObjectPropList |
+| Onexplayer Mini Pro V2 | a000:027d | community | supportsGetObjectPropList |
+| Onexplayer F1 Pro | a000:027e | community | supportsGetObjectPropList |
+| Ayn Loki Max 6800u | a000:027f | community | supportsGetObjectPropList |
+| Ayn Loki Zero | a000:0280 | community | supportsGetObjectPropList |
+| Ayn Odin2 Mini Android | a000:0281 | community | supportsGetObjectPropList |
+| Ayn Odin2 Portal | a000:0282 | community | supportsGetObjectPropList |
+| Retroid Pocket 4 Pro | a000:0283 | community | supportsGetObjectPropList |
+| Retroid Pocket Mini V2 | a000:0284 | community | supportsGetObjectPropList |
+| Retroid Pocket Flip | a000:0285 | community | supportsGetObjectPropList |
+| Anbernic Rg556 Android | a000:0286 | community | supportsGetObjectPropList |
+| Anbernic Rg Arc S | a000:0287 | community | supportsGetObjectPropList |
+| Anbernic Rg405m | a000:0288 | community | supportsGetObjectPropList |
+| Anbernic Rg505 Android | a000:0289 | community | supportsGetObjectPropList |
+| Anbernic Rg35xx Sp | a000:028a | community | supportsGetObjectPropList |
+| Miyoo Mini Plus V4 | a000:028b | community | supportsGetObjectPropList |
+| Miyoo A30 Retro | a000:028c | community | supportsGetObjectPropList |
+| Powkiddy X55 Retro | a000:028d | community | supportsGetObjectPropList |
+| Powkiddy Rgb30 Retro | a000:028e | community | supportsGetObjectPropList |
+| Trimui Smart Pro | a000:028f | community | supportsGetObjectPropList |
+| Trimui Brick | a000:0290 | community | supportsGetObjectPropList |
+| Razer Edge 5g Gaming | a000:0291 | community | supportsGetObjectPropList |
+| Logitech G Cloud 2 | a000:0292 | community | supportsGetObjectPropList |
+| Elegoo Saturn 4 Ultra | a000:0293 | community | supportsGetObjectPropList |
+| Elegoo Saturn 3 Ultra | a000:0294 | community | supportsGetObjectPropList |
+| Elegoo Mars 5 Ultra | a000:0295 | community | supportsGetObjectPropList |
+| Elegoo Mars 4 Max | a000:0296 | community | supportsGetObjectPropList |
+| Elegoo Neptune 4 Max Fdm | a000:0297 | community | supportsGetObjectPropList |
+| Elegoo Neptune 4 Plus | a000:0298 | community | supportsGetObjectPropList |
+| Elegoo Neptune 4 Pro | a000:0299 | community | supportsGetObjectPropList |
+| Elegoo Neptune 4 Base | a000:029a | community | supportsGetObjectPropList |
+| Elegoo Neptune 3 Max | a000:029b | community | supportsGetObjectPropList |
+| Elegoo Centauri Carbon | a000:029c | community | supportsGetObjectPropList |
+| Anycubic Photon Mono M7 | a000:029d | community | supportsGetObjectPropList |
+| Anycubic Photon Mono M5s | a000:029e | community | supportsGetObjectPropList |
+| Anycubic Photon D2 | a000:029f | community | supportsGetObjectPropList |
+| Anycubic Kobra 3 Combo Ams | a000:02a0 | community | supportsGetObjectPropList |
+| Anycubic Kobra 2 Max | a000:02a1 | community | supportsGetObjectPropList |
+| Anycubic Kobra 2 Plus | a000:02a2 | community | supportsGetObjectPropList |
+| Anycubic Kobra 2 Neo | a000:02a3 | community | supportsGetObjectPropList |
+| Anycubic Kobra 2 Pro | a000:02a4 | community | supportsGetObjectPropList |
+| Qidi X Plus 3 | a000:02a5 | community | supportsGetObjectPropList |
+| Qidi X Max 3 | a000:02a6 | community | supportsGetObjectPropList |
+| Qidi X Smart 3 | a000:02a7 | community | supportsGetObjectPropList |
+| Qidi Q1 Pro | a000:02a8 | community | supportsGetObjectPropList |
+| Qidi Ifast Industrial | a000:02a9 | community | supportsGetObjectPropList |
+| Flashforge Adventurer 5m Base | a000:02aa | community | supportsGetObjectPropList |
+| Flashforge Creator 4s | a000:02ab | community | supportsGetObjectPropList |
+| Flashforge Guider 3 Plus | a000:02ac | community | supportsGetObjectPropList |
+| Flashforge Foto 13 3 Resin | a000:02ad | community | supportsGetObjectPropList |
+| Flashforge Hunter S | a000:02ae | community | supportsGetObjectPropList |
+| Sovol Sv08 Corexy | a000:02af | community | supportsGetObjectPropList |
+| Sovol Sv07 Plus | a000:02b0 | community | supportsGetObjectPropList |
+| Sovol Sv06 Plus | a000:02b1 | community | supportsGetObjectPropList |
+| Sovol Sv04 Idex | a000:02b2 | community | supportsGetObjectPropList |
+| Sovol Sv09 Direct | a000:02b3 | community | supportsGetObjectPropList |
+| Creality K1c Carbon | a000:02b4 | community | supportsGetObjectPropList |
+| Creality K1 Max Ai | a000:02b5 | community | supportsGetObjectPropList |
+| Creality Ender 3 V3 Ke | a000:02b6 | community | supportsGetObjectPropList |
+| Creality Ender 3 V3 Plus | a000:02b7 | community | supportsGetObjectPropList |
+| Creality Halot Mage 8k | a000:02b8 | community | supportsGetObjectPropList |
+| Creality Cr M4 Large | a000:02b9 | community | supportsGetObjectPropList |
+| Bambu Lab A1 Mini Ams | a000:02ba | community | supportsGetObjectPropList |
+| Bambu Lab A1 Combo | a000:02bb | community | supportsGetObjectPropList |
+| Bambu Lab P1s Combo Ams | a000:02bc | community | supportsGetObjectPropList |
+| Bambu Lab X1c Combo | a000:02bd | community | supportsGetObjectPropList |
+| Phrozen Sonic Mega 8k | a000:02be | community | supportsGetObjectPropList |
+| Phrozen Sonic Mini 8k S | a000:02bf | community | supportsGetObjectPropList |
+| Peopoly Phenom Xxl | a000:02c0 | community | supportsGetObjectPropList |
+| Longer Orange 4k Resin | a000:02c1 | community | supportsGetObjectPropList |
+| Longer Lk5 Pro Fdm | a000:02c2 | community | supportsGetObjectPropList |
+| Voxelab Aquila X3 Fdm | a000:02c3 | community | supportsGetObjectPropList |
+| Artillery Genius Pro 2 | a000:02c4 | community | supportsGetObjectPropList |
+| Xgimi Horizon Ultra 4k Laser | a000:02c5 | community | supportsGetObjectPropList |
+| Xgimi Horizon S Max | a000:02c6 | community | supportsGetObjectPropList |
+| Xgimi Horizon S Pro | a000:02c7 | community | supportsGetObjectPropList |
+| Xgimi Halo Plus Fhd Portable | a000:02c8 | community | supportsGetObjectPropList |
+| Xgimi Mogo 3 Pro | a000:02c9 | community | supportsGetObjectPropList |
+| Xgimi Mogo 2 Base | a000:02ca | community | supportsGetObjectPropList |
+| Xgimi Elfin Flip | a000:02cb | community | supportsGetObjectPropList |
+| Xgimi Aladdin Ceiling | a000:02cc | community | supportsGetObjectPropList |
+| Dangbei Mars Pro 2 4k | a000:02cd | community | supportsGetObjectPropList |
+| Dangbei Atom 1080p | a000:02ce | community | supportsGetObjectPropList |
+| Dangbei Atom Laser Fhd | a000:02cf | community | supportsGetObjectPropList |
+| Dangbei Neo Portable | a000:02d0 | community | supportsGetObjectPropList |
+| Dangbei X5 Pro Laser | a000:02d1 | community | supportsGetObjectPropList |
+| Dangbei D5x Pro | a000:02d2 | community | supportsGetObjectPropList |
+| Dangbei Evo Gaming | a000:02d3 | community | supportsGetObjectPropList |
+| Jmgo N1s Ultra 4k Laser | a000:02d4 | community | supportsGetObjectPropList |
+| Jmgo N1s Pro 4k | a000:02d5 | community | supportsGetObjectPropList |
+| Jmgo N1s 1080p | a000:02d6 | community | supportsGetObjectPropList |
+| Jmgo O2 Ultra Ust | a000:02d7 | community | supportsGetObjectPropList |
+| Jmgo O1s Ust Laser | a000:02d8 | community | supportsGetObjectPropList |
+| Jmgo O2s Ust 4k | a000:02d9 | community | supportsGetObjectPropList |
+| Jmgo Explorer Portable | a000:02da | community | supportsGetObjectPropList |
+| Samsung Freestyle 2nd | a000:02db | community | supportsGetObjectPropList |
+| Samsung Premiere 9 Ust | a000:02dc | community | supportsGetObjectPropList |
+| Lg Cinebeam Qu915qb | a000:02dd | community | supportsGetObjectPropList |
+| Lg Cinebeam Hu710pw | a000:02de | community | supportsGetObjectPropList |
+| Lg Pf50ka Portable | a000:02df | community | supportsGetObjectPropList |
+| Epson Ef21 Laser Fhd | a000:02e0 | community | supportsGetObjectPropList |
+| Epson Ef12 Smartmedia | a000:02e1 | community | supportsGetObjectPropList |
+| Benq Ew2880u 4k | a000:02e2 | community | supportsGetObjectPropList |
+| Benq Gv50 Portable | a000:02e3 | community | supportsGetObjectPropList |
+| Benq Gp20 4k Portable | a000:02e4 | community | supportsGetObjectPropList |
+| Benq Ew600 Smartproj | a000:02e5 | community | supportsGetObjectPropList |
+| Viewsonic M1 Pro Portable | a000:02e6 | community | supportsGetObjectPropList |
+| Viewsonic X2 4k Gaming | a000:02e7 | community | supportsGetObjectPropList |
+| Anker Nebula Capsule 3 | a000:02e8 | community | supportsGetObjectPropList |
+| Anker Nebula Cosmos 4k | a000:02e9 | community | supportsGetObjectPropList |
+| Anker Nebula Mars 3 Air | a000:02ea | community | supportsGetObjectPropList |
+| Optoma Gt2100hdr Gaming | a000:02eb | community | supportsGetObjectPropList |
+| Optoma Uhz66lv Laser | a000:02ec | community | supportsGetObjectPropList |
+| Formovie Theater Ust | a000:02ed | community | supportsGetObjectPropList |
+| Formovie Xming Page One | a000:02ee | community | supportsGetObjectPropList |
+| Wemax Nova Ust Laser | a000:02ef | community | supportsGetObjectPropList |
+| Hisense Px3 Pro Ust | a000:02f0 | community | supportsGetObjectPropList |
+| Hisense C1 Mini Portable | a000:02f1 | community | supportsGetObjectPropList |
+| Apple Homepod Mini Matter | a000:02f2 | community | supportsGetObjectPropList |
+| Apple Homepod 2nd Matter | a000:02f3 | community | supportsGetObjectPropList |
+| Apple Tv 4k Thread Border | a000:02f4 | community | supportsGetObjectPropList |
+| Google Nest Hub 2nd Matter | a000:02f5 | community | supportsGetObjectPropList |
+| Google Nest Hub Max Matter | a000:02f6 | community | supportsGetObjectPropList |
+| Google Nest Wifi Pro Thread | a000:02f7 | community | supportsGetObjectPropList |
+| Google Nest Mini 2nd Matter | a000:02f8 | community | supportsGetObjectPropList |
+| Amazon Echo 4th Matter | a000:02f9 | community | supportsGetObjectPropList |
+| Amazon Echo Hub Matter | a000:02fa | community | supportsGetObjectPropList |
+| Amazon Echo Show 15 Matter | a000:02fb | community | supportsGetObjectPropList |
+| Amazon Echo Dot 5th Matter | a000:02fc | community | supportsGetObjectPropList |
+| Amazon Eero Pro 6e Thread | a000:02fd | community | supportsGetObjectPropList |
+| Amazon Eero 6 Plus Thread | a000:02fe | community | supportsGetObjectPropList |
+| Samsung Smartthings V3 Hub | a000:02ff | community | supportsGetObjectPropList |
+| Samsung Smartthings Station | a000:0300 | community | supportsGetObjectPropList |
+| Samsung Smartthings Dongle | a000:0301 | community | supportsGetObjectPropList |
+| Aqara M3 Hub Matter | a000:0302 | community | supportsGetObjectPropList |
+| Aqara M2 Hub Zigbee | a000:0303 | community | supportsGetObjectPropList |
+| Aqara Camera Hub G3 | a000:0304 | community | supportsGetObjectPropList |
+| Aqara Presence Sensor Fp2 | a000:0305 | community | supportsGetObjectPropList |
+| Sonoff Zigbee Dongle E | a000:0306 | community | supportsGetObjectPropList |
+| Sonoff Zigbee Dongle P | a000:0307 | community | supportsGetObjectPropList |
+| Sonoff Nspanel Pro Matter | a000:0308 | community | supportsGetObjectPropList |
+| Sonoff Ihost Smart Hub | a000:0309 | community | supportsGetObjectPropList |
+| Conbee Iii Zigbee USB | a000:030a | community | supportsGetObjectPropList |
+| Conbee Ii Zigbee USB | a000:030b | community | supportsGetObjectPropList |
+| Skyconnect Thread Zigbee | a000:030c | community | supportsGetObjectPropList |
+| Home Assistant Green Hub | a000:030d | community | supportsGetObjectPropList |
+| Home Assistant Yellow Hub | a000:030e | community | supportsGetObjectPropList |
+| Nordic Thread Dongle Nrf52 | a000:030f | community | supportsGetObjectPropList |
+| Silicon Labs Thread Border | a000:0310 | community | supportsGetObjectPropList |
+| Eve Energy Matter Thread | a000:0311 | community | supportsGetObjectPropList |
+| Eve Motion Matter Thread | a000:0312 | community | supportsGetObjectPropList |
+| Eve Door Window Matter | a000:0313 | community | supportsGetObjectPropList |
+| Nanoleaf Essentials Matter | a000:0314 | community | supportsGetObjectPropList |
+| Nanoleaf Shapes Matter USB | a000:0315 | community | supportsGetObjectPropList |
+| Philips Hue Bridge V2 Matter | a000:0316 | community | supportsGetObjectPropList |
+| Philips Hue Tap Dial Matter | a000:0317 | community | supportsGetObjectPropList |
+| Ikea Dirigera Hub Matter | a000:0318 | community | supportsGetObjectPropList |
+| Ikea Tradfri USB Signal | a000:0319 | community | supportsGetObjectPropList |
+| Tp Link Tapo H200 Hub | a000:031a | community | supportsGetObjectPropList |
+| Tp Link Tapo Matter Plug | a000:031b | community | supportsGetObjectPropList |
+| Meross Matter Hub USB | a000:031c | community | supportsGetObjectPropList |
+| Tuya Zigbee 3 Gateway USB | a000:031d | community | supportsGetObjectPropList |
+| Hubitat Elevation C8 Pro | a000:031e | community | supportsGetObjectPropList |
+| Reolink Rlc 810a Poe USB | a000:031f | community | supportsGetObjectPropList |
+| Reolink Rlc 811a Poe USB | a000:0320 | community | supportsGetObjectPropList |
+| Reolink Rlc 823a Poe USB | a000:0321 | community | supportsGetObjectPropList |
+| Reolink Rlc 842a 8mp USB | a000:0322 | community | supportsGetObjectPropList |
+| Reolink Cx810 Colorx USB | a000:0323 | community | supportsGetObjectPropList |
+| Reolink Trackmix Poe USB | a000:0324 | community | supportsGetObjectPropList |
+| Reolink Duo 3 Poe USB | a000:0325 | community | supportsGetObjectPropList |
+| Reolink Rlc 1224a 12mp USB | a000:0326 | community | supportsGetObjectPropList |
+| Amcrest Ip8m 2693ew USB | a000:0327 | community | supportsGetObjectPropList |
+| Amcrest Ip5m T1179ew USB | a000:0328 | community | supportsGetObjectPropList |
+| Amcrest Ip4m 1051w USB | a000:0329 | community | supportsGetObjectPropList |
+| Amcrest Ad410 Doorbell USB | a000:032a | community | supportsGetObjectPropList |
+| Amcrest Asr1004 Nvr USB | a000:032b | community | supportsGetObjectPropList |
+| Lorex E893ab 4k USB | a000:032c | community | supportsGetObjectPropList |
+| Lorex E896ab 4k Det USB | a000:032d | community | supportsGetObjectPropList |
+| Lorex W482ca 2k USB | a000:032e | community | supportsGetObjectPropList |
+| Lorex Lnr600 Nvr USB | a000:032f | community | supportsGetObjectPropList |
+| Lorex D871ab USB | a000:0330 | community | supportsGetObjectPropList |
+| Ubiquiti G5 Pro USB | a000:0331 | community | supportsGetObjectPropList |
+| Ubiquiti G5 Bullet USB | a000:0332 | community | supportsGetObjectPropList |
+| Ubiquiti G5 Turret Ultra USB | a000:0333 | community | supportsGetObjectPropList |
+| Ubiquiti G5 Flex USB | a000:0334 | community | supportsGetObjectPropList |
+| Ubiquiti Ai Pro USB | a000:0335 | community | supportsGetObjectPropList |
+| Ubiquiti Ai 360 USB | a000:0336 | community | supportsGetObjectPropList |
+| Ubiquiti G4 Doorbell Pro USB | a000:0337 | community | supportsGetObjectPropList |
+| Ubiquiti Unvr Pro USB | a000:0338 | community | supportsGetObjectPropList |
+| Ubiquiti Viewport USB | a000:0339 | community | supportsGetObjectPropList |
+| Dahua Ipc Hfw3849t1 USB | a000:033a | community | supportsGetObjectPropList |
+| Dahua Ipc Hdw3849h USB | a000:033b | community | supportsGetObjectPropList |
+| Dahua Nvr608h Xi USB | a000:033c | community | supportsGetObjectPropList |
+| Hanwha Xno 8080r USB | a000:033d | community | supportsGetObjectPropList |
+| Hanwha Xnd 8080rv USB | a000:033e | community | supportsGetObjectPropList |
+| Hanwha Pno A9081r USB | a000:033f | community | supportsGetObjectPropList |
+| Axis P3268 Lv USB | a000:0340 | community | supportsGetObjectPropList |
+| Axis M4318 Plve USB | a000:0341 | community | supportsGetObjectPropList |
+| Axis Q6135 Le Ptz USB | a000:0342 | community | supportsGetObjectPropList |
+| Vivotek Ib9393 Eht USB | a000:0343 | community | supportsGetObjectPropList |
+| Vivotek Fd9187 Eht USB | a000:0344 | community | supportsGetObjectPropList |
+| Eufy E340 Dual USB | a000:0345 | community | supportsGetObjectPropList |
+| Eufy S350 4k USB | a000:0346 | community | supportsGetObjectPropList |
+| Eufy S100 Homebase USB | a000:0347 | community | supportsGetObjectPropList |
+| Tp Link Vigi C540v USB | a000:0348 | community | supportsGetObjectPropList |
+| Tp Link Vigi C445 USB | a000:0349 | community | supportsGetObjectPropList |
+| Tp Link Vigi Nvr1008h USB | a000:034a | community | supportsGetObjectPropList |
+| Annke C800 4k Poe USB | a000:034b | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab S10 Ultra 5g | a000:034c | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab S10 Plus | a000:034d | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab S10 Fe | a000:034e | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab S9 Ultra | a000:034f | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab S9 Plus | a000:0350 | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab S9 Base | a000:0351 | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab S9 Fe 5g | a000:0352 | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab S9 Fe Wifi | a000:0353 | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab A9 Plus Lte | a000:0354 | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab A9 Base | a000:0355 | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab S8 Ultra | a000:0356 | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab Active5 | a000:0357 | community | supportsGetObjectPropList |
+| Samsung Galaxy Tab Active4 Pro | a000:0358 | community | supportsGetObjectPropList |
+| Lenovo Tab P12 Pro 5g | a000:0359 | community | supportsGetObjectPropList |
+| Lenovo Tab P12 | a000:035a | community | supportsGetObjectPropList |
+| Lenovo Tab P11 Pro Gen2 | a000:035b | community | supportsGetObjectPropList |
+| Lenovo Tab P11 Gen2 | a000:035c | community | supportsGetObjectPropList |
+| Lenovo Tab M11 | a000:035d | community | supportsGetObjectPropList |
+| Lenovo Tab M10 Plus 3rd | a000:035e | community | supportsGetObjectPropList |
+| Lenovo Tab M9 | a000:035f | community | supportsGetObjectPropList |
+| Lenovo Tab K11 Plus | a000:0360 | community | supportsGetObjectPropList |
+| Lenovo Yoga Tab 13 | a000:0361 | community | supportsGetObjectPropList |
+| Amazon Fire Max 11 | a000:0362 | community | supportsGetObjectPropList |
+| Amazon Fire Hd 10 | a000:0363 | community | supportsGetObjectPropList |
+| Amazon Fire Hd 10 Plus | a000:0364 | community | supportsGetObjectPropList |
+| Amazon Fire Hd 8 | a000:0365 | community | supportsGetObjectPropList |
+| Amazon Fire Hd 8 Plus | a000:0366 | community | supportsGetObjectPropList |
+| Amazon Fire 7 | a000:0367 | community | supportsGetObjectPropList |
+| Amazon Fire Kids Pro 11 | a000:0368 | community | supportsGetObjectPropList |
+| Google Pixel Tablet 2 | a000:0369 | community | supportsGetObjectPropList |
+| Google Pixel Tablet Charging | a000:036a | community | supportsGetObjectPropList |
+| Oneplus Pad 2 | a000:036b | community | supportsGetObjectPropList |
+| Oneplus Pad Go | a000:036c | community | supportsGetObjectPropList |
+| Xiaomi Pad 7 Pro 5g | a000:036d | community | supportsGetObjectPropList |
+| Xiaomi Pad 7 Base | a000:036e | community | supportsGetObjectPropList |
+| Xiaomi Pad 6s Pro 124 | a000:036f | community | supportsGetObjectPropList |
+| Xiaomi Redmi Pad Se 87 | a000:0370 | community | supportsGetObjectPropList |
+| Oppo Pad 3 | a000:0371 | community | supportsGetObjectPropList |
+| Oppo Pad Neo | a000:0372 | community | supportsGetObjectPropList |
+| Realme Pad 2 Mini | a000:0373 | community | supportsGetObjectPropList |
+| Nokia T21 Tablet | a000:0374 | community | supportsGetObjectPropList |
+| Tcl Nxtpaper 14 Pro | a000:0375 | community | supportsGetObjectPropList |
+| Honor Pad 9 Hey2 W09 | a000:0376 | community | supportsGetObjectPropList |
+| Huawei Matepad Pro 132 | a000:0377 | community | supportsGetObjectPropList |
+| Huawei Matepad Air | a000:0378 | community | supportsGetObjectPropList |
+| Roku Ultra 2024 USB | a000:0379 | community | supportsGetObjectPropList |
+| Roku Streaming Stick 4k | a000:037a | community | supportsGetObjectPropList |
+| Roku Streaming Stick 4k Plus | a000:037b | community | supportsGetObjectPropList |
+| Roku Express 4k 2024 USB | a000:037c | community | supportsGetObjectPropList |
+| Roku Express Hd USB | a000:037d | community | supportsGetObjectPropList |
+| Roku Streambar Pro USB | a000:037e | community | supportsGetObjectPropList |
+| Roku Streambar Se USB | a000:037f | community | supportsGetObjectPropList |
+| Roku Tv Wireless Bass | a000:0380 | community | supportsGetObjectPropList |
+| Apple Tv 4k 3rd Usbc | a000:0381 | community | supportsGetObjectPropList |
+| Apple Tv 4k Wifi 6e Usbc | a000:0382 | community | supportsGetObjectPropList |
+| Nvidia Shield Tv Pro | a000:0383 | community | supportsGetObjectPropList |
+| Nvidia Shield Tv 2022 USB | a000:0384 | community | supportsGetObjectPropList |
+| Nvidia Shield Tv Pro Plex | a000:0385 | community | supportsGetObjectPropList |
+| Chromecast 4k Gvnz7 | a000:0386 | community | supportsGetObjectPropList |
+| Chromecast Hd | a000:0387 | community | supportsGetObjectPropList |
+| Amazon Fire Tv Stick 4k Max 2nd | a000:0388 | community | supportsGetObjectPropList |
+| Amazon Fire Tv Stick 4k | a000:0389 | community | supportsGetObjectPropList |
+| Amazon Fire Tv Cube 3rd USB | a000:038a | community | supportsGetObjectPropList |
+| Amazon Fire Tv Soundbar | a000:038b | community | supportsGetObjectPropList |
+| Xiaomi Tv Box S 2nd | a000:038c | community | supportsGetObjectPropList |
+| Xiaomi Tv Stick 4k | a000:038d | community | supportsGetObjectPropList |
+| Mecool Km2 Plus Deluxe Atv | a000:038e | community | supportsGetObjectPropList |
+| Mecool Km7 Plus Atv | a000:038f | community | supportsGetObjectPropList |
+| Mecool Kp1 Projector Atv | a000:0390 | community | supportsGetObjectPropList |
+| Beelink Gt King Ii | a000:0391 | community | supportsGetObjectPropList |
+| Beelink Gs King X | a000:0392 | community | supportsGetObjectPropList |
+| Ugoos Am7 Amlogic S905x4 | a000:0393 | community | supportsGetObjectPropList |
+| Ugoos Ut8 Pro Rk3568 | a000:0394 | community | supportsGetObjectPropList |
+| Formuler Z11 Pro Max | a000:0395 | community | supportsGetObjectPropList |
+| Formuler Z10 Se Iptv | a000:0396 | community | supportsGetObjectPropList |
+| Dune Hd Homatics R4k Plus | a000:0397 | community | supportsGetObjectPropList |
+| Homatics Box R 4k Plus | a000:0398 | community | supportsGetObjectPropList |
+| Homatics Dongle Q Atv | a000:0399 | community | supportsGetObjectPropList |
+| Minix Neo U22 Xj Atv | a000:039a | community | supportsGetObjectPropList |
+| Wd Tv Live Gen3 USB | a000:039b | community | supportsGetObjectPropList |
+| Zidoo Z9x Pro USB | a000:039c | community | supportsGetObjectPropList |
+| Zidoo Z20 Pro USB | a000:039d | community | supportsGetObjectPropList |
+| Himedia Q20 Pro USB | a000:039e | community | supportsGetObjectPropList |
+| Popcorn Hour A510 USB | a000:039f | community | supportsGetObjectPropList |
+| Kodi Vero V USB | a000:03a0 | community | supportsGetObjectPropList |
+| Kodi Vero 4k Plus | a000:03a1 | community | supportsGetObjectPropList |
+| Tvip S Box V710 USB | a000:03a2 | community | supportsGetObjectPropList |
+| Magenta Tv One USB | a000:03a3 | community | supportsGetObjectPropList |
+| Vodafone Tv 4k USB | a000:03a4 | community | supportsGetObjectPropList |
+| Skyworth Binge Atv USB | a000:03a5 | community | supportsGetObjectPropList |
+| Garmin Montana 750i Gps | a000:03a6 | community | — |
+| Garmin Montana 700 Gps | a000:03a7 | community | — |
+| Garmin Montana 700i Gps | a000:03a8 | community | — |
+| Garmin Oregon 700 Gps | a000:03a9 | community | — |
+| Garmin Oregon 750t Gps | a000:03aa | community | — |
+| Garmin Etrex 22x Gps | a000:03ab | community | — |
+| Garmin Etrex 32x Gps | a000:03ac | community | — |
+| Garmin Etrex Se Gps | a000:03ad | community | — |
+| Garmin Gpsmap 67i | a000:03ae | community | — |
+| Garmin Gpsmap 67 Gps | a000:03af | community | — |
+| Garmin Gpsmap 66i Gps | a000:03b0 | community | — |
+| Garmin Gpsmap 66sr Gps | a000:03b1 | community | — |
+| Garmin Gpsmap 66st Gps | a000:03b2 | community | — |
+| Garmin Gpsmap 65s Gps | a000:03b3 | community | — |
+| Garmin Gpsmap 65 Gps | a000:03b4 | community | — |
+| Garmin Gpsmap 276cx Gps | a000:03b5 | community | — |
+| Garmin Overlander Gps | a000:03b6 | community | — |
+| Garmin Tread Sx Ohv Gps | a000:03b7 | community | — |
+| Garmin Zumo Xt2 Moto Gps | a000:03b8 | community | — |
+| Garmin Zumo 396 Moto Gps | a000:03b9 | community | — |
+| Garmin Drivesmart 76 Gps | a000:03ba | community | — |
+| Garmin Drivesmart 66 Gps | a000:03bb | community | — |
+| Garmin Rv 1095 Gps | a000:03bc | community | — |
+| Garmin Rv 895 Gps | a000:03bd | community | — |
+| Garmin Dezl Otr1010 Gps | a000:03be | community | — |
+| Garmin Dezl Otr810 Gps | a000:03bf | community | — |
+| Garmin Dezl Otr610 Gps | a000:03c0 | community | — |
+| Garmin Inreach Mini 2 | a000:03c1 | community | — |
+| Garmin Inreach Messenger | a000:03c2 | community | — |
+| Garmin Inreach Explorer Plus | a000:03c3 | community | — |
+| Garmin Edge 1050 Cycling | a000:03c4 | community | — |
+| Garmin Edge 840 Cycling | a000:03c5 | community | — |
+| Garmin Edge 540 Cycling | a000:03c6 | community | — |
+| Garmin Edge Explore 2 Gps | a000:03c7 | community | — |
+| Garmin Rally Rk200 Power | a000:03c8 | community | — |
+| Magellan Explorist 710 Gps | a000:03c9 | community | — |
+| Lowrance Ifinder Expedition | a000:03ca | community | — |
+| Satmap Active 20 Gps | a000:03cb | community | — |
+| Twonav Cross Plus Gps | a000:03cc | community | — |
+| Twonav Trail 2 Bike Gps | a000:03cd | community | — |
+| Wahoo Elemnt Roam V2 Gps | a000:03ce | community | — |
+| Wahoo Elemnt Bolt V2 Gps | a000:03cf | community | — |
+| Hammerhead Karoo 3 Gps | a000:03d0 | community | — |
+| Bryton Rider S800 Gps | a000:03d1 | community | — |
+| Lezyne Mega C Gps | a000:03d2 | community | — |
+| Carlinkit 4 Wireless Carplay | b000:0001 | experimental | — |
+| Carlinkit 5 USB Dongle | b000:0002 | experimental | — |
+| Carlinkit Tbox Plus | b000:0003 | experimental | — |
+| Ottocast U2 Air Carplay | b000:0004 | experimental | — |
+| Ottocast U2 X Pro | b000:0005 | experimental | — |
+| Ottocast Picasou2 | b000:0006 | experimental | — |
+| Cplay2air Wireless Adapter | b000:0007 | experimental | — |
+| Autosky Wireless Carplay Dongle | b000:0008 | experimental | — |
+| Thinkcar Carplay Ai Box | b000:0009 | experimental | — |
+| Loadkey Carplay Dongle | b000:000a | experimental | — |
+| Aawireless Android Auto | b000:000b | experimental | — |
+| Motorola Ma1 Android Auto | b000:000c | experimental | — |
+| Carsifi Wireless Aa Adapter | b000:000d | experimental | — |
+| Aadongle Wireless Aa | b000:000e | experimental | — |
+| Indash Wireless Aa Dongle | b000:000f | experimental | — |
+| Nulaxy Km18 Fm Transmitter | b000:0010 | experimental | — |
+| Nulaxy Km28 Fm Transmitter | b000:0011 | experimental | — |
+| Roav Smartcharge F2 | b000:0012 | experimental | — |
+| Anker Roav F0 Transmitter | b000:0013 | experimental | — |
+| Sumind Bt70b Fm Transmitter | b000:0014 | experimental | — |
+| Lihan Fm Transmitter USB | b000:0015 | experimental | — |
+| Imden C57 Fm Transmitter | b000:0016 | experimental | — |
+| Guanda Fm Transmitter Aux | b000:0017 | experimental | — |
+| Criacr Cp24 Fm Transmitter | b000:0018 | experimental | — |
+| Tecboss Tb27 Fm Transmitter | b000:0019 | experimental | — |
+| Obdlink Sx USB Scan | b000:001a | experimental | — |
+| Obdlink Ex USB Ford | b000:001b | experimental | — |
+| Vgate Vlinker Fs USB | b000:001c | experimental | — |
+| Vgate Vlinker Mc USB | b000:001d | experimental | — |
+| Autel Maxiap Ap200 USB | b000:001e | experimental | — |
+| Launch Thinkdiag USB | b000:001f | experimental | — |
+| Ancel Ad310 Obd2 | b000:0020 | experimental | — |
+| Bluedriver Pro USB Obd2 | b000:0021 | experimental | — |
+| Viofo A129 USB Adapter | b000:0022 | experimental | — |
+| Blackvue Dr900x USB | b000:0023 | experimental | — |
+| Thinkware U3000 USB | b000:0024 | experimental | — |
+| Rexing V1 USB Adapter | b000:0025 | experimental | — |
+| Garmin Dash Mini2 USB | b000:0026 | experimental | — |
+| Pioneer Sph Da160dab | b000:0027 | experimental | — |
+| Kenwood Dmx958xr USB | b000:0028 | experimental | — |
+| Alpine Ilx W670 USB | b000:0029 | experimental | — |
+| Sony Xav Ax7000 USB | b000:002a | experimental | — |
+| Jvc Kw M785bw USB | b000:002b | experimental | — |
+| Boss Bvcp9700a USB | b000:002c | experimental | — |
+| Atoto S8 Premium USB | b000:002d | experimental | — |
+| Dasaita Vivid USB | b000:002e | experimental | — |
+| Bosch Gll3 330cg Laser | b000:002f | experimental | — |
+| Bosch Grl4000 80chvk | b000:0030 | experimental | — |
+| Bosch Glm400cl Laser | b000:0031 | experimental | — |
+| Dewalt Dw089lr Laser Level | b000:0032 | experimental | — |
+| Dewalt Dw0822lr Laser | b000:0033 | experimental | — |
+| Dewalt Dce089d1g Laser | b000:0034 | experimental | — |
+| Leica Lino L6g Laser | b000:0035 | experimental | — |
+| Leica Rugby Cli Laser | b000:0036 | experimental | — |
+| Hilti Pm 40mg Laser | b000:0037 | experimental | — |
+| Hilti Pmc 46 Laser | b000:0038 | experimental | — |
+| Stabila La 180g Laser | b000:0039 | experimental | — |
+| Huepar S04cg Laser | b000:003a | experimental | — |
+| Topcon Rl H5a Laser | b000:003b | experimental | — |
+| Spectra Ll500 Laser | b000:003c | experimental | — |
+| Geo Fennel Fl 265hv | b000:003d | experimental | — |
+| Leica Ts16 Total Station | b000:003e | experimental | — |
+| Leica Ts07 Total Station | b000:003f | experimental | — |
+| Trimble S9 Total Station | b000:0040 | experimental | — |
+| Trimble Sx12 Total Station | b000:0041 | experimental | — |
+| Topcon Gt 1003 Total Station | b000:0042 | experimental | — |
+| Topcon Ds 200i Total Station | b000:0043 | experimental | — |
+| Sokkia Ix 1003 Total Station | b000:0044 | experimental | — |
+| Nikon Xs Total Station | b000:0045 | experimental | — |
+| South N6 Total Station | b000:0046 | experimental | — |
+| Kolida Kts 442r Total Station | b000:0047 | experimental | — |
+| Brinno Bcc2000 Construction | b000:0048 | experimental | — |
+| Brinno Bcc300 M Timelapse | b000:0049 | experimental | — |
+| Sensera Mc 30a Siteview | b000:004a | experimental | — |
+| Oxblue Construction Cam | b000:004b | experimental | — |
+| Earthcam Megapixelcam USB | b000:004c | experimental | — |
+| Tikee 3 Pro Timelapse | b000:004d | experimental | — |
+| Leica Disto D5 USB | b000:004e | experimental | — |
+| Leica Disto S910 USB | b000:004f | experimental | — |
+| Bosch Glm 50 27cg USB | b000:0050 | experimental | — |
+| Hilti Pd I USB | b000:0051 | experimental | — |
+| Stanley Tlm660 USB | b000:0052 | experimental | — |
+| Akai Mpk Mini Mk3 Midi | b000:0053 | experimental | — |
+| Akai Mpk Mini Play Mk3 | b000:0054 | experimental | — |
+| Akai Mpk261 Midi | b000:0055 | experimental | — |
+| Akai Mpk249 Midi | b000:0056 | experimental | — |
+| Akai Mpd226 Midi | b000:0057 | experimental | — |
+| Akai Mpd232 Midi | b000:0058 | experimental | — |
+| Akai Apc Mini Mk2 | b000:0059 | experimental | — |
+| Akai Apc Key 25 Mk2 | b000:005a | experimental | — |
+| Akai Apc40 Mkii Midi | b000:005b | experimental | — |
+| Akai Fire Fl Controller | b000:005c | experimental | — |
+| Akai Mpc One Plus | b000:005d | experimental | — |
+| Akai Mpc Live Ii | b000:005e | experimental | — |
+| Akai Mpc Key 61 | b000:005f | experimental | — |
+| Akai Force Controller | b000:0060 | experimental | — |
+| Novation Launchpad X | b000:0061 | experimental | — |
+| Novation Launchpad Pro Mk3 | b000:0062 | experimental | — |
+| Novation Launchpad Mini Mk3 | b000:0063 | experimental | — |
+| Novation Launchkey 37 Mk3 | b000:0064 | experimental | — |
+| Novation Launchkey 49 Mk3 | b000:0065 | experimental | — |
+| Novation Launchkey 61 Mk3 | b000:0066 | experimental | — |
+| Novation Launchkey 88 | b000:0067 | experimental | — |
+| Novation Flkey 37 | b000:0068 | experimental | — |
+| Novation Flkey Mini | b000:0069 | experimental | — |
+| Novation Sl Mkiii 61 | b000:006a | experimental | — |
+| Novation Circuit Tracks | b000:006b | experimental | — |
+| Novation Circuit Rhythm | b000:006c | experimental | — |
+| Arturia Keystep 37 | b000:006d | experimental | — |
+| Arturia Keystep Pro | b000:006e | experimental | — |
+| Arturia Minilab 3 | b000:006f | experimental | — |
+| Arturia Keylab Essential 49 | b000:0070 | experimental | — |
+| Arturia Keylab Essential 61 | b000:0071 | experimental | — |
+| Arturia Keylab Essential 88 | b000:0072 | experimental | — |
+| Arturia Keylab Mk2 61 | b000:0073 | experimental | — |
+| Arturia Beatstep Pro | b000:0074 | experimental | — |
+| Arturia Microfreak USB | b000:0075 | experimental | — |
+| Arturia Minibrute 2 USB | b000:0076 | experimental | — |
+| Ni Maschine Mk3 | b000:0077 | experimental | — |
+| Ni Maschine Plus | b000:0078 | experimental | — |
+| Ni Maschine Mikro Mk3 | b000:0079 | experimental | — |
+| Ni Komplete Kontrol S49 | b000:007a | experimental | — |
+| Ni Komplete Kontrol S61 | b000:007b | experimental | — |
+| Ni Komplete Kontrol S88 | b000:007c | experimental | — |
+| Ni Komplete Kontrol A25 | b000:007d | experimental | — |
+| Ni Komplete Kontrol M32 | b000:007e | experimental | — |
+| Ni Traktor Kontrol S2 Mk3 | b000:007f | experimental | — |
+| Ni Traktor Kontrol S4 Mk3 | b000:0080 | experimental | — |
+| Blue Yeti USB Mic | b000:0081 | experimental | — |
+| Blue Yeti X USB Mic | b000:0082 | experimental | — |
+| Blue Yeti Nano USB | b000:0083 | experimental | — |
+| Blue Snowball Ice USB | b000:0084 | experimental | — |
+| Blue Snowball USB Mic | b000:0085 | experimental | — |
+| Hyperx Quadcast S USB | b000:0086 | experimental | — |
+| Hyperx Quadcast USB Mic | b000:0087 | experimental | — |
+| Hyperx Solocast USB Mic | b000:0088 | experimental | — |
+| Hyperx Duocast USB Mic | b000:0089 | experimental | — |
+| Rode Nt USB Plus | b000:008a | experimental | — |
+| Rode Nt USB Mini | b000:008b | experimental | — |
+| Rode Podcaster USB | b000:008c | experimental | — |
+| Rode Ai Micro USB | b000:008d | experimental | — |
+| Rode Rodecaster Pro Ii | b000:008e | experimental | — |
+| Rode Rodecaster Duo | b000:008f | experimental | — |
+| Shure Mv7 USB Mic | b000:0090 | experimental | — |
+| Shure Mv7x USB Mic | b000:0091 | experimental | — |
+| Shure Mv88 Plus USB | b000:0092 | experimental | — |
+| Shure Mv51 USB Mic | b000:0093 | experimental | — |
+| Elgato Wave 3 USB Mic | b000:0094 | experimental | — |
+| Elgato Wave 1 USB Mic | b000:0095 | experimental | — |
+| Samson Q9u USB Mic | b000:0096 | experimental | — |
+| Samson G Track Pro USB | b000:0097 | experimental | — |
+| Audio Technica At2020usb X | b000:0098 | experimental | — |
+| Audio Technica At2005usb | b000:0099 | experimental | — |
+| Fifine K669b USB Mic | b000:009a | experimental | — |
+| Fifine Ampligame A8 USB | b000:009b | experimental | — |
+| Razer Seiren V3 Chroma | b000:009c | experimental | — |
+| Razer Seiren Mini USB | b000:009d | experimental | — |
+| Jlab Talk Pro USB Mic | b000:009e | experimental | — |
+| Maono Pd400x USB Mic | b000:009f | experimental | — |
+| Mackie Em USB Mic | b000:00a0 | experimental | — |
+| Pioneer Ddj Flx4 | b000:00a1 | experimental | — |
+| Pioneer Ddj Flx10 | b000:00a2 | experimental | — |
+| Pioneer Ddj Rev7 | b000:00a3 | experimental | — |
+| Pioneer Ddj | b000:00a4 | experimental | — |
+| Numark Mixtrack Pro Fx | b000:00a5 | experimental | — |
+| Numark Party Mix Ii | b000:00a6 | experimental | — |
+| Denon Mc6000 Mk2 USB | b000:00a7 | experimental | — |
+| Hercules Djcontrol Inpulse500 | b000:00a8 | experimental | — |
+| Roland Dj 707m | b000:00a9 | experimental | — |
+| Ableton Push 3 | b000:00aa | experimental | — |
+| Keith Mcmillen K Board Pro4 | b000:00ab | experimental | — |
+| Roli Seaboard Rise2 | b000:00ac | experimental | — |
+| Teenage Engineering Op 1 Field | b000:00ad | experimental | — |
+| Teenage Engineering Op Z | b000:00ae | experimental | — |
+| Korg Nanokontrol2 USB | b000:00af | experimental | — |
+| Korg Nanokey2 USB | b000:00b0 | experimental | — |
+| Korg Nanopad2 USB | b000:00b1 | experimental | — |
+| Korg Keystage 61 | b000:00b2 | experimental | — |
+| Korg Minilogue Xd USB | b000:00b3 | experimental | — |
+| Godox X2t C Trigger | b000:00b4 | experimental | — |
+| Godox X2t N Trigger | b000:00b5 | experimental | — |
+| Godox X2t S Trigger | b000:00b6 | experimental | — |
+| Godox X2t F Trigger | b000:00b7 | experimental | — |
+| Godox Xpro Ii C Trigger | b000:00b8 | experimental | — |
+| Godox Xpro Ii N Trigger | b000:00b9 | experimental | — |
+| Godox Xpro Ii S Trigger | b000:00ba | experimental | — |
+| Godox X3 C Trigger | b000:00bb | experimental | — |
+| Godox X3 N Trigger | b000:00bc | experimental | — |
+| Godox X3 S Trigger | b000:00bd | experimental | — |
+| Godox Ad200pro Flash | b000:00be | experimental | — |
+| Godox Ad600pro Flash | b000:00bf | experimental | — |
+| Godox V1 C Flash | b000:00c0 | experimental | — |
+| Godox V860iii C Flash | b000:00c1 | experimental | — |
+| Profoto Connect Pro Trigger | b000:00c2 | experimental | — |
+| Profoto A2 Flash USB | b000:00c3 | experimental | — |
+| Profoto B10 Plus USB | b000:00c4 | experimental | — |
+| Profoto D2 1000 USB | b000:00c5 | experimental | — |
+| Broncolor Siros 800 USB | b000:00c6 | experimental | — |
+| Elinchrom Five USB | b000:00c7 | experimental | — |
+| Flashpoint Xplor 600pro | b000:00c8 | experimental | — |
+| Yongnuo Yn686ex Rt USB | b000:00c9 | experimental | — |
+| Yongnuo Yn622c Ii Trigger | b000:00ca | experimental | — |
+| Neewer Q4 Flash USB | b000:00cb | experimental | — |
+| Xrite Colorchecker Passport | b000:00cc | experimental | — |
+| Xrite I1 Display Pro Plus | b000:00cd | experimental | — |
+| Calibrite Colorchecker Studio | b000:00ce | experimental | — |
+| Calibrite Display Plus Hl | b000:00cf | experimental | — |
+| Datacolor Spyderx Pro | b000:00d0 | experimental | — |
+| Datacolor Spyderx Elite | b000:00d1 | experimental | — |
+| Datacolor Spyder Checkr 24 | b000:00d2 | experimental | — |
+| Pixel Tw 283 Intervalometer | b000:00d3 | experimental | — |
+| Pixel T9 Intervalometer | b000:00d4 | experimental | — |
+| Neewer Timer Remote USB | b000:00d5 | experimental | — |
+| Vello Shutterboss Ii USB | b000:00d6 | experimental | — |
+| Miops Smart Trigger USB | b000:00d7 | experimental | — |
+| Miops Splash Trigger USB | b000:00d8 | experimental | — |
+| Pluto Trigger USB | b000:00d9 | experimental | — |
+| Tethertools Air Direct USB | b000:00da | experimental | — |
+| Camranger 2 USB Tether | b000:00db | experimental | — |
+| Case Relay USB Power Adapter | b000:00dc | experimental | — |
+| Canon Selphy Cp1500 USB | b000:00dd | experimental | — |
+| Canon Selphy Qx10 USB | b000:00de | experimental | — |
+| Fujifilm Instax Link Wide | b000:00df | experimental | — |
+| Hiti P525l Photo Printer | b000:00e0 | experimental | — |
+| Dnp Ds620a Photo Printer | b000:00e1 | experimental | — |
+| Mitsubishi Cp D90dw Printer | b000:00e2 | experimental | — |
+| Alstom Atlas Etcs USB | b000:00e3 | experimental | — |
+| Siemens Trainguard Mt USB | b000:00e4 | experimental | — |
+| Siemens Desiro Hmi USB | b000:00e5 | experimental | — |
+| Bombardier Mitrac USB | b000:00e6 | experimental | — |
+| Hitachi Rail Ats USB | b000:00e7 | experimental | — |
+| Thales Cbtc Logger USB | b000:00e8 | experimental | — |
+| Wabtec I Etms USB | b000:00e9 | experimental | — |
+| Knorr Bremse Ep2002 USB | b000:00ea | experimental | — |
+| Alstom Iconis Cbi USB | b000:00eb | experimental | — |
+| Caf Drive Controller USB | b000:00ec | experimental | — |
+| Hanning Kahl Signal USB | b000:00ed | experimental | — |
+| Westinghouse Relay Logger | b000:00ee | experimental | — |
+| Invensys Ssi Logger USB | b000:00ef | experimental | — |
+| Mermec Roger1000 USB | b000:00f0 | experimental | — |
+| Plasser Em120 USB Recorder | b000:00f1 | experimental | — |
+| Harsco Mark Iv USB Logger | b000:00f2 | experimental | — |
+| Strukton Rail Monitor USB | b000:00f3 | experimental | — |
+| Vossloh Rail Sensor USB | b000:00f4 | experimental | — |
+| Pandrol Fastclip Monitor USB | b000:00f5 | experimental | — |
+| Progress Rail Detector USB | b000:00f6 | experimental | — |
+| Trimble Rail Gps Tracker | b000:00f7 | experimental | — |
+| Queclink Gl300ma Rail Gps | b000:00f8 | experimental | — |
+| Calamp Ttg2400 Rail Gps | b000:00f9 | experimental | — |
+| Orbcomm St6100 Rail Gps | b000:00fa | experimental | — |
+| Geotab Go9 Rail Gps | b000:00fb | experimental | — |
+| Railcomm Rcc Gps USB | b000:00fc | experimental | — |
+| Savvy Telematic Rail Gps | b000:00fd | experimental | — |
+| Mecomo Dinibox Rail Gps | b000:00fe | experimental | — |
+| Nexxiot Sentinel Rail | b000:00ff | experimental | — |
+| Tego Rail Rfid Gps | b000:0100 | experimental | — |
+| Sperry Rail Detector USB | b000:0101 | experimental | — |
+| Mermec Archimede USB | b000:0102 | experimental | — |
+| Ensco Track Geometry USB | b000:0103 | experimental | — |
+| Holland Aurora Rail USB | b000:0104 | experimental | — |
+| Nordco Rail Grinder USB | b000:0105 | experimental | — |
+| Axon Body 4 Camera | b000:0106 | experimental | — |
+| Axon Body 3 Camera | b000:0107 | experimental | — |
+| Axon Body 2 Camera | b000:0108 | experimental | — |
+| Axon Flex 3 Camera | b000:0109 | experimental | — |
+| Axon Signal Sidearm | b000:010a | experimental | — |
+| Reveal D5 Body Camera | b000:010b | experimental | — |
+| Reveal D7 Body Camera | b000:010c | experimental | — |
+| Reveal Rs3 Sx Body Cam | b000:010d | experimental | — |
+| Reveal Media Dock USB | b000:010e | experimental | — |
+| Motorola Si500 Body Cam | b000:010f | experimental | — |
+| Motorola Si300 Body Cam | b000:0110 | experimental | — |
+| Motorola V700 Body Cam | b000:0111 | experimental | — |
+| Motorola Vt100 Body Cam | b000:0112 | experimental | — |
+| Hytera Vm780 Body Cam | b000:0113 | experimental | — |
+| Hytera Vm580d Body Cam | b000:0114 | experimental | — |
+| Transcend Drivepro Body 60 | b000:0115 | experimental | — |
+| Transcend Drivepro Body 30 | b000:0116 | experimental | — |
+| Wolfcom Halo Body Cam | b000:0117 | experimental | — |
+| Wolfcom Vision Body Cam | b000:0118 | experimental | — |
+| Getac Veretos Body Cam | b000:0119 | experimental | — |
+| Panasonic Arbitrator Bwc | b000:011a | experimental | — |
+| Digital Ally Firstvu Hd | b000:011b | experimental | — |
+| Utility Bodyworn USB | b000:011c | experimental | — |
+| Safefleet Bodycam USB | b000:011d | experimental | — |
+| Coban Body Worn Hd | b000:011e | experimental | — |
+| Axon Dock 6 Bay USB | b000:011f | experimental | — |
+| Reveal Docking Station USB | b000:0120 | experimental | — |
+| Motorola Multi Unit Charger | b000:0121 | experimental | — |
+| Hytera Mca32 Dock USB | b000:0122 | experimental | — |
+| Lawmate Pv 500neo Pro | b000:0123 | experimental | — |
+| Lawmate Pv Uc10i USB Cam | b000:0124 | experimental | — |
+| Lawmate Pv 50hd USB | b000:0125 | experimental | — |
+| Supercircuits Pc Mini USB | b000:0126 | experimental | — |
+| Brickhouse Camscura USB | b000:0127 | experimental | — |
+| Genetec Streamvault USB | b000:0128 | experimental | — |
+| Milestone Husky USB | b000:0129 | experimental | — |
+| Avigilon Acc USB Dongle | b000:012a | experimental | — |
+| Verkada Command USB | b000:012b | experimental | — |
+| Rhombus R360 USB Setup | b000:012c | experimental | — |
+| Eagle Eye Cmvr USB | b000:012d | experimental | — |
+| Trackman 4 Launch Monitor | b000:012e | experimental | — |
+| Trackman Io Indoor | b000:012f | experimental | — |
+| Rapsodo Mlm2pro Monitor | b000:0130 | experimental | — |
+| Rapsodo Mlm Launch Monitor | b000:0131 | experimental | — |
+| Flightscope Mevo Plus | b000:0132 | experimental | — |
+| Flightscope X3 Monitor | b000:0133 | experimental | — |
+| Foresight Gc3 Launch Monitor | b000:0134 | experimental | — |
+| Foresight Gcquad Monitor | b000:0135 | experimental | — |
+| Foresight Falcon Monitor | b000:0136 | experimental | — |
+| Garmin Approach R10 USB | b000:0137 | experimental | — |
+| Bushnell Launch Pro USB | b000:0138 | experimental | — |
+| Swing Caddie Sc4 Monitor | b000:0139 | experimental | — |
+| Prgr Hs130a Launch Monitor | b000:013a | experimental | — |
+| Ernest Sports Es16 Tour | b000:013b | experimental | — |
+| Skytrak Plus Launch Monitor | b000:013c | experimental | — |
+| Uneekor Eye Xo2 Monitor | b000:013d | experimental | — |
+| Uneekor Qed Monitor | b000:013e | experimental | — |
+| Aboutgolf Simulator USB | b000:013f | experimental | — |
+| Trugolf Apogee Monitor | b000:0140 | experimental | — |
+| Full Swing Kit Monitor | b000:0141 | experimental | — |
+| Shotscope V5 Tracker | b000:0142 | experimental | — |
+| Shotscope Pro Lx Tracker | b000:0143 | experimental | — |
+| Arccos Caddie Smart Sensor | b000:0144 | experimental | — |
+| Game Golf Pro Tracker | b000:0145 | experimental | — |
+| Blast Motion Golf USB | b000:0146 | experimental | — |
+| Zepp Golf 2 Sensor USB | b000:0147 | experimental | — |
+| Wilson X Connected Football | b000:0148 | experimental | — |
+| Adidas Smart Ball USB | b000:0149 | experimental | — |
+| Shootracker Smart Basketball | b000:014a | experimental | — |
+| 94fifty Smart Sensor Ball | b000:014b | experimental | — |
+| Playr Smart Soccer Vest | b000:014c | experimental | — |
+| Catapult One Pod USB | b000:014d | experimental | — |
+| Rapsodo Pitching 2 USB | b000:014e | experimental | — |
+| Diamond Kinetics Pitchtracker | b000:014f | experimental | — |
+| Yakkertech Pitch Monitor | b000:0150 | experimental | — |
+| Blast Baseball Sensor USB | b000:0151 | experimental | — |
+| Hittrax Simulator USB | b000:0152 | experimental | — |
+| Zepp Tennis 2 Sensor USB | b000:0153 | experimental | — |
+| Sony Smart Tennis Sensor | b000:0154 | experimental | — |
+| Playsight Smartcourt USB | b000:0155 | experimental | — |
+| Babolat Pop Sensor USB | b000:0156 | experimental | — |
+| Swingvision USB Camera | b000:0157 | experimental | — |
+| Form Swim Goggles USB | b000:0158 | experimental | — |
+| Finis Swim Coach USB | b000:0159 | experimental | — |
+| Phlex Swim Tracker USB | b000:015a | experimental | — |
+| Garmin Echomap Uhd2 92sv | b000:015b | experimental | — |
+| Garmin Echomap Uhd2 72cv | b000:015c | experimental | — |
+| Garmin Livescope Plus USB | b000:015d | experimental | — |
+| Garmin Striker Vivid 9sv | b000:015e | experimental | — |
+| Lowrance Hds Pro 16 USB | b000:015f | experimental | — |
+| Lowrance Elite Fs 9 USB | b000:0160 | experimental | — |
+| Lowrance Hook Reveal 9 | b000:0161 | experimental | — |
+| Humminbird Helix 12 Chirp | b000:0162 | experimental | — |
+| Humminbird Apex 19 Msi | b000:0163 | experimental | — |
+| Simrad Nss16 Evo3s USB | b000:0164 | experimental | — |
+| Simrad Go9 Xse USB | b000:0165 | experimental | — |
+| Raymarine Element 12hv USB | b000:0166 | experimental | — |
+| Furuno Gp1971f Fishfinder | b000:0167 | experimental | — |
+| Furuno Fv295 Fishfinder | b000:0168 | experimental | — |
+| Garmin Reactor 40 Autopilot | b000:0169 | experimental | — |
+| Raymarine Evolution Ev200 | b000:016a | experimental | — |
+| Simrad Ap70 Mk2 Autopilot | b000:016b | experimental | — |
+| Furuno Navpilot 711c USB | b000:016c | experimental | — |
+| B And G H5000 Autopilot USB | b000:016d | experimental | — |
+| Comnav Commander P2 USB | b000:016e | experimental | — |
+| Course Computer Ap48 USB | b000:016f | experimental | — |
+| Vesper Cortex M1 Ais | b000:0170 | experimental | — |
+| Vesper Cortex V1 Ais | b000:0171 | experimental | — |
+| Em Trak B954 Ais USB | b000:0172 | experimental | — |
+| Em Trak R300 Ais USB | b000:0173 | experimental | — |
+| Digital Yacht Ais100 USB | b000:0174 | experimental | — |
+| Digital Yacht Zdigitag USB | b000:0175 | experimental | — |
+| Si Tex Mda 5h Ais USB | b000:0176 | experimental | — |
+| Simrad Nais 500 Ais USB | b000:0177 | experimental | — |
+| Garmin Ais 800 Transceiver | b000:0178 | experimental | — |
+| Nasa Marine Ais Engine USB | b000:0179 | experimental | — |
+| Mcmurdo Smartfind M15 Ais | b000:017a | experimental | — |
+| Davis Weather Envoy USB | b000:017b | experimental | — |
+| Maretron Usb100 Gateway | b000:017c | experimental | — |
+| Actisense Ngt 1 USB Gateway | b000:017d | experimental | — |
+| Shipmodul Miniplex 3usb | b000:017e | experimental | — |
+| Yacht Devices Ydnr 02n USB | b000:017f | experimental | — |
+| Icom Ic M510 Vhf USB | b000:0180 | experimental | — |
+| Standard Horizon Gx6500 USB | b000:0181 | experimental | — |
+| Garmin Vhf 215i USB | b000:0182 | experimental | — |
+| Raymarine Ray 63 Vhf USB | b000:0183 | experimental | — |
+| Simrad Rs40 B Vhf USB | b000:0184 | experimental | — |
+| Theragun Pro Plus USB | b000:0185 | experimental | — |
+| Theragun Elite USB | b000:0186 | experimental | — |
+| Theragun Prime USB | b000:0187 | experimental | — |
+| Theragun Mini 2 USB | b000:0188 | experimental | — |
+| Hyperice Hypervolt 2 Pro | b000:0189 | experimental | — |
+| Hyperice Hypervolt Go 2 | b000:018a | experimental | — |
+| Ekrin Athletics B37s USB | b000:018b | experimental | — |
+| Bob And Brad D6 Pro USB | b000:018c | experimental | — |
+| Opove Apex Massage Gun USB | b000:018d | experimental | — |
+| Lifepro Dynaflex Pro USB | b000:018e | experimental | — |
+| Withings Body Plus USB | b000:018f | experimental | — |
+| Withings Body Comp USB | b000:0190 | experimental | — |
+| Withings Body Scan USB | b000:0191 | experimental | — |
+| Renpho Elis 1 USB Scale | b000:0192 | experimental | — |
+| Renpho Elis Aspire USB | b000:0193 | experimental | — |
+| Renpho Smart Body Fat USB | b000:0194 | experimental | — |
+| Eufy Smart Scale P3 USB | b000:0195 | experimental | — |
+| Fitbit Aria Air USB Scale | b000:0196 | experimental | — |
+| Garmin Index S2 USB Scale | b000:0197 | experimental | — |
+| Omron Bcm 500 USB Scale | b000:0198 | experimental | — |
+| Tanita Rd 545 USB Scale | b000:0199 | experimental | — |
+| Inbody H20n USB Scale | b000:019a | experimental | — |
+| Xiaomi Scale 2 USB | b000:019b | experimental | — |
+| Yunmai Premium USB Scale | b000:019c | experimental | — |
+| Omron Evolv Bp7000 USB | b000:019d | experimental | — |
+| Omron Complete Bp7900 USB | b000:019e | experimental | — |
+| Withings Bpm Connect USB | b000:019f | experimental | — |
+| Qardio Qardioarm USB | b000:01a0 | experimental | — |
+| Beurer Bm 85 USB | b000:01a1 | experimental | — |
+| Masimo Mightysat Rx USB | b000:01a2 | experimental | — |
+| Nonin 3230 USB Oximeter | b000:01a3 | experimental | — |
+| Contec Cms50d USB Oximeter | b000:01a4 | experimental | — |
+| Wellue O2ring USB | b000:01a5 | experimental | — |
+| Withings Sleep Analyzer USB | b000:01a6 | experimental | — |
+| Emfit Qs Sleep Tracker USB | b000:01a7 | experimental | — |
+| Beautyrest Sleeptracker USB | b000:01a8 | experimental | — |
+| Beddit 3 Sleep Monitor USB | b000:01a9 | experimental | — |
+| Neurovalens Modius USB | b000:01aa | experimental | — |
+| Fisher Wallace Stimulator USB | b000:01ab | experimental | — |
+| Cefaly Dual USB Migraine | b000:01ac | experimental | — |
+| Quell 2 Pain Relief USB | b000:01ad | experimental | — |
+| Oura Ring Charger USB | b000:01ae | experimental | — |
+| Whoop 4 Charger USB | b000:01af | experimental | — |
+| Teac Fd 05pub Floppy USB | b000:01b0 | experimental | — |
+| Samsung Sfd 321u Floppy | b000:01b1 | experimental | — |
+| Nec Ufd1m5b Floppy USB | b000:01b2 | experimental | — |
+| Mitsumi D353fub Floppy | b000:01b3 | experimental | — |
+| Imation USB Floppy Drive | b000:01b4 | experimental | — |
+| Sabrent Sbt Ufdb Floppy | b000:01b5 | experimental | — |
+| Syba Sy USB Fdd Floppy | b000:01b6 | experimental | — |
+| Iomega Zip 750 USB | b000:01b7 | experimental | — |
+| Iomega Zip 250 USB | b000:01b8 | experimental | — |
+| Iomega Jaz 2gb USB | b000:01b9 | experimental | — |
+| Gotek Floppy Emulator USB | b000:01ba | experimental | — |
+| Blue Scsi V2 USB | b000:01bb | experimental | — |
+| Scsi2sd V6 Adapter | b000:01bc | experimental | — |
+| Zuluide Scsi Emulator USB | b000:01bd | experimental | — |
+| Piscsi USB Scsi Adapter | b000:01be | experimental | — |
+| Startech Icusb1284 Parallel | b000:01bf | experimental | — |
+| Tripp Lite U207 USB Parallel | b000:01c0 | experimental | — |
+| Iogear Guc1284b Parallel | b000:01c1 | experimental | — |
+| Belkin F5u002 Parallel USB | b000:01c2 | experimental | — |
+| Manhattan USB Parallel Conv | b000:01c3 | experimental | — |
+| Sabrent Cb 1284 Parallel | b000:01c4 | experimental | — |
+| Ftdi Ft232r Serial USB | b000:01c5 | experimental | — |
+| Prolific Pl2303 Serial USB | b000:01c6 | experimental | — |
+| Keyspan Usa19hs Serial | b000:01c7 | experimental | — |
+| Tripp Lite U209 Serial USB | b000:01c8 | experimental | — |
+| Aten Uc232a Serial USB | b000:01c9 | experimental | — |
+| Greaseweazle V4 Floppy | b000:01ca | experimental | — |
+| Kryoflux Floppy Controller | b000:01cb | experimental | — |
+| Supercard Pro Floppy USB | b000:01cc | experimental | — |
+| USB Gameport Adapter Retro | b000:01cd | experimental | — |
+| Tinkerboy Adb USB Adapter | b000:01ce | experimental | — |
+| Raphnet N64 USB Adapter | b000:01cf | experimental | — |
+| Raphnet Gc USB Adapter | b000:01d0 | experimental | — |
+| Raphnet Snes USB Adapter | b000:01d1 | experimental | — |
+| Raphnet Nes USB Adapter | b000:01d2 | experimental | — |
+| Raphnet Wii USB Adapter | b000:01d3 | experimental | — |
+| Raphnet Dual Nes USB | b000:01d4 | experimental | — |
+| Raphnet 4nes4snes USB | b000:01d5 | experimental | — |
+| Raphnet Saturn USB Adapter | b000:01d6 | experimental | — |
+| Raphnet Dreamcast USB | b000:01d7 | experimental | — |
+| 8bitdo USB Wireless Adapter2 | b000:01d8 | experimental | — |
+| 8bitdo Retro Receiver Snes | b000:01d9 | experimental | — |
+| 8bitdo Retro Receiver Nes | b000:01da | experimental | — |
+| 8bitdo Retro Receiver Mega | b000:01db | experimental | — |
+| 8bitdo Arcade Stick USB | b000:01dc | experimental | — |
+| 8bitdo Pro2 Wired USB | b000:01dd | experimental | — |
+| 8bitdo Sn30pro USB | b000:01de | experimental | — |
+| 8bitdo Ultimate C USB | b000:01df | experimental | — |
+| Brook Wingman Xs Adapter | b000:01e0 | experimental | — |
+| Brook Wingman Fgc Adapter | b000:01e1 | experimental | — |
+| Brook Ps2 To USB Adapter | b000:01e2 | experimental | — |
+| Mayflash Magic Ns 2 USB | b000:01e3 | experimental | — |
+| Mayflash F300 Elite USB | b000:01e4 | experimental | — |
+| Retrobit Saturn USB Pad | b000:01e5 | experimental | — |
+| Retrobit Genesis USB Pad | b000:01e6 | experimental | — |
+| Hori Fighting Commander USB | b000:01e7 | experimental | — |
+| Dualshock USB Adapter Retro | b000:01e8 | experimental | — |
+| Hid Pivclass R40 USB | b000:01e9 | experimental | — |
+| Hid Omnikey 5427 Ck USB | b000:01ea | experimental | — |
+| Hid Iclass Se Rp40 USB | b000:01eb | experimental | — |
+| Assa Abloy Aperio USB | b000:01ec | experimental | — |
+| Salto Xs4 Wall Reader USB | b000:01ed | experimental | — |
+| Dormakaba 91 10 Reader USB | b000:01ee | experimental | — |
+| Suprema Bioentry R2 USB | b000:01ef | experimental | — |
+| Zkteco Sf400 Reader USB | b000:01f0 | experimental | — |
+| Gallagher T20 Reader USB | b000:01f1 | experimental | — |
+| Rak Rak2287 USB Gateway | b000:01f2 | experimental | — |
+| Rak Rak5146 USB Concentrator | b000:01f3 | experimental | — |
+| Semtech Sx1302 Ref USB | b000:01f4 | experimental | — |
+| Dragino Lg308 USB Gateway | b000:01f5 | experimental | — |
+| Mikrotik Lora USB Adapter | b000:01f6 | experimental | — |
+| Multitech Mtcdt Lora USB | b000:01f7 | experimental | — |
+| Laird Rg191 USB Gateway | b000:01f8 | experimental | — |
+| Kerlink Wirnet USB | b000:01f9 | experimental | — |
+| Libelium Waspmote Lora USB | b000:01fa | experimental | — |
+| Heltec Ht M02 USB Gateway | b000:01fb | experimental | — |
+| Airspy R2 Sdr Receiver | b000:01fc | experimental | — |
+| Airspy Mini Sdr USB | b000:01fd | experimental | — |
+| Sdrplay Rspdx R2 USB | b000:01fe | experimental | — |
+| Sdrplay Rsp1b USB | b000:01ff | experimental | — |
+| Sdrplay Rspduo USB | b000:0200 | experimental | — |
+| Adalm Pluto Sdr USB | b000:0201 | experimental | — |
+| Funcube Dongle Pro Plus | b000:0202 | experimental | — |
+| Nooelec Smartee Xtr Sdr | b000:0203 | experimental | — |
+| Rtlsdr Blog V4 USB | b000:0204 | experimental | — |
+| Bambu Lab X1 Carbon USB | b000:0205 | experimental | — |
+| Bambu Lab P1p USB | b000:0206 | experimental | — |
+| Bambu Lab A1 Mini USB | b000:0207 | experimental | — |
+| Prusa Mk4s USB | b000:0208 | experimental | — |
+| Prusa Mini Plus USB | b000:0209 | experimental | — |
+| Creality K1 Max USB | b000:020a | experimental | — |
+| Creality Ender 3 V3 Se USB | b000:020b | experimental | — |
+| Anycubic Kobra 3 Combo USB | b000:020c | experimental | — |
+| Elegoo Neptune 4 Pro USB | b000:020d | experimental | — |
+| Flashforge Adventurer 5m USB | b000:020e | experimental | — |
+| Icom Ic 7610 USB | b000:020f | experimental | — |
+| Icom Ic 7300 USB | b000:0210 | experimental | — |
+| Icom Ic 905 USB | b000:0211 | experimental | — |
+| Yaesu Ft 710 USB | b000:0212 | experimental | — |
+| Yaesu Ftdx10 USB | b000:0213 | experimental | — |
+| Yaesu Ft 891 USB | b000:0214 | experimental | — |
+| Kenwood Ts 890s USB | b000:0215 | experimental | — |
+| Kenwood Ts 590sg USB | b000:0216 | experimental | — |
+| Elecraft K4 USB | b000:0217 | experimental | — |
+| Flexradio Flex 6600 USB | b000:0218 | experimental | — |
+| Phonak Paradise P90 USB | b000:0219 | experimental | — |
+| Phonak Lumity L90 USB | b000:021a | experimental | — |
+| Oticon Real 1 USB | b000:021b | experimental | — |
+| Oticon Intent 1 USB | b000:021c | experimental | — |
+| Signia Pure Cx USB | b000:021d | experimental | — |
+| Signia Styletto Ax USB | b000:021e | experimental | — |
+| Resound Nexia 9 USB | b000:021f | experimental | — |
+| Starkey Genesis Ai 24 USB | b000:0220 | experimental | — |
+| Widex Moment 440 USB | b000:0221 | experimental | — |
+| Unitron Vivante USB | b000:0222 | experimental | — |
+| Tobii Dynavox I 15 USB | b000:0223 | experimental | — |
+| Tobii Eye Tracker 5l USB | b000:0224 | experimental | — |
+| Ablenet Blue2 Switch USB | b000:0225 | experimental | — |
+| Ablenet Hook Switch USB | b000:0226 | experimental | — |
+| Enabling Devices Sip Puff | b000:0227 | experimental | — |
+| Quadstick Fp USB Controller | b000:0228 | experimental | — |
+| Glassouse V14 Head Mouse | b000:0229 | experimental | — |
+| Quha Zono Gyro Mouse USB | b000:022a | experimental | — |
+| Inclusive Switch Box USB | b000:022b | experimental | — |
+| Pretorian Simplyworks USB | b000:022c | experimental | — |
+| Zwo Asi 2600mc Pro USB | b000:022d | experimental | — |
+| Zwo Asi 533mc Pro USB | b000:022e | experimental | — |
+| Zwo Eaf Focuser USB | b000:022f | experimental | — |
+| Zwo Am5 Mount USB | b000:0230 | experimental | — |
+| Celestron Nexstar Evolution8 USB | b000:0231 | experimental | — |
+| Celestron Starsense Autoalign | b000:0232 | experimental | — |
+| Pegasus Astro Ppba USB | b000:0233 | experimental | — |
+| Qhy 268c Cooled USB | b000:0234 | experimental | — |
+| Player One Poseidon C USB | b000:0235 | experimental | — |
+| Haas Ngc USB Controller | b000:0236 | experimental | — |
+| Fanuc 0i Tf Plus USB | b000:0237 | experimental | — |
+| Siemens Sinumerik 828d USB | b000:0238 | experimental | — |
+| Mazak Smooth Ai USB | b000:0239 | experimental | — |
+| Okuma Osp P300a USB | b000:023a | experimental | — |
+| Hurco Max5 USB Controller | b000:023b | experimental | — |
+| Dmg Mori Celos USB | b000:023c | experimental | — |
+| Brother C00 USB Controller | b000:023d | experimental | — |
+| Makino Pro6 USB Controller | b000:023e | experimental | — |
+| Mitsubishi M80 Cnc USB | b000:023f | experimental | — |
+| Brightsign Xd5 USB Player | b000:0240 | experimental | — |
+| Brightsign Xt5 USB Player | b000:0241 | experimental | — |
+| Brightsign Ls5 USB Player | b000:0242 | experimental | — |
+| Samsung Sssp Tizen USB | b000:0243 | experimental | — |
+| Lg Webos Signage Soc USB | b000:0244 | experimental | — |
+| Philips Android Soc USB | b000:0245 | experimental | — |
+| Iadea Xmp 7300 USB | b000:0246 | experimental | — |
+| Giada Dn74 Media Player | b000:0247 | experimental | — |
+| Qbic Td1060 USB Player | b000:0248 | experimental | — |
+| Advantech Ds 580 USB | b000:0249 | experimental | — |
+| Kobo Libra Colour USB | b000:024a | experimental | — |
+| Kobo Clara Colour USB | b000:024b | experimental | — |
+| Kobo Elipsa 2e USB | b000:024c | experimental | — |
+| Pocketbook Era Colour USB | b000:024d | experimental | — |
+| Pocketbook Inkpad 4 USB | b000:024e | experimental | — |
+| Onyx Boox Tab Ultra C USB | b000:024f | experimental | — |
+| Onyx Boox Page USB | b000:0250 | experimental | — |
+| Remarkable 2 USB Tablet | b000:0251 | experimental | — |
+| Bigme Inknote Color USB | b000:0252 | experimental | — |
+| Meebook P78 Pro USB | b000:0253 | experimental | — |
+| Flir E86 Advanced USB | b000:0254 | experimental | — |
+| Flir E54 USB Thermal | b000:0255 | experimental | — |
+| Flir Cx5 Pocket Thermal | b000:0256 | experimental | — |
+| Flir T865 Advanced USB | b000:0257 | experimental | — |
+| Fluke Tis75 Plus USB | b000:0258 | experimental | — |
+| Fluke Ti480 Pro USB | b000:0259 | experimental | — |
+| Hikmicro M30 USB Thermal | b000:025a | experimental | — |
+| Hikmicro B20 USB Thermal | b000:025b | experimental | — |
+| Seek Shotpro USB Thermal | b000:025c | experimental | — |
+| Infiray T2s Plus USB | b000:025d | experimental | — |
+| John Deere Starfire 7000 USB | b000:025e | experimental | — |
+| Topcon X35 Display USB | b000:025f | experimental | — |
+| Raven Cr7 Display USB | b000:0260 | experimental | — |
+| Precision Planting 2020gen3 | b000:0261 | experimental | — |
+| Case Ih Afs 700 USB | b000:0262 | experimental | — |
+| Claas Cebis Terminal USB | b000:0263 | experimental | — |
+| Mueller Isobus USB Gateway | b000:0264 | experimental | — |
+| Kverneland Isobus Terminal | b000:0265 | experimental | — |
+| Meta Quest 3s USB Link | b000:0266 | experimental | — |
+| Meta Quest Pro USB Link | b000:0267 | experimental | — |
+| Pico 4 Ultra USB | b000:0268 | experimental | — |
+| Pico 4 Enterprise USB | b000:0269 | experimental | — |
+| Htc Vive Focus 3 USB | b000:026a | experimental | — |
+| Htc Vive Xr Elite USB | b000:026b | experimental | — |
+| Valve Index USB Headset | b000:026c | experimental | — |
+| Varjo Aero USB Headset | b000:026d | experimental | — |
+| Varjo Xr 4 USB Headset | b000:026e | experimental | — |
+| Pimax Crystal Super USB | b000:026f | experimental | — |
+| Browning Strike Force Pro Xd | 3305:0101 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Browning Strike Force Hd Pro X | 3305:0102 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Browning Dark Ops Hd Pro X | 3305:0103 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Browning Dark Ops Max Hd Plus | 3305:0104 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Browning Recon Force 4k | 3305:0105 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Browning Spec Ops Elite Hp5 | 3305:0106 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Browning Defender Pro Scout Max | 3305:0107 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Wildgame Terra Extreme 14 | 3306:0101 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Wildgame Terra Cell | 3306:0102 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Wildgame Wraith 2 | 3306:0103 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Wildgame Encounter Cell | 3306:0104 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Wildgame Mirage 2 | 3306:0105 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Wildgame Rival 20 Lightsout | 3306:0106 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Wildgame Cloak Pro 16 | 3306:0107 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Spypoint Flex G36 | 3307:0101 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Spypoint Flex E36 | 3307:0102 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Spypoint Force Pro S | 3307:0103 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Spypoint Force Pro | 3307:0104 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Spypoint Link Micro S Lte | 3307:0105 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Spypoint Force 20 | 3307:0106 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Razer Kiyo Pro Ultra | 1532:0c01 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Razer Kiyo Pro | 1532:0c02 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Razer Kiyo X | 1532:0c03 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Razer Kiyo | 1532:0c04 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Razer Stargazer | 1532:0c05 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Elgato Facecam Pro | 0fd9:0c01 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Elgato Facecam Mk2 | 0fd9:0c02 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Elgato Facecam | 0fd9:0c03 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Elgato Facecam Neo | 0fd9:0c04 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Elgato Epoccam | 0fd9:0c05 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Avermedia Pw515 | 07ca:0c01 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Avermedia Pw513 | 07ca:0c02 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Avermedia Pw315 | 07ca:0c03 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Avermedia Pw313d | 07ca:0c04 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Avermedia Pw310p | 07ca:0c05 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Poly Studio P21 | 047f:0c01 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Poly Studio P15 | 047f:0c02 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Poly Studio P5 | 047f:0c03 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Poly Studio E70 | 047f:0c04 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Poly Studio R30 | 047f:0c05 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Poly Eagleeye Mini | 047f:0c06 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Jabra Panacast 50 | 0b0e:0c01 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Jabra Panacast 20 | 0b0e:0c02 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Jabra Panacast | 0b0e:0c03 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Jabra Engage 50 Ii | 0b0e:0c04 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Jabra Biz 4400 Uc Cam | 0b0e:0c05 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Brc X1000 | 054c:1001 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Sony Brc X400 | 054c:1002 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Sony Brc H900 | 054c:1003 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Sony Brc H800 | 054c:1004 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Sony Brc X401 | 054c:1005 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Sony Srg X400 | 054c:1006 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Sony Srg X120 | 054c:1007 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Sony Srg 360she | 054c:1008 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Sony Srg Hd1m2 | 054c:1009 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Panasonic Aw Ue160 | 04da:0c01 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Panasonic Aw Ue150 | 04da:0c02 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Panasonic Aw Ue100 | 04da:0c03 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Panasonic Aw Ue80 | 04da:0c04 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Panasonic Aw Ue50 | 04da:0c05 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Panasonic Aw Ue40 | 04da:0c06 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Panasonic Aw Ue20 | 04da:0c07 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Panasonic Aw Ue4 | 04da:0c08 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Panasonic Aw He145 | 04da:0c09 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Ptzoptics Move 4k | 3356:0101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Ptzoptics Move Se | 3356:0102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Ptzoptics Link 4k | 3356:0103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Ptzoptics Studio Pro | 3356:0104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Ptzoptics Move 4k G3 | 3356:0105 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Ptzoptics Superjoyd1 | 3356:0106 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Ptzoptics Producer Plus | 3356:0107 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Ptzoptics Halo | 3356:0108 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Vaddio Roboshot 40 Uhd | 3357:0101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Vaddio Roboshot 30e USB | 3357:0102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Vaddio Roboshot 20 Uhd | 3357:0103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Vaddio Roboshot 12e USB | 3357:0104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Vaddio Intellishot Auto | 3357:0105 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Vaddio Conferenceshot Av | 3357:0106 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Vaddio Easyip 30 | 3357:0107 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Vaddio Easyip 20 | 3357:0108 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Datavideo Ptc 305ndi | 3358:0101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Datavideo Ptc 285ndi | 3358:0102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Datavideo Ptc 280ndi | 3358:0103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Datavideo Ptc 185ndi | 3358:0104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Datavideo Ptc 145ndi | 3358:0105 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Datavideo Ptc 150tlc | 3358:0106 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Datavideo Bc 200t | 3358:0107 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Marshall Cv630 Ndi | 3359:0101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Marshall Cv620 Ndi | 3359:0102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Marshall Cv612ht 4k | 3359:0103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Marshall Cv420 30x Ndi | 3359:0104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
