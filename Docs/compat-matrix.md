@@ -4556,3 +4556,22 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Roper Scientific Pixis 400 | 0bd7:0001 | ⚪ proposed | — |
 | Roper Scientific Proem 512 | 0bd7:0002 | ⚪ proposed | — |
 | Roper Scientific Pixis 2048 | 0bd7:0003 | ⚪ proposed | — |
+| Zoom H1n | 1686:0024 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Zoom H4n Pro | 1686:0025 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Zoom H5 | 1686:0026 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Zoom H6 | 1686:0027 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Zoom H8 | 1686:0028 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Zoom F3 | 1686:002a | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Zoom F6 | 1686:002b | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Zoom F8n | 1686:002c | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Tascam Dr 40x | 0644:0049 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Tascam Dr 100mkiii | 0644:004a | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Tascam Portacapture X6 | 0644:004b | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Tascam Portacapture X8 | 0644:004c | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Roland R 07 | 0582:012f | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Roland R 88 | 0582:0130 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Boss Br 800 | 0582:0131 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Sound Devices Mixpre 3 Ii | 2af0:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Sound Devices Mixpre 6 Ii | 2af0:0002 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Sony Icd Ux570 | 054c:00a1 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Sony Pcm D10 | 054c:00a2 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
