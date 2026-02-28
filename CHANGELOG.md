@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Baseline & compat matrix update for 8,500+ quirks entries (8,500+ across 515+ VIDs, 36 categories)
+- Baseline & compat matrix update for 9,600+ quirks entries (9,600+ across 570+ VIDs, 38 categories)
 - Wave 63: CI fixes — Xcode 16.2 + Swift 6.2 toolchain setup, workflow stabilization
 - Wave 64: IoT/embedded device entries — smart home hubs, embedded SBCs, dev boards
 - Wave 65: Vintage media player expansion — legacy PMP and DAP entries
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Wave 71: Documentation refresh — compat matrix regeneration, CHANGELOG + README updates
 - Wave 72–75: Samsung/LG/Huawei expansion, Chinese phone brands, additional regional entries
 - Waves 76–78: Industrial cameras, machine vision, smart glasses, AR glasses, e-ink displays, embedded/fitness entries
-- **🎉 Device Quirks Database: 8,500+ entries across 515+ VIDs and 36 device categories**
+- **🎉 Device Quirks Database: 9,600+ entries across 570+ VIDs and 38 device categories**
 
 - Wave 42-50: Gaming handhelds, VR, hi-fi DAPs, embedded dev boards, 3D printers, lab instruments
 - Wave 52-53: Device category assignment — 97% of entries now categorized (phones, cameras, media players, GPS, etc.)
