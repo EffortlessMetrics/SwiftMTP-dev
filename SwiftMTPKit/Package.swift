@@ -7,7 +7,7 @@ import PackageDescription
 let package = Package(
   name: "SwiftMTPKit",
   defaultLocalization: "en",
-  platforms: [.macOS(.v26), .iOS(.v26)],
+  platforms: [.macOS(.v15), .iOS(.v18)],
   products: [
     .library(name: "MTPEndianCodec", targets: ["MTPEndianCodec"]),
     .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
