@@ -557,6 +557,78 @@ final class BDDRunner: XCTestCase {
     else { throw XCTSkip("archos-504 not in database") }
     XCTAssertNotNil(q)
   }
+
+  // MARK: - Wave 17-20: Android TV, Regional, Rugged, Cameras
+
+  func testWave17NvidiaShieldTV() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0955, pid: 0xb42a, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("nvidia-shield-android-tv-pro-mtp-b42a not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave17FireTVStick4K() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x1949, pid: 0x0441, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("amazon-fire-tv-stick-4k-0441 not in database") }
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave18LavaZ1() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x29a9, pid: 0x6001, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("lava-z1-6001 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave18MicromaxINNote1() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2a96, pid: 0x6001, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("micromax-in-note-1-6001 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave18BLUVivoXL() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x271d, pid: 0x4008, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("blu-vivo-xl-4008 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave19DoogeeS100Pro() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0e8d, pid: 0x2035, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("doogee-s100-pro-2035 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave19BlackviewBV9300() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0e8d, pid: 0x2041, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("blackview-bv9300-2041 not in database") }
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave20CanonEOSR7MarkII() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x04a9, pid: 0x3319, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("canon-eos-r7-mark-ii-3319 not in database") }
+    XCTAssertTrue(q.resolvedFlags().supportsGetObjectPropList)
+  }
+
+  func testWave20NikonZ8() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x04b0, pid: 0x0451, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("nikon-z8-0451 not in database") }
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testWave20NikonZ9() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x04b0, pid: 0x0450, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("nikon-z9-0450 not in database") }
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
