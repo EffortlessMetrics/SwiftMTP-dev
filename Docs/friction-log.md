@@ -37,6 +37,10 @@ Ongoing record of issues, paper cuts, and improvement opportunities encountered 
 | 2026-02-27 | 🟢 P3 | `generate-compat-matrix.sh` output drifts from committed `Docs/compat-matrix.md` after every quirks addition. No automation to keep them in sync. | **TODO**: add a `post-commit` or CI step that auto-regenerates and commits, or make the CI check advisory-only. |
 | 2026-02-27 | 🔴 P0 | `Package.swift` set `platforms: [.macOS(.v26), .iOS(.v26)]` but CI runners are macOS 15. Binaries built for macOS 26 cannot execute on macOS 15 — `Library not loaded: libswift_DarwinFoundation2.dylib`. | ✅ Fixed — lowered to `.macOS(.v15), .iOS(.v18)`. No macOS-26-only APIs were in use. |
 
+| 2026-02-27 | 🔴 P0 | CI docs workflow requires compat matrix regen after every device merge — need auto-regen in CI. Matrix drifts silently otherwise. | **TODO**: add `generate-compat-matrix.sh` step to CI docs workflow, or a post-merge hook. |
+| 2026-02-27 | 🟠 P1 | Agents frequently create quirks.json conflicts when working in parallel worktrees — need automated dedup CI step to catch and resolve duplicates. | **TODO**: add `scripts/dedup-quirks.py` as a CI pre-merge check. |
+| 2026-02-27 | 🟠 P1 | `validate-quirks.sh` reports 8000+ schema errors due to missing tuning fields on bulk-imported entries — either relax schema to allow optional tuning or add sensible defaults during import. | **TODO**: decide on schema strictness policy; add defaults in import tooling or make tuning fields optional in `quirks.schema.json`. |
+
 ## Device Onboarding
 
 | Date | Severity | Issue | Status |
@@ -56,6 +60,8 @@ Ongoing record of issues, paper cuts, and improvement opportunities encountered 
 | 2026-02-27 | 🟡 P2 | Property test baselines (currently 1900) must be manually bumped after every device expansion wave. | **TODO**: make baseline dynamic — read from `Specs/quirks.json` at test time. |
 | 2026-02-27 | 🟢 P3 | No snapshot tests for quirk resolution output. A device-profile regression could silently change flag values. | **TODO**: add snapshot tests that pin resolved flags for key device profiles. |
 | 2026-02-27 | 🟢 P3 | `VirtualDeviceConfig` presets use manually-incremented bus addresses (`@1:42`, `@1:43`...). Could collide if multiple contributors add presets. | **TODO**: auto-generate bus address from hash of VID:PID. |
+
+| 2026-02-27 | 🟡 P2 | BDD tests don't use the `.feature` files for execution — CucumberTests are manual Swift test methods that duplicate Gherkin scenarios in code. Feature files exist but aren't parsed at runtime. | **TODO**: wire CucumberSwift to parse `.feature` files directly, or remove unused `.feature` files to reduce confusion. |
 
 ## Developer Experience
 

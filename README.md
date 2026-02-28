@@ -74,7 +74,7 @@ SwiftMTP is built with modern Swift 6 concurrency patterns:
 ### Key Features
 
 - **Privacy-First Design**: Read-only collection mode with strict defaults
-- **Device Quirks System**: Learned profiles and static quirks for 4,400+ devices
+- **Device Quirks System**: Learned profiles and static quirks for 4,400+ devices across 25+ categories
 - **Transfer Journaling**: Resumable operations with automatic recovery
 - **File Provider Integration**: Native Finder integration on macOS (XPC service)
 - **Benchmarking Suite**: Performance profiling with p50/p95 metrics
@@ -202,6 +202,38 @@ swift test --package-path SwiftMTPKit --filter SnapshotTests
 Status: ✅ Promoted = fully verified with evidence · ✔ Verified = confirmed working · ⚠ Proposed = unverified, based on libmtp data
 
 See [`Docs/SwiftMTP.docc/Devices/`](Docs/SwiftMTP.docc/Devices/) for device-specific tuning guides.
+
+### Device Categories
+
+The quirks database covers devices across the following categories:
+
+| Category | Description |
+|----------|-------------|
+| phone | Android and other MTP-capable smartphones |
+| tablet | Android tablets and convertible devices |
+| camera | Digital cameras (DSLR, mirrorless, compact) |
+| action-camera | GoPro, DJI Action, Insta360, etc. |
+| drone | DJI, Autel, Parrot aerial platforms |
+| dap | Digital audio players (FiiO, Sony Walkman, etc.) |
+| media-player | Portable media players and PMPs |
+| e-reader | E-ink readers with MTP file transfer |
+| gaming-handheld | Steam Deck, retro handhelds, etc. |
+| vr-headset | Meta Quest, Pico, and other VR/XR devices |
+| wearable | Smartwatches with MTP support |
+| fitness | Fitness trackers and sports devices |
+| medical | Medical devices with MTP data export |
+| printer | Printers with PictBridge/MTP |
+| scanner | Document and photo scanners |
+| storage | Portable storage and NAS devices |
+| calculator | Graphing calculators (TI, HP, Casio) |
+| smart-home | Smart displays and home hubs |
+| automotive | In-vehicle infotainment and dashcams |
+| gps-navigator | Garmin, TomTom, and other GPS units |
+| 3d-printer | 3D printers with USB file transfer |
+| lab-instrument | Scientific instruments and data loggers |
+| industrial | Industrial controllers and HMI panels |
+| embedded | Embedded systems and SBCs |
+| dev-board | Development boards with MTP firmware |
 
 ### Connected Device Lab (repeatable host workflow)
 ```bash
