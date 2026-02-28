@@ -172,7 +172,9 @@ Contributors are recognized through:
 - `CHANGELOG.md` for notable contributions
 - GitHub release notes and PR history
 
-## Contributing Device Data
+## Contributing Device Quirks
+
+### Quick path
 
 The easiest way to add support for a new device is via the `add-device` command:
 
@@ -183,6 +185,66 @@ swiftmtp add-device --vid 0x1234 --pid 0x5678 --name "My Device" --class android
 This generates a ready-to-use quirk entry template. Copy the output into
 `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json`,
 validate with `./scripts/validate-quirks.sh`, then open a PR.
+
+### Manual entry format
+
+Each device entry in `Specs/quirks.json` follows the schema defined in
+[`Specs/quirks.schema.json`](../Specs/quirks.schema.json). A minimal entry looks
+like this:
+
+```json
+{
+  "id": "acme-widget-phone-abcd",
+  "match": {
+    "vid": "0x1234",
+    "pid": "0xabcd"
+  },
+  "tuning": {
+    "maxChunkBytes": 2097152,
+    "handshakeTimeoutMs": 5000,
+    "ioTimeoutMs": 10000
+  },
+  "ops": {
+    "supportsGetPartialObject64": true,
+    "supportsGetObjectPropList": true
+  },
+  "status": "proposed",
+  "confidence": "low",
+  "source": "community",
+  "evidenceRequired": ["usb-dump", "probe-log"]
+}
+```
+
+Key fields:
+
+| Field | Description |
+|-------|-------------|
+| `id` | Unique kebab-case identifier: `brand-model-pid` |
+| `match.vid` / `match.pid` | USB Vendor and Product IDs (hex with `0x` prefix) |
+| `tuning` | Timeout and chunk-size overrides for the device |
+| `ops` | Boolean capability flags (see schema for full list) |
+| `status` | Governance status: `proposed`, `verified`, or `promoted` |
+| `confidence` | `low`, `medium`, or `high` |
+
+### Testing your entry
+
+```bash
+cd SwiftMTPKit
+
+# Validate both quirks files
+./scripts/validate-quirks.sh
+
+# Run quirk-matching tests
+swift test --filter QuirkMatchingTests
+```
+
+### Submitting
+
+1. Add your entry to **both** `Specs/quirks.json` and
+   `SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json`.
+2. Run the validation and tests above.
+3. Open a PR with the device entry and any supporting evidence (USB dump, probe
+   log) in `Contrib/submissions/<your-device>/`.
 
 See [Device Submission Guide](DeviceSubmission.md) for full instructions, device
 class descriptions, and authoritative VID/PID sources.

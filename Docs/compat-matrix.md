@@ -2783,7 +2783,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Memorex Mmp 8585 8586 Or Iriver E200 | 10d6:2300 | ⚪ proposed | supportsGetObjectPropList |
 | Sirius Stiletto | 18f6:0102 | ⚪ proposed | supportsGetObjectPropList |
 | Sirius Stiletto 2 | 18f6:0110 | ⚪ proposed | supportsGetObjectPropList |
-| Trekstor I.beat Sweez Fm | 0402:0611 | ⚪ proposed | supportsGetObjectPropList |
+| Trekstor I Beat Sweez Fm | 0402:0611 | ⚪ proposed | supportsGetObjectPropList |
 | Nextar Ma715a 8r | 0402:5668 | ⚪ proposed | supportsGetObjectPropList |
 | Kenwood Media Keg Hd10gb7 | 0b28:100c | ⚪ proposed | supportsGetObjectPropList |
 | Msi P610 Model Ms 5557 | 0db0:5572 | ⚪ proposed | supportsGetObjectPropList |
@@ -2805,7 +2805,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Philips Gogear Sa1vbe08kx 78 | 0471:208e | ⚪ proposed | supportsGetObjectPropList |
 | Philips Pi3900b2 58 | 0471:2190 | ⚪ proposed | supportsGetObjectPropList |
 | Philips Psa235 | 0471:7e01 | ⚪ proposed | supportsGetObjectPropList |
-| Trekstor I.beat Organix 2.0 | 1e68:0002 | ⚪ proposed | — |
+| Trekstor I Beat Organix 2 0 | 1e68:0002 | ⚪ proposed | — |
 | Marshall London | 2ad9:000b | ⚪ proposed | supportsGetObjectPropList |
 | Garmin Marq | 091e:4cae | ⚪ proposed | supportsGetObjectPropList |
 | Garmin Marq Aviator | 091e:4caf | ⚪ proposed | supportsGetObjectPropList |
@@ -3538,3 +3538,414 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Polar Grit X2 Pro | 0da4:0014 | ⚪ proposed | — |
 | Hawkeye Ai15 | 1d6b:0101 | ⚪ proposed | — |
 | Qemu Virtual MTP | 46f4:0004 | ⚪ proposed | supportsGetObjectPropList |
+| Canon Powershot S45 | 04a9:306d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot G3 | 04a9:306f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot S230 | 04a9:3071 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus Ii | 04a9:3072 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A70 | 04a9:3073 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A60 | 04a9:3074 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 400 | 04a9:3075 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A300 | 04a9:3076 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot S50 | 04a9:3077 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot G5 | 04a9:3085 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A80 | 04a9:309a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus I | 04a9:309b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot S1 Is | 04a9:309c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot S70 | 04a9:30b1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot S60 | 04a9:30b2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot G6 | 04a9:30b3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 500 | 04a9:30b4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A75 | 04a9:30b5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sd110 | 04a9:30b6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A400 | 04a9:30b7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A310 | 04a9:30b8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A85 | 04a9:30b9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 430 | 04a9:30ba | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A95 | 04a9:30bb | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 40 | 04a9:30bf | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sd200 | 04a9:30c0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A520 | 04a9:30c1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A510 | 04a9:30c2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon EOS 350d | 04a9:30ee | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon EOS 350d | 04a9:30ef | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot S2 Is | 04a9:30f0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sd430 | 04a9:30f1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 700 | 04a9:30f2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus Iz | 04a9:30f4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A430 | 04a9:30f8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A410 | 04a9:30f9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot S80 | 04a9:30fa | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A620 | 04a9:30fc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A610 | 04a9:30fd | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sd630 | 04a9:30fe | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 55 | 04a9:30ff | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon EOS 5d | 04a9:3102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 50 | 04a9:310e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A420 | 04a9:310f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon EOS 400d | 04a9:3110 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 900ti | 04a9:3115 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 750 | 04a9:3116 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A700 | 04a9:3117 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sd700 | 04a9:3119 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot S3 Is | 04a9:311a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A540 | 04a9:311b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 60 | 04a9:311c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot G7 | 04a9:3125 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A530 | 04a9:3126 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 850 Is | 04a9:3136 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sd40 | 04a9:3137 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A710 Is | 04a9:3138 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A630 | 04a9:313a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot S5 Is | 04a9:3148 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A460 | 04a9:3149 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 950 Is | 04a9:314b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A570 Is | 04a9:314c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A560 | 04a9:314d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 75 | 04a9:314e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 70 | 04a9:314f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A550 | 04a9:3150 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A450 | 04a9:3155 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot G9 | 04a9:315a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A650is | 04a9:315b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A720 Is | 04a9:315d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx100 Is | 04a9:315e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 960 Is | 04a9:315f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 860 Is | 04a9:3160 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 970 Is | 04a9:3173 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 90 Is | 04a9:3174 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sd770 Is | 04a9:3175 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A590 Is | 04a9:3176 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A580 | 04a9:3177 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A470 | 04a9:317a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 80 Is | 04a9:3184 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx10 Is | 04a9:318d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A1000 Is | 04a9:318e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A2000 Is | 04a9:3191 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx110 Is | 04a9:3192 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 980 Is | 04a9:3193 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sd880 Is | 04a9:3196 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot D10 | 04a9:31bc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 110 Is | 04a9:31bd | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A2100 Is | 04a9:31be | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A480 | 04a9:31bf | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx200 Is | 04a9:31c0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 990 Is | 04a9:31c1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 100 Is | 04a9:31c2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A1100 Is | 04a9:31c3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sd1200 Is | 04a9:31c4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx120 Is | 04a9:31e0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx20 Is | 04a9:31e4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Ixy 220 Is | 04a9:31e6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A495 | 04a9:31ef | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A3100 Is | 04a9:31f1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A3000 Is | 04a9:31f2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 130 | 04a9:31f3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sd1300 Is | 04a9:31f4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx210 Is | 04a9:31f6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 300 Hs | 04a9:31f7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx130 Is | 04a9:3211 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Ixus 310is | 04a9:3225 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A800 | 04a9:3226 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx230hs | 04a9:3228 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A2200 | 04a9:322a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx220hs | 04a9:322c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx40hs | 04a9:3238 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A1300is | 04a9:323e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A810 | 04a9:323f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Ixus 125hs | 04a9:3241 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A4000is | 04a9:3243 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx260hs | 04a9:3244 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx240hs | 04a9:3245 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A2400is | 04a9:3249 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A2300is | 04a9:324a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx160is | 04a9:325a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx500is | 04a9:325c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx280hs | 04a9:325f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A3500is | 04a9:3261 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A2600 | 04a9:3262 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A1400 | 04a9:3264 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 255hs | 04a9:3268 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot A2500 | 04a9:3271 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx170 Is | 04a9:3276 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Powershot Sx510 Hs | 04a9:3277 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon Digital Ixus 132 | 04a9:327d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Canon EOS 5ds R | 04a9:32af | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 2500 | 04b0:0109 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 4500 | 04b0:010b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 5700 | 04b0:010d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 4300 | 04b0:010f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 3500 | 04b0:0111 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 885 | 04b0:0112 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 5000 | 04b0:0113 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 3100 | 04b0:0115 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 2100 | 04b0:0117 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 5400 | 04b0:0119 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 3700 | 04b0:011d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 8700 | 04b0:011f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 3200 | 04b0:0121 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 2200 | 04b0:0122 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 2200v11 | 04b0:0123 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 8800 | 04b0:0127 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 4800 | 04b0:0129 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 4100 | 04b0:012d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 5600 | 04b0:012e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 4600 | 04b0:0130 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 4600a | 04b0:0131 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 5900 | 04b0:0135 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 7900 | 04b0:0137 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 7600 | 04b0:0139 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P1 | 04b0:0140 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P2 | 04b0:0142 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S4 | 04b0:0144 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S2 | 04b0:014e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S7c | 04b0:0157 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P5000 | 04b0:015b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S500 | 04b0:015d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L12 | 04b0:015f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S200 | 04b0:0161 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P5100 | 04b0:0163 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P50 | 04b0:0169 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P80 | 04b0:016b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P80 V11 | 04b0:016c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P6000 | 04b0:016f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S60 | 04b0:0171 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P90 | 04b0:0173 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L100 | 04b0:0174 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S220 | 04b0:0177 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S225 | 04b0:0178 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P100 | 04b0:017d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L110 | 04b0:017e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P7000 | 04b0:017f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P500 | 04b0:0184 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L120 | 04b0:0185 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S9100 | 04b0:0186 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 9400 | 04b0:0191 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Keymission 360 | 04b0:019f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix Sq | 04b0:0202 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 4200 | 04b0:0204 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 5200 | 04b0:0206 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L1 | 04b0:0208 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P4 | 04b0:020c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S620 | 04b0:021c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S6000 | 04b0:021e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S8000 | 04b0:021f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S5100 | 04b0:0220 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P300 | 04b0:0221 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S8200 | 04b0:0222 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix 2000 | 04b0:0302 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L4 | 04b0:0305 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L11 | 04b0:0309 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L10 | 04b0:030b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix P60 | 04b0:0311 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L16 | 04b0:0315 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L20 | 04b0:0317 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L19 | 04b0:0318 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S3000 | 04b0:031b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S3100 | 04b0:0320 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S2500 | 04b0:0321 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L23 | 04b0:0324 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S4300 | 04b0:0329 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S3300 | 04b0:032a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S6300 | 04b0:032c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S2600 | 04b0:032d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L810 | 04b0:032f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S3200 | 04b0:0334 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S01 | 04b0:0337 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S3500 | 04b0:033b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S2700 | 04b0:033f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix L27 | 04b0:0343 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S02 | 04b0:0346 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S6800 | 04b0:0350 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S3600 | 04b0:0353 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S3700 | 04b0:035c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Coolpix S2900 | 04b0:035e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nikon Keymission 170 | 04b0:0364 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix A820 | 04cb:01c6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix A920 | 04cb:01d3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix S5800 | 04cb:01d7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix F60fd | 04cb:01e6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix S2000hd | 04cb:01e8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Fujifilm A220 | 04cb:01fe | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix S1800 | 04cb:0200 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix Z35 | 04cb:0201 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix Av 150 | 04cb:021b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix T200 | 04cb:0233 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix Jx370 | 04cb:0250 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix S4200 | 04cb:0264 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix S4300 | 04cb:0265 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix Hs30exr | 04cb:0271 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix S2980 | 04cb:027d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Fuji Finepix S4850 | 04cb:0298 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Ptp | 054c:004e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc S730 | 054c:0296 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc A100 | 054c:02c0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc W200 | 054c:02f8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Slt A350 | 054c:0321 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc W130 | 054c:0343 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Hx5v | 054c:0491 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Slt A55 | 054c:04a3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Nex5 | 054c:04a5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Slt A35 | 054c:04a7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Rx100 | 054c:052a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Rx1 | 054c:052b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc W510 | 054c:053c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Hx100v | 054c:0543 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Slt A65v | 054c:0574 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Slt A77v | 054c:0577 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Nex 5n | 054c:0579 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Nex 7 | 054c:057d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Hx20v | 054c:061c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Hx200v | 054c:061f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Slt A99v | 054c:0641 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Slt A57 | 054c:0669 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Nex 5r | 054c:066f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Slt A99v | 054c:0675 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Nex 6 | 054c:0678 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Hx300 | 054c:06ee | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Nex 3n | 054c:072f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Slt A58 | 054c:0736 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Slt A58 | 054c:0737 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Rx100m2 | 054c:074b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A3000 | 054c:074e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A68 | 054c:0779 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Hx80 | 054c:0780 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A68 | 054c:079b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A6300 | 054c:079c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Rx10m3 | 054c:079d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A99 M2 | 054c:079e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Rx100v | 054c:07a3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A6500 | 054c:07a4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A5000 | 054c:07c6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Rx100m6 | 054c:0830 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Hx400v | 054c:08ac | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Hx60v | 054c:08ad | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Wx350 | 054c:08b0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Wx220 | 054c:08d7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Rx100m3 | 054c:08e3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A6000 | 054c:094e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A77 M2 | 054c:0953 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A7s | 054c:0954 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A5100 | 054c:0957 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A7iii | 054c:096f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Hx90v | 054c:09e8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A7r Ii | 054c:0a6b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Rx100m4 | 054c:0a6d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha Rx1r Ii | 054c:0a70 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Qx30u | 054c:0a77 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Dsc Rx0 | 054c:0bfd | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Lava Z1 | 29a9:6001 | ⚪ proposed | — |
+| Lava Z2 | 29a9:6002 | ⚪ proposed | — |
+| Lava Z3 | 29a9:6003 | ⚪ proposed | — |
+| Lava Z6 | 29a9:6004 | ⚪ proposed | — |
+| Lava Agni 5g | 29a9:6005 | ⚪ proposed | — |
+| Lava Blaze | 29a9:6006 | ⚪ proposed | — |
+| Lava Blaze 5g | 29a9:6007 | ⚪ proposed | — |
+| Lava Blaze Pro | 29a9:6008 | ⚪ proposed | — |
+| Lava Agni 2 | 29a9:6009 | ⚪ proposed | — |
+| Symphony Z10 | 1782:5001 | ⚪ proposed | — |
+| Symphony Z15 | 1782:5002 | ⚪ proposed | — |
+| Symphony Z25 | 1782:5003 | ⚪ proposed | — |
+| Symphony Z30 | 1782:5004 | ⚪ proposed | — |
+| Symphony I18 | 1782:5005 | ⚪ proposed | — |
+| Symphony I75 | 1782:5006 | ⚪ proposed | — |
+| Symphony V155 | 1782:5007 | ⚪ proposed | — |
+| Micromax In Note 1 | 2a96:6001 | ⚪ proposed | — |
+| Micromax In 1b | 2a96:6002 | ⚪ proposed | — |
+| Micromax In Note 2 | 2a96:6003 | ⚪ proposed | — |
+| Micromax In 2b | 2a96:6004 | ⚪ proposed | — |
+| Micromax In 2c | 2a96:6005 | ⚪ proposed | — |
+| Micromax Canvas Infinity | 2a96:6006 | ⚪ proposed | — |
+| Micromax Bharat 5 | 2a96:6007 | ⚪ proposed | — |
+| Micromax Canvas 6 Pro | 2a96:6008 | ⚪ proposed | — |
+| Condor Allure A55 | 0e8d:2030 | ⚪ proposed | — |
+| Condor Plume L2 Pro | 0e8d:2031 | ⚪ proposed | — |
+| Condor Griffe T9 | 0e8d:2032 | ⚪ proposed | — |
+| Condor Allure M3 | 0e8d:2033 | ⚪ proposed | — |
+| Condor Plume P8 Pro | 0e8d:2034 | ⚪ proposed | — |
+| Tmobile Revvl 6 5g | 1bbb:a101 | ⚪ proposed | — |
+| Tmobile Revvl 6 Pro | 1bbb:a102 | ⚪ proposed | — |
+| Tmobile Revvl V Plus 5g | 1bbb:a103 | ⚪ proposed | — |
+| Tmobile Revvl 5g | 1bbb:a104 | ⚪ proposed | — |
+| Tmobile Revvl 4 | 1bbb:a105 | ⚪ proposed | — |
+| Tmobile Revvl 4 Plus | 1bbb:a106 | ⚪ proposed | — |
+| Tmobile Revvl Tab 5g | 1bbb:a107 | ⚪ proposed | — |
+| Att Calypso 3 | 1bbb:a201 | ⚪ proposed | — |
+| Att Maestro Max | 1bbb:a202 | ⚪ proposed | — |
+| Att Motivate 2 | 1bbb:a203 | ⚪ proposed | — |
+| Att Radiant Max 5g | 1bbb:a204 | ⚪ proposed | — |
+| Att Fusion 5g | 1bbb:a205 | ⚪ proposed | — |
+| Verizon Orbic Joy | 05c6:a301 | ⚪ proposed | — |
+| Verizon Orbic Myra 5g | 05c6:a302 | ⚪ proposed | — |
+| Verizon Tcl 30 Xe 5g | 1bbb:a303 | ⚪ proposed | — |
+| Verizon Tcl 50 Xl Nxtpaper | 1bbb:a304 | ⚪ proposed | — |
+| Cricket Dream 5g | 1bbb:a401 | ⚪ proposed | — |
+| Cricket Icon 5 | 1bbb:a402 | ⚪ proposed | — |
+| Cricket Magic 5g | 1bbb:a403 | ⚪ proposed | — |
+| Cricket Ovation 3 | 1bbb:a404 | ⚪ proposed | — |
+| Cricket Debut S2 | 1bbb:a405 | ⚪ proposed | — |
+| Blu G91 Pro | 271d:4018 | ⚪ proposed | — |
+| Blu G91s | 271d:4019 | ⚪ proposed | — |
+| Blu View 4 | 271d:401a | ⚪ proposed | — |
+| Blu Bold N2 | 271d:401b | ⚪ proposed | — |
+| Blu G93 | 271d:401c | ⚪ proposed | — |
+| Blu F91 | 271d:401d | ⚪ proposed | — |
+| Blu View 3 | 271d:401e | ⚪ proposed | — |
+| Blu G71 | 271d:401f | ⚪ proposed | — |
+| Blu Bold N3 | 271d:4020 | ⚪ proposed | — |
+| Wiko Power U30 | 1ebf:1012 | ⚪ proposed | — |
+| Wiko T50 | 1ebf:1013 | ⚪ proposed | — |
+| Wiko T60 | 1ebf:1014 | ⚪ proposed | — |
+| Wiko 10 | 1ebf:1015 | ⚪ proposed | — |
+| Wiko View 5 Plus | 1ebf:1016 | ⚪ proposed | — |
+| Infinix Gt 20 Pro | 1d5c:601c | ⚪ proposed | — |
+| Infinix Note 40 Pro | 1d5c:601d | ⚪ proposed | — |
+| Infinix Hot 40 Pro | 1d5c:601e | ⚪ proposed | — |
+| Infinix Zero 30 5g | 1d5c:601f | ⚪ proposed | — |
+| Infinix Smart 8 | 1d5c:6020 | ⚪ proposed | — |
+| Itel S24 | 1d4d:601c | ⚪ proposed | — |
+| Itel A70 | 1d4d:601d | ⚪ proposed | — |
+| Itel P55 5g | 1d4d:601e | ⚪ proposed | — |
+| Itel Rs4 | 1d4d:601f | ⚪ proposed | — |
+| Itel A60s | 1d4d:6020 | ⚪ proposed | — |
+| Tecno Camon 30 Pro | 1d5b:601e | ⚪ proposed | — |
+| Tecno Phantom V Fold | 1d5b:601f | ⚪ proposed | — |
+| Tecno Spark 20 Pro | 1d5b:6020 | ⚪ proposed | — |
+| Tecno Pova 6 Pro | 1d5b:6021 | ⚪ proposed | — |
+| Tecno Phantom X2 Pro | 1d5b:6022 | ⚪ proposed | — |
+| Doogee S100 Pro | 0e8d:2035 | ⚪ proposed | — |
+| Doogee V30 | 0e8d:2036 | ⚪ proposed | — |
+| Doogee S110 | 0e8d:2037 | ⚪ proposed | — |
+| Ulefone Armor 23 Ultra | 0e8d:2038 | ⚪ proposed | — |
+| Ulefone Armor 22 | 0e8d:2039 | ⚪ proposed | — |
+| Ulefone Power Armor 19t | 0e8d:203a | ⚪ proposed | — |
+| Oukitel Wp28 | 0e8d:203b | ⚪ proposed | — |
+| Oukitel Wp30 Pro | 0e8d:203c | ⚪ proposed | — |
+| Oukitel Rt7 | 0e8d:203d | ⚪ proposed | — |
+| Agm Glory G1s | 0e8d:203e | ⚪ proposed | — |
+| Agm H6 | 0e8d:203f | ⚪ proposed | — |
+| Agm Note N1 | 0e8d:2040 | ⚪ proposed | — |
+| Blackview Bv9300 | 0e8d:2041 | ⚪ proposed | — |
+| Blackview Bv8900 | 0e8d:2042 | ⚪ proposed | — |
+| Blackview Bl9000 | 0e8d:2043 | ⚪ proposed | — |
+| Blackview Bv7200 | 0e8d:2044 | ⚪ proposed | — |
+| Blackview Tab 18 | 0e8d:2045 | ⚪ proposed | — |
+| Blackview N6000 | 0e8d:2046 | ⚪ proposed | — |
+| Nvidia Shield Tablet | 0955:cf06 | ⚪ proposed | — |
+| Nvidia Shield Tablet Ptp | 0955:cf08 | ⚪ proposed | — |
+| Amazon Fire Tv Stick 1gen | 1949:02a1 | ⚪ proposed | — |
+| Amazon Fire Tv Stick 2gen | 1949:0311 | ⚪ proposed | — |
+| Amazon Fire Tv Stick 4k | 1949:0441 | ⚪ proposed | — |
+| Amazon Fire Tv Stick 4kmax | 1949:0461 | ⚪ proposed | — |
+| Amazon Fire Tv Cube 2gen | 1949:0381 | ⚪ proposed | — |
+| Amazon Fire Tv Cube 3gen | 1949:0741 | ⚪ proposed | — |
+| Xiaomi Mi Box S | 2717:5001 | ⚪ proposed | — |
+| Xiaomi Mi Box 4 | 2717:5002 | ⚪ proposed | — |
+| Xiaomi Mi Tv Stick | 2717:5003 | ⚪ proposed | — |
+| Amlogic S905x Tvbox | 1b8e:c003 | ⚪ proposed | — |
+| Amlogic S905x3 Tvbox | 1b8e:c004 | ⚪ proposed | — |
+| Amlogic S905x4 Tvbox | 1b8e:c005 | ⚪ proposed | — |
+| Rockchip Rk3328 Tvbox | 2207:0030 | ⚪ proposed | — |
+| Allwinner H616 Tvbox | 1f3a:6010 | ⚪ proposed | — |
+| Tivo Stream 4k | 1b8e:c006 | ⚪ proposed | — |
+| Realme Tv Stick | 22d9:278a | ⚪ proposed | — |
+| Oppo Smart Tv K9 | 22d9:278b | ⚪ proposed | — |
