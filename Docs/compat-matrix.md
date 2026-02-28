@@ -4575,3 +4575,20 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Sound Devices Mixpre 6 Ii | 2af0:0002 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
 | Sony Icd Ux570 | 054c:00a1 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
 | Sony Pcm D10 | 054c:00a2 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Yamaha Steinberg Ur22c | 0499:7010 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Nintendo Switch | 057e:2000 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Nintendo Switch Lite | 057e:2001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Nintendo Switch Oled | 057e:2002 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Kobo Clara 2e | 2237:7010 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Kobo Libra 2 | 2237:7011 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Kobo Sage | 2237:7012 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Kobo Elipsa 2e | 2237:7013 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Viofo A129 Pro | 0c76:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, deleteObject |
+| Thinkware F200 Pro | 2c18:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, deleteObject |
+| Ray Ban Meta | 2d40:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Remarkable 2 | 04b3:0610 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Roku Streaming Stick | 1d5a:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |
+| Garmin Edge 1040 | 091e:4c60 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Garmin Fenix 7x | 091e:4c61 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Garmin Forerunner 965 | 091e:4c62 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Axon Body 3 | 2c55:0001 | experimental | getDeviceInfo, openSession, getStorageIDs, getObjectHandles, getObject |

@@ -98,3 +98,21 @@ When you encounter friction during development:
 # Quick search for open items:
 grep -c 'TODO' Docs/friction-log.md
 ```
+
+### TSAN Interceptor Loading on Xcode 26.3+
+- **Priority**: P1
+- **Context**: Xcode 26.3 RC2 TSAN fails with "Interceptors are not working"
+- **Workaround**: Set DYLD_INSERT_LIBRARIES to the TSAN runtime library path
+- **Long-term**: Monitor Apple releases; may be fixed in GM or later Xcode versions
+
+### xcodeproj Deployment Target Drift
+- **Priority**: P1
+- **Context**: Package.swift was fixed to .macOS(.v15) but SwiftMTP.xcodeproj still had 26.0
+- **Workaround**: Manually lowered xcodeproj MACOSX_DEPLOYMENT_TARGET to 15.0
+- **Long-term**: Add CI step to validate Package.swift and xcodeproj deployment targets match
+
+### Category Field Not in DeviceQuirk Struct
+- **Priority**: P2
+- **Context**: quirks.json has `category` field but DeviceQuirk struct doesn't decode it
+- **Impact**: Can't filter by category at runtime; only available in JSON tooling
+- **Long-term**: Add `category` property to DeviceQuirk struct and CodingKeys
