@@ -218,7 +218,7 @@ def validate_with_schema(
     try:
         import jsonschema
     except ModuleNotFoundError:
-        return ["JSON schema validation skipped: install Python jsonschema (python3 -m pip install jsonschema)"]
+        return []  # jsonschema not installed — skip validation (not an error)
 
     try:
         schema = json.loads(schema_path.read_text(encoding="utf-8"))

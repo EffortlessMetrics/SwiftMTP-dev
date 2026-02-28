@@ -4247,3 +4247,105 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Leica M11 P | 1a98:0013 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Leica D Lux 8 | 1a98:0014 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Leica Q3 43 | 1a98:0015 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nokia X10 | 2e04:c02b | ⚪ proposed | — |
+| Nokia X20 | 2e04:c02c | ⚪ proposed | — |
+| Nokia G60 | 2e04:c02d | ⚪ proposed | — |
+| Nokia C32 | 2e04:c02e | ⚪ proposed | — |
+| Nokia G22 | 2e04:c02f | ⚪ proposed | — |
+| Nokia X30 | 2e04:c030 | ⚪ proposed | — |
+| Nothing Phone 1 | 2a70:f01e | ⚪ proposed | — |
+| Nothing Phone 2 | 2a70:f01f | ⚪ proposed | — |
+| Nothing Phone 2a | 2a70:f020 | ⚪ proposed | — |
+| Nothing Phone 2a Plus | 2a70:f021 | ⚪ proposed | — |
+| Fairphone 4 | 2ae5:f004 | ⚪ proposed | — |
+| Fairphone 5 | 2ae5:f005 | ⚪ proposed | — |
+| Fairphone 4 MTP | 2ae5:2008 | ⚪ proposed | — |
+| Poco X5 | 2717:ff7f | ⚪ proposed | — |
+| Poco X5 Pro | 2717:ff80 | ⚪ proposed | — |
+| Poco X6 | 2717:ff81 | ⚪ proposed | — |
+| Poco X6 Pro | 2717:ff82 | ⚪ proposed | — |
+| Poco F5 | 2717:ff83 | ⚪ proposed | — |
+| Poco F5 Pro | 2717:ff84 | ⚪ proposed | — |
+| Poco M5 | 2717:ff85 | ⚪ proposed | — |
+| Poco M5s | 2717:ff86 | ⚪ proposed | — |
+| Poco C65 | 2717:ff87 | ⚪ proposed | — |
+| Iqoo 11 | 2d95:6023 | ⚪ proposed | — |
+| Iqoo 11 Pro | 2d95:6024 | ⚪ proposed | — |
+| Iqoo 12 | 2d95:6025 | ⚪ proposed | — |
+| Iqoo 12 Pro | 2d95:6026 | ⚪ proposed | — |
+| Iqoo Neo8 | 2d95:6027 | ⚪ proposed | — |
+| Iqoo Neo8 Pro | 2d95:6028 | ⚪ proposed | — |
+| Iqoo Z7 | 2d95:6029 | ⚪ proposed | — |
+| Iqoo Z7x | 2d95:602a | ⚪ proposed | — |
+| Realme 11 Pro | 22d9:278c | ⚪ proposed | — |
+| Realme 11 Pro Plus | 22d9:278d | ⚪ proposed | — |
+| Realme Gt5 | 22d9:278e | ⚪ proposed | — |
+| Realme Gt5 Pro | 22d9:278f | ⚪ proposed | — |
+| Realme Narzo 60 | 22d9:2790 | ⚪ proposed | — |
+| Realme Narzo 60 Pro | 22d9:2791 | ⚪ proposed | — |
+| Realme C55 | 22d9:2792 | ⚪ proposed | — |
+| Realme 12 Pro | 22d9:2793 | ⚪ proposed | — |
+| Honor Magic6 | 12d1:3808 | ⚪ proposed | — |
+| Honor Magic6 Pro | 12d1:3809 | ⚪ proposed | — |
+| Honor 90 | 12d1:380a | ⚪ proposed | — |
+| Honor 90 Pro | 12d1:380b | ⚪ proposed | — |
+| Honor X9b | 12d1:380c | ⚪ proposed | — |
+| Honor Magic5 Pro | 12d1:380d | ⚪ proposed | — |
+| Honor X8b | 12d1:380e | ⚪ proposed | — |
+| Tcl 40 Se | 1bbb:a406 | ⚪ proposed | — |
+| Tcl 40 Nxtpaper | 1bbb:a407 | ⚪ proposed | — |
+| Tcl 50 Xl | 1bbb:a408 | ⚪ proposed | — |
+| Tcl 50 5g | 1bbb:a409 | ⚪ proposed | — |
+| Tcl Tab 10s | 1bbb:a40a | ⚪ proposed | — |
+| Tcl 30 Se | 1bbb:a40b | ⚪ proposed | — |
+| Zte Blade V50 | 19d2:0418 | ⚪ proposed | — |
+| Zte Blade V50 Vita | 19d2:0419 | ⚪ proposed | — |
+| Zte Axon 50 | 19d2:041a | ⚪ proposed | — |
+| Zte Axon 50 Pro | 19d2:041b | ⚪ proposed | — |
+| Nubia Z60 Ultra | 19d2:041c | ⚪ proposed | — |
+| Nubia Z50s Pro | 19d2:041d | ⚪ proposed | — |
+| Nubia Redmagic 9 Pro | 19d2:041e | ⚪ proposed | — |
+| Meizu 20 | 2a45:000d | ⚪ proposed | — |
+| Meizu 20 Pro | 2a45:000e | ⚪ proposed | — |
+| Meizu 21 | 2a45:000f | ⚪ proposed | — |
+| Meizu 21 Pro | 2a45:0010 | ⚪ proposed | — |
+| Meizu 20 Infinity | 2a45:0011 | ⚪ proposed | — |
+| Caterpillar Cat S75 | 04b7:88f2 | ⚪ proposed | — |
+| Caterpillar Cat S62 Pro | 04b7:88f3 | ⚪ proposed | — |
+| Caterpillar Cat S53 | 04b7:88f4 | ⚪ proposed | — |
+| Caterpillar Cat S42 H | 04b7:88f5 | ⚪ proposed | — |
+| Sharp Aquos R8 | 04dd:9d6f | ⚪ proposed | — |
+| Sharp Aquos R8 Pro | 04dd:9d70 | ⚪ proposed | — |
+| Sharp Aquos Wish3 | 04dd:9d71 | ⚪ proposed | — |
+| Sharp Aquos Sense8 | 04dd:9d72 | ⚪ proposed | — |
+| Sharp Aquos R9 | 04dd:9d73 | ⚪ proposed | — |
+| Sandisk Extreme Portable Ssd | 0781:558c | ⚪ proposed | — |
+| Sandisk Ultra Dual Drive | 0781:5590 | ⚪ proposed | — |
+| Sandisk Ixpand Flash Drive | 0781:55a3 | ⚪ proposed | — |
+| Sandisk Extreme Pro Ssd | 0781:55af | ⚪ proposed | — |
+| Samsung T7 Portable Ssd | 04e8:4001 | ⚪ proposed | — |
+| Samsung T7 Shield Ssd | 04e8:4002 | ⚪ proposed | — |
+| Samsung T9 Portable Ssd | 04e8:4003 | ⚪ proposed | — |
+| Wd My Passport | 1058:25a2 | ⚪ proposed | — |
+| Wd My Book Desktop | 1058:1230 | ⚪ proposed | — |
+| Seagate One Touch Hdd | 0bc2:ab24 | ⚪ proposed | — |
+| Seagate Expansion Portable | 0bc2:2322 | ⚪ proposed | — |
+| Kingston Datatraveler 100 G3 | 0951:1666 | ⚪ proposed | — |
+| Kingston Xs2000 Portable Ssd | 0951:1697 | ⚪ proposed | — |
+| Kingston Datatraveler Max | 0951:177f | ⚪ proposed | — |
+| Crucial X6 Portable Ssd | 0634:0660 | ⚪ proposed | — |
+| Crucial X8 Portable Ssd | 0634:0661 | ⚪ proposed | — |
+| Crucial X9 Portable Ssd | 0634:0662 | ⚪ proposed | — |
+| Pny Elite X Fit Ssd | 154b:0065 | ⚪ proposed | — |
+| Pny Pro Elite V2 Ssd | 154b:0067 | ⚪ proposed | — |
+| Transcend Esd310c Ssd | 8564:7100 | ⚪ proposed | — |
+| Transcend Storejet 25h3 | 8564:7000 | ⚪ proposed | — |
+| Adata Se880 Portable Ssd | 125f:a94a | ⚪ proposed | — |
+| Adata Se920 Portable Ssd | 125f:a95a | ⚪ proposed | — |
+| Ti 84 Plus Calculator | 0451:e003 | ⚪ proposed | — |
+| Ti 84 Plus Silver Calculator | 0451:e008 | ⚪ proposed | — |
+| Ti Nspire Calculator | 0451:e012 | ⚪ proposed | — |
+| Casio Fx 9750gii Calculator | 07cf:6101 | ⚪ proposed | — |
+| Casio Fx Cp400 Calculator | 07cf:6102 | ⚪ proposed | — |
+| Casio Fx Cg50 Calculator | 07cf:6103 | ⚪ proposed | — |
+| Digilent Analog Discovery 2 | 1443:0007 | ⚪ proposed | — |
