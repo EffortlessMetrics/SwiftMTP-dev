@@ -1072,6 +1072,57 @@ final class BDDRunner: XCTestCase {
     else { throw XCTSkip("nothing-phone-1-f01e not in database") }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
+
+  // MARK: - Wave 33-40 Expansion
+
+  func testWave33PalmPreVintageMediaPlayer() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0830, pid: 0x0101, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("palm-pre-0101 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave34CanonPixmaPrinter() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x04a9, pid: 0x1754, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("canon-pixma-mg3620-1754 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave35ParrotBebop2Drone() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x19cf, pid: 0x0903, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("parrot-bebop-2-0903 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave38PioneerHeadUnit() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x08e4, pid: 0x0142, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("pioneer-dvr-lx60d-0142 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave38GarminDriveSmartGPS() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x091e, pid: 0x4c50, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("garmin-drivesmart-66-4c50 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave39WahooElemntFitness() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x31e0, pid: 0x0001, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("wahoo-elemnt-roam-0001 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave40SupernoteA5X2EReader() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2207, pid: 0x0032, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
+    else { throw XCTSkip("supernote-a5x2-0032 not in database") }
+    XCTAssertNotNil(q)
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
