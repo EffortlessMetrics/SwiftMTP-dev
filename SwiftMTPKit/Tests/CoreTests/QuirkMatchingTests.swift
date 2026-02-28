@@ -504,7 +504,7 @@ final class QuirkMatchingTests: XCTestCase {
   }
 
   func testDatabase395OrMoreEntries() {
-    XCTAssertGreaterThanOrEqual(db.entries.count, 9500, "Expected at least 9500 quirk entries")
+    XCTAssertGreaterThanOrEqual(db.entries.count, 10000, "Expected at least 10000 quirk entries")
   }
 
   // Nokia

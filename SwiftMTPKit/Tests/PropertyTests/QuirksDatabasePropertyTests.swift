@@ -591,6 +591,22 @@ final class QuirksDatabasePropertyTests: XCTestCase {
       "Entries with invalid PID format: \(invalid.compactMap { $0["id"] as? String }.prefix(10))")
   }
 
+  // MARK: - 10,000-Entry Milestone Invariants
+
+  func testAllEntriesHaveUniqueIDs() {
+    let ids = db.entries.map { $0.id }
+    var seen = Set<String>()
+    var duplicates = [String]()
+    for id in ids {
+      if !seen.insert(id).inserted {
+        duplicates.append(id)
+      }
+    }
+    XCTAssertTrue(
+      duplicates.isEmpty,
+      "All \(db.entries.count) entries must have unique IDs; duplicates: \(duplicates.prefix(10))")
+  }
+
   private func findDuplicates<T: Hashable>(_ items: [T]) -> [T] {
     var seen = Set<T>()
     var duplicates = Set<T>()
