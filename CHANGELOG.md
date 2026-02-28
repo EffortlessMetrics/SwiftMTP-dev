@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **🎉 10,000-Entry Milestone**: Device quirks database reaches 10,000+ entries across 600+ VIDs and 38 device categories
+- Milestone BDD tests: `testDatabaseHas10000PlusEntries`, `testDatabaseHas600PlusVIDs`, `testDatabaseHas38PlusCategories`
+- Property test: `testAllEntriesHaveUniqueIDs` (no duplicate entry IDs across all 10,000+ entries)
+- Core baseline bumped from 9,500 → 10,000 in `QuirkMatchingTests`
+- Compat matrix regenerated for 10,000+ entries
 - Baseline & compat matrix update for 9,600+ quirks entries (9,600+ across 570+ VIDs, 38 categories)
 - Wave 63: CI fixes — Xcode 16.2 + Swift 6.2 toolchain setup, workflow stabilization
 - Wave 64: IoT/embedded device entries — smart home hubs, embedded SBCs, dev boards
@@ -20,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Wave 71: Documentation refresh — compat matrix regeneration, CHANGELOG + README updates
 - Wave 72–75: Samsung/LG/Huawei expansion, Chinese phone brands, additional regional entries
 - Waves 76–78: Industrial cameras, machine vision, smart glasses, AR glasses, e-ink displays, embedded/fitness entries
+- **🎉 Device Quirks Database: 10,000+ entries across 600+ VIDs and 38 device categories**
 - **🎉 Device Quirks Database: 9,600+ entries across 570+ VIDs and 38 device categories**
 
 - Wave 42-50: Gaming handhelds, VR, hi-fi DAPs, embedded dev boards, 3D printers, lab instruments

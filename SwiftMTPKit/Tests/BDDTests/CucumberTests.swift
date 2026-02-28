@@ -1904,6 +1904,25 @@ final class BDDRunner: XCTestCase {
     let uniqueVIDs = Set(db.entries.map { $0.vid })
     XCTAssertGreaterThanOrEqual(uniqueVIDs.count, 560, "Should have 560+ unique VIDs")
   }
+
+  // MARK: - 🎉 10,000-Entry Milestone
+
+  func testDatabaseHas10000PlusEntries() throws {
+    let db = try QuirkDatabase.load()
+    XCTAssertGreaterThanOrEqual(db.entries.count, 10000, "Quirk database should have 10,000+ entries")
+  }
+
+  func testDatabaseHas600PlusVIDs() throws {
+    let db = try QuirkDatabase.load()
+    let uniqueVIDs = Set(db.entries.map { $0.vid })
+    XCTAssertGreaterThanOrEqual(uniqueVIDs.count, 600, "Should have 600+ unique VIDs")
+  }
+
+  func testDatabaseHas38PlusCategories() throws {
+    let db = try QuirkDatabase.load()
+    let uniqueCategories = Set(db.entries.compactMap { $0.category })
+    XCTAssertGreaterThanOrEqual(uniqueCategories.count, 38, "Should have 38+ unique device categories")
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
