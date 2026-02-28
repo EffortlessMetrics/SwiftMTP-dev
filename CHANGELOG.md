@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **🎉 Device Quirks Database: 3,227+ entries** (up from 2,055): Massive expansion through waves 11–15:
+- **🎉 Device Quirks Database: 3,945+ entries** (up from 2,055): Massive expansion through waves 11–20:
   - **Smartphones**: Samsung Galaxy S/A/M/F/Z (120+), Xiaomi/Redmi/POCO (136+), Huawei P/Mate/nova (68+), Honor (16+), OnePlus (28+), Google Pixel/Nexus (35+), Sony Xperia (312+), LG (73+), HTC (82+), OPPO/Realme (62+), vivo (24+), ZTE/nubia (29+), ASUS ZenFone/ROG (24+), Motorola Edge/Moto G/Razr (61+), Nokia/HMD (96+), BlackBerry (20+), Fairphone (3), Nothing Phone (5), Meizu (14+), Sharp Aquos (13+), Kyocera DuraForce (7+), CAT Rugged (5+), Razer (2), Lenovo (56+), Acer (48+), Essential (2+)
   - **Cameras (PTP/MTP)**: Canon EOS/R-series (163+), Nikon D/Z-series (96+), Sony Alpha (147+), Fujifilm X-series (69+), Olympus/OM System (66+), Panasonic Lumix (42+), Sigma (13+), Hasselblad (8+), Leica M/Q/SL (17+), Pentax (6+), Phase One (5+), GoPro Hero (12+), Insta360 (13+), DJI drones (13+), Blackmagic BMPCC (5+), FLIR/InfiRay/Seek thermal (14+)
   - **E-readers**: Kindle/Fire (67+), Kobo (14+), Onyx Boox (17+), PocketBook (14+), Barnes & Noble Nook (11+), Tolino (8+)
@@ -24,13 +24,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Audio/Recording**: Roland FANTOM/SPD/RD (12+), Zoom H/Q/L recorders (7+), TASCAM DR/PORTACAPTURE (7+), Sony ICD/PCM recorders (6+), Sennheiser headphones (10+)
   - **Specialty**: Epson scanners (9+), Canon CanoScan (5+), HP PhotoSmart (4+), Casio cameras (5+), Minolta DiMage (4+), Sony PSP/Vita (7+), Microsoft Surface Duo (2)
   - **Apple**: iPhone/iPad PTP camera roll (4+), iPod classic/nano MTP (7+) with iOS-Compatibility.md documentation
-  - **153 unique USB vendor IDs** across all categories
+  - **Wave 17**: Android TV & streaming devices (+19)
+  - **Wave 18**: libgphoto2 PTP cameras (+295)
+  - **Wave 19**: Regional/carrier phones (+97)
+  - **Wave 20**: JSON Schema validation + QuirkFlags.cameraClass
+  - **190 unique USB vendor IDs** across all categories
 - **BDD tests waves 7–15**: `android-brands-wave7.feature`, `flagship-brands-wave8.feature`, `wave11-emerging-brands.feature`, `wave14-ereaders-niche.feature` (54+ test methods, 4 skipped), covering all major device categories
 - **VirtualDeviceConfig presets**: 16 new presets (LG G5, HTC One M8, ZTE Axon 7, OPPO Reno 2, vivo V20 Pro, BlackBerry KEYone, Fitbit Versa, Garmin FR945, Google Pixel 8, OnePlus 12, Samsung Galaxy S24, Nothing Phone 2, Valve Steam Deck, Meta Quest 3, Tecno Camon 30, Archos 504)
 - **Property tests**: 4 new invariants; baseline bumped from 395 → 3200
 - **Friction log**: `Docs/friction-log.md` tracking 24+ improvement opportunities (P0–P3)
 - **iOS-Compatibility.md**: Explains PTP-only camera roll access vs full MTP limitation for iOS users
-- **Compat matrix**: Regenerated with 3,227 entries and 153 VIDs
+- **Compat matrix**: Regenerated with 3,945 entries and 190 VIDs
 
 
 - **`MTPError.sessionBusy`**: New error case for transaction contention detection.
