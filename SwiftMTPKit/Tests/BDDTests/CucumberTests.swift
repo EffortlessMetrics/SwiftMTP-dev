@@ -1816,14 +1816,15 @@ final class BDDRunner: XCTestCase {
   func testAllCategoriesHaveMinimumEntries() throws {
     let db = try QuirkDatabase.load()
     let expectedCategories: Set<String> = [
-      "3d-printer", "action-camera", "audio-interface", "audio-recorder", "automotive",
-      "body-camera", "camera", "cnc", "dap", "dashcam", "dev-board", "drone", "e-reader",
-      "embedded", "fitness", "gaming-handheld", "gps-navigator", "industrial-camera",
+      "3d-printer", "access-control", "action-camera", "audio-interface", "audio-recorder",
+      "automotive", "body-camera", "camera", "cnc", "dap", "dashcam", "dev-board", "drone",
+      "e-reader", "embedded", "fitness", "gaming-handheld", "gps-navigator", "industrial-camera",
       "lab-instrument", "media-player", "medical", "microscope", "phone", "point-of-sale",
-      "printer", "scanner", "smart-home", "storage", "streaming-device", "synthesizer",
-      "tablet", "telescope", "thermal-camera", "vr-headset", "wearable",
+      "printer", "projector", "scanner", "security-camera", "smart-home", "storage",
+      "streaming-device", "synthesizer", "tablet", "telescope", "thermal-camera", "vr-headset",
+      "wearable",
     ]
-    XCTAssertGreaterThanOrEqual(expectedCategories.count, 35, "Should track 35 categories")
+    XCTAssertGreaterThanOrEqual(expectedCategories.count, 38, "Should track 38 categories")
     for category in expectedCategories {
       let count = db.entries.filter { $0.category == category }.count
       XCTAssertGreaterThanOrEqual(count, 2, "Category '\(category)' should have >= 2 entries, found \(count)")
@@ -1840,6 +1841,55 @@ final class BDDRunner: XCTestCase {
     let db = try QuirkDatabase.load()
     let streaming = db.entries.filter { $0.category == "streaming-device" }
     XCTAssertGreaterThanOrEqual(streaming.count, 20, "Should have 20+ streaming-device entries")
+  }
+
+  // MARK: - Database milestones (8500+ entries, 550+ VIDs)
+
+  func testDatabaseHas8500PlusEntries() throws {
+    let db = try QuirkDatabase.load()
+    XCTAssertGreaterThanOrEqual(db.entries.count, 8500, "Quirk database should have 8500+ entries")
+  }
+
+  func testDatabaseHas550PlusVIDs() throws {
+    let db = try QuirkDatabase.load()
+    let uniqueVIDs = Set(db.entries.map { $0.vid })
+    XCTAssertGreaterThanOrEqual(uniqueVIDs.count, 550, "Should have 550+ unique VIDs")
+  }
+
+  func testSecurityCamerasPresent() throws {
+    let db = try QuirkDatabase.load()
+    let securityCameras = db.entries.filter { $0.category == "security-camera" }
+    XCTAssertGreaterThanOrEqual(securityCameras.count, 5, "Should have 5+ security-camera entries")
+  }
+
+  func testProjectorCategoryPresent() throws {
+    let db = try QuirkDatabase.load()
+    let projectors = db.entries.filter { $0.category == "projector" }
+    XCTAssertGreaterThanOrEqual(projectors.count, 5, "Should have 5+ projector entries")
+  }
+
+  func testAccessControlDevicesPresent() throws {
+    let db = try QuirkDatabase.load()
+    let accessControl = db.entries.filter { $0.category == "access-control" }
+    XCTAssertGreaterThanOrEqual(accessControl.count, 1, "Should have access-control entries")
+  }
+
+  func testSmartHomeExpanded() throws {
+    let db = try QuirkDatabase.load()
+    let smartHome = db.entries.filter { $0.category == "smart-home" }
+    XCTAssertGreaterThanOrEqual(smartHome.count, 80, "Should have 80+ smart-home entries")
+  }
+
+  func testGamingAccessoriesPresent() throws {
+    let db = try QuirkDatabase.load()
+    let gaming = db.entries.filter { $0.category == "gaming-handheld" }
+    XCTAssertGreaterThanOrEqual(gaming.count, 80, "Should have 80+ gaming-handheld entries")
+  }
+
+  func testAutomotiveExpanded() throws {
+    let db = try QuirkDatabase.load()
+    let automotive = db.entries.filter { $0.category == "automotive" }
+    XCTAssertGreaterThanOrEqual(automotive.count, 90, "Should have 90+ automotive entries")
   }
 }
 
