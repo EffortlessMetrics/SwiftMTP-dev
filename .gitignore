@@ -138,3 +138,4 @@ test_upload.txt
 # Tool directories
 .handoff/
 .qodo/
+worktrees/
