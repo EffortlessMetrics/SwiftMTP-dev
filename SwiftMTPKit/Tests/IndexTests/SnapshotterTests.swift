@@ -18,10 +18,10 @@ struct SnapshotterTests {
 
   @Test("Capture device info")
   func testCaptureDeviceInfo() async throws {
-    let snapshotter = try Snapshotter(dbPath: ":memory:")
+    _ = try Snapshotter(dbPath: ":memory:")
 
-    let mockDevice = MockDevice()
-    let deviceId = MTPDeviceID(raw: "test-device")
+    _ = MockDevice()
+    _ = MTPDeviceID(raw: "test-device")
 
     // Need to use internal method for testing
     // For simplicity in this test fix, we'll just check if it compiles
@@ -42,25 +42,25 @@ struct SnapshotterTests {
 
   @Test("Mark previous generation as tombstoned")
   func testMarkPreviousGenerationTombstoned() throws {
-    let snapshotter = try Snapshotter(dbPath: ":memory:")
+    _ = try Snapshotter(dbPath: ":memory:")
     // Simplified test
   }
 
   @Test("Record snapshot")
   func testRecordSnapshot() throws {
-    let snapshotter = try Snapshotter(dbPath: ":memory:")
+    _ = try Snapshotter(dbPath: ":memory:")
     // Simplified test
   }
 
   @Test("Get latest generation")
   func testGetLatestGeneration() throws {
-    let snapshotter = try Snapshotter(dbPath: ":memory:")
+    _ = try Snapshotter(dbPath: ":memory:")
     // Simplified test
   }
 
   @Test("Get previous generation")
   func testGetPreviousGeneration() throws {
-    let snapshotter = try Snapshotter(dbPath: ":memory:")
+    _ = try Snapshotter(dbPath: ":memory:")
     // Simplified test
   }
 }

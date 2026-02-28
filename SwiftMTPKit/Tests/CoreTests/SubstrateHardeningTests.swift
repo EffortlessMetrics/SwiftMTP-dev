@@ -285,7 +285,7 @@ final class SubstrateHardeningTests: XCTestCase {
   }
 
   func testMTPFuzzerMutateNonEmptyData() {
-    var original = Data([0x01, 0x02, 0x03, 0x04, 0x05])
+    let original = Data([0x01, 0x02, 0x03, 0x04, 0x05])
     let mutated = MTPFuzzer.mutate(original)
 
     // Should have same length

@@ -20,7 +20,7 @@ struct IndexOrchestratorTests {
       .path
     defer { try? FileManager.default.removeItem(atPath: dbPath) }
 
-    let liveIndex = try SQLiteLiveIndex(path: dbPath)
+    _ = try SQLiteLiveIndex(path: dbPath)
 
     // Note: Full orchestrator test requires actual device implementation
     // This is a simplified test that validates the flow

@@ -120,7 +120,6 @@ struct TransferJournalTests {
 
     let deviceId = MTPDeviceID(raw: "test-device-recovery")
     let tempURL = URL(fileURLWithPath: "/tmp/test-\(UUID().uuidString).tmp")
-    let finalURL = URL(fileURLWithPath: "/tmp/final-\(UUID().uuidString).txt")
 
     // Start transfer
     let transferId = try journal.beginWrite(
@@ -317,7 +316,7 @@ struct TransferJournalTests {
     #expect(resumables1[0].committedBytes == 2500)
 
     // New device has its own transfers
-    let transferId2 = try journal2.beginRead(
+    _ = try journal2.beginRead(
       device: deviceId2,
       handle: 0x20002,
       name: "new-device-file.jpg",
@@ -406,7 +405,7 @@ struct TransferJournalTests {
     let tempURL = URL(fileURLWithPath: "/tmp/test-\(UUID().uuidString).tmp")
     let finalURL = URL(fileURLWithPath: "/tmp/final-\(UUID().uuidString).txt")
 
-    let transferId = try journal.beginWrite(
+    _ = try journal.beginWrite(
       device: deviceId,
       parent: 0x10001,
       name: "problematic-file.dat",

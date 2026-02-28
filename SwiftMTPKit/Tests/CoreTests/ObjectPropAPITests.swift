@@ -112,7 +112,7 @@ final class ObjectPropAPITests: XCTestCase {
     XCTAssertNotNil(date)
     // "20250101T000000" should parse to 2025-01-01 00:00:00 UTC
     let cal = Calendar.current
-    var comps = cal.dateComponents(in: TimeZone(identifier: "UTC")!, from: date!)
+    let comps = cal.dateComponents(in: TimeZone(identifier: "UTC")!, from: date!)
     XCTAssertEqual(comps.year, 2025)
     XCTAssertEqual(comps.month, 1)
     XCTAssertEqual(comps.day, 1)

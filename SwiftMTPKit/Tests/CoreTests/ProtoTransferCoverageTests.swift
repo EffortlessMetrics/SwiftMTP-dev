@@ -73,7 +73,7 @@ final class ProtoTransferCoverageTests: XCTestCase {
     do {
       try result.checkOK()
       XCTFail("Should throw for not supported error")
-    } catch let error as MTPError {
+    } catch is MTPError {
       // Verify it's a notSupported error (we just check it throws)
       XCTAssertTrue(true)
     } catch {
@@ -88,7 +88,7 @@ final class ProtoTransferCoverageTests: XCTestCase {
     do {
       try result.checkOK()
       XCTFail("Should throw for object not found error")
-    } catch let error as MTPError {
+    } catch is MTPError {
       XCTAssertTrue(true)
     } catch {
       XCTFail("Unexpected error type: \(error)")
@@ -103,7 +103,7 @@ final class ProtoTransferCoverageTests: XCTestCase {
       do {
         try result.checkOK()
         XCTFail("Should throw for storage full error (code: \(code))")
-      } catch let error as MTPError {
+      } catch is MTPError {
         XCTAssertTrue(true)
       } catch {
         XCTFail("Unexpected error type: \(error)")
@@ -118,7 +118,7 @@ final class ProtoTransferCoverageTests: XCTestCase {
     do {
       try result.checkOK()
       XCTFail("Should throw for read only error")
-    } catch let error as MTPError {
+    } catch is MTPError {
       XCTAssertTrue(true)
     } catch {
       XCTFail("Unexpected error type: \(error)")
@@ -132,7 +132,7 @@ final class ProtoTransferCoverageTests: XCTestCase {
     do {
       try result.checkOK()
       XCTFail("Should throw for permission denied error")
-    } catch let error as MTPError {
+    } catch is MTPError {
       XCTAssertTrue(true)
     } catch {
       XCTFail("Unexpected error type: \(error)")
@@ -146,7 +146,7 @@ final class ProtoTransferCoverageTests: XCTestCase {
     do {
       try result.checkOK()
       XCTFail("Should throw for busy error")
-    } catch let error as MTPError {
+    } catch is MTPError {
       XCTAssertTrue(true)
     } catch {
       XCTFail("Unexpected error type: \(error)")
@@ -160,7 +160,7 @@ final class ProtoTransferCoverageTests: XCTestCase {
     do {
       try result.checkOK()
       XCTFail("Should throw for unknown error")
-    } catch let error as MTPError {
+    } catch is MTPError {
       // Should be a protocol error
       XCTAssertTrue(true)
     } catch {
@@ -302,9 +302,7 @@ final class PTPOperationCoverageTests: XCTestCase {
 
   func testGetPartialObject64CommandStructure() {
     // Test that the command is properly structured for GetPartialObject64
-    let handle: UInt32 = 100
     let offset: UInt64 = 0x1_0000_0000
-    let maxBytes: UInt32 = 4096
 
     let offsetLo = UInt32(offset & 0xFFFFFFFF)
     let offsetHi = UInt32(offset >> 32)

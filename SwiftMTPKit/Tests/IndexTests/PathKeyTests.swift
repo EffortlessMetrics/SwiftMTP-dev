@@ -214,7 +214,7 @@ struct PathKeyTests {
   @Test("Parse path key with lowercase hex")
   func testParseLowercaseHex() {
     let pathKey = "a1b2c3d4/test.txt"
-    let (storageId, components) = PathKey.parse(pathKey)
+    let (storageId, _) = PathKey.parse(pathKey)
     #expect(storageId == 0xA1B2C3D4)
   }
 

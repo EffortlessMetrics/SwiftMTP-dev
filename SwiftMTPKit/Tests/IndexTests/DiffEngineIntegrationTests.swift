@@ -11,7 +11,7 @@ final class DiffEngineIntegrationTests: XCTestCase {
   // MARK: - MTPDiff Tests
 
   func testMTPDiffEmpty() {
-    var diff = MTPDiff()
+    let diff = MTPDiff()
     XCTAssertTrue(diff.isEmpty)
     XCTAssertEqual(diff.totalChanges, 0)
     XCTAssertTrue(diff.added.isEmpty)
