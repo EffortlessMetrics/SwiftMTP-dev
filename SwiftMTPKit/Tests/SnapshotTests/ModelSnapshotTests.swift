@@ -378,6 +378,25 @@ final class ModelSnapshotTests: XCTestCase {
     assertSnapshot(of: selections, as: .json, named: "fallback-selections")
   }
 
+  // MARK: - Category Distribution Snapshot
+
+  /// Verify category distribution across the quirks database
+  func testCategoryDistribution() throws {
+    let database = try QuirkDatabase.load()
+    var distribution: [String: Int] = [:]
+    for entry in database.entries {
+      let cat = entry.category ?? "unknown"
+      distribution[cat, default: 0] += 1
+    }
+    // Verify we have enough categories and the expected shape
+    XCTAssertGreaterThanOrEqual(distribution.count, 25, "Expected at least 25 device categories")
+    XCTAssertGreaterThanOrEqual(distribution["phone"] ?? 0, 2000)
+    XCTAssertGreaterThanOrEqual(distribution["camera"] ?? 0, 800)
+    XCTAssertGreaterThanOrEqual(distribution["media-player"] ?? 0, 300)
+    XCTAssertGreaterThanOrEqual(distribution["e-reader"] ?? 0, 100)
+    XCTAssertGreaterThanOrEqual(distribution["gps-navigator"] ?? 0, 100)
+  }
+
   // MARK: - LearnedProfile Snapshots
 
   /// Empty profile (new device, no session data yet)
