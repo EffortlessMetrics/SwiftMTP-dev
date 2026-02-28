@@ -2,7 +2,7 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-**7,102** device entries across **360** vendor IDs and **35** categories.
+**7,589** device entries across **444** vendor IDs and **35** categories.
 
 ## 3D Printer (96)
 
@@ -159,7 +159,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | insta360-x4-creator-0025 | 0x2e1a:0x0025 | community | community |
 | insta360-flow-pro-0026 | 0x2e1a:0x0026 | community | community |
 
-## Audio Interface (23)
+## Audio Interface (34)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -185,6 +185,17 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | behringer-xr18-0005 | 0x1397:0x0005 | proposed | low |
 | behringer-x-touch-0006 | 0x1397:0x0006 | proposed | low |
 | native-instruments-maschine-plus-1600 | 0x17cc:0x1600 | proposed | low |
+| teenage-engineering-tx-6-0023 | 0x2367:0x0023 | proposed | medium |
+| teenage-engineering-tp-7-0025 | 0x2367:0x0025 | proposed | medium |
+| pioneer-dj-ddj-flx10-0010 | 0x2b73:0x0010 | proposed | medium |
+| pioneer-dj-ddj-rev7-0011 | 0x2b73:0x0011 | proposed | medium |
+| pioneer-dj-cdj-3000-0012 | 0x2b73:0x0012 | proposed | medium |
+| pioneer-dj-djm-a9-0013 | 0x2b73:0x0013 | proposed | medium |
+| pioneer-dj-ddj-1000-0014 | 0x2b73:0x0014 | proposed | medium |
+| pioneer-dj-xdj-xz-0015 | 0x2b73:0x0015 | proposed | medium |
+| pioneer-dj-ddj-flx6-0016 | 0x2b73:0x0016 | proposed | medium |
+| native-instruments-traktor-kontrol-s2mk3-1402 | 0x17cc:0x1402 | proposed | medium |
+| native-instruments-traktor-kontrol-s3-1403 | 0x17cc:0x1403 | proposed | medium |
 | Yamaha/Steinberg UR22C | 0x0499:0x7010 | experimental | unknown |
 
 ## Audio Recorder (75)
@@ -267,7 +278,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Zoom H6 | 0x1686:0x0027 | experimental | unknown |
 | Zoom H8 | 0x1686:0x0028 | experimental | unknown |
 
-## Automotive (55)
+## Automotive (97)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -326,8 +337,50 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | jvc-kw-m56bt-0431 | 0x04f1:0x0431 | proposed | low |
 | jvc-kw-z1000w-0432 | 0x04f1:0x0432 | proposed | low |
 | jvc-kd-x482dbt-0433 | 0x04f1:0x0433 | proposed | low |
+| obdlink-sx-6015 | 0x0403:0x6015 | proposed | low |
+| obdlink-ex-6016 | 0x0403:0x6016 | proposed | low |
+| obdlink-mxp-6017 | 0x0403:0x6017 | proposed | low |
+| bluedriver-pro-0001 | 0x2c63:0x0001 | proposed | low |
+| bluedriver-pro2-0002 | 0x2c63:0x0002 | proposed | low |
+| foxwell-nt301-0101 | 0x2890:0x0101 | proposed | low |
+| foxwell-nt710-0102 | 0x2890:0x0102 | proposed | low |
+| foxwell-gt75ts-0103 | 0x2890:0x0103 | proposed | low |
+| autel-maxicom-mk808-0101 | 0x2396:0x0101 | proposed | low |
+| autel-maxisys-ms906pro-0102 | 0x2396:0x0102 | proposed | low |
+| autel-maxisys-ultra-0103 | 0x2396:0x0103 | proposed | low |
+| launch-x431-v-plus-0101 | 0x2708:0x0101 | proposed | low |
+| launch-x431-pro3-0102 | 0x2708:0x0102 | proposed | low |
+| launch-x431-pad-v-0103 | 0x2708:0x0103 | proposed | low |
+| launch-crp919x-0105 | 0x2708:0x0105 | proposed | low |
+| juicebox-40-0101 | 0x34a1:0x0101 | proposed | low |
+| juicebox-48-0102 | 0x34a1:0x0102 | proposed | low |
+| chargepoint-home-flex-0101 | 0x34a2:0x0101 | proposed | low |
+| grizzle-classic-0101 | 0x34a3:0x0101 | proposed | low |
+| grizzle-duo-0102 | 0x34a3:0x0102 | proposed | low |
+| wallbox-pulsar-plus-0101 | 0x34a4:0x0101 | proposed | low |
+| wallbox-quasar-2-0102 | 0x34a4:0x0102 | proposed | low |
+| sony-xav-ax6000-0f18 | 0x054c:0x0f18 | proposed | low |
+| sony-xav-ax3000-0f19 | 0x054c:0x0f19 | proposed | low |
+| sony-xav-ax8500-0f1b | 0x054c:0x0f1b | proposed | low |
+| pioneer-dmh-wt3800nex-015a | 0x08e4:0x015a | proposed | low |
+| pioneer-dmh-c5500nex-015b | 0x08e4:0x015b | proposed | low |
+| kenwood-ddx9907xr-0319 | 0x04bf:0x0319 | proposed | low |
+| kenwood-dmx8707s-031b | 0x04bf:0x031b | proposed | low |
+| kenwood-dmx709s-031c | 0x04bf:0x031c | proposed | low |
+| alpine-ilx-w650-0068 | 0x0a4b:0x0068 | proposed | low |
+| alpine-halo9-ilx-f259-0069 | 0x0a4b:0x0069 | proposed | low |
+| tymate-tpms-usb-0101 | 0x34b1:0x0101 | proposed | low |
+| vesafe-tpms-usb-0201 | 0x34b2:0x0201 | proposed | low |
+| careud-tpms-usb-0301 | 0x34b3:0x0301 | proposed | low |
+| steelmate-tp-05-0501 | 0x34b5:0x0501 | proposed | low |
+| valentine-one-gen2-0101 | 0x28ff:0x0101 | proposed | low |
+| valentine-one-gen1-0102 | 0x28ff:0x0102 | proposed | low |
+| uniden-r8-0201 | 0x28fe:0x0201 | proposed | low |
+| uniden-r7-0202 | 0x28fe:0x0202 | proposed | low |
+| escort-redline-360c-0301 | 0x28fd:0x0301 | proposed | low |
+| escort-max-360c-mkii-0302 | 0x28fd:0x0302 | proposed | low |
 
-## Body Camera (9)
+## Body Camera (34)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -339,9 +392,34 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | motorola-v300-0003 | 0x22b8:0x7300 | proposed | low |
 | axon-fleet-3-0005 | 0x2c55:0x0005 | proposed | low |
 | motorola-si200-0004 | 0x22b8:0x7200 | proposed | low |
+| axon-body-4-usbc-0006 | 0x2c55:0x0006 | proposed | medium |
+| axon-body-3-gen2-0007 | 0x2c55:0x0007 | proposed | medium |
+| axon-body-4-dock-0008 | 0x2c55:0x0008 | proposed | medium |
+| motorola-vb400-7100 | 0x22b8:0x7100 | proposed | medium |
+| motorola-v500-7600 | 0x22b8:0x7600 | proposed | medium |
+| boblov-a22-0001 | 0x3477:0x0001 | proposed | medium |
+| boblov-b4k2-0002 | 0x3477:0x0002 | proposed | medium |
+| boblov-m5-0003 | 0x3477:0x0003 | proposed | medium |
+| boblov-pd70-0004 | 0x3477:0x0004 | proposed | medium |
+| boblov-kj21-0005 | 0x3477:0x0005 | proposed | medium |
+| cammpro-i826-0001 | 0x3478:0x0001 | proposed | medium |
+| cammpro-m831-0002 | 0x3478:0x0002 | proposed | medium |
+| cammpro-pm1-0003 | 0x3478:0x0003 | proposed | medium |
+| hytera-vm780-0001 | 0x238b:0x0001 | proposed | medium |
+| hytera-vm685-0002 | 0x238b:0x0002 | proposed | medium |
+| hytera-vm580d-0003 | 0x238b:0x0003 | proposed | medium |
+| wolfcom-vision-0001 | 0x347a:0x0001 | proposed | medium |
+| wolfcom-halo-0002 | 0x347a:0x0002 | proposed | medium |
+| wolfcom-commander-0003 | 0x347a:0x0003 | proposed | medium |
+| digital-ally-firstvu-hd-0001 | 0x347b:0x0001 | proposed | medium |
+| digital-ally-firstvu-pro-0002 | 0x347b:0x0002 | proposed | medium |
+| digital-ally-dv2-0003 | 0x347b:0x0003 | proposed | medium |
+| getac-bc-03-0001 | 0x3479:0x0001 | proposed | medium |
+| getac-bc-04-0002 | 0x3479:0x0002 | proposed | medium |
+| getac-veretos-mobile-0003 | 0x3479:0x0003 | proposed | medium |
 | Axon Body 3 | 0x2c55:0x0001 | experimental | unknown |
 
-## Camera (1214)
+## Camera (1233)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1559,6 +1637,25 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | pacific-image-primescan-xas-0001 | 0x0e96:0x0001 | experimental | community |
 | pacific-image-primefilm-xa-plus-0002 | 0x0e96:0x0002 | experimental | community |
 | pacific-image-powerslide-x-0003 | 0x0e96:0x0003 | experimental | community |
+| bushnell-core-ds-4k-0101 | 0x16d8:0x0101 | proposed | medium |
+| bushnell-core-s-4k-0102 | 0x16d8:0x0102 | proposed | medium |
+| bushnell-cellucore-30-0103 | 0x16d8:0x0103 | proposed | medium |
+| bushnell-prime-l20-0104 | 0x16d8:0x0104 | proposed | medium |
+| stealth-cam-fusion-x-0001 | 0x347c:0x0001 | proposed | medium |
+| stealth-cam-ds4k-max-0002 | 0x347c:0x0002 | proposed | medium |
+| stealth-cam-gmax32-0003 | 0x347c:0x0003 | proposed | medium |
+| browning-recon-force-elite-0001 | 0x347d:0x0001 | proposed | medium |
+| browning-strike-force-pro-0002 | 0x347d:0x0002 | proposed | medium |
+| browning-defender-vision-0003 | 0x347d:0x0003 | proposed | medium |
+| reconyx-hyperfire-2-0001 | 0x347e:0x0001 | proposed | high |
+| reconyx-ultrafire-xr6-0002 | 0x347e:0x0002 | proposed | medium |
+| reconyx-hyperfire-hf2x-0003 | 0x347e:0x0003 | proposed | medium |
+| moultrie-mobile-edge-0001 | 0x347f:0x0001 | proposed | medium |
+| moultrie-a900-0002 | 0x347f:0x0002 | proposed | medium |
+| moultrie-mobile-delta-0003 | 0x347f:0x0003 | proposed | medium |
+| spypoint-flex-g36-0001 | 0x3480:0x0001 | proposed | medium |
+| spypoint-force-pro-s-0002 | 0x3480:0x0002 | proposed | medium |
+| spypoint-flex-s-0003 | 0x3480:0x0003 | proposed | medium |
 
 ## Cnc (13)
 
@@ -1716,7 +1813,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | fiio-m15s-006b | 0x2972:0x006b | proposed | low |
 | fiio-r7-006d | 0x2972:0x006d | proposed | low |
 
-## Dashcam (95)
+## Dashcam (101)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1813,10 +1910,16 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | nextbase-522gw-gen2-100d | 0x2b24:0x100d | proposed | low |
 | nextbase-422gw-gen2-100e | 0x2b24:0x100e | proposed | low |
 | nextbase-322gw-gen2-100f | 0x2b24:0x100f | proposed | low |
+| redtiger-f7n-e101 | 0x3362:0xe101 | proposed | low |
+| redtiger-f7np-e102 | 0x3362:0xe102 | proposed | low |
+| miofive-s1-e201 | 0x3363:0xe201 | proposed | low |
+| rove-r2-4k-e301 | 0x3364:0xe301 | proposed | low |
+| rove-r3-e302 | 0x3364:0xe302 | proposed | low |
+| rexing-v33-e006 | 0x0603:0xe006 | proposed | low |
 | Thinkware F200 Pro | 0x2c18:0x0001 | experimental | unknown |
 | Viofo A129 Pro Duo | 0x0c76:0x0001 | experimental | unknown |
 
-## Dev Board (218)
+## Dev Board (246)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2038,6 +2141,34 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | waveshare-esp32s3-touch-lcd-mtp-1020 | 0x303a:0x1020 | proposed | low |
 | sipeed-longan-nano-mtp-c006 | 0x1209:0xc006 | proposed | low |
 | sipeed-m0s-dock-mtp-c007 | 0x1209:0xc007 | proposed | low |
+| rtl-sdr-v3-rtl2832u-2832 | 0x0bda:0x2832 | proposed | low |
+| rtl-sdr-v4-rtl2838-2838 | 0x0bda:0x2838 | proposed | low |
+| hackrf-one-6089 | 0x1d50:0x6089 | proposed | low |
+| hackrf-jawbreaker-604b | 0x1d50:0x604b | proposed | low |
+| airspy-r2-60a1 | 0x1d50:0x60a1 | proposed | low |
+| sdrplay-rsp1a-2500 | 0x1df7:0x2500 | proposed | low |
+| sdrplay-rspdx-3000 | 0x1df7:0x3000 | proposed | low |
+| adalm-pluto-sdr-b673 | 0x0456:0xb673 | proposed | low |
+| limesdr-usb-6108 | 0x1d50:0x6108 | proposed | low |
+| funcube-dongle-proplus-fb31 | 0x04d8:0xfb31 | proposed | low |
+| yaesu-ft991a-0023 | 0x0c26:0x0023 | proposed | low |
+| yaesu-ft710-0025 | 0x0c26:0x0025 | proposed | low |
+| yaesu-ftdx10-0027 | 0x0c26:0x0027 | proposed | low |
+| yaesu-ft891-0021 | 0x0c26:0x0021 | proposed | low |
+| icom-ic705-0036 | 0x0c39:0x0036 | proposed | low |
+| icom-ic7300-0038 | 0x0c39:0x0038 | proposed | low |
+| ti-nspire-cx-ii-calculator-e01c | 0x0451:0xe01c | community | community |
+| ti-nspire-cx-ii-cas-e01d | 0x0451:0xe01d | community | community |
+| ti-84-plus-ce-calculator-e020 | 0x0451:0xe020 | community | community |
+| casio-fx-cg500-calculator-6104 | 0x07cf:0x6104 | community | community |
+| casio-classwiz-fx991cw-6110 | 0x07cf:0x6110 | community | community |
+| hp-prime-g2-calculator-0441 | 0x03f0:0x0441 | community | community |
+| hp-prime-g1-calculator-0442 | 0x03f0:0x0442 | community | community |
+| bbc-microbit-v1-mtp-0204 | 0x0d28:0x0204 | community | community |
+| bbc-microbit-v2-mtp-0215 | 0x0d28:0x0215 | community | community |
+| calliope-mini-v2-mtp-0251 | 0x0d28:0x0251 | community | community |
+| calliope-mini-v3-mtp-0252 | 0x0d28:0x0252 | community | community |
+| raspberry-pi-pico-micropython-mtp-4006 | 0x2e8a:0x4006 | community | community |
 
 ## Drone (114)
 
@@ -2486,7 +2617,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Nintendo Switch Lite | 0x057e:0x2001 | experimental | unknown |
 | Nintendo Switch OLED | 0x057e:0x2002 | experimental | unknown |
 
-## Gps Navigator (215)
+## Gps Navigator (225)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2704,6 +2835,16 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | magellan-roadmate-5465t-lmb-5250 | 0x120f:0x5250 | proposed | low |
 | magellan-explorist-310-0003 | 0x1dab:0x0003 | proposed | low |
 | magellan-explorist-510-0004 | 0x1dab:0x0004 | proposed | low |
+| iridium-9575-satphone-0001 | 0x1e10:0x0001 | proposed | low |
+| iridium-9555-satphone-0002 | 0x1e10:0x0002 | proposed | low |
+| iridium-go-satphone-0003 | 0x1e10:0x0003 | proposed | low |
+| garmin-inreach-mini2-0a01 | 0x091e:0x0a01 | proposed | low |
+| garmin-inreach-explorer-0a02 | 0x091e:0x0a02 | proposed | low |
+| bouncie-gps-tracker-0101 | 0x34c1:0x0101 | proposed | low |
+| bouncie-gps-tracker-gen3-0102 | 0x34c1:0x0102 | proposed | low |
+| landairsea-overdrive-0201 | 0x34c2:0x0201 | proposed | low |
+| landairsea-sync-0202 | 0x34c2:0x0202 | proposed | low |
+| vyncs-gps-tracker-0301 | 0x34c3:0x0301 | proposed | low |
 | Garmin Edge 1040 | 0x091e:0x4c60 | experimental | unknown |
 
 ## Industrial Camera (4)
@@ -2715,7 +2856,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | basler-ace2-mtp-0010 | 0x2676:0x0010 | experimental | community |
 | allied-vision-alvium-mtp-0010 | 0x1ab2:0x0010 | experimental | community |
 
-## Lab Instrument (81)
+## Lab Instrument (106)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -2800,6 +2941,31 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | davis-enviromonitor-0003 | 0x1781:0x0003 | proposed | low |
 | airthings-wave-plus-0001 | 0x2a19:0x0001 | proposed | low |
 | airthings-view-plus-0002 | 0x2a19:0x0002 | proposed | low |
+| lascar-el-usb-1-temp-0001 | 0x0925:0x0001 | community | community |
+| lascar-el-usb-2-temp-rh-0002 | 0x0925:0x0002 | community | community |
+| lascar-el-usb-co-0003 | 0x0925:0x0003 | community | community |
+| labjack-u3-hv-0003 | 0x0cd5:0x0003 | community | community |
+| labjack-u6-0006 | 0x0cd5:0x0006 | community | community |
+| labjack-t7-0010 | 0x0cd5:0x0010 | community | community |
+| onset-hobo-pendant-mx-0004 | 0x1a40:0x0004 | community | community |
+| onset-hobo-mx2301a-0005 | 0x1a40:0x0005 | community | community |
+| hanna-hi2002-edge-ph-0001 | 0x0f39:0x0001 | community | community |
+| hanna-hi2020-edge-ph-0002 | 0x0f39:0x0002 | community | community |
+| hanna-hi5222-benchtop-ph-0010 | 0x0f39:0x0010 | community | community |
+| ocean-optics-flame-s-uv-vis-1000 | 0x2457:0x1000 | community | community |
+| ocean-optics-flame-t-uv-vis-1001 | 0x2457:0x1001 | community | community |
+| ocean-optics-usb4000-2000 | 0x2457:0x2000 | community | community |
+| ocean-optics-usb2000-plus-2001 | 0x2457:0x2001 | community | community |
+| thorlabs-ccs200-spectrometer-0001 | 0x1313:0x0001 | community | community |
+| thorlabs-pm100usb-power-meter-0010 | 0x1313:0x0010 | community | community |
+| acurite-atlas-weather-station-0001 | 0x24c2:0x0001 | community | community |
+| acurite-5in1-weather-station-0002 | 0x24c2:0x0002 | community | community |
+| ambient-weather-ws2902-0001 | 0x24c1:0x0001 | community | community |
+| elmo-mx-p2-document-camera-0001 | 0x09a1:0x0001 | community | community |
+| elmo-mo-2-document-camera-0002 | 0x09a1:0x0002 | community | community |
+| ipevo-v4k-pro-document-camera-0001 | 0x1778:0x0001 | community | community |
+| hovercam-solo-8-plus-0001 | 0x1871:0x0001 | community | community |
+| hovercam-ultra-8-0002 | 0x1871:0x0002 | community | community |
 
 ## Media Player (549)
 
@@ -3449,7 +3615,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | tanita-mc780ma-0002 | 0x0e65:0x0002 | proposed | low |
 | tanita-rd545-0003 | 0x0e65:0x0003 | proposed | low |
 
-## Microscope (44)
+## Microscope (50)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -3497,8 +3663,14 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | keyence-vhx-7000-0001 | 0x1553:0x0001 | proposed | low |
 | keyence-vk-x3000-0002 | 0x1553:0x0002 | proposed | low |
 | keyence-bz-x800-0003 | 0x1553:0x0003 | proposed | low |
+| plugable-usb2-micro-250x-0010 | 0x199b:0x0010 | community | community |
+| plugable-usb-micro-800x-0011 | 0x199b:0x0011 | community | community |
+| jiusion-usb-digital-microscope-40x-6366 | 0x0c45:0x6366 | community | community |
+| carson-zorb-digital-microscope-6367 | 0x0c45:0x6367 | community | community |
+| ninyoon-usb-microscope-4k-6368 | 0x0c45:0x6368 | community | community |
+| carson-eflex-digital-microscope-636c | 0x0c45:0x636c | community | community |
 
-## Phone (2928)
+## Phone (2995)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -6315,6 +6487,73 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | poco-x7-5g-ff9b | 0x2717:0xff9b | proposed | low |
 | poco-f7-ff9c | 0x2717:0xff9c | proposed | low |
 | poco-f7-pro-ff9d | 0x2717:0xff9d | proposed | low |
+| samsung-galaxy-s25-edge-696f | 0x04e8:0x696f | proposed | medium |
+| samsung-galaxy-z-fold-se-6970 | 0x04e8:0x6970 | proposed | medium |
+| samsung-galaxy-z-flip-fe-6971 | 0x04e8:0x6971 | proposed | medium |
+| samsung-galaxy-a26-5g-6972 | 0x04e8:0x6972 | proposed | medium |
+| samsung-galaxy-m56-5g-6973 | 0x04e8:0x6973 | proposed | medium |
+| samsung-galaxy-f56-5g-6974 | 0x04e8:0x6974 | proposed | medium |
+| samsung-galaxy-xcover-8-6975 | 0x04e8:0x6975 | proposed | medium |
+| samsung-galaxy-m16-5g-6976 | 0x04e8:0x6976 | proposed | medium |
+| google-pixel-10-4f05 | 0x18d1:0x4f05 | proposed | medium |
+| google-pixel-10-pro-4f06 | 0x18d1:0x4f06 | proposed | medium |
+| google-pixel-10-pro-xl-4f07 | 0x18d1:0x4f07 | proposed | medium |
+| oneplus-13t-f028 | 0x2a70:0xf028 | proposed | medium |
+| oneplus-nord-5-f029 | 0x2a70:0xf029 | proposed | medium |
+| oneplus-ace-5-f02a | 0x2a70:0xf02a | proposed | medium |
+| oneplus-ace-5-pro-f02b | 0x2a70:0xf02b | proposed | medium |
+| nothing-phone-3-f02c | 0x2a70:0xf02c | proposed | medium |
+| nothing-phone-3a-f02d | 0x2a70:0xf02d | proposed | medium |
+| cmf-phone-1-f02e | 0x2a70:0xf02e | proposed | medium |
+| cmf-phone-2-f02f | 0x2a70:0xf02f | proposed | medium |
+| xiaomi-15s-pro-ff9e | 0x2717:0xff9e | proposed | medium |
+| xiaomi-mix-fold-5-ff9f | 0x2717:0xff9f | proposed | medium |
+| xiaomi-redmi-k80-ffa0 | 0x2717:0xffa0 | proposed | medium |
+| xiaomi-redmi-k80-pro-ffa1 | 0x2717:0xffa1 | proposed | medium |
+| xiaomi-poco-f7-ultra-ffa2 | 0x2717:0xffa2 | proposed | medium |
+| xiaomi-redmi-note-14-ultra-ffa3 | 0x2717:0xffa3 | proposed | medium |
+| xiaomi-redmi-turbo-4-ffa4 | 0x2717:0xffa4 | proposed | medium |
+| oppo-find-x8-pro-27a7 | 0x22d9:0x27a7 | proposed | medium |
+| oppo-find-x8-27a8 | 0x22d9:0x27a8 | proposed | medium |
+| oppo-find-x8-ultra-27a9 | 0x22d9:0x27a9 | proposed | medium |
+| oppo-find-n5-27aa | 0x22d9:0x27aa | proposed | medium |
+| oppo-find-n5-flip-27ab | 0x22d9:0x27ab | proposed | medium |
+| oppo-reno13-pro-27ac | 0x22d9:0x27ac | proposed | medium |
+| oppo-reno13-27ad | 0x22d9:0x27ad | proposed | medium |
+| realme-gt7-pro-27ae | 0x22d9:0x27ae | proposed | medium |
+| realme-gt7-27af | 0x22d9:0x27af | proposed | medium |
+| realme-14-pro-plus-27b0 | 0x22d9:0x27b0 | proposed | medium |
+| realme-14-pro-27b1 | 0x22d9:0x27b1 | proposed | medium |
+| realme-13-pro-plus-27b2 | 0x22d9:0x27b2 | proposed | medium |
+| realme-13-pro-5g-27b3 | 0x22d9:0x27b3 | proposed | medium |
+| vivo-x200-pro-6038 | 0x2d95:0x6038 | proposed | medium |
+| vivo-x200-6039 | 0x2d95:0x6039 | proposed | medium |
+| vivo-x200-ultra-603a | 0x2d95:0x603a | proposed | medium |
+| vivo-x-fold4-603b | 0x2d95:0x603b | proposed | medium |
+| iqoo-13-603c | 0x2d95:0x603c | proposed | medium |
+| iqoo-neo10-603d | 0x2d95:0x603d | proposed | medium |
+| iqoo-neo10-pro-603e | 0x2d95:0x603e | proposed | medium |
+| vivo-v40-pro-603f | 0x2d95:0x603f | proposed | medium |
+| vivo-v40-6040 | 0x2d95:0x6040 | proposed | medium |
+| motorola-edge-60-ultra-2ebe | 0x22b8:0x2ebe | proposed | medium |
+| motorola-edge-60-pro-2ebf | 0x22b8:0x2ebf | proposed | medium |
+| motorola-razr-plus-2025-2ec0 | 0x22b8:0x2ec0 | proposed | medium |
+| motorola-razr-2025-2ec1 | 0x22b8:0x2ec1 | proposed | medium |
+| motorola-moto-g-power-2025-2ec2 | 0x22b8:0x2ec2 | proposed | medium |
+| motorola-moto-g-stylus-5g-2025-2ec3 | 0x22b8:0x2ec3 | proposed | medium |
+| motorola-thinkphone-2025-2ec4 | 0x22b8:0x2ec4 | proposed | medium |
+| sony-xperia-1-vii-021b | 0x0fce:0x021b | proposed | medium |
+| sony-xperia-10-vii-021c | 0x0fce:0x021c | proposed | medium |
+| honor-magic-v3-3815 | 0x12d1:0x3815 | proposed | medium |
+| honor-magic-v4-3816 | 0x12d1:0x3816 | proposed | medium |
+| honor-magic7-pro-3817 | 0x12d1:0x3817 | proposed | medium |
+| honor-magic7-3818 | 0x12d1:0x3818 | proposed | medium |
+| honor-200-pro-3819 | 0x12d1:0x3819 | proposed | medium |
+| honor-200-381a | 0x12d1:0x381a | proposed | medium |
+| asus-rog-phone-9-620f | 0x0b05:0x620f | proposed | medium |
+| asus-rog-phone-9-pro-6210 | 0x0b05:0x6210 | proposed | medium |
+| asus-zenfone-11-6211 | 0x0b05:0x6211 | proposed | medium |
+| asus-zenfone-11-ultra-6212 | 0x0b05:0x6212 | proposed | medium |
 | AGM Glory SE | 0x0e8d:0x2051 | community | community |
 | AGM H5 Pro | 0x0e8d:0x2050 | community | community |
 | BLU Bold N3 | 0x0e8d:0x2062 | community | community |
@@ -6431,7 +6670,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Ulefone Note 16 Pro | 0x0e8d:0x2056 | community | community |
 | Ulefone Power Armor 18T Ultra | 0x0e8d:0x2054 | community | community |
 
-## Point Of Sale (4)
+## Point Of Sale (63)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -6439,6 +6678,65 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | verifone-p400-mtp-0200 | 0x11ca:0x0200 | experimental | community |
 | ingenico-move5000-mtp-0100 | 0x079b:0x0100 | experimental | community |
 | ingenico-lane3000-mtp-0200 | 0x079b:0x0200 | experimental | community |
+| verifone-vx680-mtp-0300 | 0x11ca:0x0300 | experimental | community |
+| verifone-vx820-mtp-0400 | 0x11ca:0x0400 | experimental | community |
+| verifone-e285-mtp-0500 | 0x11ca:0x0500 | experimental | community |
+| verifone-e355-mtp-0600 | 0x11ca:0x0600 | experimental | community |
+| verifone-t650p-mtp-0700 | 0x11ca:0x0700 | experimental | community |
+| verifone-m400-mtp-0800 | 0x11ca:0x0800 | experimental | community |
+| verifone-v240m-mtp-0900 | 0x11ca:0x0900 | experimental | community |
+| verifone-carbon-mobile5-mtp-0a00 | 0x11ca:0x0a00 | experimental | community |
+| ingenico-link2500-mtp-0300 | 0x079b:0x0300 | experimental | community |
+| ingenico-isc-touch-250-mtp-0400 | 0x079b:0x0400 | experimental | community |
+| ingenico-isc-touch-480-mtp-0500 | 0x079b:0x0500 | experimental | community |
+| ingenico-desk3500-mtp-0600 | 0x079b:0x0600 | experimental | community |
+| ingenico-desk5000-mtp-0700 | 0x079b:0x0700 | experimental | community |
+| ingenico-move3500-mtp-0800 | 0x079b:0x0800 | experimental | community |
+| ingenico-axium-dx8000-mtp-0900 | 0x079b:0x0900 | experimental | community |
+| pax-a920-mtp-0100 | 0x2fb8:0x0100 | experimental | community |
+| pax-a920-pro-mtp-0200 | 0x2fb8:0x0200 | experimental | community |
+| pax-a77-mtp-0300 | 0x2fb8:0x0300 | experimental | community |
+| pax-a35-mtp-0400 | 0x2fb8:0x0400 | experimental | community |
+| pax-a800-mtp-0500 | 0x2fb8:0x0500 | experimental | community |
+| pax-e600-mtp-0600 | 0x2fb8:0x0600 | experimental | community |
+| pax-e800-mtp-0700 | 0x2fb8:0x0700 | experimental | community |
+| pax-q25-mtp-0800 | 0x2fb8:0x0800 | experimental | community |
+| square-terminal-mtp-0100 | 0x28e9:0x0100 | experimental | community |
+| square-register-mtp-0200 | 0x28e9:0x0200 | experimental | community |
+| square-reader-mtp-0300 | 0x28e9:0x0300 | experimental | community |
+| clover-flex-mtp-0100 | 0x2182:0x0100 | experimental | community |
+| clover-station-duo-mtp-0200 | 0x2182:0x0200 | experimental | community |
+| clover-mini-mtp-0300 | 0x2182:0x0300 | experimental | community |
+| clover-station-solo-mtp-0400 | 0x2182:0x0400 | experimental | community |
+| sumup-solo-mtp-0100 | 0x34c4:0x0100 | experimental | community |
+| sumup-solo-printer-mtp-0200 | 0x34c4:0x0200 | experimental | community |
+| zebra-zt411-mtp-0100 | 0x05e0:0x0100 | experimental | community |
+| zebra-zd421-mtp-0200 | 0x05e0:0x0200 | experimental | community |
+| zebra-tc72-mtp-0300 | 0x05e0:0x0300 | experimental | community |
+| zebra-tc52-mtp-0400 | 0x05e0:0x0400 | experimental | community |
+| zebra-mc9300-mtp-0500 | 0x05e0:0x0500 | experimental | community |
+| zebra-zq630-mtp-0600 | 0x05e0:0x0600 | experimental | community |
+| zebra-ds9908-mtp-0700 | 0x05e0:0x0700 | experimental | community |
+| honeywell-voyager-1400g-mtp-0100 | 0x0c2e:0x0100 | experimental | community |
+| honeywell-xenon-1900-mtp-0200 | 0x0c2e:0x0200 | experimental | community |
+| honeywell-xenon-1950g-mtp-0300 | 0x0c2e:0x0300 | experimental | community |
+| honeywell-ct60-mtp-0400 | 0x0c2e:0x0400 | experimental | community |
+| honeywell-ck65-mtp-0500 | 0x0c2e:0x0500 | experimental | community |
+| datalogic-gryphon-gd4520-mtp-0100 | 0x05f9:0x0100 | experimental | community |
+| datalogic-quickscan-qd2500-mtp-0200 | 0x05f9:0x0200 | experimental | community |
+| datalogic-magellan-9800i-mtp-0300 | 0x05f9:0x0300 | experimental | community |
+| datalogic-memor-20-mtp-0400 | 0x05f9:0x0400 | experimental | community |
+| epson-tm-t88vi-mtp-0901 | 0x04b8:0x0901 | experimental | community |
+| epson-tm-t88vii-mtp-0902 | 0x04b8:0x0902 | experimental | community |
+| epson-tm-m30ii-mtp-0903 | 0x04b8:0x0903 | experimental | community |
+| epson-tm-m30iii-mtp-0904 | 0x04b8:0x0904 | experimental | community |
+| star-tsp143iv-mtp-0100 | 0x0519:0x0100 | experimental | community |
+| star-mc-print3-mtp-0200 | 0x0519:0x0200 | experimental | community |
+| star-mc-print2-mtp-0300 | 0x0519:0x0300 | experimental | community |
+| star-sm-l200-mtp-0400 | 0x0519:0x0400 | experimental | community |
+| elo-paypoint-plus-mtp-0100 | 0x04e7:0x0100 | experimental | community |
+| elo-i-series-4-mtp-0200 | 0x04e7:0x0200 | experimental | community |
+| elo-15i5-mtp-0300 | 0x04e7:0x0300 | experimental | community |
 
 ## Printer (131)
 
@@ -6645,7 +6943,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | hovercam-solo-8plus-0002 | 0x2083:0x0002 | community | community |
 | hovercam-ultra-8-0003 | 0x2083:0x0003 | community | community |
 
-## Smart Home (27)
+## Smart Home (125)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -6676,6 +6974,104 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | ring-peephole-cam-0006 | 0x1d6b:0x0906 | proposed | medium |
 | google-nest-cam-indoor-4ee7 | 0x18d1:0x4ee7 | proposed | medium |
 | google-nest-cam-outdoor-4ee8 | 0x18d1:0x4ee8 | proposed | medium |
+| netgear-nighthawk-m1-9060 | 0x0846:0x9060 | proposed | low |
+| netgear-nighthawk-m2-9062 | 0x0846:0x9062 | proposed | low |
+| netgear-nighthawk-m5-9064 | 0x0846:0x9064 | proposed | low |
+| netgear-nighthawk-m6-9066 | 0x0846:0x9066 | proposed | low |
+| zte-mf923-hotspot-1403 | 0x19d2:0x1403 | proposed | low |
+| zte-mf985-hotspot-1432 | 0x19d2:0x1432 | proposed | low |
+| tp-link-m7450-9100 | 0x2357:0x9100 | proposed | low |
+| tp-link-m7650-9102 | 0x2357:0x9102 | proposed | low |
+| huawei-e5577-hotspot-1506 | 0x12d1:0x1506 | proposed | low |
+| huawei-e5785-hotspot-1508 | 0x12d1:0x1508 | proposed | low |
+| inseego-mifi-8800l-1101 | 0x1bc7:0x1101 | proposed | low |
+| inseego-mifi-m2000-1104 | 0x1bc7:0x1104 | proposed | low |
+| inseego-mifi-x-pro-1106 | 0x1bc7:0x1106 | proposed | low |
+| inseego-mifi-m3000-1108 | 0x1bc7:0x1108 | proposed | low |
+| huawei-e8372h-dongle-14dc | 0x12d1:0x14dc | proposed | low |
+| huawei-e3372h-dongle-1f01 | 0x12d1:0x1f01 | proposed | low |
+| zte-mf833v-dongle-1405 | 0x19d2:0x1405 | proposed | low |
+| zte-mf79s-dongle-1407 | 0x19d2:0x1407 | proposed | low |
+| netgear-aircard-810s-68e1 | 0x0846:0x68e1 | proposed | low |
+| netgear-aircard-797s-68e3 | 0x0846:0x68e3 | proposed | low |
+| sierra-mc7455-9071 | 0x1199:0x9071 | proposed | low |
+| sierra-em7455-9079 | 0x1199:0x9079 | proposed | low |
+| sierra-em7565-9091 | 0x1199:0x9091 | proposed | low |
+| sierra-mc7354-68c0 | 0x1199:0x68c0 | proposed | low |
+| quectel-eg25g-0125 | 0x2c7c:0x0125 | proposed | low |
+| quectel-rm500q-0800 | 0x2c7c:0x0800 | proposed | low |
+| quectel-ec25-0121 | 0x2c7c:0x0121 | proposed | low |
+| quectel-bg96-0296 | 0x2c7c:0x0296 | proposed | low |
+| ubiquiti-g4-doorbell-0005 | 0x2047:0x0005 | proposed | low |
+| ubiquiti-g5-bullet-0006 | 0x2047:0x0006 | proposed | low |
+| dahua-ipc-hfw-0001 | 0x2745:0x0001 | proposed | low |
+| dahua-ipc-hdw-0002 | 0x2745:0x0002 | proposed | low |
+| dahua-sd-ptz-0003 | 0x2745:0x0003 | proposed | low |
+| amazon-echo-dot-5th-0820 | 0x1949:0x0820 | proposed | low |
+| amazon-echo-dot-5th-clock-0821 | 0x1949:0x0821 | proposed | low |
+| amazon-echo-4th-0822 | 0x1949:0x0822 | proposed | low |
+| amazon-echo-pop-0823 | 0x1949:0x0823 | proposed | low |
+| amazon-echo-studio-0824 | 0x1949:0x0824 | proposed | low |
+| amazon-echo-auto-2nd-0825 | 0x1949:0x0825 | proposed | low |
+| amazon-echo-show-21-0826 | 0x1949:0x0826 | proposed | low |
+| amazon-echo-hub-0827 | 0x1949:0x0827 | proposed | low |
+| amazon-echo-spot-2024-0828 | 0x1949:0x0828 | proposed | low |
+| amazon-echo-dot-kids-5th-0829 | 0x1949:0x0829 | proposed | low |
+| google-nest-mini-2nd-4ee9 | 0x18d1:0x4ee9 | proposed | low |
+| google-nest-audio-4eea | 0x18d1:0x4eea | proposed | low |
+| google-nest-hub-1st-4eeb | 0x18d1:0x4eeb | proposed | low |
+| google-nest-cam-battery-4eec | 0x18d1:0x4eec | proposed | low |
+| google-nest-cam-floodlight-4f01 | 0x18d1:0x4f01 | proposed | low |
+| google-nest-doorbell-battery-4f02 | 0x18d1:0x4f02 | proposed | low |
+| google-nest-doorbell-wired-2nd-4f03 | 0x18d1:0x4f03 | proposed | low |
+| google-nest-wifi-pro-4f04 | 0x18d1:0x4f04 | proposed | low |
+| apple-homepod-mini-12b0 | 0x05ac:0x12b0 | proposed | low |
+| apple-homepod-2nd-12b1 | 0x05ac:0x12b1 | proposed | low |
+| samsung-smartthings-station-a100 | 0x04e8:0xa100 | proposed | low |
+| samsung-smartthings-hub-v4-a101 | 0x04e8:0xa101 | proposed | low |
+| philips-hue-bridge-v2-0110 | 0x0609:0x0110 | proposed | low |
+| philips-hue-bridge-v3-0111 | 0x0609:0x0111 | proposed | low |
+| ikea-dirigera-hub-5500 | 0x1915:0x5500 | proposed | low |
+| ring-doorbell-4-0907 | 0x1d6b:0x0907 | proposed | low |
+| ring-doorbell-wired-0908 | 0x1d6b:0x0908 | proposed | low |
+| ring-floodlight-cam-pro-0909 | 0x1d6b:0x0909 | proposed | low |
+| ring-spotlight-cam-pro-090a | 0x1d6b:0x090a | proposed | low |
+| wyze-cam-v4-0001 | 0x3293:0x0001 | proposed | low |
+| wyze-cam-pan-v3-0002 | 0x3293:0x0002 | proposed | low |
+| wyze-doorbell-pro-2-0003 | 0x3293:0x0003 | proposed | low |
+| wyze-cam-og-0004 | 0x3293:0x0004 | proposed | low |
+| wyze-cam-floodlight-v2-0005 | 0x3293:0x0005 | proposed | low |
+| aqara-hub-m3-8a30 | 0x10c4:0x8a30 | proposed | low |
+| aqara-hub-m2-8a31 | 0x10c4:0x8a31 | proposed | low |
+| aqara-camera-hub-g3-8a32 | 0x10c4:0x8a32 | proposed | low |
+| irobot-roomba-j9plus-0030 | 0x2b0e:0x0030 | proposed | low |
+| irobot-roomba-combo-j7plus-0031 | 0x2b0e:0x0031 | proposed | low |
+| roborock-s8-maxv-ultra-0001 | 0x3434:0x0001 | proposed | low |
+| roborock-q-revo-maxv-0002 | 0x3434:0x0002 | proposed | low |
+| roborock-s8-pro-ultra-0003 | 0x3434:0x0003 | proposed | low |
+| dreame-x40-ultra-0001 | 0x0cdc:0x0001 | proposed | low |
+| dreame-l20-ultra-0002 | 0x0cdc:0x0002 | proposed | low |
+| meta-portal-plus-2nd-0004 | 0x2c6a:0x0004 | proposed | low |
+| august-wifi-smart-lock-4th-0001 | 0x2d5f:0x0001 | proposed | low |
+| yale-assure-lock-2-0002 | 0x2d5f:0x0002 | proposed | low |
+| reolink-rlc-810a-0001 | 0x3481:0x0001 | proposed | medium |
+| reolink-rlc-520a-0002 | 0x3481:0x0002 | proposed | medium |
+| reolink-trackmix-0004 | 0x3481:0x0004 | proposed | medium |
+| amcrest-ip8m-2793ew-0001 | 0x3482:0x0001 | proposed | medium |
+| amcrest-ad410-0002 | 0x3482:0x0002 | proposed | medium |
+| amcrest-ash42-0003 | 0x3482:0x0003 | proposed | medium |
+| lorex-e893ab-0001 | 0x3483:0x0001 | proposed | medium |
+| lorex-w482cad-0002 | 0x3483:0x0002 | proposed | medium |
+| lorex-lnb9393-0003 | 0x3483:0x0003 | proposed | medium |
+| nanit-pro-camera-0001 | 0x3484:0x0001 | proposed | medium |
+| nanit-pro-flex-stand-0002 | 0x3484:0x0002 | proposed | medium |
+| owlet-cam-2-0001 | 0x3485:0x0001 | proposed | medium |
+| owlet-dream-duo-0002 | 0x3485:0x0002 | proposed | medium |
+| infant-optics-dxr-8-pro-0001 | 0x3486:0x0001 | proposed | medium |
+| furbo-360-dog-camera-0001 | 0x3487:0x0001 | proposed | medium |
+| furbo-mini-camera-0002 | 0x3487:0x0002 | proposed | medium |
+| petcube-bites-2-0001 | 0x3488:0x0001 | proposed | medium |
+| petcube-play-2-0002 | 0x3488:0x0002 | proposed | medium |
 
 ## Storage (92)
 
@@ -6774,7 +7170,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | lacie-2big-dock-1085 | 0x059f:0x1085 | proposed | low |
 | lacie-rugged-boss-ssd-1086 | 0x059f:0x1086 | proposed | low |
 
-## Streaming Device (60)
+## Streaming Device (68)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -6837,9 +7233,17 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | deutsche-telekom-magenta-tv-box-c017 | 0x1b8e:0xc017 | proposed | low |
 | wd-tv-live-0750 | 0x1058:0x0750 | proposed | low |
 | wd-tv-live-hub-0751 | 0x1058:0x0751 | proposed | low |
+| sonos-era-100-0630 | 0x1e54:0x0630 | proposed | low |
+| sonos-era-300-0631 | 0x1e54:0x0631 | proposed | low |
+| sonos-one-sl-0632 | 0x1e54:0x0632 | proposed | low |
+| sonos-move-2-0633 | 0x1e54:0x0633 | proposed | low |
+| sonos-roam-2-0634 | 0x1e54:0x0634 | proposed | low |
+| sonos-arc-0635 | 0x1e54:0x0635 | proposed | low |
+| sonos-beam-3rd-0636 | 0x1e54:0x0636 | proposed | low |
+| sonos-ace-0637 | 0x1e54:0x0637 | proposed | low |
 | Roku Streaming Stick 4K | 0x1d5a:0x0001 | experimental | unknown |
 
-## Synthesizer (32)
+## Synthesizer (91)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -6875,6 +7279,65 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | teenage-engineering-ep-133-0022 | 0x2367:0x0022 | proposed | medium |
 | arturia-polybrute-0101 | 0x1c75:0x0101 | proposed | medium |
 | arturia-microfreak-0102 | 0x1c75:0x0102 | proposed | medium |
+| korg-minilogue-xd-0010 | 0x0944:0x0010 | proposed | medium |
+| korg-prologue-16-0011 | 0x0944:0x0011 | proposed | medium |
+| korg-prologue-8-0012 | 0x0944:0x0012 | proposed | medium |
+| korg-wavestate-0013 | 0x0944:0x0013 | proposed | medium |
+| korg-modwave-0014 | 0x0944:0x0014 | proposed | medium |
+| korg-drumlogue-0015 | 0x0944:0x0015 | proposed | medium |
+| korg-volca-sample-2-0016 | 0x0944:0x0016 | proposed | medium |
+| korg-volca-drum-0017 | 0x0944:0x0017 | proposed | medium |
+| korg-opsix-0018 | 0x0944:0x0018 | proposed | medium |
+| roland-mc-707-01e0 | 0x0582:0x01e0 | proposed | medium |
+| roland-tr-8s-01e1 | 0x0582:0x01e1 | proposed | medium |
+| roland-tb-03-01e2 | 0x0582:0x01e2 | proposed | medium |
+| roland-system-8-01e3 | 0x0582:0x01e3 | proposed | medium |
+| roland-fantom-06-01e4 | 0x0582:0x01e4 | proposed | medium |
+| roland-fantom-07-01e5 | 0x0582:0x01e5 | proposed | medium |
+| roland-fantom-08-01e6 | 0x0582:0x01e6 | proposed | medium |
+| roland-mc-101-01e7 | 0x0582:0x01e7 | proposed | medium |
+| roland-tr-6s-01e8 | 0x0582:0x01e8 | proposed | medium |
+| roland-rd-88-01e9 | 0x0582:0x01e9 | proposed | medium |
+| yamaha-modx6-plus-7020 | 0x0499:0x7020 | proposed | medium |
+| yamaha-modx7-plus-7021 | 0x0499:0x7021 | proposed | medium |
+| yamaha-modx8-plus-7022 | 0x0499:0x7022 | proposed | medium |
+| yamaha-reface-cs-7023 | 0x0499:0x7023 | proposed | medium |
+| yamaha-reface-dx-7024 | 0x0499:0x7024 | proposed | medium |
+| yamaha-reface-cp-7025 | 0x0499:0x7025 | proposed | medium |
+| yamaha-reface-yc-7026 | 0x0499:0x7026 | proposed | medium |
+| yamaha-seqtrak-7027 | 0x0499:0x7027 | proposed | medium |
+| yamaha-montage-m6-7028 | 0x0499:0x7028 | proposed | medium |
+| yamaha-montage-m7-7029 | 0x0499:0x7029 | proposed | medium |
+| yamaha-montage-m8x-702a | 0x0499:0x702a | proposed | medium |
+| novation-peak-8220 | 0x1235:0x8220 | proposed | medium |
+| novation-summit-8221 | 0x1235:0x8221 | proposed | medium |
+| novation-circuit-rhythm-8222 | 0x1235:0x8222 | proposed | medium |
+| novation-circuit-tracks-8223 | 0x1235:0x8223 | proposed | medium |
+| arturia-minibrute-2-0110 | 0x1c75:0x0110 | proposed | medium |
+| arturia-minibrute-2s-0111 | 0x1c75:0x0111 | proposed | medium |
+| arturia-polybrute-12-0112 | 0x1c75:0x0112 | proposed | medium |
+| arturia-microfreak-stellar-0113 | 0x1c75:0x0113 | proposed | medium |
+| arturia-matrixbrute-0114 | 0x1c75:0x0114 | proposed | medium |
+| teenage-engineering-op-1-0024 | 0x2367:0x0024 | proposed | medium |
+| elektron-analog-rytm-mkii-0010 | 0x1935:0x0010 | proposed | medium |
+| elektron-analog-four-mkii-0011 | 0x1935:0x0011 | proposed | medium |
+| elektron-model-samples-0012 | 0x1935:0x0012 | proposed | medium |
+| elektron-model-cycles-0013 | 0x1935:0x0013 | proposed | medium |
+| elektron-digitone-keys-0014 | 0x1935:0x0014 | proposed | medium |
+| sequential-prophet-6-0010 | 0x2154:0x0010 | proposed | medium |
+| sequential-rev2-0011 | 0x2154:0x0011 | proposed | medium |
+| sequential-take-5-0012 | 0x2154:0x0012 | proposed | medium |
+| sequential-trigon-6-0013 | 0x2154:0x0013 | proposed | medium |
+| sequential-prophet-5-rev4-0014 | 0x2154:0x0014 | proposed | medium |
+| moog-subsequent-37-0010 | 0x2e2a:0x0010 | proposed | medium |
+| moog-matriarch-0011 | 0x2e2a:0x0011 | proposed | medium |
+| moog-one-8-0012 | 0x2e2a:0x0012 | proposed | medium |
+| moog-one-16-0013 | 0x2e2a:0x0013 | proposed | medium |
+| moog-grandmother-0014 | 0x2e2a:0x0014 | proposed | medium |
+| native-instruments-komplete-kontrol-s61mk3-1404 | 0x17cc:0x1404 | proposed | medium |
+| native-instruments-komplete-kontrol-s88mk3-1405 | 0x17cc:0x1405 | proposed | medium |
+| akai-mpc-x-se-0074 | 0x09e8:0x0074 | proposed | medium |
+| akai-mpc-studio-mk2-0075 | 0x09e8:0x0075 | proposed | medium |
 
 ## Tablet (154)
 
@@ -7035,7 +7498,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | HP/Palm TouchPad (alt PID) | 0x0830:0x8004 | community | community |
 | Ulefone Armor Pad 3 Pro | 0x0e8d:0x2055 | community | community |
 
-## Telescope (5)
+## Telescope (29)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -7044,6 +7507,30 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | celestron-skyris-445m-0003 | 0x1546:0x0003 | proposed | low |
 | celestron-cpc-1100-cam-0004 | 0x1546:0x0004 | proposed | low |
 | celestron-starsense-explorer-0005 | 0x1546:0x0005 | proposed | low |
+| zwo-asi120mc-s-a120 | 0x03c3:0xa120 | community | community |
+| zwo-asi120mm-s-a121 | 0x03c3:0xa121 | community | community |
+| zwo-asi294mc-pro-a294 | 0x03c3:0xa294 | community | community |
+| zwo-asi2600mc-pro-a260 | 0x03c3:0xa260 | community | community |
+| zwo-asi2600mm-pro-a261 | 0x03c3:0xa261 | community | community |
+| zwo-asi533mc-pro-a533 | 0x03c3:0xa533 | community | community |
+| zwo-asi585mc-a585 | 0x03c3:0xa585 | community | community |
+| qhy-qhy5iii178c-0920 | 0x1618:0x0920 | community | community |
+| qhy-qhy268c-c268 | 0x1618:0xc268 | community | community |
+| qhy-qhy268m-c269 | 0x1618:0xc269 | community | community |
+| qhy-qhy600m-c600 | 0x1618:0xc600 | community | community |
+| qhy-qhy294c-pro-c294 | 0x1618:0xc294 | community | community |
+| meade-lx200-autostar-0001 | 0x0c72:0x0001 | community | community |
+| meade-deep-sky-imager-iv-0010 | 0x0c72:0x0010 | community | community |
+| celestron-nexstar-hand-control-usb-0101 | 0x0547:0x0101 | community | community |
+| celestron-cgx-mount-usb-0102 | 0x0547:0x0102 | community | community |
+| celestron-avx-mount-usb-0103 | 0x0547:0x0103 | community | community |
+| skywatcher-synscan-usb-goto-0001 | 0x4e4c:0x0001 | community | community |
+| skywatcher-eq6r-pro-mount-0003 | 0x4e4c:0x0003 | community | community |
+| skywatcher-az-gti-mount-0004 | 0x4e4c:0x0004 | community | community |
+| ioptron-cem26-mount-0001 | 0x1856:0x0001 | community | community |
+| ioptron-cem40-mount-0002 | 0x1856:0x0002 | community | community |
+| ioptron-cem70-mount-0003 | 0x1856:0x0003 | community | community |
+| ioptron-gotostar-hand-ctrl-0010 | 0x1856:0x0010 | community | community |
 
 ## Thermal Camera (36)
 
