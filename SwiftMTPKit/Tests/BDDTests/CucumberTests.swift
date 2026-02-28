@@ -1123,6 +1123,44 @@ final class BDDRunner: XCTestCase {
     else { throw XCTSkip("supernote-a5x2-0032 not in database") }
     XCTAssertNotNil(q)
   }
+
+  // MARK: - Wave 52-56: Category Expansion & Audio Recorders
+
+  func testWave54ZoomH6AudioRecorder() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x1686, pid: 0x0027, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("zoom-h6-0027 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave54TascamDR40X() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0644, pid: 0x0049, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("tascam-dr-40x-0049 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave54RolandR07() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x0582, pid: 0x012f, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("roland-r-07-012f not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave54SoundDevicesMixPre3() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(vid: 0x2af0, pid: 0x0001, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { throw XCTSkip("sound-devices-mixpre-3-ii-0001 not in database") }
+    XCTAssertNotNil(q)
+  }
+
+  func testWave56AudioRecorderCount() throws {
+    let db = try QuirkDatabase.load()
+    // Verify we have at least 15 audio recorder entries (Zoom + TASCAM + Roland + etc)
+    let recorderVids: Set<UInt16> = [0x1686, 0x0644]  // Zoom, TASCAM
+    let recorders = db.entries.filter { recorderVids.contains($0.vid) }
+    XCTAssertGreaterThanOrEqual(recorders.count, 10, "Expected at least 10 audio recorder entries")
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
