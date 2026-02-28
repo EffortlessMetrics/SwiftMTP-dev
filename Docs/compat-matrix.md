@@ -2,7 +2,7 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-**4,842** device entries across **281** vendor IDs and **33** categories.
+**5,190** device entries across **289** vendor IDs and **33** categories.
 
 ## 3D Printer (29)
 
@@ -38,7 +38,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | biqu-btt-cb1-614e | 0x1d50:0x614e | proposed | low |
 | biqu-btt-cb2-614f | 0x1d50:0x614f | proposed | low |
 
-## Action Camera (10)
+## Action Camera (34)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -52,6 +52,30 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | yi-horizon-vr180-0006 | 0x2970:0x0006 | experimental | community |
 | sjcam-sj8-plus-0208 | 0x1224:0x0208 | experimental | community |
 | sjcam-sj20-0209 | 0x1224:0x0209 | experimental | community |
+| dji-osmo-action-5-pro-004c | 0x2ca3:0x004c | community | community |
+| dji-action-3-004d | 0x2ca3:0x004d | community | community |
+| dji-action-4-004e | 0x2ca3:0x004e | community | community |
+| gopro-hero-session-0063 | 0x2672:0x0063 | community | community |
+| gopro-hero9-black-alt-0064 | 0x2672:0x0064 | community | community |
+| gopro-hero10-black-alt-0065 | 0x2672:0x0065 | community | community |
+| gopro-hero11-black-alt-0066 | 0x2672:0x0066 | community | community |
+| gopro-hero12-black-alt-0067 | 0x2672:0x0067 | community | community |
+| gopro-max-360-0068 | 0x2672:0x0068 | community | community |
+| runcam-6-0106 | 0x4255:0x0106 | community | community |
+| runcam-scope-cam-4k-0107 | 0x4255:0x0107 | community | community |
+| runcam-wasp-0108 | 0x4255:0x0108 | community | community |
+| runcam-hybrid-2-0109 | 0x4255:0x0109 | community | community |
+| akaso-brave-8-pro-000f | 0x3538:0x000f | community | community |
+| akaso-brave-9-0010 | 0x3538:0x0010 | community | community |
+| sjcam-c200-020a | 0x1b3f:0x020a | community | community |
+| sjcam-c300-pocket-020b | 0x1b3f:0x020b | community | community |
+| sjcam-sj11-active-020c | 0x1b3f:0x020c | community | community |
+| reolink-keen-0001 | 0x3394:0x0001 | community | community |
+| reolink-argus-4-pro-0002 | 0x3394:0x0002 | community | community |
+| reolink-argus-3-pro-0003 | 0x3394:0x0003 | community | community |
+| caddx-peanut-0001 | 0x4b4e:0x0001 | community | community |
+| caddx-walnut-0002 | 0x4b4e:0x0002 | community | community |
+| caddx-gofilm20-0003 | 0x4b4e:0x0003 | community | community |
 
 ## Audio Interface (5)
 
@@ -140,7 +164,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 |--------|---------|--------|------------|
 | Axon Body 3 | 0x2c55:0x0001 | experimental | unknown |
 
-## Camera (968)
+## Camera (1028)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1112,6 +1136,66 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | fujifilm-x100vi-030b | 0x04cb:0x030b | experimental | community |
 | leica-sl3-0060 | 0x1a98:0x0060 | experimental | community |
 | leica-q3-0061 | 0x1a98:0x0061 | experimental | community |
+| panasonic-lumix-s1-2388 | 0x04da:0x2388 | proposed | low |
+| panasonic-lumix-s1r-238a | 0x04da:0x238a | proposed | low |
+| panasonic-lumix-s1h-238e | 0x04da:0x238e | proposed | low |
+| panasonic-lumix-s5-2392 | 0x04da:0x2392 | proposed | low |
+| panasonic-lumix-s5iix-239e | 0x04da:0x239e | proposed | low |
+| panasonic-lumix-gh5s-2381 | 0x04da:0x2381 | proposed | low |
+| panasonic-lumix-gh5ii-238c | 0x04da:0x238c | proposed | low |
+| panasonic-lumix-gh6-2399 | 0x04da:0x2399 | proposed | low |
+| panasonic-lumix-gh7-23a3 | 0x04da:0x23a3 | proposed | low |
+| panasonic-lumix-g9-2378 | 0x04da:0x2378 | proposed | low |
+| panasonic-lumix-g9ii-23a1 | 0x04da:0x23a1 | proposed | low |
+| panasonic-lumix-g100-2394 | 0x04da:0x2394 | proposed | low |
+| panasonic-lumix-gx9-2382 | 0x04da:0x2382 | proposed | low |
+| panasonic-lumix-gx800-237e | 0x04da:0x237e | proposed | low |
+| panasonic-lumix-lx100ii-2384 | 0x04da:0x2384 | proposed | low |
+| panasonic-lumix-fz1000ii-238b | 0x04da:0x238b | proposed | low |
+| panasonic-lumix-fz80-2376 | 0x04da:0x2376 | proposed | low |
+| panasonic-lumix-fz80d-23a5 | 0x04da:0x23a5 | proposed | low |
+| panasonic-lumix-tz200-2387 | 0x04da:0x2387 | proposed | low |
+| panasonic-lumix-tz95-2385 | 0x04da:0x2385 | proposed | low |
+| panasonic-lumix-tz220-23a7 | 0x04da:0x23a7 | proposed | low |
+| phase-one-iq4-150mp-0200 | 0x1b1e:0x0200 | proposed | low |
+| phase-one-iq4-100mp-trichromatic-0201 | 0x1b1e:0x0201 | proposed | low |
+| phase-one-iq3-100mp-0202 | 0x1b1e:0x0202 | proposed | low |
+| phase-one-xf-body-0203 | 0x1b1e:0x0203 | proposed | low |
+| phase-one-xt-body-0204 | 0x1b1e:0x0204 | proposed | low |
+| phase-one-p65-plus-0100 | 0x1b1e:0x0100 | proposed | low |
+| leica-cl-0016 | 0x1a98:0x0016 | proposed | low |
+| leica-tl2-0017 | 0x1a98:0x0017 | proposed | low |
+| leica-t-typ701-0018 | 0x1a98:0x0018 | proposed | low |
+| leica-c-lux-0019 | 0x1a98:0x0019 | proposed | low |
+| leica-v-lux-114-001a | 0x1a98:0x001a | proposed | low |
+| leica-q2-monochrom-001b | 0x1a98:0x001b | proposed | low |
+| ricoh-wg-90-018b | 0x05ca:0x018b | proposed | low |
+| ricoh-theta-sc2-business-036b | 0x05ca:0x036b | proposed | low |
+| ricoh-pentax-645d-0159 | 0x05ca:0x0159 | proposed | low |
+| ricoh-pentax-kf-alt-018c | 0x05ca:0x018c | proposed | low |
+| kodak-pixpro-az528-0039 | 0x040a:0x0039 | proposed | low |
+| kodak-smile-classic-003a | 0x040a:0x003a | proposed | low |
+| kodak-pixpro-az652-003b | 0x040a:0x003b | proposed | low |
+| kodak-pixpro-fz45-003c | 0x040a:0x003c | proposed | low |
+| kodak-pixpro-az255-003d | 0x040a:0x003d | proposed | low |
+| yi-mirrorless-m1-0007 | 0x2dbd:0x0007 | proposed | low |
+| yi-4k-action-camera-2-0008 | 0x2dbd:0x0008 | proposed | low |
+| insta360-flow-2-pro-0019 | 0x2e1a:0x0019 | proposed | low |
+| insta360-one-x4-001a | 0x2e1a:0x001a | proposed | low |
+| insta360-ace-0020 | 0x2e1a:0x0020 | proposed | low |
+| fujifilm-xa7-02df | 0x04cb:0x02df | proposed | low |
+| fujifilm-xt200-02e1 | 0x04cb:0x02e1 | proposed | low |
+| fujifilm-xt30ii-02ed | 0x04cb:0x02ed | proposed | low |
+| fujifilm-gfx50sii-02ef | 0x04cb:0x02ef | proposed | low |
+| sigma-dp1-quattro-0034 | 0x1003:0x0034 | proposed | low |
+| sigma-dp2-quattro-0035 | 0x1003:0x0035 | proposed | low |
+| sigma-dp3-quattro-0036 | 0x1003:0x0036 | proposed | low |
+| sigma-dp0-quattro-0037 | 0x1003:0x0037 | proposed | low |
+| olympus-om-system-pen-e-pl10-07b4-0159 | 0x07b4:0x0159 | proposed | low |
+| olympus-om-system-pen-e-p5-alt-07b4-015b | 0x07b4:0x015b | proposed | low |
+| hasselblad-503cw-cfv-020b | 0x25b7:0x020b | proposed | low |
+| hasselblad-h5d-50c-020c | 0x25b7:0x020c | proposed | low |
+| hasselblad-h4d-40-020d | 0x25b7:0x020d | proposed | low |
 
 ## Cnc (5)
 
@@ -1266,7 +1350,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | seeed-wio-terminal-mtp-802d | 0x2886:0x802d | proposed | low |
 | seeed-xiao-samd21-mtp-802f | 0x2886:0x802f | proposed | low |
 
-## Drone (50)
+## Drone (74)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1320,8 +1404,32 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | skydio-x2-0002 | 0x2fde:0x0002 | proposed | low |
 | fimi-x8se-2022-0001 | 0x2b4c:0x0001 | proposed | low |
 | fimi-mini-pro-0002 | 0x2b4c:0x0002 | proposed | low |
+| dji-inspire-3-0042 | 0x2ca3:0x0042 | community | community |
+| dji-inspire-2-0043 | 0x2ca3:0x0043 | community | community |
+| dji-matrice-30t-0044 | 0x2ca3:0x0044 | community | community |
+| dji-matrice-300-rtk-0045 | 0x2ca3:0x0045 | community | community |
+| dji-matrice-350-rtk-0046 | 0x2ca3:0x0046 | community | community |
+| dji-mavic-mini-se-0047 | 0x2ca3:0x0047 | community | community |
+| dji-flip-0048 | 0x2ca3:0x0048 | community | community |
+| dji-phantom-3-pro-0049 | 0x2ca3:0x0049 | community | community |
+| dji-phantom-3-standard-004a | 0x2ca3:0x004a | community | community |
+| dji-spark-004b | 0x2ca3:0x004b | community | community |
+| autel-evo-lite-plus-0004 | 0x2f8a:0x0004 | community | community |
+| autel-evo-ii-pro-v3-0005 | 0x2f8a:0x0005 | community | community |
+| autel-evo-max-4t-0006 | 0x2f8a:0x0006 | community | community |
+| autel-evo-ii-v3-0007 | 0x2f8a:0x0007 | community | community |
+| autel-evo-nano-plus-0008 | 0x2f8a:0x0008 | community | community |
+| autel-evo-ii-dual-0009 | 0x2f8a:0x0009 | community | community |
+| autel-dragonfish-000a | 0x2f8a:0x000a | community | community |
+| skydio-x10-0003 | 0x2fde:0x0003 | community | community |
+| skydio-x2e-0004 | 0x2fde:0x0004 | community | community |
+| skydio-2-0005 | 0x2fde:0x0005 | community | community |
+| parrot-anafi-ai-0a00 | 0x19cf:0x0a00 | community | community |
+| parrot-anafi-usa-0a01 | 0x19cf:0x0a01 | community | community |
+| parrot-anafi-0908 | 0x19cf:0x0908 | community | community |
+| parrot-anafi-thermal-0909 | 0x19cf:0x0909 | community | community |
 
-## E Reader (120)
+## E Reader (149)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1440,6 +1548,35 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | amazon-fire-7-2022-080a | 0x1949:0x080a | proposed | medium |
 | supernote-a5x2-0032 | 0x2207:0x0032 | proposed | low |
 | supernote-a6x2-0033 | 0x2207:0x0033 | proposed | low |
+| amazon-kindle-oasis-3-0590 | 0x1949:0x0590 | community | community |
+| amazon-kindle-oasis-2-0491 | 0x1949:0x0491 | community | community |
+| amazon-kindle-pw5-0601 | 0x1949:0x0601 | community | community |
+| amazon-kindle-pw5-sig-0602 | 0x1949:0x0602 | community | community |
+| amazon-kindle-2024-0c32 | 0x1949:0x0c32 | community | community |
+| amazon-kindle-2024-colorsoft-0c33 | 0x1949:0x0c33 | community | community |
+| kobo-clara-hd-2-417a | 0x2237:0x417a | community | community |
+| kobo-libra-colour-alt-4195 | 0x2237:0x4195 | community | community |
+| kobo-elipsa-alt-418a | 0x2237:0x418a | community | community |
+| pocketbook-verse-a4af | 0x0525:0xa4af | community | community |
+| pocketbook-verse-pro-color-a4b0 | 0x0525:0xa4b0 | community | community |
+| pocketbook-inkpad-lite-a4b1 | 0x0525:0xa4b1 | community | community |
+| pocketbook-touch-hd-plus-a4b2 | 0x0525:0xa4b2 | community | community |
+| pocketbook-era-color-a4b3 | 0x0525:0xa4b3 | community | community |
+| onyx-boox-tab-ultra-c-0027 | 0x0489:0x0027 | community | community |
+| onyx-boox-note-air-3c-alt-0028 | 0x0489:0x0028 | community | community |
+| onyx-boox-tab-mini-c-alt-0029 | 0x0489:0x0029 | community | community |
+| onyx-boox-poke5s-002a | 0x0489:0x002a | community | community |
+| onyx-boox-page-2-002b | 0x0489:0x002b | community | community |
+| onyx-boox-palma-002c | 0x0489:0x002c | community | community |
+| onyx-boox-palma-2-002d | 0x0489:0x002d | community | community |
+| supernote-nomad-0034 | 0x2d01:0x0034 | community | community |
+| supernote-manta-0035 | 0x2d01:0x0035 | community | community |
+| bigme-inkpad-color-0001 | 0x2d08:0x0001 | community | community |
+| bigme-galy-0002 | 0x2d08:0x0002 | community | community |
+| bigme-hibreak-0003 | 0x2d08:0x0003 | community | community |
+| bigme-s6-color-0004 | 0x2d08:0x0004 | community | community |
+| bigme-inknote-color-0005 | 0x2d08:0x0005 | community | community |
+| remarkable-paper-pro-4003 | 0x2d5f:0x4003 | community | community |
 | Kobo Clara 2E | 0x2237:0x7010 | experimental | unknown |
 | Kobo Elipsa 2E | 0x2237:0x7013 | experimental | unknown |
 | Kobo Libra 2 | 0x2237:0x7011 | experimental | unknown |
@@ -1455,12 +1592,28 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | livescribe-3-smartpen-0003 | 0x1ccb:0x0003 | proposed | low |
 | raspberry-pi-zero2w-gadget-mtp-4020 | 0x2e8a:0x4020 | proposed | low |
 
-## Fitness (2)
+## Fitness (18)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
 | wahoo-elemnt-roam-0001 | 0x31e0:0x0001 | proposed | low |
 | wahoo-elemnt-bolt-v2-0002 | 0x31e0:0x0002 | proposed | low |
+| garmin-vivosmart-5-4cca | 0x091e:0x4cca | community | community |
+| garmin-vivosmart-4-4ccb | 0x091e:0x4ccb | community | community |
+| garmin-vivosport-4ccc | 0x091e:0x4ccc | community | community |
+| garmin-rally-rk-521c | 0x091e:0x521c | community | community |
+| garmin-rally-rs-521d | 0x091e:0x521d | community | community |
+| garmin-rally-xc-521e | 0x091e:0x521e | community | community |
+| garmin-varia-rtl516-521f | 0x091e:0x521f | community | community |
+| garmin-varia-rct715-5220 | 0x091e:0x5220 | community | community |
+| fitbit-charge-6-fb16 | 0x2687:0xfb16 | community | community |
+| fitbit-ace-lt-fb19 | 0x2687:0xfb19 | community | community |
+| fitbit-inspire-2-fb1a | 0x2687:0xfb1a | community | community |
+| fitbit-ace-3-fb1b | 0x2687:0xfb1b | community | community |
+| wahoo-elemnt-rival-0003 | 0x31e0:0x0003 | community | community |
+| polar-unite-0018 | 0x0da4:0x0018 | community | community |
+| coros-pod-2-0008 | 0x3515:0x0008 | community | community |
+| tomtom-touch-7478 | 0x1390:0x7478 | community | community |
 
 ## Gaming Handheld (31)
 
@@ -1498,7 +1651,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Nintendo Switch Lite | 0x057e:0x2001 | experimental | unknown |
 | Nintendo Switch OLED | 0x057e:0x2002 | experimental | unknown |
 
-## Gps Navigator (158)
+## Gps Navigator (211)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -1659,6 +1812,59 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | tomtom-go-camper-max-545b | 0x1390:0x545b | proposed | low |
 | tomtom-go-navigator-545c | 0x1390:0x545c | proposed | low |
 | tomtom-rider-600-545d | 0x1390:0x545d | proposed | low |
+| garmin-etrex-20x-251a | 0x091e:0x251a | community | community |
+| garmin-etrex-22x-251d | 0x091e:0x251d | community | community |
+| garmin-etrex-32x-251e | 0x091e:0x251e | community | community |
+| garmin-etrex-se-2520 | 0x091e:0x2520 | community | community |
+| garmin-etrex-touch-25-2521 | 0x091e:0x2521 | community | community |
+| garmin-etrex-touch-35-2522 | 0x091e:0x2522 | community | community |
+| garmin-gpsmap-66i-50f1 | 0x091e:0x50f1 | community | community |
+| garmin-gpsmap-66sr-50f4 | 0x091e:0x50f4 | community | community |
+| garmin-gpsmap-67i-50f5 | 0x091e:0x50f5 | community | community |
+| garmin-gpsmap-86i-50f6 | 0x091e:0x50f6 | community | community |
+| garmin-gpsmap-86sci-50f7 | 0x091e:0x50f7 | community | community |
+| garmin-gpsmap-64st-253d | 0x091e:0x253d | community | community |
+| garmin-gpsmap-64sx-253e | 0x091e:0x253e | community | community |
+| garmin-gpsmap-65-253f | 0x091e:0x253f | community | community |
+| garmin-gpsmap-65s-2540 | 0x091e:0x2540 | community | community |
+| garmin-inreach-mini-2-4d9e | 0x091e:0x4d9e | community | community |
+| garmin-inreach-explorer-plus-4d9f | 0x091e:0x4d9f | community | community |
+| garmin-inreach-se-plus-4da0 | 0x091e:0x4da0 | community | community |
+| garmin-inreach-messenger-4da1 | 0x091e:0x4da1 | community | community |
+| garmin-approach-z82-50b4 | 0x091e:0x50b4 | community | community |
+| garmin-approach-r10-50b5 | 0x091e:0x50b5 | community | community |
+| garmin-edge-530-4fdb | 0x091e:0x4fdb | community | community |
+| garmin-edge-830-4fdc | 0x091e:0x4fdc | community | community |
+| garmin-edge-1030-plus-4f04 | 0x091e:0x4f04 | community | community |
+| garmin-edge-520-plus-4b50 | 0x091e:0x4b50 | community | community |
+| garmin-edge-130-plus-4f05 | 0x091e:0x4f05 | community | community |
+| garmin-edge-1050-521b | 0x091e:0x521b | community | community |
+| garmin-oregon-700-2381 | 0x091e:0x2381 | community | community |
+| garmin-oregon-750t-2382 | 0x091e:0x2382 | community | community |
+| garmin-montana-700-2541 | 0x091e:0x2541 | community | community |
+| garmin-montana-700i-2542 | 0x091e:0x2542 | community | community |
+| garmin-montana-750i-2543 | 0x091e:0x2543 | community | community |
+| garmin-zumo-xt2-4d9d | 0x091e:0x4d9d | community | community |
+| garmin-zumo-396-4d9b | 0x091e:0x4d9b | community | community |
+| wahoo-elemnt-roam-v2-0004 | 0x31e0:0x0004 | community | community |
+| wahoo-elemnt-bolt-v1-0005 | 0x31e0:0x0005 | community | community |
+| wahoo-elemnt-v1-0006 | 0x31e0:0x0006 | community | community |
+| wahoo-elemnt-ace-0007 | 0x31e0:0x0007 | community | community |
+| coros-dura-0007 | 0x3515:0x0007 | community | community |
+| tomtom-via-52-545e | 0x1390:0x545e | community | community |
+| tomtom-via-53-545f | 0x1390:0x545f | community | community |
+| tomtom-go-essential-5460 | 0x1390:0x5460 | community | community |
+| tomtom-go-premium-5461 | 0x1390:0x5461 | community | community |
+| bryton-rider-s800-0001 | 0x0bf8:0x0001 | community | community |
+| bryton-rider-750-0002 | 0x0bf8:0x0002 | community | community |
+| bryton-rider-420-0003 | 0x0bf8:0x0003 | community | community |
+| bryton-rider-320-0004 | 0x0bf8:0x0004 | community | community |
+| bryton-aero-60-0005 | 0x0bf8:0x0005 | community | community |
+| bryton-rider-s500-0006 | 0x0bf8:0x0006 | community | community |
+| lezyne-mega-xl-0001 | 0x2047:0x0001 | community | community |
+| lezyne-mega-c-0002 | 0x2047:0x0002 | community | community |
+| lezyne-super-pro-0003 | 0x2047:0x0003 | community | community |
+| lezyne-macro-plus-0004 | 0x2047:0x0004 | community | community |
 | Garmin Edge 1040 | 0x091e:0x4c60 | experimental | unknown |
 
 ## Industrial Camera (4)
@@ -2255,7 +2461,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | olympus-dp73-microscope-0303 | 0x07b4:0x0303 | proposed | low |
 | olympus-dp80-microscope-0304 | 0x07b4:0x0304 | proposed | low |
 
-## Phone (2438)
+## Phone (2483)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -4642,6 +4848,51 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | palm-pre-2-0103 | 0x0830:0x0103 | proposed | low |
 | palm-pixi-8002 | 0x0830:0x8002 | proposed | low |
 | palm-pixi-plus-8003 | 0x0830:0x8003 | proposed | low |
+| sony-xperia-1-iii-0209 | 0x0fce:0x0209 | proposed | low |
+| sony-xperia-1-iv-0211 | 0x0fce:0x0211 | proposed | low |
+| sony-xperia-pro-i-0215 | 0x0fce:0x0215 | proposed | low |
+| sony-xperia-10-iii-0219 | 0x0fce:0x0219 | proposed | low |
+| sony-xperia-pro-021a | 0x0fce:0x021a | proposed | low |
+| asus-zenfone-11-ultra-4dbe | 0x0b05:0x4dbe | proposed | low |
+| asus-rog-phone-8-pro-4dbf | 0x0b05:0x4dbf | proposed | low |
+| asus-rog-phone-9-4dc0 | 0x0b05:0x4dc0 | proposed | low |
+| asus-rog-phone-9-pro-4dc1 | 0x0b05:0x4dc1 | proposed | low |
+| asus-zenfone-11-4dc2 | 0x0b05:0x4dc2 | proposed | low |
+| motorola-edge-50-neo-2eb6 | 0x22b8:0x2eb6 | proposed | low |
+| motorola-razr-2024-2eb7 | 0x22b8:0x2eb7 | proposed | low |
+| motorola-moto-g-power-2024-2eb8 | 0x22b8:0x2eb8 | proposed | low |
+| motorola-edge-2024-2eb9 | 0x22b8:0x2eb9 | proposed | low |
+| motorola-moto-g-stylus-5g-2024-2eba | 0x22b8:0x2eba | proposed | low |
+| motorola-moto-g34-2ebb | 0x22b8:0x2ebb | proposed | low |
+| motorola-edge-50-fusion-2ebc | 0x22b8:0x2ebc | proposed | low |
+| motorola-razr-50-2ebd | 0x22b8:0x2ebd | proposed | low |
+| hmd-pulse-c031 | 0x2e04:0xc031 | proposed | low |
+| hmd-pulse-pro-c032 | 0x2e04:0xc032 | proposed | low |
+| hmd-pulse-plus-c033 | 0x2e04:0xc033 | proposed | low |
+| hmd-skyline-c034 | 0x2e04:0xc034 | proposed | low |
+| hmd-vibe-c035 | 0x2e04:0xc035 | proposed | low |
+| hmd-crest-c036 | 0x2e04:0xc036 | proposed | low |
+| hmd-crest-max-c037 | 0x2e04:0xc037 | proposed | low |
+| nokia-g42-c038 | 0x2e04:0xc038 | proposed | low |
+| nokia-xr21-c039 | 0x2e04:0xc039 | proposed | low |
+| nokia-c22-c03a | 0x2e04:0xc03a | proposed | low |
+| nokia-g22-c03b | 0x2e04:0xc03b | proposed | low |
+| nokia-g310-c03c | 0x2e04:0xc03c | proposed | low |
+| infinix-zero-40-6021 | 0x1d5c:0x6021 | proposed | low |
+| infinix-zero-40-5g-6022 | 0x1d5c:0x6022 | proposed | low |
+| infinix-hot-50-6023 | 0x1d5c:0x6023 | proposed | low |
+| infinix-hot-50-pro-6024 | 0x1d5c:0x6024 | proposed | low |
+| infinix-hot-50i-6025 | 0x1d5c:0x6025 | proposed | low |
+| tecno-spark-30-6023 | 0x1d5b:0x6023 | proposed | low |
+| tecno-spark-30-pro-6024 | 0x1d5b:0x6024 | proposed | low |
+| tecno-camon-30s-pro-6025 | 0x1d5b:0x6025 | proposed | low |
+| tecno-pova-6-neo-6026 | 0x1d5b:0x6026 | proposed | low |
+| tecno-phantom-v2-6027 | 0x1d5b:0x6027 | proposed | low |
+| itel-s25-6021 | 0x1d4d:0x6021 | proposed | low |
+| itel-p65-6022 | 0x1d4d:0x6022 | proposed | low |
+| itel-a60-pro-6023 | 0x1d4d:0x6023 | proposed | low |
+| itel-a05-6024 | 0x1d4d:0x6024 | proposed | low |
+| itel-p33-plus-6025 | 0x1d4d:0x6025 | proposed | low |
 | AGM Glory SE | 0x0e8d:0x2051 | community | community |
 | AGM H5 Pro | 0x0e8d:0x2050 | community | community |
 | BLU Bold N3 | 0x0e8d:0x2062 | community | community |
@@ -4866,7 +5117,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | adata-se880-portable-ssd-a94a | 0x125f:0xa94a | proposed | low |
 | adata-se920-portable-ssd-a95a | 0x125f:0xa95a | proposed | low |
 
-## Tablet (71)
+## Tablet (99)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -4934,6 +5185,34 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | lenovo-legion-y700-7f01 | 0x17ef:0x7f01 | proposed | low |
 | xiaomi-pad-6-0670 | 0x2717:0x0670 | proposed | low |
 | redmi-pad-se-0680 | 0x2717:0x0680 | proposed | low |
+| lenovo-tab-p12-gen2-7e18 | 0x17ef:0x7e18 | community | community |
+| lenovo-tab-m10-gen4-7f01 | 0x17ef:0x7f01 | community | community |
+| lenovo-yoga-tab-13-7d88 | 0x17ef:0x7d88 | community | community |
+| lenovo-yoga-tab-11-7d87 | 0x17ef:0x7d87 | community | community |
+| samsung-galaxy-tab-s10-ultra-6939 | 0x04e8:0x6939 | community | community |
+| samsung-galaxy-tab-s10-fe-693a | 0x04e8:0x693a | community | community |
+| samsung-galaxy-tab-s9-fe-plus-alt-6b18a | 0x04e8:0x693b | community | community |
+| samsung-galaxy-tab-a9-lite-693c | 0x04e8:0x693c | community | community |
+| samsung-galaxy-tab-s10-plus-alt-693d | 0x04e8:0x693d | community | community |
+| xiaomi-pad-6-max-0671 | 0x2717:0x0671 | community | community |
+| xiaomi-pad-6-pro-0672 | 0x2717:0x0672 | community | community |
+| xiaomi-pad-6s-pro-0673 | 0x2717:0x0673 | community | community |
+| xiaomi-redmi-pad-se-0674 | 0x2717:0x0674 | community | community |
+| xiaomi-redmi-pad-pro-0675 | 0x2717:0x0675 | community | community |
+| amazon-fire-hd10-2024-0017 | 0x1949:0x0017 | community | community |
+| amazon-fire-hd8-2024-0018 | 0x1949:0x0018 | community | community |
+| amazon-fire-max-11-2024-0808a | 0x1949:0x080b | community | community |
+| amazon-fire-7-2024-080c | 0x1949:0x080c | community | community |
+| huawei-matepad-115-3808 | 0x12d1:0x3808 | community | community |
+| huawei-matepad-pro-133-3809 | 0x12d1:0x3809 | community | community |
+| huawei-matepad-air-380a | 0x12d1:0x380a | community | community |
+| huawei-matepad-se-380b | 0x12d1:0x380b | community | community |
+| huawei-matepad-paper-380c | 0x12d1:0x380c | community | community |
+| tcl-tab-10-gen2-a40b | 0x1bbb:0xa40b | community | community |
+| tcl-tab-11-a40c | 0x1bbb:0xa40c | community | community |
+| tcl-nxtpaper-11-a40d | 0x1bbb:0xa40d | community | community |
+| tcl-nxtpaper-14-a40e | 0x1bbb:0xa40e | community | community |
+| tcl-tab-8-le-a40f | 0x1bbb:0xa40f | community | community |
 | AGM Pad P1 | 0x0e8d:0x2052 | community | community |
 | Alcatel Joy Tab 2 | 0x1bbb:0x9033 | community | community |
 | Blackview Active 8 Pro | 0x0e8d:0x204a | community | community |
@@ -4983,7 +5262,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | htc-vive-focus-3-0c98 | 0x0bb4:0x0c98 | proposed | low |
 | htc-vive-xr-elite-0c99 | 0x0bb4:0x0c99 | proposed | low |
 
-## Wearable (23)
+## Wearable (92)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -5007,6 +5286,75 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | polar-ignite-3-0010 | 0x0da4:0x0010 | proposed | low |
 | coros-pace-3-0001 | 0x3515:0x0001 | proposed | low |
 | coros-vertix-2s-0002 | 0x3515:0x0002 | proposed | low |
+| garmin-approach-s70-42mm-50b0 | 0x091e:0x50b0 | community | community |
+| garmin-approach-s70-47mm-50b1 | 0x091e:0x50b1 | community | community |
+| garmin-approach-s62-50b2 | 0x091e:0x50b2 | community | community |
+| garmin-approach-s42-50b3 | 0x091e:0x50b3 | community | community |
+| garmin-tactix-delta-5028 | 0x091e:0x5028 | community | community |
+| garmin-tactix-charlie-5029 | 0x091e:0x5029 | community | community |
+| garmin-tactix-bravo-502a | 0x091e:0x502a | community | community |
+| garmin-enduro-4f44 | 0x091e:0x4f44 | community | community |
+| garmin-enduro-2-4f45 | 0x091e:0x4f45 | community | community |
+| garmin-instinct-crossover-5298 | 0x091e:0x5298 | community | community |
+| garmin-instinct-3-amoled-5299 | 0x091e:0x5299 | community | community |
+| garmin-instinct-2s-solar-529a | 0x091e:0x529a | community | community |
+| garmin-instinct-solar-529b | 0x091e:0x529b | community | community |
+| garmin-fenix-5s-plus-4b55 | 0x091e:0x4b55 | community | community |
+| garmin-fenix-5x-plus-4b56 | 0x091e:0x4b56 | community | community |
+| garmin-fenix-6-4cd9 | 0x091e:0x4cd9 | community | community |
+| garmin-fenix-6s-4cdc | 0x091e:0x4cdc | community | community |
+| garmin-fenix-7-standard-4f40 | 0x091e:0x4f40 | community | community |
+| garmin-fenix-7x-sapphire-solar-4f46 | 0x091e:0x4f46 | community | community |
+| garmin-fenix-8-47mm-51b7 | 0x091e:0x51b7 | community | community |
+| garmin-fenix-8-43mm-51b9 | 0x091e:0x51b9 | community | community |
+| garmin-forerunner-45-4b1a | 0x091e:0x4b1a | community | community |
+| garmin-forerunner-45s-4b1c | 0x091e:0x4b1c | community | community |
+| garmin-forerunner-235-097f | 0x091e:0x097f | community | community |
+| garmin-forerunner-735xt-086e | 0x091e:0x086e | community | community |
+| garmin-forerunner-935-4b36 | 0x091e:0x4b36 | community | community |
+| garmin-forerunner-645-4b46 | 0x091e:0x4b46 | community | community |
+| garmin-forerunner-165s-4bf1 | 0x091e:0x4bf1 | community | community |
+| garmin-venu-sq-4e0b | 0x091e:0x4e0b | community | community |
+| garmin-venu-3-45mm-50a4 | 0x091e:0x50a4 | community | community |
+| garmin-d2-mach-1-4c7d | 0x091e:0x4c7d | community | community |
+| garmin-d2-air-x10-488c | 0x091e:0x488c | community | community |
+| garmin-lily-4ccf | 0x091e:0x4ccf | community | community |
+| garmin-vivomove-trend-4cc6 | 0x091e:0x4cc6 | community | community |
+| garmin-vivomove-sport-4cc7 | 0x091e:0x4cc7 | community | community |
+| garmin-vivomove-style-4cc8 | 0x091e:0x4cc8 | community | community |
+| garmin-vivomove-luxe-4cc9 | 0x091e:0x4cc9 | community | community |
+| garmin-swim-2-4e06 | 0x091e:0x4e06 | community | community |
+| fitbit-sense-2-fb17 | 0x2687:0xfb17 | community | community |
+| polar-m2-0015 | 0x0da4:0x0015 | community | community |
+| polar-pacer-0016 | 0x0da4:0x0016 | community | community |
+| polar-vantage-m2-0017 | 0x0da4:0x0017 | community | community |
+| polar-ignite-2-0019 | 0x0da4:0x0019 | community | community |
+| polar-grit-x-pro-001a | 0x0da4:0x001a | community | community |
+| polar-vantage-v-001b | 0x0da4:0x001b | community | community |
+| polar-m430-001c | 0x0da4:0x001c | community | community |
+| suunto-9-peak-005c | 0x1493:0x005c | community | community |
+| suunto-7-0060 | 0x1493:0x0060 | community | community |
+| suunto-spartan-sport-whr-0064 | 0x1493:0x0064 | community | community |
+| suunto-spartan-ultra-0068 | 0x1493:0x0068 | community | community |
+| suunto-spartan-trainer-006c | 0x1493:0x006c | community | community |
+| suunto-core-0042 | 0x1493:0x0042 | community | community |
+| suunto-traverse-0046 | 0x1493:0x0046 | community | community |
+| suunto-traverse-alpha-0047 | 0x1493:0x0047 | community | community |
+| suunto-ambit3-peak-0043 | 0x1493:0x0043 | community | community |
+| suunto-ambit3-run-0045 | 0x1493:0x0045 | community | community |
+| suunto-race-s-004d | 0x1493:0x004d | community | community |
+| suunto-ocean-004e | 0x1493:0x004e | community | community |
+| coros-vertix-2-0003 | 0x3515:0x0003 | community | community |
+| coros-apex-2-0004 | 0x3515:0x0004 | community | community |
+| coros-apex-2-pro-0005 | 0x3515:0x0005 | community | community |
+| coros-pace-2-0006 | 0x3515:0x0006 | community | community |
+| coros-apex-pro-0009 | 0x3515:0x0009 | community | community |
+| coros-vertix-000a | 0x3515:0x000a | community | community |
+| tomtom-runner-3-7475 | 0x1390:0x7475 | community | community |
+| tomtom-spark-3-7476 | 0x1390:0x7476 | community | community |
+| tomtom-adventurer-7477 | 0x1390:0x7477 | community | community |
+| tomtom-runner-2-7479 | 0x1390:0x7479 | community | community |
+| tomtom-spark-747a | 0x1390:0x747a | community | community |
 | Garmin Fenix 7X | 0x091e:0x4c61 | experimental | unknown |
 | Garmin Forerunner 965 | 0x091e:0x4c62 | experimental | unknown |
 | Ray-Ban Meta Smart Glasses | 0x2d40:0x0001 | experimental | unknown |
