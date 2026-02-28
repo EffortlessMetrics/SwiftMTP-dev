@@ -2,7 +2,7 @@
 
 Auto-generated from Specs/quirks.json — do not edit manually.
 
-**5,461** device entries across **296** vendor IDs and **33** categories.
+**5,522** device entries across **296** vendor IDs and **33** categories.
 
 ## 3D Printer (35)
 
@@ -2640,7 +2640,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | dinolite-am7515-0022 | 0x0856:0x0022 | community | community |
 | dinolite-am4113zt-0023 | 0x0856:0x0023 | community | community |
 
-## Phone (2501)
+## Phone (2560)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -5090,6 +5090,65 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | itel-p55-plus-6026 | 0x1d4d:0x6026 | proposed | medium |
 | itel-a70-6027 | 0x1d4d:0x6027 | proposed | medium |
 | itel-s24-6028 | 0x1d4d:0x6028 | proposed | medium |
+| samsung-galaxy-a25-5g-6940 | 0x04e8:0x6940 | proposed | medium |
+| samsung-galaxy-m55-5g-6941 | 0x04e8:0x6941 | proposed | medium |
+| samsung-galaxy-m35-5g-6942 | 0x04e8:0x6942 | proposed | medium |
+| samsung-galaxy-m15-5g-6943 | 0x04e8:0x6943 | proposed | medium |
+| samsung-galaxy-z-fold-4-6944 | 0x04e8:0x6944 | proposed | medium |
+| samsung-galaxy-z-fold-5-6945 | 0x04e8:0x6945 | proposed | medium |
+| samsung-galaxy-s25-fe-6946 | 0x04e8:0x6946 | proposed | medium |
+| samsung-galaxy-a05s-6947 | 0x04e8:0x6947 | proposed | medium |
+| samsung-galaxy-a14-5g-6948 | 0x04e8:0x6948 | proposed | medium |
+| samsung-galaxy-m14-5g-6949 | 0x04e8:0x6949 | proposed | medium |
+| samsung-galaxy-f54-5g-694a | 0x04e8:0x694a | proposed | medium |
+| samsung-galaxy-f14-5g-694b | 0x04e8:0x694b | proposed | medium |
+| samsung-galaxy-f34-5g-694c | 0x04e8:0x694c | proposed | medium |
+| samsung-galaxy-xcover-pro-2-694d | 0x04e8:0x694d | proposed | medium |
+| samsung-galaxy-s23-plus-694e | 0x04e8:0x694e | proposed | medium |
+| samsung-galaxy-a24-694f | 0x04e8:0x694f | proposed | medium |
+| samsung-galaxy-a04s-6950 | 0x04e8:0x6950 | proposed | medium |
+| samsung-galaxy-a05-6951 | 0x04e8:0x6951 | proposed | medium |
+| samsung-galaxy-a13-5g-6952 | 0x04e8:0x6952 | proposed | medium |
+| samsung-galaxy-watch-7-6882 | 0x04e8:0x6882 | proposed | medium |
+| samsung-galaxy-watch-ultra-6883 | 0x04e8:0x6883 | proposed | medium |
+| samsung-galaxy-watch-fe-6884 | 0x04e8:0x6884 | proposed | medium |
+| lg-v60-thinq-lmv600-63a4 | 0x1004:0x63a4 | proposed | medium |
+| lg-v50s-thinq-lmv510-63a5 | 0x1004:0x63a5 | proposed | medium |
+| lg-v35-thinq-lmv350-63a6 | 0x1004:0x63a6 | proposed | medium |
+| lg-g7-thinq-lmg710-6376 | 0x1004:0x6376 | proposed | medium |
+| lg-g7-one-lmq910-6377 | 0x1004:0x6377 | proposed | medium |
+| lg-g7-fit-lmq850-6378 | 0x1004:0x6378 | proposed | medium |
+| lg-g8-thinq-lmg820-6379 | 0x1004:0x6379 | proposed | medium |
+| lg-g8x-thinq-lmg850-637a | 0x1004:0x637a | proposed | medium |
+| lg-g8s-thinq-lmg810-637b | 0x1004:0x637b | proposed | medium |
+| lg-wing-lmf100-63a9 | 0x1004:0x63a9 | proposed | medium |
+| lg-velvet-5g-uw-63aa | 0x1004:0x63aa | proposed | medium |
+| lg-k52-lmk520-63bd | 0x1004:0x63bd | proposed | medium |
+| lg-k51s-lmk510-63be | 0x1004:0x63be | proposed | medium |
+| lg-k61-lmq630-63bf | 0x1004:0x63bf | proposed | medium |
+| lg-k62-lmk525-63cb | 0x1004:0x63cb | proposed | medium |
+| lg-k42-lmk420-63cc | 0x1004:0x63cc | proposed | medium |
+| lg-k71-lmq730-63cd | 0x1004:0x63cd | proposed | medium |
+| lg-stylo-6-lmq730-63c3 | 0x1004:0x63c3 | proposed | medium |
+| lg-stylo-7-5g-lmq740-63c4 | 0x1004:0x63c4 | proposed | medium |
+| lg-q92-5g-lmq920-63ce | 0x1004:0x63ce | proposed | medium |
+| lg-q70-lmq620-63cf | 0x1004:0x63cf | proposed | medium |
+| lg-tone-free-fp9-6408 | 0x1004:0x6408 | proposed | medium |
+| huawei-mate-x5-1087 | 0x12d1:0x1087 | proposed | medium |
+| huawei-mate-x3-1088 | 0x12d1:0x1088 | proposed | medium |
+| huawei-nova-10-1096 | 0x12d1:0x1096 | proposed | medium |
+| huawei-nova-10-pro-1097 | 0x12d1:0x1097 | proposed | medium |
+| huawei-nova-11-1098 | 0x12d1:0x1098 | proposed | medium |
+| huawei-nova-11-pro-1099 | 0x12d1:0x1099 | proposed | medium |
+| huawei-nova-12-109a | 0x12d1:0x109a | proposed | medium |
+| huawei-nova-12-pro-109b | 0x12d1:0x109b | proposed | medium |
+| huawei-nova-y90-109c | 0x12d1:0x109c | proposed | medium |
+| huawei-nova-y70-109d | 0x12d1:0x109d | proposed | medium |
+| huawei-p50-1061 | 0x12d1:0x1061 | proposed | medium |
+| huawei-p60-1062 | 0x12d1:0x1062 | proposed | medium |
+| huawei-enjoy-60x-1063 | 0x12d1:0x1063 | proposed | medium |
+| huawei-pura-70-1064 | 0x12d1:0x1064 | proposed | medium |
+| huawei-pura-70-pro-1065 | 0x12d1:0x1065 | proposed | medium |
 | AGM Glory SE | 0x0e8d:0x2051 | community | community |
 | AGM H5 Pro | 0x0e8d:0x2050 | community | community |
 | BLU Bold N3 | 0x0e8d:0x2062 | community | community |
@@ -5384,7 +5443,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | adata-se880-portable-ssd-a94a | 0x125f:0xa94a | proposed | low |
 | adata-se920-portable-ssd-a95a | 0x125f:0xa95a | proposed | low |
 
-## Tablet (99)
+## Tablet (101)
 
 | Device | VID:PID | Status | Confidence |
 |--------|---------|--------|------------|
@@ -5480,6 +5539,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | tcl-nxtpaper-11-a40d | 0x1bbb:0xa40d | community | community |
 | tcl-nxtpaper-14-a40e | 0x1bbb:0xa40e | community | community |
 | tcl-tab-8-le-a40f | 0x1bbb:0xa40f | community | community |
+| samsung-galaxy-tab-s10-lite-6b1e | 0x04e8:0x6b1e | proposed | medium |
+| samsung-galaxy-tab-a7-2020-6b1f | 0x04e8:0x6b1f | proposed | medium |
 | AGM Pad P1 | 0x0e8d:0x2052 | community | community |
 | Alcatel Joy Tab 2 | 0x1bbb:0x9033 | community | community |
 | Blackview Active 8 Pro | 0x0e8d:0x204a | community | community |
