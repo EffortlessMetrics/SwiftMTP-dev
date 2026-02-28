@@ -18,7 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Wave 70: Automotive/industrial entries — dashcams, CNC, audio interfaces
 - Wave 71: Documentation refresh — compat matrix regeneration, CHANGELOG + README updates
 - Wave 72–75: Samsung/LG/Huawei expansion, Chinese phone brands, additional regional entries
-- **🎉 Device Quirks Database: 7,500+ entries across 444 VIDs and 35 device categories**
+- Waves 76–78: Industrial cameras, machine vision, smart glasses, AR glasses, e-ink displays, embedded/fitness entries
+- **🎉 Device Quirks Database: 7,900+ entries across ~500 VIDs and 35 device categories**
 
 - Wave 42-50: Gaming handhelds, VR, hi-fi DAPs, embedded dev boards, 3D printers, lab instruments
 - Wave 52-53: Device category assignment — 97% of entries now categorized (phones, cameras, media players, GPS, etc.)
