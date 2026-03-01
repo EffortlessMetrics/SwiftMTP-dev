@@ -234,7 +234,7 @@ final class BDDRunner: XCTestCase {
       vid: 0x2A70, pid: 0xF003,
       bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
     else {
-      throw XCTSkip("oneplus-3t-f003 quirk not found in database")
+      XCTFail("oneplus-3t-f003 quirk expected in 20K quirks DB"); return
     }
     XCTAssertFalse(
       quirk.resolvedFlags().supportsGetObjectPropList,
@@ -251,7 +251,7 @@ final class BDDRunner: XCTestCase {
       vid: 0x04A9, pid: 0x32B4,
       bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
     else {
-      throw XCTSkip("canon-eos-r5-32b4 quirk not found in database")
+      XCTFail("canon-eos-r5-32b4 quirk expected in 20K quirks DB"); return
     }
     XCTAssertTrue(
       quirk.resolvedFlags().supportsGetObjectPropList,
@@ -263,7 +263,7 @@ final class BDDRunner: XCTestCase {
   func testMediaPlayer_SanDiskSansaM230() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0781, pid: 0x7400, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("sandisk-sansa-m230-7400 not in database") }
+    else { XCTFail("sandisk-sansa-m230-7400 expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "sandisk-sansa-m230-7400")
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Media player should not require kernel detach")
   }
@@ -272,7 +272,7 @@ final class BDDRunner: XCTestCase {
   func testMediaPlayer_CreativeZenMicro() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x041e, pid: 0x411e, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("creative-zen-micro-411e not in database") }
+    else { XCTFail("creative-zen-micro-411e expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "creative-zen-micro-411e")
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Media player should not require kernel detach")
   }
@@ -281,7 +281,7 @@ final class BDDRunner: XCTestCase {
   func testMediaPlayer_IRiverIFP880() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x4102, pid: 0x1008, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("iriver-ifp-880-1008 not in database") }
+    else { XCTFail("iriver-ifp-880-1008 expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "iriver-ifp-880-1008")
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Media player should not require kernel detach")
   }
@@ -290,7 +290,7 @@ final class BDDRunner: XCTestCase {
   func testEReader_AmazonKindleFire() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1949, pid: 0x0007, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("amazon-kindle-fire-0007 not in database") }
+    else { XCTFail("amazon-kindle-fire-0007 expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "amazon-kindle-fire-0007")
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Kindle should not require kernel detach")
   }
@@ -299,7 +299,7 @@ final class BDDRunner: XCTestCase {
   func testMediaPlayer_PhilipsGoGear() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0471, pid: 0x014b, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("philips-hdd6320-014b not in database") }
+    else { XCTFail("philips-hdd6320-014b expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "philips-hdd6320-014b")
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Media player should not require kernel detach")
   }
@@ -308,7 +308,7 @@ final class BDDRunner: XCTestCase {
   func testEReader_KoboArcAndroid() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2237, pid: 0xb108, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("kobo-arc-android-b108 not in database") }
+    else { XCTFail("kobo-arc-android-b108 expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "kobo-arc-android-b108")
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Kobo tablet should not require kernel detach")
   }
@@ -317,7 +317,7 @@ final class BDDRunner: XCTestCase {
   func testCamera_FujifilmXT10() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x04cb, pid: 0x02c8, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("fujifilm-xt10-02c8 not in database") }
+    else { XCTFail("fujifilm-xt10-02c8 expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "fujifilm-xt10-02c8")
     XCTAssertTrue(q.resolvedFlags().supportsGetObjectPropList)
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
@@ -327,7 +327,7 @@ final class BDDRunner: XCTestCase {
   func testCamera_GoProHero11() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2672, pid: 0x0059, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("gopro-hero11-black-0059 not in database") }
+    else { XCTFail("gopro-hero11-black-0059 expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "gopro-hero11-black-0059")
     XCTAssertTrue(q.resolvedFlags().supportsGetObjectPropList)
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
@@ -337,7 +337,7 @@ final class BDDRunner: XCTestCase {
   func testCamera_GoProHero12() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2672, pid: 0x005c, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("gopro-hero12-black-005c not in database") }
+    else { XCTFail("gopro-hero12-black-005c expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "gopro-hero12-black-005c")
     XCTAssertTrue(q.resolvedFlags().supportsGetObjectPropList)
   }
@@ -346,7 +346,7 @@ final class BDDRunner: XCTestCase {
   func testCamera_CanonEOS70D() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x04a9, pid: 0x3253, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("canon-eos-70d-3253 not in database") }
+    else { XCTFail("canon-eos-70d-3253 expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "canon-eos-70d-3253")
     // Entry exists and has resolvable flags (specific flag values depend on profile version)
     _ = q.resolvedFlags()
@@ -356,7 +356,7 @@ final class BDDRunner: XCTestCase {
   func testWearable_GarminFenix6Pro() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x091e, pid: 0x4cda, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("garmin-fenix6-pro-4cda not in database") }
+    else { XCTFail("garmin-fenix6-pro-4cda expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "garmin-fenix6-pro-4cda")
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
@@ -366,7 +366,7 @@ final class BDDRunner: XCTestCase {
   func testAndroid_LG_G2() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1004, pid: 0x633e, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("lg-android-633e not in database") }
+    else { XCTFail("lg-android-633e expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
@@ -374,7 +374,7 @@ final class BDDRunner: XCTestCase {
   func testAndroid_HTC_Generic() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0bb4, pid: 0x0f15, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("htc-android-0f15 not in database") }
+    else { XCTFail("htc-android-0f15 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
@@ -382,7 +382,7 @@ final class BDDRunner: XCTestCase {
   func testAndroid_ZTE_BladeIII() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x19d2, pid: 0x0306, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("zte-blade3-0306 not in database") }
+    else { XCTFail("zte-blade3-0306 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
@@ -390,7 +390,7 @@ final class BDDRunner: XCTestCase {
   func testAndroid_OPPO_Realme() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x22d9, pid: 0x0001, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("oppo-realme-android-0001 not in database") }
+    else { XCTFail("oppo-realme-android-0001 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
@@ -398,7 +398,7 @@ final class BDDRunner: XCTestCase {
   func testAndroid_Vivo_V11() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2d95, pid: 0x6002, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("vivo-v11-6002 not in database") }
+    else { XCTFail("vivo-v11-6002 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
@@ -406,7 +406,7 @@ final class BDDRunner: XCTestCase {
   func testAndroid_Huawei_P20() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x12d1, pid: 0x1054, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("huawei-p20-pro-mate20-1054 not in database") }
+    else { XCTFail("huawei-p20-pro-mate20-1054 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
@@ -415,14 +415,14 @@ final class BDDRunner: XCTestCase {
   func testAndroid_GooglePixel8() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x18d1, pid: 0x4ef7, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("google-pixel-8-4ef7 not in database") }
+    else { XCTFail("google-pixel-8-4ef7 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAndroid_OnePlus12() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2a70, pid: 0xf014, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("oneplus-12-f014 not in database") }
+    else { XCTFail("oneplus-12-f014 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
     XCTAssertFalse(q.resolvedFlags().supportsGetObjectPropList)
   }
@@ -430,14 +430,14 @@ final class BDDRunner: XCTestCase {
   func testAndroid_NothingPhone2() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2b0e, pid: 0x0002, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("nothing-phone-2-0002 not in database") }
+    else { XCTFail("nothing-phone-2-0002 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAndroid_ASUSROGPhone6() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0b05, pid: 0x4dba, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("asus-rog-phone-6-4dba not in database") }
+    else { XCTFail("asus-rog-phone-6-4dba expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -446,56 +446,56 @@ final class BDDRunner: XCTestCase {
   func testWave11TecnoCamon30Pro() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1d5b, pid: 0x600b, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("tecno-camon-30-pro-600b not in database") }
+    else { XCTFail("tecno-camon-30-pro-600b expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave11InfinixNote40Pro() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1d5c, pid: 0x6009, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("infinix-note-40-pro-6009 not in database") }
+    else { XCTFail("infinix-note-40-pro-6009 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave11ValveSteamDeckLCD() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x28de, pid: 0x1002, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("valve-steam-deck-lcd-1002 not in database") }
+    else { XCTFail("valve-steam-deck-lcd-1002 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave11MetaQuest2() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2833, pid: 0x0182, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("meta-quest-2-0182 not in database") }
+    else { XCTFail("meta-quest-2-0182 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave11ToshibaGigabeatS() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0930, pid: 0x0010, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("toshiba-gigabeat-s-0010 not in database") }
+    else { XCTFail("toshiba-gigabeat-s-0010 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave11PhilipsGoGearVibe() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0471, pid: 0x2075, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("philips-gogear-vibe-2075 not in database") }
+    else { XCTFail("philips-gogear-vibe-2075 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave11Archos504() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0e79, pid: 0x1307, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("archos-504-1307 not in database") }
+    else { XCTFail("archos-504-1307 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave11YotaPhone2() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2916, pid: 0x914d, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("yota-phone-2-914d not in database") }
+    else { XCTFail("yota-phone-2-914d expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -504,21 +504,21 @@ final class BDDRunner: XCTestCase {
   func testWave14KoboClara2E() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2237, pid: 0x418c, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("kobo-clara-2e-418c not in database") }
+    else { XCTFail("kobo-clara-2e-418c expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave14BooxTabUltra() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2207, pid: 0x001a, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("onyx-boox-tab-ultra-001a not in database") }
+    else { XCTFail("onyx-boox-tab-ultra-001a expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave14KindleFireHD8() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1949, pid: 0x0006, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("kindle-fire-hd8 not in database") }
+    else { XCTFail("kindle-fire-hd8 expected in 20K quirks DB"); return }
     // E-readers don't need kernel detach on macOS
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
@@ -526,35 +526,35 @@ final class BDDRunner: XCTestCase {
   func testWave14GarminDashCam() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x091e, pid: 0x0003, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("garmin-dashcam-0003 not in database") }
+    else { XCTFail("garmin-dashcam-0003 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave14FLIRThermal() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x09cb, pid: 0x1007, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("flir-e8-xt-1007 not in database") }
+    else { XCTFail("flir-e8-xt-1007 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave14TomTomGO520() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1390, pid: 0x7474, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("tomtom-go-520 not in database") }
+    else { XCTFail("tomtom-go-520 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave14AnbernicRG556() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1d6b, pid: 0x0104, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("anbernic-rg556 not in database") }
+    else { XCTFail("anbernic-rg556 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave14ArchosMTP() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0e79, pid: 0x1307, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("archos-504 not in database") }
+    else { XCTFail("archos-504 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
@@ -563,70 +563,70 @@ final class BDDRunner: XCTestCase {
   func testWave17NvidiaShieldTV() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0955, pid: 0xb42a, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("nvidia-shield-android-tv-pro-mtp-b42a not in database") }
+    else { XCTFail("nvidia-shield-android-tv-pro-mtp-b42a expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave17FireTVStick4K() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1949, pid: 0x0441, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("amazon-fire-tv-stick-4k-0441 not in database") }
+    else { XCTFail("amazon-fire-tv-stick-4k-0441 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave18LavaZ1() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x29a9, pid: 0x6001, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("lava-z1-6001 not in database") }
+    else { XCTFail("lava-z1-6001 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave18MicromaxINNote1() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2a96, pid: 0x6001, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("micromax-in-note-1-6001 not in database") }
+    else { XCTFail("micromax-in-note-1-6001 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave18BLUVivoXL() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x271d, pid: 0x4008, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("blu-vivo-xl-4008 not in database") }
+    else { XCTFail("blu-vivo-xl-4008 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave19DoogeeS100Pro() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0e8d, pid: 0x2035, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("doogee-s100-pro-2035 not in database") }
+    else { XCTFail("doogee-s100-pro-2035 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave19BlackviewBV9300() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0e8d, pid: 0x2041, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("blackview-bv9300-2041 not in database") }
+    else { XCTFail("blackview-bv9300-2041 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave20CanonEOSR7MarkII() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x04a9, pid: 0x3319, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("canon-eos-r7-mark-ii-3319 not in database") }
+    else { XCTFail("canon-eos-r7-mark-ii-3319 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().supportsGetObjectPropList)
   }
 
   func testWave20NikonZ8() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x04b0, pid: 0x0451, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("nikon-z8-0451 not in database") }
+    else { XCTFail("nikon-z8-0451 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave20NikonZ9() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x04b0, pid: 0x0450, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("nikon-z9-0450 not in database") }
+    else { XCTFail("nikon-z9-0450 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -635,42 +635,42 @@ final class BDDRunner: XCTestCase {
   func testWave25OMSystem() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x33a2, pid: 0x0135, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("om-system not in database") }
+    else { XCTFail("om-system expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().cameraClass)
   }
 
   func testWave25LeicaM11P() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1a98, pid: 0x0013, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("leica-m11-p not in database") }
+    else { XCTFail("leica-m11-p expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().cameraClass)
   }
 
   func testWave26BambuLabX1Carbon() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x3311, pid: 0x0001, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("bambulab-x1-carbon not in database") }
+    else { XCTFail("bambulab-x1-carbon expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().cameraClass)
   }
 
   func testWave26DexcomG6() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x22a3, pid: 0x0003, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("dexcom-g6 not in database") }
+    else { XCTFail("dexcom-g6 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().cameraClass)
   }
 
   func testWave27ZuneHD() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x045e, pid: 0x0710, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("zune-hd not in database") }
+    else { XCTFail("zune-hd expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave28MotorolaEdge() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x22b8, pid: 0x2e81, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("motorola-edge not in database") }
+    else { XCTFail("motorola-edge expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -679,21 +679,21 @@ final class BDDRunner: XCTestCase {
   func testAudioFiioDAPM7() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2972, pid: 0x0011, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("fiio-m7-0011 not in database") }
+    else { XCTFail("fiio-m7-0011 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioFiioDAPM11() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2972, pid: 0x0015, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("fiio-m11-0015 not in database") }
+    else { XCTFail("fiio-m11-0015 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioFiioDAPM15() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2972, pid: 0x001b, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("fiio-m15-001b not in database") }
+    else { XCTFail("fiio-m15-001b expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -702,21 +702,21 @@ final class BDDRunner: XCTestCase {
   func testAudioSonyWalkmanNWA105() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x054c, pid: 0x0d00, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("sony-nw-a105-0d00 not in database") }
+    else { XCTFail("sony-nw-a105-0d00 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioSonyWalkmanNWA45() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x054c, pid: 0x0c71, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("sony-nw-a45-0c71 not in database") }
+    else { XCTFail("sony-nw-a45-0c71 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioSonyWalkmanNWZX500() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x054c, pid: 0x0d01, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("sony-nw-zx500-0d01 not in database") }
+    else { XCTFail("sony-nw-zx500-0d01 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -725,21 +725,21 @@ final class BDDRunner: XCTestCase {
   func testAudioMarshallLondon() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2ad9, pid: 0x000b, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("marshall-london-000b not in database") }
+    else { XCTFail("marshall-london-000b expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioMarshallEmberton() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2ad9, pid: 0x000d, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("marshall-emberton-000d not in database") }
+    else { XCTFail("marshall-emberton-000d expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioMarshallEmbertonII() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2ad9, pid: 0x000f, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("marshall-emberton-ii-000f not in database") }
+    else { XCTFail("marshall-emberton-ii-000f expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -748,21 +748,21 @@ final class BDDRunner: XCTestCase {
   func testAudioJBLCharge5() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0ecb, pid: 0x2070, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("jbl-charge5-2070 not in database") }
+    else { XCTFail("jbl-charge5-2070 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioJBLFlip6() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0ecb, pid: 0x2072, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("jbl-flip6-2072 not in database") }
+    else { XCTFail("jbl-flip6-2072 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioJBLPartyBox310() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0ecb, pid: 0x2074, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("jbl-partybox310-2074 not in database") }
+    else { XCTFail("jbl-partybox310-2074 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -771,35 +771,35 @@ final class BDDRunner: XCTestCase {
   func testAudioBoseQC35II() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x05a7, pid: 0x4002, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("bose-qc35ii-4002 not in database") }
+    else { XCTFail("bose-qc35ii-4002 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioBoseNC700() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x05a7, pid: 0x4004, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("bose-nc700-4004 not in database") }
+    else { XCTFail("bose-nc700-4004 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioBoseQC45() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x05a7, pid: 0x4006, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("bose-qc45-4006 not in database") }
+    else { XCTFail("bose-qc45-4006 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioBoseQCUltra() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x05a7, pid: 0x4008, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("bose-qc-ultra-4008 not in database") }
+    else { XCTFail("bose-qc-ultra-4008 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAudioBoseSoundLinkFlex() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x05a7, pid: 0x40fe, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("bose-soundlink-flex-40fe not in database") }
+    else { XCTFail("bose-soundlink-flex-40fe expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -808,28 +808,28 @@ final class BDDRunner: XCTestCase {
   func testActionCamGoProHero() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2672, pid: 0x000c, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("gopro-hero-000c not in database") }
+    else { XCTFail("gopro-hero-000c expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamGoProHero5Black() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2672, pid: 0x0027, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("gopro-hero5-black-0027 not in database") }
+    else { XCTFail("gopro-hero5-black-0027 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamGoProHero9Black() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2672, pid: 0x004d, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("gopro-hero9-black-004d not in database") }
+    else { XCTFail("gopro-hero9-black-004d expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamGoProHero13Black() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2672, pid: 0x005d, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("gopro-hero13-black-005d not in database") }
+    else { XCTFail("gopro-hero13-black-005d expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -838,28 +838,28 @@ final class BDDRunner: XCTestCase {
   func testActionCamDJIOsmoAction3() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2ca3, pid: 0x001f, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("dji-osmo-action-3-001f not in database") }
+    else { XCTFail("dji-osmo-action-3-001f expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamDJIMini3Pro() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2ca3, pid: 0x001c, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("dji-mini-3-pro-001c not in database") }
+    else { XCTFail("dji-mini-3-pro-001c expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamDJIMavic3Pro() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2ca3, pid: 0x0027, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("dji-mavic-3-pro-0027 not in database") }
+    else { XCTFail("dji-mavic-3-pro-0027 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamDJIAir3() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2ca3, pid: 0x0026, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("dji-air-3-0026 not in database") }
+    else { XCTFail("dji-air-3-0026 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -868,21 +868,21 @@ final class BDDRunner: XCTestCase {
   func testActionCamGarminVIRBUltra30() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x091e, pid: 0x2468, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("garmin-virb-ultra30-2468 not in database") }
+    else { XCTFail("garmin-virb-ultra30-2468 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamGarminVIRB360() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x091e, pid: 0x2469, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("garmin-virb-360-2469 not in database") }
+    else { XCTFail("garmin-virb-360-2469 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamGarminVIRBX() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x091e, pid: 0x2466, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("garmin-virb-x-2466 not in database") }
+    else { XCTFail("garmin-virb-x-2466 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -891,21 +891,21 @@ final class BDDRunner: XCTestCase {
   func testActionCamInsta360OneX2() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2e1a, pid: 0x000a, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("insta360-one-x2-000a not in database") }
+    else { XCTFail("insta360-one-x2-000a expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamInsta360X3() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2e1a, pid: 0x000c, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("insta360-x3-000c not in database") }
+    else { XCTFail("insta360-x3-000c expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamInsta360AcePro() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2e1a, pid: 0x000f, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("insta360-ace-pro-000f not in database") }
+    else { XCTFail("insta360-ace-pro-000f expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -914,35 +914,35 @@ final class BDDRunner: XCTestCase {
   func testActionCamSJCAMSJ10Pro() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1b3f, pid: 0x0201, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("sjcam-sj10-pro-0201 not in database") }
+    else { XCTFail("sjcam-sj10-pro-0201 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamSJCAMC300() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1b3f, pid: 0x0203, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("sjcam-c300-0203 not in database") }
+    else { XCTFail("sjcam-c300-0203 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamAkasoEK7000() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x3538, pid: 0x0001, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("akaso-ek7000-0001 not in database") }
+    else { XCTFail("akaso-ek7000-0001 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamAkasoBrave7() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x3538, pid: 0x0009, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("akaso-brave-7-0009 not in database") }
+    else { XCTFail("akaso-brave-7-0009 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testActionCamAkasoBrave8() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x3538, pid: 0x0007, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("akaso-brave-8-0007 not in database") }
+    else { XCTFail("akaso-brave-8-0007 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -951,21 +951,21 @@ final class BDDRunner: XCTestCase {
   func testAndroidTVNvidiaShieldTVPro() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0955, pid: 0xb42a, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("nvidia-shield-android-tv-pro-mtp-b42a not in database") }
+    else { XCTFail("nvidia-shield-android-tv-pro-mtp-b42a expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAndroidTVNvidiaShieldMTP() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0955, pid: 0xb401, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("nvidia-shield-mtp-b401 not in database") }
+    else { XCTFail("nvidia-shield-mtp-b401 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAndroidTVNvidiaShieldMTPADB() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0955, pid: 0xb400, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("nvidia-shield-mtpadb-b400 not in database") }
+    else { XCTFail("nvidia-shield-mtpadb-b400 expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -974,42 +974,42 @@ final class BDDRunner: XCTestCase {
   func testAndroidTVFireTVStick1Gen() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1949, pid: 0x02a1, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("amazon-fire-tv-stick-1gen-02a1 not in database") }
+    else { XCTFail("amazon-fire-tv-stick-1gen-02a1 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAndroidTVFireTVStick2Gen() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1949, pid: 0x0311, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("amazon-fire-tv-stick-2gen-0311 not in database") }
+    else { XCTFail("amazon-fire-tv-stick-2gen-0311 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAndroidTVFireTVStick4K() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1949, pid: 0x0441, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("amazon-fire-tv-stick-4k-0441 not in database") }
+    else { XCTFail("amazon-fire-tv-stick-4k-0441 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAndroidTVFireTVStick4KMax() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1949, pid: 0x0461, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("amazon-fire-tv-stick-4kmax-0461 not in database") }
+    else { XCTFail("amazon-fire-tv-stick-4kmax-0461 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAndroidTVFireTVCube2Gen() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1949, pid: 0x0381, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("amazon-fire-tv-cube-2gen-0381 not in database") }
+    else { XCTFail("amazon-fire-tv-cube-2gen-0381 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAndroidTVFireTVCube3Gen() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1949, pid: 0x0741, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("amazon-fire-tv-cube-3gen-0741 not in database") }
+    else { XCTFail("amazon-fire-tv-cube-3gen-0741 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -1018,14 +1018,14 @@ final class BDDRunner: XCTestCase {
   func testAndroidTVXiaomiMiBoxS() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2717, pid: 0x5001, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("xiaomi-mi-box-s-5001 not in database") }
+    else { XCTFail("xiaomi-mi-box-s-5001 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testAndroidTVXiaomiMiBox4() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2717, pid: 0x5002, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("xiaomi-mi-box-4-5002 not in database") }
+    else { XCTFail("xiaomi-mi-box-4-5002 expected in 20K quirks DB"); return }
     XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -1034,42 +1034,42 @@ final class BDDRunner: XCTestCase {
   func testWave29NokiaHMDPhone() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0421, pid: 0x06fc, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("nokia-lumia-rm975-06fc not in database") }
+    else { XCTFail("nokia-lumia-rm975-06fc expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave29FairphoneEthicalPhone() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2ae5, pid: 0x9039, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("fairphone-2-os-9039 not in database") }
+    else { XCTFail("fairphone-2-os-9039 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave30SanDiskPortableSSD() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0781, pid: 0x558c, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("sandisk-extreme-portable-ssd-558c not in database") }
+    else { XCTFail("sandisk-extreme-portable-ssd-558c expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave30TI84PlusCalculator() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0451, pid: 0xe008, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0x01, ifaceProtocol: 0x00)
-    else { throw XCTSkip("ti-84-plus-silver-calculator-e008 not in database") }
+    else { XCTFail("ti-84-plus-silver-calculator-e008 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave31CasioGraphingCalculator() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x07cf, pid: 0x6102, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0x00, ifaceProtocol: 0x00)
-    else { throw XCTSkip("casio-fx-cp400-calculator-6102 not in database") }
+    else { XCTFail("casio-fx-cp400-calculator-6102 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave31NothingPhone() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2a70, pid: 0xf01e, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("nothing-phone-1-f01e not in database") }
+    else { XCTFail("nothing-phone-1-f01e expected in 20K quirks DB"); return }
     XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
   }
 
@@ -1078,49 +1078,49 @@ final class BDDRunner: XCTestCase {
   func testWave33PalmPreVintageMediaPlayer() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0830, pid: 0x0101, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("palm-pre-0101 not in database") }
+    else { XCTFail("palm-pre-0101 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave34CanonPixmaPrinter() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x04a9, pid: 0x1754, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("canon-pixma-mg3620-1754 not in database") }
+    else { XCTFail("canon-pixma-mg3620-1754 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave35ParrotBebop2Drone() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x19cf, pid: 0x0903, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("parrot-bebop-2-0903 not in database") }
+    else { XCTFail("parrot-bebop-2-0903 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave38PioneerHeadUnit() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x08e4, pid: 0x0142, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("pioneer-dvr-lx60d-0142 not in database") }
+    else { XCTFail("pioneer-dvr-lx60d-0142 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave38GarminDriveSmartGPS() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x091e, pid: 0x4c50, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("garmin-drivesmart-66-4c50 not in database") }
+    else { XCTFail("garmin-drivesmart-66-4c50 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave39WahooElemntFitness() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x31e0, pid: 0x0001, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("wahoo-elemnt-roam-0001 not in database") }
+    else { XCTFail("wahoo-elemnt-roam-0001 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave40SupernoteA5X2EReader() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2207, pid: 0x0032, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
-    else { throw XCTSkip("supernote-a5x2-0032 not in database") }
+    else { XCTFail("supernote-a5x2-0032 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
@@ -1129,28 +1129,28 @@ final class BDDRunner: XCTestCase {
   func testWave54ZoomH6AudioRecorder() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x1686, pid: 0x0027, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("zoom-h6-0027 not in database") }
+    else { XCTFail("zoom-h6-0027 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave54TascamDR40X() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0644, pid: 0x0049, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("tascam-dr-40x-0049 not in database") }
+    else { XCTFail("tascam-dr-40x-0049 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave54RolandR07() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x0582, pid: 0x012f, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("roland-r-07-012f not in database") }
+    else { XCTFail("roland-r-07-012f expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
   func testWave54SoundDevicesMixPre3() throws {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2af0, pid: 0x0001, bcdDevice: nil, ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { throw XCTSkip("sound-devices-mixpre-3-ii-0001 not in database") }
+    else { XCTFail("sound-devices-mixpre-3-ii-0001 expected in 20K quirks DB"); return }
     XCTAssertNotNil(q)
   }
 
