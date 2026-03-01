@@ -26,7 +26,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Canon EOS 5d3 | 04a9:3234 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Canon EOS R5 | 04a9:32b4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Canon EOS R3 | 04a9:32b5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Nikon Z6 Z7 | 04b0:0441 | ⚪ proposed | disableWriteResume |
+| Nikon Z6 Z7 | 04b0:0441 | experimental | disableWriteResume |
 | Nikon Z6ii Z7ii | 04b0:0442 | ⚪ proposed | disableWriteResume |
 | Fujifilm X Series | 04cb:0104 | ⚪ proposed | disableWriteResume |
 | Oneplus 9 | 2a70:9011 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
@@ -147,7 +147,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Nikon Zfc | 04b0:044f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
 | Nikon Z30 | 04b0:0452 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
 | Nikon Zf | 04b0:0453 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Nikon Z6 Iii | 04b0:0454 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Z6 Iii | 04b0:0454 | experimental | supportsGetObjectPropList, disableWriteResume |
 | Canon EOS 450d | 04a9:3145 | ⚪ proposed | disableWriteResume |
 | Canon EOS 5d Mark Ii | 04a9:3199 | ⚪ proposed | disableWriteResume |
 | Canon EOS 7d | 04a9:319a | ⚪ proposed | disableWriteResume |
@@ -162,7 +162,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Canon EOS 7d Mark Ii | 04a9:326f | ⚪ proposed | disableWriteResume |
 | Canon EOS 700d | 04a9:3272 | ⚪ proposed | disableWriteResume |
 | Canon EOS 760d | 04a9:3280 | ⚪ proposed | disableWriteResume |
-| Canon EOS 5d Mark Iv | 04a9:3281 | ⚪ proposed | disableWriteResume |
+| Canon EOS 5d Mark Iv | 04a9:3281 | experimental | disableWriteResume |
 | Canon EOS 80d | 04a9:3294 | ⚪ proposed | disableWriteResume |
 | Canon EOS 750d | 04a9:32a1 | ⚪ proposed | disableWriteResume |
 | Canon EOS 800d | 04a9:32c9 | ⚪ proposed | disableWriteResume |
@@ -171,41 +171,41 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Canon EOS R | 04a9:32da | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
 | Canon EOS Rp | 04a9:32e2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
 | Canon EOS 250d | 04a9:32e9 | ⚪ proposed | disableWriteResume |
-| Canon EOS 90d | 04a9:32ea | ⚪ proposed | disableWriteResume |
+| Canon EOS 90d | 04a9:32ea | experimental | disableWriteResume |
 | Canon EOS 850d | 04a9:32f1 | ⚪ proposed | disableWriteResume |
-| Canon EOS R6 | 04a9:32f5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Canon EOS R7 | 04a9:32f7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Canon EOS R10 | 04a9:32f8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R6 | 04a9:32f5 | experimental | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R7 | 04a9:32f7 | experimental | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R10 | 04a9:32f8 | experimental | supportsGetObjectPropList, disableWriteResume |
 | Canon EOS M50 Ii | 04a9:32f9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
 | Canon EOS R6 Mark Ii | 04a9:330b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
-| Canon EOS R8 | 04a9:330c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R8 | 04a9:330c | experimental | supportsGetObjectPropList, disableWriteResume |
 | Sony Alpha A5100 | 054c:08e7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A6000 | 054c:08b7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A6100 | 054c:0d13 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A6300 | 054c:077a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A6500 | 054c:0784 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A6600 | 054c:0d0f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A6700 | 054c:0e78 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A6700 | 054c:0e78 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A7 | 054c:094c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A7ii | 054c:0a6a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A7iii | 054c:0c03 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7iv | 054c:0da6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A7iv | 054c:0da6 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A7r | 054c:094d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A7rii | 054c:09e7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A7riii | 054c:0c00 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Alpha A7rv | 054c:0e0c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Alpha A7rv | 054c:0e0c | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A7s | 054c:08e2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A7sii | 054c:0a71 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A7siii | 054c:0d17 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A9 | 054c:0c2a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Alpha A9iii | 054c:0e80 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Zv1 | 054c:0c1b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Sony Zv E10 | 054c:0de3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Sony Zv E10 | 054c:0de3 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Rx100m7 | 054c:0cae | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Rx10m4 | 054c:0c2f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Fx3 | 054c:0da3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Panasonic Lumix | 04da:2374 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
-| Panasonic Gh5 | 04da:2382 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Panasonic Gh5 | 04da:2382 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sigma Fp | 1003:c432 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Sigma Fp L | 1003:c442 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Leica M9 | 1a98:0002 | ⚪ proposed | disableWriteResume |
@@ -275,7 +275,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Motorola Moto X Xt1058 | 22b8:2e63 | ⚪ proposed | — |
 | Motorola Droid Turbo Vzw | 22b8:2ea8 | ⚪ proposed | — |
 | Nikon Z9 | 04b0:0450 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Nikon Z8 | 04b0:0451 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z8 | 04b0:0451 | experimental | supportsGetObjectPropList, preferGetObjectPropList |
 | Nikon Z50 V2 | 04b0:0455 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Canon Powershot G7x Mark Ii | 04a9:32bc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Canon Powershot Sx540hs | 04a9:32be | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
@@ -289,7 +289,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Canon Powershot Sx70hs | 04a9:32ee | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Canon EOS M200 | 04a9:32ef | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Canon Powershot G7x Mark Iii | 04a9:32f0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Canon EOS R5 | 04a9:32f4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R5 | 04a9:32f4 | experimental | supportsGetObjectPropList, preferGetObjectPropList |
 | Canon EOS R3 | 04a9:32fc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Canon EOS R5c | 04a9:3303 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Canon EOS R50 | 04a9:330d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
@@ -310,8 +310,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Fujifilm Xt4 | 04cb:02e6 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Fujifilm Xe4 | 04cb:02e8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Fujifilm Xs10 | 04cb:02ea | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xt5 | 04cb:02fc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm X100vi | 04cb:0305 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm Xt5 | 04cb:02fc | experimental | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X100vi | 04cb:0305 | experimental | supportsGetObjectPropList, preferGetObjectPropList |
 | Fujifilm Xm5 | 04cb:030c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Casio Exilim | 07cf:1042 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Casio Exilim | 07cf:1049 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
@@ -835,7 +835,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Fujifilm Gfx50r | 04cb:02dc | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Fujifilm Xpro3 | 04cb:02e4 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Fujifilm Gfx100s Alt | 04cb:02e9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Fujifilm Xh2s | 04cb:02f0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm Xh2s | 04cb:02f0 | experimental | supportsGetObjectPropList, preferGetObjectPropList |
 | Fujifilm Xh2 | 04cb:02f2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Fujifilm Gfx100ii | 04cb:02fe | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Fujifilm Xe5 | 04cb:0313 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
