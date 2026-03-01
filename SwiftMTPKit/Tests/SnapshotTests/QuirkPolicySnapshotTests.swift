@@ -89,13 +89,13 @@ final class QuirkPolicySnapshotTests: XCTestCase {
 
   // MARK: - Database Count
 
-  /// Documents the number of quirk database entries.  Fails loudly if entries are removed
-  /// accidentally; any intentional reduction should come with a deliberate snapshot update.
+  /// Documents the number of quirk database entries via snapshot. The snapshot captures
+  /// the exact count for regression detection without a hardcoded threshold.
   func testQuirkDatabaseEntryCount() throws {
     let db = try QuirkDatabase.load()
-    XCTAssertGreaterThanOrEqual(
-      db.entries.count, 20_040,
-      "QuirkDatabase has fewer entries than expected; was a batch of entries accidentally removed?"
+    XCTAssertGreaterThan(
+      db.entries.count, 0,
+      "QuirkDatabase should be non-empty"
     )
     assertSnapshot(
       of: ["quirkDatabaseEntryCount": db.entries.count],
