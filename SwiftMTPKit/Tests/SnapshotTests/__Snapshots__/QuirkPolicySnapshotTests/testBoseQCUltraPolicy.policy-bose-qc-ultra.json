@@ -1,0 +1,14 @@
+{
+  "flagsSource" : "quirk",
+  "ioTimeoutMs" : 15000,
+  "maxChunkBytes" : 524288,
+  "prefersPropListEnumeration" : true,
+  "quirkID" : "bose-qc-ultra-4008",
+  "requireStabilization" : false,
+  "requiresKernelDetach" : false,
+  "resetOnOpen" : false,
+  "skipPTPReset" : false,
+  "stabilizeMs" : 300,
+  "supportsGetObjectPropList" : false,
+  "supportsPartialRead64" : true
+}

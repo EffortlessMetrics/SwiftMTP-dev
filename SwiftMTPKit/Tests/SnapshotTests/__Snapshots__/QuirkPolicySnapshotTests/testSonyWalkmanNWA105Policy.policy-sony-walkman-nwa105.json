@@ -1,0 +1,13 @@
+{
+  "flagsSource" : "defaults",
+  "ioTimeoutMs" : 8000,
+  "maxChunkBytes" : 1048576,
+  "prefersPropListEnumeration" : true,
+  "requireStabilization" : false,
+  "requiresKernelDetach" : true,
+  "resetOnOpen" : false,
+  "skipPTPReset" : false,
+  "stabilizeMs" : 0,
+  "supportsGetObjectPropList" : false,
+  "supportsPartialRead64" : true
+}

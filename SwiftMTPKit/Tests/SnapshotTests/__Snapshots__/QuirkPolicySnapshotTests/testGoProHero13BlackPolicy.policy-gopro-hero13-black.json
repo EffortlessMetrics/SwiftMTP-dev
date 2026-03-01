@@ -1,0 +1,14 @@
+{
+  "flagsSource" : "quirk",
+  "ioTimeoutMs" : 10000,
+  "maxChunkBytes" : 1048576,
+  "prefersPropListEnumeration" : true,
+  "quirkID" : "gopro-hero13-black-005d",
+  "requireStabilization" : false,
+  "requiresKernelDetach" : false,
+  "resetOnOpen" : false,
+  "skipPTPReset" : false,
+  "stabilizeMs" : 200,
+  "supportsGetObjectPropList" : false,
+  "supportsPartialRead64" : true
+}
