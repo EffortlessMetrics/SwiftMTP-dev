@@ -74,7 +74,7 @@ SwiftMTP is built with modern Swift 6 concurrency patterns:
 ### Key Features
 
 - **Privacy-First Design**: Read-only collection mode with strict defaults
-- **Device Quirks System**: Learned profiles and static quirks for 15,500+ devices across 1,073 VIDs and 59 categories
+- **Device Quirks System**: Learned profiles and static quirks for 20,000+ devices across 1,157 VIDs and 62 categories
 - **Transfer Journaling**: Resumable operations with automatic recovery
 - **File Provider Integration**: Native Finder integration on macOS (XPC service)
 - **Benchmarking Suite**: Performance profiling with p50/p95 metrics

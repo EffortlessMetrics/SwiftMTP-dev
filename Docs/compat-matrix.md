@@ -19108,3 +19108,939 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Marshall Cv620 Ndi | 3359:0102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Marshall Cv612ht 4k | 3359:0103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Marshall Cv420 30x Ndi | 3359:0104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Pioneer Avh MTP | 08e4:776b | experimental | supportsGetPartialObject, disableWriteResume |
+| Pioneer Dmh MTP | 08e4:7179 | experimental | supportsGetPartialObject, disableWriteResume |
+| Pioneer Sph MTP | 08e4:4338 | experimental | supportsGetPartialObject, disableWriteResume |
+| Keysight Dsox MTP | 0957:a974 | experimental | supportsGetPartialObject, disableWriteResume |
+| Samsung Galaxy Tab S10 Ultra | 04e8:3dc5 | community | supportsGetObjectPropList, supportsGetPartialObject |
+| Samsung Galaxy Tab S10 Fe | 04e8:4af2 | community | supportsGetObjectPropList, supportsGetPartialObject |
+| Huawei Matepad 115 | 12d1:321c | community | supportsGetObjectPropList, supportsGetPartialObject |
+| Huawei Matepad Pro 133 | 12d1:d287 | community | supportsGetObjectPropList, supportsGetPartialObject |
+| Panasonic Lumix S1 | 04da:262a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix S1r | 04da:504b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix S1h | 04da:caa1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix S5 | 04da:7210 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix S5iix | 04da:97e3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix Gh5s | 04da:bf2e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix Gh5ii | 04da:c353 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix Gh6 | 04da:99e3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix G9 | 04da:26ff | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix G9ii | 04da:afb9 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix G100 | 04da:8d41 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix Gx9 | 04da:4310 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix Gx800 | 04da:7bf0 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix Lx100ii | 04da:c8e3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix Fz1000ii | 04da:acfb | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix Fz80 | 04da:a6a1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix Tz200 | 04da:4779 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix Tz95 | 04da:dae8 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Prusa Mk4s | 2c99:b3b1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Creality Ender 5 S1 | 1a86:2c80 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bambu Lab X1e | 2e3c:1667 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Lulzbot Taz Workhorse | 1d50:cdd6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Anycubic Kobra 3 | 27b1:5668 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nxp Mifare Prox | 1fc9:4eb1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Omnikey 5427 Ck | 076b:4924 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Scm Spr332 V2 | 04e6:33b8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Gemalto Idbridge Ct40 | 08e6:cc89 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Acs Acr1552u | 072f:2a3d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Osmo Action 5 | 2970:bd3c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insta360 Ace Pro 2 | 0502:cd9c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Akaso Brave 8 Lite | 04b4:f465 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sjcam Sj12 Pro | 0907:9b9d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Eken H9r Plus | 1bcf:2641 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Trimble Greenseeker Rt200 | 1546:a72a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Topcon Cropspec Ag | 067b:7c03 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Davis Instruments Enviromonitor | 10c4:1822 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Agleader Incommand 1200 | 0483:17a0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Raven Viper 4 Display | 1a79:27fc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Icom Ic 905 | 0c26:47f8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Yaesu Ftdx101mp | 091e:4b8f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Elecraft K4d | 16c0:915e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Flexradio Flex 6400m | 2341:aa1d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Kenwood Ts 990s USB | 1fc9:16cb | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Tobii Dynavox I 16 | 0553:9fad | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Humanware Brailliant Bi X | 0458:42e7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Microsoft Adaptive Hub 2 | 045e:c74d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Glassouse Pro V2 | 1532:b65e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Adaptive Gaming Kit | 046d:c38a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Focusrite Scarlett Solo 4th | 1235:9b81 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Motu M6 | 07fd:7b65 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| M Audio Air 192x14 | 0763:486e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Native Instruments Komplete A6 Mk3 | 17cc:82ff | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ssl Ssl2 Mk2 | 2573:a6da | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Tascam Portacapture X6 | 0644:5737 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Zoom H6essential | 1395:df36 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus Ls P5 Mk2 | 04fe:ee8a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Roland R 07 Mk2 | 0582:11a9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Pcm D100 Mk2 | 054c:d241 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Obdlink Mx V3 | 1cbe:de4a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Autel Maxisys Ms909 | 0403:38df | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Launch X431 V 6 | 0bda:c2b9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Snap On Zeus Plus | 067b:7c30 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bluedriver Pro Elite | 10c4:671a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Zebra Ds9908 Sr | 05e0:5722 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Honeywell Voyager 1472g2d | 0c2e:37cd | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Datalogic Gryphon Gd4590 | 1eab:471e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Socket Mobile S740 2d | 04b4:d374 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Cipherlab 2564 Mr | 0536:662b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Axon Body 4 | 1d6b:2a2a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Motorola V700 | 05a3:27be | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Reveal Media D5 | 0c45:7142 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Digital Ally Firstvu Hd2 | 1b3f:28c2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Getac Bc 04 Pro | 2833:6be6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackmagic Atem Mini Extreme Iso | 1edb:e8f5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Elgato Stream Deck Ultra | 0fd9:680d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Teradek Bolt 6 Lt | 07cd:aa8d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Newtek Spark Plus 4k | 09da:53b7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Aja Io X3 Plus | 5986:de9f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon EOS R1 V2 | 04a9:1b1f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Z6 Iii | 04b0:cacf | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony A7c Ii | 054c:859c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujifilm X T50 | 0a5c:9946 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Panasonic Lumix S5 Iix | 1004:2ff4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Carbide Motion Nomad 3 | 1a86:fc1b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Inventables X Carve Pro | 2341:70e7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Openbuilds Blackbox X32 V2 | 1d50:242c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Haas Ngc Cnc USB | 0403:9d52 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stepcraft D840 V2 | 10c4:5b0d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fiio M17 Mk2 | 2398:e453 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Astell And Kern Kann Max | 20b1:b0ee | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ibasso Dx320 Max | 262a:ae57 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hiby Rs8 | 0e21:f2ac | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Shanling M9 Plus | 2972:ec98 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Viofo A229 Pro Duo | 0bda:6c94 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Thinkware U3000 | 2c7c:a3cd | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Blackvue Dr970x 2ch | 04f2:4139 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Dash Cam 67w Mk2 | 1b71:c45e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nextbase 622gw Plus | 0c45:21ce | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Arduino Giga R1 Wifi | 2341:1bbb | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Espressif Esp32 S3 Devkitc | 303a:b948 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Raspberry Pi Pico 2 W | 2e8a:4a57 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nxp Mimxrt1170 Evk | 1fc9:d5e7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stm32 Nucleo H755zi Q | 0d28:5a15 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Brightsign Xc5 | 2109:246d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Samsung Magicinfo S9 | 054c:eaf6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Lg Webos Signage 40 | 04da:4b98 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Philips D Line 4k86 | 1a40:edd1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Scala Enterprise Player | 0451:29db | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Mavic 4 Pro | 2ca3:714f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Dji Air 3s | 2970:5729 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Autel Evo Max 4n | 18d1:8412 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Skydio X10d | 04b4:b2bc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Parrot Anafi Ai V2 | 0483:e588 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Amazon Kindle Scribe 2 | 1949:6d65 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Kobo Elipsa 2e V2 | 18d1:39a3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Boox Tab Ultra C Pro 2 | 2207:6ec4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Pocketbook Inkpad Color 4 | 0525:6af3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Remarkable Paper Pro 2 | 1d6b:45a2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ftdi Ft4233hp | 0403:bb90 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Segger J Link Ultra | 1366:5458 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stmicroelectronics St Link V3e | 0483:c3aa | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Luminary Micro Icdi V3 | 1cbe:ffc8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Microchip Mplab Pickit 5 | 03eb:befc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Poly Studio X72 | 0461:b5e5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Aten Cl5816n | 0557:2247 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Rally Bar Mini 2 | 046d:abf0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Displaylink Dl 7400 | 17e9:b28d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Crestron Mercury X | 04b4:3bcf | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Davis Vantage Vue Plus | 10c4:98bd | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Onset Hobo Mx2501 | 0403:caa8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Tinytag Ultra 2 USB | 16c0:4eab | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ecowitt Ws3900 Console | 1a86:39d4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Kestrel 5500 Fw Link | 067b:8656 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Forerunner 965 V2 | 091e:7123 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Wahoo Elemnt Ace | 0fcf:551b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Polar Vantage V3 | 10c4:fce6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Coros Vertix 2s | 1915:b3d7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Whoop 40 USB | 046d:c02b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Steam Deck Oled 2 | 28de:9e94 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Asus Rog Ally X | 0db0:4838 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Lenovo Legion Go S | 2dc8:bf42 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Msi Claw 8 Ai | 17ef:6304 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Razer Edge 2 | 045e:e7c5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Montana 800 | 091e:d4b0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Trimble Catalyst Da3 | 1546:d6a7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Tomtom Go Expert 8 | 04e8:1e51 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Gpsmap 67i V2 | 1199:4aa2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Magellan Explorist Trx8 | 067b:e261 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Phonak Lumity L90 Rt | 0a12:1837 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Oticon Real 1 Minirite | 0a5c:de17 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Resound Nexia 9 Mandrie | 0489:60c1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Widex Smartric 440 | 0cf3:76b2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Signia Pure Candg Ax | 13d3:548a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Flir Blackfly S Gige Gen2 | 2bdf:20f1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Basler Ace 2 Pro | 1e10:4602 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Allied Vision Alvium 1800 | 04b4:f9c3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ids Imaging Ueye Xcp | 0bd3:a132 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Teledyne Dalsa Nano C4900 | 1ab2:f059 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| National Instruments USB 6363 | 3923:c7c9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Keysight 34465a USB | 0957:608e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Tektronix Mso46b | 0699:466e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Rohde And Schwarz Rtb2004 | 164e:b7ca | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Thorlabs Pm5020 | 1313:8fcd | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Rak Wisgate Edge Pro 2 | 10c4:7548 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Heltec Wifi Lora 32 V3 | 1a86:f27a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Lilygo T Beam Supreme | 303a:fa1f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Arduino Mkr Wan 1310 V2 | 2341:b491 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Seeed Sensecap M4 Square | 2e8a:8577 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Echomap Ultra 2 126sv | 091e:3493 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Raymarine Axiom2 Pro 16 S | 0403:53cf | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Lowrance Hds Pro 16 | 10c4:33be | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Humminbird Solix 15 Mega | 067b:4f22 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Simrad Nsx 3012 | 1546:ceb7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Vhf 315i | 091e:9fb5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Icom Ic M510 Vhf | 0403:99fa | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Standard Horizon Gx6500 | 10c4:5343 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Raymarine Ray73 Vhf | 067b:cf3c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Cobra Mr F57b Eu | 1a86:a5a7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nvidia Shield Tv Pro 2 | 18d1:7dad | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Apple Tv 4k 2024 | 0b05:f5d7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Roku Ultra 2025 | 2207:a562 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Amazon Fire Tv Cube 3 | 1b20:763f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Google Chromecast Hd 2 | 2c7c:6cab | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Masimo Rad 97 Pulse Co Ox | 0403:4825 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Welch Allyn Connex Vsm | 067b:3369 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Omron Complete Hem 7530t | 1a86:9270 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Resmed Airsense 11 Autoset | 10c4:8e57 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Abbott Freestyle Libre 3 R | 04b8:2745 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Olympus Bx53m V2 | 04b5:d17a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Zeiss Axio Observer 7 | 0a49:1c0f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Leica Dm6 M Libs | 04c5:ec71 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Nikon Eclipse Ni U V2 | 1ab2:2c11 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Keyence Vhx 7200 | 168c:3720 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Quectel Rm520n Gl | 2c7c:b0a0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ubiquiti Dream Machine Se | 0bda:38f4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Mikrotik Hap Ax3 | 0b05:dac5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sierra Wireless Em9291 | 1199:be34 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fibocom Fm160 Na | 2cb7:7c12 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ingenico Lane 5000 V3 | 0b00:a8ae | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Verifone T650c | 1fc9:2043 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Pax A77 Plus | 0403:7280 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Castles Saturn S1f2 | 076b:71b1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bbpos Chipper 3x Bt | 04e6:a88c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Oneplus 13 5g | 22d9:87d2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Oneplus Nord Ce4 | 2a70:9774 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Htc U24 Pro | 0bb4:505c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Xiaomi 15 Ultra | 2717:9da0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Samsung Galaxy Z Fold 6 | 04e8:ec5c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Epson Tm T88vii Dt2 | 0dd4:12f0 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Star Micronics Mc Label3 | 0519:be27 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ncr Voyix 7616 Pos | 0404:c881 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bixolon Srp S3000 | 0d3d:2d53 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hp Engage One Pro Aio | 0acd:be84 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Eaton 5px G2 3000 Rt | 0463:f281 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Apc Smart Ups Srt 6000 | 051d:9976 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Cyberpower Pr3000elcdrt2u | 0764:d039 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Vertiv Liebert Gxt5 6000 | 06da:544e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Tripp Lite Su6000rt4utf | 09ae:d4c2 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Brother Mfc L3780cdw | 04f9:b416 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Imageclass Mf656cdw | 04a9:6715 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hp Laserjet Pro Mfp 4302fdw | 03f0:2c8e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Epson Ecotank Et 5850 V2 | 04b8:5b22 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Xerox Versalink C625 | 0924:7f4c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Epson Eb Pu2220b | 04b3:387d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Benq Tk860i | 413c:8427 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Lg Cinebeam Hu915qe | 04da:10d4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Vpl Xw7000es | 0408:c8db | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Optoma Uhz66lv | 1a2c:f037 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Rally Bar 2 Ptz | 046d:c83c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Samsung Spc 2012 | 04e8:536d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Srg A40n | 0408:9026 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Aver Vc520 Pro3 | 0fd9:d30f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ptzoptics Move Se | 2bd9:3dbc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Impinj Speedway R740 | 0c27:91f7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Zebra Fx9600 82325 | 1325:f9a1 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Thingmagic Sargas 2 | 0403:2b3d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hid Iclass Se Rk40 | 076b:eeda | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Feig Obid I Scan Hf | 04e6:b013 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Iridium Go Exec | 1199:5c66 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Inreach Messenger 2 | 1546:e777 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Thuraya X5 Touch V2 | 04da:b392 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Isatphone 21 | 05c6:91f6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Globalstar Sat Fi2 Pro | 2c7c:abe5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Epson Ds 790wn | 04b8:42eb | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hp Scanjet Enterprise 7500 V2 | 03f0:3720 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Canon Imageformula Dr S250n | 04a9:6fb8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fujitsu Scansnap Ix1700 | 04c5:d333 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Kodak S3120 Max | 0638:395b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Great Scott Gadgets Hackrf One H4 | 1d50:9a14 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Rtl Sdr Blog V4 | 0bda:d754 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Airspy Mini R2 | 16d0:fc24 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ettus Usrp B210 V2 | 2500:97c5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sdrplay Rspdx R2 | 1fc9:fb22 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Reolink Argus 4 Pro | 0bda:1025 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Arlo Ultra 2 Xl | 2c7c:a954 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ring Stick Up Cam Pro | 04f2:62fb | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Eufy Security S350 | 05a3:8d15 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Lorex 4k Spotlight Ai | 1b71:14fc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Aeotec Z Stick 7 Pro | 10c4:2ca3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sonoff Zigbee 30 USB P2 | 1a86:fdd9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Home Assistant Skyconnect V2 | 0451:6cec | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hubitat Elevation C 8 Pro | 2c7c:f0f3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Insteon Hub 2245 222 V3 | 0403:e4e8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Keysight N9952b Fieldfox | 0957:de88 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Rohde And Schwarz Fpc1500 | 0aad:5eb9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Tektronix Rsa306b V2 | 0699:4d4c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Rigol Dsa875 | 1ab1:1ed4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Anritsu Ms2090a | 164e:4da9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Samsung T9 Portable Ssd | 090c:f0c5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Seagate One Touch Ssd 2tb | 0bc2:a13e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sandisk Professional G Drive Armoratd | 0781:2429 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Wd My Passport Ssd 2024 | 1058:25ed | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Crucial X10 Pro 4tb | 2109:cb5e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Elgato Wave Xlr | 0fd9:8c69 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Avermedia Live Streamer Cam 515 | 46d4:e0e6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Razer Kiyo Ultra | 1532:21b7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Roland Vr 6hd | 17cc:d2b6 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Obsbot Tail Air | 09da:985f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Roland Fantom Ex | 0582:d40d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Korg Nautilus At | 0944:3031 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Arturia Minifreak V2 | 1c75:30de | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Yamaha Montage M8x | 07cf:b8e5 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sequential Prophet Rev2 Mk2 | 0a67:89ac | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Google Pixel Tablet 2 | 18d1:9cbf | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Xiaomi Pad 7 Pro | 2717:3a45 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Samsung Galaxy Tab S10 Fe | 04e8:53da | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Oneplus Pad 2 | 22d9:9715 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Lenovo Tab Extreme 2 | 2207:ef57 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Celestron Nexstar 8se V2 | 1856:ab49 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Meade Lx600 Acf 14 | 10c4:7c52 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sky Watcher Az Gti V2 Wifi | 0403:4638 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Zwo Am5n Harmonic Mount | 04b4:fdcd | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Ioptron Cem70g V2 | 1a86:9a0f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Flir E86 Advanced | 09cb:d159 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Flir A700 Est Advanced | 2bdf:cadc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Infiray Xinfrared T3 Pro | 1514:c09b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Seek Thermal Compactpro Ff | 298d:437e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hikvision Ds 2tp21b 6avf | 03f0:c683 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Reconyx Hyperfire 2 Hf2xc | 0547:5fcc | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Stealth Cam Gmax 36ng | 05e3:7624 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Bushnell Cellucore 30 Twin | 04fc:bbf3 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Browning Defender Pro Scout Max | 0930:b65e | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Moultrie Mobile Edge Pro | 0572:6f98 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Motorola Apx N70 | 0483:8027 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Kenwood Nx 5800 V2 | 10c4:f64d | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Hytera Hp785g | 152a:947f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Harris Xl 200p V2 | 15a2:8394 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Icom Ic Sat100m | 067b:2efa | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Quectel Eg912y Eu | 2c7c:4f76 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sierra Wireless Hl7812 | 1199:4985 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Qualcomm Snapdragon X75 | 05c6:2064 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Huawei Me919as 87a | 12d1:668c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Fibocom Fg370 Na | 2cb7:1562 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Meta Quest 3s | 2833:a69b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Htc Vive Focus Vision | 0bb4:9dcd | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Sony Playstation Vr2 Pc | 054c:4ae8 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Valve Index 2 | 28de:a6a4 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Samsung Galaxy Xr | 045e:4860 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Venu 4 | 091e:11d7 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Garmin Epix Pro Gen 2 | 0fcf:222c | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Polar Ignite 4 | 10c4:c535 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Coros Pace 4 | 1915:b18f | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Oura Ring 4 USB Dock | 046d:1f12 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Logitech Brio 505 | 046d:4a9b | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Microsoft Modern Webcam 2 | 045e:2141 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Razer Kiyo X2 | 0c45:f7c9 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Obsbot Meet 2 4k | 04f2:180a | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Anker Powerconf C200 V2 | 05a3:ec11 | ⚪ proposed | supportsGetObjectPropList, disableWriteResume |
+| Samsung Galaxy A16 5g | 04e8:f100 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy A16 4g | 04e8:f101 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy A06 | 04e8:f102 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy A26 5g | 04e8:f103 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy A36 5g | 04e8:f104 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy A56 5g | 04e8:f105 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy A55 5g | 04e8:f106 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy A35 5g | 04e8:f107 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy A25 5g | 04e8:f108 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy A15 5g | 04e8:f109 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy M55 5g | 04e8:f10a | ⚪ proposed | getPartialObject |
+| Samsung Galaxy M35 5g | 04e8:f10b | ⚪ proposed | getPartialObject |
+| Samsung Galaxy M16 5g | 04e8:f10c | ⚪ proposed | getPartialObject |
+| Samsung Galaxy M56 5g | 04e8:f10d | ⚪ proposed | getPartialObject |
+| Samsung Galaxy F56 5g | 04e8:f10e | ⚪ proposed | getPartialObject |
+| Samsung Galaxy F55 5g | 04e8:f10f | ⚪ proposed | getPartialObject |
+| Samsung Galaxy S25 | 04e8:f110 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy S25 Plus | 04e8:f111 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy S25 Ultra | 04e8:f112 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy S25 Edge | 04e8:f113 | ⚪ proposed | getPartialObject |
+| Xiaomi 15 Ultra | 2717:f100 | ⚪ proposed | getPartialObject |
+| Xiaomi 15 Pro | 2717:f101 | ⚪ proposed | getPartialObject |
+| Xiaomi 15 | 2717:f102 | ⚪ proposed | getPartialObject |
+| Xiaomi 14t Pro | 2717:f103 | ⚪ proposed | getPartialObject |
+| Xiaomi 14t | 2717:f104 | ⚪ proposed | getPartialObject |
+| Xiaomi 14 Civi | 2717:f105 | ⚪ proposed | getPartialObject |
+| Xiaomi Mix Fold 4 | 2717:f106 | ⚪ proposed | getPartialObject |
+| Xiaomi Mix Flip | 2717:f107 | ⚪ proposed | getPartialObject |
+| Redmi Note 14 Pro Plus | 2717:f108 | ⚪ proposed | getPartialObject |
+| Redmi Note 14 Pro | 2717:f109 | ⚪ proposed | getPartialObject |
+| Redmi Note 14 5g | 2717:f10a | ⚪ proposed | getPartialObject |
+| Redmi Note 14 4g | 2717:f10b | ⚪ proposed | getPartialObject |
+| Redmi 14c | 2717:f10c | ⚪ proposed | getPartialObject |
+| Redmi A4 5g | 2717:f10d | ⚪ proposed | getPartialObject |
+| Redmi Turbo 4 | 2717:f10e | ⚪ proposed | getPartialObject |
+| Redmi Turbo 3 | 2717:f10f | ⚪ proposed | getPartialObject |
+| Poco X7 Pro | 2717:f110 | ⚪ proposed | getPartialObject |
+| Poco X7 | 2717:f111 | ⚪ proposed | getPartialObject |
+| Poco F7 Ultra | 2717:f112 | ⚪ proposed | getPartialObject |
+| Poco F7 Pro | 2717:f113 | ⚪ proposed | getPartialObject |
+| Poco F7 | 2717:f114 | ⚪ proposed | getPartialObject |
+| Poco M7 Pro | 2717:f115 | ⚪ proposed | getPartialObject |
+| Poco M7 | 2717:f116 | ⚪ proposed | getPartialObject |
+| Poco C75 | 2717:f117 | ⚪ proposed | getPartialObject |
+| Poco C65 | 2717:f118 | ⚪ proposed | getPartialObject |
+| Oppo Find X8 Pro | 22d9:f100 | ⚪ proposed | getPartialObject |
+| Oppo Find X8 | 22d9:f101 | ⚪ proposed | getPartialObject |
+| Oppo Find X8s Pro | 22d9:f102 | ⚪ proposed | getPartialObject |
+| Oppo Find N5 | 22d9:f103 | ⚪ proposed | getPartialObject |
+| Oppo Reno13 Pro 5g | 22d9:f104 | ⚪ proposed | getPartialObject |
+| Oppo Reno13 5g | 22d9:f105 | ⚪ proposed | getPartialObject |
+| Oppo Reno12 Pro 5g | 22d9:f106 | ⚪ proposed | getPartialObject |
+| Oppo Reno12 5g | 22d9:f107 | ⚪ proposed | getPartialObject |
+| Oppo Reno12f 5g | 22d9:f108 | ⚪ proposed | getPartialObject |
+| Oppo A5 Pro | 22d9:f109 | ⚪ proposed | getPartialObject |
+| Oppo A3 Pro 5g | 22d9:f10a | ⚪ proposed | getPartialObject |
+| Oppo A3x 5g | 22d9:f10b | ⚪ proposed | getPartialObject |
+| Oppo A3 5g | 22d9:f10c | ⚪ proposed | getPartialObject |
+| Oppo A80 5g | 22d9:f10d | ⚪ proposed | getPartialObject |
+| Oppo K12 | 22d9:f10e | ⚪ proposed | getPartialObject |
+| Vivo X200 Pro Mini | 2d95:f100 | ⚪ proposed | getPartialObject |
+| Vivo X200 Ultra | 2d95:f101 | ⚪ proposed | getPartialObject |
+| Vivo X200 Pro | 2d95:f102 | ⚪ proposed | getPartialObject |
+| Vivo X200 | 2d95:f103 | ⚪ proposed | getPartialObject |
+| Vivo X Fold 4 | 2d95:f104 | ⚪ proposed | getPartialObject |
+| Vivo V40 Pro | 2d95:f105 | ⚪ proposed | getPartialObject |
+| Vivo V40 | 2d95:f106 | ⚪ proposed | getPartialObject |
+| Vivo V40e | 2d95:f107 | ⚪ proposed | getPartialObject |
+| Vivo Y300 Pro | 2d95:f108 | ⚪ proposed | getPartialObject |
+| Vivo Y300 5g | 2d95:f109 | ⚪ proposed | getPartialObject |
+| Vivo Y200 Pro | 2d95:f10a | ⚪ proposed | getPartialObject |
+| Vivo Y28 5g | 2d95:f10b | ⚪ proposed | getPartialObject |
+| Vivo T3 Ultra | 2d95:f10c | ⚪ proposed | getPartialObject |
+| Vivo T3 Pro | 2d95:f10d | ⚪ proposed | getPartialObject |
+| Vivo T3x | 2d95:f10e | ⚪ proposed | getPartialObject |
+| Realme Gt7 Pro | 2ae5:f100 | ⚪ proposed | getPartialObject |
+| Realme Gt7 | 2ae5:f101 | ⚪ proposed | getPartialObject |
+| Realme Gt6 | 2ae5:f102 | ⚪ proposed | getPartialObject |
+| Realme Gt6t | 2ae5:f103 | ⚪ proposed | getPartialObject |
+| Realme Gt Neo7 | 2ae5:f104 | ⚪ proposed | getPartialObject |
+| Realme 14 Pro Plus | 2ae5:f105 | ⚪ proposed | getPartialObject |
+| Realme 14 Pro | 2ae5:f106 | ⚪ proposed | getPartialObject |
+| Realme 14x 5g | 2ae5:f107 | ⚪ proposed | getPartialObject |
+| Realme 13 Pro Plus | 2ae5:f108 | ⚪ proposed | getPartialObject |
+| Realme 13 Pro | 2ae5:f109 | ⚪ proposed | getPartialObject |
+| Realme C75 | 2ae5:f10a | ⚪ proposed | getPartialObject |
+| Realme Narzo 70 Pro | 2ae5:f10b | ⚪ proposed | getPartialObject |
+| Realme Narzo 70x 5g | 2ae5:f10c | ⚪ proposed | getPartialObject |
+| Realme P2 Pro | 2ae5:f10d | ⚪ proposed | getPartialObject |
+| Realme P1 5g | 2ae5:f10e | ⚪ proposed | getPartialObject |
+| Nothing Phone 3a | 2a70:f100 | ⚪ proposed | getPartialObject |
+| Nothing Phone 3a Plus | 2a70:f101 | ⚪ proposed | getPartialObject |
+| Nothing Phone 2a Plus | 2a70:f102 | ⚪ proposed | getPartialObject |
+| Nothing Phone 2a | 2a70:f103 | ⚪ proposed | getPartialObject |
+| Nothing Cmf Phone 2 Pro | 2a70:f104 | ⚪ proposed | getPartialObject |
+| Nothing Cmf Phone 2 | 2a70:f105 | ⚪ proposed | getPartialObject |
+| Google Pixel 9 Pro Fold | 18d1:f100 | ⚪ proposed | getPartialObject |
+| Google Pixel 9 Pro Xl | 18d1:f101 | ⚪ proposed | getPartialObject |
+| Google Pixel 9 Pro | 18d1:f102 | ⚪ proposed | getPartialObject |
+| Google Pixel 9 | 18d1:f103 | ⚪ proposed | getPartialObject |
+| Google Pixel 9a | 18d1:f104 | ⚪ proposed | getPartialObject |
+| Google Pixel 8a | 18d1:f105 | ⚪ proposed | getPartialObject |
+| Motorola Edge 50 Ultra | 22b8:f100 | ⚪ proposed | getPartialObject |
+| Motorola Edge 50 Pro | 22b8:f101 | ⚪ proposed | getPartialObject |
+| Motorola Edge 50 Fusion | 22b8:f102 | ⚪ proposed | getPartialObject |
+| Motorola Edge 50 Neo | 22b8:f103 | ⚪ proposed | getPartialObject |
+| Motorola Edge 2024 | 22b8:f104 | ⚪ proposed | getPartialObject |
+| Motorola Razr Plus 2025 | 22b8:f105 | ⚪ proposed | getPartialObject |
+| Motorola Razr 2025 | 22b8:f106 | ⚪ proposed | getPartialObject |
+| Motorola Razr Plus 2024 | 22b8:f107 | ⚪ proposed | getPartialObject |
+| Motorola Moto G Power 2025 | 22b8:f108 | ⚪ proposed | getPartialObject |
+| Motorola Moto G 5g 2025 | 22b8:f109 | ⚪ proposed | getPartialObject |
+| Motorola Moto G75 5g | 22b8:f10a | ⚪ proposed | getPartialObject |
+| Motorola Moto G55 5g | 22b8:f10b | ⚪ proposed | getPartialObject |
+| Motorola Moto G45 5g | 22b8:f10c | ⚪ proposed | getPartialObject |
+| Motorola Moto G35 5g | 22b8:f10d | ⚪ proposed | getPartialObject |
+| Motorola Moto G15 | 22b8:f10e | ⚪ proposed | getPartialObject |
+| Motorola Moto G05 | 22b8:f10f | ⚪ proposed | getPartialObject |
+| Oneplus 13 | 2a70:f106 | ⚪ proposed | getPartialObject |
+| Oneplus 13r | 2a70:f107 | ⚪ proposed | getPartialObject |
+| Oneplus 13t | 2a70:f108 | ⚪ proposed | getPartialObject |
+| Oneplus Open 2 | 2a70:f109 | ⚪ proposed | getPartialObject |
+| Oneplus Nord 4 | 2a70:f10a | ⚪ proposed | getPartialObject |
+| Oneplus Nord Ce 4 | 2a70:f10b | ⚪ proposed | getPartialObject |
+| Oneplus Nord Ce 4 Lite | 2a70:f10c | ⚪ proposed | getPartialObject |
+| Oneplus Ace 5 Pro | 2a70:f10d | ⚪ proposed | getPartialObject |
+| Oneplus Ace 5 | 2a70:f10e | ⚪ proposed | getPartialObject |
+| Honor Magic7 Pro | 349e:f100 | ⚪ proposed | getPartialObject |
+| Honor Magic7 | 349e:f101 | ⚪ proposed | getPartialObject |
+| Honor Magic7 Lite | 349e:f102 | ⚪ proposed | getPartialObject |
+| Honor Magic V4 | 349e:f103 | ⚪ proposed | getPartialObject |
+| Honor Magic V Flip | 349e:f104 | ⚪ proposed | getPartialObject |
+| Honor 200 Pro | 349e:f105 | ⚪ proposed | getPartialObject |
+| Honor 200 | 349e:f106 | ⚪ proposed | getPartialObject |
+| Honor 200 Lite | 349e:f107 | ⚪ proposed | getPartialObject |
+| Honor X9c | 349e:f108 | ⚪ proposed | getPartialObject |
+| Honor X8c | 349e:f109 | ⚪ proposed | getPartialObject |
+| Honor X7c | 349e:f10a | ⚪ proposed | getPartialObject |
+| Honor X6c | 349e:f10b | ⚪ proposed | getPartialObject |
+| Nokia G520 5g | 0421:f100 | ⚪ proposed | getPartialObject |
+| Nokia G310 5g | 0421:f101 | ⚪ proposed | getPartialObject |
+| Nokia G42 5g | 0421:f102 | ⚪ proposed | getPartialObject |
+| Nokia X50 5g | 0421:f103 | ⚪ proposed | getPartialObject |
+| Hmd Skyline | 0421:f104 | ⚪ proposed | getPartialObject |
+| Hmd Pulse Pro | 0421:f105 | ⚪ proposed | getPartialObject |
+| Hmd Pulse Plus | 0421:f106 | ⚪ proposed | getPartialObject |
+| Hmd Fusion | 0421:f107 | ⚪ proposed | getPartialObject |
+| Hmd Crest | 0421:f108 | ⚪ proposed | getPartialObject |
+| Hmd Crest Max | 0421:f109 | ⚪ proposed | getPartialObject |
+| Fairphone 5 | 2ae5:f10f | ⚪ proposed | getPartialObject |
+| Fairphone 5 Plus | 2ae5:f110 | ⚪ proposed | getPartialObject |
+| Zte Nubia Z70 Ultra | 19d2:f100 | ⚪ proposed | getPartialObject |
+| Zte Nubia Z60s Pro | 19d2:f10f | ⚪ proposed | getPartialObject |
+| Zte Nubia Flip 2 | 19d2:f110 | ⚪ proposed | getPartialObject |
+| Zte Nubia V60 Design | 19d2:f111 | ⚪ proposed | getPartialObject |
+| Zte Blade V70 | 19d2:f112 | ⚪ proposed | getPartialObject |
+| Zte Blade A55 Plus | 19d2:f113 | ⚪ proposed | getPartialObject |
+| Zte Nubia Music 2 | 19d2:f114 | ⚪ proposed | getPartialObject |
+| Zte Nubia Neo 2 5g | 19d2:f115 | ⚪ proposed | getPartialObject |
+| Redmagic 10 Pro | 19d2:f116 | ⚪ proposed | getPartialObject |
+| Redmagic 10 Air | 19d2:f117 | ⚪ proposed | getPartialObject |
+| Asus Rog Phone 9 Pro | 0b05:f100 | ⚪ proposed | getPartialObject |
+| Asus Rog Phone 9 | 0b05:f101 | ⚪ proposed | getPartialObject |
+| Asus Rog Phone 8 Pro | 0b05:f102 | ⚪ proposed | getPartialObject |
+| Asus Rog Phone 8 | 0b05:f103 | ⚪ proposed | getPartialObject |
+| Asus Zenfone 12 Ultra | 0b05:f104 | ⚪ proposed | getPartialObject |
+| Asus Zenfone 11 Ultra | 0b05:f105 | ⚪ proposed | getPartialObject |
+| Sony Xperia 1 Vii | 054c:f100 | ⚪ proposed | getPartialObject |
+| Sony Xperia 1 Vi | 054c:f101 | ⚪ proposed | getPartialObject |
+| Sony Xperia 10 Vi | 054c:f102 | ⚪ proposed | getPartialObject |
+| Sony Xperia 5 Vi | 054c:f103 | ⚪ proposed | getPartialObject |
+| Tecno Phantom V2 Fold | 2e04:f100 | ⚪ proposed | getPartialObject |
+| Tecno Phantom X2 Pro | 2e04:f101 | ⚪ proposed | getPartialObject |
+| Tecno Camon 40 Pro | 2e04:f102 | ⚪ proposed | getPartialObject |
+| Tecno Camon 40 Premier | 2e04:f103 | ⚪ proposed | getPartialObject |
+| Tecno Spark 30 Pro | 2e04:f104 | ⚪ proposed | getPartialObject |
+| Tecno Spark 30c | 2e04:f105 | ⚪ proposed | getPartialObject |
+| Tecno Pova 7 Pro | 2e04:f106 | ⚪ proposed | getPartialObject |
+| Tecno Pova 7 | 2e04:f107 | ⚪ proposed | getPartialObject |
+| Infinix Zero 40 5g | 2e04:f108 | ⚪ proposed | getPartialObject |
+| Infinix Note 40 Pro Plus | 2e04:f109 | ⚪ proposed | getPartialObject |
+| Infinix Hot 50 Pro Plus | 2e04:f10a | ⚪ proposed | getPartialObject |
+| Infinix Hot 50i | 2e04:f10b | ⚪ proposed | getPartialObject |
+| Infinix Gt 20 Pro | 2e04:f10c | ⚪ proposed | getPartialObject |
+| Infinix Smart 9 | 2e04:f10d | ⚪ proposed | getPartialObject |
+| Infinix Note 50 Pro | 2e04:f10e | ⚪ proposed | getPartialObject |
+| Infinix Zero 50 5g | 2e04:f10f | ⚪ proposed | getPartialObject |
+| Iqoo 13 | 2d95:f10f | ⚪ proposed | getPartialObject |
+| Iqoo Neo 10 Pro | 2d95:f110 | ⚪ proposed | getPartialObject |
+| Iqoo Neo 10 | 2d95:f111 | ⚪ proposed | getPartialObject |
+| Iqoo Z9s Pro | 2d95:f112 | ⚪ proposed | getPartialObject |
+| Iqoo Z9x | 2d95:f113 | ⚪ proposed | getPartialObject |
+| Iqoo Neo 10r | 2d95:f114 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy S24 Fe | 04e8:f114 | ⚪ proposed | getPartialObject |
+| Itel S25 Ultra | 2e04:f110 | ⚪ proposed | getPartialObject |
+| Honor Magic V3 | 349e:f10c | ⚪ proposed | getPartialObject |
+| Realme Gt Neo7 Se | 2ae5:f111 | ⚪ proposed | getPartialObject |
+| Vivo X Flip 2 | 2d95:f115 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy M15 5g | 04e8:f115 | ⚪ proposed | getPartialObject |
+| Samsung Galaxy A05 | 04e8:f116 | ⚪ proposed | getPartialObject |
+| Canon EOS R1 | 04a9:f100 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R5 Ii | 04a9:f101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R6 Iii | 04a9:f102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R7 Ii | 04a9:f103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R8 | 04a9:f104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R50 | 04a9:f105 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R100 | 04a9:f106 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R10 Ii | 04a9:f107 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R5c | 04a9:f108 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R3 Ii | 04a9:f109 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R6 Ii | 04a9:f10a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R7 | 04a9:f10b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R10 | 04a9:f10c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R | 04a9:f10d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS Rp | 04a9:f10e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS R200 | 04a9:f10f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS C80 | 04a9:f110 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS C400 | 04a9:f111 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon EOS C400 Ii | 04a9:f112 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon Powershot V10 | 04a9:f113 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Canon Powershot V1 | 04a9:f114 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A9 Iii | 054c:f104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A7r V | 054c:f105 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A7 Iv | 054c:f106 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A7c Ii | 054c:f107 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A7cr | 054c:f108 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A6700 | 054c:f109 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A6400 Ii | 054c:f10a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A1 Ii | 054c:f10b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony Zv E10 Ii | 054c:f10c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony Zv E1 | 054c:f10d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony Fx3 Ii | 054c:f10e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony Fx6 | 054c:f10f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony Fx30 | 054c:f110 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A7s Iv | 054c:f111 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A7 V | 054c:f112 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A5 | 054c:f113 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A6100 Ii | 054c:f114 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony A7c Iii | 054c:f115 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony Burano | 054c:f116 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony Fr7 Ii | 054c:f117 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony Zv 1 Ii | 054c:f118 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony Zv 1f | 054c:f119 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sony Rx100 Viii | 054c:f11a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z9 Ii | 04b0:f100 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z8 | 04b0:f101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z6 Iii | 04b0:f102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z5 Ii | 04b0:f103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z7 Iii | 04b0:f104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Zf | 04b0:f105 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Zfc Ii | 04b0:f106 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z50 Ii | 04b0:f107 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z30 | 04b0:f108 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z30 Ii | 04b0:f109 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z70 | 04b0:f10a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Nikon Z Cine | 04b0:f10b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X T6 | 04cb:f100 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X T50 | 04cb:f101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X H2s Ii | 04cb:f102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X H2 Ii | 04cb:f103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X S20 | 04cb:f104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X S10 Ii | 04cb:f105 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X Pro4 | 04cb:f106 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X E5 | 04cb:f107 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X M5 | 04cb:f108 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X100vi | 04cb:f109 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X100v | 04cb:f10a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm Gfx100s Ii | 04cb:f10b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm Gfx100 Ii | 04cb:f10c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm Gfx50s Ii | 04cb:f10d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Fujifilm X T5 | 04cb:f10e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix S1h Ii | 04da:f100 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix S5 Iix | 04da:f101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix S5 Ii | 04da:f102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix S9 | 04da:f103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix G9 Ii | 04da:f104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix Gh7 | 04da:f105 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Panasonic Lumix G100d | 04da:f106 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Om System Om 1 Ii | 07b4:f100 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Om System Om 5 Ii | 07b4:f101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Om System Pen E P8 | 07b4:f102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Om System Tough Tg 7 | 07b4:f103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Leica Sl3 | 1a98:f100 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Leica Sl3 S | 1a98:f101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Leica Q3 | 1a98:f102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Leica Q3 43 | 1a98:f103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Leica M11 P | 1a98:f104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Leica M11 D | 1a98:f105 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Leica Cl2 | 1a98:f106 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sigma Fp L Ii | 1003:f100 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Sigma Fp Ii | 1003:f101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Hasselblad X2d 100c Ii | 04c5:f100 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Hasselblad 907x 100c | 04c5:f101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Hasselblad Cfv 100c Ii | 04c5:f102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Pentax K 3 Iii Mono | 05ca:f100 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Pentax 17 | 05ca:f101 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Ricoh Gr Iiix | 05ca:f102 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Ricoh Gr Iv | 05ca:f103 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Pentax K 1 Iii | 05ca:f104 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Pentax Kr Mirrorless | 05ca:f105 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Roku Ultra 2024 V2 USB | c501:0001 | community | — |
+| Roku Streambar Pro V2 USB | c501:0002 | experimental | — |
+| Roku Express 4k | c501:0003 | experimental | — |
+| Roku Streaming Stick 4k Max | c501:0004 | experimental | — |
+| Roku Plus Series USB | c501:0005 | community | — |
+| Roku Premiere 2024 USB | c501:0006 | community | — |
+| Roku Le Hd 2024 USB | c501:0007 | community | — |
+| Apple Tv 4k 3rd Gen USB | c501:0008 | community | — |
+| Apple Tv 4k Wifi USB | c501:0009 | community | — |
+| Apple Tv Hd 2021 USB | c501:000a | community | — |
+| Nvidia Shield Tv Pro 2024 V2 | c501:000b | experimental | — |
+| Nvidia Shield Tv Tube | c501:000c | experimental | — |
+| Chromecast 4k 2024 USB | c501:000d | community | — |
+| Chromecast Hd 2024 USB | c501:000e | experimental | — |
+| Xiaomi Tv Stick 4k 2nd | c501:000f | experimental | — |
+| Xiaomi Tv Box S 4k | c501:0010 | community | — |
+| Amazon Fire Tv Stick 4k Max 3 | c501:0011 | experimental | — |
+| Amazon Fire Tv Cube 3rd Gen | c501:0012 | experimental | — |
+| Mecool Km2 Plus Atv | c501:0013 | community | — |
+| Mecool Km7 Plus V2 Atv | c501:0014 | community | — |
+| Tivo Stream 4k 2024 USB | c501:0015 | community | — |
+| Onn 4k Streaming Box USB | c501:0016 | community | — |
+| Onn Fhd Streaming Stick USB | c501:0017 | experimental | — |
+| Dynalink Atv Box USB | c501:0018 | community | — |
+| Formuler Z11 Pro Atv | c501:0019 | experimental | — |
+| Ematic Jetstream 4k USB | c501:001a | community | — |
+| Homatics Box R 4k V2 Plus | c501:001b | community | — |
+| Realme 4k Tv Stick USB | c501:001c | experimental | — |
+| Nokia Streaming Box | c501:001d | experimental | — |
+| Hako Pro Atv Box USB | c501:001e | experimental | — |
+| Arduino Uno R4 Wifi USB | c502:0001 | community | — |
+| Arduino Uno R4 Minima USB | c502:0002 | experimental | — |
+| Arduino Mega 2560 Rev3 USB | c502:0003 | experimental | — |
+| Arduino Nano Every USB | c502:0004 | experimental | — |
+| Arduino Nano Esp32 USB | c502:0005 | experimental | — |
+| Arduino Nano 33 Ble Sense R2 | c502:0006 | community | — |
+| Arduino Nano Rp2040 Connect | c502:0007 | community | — |
+| Arduino Mkr Wifi 1010 USB | c502:0008 | experimental | — |
+| Arduino Portenta H7 USB | c502:0009 | experimental | — |
+| Arduino Giga R1 Wifi USB | c502:000a | experimental | — |
+| Esp32 S3 Devkitc 1 USB | c502:000b | experimental | — |
+| Esp32 S3 Mini 1 USB | c502:000c | experimental | — |
+| Esp32 C3 Devkitm 1 USB | c502:000d | community | — |
+| Esp32 C6 Devkitc 1 USB | c502:000e | experimental | — |
+| Esp32 H2 Devkitm 1 USB | c502:000f | experimental | — |
+| Esp32 S2 Saola 1 USB | c502:0010 | community | — |
+| Esp32 Wroom 32e Devkit | c502:0011 | experimental | — |
+| Esp32 Wrover Devkit V4 | c502:0012 | experimental | — |
+| Lilygo T Display S3 USB | c502:0013 | community | — |
+| Seeed Xiao Esp32s3 USB | c502:0014 | experimental | — |
+| Rpi Pico W USB | c502:0015 | community | — |
+| Rpi Pico 2 USB | c502:0016 | experimental | — |
+| Rpi Pico 2 W USB | c502:0017 | experimental | — |
+| Rpi Pico Debug Probe USB | c502:0018 | community | — |
+| Adafruit Feather Rp2040 USB | c502:0019 | experimental | — |
+| Adafruit Qt Py Esp32s3 USB | c502:001a | experimental | — |
+| Sparkfun Thing Plus Esp32s3 | c502:001b | experimental | — |
+| Teensy 4 1 USB | c502:001c | experimental | — |
+| Wemos D1 Mini Esp32s3 | c502:001d | experimental | — |
+| Pimoroni Pico Plus 2 USB | c502:001e | experimental | — |
+| Sabrent Ec Snve Ssd Encl | c503:0001 | experimental | — |
+| Orico M2pv C3 Nvme Encl | c503:0002 | experimental | — |
+| Ugreen Cm642 Nvme Encl | c503:0003 | community | — |
+| Inateck Fe2025 Ssd Encl | c503:0004 | experimental | — |
+| Asus Tuf Gaming A1 Encl | c503:0005 | experimental | — |
+| Plugable Usbc Nvme Tool Free | c503:0006 | community | — |
+| Acasis Nvme Dual Bay Clone | c503:0007 | community | — |
+| Synology Ds224plus Nas USB | c503:0008 | community | — |
+| Qnap Ts 264 Nas USB | c503:0009 | experimental | — |
+| Asustor Drivestor 4 Pro USB | c503:000a | community | — |
+| Terramaster F4 424 Pro USB | c503:000b | experimental | — |
+| Wd My Cloud Ex2 Ultra USB | c503:000c | experimental | — |
+| Sabrent Ds Uc4b USB Dock | c503:000d | community | — |
+| Caldigit Ts4 Thunderbolt Dock | c503:000e | experimental | — |
+| Owc Thunderbolt 4 Dock USB | c503:000f | experimental | — |
+| Startech M2e1bmu31c Encl | c503:0010 | experimental | — |
+| Kingston Xs2000 Portable Ssd | c503:0011 | experimental | — |
+| Samsung T9 Portable Ssd USB | c503:0012 | experimental | — |
+| Wd Black P40 Game Drive USB | c503:0013 | community | — |
+| Seagate One Touch Ssd | c503:0014 | experimental | — |
+| Crucial X10 Pro Portable Ssd | c503:0015 | community | — |
+| Anker 7in1 Usbc Hub Storage | c503:0016 | community | — |
+| Baseus Spacemate USB Dock | c503:0017 | community | — |
+| Unitek S1206a Dual Ssd Dock | c503:0018 | community | — |
+| Maiwo K3527a USB Ssd Caddy | c503:0019 | experimental | — |
+| Rigol Ds1054z Scope USB | c504:0001 | experimental | — |
+| Rigol Mso5074 Scope USB | c504:0002 | community | — |
+| Siglent Sds1104x E Scope | c504:0003 | community | — |
+| Siglent Sds2104x Plus Scope | c504:0004 | community | — |
+| Keysight Dsox1204g Scope | c504:0005 | community | — |
+| Keysight Edux1052a Scope | c504:0006 | community | — |
+| Tektronix Tbs1052c Scope | c504:0007 | community | — |
+| Tektronix Mso2024b Scope | c504:0008 | community | — |
+| Fnirsi 1014d Scope USB | c504:0009 | community | — |
+| Hantek 6254bc Scope USB | c504:000a | community | — |
+| Owon Hds242s Scope USB | c504:000b | experimental | — |
+| Digilent Analog Discovery 3 | c504:000c | community | — |
+| Saleae Logic Pro 16 USB | c504:000d | experimental | — |
+| Rigol Dp832 Bench Supply USB | c504:000e | experimental | — |
+| Siglent Spd3303x E Supply | c504:000f | experimental | — |
+| Keysight E36312a Supply USB | c504:0010 | community | — |
+| Korad Ka3005p Supply USB | c504:0011 | community | — |
+| Riden Rd6018 Supply USB | c504:0012 | community | — |
+| Fnirsi Dps150 Supply USB | c504:0013 | community | — |
+| Gwinstek Gpp 3323 Supply | c504:0014 | community | — |
+| Bk Precision 9130b Supply | c504:0015 | experimental | — |
+| Keithley 2400 Smu USB | c504:0016 | experimental | — |
+| Rigol Dg1022z Funcgen USB | c504:0017 | community | — |
+| Siglent Sdg2042x Funcgen | c504:0018 | community | — |
+| Fluke 8845a Dmm USB | c504:0019 | community | — |
+| Obdlink Mx Plus Obd2 USB | c505:0001 | community | — |
+| Obdlink Ex Ford Obd2 USB | c505:0002 | experimental | — |
+| Obdlink Cx Bimmercode USB | c505:0003 | community | — |
+| Veepeak Obdcheck Ble Plus | c505:0004 | experimental | — |
+| Carista Obd2 Adapter USB | c505:0005 | experimental | — |
+| Autel Maxicom Mk808bt USB | c505:0006 | community | — |
+| Launch Crp129x Obd2 USB | c505:0007 | community | — |
+| Foxwell Nt710 Obd2 USB | c505:0008 | community | — |
+| Innova 5610 Obd2 Scanner | c505:0009 | community | — |
+| Bluedriver Pro Obd2 USB | c505:000a | experimental | — |
+| Topdon Artilink 600 Obd2 | c505:000b | experimental | — |
+| Ancel Fx6000 Obd2 USB | c505:000c | experimental | — |
+| Chargepoint Home Flex V2 USB | c505:000d | experimental | — |
+| Juicebox 48a Evse USB | c505:000e | experimental | — |
+| Wallbox Pulsar Plus V2 USB | c505:000f | experimental | — |
+| Grizzl E Classic Evse USB | c505:0010 | experimental | — |
+| Emporia Ev Charger V2 USB | c505:0011 | community | — |
+| Lectron V Box 48a Evse | c505:0012 | community | — |
+| Tesla Wall Connector USB | c505:0013 | community | — |
+| Clipper Creek Hcs 60 USB | c505:0014 | community | — |
+| Autel Maxicharger Ac USB | c505:0015 | community | — |
+| Nacs Ccs Adapter USB Diag | c505:0016 | community | — |
+| Elm327 V2 1 Obd2 USB | c505:0017 | community | — |
+| Vgate Icar Pro Obd2 USB | c505:0018 | experimental | — |
+| Autophix Om129 Obd2 USB | c505:0019 | experimental | — |
+| Irobot Roomba J9 Plus USB | c506:0001 | community | — |
+| Irobot Roomba Combo J9 USB | c506:0002 | experimental | — |
+| Roborock S8 Maxv Ultra USB | c506:0003 | community | — |
+| Roborock Q Revo Maxv USB | c506:0004 | community | — |
+| Ecovacs Deebot X2 Omni USB | c506:0005 | community | — |
+| Ecovacs Deebot T30s USB | c506:0006 | community | — |
+| Dreame X40 Ultra USB | c506:0007 | community | — |
+| Dreame L20 Ultra USB | c506:0008 | experimental | — |
+| Narwal Freo X Ultra USB | c506:0009 | experimental | — |
+| Eufy X10 Pro Omni USB | c506:000a | experimental | — |
+| Switchbot S10 Vacuum USB | c506:000b | community | — |
+| Yeedi M12 Pro Vacuum USB | c506:000c | experimental | — |
+| Samsung Bespoke Jet Ai USB | c506:000d | experimental | — |
+| Amazon Echo Show 15 USB | c506:000e | community | — |
+| Amazon Echo Show 10 3g USB | c506:000f | experimental | — |
+| Google Nest Hub Max 2 USB | c506:0010 | experimental | — |
+| Google Nest Hub 2nd Gen USB | c506:0011 | experimental | — |
+| Meta Portal Plus 2 USB | c506:0012 | experimental | — |
+| Lenovo Smart Clock 2 USB | c506:0013 | experimental | — |
+| Echo Dot 5th Clock USB | c506:0014 | community | — |
+| Apple Homepod Mini 2 USB | c506:0015 | experimental | — |
+| Sonos Era 300 USB | c506:0016 | experimental | — |
+| Home Assistant Green USB | c506:0017 | experimental | — |
+| Aeotec Smart Home Hub USB | c506:0018 | community | — |
+| Ring Alarm Pro Base USB | c506:0019 | community | — |
+| Fitbit Charge 6 USB | c507:0001 | experimental | — |
+| Fitbit Sense 2 USB | c507:0002 | experimental | — |
+| Fitbit Versa 4 USB | c507:0003 | experimental | — |
+| Fitbit Inspire 3 USB | c507:0004 | experimental | — |
+| Garmin Venu 3s USB | c507:0005 | community | — |
+| Garmin Forerunner 965 USB | c507:0006 | experimental | — |
+| Garmin Fenix 8 USB | c507:0007 | community | — |
+| Garmin Instinct 3 Solar USB | c507:0008 | experimental | — |
+| Garmin Epix Pro Gen2 USB | c507:0009 | community | — |
+| Samsung Galaxy Watch 7 USB | c507:000a | community | — |
+| Samsung Galaxy Watch Ultra MTP | c507:000b | community | — |
+| Samsung Galaxy Fit 3 USB | c507:000c | community | — |
+| Apple Watch Ultra 2 MTP | c507:000d | community | — |
+| Apple Watch Se 3rd Gen USB | c507:000e | community | — |
+| Xiaomi Band 9 USB | c507:000f | experimental | — |
+| Xiaomi Watch S4 USB | c507:0010 | community | — |
+| Amazfit T Rex 3 USB | c507:0011 | experimental | — |
+| Amazfit Balance USB | c507:0012 | community | — |
+| Huawei Watch Gt 5 Pro USB | c507:0013 | experimental | — |
+| Huawei Band 9 USB | c507:0014 | community | — |
+| Polar Vantage V3 USB | c507:0015 | experimental | — |
+| Polar Ignite 3 USB | c507:0016 | community | — |
+| Coros Pace 3 USB | c507:0017 | community | — |
+| Coros Vertix 2s USB | c507:0018 | experimental | — |
+| Whoop 5 0 Charger USB | c507:0019 | community | — |
+| Schiit Modi 3e Dac USB | c508:0001 | community | — |
+| Schiit Modius E Dac USB | c508:0002 | community | — |
+| Schiit Bifrost 2 64 Dac | c508:0003 | experimental | — |
+| Topping D10s Dac USB | c508:0004 | community | — |
+| Topping Dx5 Dac Amp USB | c508:0005 | experimental | — |
+| Topping E70 Velvet Dac | c508:0006 | community | — |
+| Fiio K9 Pro Ess Dac USB | c508:0007 | community | — |
+| Fiio Ka17 Portable Dac USB | c508:0008 | experimental | — |
+| Ifi Zen Dac V2 USB | c508:0009 | community | — |
+| Ifi Neo Idsd 2 Dac USB | c508:000a | community | — |
+| Chord Mojo 2 Dac USB | c508:000b | community | — |
+| Khadas Tone 2 Pro Dac USB | c508:000c | experimental | — |
+| Focusrite Scarlett 4i4 4g | c508:000d | community | — |
+| Ssl 2 Plus Audio Interface | c508:000e | community | — |
+| Audient Id14 Mkii USB | c508:000f | experimental | — |
+| Motu M4 Audio Interface | c508:0010 | experimental | — |
+| Universal Audio Volt 476 USB | c508:0011 | experimental | — |
+| Presonus Studio 24c USB | c508:0012 | community | — |
+| Yamaha Ag06mk2 Mixer USB | c508:0013 | experimental | — |
+| Rode Rodecaster Duo USB | c508:0014 | community | — |
+| Zoom Livetrak L8 Mixer USB | c508:0015 | community | — |
+| Tascam Model 12 Mixer USB | c508:0016 | community | — |
+| Mackie Onyx8 Mixer USB | c508:0017 | community | — |
+| Allen Heath Qu 16 Mixer USB | c508:0018 | community | — |
+| Behringer Xenyx Q1202 USB | c508:0019 | community | — |
+| Anbernic Rg556 USB | c509:0001 | experimental | — |
+| Anbernic Rg405m USB | c509:0002 | experimental | — |
+| Anbernic Rg35xx Plus USB | c509:0003 | community | — |
+| Anbernic Rg Cube USB | c509:0004 | community | — |
+| Anbernic Rg505 USB | c509:0005 | community | — |
+| Retroid Pocket 4 Pro USB | c509:0006 | community | — |
+| Retroid Pocket Mini USB | c509:0007 | experimental | — |
+| Retroid Pocket Flip USB | c509:0008 | community | — |
+| Ayn Odin 2 Max USB | c509:0009 | experimental | — |
+| Ayn Odin 2 Mini USB | c509:000a | community | — |
+| Ayaneo Pocket S USB | c509:000b | experimental | — |
+| Ayaneo Pocket Evo USB | c509:000c | experimental | — |
+| Miyoo Mini Plus V4 USB | c509:000d | community | — |
+| Miyoo A30 USB | c509:000e | community | — |
+| Powkiddy Rgb30 USB | c509:000f | experimental | — |
+| Powkiddy X55 USB | c509:0010 | community | — |
+| Powkiddy Rgb20sx USB | c509:0011 | community | — |
+| Trimui Smart Pro USB | c509:0012 | community | — |
+| Trimui Brick USB | c509:0013 | community | — |
+| Rg Nano Plus USB | c509:0014 | experimental | — |
+| Gpd Xp Plus USB | c509:0015 | experimental | — |
+| Steam Deck Oled USB | c509:0016 | experimental | — |
+| Asus Rog Ally X USB | c509:0017 | experimental | — |
+| Lenovo Legion Go S USB | c509:0018 | experimental | — |
+| Msi Claw 8 Ai Plus USB | c509:0019 | community | — |
+| Garmin Gpsmap 67i USB | c50a:0001 | experimental | — |
+| Garmin Gpsmap 67 USB | c50a:0002 | experimental | — |
+| Garmin Montana 800 USB | c50a:0003 | community | — |
+| Garmin Etrex Se USB | c50a:0004 | community | — |
+| Garmin Oregon 700 USB | c50a:0005 | experimental | — |
+| Garmin Inreach Messenger USB | c50a:0006 | experimental | — |
+| Garmin Edge 1050 USB | c50a:0007 | experimental | — |
+| Garmin Zumo Xt2 Moto USB | c50a:0008 | experimental | — |
+| Garmin Overlander 2 USB | c50a:0009 | experimental | — |
+| Garmin Tread Sx USB | c50a:000a | community | — |
+| Garmin Drivesmart 76 USB | c50a:000b | experimental | — |
+| Garmin Rv 895 USB | c50a:000c | community | — |
+| Garmin Gpsmap 1243xsv USB | c50a:000d | experimental | — |
+| Garmin Gpsmap 1043xsv USB | c50a:000e | community | — |
+| Garmin Echomap Ultra 2 106sv | c50a:000f | experimental | — |
+| Garmin Echomap Uhd2 93sv MTP | c50a:0010 | community | — |
+| Garmin Striker Vivid 9sv MTP | c50a:0011 | community | — |
+| Lowrance Hds Live 12 MTP | c50a:0012 | community | — |
+| Lowrance Elite Fs 9 MTP | c50a:0013 | experimental | — |
+| Humminbird Helix 12 Mega USB | c50a:0014 | experimental | — |
+| Humminbird Solix 15 Chirp MTP | c50a:0015 | community | — |
+| Simrad Nss16 Evo3s MTP | c50a:0016 | community | — |
+| Raymarine Axiom2 12 USB | c50a:0017 | community | — |
+| Furuno Gp1971f Marine USB | c50a:0018 | experimental | — |
+| Navionics Platinum Plus USB | c50a:0019 | experimental | — |
+| Kindle Paperwhite 12th USB | c50b:0001 | community | — |
+| Kindle Paperwhite Sig | c50b:0002 | community | — |
+| Kindle Scribe 2024 USB | c50b:0003 | experimental | — |
+| Kindle Colorsoft USB | c50b:0004 | experimental | — |
+| Kindle 11th Gen 2022 USB | c50b:0005 | community | — |
+| Kindle Oasis 3 USB | c50b:0006 | experimental | — |
+| Kindle Kids 2024 USB | c50b:0007 | community | — |
+| Kobo Libra Colour MTP | c50b:0008 | experimental | — |
+| Kobo Clara Colour MTP | c50b:0009 | experimental | — |
+| Kobo Clara Bw 2024 USB | c50b:000a | experimental | — |
+| Kobo Sage 2 USB | c50b:000b | experimental | — |
+| Kobo Elipsa 2e MTP | c50b:000c | community | — |
+| Kobo Nia 2 USB | c50b:000d | experimental | — |
+| Boox Note Air 4c USB | c50b:000e | community | — |
+| Boox Page 2 USB | c50b:000f | experimental | — |
+| Boox Poke 5 USB | c50b:0010 | community | — |
+| Boox Tab Ultra C Pro USB | c50b:0011 | experimental | — |
+| Pocketbook Era Color USB | c50b:0012 | experimental | — |
+| Pocketbook Inkpad 4 MTP | c50b:0013 | community | — |
+| Remarkable 2 Type Folio USB | c50b:0014 | experimental | — |
+| Fiio M23 Dap USB | c50c:0001 | experimental | — |
+| Fiio M15s Dap USB | c50c:0002 | experimental | — |
+| Fiio M11s Dap USB | c50c:0003 | community | — |
+| Fiio M7 Dap USB | c50c:0004 | community | — |
+| Fiio Cp13 Cassette Dap | c50c:0005 | community | — |
+| Shanling M9 Plus Dap USB | c50c:0006 | experimental | — |
+| Shanling M7 Dap USB | c50c:0007 | experimental | — |
+| Shanling M3 Ultra Dap USB | c50c:0008 | experimental | — |
+| Shanling M0 Pro Dap USB | c50c:0009 | experimental | — |
+| Ibasso Dx320max Ti Dap | c50c:000a | experimental | — |
+| Ibasso Dx240 Dap USB | c50c:000b | experimental | — |
+| Ibasso Dx170 Dap USB | c50c:000c | community | — |
+| Ibasso Dc Elite Dongle Dap | c50c:000d | community | — |
+| Hiby R8 Ii Dap USB | c50c:000e | experimental | — |
+| Hiby R6 Iii Dap USB | c50c:000f | community | — |
+| Hiby R4 Dap USB | c50c:0010 | experimental | — |
+| Cayin N8ii Dap USB | c50c:0011 | community | — |
+| Cayin N7 Dap USB | c50c:0012 | community | — |
+| Astell Kern Sp3000t Dap | c50c:0013 | community | — |
+| Astell Kern Ka5 Dongle Dap | c50c:0014 | experimental | — |
