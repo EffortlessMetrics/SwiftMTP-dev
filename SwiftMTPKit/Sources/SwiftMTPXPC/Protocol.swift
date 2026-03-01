@@ -60,7 +60,7 @@ public final class ReadResponse: NSObject, NSSecureCoding, Sendable {
     coder.encode(success, forKey: "success")
     coder.encode(errorMessage, forKey: "errorMessage")
     coder.encode(tempFileURL, forKey: "tempFileURL")
-    if let fileSize = fileSize { coder.encode(Int64(fileSize), forKey: "fileSize") }
+    if let fileSize = fileSize { coder.encode(Int64(bitPattern: fileSize), forKey: "fileSize") }
   }
 
   public init?(coder: NSCoder) {
@@ -68,7 +68,7 @@ public final class ReadResponse: NSObject, NSSecureCoding, Sendable {
     self.errorMessage = coder.decodeObject(of: NSString.self, forKey: "errorMessage") as String?
     self.tempFileURL = coder.decodeObject(of: NSURL.self, forKey: "tempFileURL") as URL?
     if coder.containsValue(forKey: "fileSize") {
-      self.fileSize = UInt64(coder.decodeInt64(forKey: "fileSize"))
+      self.fileSize = UInt64(bitPattern: coder.decodeInt64(forKey: "fileSize"))
     } else {
       self.fileSize = nil
     }
@@ -93,21 +93,21 @@ public final class StorageInfo: NSObject, NSSecureCoding, Sendable {
   }
 
   public func encode(with coder: NSCoder) {
-    coder.encode(Int64(storageId), forKey: "storageId")
+    coder.encode(Int64(bitPattern: UInt64(storageId)), forKey: "storageId")
     coder.encode(storageDescription, forKey: "storageDescription")
-    coder.encode(Int64(capacityBytes), forKey: "capacityBytes")
-    coder.encode(Int64(freeBytes), forKey: "freeBytes")
+    coder.encode(Int64(bitPattern: capacityBytes), forKey: "capacityBytes")
+    coder.encode(Int64(bitPattern: freeBytes), forKey: "freeBytes")
   }
 
   public init?(coder: NSCoder) {
-    self.storageId = UInt32(coder.decodeInt64(forKey: "storageId"))
+    self.storageId = UInt32(UInt64(bitPattern: coder.decodeInt64(forKey: "storageId")))
     guard
       let description = coder.decodeObject(of: NSString.self, forKey: "storageDescription")
         as String?
     else { return nil }
     self.storageDescription = description
-    self.capacityBytes = UInt64(coder.decodeInt64(forKey: "capacityBytes"))
-    self.freeBytes = UInt64(coder.decodeInt64(forKey: "freeBytes"))
+    self.capacityBytes = UInt64(bitPattern: coder.decodeInt64(forKey: "capacityBytes"))
+    self.freeBytes = UInt64(bitPattern: coder.decodeInt64(forKey: "freeBytes"))
   }
 }
 
@@ -179,7 +179,7 @@ public final class ObjectInfo: NSObject, NSSecureCoding, Sendable {
   public func encode(with coder: NSCoder) {
     coder.encode(Int64(handle), forKey: "handle")
     coder.encode(name, forKey: "name")
-    if let sizeBytes = sizeBytes { coder.encode(Int64(sizeBytes), forKey: "sizeBytes") }
+    if let sizeBytes = sizeBytes { coder.encode(Int64(bitPattern: sizeBytes), forKey: "sizeBytes") }
     coder.encode(isDirectory, forKey: "isDirectory")
     coder.encode(modifiedDate, forKey: "modifiedDate")
   }
@@ -191,7 +191,7 @@ public final class ObjectInfo: NSObject, NSSecureCoding, Sendable {
     }
     self.name = name
     if coder.containsValue(forKey: "sizeBytes") {
-      self.sizeBytes = UInt64(coder.decodeInt64(forKey: "sizeBytes"))
+      self.sizeBytes = UInt64(bitPattern: coder.decodeInt64(forKey: "sizeBytes"))
     } else {
       self.sizeBytes = nil
     }
@@ -325,7 +325,7 @@ public final class WriteRequest: NSObject, NSSecureCoding, Sendable {
     coder.encode(Int64(storageId), forKey: "storageId")
     if let ph = parentHandle { coder.encode(Int64(ph), forKey: "parentHandle") }
     coder.encode(name, forKey: "name")
-    coder.encode(Int64(size), forKey: "size")
+    coder.encode(Int64(bitPattern: size), forKey: "size")
     coder.encode(bookmark, forKey: "bookmark")
   }
 
@@ -339,7 +339,7 @@ public final class WriteRequest: NSObject, NSSecureCoding, Sendable {
       coder.containsValue(forKey: "parentHandle")
       ? UInt32(coder.decodeInt64(forKey: "parentHandle")) : nil
     self.name = name
-    self.size = UInt64(coder.decodeInt64(forKey: "size"))
+    self.size = UInt64(bitPattern: coder.decodeInt64(forKey: "size"))
     self.bookmark = coder.decodeObject(of: NSData.self, forKey: "bookmark") as Data?
   }
 }
