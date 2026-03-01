@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 SwiftMTP is a macOS/iOS library and tool for interacting with MTP (Media Transfer Protocol) devices over USB. The project uses modern Swift 6 with strict concurrency and actor-based architecture.
 
+**Maturity note**: Real-device testing is in early stages. Most test coverage uses `VirtualMTPDevice` (in-memory mock). The quirks database (~20,000 entries) is largely research-based, sourced from libmtp data and vendor specs — only a handful of devices have been tested with SwiftMTP directly. Only the Xiaomi Mi Note 2 (ff10) has completed real file transfers.
+
 ## Development Commands
 
 ### Building
@@ -160,16 +162,16 @@ SwiftMTPKit/
 
 Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json`.
 
-### Supported Devices
+### Tested Devices
 | Device | VID:PID | Status | Quirk ID |
 |--------|---------|--------|----------|
-| Xiaomi Mi Note 2 | 2717:ff10 | Stable | xiaomi-mi-note-2-ff10 |
-| Xiaomi Mi Note 2 (alt) | 2717:ff40 | Stable | xiaomi-mi-note-2-ff40 |
-| Samsung Galaxy S7 (SM-G930W8) | 04e8:6860 | Experimental | samsung-android-6860 |
-| OnePlus 3T | 2a70:f003 | Stable | oneplus-3t-f003 |
-| Google Pixel 7 | 18d1:4ee1 | Blocked | google-pixel-7-4ee1 |
-| Canon EOS Rebel / R-class | 04a9:3139 | Experimental | canon-eos-rebel-3139 |
-| Nikon DSLR / Z-series | 04b0:0410 | Experimental | nikon-dslr-0410 |
+| Xiaomi Mi Note 2 | 2717:ff10 | Partial — only device with real transfer data | xiaomi-mi-note-2-ff10 |
+| Xiaomi Mi Note 2 (alt) | 2717:ff40 | Partial — recent lab run returned 0 storages | xiaomi-mi-note-2-ff40 |
+| Samsung Galaxy S7 (SM-G930W8) | 04e8:6860 | Not Working — handshake fails after USB claim | samsung-android-6860 |
+| OnePlus 3T | 2a70:f003 | Partial — probe/read works, writes fail (0x201D) | oneplus-3t-f003 |
+| Google Pixel 7 | 18d1:4ee1 | Blocked — bulk transfer timeout, macOS kernel issue | google-pixel-7-4ee1 |
+| Canon EOS Rebel / R-class | 04a9:3139 | Research Only — never connected to SwiftMTP | canon-eos-rebel-3139 |
+| Nikon DSLR / Z-series | 04b0:0410 | Research Only — never connected to SwiftMTP | nikon-dslr-0410 |
 
 ## Performance Considerations
 - Chunk sizes auto-tune from 512KB to 8MB based on device performance
