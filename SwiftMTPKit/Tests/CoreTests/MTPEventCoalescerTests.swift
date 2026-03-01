@@ -22,8 +22,8 @@ final class MTPEventCoalescerTests: XCTestCase {
   func testThirdEventAfterWindowExpiryIsForwarded() async throws {
     let coalescer = MTPEventCoalescer(window: 0.05)
     XCTAssertTrue(coalescer.shouldForward())
-    // Wait for the window to expire.
-    try await Task.sleep(nanoseconds: 60_000_000)  // 60 ms > 50 ms window
+    // Wait well beyond the window to avoid flakiness under CPU load.
+    try await Task.sleep(nanoseconds: 150_000_000)  // 150 ms >> 50 ms window
     XCTAssertTrue(coalescer.shouldForward(), "Event after window expiry must be forwarded")
   }
 
@@ -31,8 +31,8 @@ final class MTPEventCoalescerTests: XCTestCase {
     // Use a very short window so the sleep comfortably clears it.
     let coalescer = MTPEventCoalescer(window: 0.01)
     XCTAssertTrue(coalescer.shouldForward())
-    // Sleep slightly beyond the window boundary.
-    try await Task.sleep(nanoseconds: 15_000_000)  // 15 ms > 10 ms window
+    // Sleep well beyond the window boundary to avoid flakiness under CPU load.
+    try await Task.sleep(nanoseconds: 50_000_000)  // 50 ms >> 10 ms window
     XCTAssertTrue(coalescer.shouldForward(), "Event at/after window boundary must be forwarded")
   }
 }

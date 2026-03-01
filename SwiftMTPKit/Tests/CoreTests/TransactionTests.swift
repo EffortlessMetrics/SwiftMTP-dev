@@ -88,7 +88,7 @@ struct TransactionTests {
     }
 
     // Let t1 start and acquire the lock before t2 is launched.
-    try await Task.sleep(nanoseconds: 5_000_000)
+    try await Task.sleep(nanoseconds: 50_000_000)  // 50 ms (generous for CI load)
 
     // Task 2: should queue behind t1 and record "2" only after t1 finishes.
     let t2 = Task<Void, Error> {

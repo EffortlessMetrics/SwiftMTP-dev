@@ -537,28 +537,29 @@ final class DeviceServiceCoverageTests: XCTestCase {
 
   /// Concurrent attach events are processed in parallel.
   /// Two devices are injected simultaneously via syncConnectedDeviceSnapshot.
-  /// Each onAttach sleeps 50 ms. If serial: ~100 ms total. If parallel: ~50 ms total.
+  /// Uses XCTestExpectation to wait for completion instead of fixed sleeps.
   func testConcurrentAttachEventsProcessedInParallel() async throws {
     // Don't use mock transport — it would inject an extra auto-attach event.
     // startDiscovery() still initializes the attach/detach stream continuations.
     let manager = MTPDeviceManager()
     let registry = DeviceServiceRegistry()
     let attachedIDs = ActorBox<String>()
-    let delay: UInt64 = 50_000_000  // 50 ms
+
+    let expectA = XCTestExpectation(description: "Device A attached")
+    let expectB = XCTestExpectation(description: "Device B attached")
 
     await registry.startMonitoring(
       manager: manager,
       onAttach: { summary, _ in
-        try? await Task.sleep(nanoseconds: delay)
         await attachedIDs.append(summary.id.raw)
+        if summary.id.raw == "par-A" { expectA.fulfill() }
+        if summary.id.raw == "par-B" { expectB.fulfill() }
       },
       onDetach: { _, _ in }
     )
 
     // Prime the discovery streams without starting real USB discovery
     try await manager.startDiscovery()
-
-    let start = Date()
 
     // Inject two devices in one snapshot → both attach events fired immediately
     let idA = MTPDeviceID(raw: "par-A")
@@ -571,18 +572,15 @@ final class DeviceServiceCoverageTests: XCTestCase {
       vendorID: 0xAAAA, productID: 0x0002, bus: 1, address: 2)
     await manager.syncConnectedDeviceSnapshot([summaryA, summaryB])
 
-    // Wait enough for both handlers to complete (even under heavy load)
-    try await Task.sleep(nanoseconds: delay * 20)
+    // Wait up to 10 seconds for both attach handlers (generous for CI load)
+    await fulfillment(of: [expectA, expectB], timeout: 10.0)
 
     await registry.stopMonitoring()
     await manager.stopDiscovery()
 
     let ids = await attachedIDs.values
-    // Under extreme CPU load, handlers may not complete in time — accept partial
-    XCTAssertGreaterThanOrEqual(ids.count, 0, "Attach handlers should complete eventually")
-    if ids.count == 2 {
-      XCTAssertTrue(ids.contains("par-A") && ids.contains("par-B"))
-    }
+    XCTAssertEqual(ids.count, 2, "Both attach handlers should have completed")
+    XCTAssertTrue(ids.contains("par-A") && ids.contains("par-B"))
   }
 }
 
