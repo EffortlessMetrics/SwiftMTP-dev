@@ -270,6 +270,7 @@ let package = Package(
         "SwiftMTPTransportLibUSB",
         "SwiftMTPIndex",
         "SwiftMTPSync",
+        "SwiftMTPQuirks",
         "SwiftMTPTestKit",
       ]),
     .testTarget(
