@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### RC Validation Cycle (PRs #220–#248)
+
+> **Summary**: Comprehensive RC hardening — tests nearly doubled from ~1,900 to 3,793+, a real XPC bug was found and fixed, CI is fully operational across all surfaces, and zero test failures remain.
+
+#### Key Stats
+- **20,009 device quirks** across 62 categories
+- **3,793+ tests** across 15+ test targets (up from ~1,900)
+- **0 test failures**
+- **Real bug found & fixed**: XPC `UInt64` overflow in file-size encoding (PR #231)
+- **CI fully configured**: Smoke, Documentation, TSAN, Fuzz, Build-test, Compat matrix
+
+#### Test Expansion (PRs #223–#228, #236–#242, #245–#246)
+- **BDD scenarios**: 117 previously-skipped scenarios unskipped and passing (PR #223)
+- **PropertyTests**: New property tests for sync/index/codec modules (PR #224)
+- **SyncTests**: 22 → 111 tests — mirror, diff, conflict resolution (PR #225)
+- **ToolingTests**: 80+ CLI and tooling tests added (PR #226)
+- **XPCTests**: 20 → 91 tests — protocol round-trip, overflow, edge cases (PR #227)
+- **TestKitTests**: 14 → 79 tests — VirtualMTPDevice, FaultInjectingLink (PR #228)
+- **RecoveryPathTests**: 30 new recovery/retry path tests (PR #236)
+- **IntegrationTests**: Cross-module integration expansion (PR #238)
+- **StoreTests**: 42 new persistence/journal tests (PR #240)
+- **FileProviderTests**: 47 new File Provider extension tests (PR #241)
+- **ScenarioTests**: 14 new end-to-end scenario tests (PR #242)
+- **TransportTests**: 123 new transport edge-case tests (PR #245)
+- **Property test skips**: 9 skipped property tests resolved (PR #246)
+
+#### Bug Fixes & Stability (PRs #230–#234, #239, #243, #248)
+- **XPC UInt64 overflow**: Real bug — file sizes > 4 GB were silently truncated in XPC encoding; fixed with proper `UInt64` round-trip (PR #231)
+- **Swift 6 concurrency**: Strict sendability and actor isolation fixes across modules (PRs #230, #239)
+- **SyncTests macOS**: Platform-specific test fixes for macOS runner compatibility (PR #232)
+- **Quirks.json integrity**: Deduplication, schema cleanup, field normalization (PRs #233, #235)
+- **BDD fixes**: Gherkin scenario corrections and step definition alignment (PR #234)
+- **5 test failures**: Resolved failures from Wave 5 expansion (PR #243)
+- **Flaky tests**: Timing-sensitive test stabilization and quirk DB load fallback (PR #248)
+
+#### CI & Infrastructure (PRs #220–#222, #229, #237, #244)
+- **CI runner fix**: Migrated to `macos-15` runner for stability (PR #220)
+- **Documentation CI**: RC documentation workflow fix (PRs #221, #222)
+- **Snapshot baselines**: Updated for current quirks DB state (PR #229)
+- **Fuzz corpus**: Expanded fuzz corpus with regression test cases (PR #237)
+- **TSAN CI**: Robust Thread Sanitizer runtime detection and SIP-safe configuration (PR #244)
+
+---
+
 ### Added
 - **🎉 20,040-Entry Milestone**: Device quirks database reaches 20,040 entries across 1,157 VIDs and 62 categories — massive 20K milestone
 - Milestone BDD tests: `testDatabaseHas19000PlusEntries`, `testDatabaseHas20000PlusEntries`
@@ -131,7 +175,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Quirk governance lifecycle**: `QuirkStatus` enum (`proposed | verified | promoted`) on `DeviceQuirk`. `evidenceRequired`, `lastVerifiedDate`, `lastVerifiedBy` fields. All existing profiles promoted to `promoted`. `scripts/validate-quirks.sh` enforces status presence and evidence requirements. `scripts/generate-compat-matrix.sh` generates markdown compatibility table.
 - **Per-transaction observability timeline**: `TransactionLog` actor (ring-buffered at 1000) with `TransactionRecord` (opcode, txid, bytes, duration, outcome). `MTPOpcodeLabel` with 21 common opcode labels. `ActionableErrors` protocol with user-friendly descriptions for all `MTPError`/`TransportError` cases.
 - **libmtp compatibility harness** (`scripts/compat-harness.py`): Python script comparing SwiftMTP vs `mtp-tools` output. Structured JSON evidence, diff classification, expectation overlays per device (`compat/expectations/<vidpid>.yml`).
-- **Test count: 1920** (up from 1891), 0 failures, 0 lint warnings.
+- **Test count: 3,793+** (up from ~1,900 at start of RC cycle), 0 failures, 0 lint warnings.
 - **Expanded device quirk database** from 7 → 26 → **50 entries** (wave 1 + wave 2), adding profiles for Samsung S20/S21/Kies, LG V20/G5/G6/G4/V10, HTC U11/U12/One M8/M9, Huawei P9/P20/P30 series, ASUS ZenFone 5/6, Acer Iconia A500/A700, Oppo/Realme, Google Nexus One/7, Sony Xperia Z1/Z5/XZ, Sony Alpha a7III/a7RIV, Panasonic Lumix G, Olympus E-series, and Ricoh/Pentax K-series.
 - **VirtualDeviceConfig factory presets** for 13 device families: `samsungGalaxy`, `samsungGalaxyMtpAdb`, `googlePixelAdb`, `motorolaMotoG`, `sonyXperiaZ`, `canonEOSR5`, `nikonZ6`, `onePlus9`, `lgAndroid`, `lgAndroidOlder`, `htcAndroid`, `huaweiAndroid`, `fujifilmX`.
 - **QuirkMatchingTests**: 77+ tests covering all 50 quirk entries, no-match guards, timeout spot-checks, and policy-consistency tests.
