@@ -8,7 +8,9 @@ on:
   pull_request:
 jobs:
   build-test:
-    runs-on: macos-latest
+    # Pin to macos-15 to avoid DTXConnectionServices interceptor crashes
+    # that occur on macos-latest runners (signal 5 / DTXBlockCompressorLibCompression).
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
         with:
