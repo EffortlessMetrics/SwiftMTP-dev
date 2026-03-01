@@ -84,6 +84,9 @@ final class MirrorOperationsTests: XCTestCase {
     let report1 = try await mirrorEngine.mirror(device: device, deviceId: deviceId, to: output)
     XCTAssertEqual(report1.downloaded, 1)
 
+    // Snapshot generation is based on unix timestamp (seconds); wait to avoid duplicate gen
+    try await Task.sleep(nanoseconds: 1_100_000_000)
+
     // Second mirror — same device/snapshot so diff should be empty
     let report2 = try await mirrorEngine.mirror(device: device, deviceId: deviceId, to: output)
     // On second run the new snapshot has same objects, so nothing added vs prev gen

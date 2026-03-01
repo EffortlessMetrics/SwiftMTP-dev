@@ -295,9 +295,10 @@ final class ConflictResolutionTests: XCTestCase {
   }
 
   private func listRelativeFiles(in directory: URL) -> [String] {
+    let resolvedDir = directory.resolvingSymlinksInPath()
     guard
       let enumerator = FileManager.default.enumerator(
-        at: directory, includingPropertiesForKeys: [.isRegularFileKey],
+        at: resolvedDir, includingPropertiesForKeys: [.isRegularFileKey],
         options: [.skipsHiddenFiles])
     else { return [] }
     var files: [String] = []
@@ -305,7 +306,8 @@ final class ConflictResolutionTests: XCTestCase {
       guard let values = try? fileURL.resourceValues(forKeys: [.isRegularFileKey]),
         values.isRegularFile == true
       else { continue }
-      files.append(fileURL.path.replacingOccurrences(of: directory.path + "/", with: ""))
+      let resolvedFile = fileURL.resolvingSymlinksInPath()
+      files.append(resolvedFile.path.replacingOccurrences(of: resolvedDir.path + "/", with: ""))
     }
     return files
   }

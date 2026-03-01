@@ -140,6 +140,9 @@ final class GlobPatternTests: XCTestCase {
 
   func testPathKeyToLocalURLStorageOnly() {
     let url = mirrorEngine.pathKeyToLocalURL("00010001", root: tempDirectory)
-    XCTAssertEqual(url, tempDirectory)
+    // appendingPathComponent("") may add a trailing separator; compare resolved paths
+    XCTAssertEqual(
+      url.resolvingSymlinksInPath().path,
+      tempDirectory.resolvingSymlinksInPath().path)
   }
 }

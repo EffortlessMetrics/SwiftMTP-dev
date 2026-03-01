@@ -38,16 +38,24 @@ final class SyncConcurrencyExtendedTests: XCTestCase {
   // MARK: - Parallel Mirror Operations
 
   func testParallelMirrorsToDifferentDirectories() async throws {
-    let device = VirtualMTPDevice(config: .emptyDevice)
-    let deviceId = await device.id
-    let engine = self.mirrorEngine!
     let root = self.tempDirectory!
 
+    // Each parallel mirror uses its own database and device to avoid snapshot
+    // generation (unix-timestamp) collisions on the shared UNIQUE(deviceId, gen) constraint.
     let results = await withTaskGroup(of: MTPSyncReport?.self, returning: [MTPSyncReport].self) {
       group in
       for i in 0..<5 {
         group.addTask {
-          try? await engine.mirror(
+          let dbPath = root.appendingPathComponent("parallel-\(i).sqlite").path
+          guard let snapshotter = try? Snapshotter(dbPath: dbPath),
+            let diffEngine = try? DiffEngine(dbPath: dbPath),
+            let journal = try? SQLiteTransferJournal(dbPath: dbPath)
+          else { return nil }
+          let engine = MirrorEngine(
+            snapshotter: snapshotter, diffEngine: diffEngine, journal: journal)
+          let device = VirtualMTPDevice(config: .emptyDevice)
+          let deviceId = await device.id
+          return try? await engine.mirror(
             device: device, deviceId: deviceId,
             to: root.appendingPathComponent("parallel-\(i)"))
         }
