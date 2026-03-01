@@ -186,7 +186,8 @@ let package = Package(
       dependencies: [
         "SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks", "SwiftMTPTestKit",
         "SwiftMTPCLI",
-      ]),
+      ],
+      resources: [.copy("Fixtures")]),
     .testTarget(
       name: "IndexTests",
       dependencies: [
@@ -283,7 +284,7 @@ let package = Package(
     .testTarget(
       name: "MTPEndianCodecTests",
       dependencies: ["MTPEndianCodec", "SwiftCheck"],
-      exclude: ["Corpus", "__Snapshots__"]),
+      exclude: ["Corpus"]),
 
     .testTarget(
       name: "SwiftMTPCLITests",

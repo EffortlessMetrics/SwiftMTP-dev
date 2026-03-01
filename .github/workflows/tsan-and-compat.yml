@@ -32,8 +32,22 @@ jobs:
         with:
           swift-version: '6.2'
 
+      - name: Resolve TSAN runtime dylib
+        id: tsan_rt
+        shell: bash
+        run: |
+          set -euo pipefail
+          SWIFT_BIN="$(command -v swift)"
+          TOOLCHAIN_USR="$(cd "$(dirname "$SWIFT_BIN")/.." && pwd)"
+          TSAN_DYLIB="$(find "$TOOLCHAIN_USR/lib/clang" -name libclang_rt.tsan_osx_dynamic.dylib -print -quit)"
+          test -n "$TSAN_DYLIB"
+          echo "tsan_dylib=$TSAN_DYLIB" >> "$GITHUB_OUTPUT"
+          ls -la "$TSAN_DYLIB"
+
       - name: TSAN – CoreTests / IndexTests / ScenarioTests
         working-directory: SwiftMTPKit
+        env:
+          DYLD_INSERT_LIBRARIES: ${{ steps.tsan_rt.outputs.tsan_dylib }}
         run: swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
 
   compat-matrix:
