@@ -424,7 +424,14 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 ---
 
-## Current Coverage Results (February 2026 - SwiftMTPCore Coverage Push)
+## Current Coverage Results (February 2026 - RC Readiness)
+
+### Release Candidate State
+
+- **Device quirks database**: 20,040 entries across 1,157 VIDs and 62 categories
+- **Gated modules at 100%**: SwiftMTPQuirks, SwiftMTPStore, SwiftMTPSync, SwiftMTPObservability
+- **Total test cases**: 1,920+ (0 failures)
+- **Milestones**: 15K → 16K → 17K → 18K → 19K → 20K all captured
 
 ### Overall Metrics
 
@@ -433,7 +440,7 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 | **Overall Line Coverage** | **~70%** | ✅ Improving |
 | Total Lines Covered | ~2,280+ | - |
 | Total Lines | ~3,240 | - |
-| **Total Test Cases** | **1891** | ✅ Executed |
+| **Total Test Cases** | **1920+** | ✅ Executed |
 | Test Failures | 0 | ✅ All Passing |
 
 ### New Coverage Tests Added (February 2026 - Final Coverage Push)
