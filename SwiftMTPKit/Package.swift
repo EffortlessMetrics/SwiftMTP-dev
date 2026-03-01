@@ -286,6 +286,13 @@ let package = Package(
         "swiftmtp-cli",
         "SwiftMTPCore",
       ]),
+    .testTarget(
+      name: "UITests",
+      dependencies: [
+        "SwiftMTPUI",
+        "SwiftMTPCore",
+        "SwiftMTPTestKit",
+      ]),
 
     // MARK: - MTPEndianCodec Tests
 
