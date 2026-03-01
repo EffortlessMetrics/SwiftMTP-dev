@@ -1,12 +1,12 @@
 # SwiftMTP Roadmap
 
-*Last updated: 2026-02-25*
+*Last updated: 2026-02-28*
 
 This roadmap is the execution plan for the next implementation sprints in the 2.x release train.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green.
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Device quirks database now at **20,040 entries** across **1,157 VIDs** and **62 categories**.
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
@@ -38,9 +38,9 @@ Minimum expectations for each item:
 
 | Sprint | Theme | Current State | Primary Risk | Primary Gate |
 |--------|-------|---------------|--------------|--------------|
-| 2.1-A | Transport stability + error clarity | In progress | Real-device timeout reproduction drift | `./scripts/smoke.sh` + targeted device artifacts |
-| 2.1-B | Submission workflow hardening | Planned | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
-| 2.1-C | CI + verification consolidation | Planned | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
+| 2.1-A | Transport stability + error clarity | Complete | Real-device timeout reproduction drift | `./scripts/smoke.sh` + targeted device artifacts |
+| 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
+| 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
 
 ## Implementation Sprint Queue (Next 3)
 
@@ -144,7 +144,7 @@ Sprint exit criteria:
 | Version | Target window | Goal | Status |
 |---------|---------------|------|--------|
 | v2.0.0  | 2026-02 | Tahoe 26 core + architecture upgrade | Released |
-| v2.1.0  | 2026-Q2 | Stability + submission hardening + docs readiness | In Progress |
+| v2.1.0  | 2026-Q2 | Stability + submission hardening + docs readiness | RC Ready |
 | v2.2.0  | 2026-Q3 | Performance and benchmark reliability | Planned |
 | v2.3.0  | 2026-Q4 | Device coverage expansion | Planned |
 | v3.0.0  | 2027 | Cross-platform and strategic re-architecture | Exploratory |

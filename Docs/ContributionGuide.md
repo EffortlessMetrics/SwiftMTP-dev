@@ -1,6 +1,6 @@
 # SwiftMTP Contribution Guide
 
-*Last updated: 2026-02-16*
+*Last updated: 2026-02-28*
 
 This guide covers how to contribute during the active implementation sprints, including code changes, device evidence, and documentation updates.
 

@@ -1,6 +1,6 @@
 # SwiftMTP Release Runbook (2.x)
 
-*Last updated: 2026-02-16*
+*Last updated: 2026-02-28*
 
 This runbook describes how to prepare and ship SwiftMTP releases in the current 2.x train.
 
@@ -8,6 +8,13 @@ This runbook describes how to prepare and ship SwiftMTP releases in the current 
 
 - Applies to `v2.x.y` patch releases and `v2.x.0` minor releases.
 - Assumes release artifacts are produced by GitHub Actions (`.github/workflows/release.yml`).
+
+## Current RC State
+
+- **Quirks database**: 20,040 entries across 1,157 VIDs and 62 categories
+- **Test suite**: 1,920+ test cases, 0 failures
+- **Gated module coverage**: 100% on SwiftMTPQuirks, SwiftMTPStore, SwiftMTPSync, SwiftMTPObservability
+- **Milestones captured**: 15K → 16K → 17K → 18K → 19K → 20K
 
 ## Pre-Release Readiness
 
