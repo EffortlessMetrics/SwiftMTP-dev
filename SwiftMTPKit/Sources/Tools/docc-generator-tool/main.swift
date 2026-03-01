@@ -9,6 +9,71 @@ import Foundation
 
 // MARK: - Data Models
 
+/// Handles JSON values that may be strings or objects (encoded as JSON description).
+enum FlexibleValue: Codable {
+  case string(String)
+  case object([String: AnyCodable])
+
+  init(from decoder: Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    if let str = try? container.decode(String.self) {
+      self = .string(str)
+    } else if let dict = try? container.decode([String: AnyCodable].self) {
+      self = .object(dict)
+    } else {
+      self = .string("(unknown)")
+    }
+  }
+
+  func encode(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+    switch self {
+    case .string(let s): try container.encode(s)
+    case .object(let d): try container.encode(d)
+    }
+  }
+
+  var description: String {
+    switch self {
+    case .string(let s): return s
+    case .object(let d):
+      let parts = d.sorted { $0.key < $1.key }.map { "\($0.key): \($0.value)" }
+      return parts.joined(separator: ", ")
+    }
+  }
+}
+
+/// Type-erased Codable wrapper for heterogeneous JSON.
+struct AnyCodable: Codable, CustomStringConvertible {
+  let value: Any
+
+  init(from decoder: Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    if let s = try? container.decode(String.self) { value = s }
+    else if let i = try? container.decode(Int.self) { value = i }
+    else if let d = try? container.decode(Double.self) { value = d }
+    else if let b = try? container.decode(Bool.self) { value = b }
+    else if let a = try? container.decode([AnyCodable].self) { value = a }
+    else if let o = try? container.decode([String: AnyCodable].self) { value = o }
+    else { value = "(null)" }
+  }
+
+  func encode(to encoder: Encoder) throws {
+    var container = encoder.singleValueContainer()
+    switch value {
+    case let s as String: try container.encode(s)
+    case let i as Int: try container.encode(i)
+    case let d as Double: try container.encode(d)
+    case let b as Bool: try container.encode(b)
+    case let a as [AnyCodable]: try container.encode(a)
+    case let o as [String: AnyCodable]: try container.encode(o)
+    default: try container.encodeNil()
+    }
+  }
+
+  var description: String { "\(value)" }
+}
+
 struct QuirksFile: Codable {
   let version: Int
   let entries: [QuirkEntry]
@@ -35,9 +100,9 @@ struct QuirkEntry: Codable {
   let label: String?
   let name: String?
   let transport: Transport?
-  let behaviorLimitations: [String]?
-  let warnings: [String]?
-  let probeLadder: [String]?
+  let behaviorLimitations: [FlexibleValue]?
+  let warnings: [FlexibleValue]?
+  let probeLadder: [FlexibleValue]?
 
   enum Status: String, Codable {
     case experimental, stable, deprecated
