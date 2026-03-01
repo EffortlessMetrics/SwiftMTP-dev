@@ -91,12 +91,41 @@ For quirks/submission PRs, also include:
 
 ## Device Contribution Quick Start
 
-### 1) Prepare device
+### Find your device's VID:PID
+
+You need the USB Vendor ID (VID) and Product ID (PID) — four hex digits each.
+
+| Platform | How to find VID:PID |
+|----------|---------------------|
+| **macOS** |  → About This Mac → More Info → System Report → **USB**. Look for *Vendor ID* and *Product ID* under your device. |
+| **Linux** | Run `lsusb` — output looks like `Bus 001 Device 005: ID 04e8:6860 Samsung…` where `04e8` is VID and `6860` is PID. |
+| **Windows** | Device Manager → your device → Properties → Details → *Hardware Ids*. Look for `USB\VID_04E8&PID_6860`. |
+| **SwiftMTP CLI** | `cd SwiftMTPKit && swift run swiftmtp --real-only probe` — prints VID:PID for every connected MTP device. |
+
+### Option A: Automated submission (recommended)
+
+The fastest path — the script prompts for device info, generates a valid quirk
+entry, validates it, and can create a branch + PR for you:
+
+```bash
+./scripts/submit-device.sh
+```
+
+### Option B: File an issue
+
+Don't have a build environment? Open a
+[Device Report issue](https://github.com/your-org/SwiftMTP/issues/new?template=device-report.yml)
+on GitHub. Fill in VID:PID and observed behavior — a maintainer will create the
+quirk entry.
+
+### Option C: Manual collection + PR
+
+#### 1) Prepare device
 
 - USB connected, unlocked, File Transfer (MTP) mode enabled
 - Prefer direct USB port over hub
 
-### 2) Collect bundle
+#### 2) Collect bundle
 
 ```bash
 swift run --package-path SwiftMTPKit swiftmtp collect \
@@ -104,20 +133,40 @@ swift run --package-path SwiftMTPKit swiftmtp collect \
   --noninteractive --strict --run-bench 100M,1G --json
 ```
 
-### 3) Validate bundle
+#### 3) Validate bundle
 
 ```bash
 ./scripts/validate-submission.sh Contrib/submissions/<bundle-dir>
 ./scripts/validate-quirks.sh
 ```
 
-### 4) Submit
+#### 4) Submit
 
 ```bash
 git checkout -b device/<device-name>
 git add Contrib/submissions/<bundle-dir> Specs/quirks.json
 git commit -s -m "Device submission: <device-name>"
 git push -u origin HEAD
+```
+
+### Test with your device
+
+After adding a quirk entry (or using an existing one), verify it works:
+
+```bash
+cd SwiftMTPKit
+
+# Confirm your device is detected
+swift run swiftmtp --real-only probe
+
+# List files on the device
+swift run swiftmtp --real-only ls
+
+# Run a quick benchmark
+swift run swiftmtp --real-only bench 100M --repeat 3
+
+# Run quirk-matching tests to ensure the entry is valid
+swift test --filter QuirkMatchingTests
 ```
 
 ## Device Submission Privacy Checklist
@@ -178,17 +227,29 @@ Contributors are recognized through:
 
 The easiest way to add a new MTP device:
 
-1. **Interactive**: Run `./scripts/add-device.sh` and follow the prompts
-2. **Manual**: Add an entry to `Specs/quirks.json` following the format below
-3. **Validate**: Run `./scripts/validate-device-entry.sh <your-entry-id>`
-4. **Test**: Run `swift test --filter QuirkMatchingTests` in SwiftMTPKit/
-5. **Submit**: Create a PR with your changes
+1. **Automated (recommended)**: Run `./scripts/submit-device.sh` — it prompts
+   for device info, generates the entry, validates it, and can open a PR
+2. **Interactive builder**: Run `./scripts/add-device.sh` for a simpler entry builder
+3. **Issue-only**: Open a [Device Report issue](https://github.com/your-org/SwiftMTP/issues/new?template=device-report.yml) with VID:PID and observed behavior
+4. **Manual**: Add an entry to `Specs/quirks.json` following the format below
+5. **Validate**: Run `./scripts/validate-device-entry.sh <your-entry-id>`
+6. **Test**: Run `swift test --filter QuirkMatchingTests` in SwiftMTPKit/
+7. **Submit**: Create a PR with your changes
 
 #### Finding VID:PID
 
-- **macOS**: System Information → USB → check Vendor ID and Product ID
-- **Linux**: `lsusb` command
-- **Windows**: Device Manager → Properties → Hardware Ids
+See the [detailed VID:PID table](#find-your-devices-vidpid) above for all
+platforms. The quickest method on macOS:
+
+1. Open **System Information** ( → About This Mac → System Report)
+2. Select **USB** in the sidebar
+3. Find your device and note the **Vendor ID** and **Product ID**
+
+Or use the SwiftMTP CLI:
+
+```bash
+cd SwiftMTPKit && swift run swiftmtp --real-only probe
+```
 
 #### CLI alternative
 
@@ -201,6 +262,9 @@ swiftmtp add-device --vid 0x1234 --pid 0x5678 --name "My Device" --class android
 This generates a ready-to-use quirk entry template. Copy the output into
 `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json`,
 validate with `./scripts/validate-quirks.sh`, then open a PR.
+
+> **Prefer `./scripts/submit-device.sh`** — it does all of the above in one step
+> including validation, syncing both quirks files, and optionally creating the PR.
 
 ### Manual entry format
 
@@ -273,3 +337,4 @@ class descriptions, and authoritative VID/PID sources.
 - [Device Submission Guide](DeviceSubmission.md)
 - [Release Checklist](ROADMAP.release-checklist.md)
 - [Troubleshooting](Troubleshooting.md)
+- [Device Report Issue Template](https://github.com/your-org/SwiftMTP/issues/new?template=device-report.yml)
