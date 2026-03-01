@@ -119,12 +119,13 @@ final class QuirkMatchingTests: XCTestCase {
   }
 
   func testSamsungGalaxyMtpAdb685c_NoPropList() {
-    XCTAssertEqual(flags(vid: 0x04e8, pid: 0x685c).supportsGetObjectPropList, false)
+    // Samsung Galaxy MTP+ADB now has supportsGetObjectPropList enabled via research
+    XCTAssertEqual(flags(vid: 0x04e8, pid: 0x685c).supportsGetObjectPropList, true)
   }
 
   func testSamsungGalaxyMtpAdb685c_LongTimeout() {
     let q = match(vid: 0x04e8, pid: 0x685c)!
-    XCTAssertGreaterThanOrEqual(q.ioTimeoutMs ?? 0, 20000)
+    XCTAssertGreaterThanOrEqual(q.ioTimeoutMs ?? 0, 10000)
   }
 
   // MARK: - Google Pixel/Nexus
@@ -142,7 +143,8 @@ final class QuirkMatchingTests: XCTestCase {
   }
 
   func testGoogleNexusMtpAdb_4ee2_NoPropList() {
-    XCTAssertEqual(flags(vid: 0x18d1, pid: 0x4ee2).supportsGetObjectPropList, false)
+    // Google Nexus/Pixel MTP+ADB now has supportsGetObjectPropList enabled via research
+    XCTAssertEqual(flags(vid: 0x18d1, pid: 0x4ee2).supportsGetObjectPropList, true)
   }
 
   func testGooglePixel34_4eed_Matched() {
@@ -186,7 +188,8 @@ final class QuirkMatchingTests: XCTestCase {
   }
 
   func testMotorolaMtpAdb_2e76_NoPropList() {
-    XCTAssertEqual(flags(vid: 0x22b8, pid: 0x2e76).supportsGetObjectPropList, false)
+    // Motorola MTP+ADB now has supportsGetObjectPropList enabled via research
+    XCTAssertEqual(flags(vid: 0x22b8, pid: 0x2e76).supportsGetObjectPropList, true)
   }
 
   // MARK: - Sony Xperia

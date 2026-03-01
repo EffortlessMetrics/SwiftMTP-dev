@@ -227,7 +227,7 @@ public struct VirtualDeviceConfig: Sendable {
     _androidPreset(
       rawId: "04e8:685c@1:4", vendor: "Samsung", model: "Galaxy Android (ADB)",
       vendorID: 0x04e8, productID: 0x685c, serial: "VIRT-SAMSUNG-685C",
-      includePropList: false)
+      includePropList: true)
   }
 
   /// A Google Nexus/Pixel in MTP+ADB mode (VID 0x18d1, PID 0x4ee2).
@@ -235,7 +235,7 @@ public struct VirtualDeviceConfig: Sendable {
     _androidPreset(
       rawId: "18d1:4ee2@1:5", vendor: "Google", model: "Nexus/Pixel (ADB)",
       vendorID: 0x18d1, productID: 0x4ee2, serial: "VIRT-PIXEL-4EE2",
-      includePropList: false)
+      includePropList: true)
   }
 
   /// A Motorola Moto G/E/Z in standard MTP mode (VID 0x22b8, PID 0x2e82).
