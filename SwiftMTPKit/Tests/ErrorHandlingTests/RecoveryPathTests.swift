@@ -358,18 +358,14 @@ final class RecoveryPathTests: XCTestCase {
   }
 
   func testTimeoutEscalation_FallbackLadder_TimeoutsEscalateToReset() async throws {
-    var attemptCount = 0
     let rungs: [FallbackRung<String>] = [
       FallbackRung(name: "quick") {
-        attemptCount += 1
         throw MTPError.timeout
       },
       FallbackRung(name: "patient") {
-        attemptCount += 1
         throw MTPError.timeout
       },
       FallbackRung(name: "reset") {
-        attemptCount += 1
         return "recovered-after-reset"
       },
     ]
@@ -377,7 +373,6 @@ final class RecoveryPathTests: XCTestCase {
     let result = try await FallbackLadder.execute(rungs)
     XCTAssertEqual(result.value, "recovered-after-reset")
     XCTAssertEqual(result.winningRung, "reset")
-    XCTAssertEqual(attemptCount, 3)
     XCTAssertEqual(result.attempts.count, 3)
     XCTAssertFalse(result.attempts[0].succeeded)
     XCTAssertFalse(result.attempts[1].succeeded)
