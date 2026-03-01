@@ -236,7 +236,8 @@ let package = Package(
       name: "IntegrationTests",
       dependencies: [
         "SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex", "SwiftMTPFileProvider",
-        "SwiftMTPXPC", "SwiftMTPQuirks", "SwiftMTPTestKit",
+        "SwiftMTPXPC", "SwiftMTPQuirks", "SwiftMTPTestKit", "SwiftMTPSync",
+        "SwiftMTPObservability",
       ]),
     .testTarget(
       name: "StoreTests",
