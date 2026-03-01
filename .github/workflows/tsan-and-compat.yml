@@ -37,18 +37,52 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Resolve symlinks so we get the real toolchain path
+          # (setup-swift may place a symlink in PATH)
           SWIFT_BIN="$(command -v swift)"
-          TOOLCHAIN_USR="$(cd "$(dirname "$SWIFT_BIN")/.." && pwd)"
-          TSAN_DYLIB="$(find "$TOOLCHAIN_USR/lib/clang" -name libclang_rt.tsan_osx_dynamic.dylib -print -quit)"
-          test -n "$TSAN_DYLIB"
+          SWIFT_REAL="$(python3 -c "import os,sys; sys.stdout.write(os.path.realpath('$SWIFT_BIN'))")"
+          TOOLCHAIN_USR="$(cd "$(dirname "$SWIFT_REAL")/.." && pwd)"
+
+          TSAN_DYLIB="$(find "$TOOLCHAIN_USR/lib/clang" -name libclang_rt.tsan_osx_dynamic.dylib -print -quit 2>/dev/null || true)"
+
+          # Fallback: search the hostedtoolcache Swift installation
+          if [ -z "$TSAN_DYLIB" ]; then
+            TSAN_DYLIB="$(find /Users/runner/hostedtoolcache/swift-macOS -name libclang_rt.tsan_osx_dynamic.dylib -print -quit 2>/dev/null || true)"
+          fi
+
+          # Fallback: search selected Xcode toolchain
+          if [ -z "$TSAN_DYLIB" ]; then
+            XCODE_TC="$(xcode-select -p)/Toolchains/XcodeDefault.xctoolchain/usr"
+            TSAN_DYLIB="$(find "$XCODE_TC/lib/clang" -name libclang_rt.tsan_osx_dynamic.dylib -print -quit 2>/dev/null || true)"
+          fi
+
+          if [ -z "$TSAN_DYLIB" ]; then
+            echo "::error::Could not locate libclang_rt.tsan_osx_dynamic.dylib"
+            exit 1
+          fi
+
+          TSAN_DIR="$(dirname "$TSAN_DYLIB")"
           echo "tsan_dylib=$TSAN_DYLIB" >> "$GITHUB_OUTPUT"
+          echo "tsan_dir=$TSAN_DIR" >> "$GITHUB_OUTPUT"
+          echo "Found TSAN runtime: $TSAN_DYLIB"
           ls -la "$TSAN_DYLIB"
+
+      - name: Build tests (TSAN)
+        working-directory: SwiftMTPKit
+        run: swift build --build-tests -Xswiftc -sanitize=thread
 
       - name: TSAN – CoreTests / IndexTests / ScenarioTests
         working-directory: SwiftMTPKit
-        env:
-          DYLD_INSERT_LIBRARIES: ${{ steps.tsan_rt.outputs.tsan_dylib }}
-        run: swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
+        run: |
+          # Inline DYLD_INSERT_LIBRARIES to avoid SIP stripping the env
+          # var when swift-test spawns xctest through a system binary path.
+          # -Xlinker -rpath ensures the dynamic linker can resolve the runtime.
+          DYLD_INSERT_LIBRARIES="${{ steps.tsan_rt.outputs.tsan_dylib }}" \
+          swift test \
+            --skip-build \
+            -Xswiftc -sanitize=thread \
+            -Xlinker -rpath -Xlinker "${{ steps.tsan_rt.outputs.tsan_dir }}" \
+            --filter CoreTests --filter IndexTests --filter ScenarioTests
 
   compat-matrix:
     name: Compatibility Matrix
