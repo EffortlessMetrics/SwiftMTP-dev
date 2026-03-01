@@ -17,7 +17,7 @@ struct QuirksFile: Codable {
 struct QuirkEntry: Codable {
   let id: String
   let match: MatchCriteria
-  let tuning: TuningParameters
+  let tuning: TuningParameters?
   let ops: OperationSupport?
   let benchGates: BenchmarkGates?
   let notes: [String]?
@@ -26,6 +26,18 @@ struct QuirkEntry: Codable {
   let evidenceRequired: [String]?
   let lastVerifiedDate: String?
   let lastVerifiedBy: String?
+  let category: String?
+  let flags: Flags?
+  let confidence: String?
+  let hooks: [Hook]?
+  let governance: Governance?
+  let deviceName: String?
+  let label: String?
+  let name: String?
+  let transport: Transport?
+  let behaviorLimitations: [String]?
+  let warnings: [String]?
+  let probeLadder: [String]?
 
   enum Status: String, Codable {
     case experimental, stable, deprecated
@@ -36,6 +48,61 @@ struct QuirkEntry: Codable {
       self = Status(rawValue: raw) ?? .proposed
     }
   }
+
+  struct Flags: Codable {
+    // Accept any keys
+    init(from decoder: Decoder) throws {
+      _ = try decoder.container(keyedBy: DynamicCodingKeys.self)
+    }
+    func encode(to encoder: Encoder) throws {}
+    private struct DynamicCodingKeys: CodingKey {
+      var stringValue: String
+      var intValue: Int? { nil }
+      init?(stringValue: String) { self.stringValue = stringValue }
+      init?(intValue: Int) { return nil }
+    }
+  }
+
+  struct Hook: Codable {
+    let phase: String?
+    let action: String?
+    init(from decoder: Decoder) throws {
+      if let container = try? decoder.container(keyedBy: CodingKeys.self) {
+        phase = try container.decodeIfPresent(String.self, forKey: .phase)
+        action = try container.decodeIfPresent(String.self, forKey: .action)
+      } else {
+        phase = nil
+        action = nil
+      }
+    }
+    enum CodingKeys: String, CodingKey { case phase, action }
+  }
+
+  struct Governance: Codable {
+    init(from decoder: Decoder) throws {
+      _ = try decoder.container(keyedBy: DynamicCodingKeys.self)
+    }
+    func encode(to encoder: Encoder) throws {}
+    private struct DynamicCodingKeys: CodingKey {
+      var stringValue: String
+      var intValue: Int? { nil }
+      init?(stringValue: String) { self.stringValue = stringValue }
+      init?(intValue: Int) { return nil }
+    }
+  }
+
+  struct Transport: Codable {
+    init(from decoder: Decoder) throws {
+      _ = try decoder.container(keyedBy: DynamicCodingKeys.self)
+    }
+    func encode(to encoder: Encoder) throws {}
+    private struct DynamicCodingKeys: CodingKey {
+      var stringValue: String
+      var intValue: Int? { nil }
+      init?(stringValue: String) { self.stringValue = stringValue }
+      init?(intValue: Int) { return nil }
+    }
+  }
 }
 
 struct MatchCriteria: Codable {
@@ -44,6 +111,9 @@ struct MatchCriteria: Codable {
   let deviceInfoRegex: String?
   let iface: InterfaceDescriptor?
   let endpoints: EndpointAddresses?
+  let interfaceClass: String?
+  let interfaceSubclass: String?
+  let interfaceProtocol: String?
 }
 
 struct InterfaceDescriptor: Codable {
@@ -65,13 +135,28 @@ struct EndpointAddresses: Codable {
 }
 
 struct TuningParameters: Codable {
-  let maxChunkBytes: Int
-  let handshakeTimeoutMs: Int
-  let ioTimeoutMs: Int
-  let inactivityTimeoutMs: Int
-  let overallDeadlineMs: Int
+  let maxChunkBytes: Int?
+  let handshakeTimeoutMs: Int?
+  let ioTimeoutMs: Int?
+  let inactivityTimeoutMs: Int?
+  let overallDeadlineMs: Int?
   let stabilizeMs: Int?
   let eventPumpDelayMs: Int?
+  let chunkSize: Int?
+  let timeoutMs: Int?
+  let maxRetries: Int?
+  let resetOnOpen: Bool?
+  let maxPayload: Int?
+  let windowSize: Int?
+  let maxPacketSize: Int?
+  let requiresKernelDetach: Bool?
+  let postClaimStabilizeMs: Int?
+  let alternateInterfaceSelection: Int?
+  let skipPTPReset: Bool?
+  let forceConfigurationNumber: Int?
+  let forceAltSetting: Int?
+  let disableEventPump: Bool?
+  let postProbeStabilizeMs: Int?
 }
 
 struct OperationSupport: Codable {
@@ -79,6 +164,21 @@ struct OperationSupport: Codable {
   let supportsSendPartialObject: Bool?
   let preferGetObjectPropList: Bool?
   let disableWriteResume: Bool?
+  let supportsGetObjectPropList: Bool?
+  let supportsGetPartialObject: Bool?
+  let getPartialObject: Bool?
+  let sendPartialObject: Bool?
+  let useAndroidExtensions: Bool?
+  let openSession: Bool?
+  let getDeviceInfo: Bool?
+  let getStorageIDs: Bool?
+  let getObjectHandles: Bool?
+  let getObject: Bool?
+  let sendObject: Bool?
+  let skipGetObjectPropValue: Bool?
+  let getObjectPropList: Bool?
+  let deleteObject: Bool?
+  let supportsEvents: Bool?
 }
 
 struct BenchmarkGates: Codable {
@@ -91,6 +191,14 @@ struct Provenance: Codable {
   let date: String?
   let commit: String?
   let artifacts: Artifacts?
+  let source: String?
+  let notes: String?
+  let confidence: String?
+  let addedDate: String?
+  let sourceRef: String?
+  let origin: String?
+  let deviceName: String?
+  let libmtpFlags: String?
 }
 
 struct Artifacts: Codable {
@@ -155,25 +263,27 @@ func generateDocCPage(for entry: QuirkEntry) -> String {
       """
   }
 
-  content += """
+  if let tuning = entry.tuning {
+    content += """
 
-    ## Tuning Parameters
+      ## Tuning Parameters
 
-    | Parameter | Value | Unit |
-    |-----------|-------|------|
-    | Maximum Chunk Size | \(formatBytes(entry.tuning.maxChunkBytes)) | bytes |
-    | Handshake Timeout | \(entry.tuning.handshakeTimeoutMs) | ms |
-    | I/O Timeout | \(entry.tuning.ioTimeoutMs) | ms |
-    | Inactivity Timeout | \(entry.tuning.inactivityTimeoutMs) | ms |
-    | Overall Deadline | \(entry.tuning.overallDeadlineMs) | ms |
-    """
+      | Parameter | Value | Unit |
+      |-----------|-------|------|
+      | Maximum Chunk Size | \(tuning.maxChunkBytes.map { formatBytes($0) } ?? "default") | bytes |
+      | Handshake Timeout | \(tuning.handshakeTimeoutMs.map(String.init) ?? "default") | ms |
+      | I/O Timeout | \(tuning.ioTimeoutMs.map(String.init) ?? "default") | ms |
+      | Inactivity Timeout | \(tuning.inactivityTimeoutMs.map(String.init) ?? "default") | ms |
+      | Overall Deadline | \(tuning.overallDeadlineMs.map(String.init) ?? "default") | ms |
+      """
 
-  if let stabilize = entry.tuning.stabilizeMs, stabilize > 0 {
-    content += "| Stabilization Delay | \(stabilize) | ms |\n"
-  }
+    if let stabilize = tuning.stabilizeMs, stabilize > 0 {
+      content += "| Stabilization Delay | \(stabilize) | ms |\n"
+    }
 
-  if let eventDelay = entry.tuning.eventPumpDelayMs, eventDelay > 0 {
-    content += "| Event Pump Delay | \(eventDelay) | ms |\n"
+    if let eventDelay = tuning.eventPumpDelayMs, eventDelay > 0 {
+      content += "| Event Pump Delay | \(eventDelay) | ms |\n"
+    }
   }
 
   if let ops = entry.ops {
