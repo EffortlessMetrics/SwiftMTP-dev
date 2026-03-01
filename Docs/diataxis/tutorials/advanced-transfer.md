@@ -1,6 +1,6 @@
 # Advanced Transfer Strategies
 
-This tutorial covers advanced file transfer techniques in SwiftMTP, including parallel transfers, resumable transfers, and production-ready patterns.
+This tutorial covers advanced file transfer techniques in SwiftMTP, including parallel transfers, resumable transfers, and patterns for robust transfers.
 
 ## What You'll Learn
 

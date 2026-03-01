@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **🎉 20,040-Entry Milestone**: Device quirks database reaches 20,040 entries across 1,157 VIDs and 62 categories — massive 20K milestone
+  Note: Quirk entries are research-based (sourced from libmtp and vendor specs), not validated with real hardware.
 - Milestone BDD tests: `testDatabaseHas19000PlusEntries`, `testDatabaseHas20000PlusEntries`
 - Core baseline bumped from 18,000 → 20,000 entries / 1,090 → 1,150 VIDs in `QuirkMatchingTests`
 - Compat matrix regenerated for 20,040 entries
@@ -314,7 +315,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Core operations: probe, storages, ls, events, delete, move
 - Version command with --version [--json] and build info
 - Cross-platform support: macOS (Intel/Apple Silicon) and Linux
-- Homebrew tap installation
 - SBOM generation with SPDX format
 - Comprehensive test suite with CI validation
 - DocC documentation for devices and API

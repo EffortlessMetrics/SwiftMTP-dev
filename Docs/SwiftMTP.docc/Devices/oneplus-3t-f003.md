@@ -14,7 +14,7 @@ Current bring-up status for OnePlus 3T (`VID:PID 2a70:f003`).
 | Vendor ID | 0x2a70 |
 | Product ID | 0xf003 |
 | Device Info Pattern | `None` |
-| Status | Stable |
+| Status | Partial |
 
 |---|---|
 | Vendor ID | `0x2a70` |
@@ -23,7 +23,7 @@ Current bring-up status for OnePlus 3T (`VID:PID 2a70:f003`).
 | Secondary Interface | Mass Storage on interface 1 (`class 0x08`) |
 | Endpoints | IN `0x81`, OUT `0x01`, EVT `0x82` |
 | Quirk Profile | `oneplus-3t-f003` |
-| Status | Stable profile, currently unavailable in latest lab run |
+| Status | Partial — probe works, absent from recent lab runs |
 
 ## Evidence
 

@@ -16,7 +16,7 @@ Current bring-up status for Samsung Android (`VID:PID 04e8:6860`).
 | Interface | class `0xff`, subclass `0xff`, protocol `0x00` |
 | Endpoints | IN `0x81`, OUT `0x01`, EVT `0x82` |
 | Quirk Profile | `samsung-android-6860` |
-| Status | Experimental |
+| Status | Not Working (storage gated) |
 
 ## Evidence
 

@@ -16,7 +16,7 @@ Current bring-up status for Xiaomi Mi Note 2 (`VID:PID 2717:ff40`).
 | Interface | class `0xff`, subclass `0xff`, protocol `0x00` |
 | Endpoints | IN `0x81`, OUT `0x01`, EVT `0x82` |
 | Quirk Profile | `xiaomi-mi-note-2-ff40` |
-| Status | Stable profile, validation in progress |
+| Status | Partial — recent lab run returned 0 storages |
 
 ## Evidence
 

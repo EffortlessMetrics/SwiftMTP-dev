@@ -2,6 +2,8 @@
 
 Canon EOS Rebel / EOS R class cameras in PTP/MTP mode.
 
+**Note**: This profile is based on PTP/MTP protocol specs. This device has never been connected to SwiftMTP. Contributions from Canon owners welcome.
+
 ## Device Information
 
 | Field | Value |
@@ -83,6 +85,6 @@ Use `SWIFTMTP_OVERALL_DEADLINE_MS=300000` for 20+ MB uploads.
 
 ## Provenance
 
-- **Status**: Experimental (profile contributed by community)
-- **Tested body**: EOS Rebel SL3 (0x04A9:0x3139)
+- **Status**: Research Only — never connected to SwiftMTP
+- **Reference body**: EOS Rebel SL3 (0x04A9:0x3139) — profile based on PTP/MTP specs, not tested with SwiftMTP
 - **Date**: 2025-02-25
