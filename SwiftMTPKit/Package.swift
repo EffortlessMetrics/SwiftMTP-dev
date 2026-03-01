@@ -254,6 +254,9 @@ let package = Package(
       ]),
 
     .testTarget(
+      name: "ObservabilityTests",
+      dependencies: ["SwiftMTPObservability", "SwiftMTPTestKit"]),
+    .testTarget(
       name: "ErrorHandlingTests",
       dependencies: [
         "SwiftMTPCore",
