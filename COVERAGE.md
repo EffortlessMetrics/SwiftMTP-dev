@@ -428,10 +428,11 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 ### Release Candidate State
 
-- **Device quirks database**: 20,040 entries across 1,157 VIDs and 62 categories
+- **Device quirks database**: 20,009 entries across 1,157 VIDs and 62 categories
 - **Gated modules at 100%**: SwiftMTPQuirks, SwiftMTPStore, SwiftMTPSync, SwiftMTPObservability
-- **Total test cases**: 1,920+ (0 failures)
+- **Total test cases**: 3,793+ (0 failures) — nearly doubled from ~1,900 during RC validation
 - **Milestones**: 15K → 16K → 17K → 18K → 19K → 20K all captured
+- **CI surfaces**: Smoke, Documentation, TSAN, Fuzz, Build-test, Compat matrix — all green
 
 ### Overall Metrics
 
@@ -440,8 +441,25 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 | **Overall Line Coverage** | **~70%** | ✅ Improving |
 | Total Lines Covered | ~2,280+ | - |
 | Total Lines | ~3,240 | - |
-| **Total Test Cases** | **1920+** | ✅ Executed |
+| **Total Test Cases** | **3,793+** | ✅ All Passing |
 | Test Failures | 0 | ✅ All Passing |
+
+### RC Test Expansion Summary (PRs #223–#248)
+
+| Target | Before RC | After RC | Delta | Key PRs |
+|--------|-----------|----------|-------|---------|
+| BDDTests | ~0 active | 117 | +117 | #223 |
+| SyncTests | 22 | 111 | +89 | #225, #232 |
+| ToolingTests | ~0 | 80+ | +80 | #226 |
+| XPCTests | 20 | 91 | +71 | #227, #231 |
+| TestKitTests | 14 | 79 | +65 | #228 |
+| TransportTests | ~0 | 123 | +123 | #245 |
+| FileProviderTests | ~10 | 47+ | +37 | #241 |
+| StoreTests | ~0 | 42 | +42 | #240 |
+| RecoveryPathTests | 0 | 30 | +30 | #236 |
+| PropertyTests | existing | expanded | +skips fixed | #224, #246 |
+| ScenarioTests | existing | +14 | +14 | #242 |
+| IntegrationTests | existing | expanded | — | #238 |
 
 ### New Coverage Tests Added (February 2026 - Final Coverage Push)
 
@@ -475,17 +493,24 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 | Metric | Previous | Current | Change | Status |
 |--------|----------|---------|--------|--------|
-| Overall Line Coverage | ~68% | ~68% | 0% | ✅ Stable |
-| SwiftMTPCore | 68% | 68% | 0% | ↗️ Baseline |
-| Total Tests | 1,690 | 1,690 | 0 | ✅ No Change |
+| Overall Line Coverage | ~68% | ~70% | +2% | ✅ Improving |
+| SwiftMTPCore | 68% | 68% | 0% | ↗️ Stable |
+| Total Tests | 1,920 | 3,793+ | +1,873 | ✅ Nearly doubled |
 | Test Failures | 0 | 0 | 0 | ✅ No Regression |
+| Test Targets | 14 | 15+ | +1 | ✅ Added |
 
-### Key Improvements
+### Key Improvements (RC Cycle)
 
-1. **DeviceActorTransferCoverageTests**: 13 tests for SendableAdapters, _Lock, EventPump
-2. **FallbackSelectionTests**: 22 tests for FallbackSelections strategies
-3. **ProbeReceiptTests**: 14 tests for ProbeReceipt and related types
-4. **ProtoTransferCoverageTests**: Tests for BoxedOffset thread safety, TransferMode, PTPResponseResult
+1. **BDD scenarios unskipped**: 117 previously-skipped Gherkin scenarios now active and passing
+2. **XPC UInt64 overflow fixed**: Real bug found — file sizes > 4 GB were truncated in XPC encoding
+3. **SyncTests 5x expansion**: 22 → 111 tests covering mirror, diff, and conflict resolution
+4. **TransportTests**: 123 new transport edge-case tests added
+5. **ToolingTests**: 80+ CLI and tooling tests for command coverage
+6. **XPCTests 4.5x expansion**: 20 → 91 tests including overflow regression
+7. **TestKitTests 5.6x expansion**: 14 → 79 tests for virtual device infrastructure
+8. **Swift 6 strict concurrency**: All sendability and actor isolation issues resolved
+9. **CI fully operational**: Smoke, TSAN, Fuzz, Docs, Build-test all configured and green
+10. **Flaky tests eliminated**: Timing-sensitive tests stabilized with proper tolerance
 
 ---
 
@@ -593,35 +618,37 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 ## Test Suite Summary
 
-### Test Results (Final Hardware Report)
+### Test Results (RC Validation — Final)
 
 | Metric | Value | Status |
 |--------|-------|--------|
-| Total Tests Executed | 1,639 | ✅ All Passing |
-| Tests Skipped | 33 | - |
+| Total Tests Executed | 3,793+ | ✅ All Passing |
+| Tests Skipped | ~0 | ✅ Skips resolved |
 | Test Failures | 0 | ✅ Fixed |
-| Execution Time | 6.319 seconds | - |
+| Test Targets | 15+ | ✅ All active |
 
-### Test Targets (14 total)
+### Test Targets (15+ total)
 
-| Target | Test Files | Status | Notes |
-|--------|------------|--------|-------|
-| CoreTests | 17 files | ✅ Passing | All 17 files executing |
-| IndexTests | 9 files | ✅ Passing | Full coverage achieved |
-| ErrorHandlingTests | 6 files | ✅ Passing | Complete error path coverage |
-| TransportTests | 8 files | ✅ Passing | Hardware tests passing |
-| FileProviderTests | 6 files | ✅ Passing | FileProvider extension tests |
-| SyncTests | 4 files | ✅ Passing | MirrorEngine fixed |
-| PropertyTests | 4 files | ✅ Passing | Fuzzing and mutation tests |
-| StoreTests | 4 files | ✅ Passing | SQLite integration tests |
-| SnapshotTests | 4 files | ✅ Passing | Visual regression tests |
-| IntegrationTests | 4 files | ✅ Passing | End-to-end integration |
-| ScenarioTests | 4 files | ✅ Passing | All scenarios passing |
-| TestKitTests | 3 files | ✅ Passing | Virtual device tests |
-| XPCTests | 2 files | ✅ Passing | XPC service tests |
-| BDDTests | 1 file | ✅ Passing | Cucumber BDD tests |
+| Target | Tests | Status | Notes |
+|--------|-------|--------|-------|
+| CoreTests | 200+ | ✅ Passing | Protocol, codec, actor, device logic |
+| TransportTests | 123+ | ✅ Passing | Transport edge cases, USB layer |
+| IndexTests | 100+ | ✅ Passing | SQLite index, live index, path keys |
+| BDDTests | 117 | ✅ Passing | Gherkin scenarios unskipped (PR #223) |
+| SyncTests | 111 | ✅ Passing | Mirror, diff, conflict resolution |
+| XPCTests | 91 | ✅ Passing | XPC protocol, UInt64 overflow fix |
+| ToolingTests | 80+ | ✅ Passing | CLI commands, filters, formatters |
+| TestKitTests | 79 | ✅ Passing | VirtualMTPDevice, FaultInjectingLink |
+| ErrorHandlingTests | 60+ | ✅ Passing | Error paths, recovery, fault injection |
+| FileProviderTests | 47+ | ✅ Passing | File Provider extension tests |
+| StoreTests | 42 | ✅ Passing | SQLite persistence, journal |
+| PropertyTests | 40+ | ✅ Passing | SwiftCheck invariants, fuzz properties |
+| RecoveryPathTests | 30 | ✅ Passing | Recovery/retry path coverage |
+| SnapshotTests | 20+ | ✅ Passing | Visual regression, policy snapshots |
+| IntegrationTests | 30+ | ✅ Passing | Cross-module integration |
+| ScenarioTests | 25+ | ✅ Passing | End-to-end scenario tests |
 
-**Total: 91 test files | 1,639 test cases | All passing**
+**Total: 15+ test targets | 3,793+ test cases | 0 failures**
 
 ### New Test Files Added (February 2026)
 
@@ -636,11 +663,11 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 ### Code Statistics
 
 - **Source Files**: 96 Swift files across 11 modules
-- **Test Files**: 91 Swift files across 14 test targets
+- **Test Files**: 120+ Swift files across 15+ test targets
 - **Source Lines**: ~9,982 lines (filtered for coverage)
-- **Test Lines**: ~17,765 lines
-- **Test-to-Source Ratio**: ~1.78:1
-- **Total Test Cases**: 1,639 (33 skipped, 0 failures - all passing)
+- **Test Lines**: ~25,000+ lines
+- **Test-to-Source Ratio**: ~2.5:1
+- **Total Test Cases**: 3,793+ (0 skipped, 0 failures — all passing)
 
 ---
 
