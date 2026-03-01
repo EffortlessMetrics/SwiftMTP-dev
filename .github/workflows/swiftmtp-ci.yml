@@ -5,7 +5,9 @@ name: SwiftMTP CI/CD
 # Purpose: Comprehensive CI for main branch and nightly runs.
 # Checks: full test + coverage gate, CLI smoke, DocC docs, SBOM on release.
 # Runs on: push/PR to main + nightly schedule (2 AM UTC).
-# Complement: ci.yml runs on all branches/PRs and includes TSAN + fuzz.
+# Complement: ci.yml runs on all branches/PRs and includes fuzz.
+# TSAN: handled by tsan-and-compat.yml — NOT run here to avoid
+#        DTXConnectionServices interceptor crashes on CI runners.
 # Local equivalent: ./run-all-tests.sh (full) or swift test -v (quick).
 
 on:
@@ -26,7 +28,7 @@ jobs:
   # Build and Test Job - Runs on every push/PR to main
   # =========================================================================
   test:
-    name: Test (Unit, BDD, Property, Fuzz, Integration, E2E, Snapshot, Storybook, Xcode)
+    name: Test (Unit, BDD, Property, Fuzz, Integration, E2E, Snapshot, Storybook)
     runs-on: macos-15
     permissions:
       contents: read
@@ -72,9 +74,11 @@ jobs:
         working-directory: SwiftMTPKit
         run: swift build
 
-      - name: Run Full Test Suite + Coverage Gate + Xcode Unit/UI Tests
+      - name: Run Full Test Suite + Coverage Gate
         env:
-          RUN_XCODE_UI_TESTS: "1"
+          # Skip xcodebuild tests to avoid DTXConnectionServices interceptor
+          # crashes on CI runners. TSAN is handled by tsan-and-compat.yml.
+          RUN_XCODE_TESTS: "0"
         run: ./run-all-tests.sh
 
       - name: Upload test results
@@ -216,7 +220,8 @@ jobs:
 
       - name: Build with code coverage enabled + enforce gate
         env:
-          RUN_XCODE_UI_TESTS: "0"
+          # Skip xcodebuild tests — coverage only needs SPM test data.
+          RUN_XCODE_TESTS: "0"
         run: ./run-all-tests.sh
 
       - name: Upload coverage artifact
