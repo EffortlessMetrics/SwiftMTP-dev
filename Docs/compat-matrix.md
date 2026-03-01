@@ -2511,7 +2511,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Seek Thermal Compact Pro | 289d:0010 | ⚪ proposed | — |
 | Seek Thermal Shotpro | 289d:0011 | ⚪ proposed | — |
 | Tomtom Go 520 | 1390:0001 | ⚪ proposed | — |
-| Tomtom Runner Gps Watch | 1390:7474 | ⚪ proposed | — |
+| Tomtom Runner Gps Watch | 1390:747b | ⚪ proposed | — |
 | Tomtom Go 520 | 1390:7474 | ⚪ proposed | — |
 | Tomtom Bandit Action Cam | 1390:a001 | ⚪ proposed | — |
 | Tomtom Go 5200 | 1390:5456 | ⚪ proposed | — |
@@ -2731,7 +2731,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Essential Ph1a | 2e17:c030 | ⚪ proposed | — |
 | Essential Ph1 | 2e17:c033 | ⚪ proposed | — |
 | Chuwi Vi8 Tablet | 8087:0a5f | ⚪ proposed | — |
-| Garmin Gps Generic | 091e:0003 | ⚪ proposed | — |
+| Garmin Gps Generic | 091e:0004 | ⚪ proposed | — |
 | Garmin Etrex Cx | 091e:21a5 | ⚪ proposed | — |
 | Garmin Nuvi 360 | 091e:2236 | ⚪ proposed | — |
 | Garmin Edge 605 | 091e:2271 | ⚪ proposed | — |
