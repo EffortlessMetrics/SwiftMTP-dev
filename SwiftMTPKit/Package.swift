@@ -254,6 +254,9 @@ let package = Package(
       ]),
 
     .testTarget(
+      name: "QuirksTests",
+      dependencies: ["SwiftMTPQuirks", "SwiftMTPTestKit"]),
+    .testTarget(
       name: "ObservabilityTests",
       dependencies: ["SwiftMTPObservability", "SwiftMTPTestKit"]),
     .testTarget(
