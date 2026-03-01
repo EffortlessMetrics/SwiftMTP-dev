@@ -4809,9 +4809,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Lava Blaze Curve 5g | 29a9:600c | community | getPartialObject, sendPartialObject |
 | Tesla Model S MTP | 0bda:ee01 | experimental | supportsGetPartialObject, disableWriteResume |
 | Tesla Mcu2 MTP | 0bda:ee02 | experimental | supportsGetPartialObject, disableWriteResume |
-| Pioneer Avh MTP | 08e4:0110 | experimental | supportsGetPartialObject, disableWriteResume |
-| Pioneer Dmh MTP | 08e4:0120 | experimental | supportsGetPartialObject, disableWriteResume |
-| Pioneer Sph MTP | 08e4:0130 | experimental | supportsGetPartialObject, disableWriteResume |
 | Kenwood Dmx MTP | 0b67:0210 | experimental | supportsGetPartialObject, disableWriteResume |
 | Kenwood Dnx MTP | 0b67:0220 | experimental | supportsGetPartialObject, disableWriteResume |
 | Kenwood Excelon MTP | 0b67:0230 | experimental | supportsGetPartialObject, disableWriteResume |
@@ -4830,7 +4827,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Rigol Ds1054z MTP | 1ab1:0514 | experimental | supportsGetPartialObject, disableWriteResume |
 | Rigol Mso5000 MTP | 1ab1:0515 | experimental | supportsGetPartialObject, disableWriteResume |
 | Rigol Dg4000 MTP | 1ab1:0516 | experimental | supportsGetPartialObject, disableWriteResume |
-| Keysight Dsox MTP | 0957:0a07 | experimental | supportsGetPartialObject, disableWriteResume |
 | Keysight Edux MTP | 0957:0a08 | experimental | supportsGetPartialObject, disableWriteResume |
 | Tektronix Tbs2000 MTP | 0699:0368 | experimental | supportsGetPartialObject, disableWriteResume |
 | Tektronix Mso2 MTP | 0699:0369 | experimental | supportsGetPartialObject, disableWriteResume |
@@ -4877,9 +4873,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Lenovo Tab P12 Gen2 | 17ef:7e18 | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Lenovo Yoga Tab 13 | 17ef:7d88 | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Lenovo Yoga Tab 11 | 17ef:7d87 | community | supportsGetObjectPropList, supportsGetPartialObject |
-| Samsung Galaxy Tab S10 Ultra | 04e8:6939 | community | supportsGetObjectPropList, supportsGetPartialObject |
-| Samsung Galaxy Tab S10 Fe | 04e8:693a | community | supportsGetObjectPropList, supportsGetPartialObject |
-| Samsung Galaxy Tab S9 Fe Plus Alt 6b18a | 04e8:693b | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Samsung Galaxy Tab A9 Lite | 04e8:693c | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Samsung Galaxy Tab S10 Plus Alt | 04e8:693d | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Xiaomi Pad 6 Max | 2717:0671 | community | supportsGetObjectPropList, supportsGetPartialObject |
@@ -4891,8 +4884,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Amazon Fire Hd8 2024 | 1949:0018 | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Amazon Fire Max 11 2024 0808a | 1949:080b | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Amazon Fire 7 2024 | 1949:080c | community | supportsGetObjectPropList, supportsGetPartialObject |
-| Huawei Matepad 115 | 12d1:3808 | community | supportsGetObjectPropList, supportsGetPartialObject |
-| Huawei Matepad Pro 133 | 12d1:3809 | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Tcl Tab 11 | 1bbb:a40c | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Tcl Nxtpaper 11 | 1bbb:a40d | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Tcl Nxtpaper 14 | 1bbb:a40e | community | supportsGetObjectPropList, supportsGetPartialObject |
@@ -4945,26 +4936,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Caddx Peanut | 4b4e:0001 | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Caddx Walnut | 4b4e:0002 | community | supportsGetObjectPropList, supportsGetPartialObject |
 | Caddx Gofilm20 | 4b4e:0003 | community | supportsGetObjectPropList, supportsGetPartialObject |
-| Panasonic Lumix S1 | 04da:2388 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix S1r | 04da:238a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix S1h | 04da:238e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix S5 | 04da:2392 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix S5iix | 04da:239e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix Gh5s | 04da:2381 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix Gh5ii | 04da:238c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix Gh6 | 04da:2399 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Panasonic Lumix Gh7 | 04da:23a3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix G9 | 04da:2378 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix G9ii | 04da:23a1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix G100 | 04da:2394 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix Gx9 | 04da:2382 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix Gx800 | 04da:237e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix Lx100ii | 04da:2384 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix Fz1000ii | 04da:238b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix Fz80 | 04da:2376 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Panasonic Lumix Fz80d | 04da:23a5 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix Tz200 | 04da:2387 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Panasonic Lumix Tz95 | 04da:2385 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Panasonic Lumix Tz220 | 04da:23a7 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Phase One Iq4 150mp | 1b1e:0200 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
 | Phase One Iq4 100mp Trichromatic | 1b1e:0201 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
@@ -5348,7 +5321,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Sound Devices Mixpre 10 Ii | 2af0:0006 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
 | Thinkware U3000 | 1eac:0700 | ⚪ proposed | — |
 | Vantrue N2pro | 0603:f007 | ⚪ proposed | — |
-| Garmin Dashcam Mini2 Lte | 091e:2464 | ⚪ proposed | — |
 | Viofo A129pro Duo | 0c45:a807 | ⚪ proposed | — |
 | Blackvue Dr590w 2ch | 0603:d592 | ⚪ proposed | — |
 | Blackvue Dr750x Plus | 0603:d752 | ⚪ proposed | — |
@@ -9324,21 +9296,21 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Sony Fx3 | 054c:12a1 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Sony Fx30 | 054c:12a2 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Sony A7s Iii | 054c:12a3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X T5 | 04cb:314 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X S20 | 04cb:315 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X H2s | 04cb:316 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X H2 | 04cb:317 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm Gfx100 Ii | 04cb:318 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm Gfx100s Ii | 04cb:319 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X T50 | 04cb:31a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X S10 | 04cb:31b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X E4 | 04cb:31c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X100vi | 04cb:31d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X100v | 04cb:31e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm Gfx50s Ii | 04cb:31f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X Pro3 | 04cb:320 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X T4 | 04cb:321 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Fujifilm X T30 Ii | 04cb:322 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X T5 | 04cb:0314 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X S20 | 04cb:0315 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X H2s | 04cb:0316 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X H2 | 04cb:0317 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm Gfx100 Ii | 04cb:0318 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm Gfx100s Ii | 04cb:0319 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X T50 | 04cb:031a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X S10 | 04cb:031b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X E4 | 04cb:031c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X100vi | 04cb:031d | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X100v | 04cb:031e | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm Gfx50s Ii | 04cb:031f | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X Pro3 | 04cb:0320 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X T4 | 04cb:0321 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
+| Fujifilm X T30 Ii | 04cb:0322 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Panasonic S5 Iix | 04da:401a | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Panasonic S5 Ii | 04da:401b | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Panasonic Gh7 | 04da:401c | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
@@ -9349,16 +9321,16 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Panasonic Gh6 | 04da:4021 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Panasonic G100 | 04da:4022 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
 | Panasonic Fz1000 Ii | 04da:4023 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList, disableWriteResume |
-| Gopro Hero13 Black | 2672:73 | ⚪ proposed | — |
-| Gopro Hero12 Black | 2672:74 | ⚪ proposed | — |
-| Gopro Hero11 Mini | 2672:75 | ⚪ proposed | — |
-| Gopro Max | 2672:76 | ⚪ proposed | — |
-| Gopro Hero13 White | 2672:77 | ⚪ proposed | — |
-| Gopro Hero11 Black | 2672:78 | ⚪ proposed | — |
-| Gopro Hero10 Black | 2672:79 | ⚪ proposed | — |
-| Gopro Hero9 Black | 2672:7a | ⚪ proposed | — |
-| Gopro Hero13 Creator | 2672:7b | ⚪ proposed | — |
-| Gopro Hero12 Creator | 2672:7c | ⚪ proposed | — |
+| Gopro Hero13 Black | 2672:0073 | ⚪ proposed | — |
+| Gopro Hero12 Black | 2672:0074 | ⚪ proposed | — |
+| Gopro Hero11 Mini | 2672:0075 | ⚪ proposed | — |
+| Gopro Max | 2672:0076 | ⚪ proposed | — |
+| Gopro Hero13 White | 2672:0077 | ⚪ proposed | — |
+| Gopro Hero11 Black | 2672:0078 | ⚪ proposed | — |
+| Gopro Hero10 Black | 2672:0079 | ⚪ proposed | — |
+| Gopro Hero9 Black | 2672:007a | ⚪ proposed | — |
+| Gopro Hero13 Creator | 2672:007b | ⚪ proposed | — |
+| Gopro Hero12 Creator | 2672:007c | ⚪ proposed | — |
 | Dji Osmo Action 5 Pro | 2ca3:102b | ⚪ proposed | — |
 | Dji Osmo Pocket 3 | 2ca3:102c | ⚪ proposed | — |
 | Dji Action 4 | 2ca3:102d | ⚪ proposed | — |
@@ -9369,11 +9341,11 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Dji Action 2 | 2ca3:1032 | ⚪ proposed | — |
 | Dji Osmo Action | 2ca3:1033 | ⚪ proposed | — |
 | Dji Osmo Pocket 3 Creator | 2ca3:1034 | ⚪ proposed | — |
-| Insta360 X4 | 2e1a:29 | ⚪ proposed | — |
-| Insta360 Ace Pro 2 | 2e1a:2a | ⚪ proposed | — |
-| Insta360 Go 3s | 2e1a:2b | ⚪ proposed | — |
-| Insta360 Flow 2 Pro | 2e1a:2c | ⚪ proposed | — |
-| Insta360 One X3 | 2e1a:2d | ⚪ proposed | — |
+| Insta360 X4 | 2e1a:0029 | ⚪ proposed | — |
+| Insta360 Ace Pro 2 | 2e1a:002a | ⚪ proposed | — |
+| Insta360 Go 3s | 2e1a:002b | ⚪ proposed | — |
+| Insta360 Flow 2 Pro | 2e1a:002c | ⚪ proposed | — |
+| Insta360 One X3 | 2e1a:002d | ⚪ proposed | — |
 | Samsung Galaxy S24 Fe | 04e8:e220 | experimental | — |
 | Samsung Galaxy S24 Ultra | 04e8:e221 | experimental | — |
 | Samsung Galaxy S24 Plus | 04e8:e222 | experimental | — |
@@ -10311,10 +10283,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Lattice Certuspro Nx Evn | 1204:0003 | ⚪ proposed | — |
 | Lattice Machxo3d Evn | 1204:0004 | ⚪ proposed | — |
 | Lattice Ecp5 Versa | 1204:0005 | ⚪ proposed | — |
-| Gopro Hero11 Mini | 2672:0073 | ⚪ proposed | — |
-| Gopro Max 2 | 2672:0074 | ⚪ proposed | — |
-| Gopro Hero 2023 | 2672:0075 | ⚪ proposed | — |
-| Gopro Hero12 Black Creator | 2672:0076 | ⚪ proposed | — |
 | Dji Osmo Action 5 Pro | 2ca3:0070 | ⚪ proposed | — |
 | Dji Osmo Pocket 3 | 2ca3:0071 | ⚪ proposed | — |
 | Dji Osmo Action 4 | 2ca3:0072 | ⚪ proposed | — |
@@ -10405,7 +10373,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Pimax 8kx | 0b9c:0002 | ⚪ proposed | — |
 | Pimax Crystal | 0b9c:0003 | ⚪ proposed | — |
 | Pimax Crystal Light | 0b9c:0004 | ⚪ proposed | — |
-| Bigscreen Beyond | 3592:0001 | ⚪ proposed | — |
 | Varjo Xr 4 | 3462:0001 | ⚪ proposed | — |
 | Varjo Aero | 3462:0002 | ⚪ proposed | — |
 | Varjo Xr 3 | 3462:0003 | ⚪ proposed | — |
@@ -13454,7 +13421,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Panasonic Toughbook Fz A3 | 04da:0401 | community | — |
 | Blackview Tab 18 | 2d95:b001 | community | — |
 | Doogee T30 Ultra | 2d99:d010 | community | — |
-| Teclast T65 Max T650 | 2d9a:t650 | community | — |
+| Teclast T65 Max T650 | 2d9a:0650 | community | — |
 | Fiio M23 | 2972:0a23 | community | — |
 | Fiio M15s | 2972:0a15 | community | — |
 | Fiio M5 | 2972:0a05 | community | — |
@@ -13686,8 +13653,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Onn 4k Pro | 2eb1:0701 | community | — |
 | Tivo Stream 4k | 2eb2:0801 | community | — |
 | Formuler Z11 Pro Max | 2eb3:0901 | community | — |
-| Mecool Km2 Plus | 2eb4b:0a01 | community | — |
-| Dune Hd Homatics Box R | 2eb5b:0b01 | community | — |
+| Mecool Km2 Plus | 2eb4:0a01 | community | — |
+| Dune Hd Homatics Box R | 2eb5:0b01 | community | — |
 | Reolink Argus 4 Pro | 2eb4:0401 | community | — |
 | Eufy S350 | 2eb5:0501 | community | — |
 | Arlo Ultra 2 Xl | 2eb6:0601 | community | — |
