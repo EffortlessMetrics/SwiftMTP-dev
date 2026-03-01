@@ -6,11 +6,10 @@ This document captures **repeatable** performance results for SwiftMTP across MT
 
 | Device | VID:PID | Status | Read | Write | Notes |
 |--------|---------|--------|------|-------|-------|
-| Google Pixel 7 | 18d1:4ee1 | Experimental | N/A | N/A | macOS Tahoe 26 bulk timeout |
-| OnePlus 3T | 2a70:f003 | Stable (probe/read) | N/A | N/A | Probe path hardened (no misaligned-pointer trap) |
-| Xiaomi Mi Note 2 | 2717:ff10 | Stable | Pending | Pending | DEVICE_BUSY handling verified |
-| Samsung Galaxy S21 | 04e8:6860 | Experimental | 15.8 MB/s | 12.4 MB/s | Vendor-specific interface, conservative tuning |
-| Canon EOS R5 | 04a9:3196 | Known | 45.6 MB/s | 28.9 MB/s | PTP-derived |
+| Google Pixel 7 | 18d1:4ee1 | Blocked | N/A | N/A | macOS Tahoe 26 bulk timeout |
+| OnePlus 3T | 2a70:f003 | Partial (probe only) | N/A | N/A | Probe path hardened (no misaligned-pointer trap) |
+| Xiaomi Mi Note 2 | 2717:ff10 | Partial — only device with real transfer data | Pending | Pending | DEVICE_BUSY handling verified |
+| Samsung Galaxy S7 (SM-G930W8) | 04e8:6860 | Not Working | N/A | N/A | Handshake fails after USB claim |
 
 ### Connected Device Lab Runs
 
@@ -210,42 +209,6 @@ swift run swiftmtp --real-only mirror ~/PhoneBackup --include "DCIM/**" --out lo
 
 ---
 
-### Samsung Galaxy S21 (Android 13)
-
-| Metric | Value | Status |
-|--------|-------|--------|
-| VID:PID | 04e8:6860 | |
-| USB Speed | High-Speed (USB 2.0) | |
-| Read Speed | 15.8 MB/s (1GB, 63.3s) | ✅ |
-| Write Speed | 12.4 MB/s (1GB, 80.6s) | ✅ |
-| Resume Read | ✅ Full | |
-| Resume Write | ❌ Single-pass | |
-
-**Notes:**
-- Limited by USB 2.0 speed
-- Partial MTP implementation (missing SendPartialObject)
-- 4.1s enumeration time, 892 objects
-
----
-
-### Canon EOS R5 (PTP/MTP Mode)
-
-| Metric | Value | Status |
-|--------|-------|--------|
-| VID:PID | 04a9:3196 | |
-| USB Speed | SuperSpeed (USB 3.0) | |
-| Read Speed | 45.6 MB/s (1GB, 21.9s) | ✅ |
-| Write Speed | 28.9 MB/s (1GB, 34.6s) | ✅ |
-| Resume | Limited (PTP-based) | ⚠️ |
-
-**Notes:**
-- PTP-derived MTP implementation
-- Excellent raw transfer speeds
-- Large file counts typical
-- Single-pass writes only
-
----
-
 ## How to Run Benchmarks
 
 ### Using the Benchmark Script (Recommended)
@@ -394,8 +357,8 @@ swift run swiftmtp --real-only mirror ~/PhoneBackup \
 | Pixel 7 | N/A (blocked) | N/A (blocked) | N/A | N/A |
 | OnePlus 3T | ✅ | ✅ | ✅ Full | ✅ Full |
 | Xiaomi Mi Note 2 | ✅ | ✅ | ✅ Full | ✅ Full |
-| Galaxy S21 | ✅ | ❌ | ✅ Full | ❌ Single-pass |
-| Canon EOS R5 | ⚠️ PTP | ❌ | ⚠️ Limited | ❌ Single-pass |
+
+> **Note**: Only the Xiaomi Mi Note 2 (ff10) has completed real file transfers via SwiftMTP. Operation support for other devices is based on MTP capability reporting, not validated transfers.
 
 ---
 
@@ -403,11 +366,10 @@ swift run swiftmtp --real-only mirror ~/PhoneBackup \
 
 | Device | VID:PID | Status | Key Quirks |
 |--------|---------|--------|------------|
-| Google Pixel 7 | 18d1:4ee1 | Experimental | Bulk timeout on macOS 26 |
-| OnePlus 3T | 2a70:f003 | Stable | Dual interface, 200ms stabilize |
-| Xiaomi Mi Note 2 | 2717:ff10 | Stable | DEVICE_BUSY, 250-500ms delay |
-| Samsung Galaxy S21 | 04e8:6860 | Known | USB 2.0, partial MTP |
-| Canon EOS R5 | 04a9:3196 | Known | PTP-derived, limited MTP |
+| Google Pixel 7 | 18d1:4ee1 | Blocked | Bulk timeout on macOS 26 |
+| OnePlus 3T | 2a70:f003 | Partial | Dual interface, 200ms stabilize; absent from recent lab runs |
+| Xiaomi Mi Note 2 | 2717:ff10 | Partial | DEVICE_BUSY, 250-500ms delay; only device with real transfer data |
+| Samsung Galaxy S7 | 04e8:6860 | Not Working | Storage enumeration fails after USB claim |
 
 ---
 

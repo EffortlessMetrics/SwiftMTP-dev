@@ -21,7 +21,7 @@ Current bring-up status for Google Pixel 7 (`VID:PID 18d1:4ee1`).
 | Interface | class `0x06`, subclass `0x01`, protocol `0x01` |
 | Endpoints | IN `0x81`, OUT `0x01`, EVT `0x82` |
 | Quirk Profile | `google-pixel-7-4ee1` |
-| Status | Experimental |
+| Status | Blocked |
 
 ## Evidence
 

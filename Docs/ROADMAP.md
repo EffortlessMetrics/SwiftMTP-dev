@@ -48,8 +48,8 @@ Minimum expectations for each item:
 
 Primary outcome: reduce high-severity real-device failures and make first-line failures actionable.
 
-- [x] Resolve Pixel 7 Tahoe 26 bulk-transfer timeout path (control-plane succeeds, bulk path times out)
-- [x] Stabilize OnePlus 3T `SendObject` / `0x201D` large-write behavior
+- [ ] Resolve Pixel 7 Tahoe 26 bulk-transfer timeout path — documented root cause and troubleshooting; device remains blocked
+- [ ] Stabilize OnePlus 3T `SendObject` / `0x201D` large-write behavior — documented workaround; device absent from recent lab runs
 - [x] Improve first-line error messages for `probe`, `collect`, and write-path operations
 - [x] Refresh per-device behavior notes in `Docs/Troubleshooting.md` and device pages
 
@@ -113,7 +113,7 @@ Sprint exit criteria:
 - [x] Multi-device parallel transfer support
 - [x] FileProvider write operations (macOS 26 Finder integration)
 - [x] Extended MTP event handling (storageAdded/Removed, objectInfoChanged, unknown)
-- [x] Pixel 7 and OnePlus write/open-path stabilization complete
+- [ ] Pixel 7 and OnePlus write/open-path stabilization — troubleshooting documented, transfers not yet working
 - [x] Submission and troubleshooting workflow hardening complete
 - [x] CI/test gate documentation and execution consolidated
 

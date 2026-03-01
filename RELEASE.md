@@ -9,10 +9,12 @@ This runbook describes how to prepare and ship SwiftMTP releases in the current 
 - Applies to `v2.x.y` patch releases and `v2.x.0` minor releases.
 - Assumes release artifacts are produced by GitHub Actions (`.github/workflows/release.yml`).
 
-## Current RC State
+## Current State
 
-- **Quirks database**: 20,040 entries across 1,157 VIDs and 62 categories
-- **Test suite**: 1,920+ test cases, 0 failures
+Note: SwiftMTP is in early development. Metrics below reflect mock-based test coverage, not real-device validation.
+
+- **Quirks database**: 20,040 research-based entries (sourced from libmtp/vendor specs; 1 device validated with real transfers)
+- **Test suite**: 1,920+ test cases, 0 failures (using in-memory mock devices)
 - **Gated module coverage**: 100% on SwiftMTPQuirks, SwiftMTPStore, SwiftMTPSync, SwiftMTPObservability
 - **Milestones captured**: 15K → 16K → 17K → 18K → 19K → 20K
 

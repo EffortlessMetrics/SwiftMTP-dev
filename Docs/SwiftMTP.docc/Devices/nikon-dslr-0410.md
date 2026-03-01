@@ -2,6 +2,8 @@
 
 Nikon D-series DSLR and Z-series mirrorless cameras in MTP/PTP mode.
 
+**Note**: This profile is based on PTP/MTP protocol specs. This device has never been connected to SwiftMTP. Contributions from Nikon owners welcome.
+
 ## Device Information
 
 | Field | Value |
@@ -75,6 +77,6 @@ export SWIFTMTP_OVERALL_DEADLINE_MS=300000
 
 ## Provenance
 
-- **Status**: Experimental (profile contributed by community)
-- **Tested body**: Nikon D3200 (04B0:0410)
+- **Status**: Research Only — never connected to SwiftMTP
+- **Reference body**: Nikon D3200 (04B0:0410) — profile based on PTP/MTP specs, not tested with SwiftMTP
 - **Date**: 2025-02-25

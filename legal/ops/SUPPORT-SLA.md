@@ -17,14 +17,12 @@
 - **Support Channels:** Email, Slack, Phone
 
 ### Enterprise
-- **Hours:** 24x7
-- **Response Time:** 2 hours for P1 issues
-- **Fixes:** P1 hotfixes, advisory help for App Store submissions
-- **Support Channels:** Dedicated Slack, Phone, Video
+- Not yet available. SwiftMTP is in early development with limited real-device testing.
+- Contact git@effortlesssteven.com for future availability.
 
 ## Severities
 
-- **P1 (Critical):** Production outage, data loss, security breach
+- **P1 (Critical):** Data loss, security breach, complete functionality block
 - **P2 (Major):** Core function degraded, major feature broken
 - **P3 (Minor):** Non-critical function affected, workaround available
 - **P4 (Info):** Questions, feature requests, general guidance
