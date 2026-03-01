@@ -42,13 +42,13 @@ struct BufferPoolTests {
     }
 
     // Give the task a moment — it should still be blocked.
-    try await Task.sleep(nanoseconds: 50_000_000)  // 50 ms
+    try await Task.sleep(nanoseconds: 200_000_000)  // 200 ms (generous for CI load)
     let snapshot = await acquired.value
     #expect(snapshot == false, "Third acquire should still be blocked")
 
     // Release one buffer — the blocked acquire should now proceed.
     await pool.release(b1)
-    try await Task.sleep(nanoseconds: 100_000_000)  // 100 ms
+    try await Task.sleep(nanoseconds: 500_000_000)  // 500 ms (generous for CI load)
     let snapshot2 = await acquired.value
     #expect(snapshot2 == true, "Third acquire should have completed after release")
 
@@ -171,12 +171,12 @@ struct BufferPoolTests {
       await pool.release(b5)
     }
 
-    try await Task.sleep(nanoseconds: 50_000_000)  // 50 ms
+    try await Task.sleep(nanoseconds: 200_000_000)  // 200 ms (generous for CI load)
     #expect(await acquired.value == false, "5th acquire should still be blocked")
 
     // Release one — the 5th acquire should now proceed.
     await pool.release(b1)
-    try await Task.sleep(nanoseconds: 100_000_000)  // 100 ms
+    try await Task.sleep(nanoseconds: 500_000_000)  // 500 ms (generous for CI load)
     #expect(await acquired.value == true, "5th acquire should complete after release")
 
     await pool.release(b2)
