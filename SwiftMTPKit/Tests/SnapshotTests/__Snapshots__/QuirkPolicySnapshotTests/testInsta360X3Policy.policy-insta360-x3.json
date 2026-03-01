@@ -1,0 +1,14 @@
+{
+  "flagsSource" : "quirk",
+  "ioTimeoutMs" : 10000,
+  "maxChunkBytes" : 1048576,
+  "prefersPropListEnumeration" : true,
+  "quirkID" : "insta360-x3-000c",
+  "requireStabilization" : false,
+  "requiresKernelDetach" : false,
+  "resetOnOpen" : false,
+  "skipPTPReset" : false,
+  "stabilizeMs" : 200,
+  "supportsGetObjectPropList" : true,
+  "supportsPartialRead64" : true
+}

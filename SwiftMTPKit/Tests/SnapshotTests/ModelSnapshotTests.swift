@@ -389,12 +389,12 @@ final class ModelSnapshotTests: XCTestCase {
       distribution[cat, default: 0] += 1
     }
     // Verify we have enough categories and the expected shape
-    XCTAssertGreaterThanOrEqual(distribution.count, 25, "Expected at least 25 device categories")
-    XCTAssertGreaterThanOrEqual(distribution["phone"] ?? 0, 2000)
-    XCTAssertGreaterThanOrEqual(distribution["camera"] ?? 0, 800)
-    XCTAssertGreaterThanOrEqual(distribution["media-player"] ?? 0, 300)
-    XCTAssertGreaterThanOrEqual(distribution["e-reader"] ?? 0, 100)
-    XCTAssertGreaterThanOrEqual(distribution["gps-navigator"] ?? 0, 100)
+    XCTAssertGreaterThanOrEqual(distribution.count, 60, "Expected at least 60 device categories")
+    XCTAssertGreaterThanOrEqual(distribution["phone"] ?? 0, 5000)
+    XCTAssertGreaterThanOrEqual(distribution["camera"] ?? 0, 2400)
+    XCTAssertGreaterThanOrEqual(distribution["media-player"] ?? 0, 700)
+    XCTAssertGreaterThanOrEqual(distribution["e-reader"] ?? 0, 300)
+    XCTAssertGreaterThanOrEqual(distribution["gps-navigator"] ?? 0, 400)
   }
 
   // MARK: - LearnedProfile Snapshots

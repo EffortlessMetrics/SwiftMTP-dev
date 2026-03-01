@@ -94,7 +94,7 @@ final class QuirkPolicySnapshotTests: XCTestCase {
   func testQuirkDatabaseEntryCount() throws {
     let db = try QuirkDatabase.load()
     XCTAssertGreaterThanOrEqual(
-      db.entries.count, 222,
+      db.entries.count, 20_040,
       "QuirkDatabase has fewer entries than expected; was a batch of entries accidentally removed?"
     )
     assertSnapshot(
