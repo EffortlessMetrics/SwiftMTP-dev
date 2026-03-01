@@ -155,7 +155,7 @@ SwiftMTPKit/
 - Failure scenarios: timeout, busy, disconnected
 - Tests use XCTest with async/await support
 - `SwiftMTPTestKit` provides `VirtualMTPDevice` (in-memory MTP device) and `FaultInjectingLink` for deterministic failure injection
-- 15 test targets: CoreTests, TransportTests, IndexTests, FileProviderTests, ErrorHandlingTests, StoreTests, SyncTests, ScenarioTests, TestKitTests, IntegrationTests, XPCTests, ToolingTests, BDDTests, PropertyTests, SnapshotTests
+- 20 test targets: CoreTests, TransportTests, IndexTests, FileProviderTests, ErrorHandlingTests, StoreTests, SyncTests, ScenarioTests, TestKitTests, IntegrationTests, XPCTests, ToolingTests, BDDTests, PropertyTests, SnapshotTests, MTPEndianCodecTests, QuirksTests, ObservabilityTests, SwiftMTPCLITests, UITests
 - Coverage gating via `SwiftMTPKit/scripts/coverage_gate.py`
 
 ## Device Quirks System
