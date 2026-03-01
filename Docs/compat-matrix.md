@@ -1179,6 +1179,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Nextbase 522gw Alt | 2b24:1007 | ⚪ proposed | — |
 | Nextbase Duohd | 2b24:1008 | ⚪ proposed | — |
 | Garmin Dashcam55 | 091e:2458 | ⚪ proposed | — |
+| Garmin Dashcam | 091e:0003 | ⚪ proposed | — |
 | Garmin Dashcam65w | 091e:2459 | ⚪ proposed | — |
 | Garmin Dashcammini2 | 091e:245a | ⚪ proposed | — |
 | Garmin Dashcam67w | 091e:245b | ⚪ proposed | — |
@@ -2511,6 +2512,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Seek Thermal Shotpro | 289d:0011 | ⚪ proposed | — |
 | Tomtom Go 520 | 1390:0001 | ⚪ proposed | — |
 | Tomtom Runner Gps Watch | 1390:7474 | ⚪ proposed | — |
+| Tomtom Go 520 | 1390:7474 | ⚪ proposed | — |
 | Tomtom Bandit Action Cam | 1390:a001 | ⚪ proposed | — |
 | Tomtom Go 5200 | 1390:5456 | ⚪ proposed | — |
 | Tomtom Go Discover | 1390:5457 | ⚪ proposed | — |
