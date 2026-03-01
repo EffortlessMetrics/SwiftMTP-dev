@@ -20013,3 +20013,14 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Cayin N7 Dap USB | c50c:0012 | community | — |
 | Astell Kern Sp3000t Dap | c50c:0013 | community | — |
 | Astell Kern Ka5 Dongle Dap | c50c:0014 | experimental | — |
+| Adafruit Itsybitsy M4 MTP | 239a:802b | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Teensy 41 MTP | 16c0:04d1 | experimental | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Esp32 S3 Tinyusb MTP | 303a:8000 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Chromecast Google Tv Hd | 18d1:dd34 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Garmin Edge 1040 | 091e:4bfe | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Garmin Fenix 7 | 091e:4c3e | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Garmin Forerunner 965 | 091e:4c80 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Garmin Venu 3 | 091e:4ca0 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject, deleteObject |
+| Lenovo Smart Display | 17ef:7941 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
+| Pioneer Avh Car Headunit | 08e4:0160 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Kenwood Dmx Car Headunit | 0b28:0200 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
