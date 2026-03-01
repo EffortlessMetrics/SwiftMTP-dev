@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Post-RC Test Expansion (PRs #249–#273)
+
+> **Summary**: Waves 10–12 — test targets expanded from 15 to 20, total tests reach 3,490+ (verified via `swift test --list-tests`), 650+ device category corrections, and new resilience/data-integrity test suites added.
+
+#### Key Stats
+- **20,009+ device quirks** across 62+ categories
+- **3,490+ tests** across 20 test targets (up from 3,793+ claimed, now verified)
+- **0 test failures**
+- **5 new test targets**: ObservabilityTests, QuirksTests, SwiftMTPCLITests, MTPEndianCodecTests, ErrorHandlingTests
+
+#### Wave 10 — Test Infrastructure & Coverage (PRs #249–#258)
+- **ObservabilityTests**: New dedicated test target for SwiftMTPObservability module (PR #250)
+- **LiveIndexEdgeCaseTests**: SQLiteLiveIndex edge case coverage (PR #251)
+- **QuirksTests**: Dedicated test target for SwiftMTPQuirks module (PR #253)
+- **Inline protocol snapshot tests**: 70 inline protocol snapshot tests (PR #254)
+- **ErrorCascadeTests**: 60 tests for error propagation and cascading (PR #255)
+- **DeviceSubmissionTests**: Device contribution workflow tests (PR #256)
+- **Mutation testing harness**: Lightweight mutation testing and detection (PR #257)
+- **Performance benchmarks**: Benchmark tests for core subsystems (PR #258)
+- **Documentation honesty pass**: Updated remaining docs and artifacts (PR #252)
+- **RC release notes**: Comprehensive release notes and coverage stats (PR #249)
+
+#### Wave 11 — CLI Tests, BDD, Device Quirks (PRs #259–#268)
+- **CLI integration tests**: 35+ CLI tests using Swift Testing framework (PR #259)
+- **Camera quirks**: 18 camera entries improved with gphoto2-verified PID/behavior data (PR #260)
+- **Phone quirks**: 34 phone entries improved with researched MTP behavior data (PR #261)
+- **TSAN CI fix**: Bypass swiftpm-xctest-helper for TSAN to avoid DTXConnectionServices conflict (PR #262)
+- **BDD scenarios**: 32 new BDD scenarios for connection/transfer/quirk/error/index flows (PR #263)
+- **Tablet/e-reader fixes**: 251 tablet/e-reader device category and flag corrections (PR #264)
+- **Action camera/DAP/drone fixes**: 399 action camera, DAP, and drone category corrections (PR #265)
+- **DocC generator fix**: All quirks.json fields made optional for robustness (PR #266)
+- **XPC resilience tests**: 42 XPC resilience tests for protocol boundaries, service lifecycle, error propagation (PR #267)
+- **Sync edge case tests**: 47 Sync edge case and property tests (PR #268)
+
+#### Wave 12 — FileProvider, Index, Fixes (PRs #269–#273)
+- **FileProvider resilience tests**: 41 FileProvider resilience & edge-case tests (PR #269)
+- **Quirks categories**: Fix categories and add dev-board/IoT/automotive devices (PR #270)
+- **IndexDataIntegrityTests**: 33 tests covering SQLite edge cases, concurrency, and data validation (PR #271)
+- **Category reclassification test fixes**: Update 25 tests for category reclassifications (dap→audio-player, Kindle→tablet) (PR #272)
+- **Property test refactor**: Refactor e-reader/wearable kernel detach property tests (PR #273)
+
+---
+
 ### RC Validation Cycle (PRs #220–#248)
 
 > **Summary**: Comprehensive RC hardening — tests nearly doubled from ~1,900 to 3,793+, a real XPC bug was found and fixed, CI is fully operational across all surfaces, and zero test failures remain.
