@@ -143,16 +143,32 @@ final class SyncPropertyTests: XCTestCase {
   /// totalProcessed always equals downloaded + skipped + failed.
   func testSyncReportTotalProcessed() {
     property("totalProcessed should equal downloaded + skipped + failed")
-      <- forAll(SyncReportGenerator.arbitrary) { report in
-        report.totalProcessed == report.downloaded + report.skipped + report.failed
+      <- forAll(
+        Gen<Int>.choose((0, 1000)),
+        Gen<Int>.choose((0, 1000)),
+        Gen<Int>.choose((0, 100))
+      ) { downloaded, skipped, failed in
+        var report = MTPSyncReport()
+        report.downloaded = downloaded
+        report.skipped = skipped
+        report.failed = failed
+        return report.totalProcessed == report.downloaded + report.skipped + report.failed
       }
   }
 
   /// Success rate is between 0 and 100 inclusive.
   func testSyncReportSuccessRateRange() {
     property("successRate should be between 0 and 100")
-      <- forAll(SyncReportGenerator.arbitrary) { report in
-        report.successRate >= 0 && report.successRate <= 100
+      <- forAll(
+        Gen<Int>.choose((0, 1000)),
+        Gen<Int>.choose((0, 1000)),
+        Gen<Int>.choose((0, 100))
+      ) { downloaded, skipped, failed in
+        var report = MTPSyncReport()
+        report.downloaded = downloaded
+        report.skipped = skipped
+        report.failed = failed
+        return report.successRate >= 0 && report.successRate <= 100
       }
   }
 

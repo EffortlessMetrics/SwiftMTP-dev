@@ -163,9 +163,9 @@ final class IndexPropertyTests: XCTestCase {
         )
 
         let semaphore = DispatchSemaphore(value: 0)
-        var result = false
+        nonisolated(unsafe) var result = false
 
-        Task {
+        Task { @Sendable in
           do {
             try await index.upsertObjects([obj], deviceId: deviceId)
             let queried = try await index.object(deviceId: deviceId, handle: handle)
@@ -192,23 +192,22 @@ final class IndexPropertyTests: XCTestCase {
 
         let deviceId = "batch-device"
         let storageId: UInt32 = 0x00010001
-        var objects: [IndexedObject] = []
-        for i in 0..<count {
+        let objects: [IndexedObject] = (0..<count).map { i in
           let handle = UInt32(i + 1)
           let name = "file_\(i).dat"
-          objects.append(IndexedObject(
+          return IndexedObject(
             deviceId: deviceId, storageId: storageId, handle: handle,
             parentHandle: nil, name: name,
             pathKey: PathKey.normalize(storage: storageId, components: [name]),
             sizeBytes: UInt64(i * 1024), mtime: nil, formatCode: 0x3001,
             isDirectory: false, changeCounter: 0
-          ))
+          )
         }
 
         let semaphore = DispatchSemaphore(value: 0)
-        var result = false
+        nonisolated(unsafe) var result = false
 
-        Task {
+        Task { @Sendable in
           do {
             try await index.upsertObjects(objects, deviceId: deviceId)
             let children = try await index.children(
@@ -247,9 +246,9 @@ final class IndexPropertyTests: XCTestCase {
         )
 
         let semaphore = DispatchSemaphore(value: 0)
-        var result = false
+        nonisolated(unsafe) var result = false
 
-        Task {
+        Task { @Sendable in
           do {
             try await index.upsertObjects([obj], deviceId: deviceId)
             try await index.upsertObjects([obj], deviceId: deviceId)
@@ -289,9 +288,9 @@ final class IndexPropertyTests: XCTestCase {
         )
 
         let semaphore = DispatchSemaphore(value: 0)
-        var result = false
+        nonisolated(unsafe) var result = false
 
-        Task {
+        Task { @Sendable in
           do {
             try await index.upsertObjects([obj], deviceId: deviceId)
             try await index.removeObject(deviceId: deviceId, storageId: storageId, handle: handle)
@@ -321,9 +320,9 @@ final class IndexPropertyTests: XCTestCase {
         let deviceId = "counter-device"
 
         let semaphore = DispatchSemaphore(value: 0)
-        var result = false
+        nonisolated(unsafe) var result = false
 
-        Task {
+        Task { @Sendable in
           do {
             var counters: [Int64] = []
             for _ in 0..<iterations {
