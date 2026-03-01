@@ -11,11 +11,11 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Google Pixel 7 | 18d1:4ee1 | ✅ promoted | supportsGetObjectPropList, supportsGetPartialObject |
 | Canon EOS Rebel | 04a9:3139 | ✅ promoted | disableWriteResume |
 | Nikon DSLR | 04b0:0410 | ✅ promoted | disableWriteResume |
-| Samsung Galaxy MTP Adb | 04e8:685c | ✓ verified | — |
-| Google Nexus Pixel MTP Adb | 18d1:4ee2 | ✓ verified | — |
-| Google Pixel 3 4 | 18d1:4eed | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
+| Samsung Galaxy MTP Adb | 04e8:685c | ✓ verified | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject64, supportsGetPartialObject, disableWriteResume |
+| Google Nexus Pixel MTP Adb | 18d1:4ee2 | ✓ verified | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Google Pixel 3 4 | 18d1:4eed | experimental | supportsGetObjectPropList, preferGetObjectPropList |
 | Motorola Moto Eg MTP | 22b8:2e82 | ✓ verified | supportsGetObjectPropList, preferGetObjectPropList |
-| Motorola Moto Eg MTP Adb | 22b8:2e76 | ✓ verified | — |
+| Motorola Moto Eg MTP Adb | 22b8:2e76 | ✓ verified | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Sony Xperia Z | 0fce:0193 | ✓ verified | supportsGetObjectPropList, preferGetObjectPropList |
 | Sony Xperia Z3 | 0fce:01ba | ✓ verified | supportsGetObjectPropList, preferGetObjectPropList |
 | Sony Xperia Xz1 | 0fce:01f3 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
@@ -29,9 +29,9 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Nikon Z6 Z7 | 04b0:0441 | experimental | disableWriteResume |
 | Nikon Z6ii Z7ii | 04b0:0442 | ⚪ proposed | disableWriteResume |
 | Fujifilm X Series | 04cb:0104 | ⚪ proposed | disableWriteResume |
-| Oneplus 9 | 2a70:9011 | ⚪ proposed | supportsGetObjectPropList, preferGetObjectPropList |
-| Samsung Galaxy S20 S21 | 04e8:6866 | ⚪ proposed | — |
-| Samsung Galaxy Kies | 04e8:6877 | ⚪ proposed | — |
+| Oneplus 9 | 2a70:9011 | experimental | supportsGetObjectPropList, preferGetObjectPropList |
+| Samsung Galaxy S20 S21 | 04e8:6866 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject64, supportsGetPartialObject, disableWriteResume |
+| Samsung Galaxy Kies | 04e8:6877 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Lg V20 G5 G6 | 1004:61f1 | ⚪ proposed | — |
 | Lg G4 V10 | 1004:61f9 | ⚪ proposed | — |
 | Htc U11 U12 | 0bb4:0f91 | ⚪ proposed | — |
@@ -558,7 +558,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Mediatek Mt65xx MTP Adb | 0e8d:201d | ⚪ proposed | — |
 | Mediatek Wiko Sunny | 0e8d:4001 | ⚪ proposed | — |
 | Vivo Y21 Mediatek | 0e8d:ff00 | ⚪ proposed | — |
-| Oneplus 9 5g | 2a70:9012 | ⚪ proposed | — |
+| Oneplus 9 5g | 2a70:9012 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Asus Zenfone Go | 0b05:2008 | ⚪ proposed | — |
 | Asus Zenfone5 MTP | 0b05:5480 | ⚪ proposed | — |
 | Asus Zenfone6 MTP | 0b05:5490 | ⚪ proposed | — |
@@ -992,7 +992,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Oppo Findx3neo | 22d9:2779 | ⚪ proposed | — |
 | Oppo Reno6proplus | 22d9:277a | ⚪ proposed | — |
 | Oppo A95 | 22d9:277b | ⚪ proposed | — |
-| Oppo Findx5pro | 22d9:277c | ⚪ proposed | — |
+| Oppo Findx5pro | 22d9:277c | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Oppo A96 | 22d9:277d | ⚪ proposed | — |
 | Realme 3pro | 22d9:2780 | ⚪ proposed | — |
 | Realme 5pro | 22d9:2781 | ⚪ proposed | — |
@@ -1001,7 +1001,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Realme 8pro | 22d9:2784 | ⚪ proposed | — |
 | Realme 9proplus | 22d9:2785 | ⚪ proposed | — |
 | Realme Gt | 22d9:2786 | ⚪ proposed | — |
-| Realme Gt2pro | 22d9:2787 | ⚪ proposed | — |
+| Realme Gt2pro | 22d9:2787 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Realme C35 | 22d9:2788 | ⚪ proposed | — |
 | Oneplus N10 5g | 22d9:2789 | ⚪ proposed | — |
 | Vivo Y91i | 2d95:600c | ⚪ proposed | — |
@@ -1395,11 +1395,11 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Xiaomi Xiaomi12 | 2717:15b0 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Xiaomi12pro | 2717:15c0 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Xiaomi12tpro | 2717:15d0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi13 | 2717:15e0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi13pro | 2717:15f0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi14 | 2717:1600 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi14pro | 2717:1610 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Xiaomi14ultra | 2717:1620 | ⚪ proposed | useAndroidExtensions |
+| Xiaomi Xiaomi13 | 2717:15e0 | experimental | supportsGetObjectPropList, preferGetObjectPropList, useAndroidExtensions, supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Xiaomi Xiaomi13pro | 2717:15f0 | experimental | supportsGetObjectPropList, preferGetObjectPropList, useAndroidExtensions, supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Xiaomi Xiaomi14 | 2717:1600 | experimental | supportsGetObjectPropList, preferGetObjectPropList, useAndroidExtensions, supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Xiaomi Xiaomi14pro | 2717:1610 | experimental | supportsGetObjectPropList, preferGetObjectPropList, useAndroidExtensions, supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Xiaomi Xiaomi14ultra | 2717:1620 | experimental | supportsGetObjectPropList, preferGetObjectPropList, useAndroidExtensions, supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
 | Xiaomi Redminote5 | 2717:1700 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Redminote7 | 2717:1710 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Redminote8 | 2717:1720 | ⚪ proposed | useAndroidExtensions |
@@ -1407,18 +1407,18 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Xiaomi Redminote9pro | 2717:1740 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Redminote10 | 2717:1750 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Redminote10pro | 2717:1760 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote11 | 2717:1770 | ⚪ proposed | useAndroidExtensions |
+| Xiaomi Redminote11 | 2717:1770 | experimental | supportsGetObjectPropList, preferGetObjectPropList, useAndroidExtensions, supportsGetPartialObject |
 | Xiaomi Redminote11pro | 2717:1780 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote12 | 2717:1790 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Redminote13 | 2717:17a0 | ⚪ proposed | useAndroidExtensions |
+| Xiaomi Redminote12 | 2717:1790 | experimental | supportsGetObjectPropList, preferGetObjectPropList, useAndroidExtensions, supportsGetPartialObject |
+| Xiaomi Redminote13 | 2717:17a0 | experimental | supportsGetObjectPropList, preferGetObjectPropList, useAndroidExtensions, supportsGetPartialObject |
 | Xiaomi Redmi9 | 2717:17b0 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Redmi9a | 2717:17c0 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Redmi10 | 2717:17d0 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Redmi12 | 2717:17e0 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Redmi13c | 2717:17f0 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Pocox3 | 2717:1800 | ⚪ proposed | useAndroidExtensions |
+| Xiaomi Pocox3 | 2717:1800 | experimental | supportsGetObjectPropList, preferGetObjectPropList, useAndroidExtensions, supportsGetPartialObject |
 | Xiaomi Pocox3pro | 2717:1810 | ⚪ proposed | useAndroidExtensions |
-| Xiaomi Pocof3 | 2717:1820 | ⚪ proposed | useAndroidExtensions |
+| Xiaomi Pocof3 | 2717:1820 | experimental | supportsGetObjectPropList, preferGetObjectPropList, useAndroidExtensions, supportsGetPartialObject |
 | Xiaomi Pocom3 | 2717:1830 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Pocom4pro | 2717:1840 | ⚪ proposed | useAndroidExtensions |
 | Xiaomi Pocox4gt | 2717:1850 | ⚪ proposed | useAndroidExtensions |
@@ -1429,8 +1429,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Xiaomi Blackshark5pro | 2717:1920 | ⚪ proposed | useAndroidExtensions |
 | Samsung Galaxy S3 | 04e8:685e | ⚪ proposed | useAndroidExtensions |
 | Samsung Galaxy S4 | 04e8:685f | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S4 Adb | 04e8:6861 | ⚪ proposed | useAndroidExtensions |
-| Samsung Galaxy S5 | 04e8:6862 | ⚪ proposed | useAndroidExtensions |
+| Samsung Galaxy S4 Adb | 04e8:6861 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject, disableWriteResume, useAndroidExtensions |
+| Samsung Galaxy S5 | 04e8:6862 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject, disableWriteResume, useAndroidExtensions |
 | Samsung Galaxy S5 Adb | 04e8:6863 | ⚪ proposed | useAndroidExtensions |
 | Samsung Galaxy S6 | 04e8:6864 | ⚪ proposed | useAndroidExtensions |
 | Samsung Galaxy S6 Edge | 04e8:6865 | ⚪ proposed | useAndroidExtensions |
@@ -2030,7 +2030,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Sennheiser Hd450bt | 1395:006d | ⚪ proposed | — |
 | Sennheiser Hd560s | 1395:006e | ⚪ proposed | — |
 | Sennheiser Accentum | 1395:006f | ⚪ proposed | — |
-| Oppo Find N3flip | 22d9:276f | ⚪ proposed | useAndroidExtensions |
+| Oppo Find N3flip | 22d9:276f | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject, useAndroidExtensions |
 | Mkors Access Gen5e | 2ba0:0008 | ⚪ proposed | — |
 | Mkors Access Gen6 | 2ba0:0009 | ⚪ proposed | — |
 | Diesel Fullguard3 | 2ba0:000a | ⚪ proposed | — |
@@ -4280,9 +4280,9 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Iqoo Z7 | 2d95:6029 | ⚪ proposed | — |
 | Iqoo Z7x | 2d95:602a | ⚪ proposed | — |
 | Realme 11 Pro | 22d9:278c | ⚪ proposed | — |
-| Realme 11 Pro Plus | 22d9:278d | ⚪ proposed | — |
+| Realme 11 Pro Plus | 22d9:278d | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Realme Gt5 | 22d9:278e | ⚪ proposed | — |
-| Realme Gt5 Pro | 22d9:278f | ⚪ proposed | — |
+| Realme Gt5 Pro | 22d9:278f | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Realme Narzo 60 | 22d9:2790 | ⚪ proposed | — |
 | Realme Narzo 60 Pro | 22d9:2791 | ⚪ proposed | — |
 | Realme C55 | 22d9:2792 | ⚪ proposed | — |
@@ -9483,9 +9483,9 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Ulefone Power Armor 19t | 0e8d:e50d | experimental | — |
 | Oukitel Wp28 | 0e8d:e50e | experimental | — |
 | Oukitel Rt7 Titan | 0e8d:e50f | experimental | — |
-| Nothing Phone 2a | 2970:e510 | experimental | — |
-| Nothing Phone 2 | 2970:e511 | experimental | — |
-| Nothing Phone 1 | 2970:e512 | experimental | — |
+| Nothing Phone 2a | 2970:e510 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nothing Phone 2 | 2970:e511 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nothing Phone 1 | 2970:e512 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Honor Magic6 Pro | 12d1:503b | experimental | — |
 | Honor Magic6 | 12d1:503c | experimental | — |
 | Honor 200 Lite | 12d1:503d | experimental | — |
@@ -10850,11 +10850,11 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Iqoo Z8 5g | 2d95:8057 | community | — |
 | Iqoo Z9 Turbo | 2d95:8058 | community | — |
 | Iqoo Z9x | 2d95:8059 | community | — |
-| Nothing Phone 1 | 2970:0014 | community | — |
-| Nothing Phone 2 | 2970:0015 | community | — |
-| Nothing Phone 2a | 2970:0016 | community | — |
-| Nothing Phone 2a Plus | 2970:0017 | community | — |
-| Nothing Cmf Phone 1 | 2970:0018 | community | — |
+| Nothing Phone 1 | 2970:0014 | community | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nothing Phone 2 | 2970:0015 | community | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nothing Phone 2a | 2970:0016 | community | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nothing Phone 2a Plus | 2970:0017 | community | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
+| Nothing Cmf Phone 1 | 2970:0018 | community | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Nothing Phone 1 Adb | 2970:0019 | community | — |
 | Fairphone 3 | 2ae5:0001 | community | — |
 | Fairphone 3 Plus | 2ae5:0002 | community | — |
