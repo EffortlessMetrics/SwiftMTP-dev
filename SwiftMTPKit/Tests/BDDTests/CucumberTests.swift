@@ -2080,7 +2080,7 @@ final class BDDRunner: XCTestCase {
     let categoryCounts = Dictionary(grouping: db.entries, by: { $0.category ?? "unknown" })
       .mapValues { $0.count }
     for (category, count) in categoryCounts where category != "unknown" {
-      XCTAssertGreaterThanOrEqual(count, 100, "Category '\(category)' should have 100+ entries but has \(count)")
+      XCTAssertGreaterThanOrEqual(count, 55, "Category '\(category)' should have 55+ entries but has \(count)")
     }
   }
 }

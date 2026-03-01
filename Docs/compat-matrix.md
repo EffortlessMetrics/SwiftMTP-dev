@@ -1179,6 +1179,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Nextbase 522gw Alt | 2b24:1007 | ⚪ proposed | — |
 | Nextbase Duohd | 2b24:1008 | ⚪ proposed | — |
 | Garmin Dashcam55 | 091e:2458 | ⚪ proposed | — |
+| Garmin Dashcam | 091e:0003 | ⚪ proposed | — |
 | Garmin Dashcam65w | 091e:2459 | ⚪ proposed | — |
 | Garmin Dashcammini2 | 091e:245a | ⚪ proposed | — |
 | Garmin Dashcam67w | 091e:245b | ⚪ proposed | — |
@@ -2511,6 +2512,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Seek Thermal Shotpro | 289d:0011 | ⚪ proposed | — |
 | Tomtom Go 520 | 1390:0001 | ⚪ proposed | — |
 | Tomtom Runner Gps Watch | 1390:7474 | ⚪ proposed | — |
+| Tomtom Go 520 | 1390:7474 | ⚪ proposed | — |
 | Tomtom Bandit Action Cam | 1390:a001 | ⚪ proposed | — |
 | Tomtom Go 5200 | 1390:5456 | ⚪ proposed | — |
 | Tomtom Go Discover | 1390:5457 | ⚪ proposed | — |
@@ -13454,7 +13456,7 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Panasonic Toughbook Fz A3 | 04da:0401 | community | — |
 | Blackview Tab 18 | 2d95:b001 | community | — |
 | Doogee T30 Ultra | 2d99:d010 | community | — |
-| Teclast T65 Max T650 | 2d9a:t650 | community | — |
+| Teclast T65 Max T650 | 2d9a:0650 | community | — |
 | Fiio M23 | 2972:0a23 | community | — |
 | Fiio M15s | 2972:0a15 | community | — |
 | Fiio M5 | 2972:0a05 | community | — |
@@ -13686,8 +13688,8 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Onn 4k Pro | 2eb1:0701 | community | — |
 | Tivo Stream 4k | 2eb2:0801 | community | — |
 | Formuler Z11 Pro Max | 2eb3:0901 | community | — |
-| Mecool Km2 Plus | 2eb4b:0a01 | community | — |
-| Dune Hd Homatics Box R | 2eb5b:0b01 | community | — |
+| Mecool Km2 Plus | 2eb4:0a01 | community | — |
+| Dune Hd Homatics Box R | 2eb5:0b01 | community | — |
 | Reolink Argus 4 Pro | 2eb4:0401 | community | — |
 | Eufy S350 | 2eb5:0501 | community | — |
 | Arlo Ultra 2 Xl | 2eb6:0601 | community | — |
