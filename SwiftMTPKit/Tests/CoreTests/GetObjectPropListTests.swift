@@ -60,9 +60,7 @@ final class GetObjectPropListTests: XCTestCase {
   func testGetObjectPropList_fallsBackWhenQuirkDisabled() async throws {
     // VirtualMTPLink with pixel7 config has known objects in storage
     let config = VirtualDeviceConfig.pixel7
-    guard let storage = config.storages.first else {
-      throw XCTSkip("pixel7 config has no storages")
-    }
+    let storage = try XCTUnwrap(config.storages.first, "pixel7 config must have storages")
 
     // Create a CapturingLink so we can verify getObjectPropList (0x9805) was NOT called
     let capturing = CapturingLink(inner: VirtualMTPLink(config: config))
@@ -76,9 +74,7 @@ final class GetObjectPropListTests: XCTestCase {
 
     // We call via the link directly to avoid the full session open
     let handles = try await capturing.getObjectHandles(storage: storage.id, parent: nil)
-    guard !handles.isEmpty else {
-      throw XCTSkip("pixel7 config has no objects")
-    }
+    XCTAssertFalse(handles.isEmpty, "pixel7 config must have objects")
     let infos = try await capturing.getObjectInfos(handles)
 
     // The fallback path returns objects — verify they are non-empty
