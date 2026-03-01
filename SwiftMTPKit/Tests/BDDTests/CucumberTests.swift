@@ -505,7 +505,8 @@ final class BDDRunner: XCTestCase {
     let db = try QuirkDatabase.load()
     guard let q = db.match(vid: 0x2237, pid: 0x418c, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
     else { XCTFail("kobo-clara-2e-418c expected in 20K quirks DB"); return }
-    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+    // E-readers don't need kernel detach on macOS
+    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach)
   }
 
   func testWave14BooxTabUltra() throws {
