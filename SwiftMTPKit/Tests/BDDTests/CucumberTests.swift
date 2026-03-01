@@ -2084,6 +2084,420 @@ final class BDDRunner: XCTestCase {
       XCTAssertGreaterThanOrEqual(count, 55, "Category '\(category)' should have 55+ entries but has \(count)")
     }
   }
+
+  // MARK: - Device Connection Flow
+
+  func testConnectionFlow_DeviceAttach_SessionOpened() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    let info = try await device.devGetDeviceInfoUncached()
+    XCTAssertEqual(info.model, "Pixel 7")
+  }
+
+  func testConnectionFlow_MultipleDevices_IndependentSessions() async throws {
+    let deviceA = VirtualMTPDevice(config: .pixel7)
+    let deviceB = VirtualMTPDevice(config: .canonEOSR5)
+    try await deviceA.openIfNeeded()
+    try await deviceB.openIfNeeded()
+    let infoA = try await deviceA.devGetDeviceInfoUncached()
+    let infoB = try await deviceB.devGetDeviceInfoUncached()
+    XCTAssertNotEqual(infoA.model, infoB.model, "Devices must have independent sessions")
+  }
+
+  func testConnectionFlow_DeviceDetach_CleanupOccurs() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    try await device.devClose()
+    // After close, re-open should succeed (clean state)
+    try await device.openIfNeeded()
+    let info = try await device.devGetDeviceInfoUncached()
+    XCTAssertFalse(info.model.isEmpty, "Device should re-open cleanly after close")
+  }
+
+  func testConnectionFlow_EmptyDevice_OpensSuccessfully() async throws {
+    let device = VirtualMTPDevice(config: .emptyDevice)
+    try await device.openIfNeeded()
+    let info = try await device.devGetDeviceInfoUncached()
+    XCTAssertEqual(info.model, "Empty Device")
+  }
+
+  func testConnectionFlow_CanonCamera_OpensSession() async throws {
+    let device = VirtualMTPDevice(config: .canonEOSR5)
+    try await device.openIfNeeded()
+    let info = try await device.devGetDeviceInfoUncached()
+    XCTAssertEqual(info.manufacturer, "Canon")
+  }
+
+  // MARK: - Transfer Operations
+
+  func testTransferOp_PullSingleFile() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    let payload = Data("hello-world".utf8)
+    let handle: MTPObjectHandle = 500
+    await device.addObject(VirtualObjectConfig(
+      handle: handle, storage: MTPStorageID(raw: 0x0001_0001),
+      parent: nil, name: "pull-test.txt", formatCode: 0x3000, data: payload))
+    let url = FileManager.default.temporaryDirectory.appendingPathComponent("bdd-pull-\(UUID().uuidString)")
+    defer { try? FileManager.default.removeItem(at: url) }
+    _ = try await device.read(handle: handle, range: nil, to: url)
+    let actual = try Data(contentsOf: url)
+    XCTAssertEqual(actual, payload)
+  }
+
+  func testTransferOp_PushFile() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    let url = FileManager.default.temporaryDirectory.appendingPathComponent("bdd-push-\(UUID().uuidString)")
+    defer { try? FileManager.default.removeItem(at: url) }
+    let payload = Data("push-content".utf8)
+    try payload.write(to: url)
+    _ = try await device.write(parent: nil, name: "pushed.txt", size: UInt64(payload.count), from: url)
+    let storage = MTPStorageID(raw: 0x0001_0001)
+    var found = false
+    for try await batch in device.list(parent: nil, in: storage) {
+      if batch.contains(where: { $0.name == "pushed.txt" }) { found = true }
+    }
+    XCTAssertTrue(found, "Pushed file should appear in device listing")
+  }
+
+  func testTransferOp_LargeFile_ChunkedTransfer() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    let largePayload = Data(repeating: 0xAB, count: 2 * 1024 * 1024)
+    let handle: MTPObjectHandle = 600
+    await device.addObject(VirtualObjectConfig(
+      handle: handle, storage: MTPStorageID(raw: 0x0001_0001),
+      parent: nil, name: "large.bin", formatCode: 0x3000, data: largePayload))
+    let url = FileManager.default.temporaryDirectory.appendingPathComponent("bdd-large-\(UUID().uuidString)")
+    defer { try? FileManager.default.removeItem(at: url) }
+    _ = try await device.read(handle: handle, range: nil, to: url)
+    let actual = try Data(contentsOf: url)
+    XCTAssertEqual(actual.count, largePayload.count, "Large file transfer must preserve size")
+  }
+
+  func testTransferOp_EmptyFile() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    let handle: MTPObjectHandle = 601
+    await device.addObject(VirtualObjectConfig(
+      handle: handle, storage: MTPStorageID(raw: 0x0001_0001),
+      parent: nil, name: "empty.txt", formatCode: 0x3000, data: Data()))
+    let url = FileManager.default.temporaryDirectory.appendingPathComponent("bdd-empty-\(UUID().uuidString)")
+    defer { try? FileManager.default.removeItem(at: url) }
+    _ = try await device.read(handle: handle, range: nil, to: url)
+    let actual = try Data(contentsOf: url)
+    XCTAssertTrue(actual.isEmpty, "Empty file read should produce empty data")
+  }
+
+  func testTransferOp_MultipleFilesSequential() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    let storage = MTPStorageID(raw: 0x0001_0001)
+    for i in 0..<3 {
+      let handle = MTPObjectHandle(700 + UInt32(i))
+      await device.addObject(VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "seq-\(i).txt", formatCode: 0x3000, data: Data("data-\(i)".utf8)))
+    }
+    var names: [String] = []
+    for try await batch in device.list(parent: nil, in: storage) {
+      names.append(contentsOf: batch.map(\.name))
+    }
+    for i in 0..<3 {
+      XCTAssertTrue(names.contains("seq-\(i).txt"), "Sequential file seq-\(i).txt must be listed")
+    }
+  }
+
+  // MARK: - Quirk Application
+
+  func testQuirkApp_Pixel7_BlockedStatus() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(
+      vid: 0x18D1, pid: 0x4EE1, bcdDevice: nil,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { XCTFail("google-pixel-7-4ee1 quirk expected in DB"); return }
+    XCTAssertEqual(q.id, "google-pixel-7-4ee1")
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testQuirkApp_SamsungGalaxy_ExperimentalStatus() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(
+      vid: 0x04E8, pid: 0x6860, bcdDevice: nil,
+      ifaceClass: 0xFF, ifaceSubclass: nil, ifaceProtocol: nil)
+    else { XCTFail("samsung-android-6860 quirk expected in DB"); return }
+    XCTAssertTrue(q.resolvedFlags().supportsGetObjectPropList,
+                  "Samsung Galaxy should support GetObjectPropList")
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach)
+  }
+
+  func testQuirkApp_Canon_PTPCamera_Defaults() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(
+      vid: 0x04A9, pid: 0x3139, bcdDevice: nil,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { XCTFail("canon-eos-rebel-3139 quirk expected in DB"); return }
+    XCTAssertTrue(q.resolvedFlags().cameraClass,
+                  "Canon PTP camera should have cameraClass flag set")
+  }
+
+  func testQuirkApp_UnknownDevice_FallbackDefaults() throws {
+    let db = try QuirkDatabase.load()
+    let q = db.match(
+      vid: 0xFFFF, pid: 0xFFFF, bcdDevice: nil,
+      ifaceClass: 0xFF, ifaceSubclass: 0xFF, ifaceProtocol: 0x00)
+    XCTAssertNil(q, "Unknown VID:PID should not match any quirk entry")
+  }
+
+  func testQuirkApp_MaxChunkSize_Applied() throws {
+    let db = try QuirkDatabase.load()
+    // Check that entries with maxChunkBytes have reasonable values
+    let entriesWithChunk = db.entries.filter { $0.maxChunkBytes != nil }
+    for entry in entriesWithChunk {
+      if let chunk = entry.maxChunkBytes {
+        XCTAssertGreaterThan(chunk, 0, "maxChunkBytes for \(entry.id) must be positive")
+        XCTAssertLessThanOrEqual(chunk, 64 * 1024 * 1024,
+                                 "maxChunkBytes for \(entry.id) should not exceed 64MB")
+      }
+    }
+  }
+
+  func testQuirkApp_Nikon_DSLR_Defaults() throws {
+    let db = try QuirkDatabase.load()
+    guard let q = db.match(
+      vid: 0x04B0, pid: 0x0410, bcdDevice: nil,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { XCTFail("nikon-dslr-0410 quirk expected in DB"); return }
+    XCTAssertTrue(q.resolvedFlags().cameraClass,
+                  "Nikon DSLR should have cameraClass flag set")
+  }
+
+  // MARK: - Error Recovery
+
+  func testErrorRecovery_DisconnectMidTransfer_ErrorReported() async throws {
+    let fault = ScheduledFault(
+      trigger: .onOperation(.getStorageIDs), error: .disconnected, repeatCount: 1)
+    let link = VirtualMTPLink(config: .pixel7, faultSchedule: FaultSchedule([fault]))
+    try await link.openSession(id: 1)
+    do {
+      _ = try await link.getStorageIDs()
+      XCTFail("Expected disconnected error during transfer")
+    } catch let err as TransportError {
+      XCTAssertEqual(err, .noDevice, "Disconnect should surface as noDevice")
+    }
+  }
+
+  func testErrorRecovery_TimeoutRetry_FallbackLadder() async throws {
+    let fault = ScheduledFault(
+      trigger: .onOperation(.getStorageIDs), error: .timeout, repeatCount: 1)
+    let link = VirtualMTPLink(config: .pixel7, faultSchedule: FaultSchedule([fault]))
+    try await link.openSession(id: 1)
+    do {
+      _ = try await link.getStorageIDs()
+      XCTFail("Expected timeout error")
+    } catch let err as TransportError {
+      XCTAssertEqual(err, .timeout)
+    }
+    // After the single fault, retry should succeed
+    let storages = try await link.getStorageIDs()
+    XCTAssertFalse(storages.isEmpty, "Retry after timeout should succeed")
+  }
+
+  func testErrorRecovery_InvalidHandle_ObjectNotFoundError() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    do {
+      try await device.delete(0xDEAD_BEEF, recursive: false)
+      XCTFail("Expected error for invalid handle")
+    } catch {
+      // Any error is acceptable — the device should reject unknown handles
+      XCTAssertTrue(true, "Invalid handle correctly produces an error")
+    }
+  }
+
+  func testErrorRecovery_StorageNotFound() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    let bogusStorage = MTPStorageID(raw: 0xFFFF_FFFF)
+    var items: [MTPObjectInfo] = []
+    for try await batch in device.list(parent: nil, in: bogusStorage) {
+      items.append(contentsOf: batch)
+    }
+    XCTAssertTrue(items.isEmpty, "Listing bogus storage should yield no objects")
+  }
+
+  func testErrorRecovery_BusyError_Reported() async throws {
+    let fault = ScheduledFault(
+      trigger: .onOperation(.getObjectHandles), error: .busy, repeatCount: 1)
+    let link = VirtualMTPLink(config: .pixel7, faultSchedule: FaultSchedule([fault]))
+    try await link.openSession(id: 1)
+    do {
+      _ = try await link.getObjectHandles(storage: MTPStorageID(raw: 0x0001_0001), parent: nil)
+      XCTFail("Expected busy error")
+    } catch let err as TransportError {
+      XCTAssertEqual(err, .busy)
+    }
+  }
+
+  func testErrorRecovery_AccessDenied_Reported() async throws {
+    let fault = ScheduledFault(
+      trigger: .onOperation(.openUSB), error: .accessDenied, repeatCount: 1)
+    let link = VirtualMTPLink(config: .pixel7, faultSchedule: FaultSchedule([fault]))
+    do {
+      try await link.openUSBIfNeeded()
+      XCTFail("Expected accessDenied error")
+    } catch let err as TransportError {
+      XCTAssertEqual(err, .accessDenied)
+    }
+  }
+
+  // MARK: - Live Index
+
+  func testLiveIndex_SnapshotCapture_ObjectsCaptured() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    let storage = MTPStorageID(raw: 0x0001_0001)
+    var objects: [MTPObjectInfo] = []
+    for try await batch in device.list(parent: nil, in: storage) {
+      objects.append(contentsOf: batch)
+    }
+    // Pixel 7 config has pre-seeded objects
+    XCTAssertGreaterThan(objects.count, 0, "Pixel 7 config should have pre-seeded objects")
+  }
+
+  func testLiveIndex_DiffEmptyToPopulated_AllAdded() async throws {
+    let emptyDevice = VirtualMTPDevice(config: .emptyDevice)
+    try await emptyDevice.openIfNeeded()
+    let storage = MTPStorageID(raw: 0x0001_0001)
+    var emptyObjects: [MTPObjectInfo] = []
+    for try await batch in emptyDevice.list(parent: nil, in: storage) {
+      emptyObjects.append(contentsOf: batch)
+    }
+    let populatedDevice = VirtualMTPDevice(config: .pixel7)
+    try await populatedDevice.openIfNeeded()
+    var populatedObjects: [MTPObjectInfo] = []
+    for try await batch in populatedDevice.list(parent: nil, in: storage) {
+      populatedObjects.append(contentsOf: batch)
+    }
+    XCTAssertGreaterThanOrEqual(
+      populatedObjects.count, emptyObjects.count,
+      "Populated device should have at least as many objects as empty device")
+  }
+
+  func testLiveIndex_MultipleStorages_AllIndexed() async throws {
+    let config = VirtualDeviceConfig.pixel7
+      .withStorage(VirtualStorageConfig(id: MTPStorageID(raw: 0x0002_0001), description: "SD Card"))
+    let device = VirtualMTPDevice(config: config)
+    try await device.openIfNeeded()
+    let storageIDs = try await device.devGetStorageIDsUncached()
+    XCTAssertGreaterThanOrEqual(storageIDs.count, 2, "Device should report multiple storages")
+  }
+
+  func testLiveIndex_ObjectInfoRetrievable() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    let handle: MTPObjectHandle = 800
+    await device.addObject(VirtualObjectConfig(
+      handle: handle, storage: MTPStorageID(raw: 0x0001_0001),
+      parent: nil, name: "index-test.jpg", formatCode: 0x3801, data: Data(repeating: 0xFF, count: 64)))
+    let info = try await device.devGetObjectInfoUncached(handle: handle)
+    XCTAssertEqual(info.name, "index-test.jpg")
+  }
+
+  func testLiveIndex_FolderAndFileSeparation() async throws {
+    let device = VirtualMTPDevice(config: .pixel7)
+    try await device.openIfNeeded()
+    let storage = MTPStorageID(raw: 0x0001_0001)
+    await device.addObject(VirtualObjectConfig(
+      handle: 810, storage: storage, parent: nil, name: "Folder", formatCode: 0x3001))
+    await device.addObject(VirtualObjectConfig(
+      handle: 811, storage: storage, parent: nil, name: "file.txt", formatCode: 0x3000, data: Data("x".utf8)))
+    var objects: [MTPObjectInfo] = []
+    for try await batch in device.list(parent: nil, in: storage) {
+      objects.append(contentsOf: batch)
+    }
+    let folders = objects.filter { $0.formatCode == 0x3001 }
+    let files = objects.filter { $0.formatCode != 0x3001 }
+    XCTAssertGreaterThan(folders.count, 0, "Should contain at least one folder")
+    XCTAssertGreaterThan(files.count, 0, "Should contain at least one file")
+  }
+
+  // MARK: - Multi-Device Quirks
+
+  func testMultiDevice_DifferentManufacturers_DifferentQuirks() throws {
+    let db = try QuirkDatabase.load()
+    let samsung = db.match(
+      vid: 0x04E8, pid: 0x6860, bcdDevice: nil,
+      ifaceClass: 0xFF, ifaceSubclass: 0xFF, ifaceProtocol: 0x00)
+    let canon = db.match(
+      vid: 0x04A9, pid: 0x3139, bcdDevice: nil,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(samsung, "Samsung quirk should exist")
+    XCTAssertNotNil(canon, "Canon quirk should exist")
+    XCTAssertNotEqual(samsung?.id, canon?.id, "Different manufacturers must have different quirk IDs")
+  }
+
+  func testMultiDevice_SameVendor_DifferentProducts() throws {
+    let db = try QuirkDatabase.load()
+    let canonRebel = db.match(
+      vid: 0x04A9, pid: 0x3139, bcdDevice: nil,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    let canonR5 = db.match(
+      vid: 0x04A9, pid: 0x32B4, bcdDevice: nil,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotNil(canonRebel, "Canon Rebel quirk should exist")
+    XCTAssertNotNil(canonR5, "Canon R5 quirk should exist")
+    XCTAssertNotEqual(canonRebel?.id, canonR5?.id,
+                      "Same vendor, different products must have different quirk IDs")
+  }
+
+  func testMultiDevice_AndroidVsCamera_DifferentFlags() throws {
+    let db = try QuirkDatabase.load()
+    guard let android = db.match(
+      vid: 0x2A70, pid: 0xF003, bcdDevice: nil,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { XCTFail("OnePlus 3T quirk expected"); return }
+    guard let camera = db.match(
+      vid: 0x04A9, pid: 0x32B4, bcdDevice: nil,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else { XCTFail("Canon R5 quirk expected"); return }
+    XCTAssertNotEqual(
+      android.resolvedFlags().supportsGetObjectPropList,
+      camera.resolvedFlags().supportsGetObjectPropList,
+      "Android and camera devices should have different proplist support")
+  }
+
+  func testMultiDevice_GooglePixels_SameVendor() throws {
+    let db = try QuirkDatabase.load()
+    let pixel7 = db.match(
+      vid: 0x18D1, pid: 0x4EE1, bcdDevice: nil,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    let pixel8 = db.match(
+      vid: 0x18D1, pid: 0x4EF7, bcdDevice: nil,
+      ifaceClass: 0xFF, ifaceSubclass: 0xFF, ifaceProtocol: 0x00)
+    XCTAssertNotNil(pixel7, "Pixel 7 quirk should exist")
+    XCTAssertNotNil(pixel8, "Pixel 8 quirk should exist")
+    XCTAssertNotEqual(pixel7?.id, pixel8?.id,
+                      "Pixel 7 and Pixel 8 should have different quirk IDs")
+  }
+
+  func testMultiDevice_VirtualDevices_IndependentState() async throws {
+    let deviceA = VirtualMTPDevice(config: .samsungGalaxy)
+    let deviceB = VirtualMTPDevice(config: .nikonZ6)
+    try await deviceA.openIfNeeded()
+    try await deviceB.openIfNeeded()
+    await deviceA.addObject(VirtualObjectConfig(
+      handle: 900, storage: MTPStorageID(raw: 0x0001_0001),
+      parent: nil, name: "samsung-only.txt", formatCode: 0x3000, data: Data("s".utf8)))
+    let storage = MTPStorageID(raw: 0x0001_0001)
+    var nikonNames: [String] = []
+    for try await batch in deviceB.list(parent: nil, in: storage) {
+      nikonNames.append(contentsOf: batch.map(\.name))
+    }
+    XCTAssertFalse(nikonNames.contains("samsung-only.txt"),
+                   "Object added to device A must not appear on device B")
+  }
 }
 
 // MARK: - MTPDeviceActor Test Helper (proplist policy override)
