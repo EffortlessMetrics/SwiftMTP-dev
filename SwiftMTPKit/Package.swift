@@ -213,6 +213,7 @@ let package = Package(
       dependencies: [
         "SwiftMTPCore",
         "SwiftMTPIndex",
+        "SwiftMTPQuirks",
         .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
       ],
       exclude: ["__Snapshots__"]),
