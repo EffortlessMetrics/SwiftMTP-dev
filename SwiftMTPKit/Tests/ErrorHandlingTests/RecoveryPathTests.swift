@@ -136,7 +136,7 @@ final class RecoveryPathTests: XCTestCase {
     // Simulate chunks
     let chunkSize: Int64 = 1024
     while bytesTransferred < totalBytes {
-      if bytesTransferred + chunkSize > disconnectAt && bytesTransferred < disconnectAt {
+      if bytesTransferred + chunkSize >= disconnectAt && bytesTransferred < disconnectAt {
         bytesTransferred = disconnectAt
         break  // simulate disconnect
       }

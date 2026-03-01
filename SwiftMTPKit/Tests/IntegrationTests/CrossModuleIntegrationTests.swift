@@ -227,11 +227,11 @@ final class IndexDiffIntegrationTests: XCTestCase {
     // First snapshot
     let gen1 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
-    // Add a new object
+    // Add a new root-level object (Snapshotter only lists root objects)
     let newObj = VirtualObjectConfig(
       handle: 100,
       storage: MTPStorageID(raw: 0x0001_0001),
-      parent: 2,
+      parent: nil,
       name: "new_photo.jpg",
       sizeBytes: 1_000_000,
       formatCode: 0x3801,
@@ -263,8 +263,8 @@ final class IndexDiffIntegrationTests: XCTestCase {
     // First snapshot with all objects
     let gen1 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
-    // Remove an object (handle 3 = sample photo)
-    await device.removeObject(handle: 3)
+    // Remove a root-level object (handle 1 = DCIM folder; Snapshotter only lists root objects)
+    await device.removeObject(handle: 1)
 
     try await Task.sleep(nanoseconds: 1_100_000_000)
 
