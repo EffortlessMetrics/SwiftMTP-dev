@@ -272,6 +272,11 @@ public struct QuirkDatabase: Codable, Sendable {
     try container.encode(entries, forKey: .entries)
   }
 
+  /// URL of the quirks.json bundled as a package resource, if available.
+  public static var bundledQuirksURL: URL? {
+    Bundle.module.url(forResource: "quirks", withExtension: "json")
+  }
+
   public static func load(
     pathEnv: String? = ProcessInfo.processInfo.environment["SWIFTMTP_QUIRKS_PATH"]
   ) throws -> QuirkDatabase {
@@ -281,6 +286,7 @@ public struct QuirkDatabase: Codable, Sendable {
       URL(fileURLWithPath: "Specs/quirks.json"),
       URL(fileURLWithPath: "../Specs/quirks.json"),
       URL(fileURLWithPath: "SwiftMTPKit/Specs/quirks.json"),
+      bundledQuirksURL,
     ]
     .compactMap { $0 }
     guard let url = candidates.first(where: { fm.fileExists(atPath: $0.path) }) else {

@@ -262,13 +262,9 @@ final class ObjectPropsSupportedTests: XCTestCase {
   func testGetObjectSizeU64ReturnsCorrectValue() async throws {
     let link = VirtualMTPLink(config: .pixel7)
     let config = VirtualDeviceConfig.pixel7
-    guard let storage = config.storages.first else {
-      throw XCTSkip("No storages in virtual device")
-    }
+    let storage = try XCTUnwrap(config.storages.first, "pixel7 config must have storages")
     let handles = try await link.getObjectHandles(storage: storage.id, parent: nil)
-    guard let firstHandle = handles.first else {
-      throw XCTSkip("No objects in virtual device")
-    }
+    let firstHandle = try XCTUnwrap(handles.first, "pixel7 config must have objects")
     let size = try await PTPLayer.getObjectSizeU64(handle: firstHandle, on: link)
     XCTAssertNotNil(size)
   }

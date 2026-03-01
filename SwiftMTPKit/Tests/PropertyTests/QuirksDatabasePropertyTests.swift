@@ -329,15 +329,7 @@ final class QuirksDatabasePropertyTests: XCTestCase {
 
   func testAllEntriesHaveNonEmptyNotes() throws {
     // Verify that entries carrying a "notes" field in the raw JSON are non-empty.
-    let fm = FileManager.default
-    let candidates: [String] = [
-      "Specs/quirks.json",
-      "../Specs/quirks.json",
-      "SwiftMTPKit/Specs/quirks.json",
-    ]
-    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }) else {
-      throw XCTSkip("quirks.json not found for raw JSON notes check")
-    }
+    let path = try resolveQuirksJSONPath()
     let data = try Data(contentsOf: URL(fileURLWithPath: path))
     let raw = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] ?? []
     let emptyNotes = raw.filter { entry in
@@ -351,13 +343,7 @@ final class QuirksDatabasePropertyTests: XCTestCase {
 
   func testAllEntriesHaveValidStatus() {
     let validStatuses: Set<String> = ["proposed", "verified", "promoted", "experimental", "community", "legacy"]
-    let fm = FileManager.default
-    let candidates: [String] = [
-      "Specs/quirks.json",
-      "../Specs/quirks.json",
-      "SwiftMTPKit/Specs/quirks.json",
-    ]
-    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }),
+    guard let path = try? resolveQuirksJSONPath(),
       let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
       let raw = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
     else { return }
@@ -405,15 +391,7 @@ final class QuirksDatabasePropertyTests: XCTestCase {
   }
 
   func testVIDFormatConsistency() throws {
-    let fm = FileManager.default
-    let candidates: [String] = [
-      "Specs/quirks.json",
-      "../Specs/quirks.json",
-      "SwiftMTPKit/Specs/quirks.json",
-    ]
-    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }) else {
-      throw XCTSkip("quirks.json not found for VID format check")
-    }
+    let path = try resolveQuirksJSONPath()
     let data = try Data(contentsOf: URL(fileURLWithPath: path))
     let raw = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] ?? []
     let hexPattern = try NSRegularExpression(pattern: "^0x[0-9a-f]{4}$")
@@ -429,15 +407,7 @@ final class QuirksDatabasePropertyTests: XCTestCase {
   }
 
   func testPIDFormatConsistency() throws {
-    let fm = FileManager.default
-    let candidates: [String] = [
-      "Specs/quirks.json",
-      "../Specs/quirks.json",
-      "SwiftMTPKit/Specs/quirks.json",
-    ]
-    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }) else {
-      throw XCTSkip("quirks.json not found for PID format check")
-    }
+    let path = try resolveQuirksJSONPath()
     let data = try Data(contentsOf: URL(fileURLWithPath: path))
     let raw = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] ?? []
     let hexPattern = try NSRegularExpression(pattern: "^0x[0-9a-f]{4}$")
@@ -542,15 +512,7 @@ final class QuirksDatabasePropertyTests: XCTestCase {
   }
 
   func testAllVIDsHaveValidFormat() throws {
-    let fm = FileManager.default
-    let candidates: [String] = [
-      "Specs/quirks.json",
-      "../Specs/quirks.json",
-      "SwiftMTPKit/Specs/quirks.json",
-    ]
-    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }) else {
-      throw XCTSkip("quirks.json not found for VID format check")
-    }
+    let path = try resolveQuirksJSONPath()
     let data = try Data(contentsOf: URL(fileURLWithPath: path))
     let raw = try JSONSerialization.jsonObject(with: data) as? [String: Any]
     let entries = raw?["entries"] as? [[String: Any]] ?? []
@@ -567,15 +529,7 @@ final class QuirksDatabasePropertyTests: XCTestCase {
   }
 
   func testAllPIDsHaveValidFormat() throws {
-    let fm = FileManager.default
-    let candidates: [String] = [
-      "Specs/quirks.json",
-      "../Specs/quirks.json",
-      "SwiftMTPKit/Specs/quirks.json",
-    ]
-    guard let path = candidates.first(where: { fm.fileExists(atPath: $0) }) else {
-      throw XCTSkip("quirks.json not found for PID format check")
-    }
+    let path = try resolveQuirksJSONPath()
     let data = try Data(contentsOf: URL(fileURLWithPath: path))
     let raw = try JSONSerialization.jsonObject(with: data) as? [String: Any]
     let entries = raw?["entries"] as? [[String: Any]] ?? []
@@ -616,5 +570,20 @@ final class QuirksDatabasePropertyTests: XCTestCase {
       }
     }
     return Array(duplicates)
+  }
+
+  /// Resolves the quirks.json file path, preferring filesystem candidates then falling back to the bundle resource.
+  private func resolveQuirksJSONPath() throws -> String {
+    let fm = FileManager.default
+    let candidates: [String?] = [
+      "Specs/quirks.json",
+      "../Specs/quirks.json",
+      "SwiftMTPKit/Specs/quirks.json",
+      QuirkDatabase.bundledQuirksURL?.path,
+    ]
+    guard let path = candidates.compactMap({ $0 }).first(where: { fm.fileExists(atPath: $0) }) else {
+      throw XCTSkip("quirks.json not found")
+    }
+    return path
   }
 }
