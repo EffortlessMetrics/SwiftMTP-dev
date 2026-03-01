@@ -31,7 +31,7 @@ Built with Swift 6 strict concurrency and actor-based isolation:
 
 ### Key Features
 
-- **Device Quirks Database**: 20,000+ entries across ~1,100 vendor IDs, sourced from libmtp data and vendor specs. This is research-based scaffolding — only a handful of devices have been tested with SwiftMTP directly.
+- **Device Quirks Database**: 20,000+ entries across 38 categories and ~1,150 vendor IDs, sourced from libmtp data and vendor specs. This is research-based scaffolding — only a handful of devices have been tested with SwiftMTP directly.
 - **Transfer Journaling**: Resumable file operations with automatic recovery. Implemented and tested with mocks; limited real-device validation.
 - **File Provider Integration**: Native Finder integration on macOS via XPC. Tech preview, read-only.
 - **Demo Mode**: Simulated device profiles (pixel7, galaxy, iphone, canon) for development without physical hardware.
@@ -88,7 +88,7 @@ swift run SwiftMTPApp
 
 ## Verification & Testing
 
-Test coverage uses `VirtualMTPDevice` (in-memory mock) extensively. Real-device tests require physical hardware.
+4,300+ test cases across 20 test targets, using `VirtualMTPDevice` (in-memory mock) extensively. Includes unit, BDD (CucumberSwift), property-based (SwiftCheck), snapshot, and fuzz tests. Real-device tests require physical hardware.
 
 ### Full Verification Suite
 ```bash
@@ -159,7 +159,7 @@ SwiftMTP/
 │   │   ├── SwiftMTPObservability/  # Logging
 │   │   ├── SwiftMTPStore/         # Persistence
 │   │   └── Tools/                 # CLI & App targets
-│   └── Tests/                    # 15 test targets
+│   └── Tests/                    # 20 test targets
 ├── Docs/                  # Documentation
 │   ├── SwiftMTP.docc/     # DocC documentation
 │   └── benchmarks/       # Performance data

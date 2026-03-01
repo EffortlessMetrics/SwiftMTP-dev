@@ -13,8 +13,8 @@ This runbook describes how to prepare and ship SwiftMTP releases in the current 
 
 Note: SwiftMTP is in early development. Metrics below reflect mock-based test coverage, not real-device validation.
 
-- **Quirks database**: 20,040 research-based entries (sourced from libmtp/vendor specs; 1 device validated with real transfers)
-- **Test suite**: 1,920+ test cases, 0 failures (using in-memory mock devices)
+- **Quirks database**: 20,020 research-based entries across 38 categories and ~1,150 vendor IDs (sourced from libmtp/vendor specs; 1 device validated with real transfers)
+- **Test suite**: 4,300+ test cases across 20 targets, 0 failures (using in-memory mock devices)
 - **Gated module coverage**: 100% on SwiftMTPQuirks, SwiftMTPStore, SwiftMTPSync, SwiftMTPObservability
 - **Milestones captured**: 15K → 16K → 17K → 18K → 19K → 20K
 
