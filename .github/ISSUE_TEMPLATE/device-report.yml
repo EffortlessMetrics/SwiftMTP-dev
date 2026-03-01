@@ -1,0 +1,124 @@
+name: "📱 Device Report"
+description: Report a new MTP device for SwiftMTP compatibility
+title: "Device report: [Device Name] ([VID:PID])"
+labels: ["device-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve SwiftMTP device compatibility!
+        Fill in as much as you can — even partial reports are useful.
+
+        **Tip:** Run `./scripts/submit-device.sh` for a guided, automated submission.
+
+  - type: input
+    id: device-name
+    attributes:
+      label: Device name
+      description: Manufacturer and model (e.g., Samsung Galaxy S24)
+      placeholder: Samsung Galaxy S24
+    validations:
+      required: true
+
+  - type: input
+    id: vid-pid
+    attributes:
+      label: "USB VID:PID"
+      description: |
+        Hex values with 0x prefix. Find them via:
+        - **macOS:**  → About This Mac → System Report → USB
+        - **Linux:** `lsusb`
+        - **Windows:** Device Manager → Properties → Hardware Ids
+      placeholder: "0x04e8:0x6860"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Device category
+      options:
+        - Android phone/tablet
+        - Camera (DSLR/mirrorless)
+        - Media player / DAP
+        - Dev board / embedded
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: submission-type
+    attributes:
+      label: Submission type
+      options:
+        - New device (not yet in quirks database)
+        - Update existing device entry
+        - Bug report for supported device
+    validations:
+      required: true
+
+  - type: textarea
+    id: os-firmware
+    attributes:
+      label: Device OS / firmware
+      description: Android version, camera firmware, etc.
+      placeholder: "Android 14 (One UI 6.1)"
+
+  - type: textarea
+    id: basic-behavior
+    attributes:
+      label: Observed behavior
+      description: What works and what doesn't when connected via USB in MTP mode.
+      placeholder: |
+        - Device detected: yes/no
+        - File listing works: yes/no
+        - File transfer works: yes/no
+        - Approximate read speed: ~XX MB/s
+        - Approximate write speed: ~XX MB/s
+        - Stability: reliable / intermittent / crashes
+
+  - type: textarea
+    id: probe-output
+    attributes:
+      label: Probe output (optional)
+      description: |
+        Paste the output of:
+        ```
+        cd SwiftMTPKit && swift run swiftmtp --real-only probe
+        ```
+      render: text
+
+  - type: textarea
+    id: usb-info
+    attributes:
+      label: USB details (optional)
+      description: |
+        On macOS, paste the USB section from System Report for your device.
+        On Linux, paste the output of `lsusb -v -d VID:PID`.
+      render: text
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Cable type, USB port, hub usage, any workarounds you found, etc.
+
+  - type: checkboxes
+    id: host-environment
+    attributes:
+      label: Host environment
+      options:
+        - label: "macOS (Apple Silicon)"
+        - label: "macOS (Intel)"
+        - label: "Linux"
+
+  - type: checkboxes
+    id: privacy-consent
+    attributes:
+      label: Privacy & consent
+      description: Required for us to use your data.
+      options:
+        - label: I confirm no personal data (file contents, paths, serials) is included
+          required: true
+        - label: I consent to this data being used to improve SwiftMTP device support
+          required: true
