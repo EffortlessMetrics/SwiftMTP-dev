@@ -198,9 +198,10 @@ final class QuirksDatabasePropertyTests: XCTestCase {
 
   /// E-readers (Kobo, Nook, Amazon Kindle) must NOT require kernel detach.
   func testEReadersDoNotRequireKernelDetach() {
-    let ereaderVIDs: Set<UInt16> = [0x2237, 0x2080, 0x1949]
+    // Only check actual e-reader category devices (Kobo, reMarkable, etc.)
+    // Amazon Kindle Fire devices are now categorized as tablets (Android-based)
     let offenders = db.entries
-      .filter { ereaderVIDs.contains($0.vid) }
+      .filter { $0.category == "e-reader" }
       .filter { $0.resolvedFlags().requiresKernelDetach }
     XCTAssertTrue(
       offenders.isEmpty,
@@ -373,13 +374,13 @@ final class QuirksDatabasePropertyTests: XCTestCase {
 
   func testNoCategoryMisspellings() {
     let validCategories: Set<String> = [
-      "3d-printer", "access-control", "action-camera", "audio-interface", "audio-recorder",
-      "automotive", "body-camera", "camera", "cnc", "dap", "dashcam", "dev-board", "drone",
-      "e-reader", "embedded", "fitness", "gaming-handheld", "gps-navigator", "industrial-camera",
-      "lab-instrument", "media-player", "medical", "microscope", "phone", "point-of-sale",
-      "printer", "projector", "scanner", "security-camera", "smart-home", "storage",
-      "streaming-device", "synthesizer", "tablet", "telescope", "thermal-camera", "vr-headset",
-      "wearable",
+      "3d-printer", "access-control", "action-camera", "audio-interface", "audio-player",
+      "audio-recorder", "automotive", "body-camera", "camera", "cnc", "dashcam", "dev-board",
+      "drone", "e-reader", "embedded", "fitness", "gaming-handheld", "gps-navigator",
+      "industrial-camera", "lab-instrument", "media-player", "medical", "microscope", "phone",
+      "point-of-sale", "printer", "projector", "scanner", "security-camera", "smart-home",
+      "storage", "streaming-device", "synthesizer", "tablet", "telescope", "thermal-camera",
+      "vr-headset", "wearable",
     ]
     let invalid = db.entries.filter { entry in
       guard let cat = entry.category else { return false }

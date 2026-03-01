@@ -88,8 +88,8 @@ final class DeviceSubmissionTests: XCTestCase {
 
   private let validCategories: Set<String> = [
     "3d-printer", "access-control", "action-camera", "audio-interface",
-    "audio-recorder", "automotive", "body-camera", "camera", "cnc",
-    "dap", "dashcam", "dev-board", "drone", "e-reader", "embedded",
+    "audio-player", "audio-recorder", "automotive", "body-camera", "camera", "cnc",
+    "dashcam", "dev-board", "drone", "e-reader", "embedded",
     "fitness", "gaming-handheld", "gps-navigator", "industrial-camera",
     "lab-instrument", "media-player", "medical", "microscope", "phone",
     "point-of-sale", "printer", "projector", "scanner", "security-camera",
