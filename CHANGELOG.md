@@ -7,6 +7,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Test Expansion & Device Research (PRs #274–#308)
+
+> **Summary**: Waves 13–16 — tests grow from 3,490 to 4,336 across 21 targets (+1 UITests), QuirksTests 4.5× growth with device research for Samsung, Canon, Nikon, Google Pixel, Xiaomi, OnePlus, and OPPO/Realme.
+
+#### Key Stats
+- **20,009+ device quirks** across 62+ categories
+- **4,336 tests** across 21 test targets (up from 3,490)
+- **0 test failures**
+- **1 new test target**: UITests (#278)
+
+#### Wave 13 — Fixes & UITests (PRs #274–#280)
+- **DocC fix**: Handle mixed string/object values in behaviorLimitations and warnings (PR #274)
+- **Flaky test hardening**: Timing-sensitive test stabilization (PR #275)
+- **Device submission tooling**: Improved contributor device submission docs (PR #277)
+- **UITests target**: New SwiftUI view test target with 34 tests (PR #278)
+- **ObservabilityTests + StoreTests expansion**: Coverage expansion for both targets (PR #279)
+- **RC release artifacts**: Updated README and release artifacts (PR #280)
+
+#### Wave 14 — Transport, Codec, BDD, Integration (PRs #281–#290)
+- **TransportRecoveryTests**: Error recovery edge cases for transport layer (PR #281)
+- **Codec fuzz regression**: Fuzz regression tests and expanded corpus (PR #282)
+- **ScenarioTests expansion**: End-to-end device operation scenarios (PR #283)
+- **BDD dynamic baselines**: BDD tests now derive baselines from quirks.json (PR #284)
+- **Quirks governance**: Quirks governance and validation tests (PR #285)
+- **VirtualDevice compliance**: VirtualMTPDevice compliance and FaultInjectingLink tests (PR #286)
+- **Error propagation chains**: Error propagation chain tests (PR #287)
+- **Cross-module integration**: Additional cross-module integration tests (PR #288)
+- **Friction log + CI improvements**: Documentation and CI updates (PR #289)
+- **Public API audit**: Audit and documentation of public API surface (PR #290)
+
+#### Wave 15 — FileProvider, Property, CLI, DeviceActor (PRs #291–#300)
+- **FileProvider enumeration**: Enumeration and materialization tests (PR #291)
+- **Protocol-level property tests**: Property tests at the protocol level (PR #292)
+- **Advanced sync property tests**: Sync edge case property tests (PR #293)
+- **SQLite index stress tests**: Concurrency stress tests for SQLite index (PR #294)
+- **XPC protocol boundary tests**: XPC boundary and protocol tests (PR #295)
+- **CLI smoke tests**: Command parsing and help output tests (PR #296)
+- **CLI output format snapshots**: Snapshot tests for CLI output formats (PR #297)
+- **Quirks data quality**: Data quality validation tests for quirks database (PR #298)
+- **DeviceActor concurrency**: Actor isolation and concurrency tests (PR #299)
+- **FallbackLadder tests**: Error recovery strategy tests (PR #300)
+
+#### Wave 16 — Device Research & Final Tests (PRs #301–#308)
+- **Samsung Galaxy research**: Device-specific MTP research and improved quirks (PR #301)
+- **TransferJournal resilience**: Edge case and resilience tests for journal-based resume (PR #302)
+- **Canon/Nikon PTP research**: Camera PTP quirks improved with gphoto2 and vendor research data (PR #303)
+- **RUNBOOK + release readiness**: Updated runbook and release readiness tests (PR #304)
+- **Google Pixel research**: Pixel device research and improved quirks tests (PR #305)
+- **Mirror/diff engine tests**: Comprehensive mirror and diff engine tests (PR #306)
+- **MTP codec fuzzing**: Expanded codec edge case and fuzzing tests (PR #307)
+- **Chinese phone brands**: Xiaomi, OnePlus, OPPO/Realme quirks tests (PR #308)
+
+---
+
 ### Post-RC Test Expansion (PRs #249–#273)
 
 > **Summary**: Waves 10–12 — test targets expanded from 15 to 20, total tests reach 3,490+ (verified via `swift test --list-tests`), 650+ device category corrections, and new resilience/data-integrity test suites added.
