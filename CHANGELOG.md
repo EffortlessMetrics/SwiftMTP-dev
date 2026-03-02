@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Waves 23–25 Test Expansion (PRs #324–#339)
+
+> **Summary**: Tests grow from 5,275 to **6,272** across 20 targets (+997), with major device research expansion (HTC, Nokia, Philips, Toshiba, Acer, Microsoft, Dell, Fujitsu). **6,000-test milestone reached.**
+
+#### Key Stats
+- **6,272 tests** across 20 test targets (up from 5,275)
+- **0 test failures**
+- **~110 PRs** merged total (#229–#339)
+
+#### Wave 23 — Device Research & Snapshot Expansion (PRs #324–#329)
+- **QuirksTests 267→488**: +221 tests — HTC, Nokia, Philips device research
+- **SnapshotTests 132→306**: +174 snapshot and visual regression tests
+- **ScenarioTests 141→215**: +74 end-to-end device operation scenarios
+
+#### Wave 24 — Sync, Store & Error Paths (PRs #331–#335)
+- **SyncTests 238→305**: +67 mirror/diff/conflict resolution tests
+- **StoreTests 201→262**: +61 SQLite persistence and journal tests
+- **ErrorHandlingTests 334→398**: +64 error path and recovery tests
+- **IntegrationTests 127→191**: +64 cross-module integration tests
+
+#### Wave 25 — Tooling, Observability & UI (PRs #336–#339)
+- **ToolingTests 117→251**: +134 CLI command, filter, and formatter tests
+- **ObservabilityTests 138→206**: +68 structured logging and monitoring tests
+- **UITests 34→104**: +70 SwiftUI view tests
+- **Device research**: Toshiba, Acer, Microsoft, Dell, Fujitsu quirks research
+
+---
+
 ### Final RC Test Expansion (PRs #309–#323)
 
 > **Summary**: Waves 17–23 — tests grow from 4,336 to **5,275** across 21 targets (+939), every target expanded. Device research adds Sony Walkman/Alpha, Huawei/Honor, SanDisk Sansa, and Creative ZEN. **5,000-test milestone reached.**
