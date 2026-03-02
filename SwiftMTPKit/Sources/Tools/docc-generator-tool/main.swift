@@ -102,7 +102,7 @@ struct QuirkEntry: Codable {
   let transport: Transport?
   let behaviorLimitations: [FlexibleValue]?
   let warnings: [FlexibleValue]?
-  let probeLadder: [FlexibleValue]?
+  let probeLadder: FlexibleValue?
 
   enum Status: String, Codable {
     case experimental, stable, deprecated
