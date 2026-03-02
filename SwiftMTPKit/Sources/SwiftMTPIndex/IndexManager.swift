@@ -4,7 +4,8 @@
 import Foundation
 import SwiftMTPCore
 
-public struct MTPIndexManager {
+/// Convenience manager for creating transfer journals backed by SQLite.
+public struct MTPIndexManager: Sendable {
   private let dbPath: String
 
   public init(dbPath: String = "~/Library/Application Support/SwiftMTP/transfers.db") {

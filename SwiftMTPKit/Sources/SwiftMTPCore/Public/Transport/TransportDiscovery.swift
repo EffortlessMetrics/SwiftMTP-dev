@@ -11,7 +11,7 @@ public protocol TransportDiscoveryProtocol {
 }
 
 /// Core transport discovery interface that transport layers extend to provide device discovery
-public struct TransportDiscovery {
+public struct TransportDiscovery: Sendable {
   /// Start device discovery with the specified attach/detach handlers
   /// This is extended by concrete transport implementations (USB, Bluetooth, etc.)
   public static func start(

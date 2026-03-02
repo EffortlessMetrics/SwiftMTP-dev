@@ -4,7 +4,7 @@
 import Foundation
 
 /// Path normalization utilities for consistent, cross-platform path handling
-public enum PathKey {
+public enum PathKey: Sendable {
   /// Normalize a storage-relative path with components
   /// - Parameters:
   ///   - storage: Storage ID

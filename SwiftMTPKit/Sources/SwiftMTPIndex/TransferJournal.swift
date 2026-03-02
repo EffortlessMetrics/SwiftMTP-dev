@@ -8,6 +8,7 @@ import SwiftMTPCore
 // SQLite constants that might not be available in all environments
 private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
+/// Row-level representation of a transfer record stored in the SQLite journal.
 public struct SQLiteTransferRecord: Sendable {
   public let id: String
   public let deviceId: String

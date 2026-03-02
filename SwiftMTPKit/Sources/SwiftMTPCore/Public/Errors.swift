@@ -3,6 +3,11 @@
 
 import Foundation
 
+/// Errors that can occur during MTP protocol operations.
+///
+/// These errors cover device-level issues (disconnection, permissions),
+/// protocol-level failures (invalid parameters, unsupported operations),
+/// and storage constraints (full, read-only).
 public enum MTPError: Error, Sendable, Equatable {
   case deviceDisconnected, permissionDenied
   case notSupported(String)
@@ -109,6 +114,7 @@ extension MTPError: LocalizedError {
   }
 }
 
+/// Phase of a USB bulk transfer where a timeout or error occurred.
 public enum TransportPhase: Sendable, Equatable {
   case bulkOut, bulkIn, responseWait
 
@@ -121,6 +127,7 @@ public enum TransportPhase: Sendable, Equatable {
   }
 }
 
+/// Low-level USB transport errors that occur during device communication.
 public enum TransportError: Error, Sendable, Equatable {
   case noDevice, timeout, busy, accessDenied, stall
   case io(String)
