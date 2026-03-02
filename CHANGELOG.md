@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Final RC Test Expansion (PRs #309–#323)
+
+> **Summary**: Waves 17–23 — tests grow from 4,336 to **5,275** across 21 targets (+939), every target expanded. Device research adds Sony Walkman/Alpha, Huawei/Honor, SanDisk Sansa, and Creative ZEN. **5,000-test milestone reached.**
+
+#### Key Stats
+- **20,020 device quirks** across 1,154 VIDs and 38 categories
+- **5,275 tests** across 21 test targets (up from 4,336)
+- **0 test failures**
+- **395 commits** on main
+
+#### Wave 17 — Observability & Index (PRs #309–#311)
+- **Docs baseline update**: COVERAGE.md and CHANGELOG.md updated for 4,300+ tests (PR #309)
+- **ObservabilityTests 70→138**: 68 structured logging tests for SwiftMTPObservability (PR #310)
+- **IndexTests 226→276**: SQLiteLiveIndex persistence and query tests (PR #311)
+
+#### Wave 18 — Transport, Codec & Sony Research (PRs #312–#314)
+- **TransportTests 433→489**: USBClaimDiagnostics tests and InterfaceProbe expansion (PR #312)
+- **QuirksTests 210→267**: Sony Walkman NWZ deep dive and Alpha camera research tests (PR #313)
+- **MTPEndianCodecTests 90→172**: Expanded codec edge case and round-trip tests (PR #314)
+
+#### Wave 19 — TestKit & Audio Player Quirks (PRs #315–#316)
+- **TestKitTests 116→189**: VirtualMTPDevice and FaultInjectingLink expansion (PR #315)
+- **SanDisk Sansa & Creative ZEN**: libmtp-researched flags for classic audio players (PR #316)
+
+#### Wave 20 — Scenarios & BDD (PRs #317–#318)
+- **ScenarioTests 71→141**: End-to-end device operation scenarios doubled (PR #317)
+- **BDDTests 237→302**: 65 new Gherkin scenarios for connection, transfer, and quirks (PR #318)
+
+#### Wave 21 — Huawei/Honor & XPC (PRs #319–#320)
+- **Huawei/Honor quirks**: Device-specific tests for VID 0x12d1 (PR #319)
+- **XPCTests 156→250**: XPC protocol boundary and resilience expansion (PR #320)
+
+#### Wave 22 — CLI & FileProvider (PRs #321–#322)
+- **SwiftMTPCLITests 132→264**: CLI command parsing, help output, smoke tests doubled (PR #321)
+- **FileProviderTests 219→309**: Concurrency and edge case coverage expansion (PR #322)
+
+#### Wave 23 — Property Tests (PR #323)
+- **PropertyTests 248→350**: Transfer, path normalization, and quirks merging property tests (PR #323)
+
+---
+
 ### Test Expansion & Device Research (PRs #274–#308)
 
 > **Summary**: Waves 13–16 — tests grow from 3,490 to 4,336 across 21 targets (+1 UITests), QuirksTests 4.5× growth with device research for Samsung, Canon, Nikon, Google Pixel, Xiaomi, OnePlus, and OPPO/Realme.
