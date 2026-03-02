@@ -1,6 +1,8 @@
 # SwiftMTP Contribution Guide
 
-*Last updated: 2026-02-28*
+*Last updated: 2026-03-01*
+
+> **Pre-Alpha Context**: SwiftMTP is in pre-alpha. The project has extensive scaffolding (~4,800 tests, 20K+ quirks entries, 9 CI workflows) but only 1 device (Xiaomi Mi Note 2) has completed real file transfers. Real-device testing contributions are the single highest-impact way to help the project. Some test targets (PropertyTests, IntegrationTests) have pre-existing build errors — CI workflow consolidation is in progress.
 
 This guide covers how to contribute during the active implementation sprints, including code changes, device evidence, and documentation updates.
 

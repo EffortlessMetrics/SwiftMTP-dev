@@ -1,6 +1,8 @@
 # SwiftMTP Device Submission Guide
 
-*Last updated: 2026-02-16*
+*Last updated: 2026-03-01*
+
+> **Pre-Alpha Note**: The quirks database currently contains ~20,000 entries, but the vast majority are research-based — sourced from libmtp data and vendor specifications, not validated through SwiftMTP testing. Only a handful of devices have been tested directly. During pre-alpha, device submissions are advisory and help build the validation dataset for future releases.
 
 This guide explains how to submit new device profiles (quirks) to SwiftMTP for inclusion in the official quirks database.
 

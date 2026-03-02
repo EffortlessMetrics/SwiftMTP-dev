@@ -1,6 +1,8 @@
 # SwiftMTP Release Checklist
 
-*Last updated: 2026-02-16*
+*Last updated: 2026-03-01*
+
+> **Pre-Alpha Context**: This checklist applies to internal development milestone releases during the pre-alpha phase. These releases are not production-ready — real-device transfer validation is limited to 1 device (Xiaomi Mi Note 2). The version tags (v2.x) represent development milestones, not production readiness.
 
 This checklist is the operational companion to `Docs/ROADMAP.md` and is intended to be used throughout each sprint, not only at tag time.
 
