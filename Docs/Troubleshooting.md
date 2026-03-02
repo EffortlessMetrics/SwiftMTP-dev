@@ -1,5 +1,7 @@
 # Troubleshooting
 
+> **Pre-Alpha Note**: SwiftMTP is in pre-alpha with limited real-device validation. Many of the device-specific solutions below are based on research and initial testing — your mileage may vary. If you encounter issues not covered here, please open an issue with your device model, VID:PID, and the exact error.
+
 Comprehensive troubleshooting guide for SwiftMTP operations.
 
 ## Table of Contents

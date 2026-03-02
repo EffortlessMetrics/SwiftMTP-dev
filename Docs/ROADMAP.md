@@ -1,24 +1,28 @@
 # SwiftMTP Roadmap
 
-*Last updated: 2026-02-28*
+*Last updated: 2026-03-01*
+
+> **Pre-Alpha Status**: SwiftMTP has extensive protocol and test infrastructure but minimal real-device validation. Only 1 device (Xiaomi Mi Note 2) has completed real file transfers. The version numbers below (2.x) reflect internal development milestones, not production readiness. Items marked as "shipped" or "complete" are code-complete and mock-tested unless noted otherwise — most have not been validated on real hardware.
 
 This roadmap is the execution plan for the next implementation sprints in the 2.x release train.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Device quirks database now at **20,040 entries** across **1,157 VIDs** and **62 categories**.
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Device quirks database now at **20,040 entries** across **1,157 VIDs** and **62 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices).
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
-- [x] **GetObjectPropValue / SetObjectPropValue** — `MTPLink` protocol property APIs with default implementations
+All items below are code-complete and mock-tested. None have been validated on real hardware unless noted.
+
+- [x] **GetObjectPropValue / SetObjectPropValue** — `MTPLink` protocol property APIs with default implementations (mock-tested)
 - [x] **MTPObjectPropCode enum** — all standard MTP object property codes (0xDC01–0xDC48)
 - [x] **MTPDateString** — encode/decode MTP ISO 8601 compact date format
-- [x] **MTPObjectInfo.modified** — populated from GetObjectInfo ModificationDate field
-- [x] **ObjectSize U64 fallback** — GetObjectPropValue(0xDC04) for files > 4 GB
-- [x] **GetObjectPropsSupported (0x9801)** — list device-supported properties per format
-- [x] **Extended MTPEvent** — storageAdded, storageRemoved, objectInfoChanged, deviceInfoChanged, unknown(code:params:)
-- [x] **FileProvider write operations** — createItem, modifyItem, deleteItem with XPC bridge
-- [x] **Multi-device parallel transfers** — 8 scenario tests, DeviceServiceRegistry routing
+- [x] **MTPObjectInfo.modified** — populated from GetObjectInfo ModificationDate field (mock-tested)
+- [x] **ObjectSize U64 fallback** — GetObjectPropValue(0xDC04) for files > 4 GB (mock-tested)
+- [x] **GetObjectPropsSupported (0x9801)** — list device-supported properties per format (mock-tested)
+- [x] **Extended MTPEvent** — storageAdded, storageRemoved, objectInfoChanged, deviceInfoChanged, unknown(code:params:) (mock-tested)
+- [x] **FileProvider write operations** — createItem, modifyItem, deleteItem with XPC bridge (mock-tested, no real-device validation)
+- [x] **Multi-device parallel transfers** — 8 scenario tests, DeviceServiceRegistry routing (mock-tested)
 - [x] **FallbackAllFailedError** — carries full attempt history (name, duration, error per rung)
 - [x] **Automatic documentation** — `swiftmtp-docs` SPM executable target for hands-off DocC generation
 - [x] **1849 tests, 0 failures** (up from 1799 with preexisting failures)
@@ -104,33 +108,35 @@ Sprint exit criteria:
 
 ## 2.x Delivery Plan
 
+Items marked [x] are code-complete and mock-tested. "Real-device" notes indicate where actual hardware validation exists.
+
 ### 2.1 Focus: Stabilization and Reliability
 
-- [x] macOS Tahoe 26 native support
+- [x] macOS Tahoe 26 native support (build/compile verified)
 - [x] SwiftPM 6.2+ tooling alignment
-- [x] IOUSBHost integration as primary USB interface
-- [x] MTP object property APIs (GetObjectPropValue, SetObjectPropValue)
-- [x] Multi-device parallel transfer support
-- [x] FileProvider write operations (macOS 26 Finder integration)
-- [x] Extended MTP event handling (storageAdded/Removed, objectInfoChanged, unknown)
+- [x] IOUSBHost integration as primary USB interface (mock-tested; real-device: Xiaomi partial)
+- [x] MTP object property APIs (GetObjectPropValue, SetObjectPropValue) (mock-tested)
+- [x] Multi-device parallel transfer support (mock-tested, 8 scenario tests)
+- [x] FileProvider write operations (macOS 26 Finder integration) (mock-tested, no real-device validation)
+- [x] Extended MTP event handling (storageAdded/Removed, objectInfoChanged, unknown) (mock-tested)
 - [ ] Pixel 7 and OnePlus write/open-path stabilization — troubleshooting documented, transfers not yet working
 - [x] Submission and troubleshooting workflow hardening complete
 - [x] CI/test gate documentation and execution consolidated
 
 ### 2.2 Focus: Testing and Submission Depth
 
-- [x] GetObjectPropsSupported for format-aware property discovery
-- [x] ObjectSize U64 fallback for files > 4 GB
-- [x] Increase mutation and edge-case coverage for transport error handling
+- [x] GetObjectPropsSupported for format-aware property discovery (mock-tested)
+- [x] ObjectSize U64 fallback for files > 4 GB (mock-tested)
+- [x] Increase mutation and edge-case coverage for transport error handling (mock-tested)
 - [x] Expand real-device troubleshooting trees for top support issues
 - [x] Improve benchmark report consistency and release evidence packaging
 
 ### 2.3 Focus: Growth and Performance
 
-- [x] Expand supported device profile coverage (new vendor classes) — Canon EOS (04A9:3139), Nikon DSLR (04B0:0410) added as experimental profiles with full troubleshooting docs
-- [x] Investigate parallel multi-device enumeration — implemented Task-per-attach dispatch in DeviceServiceRegistry.startMonitoring; O(1) startup regardless of N devices
-- [x] Improve large-file throughput on USB 3.x controllers
-- [x] Add transfer resume telemetry to benchmark reports
+- [x] Expand supported device profile coverage (new vendor classes) — Canon EOS (04A9:3139), Nikon DSLR (04B0:0410) added as research-only profiles with troubleshooting docs (never connected to SwiftMTP)
+- [x] Investigate parallel multi-device enumeration — implemented Task-per-attach dispatch in DeviceServiceRegistry.startMonitoring; O(1) startup regardless of N devices (mock-tested)
+- [x] Improve large-file throughput on USB 3.x controllers (mock-tested)
+- [x] Add transfer resume telemetry to benchmark reports (mock-tested)
 
 ### 3.x Exploratory Themes
 
@@ -143,13 +149,15 @@ Sprint exit criteria:
 
 | Version | Target window | Goal | Status |
 |---------|---------------|------|--------|
-| v2.0.0  | 2026-02 | Tahoe 26 core + architecture upgrade | Released |
-| v2.1.0  | 2026-Q2 | Stability + submission hardening + docs readiness | RC Ready |
+| v2.0.0  | 2026-02 | Tahoe 26 core + architecture upgrade | Released (dev milestone, pre-alpha) |
+| v2.1.0  | 2026-Q2 | Stability + submission hardening + docs readiness | RC Ready (dev milestone, pre-alpha) |
 | v2.2.0  | 2026-Q3 | Performance and benchmark reliability | Planned |
 | v2.3.0  | 2026-Q4 | Device coverage expansion | Planned |
 | v3.0.0  | 2027 | Cross-platform and strategic re-architecture | Exploratory |
 
 ## Minor Release Criteria (2.x)
+
+Note: during pre-alpha, these criteria apply to development milestones. A production-ready release additionally requires successful real-device transfers on multiple device classes.
 
 Any minor release (`v2.x.0`) should satisfy all of the following:
 

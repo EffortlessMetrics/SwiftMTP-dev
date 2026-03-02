@@ -1,6 +1,8 @@
 # SwiftMTP Testing Guide
 
-*Last updated: 2026-02-16*
+*Last updated: 2026-03-01*
+
+> **Pre-Alpha Testing Reality**: SwiftMTP has ~4,800 test cases across 20 targets, but nearly all coverage uses `VirtualMTPDevice` (in-memory mock). Real-device validation is minimal (1 device with working transfers). Some test targets have pre-existing build errors: PropertyTests and IntegrationTests may fail to compile. `swift test` compiles ALL targets, so broken targets can block testing even with `--skip`. Use `--filter` to target specific suites. The test infrastructure below represents the aspired-to gate model — not all gates are fully operational.
 
 This document defines the test gates used for day-to-day development and for sprint/release readiness.
 
@@ -11,7 +13,7 @@ SwiftMTP uses a layered gate model:
 1. Local quick confidence (`swift build`, targeted test filters)
 2. Full local matrix (`./run-all-tests.sh`)
 3. CI matrix (build, test, smoke, fuzz, TSAN path)
-4. Real-device validation (manual/bring-up artifacts)
+4. Real-device validation (manual/bring-up artifacts) — **currently limited to Xiaomi Mi Note 2**
 
 ## Source of Truth Commands
 
@@ -78,7 +80,7 @@ Artifacts are emitted under `SwiftMTPKit/coverage/`.
 
 ## CI Reality (Current)
 
-The repository currently contains multiple CI workflow definitions. For sprint execution, treat these as the required surfaces to keep healthy:
+The repository currently contains multiple CI workflow definitions (consolidation in progress). Note that CI validates build and mock-test correctness — it does not validate real-device behavior. For sprint execution, treat these as the required surfaces to keep healthy:
 
 - `.github/workflows/ci.yml`: build/test, TSAN slice, fuzz quick check, optional tag-time SBOM
 - `.github/workflows/smoke.yml`: no-hardware smoke validation and learned-store hygiene check

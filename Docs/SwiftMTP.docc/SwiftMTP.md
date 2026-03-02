@@ -7,6 +7,8 @@
 
 Swift 6-native, actor-isolated MTP backend for macOS Tahoe 26.
 
+> **Pre-Alpha Disclaimer**: SwiftMTP is in active pre-alpha development. The API surface, code examples, and architecture described below represent the intended design and are tested against in-memory mock devices. Only 1 real device (Xiaomi Mi Note 2) has completed file transfers through SwiftMTP. Most features have not been validated on real hardware. Do not use in production.
+
 ## macOS Tahoe 26 Support
 
 SwiftMTP supports macOS Tahoe 26 with full leverage of modern Swift concurrency and platform features.
@@ -23,6 +25,8 @@ SwiftMTP supports macOS Tahoe 26 with full leverage of modern Swift concurrency 
 See the [macOS Tahoe 26 Guide](macOS26.md) for detailed platform-specific documentation.
 
 ## Getting Started
+
+> The code examples below show the intended API. They compile and pass mock tests but have limited real-device validation.
 
 1. Add the package via SwiftPM.
 2. macOS app: (if sandboxed) add `com.apple.security.device.usb = true`.
@@ -275,7 +279,7 @@ swift run swiftmtp wizard
 
 ## Device Quirks
 
-SwiftMTP maintains a device quirks database for optimized performance:
+SwiftMTP maintains a research-based device quirks database (20,000+ entries sourced from libmtp data and vendor specs, not from SwiftMTP testing) for optimized performance:
 
 ```bash
 # See active quirks for connected device

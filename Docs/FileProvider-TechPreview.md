@@ -1,5 +1,7 @@
 # File Provider Tech Preview
 
+> **Pre-Alpha Tech Preview**: This File Provider integration is in early development and has **not been validated on real MTP devices**. All testing to date uses the in-memory `VirtualMTPDevice` mock. The architecture and APIs described below are under active development and may change. Do not ship applications depending on this integration.
+
 This document describes the tech preview implementation of Finder integration for SwiftMTP using macOS/iOS File Provider framework.
 
 ## Overview
@@ -48,7 +50,7 @@ Content (on-demand): File Provider Extension → XPC → Host App → MTP Device
 
 ### Cache-First Architecture
 
-The implementation uses a **cache-first architecture** for optimal performance:
+The implementation uses a **cache-first architecture** (under active development) for optimal performance:
 - **Metadata reads** come from the local SQLite live index (no XPC needed)
 - **Content materialization** goes through XPC to the host app, then to the MTP device
 - If the index is empty for a folder, a background crawl request is fired via XPC
