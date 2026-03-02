@@ -428,46 +428,46 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 ### Current State
 
-- **Device quirks database**: 20,009+ entries across 1,157 VIDs and 62+ categories
+- **Device quirks database**: 20,020 entries across 1,154 VIDs and 38 categories
 - **Gated modules at 100%**: SwiftMTPQuirks, SwiftMTPStore, SwiftMTPSync, SwiftMTPObservability
-- **Total test cases**: 4,336 (0 failures) across 21 test targets
-- **Milestones**: 15K → 16K → 17K → 18K → 19K → 20K all captured
+- **Total test cases**: 5,275 (0 failures) across 21 test targets
+- **Milestones**: 15K → 16K → 17K → 18K → 19K → 20K all captured; **5,000-test milestone reached**
 - **CI surfaces**: Smoke, Documentation, TSAN, Fuzz, Build-test, Compat matrix — all green
 
 ### Overall Metrics
 
 | Metric | Value | Status |
 |--------|-------|--------|
-| **Overall Line Coverage** | **~72%** | ✅ Improving |
-| Total Lines Covered | ~2,400+ | - |
-| Total Lines | ~3,300 | - |
-| **Total Test Cases** | **4,336** | ✅ All Passing |
+| **Overall Line Coverage** | **~74%** | ✅ Improving |
+| Total Lines Covered | ~2,500+ | - |
+| Total Lines | ~3,400 | - |
+| **Total Test Cases** | **5,275** | ✅ All Passing |
 | Test Failures | 0 | ✅ All Passing |
 
-### Test Expansion (PRs #274–#308)
+### Test Expansion (PRs #309–#323)
 
-| Target | Previous (#276) | Current | Delta | Key PRs |
+| Target | Previous (#308) | Current | Delta | Key PRs |
 |--------|-----------------|---------|-------|---------|
-| CoreTests | 805 | 944 | +139 | #282, #287, #292, #299, #307 |
-| TransportTests | 393 | 433 | +40 | #281 |
-| ErrorHandlingTests | 254 | 334 | +80 | #287, #300 |
-| PropertyTests | 220 | 248 | +28 | #292, #293 |
-| SyncTests | 158 | 238 | +80 | #293, #306 |
-| BDDTests | 300 | 237 | -63 | #284 (dynamic baselines) |
-| IndexTests | 208 | 226 | +18 | #294 |
-| FileProviderTests | 182 | 219 | +37 | #291 |
-| QuirksTests | 46 | 210 | +164 | #285, #298, #301, #303, #305, #308 |
-| StoreTests | 130 | 201 | +71 | #279, #302 |
-| XPCTests | 133 | 156 | +23 | #295 |
-| SwiftMTPCLITests | 91 | 132 | +41 | #296, #297 |
-| SnapshotTests | 108 | 132 | +24 | #297 |
-| IntegrationTests | 83 | 127 | +44 | #288 |
+| CoreTests | 944 | 944 | — | — |
+| TransportTests | 433 | 489 | +56 | #312 |
+| PropertyTests | 248 | 350 | +102 | #323 |
+| ErrorHandlingTests | 334 | 334 | — | — |
+| FileProviderTests | 219 | 309 | +90 | #322 |
+| BDDTests | 237 | 302 | +65 | #318 |
+| IndexTests | 226 | 276 | +50 | #311 |
+| QuirksTests | 210 | 267 | +57 | #313, #319 |
+| SwiftMTPCLITests | 132 | 264 | +132 | #321 |
+| XPCTests | 156 | 250 | +94 | #320 |
+| SyncTests | 238 | 238 | — | — |
+| StoreTests | 201 | 201 | — | — |
+| TestKitTests | 116 | 189 | +73 | #315 |
+| MTPEndianCodecTests | 90 | 172 | +82 | #314 |
+| ScenarioTests | 71 | 141 | +70 | #317 |
+| ObservabilityTests | 70 | 138 | +68 | #310 |
+| SnapshotTests | 132 | 132 | — | — |
+| IntegrationTests | 127 | 127 | — | — |
 | ToolingTests | 117 | 117 | — | — |
-| TestKitTests | 79 | 116 | +37 | #286 |
-| MTPEndianCodecTests | 90 | 90 | — | — |
-| ScenarioTests | 49 | 71 | +22 | #283 |
-| ObservabilityTests | 40 | 70 | +30 | #279 |
-| UITests | — | 34 | new | #278 |
+| UITests | 34 | 34 | — | — |
 
 ### Per-Module Coverage
 
@@ -492,26 +492,26 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 ### Comparison with Previous Baseline
 
-| Metric | Previous (#276) | Current | Change | Status |
+| Metric | Previous (#308) | Current | Change | Status |
 |--------|-----------------|---------|--------|--------|
-| Overall Line Coverage | ~70% | ~72% | +2% | ✅ Improving |
-| SwiftMTPCore | ~68% | ~70% | +2% | ↗️ Improving |
-| Total Tests | 3,490+ | 4,336 | +846 | ✅ All Passing |
+| Overall Line Coverage | ~72% | ~74% | +2% | ✅ Improving |
+| SwiftMTPCore | ~70% | ~72% | +2% | ↗️ Improving |
+| Total Tests | 4,336 | 5,275 | +939 | ✅ All Passing |
 | Test Failures | 0 | 0 | 0 | ✅ No Regression |
-| Test Targets | 20 | 21 | +1 (UITests) | ✅ Added |
+| Test Targets | 21 | 21 | — | ✅ All active |
 
-### Key Improvements (PRs #274–#308)
+### Key Improvements (PRs #309–#323)
 
-1. **Device research PRs**: Samsung Galaxy (#301), Canon/Nikon PTP (#303), Google Pixel (#305), Xiaomi/OnePlus/OPPO/Realme (#308) — enriched quirks with real-world MTP behavior data
-2. **QuirksTests 4.5× growth**: 46 → 210 tests with data quality validation, governance, and device-specific research tests (#285, #298, #301, #303, #305, #308)
-3. **DeviceActor concurrency tests**: Actor isolation and concurrency stress tests (#299)
-4. **FallbackLadder tests**: Error recovery strategy tests for the fallback ladder (#300)
-5. **TransferJournal resilience**: Edge case and resilience tests for journal-based transfer resume (#302)
-6. **Mirror/diff engine**: Comprehensive tests for mirror and diff engine (#306)
-7. **Codec fuzzing**: MTP codec edge case and fuzz regression tests (#282, #307)
-8. **UITests target**: New test target for SwiftUI view tests (#278)
-9. **CLI smoke + snapshot tests**: Command parsing, help output, and output format snapshot tests (#296, #297)
-10. **BDD dynamic baselines**: BDD tests now derive baselines from quirks.json instead of hardcoded values (#284)
+1. **5,000-test milestone**: Suite grew from 4,336 to 5,275 tests — every expanded target saw meaningful growth
+2. **ObservabilityTests 2× growth**: 70 → 138 tests with structured logging validation (#310)
+3. **CLI tests doubled**: 132 → 264 tests covering command parsing, help output, smoke tests (#321)
+4. **Property tests 41% growth**: 248 → 350 tests for transfers, path normalization, quirks merging (#323)
+5. **XPC boundary expansion**: 156 → 250 tests for protocol boundaries and resilience (#320)
+6. **FileProvider concurrency**: 219 → 309 tests with concurrency and edge case coverage (#322)
+7. **Codec tests nearly doubled**: 90 → 172 MTPEndianCodec round-trip and edge case tests (#314)
+8. **Device research**: Sony Walkman NWZ, Alpha cameras (#313), Huawei/Honor (#319), SanDisk Sansa, Creative ZEN (#316)
+9. **Transport diagnostics**: USBClaimDiagnostics and InterfaceProbe test expansion (#312)
+10. **BDD + Scenario growth**: ScenarioTests doubled (71→141), BDDTests +65 (237→302)
 
 ### Previous Test Expansion (PRs #249–#273)
 
@@ -634,11 +634,11 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 ## Test Suite Summary
 
-### Test Results (Current — PRs through #308)
+### Test Results (Current — PRs through #323)
 
 | Metric | Value | Status |
 |--------|-------|--------|
-| Total Tests Registered | 4,336 | ✅ All Passing |
+| Total Tests Registered | 5,275 | ✅ All Passing |
 | Tests Skipped | ~0 | ✅ Skips resolved |
 | Test Failures | 0 | ✅ Fixed |
 | Test Targets | 21 | ✅ All active |
@@ -648,36 +648,36 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 | Target | Tests | Status | Notes |
 |--------|-------|--------|-------|
 | CoreTests | 944 | ✅ Passing | Protocol, codec, actor, device logic, error cascades, mutations, benchmarks, concurrency |
-| TransportTests | 433 | ✅ Passing | Transport edge cases, USB layer, recovery |
+| TransportTests | 489 | ✅ Passing | Transport edge cases, USB layer, recovery, USBClaimDiagnostics, InterfaceProbe |
+| PropertyTests | 350 | ✅ Passing | SwiftCheck invariants, sync edge cases, protocol-level, transfers, paths, quirks merging |
 | ErrorHandlingTests | 334 | ✅ Passing | Error paths, recovery, fault injection, error cascades, propagation chains |
-| PropertyTests | 248 | ✅ Passing | SwiftCheck invariants, sync edge cases, protocol-level, fuzz properties |
+| FileProviderTests | 309 | ✅ Passing | File Provider extension, enumeration, materialization, concurrency, resilience |
+| BDDTests | 302 | ✅ Passing | Gherkin scenarios for connection, transfer, quirks, with dynamic baselines |
+| IndexTests | 276 | ✅ Passing | SQLite index, live index, path keys, data integrity, persistence, concurrency stress |
+| QuirksTests | 267 | ✅ Passing | Data quality, governance, device research (Samsung, Canon, Nikon, Pixel, Sony, Huawei, Xiaomi) |
+| SwiftMTPCLITests | 264 | ✅ Passing | CLI smoke tests, command parsing, help output, format validation |
+| XPCTests | 250 | ✅ Passing | XPC protocol, UInt64 overflow, resilience, boundaries |
 | SyncTests | 238 | ✅ Passing | Mirror, diff, conflict resolution, edge cases, advanced properties |
-| BDDTests | 237 | ✅ Passing | Gherkin scenarios with dynamic baselines from quirks.json |
-| IndexTests | 226 | ✅ Passing | SQLite index, live index, path keys, data integrity, concurrency stress |
-| FileProviderTests | 219 | ✅ Passing | File Provider extension, enumeration, materialization, resilience |
-| QuirksTests | 210 | ✅ Passing | Data quality, governance, device research (Samsung, Canon, Nikon, Pixel, Xiaomi) |
 | StoreTests | 201 | ✅ Passing | SQLite persistence, journal, TransferJournal resilience |
-| XPCTests | 156 | ✅ Passing | XPC protocol, UInt64 overflow, resilience, boundaries |
-| SwiftMTPCLITests | 132 | ✅ Passing | CLI smoke tests, command parsing, help output |
+| TestKitTests | 189 | ✅ Passing | VirtualMTPDevice, FaultInjectingLink, compliance, expanded coverage |
+| MTPEndianCodecTests | 172 | ✅ Passing | Endian codec round-trip, edge cases, expanded coverage |
+| ScenarioTests | 141 | ✅ Passing | End-to-end device operation scenarios, doubled coverage |
+| ObservabilityTests | 138 | ✅ Passing | SwiftMTPObservability structured logging tests |
 | SnapshotTests | 132 | ✅ Passing | Visual regression, policy snapshots, CLI output format snapshots |
 | IntegrationTests | 127 | ✅ Passing | Cross-module integration |
 | ToolingTests | 117 | ✅ Passing | CLI commands, filters, formatters |
-| TestKitTests | 116 | ✅ Passing | VirtualMTPDevice, FaultInjectingLink, compliance |
-| MTPEndianCodecTests | 90 | ✅ Passing | Endian codec round-trip tests |
-| ScenarioTests | 71 | ✅ Passing | End-to-end device operation scenarios |
-| ObservabilityTests | 70 | ✅ Passing | SwiftMTPObservability module tests |
 | UITests | 34 | ✅ Passing | SwiftUI view tests |
 
-**Total: 21 test targets | 4,336 test cases | 0 failures**
+**Total: 21 test targets | 5,275 test cases | 0 failures**
 
 ### Code Statistics
 
 - **Source Files**: 96+ Swift files across 11 modules
-- **Test Files**: 140+ Swift files across 21 test targets
+- **Test Files**: 150+ Swift files across 21 test targets
 - **Source Lines**: ~10,000+ lines (filtered for coverage)
-- **Test Lines**: ~35,000+ lines
-- **Test-to-Source Ratio**: ~3.5:1
-- **Total Test Cases**: 4,336 (0 skipped, 0 failures — all passing)
+- **Test Lines**: ~42,000+ lines
+- **Test-to-Source Ratio**: ~4.2:1
+- **Total Test Cases**: 5,275 (0 skipped, 0 failures — all passing)
 
 ---
 
@@ -714,7 +714,8 @@ llvm-cov show -sources=Sources/SwiftMTPCore/ -sources=Sources/SwiftMTPIndex/
 
 | Date | Overall | SwiftMTPCore | SwiftMTPIndex | SwiftMTPTransportLibUSB | Tests | Notes |
 |------|---------|--------------|---------------|-------------------------|-------|-------|
-| Jul 2025 | ~72% | ~70% | 87-98% | ~22% | 4,336 | **Current** — PRs #274–#308 |
+| Jul 2025 | ~74% | ~72% | 87-98% | ~22% | 5,275 | **Current** — PRs #309–#323, 5K milestone |
+| Jul 2025 | ~72% | ~70% | 87-98% | ~22% | 4,336 | PRs #274–#308 |
 | Jul 2025 | ~70% | ~68% | 87-98% | ~22% | 3,490+ | PR #276 baseline |
 | Feb 2026 | 75.76% | ~68% | 87-98% | ~22% | 1,646 | Hardware tests passing |
 | Feb 2026 | 75.79% | 66.53% | 93.89% | 23.39% | 1,646 | Baseline with test expansion |
