@@ -3,24 +3,29 @@
 
 import Foundation
 
+/// Store for loading and saving device learned performance profiles.
 public protocol LearnedProfileStore: Sendable {
   func loadProfile(for fingerprint: MTPDeviceFingerprint) async throws -> LearnedProfile?
   func saveProfile(_ profile: LearnedProfile, for deviceId: MTPDeviceID) async throws
 }
 
+/// Store for recording raw device profiling data from benchmark runs.
 public protocol ProfilingStore: Sendable {
   func recordProfile(_ profile: MTPDeviceProfile, for deviceId: MTPDeviceID) async throws
 }
 
+/// Store for recording device content snapshots (used by diff and mirror).
 public protocol SnapshotStore: Sendable {
   func recordSnapshot(deviceId: MTPDeviceID, generation: Int, path: String?, hash: String?)
     async throws
 }
 
+/// Store for recording quirk-profile submissions to the device database.
 public protocol SubmissionStore: Sendable {
   func recordSubmission(id: String, deviceId: MTPDeviceID, path: String) async throws
 }
 
+/// Store for recording MTP object metadata used by the snapshot and diff engines.
 public protocol ObjectCatalogStore: Sendable {
   func recordStorage(deviceId: MTPDeviceID, storage: MTPStorageInfo) async throws
   func recordObject(deviceId: MTPDeviceID, object: MTPObjectInfo, pathKey: String, generation: Int)
@@ -32,6 +37,7 @@ public protocol ObjectCatalogStore: Sendable {
   func fetchObjects(deviceId: MTPDeviceID, generation: Int) async throws -> [MTPObjectRecord]
 }
 
+/// Lightweight record of an MTP object for catalog storage and diff operations.
 public struct MTPObjectRecord: Sendable {
   public let handle: UInt32
   public let storage: UInt32
@@ -52,6 +58,7 @@ public struct MTPObjectRecord: Sendable {
   }
 }
 
+/// Aggregate provider that vends all persistence sub-stores for an MTP session.
 public protocol MTPPersistenceProvider: Sendable {
   var learnedProfiles: any LearnedProfileStore { get }
   var profiling: any ProfilingStore { get }

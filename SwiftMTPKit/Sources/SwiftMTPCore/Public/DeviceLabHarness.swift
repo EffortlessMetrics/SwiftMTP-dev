@@ -19,18 +19,21 @@ public actor MockUSBTransport: @unchecked Sendable {
   private var errorInjectionMode: ErrorInjectionMode = .none
   private var bandwidthThrottling: Double = 1.0
 
+  /// Record of a single USB request or response, used for traffic analysis.
   public struct RequestRecord: Sendable, Codable {
     public let timestamp: Date
     public let data: Data
     public let direction: Direction
     public let durationNs: UInt64
 
+    /// Direction of a USB request (host-to-device or device-to-host).
     public enum Direction: String, Sendable, Codable {
       case inRequest = "IN"
       case outRequest = "OUT"
     }
   }
 
+  /// Mode for injecting errors into the mock transport for fault-tolerance testing.
   public enum ErrorInjectionMode: Sendable {
     case none
     case corruptNextPacket
@@ -150,6 +153,7 @@ public actor MockUSBTransport: @unchecked Sendable {
   }
 }
 
+/// Errors that can occur in the mock USB transport layer.
 public enum USBTransportError: Error, Sendable, Equatable {
   case notConnected
   case noData
@@ -175,6 +179,7 @@ public struct VirtualDeviceProfile: Sendable {
   public let quirks: QuirkFlags
   public let storageInfo: [VirtualStorageInfo]
 
+  /// Storage metadata for a virtual device profile.
   public struct VirtualStorageInfo: Sendable {
     public let storageID: UInt32
     public let capacity: UInt64
@@ -346,6 +351,7 @@ public actor TrafficRecorder {
   public private(set) var recordings: [RecordingSession] = []
   private var currentSessionData: RecordingSessionData?
 
+  /// A recorded MTP traffic session for regression testing and replay.
   public struct RecordingSession: Sendable, Codable {
     public let id: UUID
     public let deviceProfile: String
@@ -355,6 +361,7 @@ public actor TrafficRecorder {
     public let summary: SessionSummary
   }
 
+  /// A single request or response entry in a recorded traffic session.
   public struct TrafficEntry: Sendable, Codable {
     public let timestamp: Date
     public let direction: Direction
@@ -362,12 +369,14 @@ public actor TrafficRecorder {
     public let payload: Data
     public let responseTimeMs: Int
 
+    /// Direction of a traffic entry (request or response).
     public enum Direction: String, Sendable, Codable {
       case request = "REQ"
       case response = "RSP"
     }
   }
 
+  /// Aggregate statistics for a recorded traffic session.
   public struct SessionSummary: Sendable, Codable {
     public let totalRequests: Int
     public let totalBytes: Int64
@@ -433,6 +442,7 @@ public actor TrafficRecorder {
 
 // MARK: - Result of a single capability test.
 
+/// Result of testing a single MTP capability on a device.
 public struct CapabilityTestResult: Sendable, Codable {
   public let name: String
   public let opcode: String?
@@ -454,6 +464,7 @@ public struct CapabilityTestResult: Sendable, Codable {
 
 // MARK: - Full report produced by the device lab harness.
 
+/// Comprehensive report produced by the device lab harness after probing a device.
 public struct DeviceLabReport: Sendable, Codable {
   public let timestamp: Date
   public let manufacturer: String

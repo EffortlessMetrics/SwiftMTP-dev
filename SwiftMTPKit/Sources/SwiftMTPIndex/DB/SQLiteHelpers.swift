@@ -7,7 +7,8 @@ import SQLite3
 // SQLite constants that might not be available in all environments
 private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
-public enum DBError: Error, CustomStringConvertible {
+/// Errors that can occur during SQLite database operations.
+public enum DBError: Error, Sendable, CustomStringConvertible {
   case open(String), prepare(String), step(String), bind(String)
   case column(String), notFound, constraint(String)
 

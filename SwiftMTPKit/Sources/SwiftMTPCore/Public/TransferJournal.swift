@@ -3,6 +3,10 @@
 
 import Foundation
 
+/// Protocol for journaling file transfers, enabling resume after interruption.
+///
+/// Implementations persist transfer state so that partially completed
+/// reads and writes can be resumed after a disconnect or crash.
 public protocol TransferJournal: Sendable {
   func beginRead(
     device: MTPDeviceID, handle: UInt32, name: String,
@@ -41,6 +45,7 @@ extension TransferJournal {
   public func addContentHash(id: String, hash: String) async throws {}
 }
 
+/// Snapshot of a single transfer's state, used for resume and progress tracking.
 public struct TransferRecord: Sendable {
   public let id: String
   public let deviceId: MTPDeviceID

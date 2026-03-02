@@ -63,6 +63,7 @@ public struct IndexedStorage: Sendable, Equatable {
 
 /// Represents a change to an object in the live index.
 public struct IndexedObjectChange: Sendable {
+  /// The type of change that occurred to an indexed object.
   public enum ChangeKind: Sendable { case upserted, deleted }
 
   public let kind: ChangeKind

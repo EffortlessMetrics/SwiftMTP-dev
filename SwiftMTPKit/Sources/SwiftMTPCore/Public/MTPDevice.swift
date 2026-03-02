@@ -5,6 +5,7 @@ import Foundation
 import MTPEndianCodec
 import SwiftMTPQuirks
 
+/// Unique identifier for an MTP device, typically derived from USB bus/address or serial number.
 public struct MTPDeviceID: Hashable, Sendable, Codable {
   public let raw: String
   public init(raw: String) { self.raw = raw }
@@ -128,11 +129,13 @@ public enum MTPEvent: Sendable {
   }
 }
 
+/// Identifier for a storage unit on an MTP device (e.g., internal storage or SD card).
 public struct MTPStorageID: Hashable, Sendable, Codable {
   public let raw: UInt32
   public init(raw: UInt32) { self.raw = raw }
 }
 
+/// Detailed information about an MTP device and its capabilities, obtained after opening a session.
 public struct MTPDeviceInfo: Sendable, Codable {
   public let manufacturer: String
   public let model: String
@@ -154,6 +157,7 @@ public struct MTPDeviceInfo: Sendable, Codable {
   }
 }
 
+/// Metadata about a single storage unit on an MTP device, including capacity and access mode.
 public struct MTPStorageInfo: Sendable, Codable {
   public let id: MTPStorageID
   public let description: String
@@ -175,6 +179,7 @@ public struct MTPStorageInfo: Sendable, Codable {
 
 public typealias MTPObjectHandle = UInt32
 
+/// Metadata for an object (file or directory) stored on an MTP device.
 public struct MTPObjectInfo: Sendable, Codable {
   public let handle: MTPObjectHandle
   public let storage: MTPStorageID
