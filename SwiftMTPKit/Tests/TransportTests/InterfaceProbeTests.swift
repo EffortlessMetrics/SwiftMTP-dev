@@ -537,4 +537,310 @@ final class InterfaceProbeTests: XCTestCase {
     let enumDelay: UInt32 = 500_000
     XCTAssertEqual(enumDelay, 500000)
   }
+
+  // MARK: - MTP Class (6, 1, 1) Interface Probe
+
+  func testHeuristicMTPClass_6_1_1_IsTopCandidate() {
+    let eps = EPCandidates(bulkIn: 0x81, bulkOut: 0x01, evtIn: 0x82)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
+      endpoints: eps, interfaceName: "")
+    XCTAssertTrue(result.isCandidate)
+    // Class 0x06/0x01 gets 100 base + 5 (protocol 0x01) + 5 (evtIn) = 110
+    XCTAssertGreaterThanOrEqual(result.score, 100)
+  }
+
+  // MARK: - PTP Class (6, 1, 2) Interface Probe
+
+  func testHeuristicPTPClass_6_1_2_IsCandidate() {
+    let eps = EPCandidates(bulkIn: 0x81, bulkOut: 0x02, evtIn: 0x83)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x02,
+      endpoints: eps, interfaceName: "")
+    XCTAssertTrue(result.isCandidate)
+    // Class 0x06/0x01 gives 100 base + 5 (evtIn) = 105
+    XCTAssertGreaterThanOrEqual(result.score, 100)
+  }
+
+  // MARK: - Vendor-Specific Class (0xFF) Interface Probe
+
+  func testHeuristicVendorSpecific0xFF_WithMTPName() {
+    let eps = EPCandidates(bulkIn: 0x81, bulkOut: 0x01, evtIn: 0x82)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0xFF, interfaceSubclass: 0x00, interfaceProtocol: 0x00,
+      endpoints: eps, interfaceName: "MTP")
+    XCTAssertTrue(result.isCandidate)
+    XCTAssertGreaterThanOrEqual(result.score, 80)
+  }
+
+  func testHeuristicVendorSpecific0xFF_WithEventEndpoint() {
+    let eps = EPCandidates(bulkIn: 0x81, bulkOut: 0x01, evtIn: 0x83)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0xFF, interfaceSubclass: 0x00, interfaceProtocol: 0x00,
+      endpoints: eps, interfaceName: "")
+    // 62 (vendor + evtIn) + 5 (evtIn bonus) = 67
+    XCTAssertTrue(result.isCandidate)
+    XCTAssertGreaterThanOrEqual(result.score, 60)
+  }
+
+  func testHeuristicVendorSpecific0xFF_WithoutEvidence_NotCandidate() {
+    let eps = EPCandidates(bulkIn: 0x81, bulkOut: 0x01, evtIn: 0)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0xFF, interfaceSubclass: 0x00, interfaceProtocol: 0x00,
+      endpoints: eps, interfaceName: "Generic USB")
+    // No MTP name match, no event endpoint → score < 60
+    XCTAssertFalse(result.isCandidate)
+  }
+
+  // MARK: - No Matching Interface
+
+  func testHeuristicNoEndpoints_NotCandidate() {
+    let eps = EPCandidates(bulkIn: 0, bulkOut: 0, evtIn: 0)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
+      endpoints: eps, interfaceName: "MTP")
+    XCTAssertFalse(result.isCandidate)
+    XCTAssertEqual(result.score, Int.min)
+  }
+
+  func testHeuristicBulkInOnly_NotCandidate() {
+    let eps = EPCandidates(bulkIn: 0x81, bulkOut: 0, evtIn: 0)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
+      endpoints: eps, interfaceName: "")
+    XCTAssertFalse(result.isCandidate)
+  }
+
+  func testHeuristicBulkOutOnly_NotCandidate() {
+    let eps = EPCandidates(bulkIn: 0, bulkOut: 0x01, evtIn: 0)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
+      endpoints: eps, interfaceName: "")
+    XCTAssertFalse(result.isCandidate)
+  }
+
+  // MARK: - Multiple Configuration / Alt Setting
+
+  func testCandidatesWithDifferentAltSettings() {
+    let alt0 = InterfaceCandidate(
+      ifaceNumber: 0, altSetting: 0,
+      bulkIn: 0x81, bulkOut: 0x01, eventIn: 0x82, score: 110,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    let alt1 = InterfaceCandidate(
+      ifaceNumber: 0, altSetting: 1,
+      bulkIn: 0x83, bulkOut: 0x02, eventIn: 0x84, score: 115,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+
+    let sorted = [alt0, alt1].sorted { $0.score > $1.score }
+    XCTAssertEqual(sorted[0].altSetting, 1, "Higher-scoring alt setting should sort first")
+    XCTAssertEqual(sorted[1].altSetting, 0)
+  }
+
+  func testMultipleConfigurationCandidates() {
+    // Simulate candidates from different interfaces (as if from different configs)
+    let ifaceMTP = InterfaceCandidate(
+      ifaceNumber: 0, altSetting: 0,
+      bulkIn: 0x81, bulkOut: 0x01, eventIn: 0x82, score: 120,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    let ifaceVendor = InterfaceCandidate(
+      ifaceNumber: 2, altSetting: 0,
+      bulkIn: 0x85, bulkOut: 0x03, eventIn: 0x86, score: 67,
+      ifaceClass: 0xFF, ifaceSubclass: 0x00, ifaceProtocol: 0x00)
+    let ifaceStorage = InterfaceCandidate(
+      ifaceNumber: 3, altSetting: 0,
+      bulkIn: 0x87, bulkOut: 0x04, eventIn: 0, score: 30,
+      ifaceClass: 0x08, ifaceSubclass: 0x06, ifaceProtocol: 0x50)
+
+    let sorted = [ifaceStorage, ifaceMTP, ifaceVendor].sorted { $0.score > $1.score }
+    XCTAssertEqual(sorted[0].ifaceNumber, 0, "MTP interface should rank first")
+    XCTAssertEqual(sorted[1].ifaceNumber, 2, "Vendor interface second")
+    XCTAssertEqual(sorted[2].ifaceNumber, 3, "Storage interface last")
+  }
+
+  // MARK: - Endpoint Detection (Bulk In / Out / Interrupt)
+
+  func testEndpointDetectionBulkInAddress() {
+    // Bulk IN endpoints have bit 7 set and transfer type 0x02
+    let bulkIn: UInt8 = 0x81
+    XCTAssertTrue((bulkIn & 0x80) != 0, "Bulk IN direction bit must be set")
+    XCTAssertEqual(bulkIn & 0x0F, 1, "Endpoint number is low nibble")
+  }
+
+  func testEndpointDetectionBulkOutAddress() {
+    let bulkOut: UInt8 = 0x02
+    XCTAssertTrue((bulkOut & 0x80) == 0, "Bulk OUT direction bit must be clear")
+    XCTAssertEqual(bulkOut & 0x0F, 2)
+  }
+
+  func testEndpointDetectionInterruptIn() {
+    // Interrupt IN endpoint for MTP events
+    let interruptIn: UInt8 = 0x83
+    XCTAssertTrue((interruptIn & 0x80) != 0, "Interrupt IN direction bit must be set")
+    XCTAssertEqual(interruptIn & 0x0F, 3)
+  }
+
+  func testEndpointTripleForMTPDevice() {
+    // Standard MTP endpoint triple: bulkIn, bulkOut, interruptIn
+    let candidate = InterfaceCandidate(
+      ifaceNumber: 0, altSetting: 0,
+      bulkIn: 0x81, bulkOut: 0x02, eventIn: 0x83, score: 110,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    XCTAssertNotEqual(candidate.bulkIn, 0, "MTP needs bulk IN")
+    XCTAssertNotEqual(candidate.bulkOut, 0, "MTP needs bulk OUT")
+    XCTAssertNotEqual(candidate.eventIn, 0, "MTP should have event IN")
+  }
+
+  // MARK: - Probe Finds Correct MTP Interface
+
+  func testProbeSelectsHighestScoringCandidate() {
+    let mtpIface = InterfaceCandidate(
+      ifaceNumber: 1, altSetting: 0,
+      bulkIn: 0x81, bulkOut: 0x01, eventIn: 0x82, score: 120,
+      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    let vendorIface = InterfaceCandidate(
+      ifaceNumber: 2, altSetting: 0,
+      bulkIn: 0x83, bulkOut: 0x02, eventIn: 0x84, score: 67,
+      ifaceClass: 0xFF, ifaceSubclass: 0x00, ifaceProtocol: 0x00)
+
+    let candidates = [vendorIface, mtpIface].sorted { $0.score > $1.score }
+    XCTAssertEqual(candidates.first?.ifaceNumber, 1, "MTP interface should be selected")
+    XCTAssertEqual(candidates.first?.ifaceClass, 0x06)
+  }
+
+  // MARK: - Composite USB Device
+
+  func testProbeHandlesCompositeDeviceWithMixedInterfaces() {
+    // Composite device: ADB + MTP + Mass Storage
+    let adbEPs = EPCandidates(bulkIn: 0x81, bulkOut: 0x01, evtIn: 0)
+    let adbResult = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0xFF, interfaceSubclass: 0x42, interfaceProtocol: 0x01,
+      endpoints: adbEPs, interfaceName: "ADB Interface")
+    XCTAssertFalse(adbResult.isCandidate, "ADB interface should be excluded")
+
+    let mtpEPs = EPCandidates(bulkIn: 0x83, bulkOut: 0x02, evtIn: 0x84)
+    let mtpResult = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
+      endpoints: mtpEPs, interfaceName: "MTP")
+    XCTAssertTrue(mtpResult.isCandidate, "MTP interface should be selected")
+
+    let mscEPs = EPCandidates(bulkIn: 0x85, bulkOut: 0x03, evtIn: 0)
+    let mscResult = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0x08, interfaceSubclass: 0x06, interfaceProtocol: 0x50,
+      endpoints: mscEPs, interfaceName: "Mass Storage")
+    XCTAssertFalse(mscResult.isCandidate, "Mass Storage should not be MTP candidate")
+
+    XCTAssertGreaterThan(mtpResult.score, mscResult.score)
+  }
+
+  // MARK: - Samsung-Style Multiple Endpoints
+
+  func testProbeSamsungStyleVendorSpecificMTP() {
+    // Samsung devices expose MTP on vendor-specific class 0xFF with "MTP" name
+    let eps = EPCandidates(bulkIn: 0x81, bulkOut: 0x02, evtIn: 0x83)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0xFF, interfaceSubclass: 0x00, interfaceProtocol: 0x00,
+      endpoints: eps, interfaceName: "Samsung Android MTP")
+    XCTAssertTrue(result.isCandidate)
+    // 80 (vendor + MTP name) + 15 (name contains "mtp") + 5 (evtIn) = 100
+    XCTAssertGreaterThanOrEqual(result.score, 80)
+  }
+
+  func testProbeSamsungWithMultipleEndpointPairs() {
+    // Samsung may expose multiple candidate interfaces; best one should win
+    let samsungMTP = InterfaceCandidate(
+      ifaceNumber: 0, altSetting: 0,
+      bulkIn: 0x81, bulkOut: 0x02, eventIn: 0x83, score: 100,
+      ifaceClass: 0xFF, ifaceSubclass: 0x00, ifaceProtocol: 0x00)
+    let samsungADB = InterfaceCandidate(
+      ifaceNumber: 1, altSetting: 0,
+      bulkIn: 0x84, bulkOut: 0x05, eventIn: 0, score: -1000,
+      ifaceClass: 0xFF, ifaceSubclass: 0x42, ifaceProtocol: 0x01)
+
+    let sorted = [samsungADB, samsungMTP].sorted { $0.score > $1.score }
+    XCTAssertEqual(sorted.first?.ifaceNumber, 0, "MTP interface should rank above ADB")
+  }
+
+  // MARK: - Camera PTP Interface
+
+  func testProbeCameraPTPInterface() {
+    // Cameras use standard PTP: class 0x06, subclass 0x01, protocol 0x01
+    let eps = EPCandidates(bulkIn: 0x81, bulkOut: 0x02, evtIn: 0x83)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
+      endpoints: eps, interfaceName: "PTP Camera")
+    XCTAssertTrue(result.isCandidate)
+    // 100 (class) + 15 (name has ptp) + 5 (protocol 0x01) + 5 (evtIn) = 125
+    XCTAssertGreaterThanOrEqual(result.score, 120)
+  }
+
+  func testProbeCameraWithOnlyBulkEndpoints() {
+    // Some cameras lack an interrupt endpoint
+    let eps = EPCandidates(bulkIn: 0x81, bulkOut: 0x02, evtIn: 0)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
+      endpoints: eps, interfaceName: "")
+    XCTAssertTrue(result.isCandidate)
+    // 100 (class) + 5 (protocol) = 105
+    XCTAssertGreaterThanOrEqual(result.score, 100)
+  }
+
+  // MARK: - Class 0x06 Without Subclass 0x01
+
+  func testHeuristicClass0x06_WithoutSubclass0x01() {
+    let eps = EPCandidates(bulkIn: 0x81, bulkOut: 0x01, evtIn: 0x82)
+    let result = evaluateMTPInterfaceCandidate(
+      interfaceClass: 0x06, interfaceSubclass: 0x00, interfaceProtocol: 0x00,
+      endpoints: eps, interfaceName: "")
+    // Class 0x06 without subclass 0x01 gets 65 + 5 (evtIn) = 70
+    XCTAssertTrue(result.isCandidate)
+    XCTAssertGreaterThanOrEqual(result.score, 65)
+    XCTAssertLessThan(result.score, 100, "Should score lower than canonical MTP")
+  }
+
+  // MARK: - probeShouldRecoverNoProgressTimeout
+
+  func testProbeShouldRecoverNoProgressTimeout_TimeoutZeroSent() {
+    XCTAssertTrue(probeShouldRecoverNoProgressTimeout(rc: -7, sent: 0))
+  }
+
+  func testProbeShouldRecoverNoProgressTimeout_TimeoutWithData() {
+    XCTAssertFalse(probeShouldRecoverNoProgressTimeout(rc: -7, sent: 12))
+  }
+
+  func testProbeShouldRecoverNoProgressTimeout_NonTimeout() {
+    XCTAssertFalse(probeShouldRecoverNoProgressTimeout(rc: -6, sent: 0))
+  }
+
+  func testProbeShouldRecoverNoProgressTimeout_Success() {
+    XCTAssertFalse(probeShouldRecoverNoProgressTimeout(rc: 0, sent: 0))
+  }
+
+  // MARK: - MTPInterfaceHeuristic
+
+  func testMTPInterfaceHeuristicFields() {
+    let h = MTPInterfaceHeuristic(isCandidate: true, score: 95)
+    XCTAssertTrue(h.isCandidate)
+    XCTAssertEqual(h.score, 95)
+  }
+
+  func testMTPInterfaceHeuristicNotCandidate() {
+    let h = MTPInterfaceHeuristic(isCandidate: false, score: Int.min)
+    XCTAssertFalse(h.isCandidate)
+    XCTAssertEqual(h.score, Int.min)
+  }
+
+  // MARK: - ProbeLadderResult
+
+  func testProbeLadderResultSuccess() {
+    let r = ProbeLadderResult(succeeded: true, cachedDeviceInfoData: Data([0x01]), stepAttempted: "OpenSession")
+    XCTAssertTrue(r.succeeded)
+    XCTAssertNotNil(r.cachedDeviceInfoData)
+    XCTAssertEqual(r.stepAttempted, "OpenSession")
+  }
+
+  func testProbeLadderResultFailure() {
+    let r = ProbeLadderResult(succeeded: false, cachedDeviceInfoData: nil, stepAttempted: "GetDeviceInfo")
+    XCTAssertFalse(r.succeeded)
+    XCTAssertNil(r.cachedDeviceInfoData)
+  }
 }

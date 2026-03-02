@@ -33,21 +33,21 @@ public extension USBClaimError {
     case .claimFailedWithConflict(let error, let iface, let process):
       let errorName = errorName(for: error)
       if let process = process {
-        return "Claim failed (\\(errorName), error code \\(error)) on interface \\(iface). "
-          + "\\(process) may be holding the device. Quit the application and retry."
+        return "Claim failed (\(errorName), error code \(error)) on interface \(iface). "
+          + "\(process) may be holding the device. Quit the application and retry."
       }
-      return "Claim failed (\\(errorName), error code \\(error)) on interface \\(iface). "
+      return "Claim failed (\(errorName), error code \(error)) on interface \(iface). "
         + "Another application (possibly Chrome/WebUSB or Android File Transfer) may have claimed the device."
 
     case .claimFailed(let error, let iface):
       let errorName = errorName(for: error)
-      return "USB claim failed (\\(errorName), error code \\(error)) on interface \\(iface)."
+      return "USB claim failed (\(errorName), error code \(error)) on interface \(iface)."
 
     case .deviceDisconnected:
       return "Device was disconnected during claim operation."
 
     case .kernelDriverError(let message):
-      return "Kernel driver error: \\(message)"
+      return "Kernel driver error: \(message)"
     }
   }
 
