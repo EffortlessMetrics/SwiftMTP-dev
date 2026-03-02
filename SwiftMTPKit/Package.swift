@@ -247,6 +247,7 @@ let package = Package(
         "SwiftMTPStore",
         "SwiftMTPTestKit",
         "SwiftMTPCore",
+        "SwiftMTPIndex",
       ]),
     .testTarget(
       name: "SyncTests",
