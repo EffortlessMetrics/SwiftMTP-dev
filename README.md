@@ -1,10 +1,35 @@
 # SwiftMTP
 
-A Swift-native MTP (Media Transfer Protocol) implementation for macOS. Early development — the protocol layer is well-tested with mocks, but real-device support is still being built out.
+> **Pre-Alpha** — Heavily scaffolded protocol and test infrastructure, but only 1 device has completed real file transfers. Not ready for production use.
+
+A Swift-native MTP (Media Transfer Protocol) implementation for macOS. The protocol layer is well-tested with mocks, but real-device support is still being built out.
 
 ## Project Status
 
-SwiftMTP is in **early development**. The core MTP protocol, codec, and session management are implemented and covered by an extensive test suite using in-memory mock devices (`VirtualMTPDevice`). Real-device testing is in its early stages — only one device (Xiaomi Mi Note 2) has completed successful file transfers through SwiftMTP.
+SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session management are implemented and covered by an extensive test suite (~4,800 tests) using in-memory mock devices (`VirtualMTPDevice`). However, real-device validation is minimal — only one device (Xiaomi Mi Note 2) has completed successful file transfers through SwiftMTP.
+
+### What Works
+
+- MTP protocol codec, session management, and object operations (mock-tested)
+- CLI tool: `probe`, `ls`, `pull`, `push`, `snapshot`, `mirror`, `bench`, `events`, `quirks`
+- Device quirks database with 20,000+ entries (research-based — see caveat below)
+- SQLite-based device content indexing and snapshots
+- Transfer journaling with resume support (mock-tested)
+- File Provider extension for Finder integration (tech preview, read-only, mock-tested)
+- SwiftUI GUI application (demo mode only)
+
+### What Doesn't Work (Yet)
+
+- Most real MTP devices — only 1 of 7 tested devices can transfer files
+- Samsung Galaxy: MTP handshake fails after USB claim
+- Google Pixel 7: bulk transfer timeout (likely macOS kernel issue)
+- OnePlus 3T: reads work but writes fail with InvalidParameter
+- Canon/Nikon cameras: never connected to SwiftMTP (research-only quirks)
+- File Provider write operations (implemented but no real-device validation)
+
+### Quirks Database Caveat
+
+The 20,000+ entry quirks database is **research-based scaffolding**, sourced from libmtp data and vendor specifications. Only a handful of devices have been tested with SwiftMTP directly. The database represents intended tuning parameters, not validated device support.
 
 - Change tracking: [`CHANGELOG.md`](CHANGELOG.md)
 - Docs index: [`Docs/README.md`](Docs/README.md)
@@ -88,7 +113,7 @@ swift run SwiftMTPApp
 
 ## Verification & Testing
 
-5,275 test cases across 21 test targets, using `VirtualMTPDevice` (in-memory mock) extensively. Includes unit, BDD (CucumberSwift), property-based (SwiftCheck), snapshot, and fuzz tests. Real-device tests require physical hardware.
+5,275+ test cases across 21 test targets, using `VirtualMTPDevice` (in-memory mock) extensively. Includes unit, BDD (CucumberSwift), property-based (SwiftCheck), snapshot, and fuzz tests. Real-device tests require physical hardware.
 
 ### Full Verification Suite
 ```bash
