@@ -7,23 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
-### Wave 33 Schema & DocC Fixes (PRs #398–#399)
+### Waves 33–34 Polish & Docs (PRs #398–#402)
 
-> **Summary**: Quirks schema validation fixed (77,654 errors eliminated), DocC generator model updated. Tests at **8,177** (+268 from wave 31).
+> **Summary**: Schema validation fix (77,654 errors eliminated), DocC generator fix, format sweep, transport logging improvements, and docs update. Session totals: **42 PRs merged** (#362–#402), tests grew from 7,112 → **8,177** (+1,065).
 
 #### Key Stats
-- **8,177 tests** executed across 20 test targets (up from 7,909)
-- **268 new tests** added across waves 32–33
-- **77,654 schema validation errors** eliminated by fixing `quirks.schema.json`
-- **0 unexpected failures**
+- **8,177 tests** executed across 20 test targets, **0 unexpected failures**, 40 skipped
+- **20,026 device quirk entries** across 1,154 VIDs and 38 categories
+- **42 PRs merged** this session (#362–#402)
+- **+1,065 tests** added across the full session (waves 25–34)
 
 #### Merged PRs
 - **#398** — Quirks schema fix: corrected `quirks.schema.json` definitions to match actual data (77,654 validation errors → 0)
 - **#399** — DocC generator fix: updated `docc-generator-tool` model to match current module structure
+- **#400** — Format sweep: `swift-format` applied across all source and test files
+- **#401** — Docs update: CHANGELOG, README, CLAUDE, ROADMAP refreshed for waves 32–33
+- **#402** — Transport logging: improved inline docs, structured logging, and error diagnostics in transport layer
 
 #### Highlights
 - **Schema validation clean** (#398): the quirks JSON schema had drifted from the actual data format; fixed `additionalProperties`, enum values, and nested object definitions to eliminate all 77,654 validation errors
 - **DocC generator** (#399): generator tool model updated so `docc-generator-tool` produces valid documentation catalogs
+- **Transport documentation** (#402): comprehensive inline documentation and structured logging added to USB transport layer for better diagnostics and maintainability
+- **Session milestone**: 42 PRs merged across 10 waves, growing test suite by 1,065 tests with zero unexpected failures throughout
 
 ---
 

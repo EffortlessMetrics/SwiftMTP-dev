@@ -46,6 +46,17 @@ Minimum expectations for each item:
 | 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
 | 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
 
+## Waves 33–34 Activity (2026-03-08)
+
+Key development activity in these waves:
+
+- **PRs merged**: #398–#402 (schema fix, DocC fix, format sweep, docs update, transport logging)
+- **Schema validation fix**: `quirks.schema.json` corrected — 77,654 validation errors eliminated (#398)
+- **DocC generator fix**: `docc-generator-tool` model updated to match current module structure (#399)
+- **Format sweep**: `swift-format` applied across all source and test files (#400)
+- **Transport inline documentation**: comprehensive inline docs, structured logging, and error diagnostics added to transport layer (#402)
+- **Session totals**: 42 PRs merged (#362–#402), tests grew from 7,112 → 8,177 (+1,065)
+
 ## Wave 32–33 Activity (2026-03-07)
 
 Key development activity in these waves:
