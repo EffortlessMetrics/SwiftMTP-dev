@@ -232,7 +232,9 @@ public actor LibUSBTransport: MTPTransport {
     guard var dev = target else { throw TransportError.noDevice }
     var h: OpaquePointer?
     guard libusb_open(dev, &h) == 0, var handle = h else {
-      log.error("libusb_open failed for device \(summary.id.raw, privacy: .public) — another process may hold an exclusive claim")
+      log.error(
+        "libusb_open failed for device \(summary.id.raw, privacy: .public) — another process may hold an exclusive claim"
+      )
       libusb_unref_device(dev)
       throw TransportError.accessDenied
     }
@@ -259,13 +261,17 @@ public actor LibUSBTransport: MTPTransport {
         }
       }
     } catch {
-      log.error("Interface ranking failed for device \(summary.id.raw, privacy: .public): \(error.localizedDescription, privacy: .public)")
+      log.error(
+        "Interface ranking failed for device \(summary.id.raw, privacy: .public): \(error.localizedDescription, privacy: .public)"
+      )
       libusb_close(handle)
       libusb_unref_device(dev)
       throw error
     }
     guard !candidates.isEmpty else {
-      log.warning("No MTP interface found among USB descriptors for device \(summary.id.raw, privacy: .public)")
+      log.warning(
+        "No MTP interface found among USB descriptors for device \(summary.id.raw, privacy: .public)"
+      )
       libusb_close(handle)
       libusb_unref_device(dev)
       throw TransportError.io("no MTP interface")
@@ -694,7 +700,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   }
 
   public func resetDevice() async throws {
-    log.info("Resetting USB device (VID=\(String(format: "%04x", self.vendorID), privacy: .public) PID=\(String(format: "%04x", self.productID), privacy: .public))")
+    log.info(
+      "Resetting USB device (VID=\(String(format: "%04x", self.vendorID), privacy: .public) PID=\(String(format: "%04x", self.productID), privacy: .public))"
+    )
     let rc = libusb_reset_device(h)
     // NOT_FOUND means device re-enumerated (expected on some Android devices)
     if rc != 0 && rc != Int32(LIBUSB_ERROR_NOT_FOUND.rawValue) {
@@ -744,7 +752,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   ///
   /// Safe to call even if no endpoint is actually halted (returns success).
   private func recoverStall() {
-    log.debug("Recovering stall: clearing HALT on all endpoints (out=\(String(format: "0x%02x", self.outEP), privacy: .public) in=\(String(format: "0x%02x", self.inEP), privacy: .public) evt=\(String(format: "0x%02x", self.evtEP), privacy: .public))")
+    log.debug(
+      "Recovering stall: clearing HALT on all endpoints (out=\(String(format: "0x%02x", self.outEP), privacy: .public) in=\(String(format: "0x%02x", self.inEP), privacy: .public) evt=\(String(format: "0x%02x", self.evtEP), privacy: .public))"
+    )
     _ = libusb_clear_halt(h, outEP)
     _ = libusb_clear_halt(h, inEP)
     if evtEP != 0 { _ = libusb_clear_halt(h, evtEP) }
@@ -1124,7 +1134,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       while got == 0 {
         got = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: 500)
         if got == 0 && DispatchTime.now().uptimeNanoseconds - start > budget {
-          log.error("Data-IN phase timeout: no response within \(self.config.handshakeTimeoutMs)ms budget")
+          log.error(
+            "Data-IN phase timeout: no response within \(self.config.handshakeTimeoutMs)ms budget"
+          )
           throw MTPError.timeout
         }
       }
@@ -1228,7 +1240,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
 
   private func throwCommandWriteFailure(_ attempt: CommandWriteAttempt, context: String) throws {
     if attempt.rc == 0, attempt.sent != attempt.expected {
-      log.error("Short write: sent=\(attempt.sent)/\(attempt.expected) — \(context, privacy: .public)")
+      log.error(
+        "Short write: sent=\(attempt.sent)/\(attempt.expected) — \(context, privacy: .public)"
+      )
       throw MTPError.transport(
         .io("\(context): short write sent=\(attempt.sent)/\(attempt.expected)"))
     }
@@ -1387,7 +1401,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   private func performCommandNoProgressLightRecovery(opcode: UInt16, txid: UInt32, debug: Bool)
     -> Bool
   {
-    log.debug("Light recovery: clearing endpoints and re-asserting alt-setting (op=\(String(format: "0x%04x", opcode)))")
+    log.debug(
+      "Light recovery: clearing endpoints and re-asserting alt-setting (op=\(String(format: "0x%04x", opcode)))"
+    )
     let clearOutRC = libusb_clear_halt(h, outEP)
     let clearInRC = libusb_clear_halt(h, inEP)
     let clearEventRC: Int32 =
@@ -1446,7 +1462,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
 
     let resetRC = libusb_reset_device(h)
     if resetRC != 0 {
-      log.error("Hard recovery: libusb_reset_device failed rc=\(resetRC) (op=\(String(format: "0x%04x", opcode)))")
+      log.error(
+        "Hard recovery: libusb_reset_device failed rc=\(resetRC) (op=\(String(format: "0x%04x", opcode)))"
+      )
       if debug {
         print(
           String(
@@ -1630,7 +1648,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       if rc == Int32(LIBUSB_ERROR_PIPE.rawValue) {
         // PIPE error = endpoint STALL. Attempt stall recovery (clear HALT on all
         // endpoints) then retry once. If the retry also fails, propagate the error.
-        log.warning("Bulk write PIPE/STALL on ep=\(String(format: "0x%02x", ep), privacy: .public), attempting stall recovery")
+        log.warning(
+          "Bulk write PIPE/STALL on ep=\(String(format: "0x%02x", ep), privacy: .public), attempting stall recovery"
+        )
         recoverStall()
         var r: Int32 = 0
         let rc2 = libusb_bulk_transfer(
@@ -1646,7 +1666,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
         continue
       }
       if rc != 0 {
-        log.error("Bulk write failed: rc=\(rc) ep=\(String(format: "0x%02x", ep), privacy: .public) sent=\(sent)/\(count)")
+        log.error(
+          "Bulk write failed: rc=\(rc) ep=\(String(format: "0x%02x", ep), privacy: .public) sent=\(sent)/\(count)"
+        )
         throw MTPError.transport(mapLibusb(rc))
       }
       sent += Int(s)
@@ -1664,7 +1686,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       let rc = libusb_bulk_transfer(h, ep, &tmp, 512, &g, timeout)
       if rc == -7 { return 0 }  // LIBUSB_ERROR_TIMEOUT — no data yet
       if rc == Int32(LIBUSB_ERROR_PIPE.rawValue) {
-        log.warning("Bulk read PIPE/STALL on ep=\(String(format: "0x%02x", ep), privacy: .public), attempting stall recovery")
+        log.warning(
+          "Bulk read PIPE/STALL on ep=\(String(format: "0x%02x", ep), privacy: .public), attempting stall recovery"
+        )
         recoverStall()
         var g2: Int32 = 0
         let rc2 = libusb_bulk_transfer(h, ep, &tmp, 512, &g2, timeout)
@@ -1688,7 +1712,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       h, ep, buf.assumingMemoryBound(to: UInt8.self), Int32(max), &g, timeout)
     if rc == -7 { return 0 }  // LIBUSB_ERROR_TIMEOUT — no data yet
     if rc == Int32(LIBUSB_ERROR_PIPE.rawValue) {
-      log.warning("Bulk read PIPE/STALL on ep=\(String(format: "0x%02x", ep), privacy: .public), attempting stall recovery")
+      log.warning(
+        "Bulk read PIPE/STALL on ep=\(String(format: "0x%02x", ep), privacy: .public), attempting stall recovery"
+      )
       recoverStall()
       var g2: Int32 = 0
       let rc2 = libusb_bulk_transfer(
