@@ -1,6 +1,6 @@
 # SwiftMTP Roadmap
 
-*Last updated: 2026-03-01*
+*Last updated: 2026-03-03*
 
 > **Pre-Alpha Status**: SwiftMTP has extensive protocol and test infrastructure but minimal real-device validation. Only 1 device (Xiaomi Mi Note 2) has completed real file transfers. The version numbers below (2.x) reflect internal development milestones, not production readiness. Items marked as "shipped" or "complete" are code-complete and mock-tested unless noted otherwise — most have not been validated on real hardware.
 
@@ -8,7 +8,7 @@ This roadmap is the execution plan for the next implementation sprints in the 2.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Device quirks database now at **20,040 entries** across **1,157 VIDs** and **62 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices).
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **6,978 tests** (6,978 executed, 40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (being expanded to 20,041; research-based scaffolding from libmtp data and vendor specs — not validated on real devices).
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
@@ -25,7 +25,7 @@ All items below are code-complete and mock-tested. None have been validated on r
 - [x] **Multi-device parallel transfers** — 8 scenario tests, DeviceServiceRegistry routing (mock-tested)
 - [x] **FallbackAllFailedError** — carries full attempt history (name, duration, error per rung)
 - [x] **Automatic documentation** — `swiftmtp-docs` SPM executable target for hands-off DocC generation
-- [x] **1849 tests, 0 failures** (up from 1799 with preexisting failures)
+- [x] **6,978 tests, 0 unexpected failures** (up from 1,849; 40 skipped, 3 expected failures across 20 test targets)
 
 ## Sprint Execution Rules
 
@@ -45,6 +45,16 @@ Minimum expectations for each item:
 | 2.1-A | Transport stability + error clarity | Complete | Real-device timeout reproduction drift | `./scripts/smoke.sh` + targeted device artifacts |
 | 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
 | 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
+
+## Wave 28 Activity (2026-03-01 → 2026-03-03)
+
+Key development activity in the current wave:
+
+- **Test expansion**: 6,978 tests across 20 targets (up from ~4,800 at wave start); added IndexQueryEdgeCaseTests, ExtendedPropertyTests, advanced BDD workflow scenarios, TransportTests edge cases, and multi-vendor device quirks tests
+- **Quirks database**: cleaned 22 duplicate VID:PID pairs (#348); added Lenovo, ZTE, Meizu, ASUS, MediaTek (#346), Motorola, LG, Xiaomi sub-brands (pending); expanding from 20,026 → 20,041 entries
+- **Fixes**: DocC generator probeLadder type mismatch (#345), SanDisk Sansa m230 BDD test assertion (pending), format sweep (pending)
+- **Active branches**: `wave28/fix-bdd-sansa-test`, `wave28/quirks-motorola-lg`, `wave28/format-sweep`, `wave28/troubleshooting-refresh`, `wave28/fix-notes-array`, `wave28/fixup-queue-clearance`
+- **PRs merged to main**: through #349
 
 ## Implementation Sprint Queue (Next 3)
 

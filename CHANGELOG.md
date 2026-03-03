@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Wave 27–28 Quality & Data Fixes (PRs #348–#355)
+
+> **Summary**: CI fixes, test alignment, device quirks expansion, and documentation refresh. Test count reaches ~6,978 across 20 targets.
+
+#### Key Stats
+- **6,978 tests** across 20 test targets (up from 6,272)
+- **0 unexpected failures** (3 expected/known failures)
+- **20,041 quirks entries** (up from 20,026)
+- **~117 PRs** merged total
+
+#### Wave 27 — Test Alignment & Quirks Dedup
+- Removed 22 duplicate VID:PID pairs from quirks.json
+- Aligned test files with actual SQLiteLiveIndex and PTPCodec APIs
+- Added IndexQueryEdgeCaseTests and ExtendedPropertyTests
+
+#### Wave 28 — CI Fixes & Docs Refresh
+- Normalized 4,647 quirks notes fields from string to array (CI fix)
+- Fixed SanDisk Sansa m230 BDD test assertion (requiresKernelDetach)
+- Added Motorola, LG, Xiaomi/Poco/Redmi device quirks entries
+- Updated Troubleshooting.md with current device status
+- Swift-format sweep across codebase
+- FIXUP_QUEUE clearance
+
+---
+
 ### Waves 23–25 Test Expansion (PRs #324–#339)
 
 > **Summary**: Tests grow from 5,275 to **6,272** across 20 targets (+997), with major device research expansion (HTC, Nokia, Philips, Toshiba, Acer, Microsoft, Dell, Fujitsu). **6,000-test milestone reached.**
