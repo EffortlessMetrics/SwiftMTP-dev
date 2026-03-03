@@ -9,11 +9,16 @@
 2. ~~`SwiftMTPKit/Sources/Tools/MTPEndianCodecFuzz/main.swift`~~  
    **DONE** — harness now prints per-iteration failure counters + crash corpus hex dump.
 
-3. `SwiftMTPKit/Tests/MTPEndianCodecTests/MTPEndianCodecTests.swift`
-   - Snapshot assertion currently runs only when `SWIFTMTP_SNAPSHOT_TESTS=1`. If snapshot drift appears in CI, regenerate fixtures and run with recording once, then rerun with `SWIFTMTP_SNAPSHOT_TESTS=1`.
+3. ~~`SwiftMTPKit/Tests/MTPEndianCodecTests/MTPEndianCodecTests.swift`~~
+   **DONE** — MTPEndianCodecTests uses only `#expect` assertions (Swift Testing);
+   no snapshot assertions exist in this target. `SWIFTMTP_SNAPSHOT_TESTS=1` applies
+   only to the separate `SnapshotTests` target. No action needed here.
 
-4. `Package.swift`
-   - `MTPEndianCodecTests` currently depends on `SnapshotTesting` but does not yet persist checked-in snapshots. If snapshot-based CI is enforced, add committed baseline files in `SwiftMTPKit/Tests/MTPEndianCodecTests/__Snapshots__`.
+4. ~~`Package.swift`~~
+   **DONE** — MTPEndianCodecTests does not depend on `SnapshotTesting` (deps:
+   `MTPEndianCodec`, `SwiftMTPCore`, `SwiftCheck`). The empty
+   `__Snapshots__/MTPEndianCodecSnapshot/` directory is inert scaffolding.
+   No baseline files are needed since no snapshot assertions exist.
 
 5. ~~`SwiftMTPKit/Sources/MTPEndianCodec/MTPEndianCodec.swift`~~  
    **DONE** — `encodeSendObjectPropListDataset` in `Proto+Transfer.swift` now uses
@@ -58,8 +63,9 @@
 - **Note**: Must handle category corrections (entries exist in both but different categories)
 
 ### VID:PID duplicate detection
-- **Issue**: HiBy R6 III used estimated PID under Vivo's VID (PR #62)
-- **Prevention**: validate-quirks CI already checks; entries with estimated PIDs should be flagged
+- ~~**Issue**: HiBy R6 III used estimated PID under Vivo's VID (PR #62)~~
+- ~~**Prevention**: validate-quirks CI already checks; entries with estimated PIDs should be flagged~~
+- **DONE** — `validate-quirks.sh` enforces unique VID:PID pairs (lines 111-124) and the embedded Python validator checks format + uniqueness. No further action needed.
 
 ### CI TSAN interceptor failure
 - **Issue**: Xcode 26.3 RC2 breaks TSAN with "Interceptors are not working"
@@ -96,7 +102,7 @@ discovered during development. Items are grouped by area.
 | F-T-1 | **Flaky timing tests** — Tests that depend on wall-clock time (e.g., transfer timeout, benchmark timing assertions) can flake on loaded CI runners. | Occasional spurious failures. | Use generous timeouts and `continue-on-error` where appropriate. |
 | F-T-2 | **SwiftCheck signal-5 crash** — `UInt64 idempotence` property test crashed when mixing XCTest + Swift Testing. | Blocked property tests. | **Fixed** — replaced `property/forAll` with explicit boundary value loop using `#expect`. |
 | F-T-3 | **Snapshot tests require env var** — `SWIFTMTP_SNAPSHOT_TESTS=1` must be set; missing this silently skips tests. | Easy to miss regressions if not enabled. | By design — prevents CI failures when updating UI; add to pre-release checklist. |
-| F-T-4 | **MTPEndianCodecTests snapshots not checked in** — Test target depends on SnapshotTesting but no baseline files exist in `__Snapshots__`. | Snapshot assertions always record, never fail. | Add committed baselines if snapshot CI gating is enforced. |
+| F-T-4 | **MTPEndianCodecTests snapshots not checked in** — Test target depends on SnapshotTesting but no baseline files exist in `__Snapshots__`. | Snapshot assertions always record, never fail. | **Resolved** — MTPEndianCodecTests does not depend on SnapshotTesting or use snapshot assertions. Empty `__Snapshots__` dir is inert scaffolding. |
 
 ### Build issues
 
@@ -113,7 +119,7 @@ discovered during development. Items are grouped by area.
 | F-D-1 | **Entries without `evidenceRequired`** — Some quirks entries lack the `evidenceRequired` field, making it unclear what validation is needed. | Inconsistent data quality. | Validate in `validate-quirks.sh`; backfill missing fields. |
 | F-D-2 | **Proposed entries needing verification** — Entries with `"status": "proposed"` have no real-device evidence. | Cannot promote to `stable` without testing. | Track in device-lab pipeline; flag in PR reviews. |
 | F-D-3 | **hooks encoding (dict vs array)** — 57 entries had `"hooks": {}` instead of `"hooks": []`, causing decode failures. | BDD and QuirkMatchingTests broke. | **Fixed** in PR #66 — add format validation to CI. |
-| F-D-4 | **VID:PID duplicate/estimated PIDs** — Some entries use estimated PIDs that may collide with real devices. | False matches in quirk lookup. | validate-quirks CI checks for duplicates; flag estimated PIDs. |
+| F-D-4 | **VID:PID duplicate/estimated PIDs** — Some entries use estimated PIDs that may collide with real devices. | False matches in quirk lookup. | **Resolved** — `validate-quirks.sh` enforces unique VID:PID pairs; Python validator checks format + uniqueness in CI. |
 
 ### Developer experience
 
