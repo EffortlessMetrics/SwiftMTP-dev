@@ -210,7 +210,7 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
     XCTAssertEqual(buf[4], 0x04)  // event type
     XCTAssertEqual(buf[6], 0x02)  // 0x4002 low byte
     XCTAssertEqual(buf[7], 0x40)  // 0x4002 high byte
-    XCTAssertEqual(buf[12], 0x05) // objectHandle param
+    XCTAssertEqual(buf[12], 0x05)  // objectHandle param
   }
 
   func testEventContainerObjectRemoved() {
@@ -226,7 +226,7 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
     XCTAssertEqual(written, 16)
     XCTAssertEqual(buf[6], 0x03)  // 0x4003 low byte
     XCTAssertEqual(buf[7], 0x40)
-    XCTAssertEqual(buf[12], 0x0A) // handle
+    XCTAssertEqual(buf[12], 0x0A)  // handle
   }
 
   func testEventContainerStoreAdded() {
@@ -242,8 +242,8 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
     XCTAssertEqual(written, 16)
     XCTAssertEqual(buf[6], 0x04)  // 0x4004
     XCTAssertEqual(buf[7], 0x40)
-    XCTAssertEqual(buf[12], 0x01) // storageID low
-    XCTAssertEqual(buf[14], 0x01) // storageID high word low
+    XCTAssertEqual(buf[12], 0x01)  // storageID low
+    XCTAssertEqual(buf[14], 0x01)  // storageID high word low
   }
 
   func testEventContainerStoreRemoved() {
@@ -337,7 +337,7 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
     XCTAssertEqual(written, 16)
     XCTAssertEqual(buf[6], 0x08)  // 0x1008
     XCTAssertEqual(buf[7], 0x10)
-    XCTAssertEqual(buf[12], 42)   // handle param
+    XCTAssertEqual(buf[12], 42)  // handle param
   }
 
   func testCommandDeleteObject() {
@@ -387,7 +387,7 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
     XCTAssertEqual(written, 12)
     XCTAssertEqual(buf[6], 0x03)  // 0x1003
     XCTAssertEqual(buf[7], 0x10)
-    XCTAssertEqual(buf[8], 99)    // txid
+    XCTAssertEqual(buf[8], 99)  // txid
   }
 
   func testCommandGetObject() {

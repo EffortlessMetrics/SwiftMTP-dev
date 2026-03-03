@@ -126,9 +126,10 @@ struct IndexLargeDatasetTests {
     let (index, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    let objects = (1...1000).map { i in
-      makeObj(handle: UInt32(i), name: "file\(i).jpg", pathKey: "/DCIM/file\(i).jpg")
-    }
+    let objects = (1...1000)
+      .map { i in
+        makeObj(handle: UInt32(i), name: "file\(i).jpg", pathKey: "/DCIM/file\(i).jpg")
+      }
     try await index.upsertObjects(objects, deviceId: "dev")
     let all = try await index.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
     #expect(all.count == 1000)
@@ -143,13 +144,14 @@ struct IndexLargeDatasetTests {
     for depth: UInt32 in 1...20 {
       let parentHandle: UInt32? = depth == 1 ? nil : depth - 1
       let pathSegments = (1...depth).map { "dir\($0)" }.joined(separator: "/")
-      objects.append(makeObj(
-        handle: depth,
-        parentHandle: parentHandle,
-        name: "dir\(depth)",
-        pathKey: "/\(pathSegments)",
-        isDirectory: true
-      ))
+      objects.append(
+        makeObj(
+          handle: depth,
+          parentHandle: parentHandle,
+          name: "dir\(depth)",
+          pathKey: "/\(pathSegments)",
+          isDirectory: true
+        ))
     }
     try await index.upsertObjects(objects, deviceId: "dev")
 
@@ -347,14 +349,15 @@ struct IndexFormatCodeTests {
       (0xBA10, "wmPlaylist"),
       (0xBA11, "m3uPlaylist"),
     ]
-    let objects = formats.enumerated().map { (i, entry) in
-      makeObj(
-        handle: UInt32(i + 1),
-        name: "\(entry.1).dat",
-        pathKey: "/\(entry.1).dat",
-        formatCode: entry.0
-      )
-    }
+    let objects = formats.enumerated()
+      .map { (i, entry) in
+        makeObj(
+          handle: UInt32(i + 1),
+          name: "\(entry.1).dat",
+          pathKey: "/\(entry.1).dat",
+          formatCode: entry.0
+        )
+      }
     try await index.upsertObjects(objects, deviceId: "dev")
     let all = try await index.children(
       deviceId: "dev", storageId: 0x10001, parentHandle: nil)
@@ -386,9 +389,10 @@ struct IndexDeletionTests {
     let (index, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    let objects = (1...5).map { i in
-      makeObj(handle: UInt32(i), name: "file\(i).txt", pathKey: "/file\(i).txt")
-    }
+    let objects = (1...5)
+      .map { i in
+        makeObj(handle: UInt32(i), name: "file\(i).txt", pathKey: "/file\(i).txt")
+      }
     try await index.upsertObjects(objects, deviceId: "dev")
     try await index.removeObject(deviceId: "dev", storageId: 0x10001, handle: 3)
     let all = try await index.children(
@@ -413,9 +417,10 @@ struct IndexDeletionTests {
     let (index, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    let objects = (1...3).map { i in
-      makeObj(handle: UInt32(i), name: "f\(i).txt", pathKey: "/f\(i).txt")
-    }
+    let objects = (1...3)
+      .map { i in
+        makeObj(handle: UInt32(i), name: "f\(i).txt", pathKey: "/f\(i).txt")
+      }
     try await index.upsertObjects(objects, deviceId: "dev")
     for i: UInt32 in 1...3 {
       try await index.removeObject(deviceId: "dev", storageId: 0x10001, handle: i)
@@ -503,16 +508,18 @@ struct IndexConcurrentAccessTests {
     let (index, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    let objects = (1...100).map { i in
-      makeObj(handle: UInt32(i), name: "file\(i).txt", pathKey: "/file\(i).txt")
-    }
+    let objects = (1...100)
+      .map { i in
+        makeObj(handle: UInt32(i), name: "file\(i).txt", pathKey: "/file\(i).txt")
+      }
     try await index.upsertObjects(objects, deviceId: "dev")
 
     await withTaskGroup(of: Int.self) { group in
       for _ in 0..<10 {
         group.addTask {
           (try? await index.children(
-            deviceId: "dev", storageId: 0x10001, parentHandle: nil))?.count ?? 0
+            deviceId: "dev", storageId: 0x10001, parentHandle: nil))?
+            .count ?? 0
         }
       }
       for await count in group {
@@ -527,12 +534,16 @@ struct IndexConcurrentAccessTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     // Pre-populate
-    let objects = (1...50).map { i in
-      makeObj(handle: UInt32(i), name: "pre\(i).txt", pathKey: "/pre\(i).txt")
-    }
+    let objects = (1...50)
+      .map { i in
+        makeObj(handle: UInt32(i), name: "pre\(i).txt", pathKey: "/pre\(i).txt")
+      }
     try await index.upsertObjects(objects, deviceId: "dev")
-    let count = try await index.children(
-      deviceId: "dev", storageId: 0x10001, parentHandle: nil).count
+    let count =
+      try await index.children(
+        deviceId: "dev", storageId: 0x10001, parentHandle: nil
+      )
+      .count
     #expect(count == 50)
   }
 }

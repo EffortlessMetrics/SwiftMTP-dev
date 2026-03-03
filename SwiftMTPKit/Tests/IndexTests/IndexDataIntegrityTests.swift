@@ -53,9 +53,10 @@ struct SQLiteEdgeCaseTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     let count = 10_500
-    let objects = (0..<count).map { i in
-      obj(handle: UInt32(i), name: "item\(i).dat", pathKey: "00010001/bulk/item\(i).dat")
-    }
+    let objects = (0..<count)
+      .map { i in
+        obj(handle: UInt32(i), name: "item\(i).dat", pathKey: "00010001/bulk/item\(i).dat")
+      }
     try await idx.upsertObjects(objects, deviceId: "dev")
 
     // Spot-check first, middle, last
@@ -75,13 +76,14 @@ struct SQLiteEdgeCaseTests {
     var objects: [IndexedObject] = []
     for level in 0..<depth {
       let parent: UInt32? = level == 0 ? nil : UInt32(level - 1)
-      objects.append(obj(
-        handle: UInt32(level),
-        parentHandle: parent,
-        name: "dir\(level)",
-        pathKey: "00010001/" + (0...level).map { "dir\($0)" }.joined(separator: "/"),
-        isDirectory: level < depth - 1
-      ))
+      objects.append(
+        obj(
+          handle: UInt32(level),
+          parentHandle: parent,
+          name: "dir\(level)",
+          pathKey: "00010001/" + (0...level).map { "dir\($0)" }.joined(separator: "/"),
+          isDirectory: level < depth - 1
+        ))
     }
     try await idx.upsertObjects(objects, deviceId: "dev")
 
@@ -90,7 +92,8 @@ struct SQLiteEdgeCaseTests {
     var cur = try await idx.object(deviceId: "dev", handle: UInt32(depth - 1))
     while let o = cur {
       segments.insert(o.name, at: 0)
-      cur = o.parentHandle != nil
+      cur =
+        o.parentHandle != nil
         ? try await idx.object(deviceId: "dev", handle: o.parentHandle!)
         : nil
     }
@@ -104,9 +107,10 @@ struct SQLiteEdgeCaseTests {
     let (idx, path) = try makeTempDB()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    let objects = (0..<5).map { i in
-      obj(handle: UInt32(i), parentHandle: nil, name: "root\(i)")
-    }
+    let objects = (0..<5)
+      .map { i in
+        obj(handle: UInt32(i), parentHandle: nil, name: "root\(i)")
+      }
     try await idx.upsertObjects(objects, deviceId: "dev")
 
     let roots = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
@@ -260,15 +264,16 @@ struct ConcurrentOperationTests {
       for d in 0..<8 {
         group.addTask {
           let deviceId = "device-\(d)"
-          let objs = (0..<100).map { j in
-            IndexedObject(
-              deviceId: deviceId, storageId: 0x10001,
-              handle: UInt32(j), parentHandle: nil,
-              name: "f\(d)_\(j).txt", pathKey: "00010001/f\(d)_\(j).txt",
-              sizeBytes: 512, mtime: Date(), formatCode: 0x3001,
-              isDirectory: false, changeCounter: 0
-            )
-          }
+          let objs = (0..<100)
+            .map { j in
+              IndexedObject(
+                deviceId: deviceId, storageId: 0x10001,
+                handle: UInt32(j), parentHandle: nil,
+                name: "f\(d)_\(j).txt", pathKey: "00010001/f\(d)_\(j).txt",
+                sizeBytes: 512, mtime: Date(), formatCode: 0x3001,
+                isDirectory: false, changeCounter: 0
+              )
+            }
           try await idx.upsertObjects(objs, deviceId: deviceId)
         }
       }
@@ -310,10 +315,11 @@ struct ConcurrentOperationTests {
     for w in 0..<2 {
       for batch in 0..<10 {
         let base = UInt32(10000 + w * 200 + batch * 20)
-        let objs: [IndexedObject] = (0..<20).map { j in
-          let h = base + UInt32(j)
-          return obj(handle: h, name: "w\(w)_\(j).txt")
-        }
+        let objs: [IndexedObject] = (0..<20)
+          .map { j in
+            let h = base + UInt32(j)
+            return obj(handle: h, name: "w\(w)_\(j).txt")
+          }
         try await idx.upsertObjects(objs, deviceId: "dev")
       }
     }
@@ -413,9 +419,10 @@ struct ConcurrentOperationTests {
     // Create parent with children
     let parent = obj(handle: 100, name: "parent", isDirectory: true)
     try await idx.insertObject(parent, deviceId: "dev")
-    let children = (0..<50).map { i in
-      obj(handle: UInt32(i), parentHandle: 100, name: "child\(i).txt")
-    }
+    let children = (0..<50)
+      .map { i in
+        obj(handle: UInt32(i), parentHandle: 100, name: "child\(i).txt")
+      }
     try await idx.upsertObjects(children, deviceId: "dev")
 
     try await withThrowingTaskGroup(of: Void.self) { group in
@@ -621,13 +628,13 @@ struct DataValidationTests {
 
     // Common MTP format codes
     let formats: [(UInt16, String)] = [
-      (0x3000, "undefined.bin"),      // Undefined
-      (0x3001, "folder"),             // Association (folder)
-      (0x3004, "text.txt"),           // Text
-      (0x3009, "audio.mp3"),          // MP3
-      (0x380B, "image.jpg"),          // EXIF/JPEG
-      (0x380D, "image.tiff"),         // TIFF
-      (0xB982, "video.mp4"),          // MP4
+      (0x3000, "undefined.bin"),  // Undefined
+      (0x3001, "folder"),  // Association (folder)
+      (0x3004, "text.txt"),  // Text
+      (0x3009, "audio.mp3"),  // MP3
+      (0x380B, "image.jpg"),  // EXIF/JPEG
+      (0x380D, "image.tiff"),  // TIFF
+      (0xB982, "video.mp4"),  // MP4
     ]
 
     for (i, (code, name)) in formats.enumerated() {

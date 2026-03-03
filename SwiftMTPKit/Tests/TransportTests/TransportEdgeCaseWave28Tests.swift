@@ -27,7 +27,7 @@ final class TimeoutHandlingEdgeCaseTests: XCTestCase {
 
   func testTimeoutDuringCloseSessionDoesNotLeak() async throws {
     let link = makeFaultLink(faults: [
-      ScheduledFault(trigger: .onOperation(.closeSession), error: .timeout),
+      ScheduledFault(trigger: .onOperation(.closeSession), error: .timeout)
     ])
     try await link.openUSBIfNeeded()
     try await link.openSession(id: 1)
@@ -53,11 +53,15 @@ final class TimeoutHandlingEdgeCaseTests: XCTestCase {
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
 
     // Each operation should fail with timeout in sequence
-    do { _ = try await link.getDeviceInfo(); XCTFail("Expected timeout") }
-    catch { XCTAssertEqual(error as? TransportError, .timeout) }
+    do {
+      _ = try await link.getDeviceInfo()
+      XCTFail("Expected timeout")
+    } catch { XCTAssertEqual(error as? TransportError, .timeout) }
 
-    do { _ = try await link.getStorageIDs(); XCTFail("Expected timeout") }
-    catch { XCTAssertEqual(error as? TransportError, .timeout) }
+    do {
+      _ = try await link.getStorageIDs()
+      XCTFail("Expected timeout")
+    } catch { XCTAssertEqual(error as? TransportError, .timeout) }
 
     do {
       _ = try await link.getObjectHandles(
@@ -76,7 +80,7 @@ final class TimeoutHandlingEdgeCaseTests: XCTestCase {
     let schedule = FaultSchedule([
       ScheduledFault(
         trigger: .onOperation(.getDeviceInfo), error: .timeout,
-        repeatCount: 0, label: "unlimited-timeout"),
+        repeatCount: 0, label: "unlimited-timeout")
     ])
     let inner = VirtualMTPLink(config: .pixel7)
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
@@ -96,7 +100,7 @@ final class TimeoutHandlingEdgeCaseTests: XCTestCase {
 
   func testTimeoutAtCallIndexTriggersOnCorrectCall() async throws {
     let schedule = FaultSchedule([
-      ScheduledFault(trigger: .atCallIndex(2), error: .timeout),
+      ScheduledFault(trigger: .atCallIndex(2), error: .timeout)
     ])
     let inner = VirtualMTPLink(config: .pixel7)
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
@@ -147,7 +151,8 @@ final class TimeoutHandlingEdgeCaseTests: XCTestCase {
 
   func testOverallDeadlineCoversAllPhases() {
     let config = SwiftMTPConfig()
-    let sumOfPhases = config.handshakeTimeoutMs + config.ioTimeoutMs
+    let sumOfPhases =
+      config.handshakeTimeoutMs + config.ioTimeoutMs
       + config.inactivityTimeoutMs
     XCTAssertGreaterThanOrEqual(
       config.overallDeadlineMs, config.handshakeTimeoutMs,
@@ -323,8 +328,9 @@ final class EndpointEnumerationMalformedTests: XCTestCase {
       interruptEndpoint: nil, usbSpeedMBps: nil)
     XCTAssertTrue(desc.bulkInEndpoint & 0x80 != 0, "IN should have direction bit")
     XCTAssertTrue(desc.bulkOutEndpoint & 0x80 == 0, "OUT should lack direction bit")
-    XCTAssertEqual(desc.bulkInEndpoint & 0x0F, desc.bulkOutEndpoint & 0x0F,
-                   "Endpoint numbers should match")
+    XCTAssertEqual(
+      desc.bulkInEndpoint & 0x0F, desc.bulkOutEndpoint & 0x0F,
+      "Endpoint numbers should match")
   }
 
   func testDescriptorWithHighEndpointNumbers() {
@@ -423,7 +429,7 @@ final class ConnectionDropDuringTransferTests: XCTestCase {
 
   func testDisconnectDuringExecuteCommandMapsToNoDevice() async throws {
     let link = makeFaultLink(faults: [
-      ScheduledFault(trigger: .onOperation(.executeCommand), error: .disconnected),
+      ScheduledFault(trigger: .onOperation(.executeCommand), error: .disconnected)
     ])
     let cmd = PTPContainer(type: 1, code: 0x1001, txid: 1, params: [])
     do {
@@ -438,7 +444,7 @@ final class ConnectionDropDuringTransferTests: XCTestCase {
 
   func testDisconnectDuringStreamingTransfer() async throws {
     let link = makeFaultLink(faults: [
-      ScheduledFault(trigger: .onOperation(.executeStreamingCommand), error: .disconnected),
+      ScheduledFault(trigger: .onOperation(.executeStreamingCommand), error: .disconnected)
     ])
     let cmd = PTPContainer(type: 1, code: 0x100D, txid: 1, params: [])
     do {
@@ -454,7 +460,7 @@ final class ConnectionDropDuringTransferTests: XCTestCase {
 
   func testDisconnectDuringGetObjectInfos() async throws {
     let link = makeFaultLink(faults: [
-      ScheduledFault(trigger: .onOperation(.getObjectInfos), error: .disconnected),
+      ScheduledFault(trigger: .onOperation(.getObjectInfos), error: .disconnected)
     ])
     do {
       _ = try await link.getObjectInfos([1, 2, 3])
@@ -468,7 +474,7 @@ final class ConnectionDropDuringTransferTests: XCTestCase {
 
   func testDisconnectDuringDeleteIsNotRetriable() async throws {
     let link = makeFaultLink(faults: [
-      ScheduledFault(trigger: .onOperation(.deleteObject), error: .disconnected),
+      ScheduledFault(trigger: .onOperation(.deleteObject), error: .disconnected)
     ])
     do {
       try await link.deleteObject(handle: 42)
@@ -484,7 +490,7 @@ final class ConnectionDropDuringTransferTests: XCTestCase {
 
   func testDisconnectRecoveryWithNewSession() async throws {
     let schedule = FaultSchedule([
-      ScheduledFault(trigger: .onOperation(.getStorageIDs), error: .disconnected),
+      ScheduledFault(trigger: .onOperation(.getStorageIDs), error: .disconnected)
     ])
     let inner = VirtualMTPLink(config: .pixel7)
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
@@ -511,7 +517,7 @@ final class ConnectionDropDuringTransferTests: XCTestCase {
     let schedule = FaultSchedule([
       ScheduledFault(
         trigger: .onOperation(.getDeviceInfo), error: .disconnected,
-        repeatCount: 3, label: "disconnect×3"),
+        repeatCount: 3, label: "disconnect×3")
     ])
     let inner = VirtualMTPLink(config: .pixel7)
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
@@ -534,7 +540,7 @@ final class ConnectionDropDuringTransferTests: XCTestCase {
 
   func testDisconnectAtByteOffset() async throws {
     let schedule = FaultSchedule([
-      ScheduledFault.disconnectAtOffset(512),
+      ScheduledFault.disconnectAtOffset(512)
     ])
     let inner = VirtualMTPLink(config: .pixel7)
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)

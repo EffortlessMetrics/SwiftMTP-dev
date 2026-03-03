@@ -14,7 +14,8 @@ final class ReleaseReadinessTests: XCTestCase {
   private var packageRoot: URL {
     // Tests/IntegrationTests/ReleaseReadinessTests.swift → SwiftMTPKit/
     let thisFile = URL(fileURLWithPath: #filePath)
-    return thisFile
+    return
+      thisFile
       .deletingLastPathComponent()  // IntegrationTests/
       .deletingLastPathComponent()  // Tests/
       .deletingLastPathComponent()  // SwiftMTPKit/
@@ -30,8 +31,9 @@ final class ReleaseReadinessTests: XCTestCase {
   func testPackageSwiftIsParseable() throws {
     let packageSwift = packageRoot.appendingPathComponent("Package.swift")
     let content = try String(contentsOf: packageSwift, encoding: .utf8)
-    XCTAssertTrue(content.contains("let package = Package("),
-                  "Package.swift must contain a Package declaration")
+    XCTAssertTrue(
+      content.contains("let package = Package("),
+      "Package.swift must contain a Package declaration")
   }
 
   func testPackageSwiftHasRequiredProducts() throws {
@@ -54,8 +56,9 @@ final class ReleaseReadinessTests: XCTestCase {
     ]
 
     for product in requiredProducts {
-      XCTAssertTrue(content.contains("\"\(product)\""),
-                    "Package.swift must define product '\(product)'")
+      XCTAssertTrue(
+        content.contains("\"\(product)\""),
+        "Package.swift must define product '\(product)'")
     }
   }
 
@@ -73,8 +76,9 @@ final class ReleaseReadinessTests: XCTestCase {
     ]
 
     for target in expectedTestTargets {
-      XCTAssertTrue(content.contains(".testTarget(") && content.contains("\"\(target)\""),
-                    "Package.swift must define test target '\(target)'")
+      XCTAssertTrue(
+        content.contains(".testTarget(") && content.contains("\"\(target)\""),
+        "Package.swift must define test target '\(target)'")
     }
   }
 
@@ -83,17 +87,20 @@ final class ReleaseReadinessTests: XCTestCase {
   func testREADMEExists() throws {
     let readme = repoRoot.appendingPathComponent("README.md")
     let content = try String(contentsOf: readme, encoding: .utf8)
-    XCTAssertGreaterThan(content.count, 100,
-                         "README.md must exist and be non-trivial")
+    XCTAssertGreaterThan(
+      content.count, 100,
+      "README.md must exist and be non-trivial")
   }
 
   func testCHANGELOGExistsAndContainsVersionInfo() throws {
     let changelog = repoRoot.appendingPathComponent("CHANGELOG.md")
     let content = try String(contentsOf: changelog, encoding: .utf8)
-    XCTAssertTrue(content.contains("## ["),
-                  "CHANGELOG.md must contain version headings")
-    XCTAssertTrue(content.contains("Unreleased") || content.contains("unreleased"),
-                  "CHANGELOG.md should have an Unreleased section")
+    XCTAssertTrue(
+      content.contains("## ["),
+      "CHANGELOG.md must contain version headings")
+    XCTAssertTrue(
+      content.contains("Unreleased") || content.contains("unreleased"),
+      "CHANGELOG.md should have an Unreleased section")
   }
 
   func testLICENSEExists() throws {
@@ -105,7 +112,8 @@ final class ReleaseReadinessTests: XCTestCase {
   // MARK: - Quirks Database
 
   func testQuirksJSONIsValid() throws {
-    let quirksPath = packageRoot
+    let quirksPath =
+      packageRoot
       .appendingPathComponent("Sources")
       .appendingPathComponent("SwiftMTPQuirks")
       .appendingPathComponent("Resources")
@@ -117,15 +125,18 @@ final class ReleaseReadinessTests: XCTestCase {
 
     let entries = json?["entries"] as? [[String: Any]]
     XCTAssertNotNil(entries, "quirks.json must have an 'entries' array")
-    XCTAssertGreaterThan(entries?.count ?? 0, 1000,
-                         "quirks.json must have >1000 entries")
+    XCTAssertGreaterThan(
+      entries?.count ?? 0, 1000,
+      "quirks.json must have >1000 entries")
   }
 
   func testBothQuirksJSONCopiesAreInSync() throws {
-    let specsQuirks = repoRoot
+    let specsQuirks =
+      repoRoot
       .appendingPathComponent("Specs")
       .appendingPathComponent("quirks.json")
-    let resourceQuirks = packageRoot
+    let resourceQuirks =
+      packageRoot
       .appendingPathComponent("Sources")
       .appendingPathComponent("SwiftMTPQuirks")
       .appendingPathComponent("Resources")
@@ -134,8 +145,9 @@ final class ReleaseReadinessTests: XCTestCase {
     let specsData = try Data(contentsOf: specsQuirks)
     let resourceData = try Data(contentsOf: resourceQuirks)
 
-    XCTAssertEqual(specsData, resourceData,
-                   "Specs/quirks.json and SwiftMTPQuirks/Resources/quirks.json must be identical")
+    XCTAssertEqual(
+      specsData, resourceData,
+      "Specs/quirks.json and SwiftMTPQuirks/Resources/quirks.json must be identical")
   }
 
   // MARK: - Code Quality
@@ -156,8 +168,9 @@ final class ReleaseReadinessTests: XCTestCase {
         guard fileURL.pathExtension == "swift" else { continue }
         let content = try String(contentsOf: fileURL, encoding: .utf8)
         for marker in markers {
-          XCTAssertFalse(content.contains(marker),
-                         "\(fileURL.lastPathComponent) contains '\(marker)' — resolve before release")
+          XCTAssertFalse(
+            content.contains(marker),
+            "\(fileURL.lastPathComponent) contains '\(marker)' — resolve before release")
         }
       }
     }
@@ -181,11 +194,10 @@ final class ReleaseReadinessTests: XCTestCase {
 
       for (i, line) in lines.enumerated() {
         let trimmed = line.trimmingCharacters(in: .whitespaces)
-        let isPublicDecl = trimmed.hasPrefix("public struct ") ||
-          trimmed.hasPrefix("public class ") ||
-          trimmed.hasPrefix("public enum ") ||
-          trimmed.hasPrefix("public protocol ") ||
-          trimmed.hasPrefix("public actor ")
+        let isPublicDecl =
+          trimmed.hasPrefix("public struct ") || trimmed.hasPrefix("public class ")
+          || trimmed.hasPrefix("public enum ") || trimmed.hasPrefix("public protocol ")
+          || trimmed.hasPrefix("public actor ")
 
         guard isPublicDecl else { continue }
 
@@ -212,7 +224,8 @@ final class ReleaseReadinessTests: XCTestCase {
       }
     }
 
-    XCTAssertEqual(undocumented.count, 0,
-                   "Undocumented public types found:\n\(undocumented.joined(separator: "\n"))")
+    XCTAssertEqual(
+      undocumented.count, 0,
+      "Undocumented public types found:\n\(undocumented.joined(separator: "\n"))")
   }
 }

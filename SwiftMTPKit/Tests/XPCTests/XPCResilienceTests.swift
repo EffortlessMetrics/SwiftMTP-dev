@@ -131,12 +131,13 @@ final class XPCProtocolBoundaryTests: XCTestCase {
   }
 
   func testStorageListResponseWith1000Storages() throws {
-    let storages = (0..<1000).map { i in
-      StorageInfo(
-        storageId: UInt32(i), description: "S\(i)",
-        capacityBytes: UInt64(i) * 1_000_000,
-        freeBytes: UInt64(i) * 500_000)
-    }
+    let storages = (0..<1000)
+      .map { i in
+        StorageInfo(
+          storageId: UInt32(i), description: "S\(i)",
+          capacityBytes: UInt64(i) * 1_000_000,
+          freeBytes: UInt64(i) * 500_000)
+      }
     let resp = StorageListResponse(success: true, storages: storages)
     let decoded = try roundTrip(resp, as: StorageListResponse.self)
     XCTAssertEqual(decoded?.storages?.count, 1000)
@@ -144,11 +145,12 @@ final class XPCProtocolBoundaryTests: XCTestCase {
   }
 
   func testObjectListResponseWith1000Objects() throws {
-    let objects = (0..<1000).map { i in
-      ObjectInfo(
-        handle: UInt32(i), name: "file\(i).dat",
-        sizeBytes: UInt64(i * 1024), isDirectory: false, modifiedDate: nil)
-    }
+    let objects = (0..<1000)
+      .map { i in
+        ObjectInfo(
+          handle: UInt32(i), name: "file\(i).dat",
+          sizeBytes: UInt64(i * 1024), isDirectory: false, modifiedDate: nil)
+      }
     let resp = ObjectListResponse(success: true, objects: objects)
     let decoded = try roundTrip(resp, as: ObjectListResponse.self)
     XCTAssertEqual(decoded?.objects?.count, 1000)
@@ -208,7 +210,8 @@ final class XPCProtocolBoundaryTests: XCTestCase {
     XCTAssertEqual(try roundTrip(readResp, as: ReadResponse.self)?.fileSize, 42)
 
     let storageListResp = StorageListResponse(
-      success: true, storages: [
+      success: true,
+      storages: [
         StorageInfo(storageId: 1, description: "SD", capacityBytes: 100, freeBytes: 50)
       ])
     XCTAssertEqual(
@@ -268,7 +271,8 @@ final class XPCServiceResilienceTests: XCTestCase {
   func testServiceWithNoCrawlHandlerRejectsGracefully() async {
     let svc = await makeService()
     // crawlBoostHandler is nil by default
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
       svc.impl.requestCrawl(
         CrawlTriggerRequest(deviceId: svc.stableId, storageId: svc.storageId)
       ) { c.resume(returning: $0) }
@@ -283,7 +287,8 @@ final class XPCServiceResilienceTests: XCTestCase {
     let svc = await makeService()
     var results: [StorageListResponse] = []
     for _ in 0..<20 {
-      let resp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+      let resp = await withCheckedContinuation {
+        (c: CheckedContinuation<StorageListResponse, Never>) in
         svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
           c.resume(returning: $0)
         }
@@ -304,7 +309,8 @@ final class XPCServiceResilienceTests: XCTestCase {
     XCTAssertTrue(ping.contains("running"))
 
     // listStorages
-    let storageResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let storageResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }
@@ -312,7 +318,8 @@ final class XPCServiceResilienceTests: XCTestCase {
     XCTAssertTrue(storageResp.success)
 
     // listObjects
-    let objResp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let objResp = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       svc.impl.listObjects(
         ObjectListRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)
       ) { c.resume(returning: $0) }
@@ -321,7 +328,8 @@ final class XPCServiceResilienceTests: XCTestCase {
     XCTAssertEqual(objResp.objects?.count, 5)
 
     // deviceStatus
-    let statusResp = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+    let statusResp = await withCheckedContinuation {
+      (c: CheckedContinuation<DeviceStatusResponse, Never>) in
       svc.impl.deviceStatus(DeviceStatusRequest(deviceId: svc.deviceId.raw)) {
         c.resume(returning: $0)
       }
@@ -334,7 +342,8 @@ final class XPCServiceResilienceTests: XCTestCase {
   func testRegistryRemoveWhileRequestsInFlight() async {
     let svc = await makeService(objectCount: 3)
     // List first to ensure device is found, then remove and retry
-    let resp1 = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let resp1 = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       svc.impl.listObjects(
         ObjectListRequest(
           deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)
@@ -345,7 +354,8 @@ final class XPCServiceResilienceTests: XCTestCase {
     await svc.registry.remove(deviceId: svc.deviceId)
 
     // After removal, should fail gracefully
-    let resp2 = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let resp2 = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       svc.impl.listObjects(
         ObjectListRequest(
           deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)
@@ -362,7 +372,8 @@ final class XPCServiceResilienceTests: XCTestCase {
     }
     // Disconnect
     await service.markDisconnected()
-    let discStatus = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+    let discStatus = await withCheckedContinuation {
+      (c: CheckedContinuation<DeviceStatusResponse, Never>) in
       svc.impl.deviceStatus(DeviceStatusRequest(deviceId: svc.deviceId.raw)) {
         c.resume(returning: $0)
       }
@@ -371,7 +382,8 @@ final class XPCServiceResilienceTests: XCTestCase {
 
     // Reconnect
     await service.markReconnected()
-    let reconnStatus = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+    let reconnStatus = await withCheckedContinuation {
+      (c: CheckedContinuation<DeviceStatusResponse, Never>) in
       svc.impl.deviceStatus(DeviceStatusRequest(deviceId: svc.deviceId.raw)) {
         c.resume(returning: $0)
       }
@@ -400,7 +412,8 @@ final class XPCServiceResilienceTests: XCTestCase {
   func testServiceWithUUIDStyleDeviceIdNotRegistered() async {
     let svc = await makeService()
     let fakeId = UUID().uuidString
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: fakeId)) {
         c.resume(returning: $0)
       }
@@ -410,7 +423,8 @@ final class XPCServiceResilienceTests: XCTestCase {
 
   func testServiceWithSpecialCharacterDeviceId() async {
     let svc = await makeService()
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       svc.impl.listObjects(
         ObjectListRequest(deviceId: "../../etc/passwd", storageId: 1, parentHandle: nil)
       ) { c.resume(returning: $0) }
@@ -431,7 +445,8 @@ final class XPCServiceResilienceTests: XCTestCase {
     XCTAssertTrue(ping.contains("running"))
 
     // Use: list storages
-    let storageResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let storageResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }
@@ -442,7 +457,8 @@ final class XPCServiceResilienceTests: XCTestCase {
     await svc.registry.remove(deviceId: svc.deviceId)
 
     // Post-invalidation: should fail
-    let failResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let failResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }
@@ -454,12 +470,14 @@ final class XPCServiceResilienceTests: XCTestCase {
     let svc1 = await makeService(objectCount: 1)
     let svc2 = await makeService(objectCount: 2)
 
-    let resp1 = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let resp1 = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       svc1.impl.listObjects(
         ObjectListRequest(deviceId: svc1.stableId, storageId: svc1.storageId, parentHandle: nil)
       ) { c.resume(returning: $0) }
     }
-    let resp2 = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let resp2 = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       svc2.impl.listObjects(
         ObjectListRequest(deviceId: svc2.stableId, storageId: svc2.storageId, parentHandle: nil)
       ) { c.resume(returning: $0) }
@@ -489,8 +507,10 @@ final class XPCErrorPropagationResilienceTests: XCTestCase {
 
   private func makeService(
     withObject: Bool = false
-  ) async -> (impl: MTPXPCServiceImpl, registry: DeviceServiceRegistry,
-              deviceId: MTPDeviceID, stableId: String, storageId: UInt32) {
+  ) async -> (
+    impl: MTPXPCServiceImpl, registry: DeviceServiceRegistry,
+    deviceId: MTPDeviceID, stableId: String, storageId: UInt32
+  ) {
     var config = VirtualDeviceConfig.emptyDevice
     let storageId = config.storages[0].id
     if withObject {
@@ -570,7 +590,8 @@ final class XPCErrorPropagationResilienceTests: XCTestCase {
 
   func testDeviceStatusForMissingDeviceReturnsFalse() async {
     let svc = await makeService()
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<DeviceStatusResponse, Never>) in
       svc.impl.deviceStatus(DeviceStatusRequest(deviceId: "timeout-device-xyz")) {
         c.resume(returning: $0)
       }
@@ -619,7 +640,8 @@ final class XPCErrorPropagationResilienceTests: XCTestCase {
       deviceId: newConfig.deviceId, domainId: svc.stableId)
 
     // Should work now
-    let successResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let successResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }

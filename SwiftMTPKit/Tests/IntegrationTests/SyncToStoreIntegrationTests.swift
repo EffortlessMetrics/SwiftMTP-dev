@@ -125,7 +125,8 @@ final class SyncToStoreIntegrationTests: XCTestCase {
     let report = try await engine.mirror(
       device: device, deviceId: deviceId, to: mirrorDir)
 
-    XCTAssertGreaterThan(report.totalProcessed, 0,
+    XCTAssertGreaterThan(
+      report.totalProcessed, 0,
       "Mirror should process files")
     XCTAssertEqual(report.failed, 0, "No files should fail in normal mirror")
   }
@@ -150,7 +151,8 @@ final class SyncToStoreIntegrationTests: XCTestCase {
       device: device, deviceId: deviceId, to: mirrorDir)
 
     // totalProcessed = downloaded + skipped + failed
-    XCTAssertEqual(report.totalProcessed,
+    XCTAssertEqual(
+      report.totalProcessed,
       report.downloaded + report.skipped + report.failed)
     if report.totalProcessed > 0 {
       XCTAssertGreaterThan(report.successRate, 0)
@@ -175,9 +177,11 @@ final class SyncToStoreIntegrationTests: XCTestCase {
 
     let entry = await journal.entries[id]
     XCTAssertEqual(entry?.state, "failed")
-    XCTAssertEqual(entry?.committedBytes, 50_000_000,
+    XCTAssertEqual(
+      entry?.committedBytes, 50_000_000,
       "Journal should record partial progress for resume")
-    XCTAssertTrue(entry?.supportsPartial ?? false,
+    XCTAssertTrue(
+      entry?.supportsPartial ?? false,
       "Partial support flag should be preserved")
   }
 
@@ -232,10 +236,11 @@ final class SyncToStoreIntegrationTests: XCTestCase {
       device: device, deviceId: deviceId, to: mirrorDir)
 
     // Add new file
-    await device.addObject(VirtualObjectConfig(
-      handle: 400, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
-      name: "new_photo.jpg", sizeBytes: 5000, formatCode: 0x3801,
-      data: Data(repeating: 0xCC, count: 64)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 400, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
+        name: "new_photo.jpg", sizeBytes: 5000, formatCode: 0x3801,
+        data: Data(repeating: 0xCC, count: 64)))
 
     try await Task.sleep(nanoseconds: 1_100_000_000)
 
@@ -244,7 +249,8 @@ final class SyncToStoreIntegrationTests: XCTestCase {
       device: device, deviceId: deviceId, to: mirrorDir)
 
     // Second mirror should process the new file
-    XCTAssertGreaterThanOrEqual(report2.downloaded, 1,
+    XCTAssertGreaterThanOrEqual(
+      report2.downloaded, 1,
       "Incremental mirror should download the new file")
     // Total processing in second run should be less than first
     XCTAssertLessThanOrEqual(report2.totalProcessed, report1.totalProcessed + 1)
@@ -268,7 +274,8 @@ final class SyncToStoreIntegrationTests: XCTestCase {
     let gen2 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
     let diff = try await diffEngine.diff(deviceId: deviceId, oldGen: gen1, newGen: gen2)
-    XCTAssertGreaterThanOrEqual(diff.removed.count, 1,
+    XCTAssertGreaterThanOrEqual(
+      diff.removed.count, 1,
       "Diff should detect removed objects")
   }
 
@@ -291,7 +298,8 @@ final class SyncToStoreIntegrationTests: XCTestCase {
     let report = try await engine.mirror(
       device: device, deviceId: deviceId, to: mirrorDir)
 
-    XCTAssertEqual(report.totalProcessed, 0,
+    XCTAssertEqual(
+      report.totalProcessed, 0,
       "Empty device mirror should have no files to process")
     XCTAssertEqual(report.successRate, 0)
   }
@@ -307,23 +315,26 @@ final class SyncToStoreIntegrationTests: XCTestCase {
 
     let gen1 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
-    await device.addObject(VirtualObjectConfig(
-      handle: 410, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
-      name: "gen2_file.txt", sizeBytes: 100, formatCode: 0x3004,
-      data: Data(repeating: 0x01, count: 16)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 410, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
+        name: "gen2_file.txt", sizeBytes: 100, formatCode: 0x3004,
+        data: Data(repeating: 0x01, count: 16)))
     try await Task.sleep(nanoseconds: 1_100_000_000)
     let gen2 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
-    await device.addObject(VirtualObjectConfig(
-      handle: 411, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
-      name: "gen3_file.txt", sizeBytes: 200, formatCode: 0x3004,
-      data: Data(repeating: 0x02, count: 16)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 411, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
+        name: "gen3_file.txt", sizeBytes: 200, formatCode: 0x3004,
+        data: Data(repeating: 0x02, count: 16)))
     try await Task.sleep(nanoseconds: 1_100_000_000)
     let gen3 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
     // Diff between gen1 and gen3 should include both additions
     let fullDiff = try await diffEngine.diff(deviceId: deviceId, oldGen: gen1, newGen: gen3)
-    XCTAssertGreaterThanOrEqual(fullDiff.added.count, 2,
+    XCTAssertGreaterThanOrEqual(
+      fullDiff.added.count, 2,
       "Diff across multiple generations should show all additions")
 
     // Diff between gen2 and gen3 should only show the last addition
@@ -387,7 +398,8 @@ final class SyncToStoreIntegrationTests: XCTestCase {
     try await journal.complete(id: id)
     entry = await journal.entries[id]
     XCTAssertEqual(entry?.state, "completed")
-    XCTAssertEqual(entry?.committedBytes, 10000,
+    XCTAssertEqual(
+      entry?.committedBytes, 10000,
       "Completed transfer should have full bytes committed")
   }
 
@@ -435,9 +447,11 @@ final class SyncToStoreIntegrationTests: XCTestCase {
     let dev1Resumables = try await journal.loadResumables(for: device1)
     let dev2Resumables = try await journal.loadResumables(for: device2)
 
-    XCTAssertEqual(dev1Resumables.count, 2,
+    XCTAssertEqual(
+      dev1Resumables.count, 2,
       "Device 1 should have 2 resumable transfers")
-    XCTAssertEqual(dev2Resumables.count, 1,
+    XCTAssertEqual(
+      dev2Resumables.count, 1,
       "Device 2 should have 1 resumable transfer")
   }
 
@@ -595,17 +609,19 @@ final class SyncToStoreIntegrationTests: XCTestCase {
 
     let gen1 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
-    await device.addObject(VirtualObjectConfig(
-      handle: 900, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
-      name: "total_changes.txt", sizeBytes: 100, formatCode: 0x3004,
-      data: Data(repeating: 0xAA, count: 16)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 900, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
+        name: "total_changes.txt", sizeBytes: 100, formatCode: 0x3004,
+        data: Data(repeating: 0xAA, count: 16)))
     await device.removeObject(handle: 1)
 
     try await Task.sleep(nanoseconds: 1_100_000_000)
     let gen2 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
     let diff = try await diffEngine.diff(deviceId: deviceId, oldGen: gen1, newGen: gen2)
-    XCTAssertEqual(diff.totalChanges,
+    XCTAssertEqual(
+      diff.totalChanges,
       diff.added.count + diff.removed.count + diff.modified.count)
     XCTAssertFalse(diff.isEmpty)
   }
@@ -621,7 +637,8 @@ final class SyncToStoreIntegrationTests: XCTestCase {
       tempURL: tmpURL, sourceURL: nil)
 
     let entry = await journal.entries[writeId]
-    XCTAssertEqual(entry?.parentHandle, 42,
+    XCTAssertEqual(
+      entry?.parentHandle, 42,
       "Write journal entry should record parent handle")
   }
 }

@@ -56,8 +56,9 @@ struct SubcommandHelpStrings {
   func allKebabCase() {
     let kebabPattern = /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/
     for cmd in Self.expectedCommands {
-      #expect(cmd.wholeMatch(of: kebabPattern) != nil,
-              "Command '\(cmd)' is not kebab-case")
+      #expect(
+        cmd.wholeMatch(of: kebabPattern) != nil,
+        "Command '\(cmd)' is not kebab-case")
     }
   }
 }
@@ -181,8 +182,9 @@ struct ExitCodeCorrectness {
   func allInBSDRange() {
     let nonZero: [ExitCode] = [.usage, .unavailable, .software, .tempfail]
     for code in nonZero {
-      #expect((64...78).contains(code.rawValue),
-              "ExitCode \(code) = \(code.rawValue) outside BSD 64-78 range")
+      #expect(
+        (64...78).contains(code.rawValue),
+        "ExitCode \(code) = \(code.rawValue) outside BSD 64-78 range")
     }
   }
 
@@ -222,8 +224,9 @@ struct CLIErrorEnvelopeSmoke {
 
   @Test("Envelope JSON contains all top-level keys when fully populated")
   func allTopLevelKeys() throws {
-    let envelope = CLIErrorEnvelope("test", details: ["k": "v"], mode: "strict",
-                                     timestamp: "2026-01-01T00:00:00Z")
+    let envelope = CLIErrorEnvelope(
+      "test", details: ["k": "v"], mode: "strict",
+      timestamp: "2026-01-01T00:00:00Z")
     let data = try JSONEncoder().encode(envelope)
     let json = try JSONSerialization.jsonObject(with: data) as! [String: Any]
     let requiredKeys: Set = ["schemaVersion", "type", "error", "timestamp", "details", "mode"]
@@ -281,8 +284,11 @@ struct DeviceFilterMatchingSemantics {
     ]
     let noFilter = DeviceFilter(vid: nil, pid: nil, bus: nil, address: nil)
     let result = selectDevice(devs, filter: noFilter, noninteractive: true)
-    if case .multiple(let m) = result { #expect(m.count == 3) }
-    else { Issue.record("Expected .multiple with 3 devices") }
+    if case .multiple(let m) = result {
+      #expect(m.count == 3)
+    } else {
+      Issue.record("Expected .multiple with 3 devices")
+    }
   }
 
   @Test("Partial filter by pid only narrows correctly")
@@ -294,8 +300,11 @@ struct DeviceFilterMatchingSemantics {
     ]
     let filter = DeviceFilter(vid: nil, pid: 0x6860, bus: nil, address: nil)
     let result = selectDevice(devs, filter: filter, noninteractive: true)
-    if case .multiple(let m) = result { #expect(m.count == 2) }
-    else { Issue.record("Expected .multiple with 2 devices") }
+    if case .multiple(let m) = result {
+      #expect(m.count == 2)
+    } else {
+      Issue.record("Expected .multiple with 2 devices")
+    }
   }
 
   @Test("Address-only filter narrows to single device")
@@ -306,8 +315,11 @@ struct DeviceFilterMatchingSemantics {
     ]
     let filter = DeviceFilter(vid: nil, pid: nil, bus: nil, address: 7)
     let result = selectDevice(devs, filter: filter, noninteractive: true)
-    if case .selected(let s) = result { #expect(s.id.raw == "b") }
-    else { Issue.record("Expected .selected for address-only filter") }
+    if case .selected(let s) = result {
+      #expect(s.id.raw == "b")
+    } else {
+      Issue.record("Expected .selected for address-only filter")
+    }
   }
 }
 
@@ -377,8 +389,9 @@ struct MTPFeatureEnumCompleteness {
     let upperSnake = /^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$/
     for feature in MTPFeature.allCases {
       #expect(!feature.rawValue.isEmpty)
-      #expect(feature.rawValue.wholeMatch(of: upperSnake) != nil,
-              "Feature '\(feature.rawValue)' is not UPPER_SNAKE_CASE")
+      #expect(
+        feature.rawValue.wholeMatch(of: upperSnake) != nil,
+        "Feature '\(feature.rawValue)' is not UPPER_SNAKE_CASE")
     }
   }
 
@@ -388,4 +401,3 @@ struct MTPFeatureEnumCompleteness {
     #expect(Set(rawValues).count == rawValues.count)
   }
 }
-

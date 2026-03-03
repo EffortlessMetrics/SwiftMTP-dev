@@ -344,14 +344,14 @@ final class VirtualDevicePathResolutionTests: XCTestCase {
 
   func testRootObjectsHaveNilParent() async throws {
     let device = VirtualMTPDevice(config: .pixel7)
-    let info = try await device.getInfo(handle: 1) // DCIM
+    let info = try await device.getInfo(handle: 1)  // DCIM
     XCTAssertNil(info.parent)
   }
 
   func testChildObjectReferencesCorrectParent() async throws {
     let device = VirtualMTPDevice(config: .pixel7)
-    let cameraInfo = try await device.getInfo(handle: 2) // Camera folder
-    XCTAssertEqual(cameraInfo.parent, 1) // parent is DCIM
+    let cameraInfo = try await device.getInfo(handle: 2)  // Camera folder
+    XCTAssertEqual(cameraInfo.parent, 1)  // parent is DCIM
   }
 
   func testListRootReturnsOnlyTopLevelObjects() async throws {
@@ -362,7 +362,7 @@ final class VirtualDevicePathResolutionTests: XCTestCase {
     for try await batch in device.list(parent: nil, in: sid) {
       rootItems.append(contentsOf: batch)
     }
-    XCTAssertEqual(rootItems.count, 1) // Only DCIM at root
+    XCTAssertEqual(rootItems.count, 1)  // Only DCIM at root
     XCTAssertEqual(rootItems[0].name, "DCIM")
   }
 
@@ -374,7 +374,7 @@ final class VirtualDevicePathResolutionTests: XCTestCase {
     for try await batch in device.list(parent: 1, in: sid) {
       dcimChildren.append(contentsOf: batch)
     }
-    XCTAssertEqual(dcimChildren.count, 1) // Only Camera subfolder
+    XCTAssertEqual(dcimChildren.count, 1)  // Only Camera subfolder
     XCTAssertEqual(dcimChildren[0].name, "Camera")
   }
 
@@ -609,7 +609,7 @@ final class VirtualDeviceTreeTraversalTests: XCTestCase {
 
     // BFS: visit level by level
     var visited: [String] = []
-    var queue: [MTPObjectHandle?] = [nil] // start from root
+    var queue: [MTPObjectHandle?] = [nil]  // start from root
 
     while !queue.isEmpty {
       let parent = queue.removeFirst()
@@ -674,7 +674,7 @@ final class VirtualDeviceTreeTraversalTests: XCTestCase {
     }
 
     let d = try await depth(parent: nil)
-    XCTAssertEqual(d, 3) // root -> A -> B -> C
+    XCTAssertEqual(d, 3)  // root -> A -> B -> C
   }
 
   func testLeafNodeCount() async throws {
@@ -694,11 +694,11 @@ final class VirtualDeviceTreeTraversalTests: XCTestCase {
     }
 
     // root has children, so not a leaf. Leaves are C and D.
-    let a = try await device.getInfo(handle: 1) // A
+    let a = try await device.getInfo(handle: 1)  // A
     let _ = a
     // Count leaves starting from root
     let leaves = try await countLeaves(parent: nil)
-    XCTAssertEqual(leaves, 2) // C and D are leaves
+    XCTAssertEqual(leaves, 2)  // C and D are leaves
   }
 
   func testEmptyTreeHasNoChildren() async throws {
@@ -728,17 +728,17 @@ final class VirtualDeviceDevSPIAdvancedTests: XCTestCase {
 
     let internalHandles = try await device.devGetRootHandlesUncached(
       storage: MTPStorageID(raw: 0x0001_0001))
-    XCTAssertTrue(internalHandles.contains(1)) // DCIM
+    XCTAssertTrue(internalHandles.contains(1))  // DCIM
 
     let sdHandles = try await device.devGetRootHandlesUncached(
       storage: MTPStorageID(raw: 0x0002_0001))
-    XCTAssertTrue(sdHandles.contains(100)) // SDROOT
+    XCTAssertTrue(sdHandles.contains(100))  // SDROOT
     XCTAssertFalse(sdHandles.contains(1))
   }
 
   func testDevGetObjectInfoUncachedReturnsCorrectData() async throws {
     let device = VirtualMTPDevice(config: .pixel7)
-    let info = try await device.devGetObjectInfoUncached(handle: 3) // sample photo
+    let info = try await device.devGetObjectInfoUncached(handle: 3)  // sample photo
     XCTAssertEqual(info.name, "IMG_20250101_120000.jpg")
     XCTAssertEqual(info.formatCode, 0x3801)
   }

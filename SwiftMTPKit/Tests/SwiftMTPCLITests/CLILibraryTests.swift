@@ -269,7 +269,8 @@ struct SelectDeviceLogic {
   @Test("Single device with no filter returns .selected")
   func singleDeviceNoFilter() {
     let d = summary("x", vid: 0x1234, pid: 0x5678, bus: 1, addr: 1)
-    let r = selectDevice([d], filter: DeviceFilter(vid: nil, pid: nil, bus: nil, address: nil), noninteractive: true)
+    let r = selectDevice(
+      [d], filter: DeviceFilter(vid: nil, pid: nil, bus: nil, address: nil), noninteractive: true)
     if case .selected(let s) = r {
       #expect(s.id.raw == "x")
     } else {
@@ -283,9 +284,13 @@ struct SelectDeviceLogic {
       summary("a", vid: 0x1111, pid: 0x2222, bus: 1, addr: 1),
       summary("b", vid: 0x3333, pid: 0x4444, bus: 2, addr: 2),
     ]
-    let r = selectDevice(devs, filter: DeviceFilter(vid: nil, pid: nil, bus: nil, address: nil), noninteractive: true)
-    if case .multiple(let m) = r { #expect(m.count == 2) }
-    else { Issue.record("Expected .multiple") }
+    let r = selectDevice(
+      devs, filter: DeviceFilter(vid: nil, pid: nil, bus: nil, address: nil), noninteractive: true)
+    if case .multiple(let m) = r {
+      #expect(m.count == 2)
+    } else {
+      Issue.record("Expected .multiple")
+    }
   }
 
   @Test("Filter by vid narrows to single device")
@@ -294,15 +299,22 @@ struct SelectDeviceLogic {
       summary("a", vid: 0x1111, pid: 0x2222, bus: 1, addr: 1),
       summary("b", vid: 0x3333, pid: 0x4444, bus: 2, addr: 2),
     ]
-    let r = selectDevice(devs, filter: DeviceFilter(vid: 0x3333, pid: nil, bus: nil, address: nil), noninteractive: true)
-    if case .selected(let s) = r { #expect(s.id.raw == "b") }
-    else { Issue.record("Expected .selected") }
+    let r = selectDevice(
+      devs, filter: DeviceFilter(vid: 0x3333, pid: nil, bus: nil, address: nil),
+      noninteractive: true)
+    if case .selected(let s) = r {
+      #expect(s.id.raw == "b")
+    } else {
+      Issue.record("Expected .selected")
+    }
   }
 
   @Test("Filter with no match returns .none")
   func noMatch() {
     let devs = [summary("a", vid: 0x1111, pid: 0x2222, bus: 1, addr: 1)]
-    let r = selectDevice(devs, filter: DeviceFilter(vid: 0x9999, pid: nil, bus: nil, address: nil), noninteractive: true)
+    let r = selectDevice(
+      devs, filter: DeviceFilter(vid: 0x9999, pid: nil, bus: nil, address: nil),
+      noninteractive: true)
     if case .none = r {} else { Issue.record("Expected .none") }
   }
 
@@ -312,9 +324,14 @@ struct SelectDeviceLogic {
       summary("a", vid: 0x04e8, pid: 0x6860, bus: 1, addr: 4),
       summary("b", vid: 0x04e8, pid: 0x6860, bus: 2, addr: 7),
     ]
-    let r = selectDevice(devs, filter: DeviceFilter(vid: 0x04e8, pid: 0x6860, bus: 2, address: 7), noninteractive: true)
-    if case .selected(let s) = r { #expect(s.id.raw == "b") }
-    else { Issue.record("Expected .selected") }
+    let r = selectDevice(
+      devs, filter: DeviceFilter(vid: 0x04e8, pid: 0x6860, bus: 2, address: 7), noninteractive: true
+    )
+    if case .selected(let s) = r {
+      #expect(s.id.raw == "b")
+    } else {
+      Issue.record("Expected .selected")
+    }
   }
 }
 

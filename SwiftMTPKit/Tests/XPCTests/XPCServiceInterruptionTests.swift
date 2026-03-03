@@ -16,7 +16,10 @@ final class XPCServiceInterruptionTests: XCTestCase {
 
   private func makeService(
     objectCount: Int = 1
-  ) async -> (impl: MTPXPCServiceImpl, registry: DeviceServiceRegistry, deviceId: MTPDeviceID, stableId: String, storageId: UInt32) {
+  ) async -> (
+    impl: MTPXPCServiceImpl, registry: DeviceServiceRegistry, deviceId: MTPDeviceID,
+    stableId: String, storageId: UInt32
+  ) {
     var config = VirtualDeviceConfig.emptyDevice
     let storageId = config.storages[0].id
     for i in 0..<objectCount {
@@ -62,8 +65,11 @@ final class XPCServiceInterruptionTests: XCTestCase {
   func testListObjectsAfterDeviceRemoval() async {
     let svc = await makeService()
     await svc.registry.remove(deviceId: svc.deviceId)
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
-      svc.impl.listObjects(ObjectListRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)) {
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
+      svc.impl.listObjects(
+        ObjectListRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)
+      ) {
         c.resume(returning: $0)
       }
     }
@@ -76,7 +82,8 @@ final class XPCServiceInterruptionTests: XCTestCase {
     let svc = await makeService()
     // Remove device
     await svc.registry.remove(deviceId: svc.deviceId)
-    let failResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let failResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }
@@ -90,7 +97,8 @@ final class XPCServiceInterruptionTests: XCTestCase {
     await svc.registry.register(deviceId: newConfig.deviceId, service: newService)
     await svc.registry.registerDomainMapping(deviceId: newConfig.deviceId, domainId: svc.stableId)
 
-    let successResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let successResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }
@@ -108,7 +116,8 @@ final class XPCServiceInterruptionTests: XCTestCase {
     }
     // Disconnect
     await service.markDisconnected()
-    let statusDisc = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+    let statusDisc = await withCheckedContinuation {
+      (c: CheckedContinuation<DeviceStatusResponse, Never>) in
       svc.impl.deviceStatus(DeviceStatusRequest(deviceId: svc.deviceId.raw)) {
         c.resume(returning: $0)
       }
@@ -117,7 +126,8 @@ final class XPCServiceInterruptionTests: XCTestCase {
 
     // Reconnect
     await service.markReconnected()
-    let statusReconn = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+    let statusReconn = await withCheckedContinuation {
+      (c: CheckedContinuation<DeviceStatusResponse, Never>) in
       svc.impl.deviceStatus(DeviceStatusRequest(deviceId: svc.deviceId.raw)) {
         c.resume(returning: $0)
       }
@@ -134,7 +144,8 @@ final class XPCServiceInterruptionTests: XCTestCase {
       storageId == targetStorage
     }
     // Should accept for correct storage
-    let accepted = await withCheckedContinuation { (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
+    let accepted = await withCheckedContinuation {
+      (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
       svc.impl.requestCrawl(CrawlTriggerRequest(deviceId: svc.stableId, storageId: targetStorage)) {
         c.resume(returning: $0)
       }
@@ -142,7 +153,8 @@ final class XPCServiceInterruptionTests: XCTestCase {
     XCTAssertTrue(accepted.accepted)
 
     // Should reject for wrong storage
-    let rejected = await withCheckedContinuation { (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
+    let rejected = await withCheckedContinuation {
+      (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
       svc.impl.requestCrawl(CrawlTriggerRequest(deviceId: svc.stableId, storageId: 99999)) {
         c.resume(returning: $0)
       }
@@ -158,7 +170,9 @@ final class XPCServiceInterruptionTests: XCTestCase {
       return true
     }
     _ = await withCheckedContinuation { (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
-      svc.impl.requestCrawl(CrawlTriggerRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: 42)) {
+      svc.impl.requestCrawl(
+        CrawlTriggerRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: 42)
+      ) {
         c.resume(returning: $0)
       }
     }
@@ -173,7 +187,9 @@ final class XPCServiceInterruptionTests: XCTestCase {
       return true
     }
     _ = await withCheckedContinuation { (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
-      svc.impl.requestCrawl(CrawlTriggerRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)) {
+      svc.impl.requestCrawl(
+        CrawlTriggerRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)
+      ) {
         c.resume(returning: $0)
       }
     }
@@ -185,9 +201,10 @@ final class XPCServiceInterruptionTests: XCTestCase {
   func testReadLargeObject() async {
     var config = VirtualDeviceConfig.emptyDevice
     let storageId = config.storages[0].id
-    let largeData = Data(repeating: 0x42, count: 1024 * 1024) // 1 MB
+    let largeData = Data(repeating: 0x42, count: 1024 * 1024)  // 1 MB
     config = config.withObject(
-      VirtualObjectConfig(handle: 7777, storage: storageId, parent: nil, name: "large.bin", data: largeData)
+      VirtualObjectConfig(
+        handle: 7777, storage: storageId, parent: nil, name: "large.bin", data: largeData)
     )
     let virtual = VirtualMTPDevice(config: config)
     let deviceService = DeviceService(device: virtual)
@@ -214,8 +231,11 @@ final class XPCServiceInterruptionTests: XCTestCase {
 
   func testListManyObjects() async {
     let svc = await makeService(objectCount: 50)
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
-      svc.impl.listObjects(ObjectListRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)) {
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
+      svc.impl.listObjects(
+        ObjectListRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)
+      ) {
         c.resume(returning: $0)
       }
     }

@@ -50,7 +50,8 @@ final class DeviceSubmissionTests: XCTestCase {
     // SwiftMTPKit is the package root; Specs/ is one level above it.
     let fileURL = URL(fileURLWithPath: #filePath)
     // #filePath -> .../SwiftMTPKit/Tests/ToolingTests/DeviceSubmissionTests.swift
-    let swiftMTPKit = fileURL
+    let swiftMTPKit =
+      fileURL
       .deletingLastPathComponent()  // ToolingTests
       .deletingLastPathComponent()  // Tests
       .deletingLastPathComponent()  // SwiftMTPKit
@@ -296,6 +297,7 @@ final class DeviceSubmissionTests: XCTestCase {
       "Cannot read Resources/quirks.json")
     XCTAssertEqual(
       specsData, resourcesData,
-      "Specs/quirks.json and SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json must be identical")
+      "Specs/quirks.json and SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json must be identical"
+    )
   }
 }

@@ -49,30 +49,51 @@ struct AddDeviceCommand {
     while i < args.count {
       switch args[i] {
       case "--vid":
-        if i + 1 < args.count { vid = args[i + 1]; i += 1 }
+        if i + 1 < args.count {
+          vid = args[i + 1]
+          i += 1
+        }
       case "--pid":
-        if i + 1 < args.count { pid = args[i + 1]; i += 1 }
+        if i + 1 < args.count {
+          pid = args[i + 1]
+          i += 1
+        }
       case "--name":
-        if i + 1 < args.count { name = args[i + 1]; i += 1 }
+        if i + 1 < args.count {
+          name = args[i + 1]
+          i += 1
+        }
       case "--class":
         if i + 1 < args.count {
           deviceClass = DeviceClass(rawValue: args[i + 1]) ?? .android
           i += 1
         }
       case "--brand":
-        if i + 1 < args.count { brand = args[i + 1]; i += 1 }
+        if i + 1 < args.count {
+          brand = args[i + 1]
+          i += 1
+        }
       case "--model":
-        if i + 1 < args.count { model = args[i + 1]; i += 1 }
+        if i + 1 < args.count {
+          model = args[i + 1]
+          i += 1
+        }
       default:
         // handle --key=value forms
         let arg = args[i]
-        if arg.hasPrefix("--vid=") { vid = String(arg.dropFirst(6)) }
-        else if arg.hasPrefix("--pid=") { pid = String(arg.dropFirst(6)) }
-        else if arg.hasPrefix("--name=") { name = String(arg.dropFirst(7)) }
-        else if arg.hasPrefix("--class=") {
+        if arg.hasPrefix("--vid=") {
+          vid = String(arg.dropFirst(6))
+        } else if arg.hasPrefix("--pid=") {
+          pid = String(arg.dropFirst(6))
+        } else if arg.hasPrefix("--name=") {
+          name = String(arg.dropFirst(7))
+        } else if arg.hasPrefix("--class=") {
           deviceClass = DeviceClass(rawValue: String(arg.dropFirst(8))) ?? .android
-        } else if arg.hasPrefix("--brand=") { brand = String(arg.dropFirst(8)) }
-        else if arg.hasPrefix("--model=") { model = String(arg.dropFirst(8)) }
+        } else if arg.hasPrefix("--brand=") {
+          brand = String(arg.dropFirst(8))
+        } else if arg.hasPrefix("--model=") {
+          model = String(arg.dropFirst(8))
+        }
       }
       i += 1
     }

@@ -418,8 +418,13 @@ final class IncompleteTransferEntryTests: XCTestCase {
       tempURL: URL(fileURLWithPath: "/tmp/retry"), finalURL: nil,
       etag: (size: nil, mtime: nil))
 
-    try journal.fail(id: id, error: NSError(domain: "test", code: 1, userInfo: [NSLocalizedDescriptionKey: "first error"]))
-    try journal.fail(id: id, error: NSError(domain: "test", code: 2, userInfo: [NSLocalizedDescriptionKey: "second error"]))
+    try journal.fail(
+      id: id,
+      error: NSError(domain: "test", code: 1, userInfo: [NSLocalizedDescriptionKey: "first error"]))
+    try journal.fail(
+      id: id,
+      error: NSError(domain: "test", code: 2, userInfo: [NSLocalizedDescriptionKey: "second error"])
+    )
 
     let failed = try journal.listFailed()
     let record = failed.first(where: { $0.id == id })
@@ -1179,7 +1184,8 @@ final class StoreAdapterJournalEdgeCaseTests: XCTestCase {
     let id = try await adapter.beginRead(
       device: device, handle: 10, name: "lifecycle.mp4",
       size: 100_000, supportsPartial: true,
-      tempURL: URL(fileURLWithPath: "/tmp/adapter-lc"), finalURL: URL(fileURLWithPath: "/tmp/final"),
+      tempURL: URL(fileURLWithPath: "/tmp/adapter-lc"),
+      finalURL: URL(fileURLWithPath: "/tmp/final"),
       etag: (size: 100_000, mtime: Date()))
 
     try await adapter.updateProgress(id: id, committed: 25_000)

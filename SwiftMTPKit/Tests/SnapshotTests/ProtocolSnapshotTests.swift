@@ -282,11 +282,11 @@ final class ProtocolSnapshotTests: XCTestCase {
   func testPTPDeviceInfoParsing() {
     // Build a minimal PTP DeviceInfo dataset manually
     var w = MTPDataEncoder()
-    w.append(UInt16(100))              // standardVersion
-    w.append(UInt32(0x00000006))       // vendorExtensionID (MTP)
-    w.append(UInt16(100))              // vendorExtensionVersion
+    w.append(UInt16(100))  // standardVersion
+    w.append(UInt32(0x00000006))  // vendorExtensionID (MTP)
+    w.append(UInt16(100))  // vendorExtensionVersion
     w.append(PTPString.encode("microsoft.com: 1.0"))  // vendorExtensionDesc
-    w.append(UInt16(0))                // functionalMode
+    w.append(UInt16(0))  // functionalMode
     // operationsSupported: [0x1001, 0x1002]
     w.append(UInt32(2))
     w.append(UInt16(0x1001))
@@ -300,10 +300,10 @@ final class ProtocolSnapshotTests: XCTestCase {
     // playbackFormats: [0x3001]
     w.append(UInt32(1))
     w.append(UInt16(0x3001))
-    w.append(PTPString.encode("TestMfg"))    // manufacturer
+    w.append(PTPString.encode("TestMfg"))  // manufacturer
     w.append(PTPString.encode("TestModel"))  // model
-    w.append(PTPString.encode("1.0.0"))      // deviceVersion
-    w.append(PTPString.encode("SN12345"))    // serialNumber
+    w.append(PTPString.encode("1.0.0"))  // deviceVersion
+    w.append(PTPString.encode("SN12345"))  // serialNumber
 
     let parsed = PTPDeviceInfo.parse(from: w.encodedData)
     XCTAssertNotNil(parsed)

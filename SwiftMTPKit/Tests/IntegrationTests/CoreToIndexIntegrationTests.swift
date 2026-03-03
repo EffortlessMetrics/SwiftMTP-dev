@@ -98,16 +98,18 @@ final class CoreToIndexIntegrationTests: XCTestCase {
     let gen1 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
     // Add a new file to the device
-    await device.addObject(VirtualObjectConfig(
-      handle: 500, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
-      name: "new_document.pdf", sizeBytes: 1_234_567, formatCode: 0x3000,
-      data: Data(repeating: 0xDD, count: 64)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 500, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
+        name: "new_document.pdf", sizeBytes: 1_234_567, formatCode: 0x3000,
+        data: Data(repeating: 0xDD, count: 64)))
 
     try await Task.sleep(nanoseconds: 1_100_000_000)
     let gen2 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
     let diff = try await diffEngine.diff(deviceId: deviceId, oldGen: gen1, newGen: gen2)
-    XCTAssertTrue(diff.added.contains(where: { $0.pathKey.contains("new_document.pdf") }),
+    XCTAssertTrue(
+      diff.added.contains(where: { $0.pathKey.contains("new_document.pdf") }),
       "Added file should appear in diff")
   }
 
@@ -144,17 +146,19 @@ final class CoreToIndexIntegrationTests: XCTestCase {
 
     // Add three files
     for i in 0..<3 {
-      await device.addObject(VirtualObjectConfig(
-        handle: UInt32(600 + i), storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
-        name: "batch_\(i).txt", sizeBytes: UInt64(100 * (i + 1)), formatCode: 0x3004,
-        data: Data(repeating: UInt8(i), count: 32)))
+      await device.addObject(
+        VirtualObjectConfig(
+          handle: UInt32(600 + i), storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
+          name: "batch_\(i).txt", sizeBytes: UInt64(100 * (i + 1)), formatCode: 0x3004,
+          data: Data(repeating: UInt8(i), count: 32)))
     }
 
     try await Task.sleep(nanoseconds: 1_100_000_000)
     let gen2 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
     let diff = try await diffEngine.diff(deviceId: deviceId, oldGen: gen1, newGen: gen2)
-    XCTAssertGreaterThanOrEqual(diff.added.count, 3,
+    XCTAssertGreaterThanOrEqual(
+      diff.added.count, 3,
       "All three added files should appear in the diff")
   }
 
@@ -171,12 +175,14 @@ final class CoreToIndexIntegrationTests: XCTestCase {
 
     // Simulate disconnect: device is gone but index DB remains
     let latestGen = try snapshotter.latestGeneration(for: deviceId)
-    XCTAssertEqual(latestGen, gen,
+    XCTAssertEqual(
+      latestGen, gen,
       "Index should remain queryable after device disconnect")
 
     let diffEngine = try DiffEngine(dbPath: dbPath)
     let diff = try await diffEngine.diff(deviceId: deviceId, oldGen: nil, newGen: gen)
-    XCTAssertGreaterThan(diff.added.count, 0,
+    XCTAssertGreaterThan(
+      diff.added.count, 0,
       "Index data should survive device disconnect")
   }
 
@@ -193,10 +199,11 @@ final class CoreToIndexIntegrationTests: XCTestCase {
 
     // Simulate reconnection with same device ID but new content
     let device2 = VirtualMTPDevice(config: .pixel7)
-    await device2.addObject(VirtualObjectConfig(
-      handle: 700, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
-      name: "new_after_reconnect.jpg", sizeBytes: 5000, formatCode: 0x3801,
-      data: Data(repeating: 0xEE, count: 64)))
+    await device2.addObject(
+      VirtualObjectConfig(
+        handle: 700, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
+        name: "new_after_reconnect.jpg", sizeBytes: 5000, formatCode: 0x3801,
+        data: Data(repeating: 0xEE, count: 64)))
 
     try await Task.sleep(nanoseconds: 1_100_000_000)
     let gen2 = try await snapshotter.capture(device: device2, deviceId: deviceId)
@@ -253,29 +260,32 @@ final class CoreToIndexIntegrationTests: XCTestCase {
     let deviceId = "test:concurrent-rw"
 
     // Write some initial objects
-    let objects = (1...5).map { i in
-      IndexedObject(
-        deviceId: deviceId, storageId: 0x0001_0001, handle: UInt32(i),
-        parentHandle: nil, name: "file_\(i).jpg", pathKey: "00010001/file_\(i).jpg",
-        sizeBytes: UInt64(i * 1000), mtime: nil, formatCode: 0x3801,
-        isDirectory: false, changeCounter: 1)
-    }
+    let objects = (1...5)
+      .map { i in
+        IndexedObject(
+          deviceId: deviceId, storageId: 0x0001_0001, handle: UInt32(i),
+          parentHandle: nil, name: "file_\(i).jpg", pathKey: "00010001/file_\(i).jpg",
+          sizeBytes: UInt64(i * 1000), mtime: nil, formatCode: 0x3801,
+          isDirectory: false, changeCounter: 1)
+      }
     try await index.upsertObjects(objects, deviceId: deviceId)
 
     // Concurrent read and write
     async let readResult = index.children(
       deviceId: deviceId, storageId: 0x0001_0001, parentHandle: nil)
-    async let writeResult: () = index.upsertObjects([
-      IndexedObject(
-        deviceId: deviceId, storageId: 0x0001_0001, handle: 100,
-        parentHandle: nil, name: "concurrent_add.jpg", pathKey: "00010001/concurrent_add.jpg",
-        sizeBytes: 5000, mtime: nil, formatCode: 0x3801,
-        isDirectory: false, changeCounter: 2)
-    ], deviceId: deviceId)
+    async let writeResult: () = index.upsertObjects(
+      [
+        IndexedObject(
+          deviceId: deviceId, storageId: 0x0001_0001, handle: 100,
+          parentHandle: nil, name: "concurrent_add.jpg", pathKey: "00010001/concurrent_add.jpg",
+          sizeBytes: 5000, mtime: nil, formatCode: 0x3801,
+          isDirectory: false, changeCounter: 2)
+      ], deviceId: deviceId)
 
     let children = try await readResult
     try await writeResult
-    XCTAssertGreaterThanOrEqual(children.count, 5,
+    XCTAssertGreaterThanOrEqual(
+      children.count, 5,
       "Concurrent read should see at least initial objects")
   }
 
@@ -289,10 +299,11 @@ final class CoreToIndexIntegrationTests: XCTestCase {
     var generations: [Int] = []
     for i in 0..<3 {
       if i > 0 {
-        await device.addObject(VirtualObjectConfig(
-          handle: UInt32(800 + i), storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
-          name: "seq_\(i).txt", sizeBytes: 100, formatCode: 0x3004,
-          data: Data(repeating: UInt8(i), count: 16)))
+        await device.addObject(
+          VirtualObjectConfig(
+            handle: UInt32(800 + i), storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
+            name: "seq_\(i).txt", sizeBytes: 100, formatCode: 0x3004,
+            data: Data(repeating: UInt8(i), count: 16)))
         try await Task.sleep(nanoseconds: 1_100_000_000)
       }
       let gen = try await snapshotter.capture(device: device, deviceId: deviceId)
@@ -300,7 +311,8 @@ final class CoreToIndexIntegrationTests: XCTestCase {
     }
 
     for i in 1..<generations.count {
-      XCTAssertGreaterThan(generations[i], generations[i - 1],
+      XCTAssertGreaterThan(
+        generations[i], generations[i - 1],
         "Snapshot generations must monotonically increase")
     }
   }
@@ -319,13 +331,14 @@ final class CoreToIndexIntegrationTests: XCTestCase {
       sizeBytes: nil, mtime: nil, formatCode: 0x3001,
       isDirectory: true, changeCounter: 1)
 
-    let photos = (10...14).map { i in
-      IndexedObject(
-        deviceId: deviceId, storageId: 0x0001_0001, handle: UInt32(i),
-        parentHandle: 1, name: "IMG_\(i).jpg", pathKey: "00010001/DCIM/IMG_\(i).jpg",
-        sizeBytes: UInt64(i * 1000), mtime: nil, formatCode: 0x3801,
-        isDirectory: false, changeCounter: 1)
-    }
+    let photos = (10...14)
+      .map { i in
+        IndexedObject(
+          deviceId: deviceId, storageId: 0x0001_0001, handle: UInt32(i),
+          parentHandle: 1, name: "IMG_\(i).jpg", pathKey: "00010001/DCIM/IMG_\(i).jpg",
+          sizeBytes: UInt64(i * 1000), mtime: nil, formatCode: 0x3801,
+          isDirectory: false, changeCounter: 1)
+      }
 
     try await index.upsertObjects([dcim] + photos, deviceId: deviceId)
 
@@ -343,27 +356,30 @@ final class CoreToIndexIntegrationTests: XCTestCase {
 
     let counter1 = try await index.currentChangeCounter(deviceId: deviceId)
 
-    try await index.upsertObjects([
-      IndexedObject(
-        deviceId: deviceId, storageId: 0x0001_0001, handle: 1,
-        parentHandle: nil, name: "a.jpg", pathKey: "00010001/a.jpg",
-        sizeBytes: 100, mtime: nil, formatCode: 0x3801,
-        isDirectory: false, changeCounter: 1)
-    ], deviceId: deviceId)
+    try await index.upsertObjects(
+      [
+        IndexedObject(
+          deviceId: deviceId, storageId: 0x0001_0001, handle: 1,
+          parentHandle: nil, name: "a.jpg", pathKey: "00010001/a.jpg",
+          sizeBytes: 100, mtime: nil, formatCode: 0x3801,
+          isDirectory: false, changeCounter: 1)
+      ], deviceId: deviceId)
 
     let counter2 = try await index.currentChangeCounter(deviceId: deviceId)
     XCTAssertGreaterThan(counter2, counter1)
 
-    try await index.upsertObjects([
-      IndexedObject(
-        deviceId: deviceId, storageId: 0x0001_0001, handle: 2,
-        parentHandle: nil, name: "b.jpg", pathKey: "00010001/b.jpg",
-        sizeBytes: 200, mtime: nil, formatCode: 0x3801,
-        isDirectory: false, changeCounter: 2)
-    ], deviceId: deviceId)
+    try await index.upsertObjects(
+      [
+        IndexedObject(
+          deviceId: deviceId, storageId: 0x0001_0001, handle: 2,
+          parentHandle: nil, name: "b.jpg", pathKey: "00010001/b.jpg",
+          sizeBytes: 200, mtime: nil, formatCode: 0x3801,
+          isDirectory: false, changeCounter: 2)
+      ], deviceId: deviceId)
 
     let counter3 = try await index.currentChangeCounter(deviceId: deviceId)
-    XCTAssertGreaterThan(counter3, counter2,
+    XCTAssertGreaterThan(
+      counter3, counter2,
       "Each upsert should increment the change counter")
   }
 
@@ -374,13 +390,14 @@ final class CoreToIndexIntegrationTests: XCTestCase {
     let deviceId = "test:remove-verify"
 
     // Insert then remove
-    try await index.upsertObjects([
-      IndexedObject(
-        deviceId: deviceId, storageId: 0x0001_0001, handle: 50,
-        parentHandle: nil, name: "temp.dat", pathKey: "00010001/temp.dat",
-        sizeBytes: 512, mtime: nil, formatCode: 0x3000,
-        isDirectory: false, changeCounter: 1)
-    ], deviceId: deviceId)
+    try await index.upsertObjects(
+      [
+        IndexedObject(
+          deviceId: deviceId, storageId: 0x0001_0001, handle: 50,
+          parentHandle: nil, name: "temp.dat", pathKey: "00010001/temp.dat",
+          sizeBytes: 512, mtime: nil, formatCode: 0x3000,
+          isDirectory: false, changeCounter: 1)
+      ], deviceId: deviceId)
 
     let before = try await index.children(
       deviceId: deviceId, storageId: 0x0001_0001, parentHandle: nil)
@@ -428,13 +445,14 @@ final class CoreToIndexIntegrationTests: XCTestCase {
     let pathKey = PathKey.normalize(
       storage: 0x0001_0001, components: ["DCIM", "Camera", "IMG_001.jpg"])
 
-    try await index.upsertObjects([
-      IndexedObject(
-        deviceId: deviceId, storageId: 0x0001_0001, handle: 42,
-        parentHandle: nil, name: "IMG_001.jpg", pathKey: pathKey,
-        sizeBytes: 4096, mtime: nil, formatCode: 0x3801,
-        isDirectory: false, changeCounter: 1)
-    ], deviceId: deviceId)
+    try await index.upsertObjects(
+      [
+        IndexedObject(
+          deviceId: deviceId, storageId: 0x0001_0001, handle: 42,
+          parentHandle: nil, name: "IMG_001.jpg", pathKey: pathKey,
+          sizeBytes: 4096, mtime: nil, formatCode: 0x3801,
+          isDirectory: false, changeCounter: 1)
+      ], deviceId: deviceId)
 
     let obj = try await index.object(deviceId: deviceId, handle: 42)
     XCTAssertNotNil(obj)
@@ -462,7 +480,8 @@ final class CoreToIndexIntegrationTests: XCTestCase {
       for row in diff.added {
         let (storageId, components) = PathKey.parse(row.pathKey)
         XCTAssertGreaterThan(storageId, 0, "PathKey storage should be positive for \(config)")
-        XCTAssertFalse(components.isEmpty,
+        XCTAssertFalse(
+          components.isEmpty,
           "PathKey should have components for \(row.pathKey)")
       }
     }

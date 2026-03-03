@@ -244,7 +244,9 @@ final class TransactionLogEdgeCaseTests: XCTestCase {
 
   func testRecordWithAllOutcomeClasses() async {
     let log = TransactionLog()
-    let outcomes: [TransactionOutcome] = [.ok, .deviceError, .timeout, .stall, .ioError, .cancelled]
+    let outcomes: [TransactionOutcome] = [
+      .ok, .deviceError, .timeout, .stall, .ioError, .cancelled,
+    ]
     for (i, outcome) in outcomes.enumerated() {
       await log.append(makeRecord(txID: UInt32(i + 1), outcome: outcome))
     }
@@ -306,7 +308,8 @@ final class MTPOpcodeLabelEdgeCaseTests: XCTestCase {
     ]
     for opcode in knownOpcodes {
       let label = MTPOpcodeLabel.label(for: opcode)
-      XCTAssertFalse(label.hasPrefix("Unknown"), "Opcode 0x\(String(opcode, radix: 16)) was Unknown")
+      XCTAssertFalse(
+        label.hasPrefix("Unknown"), "Opcode 0x\(String(opcode, radix: 16)) was Unknown")
     }
   }
 }

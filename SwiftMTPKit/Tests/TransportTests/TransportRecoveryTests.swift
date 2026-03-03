@@ -275,7 +275,8 @@ final class TransportRecoveryTests: XCTestCase {
         do {
           _ = try await link.getStorageIDs()
         } catch {
-          if case .io = error as? TransportError {} else {
+          if case .io = error as? TransportError {
+          } else {
             XCTAssertEqual(error as? TransportError, .timeout)
           }
         }
@@ -342,14 +343,15 @@ final class TransportRecoveryTests: XCTestCase {
   func testLargeObjectSizeMetadata() async throws {
     let largeSize: UInt64 = 4 * 1024 * 1024 * 1024 + 1  // Just over 4GB
     let config = VirtualDeviceConfig.pixel7
-      .withObject(VirtualObjectConfig(
-        handle: 100,
-        storage: MTPStorageID(raw: 0x0001_0001),
-        parent: nil,
-        name: "large_video.mp4",
-        sizeBytes: largeSize,
-        formatCode: 0x3009
-      ))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100,
+          storage: MTPStorageID(raw: 0x0001_0001),
+          parent: nil,
+          name: "large_video.mp4",
+          sizeBytes: largeSize,
+          formatCode: 0x3009
+        ))
     let link = makeLink(config: config)
 
     let infos = try await link.getObjectInfos([100])
@@ -361,14 +363,15 @@ final class TransportRecoveryTests: XCTestCase {
     // Object size exactly at 2MB chunk boundary
     let chunkSize: UInt64 = 2 * 1024 * 1024
     let config = VirtualDeviceConfig.pixel7
-      .withObject(VirtualObjectConfig(
-        handle: 200,
-        storage: MTPStorageID(raw: 0x0001_0001),
-        parent: nil,
-        name: "boundary.bin",
-        sizeBytes: chunkSize,
-        formatCode: 0x3000
-      ))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 200,
+          storage: MTPStorageID(raw: 0x0001_0001),
+          parent: nil,
+          name: "boundary.bin",
+          sizeBytes: chunkSize,
+          formatCode: 0x3000
+        ))
     let link = makeLink(config: config)
 
     let infos = try await link.getObjectInfos([200])
@@ -380,14 +383,15 @@ final class TransportRecoveryTests: XCTestCase {
     // One byte over 2MB chunk boundary
     let size: UInt64 = 2 * 1024 * 1024 + 1
     let config = VirtualDeviceConfig.pixel7
-      .withObject(VirtualObjectConfig(
-        handle: 201,
-        storage: MTPStorageID(raw: 0x0001_0001),
-        parent: nil,
-        name: "over_boundary.bin",
-        sizeBytes: size,
-        formatCode: 0x3000
-      ))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 201,
+          storage: MTPStorageID(raw: 0x0001_0001),
+          parent: nil,
+          name: "over_boundary.bin",
+          sizeBytes: size,
+          formatCode: 0x3000
+        ))
     let link = makeLink(config: config)
 
     let infos = try await link.getObjectInfos([201])

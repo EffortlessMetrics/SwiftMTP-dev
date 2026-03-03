@@ -189,7 +189,8 @@ struct MTPErrorCLIDescriptionFormatting {
 
   @Test("protocolError includes custom message when provided")
   func protocolErrorWithMessage() {
-    let desc = MTPError.protocolError(code: 0x201D, message: "InvalidParameter").errorDescription ?? ""
+    let desc =
+      MTPError.protocolError(code: 0x201D, message: "InvalidParameter").errorDescription ?? ""
     #expect(desc.contains("InvalidParameter"))
   }
 

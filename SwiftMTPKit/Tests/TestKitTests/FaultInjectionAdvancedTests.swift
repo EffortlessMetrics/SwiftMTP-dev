@@ -64,13 +64,19 @@ final class FaultInjectionOperationCountTests: XCTestCase {
     // Call 0: OK
     _ = try await link.getDeviceInfo()
     // Call 1: timeout
-    do { _ = try await link.getDeviceInfo(); XCTFail("Expected timeout") } catch {
+    do {
+      _ = try await link.getDeviceInfo()
+      XCTFail("Expected timeout")
+    } catch {
       XCTAssertTrue("\(error)".contains("timeout"))
     }
     // Call 2: OK
     _ = try await link.getStorageIDs()
     // Call 3: busy
-    do { _ = try await link.getStorageIDs(); XCTFail("Expected busy") } catch {
+    do {
+      _ = try await link.getStorageIDs()
+      XCTFail("Expected busy")
+    } catch {
       XCTAssertTrue("\(error)".contains("busy"))
     }
     // Call 4: OK
@@ -127,7 +133,10 @@ final class FaultInjectionRecoveryTests: XCTestCase {
     let link = makeLink(schedule: FaultSchedule([.timeoutOnce(on: .getDeviceInfo)]))
 
     // First call fails
-    do { _ = try await link.getDeviceInfo(); XCTFail("Expected timeout") } catch {}
+    do {
+      _ = try await link.getDeviceInfo()
+      XCTFail("Expected timeout")
+    } catch {}
 
     // Retry succeeds
     let info = try await link.getDeviceInfo()
@@ -141,7 +150,7 @@ final class FaultInjectionRecoveryTests: XCTestCase {
     for _ in 0..<5 {
       do {
         _ = try await link.executeCommand(PTPContainer(type: 1, code: 0x1001, txid: 1))
-        break // success
+        break  // success
       } catch {
         failCount += 1
       }
@@ -190,16 +199,22 @@ final class FaultInjectionCascadingTests: XCTestCase {
       wrapping: VirtualMTPLink(config: .emptyDevice), schedule: schedule)
 
     // openSession -> timeout
-    do { try await link.openSession(id: 1); XCTFail("Expected timeout") }
-    catch { XCTAssertTrue("\(error)".contains("timeout")) }
+    do {
+      try await link.openSession(id: 1)
+      XCTFail("Expected timeout")
+    } catch { XCTAssertTrue("\(error)".contains("timeout")) }
 
     // getDeviceInfo -> busy
-    do { _ = try await link.getDeviceInfo(); XCTFail("Expected busy") }
-    catch { XCTAssertTrue("\(error)".contains("busy")) }
+    do {
+      _ = try await link.getDeviceInfo()
+      XCTFail("Expected busy")
+    } catch { XCTAssertTrue("\(error)".contains("busy")) }
 
     // getStorageIDs -> disconnected
-    do { _ = try await link.getStorageIDs(); XCTFail("Expected disconnected") }
-    catch {
+    do {
+      _ = try await link.getStorageIDs()
+      XCTFail("Expected disconnected")
+    } catch {
       let desc = "\(error)".lowercased()
       XCTAssertTrue(desc.contains("no") || desc.contains("device"))
     }
@@ -218,7 +233,10 @@ final class FaultInjectionCascadingTests: XCTestCase {
       wrapping: VirtualMTPLink(config: .emptyDevice), schedule: schedule)
 
     // getDeviceInfo always faults
-    do { _ = try await link.getDeviceInfo(); XCTFail("Expected timeout") } catch {}
+    do {
+      _ = try await link.getDeviceInfo()
+      XCTFail("Expected timeout")
+    } catch {}
 
     // Other operations are unaffected
     let ids = try await link.getStorageIDs()
@@ -234,14 +252,20 @@ final class FaultInjectionCascadingTests: XCTestCase {
       wrapping: VirtualMTPLink(config: .emptyDevice), schedule: schedule)
 
     // Consume initial fault
-    do { _ = try await link.getDeviceInfo(); XCTFail("Expected timeout") } catch {}
+    do {
+      _ = try await link.getDeviceInfo()
+      XCTFail("Expected timeout")
+    } catch {}
 
     // Add new fault dynamically
-    link.scheduleFault(ScheduledFault(
-      trigger: .onOperation(.getStorageIDs), error: .busy))
+    link.scheduleFault(
+      ScheduledFault(
+        trigger: .onOperation(.getStorageIDs), error: .busy))
 
-    do { _ = try await link.getStorageIDs(); XCTFail("Expected busy") }
-    catch { XCTAssertTrue("\(error)".contains("busy")) }
+    do {
+      _ = try await link.getStorageIDs()
+      XCTFail("Expected busy")
+    } catch { XCTAssertTrue("\(error)".contains("busy")) }
 
     // Both faults now consumed
     _ = try await link.getDeviceInfo()
@@ -298,7 +322,8 @@ final class FaultInjectionTimeoutSimulationTests: XCTestCase {
       let schedule = FaultSchedule([.timeoutOnce(on: opType)])
       let result = schedule.check(operation: opType, callIndex: 0, byteOffset: nil)
       XCTAssertNotNil(result, "Timeout should fire for \(opType)")
-      if case .timeout = result {} else {
+      if case .timeout = result {
+      } else {
         XCTFail("Expected .timeout for \(opType), got \(String(describing: result))")
       }
     }
@@ -386,13 +411,19 @@ final class FaultPatternTests: XCTestCase {
       wrapping: VirtualMTPLink(config: .emptyDevice), schedule: schedule)
 
     // getStorageIDs: one fault then recovers
-    do { _ = try await link.getStorageIDs(); XCTFail("Expected busy") } catch {}
+    do {
+      _ = try await link.getStorageIDs()
+      XCTFail("Expected busy")
+    } catch {}
     let ids = try await link.getStorageIDs()
     XCTAssertFalse(ids.isEmpty)
 
     // getDeviceInfo: always faults
     for _ in 0..<3 {
-      do { _ = try await link.getDeviceInfo(); XCTFail("Expected disconnect") } catch {}
+      do {
+        _ = try await link.getDeviceInfo()
+        XCTFail("Expected disconnect")
+      } catch {}
     }
   }
 
@@ -424,7 +455,8 @@ final class FaultPatternTests: XCTestCase {
     } else {
       XCTFail("Expected atByteOffset trigger")
     }
-    if case .disconnected = fault.error {} else {
+    if case .disconnected = fault.error {
+    } else {
       XCTFail("Expected .disconnected error")
     }
   }
@@ -432,7 +464,8 @@ final class FaultPatternTests: XCTestCase {
   func testBusyForRetriesConvenienceFactory() {
     let fault = ScheduledFault.busyForRetries(10)
     XCTAssertEqual(fault.repeatCount, 10)
-    if case .busy = fault.error {} else {
+    if case .busy = fault.error {
+    } else {
       XCTFail("Expected .busy error")
     }
   }

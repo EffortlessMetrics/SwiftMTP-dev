@@ -832,14 +832,16 @@ final class InterfaceProbeTests: XCTestCase {
   // MARK: - ProbeLadderResult
 
   func testProbeLadderResultSuccess() {
-    let r = ProbeLadderResult(succeeded: true, cachedDeviceInfoData: Data([0x01]), stepAttempted: "OpenSession")
+    let r = ProbeLadderResult(
+      succeeded: true, cachedDeviceInfoData: Data([0x01]), stepAttempted: "OpenSession")
     XCTAssertTrue(r.succeeded)
     XCTAssertNotNil(r.cachedDeviceInfoData)
     XCTAssertEqual(r.stepAttempted, "OpenSession")
   }
 
   func testProbeLadderResultFailure() {
-    let r = ProbeLadderResult(succeeded: false, cachedDeviceInfoData: nil, stepAttempted: "GetDeviceInfo")
+    let r = ProbeLadderResult(
+      succeeded: false, cachedDeviceInfoData: nil, stepAttempted: "GetDeviceInfo")
     XCTAssertFalse(r.succeeded)
     XCTAssertNil(r.cachedDeviceInfoData)
   }

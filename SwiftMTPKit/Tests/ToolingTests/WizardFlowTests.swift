@@ -323,7 +323,8 @@ final class WizardVIDPIDFormattingTests: XCTestCase {
     let pid: UInt16 = 0x3139
     let vidStr = String(format: "0x%04x", vid)
     let pidStr = String(format: "0x%04x", pid)
-    let cmd = "swiftmtp add-device --vid \(vidStr) --pid \(pidStr) --class ptp --name \"Canon EOS R5\""
+    let cmd =
+      "swiftmtp add-device --vid \(vidStr) --pid \(pidStr) --class ptp --name \"Canon EOS R5\""
     XCTAssertTrue(cmd.contains("--vid 0x04a9"))
     XCTAssertTrue(cmd.contains("--pid 0x3139"))
     XCTAssertTrue(cmd.contains("--class ptp"))

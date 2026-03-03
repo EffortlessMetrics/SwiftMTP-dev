@@ -230,7 +230,8 @@ final class QuirkPolicySnapshotTests: XCTestCase {
     let matchedQuirkID = db.match(
       vid: vidInt, pid: pidInt, bcdDevice: nil,
       ifaceClass: ifaceClassInt, ifaceSubclass: 0x01, ifaceProtocol: 0x01
-    )?.id
+    )?
+    .id
     return PolicySnapshot(quirkID: matchedQuirkID, policy: policy)
   }
 }

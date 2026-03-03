@@ -34,8 +34,16 @@ struct SystemCommands {
     var i = 0
     while i < args.count {
       switch args[i] {
-      case "--vid": if i + 1 < args.count { vidStr = args[i + 1]; i += 1 }
-      case "--pid": if i + 1 < args.count { pidStr = args[i + 1]; i += 1 }
+      case "--vid":
+        if i + 1 < args.count {
+          vidStr = args[i + 1]
+          i += 1
+        }
+      case "--pid":
+        if i + 1 < args.count {
+          pidStr = args[i + 1]
+          i += 1
+        }
       default: break
       }
       i += 1
@@ -46,8 +54,10 @@ struct SystemCommands {
       exitNow(.usage)
     }
     // Normalize to lowercase 0xXXXX format and parse to UInt16
-    let vidHex = vidRaw.lowercased().hasPrefix("0x") ? String(vidRaw.dropFirst(2)) : vidRaw.lowercased()
-    let pidHex = pidRaw.lowercased().hasPrefix("0x") ? String(pidRaw.dropFirst(2)) : pidRaw.lowercased()
+    let vidHex =
+      vidRaw.lowercased().hasPrefix("0x") ? String(vidRaw.dropFirst(2)) : vidRaw.lowercased()
+    let pidHex =
+      pidRaw.lowercased().hasPrefix("0x") ? String(pidRaw.dropFirst(2)) : pidRaw.lowercased()
     guard let vidVal = UInt16(vidHex, radix: 16), let pidVal = UInt16(pidHex, radix: 16) else {
       print("❌ Invalid VID/PID format. Use hex like 0x18d1 or 18d1")
       exitNow(.usage)
@@ -60,25 +70,30 @@ struct SystemCommands {
       let match = db.entries.first { $0.vid == vidVal && $0.pid == pidVal }
       if let q = match {
         if flags.json {
-          printJSON([
-            "found": true,
-            "id": q.id,
-            "vid": vidFormatted,
-            "pid": pidFormatted,
-            "status": q.status?.rawValue ?? "proposed",
-            "supportsGetObjectPropList": q.resolvedFlags().supportsGetObjectPropList,
-            "requiresKernelDetach": q.resolvedFlags().requiresKernelDetach,
-          ], type: "quirksLookup")
+          printJSON(
+            [
+              "found": true,
+              "id": q.id,
+              "vid": vidFormatted,
+              "pid": pidFormatted,
+              "status": q.status?.rawValue ?? "proposed",
+              "supportsGetObjectPropList": q.resolvedFlags().supportsGetObjectPropList,
+              "requiresKernelDetach": q.resolvedFlags().requiresKernelDetach,
+            ], type: "quirksLookup")
         } else {
           let rf = q.resolvedFlags()
           print("✅ Device found in quirk database")
           print("   ID:               \(q.id)")
           print("   VID:PID:          \(vidFormatted):\(pidFormatted)")
           print("   Status:           \(q.status?.rawValue ?? "proposed")")
-          print("   GetObjectPropList:\(rf.supportsGetObjectPropList ? " ✅ fast-path" : " — fallback only")")
+          print(
+            "   GetObjectPropList:\(rf.supportsGetObjectPropList ? " ✅ fast-path" : " — fallback only")"
+          )
           print("   Kernel detach:    \(rf.requiresKernelDetach ? "yes (Android)" : "no")")
           if let cls = q.ifaceClass {
-            let label = cls == 0x06 ? "PTP (0x06)" : cls == 0xff ? "Android/vendor (0xff)" : String(format: "0x%02x", cls)
+            let label =
+              cls == 0x06
+              ? "PTP (0x06)" : cls == 0xff ? "Android/vendor (0xff)" : String(format: "0x%02x", cls)
             print("   Interface class:  \(label)")
           }
           if let ioMs = q.ioTimeoutMs {
@@ -87,15 +102,18 @@ struct SystemCommands {
         }
       } else {
         if flags.json {
-          printJSON([
-            "found": false,
-            "vid": vidFormatted,
-            "pid": pidFormatted,
-            "message": "Device not in quirk database. It may still work via PTP class heuristic.",
-            "submitURL": "Docs/DeviceSubmission.md",
-          ], type: "quirksLookup")
+          printJSON(
+            [
+              "found": false,
+              "vid": vidFormatted,
+              "pid": pidFormatted,
+              "message": "Device not in quirk database. It may still work via PTP class heuristic.",
+              "submitURL": "Docs/DeviceSubmission.md",
+            ], type: "quirksLookup")
         } else {
-          print("⚠️  Device \(vidFormatted):\(pidFormatted) not found in quirk database (\(db.entries.count) entries)")
+          print(
+            "⚠️  Device \(vidFormatted):\(pidFormatted) not found in quirk database (\(db.entries.count) entries)"
+          )
           print("   PTP cameras (class 0x06) will work via automatic heuristic.")
           print("   Android devices may need a quirk entry for best results.")
           print("   To contribute: see Docs/DeviceSubmission.md or run `swiftmtp add-device`")

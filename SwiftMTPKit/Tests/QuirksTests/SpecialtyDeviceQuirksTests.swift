@@ -68,7 +68,8 @@ final class AmazonKindleQuirksTests: XCTestCase {
       let flags = entry.resolvedFlags()
       XCTAssertFalse(
         flags.supportsGetObjectPropList,
-        "Amazon Kindle '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST)")
+        "Amazon Kindle '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST)"
+      )
     }
   }
 
@@ -114,7 +115,8 @@ final class AmazonKindleQuirksTests: XCTestCase {
     let ratio = Double(prefixed.count) / Double(amazonEntries.count)
     XCTAssertGreaterThan(
       ratio, 0.90,
-      "At least 90% of VID 0x1949 entries should start with 'amazon-' (\(prefixed.count)/\(amazonEntries.count))")
+      "At least 90% of VID 0x1949 entries should start with 'amazon-' (\(prefixed.count)/\(amazonEntries.count))"
+    )
   }
 }
 
@@ -178,7 +180,8 @@ final class GarminDeviceQuirksTests: XCTestCase {
       let flags = entry.resolvedFlags()
       XCTAssertFalse(
         flags.supportsGetObjectPropList,
-        "Garmin '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST)")
+        "Garmin '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST)"
+      )
     }
   }
 
@@ -270,7 +273,8 @@ final class GoProQuirksTests: XCTestCase {
     for entry in goProEntries where cameraPIDs.contains(entry.pid) {
       XCTAssertEqual(
         entry.category, "action-camera",
-        "GoPro '\(entry.id)' should have category 'action-camera', got '\(entry.category ?? "nil")'")
+        "GoPro '\(entry.id)' should have category 'action-camera', got '\(entry.category ?? "nil")'"
+      )
     }
   }
 
@@ -331,7 +335,8 @@ final class GoProQuirksTests: XCTestCase {
     let ratio = Double(prefixed.count) / Double(goProEntries.count)
     XCTAssertGreaterThan(
       ratio, 0.90,
-      "At least 90% of VID 0x2672 entries should start with 'gopro-' (\(prefixed.count)/\(goProEntries.count))")
+      "At least 90% of VID 0x2672 entries should start with 'gopro-' (\(prefixed.count)/\(goProEntries.count))"
+    )
   }
 }
 
@@ -388,7 +393,8 @@ final class ArchosDeviceQuirksTests: XCTestCase {
     let ratio = Double(prefixed.count) / Double(archosEntries.count)
     XCTAssertGreaterThan(
       ratio, 0.90,
-      "At least 90% of VID 0x0e79 entries should start with 'archos-' (\(prefixed.count)/\(archosEntries.count))")
+      "At least 90% of VID 0x0e79 entries should start with 'archos-' (\(prefixed.count)/\(archosEntries.count))"
+    )
   }
 }
 
@@ -433,7 +439,8 @@ final class IRiverDeviceQuirksTests: XCTestCase {
       let flags = entry.resolvedFlags()
       XCTAssertFalse(
         flags.supportsGetObjectPropList,
-        "iRiver '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST)")
+        "iRiver '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST)"
+      )
     }
   }
 
@@ -515,7 +522,8 @@ final class CowonDeviceQuirksTests: XCTestCase {
       let flags = entry.resolvedFlags()
       XCTAssertFalse(
         flags.supportsGetObjectPropList,
-        "Cowon '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST)")
+        "Cowon '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST)"
+      )
     }
   }
 

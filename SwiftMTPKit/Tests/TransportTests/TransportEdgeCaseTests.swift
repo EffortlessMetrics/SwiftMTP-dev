@@ -149,12 +149,13 @@ final class InterfaceProbeEdgeCaseTests: XCTestCase {
   }
 
   func testMultipleCandidatesSortedByScore() {
-    let candidates = [30, 165, 80, 100, 60].enumerated().map { idx, score in
-      InterfaceCandidate(
-        ifaceNumber: UInt8(idx), altSetting: 0, bulkIn: 0x81, bulkOut: 0x02,
-        eventIn: 0x83, score: score, ifaceClass: 0x06, ifaceSubclass: 0x01,
-        ifaceProtocol: 0x01)
-    }
+    let candidates = [30, 165, 80, 100, 60].enumerated()
+      .map { idx, score in
+        InterfaceCandidate(
+          ifaceNumber: UInt8(idx), altSetting: 0, bulkIn: 0x81, bulkOut: 0x02,
+          eventIn: 0x83, score: score, ifaceClass: 0x06, ifaceSubclass: 0x01,
+          ifaceProtocol: 0x01)
+      }
     let sorted = candidates.sorted { $0.score > $1.score }
     XCTAssertEqual(sorted.map(\.score), [165, 100, 80, 60, 30])
   }
@@ -211,7 +212,7 @@ final class BulkTransferErrorHandlingTests: XCTestCase {
     let faulty = FaultInjectingLink(wrapping: link, schedule: schedule)
 
     // First call fails
-    do { _ = try await faulty.getStorageIDs() } catch { /* expected */ }
+    do { _ = try await faulty.getStorageIDs() } catch { /* expected */  }
     // Second call succeeds (fault consumed)
     let ids = try await faulty.getStorageIDs()
     XCTAssertFalse(ids.isEmpty)
@@ -326,7 +327,7 @@ final class BulkTransferErrorHandlingTests: XCTestCase {
       _ = try await faulty.getDeviceInfo()
       XCTFail("Expected error")
     } catch let error as TransportError {
-      if case .io = error { /* expected */ } else { XCTFail("Expected io error") }
+      if case .io = error { /* expected */  } else { XCTFail("Expected io error") }
     }
 
     // getStorageIDs fails with timeout
@@ -800,7 +801,7 @@ final class ConnectionLifecycleTests: XCTestCase {
       try await link.deleteObject(handle: 99999)
       XCTFail("Expected error for non-existent object")
     } catch let error as TransportError {
-      if case .io = error { /* expected */ } else { XCTFail("Expected io error") }
+      if case .io = error { /* expected */  } else { XCTFail("Expected io error") }
     }
     try await link.closeSession()
   }
@@ -815,7 +816,7 @@ final class ConnectionLifecycleTests: XCTestCase {
       try await link.moveObject(handle: 99999, to: storageIDs[0], parent: nil)
       XCTFail("Expected error for non-existent object")
     } catch let error as TransportError {
-      if case .io = error { /* expected */ } else { XCTFail("Expected io error") }
+      if case .io = error { /* expected */  } else { XCTFail("Expected io error") }
     }
     try await link.closeSession()
   }
@@ -829,10 +830,11 @@ final class LargeTransferSimulationTests: XCTestCase {
   func testChunkedReassemblySmall() {
     let totalSize = 100
     let chunkSize = 32
-    let chunks = stride(from: 0, to: totalSize, by: chunkSize).map { offset -> Data in
-      let end = min(offset + chunkSize, totalSize)
-      return Data(repeating: UInt8(offset / chunkSize), count: end - offset)
-    }
+    let chunks = stride(from: 0, to: totalSize, by: chunkSize)
+      .map { offset -> Data in
+        let end = min(offset + chunkSize, totalSize)
+        return Data(repeating: UInt8(offset / chunkSize), count: end - offset)
+      }
     let reassembled = chunks.reduce(Data()) { $0 + $1 }
     XCTAssertEqual(reassembled.count, totalSize)
   }
@@ -841,9 +843,10 @@ final class LargeTransferSimulationTests: XCTestCase {
     let chunkSize = 512
     let numChunks = 8
     let totalSize = chunkSize * numChunks
-    let chunks = (0..<numChunks).map { i in
-      Data(repeating: UInt8(i & 0xFF), count: chunkSize)
-    }
+    let chunks = (0..<numChunks)
+      .map { i in
+        Data(repeating: UInt8(i & 0xFF), count: chunkSize)
+      }
     let reassembled = chunks.reduce(Data()) { $0 + $1 }
     XCTAssertEqual(reassembled.count, totalSize)
   }
@@ -851,10 +854,11 @@ final class LargeTransferSimulationTests: XCTestCase {
   func testChunkedReassemblyWithRemainder() {
     let chunkSize = 1024
     let totalSize = 3000  // 2 full chunks + 952 remainder
-    let chunks = stride(from: 0, to: totalSize, by: chunkSize).map { offset -> Data in
-      let end = min(offset + chunkSize, totalSize)
-      return Data(repeating: UInt8(offset / chunkSize), count: end - offset)
-    }
+    let chunks = stride(from: 0, to: totalSize, by: chunkSize)
+      .map { offset -> Data in
+        let end = min(offset + chunkSize, totalSize)
+        return Data(repeating: UInt8(offset / chunkSize), count: end - offset)
+      }
     XCTAssertEqual(chunks.count, 3)
     XCTAssertEqual(chunks.last?.count, 952)
     XCTAssertEqual(chunks.reduce(0) { $0 + $1.count }, totalSize)
@@ -910,11 +914,12 @@ final class LargeTransferSimulationTests: XCTestCase {
     for size in sizes {
       let data = Data(repeating: 0x42, count: size)
       let numChunks = (size + packetSize - 1) / packetSize
-      let chunks = (0..<numChunks).map { i -> Data in
-        let start = i * packetSize
-        let end = min(start + packetSize, size)
-        return data[start..<end]
-      }
+      let chunks = (0..<numChunks)
+        .map { i -> Data in
+          let start = i * packetSize
+          let end = min(start + packetSize, size)
+          return data[start..<end]
+        }
       let total = chunks.reduce(0) { $0 + $1.count }
       XCTAssertEqual(total, size, "Failed for size \(size)")
     }
@@ -992,9 +997,10 @@ final class PacketFramingEdgeCaseTests: XCTestCase {
   }
 
   func testTxidIncrementSequence() {
-    let commands = (0..<10).map { i in
-      makePTPCommand(opcode: 0x1001, txid: UInt32(i), params: [])
-    }
+    let commands = (0..<10)
+      .map { i in
+        makePTPCommand(opcode: 0x1001, txid: UInt32(i), params: [])
+      }
     for (i, cmd) in commands.enumerated() {
       let header = cmd.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
       XCTAssertEqual(header.txid, UInt32(i))
@@ -1161,8 +1167,10 @@ final class PacketFramingEdgeCaseTests: XCTestCase {
 
   func testFaultErrorProtocolErrorMapsToIO() {
     let fault = FaultError.protocolError(code: 0x2002)
-    if case .io = fault.transportError { /* expected */ }
-    else { XCTFail("Expected io transport error") }
+    if case .io = fault.transportError { /* expected */
+    } else {
+      XCTFail("Expected io transport error")
+    }
   }
 
   // MARK: ScheduledFault label generation

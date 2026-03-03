@@ -277,16 +277,18 @@ final class StorePersistenceTests: XCTestCase {
     _ = try await actor.upsertDevice(id: deviceId, manufacturer: "Test", model: "Bulk")
 
     let objectCount = 500
-    let objects: [(
-      storageId: Int, handle: Int, parentHandle: Int?, name: String,
-      pathKey: String, size: Int64?, mtime: Date?, format: Int, generation: Int
-    )] = (0..<objectCount).map { i in
-      (
-        storageId: 1, handle: i, parentHandle: i > 0 ? 0 : nil,
-        name: "obj\(i).jpg", pathKey: "/DCIM/obj\(i).jpg",
-        size: Int64(i * 1024 + 1), mtime: Date(), format: 0x3004, generation: 1
-      )
-    }
+    let objects:
+      [(
+        storageId: Int, handle: Int, parentHandle: Int?, name: String,
+        pathKey: String, size: Int64?, mtime: Date?, format: Int, generation: Int
+      )] = (0..<objectCount)
+        .map { i in
+          (
+            storageId: 1, handle: i, parentHandle: i > 0 ? 0 : nil,
+            name: "obj\(i).jpg", pathKey: "/DCIM/obj\(i).jpg",
+            size: Int64(i * 1024 + 1), mtime: Date(), format: 0x3004, generation: 1
+          )
+        }
 
     try await actor.upsertObjects(deviceId: deviceId, objects: objects)
 
@@ -459,18 +461,28 @@ final class StorePersistenceTests: XCTestCase {
     _ = try await actor.upsertDevice(id: deviceId, manufacturer: "Test", model: "Gen")
 
     // Gen 1
-    try await actor.upsertObjects(deviceId: deviceId, objects: [
-      (storageId: 1, handle: 1, parentHandle: nil, name: "a.txt",
-       pathKey: "/a.txt", size: 100, mtime: Date(), format: 0x3004, generation: 1),
-      (storageId: 1, handle: 2, parentHandle: nil, name: "b.txt",
-       pathKey: "/b.txt", size: 200, mtime: Date(), format: 0x3004, generation: 1),
-    ])
+    try await actor.upsertObjects(
+      deviceId: deviceId,
+      objects: [
+        (
+          storageId: 1, handle: 1, parentHandle: nil, name: "a.txt",
+          pathKey: "/a.txt", size: 100, mtime: Date(), format: 0x3004, generation: 1
+        ),
+        (
+          storageId: 1, handle: 2, parentHandle: nil, name: "b.txt",
+          pathKey: "/b.txt", size: 200, mtime: Date(), format: 0x3004, generation: 1
+        ),
+      ])
 
     // Gen 2
-    try await actor.upsertObjects(deviceId: deviceId, objects: [
-      (storageId: 1, handle: 3, parentHandle: nil, name: "c.txt",
-       pathKey: "/c.txt", size: 300, mtime: Date(), format: 0x3004, generation: 2),
-    ])
+    try await actor.upsertObjects(
+      deviceId: deviceId,
+      objects: [
+        (
+          storageId: 1, handle: 3, parentHandle: nil, name: "c.txt",
+          pathKey: "/c.txt", size: 300, mtime: Date(), format: 0x3004, generation: 2
+        )
+      ])
 
     let gen1 = try await actor.fetchObjects(deviceId: deviceId, generation: 1)
     let gen2 = try await actor.fetchObjects(deviceId: deviceId, generation: 2)
@@ -561,8 +573,10 @@ final class StorePersistenceTests: XCTestCase {
     try await actor.upsertObjects(
       deviceId: "never-created-\(UUID().uuidString)",
       objects: [
-        (storageId: 1, handle: 1, parentHandle: nil, name: "x.txt",
-         pathKey: "/x.txt", size: 100, mtime: Date(), format: 0x3004, generation: 1)
+        (
+          storageId: 1, handle: 1, parentHandle: nil, name: "x.txt",
+          pathKey: "/x.txt", size: 100, mtime: Date(), format: 0x3004, generation: 1
+        )
       ]
     )
   }
@@ -829,9 +843,15 @@ final class StorePersistenceTests: XCTestCase {
     let deviceId = "profmulti-\(UUID().uuidString)"
 
     let metrics = [
-      MTPProfileMetric(operation: "read", count: 50, minMs: 5, maxMs: 200, avgMs: 40, p95Ms: 150, throughputMBps: 30),
-      MTPProfileMetric(operation: "write", count: 30, minMs: 10, maxMs: 300, avgMs: 80, p95Ms: 250, throughputMBps: 15),
-      MTPProfileMetric(operation: "delete", count: 100, minMs: 1, maxMs: 50, avgMs: 10, p95Ms: 40, throughputMBps: nil),
+      MTPProfileMetric(
+        operation: "read", count: 50, minMs: 5, maxMs: 200, avgMs: 40, p95Ms: 150,
+        throughputMBps: 30),
+      MTPProfileMetric(
+        operation: "write", count: 30, minMs: 10, maxMs: 300, avgMs: 80, p95Ms: 250,
+        throughputMBps: 15),
+      MTPProfileMetric(
+        operation: "delete", count: 100, minMs: 1, maxMs: 50, avgMs: 10, p95Ms: 40,
+        throughputMBps: nil),
     ]
 
     let deviceInfo = MTPDeviceInfo(

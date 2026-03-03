@@ -41,9 +41,10 @@ final class SnapshotDiffCycleTests: XCTestCase {
   func testSnapshotModifyResnaphotDiffShowsAddition() async throws {
     let storage = MTPStorageID(raw: 0x0001_0001)
     let configV1 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "original.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "original.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
     let deviceV1 = VirtualMTPDevice(config: configV1)
     let deviceId = await deviceV1.id
     let gen1 = try await snapshotter.capture(device: deviceV1, deviceId: deviceId)
@@ -51,12 +52,15 @@ final class SnapshotDiffCycleTests: XCTestCase {
     try await Task.sleep(nanoseconds: 1_100_000_000)
 
     let configV2 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "original.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
-      .withObject(VirtualObjectConfig(
-        handle: 101, storage: storage, name: "added.txt",
-        sizeBytes: 8, formatCode: 0x3000, data: Data(repeating: 0xBB, count: 8)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "original.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4]))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 101, storage: storage, name: "added.txt",
+          sizeBytes: 8, formatCode: 0x3000, data: Data(repeating: 0xBB, count: 8)))
     let deviceV2 = VirtualMTPDevice(config: configV2)
     let gen2 = try await snapshotter.capture(device: deviceV2, deviceId: deviceId)
 
@@ -70,12 +74,15 @@ final class SnapshotDiffCycleTests: XCTestCase {
   func testSnapshotModifyResnaphotDiffShowsRemoval() async throws {
     let storage = MTPStorageID(raw: 0x0001_0001)
     let configV1 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "keep.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
-      .withObject(VirtualObjectConfig(
-        handle: 101, storage: storage, name: "remove_me.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([5, 6, 7, 8])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "keep.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4]))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 101, storage: storage, name: "remove_me.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([5, 6, 7, 8])))
     let deviceV1 = VirtualMTPDevice(config: configV1)
     let deviceId = await deviceV1.id
     let gen1 = try await snapshotter.capture(device: deviceV1, deviceId: deviceId)
@@ -83,9 +90,10 @@ final class SnapshotDiffCycleTests: XCTestCase {
     try await Task.sleep(nanoseconds: 1_100_000_000)
 
     let configV2 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "keep.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "keep.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
     let deviceV2 = VirtualMTPDevice(config: configV2)
     let gen2 = try await snapshotter.capture(device: deviceV2, deviceId: deviceId)
 
@@ -99,9 +107,10 @@ final class SnapshotDiffCycleTests: XCTestCase {
   func testSnapshotModifyResnaphotDiffShowsSizeChange() async throws {
     let storage = MTPStorageID(raw: 0x0001_0001)
     let configV1 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "growing.dat",
-        sizeBytes: 10, formatCode: 0x3000, data: Data(repeating: 0xAA, count: 10)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "growing.dat",
+          sizeBytes: 10, formatCode: 0x3000, data: Data(repeating: 0xAA, count: 10)))
     let deviceV1 = VirtualMTPDevice(config: configV1)
     let deviceId = await deviceV1.id
     let gen1 = try await snapshotter.capture(device: deviceV1, deviceId: deviceId)
@@ -109,9 +118,10 @@ final class SnapshotDiffCycleTests: XCTestCase {
     try await Task.sleep(nanoseconds: 1_100_000_000)
 
     let configV2 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "growing.dat",
-        sizeBytes: 50, formatCode: 0x3000, data: Data(repeating: 0xBB, count: 50)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "growing.dat",
+          sizeBytes: 50, formatCode: 0x3000, data: Data(repeating: 0xBB, count: 50)))
     let deviceV2 = VirtualMTPDevice(config: configV2)
     let gen2 = try await snapshotter.capture(device: deviceV2, deviceId: deviceId)
 
@@ -125,9 +135,10 @@ final class SnapshotDiffCycleTests: XCTestCase {
 
     // Gen 1: file A
     let cfg1 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "A.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "A.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
     let dev1 = VirtualMTPDevice(config: cfg1)
     let deviceId = await dev1.id
     let gen1 = try await snapshotter.capture(device: dev1, deviceId: deviceId)
@@ -136,12 +147,15 @@ final class SnapshotDiffCycleTests: XCTestCase {
 
     // Gen 2: files A, B
     let cfg2 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "A.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
-      .withObject(VirtualObjectConfig(
-        handle: 101, storage: storage, name: "B.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([5, 6, 7, 8])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "A.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4]))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 101, storage: storage, name: "B.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([5, 6, 7, 8])))
     let dev2 = VirtualMTPDevice(config: cfg2)
     let gen2 = try await snapshotter.capture(device: dev2, deviceId: deviceId)
 
@@ -149,12 +163,15 @@ final class SnapshotDiffCycleTests: XCTestCase {
 
     // Gen 3: files B, C (A removed, C added)
     let cfg3 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 101, storage: storage, name: "B.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([5, 6, 7, 8])))
-      .withObject(VirtualObjectConfig(
-        handle: 102, storage: storage, name: "C.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([9, 10, 11, 12])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 101, storage: storage, name: "B.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([5, 6, 7, 8]))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 102, storage: storage, name: "C.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([9, 10, 11, 12])))
     let dev3 = VirtualMTPDevice(config: cfg3)
     let gen3 = try await snapshotter.capture(device: dev3, deviceId: deviceId)
 
@@ -190,12 +207,15 @@ final class MirrorConflictResolutionAdvancedTests: XCTestCase {
   // 5
   func testPreferLocalPolicyPreservesLocalOnConflict() throws {
     let (localDir, remoteDir, mergedDir) = try makeDirs()
-    try "local data".write(
-      to: localDir.appendingPathComponent("f.txt"), atomically: true, encoding: .utf8)
-    try "remote data".write(
-      to: remoteDir.appendingPathComponent("f.txt"), atomically: true, encoding: .utf8)
+    try "local data"
+      .write(
+        to: localDir.appendingPathComponent("f.txt"), atomically: true, encoding: .utf8)
+    try "remote data"
+      .write(
+        to: remoteDir.appendingPathComponent("f.txt"), atomically: true, encoding: .utf8)
 
-    resolve(file: "f.txt", local: localDir, remote: remoteDir, merged: mergedDir, policy: .preferLocal)
+    resolve(
+      file: "f.txt", local: localDir, remote: remoteDir, merged: mergedDir, policy: .preferLocal)
     let content = try String(contentsOf: mergedDir.appendingPathComponent("f.txt"), encoding: .utf8)
     XCTAssertEqual(content, "local data")
   }
@@ -203,12 +223,15 @@ final class MirrorConflictResolutionAdvancedTests: XCTestCase {
   // 6
   func testPreferRemotePolicyPreservesRemoteOnConflict() throws {
     let (localDir, remoteDir, mergedDir) = try makeDirs()
-    try "local data".write(
-      to: localDir.appendingPathComponent("f.txt"), atomically: true, encoding: .utf8)
-    try "remote data".write(
-      to: remoteDir.appendingPathComponent("f.txt"), atomically: true, encoding: .utf8)
+    try "local data"
+      .write(
+        to: localDir.appendingPathComponent("f.txt"), atomically: true, encoding: .utf8)
+    try "remote data"
+      .write(
+        to: remoteDir.appendingPathComponent("f.txt"), atomically: true, encoding: .utf8)
 
-    resolve(file: "f.txt", local: localDir, remote: remoteDir, merged: mergedDir, policy: .preferRemote)
+    resolve(
+      file: "f.txt", local: localDir, remote: remoteDir, merged: mergedDir, policy: .preferRemote)
     let content = try String(contentsOf: mergedDir.appendingPathComponent("f.txt"), encoding: .utf8)
     XCTAssertEqual(content, "remote data")
   }
@@ -225,7 +248,8 @@ final class MirrorConflictResolutionAdvancedTests: XCTestCase {
     try FileManager.default.setAttributes(
       [.modificationDate: Date(timeIntervalSinceNow: -7200)], ofItemAtPath: remoteFile.path)
 
-    resolve(file: "f.txt", local: localDir, remote: remoteDir, merged: mergedDir, policy: .newestWins)
+    resolve(
+      file: "f.txt", local: localDir, remote: remoteDir, merged: mergedDir, policy: .newestWins)
     let content = try String(contentsOf: mergedDir.appendingPathComponent("f.txt"), encoding: .utf8)
     XCTAssertEqual(content, "newer local")
   }
@@ -241,7 +265,8 @@ final class MirrorConflictResolutionAdvancedTests: XCTestCase {
       [.modificationDate: Date(timeIntervalSinceNow: -7200)], ofItemAtPath: localFile.path)
     try "newer remote".write(to: remoteFile, atomically: true, encoding: .utf8)
 
-    resolve(file: "f.txt", local: localDir, remote: remoteDir, merged: mergedDir, policy: .newestWins)
+    resolve(
+      file: "f.txt", local: localDir, remote: remoteDir, merged: mergedDir, policy: .newestWins)
     let content = try String(contentsOf: mergedDir.appendingPathComponent("f.txt"), encoding: .utf8)
     XCTAssertEqual(content, "newer remote")
   }
@@ -254,7 +279,8 @@ final class MirrorConflictResolutionAdvancedTests: XCTestCase {
     try localData.write(to: localDir.appendingPathComponent("bin.dat"))
     try remoteData.write(to: remoteDir.appendingPathComponent("bin.dat"))
 
-    resolve(file: "bin.dat", local: localDir, remote: remoteDir, merged: mergedDir, policy: .preferRemote)
+    resolve(
+      file: "bin.dat", local: localDir, remote: remoteDir, merged: mergedDir, policy: .preferRemote)
     let merged = try Data(contentsOf: mergedDir.appendingPathComponent("bin.dat"))
     XCTAssertEqual(merged, remoteData)
   }
@@ -263,10 +289,12 @@ final class MirrorConflictResolutionAdvancedTests: XCTestCase {
   func testConflictResolutionWithMultipleFilesIndependent() throws {
     let (localDir, remoteDir, mergedDir) = try makeDirs()
     for i in 0..<5 {
-      try "local-\(i)".write(
-        to: localDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
-      try "remote-\(i)".write(
-        to: remoteDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
+      try "local-\(i)"
+        .write(
+          to: localDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
+      try "remote-\(i)"
+        .write(
+          to: remoteDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
     }
 
     // Resolve even files as local-wins, odd as remote-wins
@@ -313,10 +341,12 @@ final class MirrorConflictResolutionAdvancedTests: XCTestCase {
     case .preferRemote:
       try? FileManager.default.copyItem(at: remoteFile, to: mergedFile)
     case .newestWins:
-      let lm = (try? FileManager.default.attributesOfItem(atPath: localFile.path))?[
-        .modificationDate] as? Date ?? .distantPast
-      let rm = (try? FileManager.default.attributesOfItem(atPath: remoteFile.path))?[
-        .modificationDate] as? Date ?? .distantPast
+      let lm =
+        (try? FileManager.default.attributesOfItem(atPath: localFile.path))?[
+          .modificationDate] as? Date ?? .distantPast
+      let rm =
+        (try? FileManager.default.attributesOfItem(atPath: remoteFile.path))?[
+          .modificationDate] as? Date ?? .distantPast
       try? FileManager.default.copyItem(at: lm >= rm ? localFile : remoteFile, to: mergedFile)
     }
   }
@@ -354,10 +384,11 @@ final class LargeDirectoryTreeSyncTests: XCTestCase {
     let storage = MTPStorageID(raw: 0x0001_0001)
     var config = VirtualDeviceConfig.emptyDevice
     for i in 0..<1000 {
-      config = config.withObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(100 + i), storage: storage,
-        name: "file_\(i).dat", sizeBytes: 4, formatCode: 0x3000,
-        data: Data([UInt8(i % 256), UInt8((i >> 8) % 256), 0, 0])))
+      config = config.withObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(100 + i), storage: storage,
+          name: "file_\(i).dat", sizeBytes: 4, formatCode: 0x3000,
+          data: Data([UInt8(i % 256), UInt8((i >> 8) % 256), 0, 0])))
     }
     let device = VirtualMTPDevice(config: config)
     let deviceId = await device.id
@@ -377,10 +408,11 @@ final class LargeDirectoryTreeSyncTests: XCTestCase {
 
     var config = VirtualDeviceConfig.emptyDevice
     for i in 0..<1000 {
-      config = config.withObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(100 + i), storage: storage,
-        name: "file_\(i).dat", sizeBytes: 4, formatCode: 0x3000,
-        data: Data([UInt8(i % 256), 0, 0, 0])))
+      config = config.withObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(100 + i), storage: storage,
+          name: "file_\(i).dat", sizeBytes: 4, formatCode: 0x3000,
+          data: Data([UInt8(i % 256), 0, 0, 0])))
     }
     let populatedDevice = VirtualMTPDevice(config: config)
     let gen2 = try await snapshotter.capture(device: populatedDevice, deviceId: deviceId)
@@ -395,10 +427,11 @@ final class LargeDirectoryTreeSyncTests: XCTestCase {
     let storage = MTPStorageID(raw: 0x0001_0001)
     var config = VirtualDeviceConfig.emptyDevice
     for i in 0..<1000 {
-      config = config.withObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(100 + i), storage: storage,
-        name: "file_\(i).dat", sizeBytes: 4, formatCode: 0x3000,
-        data: Data([UInt8(i % 256), 0, 0, 0])))
+      config = config.withObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(100 + i), storage: storage,
+          name: "file_\(i).dat", sizeBytes: 4, formatCode: 0x3000,
+          data: Data([UInt8(i % 256), 0, 0, 0])))
     }
     let populatedDevice = VirtualMTPDevice(config: config)
     let deviceId = await populatedDevice.id
@@ -515,14 +548,17 @@ final class IncrementalSyncTests: XCTestCase {
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
 
     // Initial state: both sides have fileA
-    try "content-A".write(
-      to: localDir.appendingPathComponent("fileA.txt"), atomically: true, encoding: .utf8)
-    try "content-A".write(
-      to: remoteDir.appendingPathComponent("fileA.txt"), atomically: true, encoding: .utf8)
+    try "content-A"
+      .write(
+        to: localDir.appendingPathComponent("fileA.txt"), atomically: true, encoding: .utf8)
+    try "content-A"
+      .write(
+        to: remoteDir.appendingPathComponent("fileA.txt"), atomically: true, encoding: .utf8)
 
     // Remote adds fileB
-    try "content-B".write(
-      to: remoteDir.appendingPathComponent("fileB.txt"), atomically: true, encoding: .utf8)
+    try "content-B"
+      .write(
+        to: remoteDir.appendingPathComponent("fileB.txt"), atomically: true, encoding: .utf8)
 
     let localFiles = Set(listRelativeFiles(in: localDir))
     let remoteFiles = Set(listRelativeFiles(in: remoteDir))
@@ -602,12 +638,14 @@ final class DeletePropagationTests: XCTestCase {
 
     // Remote has files A, B, C; local only has A, B (C was deleted locally)
     for name in ["A.txt", "B.txt"] {
-      try "content".write(
-        to: localDir.appendingPathComponent(name), atomically: true, encoding: .utf8)
+      try "content"
+        .write(
+          to: localDir.appendingPathComponent(name), atomically: true, encoding: .utf8)
     }
     for name in ["A.txt", "B.txt", "C.txt"] {
-      try "content".write(
-        to: remoteDir.appendingPathComponent(name), atomically: true, encoding: .utf8)
+      try "content"
+        .write(
+          to: remoteDir.appendingPathComponent(name), atomically: true, encoding: .utf8)
     }
 
     let localFiles = Set(listFiles(in: localDir))
@@ -624,10 +662,12 @@ final class DeletePropagationTests: XCTestCase {
     try FileManager.default.createDirectory(at: mirrorDir, withIntermediateDirectories: true)
 
     // Mirror has files from previous sync
-    try "old".write(
-      to: mirrorDir.appendingPathComponent("keep.txt"), atomically: true, encoding: .utf8)
-    try "old".write(
-      to: mirrorDir.appendingPathComponent("delete_me.txt"), atomically: true, encoding: .utf8)
+    try "old"
+      .write(
+        to: mirrorDir.appendingPathComponent("keep.txt"), atomically: true, encoding: .utf8)
+    try "old"
+      .write(
+        to: mirrorDir.appendingPathComponent("delete_me.txt"), atomically: true, encoding: .utf8)
 
     // Simulate delete propagation: remove files not in device snapshot
     let deviceFiles: Set<String> = ["keep.txt"]
@@ -651,10 +691,12 @@ final class DeletePropagationTests: XCTestCase {
     let subDir = mirrorDir.appendingPathComponent("subdir")
     try FileManager.default.createDirectory(at: subDir, withIntermediateDirectories: true)
 
-    try "keep".write(
-      to: mirrorDir.appendingPathComponent("root.txt"), atomically: true, encoding: .utf8)
-    try "delete".write(
-      to: subDir.appendingPathComponent("nested.txt"), atomically: true, encoding: .utf8)
+    try "keep"
+      .write(
+        to: mirrorDir.appendingPathComponent("root.txt"), atomically: true, encoding: .utf8)
+    try "delete"
+      .write(
+        to: subDir.appendingPathComponent("nested.txt"), atomically: true, encoding: .utf8)
 
     // Device snapshot only has root.txt
     let deviceFiles: Set<String> = ["root.txt"]
@@ -716,8 +758,9 @@ final class SpecialFileHandlingTests: XCTestCase {
     try FileManager.default.createDirectory(at: localDir, withIntermediateDirectories: true)
     try FileManager.default.createDirectory(at: targetDir, withIntermediateDirectories: true)
 
-    try "real".write(
-      to: targetDir.appendingPathComponent("real.txt"), atomically: true, encoding: .utf8)
+    try "real"
+      .write(
+        to: targetDir.appendingPathComponent("real.txt"), atomically: true, encoding: .utf8)
 
     let symlinkPath = localDir.appendingPathComponent("link_to_target")
     try FileManager.default.createSymbolicLink(at: symlinkPath, withDestinationURL: targetDir)
@@ -743,9 +786,10 @@ final class SpecialFileHandlingTests: XCTestCase {
     try await Task.sleep(nanoseconds: 1_100_000_000)
 
     let config = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 42, storage: storage, name: "empty.txt",
-        sizeBytes: 0, formatCode: 0x3000, data: Data()))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 42, storage: storage, name: "empty.txt",
+          sizeBytes: 0, formatCode: 0x3000, data: Data()))
     let device = VirtualMTPDevice(config: config)
     let gen2 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
@@ -801,9 +845,10 @@ final class MirrorResumeTests: XCTestCase {
   func testMirrorCanRunTwiceWithoutDuplicatingFiles() async throws {
     let storage = MTPStorageID(raw: 0x0001_0001)
     let config = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 42, storage: storage, name: "photo.jpg",
-        sizeBytes: 16, formatCode: 0x3801, data: Data(repeating: 0xAB, count: 16)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 42, storage: storage, name: "photo.jpg",
+          sizeBytes: 16, formatCode: 0x3801, data: Data(repeating: 0xAB, count: 16)))
     let device = VirtualMTPDevice(config: config)
     let deviceId = await device.id
     let output = tempDirectory.appendingPathComponent("output")
@@ -829,12 +874,15 @@ final class MirrorResumeTests: XCTestCase {
 
     let storage = MTPStorageID(raw: 0x0001_0001)
     let config = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 42, storage: storage, name: "existing.jpg",
-        sizeBytes: 16, formatCode: 0x3801, data: Data(repeating: 0xAB, count: 16)))
-      .withObject(VirtualObjectConfig(
-        handle: 43, storage: storage, name: "new.jpg",
-        sizeBytes: 8, formatCode: 0x3801, data: Data(repeating: 0xCD, count: 8)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 42, storage: storage, name: "existing.jpg",
+          sizeBytes: 16, formatCode: 0x3801, data: Data(repeating: 0xAB, count: 16))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 43, storage: storage, name: "new.jpg",
+          sizeBytes: 8, formatCode: 0x3801, data: Data(repeating: 0xCD, count: 8)))
     let device = VirtualMTPDevice(config: config)
     let deviceId = await device.id
 
@@ -858,14 +906,16 @@ final class SyncAdvancedPropertyTests: XCTestCase {
       ) { addCount, removeCount in
         var diff = MTPDiff()
         for i in 0..<addCount {
-          diff.added.append(MTPDiff.Row(
-            handle: UInt32(i), storage: 1, pathKey: "1/add_\(i)",
-            size: 100, mtime: nil, format: 0x3000))
+          diff.added.append(
+            MTPDiff.Row(
+              handle: UInt32(i), storage: 1, pathKey: "1/add_\(i)",
+              size: 100, mtime: nil, format: 0x3000))
         }
         for i in 0..<removeCount {
-          diff.removed.append(MTPDiff.Row(
-            handle: UInt32(i + 1000), storage: 1, pathKey: "1/rm_\(i)",
-            size: 100, mtime: nil, format: 0x3000))
+          diff.removed.append(
+            MTPDiff.Row(
+              handle: UInt32(i + 1000), storage: 1, pathKey: "1/rm_\(i)",
+              size: 100, mtime: nil, format: 0x3000))
         }
         // If we reverse perspective, added becomes removed and vice versa
         var reversed = MTPDiff()
@@ -917,9 +967,13 @@ final class SyncAdvancedPropertyTests: XCTestCase {
         Gen<Int>.choose((1, 100))
       ) { initial, skipped, failed in
         var r1 = MTPSyncReport()
-        r1.downloaded = initial; r1.skipped = skipped; r1.failed = failed
+        r1.downloaded = initial
+        r1.skipped = skipped
+        r1.failed = failed
         var r2 = MTPSyncReport()
-        r2.downloaded = initial + 1; r2.skipped = skipped; r2.failed = failed
+        r2.downloaded = initial + 1
+        r2.skipped = skipped
+        r2.failed = failed
         return r2.successRate >= r1.successRate
       }
   }

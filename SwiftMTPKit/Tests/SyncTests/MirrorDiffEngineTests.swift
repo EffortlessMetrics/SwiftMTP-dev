@@ -144,17 +144,22 @@ final class MirrorDiffEngineTests: XCTestCase {
     // VirtualMTPDevice list(parent:nil) returns only root-level objects,
     // so we use root-level files to simulate a directory structure diff.
     let config = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 10, storage: storage, parent: nil,
-        name: "DCIM", formatCode: 0x3001))
-      .withObject(VirtualObjectConfig(
-        handle: 11, storage: storage, parent: nil,
-        name: "photo.jpg", sizeBytes: 1024, formatCode: 0x3801,
-        data: Data(repeating: 0xFF, count: 1024)))
-      .withObject(VirtualObjectConfig(
-        handle: 12, storage: storage, parent: nil,
-        name: "screen.png", sizeBytes: 512, formatCode: 0x3801,
-        data: Data(repeating: 0xAA, count: 512)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 10, storage: storage, parent: nil,
+          name: "DCIM", formatCode: 0x3001)
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 11, storage: storage, parent: nil,
+          name: "photo.jpg", sizeBytes: 1024, formatCode: 0x3801,
+          data: Data(repeating: 0xFF, count: 1024))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 12, storage: storage, parent: nil,
+          name: "screen.png", sizeBytes: 512, formatCode: 0x3801,
+          data: Data(repeating: 0xAA, count: 512)))
     let deviceV2 = VirtualMTPDevice(config: config)
     let gen2 = try await snapshotter.capture(device: deviceV2, deviceId: deviceId)
 
@@ -171,13 +176,16 @@ final class MirrorDiffEngineTests: XCTestCase {
 
   func testNestedDirectoryMirrorCreatesSubdirectories() async throws {
     let config = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 10, storage: storage, parent: nil,
-        name: "Documents", formatCode: 0x3001))
-      .withObject(VirtualObjectConfig(
-        handle: 11, storage: storage, parent: 10,
-        name: "report.pdf", sizeBytes: 64, formatCode: 0x3000,
-        data: Data(repeating: 0xDD, count: 64)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 10, storage: storage, parent: nil,
+          name: "Documents", formatCode: 0x3001)
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 11, storage: storage, parent: 10,
+          name: "report.pdf", sizeBytes: 64, formatCode: 0x3000,
+          data: Data(repeating: 0xDD, count: 64)))
     let device = VirtualMTPDevice(config: config)
     let deviceId = await device.id
     let output = tempDirectory.appendingPathComponent("nested-output")
@@ -194,10 +202,12 @@ final class MirrorDiffEngineTests: XCTestCase {
     try FileManager.default.createDirectory(at: localDir, withIntermediateDirectories: true)
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
 
-    try "local content v2".write(
-      to: localDir.appendingPathComponent("shared.txt"), atomically: true, encoding: .utf8)
-    try "remote content v2".write(
-      to: remoteDir.appendingPathComponent("shared.txt"), atomically: true, encoding: .utf8)
+    try "local content v2"
+      .write(
+        to: localDir.appendingPathComponent("shared.txt"), atomically: true, encoding: .utf8)
+    try "remote content v2"
+      .write(
+        to: remoteDir.appendingPathComponent("shared.txt"), atomically: true, encoding: .utf8)
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
     XCTAssertEqual(conflicts.count, 1)
@@ -226,14 +236,17 @@ final class MirrorDiffEngineTests: XCTestCase {
     let localDir = tempDirectory.appendingPathComponent("local")
     let remoteDir = tempDirectory.appendingPathComponent("remote")
     let mergedDir = tempDirectory.appendingPathComponent("merged")
-    try [localDir, remoteDir, mergedDir].forEach {
-      try FileManager.default.createDirectory(at: $0, withIntermediateDirectories: true)
-    }
+    try [localDir, remoteDir, mergedDir]
+      .forEach {
+        try FileManager.default.createDirectory(at: $0, withIntermediateDirectories: true)
+      }
 
-    try "keep this".write(
-      to: localDir.appendingPathComponent("file.txt"), atomically: true, encoding: .utf8)
-    try "discard this".write(
-      to: remoteDir.appendingPathComponent("file.txt"), atomically: true, encoding: .utf8)
+    try "keep this"
+      .write(
+        to: localDir.appendingPathComponent("file.txt"), atomically: true, encoding: .utf8)
+    try "discard this"
+      .write(
+        to: remoteDir.appendingPathComponent("file.txt"), atomically: true, encoding: .utf8)
 
     resolveConflict(
       file: "file.txt", localDir: localDir, remoteDir: remoteDir,
@@ -248,14 +261,17 @@ final class MirrorDiffEngineTests: XCTestCase {
     let localDir = tempDirectory.appendingPathComponent("local")
     let remoteDir = tempDirectory.appendingPathComponent("remote")
     let mergedDir = tempDirectory.appendingPathComponent("merged")
-    try [localDir, remoteDir, mergedDir].forEach {
-      try FileManager.default.createDirectory(at: $0, withIntermediateDirectories: true)
-    }
+    try [localDir, remoteDir, mergedDir]
+      .forEach {
+        try FileManager.default.createDirectory(at: $0, withIntermediateDirectories: true)
+      }
 
-    try "discard this".write(
-      to: localDir.appendingPathComponent("file.txt"), atomically: true, encoding: .utf8)
-    try "keep this".write(
-      to: remoteDir.appendingPathComponent("file.txt"), atomically: true, encoding: .utf8)
+    try "discard this"
+      .write(
+        to: localDir.appendingPathComponent("file.txt"), atomically: true, encoding: .utf8)
+    try "keep this"
+      .write(
+        to: remoteDir.appendingPathComponent("file.txt"), atomically: true, encoding: .utf8)
 
     resolveConflict(
       file: "file.txt", localDir: localDir, remoteDir: remoteDir,
@@ -270,9 +286,10 @@ final class MirrorDiffEngineTests: XCTestCase {
     let localDir = tempDirectory.appendingPathComponent("local")
     let remoteDir = tempDirectory.appendingPathComponent("remote")
     let mergedDir = tempDirectory.appendingPathComponent("merged")
-    try [localDir, remoteDir, mergedDir].forEach {
-      try FileManager.default.createDirectory(at: $0, withIntermediateDirectories: true)
-    }
+    try [localDir, remoteDir, mergedDir]
+      .forEach {
+        try FileManager.default.createDirectory(at: $0, withIntermediateDirectories: true)
+      }
 
     let localFile = localDir.appendingPathComponent("file.txt")
     let remoteFile = remoteDir.appendingPathComponent("file.txt")
@@ -296,9 +313,10 @@ final class MirrorDiffEngineTests: XCTestCase {
     let localDir = tempDirectory.appendingPathComponent("local")
     let remoteDir = tempDirectory.appendingPathComponent("remote")
     let mergedDir = tempDirectory.appendingPathComponent("merged")
-    try [localDir, remoteDir, mergedDir].forEach {
-      try FileManager.default.createDirectory(at: $0, withIntermediateDirectories: true)
-    }
+    try [localDir, remoteDir, mergedDir]
+      .forEach {
+        try FileManager.default.createDirectory(at: $0, withIntermediateDirectories: true)
+      }
 
     let localFile = localDir.appendingPathComponent("file.txt")
     let remoteFile = remoteDir.appendingPathComponent("file.txt")
@@ -490,14 +508,17 @@ final class MirrorDiffEngineTests: XCTestCase {
     try await Task.sleep(nanoseconds: 1_100_000_000)
 
     let config = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, parent: nil,
-        name: "existing.txt", sizeBytes: 32, formatCode: 0x3801,
-        data: Data(repeating: 0xAB, count: 32)))
-      .withObject(VirtualObjectConfig(
-        handle: 101, storage: storage, parent: nil,
-        name: "new.txt", sizeBytes: 16, formatCode: 0x3801,
-        data: Data(repeating: 0xCD, count: 16)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, parent: nil,
+          name: "existing.txt", sizeBytes: 32, formatCode: 0x3801,
+          data: Data(repeating: 0xAB, count: 32))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 101, storage: storage, parent: nil,
+          name: "new.txt", sizeBytes: 16, formatCode: 0x3801,
+          data: Data(repeating: 0xCD, count: 16)))
     let deviceV2 = VirtualMTPDevice(config: config)
     let report = try await mirrorEngine.mirror(device: deviceV2, deviceId: deviceId, to: output)
 
@@ -518,14 +539,17 @@ final class MirrorDiffEngineTests: XCTestCase {
 
   func testMirrorWithExcludeFilterSkipsDSStore() async throws {
     let config = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, parent: nil,
-        name: ".DS_Store", sizeBytes: 8, formatCode: 0x3000,
-        data: Data(repeating: 0x00, count: 8)))
-      .withObject(VirtualObjectConfig(
-        handle: 101, storage: storage, parent: nil,
-        name: "photo.jpg", sizeBytes: 32, formatCode: 0x3801,
-        data: Data(repeating: 0xFF, count: 32)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, parent: nil,
+          name: ".DS_Store", sizeBytes: 8, formatCode: 0x3000,
+          data: Data(repeating: 0x00, count: 8))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 101, storage: storage, parent: nil,
+          name: "photo.jpg", sizeBytes: 32, formatCode: 0x3801,
+          data: Data(repeating: 0xFF, count: 32)))
     let device = VirtualMTPDevice(config: config)
     let deviceId = await device.id
     let output = tempDirectory.appendingPathComponent("exclude-output")
@@ -622,13 +646,16 @@ final class MirrorDiffEngineTests: XCTestCase {
 
   func testMovedFileAcrossDirectoriesDetectedAsAddAndRemove() async throws {
     let configV1 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 10, storage: storage, parent: nil,
-        name: "FolderA", formatCode: 0x3001))
-      .withObject(VirtualObjectConfig(
-        handle: 11, storage: storage, parent: 10,
-        name: "moved.txt", sizeBytes: 32, formatCode: 0x3000,
-        data: Data(repeating: 0xAA, count: 32)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 10, storage: storage, parent: nil,
+          name: "FolderA", formatCode: 0x3001)
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 11, storage: storage, parent: 10,
+          name: "moved.txt", sizeBytes: 32, formatCode: 0x3000,
+          data: Data(repeating: 0xAA, count: 32)))
     let deviceV1 = VirtualMTPDevice(config: configV1)
     let deviceId = await deviceV1.id
     let gen1 = try await snapshotter.capture(device: deviceV1, deviceId: deviceId)
@@ -636,13 +663,16 @@ final class MirrorDiffEngineTests: XCTestCase {
     try await Task.sleep(nanoseconds: 1_100_000_000)
 
     let configV2 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 20, storage: storage, parent: nil,
-        name: "FolderB", formatCode: 0x3001))
-      .withObject(VirtualObjectConfig(
-        handle: 21, storage: storage, parent: 20,
-        name: "moved.txt", sizeBytes: 32, formatCode: 0x3000,
-        data: Data(repeating: 0xAA, count: 32)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 20, storage: storage, parent: nil,
+          name: "FolderB", formatCode: 0x3001)
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 21, storage: storage, parent: 20,
+          name: "moved.txt", sizeBytes: 32, formatCode: 0x3000,
+          data: Data(repeating: 0xAA, count: 32)))
     let deviceV2 = VirtualMTPDevice(config: configV2)
     let gen2 = try await snapshotter.capture(device: deviceV2, deviceId: deviceId)
 
@@ -692,7 +722,9 @@ final class MirrorDiffEngineTests: XCTestCase {
   func testDiffWithMixedChanges() {
     var diff = MTPDiff()
     diff.added = [makeRow(handle: 1, path: "00010001/a.jpg")]
-    diff.removed = [makeRow(handle: 2, path: "00010001/b.jpg"), makeRow(handle: 3, path: "00010001/c.jpg")]
+    diff.removed = [
+      makeRow(handle: 2, path: "00010001/b.jpg"), makeRow(handle: 3, path: "00010001/c.jpg"),
+    ]
     diff.modified = [makeRow(handle: 4, path: "00010001/d.jpg")]
     XCTAssertFalse(diff.isEmpty)
     XCTAssertEqual(diff.totalChanges, 4)
@@ -802,10 +834,11 @@ final class MirrorDiffEngineTests: XCTestCase {
   private func makeDeviceWithConfig(files: [(String, Int, UInt8)]) -> VirtualMTPDevice {
     var config = VirtualDeviceConfig.emptyDevice
     for (idx, file) in files.enumerated() {
-      config = config.withObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(100 + idx), storage: storage, parent: nil,
-        name: file.0, sizeBytes: UInt64(file.1), formatCode: 0x3801,
-        data: Data(repeating: file.2, count: file.1)))
+      config = config.withObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(100 + idx), storage: storage, parent: nil,
+          name: file.0, sizeBytes: UInt64(file.1), formatCode: 0x3801,
+          data: Data(repeating: file.2, count: file.1)))
     }
     return VirtualMTPDevice(config: config)
   }
@@ -814,11 +847,13 @@ final class MirrorDiffEngineTests: XCTestCase {
     let localFiles = Set(listRelativeFiles(in: local))
     let remoteFiles = Set(listRelativeFiles(in: remote))
     let common = localFiles.intersection(remoteFiles)
-    return common.filter { file in
-      let localData = try? Data(contentsOf: local.appendingPathComponent(file))
-      let remoteData = try? Data(contentsOf: remote.appendingPathComponent(file))
-      return localData != remoteData
-    }.sorted()
+    return
+      common.filter { file in
+        let localData = try? Data(contentsOf: local.appendingPathComponent(file))
+        let remoteData = try? Data(contentsOf: remote.appendingPathComponent(file))
+        return localData != remoteData
+      }
+      .sorted()
   }
 
   private func resolveConflict(

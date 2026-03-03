@@ -236,7 +236,7 @@ final class FallbackLadderTests: XCTestCase {
     ])
 
     async let result2 = FallbackLadder.execute([
-      FallbackRung<Int>(name: "op2-fast") { return 2 },
+      FallbackRung<Int>(name: "op2-fast") { return 2 }
     ])
 
     async let result3 = FallbackLadder.execute([
@@ -262,14 +262,16 @@ final class FallbackLadderTests: XCTestCase {
     let ladder1Attempts = 5
     let ladder2Attempts = 3
 
-    var rungs1: [FallbackRung<String>] = (0..<(ladder1Attempts - 1)).map { i in
-      FallbackRung(name: "L1-\(i)") { throw MTPError.timeout }
-    }
+    var rungs1: [FallbackRung<String>] = (0..<(ladder1Attempts - 1))
+      .map { i in
+        FallbackRung(name: "L1-\(i)") { throw MTPError.timeout }
+      }
     rungs1.append(FallbackRung(name: "L1-win") { return "ladder1" })
 
-    var rungs2: [FallbackRung<String>] = (0..<(ladder2Attempts - 1)).map { i in
-      FallbackRung(name: "L2-\(i)") { throw MTPError.busy }
-    }
+    var rungs2: [FallbackRung<String>] = (0..<(ladder2Attempts - 1))
+      .map { i in
+        FallbackRung(name: "L2-\(i)") { throw MTPError.busy }
+      }
     rungs2.append(FallbackRung(name: "L2-win") { return "ladder2" })
 
     async let r1 = FallbackLadder.execute(rungs1)
@@ -348,7 +350,7 @@ final class FallbackLadderTests: XCTestCase {
     let rungs: [FallbackRung<Int>] = [
       FallbackRung(name: "invalid-param") {
         throw MTPError.protocolError(code: 0x201D, message: "InvalidParameter")
-      },
+      }
     ]
 
     do {
@@ -399,7 +401,7 @@ final class FallbackLadderTests: XCTestCase {
 
   func testAccessDeniedTransportError() async {
     let rungs: [FallbackRung<Int>] = [
-      FallbackRung(name: "access-denied") { throw MTPError.transport(.accessDenied) },
+      FallbackRung(name: "access-denied") { throw MTPError.transport(.accessDenied) }
     ]
 
     do {
@@ -476,7 +478,7 @@ final class FallbackLadderTests: XCTestCase {
     ]
 
     let rungs2: [FallbackRung<Int>] = [
-      FallbackRung(name: "op2-ok") { return 2 },
+      FallbackRung(name: "op2-ok") { return 2 }
     ]
 
     let result1 = try await FallbackLadder.execute(rungs1)
@@ -505,9 +507,10 @@ final class FallbackLadderTests: XCTestCase {
 
   func testCustomLadderWithManyRungs() async throws {
     let rungCount = 10
-    var rungs: [FallbackRung<Int>] = (0..<(rungCount - 1)).map { i in
-      FallbackRung(name: "fail-\(i)") { throw MTPError.timeout }
-    }
+    var rungs: [FallbackRung<Int>] = (0..<(rungCount - 1))
+      .map { i in
+        FallbackRung(name: "fail-\(i)") { throw MTPError.timeout }
+      }
     rungs.append(FallbackRung(name: "final-success") { return 42 })
 
     let result = try await FallbackLadder.execute(rungs)
@@ -646,7 +649,7 @@ final class FallbackLadderTests: XCTestCase {
 
   func testFallbackAllFailedErrorLocalizedDescription() async {
     let rungs: [FallbackRung<Int>] = [
-      FallbackRung(name: "only-rung") { throw MTPError.busy },
+      FallbackRung(name: "only-rung") { throw MTPError.busy }
     ]
 
     do {

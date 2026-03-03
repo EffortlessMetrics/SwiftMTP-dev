@@ -34,7 +34,8 @@ final class XPCSerializationEdgeCaseTests: XCTestCase {
   }
 
   func testStorageInfoMaxCapacity() throws {
-    let info = StorageInfo(storageId: UInt32.max, description: "Max", capacityBytes: UInt64.max, freeBytes: UInt64.max)
+    let info = StorageInfo(
+      storageId: UInt32.max, description: "Max", capacityBytes: UInt64.max, freeBytes: UInt64.max)
     let decoded = try roundTrip(info, as: StorageInfo.self)
     XCTAssertEqual(decoded?.storageId, UInt32.max)
     XCTAssertEqual(decoded?.capacityBytes, UInt64.max)
@@ -42,14 +43,16 @@ final class XPCSerializationEdgeCaseTests: XCTestCase {
   }
 
   func testObjectInfoZeroSize() throws {
-    let info = ObjectInfo(handle: 0, name: "empty", sizeBytes: 0, isDirectory: false, modifiedDate: nil)
+    let info = ObjectInfo(
+      handle: 0, name: "empty", sizeBytes: 0, isDirectory: false, modifiedDate: nil)
     let decoded = try roundTrip(info, as: ObjectInfo.self)
     XCTAssertEqual(decoded?.sizeBytes, 0)
     XCTAssertNil(decoded?.modifiedDate)
   }
 
   func testObjectInfoNilSize() throws {
-    let info = ObjectInfo(handle: 1, name: "nosize", sizeBytes: nil, isDirectory: false, modifiedDate: nil)
+    let info = ObjectInfo(
+      handle: 1, name: "nosize", sizeBytes: nil, isDirectory: false, modifiedDate: nil)
     let decoded = try roundTrip(info, as: ObjectInfo.self)
     XCTAssertNil(decoded?.sizeBytes)
   }
@@ -85,7 +88,8 @@ final class XPCSerializationEdgeCaseTests: XCTestCase {
 
   func testObjectNameWithSpecialCharacters() throws {
     let name = "photo (1) [backup].jpg"
-    let info = ObjectInfo(handle: 1, name: name, sizeBytes: 1024, isDirectory: false, modifiedDate: Date())
+    let info = ObjectInfo(
+      handle: 1, name: name, sizeBytes: 1024, isDirectory: false, modifiedDate: Date())
     let decoded = try roundTrip(info, as: ObjectInfo.self)
     XCTAssertEqual(decoded?.name, name)
   }
@@ -109,7 +113,9 @@ final class XPCSerializationEdgeCaseTests: XCTestCase {
 
   func testWriteRequestLargeBookmark() throws {
     let largeBookmark = Data(repeating: 0xCD, count: 128 * 1024)
-    let req = WriteRequest(deviceId: "dev", storageId: 1, parentHandle: nil, name: "big.bin", size: 1_000_000, bookmark: largeBookmark)
+    let req = WriteRequest(
+      deviceId: "dev", storageId: 1, parentHandle: nil, name: "big.bin", size: 1_000_000,
+      bookmark: largeBookmark)
     let decoded = try roundTrip(req, as: WriteRequest.self)
     XCTAssertEqual(decoded?.bookmark?.count, 128 * 1024)
   }
@@ -145,7 +151,9 @@ final class XPCSerializationEdgeCaseTests: XCTestCase {
   func testStorageListResponseMultipleStorages() throws {
     var storages: [StorageInfo] = []
     for i in 0..<5 {
-      let info = StorageInfo(storageId: UInt32(i), description: "Storage \(i)", capacityBytes: UInt64(i * 1000), freeBytes: UInt64(i * 500))
+      let info = StorageInfo(
+        storageId: UInt32(i), description: "Storage \(i)", capacityBytes: UInt64(i * 1000),
+        freeBytes: UInt64(i * 500))
       storages.append(info)
     }
     let resp = StorageListResponse(success: true, storages: storages)
@@ -157,7 +165,9 @@ final class XPCSerializationEdgeCaseTests: XCTestCase {
   func testObjectListResponseMultipleObjects() throws {
     var objects: [ObjectInfo] = []
     for i in 0..<10 {
-      let obj = ObjectInfo(handle: UInt32(i), name: "item\(i)", sizeBytes: UInt64(i * 100), isDirectory: i % 2 == 0, modifiedDate: nil)
+      let obj = ObjectInfo(
+        handle: UInt32(i), name: "item\(i)", sizeBytes: UInt64(i * 100), isDirectory: i % 2 == 0,
+        modifiedDate: nil)
       objects.append(obj)
     }
     let resp = ObjectListResponse(success: true, objects: objects)
@@ -169,7 +179,9 @@ final class XPCSerializationEdgeCaseTests: XCTestCase {
   // MARK: - Write types edge cases
 
   func testWriteRequestMaxSize() throws {
-    let req = WriteRequest(deviceId: "dev", storageId: 1, parentHandle: nil, name: "huge.bin", size: UInt64.max, bookmark: nil)
+    let req = WriteRequest(
+      deviceId: "dev", storageId: 1, parentHandle: nil, name: "huge.bin", size: UInt64.max,
+      bookmark: nil)
     let decoded = try roundTrip(req, as: WriteRequest.self)
     XCTAssertEqual(decoded?.size, UInt64.max)
   }
@@ -187,7 +199,8 @@ final class XPCSerializationEdgeCaseTests: XCTestCase {
   }
 
   func testMoveObjectRequestMaxStorageId() throws {
-    let req = MoveObjectRequest(deviceId: "dev", objectHandle: 1, newParentHandle: UInt32.max, newStorageId: UInt32.max)
+    let req = MoveObjectRequest(
+      deviceId: "dev", objectHandle: 1, newParentHandle: UInt32.max, newStorageId: UInt32.max)
     let decoded = try roundTrip(req, as: MoveObjectRequest.self)
     XCTAssertEqual(decoded?.newParentHandle, UInt32.max)
     XCTAssertEqual(decoded?.newStorageId, UInt32.max)
@@ -202,7 +215,8 @@ final class XPCSerializationEdgeCaseTests: XCTestCase {
   }
 
   func testDeviceStatusResponseMaxTimestamp() throws {
-    let resp = DeviceStatusResponse(connected: true, sessionOpen: true, lastCrawlTimestamp: Int64.max)
+    let resp = DeviceStatusResponse(
+      connected: true, sessionOpen: true, lastCrawlTimestamp: Int64.max)
     let decoded = try roundTrip(resp, as: DeviceStatusResponse.self)
     XCTAssertEqual(decoded?.lastCrawlTimestamp, Int64.max)
   }

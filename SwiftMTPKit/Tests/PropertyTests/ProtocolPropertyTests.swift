@@ -21,57 +21,64 @@ private enum PTPContainerTypeGenerator {
 /// Generator for valid PTP operation codes.
 private enum PTPOpCodeGenerator {
   static var arbitrary: Gen<UInt16> {
-    Gen<UInt16>.fromElements(of: [
-      0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1006, 0x1007,
-      0x1008, 0x1009, 0x100A, 0x100B, 0x100C, 0x100D, 0x100E,
-      0x1014, 0x1015, 0x1016, 0x1017, 0x101B, 0x95C1, 0x95C4,
-    ])
+    Gen<UInt16>
+      .fromElements(of: [
+        0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1006, 0x1007,
+        0x1008, 0x1009, 0x100A, 0x100B, 0x100C, 0x100D, 0x100E,
+        0x1014, 0x1015, 0x1016, 0x1017, 0x101B, 0x95C1, 0x95C4,
+      ])
   }
 }
 
 /// Generator for arbitrary Unicode strings including multi-byte and emoji.
 private enum UnicodeGen {
   static var arbitrary: Gen<String> {
-    Gen<String>.one(of: [
-      Gen<String>.fromElements(of: [
-        "hello", "café", "naïve", "Müller", "Ångström", "Señor",
-        "文件", "ファイル", "파일", "файл", "📷🎉🌍",
-        "path/to/file", "a\u{0301}", "\u{1F600}\u{1F601}",
-      ]),
-      Gen<Character>.fromElements(of: Array("abcdefghijklmnopqrstuvwxyz0123456789"))
-        .proliferate
-        .suchThat { !$0.isEmpty }
-        .map { String($0.prefix(100)) },
-    ])
+    Gen<String>
+      .one(of: [
+        Gen<String>
+          .fromElements(of: [
+            "hello", "café", "naïve", "Müller", "Ångström", "Señor",
+            "文件", "ファイル", "파일", "файл", "📷🎉🌍",
+            "path/to/file", "a\u{0301}", "\u{1F600}\u{1F601}",
+          ]),
+        Gen<Character>.fromElements(of: Array("abcdefghijklmnopqrstuvwxyz0123456789"))
+          .proliferate
+          .suchThat { !$0.isEmpty }
+          .map { String($0.prefix(100)) },
+      ])
   }
 }
 
 /// Generator for valid MTP storage ID raw values.
 private enum StorageIDGenerator {
   static var arbitrary: Gen<UInt32> {
-    Gen<UInt32>.one(of: [
-      // Realistic storage IDs: upper 16 = physical, lower 16 = logical
-      Gen<(UInt16, UInt16)>.zip(
-        Gen<UInt16>.choose((1, 8)),
-        Gen<UInt16>.choose((1, 4))
-      ).map { phys, log in (UInt32(phys) << 16) | UInt32(log) },
-      // Boundary values
-      Gen<UInt32>.fromElements(of: [0x00010001, 0x00020001, 0xFFFFFFFF]),
-    ])
+    Gen<UInt32>
+      .one(of: [
+        // Realistic storage IDs: upper 16 = physical, lower 16 = logical
+        Gen<(UInt16, UInt16)>
+          .zip(
+            Gen<UInt16>.choose((1, 8)),
+            Gen<UInt16>.choose((1, 4))
+          )
+          .map { phys, log in (UInt32(phys) << 16) | UInt32(log) },
+        // Boundary values
+        Gen<UInt32>.fromElements(of: [0x00010001, 0x00020001, 0xFFFFFFFF]),
+      ])
   }
 }
 
 /// Generator for device filenames that may contain dangerous characters.
 private enum DeviceFilenameGenerator {
   static var arbitrary: Gen<String> {
-    Gen<String>.fromElements(of: [
-      "photo.jpg", "IMG_0001.CR2", "..hidden", "../escape.txt",
-      "normal file.txt", "file\0name.jpg", "../../etc/passwd",
-      "a/b/c.txt", "file\\name.txt", "...", ".", "..", "",
-      "  spaces  ", "naïve café.mp3", "长文件名.png",
-      String(repeating: "x", count: 300),
-      "CON", "NUL", "file\u{00}name",
-    ])
+    Gen<String>
+      .fromElements(of: [
+        "photo.jpg", "IMG_0001.CR2", "..hidden", "../escape.txt",
+        "normal file.txt", "file\0name.jpg", "../../etc/passwd",
+        "a/b/c.txt", "file\\name.txt", "...", ".", "..", "",
+        "  spaces  ", "naïve café.mp3", "长文件名.png",
+        String(repeating: "x", count: 300),
+        "CON", "NUL", "file\u{00}name",
+      ])
   }
 }
 
@@ -92,7 +99,8 @@ final class ProtocolPropertyTests: XCTestCase {
         Gen<[UInt32]>.fromElements(of: [[], [1], [1, 2], [1, 2, 3]])
       ) { type, code, txid, params in
         let length = UInt32(12 + params.count * 4)
-        let container = PTPContainer(length: length, type: type, code: code, txid: txid, params: params)
+        let container = PTPContainer(
+          length: length, type: type, code: code, txid: txid, params: params)
 
         var buf = [UInt8](repeating: 0, count: Int(length) + 16)
         let written = buf.withUnsafeMutableBufferPointer { ptr in
@@ -103,9 +111,9 @@ final class ProtocolPropertyTests: XCTestCase {
         let decoded = Data(buf[0..<written])
         var dec = MTPDataDecoder(data: decoded)
         guard let dLen = dec.readUInt32(),
-              let dType = dec.readUInt16(),
-              let dCode = dec.readUInt16(),
-              let dTxid = dec.readUInt32()
+          let dType = dec.readUInt16(),
+          let dCode = dec.readUInt16(),
+          let dTxid = dec.readUInt32()
         else { return false }
 
         var dParams = [UInt32]()
@@ -115,7 +123,7 @@ final class ProtocolPropertyTests: XCTestCase {
         }
 
         return dLen == length && dType == type && dCode == code
-            && dTxid == txid && dParams == params
+          && dTxid == txid && dParams == params
       }
   }
 
@@ -186,8 +194,12 @@ final class ProtocolPropertyTests: XCTestCase {
         Gen<UInt16>.choose((1, UInt16.max)),
         Gen<UInt16>.choose((1, UInt16.max))
       ) { vid, pid in
-        let r1 = db.match(vid: vid, pid: pid, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
-        let r2 = db.match(vid: vid, pid: pid, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+        let r1 = db.match(
+          vid: vid, pid: pid, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil,
+          ifaceProtocol: nil)
+        let r2 = db.match(
+          vid: vid, pid: pid, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil,
+          ifaceProtocol: nil)
         return r1?.id == r2?.id
       }
   }
@@ -322,7 +334,8 @@ final class ProtocolPropertyTests: XCTestCase {
       ) { type, code, txid, paramCount in
         let params = (0..<paramCount).map { UInt32($0) }
         let length = UInt32(12 + paramCount * 4)
-        let container = PTPContainer(length: length, type: type, code: code, txid: txid, params: params)
+        let container = PTPContainer(
+          length: length, type: type, code: code, txid: txid, params: params)
         var buf = [UInt8](repeating: 0, count: 512)
         let written = buf.withUnsafeMutableBufferPointer { ptr in
           container.encode(into: ptr.baseAddress!)
@@ -336,10 +349,13 @@ final class ProtocolPropertyTests: XCTestCase {
   /// PTPObjectFormat.forFilename must return a non-zero format for any filename.
   func testObjectFormatAlwaysNonZero() {
     property("PTPObjectFormat.forFilename always returns a non-zero format code")
-      <- forAll(Gen<String>.fromElements(of: [
-        "photo.jpg", "image.png", "video.mp4", "song.mp3", "notes.txt",
-        "document.pdf", "archive.zip", "unknown.xyz", "noext",
-      ])) { filename in
+      <- forAll(
+        Gen<String>
+          .fromElements(of: [
+            "photo.jpg", "image.png", "video.mp4", "song.mp3", "notes.txt",
+            "document.pdf", "archive.zip", "unknown.xyz", "noext",
+          ])
+      ) { filename in
         PTPObjectFormat.forFilename(filename) != 0
       }
   }
@@ -377,9 +393,9 @@ final class ProtocolPropertyTests: XCTestCase {
         _ = dec.readBytes(data.count)
         // All subsequent reads must be nil
         return dec.readUInt8() == nil
-            && dec.readUInt16() == nil
-            && dec.readUInt32() == nil
-            && dec.readUInt64() == nil
+          && dec.readUInt16() == nil
+          && dec.readUInt32() == nil
+          && dec.readUInt64() == nil
       }
   }
 
@@ -437,8 +453,8 @@ final class ProtocolPropertyTests: XCTestCase {
 
         var dec = MTPDataDecoder(data: enc.encodedData)
         guard let d16 = dec.readUInt16(),
-              let d32 = dec.readUInt32(),
-              let d64 = dec.readUInt64()
+          let d32 = dec.readUInt32(),
+          let d64 = dec.readUInt64()
         else { return false }
         return d16 == v16 && d32 == v32 && d64 == v64
       }
@@ -457,8 +473,8 @@ final class ProtocolPropertyTests: XCTestCase {
         let p2 = EffectiveTuningBuilder.buildPolicy(
           capabilities: [:], learned: nil, quirk: nil, overrides: nil, ifaceClass: ifaceClass)
         return p1.flags.supportsGetObjectPropList == p2.flags.supportsGetObjectPropList
-            && p1.flags.requiresKernelDetach == p2.flags.requiresKernelDetach
-            && p1.tuning.maxChunkBytes == p2.tuning.maxChunkBytes
+          && p1.flags.requiresKernelDetach == p2.flags.requiresKernelDetach
+          && p1.tuning.maxChunkBytes == p2.tuning.maxChunkBytes
       }
   }
 

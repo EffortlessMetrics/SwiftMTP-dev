@@ -90,7 +90,8 @@ final class MicrosoftDeviceQuirksTests: XCTestCase {
     for entry in microsoftEntries where zunePIDs.contains(entry.pid) {
       XCTAssertEqual(
         entry.category, "media-player",
-        "Zune entry '\(entry.id)' should be categorized as media-player, got '\(entry.category ?? "nil")'")
+        "Zune entry '\(entry.id)' should be categorized as media-player, got '\(entry.category ?? "nil")'"
+      )
     }
   }
 
@@ -162,7 +163,8 @@ final class MicrosoftDeviceQuirksTests: XCTestCase {
     let ratio = Double(prefixed.count) / Double(microsoftEntries.count)
     XCTAssertGreaterThan(
       ratio, 0.50,
-      "At least 50% of VID 0x045e entries should start with 'microsoft-' (\(prefixed.count)/\(microsoftEntries.count))")
+      "At least 50% of VID 0x045e entries should start with 'microsoft-' (\(prefixed.count)/\(microsoftEntries.count))"
+    )
   }
 }
 
@@ -577,7 +579,8 @@ final class NicheDeviceQuirksTests: XCTestCase {
     for entry in siriusEntries {
       XCTAssertEqual(
         entry.category, "media-player",
-        "Sirius '\(entry.id)' should be categorized as media-player, got '\(entry.category ?? "nil")'")
+        "Sirius '\(entry.id)' should be categorized as media-player, got '\(entry.category ?? "nil")'"
+      )
     }
   }
 }

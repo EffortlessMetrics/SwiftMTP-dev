@@ -75,14 +75,16 @@ final class SuggestedTuningTests: XCTestCase {
   }
 
   func testCustomTuningValues() {
-    let tuning = SuggestedTuning(maxChunkBytes: 512_000, ioTimeoutMs: 3000, handshakeTimeoutMs: 2000)
+    let tuning = SuggestedTuning(
+      maxChunkBytes: 512_000, ioTimeoutMs: 3000, handshakeTimeoutMs: 2000)
     XCTAssertEqual(tuning.maxChunkBytes, 512_000)
     XCTAssertEqual(tuning.ioTimeoutMs, 3000)
     XCTAssertEqual(tuning.handshakeTimeoutMs, 2000)
   }
 
   func testSuggestedTuningEncodeDecode() throws {
-    let original = SuggestedTuning(maxChunkBytes: 2_097_152, ioTimeoutMs: 10000, handshakeTimeoutMs: 5000)
+    let original = SuggestedTuning(
+      maxChunkBytes: 2_097_152, ioTimeoutMs: 10000, handshakeTimeoutMs: 5000)
     let data = try JSONEncoder().encode(original)
     let decoded = try JSONDecoder().decode(SuggestedTuning.self, from: data)
     XCTAssertEqual(decoded.maxChunkBytes, original.maxChunkBytes)
@@ -143,7 +145,8 @@ final class DeviceLabReportTests: XCTestCase {
       operationsSupported: ["0x1001"],
       eventsSupported: [],
       capabilityTests: [
-        CapabilityTestResult(name: "GetDeviceInfo", opcode: "0x1001", supported: true, durationMs: 10)
+        CapabilityTestResult(
+          name: "GetDeviceInfo", opcode: "0x1001", supported: true, durationMs: 10)
       ],
       suggestedFlags: QuirkFlags(),
       suggestedTuning: SuggestedTuning())
@@ -161,9 +164,13 @@ final class DeviceLabReportTests: XCTestCase {
 
   func testDeviceLabReportWithCapabilityTests() {
     let tests = [
-      CapabilityTestResult(name: "GetDeviceInfo", opcode: "0x1001", supported: true, durationMs: 10),
-      CapabilityTestResult(name: "GetStorageIDs", opcode: "0x1004", supported: true, durationMs: 20),
-      CapabilityTestResult(name: "GetObjectHandles", opcode: "0x1007", supported: false, durationMs: 5000, errorMessage: "timeout"),
+      CapabilityTestResult(
+        name: "GetDeviceInfo", opcode: "0x1001", supported: true, durationMs: 10),
+      CapabilityTestResult(
+        name: "GetStorageIDs", opcode: "0x1004", supported: true, durationMs: 20),
+      CapabilityTestResult(
+        name: "GetObjectHandles", opcode: "0x1007", supported: false, durationMs: 5000,
+        errorMessage: "timeout"),
     ]
     let report = DeviceLabReport(
       manufacturer: "Test",
@@ -233,7 +240,9 @@ final class VirtualDeviceProfileTests: XCTestCase {
   }
 
   func testProfileStorageFreeSpaceLessThanCapacity() {
-    for profile in [VirtualDeviceProfiles.pixel7, VirtualDeviceProfiles.onePlus3T, VirtualDeviceProfiles.miNote2] {
+    for profile in [
+      VirtualDeviceProfiles.pixel7, VirtualDeviceProfiles.onePlus3T, VirtualDeviceProfiles.miNote2,
+    ] {
       for storage in profile.storageInfo {
         XCTAssertLessThanOrEqual(
           storage.freeSpace, storage.capacity,
@@ -243,7 +252,9 @@ final class VirtualDeviceProfileTests: XCTestCase {
   }
 
   func testAllProfilesHaveAtLeastOneStorage() {
-    let profiles = [VirtualDeviceProfiles.pixel7, VirtualDeviceProfiles.onePlus3T, VirtualDeviceProfiles.miNote2]
+    let profiles = [
+      VirtualDeviceProfiles.pixel7, VirtualDeviceProfiles.onePlus3T, VirtualDeviceProfiles.miNote2,
+    ]
     for profile in profiles {
       XCTAssertFalse(
         profile.storageInfo.isEmpty,
@@ -252,7 +263,9 @@ final class VirtualDeviceProfileTests: XCTestCase {
   }
 
   func testAllProfilesHaveUniqueVIDPID() {
-    let profiles = [VirtualDeviceProfiles.pixel7, VirtualDeviceProfiles.onePlus3T, VirtualDeviceProfiles.miNote2]
+    let profiles = [
+      VirtualDeviceProfiles.pixel7, VirtualDeviceProfiles.onePlus3T, VirtualDeviceProfiles.miNote2,
+    ]
     var seen = Set<String>()
     for profile in profiles {
       let key = String(format: "%04x:%04x", profile.vendorID, profile.productID)
@@ -409,7 +422,8 @@ final class TrafficRecorderTests: XCTestCase {
     let recorder = TrafficRecorder()
     await recorder.startSession(profile: "pixel7")
     await recorder.record(entry: try makeEntry(direction: "REQ", opcode: 0x1001))
-    await recorder.record(entry: try makeEntry(direction: "RSP", opcode: 0x1001, responseTimeMs: 10))
+    await recorder.record(
+      entry: try makeEntry(direction: "RSP", opcode: 0x1001, responseTimeMs: 10))
     let session = await recorder.endSession()
     XCTAssertNotNil(session)
     XCTAssertEqual(session?.deviceProfile, "pixel7")
@@ -419,8 +433,10 @@ final class TrafficRecorderTests: XCTestCase {
   func testRecorderSessionSummary() async throws {
     let recorder = TrafficRecorder()
     await recorder.startSession(profile: "test")
-    await recorder.record(entry: try makeEntry(direction: "REQ", opcode: 0x1001, payloadBytes: 100, responseTimeMs: 10))
-    await recorder.record(entry: try makeEntry(direction: "RSP", payloadBytes: 200, responseTimeMs: 20))
+    await recorder.record(
+      entry: try makeEntry(direction: "REQ", opcode: 0x1001, payloadBytes: 100, responseTimeMs: 10))
+    await recorder.record(
+      entry: try makeEntry(direction: "RSP", payloadBytes: 200, responseTimeMs: 20))
     let session = await recorder.endSession()
     XCTAssertEqual(session?.summary.totalRequests, 1)
     XCTAssertEqual(session?.summary.totalBytes, 300)

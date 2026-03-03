@@ -99,7 +99,8 @@ final class CameraPTPQuirksTests: XCTestCase {
       let cls = entry.ifaceClass!
       XCTAssertTrue(
         cls == 0x06 || cls == 0xFF,
-        "Canon camera \(entry.id) should use USB class 0x06 (Still Image) or 0xFF (vendor), got 0x\(String(cls, radix: 16))")
+        "Canon camera \(entry.id) should use USB class 0x06 (Still Image) or 0xFF (vendor), got 0x\(String(cls, radix: 16))"
+      )
     }
   }
 
@@ -158,7 +159,8 @@ final class CameraPTPQuirksTests: XCTestCase {
       let cls = entry.ifaceClass!
       XCTAssertTrue(
         cls == 0x06 || cls == 0xFF,
-        "Nikon camera \(entry.id) should use USB class 0x06 (Still Image) or 0xFF (vendor), got 0x\(String(cls, radix: 16))")
+        "Nikon camera \(entry.id) should use USB class 0x06 (Still Image) or 0xFF (vendor), got 0x\(String(cls, radix: 16))"
+      )
     }
   }
 

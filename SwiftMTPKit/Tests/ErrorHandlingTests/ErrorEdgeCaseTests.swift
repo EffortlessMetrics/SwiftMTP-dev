@@ -75,7 +75,10 @@ final class ErrorEdgeCaseTests: XCTestCase {
     // Call index 0 + getStorageIDs: atCallIndex(0) is first in list
     let err = schedule.check(operation: .getStorageIDs, callIndex: 0, byteOffset: nil)
     XCTAssertNotNil(err)
-    if case .timeout = err {} else { XCTFail("Expected first-match (timeout), got \(String(describing: err))") }
+    if case .timeout = err {
+    } else {
+      XCTFail("Expected first-match (timeout), got \(String(describing: err))")
+    }
   }
 
   func testFaultScheduleConsumedFaultsRemovedFromList() {
@@ -95,7 +98,8 @@ final class ErrorEdgeCaseTests: XCTestCase {
 
   func testScheduledFaultPredefined_PipeStall() {
     let fault = ScheduledFault.pipeStall(on: .getObjectHandles)
-    if case .onOperation(.getObjectHandles) = fault.trigger {} else {
+    if case .onOperation(.getObjectHandles) = fault.trigger {
+    } else {
       XCTFail("Expected onOperation(.getObjectHandles)")
     }
     if case .io(let msg) = fault.error {
@@ -108,7 +112,8 @@ final class ErrorEdgeCaseTests: XCTestCase {
 
   func testScheduledFaultPredefined_TimeoutOnce() {
     let fault = ScheduledFault.timeoutOnce(on: .getDeviceInfo)
-    if case .onOperation(.getDeviceInfo) = fault.trigger {} else {
+    if case .onOperation(.getDeviceInfo) = fault.trigger {
+    } else {
       XCTFail("Expected onOperation(.getDeviceInfo)")
     }
     if case .timeout = fault.error {} else { XCTFail("Expected timeout") }
@@ -117,7 +122,8 @@ final class ErrorEdgeCaseTests: XCTestCase {
 
   func testScheduledFaultPredefined_BusyForRetries() {
     let fault = ScheduledFault.busyForRetries(5)
-    if case .onOperation(.executeCommand) = fault.trigger {} else {
+    if case .onOperation(.executeCommand) = fault.trigger {
+    } else {
       XCTFail("Expected onOperation(.executeCommand)")
     }
     if case .busy = fault.error {} else { XCTFail("Expected busy") }
@@ -126,7 +132,8 @@ final class ErrorEdgeCaseTests: XCTestCase {
 
   func testLinkOperationType_CaseIterableCoversAll() {
     let allOps = LinkOperationType.allCases
-    XCTAssertTrue(allOps.count >= 12, "Should have at least 12 operation types, got \(allOps.count)")
+    XCTAssertTrue(
+      allOps.count >= 12, "Should have at least 12 operation types, got \(allOps.count)")
     XCTAssertTrue(allOps.contains(.openUSB))
     XCTAssertTrue(allOps.contains(.openSession))
     XCTAssertTrue(allOps.contains(.closeSession))
@@ -157,8 +164,9 @@ final class ErrorEdgeCaseTests: XCTestCase {
     let phases: [TransportPhase] = [.bulkOut, .bulkIn, .responseWait]
     for phase in phases {
       let err = TransportError.timeoutInPhase(phase)
-      XCTAssertTrue(classifyTransport(err) == .transient,
-                    "timeoutInPhase(\(phase)) should be transient")
+      XCTAssertTrue(
+        classifyTransport(err) == .transient,
+        "timeoutInPhase(\(phase)) should be transient")
     }
   }
 
@@ -174,8 +182,9 @@ final class ErrorEdgeCaseTests: XCTestCase {
 
   func testProtocolError201E_SessionAlreadyOpen_Transient() {
     let err = MTPError.protocolError(code: 0x201E, message: nil)
-    XCTAssertTrue(classifyMTP(err) == .transient,
-                  "SessionAlreadyOpen should be recoverable/transient")
+    XCTAssertTrue(
+      classifyMTP(err) == .transient,
+      "SessionAlreadyOpen should be recoverable/transient")
   }
 
   func testProtocolErrorGenericCode_ClassifiedAsPermanent() {
@@ -250,7 +259,8 @@ final class ErrorEdgeCaseTests: XCTestCase {
     let l4: Error = l3
 
     guard case .notSupported(let msg) = l4 as? MTPError else {
-      XCTFail("Expected notSupported at top level"); return
+      XCTFail("Expected notSupported at top level")
+      return
     }
     XCTAssertTrue(msg.contains("USB bulk pipe reset"), "Original message lost in 5-level chain")
     XCTAssertTrue(msg.contains("0x1234"), "Offset context lost")
@@ -307,7 +317,8 @@ final class ErrorEdgeCaseTests: XCTestCase {
     let inner = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
       ScheduledFault(trigger: .onOperation(.deleteObject), error: .accessDenied, repeatCount: 1),
-      ScheduledFault(trigger: .onOperation(.moveObject), error: .io("Device locked"), repeatCount: 1),
+      ScheduledFault(
+        trigger: .onOperation(.moveObject), error: .io("Device locked"), repeatCount: 1),
     ])
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
     try await link.openSession(id: 1)
@@ -417,10 +428,12 @@ final class ErrorEdgeCaseTests: XCTestCase {
     } catch let err as FallbackAllFailedError {
       XCTAssertEqual(err.attempts.count, 3)
       XCTAssertTrue(err.attempts[0].error?.contains("stall") ?? false)
-      XCTAssertTrue(err.attempts[1].error?.contains("storageFull") ?? false
-                    || err.attempts[1].error?.contains("Storage") ?? false)
-      XCTAssertTrue(err.attempts[2].error?.contains("verification") ?? false
-                    || err.attempts[2].error?.contains("Verification") ?? false)
+      XCTAssertTrue(
+        err.attempts[1].error?.contains("storageFull") ?? false
+          || err.attempts[1].error?.contains("Storage") ?? false)
+      XCTAssertTrue(
+        err.attempts[2].error?.contains("verification") ?? false
+          || err.attempts[2].error?.contains("Verification") ?? false)
     }
   }
 
@@ -455,8 +468,9 @@ final class ErrorEdgeCaseTests: XCTestCase {
     await withTaskGroup(of: Void.self) { group in
       group.addTask {
         for _ in 0..<5 {
-          schedule.add(ScheduledFault(
-            trigger: .onOperation(.getDeviceInfo), error: .busy, repeatCount: 1))
+          schedule.add(
+            ScheduledFault(
+              trigger: .onOperation(.getDeviceInfo), error: .busy, repeatCount: 1))
         }
       }
       group.addTask {
@@ -481,7 +495,7 @@ final class ErrorEdgeCaseTests: XCTestCase {
       FallbackRung(name: "2c") { 2 },
     ])
     async let r3: FallbackResult<Int> = FallbackLadder.execute([
-      FallbackRung(name: "3a") { 3 },
+      FallbackRung(name: "3a") { 3 }
     ])
 
     let v1 = try await r1.value
@@ -668,7 +682,8 @@ final class ErrorEdgeCaseTests: XCTestCase {
     let schedule = FaultSchedule([
       ScheduledFault(trigger: .onOperation(.getStorageIDs), error: .timeout, repeatCount: 1),
       ScheduledFault(trigger: .onOperation(.getStorageInfo), error: .timeout, repeatCount: 1),
-      ScheduledFault(trigger: .onOperation(.getObjectHandles), error: .disconnected, repeatCount: 1),
+      ScheduledFault(
+        trigger: .onOperation(.getObjectHandles), error: .disconnected, repeatCount: 1),
     ])
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
     try await link.openSession(id: 1)

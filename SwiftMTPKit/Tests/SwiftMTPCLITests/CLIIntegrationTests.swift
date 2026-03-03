@@ -37,15 +37,16 @@ struct ExitCodeEdgeCases {
   func bsdRange() {
     let nonOk: [ExitCode] = [.usage, .unavailable, .software, .tempfail]
     for code in nonOk {
-      #expect(code.rawValue >= 64 && code.rawValue <= 78,
-              "ExitCode \(code) raw value \(code.rawValue) outside BSD sysexits range")
+      #expect(
+        code.rawValue >= 64 && code.rawValue <= 78,
+        "ExitCode \(code) raw value \(code.rawValue) outside BSD sysexits range")
     }
   }
 
   @Test("ExitCode Int32 representation is stable for scripting")
   func stableInt32() {
     let expected: [ExitCode: Int32] = [
-      .ok: 0, .usage: 64, .unavailable: 69, .software: 70, .tempfail: 75
+      .ok: 0, .usage: 64, .unavailable: 69, .software: 70, .tempfail: 75,
     ]
     for (code, value) in expected {
       #expect(code.rawValue == value)
@@ -253,7 +254,7 @@ struct HelpTextStructure {
       "probe", "usb-dump", "device-lab", "diag", "storages", "ls",
       "pull", "push", "bench", "mirror", "quirks", "info", "health",
       "collect", "submit", "add-device", "wizard", "delete", "move",
-      "events", "learn-promote", "bdd", "snapshot", "version"
+      "events", "learn-promote", "bdd", "snapshot", "version",
     ]
     // All known commands are non-empty and unique
     #expect(Set(knownCommands).count == knownCommands.count)
@@ -281,7 +282,7 @@ struct HelpTextStructure {
     let summaries = [
       MTPDeviceSummary(
         id: MTPDeviceID(raw: "d1"), manufacturer: "V", model: "M",
-        vendorID: 0x1234, productID: 0x5678, bus: 1, address: 1),
+        vendorID: 0x1234, productID: 0x5678, bus: 1, address: 1)
     ]
     let noFilter = DeviceFilter(vid: nil, pid: nil, bus: nil, address: nil)
 
@@ -294,11 +295,12 @@ struct HelpTextStructure {
     if case .none = r2 {} else { Issue.record("Expected .none") }
 
     // .multiple
-    let multi = summaries + [
-      MTPDeviceSummary(
-        id: MTPDeviceID(raw: "d2"), manufacturer: "V2", model: "M2",
-        vendorID: 0xAAAA, productID: 0xBBBB, bus: 2, address: 2),
-    ]
+    let multi =
+      summaries + [
+        MTPDeviceSummary(
+          id: MTPDeviceID(raw: "d2"), manufacturer: "V2", model: "M2",
+          vendorID: 0xAAAA, productID: 0xBBBB, bus: 2, address: 2)
+      ]
     let r3 = selectDevice(multi, filter: noFilter, noninteractive: true)
     if case .multiple = r3 {} else { Issue.record("Expected .multiple") }
   }
@@ -434,7 +436,7 @@ struct CLICrossCuttingIntegration {
     let devices = [
       MTPDeviceSummary(
         id: MTPDeviceID(raw: "dev1"), manufacturer: "V", model: "M",
-        vendorID: 0x1234, productID: 0x5678, bus: 1, address: 1),
+        vendorID: 0x1234, productID: 0x5678, bus: 1, address: 1)
     ]
     let result = selectDevice(devices, filter: filter, noninteractive: true)
     if case .none = result {} else { Issue.record("Expected .none for mismatched filter") }
@@ -455,7 +457,8 @@ struct CLICrossCuttingIntegration {
     for i in 0..<50 {
       details["key_\(i)"] = "value_\(i)"
     }
-    let envelope = CLIErrorEnvelope("large-test", details: details, timestamp: "2026-01-01T00:00:00Z")
+    let envelope = CLIErrorEnvelope(
+      "large-test", details: details, timestamp: "2026-01-01T00:00:00Z")
     let data = try JSONEncoder().encode(envelope)
     let decoded = try JSONDecoder().decode(CLIErrorEnvelope.self, from: data)
     #expect(decoded.details?.count == 50)

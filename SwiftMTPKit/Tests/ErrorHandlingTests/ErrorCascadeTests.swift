@@ -67,7 +67,8 @@ final class ErrorCascadeTests: XCTestCase {
 
     // Caller narrows from generic Error → MTPError → TransportError
     guard let mtpErr = apiErr as? MTPError else {
-      XCTFail("Expected MTPError"); return
+      XCTFail("Expected MTPError")
+      return
     }
     if case .transport(let inner) = mtpErr {
       XCTAssertEqual(inner, .accessDenied)
@@ -340,11 +341,10 @@ final class ErrorCascadeTests: XCTestCase {
     let errors = await withTaskGroup(of: MTPError?.self, returning: [MTPError].self) { group in
       for i in 0..<5 {
         group.addTask {
-          if i % 2 == 0 {
-            return MTPError.timeout
-          } else {
+          guard i % 2 == 0 else {
             return nil  // success
           }
+          return MTPError.timeout
         }
       }
       var collected: [MTPError] = []
@@ -414,7 +414,8 @@ final class ErrorCascadeTests: XCTestCase {
 
     let recent = await log.recent(limit: 10)
     XCTAssertEqual(recent.count, 6)
-    XCTAssertEqual(recent.map(\.outcomeClass), [.ok, .timeout, .stall, .ioError, .deviceError, .cancelled])
+    XCTAssertEqual(
+      recent.map(\.outcomeClass), [.ok, .timeout, .stall, .ioError, .deviceError, .cancelled])
   }
 
   func testTransactionLogDumpRedactsSerials() async {
@@ -449,8 +450,9 @@ final class ErrorCascadeTests: XCTestCase {
     ]
     for (error, expected) in errors {
       let desc = actionableDescription(for: error)
-      XCTAssertTrue(desc.contains(expected) || desc.lowercased().contains(expected.lowercased()),
-                     "actionableDescription for \(error) should contain '\(expected)', got '\(desc)'")
+      XCTAssertTrue(
+        desc.contains(expected) || desc.lowercased().contains(expected.lowercased()),
+        "actionableDescription for \(error) should contain '\(expected)', got '\(desc)'")
     }
   }
 

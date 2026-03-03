@@ -358,8 +358,10 @@ final class ObjectCatalogEdgeCaseTests: XCTestCase {
     try await actor.upsertObjects(
       deviceId: nonExistentDevice,
       objects: [
-        (storageId: 1, handle: 1, parentHandle: nil, name: "a.txt",
-         pathKey: "/a.txt", size: 100, mtime: Date(), format: 0x3004, generation: 1)
+        (
+          storageId: 1, handle: 1, parentHandle: nil, name: "a.txt",
+          pathKey: "/a.txt", size: 100, mtime: Date(), format: 0x3004, generation: 1
+        )
       ])
     // Should return empty since device guard clause returns early
     let rows = try await actor.fetchObjects(deviceId: nonExistentDevice, generation: 1)
@@ -423,14 +425,18 @@ final class ObjectCatalogEdgeCaseTests: XCTestCase {
     let deviceId = "large-batch-\(UUID().uuidString)"
     _ = try await actor.upsertDevice(id: deviceId, manufacturer: "Test", model: "Model")
 
-    let objects = (0..<200).map { i -> (
-      storageId: Int, handle: Int, parentHandle: Int?, name: String, pathKey: String,
-      size: Int64?, mtime: Date?, format: Int, generation: Int
-    ) in
-      (storageId: 1, handle: i, parentHandle: nil, name: "file\(i).dat",
-       pathKey: "/files/file\(i).dat", size: Int64(i * 1024), mtime: Date(),
-       format: 0x3004, generation: 1)
-    }
+    let objects = (0..<200)
+      .map {
+        i -> (
+          storageId: Int, handle: Int, parentHandle: Int?, name: String, pathKey: String,
+          size: Int64?, mtime: Date?, format: Int, generation: Int
+        ) in
+        (
+          storageId: 1, handle: i, parentHandle: nil, name: "file\(i).dat",
+          pathKey: "/files/file\(i).dat", size: Int64(i * 1024), mtime: Date(),
+          format: 0x3004, generation: 1
+        )
+      }
 
     try await actor.upsertObjects(deviceId: deviceId, objects: objects)
     let rows = try await actor.fetchObjects(deviceId: deviceId, generation: 1)

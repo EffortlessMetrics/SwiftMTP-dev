@@ -13,10 +13,11 @@ import XCTest
 /// Generator for storage IDs.
 private enum StorageIDGenerator {
   static var arbitrary: Gen<UInt32> {
-    Gen<UInt32>.fromElements(of: [
-      0x0001_0001, 0x0001_0002, 0x0002_0001,
-      0x0001_0003, 0xFFFF_FFFF, 1,
-    ])
+    Gen<UInt32>
+      .fromElements(of: [
+        0x0001_0001, 0x0001_0002, 0x0002_0001,
+        0x0001_0003, 0xFFFF_FFFF, 1,
+      ])
   }
 }
 
@@ -29,32 +30,37 @@ private enum PathComponentsGen {
       "IMG_001.jpg", "track.mp3", "notes.txt", "photo.png",
       "naïve", "café", "文件", "ファイル", "emoji📷",
     ]
-    return Gen<Int>.choose((0, 10)).flatMap { depth in
-      if depth == 0 { return Gen.pure([String]()) }
-      return Gen<[String]>.compose { composer in
-        (0..<depth).map { _ in
-          composer.generate(using: Gen<String>.fromElements(of: allNames))
-        }
+    return Gen<Int>.choose((0, 10))
+      .flatMap { depth in
+        if depth == 0 { return Gen.pure([String]()) }
+        return Gen<[String]>
+          .compose { composer in
+            (0..<depth)
+              .map { _ in
+                composer.generate(using: Gen<String>.fromElements(of: allNames))
+              }
+          }
       }
-    }
   }
 }
 
 /// Generator for special-character path components.
 private enum SpecialCharComponentGen {
   static var arbitrary: Gen<String> {
-    Gen<String>.one(of: [
-      Gen<String>.fromElements(of: [
-        "file with spaces", "file-with-dashes", "file_with_underscores",
-        "file.multiple.dots.txt", "UPPERCASE", "MiXeD CaSe",
-        "naïve café", "日本語ファイル", "한국어파일", "中文文件",
-        "emoji📷photo", "résumé.pdf", "Ångström.dat",
-        "(parentheses)", "[brackets]", "{braces}",
-        "file+plus", "file=equals", "file@at",
-        "file#hash", "file$dollar", "file%percent",
-        "file&ampersand", "file!exclaim",
-      ]),
-    ])
+    Gen<String>
+      .one(of: [
+        Gen<String>
+          .fromElements(of: [
+            "file with spaces", "file-with-dashes", "file_with_underscores",
+            "file.multiple.dots.txt", "UPPERCASE", "MiXeD CaSe",
+            "naïve café", "日本語ファイル", "한국어파일", "中文文件",
+            "emoji📷photo", "résumé.pdf", "Ångström.dat",
+            "(parentheses)", "[brackets]", "{braces}",
+            "file+plus", "file=equals", "file@at",
+            "file#hash", "file$dollar", "file%percent",
+            "file&ampersand", "file!exclaim",
+          ])
+      ])
   }
 }
 
@@ -285,10 +291,11 @@ final class PathPropertyTests: XCTestCase {
   func testSlashesInComponentsAreStripped() {
     property("Forward/backslashes are removed from components")
       <- forAll(
-        Gen<String>.fromElements(of: [
-          "path/traversal", "back\\slash", "a/b/c",
-          "/leading", "trailing/", "mixed/back\\slash",
-        ])
+        Gen<String>
+          .fromElements(of: [
+            "path/traversal", "back\\slash", "a/b/c",
+            "/leading", "trailing/", "mixed/back\\slash",
+          ])
       ) { (input: String) in
         let normalized = PathKey.normalizeComponent(input)
         return !normalized.contains("/") && !normalized.contains("\\")

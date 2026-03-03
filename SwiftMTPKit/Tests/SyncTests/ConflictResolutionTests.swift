@@ -34,10 +34,12 @@ final class ConflictResolutionTests: XCTestCase {
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
 
     // Both sides have the same filename but different content
-    try "local version A".write(
-      to: localDir.appendingPathComponent("conflict.txt"), atomically: true, encoding: .utf8)
-    try "remote version B".write(
-      to: remoteDir.appendingPathComponent("conflict.txt"), atomically: true, encoding: .utf8)
+    try "local version A"
+      .write(
+        to: localDir.appendingPathComponent("conflict.txt"), atomically: true, encoding: .utf8)
+    try "remote version B"
+      .write(
+        to: remoteDir.appendingPathComponent("conflict.txt"), atomically: true, encoding: .utf8)
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
     let conflicts = detectConflicts(local: localDir, remote: remoteDir, common: changes.common)
@@ -71,10 +73,12 @@ final class ConflictResolutionTests: XCTestCase {
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
 
     for i in 1...5 {
-      try "local-\(i)".write(
-        to: localDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
-      try "remote-\(i)".write(
-        to: remoteDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
+      try "local-\(i)"
+        .write(
+          to: localDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
+      try "remote-\(i)"
+        .write(
+          to: remoteDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
     }
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
@@ -92,9 +96,11 @@ final class ConflictResolutionTests: XCTestCase {
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
 
     // File exists only on remote (deleted on local)
-    try "remote modified".write(
-      to: remoteDir.appendingPathComponent("deleted_locally.txt"), atomically: true, encoding: .utf8
-    )
+    try "remote modified"
+      .write(
+        to: remoteDir.appendingPathComponent("deleted_locally.txt"), atomically: true,
+        encoding: .utf8
+      )
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
     XCTAssertEqual(changes.remoteOnly.count, 1)
@@ -108,9 +114,11 @@ final class ConflictResolutionTests: XCTestCase {
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
 
     // File exists only locally (deleted on remote)
-    try "local modified".write(
-      to: localDir.appendingPathComponent("deleted_remotely.txt"), atomically: true, encoding: .utf8
-    )
+    try "local modified"
+      .write(
+        to: localDir.appendingPathComponent("deleted_remotely.txt"), atomically: true,
+        encoding: .utf8
+      )
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
     XCTAssertEqual(changes.localOnly.count, 1)
@@ -140,10 +148,12 @@ final class ConflictResolutionTests: XCTestCase {
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
     try FileManager.default.createDirectory(at: mergedDir, withIntermediateDirectories: true)
 
-    try "local wins".write(
-      to: localDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
-    try "remote version".write(
-      to: remoteDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
+    try "local wins"
+      .write(
+        to: localDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
+    try "remote version"
+      .write(
+        to: remoteDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
 
     resolveConflict(
       file: "doc.txt", localDir: localDir, remoteDir: remoteDir, mergedDir: mergedDir,
@@ -164,10 +174,12 @@ final class ConflictResolutionTests: XCTestCase {
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
     try FileManager.default.createDirectory(at: mergedDir, withIntermediateDirectories: true)
 
-    try "local version".write(
-      to: localDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
-    try "remote wins".write(
-      to: remoteDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
+    try "local version"
+      .write(
+        to: localDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
+    try "remote wins"
+      .write(
+        to: remoteDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
 
     resolveConflict(
       file: "doc.txt", localDir: localDir, remoteDir: remoteDir, mergedDir: mergedDir,

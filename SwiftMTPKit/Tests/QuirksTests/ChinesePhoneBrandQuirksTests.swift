@@ -83,7 +83,8 @@ final class ChinesePhoneBrandQuirksTests: XCTestCase {
     let ratio = Double(branded.count) / Double(xiaomiEntries.count)
     XCTAssertGreaterThan(
       ratio, 0.90,
-      "≥90% of VID 0x2717 entries should start with 'xiaomi-', 'poco-', or 'redmi-' (\(branded.count)/\(xiaomiEntries.count))")
+      "≥90% of VID 0x2717 entries should start with 'xiaomi-', 'poco-', or 'redmi-' (\(branded.count)/\(xiaomiEntries.count))"
+    )
   }
 
   func testMajorityOfOnePlusIDsStartWithKnownBrands() {
@@ -95,7 +96,8 @@ final class ChinesePhoneBrandQuirksTests: XCTestCase {
     let ratio = Double(branded.count) / Double(oneplusEntries.count)
     XCTAssertGreaterThan(
       ratio, 0.95,
-      "≥95% of VID 0x2a70 entries should start with 'oneplus-', 'nothing-', or 'cmf-' (\(branded.count)/\(oneplusEntries.count))")
+      "≥95% of VID 0x2a70 entries should start with 'oneplus-', 'nothing-', or 'cmf-' (\(branded.count)/\(oneplusEntries.count))"
+    )
   }
 
   // MARK: - POCO Uses Xiaomi VID
@@ -373,7 +375,8 @@ final class ChinesePhoneBrandQuirksTests: XCTestCase {
       let hasPostOpen = entry.hooks!.contains { $0.phase == .postOpenSession }
       XCTAssertTrue(
         hasPostOpen,
-        "Promoted Xiaomi entry '\(entry.id)' should have postOpenSession hook for MIUI MTP readiness")
+        "Promoted Xiaomi entry '\(entry.id)' should have postOpenSession hook for MIUI MTP readiness"
+      )
     }
   }
 

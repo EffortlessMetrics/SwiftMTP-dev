@@ -73,7 +73,8 @@ final class CodecFuzzRegressionTests: XCTestCase {
     // Should parse without crashing; the surrogate pair forms an emoji
     XCTAssertNotNil(result)
     if let s = result {
-      XCTAssertTrue(s.contains("😀") || s.count > 0, "Should decode surrogate pair or produce non-empty string")
+      XCTAssertTrue(
+        s.contains("😀") || s.count > 0, "Should decode surrogate pair or produce non-empty string")
     }
   }
 
@@ -142,8 +143,8 @@ final class CodecFuzzRegressionTests: XCTestCase {
     let data = Data([
       0x01, 0x00, 0x00, 0x00,  // count = 1
       0xFF, 0xFF, 0xFF, 0xFF,  // handle
-      0x01, 0xDC,              // property code
-      0x06, 0x00,              // data type = UINT32
+      0x01, 0xDC,  // property code
+      0x06, 0x00,  // data type = UINT32
       0x42, 0x00, 0x00, 0x00,  // value
     ])
     let result = PTPPropList.parse(from: data)
@@ -165,8 +166,8 @@ final class CodecFuzzRegressionTests: XCTestCase {
     let data = Data([
       0x01, 0x00, 0x00, 0x00,  // count = 1
       0x01, 0x00, 0x00, 0x00,  // handle
-      0x01, 0xDC,              // property code
-      0x06, 0x00,              // data type = UINT32
+      0x01, 0xDC,  // property code
+      0x06, 0x00,  // data type = UINT32
       // missing value bytes
     ])
     let result = PTPPropList.parse(from: data)
@@ -179,10 +180,10 @@ final class CodecFuzzRegressionTests: XCTestCase {
     // Event container with code=0x0000, should parse structurally
     let data = Data([0x0C, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00])
     var reader = PTPReader(data: data)
-    XCTAssertEqual(reader.u32(), 12)   // length
-    XCTAssertEqual(reader.u16(), 4)    // type = event
-    XCTAssertEqual(reader.u16(), 0)    // code = 0 (invalid)
-    XCTAssertEqual(reader.u32(), 1)    // txid
+    XCTAssertEqual(reader.u32(), 12)  // length
+    XCTAssertEqual(reader.u16(), 4)  // type = event
+    XCTAssertEqual(reader.u16(), 0)  // code = 0 (invalid)
+    XCTAssertEqual(reader.u32(), 1)  // txid
   }
 
   func testEventContainerVendorCode() {

@@ -66,7 +66,8 @@ struct LiveIndexCRUDTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     try await idx.insertObject(makeObj(handle: 1, name: "v1.txt", sizeBytes: 100), deviceId: "dev")
-    try await idx.upsertObjects([makeObj(handle: 1, name: "v2.txt", sizeBytes: 200)], deviceId: "dev")
+    try await idx.upsertObjects(
+      [makeObj(handle: 1, name: "v2.txt", sizeBytes: 200)], deviceId: "dev")
 
     let got = try await idx.object(deviceId: "dev", handle: 1)
     #expect(got?.name == "v2.txt")
@@ -124,8 +125,10 @@ struct LiveIndexPathResolutionTests {
 
     // root -> DCIM -> 2024 -> photo.jpg
     let root = makeObj(handle: 1, name: "DCIM", pathKey: "00010001/DCIM", isDirectory: true)
-    let mid = makeObj(handle: 2, parentHandle: 1, name: "2024", pathKey: "00010001/DCIM/2024", isDirectory: true)
-    let leaf = makeObj(handle: 3, parentHandle: 2, name: "photo.jpg", pathKey: "00010001/DCIM/2024/photo.jpg")
+    let mid = makeObj(
+      handle: 2, parentHandle: 1, name: "2024", pathKey: "00010001/DCIM/2024", isDirectory: true)
+    let leaf = makeObj(
+      handle: 3, parentHandle: 2, name: "photo.jpg", pathKey: "00010001/DCIM/2024/photo.jpg")
     try await idx.upsertObjects([root, mid, leaf], deviceId: "dev")
 
     // Walk up from leaf resolving path segments
@@ -148,7 +151,8 @@ struct LiveIndexPathResolutionTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.insertObject(makeObj(handle: 1, parentHandle: nil, name: "Music"), deviceId: "dev")
+    try await idx.insertObject(
+      makeObj(handle: 1, parentHandle: nil, name: "Music"), deviceId: "dev")
     try await idx.insertObject(makeObj(handle: 2, parentHandle: nil, name: "DCIM"), deviceId: "dev")
 
     let roots = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
@@ -175,7 +179,8 @@ struct LiveIndexConcurrentAccessTests {
       for _ in 0..<4 {
         group.addTask {
           for _ in 0..<40 {
-            let kids = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
+            let kids = try await idx.children(
+              deviceId: "dev", storageId: 0x10001, parentHandle: nil)
             #expect(kids.count >= 50)
           }
         }
@@ -183,9 +188,10 @@ struct LiveIndexConcurrentAccessTests {
       // 1 writer
       group.addTask {
         for batch in 0..<10 {
-          let objs = (0..<20).map { j in
-            makeObj(handle: UInt32(1000 + batch * 20 + j), name: "new\(batch)_\(j).txt")
-          }
+          let objs = (0..<20)
+            .map { j in
+              makeObj(handle: UInt32(1000 + batch * 20 + j), name: "new\(batch)_\(j).txt")
+            }
           try await idx.upsertObjects(objs, deviceId: "dev")
         }
       }
@@ -193,7 +199,7 @@ struct LiveIndexConcurrentAccessTests {
     }
 
     let total = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
-    #expect(total.count == 250) // 50 seed + 200 new
+    #expect(total.count == 250)  // 50 seed + 200 new
   }
 
   @Test("Concurrent change counter increments are monotonic")
@@ -231,18 +237,20 @@ struct LiveIndexStorageEnumerationTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     // Storage A
-    try await idx.upsertStorage(IndexedStorage(
-      deviceId: "dev", storageId: 0xA, description: "Internal",
-      capacity: 64_000_000, free: 32_000_000, readOnly: false
-    ))
+    try await idx.upsertStorage(
+      IndexedStorage(
+        deviceId: "dev", storageId: 0xA, description: "Internal",
+        capacity: 64_000_000, free: 32_000_000, readOnly: false
+      ))
     try await idx.insertObject(makeObj(handle: 1, storageId: 0xA, name: "a1.txt"), deviceId: "dev")
     try await idx.insertObject(makeObj(handle: 2, storageId: 0xA, name: "a2.txt"), deviceId: "dev")
 
     // Storage B
-    try await idx.upsertStorage(IndexedStorage(
-      deviceId: "dev", storageId: 0xB, description: "SD Card",
-      capacity: 32_000_000, free: 16_000_000, readOnly: true
-    ))
+    try await idx.upsertStorage(
+      IndexedStorage(
+        deviceId: "dev", storageId: 0xB, description: "SD Card",
+        capacity: 32_000_000, free: 16_000_000, readOnly: true
+      ))
     try await idx.insertObject(makeObj(handle: 3, storageId: 0xB, name: "b1.txt"), deviceId: "dev")
 
     let storages = try await idx.storages(deviceId: "dev")
@@ -268,14 +276,16 @@ struct LiveIndexStorageEnumerationTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertStorage(IndexedStorage(
-      deviceId: "dev", storageId: 1, description: "Main",
-      capacity: 100, free: 80, readOnly: false
-    ))
-    try await idx.upsertStorage(IndexedStorage(
-      deviceId: "dev", storageId: 1, description: "Main",
-      capacity: 100, free: 50, readOnly: false
-    ))
+    try await idx.upsertStorage(
+      IndexedStorage(
+        deviceId: "dev", storageId: 1, description: "Main",
+        capacity: 100, free: 80, readOnly: false
+      ))
+    try await idx.upsertStorage(
+      IndexedStorage(
+        deviceId: "dev", storageId: 1, description: "Main",
+        capacity: 100, free: 50, readOnly: false
+      ))
 
     let storages = try await idx.storages(deviceId: "dev")
     #expect(storages.count == 1)
@@ -380,8 +390,10 @@ struct LiveIndexSearchFilterTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     try await idx.insertObject(makeObj(handle: 1, name: "DCIM", isDirectory: true), deviceId: "dev")
-    try await idx.insertObject(makeObj(handle: 2, name: "readme.txt", isDirectory: false), deviceId: "dev")
-    try await idx.insertObject(makeObj(handle: 3, name: "Music", isDirectory: true), deviceId: "dev")
+    try await idx.insertObject(
+      makeObj(handle: 2, name: "readme.txt", isDirectory: false), deviceId: "dev")
+    try await idx.insertObject(
+      makeObj(handle: 3, name: "Music", isDirectory: true), deviceId: "dev")
 
     let all = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
     let dirs = all.filter(\.isDirectory)
@@ -459,8 +471,10 @@ struct LiveIndexEdgeCaseTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.insertObject(makeObj(handle: 1, name: "first.txt", sizeBytes: 10), deviceId: "dev")
-    try await idx.insertObject(makeObj(handle: 1, name: "second.txt", sizeBytes: 20), deviceId: "dev")
+    try await idx.insertObject(
+      makeObj(handle: 1, name: "first.txt", sizeBytes: 10), deviceId: "dev")
+    try await idx.insertObject(
+      makeObj(handle: 1, name: "second.txt", sizeBytes: 20), deviceId: "dev")
 
     let got = try await idx.object(deviceId: "dev", handle: 1)
     #expect(got?.name == "second.txt")
@@ -500,12 +514,13 @@ struct LiveIndexEdgeCaseTests {
     var objects: [IndexedObject] = []
     for level in 0..<depth {
       let parent: UInt32? = level == 0 ? nil : UInt32(level - 1)
-      objects.append(makeObj(
-        handle: UInt32(level),
-        parentHandle: parent,
-        name: "level\(level)",
-        isDirectory: level < depth - 1
-      ))
+      objects.append(
+        makeObj(
+          handle: UInt32(level),
+          parentHandle: parent,
+          name: "level\(level)",
+          isDirectory: level < depth - 1
+        ))
     }
     try await idx.upsertObjects(objects, deviceId: "dev")
 
@@ -591,13 +606,14 @@ struct LiveIndexLargeDatasetTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     let count = 10_000
-    let objects = (0..<count).map { i in
-      makeObj(
-        handle: UInt32(i),
-        name: "file\(i).dat",
-        pathKey: "00010001/dir\(i / 100)/file\(i).dat"
-      )
-    }
+    let objects = (0..<count)
+      .map { i in
+        makeObj(
+          handle: UInt32(i),
+          name: "file\(i).dat",
+          pathKey: "00010001/dir\(i / 100)/file\(i).dat"
+        )
+      }
 
     let t0 = Date()
     try await idx.upsertObjects(objects, deviceId: "dev")

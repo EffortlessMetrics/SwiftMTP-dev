@@ -25,10 +25,13 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     XCTAssertNil(reader.u64())
     XCTAssertNil(reader.bytes(1))
     XCTAssertNil(reader.string())
-    for dt: UInt16 in [0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006,
-                       0x0007, 0x0008, 0x0009, 0x000A, 0xFFFF, 0x4006] {
+    for dt: UInt16 in [
+      0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006,
+      0x0007, 0x0008, 0x0009, 0x000A, 0xFFFF, 0x4006,
+    ] {
       var r = PTPReader(data: data)
-      XCTAssertNil(r.value(dt: dt), "dt=0x\(String(format: "%04X", dt)) should return nil for empty data")
+      XCTAssertNil(
+        r.value(dt: dt), "dt=0x\(String(format: "%04X", dt)) should return nil for empty data")
     }
   }
 
@@ -82,10 +85,12 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
 
   func testTruncatedContainerAtEveryByte() {
     // A valid 12-byte container
-    let full = Data([0x0C, 0x00, 0x00, 0x00,  // length=12
-                     0x01, 0x00,              // type=command
-                     0x01, 0x10,              // code=GetDeviceInfo
-                     0x01, 0x00, 0x00, 0x00]) // txid=1
+    let full = Data([
+      0x0C, 0x00, 0x00, 0x00,  // length=12
+      0x01, 0x00,  // type=command
+      0x01, 0x10,  // code=GetDeviceInfo
+      0x01, 0x00, 0x00, 0x00,
+    ])  // txid=1
 
     for truncLen in 0..<12 {
       let truncated = Data(full.prefix(truncLen))
@@ -120,11 +125,13 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
 
   func testTruncatedContainerWithParams() {
     // 16-byte container (header + 1 param) truncated at byte 14
-    let full = Data([0x10, 0x00, 0x00, 0x00,
-                     0x03, 0x00,
-                     0x01, 0x20,
-                     0x01, 0x00, 0x00, 0x00,
-                     0xAA, 0xBB, 0xCC, 0xDD])
+    let full = Data([
+      0x10, 0x00, 0x00, 0x00,
+      0x03, 0x00,
+      0x01, 0x20,
+      0x01, 0x00, 0x00, 0x00,
+      0xAA, 0xBB, 0xCC, 0xDD,
+    ])
     let truncated = full.prefix(14)
     var reader = PTPReader(data: Data(truncated))
     XCTAssertEqual(reader.u32(), 16)
@@ -167,7 +174,11 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
   func testContainerLengthSmallerThanActual() {
     // Header says 12 but buffer has 24 bytes
     var data = Data(repeating: 0, count: 24)
-    data[0] = 0x0C; data[4] = 0x01; data[6] = 0x01; data[7] = 0x10; data[8] = 0x01
+    data[0] = 0x0C
+    data[4] = 0x01
+    data[6] = 0x01
+    data[7] = 0x10
+    data[8] = 0x01
     var reader = PTPReader(data: data)
     XCTAssertEqual(reader.u32(), 12)
     // Reader doesn't enforce length boundary — reads beyond
@@ -180,9 +191,11 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
 
   func testContainerLengthLargerThanActual() {
     // Header says 100 but only 12 bytes of data
-    let data = Data([0x64, 0x00, 0x00, 0x00,
-                     0x01, 0x00, 0x01, 0x10,
-                     0x01, 0x00, 0x00, 0x00])
+    let data = Data([
+      0x64, 0x00, 0x00, 0x00,
+      0x01, 0x00, 0x01, 0x10,
+      0x01, 0x00, 0x00, 0x00,
+    ])
     var reader = PTPReader(data: data)
     XCTAssertEqual(reader.u32(), 100)
     XCTAssertEqual(reader.u16(), 1)
@@ -195,25 +208,30 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
 
   func testStringSurrogatePairEmoji() {
     // 😀 = U+1F600 = surrogate pair D83D DE00
-    let data = Data([0x03,              // charCount=3 (high, low, null)
-                     0x3D, 0xD8,        // D83D
-                     0x00, 0xDE,        // DE00
-                     0x00, 0x00])       // null terminator
+    let data = Data([
+      0x03,  // charCount=3 (high, low, null)
+      0x3D, 0xD8,  // D83D
+      0x00, 0xDE,  // DE00
+      0x00, 0x00,
+    ])  // null terminator
     var offset = 0
     let result = PTPString.parse(from: data, at: &offset)
     XCTAssertNotNil(result)
     if let s = result {
-      XCTAssertTrue(s.unicodeScalars.contains(where: { $0.value == 0x1F600 }),
-                    "Should contain U+1F600 emoji")
+      XCTAssertTrue(
+        s.unicodeScalars.contains(where: { $0.value == 0x1F600 }),
+        "Should contain U+1F600 emoji")
     }
   }
 
   func testStringBOMPrefix() {
     // UTF-16LE BOM (0xFEFF) followed by 'A' and null
-    let data = Data([0x03,
-                     0xFF, 0xFE,        // BOM
-                     0x41, 0x00,        // 'A'
-                     0x00, 0x00])       // null
+    let data = Data([
+      0x03,
+      0xFF, 0xFE,  // BOM
+      0x41, 0x00,  // 'A'
+      0x00, 0x00,
+    ])  // null
     var offset = 0
     let result = PTPString.parse(from: data, at: &offset)
     XCTAssertNotNil(result)
@@ -223,10 +241,12 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
 
   func testStringAllNullCharacters() {
     // 3 null characters — all skipped by parser
-    let data = Data([0x03,
-                     0x00, 0x00,
-                     0x00, 0x00,
-                     0x00, 0x00])
+    let data = Data([
+      0x03,
+      0x00, 0x00,
+      0x00, 0x00,
+      0x00, 0x00,
+    ])
     var offset = 0
     let result = PTPString.parse(from: data, at: &offset)
     XCTAssertEqual(result, "")
@@ -268,10 +288,18 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
   func testContainerLengthMaxUInt32() {
     var data = Data(count: 12)
     // length = 0xFFFFFFFF
-    data[0] = 0xFF; data[1] = 0xFF; data[2] = 0xFF; data[3] = 0xFF
-    data[4] = 0x01; data[5] = 0x00
-    data[6] = 0x01; data[7] = 0x10
-    data[8] = 0x01; data[9] = 0x00; data[10] = 0x00; data[11] = 0x00
+    data[0] = 0xFF
+    data[1] = 0xFF
+    data[2] = 0xFF
+    data[3] = 0xFF
+    data[4] = 0x01
+    data[5] = 0x00
+    data[6] = 0x01
+    data[7] = 0x10
+    data[8] = 0x01
+    data[9] = 0x00
+    data[10] = 0x00
+    data[11] = 0x00
     var reader = PTPReader(data: data)
     XCTAssertEqual(reader.u32(), 0xFFFF_FFFF)
     // Can still read remaining header fields
@@ -375,7 +403,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: data)
     if case .int8(let v) = reader.value(dt: 0x0001) {
       XCTAssertEqual(v, value)
-    } else { XCTFail("Expected int8") }
+    } else {
+      XCTFail("Expected int8")
+    }
   }
 
   func testRoundTripUInt8() {
@@ -383,7 +413,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: data)
     if case .uint8(let v) = reader.value(dt: 0x0002) {
       XCTAssertEqual(v, 0xAB)
-    } else { XCTFail("Expected uint8") }
+    } else {
+      XCTFail("Expected uint8")
+    }
   }
 
   func testRoundTripInt16() {
@@ -394,7 +426,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: data)
     if case .int16(let v) = reader.value(dt: 0x0003) {
       XCTAssertEqual(v, value)
-    } else { XCTFail("Expected int16") }
+    } else {
+      XCTFail("Expected int16")
+    }
   }
 
   func testRoundTripUInt16() {
@@ -402,7 +436,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: data)
     if case .uint16(let v) = reader.value(dt: 0x0004) {
       XCTAssertEqual(v, 0xBEEF)
-    } else { XCTFail("Expected uint16") }
+    } else {
+      XCTFail("Expected uint16")
+    }
   }
 
   func testRoundTripInt32() {
@@ -411,7 +447,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: data)
     if case .int32(let v) = reader.value(dt: 0x0005) {
       XCTAssertEqual(v, value)
-    } else { XCTFail("Expected int32") }
+    } else {
+      XCTFail("Expected int32")
+    }
   }
 
   func testRoundTripUInt32() {
@@ -419,7 +457,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: data)
     if case .uint32(let v) = reader.value(dt: 0x0006) {
       XCTAssertEqual(v, 0xDEAD_BEEF)
-    } else { XCTFail("Expected uint32") }
+    } else {
+      XCTFail("Expected uint32")
+    }
   }
 
   func testRoundTripInt64() {
@@ -428,7 +468,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: data)
     if case .int64(let v) = reader.value(dt: 0x0007) {
       XCTAssertEqual(v, value)
-    } else { XCTFail("Expected int64") }
+    } else {
+      XCTFail("Expected int64")
+    }
   }
 
   func testRoundTripUInt64() {
@@ -436,7 +478,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: data)
     if case .uint64(let v) = reader.value(dt: 0x0008) {
       XCTAssertEqual(v, 0xCAFE_BABE_DEAD_BEEF)
-    } else { XCTFail("Expected uint64") }
+    } else {
+      XCTFail("Expected uint64")
+    }
   }
 
   func testRoundTripInt128() {
@@ -444,7 +488,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: bytes)
     if case .int128(let d) = reader.value(dt: 0x0009) {
       XCTAssertEqual(d, bytes)
-    } else { XCTFail("Expected int128") }
+    } else {
+      XCTFail("Expected int128")
+    }
   }
 
   func testRoundTripUInt128() {
@@ -452,7 +498,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: bytes)
     if case .uint128(let d) = reader.value(dt: 0x000A) {
       XCTAssertEqual(d, bytes)
-    } else { XCTFail("Expected uint128") }
+    } else {
+      XCTFail("Expected uint128")
+    }
   }
 
   func testRoundTripString() {
@@ -461,7 +509,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: encoded)
     if case .string(let s) = reader.value(dt: 0xFFFF) {
       XCTAssertEqual(s, original)
-    } else { XCTFail("Expected string") }
+    } else {
+      XCTFail("Expected string")
+    }
   }
 
   func testRoundTripEmptyString() {
@@ -469,7 +519,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: encoded)
     if case .string(let s) = reader.value(dt: 0xFFFF) {
       XCTAssertEqual(s, "")
-    } else { XCTFail("Expected empty string") }
+    } else {
+      XCTFail("Expected empty string")
+    }
   }
 
   func testRoundTripArrayOfUInt16() {
@@ -486,7 +538,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
       if case .uint16(let v) = arr[0] { XCTAssertEqual(v, 100) }
       if case .uint16(let v) = arr[1] { XCTAssertEqual(v, 200) }
       if case .uint16(let v) = arr[2] { XCTAssertEqual(v, 0xFFFF) }
-    } else { XCTFail("Expected array of uint16") }
+    } else {
+      XCTFail("Expected array of uint16")
+    }
   }
 
   func testEmptyArray() {
@@ -494,7 +548,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     var reader = PTPReader(data: data)
     if case .array(let arr) = reader.value(dt: 0x4006) {
       XCTAssertEqual(arr.count, 0)
-    } else { XCTFail("Expected empty array") }
+    } else {
+      XCTFail("Expected empty array")
+    }
   }
 
   func testArrayOfInt8() {
@@ -507,7 +563,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
       XCTAssertEqual(arr.count, 2)
       if case .int8(let v) = arr[0] { XCTAssertEqual(v, -1) }
       if case .int8(let v) = arr[1] { XCTAssertEqual(v, 127) }
-    } else { XCTFail("Expected array of int8") }
+    } else {
+      XCTFail("Expected array of int8")
+    }
   }
 
   func testArrayOfUInt64() {
@@ -518,7 +576,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     if case .array(let arr) = reader.value(dt: 0x4008) {
       XCTAssertEqual(arr.count, 1)
       if case .uint64(let v) = arr[0] { XCTAssertEqual(v, 0x0102030405060708) }
-    } else { XCTFail("Expected array of uint64") }
+    } else {
+      XCTFail("Expected array of uint64")
+    }
   }
 
   // MARK: - ObjectInfo Encode Edge Cases
@@ -601,8 +661,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
       storageID: 0x00010001, parentHandle: 0, format: 0x3001,
       size: 100, name: "a.txt", omitOptionalStringFields: true
     )
-    XCTAssertGreaterThan(withStrings.count, withoutStrings.count,
-                         "Omitting optional strings should reduce size")
+    XCTAssertGreaterThan(
+      withStrings.count, withoutStrings.count,
+      "Omitting optional strings should reduce size")
   }
 
   func testObjectInfoParentHandleOverride() {
@@ -632,10 +693,10 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
   func testDeviceInfoWithLargeArrays() {
     var data = Data()
     data.append(MTPEndianCodec.encode(UInt16(0x0100)))  // StandardVersion
-    data.append(MTPEndianCodec.encode(UInt32(6)))        // VendorExtensionID=MicrosoftMTP
-    data.append(MTPEndianCodec.encode(UInt16(100)))      // VendorExtensionVersion
-    data.append(PTPString.encode("microsoft.com: 1.0")) // VendorExtensionDesc
-    data.append(MTPEndianCodec.encode(UInt16(0)))        // FunctionalMode
+    data.append(MTPEndianCodec.encode(UInt32(6)))  // VendorExtensionID=MicrosoftMTP
+    data.append(MTPEndianCodec.encode(UInt16(100)))  // VendorExtensionVersion
+    data.append(PTPString.encode("microsoft.com: 1.0"))  // VendorExtensionDesc
+    data.append(MTPEndianCodec.encode(UInt16(0)))  // FunctionalMode
 
     // Large operations array (50 entries)
     data.append(MTPEndianCodec.encode(UInt32(50)))
@@ -680,11 +741,11 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
 
   func testPropListWithStringValue() {
     var data = Data()
-    data.append(MTPEndianCodec.encode(UInt32(1)))     // count=1
+    data.append(MTPEndianCodec.encode(UInt32(1)))  // count=1
     data.append(MTPEndianCodec.encode(UInt32(0x01)))  // handle
-    data.append(MTPEndianCodec.encode(UInt16(0xDC07)))// propertyCode = ObjectFileName
-    data.append(MTPEndianCodec.encode(UInt16(0xFFFF)))// dataType = string
-    data.append(PTPString.encode("photo.jpg"))        // value
+    data.append(MTPEndianCodec.encode(UInt16(0xDC07)))  // propertyCode = ObjectFileName
+    data.append(MTPEndianCodec.encode(UInt16(0xFFFF)))  // dataType = string
+    data.append(PTPString.encode("photo.jpg"))  // value
 
     let result = PTPPropList.parse(from: data)
     XCTAssertNotNil(result)
@@ -698,19 +759,19 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
 
   func testPropListWithMultipleMixedTypes() {
     var data = Data()
-    data.append(MTPEndianCodec.encode(UInt32(2)))     // count=2
+    data.append(MTPEndianCodec.encode(UInt32(2)))  // count=2
 
     // Entry 1: uint32
-    data.append(MTPEndianCodec.encode(UInt32(1)))     // handle
-    data.append(MTPEndianCodec.encode(UInt16(0xDC04)))// ObjectSize
-    data.append(MTPEndianCodec.encode(UInt16(0x0006)))// UINT32
+    data.append(MTPEndianCodec.encode(UInt32(1)))  // handle
+    data.append(MTPEndianCodec.encode(UInt16(0xDC04)))  // ObjectSize
+    data.append(MTPEndianCodec.encode(UInt16(0x0006)))  // UINT32
     data.append(MTPEndianCodec.encode(UInt32(4096)))  // value
 
     // Entry 2: uint16
-    data.append(MTPEndianCodec.encode(UInt32(2)))     // handle
-    data.append(MTPEndianCodec.encode(UInt16(0xDC02)))// ObjectFormat
-    data.append(MTPEndianCodec.encode(UInt16(0x0004)))// UINT16
-    data.append(MTPEndianCodec.encode(UInt16(0x3801)))// JPEG
+    data.append(MTPEndianCodec.encode(UInt32(2)))  // handle
+    data.append(MTPEndianCodec.encode(UInt16(0xDC02)))  // ObjectFormat
+    data.append(MTPEndianCodec.encode(UInt16(0x0004)))  // UINT16
+    data.append(MTPEndianCodec.encode(UInt16(0x3801)))  // JPEG
 
     let result = PTPPropList.parse(from: data)
     XCTAssertNotNil(result)
@@ -754,8 +815,9 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     ]
     for code in knownCodes {
       // "UnknownVendorCode" is a valid name that contains "Unknown" — check name() not nil
-      XCTAssertNotNil(PTPResponseCode.name(for: code),
-                      "Code 0x\(String(format: "%04X", code)) should have a name")
+      XCTAssertNotNil(
+        PTPResponseCode.name(for: code),
+        "Code 0x\(String(format: "%04X", code)) should have a name")
     }
   }
 

@@ -13,12 +13,15 @@ final class XPCErrorPropagationTests: XCTestCase {
 
   // MARK: - Helpers
 
-  private func makeService(withObject: Bool = false) async -> (impl: MTPXPCServiceImpl, stableId: String, storageId: UInt32) {
+  private func makeService(withObject: Bool = false) async -> (
+    impl: MTPXPCServiceImpl, stableId: String, storageId: UInt32
+  ) {
     var config = VirtualDeviceConfig.emptyDevice
     let storageId = config.storages[0].id
     if withObject {
       config = config.withObject(
-        VirtualObjectConfig(handle: 100, storage: storageId, parent: nil, name: "test.bin", data: Data("hello".utf8))
+        VirtualObjectConfig(
+          handle: 100, storage: storageId, parent: nil, name: "test.bin", data: Data("hello".utf8))
       )
     }
     let virtual = VirtualMTPDevice(config: config)
@@ -62,7 +65,8 @@ final class XPCErrorPropagationTests: XCTestCase {
 
   func testListStoragesMissingDevice() async {
     let svc = await makeService()
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: "no-such-device")) {
         c.resume(returning: $0)
       }
@@ -75,8 +79,11 @@ final class XPCErrorPropagationTests: XCTestCase {
 
   func testListObjectsMissingDevice() async {
     let svc = await makeService()
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
-      svc.impl.listObjects(ObjectListRequest(deviceId: "no-such-device", storageId: 1, parentHandle: nil)) {
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
+      svc.impl.listObjects(
+        ObjectListRequest(deviceId: "no-such-device", storageId: 1, parentHandle: nil)
+      ) {
         c.resume(returning: $0)
       }
     }
@@ -99,7 +106,8 @@ final class XPCErrorPropagationTests: XCTestCase {
   func testGetObjectInfoInvalidHandle() async {
     let svc = await makeService(withObject: true)
     let resp = await withCheckedContinuation { (c: CheckedContinuation<ReadResponse, Never>) in
-      svc.impl.getObjectInfo(deviceId: svc.stableId, storageId: svc.storageId, objectHandle: 77777) {
+      svc.impl.getObjectInfo(deviceId: svc.stableId, storageId: svc.storageId, objectHandle: 77777)
+      {
         c.resume(returning: $0)
       }
     }
@@ -111,7 +119,11 @@ final class XPCErrorPropagationTests: XCTestCase {
   func testWriteObjectMissingDevice() async {
     let svc = await makeService()
     let resp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
-      svc.impl.writeObject(WriteRequest(deviceId: "missing", storageId: 1, parentHandle: nil, name: "f.txt", size: 0, bookmark: nil)) {
+      svc.impl.writeObject(
+        WriteRequest(
+          deviceId: "missing", storageId: 1, parentHandle: nil, name: "f.txt", size: 0,
+          bookmark: nil)
+      ) {
         c.resume(returning: $0)
       }
     }
@@ -131,7 +143,9 @@ final class XPCErrorPropagationTests: XCTestCase {
   func testCreateFolderMissingDevice() async {
     let svc = await makeService()
     let resp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
-      svc.impl.createFolder(CreateFolderRequest(deviceId: "missing", storageId: 1, parentHandle: nil, name: "dir")) {
+      svc.impl.createFolder(
+        CreateFolderRequest(deviceId: "missing", storageId: 1, parentHandle: nil, name: "dir")
+      ) {
         c.resume(returning: $0)
       }
     }
@@ -151,7 +165,10 @@ final class XPCErrorPropagationTests: XCTestCase {
   func testMoveObjectMissingDevice() async {
     let svc = await makeService()
     let resp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
-      svc.impl.moveObject(MoveObjectRequest(deviceId: "missing", objectHandle: 1, newParentHandle: nil, newStorageId: 1)) {
+      svc.impl.moveObject(
+        MoveObjectRequest(
+          deviceId: "missing", objectHandle: 1, newParentHandle: nil, newStorageId: 1)
+      ) {
         c.resume(returning: $0)
       }
     }
@@ -162,7 +179,8 @@ final class XPCErrorPropagationTests: XCTestCase {
 
   func testCrawlWithoutHandlerReturnsError() async {
     let svc = await makeService()
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
       svc.impl.requestCrawl(CrawlTriggerRequest(deviceId: svc.stableId, storageId: svc.storageId)) {
         c.resume(returning: $0)
       }
@@ -174,7 +192,8 @@ final class XPCErrorPropagationTests: XCTestCase {
   func testCrawlWithRejectingHandler() async {
     let svc = await makeService()
     svc.impl.crawlBoostHandler = { _, _, _ in false }
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
       svc.impl.requestCrawl(CrawlTriggerRequest(deviceId: svc.stableId, storageId: svc.storageId)) {
         c.resume(returning: $0)
       }
@@ -188,7 +207,9 @@ final class XPCErrorPropagationTests: XCTestCase {
     let svc = await makeService(withObject: true)
     let resp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
       svc.impl.writeObject(
-        WriteRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil, name: "f.txt", size: 10, bookmark: nil)
+        WriteRequest(
+          deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil, name: "f.txt",
+          size: 10, bookmark: nil)
       ) { c.resume(returning: $0) }
     }
     // Nil bookmark → cannot resolve source URL → error
@@ -199,7 +220,9 @@ final class XPCErrorPropagationTests: XCTestCase {
     let svc = await makeService(withObject: true)
     let resp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
       svc.impl.writeObject(
-        WriteRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil, name: "f.txt", size: 10, bookmark: Data([0xFF, 0xFE]))
+        WriteRequest(
+          deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil, name: "f.txt",
+          size: 10, bookmark: Data([0xFF, 0xFE]))
       ) { c.resume(returning: $0) }
     }
     XCTAssertFalse(resp.success)

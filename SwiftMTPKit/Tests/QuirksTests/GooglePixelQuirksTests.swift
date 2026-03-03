@@ -202,7 +202,8 @@ final class GooglePixelQuirksTests: XCTestCase {
     for entry in pixelPhones {
       XCTAssertEqual(
         entry.category, "phone",
-        "Pixel phone entry '\(entry.id)' should have category 'phone', got '\(entry.category ?? "nil")'")
+        "Pixel phone entry '\(entry.id)' should have category 'phone', got '\(entry.category ?? "nil")'"
+      )
     }
   }
 
@@ -217,7 +218,8 @@ final class GooglePixelQuirksTests: XCTestCase {
     for entry in watches {
       XCTAssertEqual(
         entry.category, "wearable",
-        "Google watch entry '\(entry.id)' should have category 'wearable', got '\(entry.category ?? "nil")'")
+        "Google watch entry '\(entry.id)' should have category 'wearable', got '\(entry.category ?? "nil")'"
+      )
     }
   }
 
@@ -285,7 +287,8 @@ final class GooglePixelQuirksTests: XCTestCase {
     let ratio = Double(googlePrefixed.count) / Double(googleEntries.count)
     XCTAssertGreaterThan(
       ratio, 0.70,
-      "At least 70% of VID 0x18d1 entries should start with 'google-' (\(googlePrefixed.count)/\(googleEntries.count))")
+      "At least 70% of VID 0x18d1 entries should start with 'google-' (\(googlePrefixed.count)/\(googleEntries.count))"
+    )
   }
 
   // MARK: - Category Distribution

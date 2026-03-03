@@ -78,7 +78,8 @@ final class QuirksDatabasePropertyTests: XCTestCase {
       guard let typedFlags = entry.flags, typedFlags.supportsGetObjectPropList else { continue }
       XCTAssertTrue(
         entry.resolvedFlags().supportsGetObjectPropList,
-        "Entry '\(entry.id)' has flags.supportsGetObjectPropList=true but resolvedFlags() returns false")
+        "Entry '\(entry.id)' has flags.supportsGetObjectPropList=true but resolvedFlags() returns false"
+      )
     }
   }
 
@@ -197,7 +198,8 @@ final class QuirksDatabasePropertyTests: XCTestCase {
       .filter { $0.ifaceClass != 0xff }
     XCTAssertTrue(
       offenders.isEmpty,
-      "Standard-interface media players should not require kernel detach: \(offenders.map { $0.id })")
+      "Standard-interface media players should not require kernel detach: \(offenders.map { $0.id })"
+    )
   }
 
   /// E-readers that require kernel detach should be Android-based (reasonable for MTP detach).
@@ -209,7 +211,8 @@ final class QuirksDatabasePropertyTests: XCTestCase {
     let needDetach = eReaders.filter { $0.resolvedFlags().requiresKernelDetach }
     // At most 80% of e-readers should need detach — some traditional devices don't
     let ratio = Double(needDetach.count) / max(Double(eReaders.count), 1.0)
-    XCTAssertLessThan(ratio, 0.80,
+    XCTAssertLessThan(
+      ratio, 0.80,
       "Too many e-readers require kernel detach (\(needDetach.count)/\(eReaders.count))")
   }
 
@@ -259,7 +262,8 @@ final class QuirksDatabasePropertyTests: XCTestCase {
     let needDetach = wearables.filter { $0.resolvedFlags().requiresKernelDetach }
     // At most 80% of wearables should need detach
     let ratio = Double(needDetach.count) / max(Double(wearables.count), 1.0)
-    XCTAssertLessThan(ratio, 0.80,
+    XCTAssertLessThan(
+      ratio, 0.80,
       "Too many wearables require kernel detach (\(needDetach.count)/\(wearables.count))")
   }
 
@@ -349,7 +353,9 @@ final class QuirksDatabasePropertyTests: XCTestCase {
   }
 
   func testAllEntriesHaveValidStatus() {
-    let validStatuses: Set<String> = ["proposed", "verified", "promoted", "experimental", "community", "legacy"]
+    let validStatuses: Set<String> = [
+      "proposed", "verified", "promoted", "experimental", "community", "legacy",
+    ]
     guard let path = try? resolveQuirksJSONPath(),
       let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
       let raw = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
@@ -394,7 +400,8 @@ final class QuirksDatabasePropertyTests: XCTestCase {
     }
     XCTAssertTrue(
       invalid.isEmpty,
-      "Entries with unknown category: \(invalid.prefix(10).map { "\($0.id)=\($0.category ?? "nil")" })")
+      "Entries with unknown category: \(invalid.prefix(10).map { "\($0.id)=\($0.category ?? "nil")" })"
+    )
   }
 
   func testVIDFormatConsistency() throws {
@@ -588,7 +595,8 @@ final class QuirksDatabasePropertyTests: XCTestCase {
       "SwiftMTPKit/Specs/quirks.json",
       QuirkDatabase.bundledQuirksURL?.path,
     ]
-    guard let path = candidates.compactMap({ $0 }).first(where: { fm.fileExists(atPath: $0) }) else {
+    guard let path = candidates.compactMap({ $0 }).first(where: { fm.fileExists(atPath: $0) })
+    else {
       throw XCTSkip("quirks.json not found")
     }
     return path

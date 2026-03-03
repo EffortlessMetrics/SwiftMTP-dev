@@ -15,7 +15,10 @@ final class XPCConnectionLifecycleTests: XCTestCase {
 
   private func makeService(
     config: VirtualDeviceConfig? = nil
-  ) async -> (impl: MTPXPCServiceImpl, registry: DeviceServiceRegistry, deviceId: MTPDeviceID, stableId: String) {
+  ) async -> (
+    impl: MTPXPCServiceImpl, registry: DeviceServiceRegistry, deviceId: MTPDeviceID,
+    stableId: String
+  ) {
     let cfg = config ?? VirtualDeviceConfig.emptyDevice
     let virtual = VirtualMTPDevice(config: cfg)
     let deviceService = DeviceService(device: virtual)
@@ -35,7 +38,9 @@ final class XPCConnectionLifecycleTests: XCTestCase {
     }
   }
 
-  private func statusResult(_ impl: MTPXPCServiceImpl, deviceId: String) async -> DeviceStatusResponse {
+  private func statusResult(_ impl: MTPXPCServiceImpl, deviceId: String) async
+    -> DeviceStatusResponse
+  {
     await withCheckedContinuation { c in
       impl.deviceStatus(DeviceStatusRequest(deviceId: deviceId)) { c.resume(returning: $0) }
     }
@@ -92,7 +97,8 @@ final class XPCConnectionLifecycleTests: XCTestCase {
   func testListStoragesFailsForRemovedDevice() async {
     let svc = await makeService()
     await svc.registry.remove(deviceId: svc.deviceId)
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }
@@ -159,8 +165,8 @@ final class XPCConnectionLifecycleTests: XCTestCase {
 
   func testDeviceManagerXPCServiceStartStop() async {
     MTPDeviceManager.shared.startXPCService()
-    MTPDeviceManager.shared.startXPCService() // idempotent
+    MTPDeviceManager.shared.startXPCService()  // idempotent
     MTPDeviceManager.shared.stopXPCService()
-    MTPDeviceManager.shared.stopXPCService() // idempotent
+    MTPDeviceManager.shared.stopXPCService()  // idempotent
   }
 }
