@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Wave 30 Deep Coverage & Fuzzing (PRs #373–#380)
+
+> **Summary**: Deep coverage passes across codec, transport, index, snapshot, quirks, and property tests. Codec fuzzing discovers PTP string max round-trippable length (253 chars, sentinel at 0xFF). Tests grow from 7,475 → **7,720** (+245 new tests).
+
+#### Key Stats
+- **7,720 tests** executed across 20 test targets (up from 7,475)
+- **245 new tests** added
+- **0 unexpected failures**
+- All **20 test targets** now have deep coverage
+
+#### Merged PRs
+- **#373** — Documentation update
+- **#374** — Codec fuzz expansion
+- **#375** — Scenario test expansion
+- **#376** — Transport deep coverage
+- **#377** — Index deep coverage
+- **#378** — Snapshot test expansion
+- **#379** — Quirks research expansion
+- **#380** — Property test expansion
+
+#### Highlights
+- **Codec fuzzing finding** (#374): PTP string max round-trippable length is **253 characters** (sentinel byte at 0xFF); strings ≥254 chars are silently truncated by the MTP codec
+- **All 20 test targets deep**: every target now has dedicated deep coverage pass, not just breadth expansion
+- **Property tests** (#380): expanded SwiftCheck generators for transfer, path normalization, and quirks merge properties
+
+---
+
 ### Wave 29–30 Test Expansion (PRs #363–#372)
 
 > **Summary**: Broad test expansion across all 20 targets, format sweep, and flaky test fix. Tests grow from 7,112 → **7,475** (+363 new tests).
