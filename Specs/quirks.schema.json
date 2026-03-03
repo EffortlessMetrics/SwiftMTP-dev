@@ -38,11 +38,11 @@
     },
     "statusEnum": {
       "type": "string",
-      "enum": ["stable", "experimental", "proposed", "blocked", "promoted", "verified"]
+      "enum": ["stable", "experimental", "proposed", "blocked", "promoted", "verified", "community", "legacy"]
     },
     "confidenceEnum": {
       "type": "string",
-      "enum": ["high", "medium", "low"]
+      "enum": ["high", "medium", "low", "community", "experimental"]
     },
 
     "quirkEntry": {
@@ -104,7 +104,12 @@
           "type": "object",
           "properties": {
             "status": { "$ref": "#/$defs/statusEnum" },
-            "evidenceRequired": { "type": "string" },
+            "evidenceRequired": {
+              "oneOf": [
+                { "type": "string" },
+                { "type": "array", "items": { "type": "string" } }
+              ]
+            },
             "addedBy": { "type": "string" },
             "addedDate": { "type": "string", "format": "date" },
             "verificationNotes": { "type": "string" }
@@ -163,14 +168,14 @@
 
     "tuningBlock": {
       "type": "object",
-      "required": ["maxChunkBytes", "handshakeTimeoutMs", "ioTimeoutMs", "inactivityTimeoutMs", "overallDeadlineMs"],
+      "required": [],
       "properties": {
-        "maxChunkBytes": { "type": "integer", "minimum": 131072, "maximum": 16777216 },
+        "maxChunkBytes": { "type": "integer", "minimum": 512, "maximum": 16777216 },
         "handshakeTimeoutMs": { "type": "integer", "minimum": 1000, "maximum": 60000 },
         "ioTimeoutMs": { "type": "integer", "minimum": 1000, "maximum": 60000 },
         "inactivityTimeoutMs": { "type": "integer", "minimum": 1000, "maximum": 60000 },
         "overallDeadlineMs": { "type": "integer", "minimum": 30000, "maximum": 600000 },
-        "stabilizeMs": { "type": "integer", "minimum": 0, "maximum": 2000 },
+        "stabilizeMs": { "type": "integer", "minimum": 0, "maximum": 5000 },
         "eventPumpDelayMs": { "type": "integer", "minimum": 0, "maximum": 5000 },
         "resetOnOpen": { "type": "boolean" },
         "requiresKernelDetach": { "type": "boolean" },
