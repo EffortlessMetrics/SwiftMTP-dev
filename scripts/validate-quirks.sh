@@ -355,8 +355,8 @@ except ImportError:
 
 ID_RE = re.compile(r"^[a-z0-9-]+$")
 VID_PID_RE = re.compile(r"^0x[0-9a-fA-F]{4}$")
-VALID_STATUS = {"stable", "experimental", "proposed", "blocked", "promoted", "verified"}
-VALID_CONFIDENCE = {"high", "medium", "low"}
+VALID_STATUS = {"stable", "experimental", "proposed", "blocked", "promoted", "verified", "community", "legacy"}
+VALID_CONFIDENCE = {"high", "medium", "low", "community", "experimental"}
 
 seen_ids = set()
 seen_vidpid = set()
