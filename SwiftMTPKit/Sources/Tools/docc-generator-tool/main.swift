@@ -224,7 +224,7 @@ struct TuningParameters: Codable {
   let maxPacketSize: Int?
   let requiresKernelDetach: Bool?
   let postClaimStabilizeMs: Int?
-  let alternateInterfaceSelection: Int?
+  let alternateInterfaceSelection: Bool?
   let skipPTPReset: Bool?
   let forceConfigurationNumber: Int?
   let forceAltSetting: Int?
