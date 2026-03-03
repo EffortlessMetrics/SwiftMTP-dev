@@ -81,6 +81,22 @@ public struct FallbackAllFailedError: Error, Sendable, CustomStringConvertible {
   public var localizedDescription: String { description }
 }
 
+extension FallbackAllFailedError: LocalizedError {
+  public var errorDescription: String? {
+    "All \(attempts.count) fallback strategies failed for this operation."
+  }
+
+  public var failureReason: String? {
+    let failures = attempts.filter { !$0.succeeded }
+    let names = failures.map(\.name).joined(separator: ", ")
+    return "Attempted strategies [\(names)] all returned errors."
+  }
+
+  public var recoverySuggestion: String? {
+    "Reconnect the device and retry. If the problem persists, check `swiftmtp probe` output for device compatibility."
+  }
+}
+
 /// Fallback ladder for storage ID retrieval with retry logic for storage readiness.
 public enum FallbackLadder {
 

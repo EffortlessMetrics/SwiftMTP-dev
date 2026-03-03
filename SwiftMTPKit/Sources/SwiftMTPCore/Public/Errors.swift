@@ -75,29 +75,72 @@ extension MTPError: LocalizedError {
       if code == 0x201D {
         return "This device rejected invalid write parameters."
       }
+      if code == 0x201E {
+        return "The device reports a session is already open (SessionAlreadyOpen 0x201E)."
+      }
       return "The transport response indicates a protocol error."
     case .transport(let transportError):
       return transportError.failureReason
-    case .deviceDisconnected, .permissionDenied, .notSupported, .objectNotFound,
-      .objectWriteProtected,
-      .storageFull, .readOnly, .timeout, .busy, .sessionBusy, .preconditionFailed,
-      .verificationFailed:
+    case .deviceDisconnected:
+      return "The USB connection to the device was lost during the operation."
+    case .permissionDenied:
+      return "The operating system denied access to the USB device."
+    case .timeout:
+      return "The device did not respond within the configured timeout period."
+    case .busy:
+      return "The device is processing another request and cannot accept new commands."
+    case .sessionBusy:
+      return "A prior MTP transaction has not yet completed on this session."
+    case .storageFull:
+      return "The device's storage has no remaining free space for the requested write."
+    case .verificationFailed(let expected, let actual):
+      return
+        "After writing, the remote object is \(actual) bytes but \(expected) bytes were expected."
+    case .notSupported, .objectNotFound, .objectWriteProtected,
+      .readOnly, .preconditionFailed:
       return nil
     }
   }
 
   public var recoverySuggestion: String? {
     switch self {
+    case .deviceDisconnected:
+      return "Reconnect the device and retry the operation."
+    case .permissionDenied:
+      return
+        "Check System Settings > Privacy & Security > USB, grant access, then retry."
+    case .notSupported:
+      return "Check the device's supported MTP operations via `swiftmtp probe`."
+    case .transport(let transportError):
+      return transportError.recoverySuggestion
     case .protocolError(let code, _):
       if code == 0x201D {
         return
           "Write to a writable folder (for example Download, DCIM, or a nested folder) instead of root."
       }
+      if code == 0x201E {
+        return "Close the existing session before opening a new one, or reuse the current session."
+      }
       return "Retry with corrected request details."
-    case .transport(let transportError):
-      return transportError.recoverySuggestion
-    default:
+    case .objectNotFound:
+      return "Verify the object handle is valid; the file may have been deleted on the device."
+    case .objectWriteProtected:
+      return "Choose a different file or change its permissions on the device."
+    case .storageFull:
+      return "Free space on the device or choose a different storage."
+    case .readOnly:
+      return "Choose a writable storage or check the device's USB transfer mode."
+    case .timeout:
+      return
+        "Increase timeout values (`SWIFTMTP_IO_TIMEOUT_MS`) or retry when the device is less busy."
+    case .busy:
+      return "Wait a moment and retry; another operation may be in progress."
+    case .sessionBusy:
+      return "Wait for the current transaction to complete before starting a new one."
+    case .preconditionFailed:
       return nil
+    case .verificationFailed:
+      return "Retry the transfer; if the problem persists the device may have storage issues."
     }
   }
 
@@ -163,8 +206,16 @@ extension TransportError: LocalizedError {
       return "Another process may own the interface (Android File Transfer, adb, browsers)."
     case .timeout:
       return "The device did not complete the USB request on time."
-    default:
-      return nil
+    case .busy:
+      return "The USB bus or host controller reported contention on the device endpoint."
+    case .stall:
+      return
+        "The USB endpoint halted, indicating the device rejected the transfer or encountered an internal error."
+    case .timeoutInPhase(let phase):
+      return
+        "The device did not respond during the \(phase.description) phase of the USB transfer."
+    case .io(let message):
+      return "A low-level USB I/O error occurred: \(message)"
     }
   }
 

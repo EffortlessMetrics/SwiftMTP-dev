@@ -164,6 +164,63 @@ public enum USBTransportError: Error, Sendable, Equatable {
   case deviceDisconnected
 }
 
+extension USBTransportError: LocalizedError {
+  public var errorDescription: String? {
+    switch self {
+    case .notConnected:
+      return "USB transport write/read failed: the device is not connected."
+    case .noData:
+      return "USB transport read failed: no response data available from the device."
+    case .timeout:
+      return "USB transport operation timed out waiting for the device to respond."
+    case .stall:
+      return "USB endpoint stalled: the device halted the transfer."
+    case .crcMismatch:
+      return "USB data integrity error: CRC mismatch detected in the received packet."
+    case .babble:
+      return "USB babble error: the device sent more data than the endpoint allows."
+    case .deviceDisconnected:
+      return "The USB device was disconnected during the transport operation."
+    }
+  }
+
+  public var failureReason: String? {
+    switch self {
+    case .notConnected:
+      return "The transport attempted an I/O operation on a device handle that is no longer open."
+    case .noData:
+      return "The device's response queue was empty when a read was attempted."
+    case .timeout:
+      return "The device did not complete the USB request within the configured timeout."
+    case .stall:
+      return "The USB endpoint halted, typically indicating the device rejected the request."
+    case .crcMismatch:
+      return "The data received from the device did not match its expected checksum."
+    case .babble:
+      return "The device transmitted more data than the maximum packet size for the endpoint."
+    case .deviceDisconnected:
+      return "The USB connection was lost, possibly due to cable disconnect or device power-off."
+    }
+  }
+
+  public var recoverySuggestion: String? {
+    switch self {
+    case .notConnected, .deviceDisconnected:
+      return "Reconnect the device and retry the operation."
+    case .noData:
+      return "Retry the request; the device may not have been ready."
+    case .timeout:
+      return "Increase timeout values or retry when the device is less busy."
+    case .stall:
+      return "Reset the endpoint or disconnect and reconnect the device."
+    case .crcMismatch:
+      return "Retry the transfer; persistent CRC errors may indicate a faulty cable."
+    case .babble:
+      return "Disconnect and reconnect the device; try a different USB port or cable."
+    }
+  }
+}
+
 // MARK: - Virtual Device Profiles
 
 /// Virtual device profiles for testing

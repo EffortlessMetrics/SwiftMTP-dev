@@ -72,6 +72,43 @@ public extension USBClaimError {
   }
 }
 
+extension USBClaimError: LocalizedError {
+  public var errorDescription: String? {
+    localizedDescription
+  }
+
+  public var failureReason: String? {
+    switch self {
+    case .claimFailedWithConflict(_, _, let process):
+      if let process {
+        return "\(process) is holding the USB interface, preventing MTP access."
+      }
+      return "Another application has an exclusive claim on the USB interface."
+    case .claimFailed(let error, _):
+      return "libusb returned error code \(error) when attempting to claim the interface."
+    case .deviceDisconnected:
+      return "The USB device was physically disconnected or powered off during the claim attempt."
+    case .kernelDriverError:
+      return "The macOS kernel driver could not be detached from the USB interface."
+    }
+  }
+
+  public var recoverySuggestion: String? {
+    switch self {
+    case .claimFailedWithConflict:
+      return
+        "Quit competing applications (Android File Transfer, Chrome, adb), then retry."
+    case .claimFailed:
+      return "Unplug and replug the device, then retry."
+    case .deviceDisconnected:
+      return "Reconnect the device and ensure the cable is secure."
+    case .kernelDriverError:
+      return
+        "Try running with elevated privileges or check System Settings > Privacy & Security > USB."
+    }
+  }
+}
+
 /// Utility for analyzing and diagnosing USB claim conflicts on macOS.
 public enum USBClaimDiagnostics {
   /// Common processes known to conflict with MTP devices on macOS.
