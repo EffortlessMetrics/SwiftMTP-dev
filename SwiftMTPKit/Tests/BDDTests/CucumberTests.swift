@@ -265,7 +265,7 @@ final class BDDRunner: XCTestCase {
     guard let q = db.match(vid: 0x0781, pid: 0x7400, bcdDevice: nil, ifaceClass: 0xff, ifaceSubclass: 0xff, ifaceProtocol: 0x00)
     else { XCTFail("sandisk-sansa-m230-7400 expected in 20K quirks DB"); return }
     XCTAssertEqual(q.id, "sandisk-sansa-m230-7400")
-    XCTAssertFalse(q.resolvedFlags().requiresKernelDetach, "Media player should not require kernel detach")
+    XCTAssertTrue(q.resolvedFlags().requiresKernelDetach, "SanDisk Sansa m230 requires kernel detach (libmtp UNLOAD_DRIVER)")
   }
 
   // media-players-e-readers.feature – Creative ZEN Micro
