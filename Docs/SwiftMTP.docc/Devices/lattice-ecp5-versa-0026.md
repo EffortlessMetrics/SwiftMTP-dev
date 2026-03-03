@@ -1,0 +1,31 @@
+# Lattice Ecp5 Versa 0026
+
+@Metadata {
+    @DisplayName: "Lattice Ecp5 Versa 0026"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Lattice Ecp5 Versa 0026 MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x1443 |
+| Product ID | 0x0026 |
+| Device Info Pattern | `None` |
+| Status | Proposed |
+
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | default | bytes |
+| Handshake Timeout | default | ms |
+| I/O Timeout | default | ms |
+| Inactivity Timeout | default | ms |
+| Overall Deadline | default | ms |
+## Notes
+
+- ECP5 Versa dev kit with USB debug and programming interface.

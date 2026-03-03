@@ -1,0 +1,57 @@
+# Nikon Dsc D300S 0425
+
+@Metadata {
+    @DisplayName: "Nikon Dsc D300S 0425"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Nikon Dsc D300S 0425 MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x04b0 |
+| Product ID | 0x0425 |
+| Device Info Pattern | `.*Nikon.*` |
+| Status | Proposed |
+
+## Interface
+
+| Property | Value |
+|----------|-------|
+| Class | 0x06 |
+| Subclass | 0x01 |
+| Protocol | 0x01 |
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | 1 MB | bytes |
+| Handshake Timeout | 8000 | ms |
+| I/O Timeout | 30000 | ms |
+| Inactivity Timeout | 15000 | ms |
+| Overall Deadline | 180000 | ms || Stabilization Delay | 300 | ms |
+| Event Pump Delay | 100 | ms |
+
+## Operation Support
+
+| Operation | Supported |
+|-----------|-----------|| 64-bit Partial Object Retrieval | No |
+| Partial Object Sending | No |
+| Prefer Object Property List | No |
+| Write Resume Disabled | Yes |
+
+## Notes
+
+- Nikon D300s — PTP camera.
+- Source: libgphoto2 camlibs/ptp2/library.c.
+- Camera must be set to PTP/MTP USB mode before connecting.
+## Provenance
+
+- **Author**: Unknown
+- **Date**: Unknown
+- **Commit**: Unknown
+
+### Evidence Artifacts

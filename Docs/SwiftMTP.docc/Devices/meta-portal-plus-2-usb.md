@@ -1,0 +1,32 @@
+# Meta Portal Plus 2 Usb
+
+@Metadata {
+    @DisplayName: "Meta Portal Plus 2 Usb"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Meta Portal Plus 2 Usb MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0xc506 |
+| Product ID | 0x0012 |
+| Device Info Pattern | `None` |
+| Status | Experimental |
+
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | default | bytes |
+| Handshake Timeout | default | ms |
+| I/O Timeout | default | ms |
+| Inactivity Timeout | default | ms |
+| Overall Deadline | default | ms |
+## Operation Support
+
+| Operation | Supported |
+|-----------|-----------|

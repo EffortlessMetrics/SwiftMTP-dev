@@ -1,0 +1,35 @@
+# Panasonic Varicam Lt 4025
+
+@Metadata {
+    @DisplayName: "Panasonic Varicam Lt 4025"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Panasonic Varicam Lt 4025 MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x04da |
+| Product ID | 0x4025 |
+| Device Info Pattern | `None` |
+| Status | Proposed |
+
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | default | bytes |
+| Handshake Timeout | default | ms |
+| I/O Timeout | default | ms |
+| Inactivity Timeout | default | ms |
+| Overall Deadline | default | ms |
+## Operation Support
+
+| Operation | Supported |
+|-----------|-----------|
+## Notes
+
+- Super 35 4K cinema camera with dual native ISO

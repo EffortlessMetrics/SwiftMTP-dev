@@ -1,0 +1,31 @@
+# Ubiquiti Uxg Pro 100B
+
+@Metadata {
+    @DisplayName: "Ubiquiti Uxg Pro 100B"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Ubiquiti Uxg Pro 100B MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x0557 |
+| Product ID | 0x100b |
+| Device Info Pattern | `None` |
+| Status | Proposed |
+
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | default | bytes |
+| Handshake Timeout | default | ms |
+| I/O Timeout | default | ms |
+| Inactivity Timeout | default | ms |
+| Overall Deadline | default | ms |
+## Notes
+
+- UniFi Next-Gen Gateway Pro

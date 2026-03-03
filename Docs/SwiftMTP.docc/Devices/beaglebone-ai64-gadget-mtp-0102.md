@@ -1,0 +1,30 @@
+# Beaglebone Ai64 Gadget Mtp 0102
+
+@Metadata {
+    @DisplayName: "Beaglebone Ai64 Gadget Mtp 0102"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Beaglebone Ai64 Gadget Mtp 0102 MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x1d6b |
+| Product ID | 0x0102 |
+| Device Info Pattern | `None` |
+| Status | Proposed |
+
+## Operation Support
+
+| Operation | Supported |
+|-----------|-----------|
+## Provenance
+
+- **Author**: Unknown
+- **Date**: Unknown
+- **Commit**: Unknown
+
+### Evidence Artifacts

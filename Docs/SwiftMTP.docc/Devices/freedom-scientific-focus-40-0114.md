@@ -1,0 +1,31 @@
+# Freedom Scientific Focus 40 0114
+
+@Metadata {
+    @DisplayName: "Freedom Scientific Focus 40 0114"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Freedom Scientific Focus 40 0114 MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x0f4e |
+| Product ID | 0x0114 |
+| Device Info Pattern | `None` |
+| Status | Proposed |
+
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | default | bytes |
+| Handshake Timeout | default | ms |
+| I/O Timeout | default | ms |
+| Inactivity Timeout | default | ms |
+| Overall Deadline | default | ms |
+## Notes
+
+- Freedom Scientific Focus 40 Blue 5th Gen braille display.

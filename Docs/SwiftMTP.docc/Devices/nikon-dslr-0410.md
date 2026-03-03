@@ -1,82 +1,62 @@
-# Nikon DSLR / Z-Series (04B0:0410)
+# Nikon Dslr 0410
 
-Nikon D-series DSLR and Z-series mirrorless cameras in MTP/PTP mode.
+@Metadata {
+    @DisplayName: "Nikon Dslr 0410"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
 
-**Note**: This profile is based on PTP/MTP protocol specs. This device has never been connected to SwiftMTP. Contributions from Nikon owners welcome.
+Device-specific configuration for Nikon Dslr 0410 MTP implementation.
 
-## Device Information
+## Identity
 
-| Field | Value |
-|-------|-------|
-| Manufacturer | Nikon Corporation |
-| USB VID | `0x04B0` |
-| USB PID | `0x0410` (D3200-class / Z-class representative) |
-| Interface Class | Still Image (0x06 / 0x01 / 0x01) |
-| MTP Status | Experimental |
-| Quirk ID | `nikon-dslr-0410` |
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x04b0 |
+| Product ID | 0x0410 |
+| Device Info Pattern | `.*Nikon.*` |
+| Status | Promoted |
 
-## Supported Operations
+## Interface
+
+| Property | Value |
+|----------|-------|
+| Class | 0x06 |
+| Subclass | 0x01 |
+| Protocol | 0x01 |
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | 1 MB | bytes |
+| Handshake Timeout | 8000 | ms |
+| I/O Timeout | 30000 | ms |
+| Inactivity Timeout | 15000 | ms |
+| Overall Deadline | 180000 | ms || Stabilization Delay | 300 | ms |
+| Event Pump Delay | 100 | ms |
+
+## Operation Support
 
 | Operation | Supported |
-|-----------|-----------|
-| GetStorageIDs | Yes |
-| GetObjectHandles | Yes |
-| GetObjectInfo | Yes |
-| GetObject (download) | Yes |
-| SendObject (upload) | Yes (limited to SD-card paths) |
-| DeleteObject | Yes |
-| GetPartialObject64 | No |
-| SendPartialObject | No |
-| GetObjectPropValue | Yes (object size via 0xDC04) |
-| GetDevicePropValue | Yes (battery, mode dial) |
+|-----------|-----------|| 64-bit Partial Object Retrieval | No |
+| Partial Object Sending | No |
 | Prefer Object Property List | No |
 | Write Resume Disabled | Yes |
 
-## Enabling MTP/PTP Mode
+## Notes
 
-1. **Settings → USB Options → MTP/PTP** (menu location varies by body).
-2. On Z-series mirrorless: **Menu → Connect & share → USB → MTP/PTP (Sel. photos)**.
-3. Power the camera **on** before connecting — Nikon enumeration is sensitive to power sequence.
-4. macOS assigns the interface; `swift run swiftmtp probe` shows `04B0:0410`.
-
-## Vendor Extension Notes
-
-Nikon exposes vendor-specific operations in the `0x9xxx` range:
-- `0x9201` — `Nikon_GetPreviewImg`: thumbnail preview without full download
-- `0x9501` — `Nikon_StartLiveView`: activate liveview (requires session lock)
-
-These are not currently wrapped by SwiftMTP. Use `device.executeRawCommand` for access.
-
-## Object Size for NEF Files
-
-NEF raw files report size via `GetObjectPropValue` property `0xDC04` (Object Size UInt64).
-SwiftMTP automatically falls back to `GetObjectInfo.sizeBytes` when the U64 property is unavailable.
-
-## Troubleshooting
-
-### Camera not enumerated (probe returns empty)
-
-1. Confirm **MTP/PTP** mode in camera menus.
-2. Some Nikon bodies default to **PictBridge** mode — select **MTP/PTP** explicitly.
-3. Turn the camera **on** before connecting USB.
-4. Remove any third-party USB-C adapters; use the original cable.
-
-### Storage appears empty (`GetStorageIDs` returns nothing)
-
-1. SD card must be inserted and recognized (check card status on LCD).
-2. If card is locked (write-protect slider), some operations are restricted.
-3. Nikon bodies in **live tethering** mode may hide SD card storage — exit live view first.
-
-### Large NEF download timeout
-
-NEF files on newer Z-series are 25–45 MB. Extend timeouts:
-```
-export SWIFTMTP_IO_TIMEOUT_MS=45000
-export SWIFTMTP_OVERALL_DEADLINE_MS=300000
-```
-
+- Nikon DSLR (generic PID 0x0410). PTP vendor extension ID: 0x0000000A.
+- Nikon PTP vendor extensions: GetEvent (0x90C7), DeviceReady (0x90C8), GetVendorPropCodes (0x90CA).
+- Liveview: StartLiveView (0x9201), EndLiveView (0x9202), GetLiveViewImg (0x9203).
+- Remote capture: InitiateCaptureRecInSdram (0x90C0), AfDrive (0x90C1), AfCaptureSDRAM (0x90CB).
+- Camera must be in MTP/PTP mode via Settings > USB Options.
+- NEF raw files are large (15-30 MB); extend ioTimeoutMs for large transfers.
+- Nikon DeviceReady (0x90C8) should be polled before operations to check camera state.
+- GetObjectSize (0x9421) returns 64-bit file size for large video files.
 ## Provenance
 
-- **Status**: Research Only — never connected to SwiftMTP
-- **Reference body**: Nikon D3200 (04B0:0410) — profile based on PTP/MTP specs, not tested with SwiftMTP
+- **Author**: SwiftMTP Contributors
 - **Date**: 2025-02-25
+- **Commit**: <pending>
+
+### Evidence Artifacts

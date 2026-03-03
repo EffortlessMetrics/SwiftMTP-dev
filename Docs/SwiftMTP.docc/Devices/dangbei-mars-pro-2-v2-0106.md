@@ -1,0 +1,31 @@
+# Dangbei Mars Pro 2 V2 0106
+
+@Metadata {
+    @DisplayName: "Dangbei Mars Pro 2 V2 0106"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Dangbei Mars Pro 2 V2 0106 MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x2101 |
+| Product ID | 0x0106 |
+| Device Info Pattern | `None` |
+| Status | Experimental |
+
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | default | bytes |
+| Handshake Timeout | default | ms |
+| I/O Timeout | default | ms |
+| Inactivity Timeout | default | ms |
+| Overall Deadline | default | ms |
+## Notes
+
+- Dangbei Mars Pro 2 4K laser projector with 2450 CVIA lumens.
