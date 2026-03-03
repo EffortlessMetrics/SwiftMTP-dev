@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Wave 31 Coverage, Benchmarks & Enforcement (PRs #381–#388)
+
+> **Summary**: Performance benchmarks, per-module coverage gate enforcement, UI accessibility tests, CLI smoke tests, and error recovery paths. Tests grow from 7,720 → **7,909** (+189 new tests).
+
+#### Key Stats
+- **7,909 tests** executed across 20 test targets (up from 7,720)
+- **189 new tests** added
+- **0 unexpected failures**
+
+#### Merged PRs
+- **#381** — Documentation update
+- **#382** — Coverage gate per-module enforcement
+- **#383** — UI accessibility tests
+- **#384** — Performance benchmarks
+- **#385** — Sync deep coverage
+- **#386** — CLI smoke tests for all subcommands
+- **#387** — TestKit enhancement tests
+- **#388** — Error cascade and recovery path tests
+
+#### Highlights
+- **Performance benchmarks** (#384): added transfer throughput, codec round-trip, and index query benchmarks with baseline thresholds
+- **Coverage gate per-module enforcement** (#382): `coverage_gate.py` now enforces minimum thresholds per module, not just aggregate
+- **UI accessibility tests** (#383): SwiftUI accessibility audit tests for all major views
+- **CLI smoke tests** (#386): end-to-end smoke tests for every `swiftmtp` subcommand
+
+---
+
 ### Wave 30 Deep Coverage & Fuzzing (PRs #373–#380)
 
 > **Summary**: Deep coverage passes across codec, transport, index, snapshot, quirks, and property tests. Codec fuzzing discovers PTP string max round-trippable length (253 chars, sentinel at 0xFF). Tests grow from 7,475 → **7,720** (+245 new tests).

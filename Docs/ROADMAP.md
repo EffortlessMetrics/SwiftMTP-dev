@@ -1,6 +1,6 @@
 # SwiftMTP Roadmap
 
-*Last updated: 2026-03-04*
+*Last updated: 2026-03-07*
 
 > **Pre-Alpha Status**: SwiftMTP has extensive protocol and test infrastructure but minimal real-device validation. Only 1 device (Xiaomi Mi Note 2) has completed real file transfers. The version numbers below (2.x) reflect internal development milestones, not production readiness. Items marked as "shipped" or "complete" are code-complete and mock-tested unless noted otherwise — most have not been validated on real hardware.
 
@@ -8,7 +8,7 @@ This roadmap is the execution plan for the next implementation sprints in the 2.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **7,720 tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices).
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **7,909 tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices).
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
@@ -25,7 +25,7 @@ All items below are code-complete and mock-tested. None have been validated on r
 - [x] **Multi-device parallel transfers** — 8 scenario tests, DeviceServiceRegistry routing (mock-tested)
 - [x] **FallbackAllFailedError** — carries full attempt history (name, duration, error per rung)
 - [x] **Automatic documentation** — `swiftmtp-docs` SPM executable target for hands-off DocC generation
-- [x] **7,720 tests executed, 0 unexpected failures** (up from 1,849; 40 skipped, 3 expected failures across 20 test targets)
+- [x] **7,909 tests executed, 0 unexpected failures** (up from 1,849; 40 skipped, 3 expected failures across 20 test targets)
 
 ## Sprint Execution Rules
 
@@ -50,9 +50,20 @@ Minimum expectations for each item:
 
 Key development activity in this wave:
 
+- **Performance benchmarks**: transfer throughput, codec round-trip, and index query benchmarks with baseline thresholds
+- **Coverage gate per-module enforcement**: `coverage_gate.py` now enforces minimum thresholds per module, not just aggregate
+- **UI accessibility tests**: SwiftUI accessibility audit tests for all major views
+- **CLI smoke tests**: end-to-end smoke tests for every `swiftmtp` subcommand
+- **Test expansion**: 7,909 tests executed across 20 targets (up from 7,720 in wave 30; +189 new tests)
+- **PRs merged**: #381–#388
+
+## Wave 30 Activity (2026-03-05)
+
+Key development activity in this wave:
+
 - **Deep coverage passes**: codec fuzzing, transport, index, snapshot, quirks research, and property tests all received dedicated deep coverage
 - **Codec fuzzing finding**: PTP string max round-trippable length is 253 characters (sentinel byte at 0xFF)
-- **Test expansion**: 7,720 tests executed across 20 targets (up from 7,475 in wave 30; +245 new tests)
+- **Test expansion**: 7,720 tests executed across 20 targets (up from 7,475 in wave 29; +245 new tests)
 - **All 20 test targets now have deep coverage**: every target has received at least one dedicated deep-coverage pass
 - **PRs merged**: #373–#380
 
