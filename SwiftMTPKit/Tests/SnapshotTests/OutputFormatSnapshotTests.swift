@@ -160,7 +160,7 @@ final class OutputFormatSnapshotTests: XCTestCase {
     let err = MTPError.permissionDenied
     XCTAssertEqual(
       err.actionableDescription,
-      "USB access denied. Check System Settings > Privacy & Security."
+      "USB access denied. Check System Settings > Privacy & Security and re-approve device access."
     )
   }
 
@@ -176,7 +176,7 @@ final class OutputFormatSnapshotTests: XCTestCase {
     let err = TransportError.noDevice
     XCTAssertEqual(
       err.actionableDescription,
-      "No MTP device found. Ensure the device is connected and in File Transfer mode."
+      "No MTP device found. Ensure the device is connected, unlocked, and set to File Transfer mode."
     )
   }
 
@@ -184,7 +184,7 @@ final class OutputFormatSnapshotTests: XCTestCase {
     let err = TransportError.accessDenied
     XCTAssertEqual(
       err.actionableDescription,
-      "USB access denied. Check System Settings > Privacy & Security."
+      "USB access denied. Close Android File Transfer, adb, or Smart Switch, then check System Settings > Privacy & Security."
     )
   }
 
@@ -192,7 +192,7 @@ final class OutputFormatSnapshotTests: XCTestCase {
     let err = TransportError.timeoutInPhase(.bulkIn)
     XCTAssertEqual(
       err.actionableDescription,
-      "USB transfer timed out (bulk-in phase). Check cable and retry."
+      "USB transfer timed out (bulk-in phase). Ensure the device is unlocked and check the cable."
     )
   }
 

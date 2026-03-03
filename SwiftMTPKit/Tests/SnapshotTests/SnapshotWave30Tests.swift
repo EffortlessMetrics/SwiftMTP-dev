@@ -78,13 +78,13 @@ final class SnapshotWave30Tests: XCTestCase {
   func testErrorDescriptionProtocolGeneric() {
     XCTAssertEqual(
       MTPError.protocolError(code: 0x2002, message: nil).errorDescription,
-      "Protocol error (0x2002)")
+      "GeneralError (0x2002): the device reported an unspecified failure.")
   }
 
   func testErrorDescriptionProtocolWithMessage() {
     XCTAssertEqual(
       MTPError.protocolError(code: 0x2005, message: "OperationNotSupported").errorDescription,
-      "OperationNotSupported (0x2005)")
+      "OperationNotSupported (0x2005): the device does not support this operation.")
   }
 
   func testErrorDescriptionProtocol201D() {
@@ -158,13 +158,13 @@ final class SnapshotWave30Tests: XCTestCase {
   func testActionablePermissionDenied() {
     XCTAssertEqual(
       MTPError.permissionDenied.actionableDescription,
-      "USB access denied. Check System Settings > Privacy & Security.")
+      "USB access denied. Check System Settings > Privacy & Security and re-approve device access.")
   }
 
   func testActionableNotSupported() {
     XCTAssertEqual(
       MTPError.notSupported("SendPartialObject").actionableDescription,
-      "Not supported: SendPartialObject")
+      "Not supported: SendPartialObject. Check device firmware or try a different approach.")
   }
 
   func testActionableProtocolError() {
@@ -182,25 +182,25 @@ final class SnapshotWave30Tests: XCTestCase {
   func testActionableObjectNotFound() {
     XCTAssertEqual(
       MTPError.objectNotFound.actionableDescription,
-      "The requested object was not found on the device.")
+      "The requested object was not found on the device. It may have been deleted or moved.")
   }
 
   func testActionableObjectWriteProtected() {
     XCTAssertEqual(
       MTPError.objectWriteProtected.actionableDescription,
-      "Device storage is write-protected.")
+      "Device storage is write-protected. Remove protection on the device and retry.")
   }
 
   func testActionableStorageFull() {
     XCTAssertEqual(
       MTPError.storageFull.actionableDescription,
-      "Device storage is full.")
+      "Device storage is full. Free space on the device, then retry the transfer.")
   }
 
   func testActionableReadOnly() {
     XCTAssertEqual(
       MTPError.readOnly.actionableDescription,
-      "The storage is read-only.")
+      "The storage is read-only. Check for a physical write-protect switch or device setting.")
   }
 
   func testActionableTimeout() {
@@ -238,19 +238,20 @@ final class SnapshotWave30Tests: XCTestCase {
   func testActionableTransportNoDevice() {
     XCTAssertEqual(
       TransportError.noDevice.actionableDescription,
-      "No MTP device found. Ensure the device is connected and in File Transfer mode.")
+      "No MTP device found. Ensure the device is connected, unlocked, and set to File Transfer mode.")
   }
 
   func testActionableTransportAccessDenied() {
     XCTAssertEqual(
       TransportError.accessDenied.actionableDescription,
-      "USB access denied. Check System Settings > Privacy & Security.")
+      "USB access denied. Close Android File Transfer, adb, or Smart Switch, then check System Settings > Privacy & Security."
+    )
   }
 
   func testActionableTransportTimeout() {
     XCTAssertEqual(
       TransportError.timeout.actionableDescription,
-      "USB transfer timed out. Check the cable connection and retry.")
+      "USB transfer timed out. Ensure the device screen is on and unlocked, then check the cable.")
   }
 
   func testActionableTransportBusy() {
@@ -262,31 +263,33 @@ final class SnapshotWave30Tests: XCTestCase {
   func testActionableTransportStall() {
     XCTAssertEqual(
       TransportError.stall.actionableDescription,
-      "USB endpoint stalled; recovered via clear-halt. Reconnect if the issue persists.")
+      "USB endpoint stalled. Disconnect and reconnect the device. Try a different USB port if it persists."
+    )
   }
 
   func testActionableTransportTimeoutBulkIn() {
     XCTAssertEqual(
       TransportError.timeoutInPhase(.bulkIn).actionableDescription,
-      "USB transfer timed out (bulk-in phase). Check cable and retry.")
+      "USB transfer timed out (bulk-in phase). Ensure the device is unlocked and check the cable.")
   }
 
   func testActionableTransportTimeoutBulkOut() {
     XCTAssertEqual(
       TransportError.timeoutInPhase(.bulkOut).actionableDescription,
-      "USB transfer timed out (bulk-out phase). Check cable and retry.")
+      "USB transfer timed out (bulk-out phase). Ensure the device is unlocked and check the cable.")
   }
 
   func testActionableTransportTimeoutResponseWait() {
     XCTAssertEqual(
       TransportError.timeoutInPhase(.responseWait).actionableDescription,
-      "USB transfer timed out (response-wait phase). Check cable and retry.")
+      "USB transfer timed out (response-wait phase). Ensure the device is unlocked and check the cable."
+    )
   }
 
   func testActionableTransportIO() {
     XCTAssertEqual(
       TransportError.io("LIBUSB_ERROR_OVERFLOW").actionableDescription,
-      "USB I/O error: LIBUSB_ERROR_OVERFLOW")
+      "USB I/O error: LIBUSB_ERROR_OVERFLOW. Try a different USB port or cable.")
   }
 
   // MARK: - 5. Probe Output JSON Format

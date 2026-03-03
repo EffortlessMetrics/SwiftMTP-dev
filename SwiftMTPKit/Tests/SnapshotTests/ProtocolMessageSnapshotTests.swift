@@ -646,12 +646,16 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
 
   func testErrorProtocolErrorGenericFormat() {
     let err = MTPError.protocolError(code: 0x2002, message: nil)
-    XCTAssertEqual(err.errorDescription, "Protocol error (0x2002)")
+    XCTAssertEqual(
+      err.errorDescription,
+      "GeneralError (0x2002): the device reported an unspecified failure.")
   }
 
   func testErrorProtocolErrorWithMessage() {
     let err = MTPError.protocolError(code: 0x2005, message: "OperationNotSupported")
-    XCTAssertEqual(err.errorDescription, "OperationNotSupported (0x2005)")
+    XCTAssertEqual(
+      err.errorDescription,
+      "OperationNotSupported (0x2005): the device does not support this operation.")
   }
 
   func testErrorProtocolError201DSpecialFormat() {
@@ -663,7 +667,9 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
 
   func testErrorRecoverySuggestionGenericProtocol() {
     let err = MTPError.protocolError(code: 0x2002, message: nil)
-    XCTAssertEqual(err.recoverySuggestion, "Retry with corrected request details.")
+    XCTAssertEqual(
+      err.recoverySuggestion,
+      "Retry the operation. If the error persists, reconnect the device.")
   }
 
   func testErrorFailureReasonProtocol201D() {
@@ -673,19 +679,19 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
 
   func testErrorFailureReasonGenericProtocol() {
     let err = MTPError.protocolError(code: 0x2002, message: nil)
-    XCTAssertEqual(err.failureReason, "The transport response indicates a protocol error.")
+    XCTAssertEqual(err.failureReason, "The device response indicates a protocol error.")
   }
 
   func testErrorFailureReasonNilForNonProtocol() {
-    XCTAssertNil(MTPError.timeout.failureReason)
-    XCTAssertNil(MTPError.busy.failureReason)
-    XCTAssertNil(MTPError.storageFull.failureReason)
+    XCTAssertNotNil(MTPError.timeout.failureReason)
+    XCTAssertNotNil(MTPError.busy.failureReason)
+    XCTAssertNotNil(MTPError.storageFull.failureReason)
   }
 
   func testErrorRecoverySuggestionNilForNonProtocol() {
-    XCTAssertNil(MTPError.timeout.recoverySuggestion)
-    XCTAssertNil(MTPError.busy.recoverySuggestion)
-    XCTAssertNil(MTPError.deviceDisconnected.recoverySuggestion)
+    XCTAssertNotNil(MTPError.timeout.recoverySuggestion)
+    XCTAssertNotNil(MTPError.busy.recoverySuggestion)
+    XCTAssertNotNil(MTPError.deviceDisconnected.recoverySuggestion)
   }
 
   // MARK: - Transport Error Details
@@ -706,17 +712,25 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
 
   func testTransportErrorRecoverySuggestionAccessDenied() {
     let err = TransportError.accessDenied
-    XCTAssertEqual(err.recoverySuggestion, "Close competing USB tools, then retry.")
+    XCTAssertEqual(
+      err.recoverySuggestion,
+      "Close competing USB tools (Android File Transfer, adb, Samsung Smart Switch), then retry.")
   }
 
   func testTransportErrorRecoverySuggestionStall() {
     let err = TransportError.stall
-    XCTAssertEqual(err.recoverySuggestion, "Disconnect and reconnect the device, then retry.")
+    XCTAssertEqual(
+      err.recoverySuggestion,
+      "Disconnect and reconnect the device. If the issue persists, try a different USB port or cable."
+    )
   }
 
   func testTransportErrorRecoverySuggestionBusy() {
     let err = TransportError.busy
-    XCTAssertEqual(err.recoverySuggestion, "Retry briefly if bus or host contention is expected.")
+    XCTAssertEqual(
+      err.recoverySuggestion,
+      "Wait a moment for the bus to become available, then retry. Close other USB-intensive applications."
+    )
   }
 
   func testTransportPhaseResponseWait() {
@@ -734,22 +748,30 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
 
   func testActionableErrorObjectWriteProtected() {
     let err = MTPError.objectWriteProtected
-    XCTAssertEqual(err.actionableDescription, "Device storage is write-protected.")
+    XCTAssertEqual(
+      err.actionableDescription,
+      "Device storage is write-protected. Remove protection on the device and retry.")
   }
 
   func testActionableErrorReadOnly() {
     let err = MTPError.readOnly
-    XCTAssertEqual(err.actionableDescription, "The storage is read-only.")
+    XCTAssertEqual(
+      err.actionableDescription,
+      "The storage is read-only. Check for a physical write-protect switch or device setting.")
   }
 
   func testActionableErrorStorageFull() {
     let err = MTPError.storageFull
-    XCTAssertEqual(err.actionableDescription, "Device storage is full.")
+    XCTAssertEqual(
+      err.actionableDescription,
+      "Device storage is full. Free space on the device, then retry the transfer.")
   }
 
   func testActionableErrorObjectNotFound() {
     let err = MTPError.objectNotFound
-    XCTAssertEqual(err.actionableDescription, "The requested object was not found on the device.")
+    XCTAssertEqual(
+      err.actionableDescription,
+      "The requested object was not found on the device. It may have been deleted or moved.")
   }
 
   func testActionableErrorTimeout() {
@@ -768,7 +790,9 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
 
   func testActionableErrorNotSupported() {
     let err = MTPError.notSupported("GetPartialObject64")
-    XCTAssertEqual(err.actionableDescription, "Not supported: GetPartialObject64")
+    XCTAssertEqual(
+      err.actionableDescription,
+      "Not supported: GetPartialObject64. Check device firmware or try a different approach.")
   }
 
   func testActionableErrorVerificationFailed() {
@@ -787,19 +811,22 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
     let err = TransportError.stall
     XCTAssertEqual(
       err.actionableDescription,
-      "USB endpoint stalled; recovered via clear-halt. Reconnect if the issue persists.")
+      "USB endpoint stalled. Disconnect and reconnect the device. Try a different USB port if it persists."
+    )
   }
 
   func testActionableTransportIO() {
     let err = TransportError.io("LIBUSB_ERROR_OVERFLOW")
-    XCTAssertEqual(err.actionableDescription, "USB I/O error: LIBUSB_ERROR_OVERFLOW")
+    XCTAssertEqual(
+      err.actionableDescription,
+      "USB I/O error: LIBUSB_ERROR_OVERFLOW. Try a different USB port or cable.")
   }
 
   func testActionableTransportTimeout() {
     let err = TransportError.timeout
     XCTAssertEqual(
       err.actionableDescription,
-      "USB transfer timed out. Check the cable connection and retry.")
+      "USB transfer timed out. Ensure the device screen is on and unlocked, then check the cable.")
   }
 
   // MARK: - 10. PTP String Encoding Edge Cases
