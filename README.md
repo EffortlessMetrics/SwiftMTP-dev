@@ -6,7 +6,7 @@ A Swift-native MTP (Media Transfer Protocol) implementation for macOS. The proto
 
 ## Project Status
 
-SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session management are implemented and covered by an extensive test suite (6,659 test methods across 20 targets, 7,112 executed including parameterized sets) using in-memory mock devices (`VirtualMTPDevice`). However, real-device validation is minimal — only one device (Xiaomi Mi Note 2) has completed successful file transfers through SwiftMTP.
+SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session management are implemented and covered by an extensive test suite (**7,475 tests executed** across 20 targets) using in-memory mock devices (`VirtualMTPDevice`). However, real-device validation is minimal — only one device (Xiaomi Mi Note 2) has completed successful file transfers through SwiftMTP.
 
 ### What Works
 
@@ -113,7 +113,7 @@ swift run SwiftMTPApp
 
 ## Verification & Testing
 
-6,659 test methods across 20 test targets (7,112 executed including parameterized sets), using `VirtualMTPDevice` (in-memory mock) extensively. Includes unit, BDD (CucumberSwift), property-based (SwiftCheck), snapshot, and fuzz tests. Real-device tests require physical hardware.
+7,475 tests executed across 20 test targets, using `VirtualMTPDevice` (in-memory mock) extensively. Includes unit, BDD (CucumberSwift), property-based (SwiftCheck), snapshot, and fuzz tests. Real-device tests require physical hardware.
 
 ### Full Verification Suite
 ```bash

@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Wave 29–30 Test Expansion (PRs #363–#372)
+
+> **Summary**: Broad test expansion across all 20 targets, format sweep, and flaky test fix. Tests grow from 7,112 → **7,475** (+363 new tests).
+
+#### Key Stats
+- **7,475 tests** executed across 20 test targets (up from 7,112)
+- **363 new tests** added
+- **0 unexpected failures**
+- All **20 test targets** expanded
+
+#### Merged PRs
+- **#363** — Format sweep (swift-format across entire codebase)
+- **#364** — Flaky test fix: concurrent attach test (root cause: stream ordering)
+- **#365** — Documentation refresh
+- **#366** — Observability tests expansion
+- **#367** — Store error tests expansion
+- **#368** — XPC tests expansion
+- **#369** — FileProvider tests expansion
+- **#370** — BDD scenarios expansion
+- **#371** — CLI/tooling tests expansion
+- **#372** — Integration tests expansion
+
+#### Highlights
+- **Flaky concurrent attach test fixed** (#364): root cause was non-deterministic stream ordering in parallel device attach; fix applies deterministic sort before assertion
+- **Format sweep** (#363): full swift-format pass ensuring consistent style across all Sources and Tests
+
+---
+
 ### Wave 27–28 Quality & Data Fixes (PRs #348–#355)
 
 > **Summary**: CI fixes, test alignment, device quirks expansion, and documentation refresh. Test count reaches ~6,978 across 20 targets.
