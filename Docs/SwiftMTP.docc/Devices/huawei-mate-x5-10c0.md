@@ -1,0 +1,33 @@
+# Huawei Mate X5 10C0
+
+@Metadata {
+    @DisplayName: "Huawei Mate X5 10C0"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Huawei Mate X5 10C0 MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x12d1 |
+| Product ID | 0x10c0 |
+| Device Info Pattern | `.*Mate X5.*` |
+| Status | Proposed |
+
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | default | bytes |
+| Handshake Timeout | 8000 | ms |
+| I/O Timeout | default | ms |
+| Inactivity Timeout | default | ms |
+| Overall Deadline | default | ms || Stabilization Delay | 500 | ms |
+
+## Operation Support
+
+| Operation | Supported |
+|-----------|-----------|

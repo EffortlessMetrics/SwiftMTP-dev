@@ -1,0 +1,31 @@
+# Obsbot Tiny 2 Lite 0915
+
+@Metadata {
+    @DisplayName: "Obsbot Tiny 2 Lite 0915"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Obsbot Tiny 2 Lite 0915 MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x3529 |
+| Product ID | 0x0915 |
+| Device Info Pattern | `None` |
+| Status | Proposed |
+
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | default | bytes |
+| Handshake Timeout | default | ms |
+| I/O Timeout | default | ms |
+| Inactivity Timeout | default | ms |
+| Overall Deadline | default | ms |
+## Notes
+
+- Obsbot Tiny 2 Lite 1080p AI tracking webcam.

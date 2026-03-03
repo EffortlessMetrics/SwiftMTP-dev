@@ -1,0 +1,31 @@
+# Siglent Sds1104Xe Li 0802
+
+@Metadata {
+    @DisplayName: "Siglent Sds1104Xe Li 0802"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Siglent Sds1104Xe Li 0802 MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0xf4ec |
+| Product ID | 0x0802 |
+| Device Info Pattern | `None` |
+| Status | Proposed |
+
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | default | bytes |
+| Handshake Timeout | default | ms |
+| I/O Timeout | default | ms |
+| Inactivity Timeout | default | ms |
+| Overall Deadline | default | ms |
+## Notes
+
+- 100MHz 4ch scope

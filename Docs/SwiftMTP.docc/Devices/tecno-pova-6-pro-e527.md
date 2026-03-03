@@ -1,0 +1,31 @@
+# Tecno Pova 6 Pro E527
+
+@Metadata {
+    @DisplayName: "Tecno Pova 6 Pro E527"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Tecno Pova 6 Pro E527 MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x0e8d |
+| Product ID | 0xe527 |
+| Device Info Pattern | `None` |
+| Status | Proposed |
+
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | default | bytes |
+| Handshake Timeout | default | ms |
+| I/O Timeout | default | ms |
+| Inactivity Timeout | default | ms |
+| Overall Deadline | default | ms |
+## Notes
+
+- Tecno Pova 6 Pro. USB MTP mode.

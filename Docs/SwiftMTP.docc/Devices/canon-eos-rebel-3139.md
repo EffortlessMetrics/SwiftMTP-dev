@@ -1,90 +1,62 @@
-# Canon EOS (04A9:3139)
+# Canon Eos Rebel 3139
 
-Canon EOS Rebel / EOS R class cameras in PTP/MTP mode.
+@Metadata {
+    @DisplayName: "Canon Eos Rebel 3139"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
 
-**Note**: This profile is based on PTP/MTP protocol specs. This device has never been connected to SwiftMTP. Contributions from Canon owners welcome.
+Device-specific configuration for Canon Eos Rebel 3139 MTP implementation.
 
-## Device Information
+## Identity
 
-| Field | Value |
-|-------|-------|
-| Manufacturer | Canon Inc. |
-| USB VID | `0x04A9` |
-| USB PID | `0x3139` (EOS Rebel / EOS R-class) |
-| Interface Class | Still Image (0x06 / 0x01 / 0x01) |
-| MTP Status | Experimental |
-| Quirk ID | `canon-eos-rebel-3139` |
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x04a9 |
+| Product ID | 0x3139 |
+| Device Info Pattern | `.*Canon.*EOS.*` |
+| Status | Promoted |
 
-## Supported Operations
+## Interface
+
+| Property | Value |
+|----------|-------|
+| Class | 0x06 |
+| Subclass | 0x01 |
+| Protocol | 0x01 |
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | 1 MB | bytes |
+| Handshake Timeout | 8000 | ms |
+| I/O Timeout | 30000 | ms |
+| Inactivity Timeout | 15000 | ms |
+| Overall Deadline | 180000 | ms || Stabilization Delay | 200 | ms |
+| Event Pump Delay | 50 | ms |
+
+## Operation Support
 
 | Operation | Supported |
-|-----------|-----------|
-| GetStorageIDs | Yes |
-| GetObjectHandles | Yes |
-| GetObjectInfo | Yes |
-| GetObject (download) | Yes |
-| SendObject (upload) | Camera filesystem only |
-| DeleteObject | Yes |
-| GetPartialObject64 | No |
-| SendPartialObject | No |
-| GetObjectPropValue | Yes (subset) |
-| GetDevicePropValue | Yes (battery, date, mode) |
+|-----------|-----------|| 64-bit Partial Object Retrieval | No |
+| Partial Object Sending | No |
 | Prefer Object Property List | No |
 | Write Resume Disabled | Yes |
 
-## Enabling PTP/MTP Mode
+## Notes
 
-1. On the camera body: **Menu → Wrench/Setup → USB Connection → PTP** (or `PC Connection`).
-2. On some EOS R-series bodies the menu path is: **Menu → Setup 4 → USB Connection → PTP**.
-3. Connect the camera via USB-C or Mini-USB (depending on body).
-4. Power the camera on **after** connecting the cable.
-5. macOS should enumerate it as `Canon EOS XXX`; `swift run swiftmtp probe` will show the VID:PID.
-
-## Capture Events
-
-Canon EOS cameras emit `ObjectAdded` (0x4001) events when photos are taken in tethered mode.
-SwiftMTP event pump polls at 50 ms intervals for this device. To listen:
-
-```swift
-for await event in device.events {
-    switch event {
-    case .objectAdded(let handle):
-        let info = try await device.getInfo(handle: handle)
-        print("New capture: \(info.name)")
-    default:
-        break
-    }
-}
-```
-
-## Performance Notes
-
-- RAW (CR2/CR3) files are typically 20–35 MB. With `maxChunkBytes = 1 MB`, expect ~10–20 s for large files.
-- Extend `SWIFTMTP_IO_TIMEOUT_MS=60000` for continuous burst downloads.
-- JPEG + RAW pairs are common; filter by `formatCode` to separate.
-
-## Troubleshooting
-
-### Camera not recognized after connection
-
-**Symptom:** `swift run swiftmtp probe` returns no devices.
-
-1. Verify the camera is in **PTP** (not MSC or Printer) mode.
-2. Some EOS bodies show a USB connection dialog — select **PTP/MTP**, not **Mass Storage**.
-3. Use a direct USB port; USB hubs can cause enumeration failures.
-4. Verify kernel detach succeeded: `ioreg -p IOUSB -w0 -l | grep -A 5 Canon`
-
-### SendObject (upload) failures
-
-Canon EOS cameras accept uploads only to the card filesystem root or `DCIM/` folder.
-The quirk profile disables write resume (`disableWriteResume: true`); uploads are atomic.
-
-### Write large files
-
-Use `SWIFTMTP_OVERALL_DEADLINE_MS=300000` for 20+ MB uploads.
-
+- Canon EOS Rebel/Kiss series cameras use PTP (ISO 15740) over USB with Canon vendor extensions (0x9001-0x903F, 0x9101-0x91FF).
+- Canon PTP vendor extension ID: 0x0000000B. Extension name reported as 'microsoft.com/MTP: 1.0; canon.com: 1.0'.
+- Supports Canon EOS extensions: GetStorageIDs (0x9101), GetObject (0x9104), GetPartialObject (0x9107), GetEvent (0x9116).
+- Liveview supported via InitiateViewfinder (0x9151) / GetViewFinderData (0x9153) / TerminateViewfinder (0x9152).
+- Remote capture: RemoteRelease (0x910F), BulbStart (0x9125), BulbEnd (0x9126).
+- Camera must be in PTP/MTP mode, not PC Connection mode. USB interface class 0x06/0x01/0x01 (Still Image).
+- Large CR2/CR3 RAW files (20-50 MB) may require extended ioTimeoutMs. Event pump needed for ObjectAdded (0xC101).
+- Battery level readable via GetDevicePropValue (Canon prop 0xD002). KeepDeviceOn (0x9003/0x911D) prevents auto-sleep.
 ## Provenance
 
-- **Status**: Research Only — never connected to SwiftMTP
-- **Reference body**: EOS Rebel SL3 (0x04A9:0x3139) — profile based on PTP/MTP specs, not tested with SwiftMTP
+- **Author**: SwiftMTP Contributors
 - **Date**: 2025-02-25
+- **Commit**: <pending>
+
+### Evidence Artifacts

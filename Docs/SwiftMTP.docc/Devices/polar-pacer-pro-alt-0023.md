@@ -1,0 +1,31 @@
+# Polar Pacer Pro Alt 0023
+
+@Metadata {
+    @DisplayName: "Polar Pacer Pro Alt 0023"
+    @PageKind: article
+    @Available: iOS 15.0, macOS 12.0
+}
+
+Device-specific configuration for Polar Pacer Pro Alt 0023 MTP implementation.
+
+## Identity
+
+| Property | Value |
+|----------|-------|
+| Vendor ID | 0x0da4 |
+| Product ID | 0x0023 |
+| Device Info Pattern | `None` |
+| Status | Experimental |
+
+## Tuning Parameters
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| Maximum Chunk Size | default | bytes |
+| Handshake Timeout | default | ms |
+| I/O Timeout | default | ms |
+| Inactivity Timeout | default | ms |
+| Overall Deadline | default | ms |
+## Notes
+
+- Polar Pacer Pro lightweight running watch with barometric altimeter. USB data sync alternate PID.
