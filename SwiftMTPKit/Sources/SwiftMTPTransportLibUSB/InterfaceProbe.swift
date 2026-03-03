@@ -288,12 +288,16 @@ func claimCandidate(
         _ = libusb_release_interface(handle, iface)
         if attempt == retryCount {
           if isPixel && isPixelDeadPipeError(setAltRC) {
-            log.error("Pixel alt-setting failed: rc=\(setAltRC) — macOS IOService unavailable or exclusive USB claim")
+            log.error(
+              "Pixel alt-setting failed: rc=\(setAltRC) — macOS IOService unavailable or exclusive USB claim"
+            )
             throw TransportError.io(
               "set_interface_alt_setting failed: rc=\(setAltRC) (macOS IOService unavailable or exclusive USB claim)"
             )
           }
-          log.error("set_interface_alt_setting failed after retries: rc=\(setAltRC) iface=\(c.ifaceNumber)")
+          log.error(
+            "set_interface_alt_setting failed after retries: rc=\(setAltRC) iface=\(c.ifaceNumber)"
+          )
           throw TransportError.io("set_interface_alt_setting failed: rc=\(setAltRC)")
         }
         continue
@@ -376,7 +380,9 @@ func claimCandidate(
 
     // If this was the last attempt, throw the error
     if attempt == retryCount {
-      log.error("USB claim failed after \(retryCount + 1) attempts: rc=\(claimRC) iface=\(c.ifaceNumber)")
+      log.error(
+        "USB claim failed after \(retryCount + 1) attempts: rc=\(claimRC) iface=\(c.ifaceNumber)"
+      )
       throw TransportError.io("libusb_claim_interface failed: rc=\(claimRC)")
     }
 
