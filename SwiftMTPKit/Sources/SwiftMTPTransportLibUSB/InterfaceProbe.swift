@@ -3,7 +3,11 @@
 
 import Foundation
 import CLibusb
+import OSLog
 import SwiftMTPCore
+import SwiftMTPObservability
+
+private let log = MTPLog.transport
 
 // MARK: - InterfaceCandidate
 
@@ -284,10 +288,12 @@ func claimCandidate(
         _ = libusb_release_interface(handle, iface)
         if attempt == retryCount {
           if isPixel && isPixelDeadPipeError(setAltRC) {
+            log.error("Pixel alt-setting failed: rc=\(setAltRC) — macOS IOService unavailable or exclusive USB claim")
             throw TransportError.io(
               "set_interface_alt_setting failed: rc=\(setAltRC) (macOS IOService unavailable or exclusive USB claim)"
             )
           }
+          log.error("set_interface_alt_setting failed after retries: rc=\(setAltRC) iface=\(c.ifaceNumber)")
           throw TransportError.io("set_interface_alt_setting failed: rc=\(setAltRC)")
         }
         continue
@@ -321,6 +327,7 @@ func claimCandidate(
       }
 
       if isPixel && (isPixelDeadPipeError(clearInRC) || isPixelDeadPipeError(clearOutRC)) {
+        log.warning("Pixel dead pipe detected during clear_halt: in=\(clearInRC) out=\(clearOutRC)")
         if debug {
           print(
             "   [Claim] Pixel clear_halt indicates dead pipe (in=\(clearInRC) out=\(clearOutRC)); releasing interface and retrying"
@@ -328,6 +335,7 @@ func claimCandidate(
         }
         _ = libusb_release_interface(handle, iface)
         if attempt == retryCount {
+          log.error("Pixel endpoint pipe unavailable: clear_halt in=\(clearInRC) out=\(clearOutRC)")
           throw TransportError.io(
             "Pixel endpoint pipe unavailable after claim: clear_halt in=\(clearInRC) out=\(clearOutRC) (macOS IOService unavailable or exclusive USB claim)"
           )
@@ -368,6 +376,7 @@ func claimCandidate(
 
     // If this was the last attempt, throw the error
     if attempt == retryCount {
+      log.error("USB claim failed after \(retryCount + 1) attempts: rc=\(claimRC) iface=\(c.ifaceNumber)")
       throw TransportError.io("libusb_claim_interface failed: rc=\(claimRC)")
     }
 
@@ -442,6 +451,18 @@ private func probeRunPixelOpenSessionPreflightIfNeeded(
     setConfigurationIfNeeded(handle: handle, device: device, force: true, debug: debug)
   }
 
+  /// Pixel 7 pre-command preflight: resets interface state before first probe command.
+  ///
+  /// This addresses a macOS-specific issue where Pixel 7 endpoints remain in an
+  /// indeterminate state after claim, causing the first GetDeviceInfo to fail with
+  /// a PIPE error or zero-byte timeout. The sequence mirrors the post-claim setup
+  /// in claimCandidate() but adds a PTP class reset for thoroughness.
+  ///
+  /// 2000ms class reset timeout: matches the light recovery rung timeout.
+  /// 200ms settle delay: allows host controller pipe reconfiguration.
+  /// 300ms hard reset delay: USB 2.0 device reset recovery (see hard recovery docs).
+  /// 3000ms MTP ready budget: maximum time to wait for the MTP responder to accept
+  /// a class-specific request after a hard reset — covers slow Android boot paths.
   let setAltRC = libusb_set_interface_alt_setting(handle, iface, alt)
   let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
   let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)

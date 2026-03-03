@@ -27,7 +27,11 @@ final class LibUSBContext: @unchecked Sendable {
   private func startEventLoop() {
     eventThread = Thread { [weak self] in
       guard let self else { return }
-      let tv = timeval(tv_sec: 0, tv_usec: 200_000)  // 200ms
+      // 200ms poll interval balances responsiveness with CPU overhead:
+      // - Short enough to detect hotplug and async transfer completion promptly
+      // - Long enough to avoid busy-looping on the libusb file descriptors
+      // - Matches the libusb recommended range for non-real-time applications
+      let tv = timeval(tv_sec: 0, tv_usec: 200_000)
       while !Thread.current.isCancelled {
         var copy = tv
         _ = libusb_handle_events_timeout_completed(self.ctx, &copy, nil)

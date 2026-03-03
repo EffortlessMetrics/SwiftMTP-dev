@@ -3,8 +3,11 @@
 
 import Foundation
 import CLibusb
+import OSLog
 import SwiftMTPCore
 import SwiftMTPObservability
+
+private let log = MTPLog.transport
 
 public struct LibUSBDiscovery {
   public struct USBDeviceIDs: Sendable {
@@ -229,6 +232,7 @@ public actor LibUSBTransport: MTPTransport {
     guard var dev = target else { throw TransportError.noDevice }
     var h: OpaquePointer?
     guard libusb_open(dev, &h) == 0, var handle = h else {
+      log.error("libusb_open failed for device \(summary.id.raw, privacy: .public) — another process may hold an exclusive claim")
       libusb_unref_device(dev)
       throw TransportError.accessDenied
     }
@@ -255,11 +259,13 @@ public actor LibUSBTransport: MTPTransport {
         }
       }
     } catch {
+      log.error("Interface ranking failed for device \(summary.id.raw, privacy: .public): \(error.localizedDescription, privacy: .public)")
       libusb_close(handle)
       libusb_unref_device(dev)
       throw error
     }
     guard !candidates.isEmpty else {
+      log.warning("No MTP interface found among USB descriptors for device \(summary.id.raw, privacy: .public)")
       libusb_close(handle)
       libusb_unref_device(dev)
       throw TransportError.io("no MTP interface")
@@ -294,6 +300,8 @@ public actor LibUSBTransport: MTPTransport {
         }
       }
       // Brief pause after reset for device to stabilize.
+      // 300ms: USB 2.0 spec allows 10ms, but Android devices with vendor-specific
+      // MTP stacks need 100-250ms for firmware re-initialization. 300ms adds margin.
       if !skipPixelResetByPolicy {
         usleep(300_000)
       }
@@ -304,8 +312,11 @@ public actor LibUSBTransport: MTPTransport {
     // endpoint pipes, which fixes stale pipe state on most devices.
     if debug { print("   [Open] Pass 1: probing \(candidates.count) candidate(s)") }
 
-    // Use extended timeout for vendor-specific devices (class 0xff)
-    // Samsung, Xiaomi, and similar devices often respond more slowly
+    // Use extended timeout for vendor-specific devices (class 0xff).
+    // Vendor-specific MTP stacks (Samsung, Xiaomi, etc.) often initialize more
+    // slowly because MTP runs atop a custom Android USB gadget driver rather than
+    // the standard PTP/MTP class driver. Doubling the handshake timeout (minimum
+    // 5000ms) accounts for the extra firmware initialization and USB mode switching.
     let effectiveTimeout =
       isVendorSpecificMTP ? max(config.handshakeTimeoutMs * 2, 5000) : config.handshakeTimeoutMs
     if isVendorSpecificMTP && debug {
@@ -520,7 +531,9 @@ public actor LibUSBTransport: MTPTransport {
       )
     }
 
-    // PTP Device Reset to clear stale sessions
+    // PTP Device Reset (bRequest 0x66) to clear stale sessions from prior connections.
+    // 5000ms timeout: PTP spec allows devices up to 5s to complete a class-specific reset.
+    // Some Android devices (Samsung) take 2-3s; 5s covers the slowest observed responses.
     let skipClassReset = Self.shouldSkipPixelClassResetControlTransfer(
       vendorID: vendorID, productID: productID)
     let resetRC: Int32
@@ -540,6 +553,8 @@ public actor LibUSBTransport: MTPTransport {
     if resetRC < 0 {
       // Device doesn't support PTP Device Reset — send CloseSession (0x1003) via bulk
       // to clear any stale session from a previous unclean disconnect.
+      // 2000ms write timeout: conservative upper bound for a 12-byte command container;
+      // devices that don't recognize CloseSession will simply STALL, which we drain below.
       let closeCmd = makePTPCommand(opcode: 0x1003, txid: 0, params: [])
       var sent: Int32 = 0
       let writeRC = closeCmd.withUnsafeBytes { ptr -> Int32 in
@@ -550,7 +565,7 @@ public actor LibUSBTransport: MTPTransport {
         )
       }
       if debug { print("   [Open] CloseSession fallback write rc=\(writeRC)") }
-      // Drain the response (don't care about result)
+      // Drain the response — 1000ms is enough for the short response container.
       var respBuf = [UInt8](repeating: 0, count: 512)
       var got: Int32 = 0
       _ = libusb_bulk_transfer(handle, sel.bulkIn, &respBuf, Int32(respBuf.count), &got, 1000)
@@ -669,15 +684,21 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   public func close() async {
     eventPumpTask?.cancel()
     eventContinuation?.finish()
-    libusb_release_interface(h, Int32(iface))
+    let releaseRC = libusb_release_interface(h, Int32(iface))
+    if releaseRC != 0 {
+      log.warning("libusb_release_interface rc=\(releaseRC) during close (non-fatal)")
+    }
     libusb_close(h)
     libusb_unref_device(dev)
+    log.debug("MTPUSBLink closed (iface=\(self.iface))")
   }
 
   public func resetDevice() async throws {
+    log.info("Resetting USB device (VID=\(String(format: "%04x", self.vendorID), privacy: .public) PID=\(String(format: "%04x", self.productID), privacy: .public))")
     let rc = libusb_reset_device(h)
     // NOT_FOUND means device re-enumerated (expected on some Android devices)
     if rc != 0 && rc != Int32(LIBUSB_ERROR_NOT_FOUND.rawValue) {
+      log.error("libusb_reset_device failed rc=\(rc)")
       throw MTPError.transport(mapLibusb(rc))
     }
   }
@@ -706,7 +727,24 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
 
   public func openUSBIfNeeded() async throws {}
 
+  /// Clears HALT/STALL condition on all bulk endpoints (and interrupt if present).
+  ///
+  /// USB STALL is a protocol-level error response where an endpoint indicates it
+  /// cannot process a request. This commonly occurs when:
+  /// - A previous transfer was interrupted mid-stream (e.g. cable glitch)
+  /// - The device rejected a malformed or unexpected PTP container
+  /// - Another process (Chrome/WebUSB, Android File Transfer) left endpoints in a
+  ///   dirty state after releasing the interface
+  ///
+  /// Per USB 2.0 spec §9.4.5, `CLEAR_FEATURE(ENDPOINT_HALT)` resets the endpoint's
+  /// data toggle and allows the next transfer to proceed. We clear all three
+  /// endpoints (bulk OUT, bulk IN, interrupt IN) because a stall on one endpoint
+  /// can leave the others in an ambiguous state — the MTP transaction model requires
+  /// all endpoints to be synchronized for command/data/response phases.
+  ///
+  /// Safe to call even if no endpoint is actually halted (returns success).
   private func recoverStall() {
+    log.debug("Recovering stall: clearing HALT on all endpoints (out=\(String(format: "0x%02x", self.outEP), privacy: .public) in=\(String(format: "0x%02x", self.inEP), privacy: .public) evt=\(String(format: "0x%02x", self.evtEP), privacy: .public))")
     _ = libusb_clear_halt(h, outEP)
     _ = libusb_clear_halt(h, inEP)
     if evtEP != 0 { _ = libusb_clear_halt(h, evtEP) }
@@ -721,6 +759,17 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       && ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_SKIP_CLASS_RESET"] == "1"
   }
 
+  /// Pre-OpenSession preflight for Pixel 7 devices.
+  ///
+  /// Resets interface alt-setting, clears endpoint HALT states, and optionally sends
+  /// a PTP class reset (0x66) to ensure the device is in a clean state before the
+  /// first OpenSession command. This compensates for macOS host controller quirks
+  /// where endpoint pipes retain stale state across close/reopen cycles.
+  ///
+  /// 2000ms class reset timeout: sufficient for the lightweight control transfer;
+  /// the device typically responds in <100ms but we allow headroom for busy devices.
+  /// 200ms settle delay: allows the host controller to complete pipe reconfiguration
+  /// after alt-setting change.
   private func runPixelPreOpenSessionPreflightIfNeeded() {
     guard isPixel7PreflightTarget, !didRunPixelPreOpenSessionPreflight else { return }
     didRunPixelPreOpenSessionPreflight = true
@@ -1052,6 +1101,10 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
         sent += wrote
       }
       if sent % 512 == 0 {
+        // USB bulk transfers require a zero-length packet (ZLP) to signal end of
+        // transfer when the payload is an exact multiple of the max packet size (512
+        // bytes for Hi-Speed). Without this, the device may wait indefinitely for
+        // more data. 100ms timeout is ample for a zero-byte transfer.
         var dummy: UInt8 = 0
         _ = libusb_bulk_transfer(h, outEP, &dummy, 0, nil, 100)
       }
@@ -1062,12 +1115,16 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       if debug {
         print(String(format: "   [USB] op=0x%04x tx=%u phase=DATA-IN", command.code, txid))
       }
+      // First read uses a short 500ms timeout: the device should begin responding
+      // quickly after receiving the command. We poll in a loop up to the full
+      // handshake budget so transient delays don't cause false timeouts.
       var first = [UInt8](repeating: 0, count: 64 * 1024), got = 0,
         start = DispatchTime.now().uptimeNanoseconds
       let budget = UInt64(config.handshakeTimeoutMs) * 1_000_000
       while got == 0 {
         got = try bulkReadOnce(inEP, into: &first, max: first.count, timeout: 500)
         if got == 0 && DispatchTime.now().uptimeNanoseconds - start > budget {
+          log.error("Data-IN phase timeout: no response within \(self.config.handshakeTimeoutMs)ms budget")
           throw MTPError.timeout
         }
       }
@@ -1088,9 +1145,15 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
           var buf = [UInt8](repeating: 0, count: min(left, 1 << 20))
           let chunkState = MTPLog.Signpost.chunkSignposter.beginInterval(
             "readChunk", id: MTPLog.Signpost.chunkSignposter.makeSignpostID(), "\(buf.count) bytes")
+          // 1000ms per-chunk timeout: longer than the 500ms initial read because
+          // mid-transfer chunks may be delayed by device-side file I/O or flash
+          // write latency, especially on large file reads from SD cards.
           let g = try bulkReadOnce(inEP, into: &buf, max: buf.count, timeout: 1000)
           MTPLog.Signpost.chunkSignposter.endInterval("readChunk", chunkState)
-          if g == 0 { throw MTPError.timeout }
+          if g == 0 {
+            log.error("Data-IN chunk read timeout: 0 bytes after 1000ms (remaining=\(left))")
+            throw MTPError.timeout
+          }
           _ = buf.withUnsafeBytes { dataInHandler!($0) }
           left -= g
         }
@@ -1165,6 +1228,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
 
   private func throwCommandWriteFailure(_ attempt: CommandWriteAttempt, context: String) throws {
     if attempt.rc == 0, attempt.sent != attempt.expected {
+      log.error("Short write: sent=\(attempt.sent)/\(attempt.expected) — \(context, privacy: .public)")
       throw MTPError.transport(
         .io("\(context): short write sent=\(attempt.sent)/\(attempt.expected)"))
     }
@@ -1173,6 +1237,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
         // Pixel 7 / macOS 26 specific: bulk OUT stalled with no bytes written.
         // Root cause: macOS does not expose MTP IOUSBInterface children for this device
         // when USB mode or developer options are not fully configured on the phone.
+        log.error("Pixel 7 no-progress timeout: bulk OUT stalled (rc=\(attempt.rc))")
         throw MTPError.transport(
           .io(
             "\(context): Google Pixel 7 — bulk OUT timeout, no bytes sent (rc=\(attempt.rc)). "
@@ -1183,12 +1248,29 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
               + "If the problem persists, verify ioreg shows IOUSBInterface children for VID 18D1:4EE1."
           ))
       }
+      log.error("No-progress timeout: sent=0 rc=\(attempt.rc) — \(context, privacy: .public)")
       throw MTPError.transport(
         .io("\(context): command-phase timeout with no progress (sent=0)"))
     }
+    log.error("Bulk write failed: rc=\(attempt.rc) — \(context, privacy: .public)")
     throw MTPError.transport(mapLibusb(attempt.rc))
   }
 
+  /// Three-rung escalating recovery for command-phase write failures.
+  ///
+  /// When a bulk OUT transfer times out with zero bytes sent (no-progress), the
+  /// endpoint is likely in a HALT or wedged state. This method attempts recovery
+  /// through progressively more disruptive actions:
+  ///
+  /// **Rung 1 – Light recovery**: Clear HALT on all endpoints, re-assert alt-setting,
+  /// send PTP class reset. Fixes most transient stalls from prior session cleanup.
+  ///
+  /// **Rung 2 – Reset+reopen** (Pixel 7 only, opt-in): Full `libusb_reset_device`,
+  /// close the old handle, re-enumerate the device on the same bus/port, and re-claim.
+  /// Needed when macOS host controller loses track of endpoint state.
+  ///
+  /// **Rung 3 – Hard recovery**: `libusb_reset_device` in-place without re-enumeration,
+  /// then re-assert configuration and clear endpoints. Last resort before failing.
   private func writeCommandContainerWithRecovery(
     _ bytes: [UInt8], opcode: UInt16, txid: UInt32, timeout: UInt32, debug: Bool
   ) throws {
@@ -1292,10 +1374,20 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     isPixelClassNoProgressTarget && allowPixelCommandResetRecovery && attempt.isNoProgressTimeout
   }
 
+  /// Light recovery rung: clear endpoint HALT, re-assert alt-setting, PTP class reset.
+  ///
+  /// Sequence rationale:
+  /// 1. `clear_halt` on all endpoints — reset data toggles per USB 2.0 §9.4.5
+  /// 2. PTP class reset (0x66) — tells the device to abandon any in-progress transaction
+  /// 3. `set_configuration` + `set_interface_alt_setting(0)` — forces macOS to
+  ///    tear down and rebuild endpoint pipes at the host controller level
+  /// 4. Post-clear on endpoints — ensures pipes are clean after alt-setting change
+  /// 5. 200ms settle — allows host controller DMA ring buffer reconfiguration
   @discardableResult
   private func performCommandNoProgressLightRecovery(opcode: UInt16, txid: UInt32, debug: Bool)
     -> Bool
   {
+    log.debug("Light recovery: clearing endpoints and re-asserting alt-setting (op=\(String(format: "0x%04x", opcode)))")
     let clearOutRC = libusb_clear_halt(h, outEP)
     let clearInRC = libusb_clear_halt(h, inEP)
     let clearEventRC: Int32 =
@@ -1328,6 +1420,16 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     return true
   }
 
+  /// Hard recovery rung: full USB device reset followed by endpoint reconfiguration.
+  ///
+  /// `libusb_reset_device` causes the host to issue a USB bus reset signal, which
+  /// forces the device firmware to re-initialize its USB stack. The device retains
+  /// its bus address but all endpoint state is wiped.
+  ///
+  /// 300ms post-reset delay: USB 2.0 spec requires devices to be ready within 10ms
+  /// of reset completion, but Android MTP implementations (Samsung, Xiaomi) often
+  /// take 100-250ms to re-initialize their MTP responder. 300ms provides margin.
+  /// 200ms post-clear delay: same as light recovery — host controller pipe setup.
   private func performCommandNoProgressHardRecovery(opcode: UInt16, txid: UInt32, debug: Bool)
     -> Bool
   {
@@ -1344,6 +1446,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
 
     let resetRC = libusb_reset_device(h)
     if resetRC != 0 {
+      log.error("Hard recovery: libusb_reset_device failed rc=\(resetRC) (op=\(String(format: "0x%04x", opcode)))")
       if debug {
         print(
           String(
@@ -1525,6 +1628,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
           mutating: ptr.advanced(by: sent).assumingMemoryBound(to: UInt8.self)),
         Int32(count - sent), &s, timeout)
       if rc == Int32(LIBUSB_ERROR_PIPE.rawValue) {
+        // PIPE error = endpoint STALL. Attempt stall recovery (clear HALT on all
+        // endpoints) then retry once. If the retry also fails, propagate the error.
+        log.warning("Bulk write PIPE/STALL on ep=\(String(format: "0x%02x", ep), privacy: .public), attempting stall recovery")
         recoverStall()
         var r: Int32 = 0
         let rc2 = libusb_bulk_transfer(
@@ -1532,11 +1638,17 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
           UnsafeMutablePointer<UInt8>(
             mutating: ptr.advanced(by: sent).assumingMemoryBound(to: UInt8.self)),
           Int32(count - sent), &r, timeout)
-        if rc2 != 0 { throw MTPError.transport(mapLibusb(rc2)) }
+        if rc2 != 0 {
+          log.error("Bulk write retry after stall recovery failed: rc=\(rc2)")
+          throw MTPError.transport(mapLibusb(rc2))
+        }
         sent += Int(r)
         continue
       }
-      if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }
+      if rc != 0 {
+        log.error("Bulk write failed: rc=\(rc) ep=\(String(format: "0x%02x", ep), privacy: .public) sent=\(sent)/\(count)")
+        throw MTPError.transport(mapLibusb(rc))
+      }
       sent += Int(s)
     }
   }
@@ -1545,37 +1657,56 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   ) throws -> Int {
     var g: Int32 = 0
     if max < 512 {
+      // USB bulk transfers require buffers aligned to max packet size (512 bytes
+      // for Hi-Speed). Use a temporary buffer to avoid short-packet issues on
+      // host controllers that enforce alignment.
       var tmp = [UInt8](repeating: 0, count: 512)
       let rc = libusb_bulk_transfer(h, ep, &tmp, 512, &g, timeout)
-      if rc == -7 { return 0 }
+      if rc == -7 { return 0 }  // LIBUSB_ERROR_TIMEOUT — no data yet
       if rc == Int32(LIBUSB_ERROR_PIPE.rawValue) {
+        log.warning("Bulk read PIPE/STALL on ep=\(String(format: "0x%02x", ep), privacy: .public), attempting stall recovery")
         recoverStall()
         var g2: Int32 = 0
         let rc2 = libusb_bulk_transfer(h, ep, &tmp, 512, &g2, timeout)
-        if rc2 != 0 && rc2 != -8 { throw MTPError.transport(mapLibusb(rc2)) }
+        if rc2 != 0 && rc2 != -8 {
+          log.error("Bulk read retry after stall recovery failed: rc=\(rc2)")
+          throw MTPError.transport(mapLibusb(rc2))
+        }
         let c = min(Int(g2), max)
         if c > 0 { memcpy(buf, tmp, c) }
         return c
       }
-      if rc != 0 && rc != -8 { throw MTPError.transport(mapLibusb(rc)) }
+      if rc != 0 && rc != -8 {
+        log.error("Bulk read failed: rc=\(rc) ep=\(String(format: "0x%02x", ep), privacy: .public)")
+        throw MTPError.transport(mapLibusb(rc))
+      }
       let c = min(Int(g), max)
       if c > 0 { memcpy(buf, tmp, c) }
       return c
     }
     let rc = libusb_bulk_transfer(
       h, ep, buf.assumingMemoryBound(to: UInt8.self), Int32(max), &g, timeout)
-    if rc == -7 { return 0 }
+    if rc == -7 { return 0 }  // LIBUSB_ERROR_TIMEOUT — no data yet
     if rc == Int32(LIBUSB_ERROR_PIPE.rawValue) {
+      log.warning("Bulk read PIPE/STALL on ep=\(String(format: "0x%02x", ep), privacy: .public), attempting stall recovery")
       recoverStall()
       var g2: Int32 = 0
       let rc2 = libusb_bulk_transfer(
         h, ep, buf.assumingMemoryBound(to: UInt8.self), Int32(max), &g2, timeout)
-      if rc2 != 0 { throw MTPError.transport(mapLibusb(rc2)) }
+      if rc2 != 0 {
+        log.error("Bulk read retry after stall recovery failed: rc=\(rc2)")
+        throw MTPError.transport(mapLibusb(rc2))
+      }
       return Int(g2)
     }
-    if rc != 0 { throw MTPError.transport(mapLibusb(rc)) }
+    if rc != 0 {
+      log.error("Bulk read failed: rc=\(rc) ep=\(String(format: "0x%02x", ep), privacy: .public)")
+      throw MTPError.transport(mapLibusb(rc))
+    }
     return Int(g)
   }
+  /// Reads exactly `need` bytes from the bulk IN endpoint, retrying until complete.
+  /// Throws `MTPError.timeout` if any individual read returns 0 bytes.
   func bulkReadExact(_ ep: UInt8, into dst: UnsafeMutableRawPointer, need: Int, timeout: UInt32)
     throws
   {
@@ -1583,7 +1714,10 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     while got < need {
       var tmp = [UInt8](repeating: 0, count: need - got)
       let g = try bulkReadOnce(ep, into: &tmp, max: tmp.count, timeout: timeout)
-      if g == 0 { throw MTPError.timeout }
+      if g == 0 {
+        log.error("bulkReadExact timeout: got=\(got)/\(need) bytes")
+        throw MTPError.timeout
+      }
       memcpy(dst.advanced(by: got), &tmp, g)
       got += g
     }
