@@ -8,8 +8,8 @@ import XCTest
 
 @testable import SwiftMTPCore
 
-/// Extended property tests covering codec roundtrips, quirks matching,
-/// progress reporting, and transfer journal invariants.
+/// Extended property tests covering codec roundtrips, PTP container invariants,
+/// PTPReader bounds, PTP string encoding, and operation code ranges.
 final class ExtendedPropertyTests: XCTestCase {
 
   // MARK: - UInt8 Round-Trip
@@ -62,8 +62,9 @@ final class ExtendedPropertyTests: XCTestCase {
         enc.append(c)
         var dec = MTPDataDecoder(data: enc.encodedData)
         guard let da = dec.readUInt8(),
-              let db = dec.readUInt16(),
-              let dc = dec.readUInt32() else { return false }
+          let db = dec.readUInt16(),
+          let dc = dec.readUInt32()
+        else { return false }
         return da == a && db == b && dc == c
       }
   }
@@ -88,135 +89,122 @@ final class ExtendedPropertyTests: XCTestCase {
       }
   }
 
-  // MARK: - PTP Container Length Invariant
+  // MARK: - PTP Container Encoding
 
-  func testPTPContainerLengthIncludesHeader() {
-    property("PTP container length is always >= 12")
-      <- forAll(Gen<UInt16>.choose((0x1001, 0x101B))) { (code: UInt16) in
+  func testPTPContainerEncodesMinimum12Bytes() {
+    // A PTP container with no params should encode to exactly 12 bytes (header only)
+    let container = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue, code: 0x1001, txid: 1)
+    var buf = [UInt8](repeating: 0, count: 64)
+    let written = container.encode(into: &buf)
+    XCTAssertEqual(written, 12, "Empty PTP container header should be 12 bytes")
+  }
+
+  func testPTPContainerParamsAddToLength() {
+    property("Each PTP container param adds 4 bytes to encoded size")
+      <- forAll(Gen<Int>.choose((0, 5))) { (paramCount: Int) in
+        let params = (0..<paramCount).map { _ in UInt32.random(in: 0...UInt32.max) }
         let container = PTPContainer(
-          type: .command,
-          code: code,
-          transactionId: 1,
-          payload: Data()
+          type: PTPContainer.Kind.command.rawValue,
+          code: 0x1001,
+          txid: 1,
+          params: params
         )
-        return container.encoded().count >= 12
+        var buf = [UInt8](repeating: 0, count: 64)
+        let written = container.encode(into: &buf)
+        return written == 12 + paramCount * 4
       }
   }
 
-  func testPTPContainerPayloadAddedToLength() {
-    property("PTP container payload increases length by payload size")
-      <- forAll(Gen<Int>.choose((0, 100))) { (payloadSize: Int) in
-        let payload = Data(repeating: 0xAB, count: payloadSize)
-        let container = PTPContainer(
-          type: .data,
-          code: 0x1009,
-          transactionId: 1,
-          payload: payload
-        )
-        return container.encoded().count == 12 + payloadSize
-      }
+  // MARK: - PTP Response Code Classification
+
+  func testOKResponseCodeIsStandard() {
+    // 0x2001 is the standard OK code
+    XCTAssertEqual(PTPResponseCode.name(for: 0x2001), "OK")
   }
 
-  // MARK: - Response Code Classification
-
-  func testSuccessCodesAreSuccess() {
-    let resp = MTPResponseCode.ok
-    XCTAssertTrue(resp.isSuccess)
-  }
-
-  func testErrorCodesAreNotSuccess() {
-    let errorCodes: [MTPResponseCode] = [
-      .generalError, .sessionNotOpen, .invalidTransactionID,
-      .operationNotSupported, .storeFull, .accessDenied,
+  func testErrorCodesHaveNames() {
+    let errorCodes: [(UInt16, String)] = [
+      (0x2002, "GeneralError"),
+      (0x2003, "SessionNotOpen"),
+      (0x2004, "InvalidTransactionID"),
+      (0x2005, "OperationNotSupported"),
+      (0x200C, "StoreFull"),
+      (0x200F, "AccessDenied"),
     ]
-    for code in errorCodes {
-      XCTAssertFalse(code.isSuccess, "\(code) should not be success")
+    for (code, expectedName) in errorCodes {
+      XCTAssertEqual(
+        PTPResponseCode.name(for: code), expectedName,
+        "Code 0x\(String(format: "%04x", code)) should be \(expectedName)"
+      )
     }
+  }
+
+  func testUnknownResponseCodeReturnsNil() {
+    XCTAssertNil(PTPResponseCode.name(for: 0x0000))
+    XCTAssertNil(PTPResponseCode.name(for: 0xFFFF))
+  }
+
+  func testDescribeIncludesHexCode() {
+    let desc = PTPResponseCode.describe(0x201D)
+    XCTAssertTrue(desc.contains("201d"), "Describe should include hex code")
+    XCTAssertTrue(desc.contains("InvalidParameter"), "Describe should include name")
   }
 
   // MARK: - Operation Code Range Properties
 
   func testStandardOpsInRange() {
-    let standardOps: [MTPOperationCode] = [
+    let standardOps: [PTPOp] = [
       .getDeviceInfo, .openSession, .closeSession,
       .getStorageIDs, .getStorageInfo, .getNumObjects,
       .getObjectHandles, .getObjectInfo, .getObject,
       .deleteObject, .sendObjectInfo, .sendObject,
     ]
     for op in standardOps {
-      XCTAssertTrue(op.rawValue >= 0x1001 && op.rawValue <= 0x101B,
-                    "\(op) should be in standard range 0x1001-0x101B")
+      XCTAssertTrue(
+        op.rawValue >= 0x1001 && op.rawValue <= 0x101B,
+        "\(op) should be in standard range 0x1001-0x101B"
+      )
     }
   }
 
-  // MARK: - MTP String Encoding Properties
-
-  func testMTPStringLengthIncludesNull() {
-    property("MTP encoded string length byte counts null terminator")
-      <- forAll(Gen<String>.fromElements(of: ["a", "ab", "abc", "test", "hello"])) { (str: String) in
-        var enc = MTPDataEncoder()
-        enc.appendMTPString(str)
-        let data = enc.encodedData
-        guard let lenByte = data.first else { return false }
-        // Length byte = character count + 1 (null terminator)
-        return Int(lenByte) == str.utf16.count + 1
-      }
-  }
-
-  func testEmptyMTPStringEncoding() {
-    var enc = MTPDataEncoder()
-    enc.appendMTPString("")
-    let data = enc.encodedData
-    // Empty string → length byte 0
-    XCTAssertEqual(data.first, 0)
-  }
-
-  // MARK: - Transaction ID Generator Properties
-
-  func testTransactionIdNeverZero() {
-    property("Transaction IDs are never zero")
-      <- forAll(Gen<UInt32>.choose((0, 10000))) { (start: UInt32) in
-        var gen = TransactionIDGenerator(current: start)
-        for _ in 0..<100 {
-          if gen.next() == 0 { return false }
-        }
-        return true
-      }
-  }
-
-  func testTransactionIdAlwaysIncreasing() {
-    var gen = TransactionIDGenerator()
-    var prev = gen.next()
-    for _ in 0..<1000 {
-      let curr = gen.next()
-      // Either strictly increasing or wrapped from max to 1
-      if curr != prev + 1 && !(prev == UInt32.max && curr == 1) {
-        XCTFail("ID \(curr) should follow \(prev)")
-        return
-      }
-      prev = curr
+  func testVendorOpsOutsideStandardRange() {
+    let vendorOps: [PTPOp] = [.getPartialObject64, .sendPartialObject]
+    for op in vendorOps {
+      XCTAssertTrue(
+        op.rawValue > 0x101B,
+        "\(op) should be outside standard range"
+      )
     }
   }
 
-  // MARK: - Storage Type Properties
+  // MARK: - PTP String Encoding Properties
 
-  func testStorageTypesNonOverlapping() {
-    let types: [MTPStorageType] = [.undefined, .fixedROM, .removableROM, .fixedRAM, .removableRAM]
-    let rawValues = types.map(\.rawValue)
-    XCTAssertEqual(Set(rawValues).count, rawValues.count, "Storage types should have unique raw values")
+  func testPTPStringRoundTrip() {
+    property("PTPString encode/parse round-trips for short strings")
+      <- forAll(
+        Gen<String>.fromElements(of: ["a", "ab", "abc", "test", "hello"])
+      ) { (str: String) in
+        let encoded = PTPString.encode(str)
+        var offset = 0
+        guard let decoded = PTPString.parse(from: encoded, at: &offset) else { return false }
+        return decoded == str
+      }
   }
 
-  // MARK: - Event Code Properties
+  func testPTPStringEncodedLengthIncludesNullTerminator() {
+    // For a non-empty string, the length byte should be char count + 1 (null terminator)
+    let str = "test"
+    let encoded = PTPString.encode(str)
+    let lenByte = Int(encoded[0])
+    XCTAssertEqual(lenByte, str.utf16.count + 1, "Length byte should include null terminator")
+  }
 
-  func testEventCodesInRange() {
-    let events: [MTPEventCode] = [
-      .objectAdded, .objectRemoved, .storeAdded, .storeRemoved,
-      .devicePropChanged, .objectInfoChanged, .storeFull,
-    ]
-    for event in events {
-      XCTAssertTrue(event.rawValue >= 0x4000, "Event codes should be >= 0x4000")
-      XCTAssertTrue(event.rawValue < 0x5000, "Standard event codes should be < 0x5000")
-    }
+  func testEmptyPTPStringEncoding() {
+    let encoded = PTPString.encode("")
+    // Empty string -> length byte 0
+    XCTAssertEqual(encoded.first, 0)
+    XCTAssertEqual(encoded.count, 1, "Empty PTP string should be just the zero length byte")
   }
 
   // MARK: - Chunk Size Properties
@@ -277,25 +265,64 @@ final class ExtendedPropertyTests: XCTestCase {
       }
   }
 
-  // MARK: - Object Format Properties
+  // MARK: - PTP Object Format Helper
 
-  func testAssociationFormatIsFolder() {
-    XCTAssertEqual(MTPObjectFormat.association.rawValue, 0x3001)
+  func testObjectFormatForJPEG() {
+    XCTAssertEqual(PTPObjectFormat.forFilename("photo.jpg"), 0x3801)
+    XCTAssertEqual(PTPObjectFormat.forFilename("PHOTO.JPEG"), 0x3801)
   }
 
-  func testImageFormatsInRange() {
-    let imageFormats: [MTPObjectFormat] = [.exifJPEG, .tiffEP, .bmp, .gif, .png, .tiff]
-    for fmt in imageFormats {
-      XCTAssertTrue(fmt.rawValue >= 0x3800 && fmt.rawValue <= 0x3FFF,
-                    "\(fmt) should be in image format range")
-    }
+  func testObjectFormatForPNG() {
+    XCTAssertEqual(PTPObjectFormat.forFilename("image.png"), 0x380b)
   }
 
-  func testAudioFormatsInRange() {
-    let audioFormats: [MTPObjectFormat] = [.mp3, .wav, .aiff]
-    for fmt in audioFormats {
-      XCTAssertTrue(fmt.rawValue >= 0x3007 && fmt.rawValue <= 0x300C,
-                    "\(fmt) should be in standard format range")
-    }
+  func testObjectFormatForMP3() {
+    XCTAssertEqual(PTPObjectFormat.forFilename("song.mp3"), 0x3009)
+  }
+
+  func testObjectFormatForMP4() {
+    XCTAssertEqual(PTPObjectFormat.forFilename("video.mp4"), 0x300b)
+  }
+
+  func testObjectFormatForUnknownExtension() {
+    XCTAssertEqual(PTPObjectFormat.forFilename("data.xyz"), 0x3000, "Unknown should be Undefined")
+  }
+
+  // MARK: - MTPDataDecoder Remaining Bytes
+
+  func testDecoderRemainingBytesProperty() {
+    property("Decoder remaining bytes decreases correctly after reads")
+      <- forAll { (value: UInt32) in
+        var enc = MTPDataEncoder()
+        enc.append(value)
+        var dec = MTPDataDecoder(data: enc.encodedData)
+        let before = dec.remainingBytes
+        _ = dec.readUInt32()
+        let after = dec.remainingBytes
+        return before == 4 && after == 0
+      }
+  }
+
+  func testDecoderHasRemainingAfterPartialRead() {
+    var enc = MTPDataEncoder()
+    enc.append(UInt32(42))
+    enc.append(UInt16(7))
+    var dec = MTPDataDecoder(data: enc.encodedData)
+    XCTAssertTrue(dec.hasRemaining)
+    _ = dec.readUInt32()
+    XCTAssertTrue(dec.hasRemaining)
+    _ = dec.readUInt16()
+    XCTAssertFalse(dec.hasRemaining)
+  }
+
+  // MARK: - MTPDataEncoder Reset
+
+  func testEncoderReset() {
+    var enc = MTPDataEncoder()
+    enc.append(UInt32(0xDEAD_BEEF))
+    XCTAssertEqual(enc.count, 4)
+    enc.reset()
+    XCTAssertEqual(enc.count, 0)
+    XCTAssertTrue(enc.encodedData.isEmpty)
   }
 }
