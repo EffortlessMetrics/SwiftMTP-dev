@@ -127,6 +127,7 @@ coverage/
 ### Threshold Behavior
 
 - **Hard Fail**: Filtered overall coverage below 100% fails the build
+- **Per-Module Fail**: Each gated module must individually meet the threshold; a regression in any single module fails the build even if others compensate
 - **Soft Warning**: Per-target coverage below threshold shows warnings
 - **CI Integration**: Coverage drops in PRs trigger failure
 
