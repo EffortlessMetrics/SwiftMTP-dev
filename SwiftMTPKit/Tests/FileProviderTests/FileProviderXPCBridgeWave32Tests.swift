@@ -148,7 +148,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
   private final class MockXPCService: NSObject, MTPXPCService {
     nonisolated(unsafe) var storageListResponse = StorageListResponse(success: true, storages: [])
     nonisolated(unsafe) var objectListResponse = ObjectListResponse(success: true, objects: [])
-    nonisolated(unsafe) var readResponse = ReadResponse(success: true, tempFileURL: nil, fileSize: nil)
+    nonisolated(unsafe) var readResponse = ReadResponse(
+      success: true, tempFileURL: nil, fileSize: nil)
     nonisolated(unsafe) var writeResponse = WriteResponse(success: true, newHandle: 100)
     nonisolated(unsafe) var deleteResponse = WriteResponse(success: true)
     nonisolated(unsafe) var createFolderResponse = WriteResponse(success: true, newHandle: 200)
@@ -183,7 +184,9 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
       r(readResponse)
     }
 
-    func listStorages(_ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void) {
+    func listStorages(
+      _ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void
+    ) {
       listStoragesCallCount += 1
       if simulateDisconnect {
         r(StorageListResponse(success: false, errorMessage: "Device not connected"))
@@ -192,7 +195,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
       r(storageListResponse)
     }
 
-    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void) {
+    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void)
+    {
       listObjectsCallCount += 1
       lastObjectListRequest = req
       if simulateDisconnect {
@@ -317,7 +321,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
 
   func testDeviceListViaXPC_returnsStorages() async {
     let svc = await makeXPCServiceImpl(objectCount: 0)
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }
@@ -329,7 +334,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
 
   func testDeviceListViaXPC_missingDevice_returnsError() async {
     let svc = await makeXPCServiceImpl()
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: "nonexistent-device")) {
         c.resume(returning: $0)
       }
@@ -340,7 +346,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
 
   func testDeviceListViaXPC_storageMetadataAccurate() async {
     let svc = await makeXPCServiceImpl()
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }
@@ -358,12 +365,14 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     let reader = MockIndexReader()
     // Add 600 objects to trigger pagination (DomainEnumerator page size is 500)
     for i in 0..<600 {
-      reader.addObject(makeIndexedObject(
-        handle: UInt32(1000 + i), name: "file-\(i).jpg", size: UInt64(i * 100)))
+      reader.addObject(
+        makeIndexedObject(
+          handle: UInt32(1000 + i), name: "file-\(i).jpg", size: UInt64(i * 100)))
     }
-    reader.addStorage(IndexedStorage(
-      deviceId: testDeviceId, storageId: testStorageId,
-      description: "Internal", capacity: 64_000_000_000, free: 32_000_000_000, readOnly: false))
+    reader.addStorage(
+      IndexedStorage(
+        deviceId: testDeviceId, storageId: testStorageId,
+        description: "Internal", capacity: 64_000_000_000, free: 32_000_000_000, readOnly: false))
 
     let enumerator = DomainEnumerator(
       deviceId: testDeviceId, storageId: testStorageId, parentHandle: nil,
@@ -373,11 +382,13 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     let observer1 = MockEnumerationObserver()
     let exp1 = expectation(description: "first page")
     observer1.onFinish = { exp1.fulfill() }
-    enumerator.enumerateItems(for: observer1, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
+    enumerator.enumerateItems(
+      for: observer1, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
     await fulfillment(of: [exp1], timeout: 5)
 
     XCTAssertEqual(observer1.enumeratedItems.count, 500)
-    XCTAssertNotNil(observer1.nextPageCursor, "Should have a next page cursor for remaining 100 items")
+    XCTAssertNotNil(
+      observer1.nextPageCursor, "Should have a next page cursor for remaining 100 items")
 
     // Second page
     let observer2 = MockEnumerationObserver()
@@ -392,14 +403,16 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
 
   func testFileEnumeration_storagesLevel() async {
     let reader = MockIndexReader()
-    reader.addStorage(IndexedStorage(
-      deviceId: testDeviceId, storageId: testStorageId,
-      description: "Internal Storage", capacity: 64_000_000_000,
-      free: 32_000_000_000, readOnly: false))
-    reader.addStorage(IndexedStorage(
-      deviceId: testDeviceId, storageId: 0x0002_0001,
-      description: "SD Card", capacity: 128_000_000_000,
-      free: 64_000_000_000, readOnly: false))
+    reader.addStorage(
+      IndexedStorage(
+        deviceId: testDeviceId, storageId: testStorageId,
+        description: "Internal Storage", capacity: 64_000_000_000,
+        free: 32_000_000_000, readOnly: false))
+    reader.addStorage(
+      IndexedStorage(
+        deviceId: testDeviceId, storageId: 0x0002_0001,
+        description: "SD Card", capacity: 128_000_000_000,
+        free: 64_000_000_000, readOnly: false))
 
     let enumerator = DomainEnumerator(
       deviceId: testDeviceId, storageId: nil, parentHandle: nil,
@@ -408,7 +421,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     let observer = MockEnumerationObserver()
     let exp = expectation(description: "storage enumeration")
     observer.onFinish = { exp.fulfill() }
-    enumerator.enumerateItems(for: observer, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
+    enumerator.enumerateItems(
+      for: observer, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
     await fulfillment(of: [exp], timeout: 5)
 
     XCTAssertEqual(observer.enumeratedItems.count, 2)
@@ -430,9 +444,10 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
 
     let reader = MockIndexReader()
     reader.addObject(makeIndexedObject(handle: 42, name: "photo.jpg", size: 5))
-    reader.addStorage(IndexedStorage(
-      deviceId: testDeviceId, storageId: testStorageId,
-      description: "Internal", capacity: 1_000_000, free: 500_000, readOnly: false))
+    reader.addStorage(
+      IndexedStorage(
+        deviceId: testDeviceId, storageId: testStorageId,
+        description: "Internal", capacity: 1_000_000, free: 500_000, readOnly: false))
 
     let ext = makeExtension(indexReader: reader, xpcService: xpcService)
 
@@ -461,9 +476,10 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
 
     let reader = MockIndexReader()
     reader.addObject(makeIndexedObject(handle: 42, name: "photo.jpg", size: 5))
-    reader.addStorage(IndexedStorage(
-      deviceId: testDeviceId, storageId: testStorageId,
-      description: "Internal", capacity: 1_000_000, free: 500_000, readOnly: false))
+    reader.addStorage(
+      IndexedStorage(
+        deviceId: testDeviceId, storageId: testStorageId,
+        description: "Internal", capacity: 1_000_000, free: 500_000, readOnly: false))
 
     let ext = makeExtension(indexReader: reader, xpcService: xpcService)
 
@@ -489,9 +505,10 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     xpcService.writeResponse = WriteResponse(success: true, newHandle: 500)
 
     let reader = MockIndexReader()
-    reader.addStorage(IndexedStorage(
-      deviceId: testDeviceId, storageId: testStorageId,
-      description: "Internal", capacity: 1_000_000, free: 500_000, readOnly: false))
+    reader.addStorage(
+      IndexedStorage(
+        deviceId: testDeviceId, storageId: testStorageId,
+        description: "Internal", capacity: 1_000_000, free: 500_000, readOnly: false))
 
     var signalledIds: [NSFileProviderItemIdentifier] = []
     let ext = makeExtension(indexReader: reader, xpcService: xpcService) { id in
@@ -528,9 +545,10 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
       success: false, errorMessage: "Object already exists")
 
     let reader = MockIndexReader()
-    reader.addStorage(IndexedStorage(
-      deviceId: testDeviceId, storageId: testStorageId,
-      description: "Internal", capacity: 1_000_000, free: 500_000, readOnly: false))
+    reader.addStorage(
+      IndexedStorage(
+        deviceId: testDeviceId, storageId: testStorageId,
+        description: "Internal", capacity: 1_000_000, free: 500_000, readOnly: false))
 
     let ext = makeExtension(indexReader: reader, xpcService: xpcService)
 
@@ -570,7 +588,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     let observer = MockEnumerationObserver()
     let exp = expectation(description: "enumeration error")
     observer.onFinish = { exp.fulfill() }
-    enumerator.enumerateItems(for: observer, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
+    enumerator.enumerateItems(
+      for: observer, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
     await fulfillment(of: [exp], timeout: 5)
 
     XCTAssertNotNil(observer.errorReceived)
@@ -619,7 +638,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     impl.registry = registry
 
     // deviceStatus uses direct registry lookup (ephemeral ID)
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<DeviceStatusResponse, Never>) in
       impl.deviceStatus(DeviceStatusRequest(deviceId: deviceId.raw)) {
         c.resume(returning: $0)
       }
@@ -628,7 +648,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     XCTAssertTrue(resp.sessionOpen)
 
     // listStorages uses findDevice which resolves stableId → ephemeral via domain mapping
-    let storageResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let storageResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       impl.listStorages(StorageListRequest(deviceId: stableId)) {
         c.resume(returning: $0)
       }
@@ -641,7 +662,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     let impl = MTPXPCServiceImpl(deviceManager: .shared)
     impl.registry = registry
 
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<DeviceStatusResponse, Never>) in
       impl.deviceStatus(DeviceStatusRequest(deviceId: "unregistered-domain")) {
         c.resume(returning: $0)
       }
@@ -656,23 +678,27 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     var signalledIds: [NSFileProviderItemIdentifier] = []
     let ext = makeExtension(signalCallback: { id in signalledIds.append(id) })
 
-    ext.handleDeviceEvent(.addObject(
-      deviceId: testDeviceId, storageId: testStorageId,
-      objectHandle: 77, parentHandle: nil))
+    ext.handleDeviceEvent(
+      .addObject(
+        deviceId: testDeviceId, storageId: testStorageId,
+        objectHandle: 77, parentHandle: nil))
 
-    XCTAssertTrue(signalledIds.contains(
-      NSFileProviderItemIdentifier("\(testDeviceId):\(testStorageId)")))
+    XCTAssertTrue(
+      signalledIds.contains(
+        NSFileProviderItemIdentifier("\(testDeviceId):\(testStorageId)")))
   }
 
   func testChangeNotification_deleteObject_signalsEnumerator() {
     var signalledIds: [NSFileProviderItemIdentifier] = []
     let ext = makeExtension(signalCallback: { id in signalledIds.append(id) })
 
-    ext.handleDeviceEvent(.deleteObject(
-      deviceId: testDeviceId, storageId: testStorageId, objectHandle: 88))
+    ext.handleDeviceEvent(
+      .deleteObject(
+        deviceId: testDeviceId, storageId: testStorageId, objectHandle: 88))
 
-    XCTAssertTrue(signalledIds.contains(
-      NSFileProviderItemIdentifier("\(testDeviceId):\(testStorageId)")))
+    XCTAssertTrue(
+      signalledIds.contains(
+        NSFileProviderItemIdentifier("\(testDeviceId):\(testStorageId)")))
   }
 
   func testChangeNotification_storageRemoved_signalsRootContainer() {
@@ -687,8 +713,9 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
   func testChangeNotification_multipleEvents_coalesced_inSyncAnchor() async {
     let reader = MockIndexReader()
     for i in 0..<5 {
-      reader.addObject(makeIndexedObject(
-        handle: UInt32(200 + i), name: "event-\(i).txt", size: 100))
+      reader.addObject(
+        makeIndexedObject(
+          handle: UInt32(200 + i), name: "event-\(i).txt", size: 100))
     }
 
     let syncAnchorStore = SyncAnchorStore()
@@ -696,9 +723,10 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
 
     // Fire multiple add events
     for i in 0..<5 {
-      ext.handleDeviceEvent(.addObject(
-        deviceId: testDeviceId, storageId: testStorageId,
-        objectHandle: UInt32(200 + i), parentHandle: nil))
+      ext.handleDeviceEvent(
+        .addObject(
+          deviceId: testDeviceId, storageId: testStorageId,
+          objectHandle: UInt32(200 + i), parentHandle: nil))
     }
 
     // The sync anchor store inside the extension records changes;
@@ -732,7 +760,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     let stableId = svc.stableId
 
     // Verify initial connectivity
-    let beforeResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let beforeResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: stableId)) {
         c.resume(returning: $0)
       }
@@ -742,7 +771,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     // Simulate XPC service crash: remove device from registry
     await svc.registry.remove(deviceId: svc.deviceId)
 
-    let duringCrash = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let duringCrash = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: stableId)) {
         c.resume(returning: $0)
       }
@@ -764,14 +794,16 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     await svc.registry.registerDomainMapping(deviceId: newConfig.deviceId, domainId: stableId)
 
     // Verify operations resume
-    let afterResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let afterResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: stableId)) {
         c.resume(returning: $0)
       }
     }
     XCTAssertTrue(afterResp.success)
 
-    let objResp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let objResp = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       svc.impl.listObjects(
         ObjectListRequest(deviceId: stableId, storageId: newStorageId.raw, parentHandle: nil)
       ) { c.resume(returning: $0) }
@@ -805,7 +837,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     // Simulate 10 sequential list requests from different FileProvider instances
     var successCount = 0
     for _ in 0..<10 {
-      let resp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+      let resp = await withCheckedContinuation {
+        (c: CheckedContinuation<ObjectListResponse, Never>) in
         svc.impl.listObjects(
           ObjectListRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)
         ) { c.resume(returning: $0) }
@@ -841,7 +874,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     let svc = await makeXPCServiceImpl(objectCount: 2)
 
     // Multiple operations against the same device in sequence
-    let storageResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let storageResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }
@@ -850,7 +884,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     XCTAssertNotNil(storageResp.storages)
 
     // deviceStatus uses direct registry lookup (ephemeral ID, not stableId)
-    let statusResp = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+    let statusResp = await withCheckedContinuation {
+      (c: CheckedContinuation<DeviceStatusResponse, Never>) in
       svc.impl.deviceStatus(DeviceStatusRequest(deviceId: svc.deviceId.raw)) {
         c.resume(returning: $0)
       }
@@ -950,7 +985,8 @@ final class FileProviderXPCBridgeWave32Tests: XCTestCase {
     let observer = MockEnumerationObserver()
     let exp = expectation(description: "enumeration error propagated")
     observer.onFinish = { exp.fulfill() }
-    enumerator.enumerateItems(for: observer, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
+    enumerator.enumerateItems(
+      for: observer, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
     await fulfillment(of: [exp], timeout: 5)
 
     XCTAssertNotNil(observer.errorReceived)

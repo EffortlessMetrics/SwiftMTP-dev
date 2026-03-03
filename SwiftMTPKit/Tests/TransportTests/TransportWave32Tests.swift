@@ -154,7 +154,7 @@ final class LibUSBErrorCodeMappingWave32Tests: XCTestCase {
       guard let mtp = error as? MTPError, case .transport(let te) = mtp else {
         return XCTFail("Expected MTPError.transport")
       }
-      if case .io = te { /* pass */ } else { XCTFail("Expected .io case") }
+      if case .io = te { /* pass */  } else { XCTFail("Expected .io case") }
     }
   }
 
@@ -380,7 +380,8 @@ final class AlternateInterfaceWave32Tests: XCTestCase {
       interfaceClass: 0xFF, interfaceSubclass: 0x00, interfaceProtocol: 0x00,
       endpoints: vendorEps, interfaceName: "MTP"
     )
-    XCTAssertGreaterThan(mtpScore.score, vendorScore.score,
+    XCTAssertGreaterThan(
+      mtpScore.score, vendorScore.score,
       "MTP class interface should score higher than vendor-specific")
   }
 
@@ -397,7 +398,8 @@ final class AlternateInterfaceWave32Tests: XCTestCase {
       interfaceClass: 0x06, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
       endpoints: noEvent, interfaceName: ""
     )
-    XCTAssertGreaterThan(scoreWith.score, scoreWithout.score,
+    XCTAssertGreaterThan(
+      scoreWith.score, scoreWithout.score,
       "Event endpoint should add bonus score")
   }
 

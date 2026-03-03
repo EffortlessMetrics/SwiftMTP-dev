@@ -142,8 +142,8 @@ final class DeviceActorWave32Tests: XCTestCase {
     XCTAssertTrue(info.operationsSupported.contains(PTPOp.getPartialObject.rawValue))
     // Pixel 7 config supports events
     XCTAssertFalse(info.eventsSupported.isEmpty)
-    XCTAssertTrue(info.eventsSupported.contains(0x4002)) // ObjectAdded
-    XCTAssertTrue(info.eventsSupported.contains(0x4003)) // ObjectRemoved
+    XCTAssertTrue(info.eventsSupported.contains(0x4002))  // ObjectAdded
+    XCTAssertTrue(info.eventsSupported.contains(0x4003))  // ObjectRemoved
   }
 
   /// Samsung Galaxy config advertises GetObjectPropList (0x9805).
@@ -274,7 +274,7 @@ final class DeviceActorWave32Tests: XCTestCase {
   func testParsePropListDataset_emptyDataset() async throws {
     let actor = makeActor()
     var data = Data()
-    appendU32(&data, 0) // count = 0
+    appendU32(&data, 0)  // count = 0
     let infos = try actor.parsePropListDataset(data)
     XCTAssertTrue(infos.isEmpty)
   }
@@ -285,7 +285,7 @@ final class DeviceActorWave32Tests: XCTestCase {
     let data = buildPropListDataset(objects: [
       PropListEntry(
         handle: 10, storageID: 0x00010001, parent: 0, name: "dated.txt",
-        size: 512, dateModified: "20250601T150000"),
+        size: 512, dateModified: "20250601T150000")
     ])
     let infos = try actor.parsePropListDataset(data)
     XCTAssertEqual(infos.count, 1)
@@ -298,7 +298,7 @@ final class DeviceActorWave32Tests: XCTestCase {
     let data = buildPropListDataset(objects: [
       PropListEntry(
         handle: 50, storageID: 0x00010001, parent: 0, name: "bigfile.iso",
-        size: 8_000_000_000),
+        size: 8_000_000_000)
     ])
     let infos = try actor.parsePropListDataset(data)
     XCTAssertEqual(infos.count, 1)
@@ -310,7 +310,7 @@ final class DeviceActorWave32Tests: XCTestCase {
     let actor = makeActor()
     let data = buildPropListDataset(objects: [
       PropListEntry(
-        handle: 7, storageID: 0x00010001, parent: 0xFFFFFFFF, name: "root-child.txt", size: 10),
+        handle: 7, storageID: 0x00010001, parent: 0xFFFFFFFF, name: "root-child.txt", size: 10)
     ])
     let infos = try actor.parsePropListDataset(data)
     XCTAssertEqual(infos.count, 1)
@@ -333,7 +333,7 @@ final class DeviceActorWave32Tests: XCTestCase {
     let link = VirtualMTPLink(config: .pixel7)
     let data = try await link.getObjectPropValue(
       handle: 3, property: MTPObjectPropCode.objectSize)
-    XCTAssertEqual(data.count, 8) // UInt64
+    XCTAssertEqual(data.count, 8)  // UInt64
   }
 
   /// VirtualMTPLink returns correct storageID property.
@@ -341,7 +341,7 @@ final class DeviceActorWave32Tests: XCTestCase {
     let link = VirtualMTPLink(config: .pixel7)
     let data = try await link.getObjectPropValue(
       handle: 3, property: MTPObjectPropCode.storageID)
-    XCTAssertEqual(data.count, 4) // UInt32
+    XCTAssertEqual(data.count, 4)  // UInt32
   }
 
   /// Unsupported property code throws notSupported.
@@ -351,7 +351,8 @@ final class DeviceActorWave32Tests: XCTestCase {
       _ = try await link.getObjectPropValue(handle: 3, property: 0xFFFF)
       XCTFail("Expected MTPError.notSupported")
     } catch let error as MTPError {
-      if case .notSupported = error { /* expected */ } else {
+      if case .notSupported = error { /* expected */
+      } else {
         XCTFail("Expected notSupported, got \(error)")
       }
     }
@@ -379,17 +380,17 @@ final class DeviceActorWave32Tests: XCTestCase {
 
     // Add a partial write record whose remote handle exists on the device
     // but actual size < expected
-    let partialHandle: MTPObjectHandle = 3 // IMG — sizeBytes = 4_500_000
+    let partialHandle: MTPObjectHandle = 3  // IMG — sizeBytes = 4_500_000
     journal.resumables = [
       TransferRecord(
         id: "r1", deviceId: config.deviceId, kind: "write",
         handle: nil, parentHandle: 2, name: "partial.jpg",
-        totalBytes: 10_000_000, // expected
+        totalBytes: 10_000_000,  // expected
         committedBytes: 2_000_000,
         supportsPartial: false,
         localTempURL: URL(fileURLWithPath: "/tmp/partial.part"),
         finalURL: nil, state: "active", updatedAt: Date(),
-        remoteHandle: partialHandle),
+        remoteHandle: partialHandle)
     ]
 
     await reconcilePartialWrites(journal: journal, device: device)
@@ -416,7 +417,7 @@ final class DeviceActorWave32Tests: XCTestCase {
         supportsPartial: false,
         localTempURL: URL(fileURLWithPath: "/tmp/no-remote.part"),
         finalURL: nil, state: "active", updatedAt: Date(),
-        remoteHandle: nil),
+        remoteHandle: nil)
     ]
 
     await reconcilePartialWrites(journal: journal, device: device)
@@ -440,7 +441,7 @@ final class DeviceActorWave32Tests: XCTestCase {
         supportsPartial: false,
         localTempURL: URL(fileURLWithPath: "/tmp/complete.part"),
         finalURL: nil, state: "active", updatedAt: Date(),
-        remoteHandle: 3),
+        remoteHandle: 3)
     ]
 
     await reconcilePartialWrites(journal: journal, device: device)
@@ -516,7 +517,7 @@ final class DeviceActorWave32Tests: XCTestCase {
           try? await actor.withTransaction {
             await orderBox.append(i)
             // Small sleep to ensure interleaving would be visible without serialisation
-            try? await Task.sleep(nanoseconds: 10_000_000) // 10ms
+            try? await Task.sleep(nanoseconds: 10_000_000)  // 10ms
             await orderBox.append(i + 100)
           }
         }
@@ -585,7 +586,7 @@ final class DeviceActorWave32Tests: XCTestCase {
     // Root: only DCIM
     let rootHandles = try await link.getObjectHandles(storage: storage, parent: nil)
     XCTAssertEqual(rootHandles.count, 1)
-    XCTAssertEqual(rootHandles[0], 1) // DCIM handle
+    XCTAssertEqual(rootHandles[0], 1)  // DCIM handle
 
     // DCIM children: Camera
     let dcimHandles = try await link.getObjectHandles(storage: storage, parent: 1)
@@ -694,7 +695,7 @@ final class DeviceActorWave32Tests: XCTestCase {
     let storage = MTPStorageID(raw: 0x0001_0001)
 
     let handle = try await device.createFolder(parent: 1, name: "NewFolder", storage: storage)
-    XCTAssertGreaterThan(handle, 3) // handles 1,2,3 taken
+    XCTAssertGreaterThan(handle, 3)  // handles 1,2,3 taken
 
     let info = try await device.getInfo(handle: handle)
     XCTAssertEqual(info.name, "NewFolder")
@@ -705,11 +706,11 @@ final class DeviceActorWave32Tests: XCTestCase {
   /// MTPEvent.fromRaw correctly parses ObjectAdded event.
   func testMTPEvent_objectAdded() {
     var data = Data()
-    appendU32(&data, 16)       // length
-    appendU16(&data, 4)        // type = event
-    appendU16(&data, 0x4002)   // ObjectAdded
-    appendU32(&data, 1)        // txid
-    appendU32(&data, 42)       // handle
+    appendU32(&data, 16)  // length
+    appendU16(&data, 4)  // type = event
+    appendU16(&data, 0x4002)  // ObjectAdded
+    appendU32(&data, 1)  // txid
+    appendU32(&data, 42)  // handle
 
     let event = MTPEvent.fromRaw(data)
     if case .objectAdded(let handle) = event {
@@ -724,7 +725,7 @@ final class DeviceActorWave32Tests: XCTestCase {
     var data = Data()
     appendU32(&data, 16)
     appendU16(&data, 4)
-    appendU16(&data, 0x4003) // ObjectRemoved
+    appendU16(&data, 0x4003)  // ObjectRemoved
     appendU32(&data, 1)
     appendU32(&data, 99)
 
@@ -741,7 +742,7 @@ final class DeviceActorWave32Tests: XCTestCase {
     var data = Data()
     appendU32(&data, 16)
     appendU16(&data, 4)
-    appendU16(&data, 0xFFFF) // Unknown
+    appendU16(&data, 0xFFFF)  // Unknown
     appendU32(&data, 1)
     appendU32(&data, 7)
 
@@ -806,29 +807,29 @@ final class DeviceActorWave32Tests: XCTestCase {
     for obj in objects {
       // storageID
       appendU32(&data, obj.handle)
-      appendU16(&data, 0xDC01) // storageID prop
-      appendU16(&data, 0x0006) // UINT32
+      appendU16(&data, 0xDC01)  // storageID prop
+      appendU16(&data, 0x0006)  // UINT32
       appendU32(&data, obj.storageID)
       // objectSize
       appendU32(&data, obj.handle)
-      appendU16(&data, 0xDC04) // objectSize prop
-      appendU16(&data, 0x0008) // UINT64
+      appendU16(&data, 0xDC04)  // objectSize prop
+      appendU16(&data, 0x0008)  // UINT64
       appendU64(&data, obj.size)
       // objectFileName
       appendU32(&data, obj.handle)
-      appendU16(&data, 0xDC07) // objectFileName prop
-      appendU16(&data, 0xFFFF) // STRING
+      appendU16(&data, 0xDC07)  // objectFileName prop
+      appendU16(&data, 0xFFFF)  // STRING
       appendStr(&data, obj.name)
       // parentObject
       appendU32(&data, obj.handle)
-      appendU16(&data, 0xDC0B) // parentObject prop
-      appendU16(&data, 0x0006) // UINT32
+      appendU16(&data, 0xDC0B)  // parentObject prop
+      appendU16(&data, 0x0006)  // UINT32
       appendU32(&data, obj.parent)
       // dateModified (optional)
       if let dateStr = obj.dateModified {
         appendU32(&data, obj.handle)
-        appendU16(&data, 0xDC09) // dateModified prop
-        appendU16(&data, 0xFFFF) // STRING
+        appendU16(&data, 0xDC09)  // dateModified prop
+        appendU16(&data, 0xFFFF)  // STRING
         appendStr(&data, dateStr)
       }
     }
