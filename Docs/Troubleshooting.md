@@ -7,13 +7,14 @@ Comprehensive troubleshooting guide for SwiftMTP operations.
 ## Table of Contents
 
 1. [Quick Fixes](#quick-fixes)
-2. [Device Detection Issues](#device-detection-issues)
-3. [Transfer Problems](#transfer-problems)
-4. [Performance Issues](#performance-issues)
-5. [Error-Specific Solutions](#error-specific-solutions)
-6. [macOS-Specific Issues](#macos-specific-issues)
-7. [Submission & Benchmark Issues](#submission--benchmark-issues)
-8. [Diagnostic Commands](#diagnostic-commands)
+2. [Known Device Status](#known-device-status)
+3. [Device Detection Issues](#device-detection-issues)
+4. [Transfer Problems](#transfer-problems)
+5. [Performance Issues](#performance-issues)
+6. [Error-Specific Solutions](#error-specific-solutions)
+7. [macOS-Specific Issues](#macos-specific-issues)
+8. [Submission & Benchmark Issues](#submission--benchmark-issues)
+9. [Diagnostic Commands](#diagnostic-commands)
 
 ---
 
@@ -26,6 +27,24 @@ Start here if you're experiencing issues:
 3. **Confirm USB mode** is set to **File Transfer (MTP)** not PTP or charging
 4. **Close competing apps**: Android File Transfer, adb, photo apps, browsers
 5. **Try a different USB cable/port** (avoid unpowered hubs)
+
+---
+
+## Known Device Status
+
+Current real-device test status (see CLAUDE.md for full details):
+
+| Device | VID:PID | Status | Notes |
+|--------|---------|--------|-------|
+| Xiaomi Mi Note 2 | 2717:ff10 | **Partial** | Only device with real transfer data |
+| Xiaomi Mi Note 2 (alt) | 2717:ff40 | **Partial** | Recent lab run returned 0 storages |
+| Samsung Galaxy S7 (SM-G930W8) | 04e8:6860 | **Not Working** | Handshake fails after USB claim |
+| OnePlus 3T | 2a70:f003 | **Partial** | Probe/read works; writes fail with 0x201D |
+| Google Pixel 7 | 18d1:4ee1 | **Blocked** | Bulk transfer timeout — macOS kernel issue |
+| Canon EOS Rebel / R-class | 04a9:3139 | **Research Only** | Never connected to SwiftMTP |
+| Nikon DSLR / Z-series | 04b0:0410 | **Research Only** | Never connected to SwiftMTP |
+
+> **Note:** SwiftMTP is pre-alpha. Most test coverage uses `VirtualMTPDevice` (in-memory mock). Only the Xiaomi Mi Note 2 (ff10) has completed real file transfers.
 
 ---
 
@@ -74,13 +93,18 @@ Start here if you're experiencing issues:
 
 **Error:** `Protocol error InvalidParameter (0x201D): write request rejected by device`
 
-**Cause:** Device restricts writes to certain folders
+**Cause:** Device restricts writes to certain folders or rejects the write outright. This is a common failure on **OnePlus 3T** (2a70:f003) where probe and read succeed but all writes return 0x201D.
 
 **Solutions:**
 - Write to a writable folder instead of root:
   - Use `0` or explicit folder name for `push` command
   - Try: `Download`, `DCIM`, or nested folders
 - Check device quirk notes for folder restrictions
+- On OnePlus 3T specifically:
+  - Confirm device is on Android 9+ (earlier firmware has wider write restrictions)
+  - Try writing to `Internal storage/Download/` — some firmware builds only allow writes there
+  - Run `swiftmtp quirks` and verify the `oneplus-3t-f003` profile is active
+  - Status: **Partial** — reads work, writes remain blocked by 0x201D on tested firmware
 
 ### Storage Full
 
@@ -202,9 +226,26 @@ The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.
 2. Open Finder → Preferences → Sidebar → Enable CDs, DVDs, and iOS Devices
 3. Restart Finder: `killall Finder`
 
-### Pixel 7 / Tahoe 26 Issues
+### Samsung Galaxy S7 Handshake Failure
 
-**Known Issue:** macOS Tahoe 26 USB stack timing on Pixel 7 — bulk transfer path times out even though control-plane (`OpenSession`) succeeds.
+**Known Issue:** Samsung Galaxy S7 (SM-G930W8, VID:PID 04e8:6860) fails during MTP handshake after USB interface claim.
+
+**Symptoms:**
+- `swiftmtp probe` detects the device but `OpenSession` never completes
+- Log shows `USB claim succeeded` followed by handshake timeout or protocol error
+- Device may appear briefly then disconnect
+
+**Solutions:**
+1. Ensure the device is set to **File Transfer (MTP)** — Samsung defaults to charging-only on many cable types
+2. Disable **USB debugging** in Developer Options — ADB and MTP cannot share the interface simultaneously
+3. Try toggling USB mode: switch to PTP, wait 5 s, switch back to MTP
+4. Use a USB-A cable directly to the Mac (USB-C adapters add negotiation latency that triggers the timeout)
+5. If the handshake still fails, the Samsung USB stack may be holding a stale session — reboot the phone and reconnect within 10 s
+6. Status: **Not Working** — handshake fails on all tested firmware versions. Samsung's MTP stack requires a specific init sequence that SwiftMTP does not yet implement.
+
+### Pixel 7 / macOS 26 Tahoe Issues
+
+**Known Issue:** macOS 26 Tahoe USB stack timing on Pixel 7 — bulk transfer path times out even though control-plane (`OpenSession`) succeeds.
 
 **Symptoms:**
 - `swiftmtp probe` succeeds but `swiftmtp ls` hangs or returns timeout
@@ -213,23 +254,29 @@ The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.
 **Solutions:**
 - Keep `stabilizeMs` elevated (≥ 600 ms); use `swiftmtp quirks` to confirm active quirk
 - Treat `LIBUSB_ERROR_TIMEOUT` as a transport-layer symptom, not a protocol error
-- Use a direct USB-A port (not a hub or USB-C adapter); Tahoe 26 has known USB-C timing regressions
+- Use a direct USB-A port (not a hub or USB-C adapter); macOS 26 Tahoe has known USB-C timing regressions
 - Run `swiftmtp probe` first and wait for the ✅ before any transfer command
-- Status: `blocked` — awaiting kernel-level fix in Tahoe 26 beta chain (see `Docs/pixel7-usb-debug-report.md`)
+- Status: **Blocked** — awaiting kernel-level fix in macOS 26 Tahoe beta chain (see `Docs/pixel7-usb-debug-report.md`)
 
 ### OnePlus 3T Issues
 
-**Known Issue:** `SendObject` (opcode `0x200C`) timeout on large writes (> 512 MB).
+**Known Issue:** OnePlus 3T (2a70:f003) has two distinct failure modes:
+
+1. **0x201D write rejection** — all writes return `InvalidParameter (0x201D)` regardless of target folder. Probe and read operations work. See [Write Fails with 0x201D Error](#write-fails-with-0x201d-error) above.
+2. **`SendObject` timeout on large writes** (> 512 MB) — uploads stall at 50–80%.
 
 **Symptoms:**
+- `swiftmtp push` returns `Protocol error InvalidParameter (0x201D)` on any write attempt
 - Upload of large files (videos, disk images) stalls at 50–80% and returns `timeout`
 - `swiftmtp push` exits with code 1 and `Device timed out` message
 
 **Solutions:**
-- Use `--chunk 1M` to limit write-chunk size; the device firmware cannot handle default 8 MB chunks reliably
+- For 0x201D: see the [0x201D section](#write-fails-with-0x201d-error) — write to `Download/` or `DCIM/`, confirm Android 9+
+- For large-write timeouts: use `--chunk 1M` to limit write-chunk size; the device firmware cannot handle default 8 MB chunks reliably
 - Keep transfers under 500 MB per session; reconnect between large sessions
 - Confirm the device is on Android 9 or later (earlier builds have a SCSI bridge bug)
 - Workaround: use `--size` flag to split large files before pushing
+- Status: **Partial** — probe/read works, writes fail with 0x201D on tested firmware
 
 ### Canon EOS / DSLR Issues
 
@@ -389,5 +436,5 @@ When opening issues, include:
 1. Failing command and exact exit code
 2. One artifact folder path under `Docs/benchmarks/`
 3. Expected vs actual behavior (one sentence)
-4. macOS version: `sw_vers -productVersion`
+4. macOS version: `sw_vers -productVersion` (macOS 15 Sequoia or macOS 26 Tahoe)
 5. SwiftMTP version: `swift run swiftmtp version`
