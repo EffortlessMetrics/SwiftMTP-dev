@@ -110,11 +110,11 @@ final class FuzzRegressionWave32Tests: XCTestCase {
 
   func testDeviceInfo_EmptySupportedOperations() {
     var encoder = MTPDataEncoder()
-    encoder.append(UInt16(100))          // standardVersion
-    encoder.append(UInt32(6))            // vendorExtensionID
-    encoder.append(UInt16(100))          // vendorExtensionVersion
-    encoder.append(PTPString.encode("")) // vendorExtensionDesc
-    encoder.append(UInt16(0))            // functionalMode
+    encoder.append(UInt16(100))  // standardVersion
+    encoder.append(UInt32(6))  // vendorExtensionID
+    encoder.append(UInt16(100))  // vendorExtensionVersion
+    encoder.append(PTPString.encode(""))  // vendorExtensionDesc
+    encoder.append(UInt16(0))  // functionalMode
     // All 5 arrays empty
     for _ in 0..<5 { encoder.append(UInt32(0)) }
     encoder.append(PTPString.encode("TestMfg"))
@@ -137,9 +137,9 @@ final class FuzzRegressionWave32Tests: XCTestCase {
     let length = UInt32(12 + params.count * 4)
     var encoder = MTPDataEncoder()
     encoder.append(length)
-    encoder.append(UInt16(3))       // type = response
+    encoder.append(UInt16(3))  // type = response
     encoder.append(UInt16(0x2001))  // code = OK
-    encoder.append(UInt32(1))       // txid
+    encoder.append(UInt32(1))  // txid
     for p in params { encoder.append(p) }
 
     // Reading all fields from the wire must not crash.
@@ -273,11 +273,11 @@ final class FuzzRegressionWave32Tests: XCTestCase {
     // PTPPropList entries with reserved handles should parse without crash.
     for handle: UInt32 in [0x00000000, 0xFFFFFFFF] {
       var encoder = MTPDataEncoder()
-      encoder.append(UInt32(1))     // 1 entry
-      encoder.append(handle)        // object handle
-      encoder.append(UInt16(0xDC01)) // property code (StorageID)
-      encoder.append(UInt16(0x0006)) // data type (UInt32)
-      encoder.append(UInt32(0x00010001)) // value
+      encoder.append(UInt32(1))  // 1 entry
+      encoder.append(handle)  // object handle
+      encoder.append(UInt16(0xDC01))  // property code (StorageID)
+      encoder.append(UInt16(0x0006))  // data type (UInt32)
+      encoder.append(UInt32(0x00010001))  // value
       let list = PTPPropList.parse(from: encoder.encodedData)
       XCTAssertNotNil(list)
       XCTAssertEqual(list?.entries.first?.handle, handle)
@@ -289,10 +289,10 @@ final class FuzzRegressionWave32Tests: XCTestCase {
   func testContainerType0_WithReservedHandle() {
     // Invalid type + reserved handle in same container.
     var encoder = MTPDataEncoder()
-    encoder.append(UInt32(16))      // length (header + 1 param)
-    encoder.append(UInt16(0))       // type = invalid
+    encoder.append(UInt32(16))  // length (header + 1 param)
+    encoder.append(UInt16(0))  // type = invalid
     encoder.append(UInt16(0xFFFF))  // code = reserved
-    encoder.append(UInt32(0))       // txid
+    encoder.append(UInt32(0))  // txid
     encoder.append(UInt32(0xFFFFFFFF))  // param = reserved handle
 
     var r = PTPReader(data: encoder.encodedData)

@@ -47,14 +47,16 @@ final class GovernanceStatusTransitionWave32Tests: XCTestCase {
     quirk.status = .proposed
     // The struct allows the mutation — governance enforcement is policy-level.
     // Tests confirm the value is detectable by tooling that checks transitions.
-    XCTAssertEqual(quirk.status, .proposed,
+    XCTAssertEqual(
+      quirk.status, .proposed,
       "Struct allows downgrade; external validation must reject promoted→proposed")
   }
 
   func testDowngradePromotedToVerifiedIsDetectable() {
     var quirk = DeviceQuirk(id: "down-2", vid: 0x0001, pid: 0x0006, status: .promoted)
     quirk.status = .verified
-    XCTAssertEqual(quirk.status, .verified,
+    XCTAssertEqual(
+      quirk.status, .verified,
       "Struct allows downgrade; external validation must reject promoted→verified")
   }
 
@@ -122,7 +124,8 @@ final class GovernanceEvidenceValidationWave32Tests: XCTestCase {
     let promoted = db.entries.filter { $0.status == .promoted }
     for entry in promoted {
       let evidence = entry.evidenceRequired ?? []
-      XCTAssertGreaterThanOrEqual(evidence.count, 2,
+      XCTAssertGreaterThanOrEqual(
+        evidence.count, 2,
         "Promoted entry '\(entry.id)' must require at least probe_log + one test evidence item")
     }
   }
@@ -131,9 +134,11 @@ final class GovernanceEvidenceValidationWave32Tests: XCTestCase {
     let db = try QuirkDatabase.load()
     let promoted = db.entries.filter { $0.status == .promoted }
     for entry in promoted {
-      XCTAssertNotNil(entry.evidenceRequired,
+      XCTAssertNotNil(
+        entry.evidenceRequired,
         "Promoted entry '\(entry.id)' must have evidenceRequired")
-      XCTAssertFalse(entry.evidenceRequired?.isEmpty ?? true,
+      XCTAssertFalse(
+        entry.evidenceRequired?.isEmpty ?? true,
         "Promoted entry '\(entry.id)' must have non-empty evidenceRequired")
     }
   }
@@ -452,9 +457,11 @@ final class GovernanceStatusFilteringWave32Tests: XCTestCase {
     let proposed = db.entries.filter { $0.status == .proposed }.count
     let promoted = db.entries.filter { $0.status == .promoted }.count
     // Most entries are scaffolded (proposed); only a few are promoted
-    XCTAssertGreaterThan(proposed, promoted,
+    XCTAssertGreaterThan(
+      proposed, promoted,
       "Proposed entries should outnumber promoted entries")
-    XCTAssertGreaterThanOrEqual(promoted, 1,
+    XCTAssertGreaterThanOrEqual(
+      promoted, 1,
       "Database should contain at least one promoted entry")
   }
 
@@ -476,13 +483,15 @@ final class GovernanceBulkValidationWave32Tests: XCTestCase {
 
   func testAllEntriesHaveValidStatusField() throws {
     let db = try QuirkDatabase.load()
-    XCTAssertGreaterThanOrEqual(db.entries.count, 20_000,
+    XCTAssertGreaterThanOrEqual(
+      db.entries.count, 20_000,
       "Database should contain ~20,026 entries")
 
     let validStatuses: Set<QuirkStatus> = [.proposed, .verified, .promoted]
     for entry in db.entries {
       if let status = entry.status {
-        XCTAssertTrue(validStatuses.contains(status),
+        XCTAssertTrue(
+          validStatuses.contains(status),
           "Entry '\(entry.id)' has invalid decoded status '\(status)'")
       }
       // status may be nil for legacy entries without the field
@@ -493,9 +502,11 @@ final class GovernanceBulkValidationWave32Tests: XCTestCase {
     let db = try QuirkDatabase.load()
     let promoted = db.entries.filter { $0.status == .promoted }
     for entry in promoted {
-      XCTAssertNotNil(entry.evidenceRequired,
+      XCTAssertNotNil(
+        entry.evidenceRequired,
         "Promoted entry '\(entry.id)' must have evidenceRequired")
-      XCTAssertTrue((entry.evidenceRequired?.count ?? 0) > 0,
+      XCTAssertTrue(
+        (entry.evidenceRequired?.count ?? 0) > 0,
         "Promoted entry '\(entry.id)' must have at least one evidence item")
     }
   }
@@ -519,7 +530,8 @@ final class GovernanceBulkValidationWave32Tests: XCTestCase {
     let db = try QuirkDatabase.load()
     var seen = Set<String>()
     for entry in db.entries {
-      XCTAssertFalse(seen.contains(entry.id),
+      XCTAssertFalse(
+        seen.contains(entry.id),
         "Duplicate quirk ID: '\(entry.id)'")
       seen.insert(entry.id)
     }
@@ -529,10 +541,12 @@ final class GovernanceBulkValidationWave32Tests: XCTestCase {
     let db = try QuirkDatabase.load()
     let promoted = db.entries.filter { $0.status == .promoted }
     for entry in promoted {
-      XCTAssertNotNil(entry.lastVerifiedDate,
+      XCTAssertNotNil(
+        entry.lastVerifiedDate,
         "Promoted entry '\(entry.id)' should have lastVerifiedDate")
       if let date = entry.lastVerifiedDate {
-        XCTAssertFalse(date.isEmpty,
+        XCTAssertFalse(
+          date.isEmpty,
           "Promoted entry '\(entry.id)' has empty lastVerifiedDate")
       }
     }

@@ -188,10 +188,11 @@ final class ConcurrentJournalWriteStressTests: XCTestCase {
   }
 
   func testMultipleTasksWritingSimultaneously() async throws {
-    let adapter = SwiftMTPStoreAdapter(store: {
-      setenv("SWIFTMTP_STORE_TYPE", "memory", 1)
-      return .shared
-    }())
+    let adapter = SwiftMTPStoreAdapter(
+      store: {
+        setenv("SWIFTMTP_STORE_TYPE", "memory", 1)
+        return .shared
+      }())
     let device = MTPDeviceID(raw: "multi-write-\(UUID().uuidString)")
     let taskCount = 30
 
@@ -211,10 +212,11 @@ final class ConcurrentJournalWriteStressTests: XCTestCase {
   }
 
   func testInterleavedProgressAndStatusUpdates() async throws {
-    let adapter = SwiftMTPStoreAdapter(store: {
-      setenv("SWIFTMTP_STORE_TYPE", "memory", 1)
-      return .shared
-    }())
+    let adapter = SwiftMTPStoreAdapter(
+      store: {
+        setenv("SWIFTMTP_STORE_TYPE", "memory", 1)
+        return .shared
+      }())
     let device = MTPDeviceID(raw: "interleave-\(UUID().uuidString)")
 
     // Create 10 transfers
@@ -334,9 +336,9 @@ final class LargeFileResumeTests: XCTestCase {
   func testMultipleLargeFilesResumeIndependently() throws {
     let device = MTPDeviceID(raw: "multi-large")
     let files: [(name: String, size: UInt64, progress: UInt64)] = [
-      ("video1.mp4", 1_073_741_824, 536_870_912),   // 1GB, 50%
+      ("video1.mp4", 1_073_741_824, 536_870_912),  // 1GB, 50%
       ("video2.mp4", 2_147_483_648, 1_610_612_736),  // 2GB, 75%
-      ("archive.zip", 4_294_967_296, 1_073_741_824), // 4GB, 25%
+      ("archive.zip", 4_294_967_296, 1_073_741_824),  // 4GB, 25%
     ]
 
     var ids: [String] = []
@@ -617,16 +619,18 @@ final class ObjectEntityCRUDWave32Tests: XCTestCase {
     let deviceId = "batch-idx-\(UUID().uuidString)"
     _ = try await actor.upsertDevice(id: deviceId, manufacturer: "Test", model: "Batch")
 
-    let objects: [(
-      storageId: Int, handle: Int, parentHandle: Int?, name: String,
-      pathKey: String, size: Int64?, mtime: Date?, format: Int, generation: Int
-    )] = (0..<20).map { i in
-      (
-        storageId: 1, handle: i, parentHandle: i > 0 ? 0 : nil,
-        name: "batch-\(i).dat", pathKey: "/batch/batch-\(i).dat",
-        size: Int64(i * 512), mtime: Date(), format: 0x3004, generation: 3
-      )
-    }
+    let objects:
+      [(
+        storageId: Int, handle: Int, parentHandle: Int?, name: String,
+        pathKey: String, size: Int64?, mtime: Date?, format: Int, generation: Int
+      )] = (0..<20)
+        .map { i in
+          (
+            storageId: 1, handle: i, parentHandle: i > 0 ? 0 : nil,
+            name: "batch-\(i).dat", pathKey: "/batch/batch-\(i).dat",
+            size: Int64(i * 512), mtime: Date(), format: 0x3004, generation: 3
+          )
+        }
 
     try await actor.upsertObjects(deviceId: deviceId, objects: objects)
 
