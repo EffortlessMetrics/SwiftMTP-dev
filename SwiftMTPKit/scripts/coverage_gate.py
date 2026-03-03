@@ -33,7 +33,7 @@ def parse_args() -> argparse.Namespace:
         default="SwiftMTPQuirks,SwiftMTPStore,SwiftMTPSync,SwiftMTPObservability",
         help="Comma-separated source modules to include in coverage math",
     )
-    parser.add_argument("--threshold", type=float, default=90.0, help="Minimum overall coverage percent")
+    parser.add_argument("--threshold", type=float, default=100.0, help="Minimum overall coverage percent")
     parser.add_argument("--output-json", default="", help="Optional output JSON path")
     parser.add_argument("--output-text", default="", help="Optional output text path")
     parser.add_argument("--worst-files", type=int, default=20, help="Number of low-coverage files to print")
@@ -88,7 +88,24 @@ def render_report(
         overall_count += stat.count
 
     overall_percent = (overall_covered / overall_count * 100.0) if overall_count else 0.0
-    passed = overall_percent >= threshold
+    all_modules_pass = True
+
+    per_module_payload: dict[str, dict[str, float | int | str]] = {}
+    for module in modules:
+        covered = module_totals[module]["covered"]
+        count = module_totals[module]["count"]
+        percent = (covered / count * 100.0) if count else 0.0
+        module_ok = percent >= threshold
+        if not module_ok:
+            all_modules_pass = False
+        per_module_payload[module] = {
+            "covered": covered,
+            "count": count,
+            "percent": percent,
+            "status": "pass" if module_ok else "fail",
+        }
+
+    passed = overall_percent >= threshold and all_modules_pass
 
     lines: list[str] = []
     lines.append("SwiftMTP Filtered Coverage")
@@ -99,17 +116,10 @@ def render_report(
     lines.append("")
     lines.append("Module Coverage:")
 
-    per_module_payload: dict[str, dict[str, float | int]] = {}
     for module in modules:
-        covered = module_totals[module]["covered"]
-        count = module_totals[module]["count"]
-        percent = (covered / count * 100.0) if count else 0.0
-        lines.append(f"  - {module}: {percent:.2f}% ({covered}/{count})")
-        per_module_payload[module] = {
-            "covered": covered,
-            "count": count,
-            "percent": percent,
-        }
+        info = per_module_payload[module]
+        status = "PASS" if info["status"] == "pass" else "FAIL"
+        lines.append(f"  - {module}: {info['percent']:.2f}% ({info['covered']}/{info['count']}) [{status}]")
 
     lines.append("")
     lines.append(f"Worst {worst_files} Files:")
