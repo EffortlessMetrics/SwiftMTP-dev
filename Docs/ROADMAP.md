@@ -8,7 +8,7 @@ This roadmap is the execution plan for the next implementation sprints in the 2.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **8,177 tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices).
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **8,177 tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices). **47 PRs merged** this session (#363–#406).
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
@@ -45,6 +45,17 @@ Minimum expectations for each item:
 | 2.1-A | Transport stability + error clarity | Complete | Real-device timeout reproduction drift | `./scripts/smoke.sh` + targeted device artifacts |
 | 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
 | 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
+
+## Wave 34–35 Activity (2026-03-08)
+
+Key development activity in these waves:
+
+- **PRs merged**: #403–#406 (error diagnostics, docs update, CI improvements, lint fixes)
+- **Error diagnostics**: MTPError and TransportError descriptions improved for actionability (#403)
+- **CI improvements**: workflow reliability, caching, and timeouts hardened (#405)
+- **Lint fixes**: line-length warnings fixed in transport layer (#406)
+- **API 503 retries**: 3 agents failed in wave 34 due to API 503 errors; retried successfully in wave 35
+- **Session totals**: 47 PRs merged (#363–#406), 8,177 tests, 0 unexpected failures
 
 ## Waves 33–34 Activity (2026-03-08)
 

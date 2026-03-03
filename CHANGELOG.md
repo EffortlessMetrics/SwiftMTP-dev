@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Wave 34–35 Error Diagnostics & CI (PRs #403–#406)
+
+> **Summary**: Improved error diagnostics for MTPError/TransportError, CI workflow reliability improvements, lint fixes, and docs update. 3 wave-34 agents failed due to API 503 errors and were retried in wave 35. Session totals: **47 PRs merged** (#363–#406).
+
+#### Key Stats
+- **8,177 tests** executed across 20 test targets, **0 unexpected failures**, 40 skipped
+- **20,026 device quirk entries** across 1,154 VIDs and 38 categories
+- **47 PRs merged** this session (#363–#406)
+- Build: **GREEN**, all smoke tests pass
+
+#### Merged PRs
+- **#403** — Error diagnostics: improved MTPError and TransportError descriptions for actionability
+- **#404** — Docs update: wave 33–34 changelog, roadmap, and stats update
+- **#405** — CI improvements: workflow reliability, caching, and timeouts
+- **#406** — Lint fixes: line-length lint warnings fixed in transport layer
+
+#### Highlights
+- **Error diagnostics** (#403): MTPError and TransportError now produce human-readable, actionable descriptions — reduces first-line debugging time for device failures
+- **CI reliability** (#405): improved caching, timeouts, and workflow robustness across CI pipelines
+- **API 503 retries**: 3 agents in wave 34 hit API 503 errors; successfully retried in wave 35
+
+---
+
 ### Waves 33–34 Polish & Docs (PRs #398–#402)
 
 > **Summary**: Schema validation fix (77,654 errors eliminated), DocC generator fix, format sweep, transport logging improvements, and docs update. Session totals: **42 PRs merged** (#362–#402), tests grew from 7,112 → **8,177** (+1,065).
