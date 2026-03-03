@@ -79,9 +79,10 @@ final class QuirksWave30ResearchTests: XCTestCase {
   }
 
   func testOppoVIDConsistency() {
-    let oppo = entries(matching: "oppo-").filter {
-      !$0.id.contains("realme")
-    }
+    let oppo = entries(matching: "oppo-")
+      .filter {
+        !$0.id.contains("realme")
+      }
     let primaryVID = oppo.filter { $0.vid == Self.oppoVID }
     let ratio = Double(primaryVID.count) / Double(max(oppo.count, 1))
     XCTAssertGreaterThan(
@@ -324,9 +325,10 @@ final class QuirksWave30ResearchTests: XCTestCase {
 
   func testInsta360PTPInterfaceEntriesHaveFullDescriptor() {
     // Insta360 cameras with full PTP descriptor (class + subclass + protocol)
-    let insta = entries(matching: "insta360-").filter {
-      $0.ifaceClass == Self.ptpIfaceClass && $0.ifaceSubclass != nil
-    }
+    let insta = entries(matching: "insta360-")
+      .filter {
+        $0.ifaceClass == Self.ptpIfaceClass && $0.ifaceSubclass != nil
+      }
     for entry in insta {
       XCTAssertEqual(
         entry.ifaceSubclass, Self.ptpIfaceSubclass,
@@ -398,9 +400,10 @@ final class QuirksWave30ResearchTests: XCTestCase {
 
   func testAstellKernPTPInterfaceEntries() {
     // Astell&Kern DAPs with PTP interface should have proper class/subclass/protocol
-    let ak = entries(matching: "astell-").filter {
-      $0.ifaceClass == Self.ptpIfaceClass
-    }
+    let ak = entries(matching: "astell-")
+      .filter {
+        $0.ifaceClass == Self.ptpIfaceClass
+      }
     for entry in ak {
       XCTAssertEqual(
         entry.ifaceSubclass, Self.ptpIfaceSubclass,
@@ -574,9 +577,10 @@ final class QuirksWave30ResearchTests: XCTestCase {
   // MARK: - Device Family Grouping: Redmi Note Series
 
   func testRedmiNoteSeriesGrouping() {
-    let redmiNote = entries(idContaining: "redmi").filter {
-      $0.id.contains("note")
-    }
+    let redmiNote = entries(idContaining: "redmi")
+      .filter {
+        $0.id.contains("note")
+      }
     XCTAssertGreaterThan(
       redmiNote.count, 5,
       "Expected multiple Redmi Note entries, found only \(redmiNote.count)")

@@ -168,10 +168,13 @@ final class FileProviderWave29Tests: XCTestCase {
     func readObject(_ req: ReadRequest, withReply r: @escaping (ReadResponse) -> Void) {
       r(readResponse)
     }
-    func listStorages(_ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void) {
+    func listStorages(
+      _ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void
+    ) {
       r(StorageListResponse(success: true))
     }
-    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void) {
+    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void)
+    {
       r(ObjectListResponse(success: true))
     }
     func getObjectInfo(
@@ -193,10 +196,14 @@ final class FileProviderWave29Tests: XCTestCase {
     func moveObject(_ req: MoveObjectRequest, withReply r: @escaping (WriteResponse) -> Void) {
       r(moveResponse)
     }
-    func requestCrawl(_ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void) {
+    func requestCrawl(
+      _ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void
+    ) {
       r(CrawlTriggerResponse(accepted: true))
     }
-    func deviceStatus(_ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void) {
+    func deviceStatus(
+      _ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void
+    ) {
       r(DeviceStatusResponse(connected: true, sessionOpen: true))
     }
   }
@@ -374,7 +381,7 @@ final class FileProviderWave29Tests: XCTestCase {
 
   func testDeviceServiceCleanupRetainsRecentDevices() async {
     let service = MTPDeviceService()
-    await service.setExtendedAbsenceThreshold(3600) // 1 hour
+    await service.setExtendedAbsenceThreshold(3600)  // 1 hour
 
     let identity = StableDeviceIdentity(
       domainId: "recent-device", displayName: "Recent",
@@ -460,8 +467,9 @@ final class FileProviderWave29Tests: XCTestCase {
     let item = MTPFileProviderItem(
       deviceId: "dev1", storageId: 1, objectHandle: 50,
       name: "firmware.xyzabc", size: 4096, isDirectory: false, modifiedDate: nil)
-    XCTAssertNotEqual(item.contentType, UTType.folder,
-                      "Unknown extension should not be folder")
+    XCTAssertNotEqual(
+      item.contentType, UTType.folder,
+      "Unknown extension should not be folder")
   }
 
   func testNoExtensionFallsBackToData() {
@@ -683,11 +691,13 @@ final class FileProviderWave29Tests: XCTestCase {
       indexReader: reader,
       signalEnumeratorOverride: { id in signaled.append(id) })
 
-    ext.handleDeviceEvent(.addObject(
-      deviceId: "dev1", storageId: 1, objectHandle: 42, parentHandle: nil))
+    ext.handleDeviceEvent(
+      .addObject(
+        deviceId: "dev1", storageId: 1, objectHandle: 42, parentHandle: nil))
 
-    XCTAssertTrue(signaled.contains(NSFileProviderItemIdentifier("dev1:1")),
-                  "Should signal the storage container")
+    XCTAssertTrue(
+      signaled.contains(NSFileProviderItemIdentifier("dev1:1")),
+      "Should signal the storage container")
   }
 
   @MainActor
@@ -699,8 +709,9 @@ final class FileProviderWave29Tests: XCTestCase {
       indexReader: reader,
       signalEnumeratorOverride: { id in signaled.append(id) })
 
-    ext.handleDeviceEvent(.deleteObject(
-      deviceId: "dev1", storageId: 1, objectHandle: 99))
+    ext.handleDeviceEvent(
+      .deleteObject(
+        deviceId: "dev1", storageId: 1, objectHandle: 99))
 
     XCTAssertTrue(signaled.contains(NSFileProviderItemIdentifier("dev1:1")))
   }
@@ -716,8 +727,9 @@ final class FileProviderWave29Tests: XCTestCase {
 
     ext.handleDeviceEvent(.storageRemoved(deviceId: "dev1", storageId: 2))
 
-    XCTAssertTrue(signaled.contains(.rootContainer),
-                  "Storage removal should signal root container")
+    XCTAssertTrue(
+      signaled.contains(.rootContainer),
+      "Storage removal should signal root container")
   }
 
   @MainActor
@@ -741,12 +753,14 @@ final class FileProviderWave29Tests: XCTestCase {
     let ext = makeExtension(reader: reader)
 
     for i: UInt32 in 1...100 {
-      ext.handleDeviceEvent(.addObject(
-        deviceId: "dev1", storageId: 1, objectHandle: i, parentHandle: nil))
+      ext.handleDeviceEvent(
+        .addObject(
+          deviceId: "dev1", storageId: 1, objectHandle: i, parentHandle: nil))
     }
     for i: UInt32 in 1...50 {
-      ext.handleDeviceEvent(.deleteObject(
-        deviceId: "dev1", storageId: 1, objectHandle: i))
+      ext.handleDeviceEvent(
+        .deleteObject(
+          deviceId: "dev1", storageId: 1, objectHandle: i))
     }
     // Survival test
   }
@@ -851,9 +865,10 @@ final class FileProviderWave29Tests: XCTestCase {
       reader.addObject(makeObject(handle: i, name: "f\(i).jpg"))
     }
     reader.setChangeCounter(5, deviceId: "dev1")
-    reader.setChanges([
-      IndexedObjectChange(kind: .upserted, object: makeObject(handle: 99, name: "new.jpg")),
-    ], deviceId: "dev1")
+    reader.setChanges(
+      [
+        IndexedObjectChange(kind: .upserted, object: makeObject(handle: 99, name: "new.jpg"))
+      ], deviceId: "dev1")
 
     let enumerator = DomainEnumerator(
       deviceId: "dev1", storageId: 1, parentHandle: nil, indexReader: reader)
@@ -1073,8 +1088,9 @@ final class FileProviderWave29Tests: XCTestCase {
   func testItemLookupForExistingObjectReturnsCorrectMetadata() {
     let date = Date(timeIntervalSince1970: 1_700_000_000)
     let reader = FailingIndexReader()
-    reader.addObject(makeObject(
-      handle: 42, name: "photo.jpg", size: 2048, mtime: date))
+    reader.addObject(
+      makeObject(
+        handle: 42, name: "photo.jpg", size: 2048, mtime: date))
     let ext = makeExtension(reader: reader)
 
     let exp = expectation(description: "found")

@@ -563,7 +563,7 @@ final class DeviceServiceCoverageTests: XCTestCase {
     )
 
     // Allow async stream consumers to fully attach before injecting events
-    try await Task.sleep(nanoseconds: 100_000_000) // 100 ms
+    try await Task.sleep(nanoseconds: 100_000_000)  // 100 ms
 
     // Inject two devices in one snapshot → both attach events fired immediately
     let idA = MTPDeviceID(raw: "par-A")

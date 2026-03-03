@@ -29,9 +29,11 @@ final class Wave29BDDScenarios: XCTestCase {
       XCTFail("Expected accessDenied error for USB permission denied")
     } catch let err as TransportError {
       // Then the error is surfaced as accessDenied
-      XCTAssertEqual(err, .accessDenied,
+      XCTAssertEqual(
+        err, .accessDenied,
         "USB permission denied must surface as .accessDenied")
-      XCTAssertNotNil(err.errorDescription,
+      XCTAssertNotNil(
+        err.errorDescription,
         "Error must have a user-facing description")
     }
   }
@@ -43,13 +45,14 @@ final class Wave29BDDScenarios: XCTestCase {
     let link = VirtualMTPLink(config: .pixel7, faultSchedule: FaultSchedule([fault]))
 
     // When the first attempt fails
-    do { try await link.openUSBIfNeeded() } catch { /* expected */ }
+    do { try await link.openUSBIfNeeded() } catch { /* expected */  }
 
     // Then retry after granting permission succeeds
     try await link.openUSBIfNeeded()
     try await link.openSession(id: 1)
     let storages = try await link.getStorageIDs()
-    XCTAssertFalse(storages.isEmpty,
+    XCTAssertFalse(
+      storages.isEmpty,
       "After granting USB permission, device should be fully accessible")
   }
 
@@ -72,7 +75,8 @@ final class Wave29BDDScenarios: XCTestCase {
     } catch let err as TransportError {
       // Then an IO error with context is surfaced
       guard case .io(let msg) = err else {
-        XCTFail("Expected .io error, got \(err)"); return
+        XCTFail("Expected .io error, got \(err)")
+        return
       }
       XCTAssertTrue(msg.contains("driver"), "IO error should mention driver conflict")
     }
@@ -86,13 +90,14 @@ final class Wave29BDDScenarios: XCTestCase {
       repeatCount: 1)
     let link = VirtualMTPLink(config: .samsungGalaxy, faultSchedule: FaultSchedule([fault]))
 
-    do { try await link.openUSBIfNeeded() } catch { /* expected */ }
+    do { try await link.openUSBIfNeeded() } catch { /* expected */  }
 
     // Then retry succeeds after the kernel driver is detached
     try await link.openUSBIfNeeded()
     try await link.openSession(id: 1)
     let info = try await link.getDeviceInfo()
-    XCTAssertEqual(info.manufacturer, "Samsung",
+    XCTAssertEqual(
+      info.manufacturer, "Samsung",
       "Device should be accessible after driver conflict resolves")
   }
 
@@ -107,9 +112,10 @@ final class Wave29BDDScenarios: XCTestCase {
     let fileSize = 4 * 1024 * 1024
     let largeData = Data(repeating: 0xAC, count: fileSize)
     let handle: MTPObjectHandle = 2900
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "large-video-w29.mp4", formatCode: 0x3000, data: largeData))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "large-video-w29.mp4", formatCode: 0x3000, data: largeData))
 
     // When we download the file
     let url = FileManager.default.temporaryDirectory
@@ -143,7 +149,8 @@ final class Wave29BDDScenarios: XCTestCase {
     let records = try await journal.loadResumables(for: deviceId)
     let record = records.first { $0.id == id }
     XCTAssertNotNil(record, "Journal must contain the in-progress transfer")
-    XCTAssertEqual(record?.committedBytes, 7_500_000,
+    XCTAssertEqual(
+      record?.committedBytes, 7_500_000,
       "Journal must reflect the latest committed byte count")
   }
 
@@ -170,7 +177,8 @@ final class Wave29BDDScenarios: XCTestCase {
     let records = try await journal.loadResumables(for: deviceId)
     let record = records.first { $0.id == id }
     XCTAssertNotNil(record, "Cancelled transfer should remain in journal for resume")
-    XCTAssertEqual(record?.committedBytes, 1_500_000,
+    XCTAssertEqual(
+      record?.committedBytes, 1_500_000,
       "Committed progress should be preserved on cancellation")
   }
 
@@ -180,9 +188,10 @@ final class Wave29BDDScenarios: XCTestCase {
     try await device.openIfNeeded()
     let data = Data(repeating: 0xBE, count: 2048)
     let handle: MTPObjectHandle = 2910
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "cancelling.dat", formatCode: 0x3000, data: data))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "cancelling.dat", formatCode: 0x3000, data: data))
 
     // When we start and then "cancel" (delete the partial)
     try await device.delete(handle, recursive: false)
@@ -192,7 +201,8 @@ final class Wave29BDDScenarios: XCTestCase {
     for try await batch in device.list(parent: nil, in: storage) {
       names.append(contentsOf: batch.map(\.name))
     }
-    XCTAssertFalse(names.contains("cancelling.dat"),
+    XCTAssertFalse(
+      names.contains("cancelling.dat"),
       "Cancelled transfer must not leave orphan files on device")
   }
 
@@ -213,7 +223,8 @@ final class Wave29BDDScenarios: XCTestCase {
       XCTFail("Expected disconnect error during transfer")
     } catch let err as TransportError {
       // Then the error is surfaced as noDevice
-      XCTAssertEqual(err, .noDevice,
+      XCTAssertEqual(
+        err, .noDevice,
         "Disconnect during transfer must surface as .noDevice")
     }
   }
@@ -228,7 +239,8 @@ final class Wave29BDDScenarios: XCTestCase {
       _ = try await link.getObjectInfos([1, 2, 3])
       XCTFail("Expected disconnect error during getObjectInfos")
     } catch let err as TransportError {
-      XCTAssertEqual(err, .noDevice,
+      XCTAssertEqual(
+        err, .noDevice,
         "Disconnect during getObjectInfos must surface as .noDevice")
     }
   }
@@ -241,11 +253,12 @@ final class Wave29BDDScenarios: XCTestCase {
     try await link.openSession(id: 1)
 
     // When the first call disconnects
-    do { _ = try await link.getStorageIDs() } catch { /* expected */ }
+    do { _ = try await link.getStorageIDs() } catch { /* expected */  }
 
     // Then a retry succeeds (device reconnected)
     let storages = try await link.getStorageIDs()
-    XCTAssertFalse(storages.isEmpty,
+    XCTAssertFalse(
+      storages.isEmpty,
       "After reconnection, storage listing should succeed")
   }
 
@@ -280,12 +293,14 @@ final class Wave29BDDScenarios: XCTestCase {
     try await deviceB.openIfNeeded()
 
     // When both sides have a file with the same name but different content
-    await deviceA.addObject(VirtualObjectConfig(
-      handle: 3000, storage: storage, parent: nil,
-      name: "notes.txt", formatCode: 0x3000, data: Data("local-edit-v2".utf8)))
-    await deviceB.addObject(VirtualObjectConfig(
-      handle: 3000, storage: storage, parent: nil,
-      name: "notes.txt", formatCode: 0x3000, data: Data("device-edit-v2".utf8)))
+    await deviceA.addObject(
+      VirtualObjectConfig(
+        handle: 3000, storage: storage, parent: nil,
+        name: "notes.txt", formatCode: 0x3000, data: Data("local-edit-v2".utf8)))
+    await deviceB.addObject(
+      VirtualObjectConfig(
+        handle: 3000, storage: storage, parent: nil,
+        name: "notes.txt", formatCode: 0x3000, data: Data("device-edit-v2".utf8)))
 
     // Then we can read both versions and detect the conflict
     let urlA = FileManager.default.temporaryDirectory
@@ -301,7 +316,8 @@ final class Wave29BDDScenarios: XCTestCase {
 
     let localContent = try Data(contentsOf: urlA)
     let deviceContent = try Data(contentsOf: urlB)
-    XCTAssertNotEqual(localContent, deviceContent,
+    XCTAssertNotEqual(
+      localContent, deviceContent,
       "Conflict detected: local and device versions differ")
     XCTAssertEqual(String(data: localContent, encoding: .utf8), "local-edit-v2")
     XCTAssertEqual(String(data: deviceContent, encoding: .utf8), "device-edit-v2")
@@ -312,9 +328,10 @@ final class Wave29BDDScenarios: XCTestCase {
     let device = VirtualMTPDevice(config: .pixel7)
     try await device.openIfNeeded()
     let newerContent = Data("device-updated-content".utf8)
-    await device.addObject(VirtualObjectConfig(
-      handle: 3010, storage: storage, parent: nil,
-      name: "report.docx", formatCode: 0x3000, data: newerContent))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 3010, storage: storage, parent: nil,
+        name: "report.docx", formatCode: 0x3000, data: newerContent))
 
     // When we pull the device version
     let url = FileManager.default.temporaryDirectory
@@ -324,7 +341,8 @@ final class Wave29BDDScenarios: XCTestCase {
 
     // Then the device content is retrieved intact
     let actual = try Data(contentsOf: url)
-    XCTAssertEqual(String(data: actual, encoding: .utf8), "device-updated-content",
+    XCTAssertEqual(
+      String(data: actual, encoding: .utf8), "device-updated-content",
       "Newer device version should be pulled successfully")
   }
 
@@ -344,7 +362,8 @@ final class Wave29BDDScenarios: XCTestCase {
     let samsungInfo = try await samsung.devGetDeviceInfoUncached()
     XCTAssertEqual(pixelInfo.manufacturer, "Google")
     XCTAssertEqual(samsungInfo.manufacturer, "Samsung")
-    XCTAssertNotEqual(pixelInfo.model, samsungInfo.model,
+    XCTAssertNotEqual(
+      pixelInfo.model, samsungInfo.model,
       "Two different phones must report distinct models")
   }
 
@@ -355,12 +374,14 @@ final class Wave29BDDScenarios: XCTestCase {
     try await samsung.openIfNeeded()
 
     // When we add files to each device independently
-    await pixel.addObject(VirtualObjectConfig(
-      handle: 3100, storage: storage, parent: nil,
-      name: "pixel-photo.jpg", formatCode: 0x3801, data: Data("pixel".utf8)))
-    await samsung.addObject(VirtualObjectConfig(
-      handle: 3100, storage: storage, parent: nil,
-      name: "samsung-photo.jpg", formatCode: 0x3801, data: Data("samsung".utf8)))
+    await pixel.addObject(
+      VirtualObjectConfig(
+        handle: 3100, storage: storage, parent: nil,
+        name: "pixel-photo.jpg", formatCode: 0x3801, data: Data("pixel".utf8)))
+    await samsung.addObject(
+      VirtualObjectConfig(
+        handle: 3100, storage: storage, parent: nil,
+        name: "samsung-photo.jpg", formatCode: 0x3801, data: Data("samsung".utf8)))
 
     // Then each device only sees its own files
     var pixelNames: [String] = []
@@ -372,10 +393,12 @@ final class Wave29BDDScenarios: XCTestCase {
       samsungNames.append(contentsOf: batch.map(\.name))
     }
     XCTAssertTrue(pixelNames.contains("pixel-photo.jpg"))
-    XCTAssertFalse(pixelNames.contains("samsung-photo.jpg"),
+    XCTAssertFalse(
+      pixelNames.contains("samsung-photo.jpg"),
       "Pixel must not see Samsung files")
     XCTAssertTrue(samsungNames.contains("samsung-photo.jpg"))
-    XCTAssertFalse(samsungNames.contains("pixel-photo.jpg"),
+    XCTAssertFalse(
+      samsungNames.contains("pixel-photo.jpg"),
       "Samsung must not see Pixel files")
   }
 
@@ -387,12 +410,14 @@ final class Wave29BDDScenarios: XCTestCase {
 
     let pixelData = Data(repeating: 0x11, count: 2048)
     let samsungData = Data(repeating: 0x22, count: 4096)
-    await pixel.addObject(VirtualObjectConfig(
-      handle: 3200, storage: storage, parent: nil,
-      name: "pixel-dl.bin", formatCode: 0x3000, data: pixelData))
-    await samsung.addObject(VirtualObjectConfig(
-      handle: 3200, storage: storage, parent: nil,
-      name: "samsung-dl.bin", formatCode: 0x3000, data: samsungData))
+    await pixel.addObject(
+      VirtualObjectConfig(
+        handle: 3200, storage: storage, parent: nil,
+        name: "pixel-dl.bin", formatCode: 0x3000, data: pixelData))
+    await samsung.addObject(
+      VirtualObjectConfig(
+        handle: 3200, storage: storage, parent: nil,
+        name: "samsung-dl.bin", formatCode: 0x3000, data: samsungData))
 
     // When downloads happen concurrently
     let pixelURL = FileManager.default.temporaryDirectory
@@ -423,10 +448,14 @@ final class Wave29BDDScenarios: XCTestCase {
   func testQuirksApplied_OnePlus3T_PropListDisabled() throws {
     // Given the OnePlus 3T quirk entry
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x2A70, pid: 0xF003, bcdDevice: nil,
-      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { XCTFail("OnePlus 3T quirk expected in DB"); return }
+    guard
+      let quirk = db.match(
+        vid: 0x2A70, pid: 0xF003, bcdDevice: nil,
+        ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      XCTFail("OnePlus 3T quirk expected in DB")
+      return
+    }
 
     // When we build a policy from the quirk
     let policy = EffectiveTuningBuilder.buildPolicy(
@@ -434,35 +463,47 @@ final class Wave29BDDScenarios: XCTestCase {
       ifaceClass: quirk.ifaceClass)
 
     // Then the policy correctly disables GetObjectPropList
-    XCTAssertFalse(policy.flags.supportsGetObjectPropList,
+    XCTAssertFalse(
+      policy.flags.supportsGetObjectPropList,
       "OnePlus 3T policy must disable proplist due to quirk")
   }
 
   func testQuirksApplied_CanonEOSR5_CameraClassEnabled() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x04A9, pid: 0x32B4, bcdDevice: nil,
-      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { XCTFail("Canon EOS R5 quirk expected in DB"); return }
+    guard
+      let quirk = db.match(
+        vid: 0x04A9, pid: 0x32B4, bcdDevice: nil,
+        ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      XCTFail("Canon EOS R5 quirk expected in DB")
+      return
+    }
 
     let flags = quirk.resolvedFlags()
-    XCTAssertTrue(flags.cameraClass,
+    XCTAssertTrue(
+      flags.cameraClass,
       "Canon EOS R5 must have cameraClass flag set")
-    XCTAssertTrue(flags.supportsGetObjectPropList,
+    XCTAssertTrue(
+      flags.supportsGetObjectPropList,
       "Canon camera must support GetObjectPropList")
   }
 
   func testQuirksApplied_SamsungGalaxy_KernelDetachRequired() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x04E8, pid: 0x6860, bcdDevice: nil,
-      ifaceClass: 0xFF, ifaceSubclass: nil, ifaceProtocol: nil)
-    else { XCTFail("Samsung Galaxy quirk expected in DB"); return }
+    guard
+      let quirk = db.match(
+        vid: 0x04E8, pid: 0x6860, bcdDevice: nil,
+        ifaceClass: 0xFF, ifaceSubclass: nil, ifaceProtocol: nil)
+    else {
+      XCTFail("Samsung Galaxy quirk expected in DB")
+      return
+    }
 
     let policy = EffectiveTuningBuilder.buildPolicy(
       capabilities: [:], learned: nil, quirk: quirk, overrides: nil,
       ifaceClass: quirk.ifaceClass)
-    XCTAssertTrue(policy.flags.requiresKernelDetach,
+    XCTAssertTrue(
+      policy.flags.requiresKernelDetach,
       "Samsung Galaxy must require kernel detach in policy")
   }
 
@@ -474,7 +515,8 @@ final class Wave29BDDScenarios: XCTestCase {
 
     // Then it reports the correct manufacturer for quirk matching
     XCTAssertEqual(info.manufacturer, "Canon")
-    XCTAssertFalse(info.model.isEmpty,
+    XCTAssertFalse(
+      info.model.isEmpty,
       "Virtual device must expose model for quirk lookup")
   }
 
@@ -494,9 +536,10 @@ final class Wave29BDDScenarios: XCTestCase {
       (".nomedia", Data("".utf8)),
     ]
     for (i, file) in files.enumerated() {
-      await device.addObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(3300 + UInt32(i)), storage: storage, parent: nil,
-        name: file.0, formatCode: 0x3000, data: file.1))
+      await device.addObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(3300 + UInt32(i)), storage: storage, parent: nil,
+          name: file.0, formatCode: 0x3000, data: file.1))
     }
 
     // When we list all objects and apply an exclusion filter
@@ -511,9 +554,11 @@ final class Wave29BDDScenarios: XCTestCase {
     XCTAssertTrue(filtered.contains("photo1.jpg"))
     XCTAssertTrue(filtered.contains("photo2.jpg"))
     XCTAssertTrue(filtered.contains("video.mp4"))
-    XCTAssertFalse(filtered.contains("thumbs.db"),
+    XCTAssertFalse(
+      filtered.contains("thumbs.db"),
       "thumbs.db must be excluded from mirror")
-    XCTAssertFalse(filtered.contains(".nomedia"),
+    XCTAssertFalse(
+      filtered.contains(".nomedia"),
       ".nomedia must be excluded from mirror")
   }
 
@@ -522,15 +567,18 @@ final class Wave29BDDScenarios: XCTestCase {
     let device = VirtualMTPDevice(config: .pixel7)
     try await device.openIfNeeded()
     let cacheFolder: MTPObjectHandle = 3400
-    await device.addObject(VirtualObjectConfig(
-      handle: cacheFolder, storage: storage, parent: nil,
-      name: ".cache", formatCode: 0x3001))
-    await device.addObject(VirtualObjectConfig(
-      handle: 3401, storage: storage, parent: cacheFolder,
-      name: "temp.dat", formatCode: 0x3000, data: Data("temp".utf8)))
-    await device.addObject(VirtualObjectConfig(
-      handle: 3402, storage: storage, parent: nil,
-      name: "important.doc", formatCode: 0x3000, data: Data("doc".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: cacheFolder, storage: storage, parent: nil,
+        name: ".cache", formatCode: 0x3001))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 3401, storage: storage, parent: cacheFolder,
+        name: "temp.dat", formatCode: 0x3000, data: Data("temp".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 3402, storage: storage, parent: nil,
+        name: "important.doc", formatCode: 0x3000, data: Data("doc".utf8)))
 
     // When we list root objects and filter dot-prefixed folders
     var rootNames: [String] = []
@@ -540,21 +588,26 @@ final class Wave29BDDScenarios: XCTestCase {
     let mirroredNames = rootNames.filter { !$0.hasPrefix(".") }
 
     // Then cache directories are excluded
-    XCTAssertFalse(mirroredNames.contains(".cache"),
+    XCTAssertFalse(
+      mirroredNames.contains(".cache"),
       "Dot-prefixed directories must be excluded from mirror")
-    XCTAssertTrue(mirroredNames.contains("important.doc"),
+    XCTAssertTrue(
+      mirroredNames.contains("important.doc"),
       "Non-excluded files must be included in mirror")
   }
 
   func testMirrorExclusion_DiffRowFilterCallback() async throws {
     // Given diff rows representing files to mirror
     let rows: [MTPDiff.Row] = [
-      MTPDiff.Row(handle: 1, storage: 0x0001_0001, pathKey: "/DCIM/photo.jpg",
-                  size: 1024, mtime: nil, format: 0x3801),
-      MTPDiff.Row(handle: 2, storage: 0x0001_0001, pathKey: "/Android/data/cache.tmp",
-                  size: 512, mtime: nil, format: 0x3000),
-      MTPDiff.Row(handle: 3, storage: 0x0001_0001, pathKey: "/Music/song.mp3",
-                  size: 4096, mtime: nil, format: 0x3000),
+      MTPDiff.Row(
+        handle: 1, storage: 0x0001_0001, pathKey: "/DCIM/photo.jpg",
+        size: 1024, mtime: nil, format: 0x3801),
+      MTPDiff.Row(
+        handle: 2, storage: 0x0001_0001, pathKey: "/Android/data/cache.tmp",
+        size: 512, mtime: nil, format: 0x3000),
+      MTPDiff.Row(
+        handle: 3, storage: 0x0001_0001, pathKey: "/Music/song.mp3",
+        size: 4096, mtime: nil, format: 0x3000),
     ]
 
     // When we apply an include filter (as MirrorEngine would)
@@ -565,7 +618,8 @@ final class Wave29BDDScenarios: XCTestCase {
 
     // Then only non-Android paths pass
     XCTAssertEqual(included.count, 2)
-    XCTAssertTrue(included.allSatisfy { !$0.pathKey.contains("/Android/") },
+    XCTAssertTrue(
+      included.allSatisfy { !$0.pathKey.contains("/Android/") },
       "Mirror filter must exclude Android system paths")
   }
 
@@ -583,9 +637,11 @@ final class Wave29BDDScenarios: XCTestCase {
     let removed = Set(oldSnapshot).subtracting(newSnapshot)
 
     // Then added files are detected
-    XCTAssertEqual(added, Set(["photo3.jpg", "video.mp4"]),
+    XCTAssertEqual(
+      added, Set(["photo3.jpg", "video.mp4"]),
       "Snapshot diff must detect newly added files")
-    XCTAssertTrue(removed.isEmpty,
+    XCTAssertTrue(
+      removed.isEmpty,
       "No files should appear as removed")
   }
 
@@ -594,35 +650,42 @@ final class Wave29BDDScenarios: XCTestCase {
     let newSnapshot: [String] = ["photo1.jpg", "photo2.jpg"]
 
     let removed = Set(oldSnapshot).subtracting(newSnapshot)
-    XCTAssertEqual(removed, Set(["temp.dat"]),
+    XCTAssertEqual(
+      removed, Set(["temp.dat"]),
       "Snapshot diff must detect removed files")
   }
 
   func testSnapshotComparison_DetectsModifiedFiles() async throws {
     // Given objects with different sizes representing modifications
     let oldFiles = [
-      MTPDiff.Row(handle: 1, storage: 0x0001_0001, pathKey: "/notes.txt",
-                  size: 100, mtime: nil, format: 0x3000),
-      MTPDiff.Row(handle: 2, storage: 0x0001_0001, pathKey: "/readme.md",
-                  size: 200, mtime: nil, format: 0x3000),
+      MTPDiff.Row(
+        handle: 1, storage: 0x0001_0001, pathKey: "/notes.txt",
+        size: 100, mtime: nil, format: 0x3000),
+      MTPDiff.Row(
+        handle: 2, storage: 0x0001_0001, pathKey: "/readme.md",
+        size: 200, mtime: nil, format: 0x3000),
     ]
     let newFiles = [
-      MTPDiff.Row(handle: 1, storage: 0x0001_0001, pathKey: "/notes.txt",
-                  size: 150, mtime: nil, format: 0x3000),
-      MTPDiff.Row(handle: 2, storage: 0x0001_0001, pathKey: "/readme.md",
-                  size: 200, mtime: nil, format: 0x3000),
+      MTPDiff.Row(
+        handle: 1, storage: 0x0001_0001, pathKey: "/notes.txt",
+        size: 150, mtime: nil, format: 0x3000),
+      MTPDiff.Row(
+        handle: 2, storage: 0x0001_0001, pathKey: "/readme.md",
+        size: 200, mtime: nil, format: 0x3000),
     ]
 
     // When we detect size changes
     var modified: [String] = []
     for old in oldFiles {
       if let new = newFiles.first(where: { $0.pathKey == old.pathKey }),
-         new.size != old.size {
+        new.size != old.size
+      {
         modified.append(old.pathKey)
       }
     }
 
-    XCTAssertEqual(modified, ["/notes.txt"],
+    XCTAssertEqual(
+      modified, ["/notes.txt"],
       "Snapshot diff must detect modified files by size change")
   }
 
@@ -647,16 +710,18 @@ final class Wave29BDDScenarios: XCTestCase {
     try await device.openIfNeeded()
 
     // Seed a file
-    await device.addObject(VirtualObjectConfig(
-      handle: 3500, storage: storage, parent: nil,
-      name: "snapshot-test.txt", formatCode: 0x3000, data: Data("v1".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 3500, storage: storage, parent: nil,
+        name: "snapshot-test.txt", formatCode: 0x3000, data: Data("v1".utf8)))
 
     // When we capture a snapshot
     let deviceId = MTPDeviceID(raw: "bdd-w29-snapshot")
     let gen = try await snapshotter.capture(device: device, deviceId: deviceId)
 
     // Then a valid generation is returned
-    XCTAssertGreaterThan(gen, 0,
+    XCTAssertGreaterThan(
+      gen, 0,
       "Snapshot capture must return a positive generation number")
   }
 
@@ -673,27 +738,31 @@ final class Wave29BDDScenarios: XCTestCase {
     // Snapshot 1: one file
     let device = VirtualMTPDevice(config: .pixel7)
     try await device.openIfNeeded()
-    await device.addObject(VirtualObjectConfig(
-      handle: 3600, storage: storage, parent: nil,
-      name: "original.txt", formatCode: 0x3000, data: Data("v1".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 3600, storage: storage, parent: nil,
+        name: "original.txt", formatCode: 0x3000, data: Data("v1".utf8)))
     let gen1 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
     // Wait to ensure distinct generation timestamp
     try await Task.sleep(for: .seconds(1.1))
 
     // Snapshot 2: add another file
-    await device.addObject(VirtualObjectConfig(
-      handle: 3601, storage: storage, parent: nil,
-      name: "added.txt", formatCode: 0x3000, data: Data("new".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 3601, storage: storage, parent: nil,
+        name: "added.txt", formatCode: 0x3000, data: Data("new".utf8)))
     let gen2 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
     // When we compute the diff
     let diff = try await diffEngine.diff(deviceId: deviceId, oldGen: gen1, newGen: gen2)
 
     // Then the new file is detected as added
-    XCTAssertFalse(diff.added.isEmpty,
+    XCTAssertFalse(
+      diff.added.isEmpty,
       "Diff must detect the newly added file between snapshots")
-    XCTAssertTrue(diff.added.contains { $0.pathKey.contains("added.txt") },
+    XCTAssertTrue(
+      diff.added.contains { $0.pathKey.contains("added.txt") },
       "Added file 'added.txt' must appear in diff results")
   }
 }

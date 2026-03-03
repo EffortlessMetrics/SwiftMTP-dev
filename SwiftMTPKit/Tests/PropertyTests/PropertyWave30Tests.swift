@@ -17,18 +17,20 @@ import XCTest
 /// Generator for PTP operation codes covering standard and vendor-extended ranges.
 private enum PTPOpCodeGenerator {
   static var arbitrary: Gen<UInt16> {
-    Gen<UInt16>.one(of: [
-      // Standard PTP/MTP operation codes
-      Gen<UInt16>.fromElements(of: [
-        0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1006, 0x1007,
-        0x1008, 0x1009, 0x100A, 0x100B, 0x100C, 0x100D, 0x100E,
-        0x1014, 0x1015, 0x1016, 0x1017, 0x101B,
-      ]),
-      // Vendor-extended codes
-      Gen<UInt16>.fromElements(of: [0x95C1, 0x95C4, 0x9801, 0x9802, 0x9803]),
-      // Random codes
-      Gen<UInt16>.choose((0x1000, 0xFFFF)),
-    ])
+    Gen<UInt16>
+      .one(of: [
+        // Standard PTP/MTP operation codes
+        Gen<UInt16>
+          .fromElements(of: [
+            0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1006, 0x1007,
+            0x1008, 0x1009, 0x100A, 0x100B, 0x100C, 0x100D, 0x100E,
+            0x1014, 0x1015, 0x1016, 0x1017, 0x101B,
+          ]),
+        // Vendor-extended codes
+        Gen<UInt16>.fromElements(of: [0x95C1, 0x95C4, 0x9801, 0x9802, 0x9803]),
+        // Random codes
+        Gen<UInt16>.choose((0x1000, 0xFFFF)),
+      ])
   }
 }
 
@@ -42,44 +44,49 @@ private enum PTPContainerTypeGenerator {
 /// Generator for PTP parameter arrays (0–5 params per spec).
 private enum PTPParamGenerator {
   static var arbitrary: Gen<[UInt32]> {
-    Gen<Int>.choose((0, 5)).flatMap { count in
-      if count == 0 { return Gen.pure([UInt32]()) }
-      return Gen<[UInt32]>.compose { c in
-        (0..<count).map { _ in c.generate(using: Gen<UInt32>.choose((0, UInt32.max))) }
+    Gen<Int>.choose((0, 5))
+      .flatMap { count in
+        if count == 0 { return Gen.pure([UInt32]()) }
+        return Gen<[UInt32]>
+          .compose { c in
+            (0..<count).map { _ in c.generate(using: Gen<UInt32>.choose((0, UInt32.max))) }
+          }
       }
-    }
   }
 }
 
 /// Generator for MTP format codes.
 private enum FormatCodeGenerator {
   static var arbitrary: Gen<UInt16> {
-    Gen<UInt16>.fromElements(of: [
-      0x3000, 0x3001, 0x3002, 0x3004, 0x3005, 0x3006, 0x3008, 0x3009,
-      0x3801, 0x3802, 0x3804, 0x3807, 0x380B, 0x380D,
-      0xB901, 0xB902, 0xB982, 0xB984,
-    ])
+    Gen<UInt16>
+      .fromElements(of: [
+        0x3000, 0x3001, 0x3002, 0x3004, 0x3005, 0x3006, 0x3008, 0x3009,
+        0x3801, 0x3802, 0x3804, 0x3807, 0x380B, 0x380D,
+        0xB901, 0xB902, 0xB982, 0xB984,
+      ])
   }
 }
 
 /// Generator for safe filenames (no path separators, no null bytes, fits PTP string limits).
 private enum SafeFilenameGenerator {
   static var arbitrary: Gen<String> {
-    Gen<String>.one(of: [
-      Gen<String>.fromElements(of: [
-        "photo.jpg", "IMG_20240101_120000.jpg", "track.mp3",
-        "notes.txt", "video.mp4", "document.pdf",
-        "naïve.txt", "café.png", "日本語.txt", "한국어.mp4",
-        "emoji📷.jpg", "résumé.pdf", "Ångström.dat",
-        "file with spaces.txt", "UPPERCASE.JPG",
-        "file.tar.gz", ".hidden", "no_extension",
-      ]),
-      Gen<Character>.fromElements(of: Array("abcdefghijklmnopqrstuvwxyz0123456789._- "))
-        .proliferate
-        .suchThat { !$0.isEmpty }
-        .map { String($0).trimmingCharacters(in: .whitespaces) }
-        .suchThat { !$0.isEmpty && $0.count < 200 },
-    ])
+    Gen<String>
+      .one(of: [
+        Gen<String>
+          .fromElements(of: [
+            "photo.jpg", "IMG_20240101_120000.jpg", "track.mp3",
+            "notes.txt", "video.mp4", "document.pdf",
+            "naïve.txt", "café.png", "日本語.txt", "한국어.mp4",
+            "emoji📷.jpg", "résumé.pdf", "Ångström.dat",
+            "file with spaces.txt", "UPPERCASE.JPG",
+            "file.tar.gz", ".hidden", "no_extension",
+          ]),
+        Gen<Character>.fromElements(of: Array("abcdefghijklmnopqrstuvwxyz0123456789._- "))
+          .proliferate
+          .suchThat { !$0.isEmpty }
+          .map { String($0).trimmingCharacters(in: .whitespaces) }
+          .suchThat { !$0.isEmpty && $0.count < 200 },
+      ])
   }
 }
 
@@ -92,47 +99,52 @@ private enum Wave30PathComponentsGen {
       "IMG_001.jpg", "track.mp3", "notes.txt", "photo.png",
       "naïve", "café", "文件", "ファイル",
     ]
-    return Gen<Int>.choose((0, 8)).flatMap { depth in
-      if depth == 0 { return Gen.pure([String]()) }
-      return Gen<[String]>.compose { c in
-        (0..<depth).map { _ in c.generate(using: Gen<String>.fromElements(of: names)) }
+    return Gen<Int>.choose((0, 8))
+      .flatMap { depth in
+        if depth == 0 { return Gen.pure([String]()) }
+        return Gen<[String]>
+          .compose { c in
+            (0..<depth).map { _ in c.generate(using: Gen<String>.fromElements(of: names)) }
+          }
       }
-    }
   }
 }
 
 /// Generator for storage IDs.
 private enum Wave30StorageIDGen {
   static var arbitrary: Gen<UInt32> {
-    Gen<UInt32>.fromElements(of: [
-      0x0001_0001, 0x0001_0002, 0x0002_0001, 0x0001_0003, 0xFFFF_FFFF, 1,
-    ])
+    Gen<UInt32>
+      .fromElements(of: [
+        0x0001_0001, 0x0001_0002, 0x0002_0001, 0x0001_0003, 0xFFFF_FFFF, 1,
+      ])
   }
 }
 
 /// Generator for EffectiveTuning with random valid values.
 private enum TuningGenerator {
   static var arbitrary: Gen<EffectiveTuning> {
-    Gen<(Int, Int, Int, Int, Int, Int, Int, Int, Bool, Bool)>.zip(
-      Gen<Int>.choose((128 * 1024, 16 * 1024 * 1024)),
-      Gen<Int>.choose((1000, 30000)),
-      Gen<Int>.choose((1000, 30000)),
-      Gen<Int>.choose((1000, 30000)),
-      Gen<Int>.choose((10000, 120000)),
-      Gen<Int>.choose((0, 2000)),
-      Gen<Int>.choose((0, 2000)),
-      Gen<Int>.choose((0, 2000)),
-      Bool.arbitrary,
-      Bool.arbitrary
-    ).map { chunk, io, hs, inact, deadline, stab, postClaim, postProbe, reset, disableEvt in
-      EffectiveTuning(
-        maxChunkBytes: chunk, ioTimeoutMs: io, handshakeTimeoutMs: hs,
-        inactivityTimeoutMs: inact, overallDeadlineMs: deadline,
-        stabilizeMs: stab, postClaimStabilizeMs: postClaim,
-        postProbeStabilizeMs: postProbe, resetOnOpen: reset,
-        disableEventPump: disableEvt, operations: [:], hooks: []
+    Gen<(Int, Int, Int, Int, Int, Int, Int, Int, Bool, Bool)>
+      .zip(
+        Gen<Int>.choose((128 * 1024, 16 * 1024 * 1024)),
+        Gen<Int>.choose((1000, 30000)),
+        Gen<Int>.choose((1000, 30000)),
+        Gen<Int>.choose((1000, 30000)),
+        Gen<Int>.choose((10000, 120000)),
+        Gen<Int>.choose((0, 2000)),
+        Gen<Int>.choose((0, 2000)),
+        Gen<Int>.choose((0, 2000)),
+        Bool.arbitrary,
+        Bool.arbitrary
       )
-    }
+      .map { chunk, io, hs, inact, deadline, stab, postClaim, postProbe, reset, disableEvt in
+        EffectiveTuning(
+          maxChunkBytes: chunk, ioTimeoutMs: io, handshakeTimeoutMs: hs,
+          inactivityTimeoutMs: inact, overallDeadlineMs: deadline,
+          stabilizeMs: stab, postClaimStabilizeMs: postClaim,
+          postProbeStabilizeMs: postProbe, resetOnOpen: reset,
+          disableEventPump: disableEvt, operations: [:], hooks: []
+        )
+      }
   }
 }
 
@@ -291,7 +303,9 @@ final class PathKeyIdempotencyPropertyTests: XCTestCase {
     property("Normalized component never contains control chars, '/', or '\\'")
       <- forAll(String.arbitrary.suchThat { !$0.isEmpty && $0.count < 200 }) { raw in
         let normalized = PathKey.normalizeComponent(raw)
-        let hasControl = normalized.unicodeScalars.contains { CharacterSet.controlCharacters.contains($0) }
+        let hasControl = normalized.unicodeScalars.contains {
+          CharacterSet.controlCharacters.contains($0)
+        }
         let hasSlash = normalized.contains("/") || normalized.contains("\\")
         return !hasControl && !hasSlash && !normalized.isEmpty
       }
@@ -439,7 +453,8 @@ final class TransferRecordRoundTripPropertyTests: XCTestCase {
     property("TransferRecord optional fields are preserved")
       <- forAll(
         Gen<Double>.choose((0.0, 500.0)),
-        Gen<String>.fromElements(of: ["abc123def456", "deadbeef0123", String(repeating: "0", count: 64)])
+        Gen<String>
+          .fromElements(of: ["abc123def456", "deadbeef0123", String(repeating: "0", count: 64)])
       ) { (throughput: Double, hash: String) in
         let record = TransferRecord(
           id: "opt-test",
@@ -504,13 +519,12 @@ final class DeviceFilterConsistencyPropertyTests: XCTestCase {
           vendorID: deviceVid, productID: pid,
           bus: 1, address: 1)
         let result = selectDevice([summary], filter: filter, noninteractive: true)
-        if filterVid == deviceVid {
-          if case .selected = result { return true }
-          return false
-        } else {
+        guard filterVid == deviceVid else {
           if case .none = result { return true }
           return false
         }
+        if case .selected = result { return true }
+        return false
       }
   }
 

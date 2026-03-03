@@ -142,7 +142,7 @@ final class DeviceSelectionWave29Tests: XCTestCase {
     let result = selectDevice(
       [MockCandidate](), filter: DeviceFilter(vid: nil, pid: nil, bus: nil, address: nil),
       noninteractive: true)
-    if case .none = result { } else { XCTFail("Expected .none") }
+    if case .none = result {} else { XCTFail("Expected .none") }
   }
 
   func testSelectSingleDeviceNoFilter() {
@@ -189,7 +189,7 @@ final class DeviceSelectionWave29Tests: XCTestCase {
     let result = selectDevice(
       [dev], filter: DeviceFilter(vid: 0x04e8, pid: nil, bus: nil, address: nil),
       noninteractive: true)
-    if case .none = result { } else { XCTFail("Expected .none for non-matching VID") }
+    if case .none = result {} else { XCTFail("Expected .none for non-matching VID") }
   }
 
   func testSelectMultipleReturnsMultiple() {
@@ -551,7 +551,8 @@ final class DeviceLabReportWave29Tests: XCTestCase {
       operationsSupported: ["GetDeviceInfo", "OpenSession"],
       eventsSupported: ["ObjectAdded"],
       capabilityTests: [
-        CapabilityTestResult(name: "GetDeviceInfo", opcode: "0x1001", supported: true, durationMs: 42)
+        CapabilityTestResult(
+          name: "GetDeviceInfo", opcode: "0x1001", supported: true, durationMs: 42)
       ],
       suggestedFlags: QuirkFlags(),
       suggestedTuning: SuggestedTuning())
@@ -602,7 +603,8 @@ final class DeviceLabReportWave29Tests: XCTestCase {
   }
 
   func testSuggestedTuningCustomValues() {
-    let tuning = SuggestedTuning(maxChunkBytes: 256_000, ioTimeoutMs: 15000, handshakeTimeoutMs: 10000)
+    let tuning = SuggestedTuning(
+      maxChunkBytes: 256_000, ioTimeoutMs: 15000, handshakeTimeoutMs: 10000)
     XCTAssertEqual(tuning.maxChunkBytes, 256_000)
     XCTAssertEqual(tuning.ioTimeoutMs, 15000)
     XCTAssertEqual(tuning.handshakeTimeoutMs, 10000)

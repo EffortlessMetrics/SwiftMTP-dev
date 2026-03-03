@@ -218,12 +218,13 @@ final class StoreErrorTests: XCTestCase {
   func testUpsertObjectsWithDeviceThatDoesNotExistSilentlySkips() async throws {
     let actor = store.createActor()
     // upsertObjects checks for device existence and returns early if not found
-    let objects: [(
-      storageId: Int, handle: Int, parentHandle: Int?, name: String,
-      pathKey: String, size: Int64?, mtime: Date?, format: Int, generation: Int
-    )] = [
-      (1, 100, nil, "file.txt", "/file.txt", 1024, nil, 0x3004, 1)
-    ]
+    let objects:
+      [(
+        storageId: Int, handle: Int, parentHandle: Int?, name: String,
+        pathKey: String, size: Int64?, mtime: Date?, format: Int, generation: Int
+      )] = [
+        (1, 100, nil, "file.txt", "/file.txt", 1024, nil, 0x3004, 1)
+      ]
     try await actor.upsertObjects(
       deviceId: "nonexistent-device-\(UUID().uuidString)", objects: objects)
 
@@ -704,13 +705,14 @@ final class StoreErrorTests: XCTestCase {
     )
 
     // Batch upsert with same handle should update
-    let objects: [(
-      storageId: Int, handle: Int, parentHandle: Int?,
-      name: String, pathKey: String, size: Int64?, mtime: Date?,
-      format: Int, generation: Int
-    )] = [
-      (1, 100, nil, "updated.txt", "/updated.txt", 200, nil, 0x3004, 1)
-    ]
+    let objects:
+      [(
+        storageId: Int, handle: Int, parentHandle: Int?,
+        name: String, pathKey: String, size: Int64?, mtime: Date?,
+        format: Int, generation: Int
+      )] = [
+        (1, 100, nil, "updated.txt", "/updated.txt", 200, nil, 0x3004, 1)
+      ]
     try await actor.upsertObjects(deviceId: deviceId, objects: objects)
 
     let fetched = try await actor.fetchObjects(deviceId: deviceId, generation: 1)
@@ -724,13 +726,15 @@ final class StoreErrorTests: XCTestCase {
     let deviceId = "batch-large-\(UUID().uuidString)"
     _ = try await actor.upsertDevice(id: deviceId, manufacturer: "Test", model: "Model")
 
-    let objects: [(
-      storageId: Int, handle: Int, parentHandle: Int?,
-      name: String, pathKey: String, size: Int64?, mtime: Date?,
-      format: Int, generation: Int
-    )] = (0..<100).map { i in
-      (1, i, nil, "file-\(i).txt", "/file-\(i).txt", Int64(i * 100), nil, 0x3004, 1)
-    }
+    let objects:
+      [(
+        storageId: Int, handle: Int, parentHandle: Int?,
+        name: String, pathKey: String, size: Int64?, mtime: Date?,
+        format: Int, generation: Int
+      )] = (0..<100)
+        .map { i in
+          (1, i, nil, "file-\(i).txt", "/file-\(i).txt", Int64(i * 100), nil, 0x3004, 1)
+        }
 
     try await actor.upsertObjects(deviceId: deviceId, objects: objects)
 

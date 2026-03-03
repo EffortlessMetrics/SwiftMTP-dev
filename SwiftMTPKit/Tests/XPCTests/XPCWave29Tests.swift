@@ -55,15 +55,16 @@ final class XPCWave29Tests: XCTestCase {
 
   func testLargeDeviceListSerialization() throws {
     // Simulate a response with 5000 objects (large device file listing)
-    let objects = (0..<5000).map { i in
-      ObjectInfo(
-        handle: UInt32(i),
-        name: "IMG_\(String(format: "%05d", i)).jpg",
-        sizeBytes: UInt64(i) * 4096,
-        isDirectory: false,
-        modifiedDate: Date(timeIntervalSince1970: Double(1_700_000_000 + i))
-      )
-    }
+    let objects = (0..<5000)
+      .map { i in
+        ObjectInfo(
+          handle: UInt32(i),
+          name: "IMG_\(String(format: "%05d", i)).jpg",
+          sizeBytes: UInt64(i) * 4096,
+          isDirectory: false,
+          modifiedDate: Date(timeIntervalSince1970: Double(1_700_000_000 + i))
+        )
+      }
     let resp = ObjectListResponse(success: true, objects: objects)
     let decoded = try roundTrip(resp, as: ObjectListResponse.self)
     XCTAssertEqual(decoded?.objects?.count, 5000)
@@ -97,13 +98,14 @@ final class XPCWave29Tests: XCTestCase {
 
   func testLargeStorageListWithManyStorages() throws {
     // 200 storages (some devices expose many partitions)
-    let storages = (0..<200).map { i in
-      StorageInfo(
-        storageId: UInt32(i),
-        description: "Partition \(i) — " + String(repeating: "📁", count: 10),
-        capacityBytes: UInt64(i) * 1_000_000_000,
-        freeBytes: UInt64(i) * 500_000_000)
-    }
+    let storages = (0..<200)
+      .map { i in
+        StorageInfo(
+          storageId: UInt32(i),
+          description: "Partition \(i) — " + String(repeating: "📁", count: 10),
+          capacityBytes: UInt64(i) * 1_000_000_000,
+          freeBytes: UInt64(i) * 500_000_000)
+      }
     let resp = StorageListResponse(success: true, storages: storages)
     let decoded = try roundTrip(resp, as: StorageListResponse.self)
     XCTAssertEqual(decoded?.storages?.count, 200)
@@ -120,7 +122,8 @@ final class XPCWave29Tests: XCTestCase {
     }
     for cycle in 0..<10 {
       await service.markDisconnected()
-      let disc = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+      let disc = await withCheckedContinuation {
+        (c: CheckedContinuation<DeviceStatusResponse, Never>) in
         svc.impl.deviceStatus(DeviceStatusRequest(deviceId: svc.deviceId.raw)) {
           c.resume(returning: $0)
         }
@@ -128,7 +131,8 @@ final class XPCWave29Tests: XCTestCase {
       XCTAssertFalse(disc.connected, "Cycle \(cycle): should be disconnected")
 
       await service.markReconnected()
-      let recon = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+      let recon = await withCheckedContinuation {
+        (c: CheckedContinuation<DeviceStatusResponse, Never>) in
         svc.impl.deviceStatus(DeviceStatusRequest(deviceId: svc.deviceId.raw)) {
           c.resume(returning: $0)
         }
@@ -149,14 +153,16 @@ final class XPCWave29Tests: XCTestCase {
       await service.markReconnected()
     }
     // Operations should still succeed
-    let storageResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let storageResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }
     }
     XCTAssertTrue(storageResp.success)
 
-    let objResp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let objResp = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       svc.impl.listObjects(
         ObjectListRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)
       ) { c.resume(returning: $0) }
@@ -172,7 +178,8 @@ final class XPCWave29Tests: XCTestCase {
     let stableId = svc.stableId
 
     // Verify working state
-    let beforeResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let beforeResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: stableId)) {
         c.resume(returning: $0)
       }
@@ -183,7 +190,8 @@ final class XPCWave29Tests: XCTestCase {
     await svc.registry.remove(deviceId: svc.deviceId)
 
     // All operations should fail gracefully during "crash"
-    let crashResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let crashResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: stableId)) {
         c.resume(returning: $0)
       }
@@ -210,7 +218,8 @@ final class XPCWave29Tests: XCTestCase {
     await svc.registry.registerDomainMapping(deviceId: newConfig.deviceId, domainId: stableId)
 
     // Operations should work again
-    let recoveredResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let recoveredResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: stableId)) {
         c.resume(returning: $0)
       }
@@ -241,7 +250,8 @@ final class XPCWave29Tests: XCTestCase {
 
   func testTruncatedArchiveDataFailsGracefully() throws {
     let req = ReadRequest(deviceId: "device", objectHandle: 42)
-    let fullData = try NSKeyedArchiver.archivedData(withRootObject: req, requiringSecureCoding: true)
+    let fullData = try NSKeyedArchiver.archivedData(
+      withRootObject: req, requiringSecureCoding: true)
     // Truncate to half
     let truncated = fullData.prefix(fullData.count / 2)
     XCTAssertThrowsError(
@@ -285,7 +295,8 @@ final class XPCWave29Tests: XCTestCase {
     var listResults: [Bool] = []
 
     for i in 0..<5 {
-      let readResp = await withCheckedContinuation { (c: CheckedContinuation<ReadResponse, Never>) in
+      let readResp = await withCheckedContinuation {
+        (c: CheckedContinuation<ReadResponse, Never>) in
         svc.impl.readObject(ReadRequest(deviceId: svc.stableId, objectHandle: UInt32(3000 + i))) {
           c.resume(returning: $0)
         }
@@ -295,7 +306,8 @@ final class XPCWave29Tests: XCTestCase {
         try? FileManager.default.removeItem(at: url)
       }
 
-      let listResp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+      let listResp = await withCheckedContinuation {
+        (c: CheckedContinuation<ObjectListResponse, Never>) in
         svc.impl.listObjects(
           ObjectListRequest(deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)
         ) { c.resume(returning: $0) }
@@ -312,12 +324,14 @@ final class XPCWave29Tests: XCTestCase {
     let svc2 = await makeService(objectCount: 3)
 
     // Both services operate independently
-    let resp1 = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let resp1 = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       svc1.impl.listObjects(
         ObjectListRequest(deviceId: svc1.stableId, storageId: svc1.storageId, parentHandle: nil)
       ) { c.resume(returning: $0) }
     }
-    let resp2 = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let resp2 = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       svc2.impl.listObjects(
         ObjectListRequest(deviceId: svc2.stableId, storageId: svc2.storageId, parentHandle: nil)
       ) { c.resume(returning: $0) }
@@ -337,7 +351,8 @@ final class XPCWave29Tests: XCTestCase {
       return true
     }
     for _ in 0..<20 {
-      let resp = await withCheckedContinuation { (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
+      let resp = await withCheckedContinuation {
+        (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
         svc.impl.requestCrawl(
           CrawlTriggerRequest(deviceId: svc.stableId, storageId: svc.storageId)
         ) { c.resume(returning: $0) }
@@ -368,8 +383,9 @@ final class XPCWave29Tests: XCTestCase {
     // Cleanup should remove all temp files
     svc.impl.cleanupOldTempFiles(olderThan: -1)
     for url in tempURLs {
-      XCTAssertFalse(FileManager.default.fileExists(atPath: url.path),
-                     "Temp file should be cleaned up: \(url.lastPathComponent)")
+      XCTAssertFalse(
+        FileManager.default.fileExists(atPath: url.path),
+        "Temp file should be cleaned up: \(url.lastPathComponent)")
     }
   }
 
@@ -516,7 +532,8 @@ final class XPCWave29Tests: XCTestCase {
     let impl = MTPXPCServiceImpl(deviceManager: .shared)
     impl.registry = registry
 
-    let objResp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let objResp = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       impl.listObjects(
         ObjectListRequest(deviceId: stableId, storageId: storageId.raw, parentHandle: nil)
       ) { c.resume(returning: $0) }
@@ -526,7 +543,8 @@ final class XPCWave29Tests: XCTestCase {
 
     // Verify reported sizes match expected values
     for (i, size) in sizes.enumerated() {
-      let infoResp = await withCheckedContinuation { (c: CheckedContinuation<ReadResponse, Never>) in
+      let infoResp = await withCheckedContinuation {
+        (c: CheckedContinuation<ReadResponse, Never>) in
         impl.getObjectInfo(
           deviceId: stableId, storageId: storageId.raw, objectHandle: UInt32(9000 + i)
         ) { c.resume(returning: $0) }
@@ -547,7 +565,8 @@ final class XPCWave29Tests: XCTestCase {
       try? await Task.sleep(for: .milliseconds(50))
       return Task.isCancelled ? false : true
     }
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
       svc.impl.requestCrawl(
         CrawlTriggerRequest(deviceId: svc.stableId, storageId: svc.storageId)
       ) { c.resume(returning: $0) }
@@ -563,7 +582,8 @@ final class XPCWave29Tests: XCTestCase {
     let start = ContinuousClock.now
 
     // Write
-    let writeResp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
+    let writeResp = await withCheckedContinuation {
+      (c: CheckedContinuation<WriteResponse, Never>) in
       svc.impl.writeObject(
         WriteRequest(
           deviceId: missingId, storageId: 1, parentHandle: nil,
@@ -573,7 +593,8 @@ final class XPCWave29Tests: XCTestCase {
     XCTAssertFalse(writeResp.success)
 
     // Delete
-    let deleteResp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
+    let deleteResp = await withCheckedContinuation {
+      (c: CheckedContinuation<WriteResponse, Never>) in
       svc.impl.deleteObject(DeleteRequest(deviceId: missingId, objectHandle: 1)) {
         c.resume(returning: $0)
       }
@@ -581,7 +602,8 @@ final class XPCWave29Tests: XCTestCase {
     XCTAssertFalse(deleteResp.success)
 
     // CreateFolder
-    let folderResp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
+    let folderResp = await withCheckedContinuation {
+      (c: CheckedContinuation<WriteResponse, Never>) in
       svc.impl.createFolder(
         CreateFolderRequest(deviceId: missingId, storageId: 1, parentHandle: nil, name: "dir")
       ) { c.resume(returning: $0) }
@@ -589,7 +611,8 @@ final class XPCWave29Tests: XCTestCase {
     XCTAssertFalse(folderResp.success)
 
     // Rename
-    let renameResp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
+    let renameResp = await withCheckedContinuation {
+      (c: CheckedContinuation<WriteResponse, Never>) in
       svc.impl.renameObject(RenameRequest(deviceId: missingId, objectHandle: 1, newName: "x")) {
         c.resume(returning: $0)
       }
@@ -599,7 +622,8 @@ final class XPCWave29Tests: XCTestCase {
     // Move
     let moveResp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
       svc.impl.moveObject(
-        MoveObjectRequest(deviceId: missingId, objectHandle: 1, newParentHandle: nil, newStorageId: 1)
+        MoveObjectRequest(
+          deviceId: missingId, objectHandle: 1, newParentHandle: nil, newStorageId: 1)
       ) { c.resume(returning: $0) }
     }
     XCTAssertFalse(moveResp.success)
@@ -626,7 +650,8 @@ final class XPCWave29Tests: XCTestCase {
     }
     XCTAssertTrue(ping.contains("running"))
 
-    let storageResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let storageResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       svc.impl.listStorages(StorageListRequest(deviceId: svc.stableId)) {
         c.resume(returning: $0)
       }

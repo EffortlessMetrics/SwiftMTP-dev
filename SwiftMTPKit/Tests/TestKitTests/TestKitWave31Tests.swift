@@ -213,9 +213,10 @@ final class Wave31FaultInjectingLinkFaultTypesTests: XCTestCase {
   }
 
   func testDisconnectFaultIsolated() async throws {
-    let link = makeLink(schedule: FaultSchedule([
-      ScheduledFault(trigger: .onOperation(.getStorageIDs), error: .disconnected),
-    ]))
+    let link = makeLink(
+      schedule: FaultSchedule([
+        ScheduledFault(trigger: .onOperation(.getStorageIDs), error: .disconnected)
+      ]))
     do {
       _ = try await link.getStorageIDs()
       XCTFail("Expected disconnected")
@@ -226,9 +227,10 @@ final class Wave31FaultInjectingLinkFaultTypesTests: XCTestCase {
   }
 
   func testBusyFaultIsolated() async throws {
-    let link = makeLink(schedule: FaultSchedule([
-      ScheduledFault(trigger: .onOperation(.openSession), error: .busy),
-    ]))
+    let link = makeLink(
+      schedule: FaultSchedule([
+        ScheduledFault(trigger: .onOperation(.openSession), error: .busy)
+      ]))
     do {
       try await link.openSession(id: 1)
       XCTFail("Expected busy")
@@ -273,14 +275,21 @@ final class Wave31FaultSchedulePatternTests: XCTestCase {
     ])
 
     if case .timeout = schedule.check(operation: .getDeviceInfo, callIndex: 0, byteOffset: nil) {
-    } else { XCTFail("Expected timeout first") }
+    } else {
+      XCTFail("Expected timeout first")
+    }
 
     if case .busy = schedule.check(operation: .getDeviceInfo, callIndex: 1, byteOffset: nil) {
-    } else { XCTFail("Expected busy second") }
+    } else {
+      XCTFail("Expected busy second")
+    }
 
     if case .disconnected = schedule.check(
       operation: .getDeviceInfo, callIndex: 2, byteOffset: nil)
-    {} else { XCTFail("Expected disconnected third") }
+    {
+    } else {
+      XCTFail("Expected disconnected third")
+    }
 
     XCTAssertNil(
       schedule.check(operation: .getDeviceInfo, callIndex: 3, byteOffset: nil),
@@ -290,7 +299,7 @@ final class Wave31FaultSchedulePatternTests: XCTestCase {
   func testProbabilisticUnlimitedFaultNeverDepletes() {
     let schedule = FaultSchedule([
       ScheduledFault(
-        trigger: .onOperation(.executeCommand), error: .busy, repeatCount: 0),
+        trigger: .onOperation(.executeCommand), error: .busy, repeatCount: 0)
     ])
     for i in 0..<100 {
       XCTAssertNotNil(
@@ -315,7 +324,7 @@ final class Wave31FaultSchedulePatternTests: XCTestCase {
 
   func testConditionalCallIndexPrecise() {
     let schedule = FaultSchedule([
-      ScheduledFault(trigger: .atCallIndex(7), error: .timeout),
+      ScheduledFault(trigger: .atCallIndex(7), error: .timeout)
     ])
     for i in 0..<7 {
       XCTAssertNil(
@@ -353,7 +362,7 @@ final class Wave31FaultSchedulePatternTests: XCTestCase {
   func testFaultScheduleConcurrentAccess() async throws {
     let schedule = FaultSchedule([
       ScheduledFault(
-        trigger: .onOperation(.getDeviceInfo), error: .timeout, repeatCount: 0),
+        trigger: .onOperation(.getDeviceInfo), error: .timeout, repeatCount: 0)
     ])
 
     try await withThrowingTaskGroup(of: Void.self) { group in
@@ -479,11 +488,13 @@ final class Wave31VirtualDeviceConfigValidationTests: XCTestCase {
     let config = VirtualDeviceConfig.emptyDevice
       .withStorage(
         VirtualStorageConfig(
-          id: MTPStorageID(raw: 0x0002_0001), description: "SD"))
+          id: MTPStorageID(raw: 0x0002_0001), description: "SD")
+      )
       .withObject(
         VirtualObjectConfig(
           handle: 50, storage: MTPStorageID(raw: 0x0002_0001),
-          parent: nil, name: "test.dat", data: Data([1, 2, 3])))
+          parent: nil, name: "test.dat", data: Data([1, 2, 3]))
+      )
       .withLatency(.getDeviceInfo, duration: .milliseconds(10))
       .withLatency(.getStorageIDs, duration: .milliseconds(20))
 

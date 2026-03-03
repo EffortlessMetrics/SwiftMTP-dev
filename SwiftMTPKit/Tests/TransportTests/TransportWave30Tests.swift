@@ -16,7 +16,9 @@ final class USBDescriptorParsingWave30Tests: XCTestCase {
   func testPTPHeaderDecodeTruncatedBuffer() {
     // A truncated buffer shorter than PTPHeader.size (12 bytes) — decode from
     // a valid 12-byte region should still work; callers gate on buffer length.
-    let shortData: [UInt8] = [0x0C, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x10, 0x01, 0x00, 0x00, 0x00]
+    let shortData: [UInt8] = [
+      0x0C, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x10, 0x01, 0x00, 0x00, 0x00,
+    ]
     XCTAssertEqual(shortData.count, PTPHeader.size)
     let header = shortData.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
     XCTAssertEqual(header.length, 12)
@@ -27,7 +29,8 @@ final class USBDescriptorParsingWave30Tests: XCTestCase {
 
   func testPTPHeaderDecodeWithOversizedLengthField() {
     // A header whose length field exceeds actual payload — length is just metadata.
-    let header = PTPHeader(length: 0xFFFF_FFFF, type: PTPContainer.Kind.data.rawValue, code: 0x1009, txid: 5)
+    let header = PTPHeader(
+      length: 0xFFFF_FFFF, type: PTPContainer.Kind.data.rawValue, code: 0x1009, txid: 5)
     var bytes = [UInt8](repeating: 0, count: PTPHeader.size)
     bytes.withUnsafeMutableBytes { header.encode(into: $0.baseAddress!) }
 
@@ -84,13 +87,15 @@ final class USBDescriptorParsingWave30Tests: XCTestCase {
       }
     }
     let header = cmd.withUnsafeBytes { PTPHeader.decode(from: $0.baseAddress!) }
-    XCTAssertNotEqual(Int(header.length), cmd.count, "Corrupted length should not match actual size")
+    XCTAssertNotEqual(
+      Int(header.length), cmd.count, "Corrupted length should not match actual size")
     XCTAssertEqual(header.length, UInt32(cmd.count + 100))
   }
 
   func testContainerHeaderLengthTooSmall() {
     // Length < PTPHeader.size is structurally invalid.
-    let header = PTPHeader(length: 4, type: PTPContainer.Kind.command.rawValue, code: 0x1001, txid: 0)
+    let header = PTPHeader(
+      length: 4, type: PTPContainer.Kind.command.rawValue, code: 0x1001, txid: 0)
     XCTAssertLessThan(header.length, UInt32(PTPHeader.size), "Length below header size is invalid")
   }
 
@@ -147,7 +152,8 @@ final class InterfaceEndpointWave30Tests: XCTestCase {
 
     XCTAssertTrue(mtpResult.isCandidate)
     XCTAssertTrue(genericResult.isCandidate)
-    XCTAssertGreaterThan(mtpResult.score, genericResult.score,
+    XCTAssertGreaterThan(
+      mtpResult.score, genericResult.score,
       "MTP (6/1/1) should score higher than generic class 0x06")
   }
 
@@ -307,7 +313,8 @@ final class ZLPTerminationTests: XCTestCase {
     let maxPacketSize = 512
     let payloadSizes = [512, 1024, 2048, 512 * 100]
     for size in payloadSizes {
-      XCTAssertTrue(size % maxPacketSize == 0,
+      XCTAssertTrue(
+        size % maxPacketSize == 0,
         "Payload \(size) should be a multiple of max packet \(maxPacketSize)")
       let needsZLP = (size % maxPacketSize == 0) && size > 0
       XCTAssertTrue(needsZLP, "ZLP required for payload size \(size)")
@@ -346,9 +353,9 @@ final class ControlTransferResetTests: XCTestCase {
   func testPTPDeviceResetRequestParameters() {
     // PTP Device Reset uses class-specific request 0x66 on the control pipe.
     let bmRequestType: UInt8 = 0x21  // Host-to-device, class, interface
-    let bRequest: UInt8 = 0x66       // PTP Device Reset
+    let bRequest: UInt8 = 0x66  // PTP Device Reset
     let wValue: UInt16 = 0
-    let wIndex: UInt16 = 0           // Interface number
+    let wIndex: UInt16 = 0  // Interface number
 
     XCTAssertEqual(bmRequestType & 0x60, 0x20, "Class request type bits")
     XCTAssertEqual(bmRequestType & 0x1F, 0x01, "Interface recipient")
@@ -472,7 +479,8 @@ final class ConfigDescriptorWalkingTests: XCTestCase {
 
     XCTAssertTrue(alt0.isCandidate)
     XCTAssertTrue(alt1.isCandidate)
-    XCTAssertGreaterThan(alt1.score, alt0.score,
+    XCTAssertGreaterThan(
+      alt1.score, alt0.score,
       "Alt setting with MTP in name should score higher")
   }
 
@@ -625,14 +633,24 @@ final class TransportStateMachineTests: XCTestCase {
       switch startState {
       case .idle: break
       case .connecting: _ = sm.connect()
-      case .ready: _ = sm.connect(); _ = sm.didEstablishSession()
-      case .transferring: _ = sm.connect(); _ = sm.didEstablishSession(); _ = sm.beginTransfer()
+      case .ready:
+        _ = sm.connect()
+        _ = sm.didEstablishSession()
+      case .transferring:
+        _ = sm.connect()
+        _ = sm.didEstablishSession()
+        _ = sm.beginTransfer()
       case .error:
-        _ = sm.connect(); _ = sm.didEstablishSession(); _ = sm.beginTransfer()
+        _ = sm.connect()
+        _ = sm.didEstablishSession()
+        _ = sm.beginTransfer()
         _ = sm.encounteredError()
       case .recovery:
-        _ = sm.connect(); _ = sm.didEstablishSession(); _ = sm.beginTransfer()
-        _ = sm.encounteredError(); _ = sm.beginRecovery()
+        _ = sm.connect()
+        _ = sm.didEstablishSession()
+        _ = sm.beginTransfer()
+        _ = sm.encounteredError()
+        _ = sm.beginRecovery()
       }
       XCTAssertEqual(sm.state, startState)
       sm.disconnect()
@@ -762,12 +780,14 @@ final class ProbeRecoveryWave30Tests: XCTestCase {
   }
 
   func testProbeLadderResultFields() {
-    let success = ProbeLadderResult(succeeded: true, cachedDeviceInfoData: Data([0xAB]), stepAttempted: "OpenSession")
+    let success = ProbeLadderResult(
+      succeeded: true, cachedDeviceInfoData: Data([0xAB]), stepAttempted: "OpenSession")
     XCTAssertTrue(success.succeeded)
     XCTAssertEqual(success.cachedDeviceInfoData, Data([0xAB]))
     XCTAssertEqual(success.stepAttempted, "OpenSession")
 
-    let failure = ProbeLadderResult(succeeded: false, cachedDeviceInfoData: nil, stepAttempted: "GetDeviceInfo")
+    let failure = ProbeLadderResult(
+      succeeded: false, cachedDeviceInfoData: nil, stepAttempted: "GetDeviceInfo")
     XCTAssertFalse(failure.succeeded)
     XCTAssertNil(failure.cachedDeviceInfoData)
   }

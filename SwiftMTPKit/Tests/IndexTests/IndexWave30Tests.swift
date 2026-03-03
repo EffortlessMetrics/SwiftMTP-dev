@@ -56,14 +56,16 @@ struct Wave30SchemaMigrationTests {
     let ephemeral = "2717:ff10@3:7"
 
     // Insert objects, storage, and generate change log under ephemeral ID
-    let objs = (0..<20).map { i in
-      makeObj(deviceId: ephemeral, handle: UInt32(i), name: "f\(i).txt")
-    }
+    let objs = (0..<20)
+      .map { i in
+        makeObj(deviceId: ephemeral, handle: UInt32(i), name: "f\(i).txt")
+      }
     try await idx.upsertObjects(objs, deviceId: ephemeral)
-    try await idx.upsertStorage(IndexedStorage(
-      deviceId: ephemeral, storageId: 0x10001, description: "Internal",
-      capacity: 64_000_000, free: 32_000_000, readOnly: false
-    ))
+    try await idx.upsertStorage(
+      IndexedStorage(
+        deviceId: ephemeral, storageId: 0x10001, description: "Internal",
+        capacity: 64_000_000, free: 32_000_000, readOnly: false
+      ))
 
     let stableId = "stable-domain-uuid"
     try idx.migrateEphemeralDeviceId(vidPidPattern: "2717:ff10", newDomainId: stableId)
@@ -114,9 +116,10 @@ struct Wave30SchemaMigrationTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     let ephemeral = "04e8:6860@1:3"
-    let objs = (0..<10).map { i in
-      makeObj(deviceId: ephemeral, handle: UInt32(i), name: "f\(i).txt")
-    }
+    let objs = (0..<10)
+      .map { i in
+        makeObj(deviceId: ephemeral, handle: UInt32(i), name: "f\(i).txt")
+      }
     try await idx.upsertObjects(objs, deviceId: ephemeral)
 
     let stableId = "stable-id"
@@ -136,7 +139,8 @@ struct Wave30SchemaMigrationTests {
 
     // Create a bare SQLite DB with only live_objects
     let rawDB = try SQLiteDB(path: path)
-    try rawDB.exec("""
+    try rawDB.exec(
+      """
       CREATE TABLE IF NOT EXISTS live_objects (
           deviceId TEXT NOT NULL,
           storageId INTEGER NOT NULL,
@@ -159,10 +163,11 @@ struct Wave30SchemaMigrationTests {
     let idx = try SQLiteLiveIndex(path: path)
 
     // Should be able to use all features
-    try await idx.upsertStorage(IndexedStorage(
-      deviceId: "dev", storageId: 1, description: "Test",
-      capacity: 100, free: 50, readOnly: false
-    ))
+    try await idx.upsertStorage(
+      IndexedStorage(
+        deviceId: "dev", storageId: 1, description: "Test",
+        capacity: 100, free: 50, readOnly: false
+      ))
     let storages = try await idx.storages(deviceId: "dev")
     #expect(storages.count == 1)
 
@@ -223,9 +228,10 @@ struct Wave30WALCheckpointTests {
       // Writer: inserts batches concurrently
       group.addTask {
         for batch in 0..<10 {
-          let objs = (0..<50).map { j in
-            makeObj(handle: UInt32(1000 + batch * 50 + j), name: "w\(batch)_\(j).txt")
-          }
+          let objs = (0..<50)
+            .map { j in
+              makeObj(handle: UInt32(1000 + batch * 50 + j), name: "w\(batch)_\(j).txt")
+            }
           try await writer.upsertObjects(objs, deviceId: "dev")
         }
       }
@@ -348,14 +354,15 @@ struct Wave30LargeBatchTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     let count = 10_000
-    let objects = (0..<count).map { i in
-      makeObj(
-        handle: UInt32(i),
-        name: "file\(i).dat",
-        pathKey: "00010001/dir\(i / 100)/file\(i).dat",
-        sizeBytes: UInt64(i * 1024)
-      )
-    }
+    let objects = (0..<count)
+      .map { i in
+        makeObj(
+          handle: UInt32(i),
+          name: "file\(i).dat",
+          pathKey: "00010001/dir\(i / 100)/file\(i).dat",
+          sizeBytes: UInt64(i * 1024)
+        )
+      }
 
     let t0 = Date()
     try await idx.upsertObjects(objects, deviceId: "dev")
@@ -381,14 +388,16 @@ struct Wave30LargeBatchTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     let count = 10_000
-    let v1 = (0..<count).map { i in
-      makeObj(handle: UInt32(i), name: "f\(i).txt", sizeBytes: 100)
-    }
+    let v1 = (0..<count)
+      .map { i in
+        makeObj(handle: UInt32(i), name: "f\(i).txt", sizeBytes: 100)
+      }
     try await idx.upsertObjects(v1, deviceId: "dev")
 
-    let v2 = (0..<count).map { i in
-      makeObj(handle: UInt32(i), name: "f\(i).txt", sizeBytes: 200)
-    }
+    let v2 = (0..<count)
+      .map { i in
+        makeObj(handle: UInt32(i), name: "f\(i).txt", sizeBytes: 200)
+      }
     let t0 = Date()
     try await idx.upsertObjects(v2, deviceId: "dev")
     let elapsed = Date().timeIntervalSince(t0)
@@ -568,11 +577,12 @@ struct Wave30IndexRebuildTests {
     try await idx.insertObject(parent, deviceId: "dev")
 
     // Original crawl: 100 objects
-    let v1 = (0..<100).map { i in
-      makeObj(
-        handle: UInt32(100 + i), parentHandle: parentHandle,
-        name: "photo\(i).jpg", pathKey: "00010001/DCIM/photo\(i).jpg")
-    }
+    let v1 = (0..<100)
+      .map { i in
+        makeObj(
+          handle: UInt32(100 + i), parentHandle: parentHandle,
+          name: "photo\(i).jpg", pathKey: "00010001/DCIM/photo\(i).jpg")
+      }
     try await idx.upsertObjects(v1, deviceId: "dev")
 
     let beforeCount = try await idx.children(
@@ -583,11 +593,12 @@ struct Wave30IndexRebuildTests {
     try await idx.markStaleChildren(
       deviceId: "dev", storageId: 0x10001, parentHandle: parentHandle)
 
-    let v2 = (0..<80).map { i in
-      makeObj(
-        handle: UInt32(100 + i), parentHandle: parentHandle,
-        name: "photo\(i)_v2.jpg", pathKey: "00010001/DCIM/photo\(i)_v2.jpg")
-    }
+    let v2 = (0..<80)
+      .map { i in
+        makeObj(
+          handle: UInt32(100 + i), parentHandle: parentHandle,
+          name: "photo\(i)_v2.jpg", pathKey: "00010001/DCIM/photo\(i)_v2.jpg")
+      }
     try await idx.upsertObjects(v2, deviceId: "dev")
 
     try await idx.purgeStale(
@@ -606,9 +617,10 @@ struct Wave30IndexRebuildTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     let parentHandle: UInt32 = 100
-    let children = (0..<50).map { i in
-      makeObj(handle: UInt32(200 + i), parentHandle: parentHandle, name: "f\(i).txt")
-    }
+    let children = (0..<50)
+      .map { i in
+        makeObj(handle: UInt32(200 + i), parentHandle: parentHandle, name: "f\(i).txt")
+      }
     try await idx.upsertObjects(children, deviceId: "dev")
 
     // Rebuild with no new objects
@@ -629,19 +641,22 @@ struct Wave30IndexRebuildTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     // Two sibling folders under root
-    let dcimChildren = (0..<10).map { i in
-      makeObj(handle: UInt32(100 + i), parentHandle: 1, name: "photo\(i).jpg")
-    }
-    let musicChildren = (0..<5).map { i in
-      makeObj(handle: UInt32(200 + i), parentHandle: 2, name: "song\(i).mp3")
-    }
+    let dcimChildren = (0..<10)
+      .map { i in
+        makeObj(handle: UInt32(100 + i), parentHandle: 1, name: "photo\(i).jpg")
+      }
+    let musicChildren = (0..<5)
+      .map { i in
+        makeObj(handle: UInt32(200 + i), parentHandle: 2, name: "song\(i).mp3")
+      }
     try await idx.upsertObjects(dcimChildren + musicChildren, deviceId: "dev")
 
     // Rebuild only DCIM (parent handle 1)
     try await idx.markStaleChildren(deviceId: "dev", storageId: 0x10001, parentHandle: 1)
-    let freshDCIM = (0..<8).map { i in
-      makeObj(handle: UInt32(100 + i), parentHandle: 1, name: "newphoto\(i).jpg")
-    }
+    let freshDCIM = (0..<8)
+      .map { i in
+        makeObj(handle: UInt32(100 + i), parentHandle: 1, name: "newphoto\(i).jpg")
+      }
     try await idx.upsertObjects(freshDCIM, deviceId: "dev")
     try await idx.purgeStale(deviceId: "dev", storageId: 0x10001, parentHandle: 1)
 
@@ -662,8 +677,8 @@ struct Wave30UnicodeNormalizationTests {
 
   @Test("NFC and NFD forms produce identical path keys")
   func nfcAndNfdProduceSamePathKey() {
-    let nfd = "cafe\u{0301}"           // NFD: e + combining acute
-    let nfc = "café"                    // NFC: precomposed é
+    let nfd = "cafe\u{0301}"  // NFD: e + combining acute
+    let nfc = "café"  // NFC: precomposed é
 
     let keyNFD = PathKey.normalize(storage: 0x10001, components: ["DCIM", nfd])
     let keyNFC = PathKey.normalize(storage: 0x10001, components: ["DCIM", nfc])
@@ -672,8 +687,8 @@ struct Wave30UnicodeNormalizationTests {
 
   @Test("German umlaut NFC/NFD normalization")
   func germanUmlautNormalization() {
-    let nfd = "Mu\u{0308}ller"         // NFD: u + combining diaeresis
-    let nfc = "Müller"                  // NFC: precomposed ü
+    let nfd = "Mu\u{0308}ller"  // NFD: u + combining diaeresis
+    let nfc = "Müller"  // NFC: precomposed ü
 
     let keyNFD = PathKey.normalizeComponent(nfd)
     let keyNFC = PathKey.normalizeComponent(nfc)
@@ -705,13 +720,13 @@ struct Wave30UnicodeNormalizationTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     let names = [
-      "café.txt",               // NFC
-      "naïve.pdf",              // NFC with diaeresis
-      "Ångström.doc",           // Nordic
-      "日本語ファイル.txt",      // Japanese
-      "파일이름.txt",            // Korean
-      "Привет.txt",             // Cyrillic
-      "📸🎉emoji.jpg",          // Emoji
+      "café.txt",  // NFC
+      "naïve.pdf",  // NFC with diaeresis
+      "Ångström.doc",  // Nordic
+      "日本語ファイル.txt",  // Japanese
+      "파일이름.txt",  // Korean
+      "Привет.txt",  // Cyrillic
+      "📸🎉emoji.jpg",  // Emoji
     ]
 
     for (i, name) in names.enumerated() {
@@ -770,12 +785,14 @@ struct Wave30MixedStorageTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     // Insert objects into two different storages
-    let internalObjs = (0..<10).map { i in
-      makeObj(handle: UInt32(i), storageId: 0x10001, name: "int\(i).txt")
-    }
-    let sdCardObjs = (0..<5).map { i in
-      makeObj(handle: UInt32(100 + i), storageId: 0x20001, name: "sd\(i).txt")
-    }
+    let internalObjs = (0..<10)
+      .map { i in
+        makeObj(handle: UInt32(i), storageId: 0x10001, name: "int\(i).txt")
+      }
+    let sdCardObjs = (0..<5)
+      .map { i in
+        makeObj(handle: UInt32(100 + i), storageId: 0x20001, name: "sd\(i).txt")
+      }
     try await idx.upsertObjects(internalObjs + sdCardObjs, deviceId: "dev")
 
     let internalKids = try await idx.children(
@@ -794,19 +811,22 @@ struct Wave30MixedStorageTests {
     let (idx, path) = try makeTempDB()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertStorage(IndexedStorage(
-      deviceId: "dev", storageId: 0x10001, description: "Internal",
-      capacity: 128_000_000_000, free: 100_000_000_000, readOnly: false))
+    try await idx.upsertStorage(
+      IndexedStorage(
+        deviceId: "dev", storageId: 0x10001, description: "Internal",
+        capacity: 128_000_000_000, free: 100_000_000_000, readOnly: false))
 
-    let objs = (0..<20).map { i in
-      makeObj(handle: UInt32(i), storageId: 0x10001, name: "f\(i).txt")
-    }
+    let objs = (0..<20)
+      .map { i in
+        makeObj(handle: UInt32(i), storageId: 0x10001, name: "f\(i).txt")
+      }
     try await idx.upsertObjects(objs, deviceId: "dev")
 
     // Update storage free space
-    try await idx.upsertStorage(IndexedStorage(
-      deviceId: "dev", storageId: 0x10001, description: "Internal",
-      capacity: 128_000_000_000, free: 50_000_000_000, readOnly: false))
+    try await idx.upsertStorage(
+      IndexedStorage(
+        deviceId: "dev", storageId: 0x10001, description: "Internal",
+        capacity: 128_000_000_000, free: 50_000_000_000, readOnly: false))
 
     // Objects still there
     let kids = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
@@ -834,7 +854,8 @@ struct Wave30LargeDiffTests {
     let deviceId = MTPDeviceID(raw: "diff-test-device")
 
     // Setup schema (use Snapshotter's PK which is deviceId+handle+gen)
-    try db.exec("""
+    try db.exec(
+      """
       CREATE TABLE IF NOT EXISTS devices(id TEXT PRIMARY KEY, model TEXT, lastSeenAt INTEGER);
       CREATE TABLE IF NOT EXISTS storages(id INTEGER, deviceId TEXT, description TEXT, capacity INTEGER, free INTEGER, readOnly INTEGER, lastIndexedAt INTEGER, PRIMARY KEY(id, deviceId));
       CREATE TABLE IF NOT EXISTS objects(
@@ -890,8 +911,8 @@ struct Wave30LargeDiffTests {
           try db.bind(stmt, 3, Int64(i))
           try db.bind(stmt, 4, "file\(i).txt")
           try db.bind(stmt, 5, "00010001/file\(i).txt")
-          try db.bind(stmt, 6, Int64(1000))     // same size
-          try db.bind(stmt, 7, Int64(1000000))   // same mtime
+          try db.bind(stmt, 6, Int64(1000))  // same size
+          try db.bind(stmt, 7, Int64(1000000))  // same mtime
           try db.bind(stmt, 8, Int64(0x3004))
           try db.bind(stmt, 9, Int64(gen2))
           _ = try db.step(stmt)
@@ -907,7 +928,7 @@ struct Wave30LargeDiffTests {
           try db.bind(stmt, 3, Int64(i))
           try db.bind(stmt, 4, "file\(i).txt")
           try db.bind(stmt, 5, "00010001/file\(i).txt")
-          try db.bind(stmt, 6, Int64(2000))      // changed size
+          try db.bind(stmt, 6, Int64(2000))  // changed size
           try db.bind(stmt, 7, Int64(1000000))
           try db.bind(stmt, 8, Int64(0x3004))
           try db.bind(stmt, 9, Int64(gen2))
@@ -971,7 +992,8 @@ struct Wave30LargeDiffTests {
     let db = try SQLiteDB(path: dbPath)
     let deviceId = MTPDeviceID(raw: "nil-gen-device")
 
-    try db.exec("""
+    try db.exec(
+      """
       CREATE TABLE IF NOT EXISTS objects(
         deviceId TEXT NOT NULL, storageId INTEGER NOT NULL, handle INTEGER NOT NULL,
         parentHandle INTEGER, name TEXT NOT NULL, pathKey TEXT NOT NULL,
@@ -1014,7 +1036,8 @@ struct Wave30LargeDiffTests {
     let db = try SQLiteDB(path: dbPath)
     let deviceId = MTPDeviceID(raw: "eq-device")
 
-    try db.exec("""
+    try db.exec(
+      """
       CREATE TABLE IF NOT EXISTS objects(
         deviceId TEXT NOT NULL, storageId INTEGER NOT NULL, handle INTEGER NOT NULL,
         parentHandle INTEGER, name TEXT NOT NULL, pathKey TEXT NOT NULL,
@@ -1135,9 +1158,10 @@ struct Wave30ConcurrentWriteStressTests {
     try await withThrowingTaskGroup(of: Void.self) { group in
       for t in 0..<taskCount {
         group.addTask {
-          let objs = (0..<objectsPerTask).map { j in
-            makeObj(handle: UInt32(t * objectsPerTask + j), name: "t\(t)_\(j).dat")
-          }
+          let objs = (0..<objectsPerTask)
+            .map { j in
+              makeObj(handle: UInt32(t * objectsPerTask + j), name: "t\(t)_\(j).dat")
+            }
           try await idx.upsertObjects(objs, deviceId: "dev")
         }
       }
