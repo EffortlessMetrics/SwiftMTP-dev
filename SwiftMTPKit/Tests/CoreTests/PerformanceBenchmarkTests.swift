@@ -79,12 +79,13 @@ final class PerformanceBenchmarkTests: XCTestCase {
     for i in 0..<count {
       let vid = UInt16(truncatingIfNeeded: (i / 256) + 1)
       let pid = UInt16(truncatingIfNeeded: (i % 256) + 1)
-      entries.append(DeviceQuirk(
-        id: "synth-device-\(i)",
-        vid: vid,
-        pid: pid,
-        maxChunkBytes: 1_048_576
-      ))
+      entries.append(
+        DeviceQuirk(
+          id: "synth-device-\(i)",
+          vid: vid,
+          pid: pid,
+          maxChunkBytes: 1_048_576
+        ))
     }
 
     let db = QuirkDatabase(schemaVersion: "2.0", entries: entries)
@@ -132,19 +133,20 @@ final class PerformanceBenchmarkTests: XCTestCase {
     var objects: [IndexedObject] = []
     objects.reserveCapacity(objectCount)
     for i in 0..<objectCount {
-      objects.append(IndexedObject(
-        deviceId: deviceId,
-        storageId: storageId,
-        handle: MTPObjectHandle(i + 1),
-        parentHandle: nil,
-        name: "file_\(i).jpg",
-        pathKey: "/DCIM/file_\(i).jpg",
-        sizeBytes: UInt64(i * 1024),
-        mtime: Date(),
-        formatCode: 0x3801,
-        isDirectory: false,
-        changeCounter: 1
-      ))
+      objects.append(
+        IndexedObject(
+          deviceId: deviceId,
+          storageId: storageId,
+          handle: MTPObjectHandle(i + 1),
+          parentHandle: nil,
+          name: "file_\(i).jpg",
+          pathKey: "/DCIM/file_\(i).jpg",
+          sizeBytes: UInt64(i * 1024),
+          mtime: Date(),
+          formatCode: 0x3801,
+          isDirectory: false,
+          changeCounter: 1
+        ))
     }
 
     let start = CFAbsoluteTimeGetCurrent()
@@ -265,7 +267,8 @@ final class PerformanceBenchmarkTests: XCTestCase {
     for i in 0..<count {
       let vid = String(format: "0x%04x", (i / 256) + 1)
       let pid = String(format: "0x%04x", (i % 256) + 1)
-      entriesJSON.append("""
+      entriesJSON.append(
+        """
         {
           "id": "synth-\(i)",
           "match": { "vid": "\(vid)", "pid": "\(pid)" },
@@ -287,7 +290,8 @@ final class PerformanceBenchmarkTests: XCTestCase {
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
     XCTAssertEqual(db.entries.count, count)
-    XCTAssertLessThan(elapsed, 2.0, "JSON parse took \(elapsed)s, expected <2s for \(count) entries")
+    XCTAssertLessThan(
+      elapsed, 2.0, "JSON parse took \(elapsed)s, expected <2s for \(count) entries")
   }
 
   // MARK: - 7. Object Path Construction
@@ -346,7 +350,7 @@ final class PerformanceBenchmarkTests: XCTestCase {
     let start = CFAbsoluteTimeGetCurrent()
     for i in 0..<iterations {
       let rungs: [FallbackRung<Int>] = [
-        FallbackRung(name: "fast") { return i },
+        FallbackRung(name: "fast") { return i }
       ]
       let result = try await FallbackLadder.execute(rungs)
       XCTAssertEqual(result.value, i)
@@ -420,11 +424,12 @@ final class PerformanceBenchmarkTests: XCTestCase {
     for i in 0..<count {
       let vid = UInt16(truncatingIfNeeded: (i / 256) + 1)
       let pid = UInt16(truncatingIfNeeded: (i % 256) + 1)
-      entries.append(DeviceQuirk(
-        id: "conc-device-\(i)",
-        vid: vid,
-        pid: pid
-      ))
+      entries.append(
+        DeviceQuirk(
+          id: "conc-device-\(i)",
+          vid: vid,
+          pid: pid
+        ))
     }
     let db = QuirkDatabase(schemaVersion: "2.0", entries: entries)
 

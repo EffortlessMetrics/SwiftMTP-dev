@@ -145,11 +145,14 @@ final class FileProviderEdgeCaseTests: XCTestCase {
       r(readResponse)
     }
 
-    func listStorages(_ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void) {
+    func listStorages(
+      _ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void
+    ) {
       r(StorageListResponse(success: true))
     }
 
-    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void) {
+    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void)
+    {
       r(ObjectListResponse(success: true))
     }
 
@@ -178,11 +181,15 @@ final class FileProviderEdgeCaseTests: XCTestCase {
       r(moveResponse)
     }
 
-    func requestCrawl(_ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void) {
+    func requestCrawl(
+      _ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void
+    ) {
       r(CrawlTriggerResponse(accepted: true))
     }
 
-    func deviceStatus(_ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void) {
+    func deviceStatus(
+      _ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void
+    ) {
       r(DeviceStatusResponse(connected: true, sessionOpen: true))
     }
   }
@@ -316,7 +323,8 @@ final class FileProviderEdgeCaseTests: XCTestCase {
     await fulfillment(of: [exp], timeout: 5)
 
     XCTAssertEqual(observer.enumeratedItems.count, 1)
-    XCTAssertEqual((observer.enumeratedItems.first?.documentSize as? NSNumber)?.uint64Value ?? 0, largeSize)
+    XCTAssertEqual(
+      (observer.enumeratedItems.first?.documentSize as? NSNumber)?.uint64Value ?? 0, largeSize)
   }
 
   func testMaxUInt64FileSize() {
@@ -374,7 +382,9 @@ final class FileProviderEdgeCaseTests: XCTestCase {
   }
 
   func testFilenameWithSpecialCharacters() {
-    let names = ["file<name>.txt", "file\"quoted\".txt", "file|pipe.txt", "file?query.txt", "file*star.txt"]
+    let names = [
+      "file<name>.txt", "file\"quoted\".txt", "file|pipe.txt", "file?query.txt", "file*star.txt",
+    ]
     for (i, name) in names.enumerated() {
       let item = MTPFileProviderItem(
         deviceId: "device1", storageId: 1, objectHandle: UInt32(10 + i),
@@ -462,13 +472,15 @@ final class FileProviderEdgeCaseTests: XCTestCase {
     // Create a chain: root → dir1 → dir2 → dir3 → ... → dir10 → file
     var parentHandle: UInt32? = nil
     for depth: UInt32 in 1...10 {
-      reader.addObject(makeObject(
-        handle: depth, parentHandle: parentHandle,
-        name: "level\(depth)", isDirectory: true))
+      reader.addObject(
+        makeObject(
+          handle: depth, parentHandle: parentHandle,
+          name: "level\(depth)", isDirectory: true))
       parentHandle = depth
     }
-    reader.addObject(makeObject(
-      handle: 100, parentHandle: 10, name: "deep_file.txt", size: 256))
+    reader.addObject(
+      makeObject(
+        handle: 100, parentHandle: 10, name: "deep_file.txt", size: 256))
 
     // Enumerate the deepest directory
     let enumerator = DomainEnumerator(
@@ -674,11 +686,12 @@ final class FileProviderEdgeCaseTests: XCTestCase {
     store.recordChange(added: [modifiedId], deleted: [], for: "device1:1")
 
     // Update the object in the index
-    reader.addObject(IndexedObject(
-      deviceId: "device1", storageId: 1, handle: 1,
-      parentHandle: nil, name: "modified.txt", pathKey: "/modified.txt",
-      sizeBytes: 2048, mtime: Date(), formatCode: 0x3800,
-      isDirectory: false, changeCounter: 1))
+    reader.addObject(
+      IndexedObject(
+        deviceId: "device1", storageId: 1, handle: 1,
+        parentHandle: nil, name: "modified.txt", pathKey: "/modified.txt",
+        sizeBytes: 2048, mtime: Date(), formatCode: 0x3800,
+        isDirectory: false, changeCounter: 1))
 
     // Enumerate changes
     let exp = expectation(description: "changes-during-enum")
@@ -926,10 +939,12 @@ final class FileProviderEdgeCaseTests: XCTestCase {
   func testHandleEventForNonexistentDevice() {
     let ext = makeExtension(reader: MockLiveIndexReader())
 
-    ext.handleDeviceEvent(.addObject(
-      deviceId: "unknown-device", storageId: 1, objectHandle: 1, parentHandle: nil))
-    ext.handleDeviceEvent(.deleteObject(
-      deviceId: "unknown-device", storageId: 1, objectHandle: 1))
+    ext.handleDeviceEvent(
+      .addObject(
+        deviceId: "unknown-device", storageId: 1, objectHandle: 1, parentHandle: nil))
+    ext.handleDeviceEvent(
+      .deleteObject(
+        deviceId: "unknown-device", storageId: 1, objectHandle: 1))
     // Should not crash
   }
 
@@ -940,8 +955,9 @@ final class FileProviderEdgeCaseTests: XCTestCase {
     let reader = MockLiveIndexReader()
     let ext = makeExtension(reader: reader)
 
-    XCTAssertThrowsError(try ext.enumerator(
-      for: .rootContainer, request: NSFileProviderRequest()))
+    XCTAssertThrowsError(
+      try ext.enumerator(
+        for: .rootContainer, request: NSFileProviderRequest()))
   }
 
   @MainActor

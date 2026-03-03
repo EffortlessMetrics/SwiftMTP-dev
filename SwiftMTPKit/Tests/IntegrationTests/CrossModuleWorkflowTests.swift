@@ -319,14 +319,16 @@ final class IndexToSyncWorkflowTests: XCTestCase {
     let gen1 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
     // Add two objects, remove one existing
-    await device.addObject(VirtualObjectConfig(
-      handle: 300, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
-      name: "added1.jpg", sizeBytes: 1000, formatCode: 0x3801,
-      data: Data(repeating: 0x01, count: 64)))
-    await device.addObject(VirtualObjectConfig(
-      handle: 301, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
-      name: "added2.png", sizeBytes: 2000, formatCode: 0x380B,
-      data: Data(repeating: 0x02, count: 64)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 300, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
+        name: "added1.jpg", sizeBytes: 1000, formatCode: 0x3801,
+        data: Data(repeating: 0x01, count: 64)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 301, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
+        name: "added2.png", sizeBytes: 2000, formatCode: 0x380B,
+        data: Data(repeating: 0x02, count: 64)))
     await device.removeObject(handle: 1)
 
     try await Task.sleep(nanoseconds: 1_100_000_000)
@@ -518,10 +520,11 @@ final class ObservabilityToCoreWorkflowTests: XCTestCase {
     ]
 
     for (i, (opcode, label, outcome)) in records.enumerated() {
-      await log.append(TransactionRecord(
-        txID: UInt32(i + 1), opcode: opcode, opcodeLabel: label,
-        sessionID: 1, startedAt: Date(), duration: 0.01,
-        bytesIn: 100, bytesOut: 12, outcomeClass: outcome))
+      await log.append(
+        TransactionRecord(
+          txID: UInt32(i + 1), opcode: opcode, opcodeLabel: label,
+          sessionID: 1, startedAt: Date(), duration: 0.01,
+          bytesIn: 100, bytesOut: 12, outcomeClass: outcome))
     }
 
     let recent = await log.recent(limit: 10)
@@ -687,7 +690,8 @@ final class TranscriptRecorderWorkflowTests: XCTestCase {
 final class PathKeyWorkflowTests: XCTestCase {
 
   func testPathKeyNormalizeAndParse() {
-    let pathKey = PathKey.normalize(storage: 0x0001_0001, components: ["DCIM", "Camera", "IMG.jpg"])
+    let pathKey = PathKey.normalize(
+      storage: 0x0001_0001, components: ["DCIM", "Camera", "IMG.jpg"])
     let (storageId, components) = PathKey.parse(pathKey)
 
     XCTAssertEqual(storageId, 0x0001_0001)
@@ -695,7 +699,8 @@ final class PathKeyWorkflowTests: XCTestCase {
   }
 
   func testPathKeyParentAndBasename() {
-    let pathKey = PathKey.normalize(storage: 0x0001_0001, components: ["DCIM", "Camera", "IMG.jpg"])
+    let pathKey = PathKey.normalize(
+      storage: 0x0001_0001, components: ["DCIM", "Camera", "IMG.jpg"])
     let parent = PathKey.parent(of: pathKey)
     let basename = PathKey.basename(of: pathKey)
 
@@ -724,7 +729,7 @@ final class FaultInjectionToIndexWorkflowTests: XCTestCase {
   func testFaultInjectingLinkRecoversForSnapshot() async throws {
     let innerLink = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
-      .timeoutOnce(on: .getDeviceInfo),
+      .timeoutOnce(on: .getDeviceInfo)
     ])
     let faultyLink = FaultInjectingLink(wrapping: innerLink, schedule: schedule)
 

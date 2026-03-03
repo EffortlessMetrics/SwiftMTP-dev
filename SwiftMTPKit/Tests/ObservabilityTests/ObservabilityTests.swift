@@ -237,7 +237,9 @@ final class TransactionRecordTests: XCTestCase {
 
 final class TransactionLogTests: XCTestCase {
 
-  private func makeRecord(txID: UInt32, outcome: TransactionOutcome = .ok, errorDescription: String? = nil)
+  private func makeRecord(
+    txID: UInt32, outcome: TransactionOutcome = .ok, errorDescription: String? = nil
+  )
     -> TransactionRecord
   {
     TransactionRecord(
@@ -416,7 +418,8 @@ final class SendabilityTests: XCTestCase {
       var local = ewma
       local.update(bytes: 1000, dt: 1.0)
       return local.bytesPerSecond
-    }.value
+    }
+    .value
     XCTAssertEqual(result, 1000.0)
   }
 
@@ -426,7 +429,8 @@ final class SendabilityTests: XCTestCase {
       var local = buf
       local.addSample(42)
       return local.count
-    }.value
+    }
+    .value
     XCTAssertEqual(count, 1)
   }
 
@@ -434,7 +438,8 @@ final class SendabilityTests: XCTestCase {
     let outcome = TransactionOutcome.ok
     let raw = await Task { @Sendable in
       outcome.rawValue
-    }.value
+    }
+    .value
     XCTAssertEqual(raw, "ok")
   }
 
@@ -444,7 +449,8 @@ final class SendabilityTests: XCTestCase {
       startedAt: Date(), duration: 0.1, bytesIn: 0, bytesOut: 0, outcomeClass: .ok)
     let txID = await Task { @Sendable in
       record.txID
-    }.value
+    }
+    .value
     XCTAssertEqual(txID, 1)
   }
 }

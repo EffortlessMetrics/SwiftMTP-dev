@@ -14,51 +14,76 @@ final class DeviceQuirksBDDTests: XCTestCase {
 
   func testKnownDevice_OnePlus3T_GetsPropListDisabled() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x2A70, pid: 0xF003, bcdDevice: nil,
-      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { XCTFail("OnePlus 3T quirk expected in DB"); return }
-    XCTAssertFalse(quirk.resolvedFlags().supportsGetObjectPropList,
+    guard
+      let quirk = db.match(
+        vid: 0x2A70, pid: 0xF003, bcdDevice: nil,
+        ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      XCTFail("OnePlus 3T quirk expected in DB")
+      return
+    }
+    XCTAssertFalse(
+      quirk.resolvedFlags().supportsGetObjectPropList,
       "OnePlus 3T must have supportsGetObjectPropList=false")
   }
 
   func testKnownDevice_SamsungGalaxy_GetsKernelDetach() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x04E8, pid: 0x6860, bcdDevice: nil,
-      ifaceClass: 0xFF, ifaceSubclass: nil, ifaceProtocol: nil)
-    else { XCTFail("Samsung Galaxy quirk expected in DB"); return }
-    XCTAssertTrue(quirk.resolvedFlags().requiresKernelDetach,
+    guard
+      let quirk = db.match(
+        vid: 0x04E8, pid: 0x6860, bcdDevice: nil,
+        ifaceClass: 0xFF, ifaceSubclass: nil, ifaceProtocol: nil)
+    else {
+      XCTFail("Samsung Galaxy quirk expected in DB")
+      return
+    }
+    XCTAssertTrue(
+      quirk.resolvedFlags().requiresKernelDetach,
       "Samsung Galaxy must require kernel detach")
   }
 
   func testKnownDevice_Pixel7_RequiresKernelDetach() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x18D1, pid: 0x4EE1, bcdDevice: nil,
-      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { XCTFail("Pixel 7 quirk expected in DB"); return }
-    XCTAssertTrue(quirk.resolvedFlags().requiresKernelDetach,
+    guard
+      let quirk = db.match(
+        vid: 0x18D1, pid: 0x4EE1, bcdDevice: nil,
+        ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      XCTFail("Pixel 7 quirk expected in DB")
+      return
+    }
+    XCTAssertTrue(
+      quirk.resolvedFlags().requiresKernelDetach,
       "Pixel 7 must require kernel detach")
   }
 
   func testKnownDevice_CanonEOS_CameraClass() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x04A9, pid: 0x3139, bcdDevice: nil,
-      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { XCTFail("Canon EOS Rebel quirk expected in DB"); return }
-    XCTAssertTrue(quirk.resolvedFlags().cameraClass,
+    guard
+      let quirk = db.match(
+        vid: 0x04A9, pid: 0x3139, bcdDevice: nil,
+        ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      XCTFail("Canon EOS Rebel quirk expected in DB")
+      return
+    }
+    XCTAssertTrue(
+      quirk.resolvedFlags().cameraClass,
       "Canon EOS must have cameraClass flag set")
   }
 
   func testKnownDevice_NikonDSLR_CameraClass() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x04B0, pid: 0x0410, bcdDevice: nil,
-      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { XCTFail("Nikon DSLR quirk expected in DB"); return }
-    XCTAssertTrue(quirk.resolvedFlags().cameraClass,
+    guard
+      let quirk = db.match(
+        vid: 0x04B0, pid: 0x0410, bcdDevice: nil,
+        ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      XCTFail("Nikon DSLR quirk expected in DB")
+      return
+    }
+    XCTAssertTrue(
+      quirk.resolvedFlags().cameraClass,
       "Nikon DSLR must have cameraClass flag set")
   }
 
@@ -84,23 +109,27 @@ final class DeviceQuirksBDDTests: XCTestCase {
   func testUnknownDevice_SafeDefaultPolicy() throws {
     let policy = EffectiveTuningBuilder.buildPolicy(
       capabilities: [:], learned: nil, quirk: nil, overrides: nil, ifaceClass: nil)
-    XCTAssertFalse(policy.flags.supportsGetObjectPropList,
+    XCTAssertFalse(
+      policy.flags.supportsGetObjectPropList,
       "Safe defaults should disable GetObjectPropList")
-    XCTAssertTrue(policy.flags.requiresKernelDetach,
+    XCTAssertTrue(
+      policy.flags.requiresKernelDetach,
       "Safe defaults require kernel detach (safety-first)")
   }
 
   func testUnknownDevice_PolicyWithPTPClass() throws {
     let policy = EffectiveTuningBuilder.buildPolicy(
       capabilities: [:], learned: nil, quirk: nil, overrides: nil, ifaceClass: 0x06)
-    XCTAssertTrue(policy.flags.supportsGetObjectPropList,
+    XCTAssertTrue(
+      policy.flags.supportsGetObjectPropList,
       "PTP class device should have supportsGetObjectPropList=true by default")
   }
 
   func testUnknownDevice_PolicyWithAndroidClass() throws {
     let policy = EffectiveTuningBuilder.buildPolicy(
       capabilities: [:], learned: nil, quirk: nil, overrides: nil, ifaceClass: 0xFF)
-    XCTAssertFalse(policy.flags.supportsGetObjectPropList,
+    XCTAssertFalse(
+      policy.flags.supportsGetObjectPropList,
       "Android vendor-specific class should default to proplist disabled")
   }
 
@@ -134,14 +163,16 @@ final class DeviceQuirksBDDTests: XCTestCase {
     let device = VirtualMTPDevice(config: .pixel7)
     try await device.openIfNeeded()
     let storage = MTPStorageID(raw: 0x0001_0001)
-    await device.addObject(VirtualObjectConfig(
-      handle: 900, storage: storage, parent: nil,
-      name: "fallback-test.txt", formatCode: 0x3000, data: Data("fb".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 900, storage: storage, parent: nil,
+        name: "fallback-test.txt", formatCode: 0x3000, data: Data("fb".utf8)))
     var names: [String] = []
     for try await batch in device.list(parent: nil, in: storage) {
       names.append(contentsOf: batch.map(\.name))
     }
-    XCTAssertTrue(names.contains("fallback-test.txt"),
+    XCTAssertTrue(
+      names.contains("fallback-test.txt"),
       "Fallback enumeration must list objects correctly")
   }
 
@@ -149,34 +180,49 @@ final class DeviceQuirksBDDTests: XCTestCase {
 
   func testKernelDetach_SamsungRequiresIt() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x04E8, pid: 0x6860, bcdDevice: nil,
-      ifaceClass: 0xFF, ifaceSubclass: nil, ifaceProtocol: nil)
-    else { XCTFail("Samsung Galaxy quirk expected in DB"); return }
+    guard
+      let quirk = db.match(
+        vid: 0x04E8, pid: 0x6860, bcdDevice: nil,
+        ifaceClass: 0xFF, ifaceSubclass: nil, ifaceProtocol: nil)
+    else {
+      XCTFail("Samsung Galaxy quirk expected in DB")
+      return
+    }
     let policy = EffectiveTuningBuilder.buildPolicy(
       capabilities: [:], learned: nil, quirk: quirk, overrides: nil,
       ifaceClass: quirk.ifaceClass)
-    XCTAssertTrue(policy.flags.requiresKernelDetach,
+    XCTAssertTrue(
+      policy.flags.requiresKernelDetach,
       "Samsung Galaxy policy must require kernel detach")
   }
 
   func testKernelDetach_AmazonKindleFire() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x1949, pid: 0x0007, bcdDevice: nil,
-      ifaceClass: 0xFF, ifaceSubclass: 0xFF, ifaceProtocol: 0x00)
-    else { XCTFail("Amazon Kindle Fire quirk expected in DB"); return }
-    XCTAssertTrue(quirk.resolvedFlags().requiresKernelDetach,
+    guard
+      let quirk = db.match(
+        vid: 0x1949, pid: 0x0007, bcdDevice: nil,
+        ifaceClass: 0xFF, ifaceSubclass: 0xFF, ifaceProtocol: 0x00)
+    else {
+      XCTFail("Amazon Kindle Fire quirk expected in DB")
+      return
+    }
+    XCTAssertTrue(
+      quirk.resolvedFlags().requiresKernelDetach,
       "Kindle Fire must require kernel detach")
   }
 
   func testKernelDetach_CameraStillRequiresIt() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x04A9, pid: 0x32B4, bcdDevice: nil,
-      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { XCTFail("Canon EOS R5 quirk expected in DB"); return }
-    XCTAssertTrue(quirk.resolvedFlags().requiresKernelDetach,
+    guard
+      let quirk = db.match(
+        vid: 0x04A9, pid: 0x32B4, bcdDevice: nil,
+        ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      XCTFail("Canon EOS R5 quirk expected in DB")
+      return
+    }
+    XCTAssertTrue(
+      quirk.resolvedFlags().requiresKernelDetach,
       "Canon EOS R5 requires kernel detach per quirk DB")
   }
 
@@ -184,7 +230,8 @@ final class DeviceQuirksBDDTests: XCTestCase {
 
   func testQuirkDatabase_HasReasonableSize() throws {
     let db = try QuirkDatabase.load()
-    XCTAssertGreaterThan(db.entries.count, 100,
+    XCTAssertGreaterThan(
+      db.entries.count, 100,
       "Quirk database should have substantial entries")
   }
 
@@ -205,9 +252,11 @@ final class DeviceQuirksBDDTests: XCTestCase {
   func testQuirkDatabase_MaxChunkBytesReasonable() throws {
     let db = try QuirkDatabase.load()
     for entry in db.entries where entry.maxChunkBytes != nil {
-      XCTAssertGreaterThan(entry.maxChunkBytes!, 0,
+      XCTAssertGreaterThan(
+        entry.maxChunkBytes!, 0,
         "maxChunkBytes for \(entry.id) must be positive")
-      XCTAssertLessThanOrEqual(entry.maxChunkBytes!, 64 * 1024 * 1024,
+      XCTAssertLessThanOrEqual(
+        entry.maxChunkBytes!, 64 * 1024 * 1024,
         "maxChunkBytes for \(entry.id) must not exceed 64MB")
     }
   }
@@ -216,15 +265,20 @@ final class DeviceQuirksBDDTests: XCTestCase {
 
   func testPolicyOverride_ChangesChunkSize() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x04A9, pid: 0x32B4, bcdDevice: nil,
-      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { XCTFail("Canon EOS R5 quirk expected"); return }
+    guard
+      let quirk = db.match(
+        vid: 0x04A9, pid: 0x32B4, bcdDevice: nil,
+        ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      XCTFail("Canon EOS R5 quirk expected")
+      return
+    }
     let overrides = ["maxChunkBytes": "1048576"]
     let policy = EffectiveTuningBuilder.buildPolicy(
       capabilities: [:], learned: nil, quirk: quirk, overrides: overrides,
       ifaceClass: quirk.ifaceClass)
-    XCTAssertEqual(policy.tuning.maxChunkBytes, 1_048_576,
+    XCTAssertEqual(
+      policy.tuning.maxChunkBytes, 1_048_576,
       "Override should set custom chunk size")
   }
 

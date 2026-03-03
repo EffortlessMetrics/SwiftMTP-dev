@@ -317,8 +317,11 @@ struct SelectDeviceArgumentHandling {
     ]
     let filter = DeviceFilter(vid: nil, pid: nil, bus: nil, address: nil)
     let result = selectDevice(devs, filter: filter, noninteractive: true)
-    if case .multiple(let m) = result { #expect(m.count == 2) }
-    else { Issue.record("Expected .multiple") }
+    if case .multiple(let m) = result {
+      #expect(m.count == 2)
+    } else {
+      Issue.record("Expected .multiple")
+    }
   }
 
   @Test("VID filter narrows from multiple to single")
@@ -376,8 +379,11 @@ struct SelectDeviceArgumentHandling {
     ]
     let filter = DeviceFilter(vid: nil, pid: 0x6860, bus: nil, address: nil)
     let result = selectDevice(devs, filter: filter, noninteractive: true)
-    if case .multiple(let m) = result { #expect(m.count == 2) }
-    else { Issue.record("Expected .multiple") }
+    if case .multiple(let m) = result {
+      #expect(m.count == 2)
+    } else {
+      Issue.record("Expected .multiple")
+    }
   }
 }
 
@@ -431,7 +437,9 @@ struct FullParseToSelectPipeline {
     // Invalid values are not consumed
     let devs = [summary("a", vid: 0x1111, pid: 0x2222, bus: 1, addr: 1)]
     let result = selectDevice(devs, filter: filter, noninteractive: true)
-    if case .selected = result {} else if case .none = result {} else {
+    if case .selected = result {
+    } else if case .none = result {
+    } else {
       Issue.record("Expected .selected or .none")
     }
   }
@@ -445,8 +453,9 @@ struct MTPFeatureEnumValidation {
   func upperSnakeCase() {
     let pattern = /^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$/
     for feature in MTPFeature.allCases {
-      #expect(feature.rawValue.wholeMatch(of: pattern) != nil,
-              "'\(feature.rawValue)' is not UPPER_SNAKE_CASE")
+      #expect(
+        feature.rawValue.wholeMatch(of: pattern) != nil,
+        "'\(feature.rawValue)' is not UPPER_SNAKE_CASE")
     }
   }
 

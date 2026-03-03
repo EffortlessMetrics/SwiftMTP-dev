@@ -76,7 +76,8 @@ final class SamsungQuirksTests: XCTestCase {
     for entry in tablets {
       XCTAssertEqual(
         entry.category, "tablet",
-        "Samsung tablet entry '\(entry.id)' should have category 'tablet', got '\(entry.category ?? "nil")'")
+        "Samsung tablet entry '\(entry.id)' should have category 'tablet', got '\(entry.category ?? "nil")'"
+      )
     }
   }
 
@@ -86,7 +87,8 @@ final class SamsungQuirksTests: XCTestCase {
     for entry in watches {
       XCTAssertEqual(
         entry.category, "wearable",
-        "Samsung watch entry '\(entry.id)' should have category 'wearable', got '\(entry.category ?? "nil")'")
+        "Samsung watch entry '\(entry.id)' should have category 'wearable', got '\(entry.category ?? "nil")'"
+      )
     }
   }
 
@@ -99,7 +101,8 @@ final class SamsungQuirksTests: XCTestCase {
       if let chunk = entry.maxChunkBytes {
         XCTAssertGreaterThanOrEqual(
           chunk, 2_097_152,
-          "Promoted Samsung entry '\(entry.id)' should use at least 2MB chunks (modern devices support 4MB)")
+          "Promoted Samsung entry '\(entry.id)' should use at least 2MB chunks (modern devices support 4MB)"
+        )
       }
     }
   }
@@ -214,7 +217,8 @@ final class SamsungQuirksTests: XCTestCase {
     let ratio = Double(samsungPrefixed.count) / Double(samsungEntries.count)
     XCTAssertGreaterThan(
       ratio, 0.95,
-      "At least 95% of VID 0x04e8 entries should start with 'samsung-' (\(samsungPrefixed.count)/\(samsungEntries.count))")
+      "At least 95% of VID 0x04e8 entries should start with 'samsung-' (\(samsungPrefixed.count)/\(samsungEntries.count))"
+    )
   }
 
   // MARK: - Samsung PID Mode Coverage

@@ -147,20 +147,41 @@ final class GetObjectPropListTests: XCTestCase {
 
     var data = Data()
 
-    func appendU16(_ v: UInt16) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
-    func appendU32(_ v: UInt32) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
-    func appendU64(_ v: UInt64) { withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) } }
+    func appendU16(_ v: UInt16) {
+      withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) }
+    }
+    func appendU32(_ v: UInt32) {
+      withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) }
+    }
+    func appendU64(_ v: UInt64) {
+      withUnsafeBytes(of: v.littleEndian) { data.append(contentsOf: $0) }
+    }
     func appendStr(_ s: String) { data.append(PTPString.encode(s)) }
 
     appendU32(totalTuples)
 
     for obj in objects {
-      appendU32(obj.handle); appendU16(0xDC01); appendU16(0x0006); appendU32(obj.storageID)
-      appendU32(obj.handle); appendU16(0xDC04); appendU16(0x0008); appendU64(obj.sizeBytes)
-      appendU32(obj.handle); appendU16(0xDC07); appendU16(0xFFFF); appendStr(obj.name)
-      appendU32(obj.handle); appendU16(0xDC0B); appendU16(0x0006); appendU32(obj.parent)
+      appendU32(obj.handle)
+      appendU16(0xDC01)
+      appendU16(0x0006)
+      appendU32(obj.storageID)
+      appendU32(obj.handle)
+      appendU16(0xDC04)
+      appendU16(0x0008)
+      appendU64(obj.sizeBytes)
+      appendU32(obj.handle)
+      appendU16(0xDC07)
+      appendU16(0xFFFF)
+      appendStr(obj.name)
+      appendU32(obj.handle)
+      appendU16(0xDC0B)
+      appendU16(0x0006)
+      appendU32(obj.parent)
       if let dateStr = obj.dateModified {
-        appendU32(obj.handle); appendU16(0xDC09); appendU16(0xFFFF); appendStr(dateStr)
+        appendU32(obj.handle)
+        appendU16(0xDC09)
+        appendU16(0xFFFF)
+        appendStr(dateStr)
       }
     }
 

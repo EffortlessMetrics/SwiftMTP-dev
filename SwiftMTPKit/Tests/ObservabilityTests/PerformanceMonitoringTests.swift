@@ -20,7 +20,7 @@ final class TransferSpeedCalculationTests: XCTestCase {
 
   func testSpeedAccumulatesOverMultipleChunks() {
     var ewma = ThroughputEWMA()
-    let chunkSize = 512 * 1024 // 512 KB
+    let chunkSize = 512 * 1024  // 512 KB
     // Feed 10 chunks at 1 MB/s each (512KB in 0.5s)
     for _ in 0..<10 {
       ewma.update(bytes: chunkSize, dt: 0.5)
@@ -182,7 +182,7 @@ final class LatencyDistributionTests: XCTestCase {
     // Latencies in milliseconds: simulate varying response times
     let latencies: [Double] = [5, 10, 15, 8, 12, 25, 3, 7, 100, 6]
     for l in latencies { buf.addSample(l) }
-    XCTAssertEqual(buf.p50!, 10.0, accuracy: 0.001) // sorted[5] of 10 elements
+    XCTAssertEqual(buf.p50!, 10.0, accuracy: 0.001)  // sorted[5] of 10 elements
     XCTAssertEqual(buf.allSamples.min(), 3.0)
     XCTAssertEqual(buf.allSamples.max(), 100.0)
   }
@@ -311,8 +311,12 @@ final class ErrorRateMonitoringTests: XCTestCase {
     var maxConsecutive = 0
     var current = 0
     for r in all {
-      if r.outcomeClass != .ok { current += 1; maxConsecutive = max(maxConsecutive, current) }
-      else { current = 0 }
+      if r.outcomeClass != .ok {
+        current += 1
+        maxConsecutive = max(maxConsecutive, current)
+      } else {
+        current = 0
+      }
     }
     XCTAssertEqual(maxConsecutive, 3)
   }
@@ -450,14 +454,16 @@ final class LogFilteringRedactionTests: XCTestCase {
 
   func testFilterRecordsByOpcode() async {
     let log = TransactionLog()
-    await log.append(TransactionRecord(
-      txID: 1, opcode: 0x1009, opcodeLabel: "GetObject",
-      sessionID: 1, startedAt: Date(), duration: 0.1,
-      bytesIn: 256, bytesOut: 0, outcomeClass: .ok))
-    await log.append(TransactionRecord(
-      txID: 2, opcode: 0x100D, opcodeLabel: "SendObject",
-      sessionID: 1, startedAt: Date(), duration: 0.2,
-      bytesIn: 0, bytesOut: 512, outcomeClass: .ok))
+    await log.append(
+      TransactionRecord(
+        txID: 1, opcode: 0x1009, opcodeLabel: "GetObject",
+        sessionID: 1, startedAt: Date(), duration: 0.1,
+        bytesIn: 256, bytesOut: 0, outcomeClass: .ok))
+    await log.append(
+      TransactionRecord(
+        txID: 2, opcode: 0x100D, opcodeLabel: "SendObject",
+        sessionID: 1, startedAt: Date(), duration: 0.2,
+        bytesIn: 0, bytesOut: 512, outcomeClass: .ok))
     let all = await log.recent(limit: 100)
     let getOps = all.filter { $0.opcode == 0x1009 }
     XCTAssertEqual(getOps.count, 1)
@@ -504,23 +510,23 @@ final class PerformanceBaselineComparisonTests: XCTestCase {
 
   func testBaselineComparisonWithinTolerance() {
     var ewma = ThroughputEWMA()
-    let baseline = 5_000_000.0 // 5 MB/s baseline
+    let baseline = 5_000_000.0  // 5 MB/s baseline
     for _ in 0..<50 {
       ewma.update(bytes: 5_000_000, dt: 1.0)
     }
     let deviation = abs(ewma.bytesPerSecond - baseline) / baseline
-    XCTAssertLessThan(deviation, 0.01) // < 1% deviation
+    XCTAssertLessThan(deviation, 0.01)  // < 1% deviation
   }
 
   func testBaselineRegressionDetection() {
     var ewma = ThroughputEWMA()
-    let baseline = 10_000_000.0 // 10 MB/s baseline
+    let baseline = 10_000_000.0  // 10 MB/s baseline
     // Simulate regression: only 5 MB/s
     for _ in 0..<50 {
       ewma.update(bytes: 5_000_000, dt: 1.0)
     }
     let deviation = (baseline - ewma.bytesPerSecond) / baseline
-    XCTAssertGreaterThan(deviation, 0.4) // > 40% regression
+    XCTAssertGreaterThan(deviation, 0.4)  // > 40% regression
   }
 
   func testBaselineImprovementDetection() {
@@ -528,7 +534,7 @@ final class PerformanceBaselineComparisonTests: XCTestCase {
     for _ in 0..<50 { current.update(bytes: 15_000_000, dt: 1.0) }
     let baseline = 10_000_000.0
     let improvement = (current.bytesPerSecond - baseline) / baseline
-    XCTAssertGreaterThan(improvement, 0.4) // > 40% improvement
+    XCTAssertGreaterThan(improvement, 0.4)  // > 40% improvement
   }
 
   func testBaselineComparisonUsingP50() {
@@ -616,10 +622,11 @@ final class MetricExportFormatTests: XCTestCase {
 
   func testExportedOutcomeClassesMatchRawValues() async {
     let log = TransactionLog()
-    await log.append(TransactionRecord(
-      txID: 1, opcode: 0x1009, opcodeLabel: "GetObject",
-      sessionID: 1, startedAt: Date(), duration: 0.1,
-      bytesIn: 0, bytesOut: 0, outcomeClass: .timeout))
+    await log.append(
+      TransactionRecord(
+        txID: 1, opcode: 0x1009, opcodeLabel: "GetObject",
+        sessionID: 1, startedAt: Date(), duration: 0.1,
+        bytesIn: 0, bytesOut: 0, outcomeClass: .timeout))
     let json = await log.dump(redacting: false)
     XCTAssertTrue(json.contains("\"timeout\""))
   }
@@ -647,10 +654,11 @@ final class MemoryUsageTrackingTests: XCTestCase {
   func testTransactionLogMemoryBoundByMaxRecords() async {
     let log = TransactionLog()
     for i: UInt32 in 1...2000 {
-      await log.append(TransactionRecord(
-        txID: i, opcode: 0x1001, opcodeLabel: "GetDeviceInfo",
-        sessionID: 1, startedAt: Date(), duration: 0.01,
-        bytesIn: 8, bytesOut: 0, outcomeClass: .ok))
+      await log.append(
+        TransactionRecord(
+          txID: i, opcode: 0x1001, opcodeLabel: "GetDeviceInfo",
+          sessionID: 1, startedAt: Date(), duration: 0.01,
+          bytesIn: 8, bytesOut: 0, outcomeClass: .ok))
     }
     let all = await log.recent(limit: 5000)
     XCTAssertEqual(all.count, 1000)
@@ -668,10 +676,11 @@ final class MemoryUsageTrackingTests: XCTestCase {
   func testTransactionLogClearFreesRecords() async {
     let log = TransactionLog()
     for i: UInt32 in 1...500 {
-      await log.append(TransactionRecord(
-        txID: i, opcode: 0x1001, opcodeLabel: "GetDeviceInfo",
-        sessionID: 1, startedAt: Date(), duration: 0.01,
-        bytesIn: 0, bytesOut: 0, outcomeClass: .ok))
+      await log.append(
+        TransactionRecord(
+          txID: i, opcode: 0x1001, opcodeLabel: "GetDeviceInfo",
+          sessionID: 1, startedAt: Date(), duration: 0.01,
+          bytesIn: 0, bytesOut: 0, outcomeClass: .ok))
     }
     await log.clear()
     let all = await log.recent(limit: 1000)
@@ -746,7 +755,9 @@ final class OpcodeLabelDiagnosticTests: XCTestCase {
 final class TransactionRecordCodableTests: XCTestCase {
 
   func testRoundTripWithAllOutcomes() throws {
-    let outcomes: [TransactionOutcome] = [.ok, .deviceError, .timeout, .stall, .ioError, .cancelled]
+    let outcomes: [TransactionOutcome] = [
+      .ok, .deviceError, .timeout, .stall, .ioError, .cancelled,
+    ]
     let encoder = JSONEncoder()
     encoder.dateEncodingStrategy = .iso8601
     let decoder = JSONDecoder()
@@ -796,7 +807,8 @@ final class TransactionRecordCodableTests: XCTestCase {
     XCTAssertEqual(decoded.opcode, 0x100D)
     XCTAssertEqual(decoded.opcodeLabel, "SendObject")
     XCTAssertEqual(decoded.sessionID, 7)
-    XCTAssertEqual(decoded.startedAt.timeIntervalSince1970, startDate.timeIntervalSince1970, accuracy: 1)
+    XCTAssertEqual(
+      decoded.startedAt.timeIntervalSince1970, startDate.timeIntervalSince1970, accuracy: 1)
     XCTAssertEqual(decoded.duration, 2.5, accuracy: 0.001)
     XCTAssertEqual(decoded.bytesIn, 0)
     XCTAssertEqual(decoded.bytesOut, 8192)

@@ -125,8 +125,9 @@ final class DeviceLifecycleScenarioTests: XCTestCase {
       secondPass.append(contentsOf: children)
     }
 
-    XCTAssertEqual(allObjects.count, secondPass.count,
-                    "Two full enumerations should yield identical counts")
+    XCTAssertEqual(
+      allObjects.count, secondPass.count,
+      "Two full enumerations should yield identical counts")
     let handles1 = Set(allObjects.map(\.handle))
     let handles2 = Set(secondPass.map(\.handle))
     XCTAssertEqual(handles1, handles2, "Object handles should be identical across enumerations")
@@ -645,8 +646,9 @@ final class DeviceLifecycleScenarioTests: XCTestCase {
     // All folders should appear in root listing
     let rootObjects = try await listAll(device: device, parent: nil, in: storageId)
     for name in folderNames {
-      XCTAssertTrue(rootObjects.contains { $0.name == name },
-                    "Folder '\(name)' should exist in root")
+      XCTAssertTrue(
+        rootObjects.contains { $0.name == name },
+        "Folder '\(name)' should exist in root")
     }
   }
 
@@ -688,7 +690,9 @@ final class DeviceLifecycleScenarioTests: XCTestCase {
     let storageId = MTPStorageID(raw: 0x0001_0001)
 
     let beforeCount = try await listAll(
-      device: device, parent: nil, in: storageId).count
+      device: device, parent: nil, in: storageId
+    )
+    .count
 
     // Add multiple objects via runtime mutation
     for i in 0..<5 {
@@ -702,7 +706,9 @@ final class DeviceLifecycleScenarioTests: XCTestCase {
     }
 
     let afterCount = try await listAll(
-      device: device, parent: nil, in: storageId).count
+      device: device, parent: nil, in: storageId
+    )
+    .count
     XCTAssertEqual(afterCount, beforeCount + 5)
   }
 
@@ -753,8 +759,9 @@ final class DeviceLifecycleScenarioTests: XCTestCase {
             handle: MTPObjectHandle(700 + i), range: nil, to: outURL)
           let data = try Data(contentsOf: outURL)
           XCTAssertEqual(data.count, 2048)
-          XCTAssertTrue(data.allSatisfy { $0 == UInt8(i + 10) },
-                        "File \(i) content mismatch")
+          XCTAssertTrue(
+            data.allSatisfy { $0 == UInt8(i + 10) },
+            "File \(i) content mismatch")
         }
       }
       try await group.waitForAll()
@@ -841,8 +848,9 @@ final class DeviceLifecycleScenarioTests: XCTestCase {
       let outURL = dir.appendingPathComponent("range_\(i).bin")
       let progress = try await device.read(handle: 3, range: range, to: outURL)
       let data = try Data(contentsOf: outURL)
-      XCTAssertEqual(UInt64(data.count), range.upperBound - range.lowerBound,
-                     "Range \(range) size mismatch")
+      XCTAssertEqual(
+        UInt64(data.count), range.upperBound - range.lowerBound,
+        "Range \(range) size mismatch")
       XCTAssertEqual(progress.completedUnitCount, Int64(range.upperBound - range.lowerBound))
     }
   }
@@ -917,7 +925,7 @@ final class DeviceLifecycleScenarioTests: XCTestCase {
     _ = try await device.storages()
 
     // Simulate idle (short sleep, verifies no timeout/disconnect)
-    try await Task.sleep(nanoseconds: 100_000_000) // 100ms
+    try await Task.sleep(nanoseconds: 100_000_000)  // 100ms
 
     // Operations should still work
     let info = try await device.info
@@ -1000,10 +1008,12 @@ final class DeviceLifecycleScenarioTests: XCTestCase {
       let storages = try await device.storages()
 
       for storage in storages {
-        XCTAssertGreaterThan(storage.capacityBytes, 0,
-                            "Storage \(storage.description) should have capacity")
-        XCTAssertLessThanOrEqual(storage.freeBytes, storage.capacityBytes,
-                                "Free ≤ capacity for \(storage.description)")
+        XCTAssertGreaterThan(
+          storage.capacityBytes, 0,
+          "Storage \(storage.description) should have capacity")
+        XCTAssertLessThanOrEqual(
+          storage.freeBytes, storage.capacityBytes,
+          "Free ≤ capacity for \(storage.description)")
         XCTAssertGreaterThan(storage.id.raw, 0)
       }
     }

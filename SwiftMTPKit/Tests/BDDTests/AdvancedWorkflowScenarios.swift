@@ -136,9 +136,10 @@ final class AdvancedWorkflowScenarios: XCTestCase {
     try await device.openIfNeeded()
     let rawData = Data(repeating: 0xAB, count: 16384)
     let handle: MTPObjectHandle = 2000
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "DSCF0001.RAF", formatCode: 0x3801, data: rawData))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "DSCF0001.RAF", formatCode: 0x3801, data: rawData))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-fuji-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }
@@ -210,10 +211,11 @@ final class AdvancedWorkflowScenarios: XCTestCase {
     try await device.openIfNeeded()
     let count = 10
     for i in 0..<count {
-      await device.addObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(3000 + UInt32(i)), storage: storage, parent: nil,
-        name: "batch_\(i).jpg", formatCode: 0x3801,
-        data: Data("photo-\(i)".utf8)))
+      await device.addObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(3000 + UInt32(i)), storage: storage, parent: nil,
+          name: "batch_\(i).jpg", formatCode: 0x3801,
+          data: Data("photo-\(i)".utf8)))
     }
     for i in 0..<count {
       let url = FileManager.default.temporaryDirectory
@@ -235,9 +237,10 @@ final class AdvancedWorkflowScenarios: XCTestCase {
       ("DOC_001.pdf", 0x3000, Data(repeating: 0x03, count: 512)),
     ]
     for (i, file) in files.enumerated() {
-      await device.addObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(3100 + UInt32(i)), storage: storage, parent: nil,
-        name: file.0, formatCode: file.1, data: file.2))
+      await device.addObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(3100 + UInt32(i)), storage: storage, parent: nil,
+          name: file.0, formatCode: file.1, data: file.2))
     }
     for (i, file) in files.enumerated() {
       let url = FileManager.default.temporaryDirectory
@@ -246,7 +249,8 @@ final class AdvancedWorkflowScenarios: XCTestCase {
       _ = try await device.read(
         handle: MTPObjectHandle(3100 + UInt32(i)), range: nil, to: url)
       let actual = try Data(contentsOf: url)
-      XCTAssertEqual(actual.count, file.2.count,
+      XCTAssertEqual(
+        actual.count, file.2.count,
         "Mixed batch file \(file.0) size must match")
     }
   }
@@ -268,7 +272,8 @@ final class AdvancedWorkflowScenarios: XCTestCase {
       names.append(contentsOf: batch.map(\.name))
     }
     for i in 0..<5 {
-      XCTAssertTrue(names.contains("up_\(i).txt"),
+      XCTAssertTrue(
+        names.contains("up_\(i).txt"),
         "Batch upload file up_\(i).txt must be present")
     }
   }
@@ -351,7 +356,7 @@ final class AdvancedWorkflowScenarios: XCTestCase {
       config: .pixel7,
       faultSchedule: FaultSchedule([.timeoutOnce(on: .getStorageIDs)]))
     try await link.openSession(id: 1)
-    do { _ = try await link.getStorageIDs() } catch { /* expected */ }
+    do { _ = try await link.getStorageIDs() } catch { /* expected */  }
     let storages = try await link.getStorageIDs()
     XCTAssertFalse(storages.isEmpty, "Retry after one-shot timeout must succeed")
   }
@@ -386,7 +391,7 @@ final class AdvancedWorkflowScenarios: XCTestCase {
       try await link.deleteObject(handle: 999)
       XCTFail("Expected pipe stall error")
     } catch let err as TransportError {
-      if case .io = err { /* expected */ } else { XCTFail("Expected .io error") }
+      if case .io = err { /* expected */  } else { XCTFail("Expected .io error") }
     }
   }
 
@@ -457,19 +462,27 @@ final class AdvancedWorkflowScenarios: XCTestCase {
 
   func testQuirk_OnePlus3T_DisablesPropList() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x2A70, pid: 0xF003, bcdDevice: nil,
-      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { XCTFail("OnePlus 3T must be in quirk DB"); return }
+    guard
+      let quirk = db.match(
+        vid: 0x2A70, pid: 0xF003, bcdDevice: nil,
+        ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      XCTFail("OnePlus 3T must be in quirk DB")
+      return
+    }
     XCTAssertFalse(quirk.resolvedFlags().supportsGetObjectPropList)
   }
 
   func testQuirk_CanonEOSR5_HasCameraClass() throws {
     let db = try QuirkDatabase.load()
-    guard let quirk = db.match(
-      vid: 0x04A9, pid: 0x32B4, bcdDevice: nil,
-      ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
-    else { XCTFail("Canon EOS R5 must be in quirk DB"); return }
+    guard
+      let quirk = db.match(
+        vid: 0x04A9, pid: 0x32B4, bcdDevice: nil,
+        ifaceClass: 0x06, ifaceSubclass: 0x01, ifaceProtocol: 0x01)
+    else {
+      XCTFail("Canon EOS R5 must be in quirk DB")
+      return
+    }
     XCTAssertTrue(quirk.resolvedFlags().cameraClass)
   }
 
@@ -571,9 +584,10 @@ final class AdvancedWorkflowScenarios: XCTestCase {
     try await device.openIfNeeded()
     let handle: MTPObjectHandle = 4000
     let data = Data(repeating: 0xDD, count: 8192)
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "progress-test.bin", formatCode: 0x3000, data: data))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "progress-test.bin", formatCode: 0x3000, data: data))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-progress-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }
@@ -599,9 +613,10 @@ final class AdvancedWorkflowScenarios: XCTestCase {
     let device = VirtualMTPDevice(config: .pixel7)
     try await device.openIfNeeded()
     let handle: MTPObjectHandle = 4010
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "empty-prog.txt", formatCode: 0x3000, data: Data()))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "empty-prog.txt", formatCode: 0x3000, data: Data()))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-empty-prog-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }
@@ -617,7 +632,8 @@ final class AdvancedWorkflowScenarios: XCTestCase {
     let policy = EffectiveTuningBuilder.buildPolicy(
       capabilities: [:], learned: nil, quirk: nil, overrides: nil, ifaceClass: 0x06)
     XCTAssertTrue(policy.flags.supportsGetObjectPropList)
-    XCTAssertFalse(policy.flags.requiresKernelDetach,
+    XCTAssertFalse(
+      policy.flags.requiresKernelDetach,
       "PTP camera defaults should not require kernel detach")
   }
 
@@ -689,9 +705,10 @@ final class AdvancedWorkflowScenarios: XCTestCase {
     let device = VirtualMTPDevice(config: .pixel7)
     try await device.openIfNeeded()
     let handle: MTPObjectHandle = 5000
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "old-name.txt", formatCode: 0x3000, data: Data("content".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "old-name.txt", formatCode: 0x3000, data: Data("content".utf8)))
     try await device.rename(handle, to: "new-name.txt")
     let info = try await device.getInfo(handle: handle)
     XCTAssertEqual(info.name, "new-name.txt")
@@ -703,9 +720,10 @@ final class AdvancedWorkflowScenarios: XCTestCase {
     let folder = try await device.createFolder(
       parent: nil, name: "Target", storage: storage)
     let handle: MTPObjectHandle = 5010
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "moveable.txt", formatCode: 0x3000, data: Data("move".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "moveable.txt", formatCode: 0x3000, data: Data("move".utf8)))
     try await device.move(handle, to: folder)
     var childNames: [String] = []
     for try await batch in device.list(parent: folder, in: storage) {
@@ -774,12 +792,14 @@ final class AdvancedWorkflowScenarios: XCTestCase {
     try await deviceB.openIfNeeded()
     let hA: MTPObjectHandle = 6000
     let hB: MTPObjectHandle = 6001
-    await deviceA.addObject(VirtualObjectConfig(
-      handle: hA, storage: storage, parent: nil,
-      name: "a.dat", formatCode: 0x3000, data: Data("deviceA".utf8)))
-    await deviceB.addObject(VirtualObjectConfig(
-      handle: hB, storage: storage, parent: nil,
-      name: "b.dat", formatCode: 0x3000, data: Data("deviceB".utf8)))
+    await deviceA.addObject(
+      VirtualObjectConfig(
+        handle: hA, storage: storage, parent: nil,
+        name: "a.dat", formatCode: 0x3000, data: Data("deviceA".utf8)))
+    await deviceB.addObject(
+      VirtualObjectConfig(
+        handle: hB, storage: storage, parent: nil,
+        name: "b.dat", formatCode: 0x3000, data: Data("deviceB".utf8)))
     let urlA = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-conc-a-\(UUID().uuidString)")
     let urlB = FileManager.default.temporaryDirectory
@@ -806,9 +826,10 @@ final class AdvancedWorkflowScenarios: XCTestCase {
     try await device.openIfNeeded()
     let data = Data(repeating: 0xAA, count: 1000)
     let handle: MTPObjectHandle = 7000
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "partial.bin", formatCode: 0x3000, data: data))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "partial.bin", formatCode: 0x3000, data: data))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-partial-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }
@@ -822,9 +843,10 @@ final class AdvancedWorkflowScenarios: XCTestCase {
     try await device.openIfNeeded()
     let data = Data(0..<200)
     let handle: MTPObjectHandle = 7010
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "partial2.bin", formatCode: 0x3000, data: data))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "partial2.bin", formatCode: 0x3000, data: data))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-partial2-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }
@@ -881,9 +903,10 @@ final class AdvancedWorkflowScenarios: XCTestCase {
     let device = VirtualMTPDevice(config: .pixel7)
     try await device.openIfNeeded()
     let handle: MTPObjectHandle = 8000
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "logged.txt", formatCode: 0x3000, data: Data("log".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "logged.txt", formatCode: 0x3000, data: Data("log".utf8)))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-log-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }

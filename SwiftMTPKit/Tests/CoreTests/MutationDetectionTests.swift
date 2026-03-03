@@ -463,8 +463,12 @@ final class MutationDetectionTests: XCTestCase {
 
   func testEventFromRawObjectAdded() {
     var data = Data(repeating: 0, count: 16)
-    data[6] = 0x02; data[7] = 0x40  // code 0x4002
-    data[12] = 0x2A; data[13] = 0x00; data[14] = 0x00; data[15] = 0x00  // handle 42
+    data[6] = 0x02
+    data[7] = 0x40  // code 0x4002
+    data[12] = 0x2A
+    data[13] = 0x00
+    data[14] = 0x00
+    data[15] = 0x00  // handle 42
     if case .objectAdded(let h) = MTPEvent.fromRaw(data) {
       XCTAssertEqual(h, 42)
     } else {
@@ -474,8 +478,12 @@ final class MutationDetectionTests: XCTestCase {
 
   func testEventFromRawObjectRemoved() {
     var data = Data(repeating: 0, count: 16)
-    data[6] = 0x03; data[7] = 0x40  // code 0x4003
-    data[12] = 0x07; data[13] = 0x00; data[14] = 0x00; data[15] = 0x00
+    data[6] = 0x03
+    data[7] = 0x40  // code 0x4003
+    data[12] = 0x07
+    data[13] = 0x00
+    data[14] = 0x00
+    data[15] = 0x00
     if case .objectRemoved(let h) = MTPEvent.fromRaw(data) {
       XCTAssertEqual(h, 7)
     } else {
@@ -485,8 +493,12 @@ final class MutationDetectionTests: XCTestCase {
 
   func testEventFromRawStorageInfoChanged() {
     var data = Data(repeating: 0, count: 16)
-    data[6] = 0x0C; data[7] = 0x40  // code 0x400C
-    data[12] = 0x01; data[13] = 0x00; data[14] = 0x01; data[15] = 0x00  // storageID 0x00010001
+    data[6] = 0x0C
+    data[7] = 0x40  // code 0x400C
+    data[12] = 0x01
+    data[13] = 0x00
+    data[14] = 0x01
+    data[15] = 0x00  // storageID 0x00010001
     if case .storageInfoChanged(let sid) = MTPEvent.fromRaw(data) {
       XCTAssertEqual(sid.raw, 0x0001_0001)
     } else {
@@ -496,8 +508,12 @@ final class MutationDetectionTests: XCTestCase {
 
   func testEventFromRawStoreAdded() {
     var data = Data(repeating: 0, count: 16)
-    data[6] = 0x04; data[7] = 0x40  // code 0x4004
-    data[12] = 0x02; data[13] = 0x00; data[14] = 0x00; data[15] = 0x00
+    data[6] = 0x04
+    data[7] = 0x40  // code 0x4004
+    data[12] = 0x02
+    data[13] = 0x00
+    data[14] = 0x00
+    data[15] = 0x00
     if case .storageAdded(let sid) = MTPEvent.fromRaw(data) {
       XCTAssertEqual(sid.raw, 2)
     } else {
@@ -507,8 +523,12 @@ final class MutationDetectionTests: XCTestCase {
 
   func testEventFromRawStoreRemoved() {
     var data = Data(repeating: 0, count: 16)
-    data[6] = 0x05; data[7] = 0x40  // code 0x4005
-    data[12] = 0x03; data[13] = 0x00; data[14] = 0x00; data[15] = 0x00
+    data[6] = 0x05
+    data[7] = 0x40  // code 0x4005
+    data[12] = 0x03
+    data[13] = 0x00
+    data[14] = 0x00
+    data[15] = 0x00
     if case .storageRemoved(let sid) = MTPEvent.fromRaw(data) {
       XCTAssertEqual(sid.raw, 3)
     } else {
@@ -518,8 +538,12 @@ final class MutationDetectionTests: XCTestCase {
 
   func testEventFromRawUnknownCode() {
     var data = Data(repeating: 0, count: 16)
-    data[6] = 0xFF; data[7] = 0xFF  // code 0xFFFF — unrecognised
-    data[12] = 0x01; data[13] = 0x00; data[14] = 0x00; data[15] = 0x00
+    data[6] = 0xFF
+    data[7] = 0xFF  // code 0xFFFF — unrecognised
+    data[12] = 0x01
+    data[13] = 0x00
+    data[14] = 0x00
+    data[15] = 0x00
     if case .unknown(let code, let params) = MTPEvent.fromRaw(data) {
       XCTAssertEqual(code, 0xFFFF)
       XCTAssertEqual(params, [1])
@@ -531,7 +555,8 @@ final class MutationDetectionTests: XCTestCase {
   func testEventFromRawObjectAddedMissingParam() {
     // 0x4002 with no param bytes → nil
     var data = Data(repeating: 0, count: 12)
-    data[6] = 0x02; data[7] = 0x40
+    data[6] = 0x02
+    data[7] = 0x40
     XCTAssertNil(MTPEvent.fromRaw(data), "ObjectAdded with no params must return nil")
   }
 

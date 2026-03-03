@@ -103,7 +103,7 @@ final class FuzzRegressionTests: XCTestCase {
     // Claims 1 entry but payload is incomplete.
     var d = Data()
     d.append(contentsOf: withUnsafeBytes(of: UInt32(1).littleEndian, Array.init))
-    d.append(contentsOf: [0x01, 0x00]) // partial objectHandle
+    d.append(contentsOf: [0x01, 0x00])  // partial objectHandle
     _ = PTPPropList.parse(from: d)
     // Must not crash.
   }
@@ -138,10 +138,10 @@ final class FuzzRegressionTests: XCTestCase {
   func testContainerInvalidType() {
     let data = Self.mtpHeader(length: 12, type: 0, opcode: 0x1001, txid: 1)
     var r = PTPReader(data: data)
-    _ = r.u32() // length
-    _ = r.u16() // type
-    _ = r.u16() // opcode
-    _ = r.u32() // txid
+    _ = r.u32()  // length
+    _ = r.u16()  // type
+    _ = r.u16()  // opcode
+    _ = r.u32()  // txid
     // Parsing must not crash even with invalid type.
   }
 
@@ -170,7 +170,11 @@ final class FuzzRegressionTests: XCTestCase {
 
       // PTPReader
       var r = PTPReader(data: data)
-      _ = r.u8(); _ = r.u16(); _ = r.u32(); _ = r.u64(); _ = r.string()
+      _ = r.u8()
+      _ = r.u16()
+      _ = r.u32()
+      _ = r.u64()
+      _ = r.string()
 
       // PTPString
       var offset = 0
@@ -195,9 +199,9 @@ final class FuzzRegressionTests: XCTestCase {
   private func corpusDirectoryURL() -> URL? {
     // Walk up from the test file location to find the corpus.
     var url = URL(fileURLWithPath: #filePath)
-      .deletingLastPathComponent() // PropertyTests/
-      .deletingLastPathComponent() // Tests/
-      .deletingLastPathComponent() // SwiftMTPKit/
+      .deletingLastPathComponent()  // PropertyTests/
+      .deletingLastPathComponent()  // Tests/
+      .deletingLastPathComponent()  // SwiftMTPKit/
     url.appendPathComponent("Sources/Tools/SwiftMTPFuzz/corpus")
     guard FileManager.default.fileExists(atPath: url.path) else { return nil }
     return url

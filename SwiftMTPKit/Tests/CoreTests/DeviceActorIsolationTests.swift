@@ -242,15 +242,16 @@ final class DeviceActorIsolationTests: XCTestCase {
     let device = makeDelayingActor(delayNs: 10_000_000)
     let monitor = ConcurrencyMonitor()
 
-    let tasks = (0..<10).map { _ in
-      Task<Void, Error> {
-        try await device.withTransaction {
-          await monitor.enter()
-          try await Task.sleep(nanoseconds: 5_000_000)
-          await monitor.exit()
+    let tasks = (0..<10)
+      .map { _ in
+        Task<Void, Error> {
+          try await device.withTransaction {
+            await monitor.enter()
+            try await Task.sleep(nanoseconds: 5_000_000)
+            await monitor.exit()
+          }
         }
       }
-    }
 
     for t in tasks { try await t.value }
     let wasConcurrent = await monitor.detectedConcurrency
@@ -262,13 +263,14 @@ final class DeviceActorIsolationTests: XCTestCase {
     let counter = AtomicCounter()
     let taskCount = 20
 
-    let tasks = (0..<taskCount).map { _ in
-      Task<Void, Error> {
-        try await device.withTransaction {
-          await counter.increment()
+    let tasks = (0..<taskCount)
+      .map { _ in
+        Task<Void, Error> {
+          try await device.withTransaction {
+            await counter.increment()
+          }
         }
       }
-    }
 
     for t in tasks { try await t.value }
     let count = await counter.value
@@ -408,7 +410,9 @@ final class DeviceActorIsolationTests: XCTestCase {
     try? await device.withTransaction { throw MTPError.timeout }
     try? await device.withTransaction { throw MTPError.busy }
     try? await device.withTransaction { throw MTPError.transport(.io("test")) }
-    try? await device.withTransaction { throw MTPError.protocolError(code: 0x2003, message: "SessionNotOpen") }
+    try? await device.withTransaction {
+      throw MTPError.protocolError(code: 0x2003, message: "SessionNotOpen")
+    }
     try? await device.withTransaction { throw CancellationError() }
 
     // Lock should not be stuck — this must complete without hanging
@@ -423,13 +427,14 @@ final class DeviceActorIsolationTests: XCTestCase {
     let counter = AtomicCounter()
     let taskCount = 50
 
-    let tasks = (0..<taskCount).map { _ in
-      Task<Void, Error> {
-        try await device.withTransaction {
-          await counter.increment()
+    let tasks = (0..<taskCount)
+      .map { _ in
+        Task<Void, Error> {
+          try await device.withTransaction {
+            await counter.increment()
+          }
         }
       }
-    }
 
     for t in tasks { try await t.value }
     let count = await counter.value
@@ -441,16 +446,17 @@ final class DeviceActorIsolationTests: XCTestCase {
     let monitor = ConcurrencyMonitor()
     let taskCount = 30
 
-    let tasks = (0..<taskCount).map { _ in
-      Task<Void, Error> {
-        try await device.withTransaction {
-          await monitor.enter()
-          // Simulate non-trivial work
-          try await Task.sleep(nanoseconds: 1_000_000)
-          await monitor.exit()
+    let tasks = (0..<taskCount)
+      .map { _ in
+        Task<Void, Error> {
+          try await device.withTransaction {
+            await monitor.enter()
+            // Simulate non-trivial work
+            try await Task.sleep(nanoseconds: 1_000_000)
+            await monitor.exit()
+          }
         }
       }
-    }
 
     for t in tasks { try await t.value }
     let peak = await monitor.peakConcurrency()
@@ -484,20 +490,21 @@ final class DeviceActorIsolationTests: XCTestCase {
     let device = makeActor()
     let counter = AtomicCounter()
 
-    let tasks = (0..<10).map { i in
-      Task<Void, Error> {
-        do {
-          try await device.withTransaction {
-            if i % 3 == 0 {
-              throw MTPError.deviceDisconnected
+    let tasks = (0..<10)
+      .map { i in
+        Task<Void, Error> {
+          do {
+            try await device.withTransaction {
+              if i % 3 == 0 {
+                throw MTPError.deviceDisconnected
+              }
+              await counter.increment()
             }
-            await counter.increment()
+          } catch {
+            // Expected for every 3rd task
           }
-        } catch {
-          // Expected for every 3rd task
         }
       }
-    }
 
     for t in tasks { try await t.value }
 
@@ -680,13 +687,14 @@ final class DeviceActorIsolationTests: XCTestCase {
     let counter = AtomicCounter()
 
     // Burst: many concurrent tasks
-    let tasks = (0..<20).map { _ in
-      Task<Void, Error> {
-        try await device.withTransaction {
-          await counter.increment()
+    let tasks = (0..<20)
+      .map { _ in
+        Task<Void, Error> {
+          try await device.withTransaction {
+            await counter.increment()
+          }
         }
       }
-    }
     for t in tasks { try await t.value }
 
     // Settle: single sequential task should work immediately
@@ -736,20 +744,21 @@ final class DeviceActorIsolationTests: XCTestCase {
     let successCounter = AtomicCounter()
     let failureCounter = AtomicCounter()
 
-    let tasks = (0..<20).map { i in
-      Task<Void, Error> {
-        do {
-          try await device.withTransaction {
-            if i.isMultiple(of: 2) {
-              throw MTPError.busy
+    let tasks = (0..<20)
+      .map { i in
+        Task<Void, Error> {
+          do {
+            try await device.withTransaction {
+              if i.isMultiple(of: 2) {
+                throw MTPError.busy
+              }
+              await successCounter.increment()
             }
-            await successCounter.increment()
+          } catch {
+            await failureCounter.increment()
           }
-        } catch {
-          await failureCounter.increment()
         }
       }
-    }
 
     for t in tasks { try await t.value }
 

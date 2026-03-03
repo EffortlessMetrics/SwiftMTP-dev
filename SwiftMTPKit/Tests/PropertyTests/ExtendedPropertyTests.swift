@@ -247,10 +247,13 @@ final class ExtendedPropertyTests: XCTestCase {
 
   func testUInt32ArrayRoundTrip() {
     property("UInt32 array round-trips")
-      <- forAll(Gen<[UInt32]>.compose { c in
-        let count = c.generate(using: Gen<Int>.choose((0, 10)))
-        return (0..<count).map { _ in c.generate() }
-      }) { (values: [UInt32]) in
+      <- forAll(
+        Gen<[UInt32]>
+          .compose { c in
+            let count = c.generate(using: Gen<Int>.choose((0, 10)))
+            return (0..<count).map { _ in c.generate() }
+          }
+      ) { (values: [UInt32]) in
         var enc = MTPDataEncoder()
         enc.append(UInt32(values.count))
         for v in values { enc.append(v) }

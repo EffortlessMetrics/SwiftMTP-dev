@@ -155,11 +155,14 @@ final class FileProviderEnumerationTests: XCTestCase {
       r(readResponse)
     }
 
-    func listStorages(_ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void) {
+    func listStorages(
+      _ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void
+    ) {
       r(StorageListResponse(success: true))
     }
 
-    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void) {
+    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void)
+    {
       r(ObjectListResponse(success: true))
     }
 
@@ -193,11 +196,15 @@ final class FileProviderEnumerationTests: XCTestCase {
       r(moveResponse)
     }
 
-    func requestCrawl(_ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void) {
+    func requestCrawl(
+      _ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void
+    ) {
       r(CrawlTriggerResponse(accepted: true))
     }
 
-    func deviceStatus(_ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void) {
+    func deviceStatus(
+      _ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void
+    ) {
       r(deviceStatusResponse)
     }
   }
@@ -736,10 +743,11 @@ final class FileProviderEnumerationTests: XCTestCase {
     let addedObj = makeObject(handle: 100, name: "new-photo.jpg")
     let deletedObj = makeObject(handle: 200, name: "old-photo.jpg")
 
-    reader.setChanges([
-      IndexedObjectChange(kind: .upserted, object: addedObj),
-      IndexedObjectChange(kind: .deleted, object: deletedObj),
-    ], deviceId: "device1")
+    reader.setChanges(
+      [
+        IndexedObjectChange(kind: .upserted, object: addedObj),
+        IndexedObjectChange(kind: .deleted, object: deletedObj),
+      ], deviceId: "device1")
     reader.setChangeCounter(5, deviceId: "device1")
 
     let enumerator = DomainEnumerator(
@@ -808,8 +816,9 @@ final class FileProviderEnumerationTests: XCTestCase {
     let reader = MockLiveIndexReader()
     let ext = makeExtension(reader: reader)
 
-    ext.handleDeviceEvent(.addObject(
-      deviceId: "device1", storageId: 1, objectHandle: 99, parentHandle: nil))
+    ext.handleDeviceEvent(
+      .addObject(
+        deviceId: "device1", storageId: 1, objectHandle: 99, parentHandle: nil))
 
     // The event should have been recorded — we verify by trying to enumerate changes
     // via the SyncAnchorStore path on a freshly-created enumerator
@@ -839,11 +848,12 @@ final class FileProviderEnumerationTests: XCTestCase {
   func testItemLookup_objectFromIndex() async {
     let reader = MockLiveIndexReader()
     let date = Date()
-    reader.addObject(IndexedObject(
-      deviceId: "device1", storageId: 1, handle: 42,
-      parentHandle: 10, name: "README.md", pathKey: "/README.md",
-      sizeBytes: 4096, mtime: date, formatCode: 0x3000,
-      isDirectory: false, changeCounter: 1))
+    reader.addObject(
+      IndexedObject(
+        deviceId: "device1", storageId: 1, handle: 42,
+        parentHandle: 10, name: "README.md", pathKey: "/README.md",
+        sizeBytes: 4096, mtime: date, formatCode: 0x3000,
+        isDirectory: false, changeCounter: 1))
 
     let ext = makeExtension(reader: reader)
     let exp = expectation(description: "item lookup")

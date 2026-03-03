@@ -49,13 +49,21 @@ struct AnyCodable: Codable, CustomStringConvertible {
 
   init(from decoder: Decoder) throws {
     let container = try decoder.singleValueContainer()
-    if let s = try? container.decode(String.self) { value = s }
-    else if let i = try? container.decode(Int.self) { value = i }
-    else if let d = try? container.decode(Double.self) { value = d }
-    else if let b = try? container.decode(Bool.self) { value = b }
-    else if let a = try? container.decode([AnyCodable].self) { value = a }
-    else if let o = try? container.decode([String: AnyCodable].self) { value = o }
-    else { value = "(null)" }
+    if let s = try? container.decode(String.self) {
+      value = s
+    } else if let i = try? container.decode(Int.self) {
+      value = i
+    } else if let d = try? container.decode(Double.self) {
+      value = d
+    } else if let b = try? container.decode(Bool.self) {
+      value = b
+    } else if let a = try? container.decode([AnyCodable].self) {
+      value = a
+    } else if let o = try? container.decode([String: AnyCodable].self) {
+      value = o
+    } else {
+      value = "(null)"
+    }
   }
 
   func encode(to encoder: Encoder) throws {

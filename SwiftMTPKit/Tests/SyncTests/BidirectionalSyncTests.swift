@@ -61,8 +61,9 @@ final class BidirectionalSyncTests: XCTestCase {
     try FileManager.default.createDirectory(
       at: remoteDir.appendingPathComponent("DCIM"), withIntermediateDirectories: true)
 
-    try "photo".write(
-      to: remoteDir.appendingPathComponent("DCIM/photo.jpg"), atomically: true, encoding: .utf8)
+    try "photo"
+      .write(
+        to: remoteDir.appendingPathComponent("DCIM/photo.jpg"), atomically: true, encoding: .utf8)
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
     XCTAssertTrue(changes.localOnly.isEmpty)
@@ -80,8 +81,9 @@ final class BidirectionalSyncTests: XCTestCase {
     try FileManager.default.createDirectory(
       at: remoteDir.appendingPathComponent("A/B"), withIntermediateDirectories: true)
 
-    try "deep file".write(
-      to: localDir.appendingPathComponent("A/B/C/file.txt"), atomically: true, encoding: .utf8)
+    try "deep file"
+      .write(
+        to: localDir.appendingPathComponent("A/B/C/file.txt"), atomically: true, encoding: .utf8)
     // Remote doesn't have C/file.txt — it was deleted
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
@@ -96,12 +98,14 @@ final class BidirectionalSyncTests: XCTestCase {
     try FileManager.default.createDirectory(
       at: remoteDir.appendingPathComponent("Photos/2024/Jan"), withIntermediateDirectories: true)
 
-    try "jan1".write(
-      to: remoteDir.appendingPathComponent("Photos/2024/Jan/img1.jpg"), atomically: true,
-      encoding: .utf8)
-    try "jan2".write(
-      to: remoteDir.appendingPathComponent("Photos/2024/Jan/img2.jpg"), atomically: true,
-      encoding: .utf8)
+    try "jan1"
+      .write(
+        to: remoteDir.appendingPathComponent("Photos/2024/Jan/img1.jpg"), atomically: true,
+        encoding: .utf8)
+    try "jan2"
+      .write(
+        to: remoteDir.appendingPathComponent("Photos/2024/Jan/img2.jpg"), atomically: true,
+        encoding: .utf8)
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
     XCTAssertEqual(changes.remoteOnly.count, 2)
@@ -117,12 +121,14 @@ final class BidirectionalSyncTests: XCTestCase {
     try FileManager.default.createDirectory(
       at: remoteDir.appendingPathComponent(nestedPath), withIntermediateDirectories: true)
 
-    try "deep".write(
-      to: localDir.appendingPathComponent("\(nestedPath)/deep.txt"), atomically: true,
-      encoding: .utf8)
-    try "deep".write(
-      to: remoteDir.appendingPathComponent("\(nestedPath)/deep.txt"), atomically: true,
-      encoding: .utf8)
+    try "deep"
+      .write(
+        to: localDir.appendingPathComponent("\(nestedPath)/deep.txt"), atomically: true,
+        encoding: .utf8)
+    try "deep"
+      .write(
+        to: remoteDir.appendingPathComponent("\(nestedPath)/deep.txt"), atomically: true,
+        encoding: .utf8)
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
     XCTAssertTrue(changes.localOnly.isEmpty)
@@ -182,24 +188,30 @@ final class BidirectionalSyncTests: XCTestCase {
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
 
     // Common file (no change)
-    try "unchanged".write(
-      to: localDir.appendingPathComponent("stable.txt"), atomically: true, encoding: .utf8)
-    try "unchanged".write(
-      to: remoteDir.appendingPathComponent("stable.txt"), atomically: true, encoding: .utf8)
+    try "unchanged"
+      .write(
+        to: localDir.appendingPathComponent("stable.txt"), atomically: true, encoding: .utf8)
+    try "unchanged"
+      .write(
+        to: remoteDir.appendingPathComponent("stable.txt"), atomically: true, encoding: .utf8)
 
     // Local-only addition
-    try "new local".write(
-      to: localDir.appendingPathComponent("new_local.txt"), atomically: true, encoding: .utf8)
+    try "new local"
+      .write(
+        to: localDir.appendingPathComponent("new_local.txt"), atomically: true, encoding: .utf8)
 
     // Remote-only addition
-    try "new remote".write(
-      to: remoteDir.appendingPathComponent("new_remote.txt"), atomically: true, encoding: .utf8)
+    try "new remote"
+      .write(
+        to: remoteDir.appendingPathComponent("new_remote.txt"), atomically: true, encoding: .utf8)
 
     // Conflict (both modified)
-    try "local mod".write(
-      to: localDir.appendingPathComponent("both.txt"), atomically: true, encoding: .utf8)
-    try "remote mod".write(
-      to: remoteDir.appendingPathComponent("both.txt"), atomically: true, encoding: .utf8)
+    try "local mod"
+      .write(
+        to: localDir.appendingPathComponent("both.txt"), atomically: true, encoding: .utf8)
+    try "remote mod"
+      .write(
+        to: remoteDir.appendingPathComponent("both.txt"), atomically: true, encoding: .utf8)
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
     XCTAssertEqual(changes.localOnly.count, 1)
@@ -214,12 +226,14 @@ final class BidirectionalSyncTests: XCTestCase {
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
 
     for i in 0..<50 {
-      try "content-\(i)".write(
-        to: localDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
+      try "content-\(i)"
+        .write(
+          to: localDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
     }
     for i in 25..<75 {
-      try "content-\(i)".write(
-        to: remoteDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
+      try "content-\(i)"
+        .write(
+          to: remoteDir.appendingPathComponent("file\(i).txt"), atomically: true, encoding: .utf8)
     }
 
     let changes = detectChanges(local: localDir, remote: remoteDir)

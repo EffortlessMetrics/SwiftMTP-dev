@@ -102,7 +102,8 @@ final class FaultInjectingExtendedTests: XCTestCase {
     ])
     let result = schedule.check(operation: .getStorageIDs, callIndex: 0, byteOffset: nil)
     XCTAssertNotNil(result)
-    if case .accessDenied = result {} else {
+    if case .accessDenied = result {
+    } else {
       XCTFail("Expected accessDenied, got \(String(describing: result))")
     }
   }
@@ -180,9 +181,18 @@ final class FaultInjectingExtendedTests: XCTestCase {
     ])
     let link = FaultInjectingLink(wrapping: base, schedule: schedule)
 
-    do { try await link.openSession(id: 1); XCTFail("Expected timeout") } catch {}
-    do { _ = try await link.getDeviceInfo(); XCTFail("Expected stall") } catch {}
-    do { _ = try await link.getStorageIDs(); XCTFail("Expected busy") } catch {}
+    do {
+      try await link.openSession(id: 1)
+      XCTFail("Expected timeout")
+    } catch {}
+    do {
+      _ = try await link.getDeviceInfo()
+      XCTFail("Expected stall")
+    } catch {}
+    do {
+      _ = try await link.getStorageIDs()
+      XCTFail("Expected busy")
+    } catch {}
 
     // All consumed; now should succeed
     try await link.openSession(id: 1)

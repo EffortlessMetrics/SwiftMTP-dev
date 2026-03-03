@@ -18,9 +18,10 @@ final class FileTransferBDDTests: XCTestCase {
     try await device.openIfNeeded()
     let photoData = Data(repeating: 0xFF, count: 4096)
     let handle: MTPObjectHandle = 500
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "IMG_0001.jpg", formatCode: 0x3801, data: photoData))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "IMG_0001.jpg", formatCode: 0x3801, data: photoData))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-photo-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }
@@ -34,9 +35,10 @@ final class FileTransferBDDTests: XCTestCase {
     try await device.openIfNeeded()
     let size = 8192
     let handle: MTPObjectHandle = 501
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "IMG_0002.cr3", formatCode: 0x3801, data: Data(repeating: 0xAA, count: size)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "IMG_0002.cr3", formatCode: 0x3801, data: Data(repeating: 0xAA, count: size)))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-raw-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }
@@ -80,7 +82,8 @@ final class FileTransferBDDTests: XCTestCase {
         uploadedSize = obj.sizeBytes
       }
     }
-    XCTAssertEqual(uploadedSize, UInt64(payload.count),
+    XCTAssertEqual(
+      uploadedSize, UInt64(payload.count),
       "Uploaded file size must match source")
   }
 
@@ -90,14 +93,16 @@ final class FileTransferBDDTests: XCTestCase {
     let device = VirtualMTPDevice(config: .pixel7)
     try await device.openIfNeeded()
     let folderHandle: MTPObjectHandle = 600
-    await device.addObject(VirtualObjectConfig(
-      handle: folderHandle, storage: storage, parent: nil,
-      name: "DCIM", formatCode: 0x3001))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: folderHandle, storage: storage, parent: nil,
+        name: "DCIM", formatCode: 0x3001))
     for i in 0..<5 {
-      await device.addObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(601 + UInt32(i)), storage: storage,
-        parent: folderHandle, name: "photo_\(i).jpg",
-        formatCode: 0x3801, data: Data("img\(i)".utf8)))
+      await device.addObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(601 + UInt32(i)), storage: storage,
+          parent: folderHandle, name: "photo_\(i).jpg",
+          formatCode: 0x3801, data: Data("img\(i)".utf8)))
     }
     var rootNames: [String] = []
     for try await batch in device.list(parent: nil, in: storage) {
@@ -110,17 +115,20 @@ final class FileTransferBDDTests: XCTestCase {
     let device = VirtualMTPDevice(config: .pixel7)
     try await device.openIfNeeded()
     let folderHandle: MTPObjectHandle = 610
-    await device.addObject(VirtualObjectConfig(
-      handle: folderHandle, storage: storage, parent: nil,
-      name: "Music", formatCode: 0x3001))
-    await device.addObject(VirtualObjectConfig(
-      handle: 611, storage: storage, parent: folderHandle,
-      name: "album.mp3", formatCode: 0x3000, data: Data("audio".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: folderHandle, storage: storage, parent: nil,
+        name: "Music", formatCode: 0x3001))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 611, storage: storage, parent: folderHandle,
+        name: "album.mp3", formatCode: 0x3000, data: Data("audio".utf8)))
     var childNames: [String] = []
     for try await batch in device.list(parent: folderHandle, in: storage) {
       childNames.append(contentsOf: batch.map(\.name))
     }
-    XCTAssertTrue(childNames.contains("album.mp3"),
+    XCTAssertTrue(
+      childNames.contains("album.mp3"),
       "Subfolder contents must be accessible via parent handle")
   }
 
@@ -143,14 +151,16 @@ final class FileTransferBDDTests: XCTestCase {
   func testTransferFail_Timeout_ClearMessage() async throws {
     let error = TransportError.timeout
     XCTAssertNotNil(error.errorDescription)
-    XCTAssertTrue(error.errorDescription!.lowercased().contains("timed out"),
+    XCTAssertTrue(
+      error.errorDescription!.lowercased().contains("timed out"),
       "Timeout error should mention 'timed out'")
   }
 
   func testTransferFail_IO_ClearMessage() async throws {
     let error = TransportError.io("USB pipe broken")
     XCTAssertNotNil(error.errorDescription)
-    XCTAssertTrue(error.errorDescription!.contains("USB pipe broken"),
+    XCTAssertTrue(
+      error.errorDescription!.contains("USB pipe broken"),
       "IO error should include the specific message")
   }
 
@@ -161,16 +171,18 @@ final class FileTransferBDDTests: XCTestCase {
     try await device.openIfNeeded()
     let largeData = Data(repeating: 0xDD, count: 1024 * 1024)
     let handle: MTPObjectHandle = 700
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "large-video.mp4", formatCode: 0x3000, data: largeData))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "large-video.mp4", formatCode: 0x3000, data: largeData))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-cancel-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }
     // Start the download — it completes on virtual device (no real cancellation point)
     _ = try await device.read(handle: handle, range: nil, to: url)
     let actual = try Data(contentsOf: url)
-    XCTAssertEqual(actual.count, largeData.count,
+    XCTAssertEqual(
+      actual.count, largeData.count,
       "Transfer should complete cleanly on virtual device")
   }
 
@@ -201,7 +213,8 @@ final class FileTransferBDDTests: XCTestCase {
       size: 1024, supportsPartial: false, tempURL: tempURL, sourceURL: nil)
     try await journal.complete(id: id)
     let records = try await journal.loadResumables(for: deviceId)
-    XCTAssertFalse(records.contains { $0.id == id },
+    XCTAssertFalse(
+      records.contains { $0.id == id },
       "Completed transfer must be removed from journal")
   }
 
@@ -212,15 +225,17 @@ final class FileTransferBDDTests: XCTestCase {
     try await device.openIfNeeded()
     let name = "日本語テスト.txt"
     let handle: MTPObjectHandle = 800
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: name, formatCode: 0x3000, data: Data("こんにちは".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: name, formatCode: 0x3000, data: Data("こんにちは".utf8)))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-unicode-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }
     _ = try await device.read(handle: handle, range: nil, to: url)
     let actual = try Data(contentsOf: url)
-    XCTAssertEqual(String(data: actual, encoding: .utf8), "こんにちは",
+    XCTAssertEqual(
+      String(data: actual, encoding: .utf8), "こんにちは",
       "Unicode file content must be preserved")
   }
 
@@ -229,9 +244,10 @@ final class FileTransferBDDTests: XCTestCase {
     try await device.openIfNeeded()
     let name = "my vacation photo (1).jpg"
     let handle: MTPObjectHandle = 801
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: name, formatCode: 0x3801, data: Data("jpeg-data".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: name, formatCode: 0x3801, data: Data("jpeg-data".utf8)))
     var found = false
     for try await batch in device.list(parent: nil, in: storage) {
       if batch.contains(where: { $0.name == name }) { found = true }
@@ -244,9 +260,10 @@ final class FileTransferBDDTests: XCTestCase {
     try await device.openIfNeeded()
     let name = "📸 photo.jpg"
     let handle: MTPObjectHandle = 802
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: name, formatCode: 0x3801, data: Data("emoji-file".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: name, formatCode: 0x3801, data: Data("emoji-file".utf8)))
     var found = false
     for try await batch in device.list(parent: nil, in: storage) {
       if batch.contains(where: { $0.name == name }) { found = true }
@@ -259,9 +276,10 @@ final class FileTransferBDDTests: XCTestCase {
     try await device.openIfNeeded()
     let name = String(repeating: "a", count: 200) + ".txt"
     let handle: MTPObjectHandle = 803
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: name, formatCode: 0x3000, data: Data("long-name".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: name, formatCode: 0x3000, data: Data("long-name".utf8)))
     var found = false
     for try await batch in device.list(parent: nil, in: storage) {
       if batch.contains(where: { $0.name == name }) { found = true }
@@ -275,9 +293,10 @@ final class FileTransferBDDTests: XCTestCase {
     let device = VirtualMTPDevice(config: .pixel7)
     try await device.openIfNeeded()
     let handle: MTPObjectHandle = 810
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "empty.txt", formatCode: 0x3000, data: Data()))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "empty.txt", formatCode: 0x3000, data: Data()))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-empty-dl-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }
@@ -309,9 +328,10 @@ final class FileTransferBDDTests: XCTestCase {
     let size = 4 * 1024 * 1024
     let largeData = Data(repeating: 0xEE, count: size)
     let handle: MTPObjectHandle = 820
-    await device.addObject(VirtualObjectConfig(
-      handle: handle, storage: storage, parent: nil,
-      name: "video.mp4", formatCode: 0x3000, data: largeData))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: handle, storage: storage, parent: nil,
+        name: "video.mp4", formatCode: 0x3000, data: largeData))
     let url = FileManager.default.temporaryDirectory
       .appendingPathComponent("bdd-large-xfer-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: url) }
@@ -328,10 +348,11 @@ final class FileTransferBDDTests: XCTestCase {
     let device = VirtualMTPDevice(config: .pixel7)
     try await device.openIfNeeded()
     for i in 0..<5 {
-      await device.addObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(830 + UInt32(i)), storage: storage, parent: nil,
-        name: "batch_\(i).dat", formatCode: 0x3000,
-        data: Data("content-\(i)".utf8)))
+      await device.addObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(830 + UInt32(i)), storage: storage, parent: nil,
+          name: "batch_\(i).dat", formatCode: 0x3000,
+          data: Data("content-\(i)".utf8)))
     }
     for i in 0..<5 {
       let url = FileManager.default.temporaryDirectory
@@ -340,7 +361,8 @@ final class FileTransferBDDTests: XCTestCase {
       _ = try await device.read(
         handle: MTPObjectHandle(830 + UInt32(i)), range: nil, to: url)
       let actual = try Data(contentsOf: url)
-      XCTAssertEqual(String(data: actual, encoding: .utf8), "content-\(i)",
+      XCTAssertEqual(
+        String(data: actual, encoding: .utf8), "content-\(i)",
         "Batch file \(i) content must match")
     }
   }

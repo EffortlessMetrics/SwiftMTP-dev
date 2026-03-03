@@ -127,10 +127,11 @@ struct ReopenPersistenceTests {
     // Write with first instance
     do {
       let idx = try openIndex(at: path)
-      try await idx.upsertObjects([
-        makeObj(handle: 1, name: "photo.jpg", sizeBytes: 5000),
-        makeObj(handle: 2, name: "video.mp4", sizeBytes: 90000),
-      ], deviceId: "dev")
+      try await idx.upsertObjects(
+        [
+          makeObj(handle: 1, name: "photo.jpg", sizeBytes: 5000),
+          makeObj(handle: 2, name: "video.mp4", sizeBytes: 90000),
+        ], deviceId: "dev")
     }
 
     // Read with second instance
@@ -220,8 +221,10 @@ struct UpdatePersistenceTests {
 
     do {
       let idx = try openIndex(at: path)
-      try await idx.insertObject(makeObj(handle: 1, name: "old.txt", sizeBytes: 100), deviceId: "dev")
-      try await idx.upsertObjects([makeObj(handle: 1, name: "new.txt", sizeBytes: 999)], deviceId: "dev")
+      try await idx.insertObject(
+        makeObj(handle: 1, name: "old.txt", sizeBytes: 100), deviceId: "dev")
+      try await idx.upsertObjects(
+        [makeObj(handle: 1, name: "new.txt", sizeBytes: 999)], deviceId: "dev")
     }
 
     let idx2 = try openIndex(at: path)
@@ -276,7 +279,8 @@ struct DeletePersistenceTests {
 
     do {
       let idx = try openIndex(at: path)
-      try await idx.insertObject(makeObj(handle: 1, parentHandle: 0, name: "purge-me.txt"), deviceId: "dev")
+      try await idx.insertObject(
+        makeObj(handle: 1, parentHandle: 0, name: "purge-me.txt"), deviceId: "dev")
       try await idx.markStaleChildren(deviceId: "dev", storageId: 0x10001, parentHandle: 0)
       try await idx.purgeStale(deviceId: "dev", storageId: 0x10001, parentHandle: 0)
     }
@@ -316,9 +320,11 @@ struct BulkOperationsTests {
     defer { cleanup(path) }
     let idx = try openIndex(at: path)
 
-    let objects = (0..<2000).map { i in
-      makeObj(handle: UInt32(i), parentHandle: 0, name: "item-\(i).dat", sizeBytes: UInt64(i * 100))
-    }
+    let objects = (0..<2000)
+      .map { i in
+        makeObj(
+          handle: UInt32(i), parentHandle: 0, name: "item-\(i).dat", sizeBytes: UInt64(i * 100))
+      }
     try await idx.upsertObjects(objects, deviceId: "dev")
 
     let children = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: 0)
@@ -331,9 +337,10 @@ struct BulkOperationsTests {
     defer { cleanup(path) }
     let idx = try openIndex(at: path)
 
-    let objects = (0..<5000).map { i in
-      makeObj(handle: UInt32(i), parentHandle: 0, name: "perf-\(i).jpg")
-    }
+    let objects = (0..<5000)
+      .map { i in
+        makeObj(handle: UInt32(i), parentHandle: 0, name: "perf-\(i).jpg")
+      }
     let start = ContinuousClock.now
     try await idx.upsertObjects(objects, deviceId: "dev")
     let elapsed = ContinuousClock.now - start
@@ -348,9 +355,10 @@ struct BulkOperationsTests {
 
     do {
       let idx = try openIndex(at: path)
-      let objects = (0..<1500).map { i in
-        makeObj(handle: UInt32(i), parentHandle: 0, name: "bulk-\(i).txt")
-      }
+      let objects = (0..<1500)
+        .map { i in
+          makeObj(handle: UInt32(i), parentHandle: 0, name: "bulk-\(i).txt")
+        }
       try await idx.upsertObjects(objects, deviceId: "dev")
     }
 
@@ -371,11 +379,12 @@ struct PathPrefixQueryTests {
     defer { cleanup(path) }
     let idx = try openIndex(at: path)
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "a.txt", pathKey: "00010001/DCIM/a.txt"),
-      makeObj(handle: 2, name: "b.txt", pathKey: "00010001/DCIM/b.txt"),
-      makeObj(handle: 3, name: "c.txt", pathKey: "00010001/Music/c.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "a.txt", pathKey: "00010001/DCIM/a.txt"),
+        makeObj(handle: 2, name: "b.txt", pathKey: "00010001/DCIM/b.txt"),
+        makeObj(handle: 3, name: "c.txt", pathKey: "00010001/Music/c.txt"),
+      ], deviceId: "dev")
 
     // Query all DCIM entries using pathKey LIKE prefix
     let dcim = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
@@ -395,10 +404,11 @@ struct HandleQueryTests {
     defer { cleanup(path) }
     let idx = try openIndex(at: path)
 
-    try await idx.upsertObjects([
-      makeObj(handle: 100, name: "target.txt"),
-      makeObj(handle: 200, name: "other.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 100, name: "target.txt"),
+        makeObj(handle: 200, name: "other.txt"),
+      ], deviceId: "dev")
 
     let obj = try await idx.object(deviceId: "dev", handle: 100)
     #expect(obj?.name == "target.txt")
@@ -421,10 +431,11 @@ struct HandleQueryTests {
     defer { cleanup(path) }
     let idx = try openIndex(at: path)
 
-    try await idx.upsertObjects([
-      makeObj(handle: 0, name: "zero.txt"),
-      makeObj(handle: UInt32.max, name: "max.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 0, name: "zero.txt"),
+        makeObj(handle: UInt32.max, name: "max.txt"),
+      ], deviceId: "dev")
 
     let zero = try await idx.object(deviceId: "dev", handle: 0)
     let max = try await idx.object(deviceId: "dev", handle: UInt32.max)
@@ -444,12 +455,13 @@ struct ParentHandleQueryTests {
     defer { cleanup(path) }
     let idx = try openIndex(at: path)
 
-    try await idx.upsertObjects([
-      makeObj(handle: 10, parentHandle: nil, name: "root.txt"),
-      makeObj(handle: 20, parentHandle: 1, name: "child-a.txt"),
-      makeObj(handle: 30, parentHandle: 1, name: "child-b.txt"),
-      makeObj(handle: 40, parentHandle: 2, name: "other-child.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 10, parentHandle: nil, name: "root.txt"),
+        makeObj(handle: 20, parentHandle: 1, name: "child-a.txt"),
+        makeObj(handle: 30, parentHandle: 1, name: "child-b.txt"),
+        makeObj(handle: 40, parentHandle: 2, name: "other-child.txt"),
+      ], deviceId: "dev")
 
     let children = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: 1)
     #expect(children.count == 2)
@@ -462,11 +474,12 @@ struct ParentHandleQueryTests {
     defer { cleanup(path) }
     let idx = try openIndex(at: path)
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, parentHandle: nil, name: "root1.txt"),
-      makeObj(handle: 2, parentHandle: nil, name: "root2.txt"),
-      makeObj(handle: 3, parentHandle: 1, name: "nested.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, parentHandle: nil, name: "root1.txt"),
+        makeObj(handle: 2, parentHandle: nil, name: "root2.txt"),
+        makeObj(handle: 3, parentHandle: 1, name: "nested.txt"),
+      ], deviceId: "dev")
 
     let roots = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
     #expect(roots.count == 2)
@@ -490,14 +503,16 @@ struct VacuumTests {
       let longName = "delete-me-\(i)-" + String(repeating: "x", count: 80) + ".bin"
       let longPath = "00010001/" + String(repeating: "p", count: 100) + "/\(i).bin"
       objects.append(
-        makeObj(handle: UInt32(i), parentHandle: 0, name: longName, pathKey: longPath, sizeBytes: 8192))
+        makeObj(
+          handle: UInt32(i), parentHandle: 0, name: longName, pathKey: longPath, sizeBytes: 8192))
     }
     try await idx.upsertObjects(objects, deviceId: "dev")
 
     // Checkpoint WAL into main DB file so size reflects all data
     try idx.database.exec("PRAGMA wal_checkpoint(TRUNCATE)")
 
-    let sizeBeforeDelete = try FileManager.default.attributesOfItem(atPath: path)[.size] as? UInt64 ?? 0
+    let sizeBeforeDelete =
+      try FileManager.default.attributesOfItem(atPath: path)[.size] as? UInt64 ?? 0
 
     // Mark all stale and purge
     try await idx.markStaleChildren(deviceId: "dev", storageId: 0x10001, parentHandle: 0)
@@ -509,8 +524,11 @@ struct VacuumTests {
     // VACUUM via the underlying database
     try idx.database.exec("VACUUM")
 
-    let sizeAfterVacuum = try FileManager.default.attributesOfItem(atPath: path)[.size] as? UInt64 ?? 0
-    #expect(sizeAfterVacuum < sizeBeforeDelete, "VACUUM should reduce file size: before=\(sizeBeforeDelete), after=\(sizeAfterVacuum)")
+    let sizeAfterVacuum =
+      try FileManager.default.attributesOfItem(atPath: path)[.size] as? UInt64 ?? 0
+    #expect(
+      sizeAfterVacuum < sizeBeforeDelete,
+      "VACUUM should reduce file size: before=\(sizeBeforeDelete), after=\(sizeAfterVacuum)")
   }
 
   @Test("Database remains functional after VACUUM")
@@ -543,13 +561,14 @@ struct EphemeralMigrationTests {
 
     // Insert with ephemeral-style deviceId
     let ephemeralId = "2717:ff10@1:3"
-    try await idx.upsertObjects([
-      IndexedObject(
-        deviceId: ephemeralId, storageId: 0x10001, handle: 1,
-        parentHandle: nil, name: "photo.jpg", pathKey: "00010001/photo.jpg",
-        sizeBytes: 5000, mtime: Date(), formatCode: 0x3801,
-        isDirectory: false, changeCounter: 0)
-    ], deviceId: ephemeralId)
+    try await idx.upsertObjects(
+      [
+        IndexedObject(
+          deviceId: ephemeralId, storageId: 0x10001, handle: 1,
+          parentHandle: nil, name: "photo.jpg", pathKey: "00010001/photo.jpg",
+          sizeBytes: 5000, mtime: Date(), formatCode: 0x3801,
+          isDirectory: false, changeCounter: 0)
+      ], deviceId: ephemeralId)
 
     // Migrate
     try idx.migrateEphemeralDeviceId(vidPidPattern: "2717:ff10", newDomainId: "stable-domain-123")
@@ -659,10 +678,11 @@ struct UnicodePathTests {
     let nfc = "\u{00E9}.txt"
     let nfd = "e\u{0301}.txt"
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: nfc),
-      makeObj(handle: 2, name: nfd),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: nfc),
+        makeObj(handle: 2, name: nfd),
+      ], deviceId: "dev")
 
     let obj1 = try await idx.object(deviceId: "dev", handle: 1)
     let obj2 = try await idx.object(deviceId: "dev", handle: 2)
@@ -992,10 +1012,11 @@ struct MultiStorageTests {
     defer { cleanup(path) }
     let idx = try openIndex(at: path)
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, storageId: 0x10001, name: "internal.txt"),
-      makeObj(handle: 2, storageId: 0x20001, name: "sdcard.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, storageId: 0x10001, name: "internal.txt"),
+        makeObj(handle: 2, storageId: 0x20001, name: "sdcard.txt"),
+      ], deviceId: "dev")
 
     let internal_ = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
     let sdcard = try await idx.children(deviceId: "dev", storageId: 0x20001, parentHandle: nil)

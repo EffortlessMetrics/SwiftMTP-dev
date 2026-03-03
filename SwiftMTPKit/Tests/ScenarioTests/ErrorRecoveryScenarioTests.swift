@@ -234,8 +234,9 @@ final class ErrorRecoveryScenarioTests: XCTestCase {
 
     let result = try await FallbackLadder.execute(rungs)
     XCTAssertEqual(result.value, "quick")
-    XCTAssertEqual(result.winningRung, "primary",
-                   "First rung should win when it succeeds")
+    XCTAssertEqual(
+      result.winningRung, "primary",
+      "First rung should win when it succeeds")
   }
 
   // MARK: - 12. VirtualMTPDevice Delete Non-Existent Returns Error
@@ -487,7 +488,7 @@ final class ErrorRecoveryScenarioTests: XCTestCase {
 
   func testFallbackLadderSingleRungFailure() async throws {
     let rungs: [FallbackRung<Int>] = [
-      FallbackRung(name: "only-option") { throw MTPError.deviceDisconnected },
+      FallbackRung(name: "only-option") { throw MTPError.deviceDisconnected }
     ]
 
     do {

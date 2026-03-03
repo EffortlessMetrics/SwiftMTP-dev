@@ -196,8 +196,8 @@ final class AdvancedScenarioTests: XCTestCase {
     let device = VirtualMTPDevice(config: .pixel7)
     let info = try await device.info
     XCTAssertFalse(info.operationsSupported.isEmpty)
-    XCTAssertTrue(info.operationsSupported.contains(0x1001)) // GetDeviceInfo
-    XCTAssertTrue(info.operationsSupported.contains(0x1002)) // OpenSession
+    XCTAssertTrue(info.operationsSupported.contains(0x1001))  // GetDeviceInfo
+    XCTAssertTrue(info.operationsSupported.contains(0x1002))  // OpenSession
   }
 
   // MARK: - 8. Device Capability Differences Across Devices
@@ -252,7 +252,7 @@ final class AdvancedScenarioTests: XCTestCase {
       _ = try await device.read(
         handle: 9999, range: nil,
         to: dir.appendingPathComponent("nonexistent.dat"))
-      failCount -= 1 // unexpected success
+      failCount -= 1  // unexpected success
     } catch {
       failCount += 1
     }
@@ -285,12 +285,16 @@ final class AdvancedScenarioTests: XCTestCase {
   // MARK: - 11. Quirk Database VID:PID Matching
 
   func testQuirkDatabaseVIDPIDMatching() async throws {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "samsung-test", deviceName: "Galaxy S7", vid: 0x04e8, pid: 0x6860,
-                  maxChunkBytes: 2 * 1024 * 1024),
-      DeviceQuirk(id: "pixel-test", deviceName: "Pixel 7", vid: 0x18d1, pid: 0x4ee1,
-                  maxChunkBytes: 4 * 1024 * 1024),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(
+          id: "samsung-test", deviceName: "Galaxy S7", vid: 0x04e8, pid: 0x6860,
+          maxChunkBytes: 2 * 1024 * 1024),
+        DeviceQuirk(
+          id: "pixel-test", deviceName: "Pixel 7", vid: 0x18d1, pid: 0x4ee1,
+          maxChunkBytes: 4 * 1024 * 1024),
+      ])
 
     let samsung = db.match(
       vid: 0x04e8, pid: 0x6860,
@@ -309,9 +313,11 @@ final class AdvancedScenarioTests: XCTestCase {
   // MARK: - 12. Quirk Database No Match Returns Nil
 
   func testQuirkDatabaseNoMatchReturnsNil() async throws {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "known-device", vid: 0x1234, pid: 0x5678),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(id: "known-device", vid: 0x1234, pid: 0x5678)
+      ])
 
     let result = db.match(
       vid: 0xFFFF, pid: 0xFFFF,
@@ -322,12 +328,16 @@ final class AdvancedScenarioTests: XCTestCase {
   // MARK: - 13. Quirk-Driven Chunk Size Selection
 
   func testQuirkDrivenChunkSizeSelection() async throws {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "slow-device", deviceName: "Slow Phone", vid: 0x1111, pid: 0x2222,
-                  maxChunkBytes: 512 * 1024),
-      DeviceQuirk(id: "fast-device", deviceName: "Fast Phone", vid: 0x3333, pid: 0x4444,
-                  maxChunkBytes: 8 * 1024 * 1024),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(
+          id: "slow-device", deviceName: "Slow Phone", vid: 0x1111, pid: 0x2222,
+          maxChunkBytes: 512 * 1024),
+        DeviceQuirk(
+          id: "fast-device", deviceName: "Fast Phone", vid: 0x3333, pid: 0x4444,
+          maxChunkBytes: 8 * 1024 * 1024),
+      ])
 
     let slow = db.match(
       vid: 0x1111, pid: 0x2222,
@@ -379,7 +389,7 @@ final class AdvancedScenarioTests: XCTestCase {
   func testTransferResumeAfterTimeoutOnRead() async throws {
     let inner = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
-      .timeoutOnce(on: .executeStreamingCommand),
+      .timeoutOnce(on: .executeStreamingCommand)
     ])
     let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
 
@@ -572,12 +582,18 @@ final class AdvancedScenarioTests: XCTestCase {
     let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
 
     // Stall on getDeviceInfo
-    do { _ = try await faultyLink.getDeviceInfo(); XCTFail("Expected stall") } catch {}
+    do {
+      _ = try await faultyLink.getDeviceInfo()
+      XCTFail("Expected stall")
+    } catch {}
     let info = try await faultyLink.getDeviceInfo()
     XCTAssertEqual(info.model, "Pixel 7")
 
     // Timeout on getStorageIDs
-    do { _ = try await faultyLink.getStorageIDs(); XCTFail("Expected timeout") } catch {}
+    do {
+      _ = try await faultyLink.getStorageIDs()
+      XCTFail("Expected timeout")
+    } catch {}
     let ids = try await faultyLink.getStorageIDs()
     XCTAssertFalse(ids.isEmpty)
 
@@ -624,7 +640,7 @@ final class AdvancedScenarioTests: XCTestCase {
     let schedule = FaultSchedule([
       ScheduledFault(
         trigger: .onOperation(.getStorageIDs), error: .timeout,
-        repeatCount: 0, label: "unlimited-timeout"),
+        repeatCount: 0, label: "unlimited-timeout")
     ])
     let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
 
@@ -1019,10 +1035,11 @@ final class AdvancedScenarioTests: XCTestCase {
     var config = VirtualDeviceConfig.pixel7
     for i in 0..<4 {
       let data = Data(repeating: UInt8(i + 1), count: 2048)
-      config = config.withObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(400 + i), storage: storageId, parent: nil,
-        name: "parallel_\(i).dat", sizeBytes: 2048, formatCode: 0x3000, data: data
-      ))
+      config = config.withObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(400 + i), storage: storageId, parent: nil,
+          name: "parallel_\(i).dat", sizeBytes: 2048, formatCode: 0x3000, data: data
+        ))
     }
     let device = VirtualMTPDevice(config: config)
 
@@ -1129,7 +1146,7 @@ final class AdvancedScenarioTests: XCTestCase {
     let schedule = FaultSchedule([
       ScheduledFault(
         trigger: .onOperation(.getDeviceInfo), error: .accessDenied,
-        repeatCount: 1, label: "access-denied"),
+        repeatCount: 1, label: "access-denied")
     ])
     let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
 
@@ -1150,7 +1167,7 @@ final class AdvancedScenarioTests: XCTestCase {
     let schedule = FaultSchedule([
       ScheduledFault(
         trigger: .onOperation(.getStorageIDs), error: .io("Simulated IO failure"),
-        repeatCount: 1, label: "io-error"),
+        repeatCount: 1, label: "io-error")
     ])
     let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
 
@@ -1170,7 +1187,7 @@ final class AdvancedScenarioTests: XCTestCase {
     let schedule = FaultSchedule([
       ScheduledFault(
         trigger: .onOperation(.getObjectHandles), error: .disconnected,
-        repeatCount: 1, label: "disconnected"),
+        repeatCount: 1, label: "disconnected")
     ])
     let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
 
@@ -1192,7 +1209,7 @@ final class AdvancedScenarioTests: XCTestCase {
     let schedule = FaultSchedule([
       ScheduledFault(
         trigger: .onOperation(.getDeviceInfo), error: .protocolError(code: 0x2002),
-        repeatCount: 1, label: "protocol-error"),
+        repeatCount: 1, label: "protocol-error")
     ])
     let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
 
@@ -1280,11 +1297,13 @@ final class AdvancedScenarioTests: XCTestCase {
   // MARK: - 64. Quirk Database Multiple Entries Same VID Different PID
 
   func testQuirkDatabaseMultipleEntriesSameVIDDifferentPID() async throws {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "dev-a", vid: 0x1234, pid: 0x0001, maxChunkBytes: 1024),
-      DeviceQuirk(id: "dev-b", vid: 0x1234, pid: 0x0002, maxChunkBytes: 2048),
-      DeviceQuirk(id: "dev-c", vid: 0x1234, pid: 0x0003, maxChunkBytes: 4096),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(id: "dev-a", vid: 0x1234, pid: 0x0001, maxChunkBytes: 1024),
+        DeviceQuirk(id: "dev-b", vid: 0x1234, pid: 0x0002, maxChunkBytes: 2048),
+        DeviceQuirk(id: "dev-c", vid: 0x1234, pid: 0x0003, maxChunkBytes: 4096),
+      ])
 
     let a = db.match(
       vid: 0x1234, pid: 0x0001,
@@ -1373,7 +1392,7 @@ final class AdvancedScenarioTests: XCTestCase {
     let inner = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
       ScheduledFault(
-        trigger: .atCallIndex(2), error: .timeout, repeatCount: 1, label: "index-2"),
+        trigger: .atCallIndex(2), error: .timeout, repeatCount: 1, label: "index-2")
     ])
     let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
 

@@ -78,16 +78,20 @@ final class ConflictFilterEdgeCaseTests: XCTestCase {
     let remoteDir = makeSubDir("remote")
 
     // Same content – no conflict
-    try "same".write(
-      to: localDir.appendingPathComponent("agreed.txt"), atomically: true, encoding: .utf8)
-    try "same".write(
-      to: remoteDir.appendingPathComponent("agreed.txt"), atomically: true, encoding: .utf8)
+    try "same"
+      .write(
+        to: localDir.appendingPathComponent("agreed.txt"), atomically: true, encoding: .utf8)
+    try "same"
+      .write(
+        to: remoteDir.appendingPathComponent("agreed.txt"), atomically: true, encoding: .utf8)
 
     // Different content – conflict
-    try "local".write(
-      to: localDir.appendingPathComponent("disputed.txt"), atomically: true, encoding: .utf8)
-    try "remote".write(
-      to: remoteDir.appendingPathComponent("disputed.txt"), atomically: true, encoding: .utf8)
+    try "local"
+      .write(
+        to: localDir.appendingPathComponent("disputed.txt"), atomically: true, encoding: .utf8)
+    try "remote"
+      .write(
+        to: remoteDir.appendingPathComponent("disputed.txt"), atomically: true, encoding: .utf8)
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
     XCTAssertEqual(conflicts.count, 1)
@@ -110,10 +114,12 @@ final class ConflictFilterEdgeCaseTests: XCTestCase {
     let remoteDir = makeSubDir("remote")
 
     for i in 0..<50 {
-      try "local-\(i)".write(
-        to: localDir.appendingPathComponent("f\(i).txt"), atomically: true, encoding: .utf8)
-      try "remote-\(i)".write(
-        to: remoteDir.appendingPathComponent("f\(i).txt"), atomically: true, encoding: .utf8)
+      try "local-\(i)"
+        .write(
+          to: localDir.appendingPathComponent("f\(i).txt"), atomically: true, encoding: .utf8)
+      try "remote-\(i)"
+        .write(
+          to: remoteDir.appendingPathComponent("f\(i).txt"), atomically: true, encoding: .utf8)
     }
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
@@ -143,10 +149,12 @@ final class ConflictFilterEdgeCaseTests: XCTestCase {
     let remoteDir = makeSubDir("remote")
     let mergedDir = makeSubDir("merged")
 
-    try "local-same".write(
-      to: localDir.appendingPathComponent("tie.txt"), atomically: true, encoding: .utf8)
-    try "remot-same".write(
-      to: remoteDir.appendingPathComponent("tie.txt"), atomically: true, encoding: .utf8)
+    try "local-same"
+      .write(
+        to: localDir.appendingPathComponent("tie.txt"), atomically: true, encoding: .utf8)
+    try "remot-same"
+      .write(
+        to: remoteDir.appendingPathComponent("tie.txt"), atomically: true, encoding: .utf8)
 
     resolveConflict(
       file: "tie.txt", localDir: localDir, remoteDir: remoteDir,
@@ -165,10 +173,12 @@ final class ConflictFilterEdgeCaseTests: XCTestCase {
     let remoteDir = makeSubDir("remote")
     let mergedDir = makeSubDir("merged")
 
-    try "local".write(
-      to: localDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
-    try "remote".write(
-      to: remoteDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
+    try "local"
+      .write(
+        to: localDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
+    try "remote"
+      .write(
+        to: remoteDir.appendingPathComponent("doc.txt"), atomically: true, encoding: .utf8)
 
     resolveConflict(
       file: "doc.txt", localDir: localDir, remoteDir: remoteDir,
@@ -447,9 +457,10 @@ final class ConflictFilterEdgeCaseTests: XCTestCase {
   func testLargeFileSetFilterPerformance() {
     var rows: [MTPDiff.Row] = []
     for i in 0..<500 {
-      rows.append(makeRow(
-        handle: UInt32(i),
-        path: "00010001/DCIM/Camera/IMG_\(String(format: "%04d", i)).jpg"))
+      rows.append(
+        makeRow(
+          handle: UInt32(i),
+          path: "00010001/DCIM/Camera/IMG_\(String(format: "%04d", i)).jpg"))
     }
 
     let start = Date()
@@ -833,10 +844,12 @@ final class ConflictFilterEdgeCaseTests: XCTestCase {
     try FileManager.default.createDirectory(at: localSub, withIntermediateDirectories: true)
     try FileManager.default.createDirectory(at: remoteSub, withIntermediateDirectories: true)
 
-    try "local-nested".write(
-      to: localSub.appendingPathComponent("deep.txt"), atomically: true, encoding: .utf8)
-    try "remote-nested".write(
-      to: remoteSub.appendingPathComponent("deep.txt"), atomically: true, encoding: .utf8)
+    try "local-nested"
+      .write(
+        to: localSub.appendingPathComponent("deep.txt"), atomically: true, encoding: .utf8)
+    try "remote-nested"
+      .write(
+        to: remoteSub.appendingPathComponent("deep.txt"), atomically: true, encoding: .utf8)
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
     XCTAssertEqual(conflicts.count, 1)
@@ -864,13 +877,15 @@ final class ConflictFilterEdgeCaseTests: XCTestCase {
 
     let localSub = localDir.appendingPathComponent("sub")
     try FileManager.default.createDirectory(at: localSub, withIntermediateDirectories: true)
-    try "local-deep".write(
-      to: localSub.appendingPathComponent("nested.txt"), atomically: true, encoding: .utf8)
+    try "local-deep"
+      .write(
+        to: localSub.appendingPathComponent("nested.txt"), atomically: true, encoding: .utf8)
 
     let remoteSub = remoteDir.appendingPathComponent("sub")
     try FileManager.default.createDirectory(at: remoteSub, withIntermediateDirectories: true)
-    try "remote-deep".write(
-      to: remoteSub.appendingPathComponent("nested.txt"), atomically: true, encoding: .utf8)
+    try "remote-deep"
+      .write(
+        to: remoteSub.appendingPathComponent("nested.txt"), atomically: true, encoding: .utf8)
 
     let mergedSub = mergedDir.appendingPathComponent("sub")
     try FileManager.default.createDirectory(at: mergedSub, withIntermediateDirectories: true)
@@ -889,8 +904,9 @@ final class ConflictFilterEdgeCaseTests: XCTestCase {
 
   func testSymlinkTargetContentAccessible() throws {
     let targetDir = makeSubDir("target")
-    try "target-content".write(
-      to: targetDir.appendingPathComponent("linked.txt"), atomically: true, encoding: .utf8)
+    try "target-content"
+      .write(
+        to: targetDir.appendingPathComponent("linked.txt"), atomically: true, encoding: .utf8)
 
     let localDir = makeSubDir("local")
     let linkPath = localDir.appendingPathComponent("link")
@@ -934,11 +950,12 @@ final class ConflictFilterEdgeCaseTests: XCTestCase {
   }
 
   private func makeRows(_ paths: [String]) -> [MTPDiff.Row] {
-    paths.enumerated().map { idx, path in
-      MTPDiff.Row(
-        handle: UInt32(idx + 1), storage: 0x0001_0001, pathKey: path,
-        size: 1024, mtime: Date(), format: 0x3801)
-    }
+    paths.enumerated()
+      .map { idx, path in
+        MTPDiff.Row(
+          handle: UInt32(idx + 1), storage: 0x0001_0001, pathKey: path,
+          size: 1024, mtime: Date(), format: 0x3801)
+      }
   }
 
   private func makeObj(handle: MTPObjectHandle, name: String, size: Int) -> VirtualObjectConfig {
@@ -960,10 +977,11 @@ final class ConflictFilterEdgeCaseTests: XCTestCase {
   private func makeDeviceWithData(files: [(String, Int, UInt8)]) -> VirtualMTPDevice {
     var config = VirtualDeviceConfig.emptyDevice
     for (idx, file) in files.enumerated() {
-      config = config.withObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(100 + idx), storage: storage, parent: nil,
-        name: file.0, sizeBytes: UInt64(file.1), formatCode: 0x3801,
-        data: Data(repeating: file.2, count: file.1)))
+      config = config.withObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(100 + idx), storage: storage, parent: nil,
+          name: file.0, sizeBytes: UInt64(file.1), formatCode: 0x3801,
+          data: Data(repeating: file.2, count: file.1)))
     }
     return VirtualMTPDevice(config: config)
   }
@@ -972,11 +990,13 @@ final class ConflictFilterEdgeCaseTests: XCTestCase {
     let localFiles = Set(listRelativeFiles(in: local))
     let remoteFiles = Set(listRelativeFiles(in: remote))
     let common = localFiles.intersection(remoteFiles)
-    return common.filter { file in
-      let localData = try? Data(contentsOf: local.appendingPathComponent(file))
-      let remoteData = try? Data(contentsOf: remote.appendingPathComponent(file))
-      return localData != remoteData
-    }.sorted()
+    return
+      common.filter { file in
+        let localData = try? Data(contentsOf: local.appendingPathComponent(file))
+        let remoteData = try? Data(contentsOf: remote.appendingPathComponent(file))
+        return localData != remoteData
+      }
+      .sorted()
   }
 
   private func resolveConflict(

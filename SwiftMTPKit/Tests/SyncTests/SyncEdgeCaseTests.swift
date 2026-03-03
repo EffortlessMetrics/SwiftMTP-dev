@@ -51,16 +51,17 @@ final class SnapshotEdgeCaseTests: XCTestCase {
 
   func testSnapshotWithMaxFileCount() async throws {
     let storage = MTPStorageID(raw: 0x0001_0001)
-    let objects = (0..<200).map { i in
-      VirtualObjectConfig(
-        handle: MTPObjectHandle(100 + i),
-        storage: storage,
-        name: "file_\(i).dat",
-        sizeBytes: 8,
-        formatCode: 0x3801,
-        data: Data(repeating: UInt8(i % 256), count: 8)
-      )
-    }
+    let objects = (0..<200)
+      .map { i in
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(100 + i),
+          storage: storage,
+          name: "file_\(i).dat",
+          sizeBytes: 8,
+          formatCode: 0x3801,
+          data: Data(repeating: UInt8(i % 256), count: 8)
+        )
+      }
     var config = VirtualDeviceConfig.emptyDevice
     for obj in objects { config = config.withObject(obj) }
     let device = VirtualMTPDevice(config: config)
@@ -98,11 +99,12 @@ final class SnapshotEdgeCaseTests: XCTestCase {
   func testSnapshotWithSpecialCharactersInFilenames() async throws {
     let storage = MTPStorageID(raw: 0x0001_0001)
     let names = ["café.jpg", "日本語.txt", "пример.doc", "file (1).png", "a&b=c.html"]
-    let objects = names.enumerated().map { idx, name in
-      VirtualObjectConfig(
-        handle: MTPObjectHandle(50 + idx), storage: storage,
-        name: name, sizeBytes: 4, formatCode: 0x3801, data: Data([0x01, 0x02, 0x03, 0x04]))
-    }
+    let objects = names.enumerated()
+      .map { idx, name in
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(50 + idx), storage: storage,
+          name: name, sizeBytes: 4, formatCode: 0x3801, data: Data([0x01, 0x02, 0x03, 0x04]))
+      }
     var config = VirtualDeviceConfig.emptyDevice
     for obj in objects { config = config.withObject(obj) }
     let device = VirtualMTPDevice(config: config)
@@ -298,15 +300,20 @@ final class DiffEdgeCaseExtendedTests: XCTestCase {
 
     // Snapshot 1: files A, B, C
     let configBefore = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "fileA.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([0x01, 0x02, 0x03, 0x04])))
-      .withObject(VirtualObjectConfig(
-        handle: 101, storage: storage, name: "fileB.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([0x05, 0x06, 0x07, 0x08])))
-      .withObject(VirtualObjectConfig(
-        handle: 102, storage: storage, name: "fileC.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([0x09, 0x0A, 0x0B, 0x0C])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "fileA.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([0x01, 0x02, 0x03, 0x04]))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 101, storage: storage, name: "fileB.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([0x05, 0x06, 0x07, 0x08]))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 102, storage: storage, name: "fileC.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([0x09, 0x0A, 0x0B, 0x0C])))
     let deviceBefore = VirtualMTPDevice(config: configBefore)
     let deviceId = await deviceBefore.id
     let gen1 = try await snapshotter.capture(device: deviceBefore, deviceId: deviceId)
@@ -315,15 +322,20 @@ final class DiffEdgeCaseExtendedTests: XCTestCase {
 
     // Snapshot 2: files B, C, D (A removed, D added)
     let configAfter = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 101, storage: storage, name: "fileB.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([0x05, 0x06, 0x07, 0x08])))
-      .withObject(VirtualObjectConfig(
-        handle: 102, storage: storage, name: "fileC.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([0x09, 0x0A, 0x0B, 0x0C])))
-      .withObject(VirtualObjectConfig(
-        handle: 103, storage: storage, name: "fileD.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([0x0D, 0x0E, 0x0F, 0x10])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 101, storage: storage, name: "fileB.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([0x05, 0x06, 0x07, 0x08]))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 102, storage: storage, name: "fileC.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([0x09, 0x0A, 0x0B, 0x0C]))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 103, storage: storage, name: "fileD.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([0x0D, 0x0E, 0x0F, 0x10])))
     let deviceAfter = VirtualMTPDevice(config: configAfter)
     let gen2 = try await snapshotter.capture(device: deviceAfter, deviceId: deviceId)
 
@@ -358,9 +370,10 @@ final class DiffEdgeCaseExtendedTests: XCTestCase {
     let storage = MTPStorageID(raw: 0x0001_0001)
 
     let configV1 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "doc.txt",
-        sizeBytes: 10, formatCode: 0x3000, data: Data(repeating: 0xAA, count: 10)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "doc.txt",
+          sizeBytes: 10, formatCode: 0x3000, data: Data(repeating: 0xAA, count: 10)))
     let deviceV1 = VirtualMTPDevice(config: configV1)
     let deviceId = await deviceV1.id
     let gen1 = try await snapshotter.capture(device: deviceV1, deviceId: deviceId)
@@ -368,9 +381,10 @@ final class DiffEdgeCaseExtendedTests: XCTestCase {
     try await Task.sleep(nanoseconds: 1_100_000_000)
 
     let configV2 = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "doc.txt",
-        sizeBytes: 20, formatCode: 0x3000, data: Data(repeating: 0xBB, count: 20)))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "doc.txt",
+          sizeBytes: 20, formatCode: 0x3000, data: Data(repeating: 0xBB, count: 20)))
     let deviceV2 = VirtualMTPDevice(config: configV2)
     let gen2 = try await snapshotter.capture(device: deviceV2, deviceId: deviceId)
 
@@ -382,9 +396,10 @@ final class DiffEdgeCaseExtendedTests: XCTestCase {
     let storage = MTPStorageID(raw: 0x0001_0001)
 
     let configBefore = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "keep.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "keep.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
     let deviceBefore = VirtualMTPDevice(config: configBefore)
     let deviceId = await deviceBefore.id
     let gen1 = try await snapshotter.capture(device: deviceBefore, deviceId: deviceId)
@@ -392,12 +407,15 @@ final class DiffEdgeCaseExtendedTests: XCTestCase {
     try await Task.sleep(nanoseconds: 1_100_000_000)
 
     let configAfter = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "keep.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
-      .withObject(VirtualObjectConfig(
-        handle: 101, storage: storage, name: "new.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([5, 6, 7, 8])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "keep.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4]))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 101, storage: storage, name: "new.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([5, 6, 7, 8])))
     let deviceAfter = VirtualMTPDevice(config: configAfter)
     let gen2 = try await snapshotter.capture(device: deviceAfter, deviceId: deviceId)
 
@@ -410,12 +428,15 @@ final class DiffEdgeCaseExtendedTests: XCTestCase {
     let storage = MTPStorageID(raw: 0x0001_0001)
 
     let configBefore = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "keep.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
-      .withObject(VirtualObjectConfig(
-        handle: 101, storage: storage, name: "gone.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([5, 6, 7, 8])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "keep.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4]))
+      )
+      .withObject(
+        VirtualObjectConfig(
+          handle: 101, storage: storage, name: "gone.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([5, 6, 7, 8])))
     let deviceBefore = VirtualMTPDevice(config: configBefore)
     let deviceId = await deviceBefore.id
     let gen1 = try await snapshotter.capture(device: deviceBefore, deviceId: deviceId)
@@ -423,9 +444,10 @@ final class DiffEdgeCaseExtendedTests: XCTestCase {
     try await Task.sleep(nanoseconds: 1_100_000_000)
 
     let configAfter = VirtualDeviceConfig.emptyDevice
-      .withObject(VirtualObjectConfig(
-        handle: 100, storage: storage, name: "keep.txt",
-        sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 100, storage: storage, name: "keep.txt",
+          sizeBytes: 4, formatCode: 0x3000, data: Data([1, 2, 3, 4])))
     let deviceAfter = VirtualMTPDevice(config: configAfter)
     let gen2 = try await snapshotter.capture(device: deviceAfter, deviceId: deviceId)
 
@@ -440,10 +462,11 @@ final class DiffEdgeCaseExtendedTests: XCTestCase {
     let storage = MTPStorageID(raw: 0x0001_0001)
     var config = VirtualDeviceConfig.emptyDevice
     for (idx, file) in files.enumerated() {
-      config = config.withObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(100 + idx), storage: storage,
-        name: file.0, sizeBytes: UInt64(file.1), formatCode: 0x3801,
-        data: Data(repeating: 0xAB, count: file.1)))
+      config = config.withObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(100 + idx), storage: storage,
+          name: file.0, sizeBytes: UInt64(file.1), formatCode: 0x3801,
+          data: Data(repeating: 0xAB, count: file.1)))
     }
     return VirtualMTPDevice(config: config)
   }
@@ -617,10 +640,11 @@ final class MirrorEdgeCaseExtendedTests: XCTestCase {
     let storage = MTPStorageID(raw: 0x0001_0001)
     var config = VirtualDeviceConfig.emptyDevice
     for (idx, file) in files.enumerated() {
-      config = config.withObject(VirtualObjectConfig(
-        handle: MTPObjectHandle(100 + idx), storage: storage,
-        name: file.0, sizeBytes: UInt64(file.1), formatCode: 0x3801,
-        data: Data(repeating: 0xAB, count: file.1)))
+      config = config.withObject(
+        VirtualObjectConfig(
+          handle: MTPObjectHandle(100 + idx), storage: storage,
+          name: file.0, sizeBytes: UInt64(file.1), formatCode: 0x3801,
+          data: Data(repeating: 0xAB, count: file.1)))
     }
     return VirtualMTPDevice(config: config)
   }
@@ -637,9 +661,10 @@ final class SyncEdgeCasePropertyTests: XCTestCase {
       <- forAll(Gen<Int>.choose((0, 50))) { count in
         var diff = MTPDiff()
         for i in 0..<count {
-          diff.added.append(MTPDiff.Row(
-            handle: UInt32(i + 1), storage: 1,
-            pathKey: "00000001/file_\(i)", size: 100, mtime: nil, format: 0x3001))
+          diff.added.append(
+            MTPDiff.Row(
+              handle: UInt32(i + 1), storage: 1,
+              pathKey: "00000001/file_\(i)", size: 100, mtime: nil, format: 0x3001))
         }
         return diff.added.count >= 0 && diff.added.count == count
       }
@@ -650,9 +675,10 @@ final class SyncEdgeCasePropertyTests: XCTestCase {
       <- forAll(Gen<Int>.choose((0, 50))) { count in
         var diff = MTPDiff()
         for i in 0..<count {
-          diff.removed.append(MTPDiff.Row(
-            handle: UInt32(i + 1), storage: 1,
-            pathKey: "00000001/file_\(i)", size: 200, mtime: nil, format: 0x3001))
+          diff.removed.append(
+            MTPDiff.Row(
+              handle: UInt32(i + 1), storage: 1,
+              pathKey: "00000001/file_\(i)", size: 200, mtime: nil, format: 0x3001))
         }
         return diff.removed.count >= 0 && diff.removed.count == count
       }
@@ -666,15 +692,17 @@ final class SyncEdgeCasePropertyTests: XCTestCase {
       ) { initial, extra in
         var diff = MTPDiff()
         for i in 0..<initial {
-          diff.added.append(MTPDiff.Row(
-            handle: UInt32(i + 1), storage: 1,
-            pathKey: "00000001/init_\(i)", size: nil, mtime: nil, format: 0x3001))
+          diff.added.append(
+            MTPDiff.Row(
+              handle: UInt32(i + 1), storage: 1,
+              pathKey: "00000001/init_\(i)", size: nil, mtime: nil, format: 0x3001))
         }
         let before = diff.totalChanges
         for i in 0..<extra {
-          diff.modified.append(MTPDiff.Row(
-            handle: UInt32(i + 1000), storage: 1,
-            pathKey: "00000001/extra_\(i)", size: nil, mtime: nil, format: 0x3001))
+          diff.modified.append(
+            MTPDiff.Row(
+              handle: UInt32(i + 1000), storage: 1,
+              pathKey: "00000001/extra_\(i)", size: nil, mtime: nil, format: 0x3001))
         }
         return diff.totalChanges >= before
       }
@@ -705,10 +733,14 @@ final class SyncEdgeCasePropertyTests: XCTestCase {
         Gen<Int>.choose((0, 1000))
       ) { a, b, c in
         var r1 = MTPSyncReport()
-        r1.downloaded = a; r1.skipped = b; r1.failed = c
+        r1.downloaded = a
+        r1.skipped = b
+        r1.failed = c
 
         var r2 = MTPSyncReport()
-        r2.failed = c; r2.downloaded = a; r2.skipped = b
+        r2.failed = c
+        r2.downloaded = a
+        r2.skipped = b
 
         return r1.totalProcessed == r2.totalProcessed
       }
@@ -800,9 +832,10 @@ final class SyncEdgeCasePropertyTests: XCTestCase {
     let engine = makeMirrorEngine()
     property("**/*.jpg matches only .jpg files")
       <- forAll(
-        Gen<String>.fromElements(of: [
-          "00010001/a.jpg", "00010001/DCIM/b.jpg", "00010001/A/B/c.jpg",
-        ])
+        Gen<String>
+          .fromElements(of: [
+            "00010001/a.jpg", "00010001/DCIM/b.jpg", "00010001/A/B/c.jpg",
+          ])
       ) { path in
         engine.matchesPattern(path, pattern: "**/*.jpg")
       }

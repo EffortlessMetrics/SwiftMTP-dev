@@ -38,7 +38,9 @@ final class HTCNokiaQuirksTests: XCTestCase {
     db = try QuirkDatabase.load()
     htcEntries = db.entries.filter { $0.vid == Self.htcVID }
     nokiaEntries = db.entries.filter { $0.vid == Self.nokiaVID }
-    nokiaAndroidEntries = db.entries.filter { $0.vid == Self.nokiaAndroidVID && $0.id.hasPrefix("nokia-") }
+    nokiaAndroidEntries = db.entries.filter {
+      $0.vid == Self.nokiaAndroidVID && $0.id.hasPrefix("nokia-")
+    }
   }
 
   // MARK: - HTC VID Consistency

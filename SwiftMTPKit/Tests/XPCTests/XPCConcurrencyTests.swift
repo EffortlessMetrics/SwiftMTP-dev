@@ -11,7 +11,8 @@ import SwiftMTPTestKit
 @MainActor
 final class XPCConcurrencyTests: XCTestCase {
 
-  private func makeService() async -> (impl: MTPXPCServiceImpl, stableId: String, storageId: UInt32) {
+  private func makeService() async -> (impl: MTPXPCServiceImpl, stableId: String, storageId: UInt32)
+  {
     var config = VirtualDeviceConfig.emptyDevice
     let storageId = config.storages[0].id
     for i in 0..<10 {
@@ -68,7 +69,8 @@ final class XPCConcurrencyTests: XCTestCase {
   func testConcurrentStatusQueries() async {
     let svc = await makeService()
     for _ in 0..<10 {
-      let resp = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+      let resp = await withCheckedContinuation {
+        (c: CheckedContinuation<DeviceStatusResponse, Never>) in
         svc.impl.deviceStatus(DeviceStatusRequest(deviceId: "nonexistent")) {
           c.resume(returning: $0)
         }
@@ -89,25 +91,30 @@ final class XPCConcurrencyTests: XCTestCase {
     }
     XCTAssertTrue(pingMsg.contains("running"))
 
-    let storageResp = await withCheckedContinuation { (c: CheckedContinuation<StorageListResponse, Never>) in
+    let storageResp = await withCheckedContinuation {
+      (c: CheckedContinuation<StorageListResponse, Never>) in
       impl.listStorages(StorageListRequest(deviceId: stableId)) {
         c.resume(returning: $0)
       }
     }
     XCTAssertTrue(storageResp.success)
 
-    let objectResp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
-      impl.listObjects(ObjectListRequest(deviceId: stableId, storageId: storageId, parentHandle: nil)) {
+    let objectResp = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
+      impl.listObjects(
+        ObjectListRequest(deviceId: stableId, storageId: storageId, parentHandle: nil)
+      ) {
         c.resume(returning: $0)
       }
     }
     XCTAssertTrue(objectResp.success)
 
-    let crawlResp = await withCheckedContinuation { (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
+    let crawlResp = await withCheckedContinuation {
+      (c: CheckedContinuation<CrawlTriggerResponse, Never>) in
       impl.requestCrawl(CrawlTriggerRequest(deviceId: stableId, storageId: storageId)) {
         c.resume(returning: $0)
       }
     }
-    XCTAssertFalse(crawlResp.accepted) // no handler → not accepted
+    XCTAssertFalse(crawlResp.accepted)  // no handler → not accepted
   }
 }

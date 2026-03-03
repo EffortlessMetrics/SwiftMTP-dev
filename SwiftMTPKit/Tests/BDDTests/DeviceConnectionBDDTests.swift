@@ -54,9 +54,10 @@ final class DeviceConnectionBDDTests: XCTestCase {
   func testDeviceUnplugged_ResourcesCleaned() async throws {
     let device = VirtualMTPDevice(config: .samsungGalaxy)
     try await device.openIfNeeded()
-    await device.addObject(VirtualObjectConfig(
-      handle: 1000, storage: storage, parent: nil,
-      name: "before-unplug.txt", formatCode: 0x3000, data: Data("temp".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 1000, storage: storage, parent: nil,
+        name: "before-unplug.txt", formatCode: 0x3000, data: Data("temp".utf8)))
     try await device.devClose()
     try await device.openIfNeeded()
     var names: [String] = []
@@ -78,7 +79,8 @@ final class DeviceConnectionBDDTests: XCTestCase {
       try await link.openSession(id: 1)
       XCTFail("Expected accessDenied error for locked screen")
     } catch let err as TransportError {
-      XCTAssertEqual(err, .accessDenied,
+      XCTAssertEqual(
+        err, .accessDenied,
         "Locked device should surface as accessDenied")
     }
   }
@@ -88,7 +90,7 @@ final class DeviceConnectionBDDTests: XCTestCase {
       trigger: .onOperation(.openSession), error: .accessDenied, repeatCount: 1)
     let link = VirtualMTPLink(config: .pixel7, faultSchedule: FaultSchedule([fault]))
     // First attempt fails (locked)
-    do { try await link.openSession(id: 1) } catch { /* expected */ }
+    do { try await link.openSession(id: 1) } catch { /* expected */  }
     // Second attempt succeeds (unlocked)
     try await link.openSession(id: 2)
     let storages = try await link.getStorageIDs()
@@ -105,7 +107,8 @@ final class DeviceConnectionBDDTests: XCTestCase {
       try await link.openUSBIfNeeded()
       XCTFail("Expected noDevice error for charge-only mode")
     } catch let err as TransportError {
-      XCTAssertEqual(err, .noDevice,
+      XCTAssertEqual(
+        err, .noDevice,
         "Charge-only device should surface as noDevice")
     }
   }
@@ -113,7 +116,8 @@ final class DeviceConnectionBDDTests: XCTestCase {
   func testChargeOnlyMode_ClearErrorMessage() async throws {
     let error = TransportError.noDevice
     XCTAssertNotNil(error.errorDescription, "Transport errors must have user-facing descriptions")
-    XCTAssertTrue(error.errorDescription!.contains("MTP"),
+    XCTAssertTrue(
+      error.errorDescription!.contains("MTP"),
       "Error message should mention MTP mode")
   }
 
@@ -143,15 +147,17 @@ final class DeviceConnectionBDDTests: XCTestCase {
     try await deviceA.openIfNeeded()
     try await deviceB.openIfNeeded()
 
-    await deviceA.addObject(VirtualObjectConfig(
-      handle: 1001, storage: storage, parent: nil,
-      name: "pixel-only.jpg", formatCode: 0x3000, data: Data("pixel".utf8)))
+    await deviceA.addObject(
+      VirtualObjectConfig(
+        handle: 1001, storage: storage, parent: nil,
+        name: "pixel-only.jpg", formatCode: 0x3000, data: Data("pixel".utf8)))
 
     var canonNames: [String] = []
     for try await batch in deviceB.list(parent: nil, in: storage) {
       canonNames.append(contentsOf: batch.map(\.name))
     }
-    XCTAssertFalse(canonNames.contains("pixel-only.jpg"),
+    XCTAssertFalse(
+      canonNames.contains("pixel-only.jpg"),
       "Files on device A must not appear on device B")
   }
 
@@ -164,7 +170,8 @@ final class DeviceConnectionBDDTests: XCTestCase {
     async let infoA = deviceA.devGetDeviceInfoUncached()
     async let infoB = deviceB.devGetDeviceInfoUncached()
     let (a, b) = try await (infoA, infoB)
-    XCTAssertNotEqual(a.model, b.model,
+    XCTAssertNotEqual(
+      a.model, b.model,
       "Concurrent queries on different devices must return independent results")
   }
 
@@ -186,9 +193,10 @@ final class DeviceConnectionBDDTests: XCTestCase {
     try await device.openIfNeeded()
 
     // Seed a file, close (crash), reopen, and verify the device is functional
-    await device.addObject(VirtualObjectConfig(
-      handle: 1002, storage: storage, parent: nil,
-      name: "pre-crash.txt", formatCode: 0x3000, data: Data("data".utf8)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 1002, storage: storage, parent: nil,
+        name: "pre-crash.txt", formatCode: 0x3000, data: Data("data".utf8)))
     try await device.devClose()
     try await device.openIfNeeded()
 
@@ -242,7 +250,7 @@ final class DeviceConnectionBDDTests: XCTestCase {
   func testConnectionTimeout_RetrySucceeds() async throws {
     let fault = ScheduledFault.timeoutOnce(on: .openSession)
     let link = VirtualMTPLink(config: .pixel7, faultSchedule: FaultSchedule([fault]))
-    do { try await link.openSession(id: 1) } catch { /* expected timeout */ }
+    do { try await link.openSession(id: 1) } catch { /* expected timeout */  }
     // Retry after the one-shot fault
     try await link.openSession(id: 2)
     let storages = try await link.getStorageIDs()
@@ -283,7 +291,8 @@ final class DeviceConnectionBDDTests: XCTestCase {
   func testBusyDevice_ClearErrorDescription() async throws {
     let error = TransportError.busy
     XCTAssertNotNil(error.errorDescription)
-    XCTAssertTrue(error.errorDescription!.lowercased().contains("busy"),
+    XCTAssertTrue(
+      error.errorDescription!.lowercased().contains("busy"),
       "Busy error description should mention 'busy'")
   }
 }

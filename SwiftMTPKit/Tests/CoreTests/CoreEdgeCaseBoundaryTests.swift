@@ -108,17 +108,26 @@ final class CoreEdgeCaseBoundaryTests: XCTestCase {
 
   func testEventFromRawExactMinimumLength() {
     var data = Data(repeating: 0, count: 12)
-    data[0] = 0x0C; data[4] = 0x04; data[6] = 0x08; data[7] = 0x40; data[8] = 0x01
+    data[0] = 0x0C
+    data[4] = 0x04
+    data[6] = 0x08
+    data[7] = 0x40
+    data[8] = 0x01
     let event = MTPEvent.fromRaw(data)
     XCTAssertNotNil(event)
-    if case .deviceInfoChanged = event {} else {
+    if case .deviceInfoChanged = event {
+    } else {
       XCTFail("Expected deviceInfoChanged, got \(String(describing: event))")
     }
   }
 
   func testEventFromRawUnknownCodeReturnsUnknown() {
     var data = Data(repeating: 0, count: 16)
-    data[0] = 0x10; data[4] = 0x04; data[6] = 0xEF; data[7] = 0xBE; data[8] = 0x01
+    data[0] = 0x10
+    data[4] = 0x04
+    data[6] = 0xEF
+    data[7] = 0xBE
+    data[8] = 0x01
     data[12] = 0x42
     let event = MTPEvent.fromRaw(data)
     XCTAssertNotNil(event)
@@ -133,7 +142,11 @@ final class CoreEdgeCaseBoundaryTests: XCTestCase {
 
   func testEventFromRawUnknownCodeWithNoParams() {
     var data = Data(repeating: 0, count: 12)
-    data[0] = 0x0C; data[4] = 0x04; data[6] = 0xFF; data[7] = 0xFF; data[8] = 0x01
+    data[0] = 0x0C
+    data[4] = 0x04
+    data[6] = 0xFF
+    data[7] = 0xFF
+    data[8] = 0x01
     let event = MTPEvent.fromRaw(data)
     if case .unknown(let code, let params) = event {
       XCTAssertEqual(code, 0xFFFF)
@@ -145,13 +158,21 @@ final class CoreEdgeCaseBoundaryTests: XCTestCase {
 
   func testEventObjectAddedMissingParamReturnsNil() {
     var data = Data(repeating: 0, count: 12)
-    data[0] = 0x0C; data[4] = 0x04; data[6] = 0x02; data[7] = 0x40; data[8] = 0x01
+    data[0] = 0x0C
+    data[4] = 0x04
+    data[6] = 0x02
+    data[7] = 0x40
+    data[8] = 0x01
     XCTAssertNil(MTPEvent.fromRaw(data))
   }
 
   func testEventObjectAddedWithParam() {
     var data = Data(repeating: 0, count: 16)
-    data[0] = 0x10; data[4] = 0x04; data[6] = 0x02; data[7] = 0x40; data[8] = 0x01
+    data[0] = 0x10
+    data[4] = 0x04
+    data[6] = 0x02
+    data[7] = 0x40
+    data[8] = 0x01
     data[12] = 0x07
     let event = MTPEvent.fromRaw(data)
     if case .objectAdded(let handle) = event {
@@ -163,7 +184,11 @@ final class CoreEdgeCaseBoundaryTests: XCTestCase {
 
   func testEventObjectRemovedWithParam() {
     var data = Data(repeating: 0, count: 16)
-    data[0] = 0x10; data[4] = 0x04; data[6] = 0x03; data[7] = 0x40; data[8] = 0x01
+    data[0] = 0x10
+    data[4] = 0x04
+    data[6] = 0x03
+    data[7] = 0x40
+    data[8] = 0x01
     data[12] = 0x0A
     let event = MTPEvent.fromRaw(data)
     if case .objectRemoved(let handle) = event {
@@ -175,8 +200,15 @@ final class CoreEdgeCaseBoundaryTests: XCTestCase {
 
   func testEventStorageAddedWithParam() {
     var data = Data(repeating: 0, count: 16)
-    data[0] = 0x10; data[4] = 0x04; data[6] = 0x04; data[7] = 0x40; data[8] = 0x01
-    data[12] = 0x01; data[13] = 0x00; data[14] = 0x01; data[15] = 0x00
+    data[0] = 0x10
+    data[4] = 0x04
+    data[6] = 0x04
+    data[7] = 0x40
+    data[8] = 0x01
+    data[12] = 0x01
+    data[13] = 0x00
+    data[14] = 0x01
+    data[15] = 0x00
     let event = MTPEvent.fromRaw(data)
     if case .storageAdded(let sid) = event {
       XCTAssertEqual(sid.raw, 0x00010001)
@@ -187,8 +219,14 @@ final class CoreEdgeCaseBoundaryTests: XCTestCase {
 
   func testEventWithMultipleParams() {
     var data = Data(repeating: 0, count: 24)
-    data[0] = 0x18; data[4] = 0x04; data[6] = 0x01; data[7] = 0xFF; data[8] = 0x01
-    data[12] = 0x0A; data[16] = 0x0B; data[20] = 0x0C
+    data[0] = 0x18
+    data[4] = 0x04
+    data[6] = 0x01
+    data[7] = 0xFF
+    data[8] = 0x01
+    data[12] = 0x0A
+    data[16] = 0x0B
+    data[20] = 0x0C
     let event = MTPEvent.fromRaw(data)
     if case .unknown(let code, let params) = event {
       XCTAssertEqual(code, 0xFF01)

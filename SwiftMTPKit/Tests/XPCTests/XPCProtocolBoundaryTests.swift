@@ -307,7 +307,8 @@ final class XPCConcurrentBoundaryTests: XCTestCase {
 
     for cycle in 0..<3 {
       // Verify working
-      let resp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+      let resp = await withCheckedContinuation {
+        (c: CheckedContinuation<ObjectListResponse, Never>) in
         svc.impl.listObjects(
           ObjectListRequest(
             deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)
@@ -320,7 +321,8 @@ final class XPCConcurrentBoundaryTests: XCTestCase {
         await service.markDisconnected()
       }
 
-      let discStatus = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+      let discStatus = await withCheckedContinuation {
+        (c: CheckedContinuation<DeviceStatusResponse, Never>) in
         svc.impl.deviceStatus(DeviceStatusRequest(deviceId: svc.deviceId.raw)) {
           c.resume(returning: $0)
         }
@@ -332,7 +334,8 @@ final class XPCConcurrentBoundaryTests: XCTestCase {
         await service.markReconnected()
       }
 
-      let reconnStatus = await withCheckedContinuation { (c: CheckedContinuation<DeviceStatusResponse, Never>) in
+      let reconnStatus = await withCheckedContinuation {
+        (c: CheckedContinuation<DeviceStatusResponse, Never>) in
         svc.impl.deviceStatus(DeviceStatusRequest(deviceId: svc.deviceId.raw)) {
           c.resume(returning: $0)
         }
@@ -347,7 +350,8 @@ final class XPCConcurrentBoundaryTests: XCTestCase {
     let count = 500
     let svc = await makeService(objectCount: count)
 
-    let resp = await withCheckedContinuation { (c: CheckedContinuation<ObjectListResponse, Never>) in
+    let resp = await withCheckedContinuation {
+      (c: CheckedContinuation<ObjectListResponse, Never>) in
       svc.impl.listObjects(
         ObjectListRequest(
           deviceId: svc.stableId, storageId: svc.storageId, parentHandle: nil)

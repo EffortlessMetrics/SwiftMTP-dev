@@ -148,11 +148,14 @@ final class FileProviderConcurrencyTests: XCTestCase {
       r(readResponse)
     }
 
-    func listStorages(_ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void) {
+    func listStorages(
+      _ req: StorageListRequest, withReply r: @escaping (StorageListResponse) -> Void
+    ) {
       r(StorageListResponse(success: true))
     }
 
-    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void) {
+    func listObjects(_ req: ObjectListRequest, withReply r: @escaping (ObjectListResponse) -> Void)
+    {
       r(ObjectListResponse(success: true))
     }
 
@@ -181,11 +184,15 @@ final class FileProviderConcurrencyTests: XCTestCase {
       r(moveResponse)
     }
 
-    func requestCrawl(_ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void) {
+    func requestCrawl(
+      _ req: CrawlTriggerRequest, withReply r: @escaping (CrawlTriggerResponse) -> Void
+    ) {
       r(CrawlTriggerResponse(accepted: true))
     }
 
-    func deviceStatus(_ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void) {
+    func deviceStatus(
+      _ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void
+    ) {
       r(DeviceStatusResponse(connected: true, sessionOpen: true))
     }
   }
@@ -250,7 +257,9 @@ final class FileProviderConcurrencyTests: XCTestCase {
 
     for i in 0..<5 {
       observers[i].onFinish = { expectations[i].fulfill() }
-      enumerator.enumerateItems(for: observers[i], startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
+      enumerator.enumerateItems(
+        for: observers[i],
+        startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
     }
 
     await fulfillment(of: expectations, timeout: 5)
@@ -286,8 +295,10 @@ final class FileProviderConcurrencyTests: XCTestCase {
     obs1.onFinish = { exp1.fulfill() }
     obs2.onFinish = { exp2.fulfill() }
 
-    enum1.enumerateItems(for: obs1, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
-    enum2.enumerateItems(for: obs2, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
+    enum1.enumerateItems(
+      for: obs1, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
+    enum2.enumerateItems(
+      for: obs2, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
 
     await fulfillment(of: [exp1, exp2], timeout: 5)
 
@@ -341,8 +352,9 @@ final class FileProviderConcurrencyTests: XCTestCase {
       version: nil, request: NSFileProviderRequest()
     ) { _, _, _ in }
 
-    XCTAssertTrue(progress.isCancellable || !progress.isCancelled,
-                  "Progress should be valid and not cancelled initially")
+    XCTAssertTrue(
+      progress.isCancellable || !progress.isCancelled,
+      "Progress should be valid and not cancelled initially")
     progress.cancel()
     XCTAssertTrue(progress.isCancelled)
   }
@@ -621,10 +633,11 @@ final class FileProviderConcurrencyTests: XCTestCase {
   func testEnumerateChangesYieldsAddedAndDeletedItems() async {
     let reader = MockLiveIndexReader()
     reader.addObject(makeObject(handle: 10, name: "new.jpg", size: 512))
-    reader.setChanges([
-      IndexedObjectChange(kind: .upserted, object: makeObject(handle: 10, name: "new.jpg")),
-      IndexedObjectChange(kind: .deleted, object: makeObject(handle: 20, name: "old.jpg")),
-    ], deviceId: "device1")
+    reader.setChanges(
+      [
+        IndexedObjectChange(kind: .upserted, object: makeObject(handle: 10, name: "new.jpg")),
+        IndexedObjectChange(kind: .deleted, object: makeObject(handle: 20, name: "old.jpg")),
+      ], deviceId: "device1")
     reader.setChangeCounter(5, deviceId: "device1")
 
     let enumerator = DomainEnumerator(
@@ -738,12 +751,14 @@ final class FileProviderConcurrencyTests: XCTestCase {
 
     // Rapid-fire events
     for i: UInt32 in 1...50 {
-      ext.handleDeviceEvent(.addObject(
-        deviceId: "device1", storageId: 1, objectHandle: i, parentHandle: nil))
+      ext.handleDeviceEvent(
+        .addObject(
+          deviceId: "device1", storageId: 1, objectHandle: i, parentHandle: nil))
     }
     for i: UInt32 in 1...10 {
-      ext.handleDeviceEvent(.deleteObject(
-        deviceId: "device1", storageId: 1, objectHandle: i))
+      ext.handleDeviceEvent(
+        .deleteObject(
+          deviceId: "device1", storageId: 1, objectHandle: i))
     }
     ext.handleDeviceEvent(.storageAdded(deviceId: "device1", storageId: 2))
     ext.handleDeviceEvent(.storageRemoved(deviceId: "device1", storageId: 3))
@@ -771,14 +786,16 @@ final class FileProviderConcurrencyTests: XCTestCase {
     observer.onFinish = { exp.fulfill() }
 
     // Fire events while enumerating
-    ext.handleDeviceEvent(.addObject(
-      deviceId: "device1", storageId: 1, objectHandle: 100, parentHandle: nil))
+    ext.handleDeviceEvent(
+      .addObject(
+        deviceId: "device1", storageId: 1, objectHandle: 100, parentHandle: nil))
 
     enumerator.enumerateItems(
       for: observer, startingAt: NSFileProviderPage.initialPageSortedByDate as NSFileProviderPage)
 
-    ext.handleDeviceEvent(.deleteObject(
-      deviceId: "device1", storageId: 1, objectHandle: 1))
+    ext.handleDeviceEvent(
+      .deleteObject(
+        deviceId: "device1", storageId: 1, objectHandle: 1))
 
     await fulfillment(of: [exp], timeout: 5)
 

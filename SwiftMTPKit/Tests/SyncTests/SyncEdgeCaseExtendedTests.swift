@@ -36,10 +36,13 @@ final class SimultaneousModificationConflictTests: XCTestCase {
 
     // Simulate both sides modifying the same set of files at nearly the same time
     for i in 0..<10 {
-      try "local-edit-\(i)".write(
-        to: localDir.appendingPathComponent("shared_\(i).txt"), atomically: true, encoding: .utf8)
-      try "remote-edit-\(i)".write(
-        to: remoteDir.appendingPathComponent("shared_\(i).txt"), atomically: true, encoding: .utf8)
+      try "local-edit-\(i)"
+        .write(
+          to: localDir.appendingPathComponent("shared_\(i).txt"), atomically: true, encoding: .utf8)
+      try "remote-edit-\(i)"
+        .write(
+          to: remoteDir.appendingPathComponent("shared_\(i).txt"), atomically: true, encoding: .utf8
+        )
     }
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
@@ -55,20 +58,25 @@ final class SimultaneousModificationConflictTests: XCTestCase {
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
 
     // Files with identical content — no conflict
-    try "same content".write(
-      to: localDir.appendingPathComponent("identical.txt"), atomically: true, encoding: .utf8)
-    try "same content".write(
-      to: remoteDir.appendingPathComponent("identical.txt"), atomically: true, encoding: .utf8)
+    try "same content"
+      .write(
+        to: localDir.appendingPathComponent("identical.txt"), atomically: true, encoding: .utf8)
+    try "same content"
+      .write(
+        to: remoteDir.appendingPathComponent("identical.txt"), atomically: true, encoding: .utf8)
 
     // Files with different content — conflict
-    try "local change".write(
-      to: localDir.appendingPathComponent("diverged.txt"), atomically: true, encoding: .utf8)
-    try "remote change".write(
-      to: remoteDir.appendingPathComponent("diverged.txt"), atomically: true, encoding: .utf8)
+    try "local change"
+      .write(
+        to: localDir.appendingPathComponent("diverged.txt"), atomically: true, encoding: .utf8)
+    try "remote change"
+      .write(
+        to: remoteDir.appendingPathComponent("diverged.txt"), atomically: true, encoding: .utf8)
 
     // File only on local — not a conflict, just local-only
-    try "new local".write(
-      to: localDir.appendingPathComponent("local_only.txt"), atomically: true, encoding: .utf8)
+    try "new local"
+      .write(
+        to: localDir.appendingPathComponent("local_only.txt"), atomically: true, encoding: .utf8)
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
     let conflicts = detectConflicts(local: localDir, remote: remoteDir, common: changes.common)
@@ -86,15 +94,18 @@ final class SimultaneousModificationConflictTests: XCTestCase {
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
 
     // Same size but different binary content
-    try Data(repeating: 0xAA, count: 256).write(
-      to: localDir.appendingPathComponent("firmware.bin"))
-    try Data(repeating: 0xBB, count: 256).write(
-      to: remoteDir.appendingPathComponent("firmware.bin"))
+    try Data(repeating: 0xAA, count: 256)
+      .write(
+        to: localDir.appendingPathComponent("firmware.bin"))
+    try Data(repeating: 0xBB, count: 256)
+      .write(
+        to: remoteDir.appendingPathComponent("firmware.bin"))
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
     let conflicts = detectConflicts(local: localDir, remote: remoteDir, common: changes.common)
 
-    XCTAssertEqual(conflicts.count, 1, "Same-size binary files with different content are conflicts")
+    XCTAssertEqual(
+      conflicts.count, 1, "Same-size binary files with different content are conflicts")
   }
 
   func testConflictResolutionLocalWinsWithMultipleFiles() async throws {
@@ -107,10 +118,12 @@ final class SimultaneousModificationConflictTests: XCTestCase {
 
     let files = ["alpha.txt", "beta.txt", "gamma.txt"]
     for file in files {
-      try "local-\(file)".write(
-        to: localDir.appendingPathComponent(file), atomically: true, encoding: .utf8)
-      try "remote-\(file)".write(
-        to: remoteDir.appendingPathComponent(file), atomically: true, encoding: .utf8)
+      try "local-\(file)"
+        .write(
+          to: localDir.appendingPathComponent(file), atomically: true, encoding: .utf8)
+      try "remote-\(file)"
+        .write(
+          to: remoteDir.appendingPathComponent(file), atomically: true, encoding: .utf8)
     }
 
     for file in files {
@@ -284,7 +297,8 @@ final class MirrorResumeInterruptionTests: XCTestCase {
 
     // Second mirror with same device state — diff should be empty
     let report2 = try await mirrorEngine.mirror(device: device, deviceId: deviceId, to: output)
-    XCTAssertEqual(report2.totalProcessed, 0, "Re-mirror of unchanged device should process 0 files")
+    XCTAssertEqual(
+      report2.totalProcessed, 0, "Re-mirror of unchanged device should process 0 files")
   }
 
   func testMirrorWithFilterSkipsNonMatchingFiles() async throws {
@@ -700,10 +714,12 @@ final class UnicodeFilenameSyncTests: XCTestCase {
     try FileManager.default.createDirectory(at: localDir, withIntermediateDirectories: true)
     try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
 
-    try "local café".write(
-      to: localDir.appendingPathComponent("café.txt"), atomically: true, encoding: .utf8)
-    try "remote café".write(
-      to: remoteDir.appendingPathComponent("café.txt"), atomically: true, encoding: .utf8)
+    try "local café"
+      .write(
+        to: localDir.appendingPathComponent("café.txt"), atomically: true, encoding: .utf8)
+    try "remote café"
+      .write(
+        to: remoteDir.appendingPathComponent("café.txt"), atomically: true, encoding: .utf8)
 
     let localFiles = Set(listRelativeFiles(in: localDir))
     let remoteFiles = Set(listRelativeFiles(in: remoteDir))

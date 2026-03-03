@@ -301,7 +301,8 @@ final class TransferJournalRecoveryTests: XCTestCase {
       try journal.updateProgress(id: id, committed: 25_000)
       try journal.fail(
         id: id,
-        error: NSError(domain: "USB", code: -1, userInfo: [NSLocalizedDescriptionKey: "pipe reset"]))
+        error: NSError(domain: "USB", code: -1, userInfo: [NSLocalizedDescriptionKey: "pipe reset"])
+      )
     }
 
     let journal2 = try SQLiteTransferJournal(dbPath: dbPath)
@@ -442,7 +443,7 @@ final class TransferJournalLargeFileTests: XCTestCase {
   func testLargeFileByteOffsetAccuracy() throws {
     let device = MTPDeviceID(raw: "large-file")
     let totalSize: UInt64 = 10_737_418_240  // 10 GB
-    let committed: UInt64 = 7_516_192_768   // ~7 GB
+    let committed: UInt64 = 7_516_192_768  // ~7 GB
 
     let id = try journal.beginRead(
       device: device, handle: 1, name: "huge-video.mkv",

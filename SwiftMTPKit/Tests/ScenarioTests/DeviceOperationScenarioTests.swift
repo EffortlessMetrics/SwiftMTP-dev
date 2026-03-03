@@ -51,13 +51,15 @@ final class DeviceOperationScenarioTests: XCTestCase {
     let device = VirtualMTPDevice(config: config)
 
     // Step 2: Quirk matching by VID:PID
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(
-        id: "pixel7-test", deviceName: "Pixel 7",
-        vid: 0x18d1, pid: 0x4ee1,
-        maxChunkBytes: 4 * 1024 * 1024
-      ),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(
+          id: "pixel7-test", deviceName: "Pixel 7",
+          vid: 0x18d1, pid: 0x4ee1,
+          maxChunkBytes: 4 * 1024 * 1024
+        )
+      ])
     let quirk = db.match(
       vid: 0x18d1, pid: 0x4ee1,
       bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil
@@ -181,7 +183,7 @@ final class DeviceOperationScenarioTests: XCTestCase {
 
   func testLargeFileTransferWithProgress() async throws {
     // Create a device with a large file
-    let largeData = Data(repeating: 0xCC, count: 8 * 1024 * 1024) // 8 MB
+    let largeData = Data(repeating: 0xCC, count: 8 * 1024 * 1024)  // 8 MB
     let largeFile = VirtualObjectConfig(
       handle: 50, storage: MTPStorageID(raw: 0x0001_0001), parent: nil,
       name: "large_video.mp4", sizeBytes: UInt64(largeData.count),
@@ -468,8 +470,9 @@ final class DeviceOperationScenarioTests: XCTestCase {
     for i in 0..<5 {
       let data = try Data(contentsOf: dir.appendingPathComponent("c\(i).dat"))
       XCTAssertEqual(data.count, 4096)
-      XCTAssertTrue(data.allSatisfy { $0 == UInt8(i + 1) },
-                     "File c\(i).dat should contain fill byte \(i + 1)")
+      XCTAssertTrue(
+        data.allSatisfy { $0 == UInt8(i + 1) },
+        "File c\(i).dat should contain fill byte \(i + 1)")
     }
 
     // All operations logged
@@ -564,8 +567,9 @@ final class DeviceOperationScenarioTests: XCTestCase {
       updatedObjects.append(contentsOf: batch)
     }
 
-    XCTAssertGreaterThan(updatedObjects.count, objects.count,
-                          "Re-enumeration should find the newly added object")
+    XCTAssertGreaterThan(
+      updatedObjects.count, objects.count,
+      "Re-enumeration should find the newly added object")
     XCTAssertTrue(updatedObjects.contains { $0.handle == newHandle })
   }
 
@@ -638,7 +642,7 @@ final class DeviceOperationScenarioTests: XCTestCase {
     XCTAssertEqual(reuploadProgress.completedUnitCount, Int64(newData.count))
 
     // Download the re-uploaded version
-    let nextHandle = MTPObjectHandle(5) // After delete+reupload, handle 5
+    let nextHandle = MTPObjectHandle(5)  // After delete+reupload, handle 5
     let downloadURL = dir.appendingPathComponent("reupload_downloaded.dat")
     let downloadProgress = try await device.read(handle: nextHandle, range: nil, to: downloadURL)
     let downloadedData = try Data(contentsOf: downloadURL)
@@ -667,7 +671,7 @@ final class DeviceOperationScenarioTests: XCTestCase {
     XCTAssertEqual(progress.totalUnitCount, 0)
 
     // Verify the file exists on device
-    let handle = MTPObjectHandle(4) // pixel7 has handles 1,2,3
+    let handle = MTPObjectHandle(4)  // pixel7 has handles 1,2,3
     let info = try await device.getInfo(handle: handle)
     XCTAssertEqual(info.name, "empty.dat")
     XCTAssertEqual(info.sizeBytes, 0)
@@ -719,8 +723,9 @@ final class DeviceOperationScenarioTests: XCTestCase {
         parent: nil, name: "boundary_\(size).dat",
         size: UInt64(size), from: srcURL
       )
-      XCTAssertEqual(Int(progress.completedUnitCount), size,
-                      "Upload size mismatch for \(size)-byte file")
+      XCTAssertEqual(
+        Int(progress.completedUnitCount), size,
+        "Upload size mismatch for \(size)-byte file")
     }
 
     let writeOps = await device.operations.filter { $0.operation == "write" }
@@ -1041,8 +1046,9 @@ final class DeviceOperationScenarioTests: XCTestCase {
 
     XCTAssertEqual(results.count, 8)
     for (i, size) in results {
-      XCTAssertEqual(Int(size), 2048 * (i + 1),
-                      "File \(i) size mismatch")
+      XCTAssertEqual(
+        Int(size), 2048 * (i + 1),
+        "File \(i) size mismatch")
     }
   }
 
@@ -1100,8 +1106,9 @@ final class DeviceOperationScenarioTests: XCTestCase {
     for try await batch in stream {
       sdDcimFiles.append(contentsOf: batch)
     }
-    XCTAssertTrue(sdDcimFiles.contains { $0.name == "sd_upload.dat" },
-                   "Uploaded file should appear under SD card DCIM")
+    XCTAssertTrue(
+      sdDcimFiles.contains { $0.name == "sd_upload.dat" },
+      "Uploaded file should appear under SD card DCIM")
   }
 
   // MARK: - 30. Device Info Consistency Across Calls
@@ -1136,8 +1143,10 @@ final class DeviceOperationScenarioTests: XCTestCase {
 
     // Verify chronological ordering
     for i in 1..<ops.count {
-      XCTAssertLessThanOrEqual(ops[i - 1].timestamp, ops[i].timestamp,
-        "Operation \(ops[i - 1].operation) at index \(i - 1) should be before \(ops[i].operation) at index \(i)")
+      XCTAssertLessThanOrEqual(
+        ops[i - 1].timestamp, ops[i].timestamp,
+        "Operation \(ops[i - 1].operation) at index \(i - 1) should be before \(ops[i].operation) at index \(i)"
+      )
     }
 
     // Verify expected sequence

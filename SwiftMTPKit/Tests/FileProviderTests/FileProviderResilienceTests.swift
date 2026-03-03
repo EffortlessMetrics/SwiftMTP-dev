@@ -253,9 +253,10 @@ final class FileProviderEnumerationResilienceTests: XCTestCase {
 
   func testEnumerateManyItems_singlePage() async {
     let reader = ResilienceIndexReader()
-    let objects = (1...150).map { i in
-      makeObject(handle: UInt32(i), name: "file\(i).jpg")
-    }
+    let objects = (1...150)
+      .map { i in
+        makeObject(handle: UInt32(i), name: "file\(i).jpg")
+      }
     await reader.setChildren(objects, deviceId: "dev1")
 
     let enumerator = DomainEnumerator(
@@ -277,9 +278,10 @@ final class FileProviderEnumerationResilienceTests: XCTestCase {
 
   func testEnumerateManyItems_multiPage() async {
     let reader = ResilienceIndexReader()
-    let objects = (1...600).map { i in
-      makeObject(handle: UInt32(i), name: "file\(i).jpg")
-    }
+    let objects = (1...600)
+      .map { i in
+        makeObject(handle: UInt32(i), name: "file\(i).jpg")
+      }
     await reader.setChildren(objects, deviceId: "dev1")
 
     let enumerator = DomainEnumerator(
@@ -856,8 +858,9 @@ final class FileProviderDomainResilienceTests: XCTestCase {
       domain: makeTestDomain(), indexReader: nil,
       signalEnumeratorOverride: { id in signaled.append(id) })
 
-    ext.handleDeviceEvent(.addObject(
-      deviceId: "dev1", storageId: 1, objectHandle: 100, parentHandle: nil))
+    ext.handleDeviceEvent(
+      .addObject(
+        deviceId: "dev1", storageId: 1, objectHandle: 100, parentHandle: nil))
 
     XCTAssertTrue(signaled.contains(NSFileProviderItemIdentifier("dev1:1")))
   }

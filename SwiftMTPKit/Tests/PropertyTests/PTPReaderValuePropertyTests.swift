@@ -86,10 +86,11 @@ final class PTPReaderValuePropertyTests: XCTestCase {
         var reader = PTPReader(data: enc.encodedData)
         guard case .array(let decoded) = reader.value(dt: 0x4006) else { return false }
         guard decoded.count == limited.count else { return false }
-        return zip(decoded, limited).allSatisfy { elem, expected in
-          guard case .uint32(let v) = elem else { return false }
-          return v == expected
-        }
+        return zip(decoded, limited)
+          .allSatisfy { elem, expected in
+            guard case .uint32(let v) = elem else { return false }
+            return v == expected
+          }
       }
   }
 

@@ -153,11 +153,14 @@ final class ChunkSizeAutoTuningTests: XCTestCase {
   }
 
   func testChunkSizePowerOfTwoValues() {
-    let validChunks = [512, 1024, 2048, 4096, 8192, 16384, 32768,
-                       65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608]
+    let validChunks = [
+      512, 1024, 2048, 4096, 8192, 16384, 32768,
+      65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608,
+    ]
     for chunk in validChunks {
-      XCTAssertTrue(chunk > 0 && (chunk & (chunk - 1)) == 0,
-                    "\(chunk) should be power of two")
+      XCTAssertTrue(
+        chunk > 0 && (chunk & (chunk - 1)) == 0,
+        "\(chunk) should be power of two")
     }
   }
 
@@ -754,7 +757,7 @@ final class LargeTransferChunkingTests: XCTestCase {
 
   func testLargeTransferChunkingWith4MBChunks() {
     let total = 100 * 1024 * 1024  // 100 MB
-    let chunk = 4 * 1024 * 1024    // 4 MB
+    let chunk = 4 * 1024 * 1024  // 4 MB
     XCTAssertEqual(chunkCount(totalBytes: total, chunkSize: chunk), 25)
   }
 
@@ -856,7 +859,9 @@ final class PTPContainerExtendedTests: XCTestCase {
 /// Tests ensuring transport works consistently across different device profiles.
 final class MultiDeviceTransportTests: XCTestCase {
 
-  private func exerciseBasicOps(config: VirtualDeviceConfig, expectedManufacturer: String) async throws {
+  private func exerciseBasicOps(config: VirtualDeviceConfig, expectedManufacturer: String)
+    async throws
+  {
     let link = VirtualMTPLink(config: config)
     try await link.openUSBIfNeeded()
     try await link.openSession(id: 1)

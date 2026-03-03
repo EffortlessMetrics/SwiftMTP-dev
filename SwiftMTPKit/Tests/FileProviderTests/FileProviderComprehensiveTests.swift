@@ -287,9 +287,10 @@ final class FPEnumerationTests: XCTestCase {
   func testEnumerationPagination() async {
     let reader = StubIndexReader()
     // Create 600 objects — should span 2 pages (500 + 100)
-    let objects = (1...600).map {
-      makeObject(handle: UInt32($0), name: "f\($0).jpg")
-    }
+    let objects = (1...600)
+      .map {
+        makeObject(handle: UInt32($0), name: "f\($0).jpg")
+      }
     for o in objects { await reader.addObject(o) }
 
     let enumerator = DomainEnumerator(
@@ -1002,8 +1003,9 @@ final class FPErrorHandlingTests: XCTestCase {
         request: NSFileProviderRequest()
       ) { error in
         let code = (error as NSError?)?.code
-        XCTAssertEqual(code, NSFileProviderError.serverUnreachable.rawValue,
-                       "'\(msg)' should map to serverUnreachable")
+        XCTAssertEqual(
+          code, NSFileProviderError.serverUnreachable.rawValue,
+          "'\(msg)' should map to serverUnreachable")
         exp.fulfill()
       }
       wait(for: [exp], timeout: 2)

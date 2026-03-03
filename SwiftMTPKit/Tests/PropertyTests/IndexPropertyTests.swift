@@ -19,12 +19,13 @@ final class IndexPropertyTests: XCTestCase {
     property("PathKey.normalize then .parse should round-trip for simple ASCII components")
       <- forAll(
         Gen<UInt32>.choose((1, UInt32.max)),
-        Gen<[String]>.fromElements(of: [
-          ["DCIM", "2024", "photos"],
-          ["Music", "Albums"],
-          ["Documents"],
-          ["a", "b", "c", "d", "e"],
-        ])
+        Gen<[String]>
+          .fromElements(of: [
+            ["DCIM", "2024", "photos"],
+            ["Music", "Albums"],
+            ["Documents"],
+            ["a", "b", "c", "d", "e"],
+          ])
       ) { storageId, components in
         let normalized = PathKey.normalize(storage: storageId, components: components)
         let (parsedStorage, parsedComponents) = PathKey.parse(normalized)
@@ -37,11 +38,12 @@ final class IndexPropertyTests: XCTestCase {
     property("PathKey.basename should return the last component")
       <- forAll(
         Gen<UInt32>.choose((1, UInt32.max)),
-        Gen<[String]>.fromElements(of: [
-          ["DCIM", "photo.jpg"],
-          ["Music", "track.mp3"],
-          ["notes.txt"],
-        ])
+        Gen<[String]>
+          .fromElements(of: [
+            ["DCIM", "photo.jpg"],
+            ["Music", "track.mp3"],
+            ["notes.txt"],
+          ])
       ) { storageId, components in
         let pathKey = PathKey.normalize(storage: storageId, components: components)
         return PathKey.basename(of: pathKey) == components.last
@@ -53,10 +55,11 @@ final class IndexPropertyTests: XCTestCase {
     property("PathKey.parent should remove the last component")
       <- forAll(
         Gen<UInt32>.choose((1, UInt32.max)),
-        Gen<[String]>.fromElements(of: [
-          ["DCIM", "2024", "photo.jpg"],
-          ["Music", "Albums", "Artist", "track.mp3"],
-        ])
+        Gen<[String]>
+          .fromElements(of: [
+            ["DCIM", "2024", "photo.jpg"],
+            ["Music", "Albums", "Artist", "track.mp3"],
+          ])
       ) { storageId, components in
         let pathKey = PathKey.normalize(storage: storageId, components: components)
         guard let parentKey = PathKey.parent(of: pathKey) else { return false }
@@ -70,11 +73,12 @@ final class IndexPropertyTests: XCTestCase {
     property("PathKey of ancestor should be prefix of descendant")
       <- forAll(
         Gen<UInt32>.choose((1, UInt32.max)),
-        Gen<[String]>.fromElements(of: [
-          ["DCIM", "2024", "photo.jpg"],
-          ["Music", "Albums", "track.mp3"],
-          ["a", "b", "c", "d"],
-        ])
+        Gen<[String]>
+          .fromElements(of: [
+            ["DCIM", "2024", "photo.jpg"],
+            ["Music", "Albums", "track.mp3"],
+            ["a", "b", "c", "d"],
+          ])
       ) { storageId, components in
         guard components.count >= 2 else { return true }
         let prefix = PathKey.normalize(storage: storageId, components: Array(components.dropLast()))
@@ -89,10 +93,11 @@ final class IndexPropertyTests: XCTestCase {
   func testPathKeyUnicodeNormalization() {
     property("PathKey.normalizeComponent should produce NFC form")
       <- forAll(
-        Gen<String>.fromElements(of: [
-          "café", "naïve", "Señor", "Ångström", "日本語", "한국어",
-          "emoji📷🎵", "Müller", "niño",
-        ])
+        Gen<String>
+          .fromElements(of: [
+            "café", "naïve", "Señor", "Ångström", "日本語", "한국어",
+            "emoji📷🎵", "Müller", "niño",
+          ])
       ) { component in
         let normalized = PathKey.normalizeComponent(component)
         // NFC form should equal precomposedStringWithCanonicalMapping
@@ -104,10 +109,11 @@ final class IndexPropertyTests: XCTestCase {
   func testPathKeyStripsControlChars() {
     property("PathKey.normalizeComponent should not contain control characters")
       <- forAll(
-        Gen<String>.fromElements(of: [
-          "file\u{0000}name", "path\u{001F}test", "null\u{007F}byte",
-          "tab\there", "newline\nhere",
-        ])
+        Gen<String>
+          .fromElements(of: [
+            "file\u{0000}name", "path\u{001F}test", "null\u{007F}byte",
+            "tab\there", "newline\nhere",
+          ])
       ) { component in
         let normalized = PathKey.normalizeComponent(component)
         return !normalized.unicodeScalars.contains(where: {
@@ -121,11 +127,12 @@ final class IndexPropertyTests: XCTestCase {
     property("PathKey should handle emoji in components")
       <- forAll(
         Gen<UInt32>.choose((1, UInt32.max)),
-        Gen<[String]>.fromElements(of: [
-          ["📷Photos", "2024"],
-          ["🎵Music", "🎸Rock"],
-          ["📁Documents", "📝Notes"],
-        ])
+        Gen<[String]>
+          .fromElements(of: [
+            ["📷Photos", "2024"],
+            ["🎵Music", "🎸Rock"],
+            ["📁Documents", "📝Notes"],
+          ])
       ) { storageId, components in
         let pathKey = PathKey.normalize(storage: storageId, components: components)
         let (parsed, parsedComponents) = PathKey.parse(pathKey)
@@ -141,9 +148,10 @@ final class IndexPropertyTests: XCTestCase {
     property("Insert then query should return the same object")
       <- forAll(
         Gen<UInt32>.choose((1, 10000)),
-        Gen<String>.fromElements(of: [
-          "photo.jpg", "track.mp3", "notes.txt", "video.mp4", "archive.zip",
-        ]),
+        Gen<String>
+          .fromElements(of: [
+            "photo.jpg", "track.mp3", "notes.txt", "video.mp4", "archive.zip",
+          ]),
         Gen<UInt64>.choose((0, 10_000_000_000))
       ) { handle, name, size in
         let tempPath = self.makeTempDBPath()
@@ -169,7 +177,8 @@ final class IndexPropertyTests: XCTestCase {
           do {
             try await index.upsertObjects([obj], deviceId: deviceId)
             let queried = try await index.object(deviceId: deviceId, handle: handle)
-            result = queried?.name == name && queried?.sizeBytes == size
+            result =
+              queried?.name == name && queried?.sizeBytes == size
               && queried?.handle == handle
           } catch {
             result = false
@@ -192,17 +201,18 @@ final class IndexPropertyTests: XCTestCase {
 
         let deviceId = "batch-device"
         let storageId: UInt32 = 0x00010001
-        let objects: [IndexedObject] = (0..<count).map { i in
-          let handle = UInt32(i + 1)
-          let name = "file_\(i).dat"
-          return IndexedObject(
-            deviceId: deviceId, storageId: storageId, handle: handle,
-            parentHandle: nil, name: name,
-            pathKey: PathKey.normalize(storage: storageId, components: [name]),
-            sizeBytes: UInt64(i * 1024), mtime: nil, formatCode: 0x3001,
-            isDirectory: false, changeCounter: 0
-          )
-        }
+        let objects: [IndexedObject] = (0..<count)
+          .map { i in
+            let handle = UInt32(i + 1)
+            let name = "file_\(i).dat"
+            return IndexedObject(
+              deviceId: deviceId, storageId: storageId, handle: handle,
+              parentHandle: nil, name: name,
+              pathKey: PathKey.normalize(storage: storageId, components: [name]),
+              sizeBytes: UInt64(i * 1024), mtime: nil, formatCode: 0x3001,
+              isDirectory: false, changeCounter: 0
+            )
+          }
 
         let semaphore = DispatchSemaphore(value: 0)
         nonisolated(unsafe) var result = false

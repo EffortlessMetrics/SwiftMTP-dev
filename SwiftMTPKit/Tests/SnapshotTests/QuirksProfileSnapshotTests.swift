@@ -276,9 +276,9 @@ final class QuirksProfileSnapshotTests: XCTestCase {
       learned: nil,
       quirk: nil,
       overrides: [
-        "maxChunkBytes": "1",      // below minimum (128KB)
-        "ioTimeoutMs": "1",         // below minimum (1000ms)
-        "overallDeadlineMs": "1",   // below minimum (5000ms)
+        "maxChunkBytes": "1",  // below minimum (128KB)
+        "ioTimeoutMs": "1",  // below minimum (1000ms)
+        "overallDeadlineMs": "1",  // below minimum (5000ms)
       ]
     )
     XCTAssertGreaterThanOrEqual(tuning.maxChunkBytes, 128 * 1024)
@@ -292,9 +292,9 @@ final class QuirksProfileSnapshotTests: XCTestCase {
       learned: nil,
       quirk: nil,
       overrides: [
-        "maxChunkBytes": "999999999",    // above maximum (16MB)
-        "ioTimeoutMs": "999999",          // above maximum (60000ms)
-        "overallDeadlineMs": "999999999", // above maximum (300000ms)
+        "maxChunkBytes": "999999999",  // above maximum (16MB)
+        "ioTimeoutMs": "999999",  // above maximum (60000ms)
+        "overallDeadlineMs": "999999999",  // above maximum (300000ms)
       ]
     )
     XCTAssertLessThanOrEqual(tuning.maxChunkBytes, 16 * 1024 * 1024)

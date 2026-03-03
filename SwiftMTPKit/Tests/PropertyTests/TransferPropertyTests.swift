@@ -13,25 +13,28 @@ import XCTest
 /// Generator for chunk sizes in the valid range (128 KB – 16 MB).
 private enum ChunkSizeGenerator {
   static var arbitrary: Gen<Int> {
-    Gen<Int>.one(of: [
-      Gen<Int>.fromElements(of: [
-        128 * 1024, 256 * 1024, 512 * 1024,
-        1024 * 1024, 2 * 1024 * 1024, 4 * 1024 * 1024,
-        8 * 1024 * 1024, 16 * 1024 * 1024,
-      ]),
-      Gen<Int>.choose((128 * 1024, 16 * 1024 * 1024)),
-    ])
+    Gen<Int>
+      .one(of: [
+        Gen<Int>
+          .fromElements(of: [
+            128 * 1024, 256 * 1024, 512 * 1024,
+            1024 * 1024, 2 * 1024 * 1024, 4 * 1024 * 1024,
+            8 * 1024 * 1024, 16 * 1024 * 1024,
+          ]),
+        Gen<Int>.choose((128 * 1024, 16 * 1024 * 1024)),
+      ])
   }
 }
 
 /// Generator for file sizes spanning edge cases through multi-GB.
 private enum FileSizeGenerator {
   static var arbitrary: Gen<UInt64> {
-    Gen<UInt64>.one(of: [
-      Gen<UInt64>.fromElements(of: [0, 1, 127, 128, 255, 256, 1023, 1024]),
-      Gen<UInt64>.choose((0, 16 * 1024 * 1024)),
-      Gen<UInt64>.choose((0, 10_000_000_000)),
-    ])
+    Gen<UInt64>
+      .one(of: [
+        Gen<UInt64>.fromElements(of: [0, 1, 127, 128, 255, 256, 1023, 1024]),
+        Gen<UInt64>.choose((0, 16 * 1024 * 1024)),
+        Gen<UInt64>.choose((0, 10_000_000_000)),
+      ])
   }
 }
 
@@ -45,22 +48,26 @@ private enum DeviceMaxChunkGenerator {
 /// Generator for valid MTP filenames (non-empty, no path separators, no null bytes).
 private enum MTPFilenameGenerator {
   static var arbitrary: Gen<String> {
-    Gen<String>.one(of: [
-      Gen<String>.fromElements(of: [
-        "photo.jpg", "IMG_20240101_120000.jpg", "track (1).mp3",
-        "naïve.txt", "café.png", "Señor.doc",
-        "文件.txt", "ファイル.png", "파일.mp4",
-        "emoji📷.jpg", "file with spaces.txt", "UPPERCASE.JPG",
-        "a", String(repeating: "x", count: 200),
-        "file.tar.gz", ".hidden", "no_extension",
-      ]),
-      Gen<Character>.fromElements(
-        of: Array("abcdefghijklmnopqrstuvwxyz0123456789._- ")
-      ).proliferate
-        .suchThat { !$0.isEmpty }
-        .map { String($0).trimmingCharacters(in: .whitespaces) }
-        .suchThat { !$0.isEmpty && $0 != "." && $0 != ".." },
-    ])
+    Gen<String>
+      .one(of: [
+        Gen<String>
+          .fromElements(of: [
+            "photo.jpg", "IMG_20240101_120000.jpg", "track (1).mp3",
+            "naïve.txt", "café.png", "Señor.doc",
+            "文件.txt", "ファイル.png", "파일.mp4",
+            "emoji📷.jpg", "file with spaces.txt", "UPPERCASE.JPG",
+            "a", String(repeating: "x", count: 200),
+            "file.tar.gz", ".hidden", "no_extension",
+          ]),
+        Gen<Character>
+          .fromElements(
+            of: Array("abcdefghijklmnopqrstuvwxyz0123456789._- ")
+          )
+          .proliferate
+          .suchThat { !$0.isEmpty }
+          .map { String($0).trimmingCharacters(in: .whitespaces) }
+          .suchThat { !$0.isEmpty && $0 != "." && $0 != ".." },
+      ])
   }
 }
 
@@ -338,9 +345,10 @@ final class TransferPropertyTests: XCTestCase {
   func testSanitizedFilenameNeverExceedsMaxLength() {
     property("Sanitized filenames do not exceed maxNameLength")
       <- forAll(
-        Gen<Int>.choose((1, 500)).map { len in
-          String(repeating: "a", count: len)
-        }
+        Gen<Int>.choose((1, 500))
+          .map { len in
+            String(repeating: "a", count: len)
+          }
       ) { (name: String) in
         guard let sanitized = PathSanitizer.sanitize(name) else { return true }
         return sanitized.count <= PathSanitizer.maxNameLength
@@ -400,7 +408,8 @@ final class TransferPropertyTests: XCTestCase {
         Gen<UInt64>.choose((0, 10_000_000_000)),
         Gen<Double>.choose((0.001, 3600.0))
       ) { (bytes: UInt64, duration: Double) in
-        let throughput = duration > 0
+        let throughput =
+          duration > 0
           ? Double(bytes) / (duration * 1_048_576)
           : 0
         return throughput >= 0

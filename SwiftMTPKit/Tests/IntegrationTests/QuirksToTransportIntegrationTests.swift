@@ -46,9 +46,11 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
     let policy = QuirkResolver.resolve(fingerprint: fingerprint, database: db)
     let defaults = EffectiveTuning.defaults()
 
-    XCTAssertEqual(policy.tuning.maxChunkBytes, 256 * 1024,
+    XCTAssertEqual(
+      policy.tuning.maxChunkBytes, 256 * 1024,
       "Quirk should override chunk size")
-    XCTAssertEqual(policy.tuning.handshakeTimeoutMs, defaults.handshakeTimeoutMs,
+    XCTAssertEqual(
+      policy.tuning.handshakeTimeoutMs, defaults.handshakeTimeoutMs,
       "Unset fields should retain defaults")
   }
 
@@ -68,7 +70,8 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
       epIn: 0x81, epOut: 0x02)
 
     let policy = QuirkResolver.resolve(fingerprint: samsungFP, database: db)
-    XCTAssertEqual(policy.tuning.maxChunkBytes, 512 * 1024,
+    XCTAssertEqual(
+      policy.tuning.maxChunkBytes, 512 * 1024,
       "Samsung quirk should be selected, not Xiaomi")
     XCTAssertEqual(policy.tuning.ioTimeoutMs, 8000)
   }
@@ -92,9 +95,11 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
       epIn: 0x81, epOut: 0x02)
 
     let policy = QuirkResolver.resolve(fingerprint: fingerprint, database: db)
-    XCTAssertEqual(policy.tuning.maxChunkBytes, 512 * 1024,
+    XCTAssertEqual(
+      policy.tuning.maxChunkBytes, 512 * 1024,
       "Samsung Galaxy quirk should set 512KB chunk size")
-    XCTAssertEqual(policy.sources.chunkSizeSource, .quirk,
+    XCTAssertEqual(
+      policy.sources.chunkSizeSource, .quirk,
       "Chunk size source should be .quirk")
   }
 
@@ -150,11 +155,14 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
     let db = QuirkDatabase(schemaVersion: "1.0", entries: [])
     let policy = QuirkResolver.resolve(fingerprint: fingerprint, database: db)
 
-    XCTAssertTrue(policy.flags.supportsGetObjectPropList,
+    XCTAssertTrue(
+      policy.flags.supportsGetObjectPropList,
       "PTP camera should enable proplist")
-    XCTAssertFalse(policy.flags.requiresKernelDetach,
+    XCTAssertFalse(
+      policy.flags.requiresKernelDetach,
       "PTP camera should not require kernel detach")
-    XCTAssertTrue(policy.flags.prefersPropListEnumeration,
+    XCTAssertTrue(
+      policy.flags.prefersPropListEnumeration,
       "PTP camera should prefer proplist enumeration")
   }
 
@@ -180,7 +188,8 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
     let policy = QuirkResolver.resolve(fingerprint: fingerprint, database: db)
     XCTAssertTrue(policy.flags.supportsGetObjectPropList)
     XCTAssertTrue(policy.flags.cameraClass)
-    XCTAssertTrue(policy.flags.needsShortReads,
+    XCTAssertTrue(
+      policy.flags.needsShortReads,
       "Explicit quirk flag should override defaults")
     XCTAssertEqual(policy.tuning.maxChunkBytes, 1_048_576)
   }
@@ -194,7 +203,8 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
     let emptyDB = QuirkDatabase(schemaVersion: "1.0", entries: [])
     let policy = QuirkResolver.resolve(fingerprint: fingerprint, database: emptyDB)
 
-    XCTAssertTrue(policy.flags.supportsGetObjectPropList,
+    XCTAssertTrue(
+      policy.flags.supportsGetObjectPropList,
       "Nikon (PTP class) should get proplist support via heuristic")
     XCTAssertTrue(policy.flags.supportsPartialRead32)
     XCTAssertFalse(policy.flags.requiresKernelDetach)
@@ -216,9 +226,11 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
     let phonePolicy = QuirkResolver.resolve(fingerprint: phoneFP, database: emptyDB)
 
     XCTAssertTrue(cameraPolicy.flags.supportsGetObjectPropList)
-    XCTAssertFalse(phonePolicy.flags.supportsGetObjectPropList,
+    XCTAssertFalse(
+      phonePolicy.flags.supportsGetObjectPropList,
       "Phone (vendor class) should not get proplist by default")
-    XCTAssertNotEqual(cameraPolicy.flags.requiresKernelDetach,
+    XCTAssertNotEqual(
+      cameraPolicy.flags.requiresKernelDetach,
       phonePolicy.flags.requiresKernelDetach,
       "Camera and phone should have different kernel detach defaults")
   }
@@ -238,7 +250,8 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
     XCTAssertEqual(policy.tuning.maxChunkBytes, defaults.maxChunkBytes)
     XCTAssertEqual(policy.tuning.ioTimeoutMs, defaults.ioTimeoutMs)
     XCTAssertEqual(policy.tuning.handshakeTimeoutMs, defaults.handshakeTimeoutMs)
-    XCTAssertEqual(policy.sources.chunkSizeSource, .defaults,
+    XCTAssertEqual(
+      policy.sources.chunkSizeSource, .defaults,
       "Unknown device should use default sources")
   }
 
@@ -251,11 +264,14 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
     let emptyDB = QuirkDatabase(schemaVersion: "1.0", entries: [])
     let policy = QuirkResolver.resolve(fingerprint: fingerprint, database: emptyDB)
 
-    XCTAssertTrue(policy.flags.requiresKernelDetach,
+    XCTAssertTrue(
+      policy.flags.requiresKernelDetach,
       "Unknown device should conservatively require kernel detach")
-    XCTAssertFalse(policy.flags.supportsGetObjectPropList,
+    XCTAssertFalse(
+      policy.flags.supportsGetObjectPropList,
       "Unknown device should not assume proplist support")
-    XCTAssertFalse(policy.flags.resetOnOpen,
+    XCTAssertFalse(
+      policy.flags.resetOnOpen,
       "Unknown device should not reset on open by default")
   }
 
@@ -280,7 +296,8 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
     let policy = EffectiveTuningBuilder.buildPolicy(
       capabilities: [:], learned: nil, quirk: quirk, overrides: overrides)
 
-    XCTAssertEqual(policy.tuning.maxChunkBytes, 8_388_608,
+    XCTAssertEqual(
+      policy.tuning.maxChunkBytes, 8_388_608,
       "User override should trump quirk")
     XCTAssertEqual(policy.tuning.ioTimeoutMs, 60000)
     XCTAssertEqual(policy.sources.chunkSizeSource, .userOverride)
@@ -302,7 +319,8 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
       capabilities: [:], learned: learnedTuning, quirk: quirk, overrides: nil)
 
     // Quirk should take precedence over learned for chunk size
-    XCTAssertEqual(policy.tuning.maxChunkBytes, 512 * 1024,
+    XCTAssertEqual(
+      policy.tuning.maxChunkBytes, 512 * 1024,
       "Quirk should override learned profile for chunk size")
   }
 
@@ -314,7 +332,8 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
     let policy = EffectiveTuningBuilder.buildPolicy(
       capabilities: [:], learned: learnedTuning, quirk: nil, overrides: nil)
 
-    XCTAssertEqual(policy.tuning.maxChunkBytes, 2_097_152,
+    XCTAssertEqual(
+      policy.tuning.maxChunkBytes, 2_097_152,
       "Learned tuning should apply when no quirk exists")
     XCTAssertEqual(policy.sources.chunkSizeSource, .learned)
   }
@@ -337,9 +356,11 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
       interfaceClass: 0xFF, interfaceSubclass: 0x01, interfaceProtocol: 0x01,
       epIn: 0x81, epOut: 0x02)
 
-    XCTAssertEqual(fp1.hashString, fp2.hashString,
+    XCTAssertEqual(
+      fp1.hashString, fp2.hashString,
       "Same VID/PID should produce identical hash")
-    XCTAssertNotEqual(fp1.hashString, fp3.hashString,
+    XCTAssertNotEqual(
+      fp1.hashString, fp3.hashString,
       "Different PID should produce different hash")
   }
 
@@ -372,7 +393,8 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
 
     let merged = initial.merged(with: session)
     XCTAssertEqual(merged.sampleCount, 6)
-    XCTAssertGreaterThan(merged.p95ReadThroughputMBps ?? 0, initial.p95ReadThroughputMBps ?? 0,
+    XCTAssertGreaterThan(
+      merged.p95ReadThroughputMBps ?? 0, initial.p95ReadThroughputMBps ?? 0,
       "Merged profile should reflect higher throughput sample")
   }
 
@@ -424,7 +446,8 @@ final class QuirksToTransportIntegrationTests: XCTestCase {
 
     let policy = QuirkResolver.resolve(fingerprint: fp, database: emptyDB)
     let defaults = EffectiveTuning.defaults()
-    XCTAssertEqual(policy.tuning.maxChunkBytes, defaults.maxChunkBytes,
+    XCTAssertEqual(
+      policy.tuning.maxChunkBytes, defaults.maxChunkBytes,
       "Empty DB should yield default tuning")
     XCTAssertEqual(policy.sources.chunkSizeSource, .defaults)
   }

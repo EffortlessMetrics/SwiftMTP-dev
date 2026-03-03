@@ -479,49 +479,77 @@ final class PTPCodecTests: XCTestCase {
   func testValueAllScalarTypes() {
     // INT8
     var r1 = PTPReader(data: Data([0xFE]))
-    if case .int8(let v) = r1.value(dt: 0x0001) { XCTAssertEqual(v, -2) }
-    else { XCTFail("Expected int8") }
+    if case .int8(let v) = r1.value(dt: 0x0001) {
+      XCTAssertEqual(v, -2)
+    } else {
+      XCTFail("Expected int8")
+    }
 
     // UINT8
     var r2 = PTPReader(data: Data([0x42]))
-    if case .uint8(let v) = r2.value(dt: 0x0002) { XCTAssertEqual(v, 0x42) }
-    else { XCTFail("Expected uint8") }
+    if case .uint8(let v) = r2.value(dt: 0x0002) {
+      XCTAssertEqual(v, 0x42)
+    } else {
+      XCTFail("Expected uint8")
+    }
 
     // INT16 — LE 0xFF00 = -256 as Int16
     var r3 = PTPReader(data: Data([0x00, 0xFF]))
-    if case .int16(let v) = r3.value(dt: 0x0003) { XCTAssertEqual(v, -256) }
-    else { XCTFail("Expected int16") }
+    if case .int16(let v) = r3.value(dt: 0x0003) {
+      XCTAssertEqual(v, -256)
+    } else {
+      XCTFail("Expected int16")
+    }
 
     // UINT16
     var r4 = PTPReader(data: Data([0x78, 0x56]))
-    if case .uint16(let v) = r4.value(dt: 0x0004) { XCTAssertEqual(v, 0x5678) }
-    else { XCTFail("Expected uint16") }
+    if case .uint16(let v) = r4.value(dt: 0x0004) {
+      XCTAssertEqual(v, 0x5678)
+    } else {
+      XCTFail("Expected uint16")
+    }
 
     // INT32 — LE 0xFFFFFF00 = -256 as Int32
     var r5data = Data(count: 4)
-    r5data[0] = 0x00; r5data[1] = 0xFF; r5data[2] = 0xFF; r5data[3] = 0xFF
+    r5data[0] = 0x00
+    r5data[1] = 0xFF
+    r5data[2] = 0xFF
+    r5data[3] = 0xFF
     var r5 = PTPReader(data: r5data)
-    if case .int32(let v) = r5.value(dt: 0x0005) { XCTAssertEqual(v, -256) }
-    else { XCTFail("Expected int32") }
+    if case .int32(let v) = r5.value(dt: 0x0005) {
+      XCTAssertEqual(v, -256)
+    } else {
+      XCTFail("Expected int32")
+    }
 
     // UINT32
     var r6data = Data(count: 4)
     r6data[0] = 0x01
     var r6 = PTPReader(data: r6data)
-    if case .uint32(let v) = r6.value(dt: 0x0006) { XCTAssertEqual(v, 1) }
-    else { XCTFail("Expected uint32") }
+    if case .uint32(let v) = r6.value(dt: 0x0006) {
+      XCTAssertEqual(v, 1)
+    } else {
+      XCTFail("Expected uint32")
+    }
 
     // INT64 — all 0xFF = -1 as Int64
     var r7 = PTPReader(data: Data(repeating: 0xFF, count: 8))
-    if case .int64(let v) = r7.value(dt: 0x0007) { XCTAssertEqual(v, -1) }
-    else { XCTFail("Expected int64") }
+    if case .int64(let v) = r7.value(dt: 0x0007) {
+      XCTAssertEqual(v, -1)
+    } else {
+      XCTFail("Expected int64")
+    }
 
     // UINT64
     var r8data = Data(count: 8)
-    r8data[0] = 0xFF; r8data[1] = 0xFF
+    r8data[0] = 0xFF
+    r8data[1] = 0xFF
     var r8 = PTPReader(data: r8data)
-    if case .uint64(let v) = r8.value(dt: 0x0008) { XCTAssertEqual(v, 0xFFFF) }
-    else { XCTFail("Expected uint64") }
+    if case .uint64(let v) = r8.value(dt: 0x0008) {
+      XCTAssertEqual(v, 0xFFFF)
+    } else {
+      XCTFail("Expected uint64")
+    }
   }
 
   func testValueUINT128AndINT128() {
@@ -547,20 +575,31 @@ final class PTPCodecTests: XCTestCase {
     // count = 3
     data[0] = 0x03
     // first = 0xAABBCCDD
-    data[4] = 0xDD; data[5] = 0xCC; data[6] = 0xBB; data[7] = 0xAA
+    data[4] = 0xDD
+    data[5] = 0xCC
+    data[6] = 0xBB
+    data[7] = 0xAA
     // second = 0x11223344
-    data[8] = 0x44; data[9] = 0x33; data[10] = 0x22; data[11] = 0x11
+    data[8] = 0x44
+    data[9] = 0x33
+    data[10] = 0x22
+    data[11] = 0x11
     // third = 0 (already zero-init)
 
     var reader = PTPReader(data: data)
     if case .array(let arr) = reader.value(dt: 0x4006) {
       XCTAssertEqual(arr.count, 3)
-      if case .uint32(let v) = arr[0] { XCTAssertEqual(v, 0xAABBCCDD) }
-      else { XCTFail("arr[0] not uint32") }
-      if case .uint32(let v) = arr[1] { XCTAssertEqual(v, 0x11223344) }
-      else { XCTFail("arr[1] not uint32") }
-      if case .uint32(let v) = arr[2] { XCTAssertEqual(v, 0) }
-      else { XCTFail("arr[2] not uint32") }
+      if case .uint32(let v) = arr[0] {
+        XCTAssertEqual(v, 0xAABBCCDD)
+      } else {
+        XCTFail("arr[0] not uint32")
+      }
+      if case .uint32(let v) = arr[1] {
+        XCTAssertEqual(v, 0x11223344)
+      } else {
+        XCTFail("arr[1] not uint32")
+      }
+      if case .uint32(let v) = arr[2] { XCTAssertEqual(v, 0) } else { XCTFail("arr[2] not uint32") }
     } else {
       XCTFail("Expected array")
     }

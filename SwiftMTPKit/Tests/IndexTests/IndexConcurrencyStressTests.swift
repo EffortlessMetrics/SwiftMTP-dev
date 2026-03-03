@@ -60,9 +60,10 @@ struct IndexConcurrencyReadsDuringWritesTests {
       // Writers: insert batches of 50
       for batch in 0..<10 {
         group.addTask {
-          let objs = (0..<50).map { j in
-            makeObj(handle: UInt32(10_000 + batch * 50 + j), name: "w\(batch)_\(j).txt")
-          }
+          let objs = (0..<50)
+            .map { j in
+              makeObj(handle: UInt32(10_000 + batch * 50 + j), name: "w\(batch)_\(j).txt")
+            }
           try await idx.upsertObjects(objs, deviceId: "dev")
         }
       }
@@ -70,7 +71,8 @@ struct IndexConcurrencyReadsDuringWritesTests {
       for _ in 0..<8 {
         group.addTask {
           for _ in 0..<50 {
-            let kids = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
+            let kids = try await idx.children(
+              deviceId: "dev", storageId: 0x10001, parentHandle: nil)
             // Must always see at least the seed data
             #expect(kids.count >= 100)
           }
@@ -80,7 +82,7 @@ struct IndexConcurrencyReadsDuringWritesTests {
     }
 
     let total = try await idx.children(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
-    #expect(total.count == 600) // 100 seed + 10 * 50
+    #expect(total.count == 600)  // 100 seed + 10 * 50
   }
 
   @Test("Single object lookup consistent during concurrent writes")
@@ -95,9 +97,10 @@ struct IndexConcurrencyReadsDuringWritesTests {
       // Continuous writer for other handles
       for batch in 0..<20 {
         group.addTask {
-          let objs = (0..<25).map { j in
-            makeObj(handle: UInt32(1000 + batch * 25 + j), name: "bg\(batch)_\(j).txt")
-          }
+          let objs = (0..<25)
+            .map { j in
+              makeObj(handle: UInt32(1000 + batch * 25 + j), name: "bg\(batch)_\(j).txt")
+            }
           try await idx.upsertObjects(objs, deviceId: "dev")
         }
       }
@@ -160,9 +163,10 @@ struct IndexConcurrencyMultiDeviceTests {
       for d in 0..<devicesCount {
         group.addTask {
           let deviceId = "device-\(d)"
-          let objs = (0..<objectsPerDevice).map { j in
-            makeObj(deviceId: deviceId, handle: UInt32(j), name: "d\(d)_f\(j).txt")
-          }
+          let objs = (0..<objectsPerDevice)
+            .map { j in
+              makeObj(deviceId: deviceId, handle: UInt32(j), name: "d\(d)_f\(j).txt")
+            }
           try await idx.upsertObjects(objs, deviceId: deviceId)
         }
       }
@@ -212,9 +216,10 @@ struct IndexConcurrencyMultiDeviceTests {
     // Seed data for two devices
     for d in 0..<2 {
       let deviceId = "dev-\(d)"
-      let objs = (0..<100).map { j in
-        makeObj(deviceId: deviceId, handle: UInt32(j), name: "f\(j).txt")
-      }
+      let objs = (0..<100)
+        .map { j in
+          makeObj(deviceId: deviceId, handle: UInt32(j), name: "f\(j).txt")
+        }
       try await idx.upsertObjects(objs, deviceId: deviceId)
     }
 
@@ -236,10 +241,10 @@ struct IndexConcurrencyMultiDeviceTests {
     }
 
     let dev0 = try await idx.children(deviceId: "dev-0", storageId: 0x10001, parentHandle: nil)
-    #expect(dev0.count == 200) // 100 original + 100 new
+    #expect(dev0.count == 200)  // 100 original + 100 new
 
     let dev1 = try await idx.children(deviceId: "dev-1", storageId: 0x10001, parentHandle: nil)
-    #expect(dev1.count == 0) // all deleted
+    #expect(dev1.count == 0)  // all deleted
   }
 }
 
@@ -263,9 +268,10 @@ struct IndexConcurrencyWALTests {
       // Writer inserts more data
       group.addTask {
         for batch in 0..<10 {
-          let objs = (0..<20).map { j in
-            makeObj(handle: UInt32(1000 + batch * 20 + j), name: "w\(batch)_\(j).txt")
-          }
+          let objs = (0..<20)
+            .map { j in
+              makeObj(handle: UInt32(1000 + batch * 20 + j), name: "w\(batch)_\(j).txt")
+            }
           try await writer.upsertObjects(objs, deviceId: "dev")
         }
       }
@@ -354,9 +360,10 @@ struct IndexConcurrencyLargeBatchTests {
     try await withThrowingTaskGroup(of: Void.self) { group in
       for b in 0..<batchCount {
         group.addTask {
-          let objs = (0..<batchSize).map { j in
-            makeObj(handle: UInt32(b * batchSize + j), name: "b\(b)_\(j).dat")
-          }
+          let objs = (0..<batchSize)
+            .map { j in
+              makeObj(handle: UInt32(b * batchSize + j), name: "b\(b)_\(j).dat")
+            }
           try await idx.upsertObjects(objs, deviceId: "dev")
         }
       }
@@ -414,11 +421,12 @@ struct IndexConcurrencyRebuildTests {
     try await idx.insertObject(parent, deviceId: "dev")
 
     // Seed children under parent
-    let seed = (0..<50).map { i in
-      makeObj(
-        handle: UInt32(100 + i), parentHandle: parentHandle,
-        name: "photo\(i).jpg", pathKey: "00010001/DCIM/photo\(i).jpg")
-    }
+    let seed = (0..<50)
+      .map { i in
+        makeObj(
+          handle: UInt32(100 + i), parentHandle: parentHandle,
+          name: "photo\(i).jpg", pathKey: "00010001/DCIM/photo\(i).jpg")
+      }
     try await idx.upsertObjects(seed, deviceId: "dev")
 
     try await withThrowingTaskGroup(of: Void.self) { group in
@@ -427,12 +435,13 @@ struct IndexConcurrencyRebuildTests {
         for cycle in 0..<5 {
           try await idx.markStaleChildren(
             deviceId: "dev", storageId: 0x10001, parentHandle: parentHandle)
-          let fresh = (0..<50).map { i in
-            makeObj(
-              handle: UInt32(100 + i), parentHandle: parentHandle,
-              name: "photo\(i)_v\(cycle).jpg",
-              pathKey: "00010001/DCIM/photo\(i)_v\(cycle).jpg")
-          }
+          let fresh = (0..<50)
+            .map { i in
+              makeObj(
+                handle: UInt32(100 + i), parentHandle: parentHandle,
+                name: "photo\(i)_v\(cycle).jpg",
+                pathKey: "00010001/DCIM/photo\(i)_v\(cycle).jpg")
+            }
           try await idx.upsertObjects(fresh, deviceId: "dev")
           try await idx.purgeStale(
             deviceId: "dev", storageId: 0x10001, parentHandle: parentHandle)
@@ -499,9 +508,10 @@ struct IndexConcurrencyMigrationTests {
 
     // Insert with ephemeral device ID pattern
     let ephemeralId = "04e8:6860@1:3"
-    let objs = (0..<100).map { i in
-      makeObj(deviceId: ephemeralId, handle: UInt32(i), name: "f\(i).txt")
-    }
+    let objs = (0..<100)
+      .map { i in
+        makeObj(deviceId: ephemeralId, handle: UInt32(i), name: "f\(i).txt")
+      }
     try await idx.upsertObjects(objs, deviceId: ephemeralId)
 
     let stableId = "stable-domain-id"
@@ -547,17 +557,19 @@ struct IndexConcurrencyMigrationTests {
       // Rapidly update storage metadata
       group.addTask {
         for i in 0..<50 {
-          try await idx.upsertStorage(IndexedStorage(
-            deviceId: "dev", storageId: 0x10001, description: "Internal",
-            capacity: 128_000_000, free: UInt64(64_000_000 - i * 1000), readOnly: false
-          ))
+          try await idx.upsertStorage(
+            IndexedStorage(
+              deviceId: "dev", storageId: 0x10001, description: "Internal",
+              capacity: 128_000_000, free: UInt64(64_000_000 - i * 1000), readOnly: false
+            ))
         }
       }
       // Insert objects concurrently
       group.addTask {
-        let objs = (0..<200).map { j in
-          makeObj(handle: UInt32(j), name: "f\(j).txt")
-        }
+        let objs = (0..<200)
+          .map { j in
+            makeObj(handle: UInt32(j), name: "f\(j).txt")
+          }
         try await idx.upsertObjects(objs, deviceId: "dev")
       }
       try await group.waitForAll()
@@ -612,7 +624,8 @@ struct IndexConcurrencyStressEdgeCaseTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    let counters = try await withThrowingTaskGroup(of: Int64.self, returning: [Int64].self) { group in
+    let counters = try await withThrowingTaskGroup(of: Int64.self, returning: [Int64].self) {
+      group in
       for _ in 0..<50 {
         group.addTask {
           return try await idx.nextChangeCounter(deviceId: "dev")
@@ -644,9 +657,10 @@ struct IndexConcurrencyStressEdgeCaseTests {
     try await withThrowingTaskGroup(of: Void.self) { group in
       for t in 0..<taskCount {
         group.addTask {
-          let objs = (0..<objectsPerTask).map { j in
-            makeObj(handle: UInt32(t * objectsPerTask + j), name: "t\(t)_\(j).txt")
-          }
+          let objs = (0..<objectsPerTask)
+            .map { j in
+              makeObj(handle: UInt32(t * objectsPerTask + j), name: "t\(t)_\(j).txt")
+            }
           try await idx.upsertObjects(objs, deviceId: "dev")
 
           // Immediately verify own objects are visible

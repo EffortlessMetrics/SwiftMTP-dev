@@ -131,8 +131,9 @@ final class VirtualDeviceComplianceTests: XCTestCase {
   func testAddObjectUpdatesNextHandle() async throws {
     let device = VirtualMTPDevice(config: .emptyDevice)
     let sid = MTPStorageID(raw: 0x0001_0001)
-    await device.addObject(VirtualObjectConfig(
-      handle: 1000, storage: sid, parent: nil, name: "high.txt"))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 1000, storage: sid, parent: nil, name: "high.txt"))
 
     let newHandle = try await device.createFolder(parent: nil, name: "after", storage: sid)
     XCTAssertGreaterThan(newHandle, 1000, "New handle should be > manually added handle")
@@ -150,8 +151,10 @@ final class VirtualDeviceComplianceTests: XCTestCase {
     var content = Data(count: 2048)
     for i in 0..<content.count { content[i] = UInt8(i % 256) }
 
-    let src = try TestUtilities.createTempFile(directory: tempDir, filename: "binary.bin", content: content)
-    _ = try await device.write(parent: nil, name: "binary.bin", size: UInt64(content.count), from: src)
+    let src = try TestUtilities.createTempFile(
+      directory: tempDir, filename: "binary.bin", content: content)
+    _ = try await device.write(
+      parent: nil, name: "binary.bin", size: UInt64(content.count), from: src)
 
     var items: [MTPObjectInfo] = []
     for try await batch in device.list(parent: nil, in: sid) {
@@ -355,7 +358,8 @@ final class VirtualDeviceComplianceTests: XCTestCase {
 
   func testDevGetRootHandlesUncached() async throws {
     let device = VirtualMTPDevice(config: .pixel7)
-    let handles = try await device.devGetRootHandlesUncached(storage: MTPStorageID(raw: 0x0001_0001))
+    let handles = try await device.devGetRootHandlesUncached(
+      storage: MTPStorageID(raw: 0x0001_0001))
     XCTAssertTrue(handles.contains(1), "DCIM folder handle should be in root handles")
   }
 
@@ -415,7 +419,8 @@ final class FaultInjectingLinkComplianceTests: XCTestCase {
   func testAccessDeniedFaultOnMoveObject() async throws {
     var config = VirtualDeviceConfig.emptyDevice
     let sid = config.storages[0].id
-    config = config.withObject(VirtualObjectConfig(handle: 10, storage: sid, parent: nil, name: "f.txt"))
+    config = config.withObject(
+      VirtualObjectConfig(handle: 10, storage: sid, parent: nil, name: "f.txt"))
     let schedule = FaultSchedule([
       ScheduledFault(trigger: .onOperation(.moveObject), error: .accessDenied)
     ])
@@ -444,9 +449,10 @@ final class FaultInjectingLinkComplianceTests: XCTestCase {
   }
 
   func testDisconnectedFaultOnCloseSession() async throws {
-    let link = makeLink(schedule: FaultSchedule([
-      ScheduledFault(trigger: .onOperation(.closeSession), error: .disconnected)
-    ]))
+    let link = makeLink(
+      schedule: FaultSchedule([
+        ScheduledFault(trigger: .onOperation(.closeSession), error: .disconnected)
+      ]))
 
     do {
       try await link.closeSession()
@@ -515,7 +521,10 @@ final class FaultInjectingLinkComplianceTests: XCTestCase {
     let link = makeLink(schedule: schedule)
 
     // Verify faults are active
-    do { _ = try await link.getDeviceInfo(); XCTFail("Expected fault") } catch {}
+    do {
+      _ = try await link.getDeviceInfo()
+      XCTFail("Expected fault")
+    } catch {}
 
     // Clear all
     schedule.clear()
@@ -542,9 +551,10 @@ final class FaultInjectingLinkComplianceTests: XCTestCase {
   }
 
   func testFaultOnExecuteStreamingCommand() async throws {
-    let link = makeLink(schedule: FaultSchedule([
-      .timeoutOnce(on: .executeStreamingCommand)
-    ]))
+    let link = makeLink(
+      schedule: FaultSchedule([
+        .timeoutOnce(on: .executeStreamingCommand)
+      ]))
 
     do {
       _ = try await link.executeStreamingCommand(
@@ -564,12 +574,16 @@ final class FaultInjectingLinkComplianceTests: XCTestCase {
     let link = makeLink(schedule: schedule)
 
     // First call: timeout
-    do { _ = try await link.getDeviceInfo(); XCTFail("Expected timeout") }
-    catch { XCTAssertTrue("\(error)".contains("timeout")) }
+    do {
+      _ = try await link.getDeviceInfo()
+      XCTFail("Expected timeout")
+    } catch { XCTAssertTrue("\(error)".contains("timeout")) }
 
     // Second call: busy
-    do { _ = try await link.getDeviceInfo(); XCTFail("Expected busy") }
-    catch { XCTAssertTrue("\(error)".contains("busy")) }
+    do {
+      _ = try await link.getDeviceInfo()
+      XCTFail("Expected busy")
+    } catch { XCTAssertTrue("\(error)".contains("busy")) }
 
     // Third call: succeeds
     let info = try await link.getDeviceInfo()

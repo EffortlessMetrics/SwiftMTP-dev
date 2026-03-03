@@ -22,9 +22,11 @@ final class ErrorPropagationChainTests: XCTestCase {
     let level3: Error = level2
 
     guard case .preconditionFailed(let msg) = level3 as? MTPError else {
-      XCTFail("Expected preconditionFailed at top level"); return
+      XCTFail("Expected preconditionFailed at top level")
+      return
     }
-    XCTAssertTrue(msg.contains("USB bulk transfer failed"), "Original message must survive 3-level chain")
+    XCTAssertTrue(
+      msg.contains("USB bulk transfer failed"), "Original message must survive 3-level chain")
     XCTAssertTrue(msg.contains("Transfer layer"), "Intermediate context must survive")
   }
 
@@ -36,7 +38,8 @@ final class ErrorPropagationChainTests: XCTestCase {
     let outer = MTPError.notSupported("Operation aborted: \(wrapped)")
 
     guard case .notSupported(let msg) = outer else {
-      XCTFail("Expected notSupported"); return
+      XCTFail("Expected notSupported")
+      return
     }
     XCTAssertTrue(msg.contains("bulk-in"), "Transport phase must propagate to outermost layer")
     XCTAssertTrue(msg.contains("Sync failed"), "Mid-layer context preserved")
@@ -50,8 +53,10 @@ final class ErrorPropagationChainTests: XCTestCase {
 
     // Narrow Error → MTPError → TransportError
     guard let mtpErr = api as? MTPError,
-          case .transport(let transportErr) = mtpErr else {
-      XCTFail("Could not narrow through chain"); return
+      case .transport(let transportErr) = mtpErr
+    else {
+      XCTFail("Could not narrow through chain")
+      return
     }
     XCTAssertEqual(transportErr, .stall)
   }
@@ -89,14 +94,14 @@ final class ErrorPropagationChainTests: XCTestCase {
     // Two independent links with different faults must not interfere
     let inner1 = VirtualMTPLink(config: .pixel7)
     let sched1 = FaultSchedule([
-      ScheduledFault(trigger: .onOperation(.getStorageIDs), error: .timeout, repeatCount: 1),
+      ScheduledFault(trigger: .onOperation(.getStorageIDs), error: .timeout, repeatCount: 1)
     ])
     let link1 = FaultInjectingLink(wrapping: inner1, schedule: sched1)
     try await link1.openSession(id: 1)
 
     let inner2 = VirtualMTPLink(config: .pixel7)
     let sched2 = FaultSchedule([
-      ScheduledFault(trigger: .onOperation(.getDeviceInfo), error: .busy, repeatCount: 1),
+      ScheduledFault(trigger: .onOperation(.getDeviceInfo), error: .busy, repeatCount: 1)
     ])
     let link2 = FaultInjectingLink(wrapping: inner2, schedule: sched2)
     try await link2.openSession(id: 2)
@@ -142,7 +147,7 @@ final class ErrorPropagationChainTests: XCTestCase {
   func testRetryExhaustionThrowsLastError() async throws {
     let inner = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
-      ScheduledFault(trigger: .onOperation(.getStorageIDs), error: .busy, repeatCount: 10),
+      ScheduledFault(trigger: .onOperation(.getStorageIDs), error: .busy, repeatCount: 10)
     ])
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
     try await link.openSession(id: 1)
@@ -181,10 +186,12 @@ final class ErrorPropagationChainTests: XCTestCase {
       XCTAssertTrue(err.attempts.allSatisfy { !$0.succeeded })
       XCTAssertTrue(err.attempts.allSatisfy { $0.error != nil })
       // Verify the errors are recorded in order
-      XCTAssertTrue(err.attempts[0].error?.contains("timeout") ?? false,
-                     "First rung error: \(err.attempts[0].error ?? "nil")")
-      XCTAssertTrue(err.attempts[3].error?.lowercased().contains("disconnect") ?? false,
-                     "Last rung error: \(err.attempts[3].error ?? "nil")")
+      XCTAssertTrue(
+        err.attempts[0].error?.contains("timeout") ?? false,
+        "First rung error: \(err.attempts[0].error ?? "nil")")
+      XCTAssertTrue(
+        err.attempts[3].error?.lowercased().contains("disconnect") ?? false,
+        "Last rung error: \(err.attempts[3].error ?? "nil")")
     }
   }
 
@@ -384,7 +391,8 @@ final class ErrorPropagationChainTests: XCTestCase {
     let inner = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
       ScheduledFault(trigger: .onOperation(.getObjectHandles), error: .timeout, repeatCount: 2),
-      ScheduledFault(trigger: .onOperation(.getObjectHandles), error: .disconnected, repeatCount: 1),
+      ScheduledFault(
+        trigger: .onOperation(.getObjectHandles), error: .disconnected, repeatCount: 1),
     ])
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
     try await link.openSession(id: 1)
@@ -404,14 +412,15 @@ final class ErrorPropagationChainTests: XCTestCase {
       }
     }
 
-    XCTAssertEqual(sequence, ["timeout", "timeout", "disconnect"],
-                   "Should see 2 timeouts then disconnect escalation")
+    XCTAssertEqual(
+      sequence, ["timeout", "timeout", "disconnect"],
+      "Should see 2 timeouts then disconnect escalation")
   }
 
   func testCleanupAfterDisconnect() async throws {
     let inner = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
-      ScheduledFault(trigger: .onOperation(.closeSession), error: .disconnected, repeatCount: 1),
+      ScheduledFault(trigger: .onOperation(.closeSession), error: .disconnected, repeatCount: 1)
     ])
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
     try await link.openSession(id: 1)
@@ -446,7 +455,7 @@ final class ErrorPropagationChainTests: XCTestCase {
   func testDisconnectDuringMultiOperationSequence() async throws {
     let inner = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
-      ScheduledFault(trigger: .onOperation(.getStorageInfo), error: .disconnected, repeatCount: 1),
+      ScheduledFault(trigger: .onOperation(.getStorageInfo), error: .disconnected, repeatCount: 1)
     ])
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
     try await link.openSession(id: 1)
@@ -494,7 +503,7 @@ final class ErrorPropagationChainTests: XCTestCase {
   func testFaultScheduleExhaustion_OperationsSucceedAfter() async throws {
     let inner = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
-      ScheduledFault(trigger: .onOperation(.getDeviceInfo), error: .timeout, repeatCount: 2),
+      ScheduledFault(trigger: .onOperation(.getDeviceInfo), error: .timeout, repeatCount: 2)
     ])
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
     try await link.openSession(id: 1)

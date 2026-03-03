@@ -65,7 +65,8 @@ final class LegacyMediaPlayerQuirksTests: XCTestCase {
       let flags = entry.resolvedFlags()
       XCTAssertFalse(
         flags.supportsGetObjectPropList,
-        "SanDisk Sansa '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST)")
+        "SanDisk Sansa '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST)"
+      )
     }
   }
 
@@ -97,7 +98,8 @@ final class LegacyMediaPlayerQuirksTests: XCTestCase {
       let flags = entry.resolvedFlags()
       XCTAssertTrue(
         flags.emptyDatesInSendObject,
-        "SanDisk Sansa '\(entry.id)' should have emptyDatesInSendObject=true (CANNOT_HANDLE_DATEMODIFIED)")
+        "SanDisk Sansa '\(entry.id)' should have emptyDatesInSendObject=true (CANNOT_HANDLE_DATEMODIFIED)"
+      )
     }
   }
 
@@ -160,7 +162,8 @@ final class LegacyMediaPlayerQuirksTests: XCTestCase {
       let flags = entry.resolvedFlags()
       XCTAssertFalse(
         flags.supportsGetObjectPropList,
-        "Creative ZEN '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST_ALL)")
+        "Creative ZEN '\(entry.id)' should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST_ALL)"
+      )
     }
   }
 
@@ -180,7 +183,8 @@ final class LegacyMediaPlayerQuirksTests: XCTestCase {
     for entry in sansaEntries {
       XCTAssertEqual(
         entry.category, "media-player",
-        "SanDisk Sansa '\(entry.id)' should have category 'media-player', got '\(entry.category ?? "nil")'")
+        "SanDisk Sansa '\(entry.id)' should have category 'media-player', got '\(entry.category ?? "nil")'"
+      )
     }
   }
 
@@ -190,7 +194,8 @@ final class LegacyMediaPlayerQuirksTests: XCTestCase {
     for entry in zenEntries {
       XCTAssertEqual(
         entry.category, "media-player",
-        "Creative ZEN '\(entry.id)' should have category 'media-player', got '\(entry.category ?? "nil")'")
+        "Creative ZEN '\(entry.id)' should have category 'media-player', got '\(entry.category ?? "nil")'"
+      )
     }
   }
 
@@ -235,7 +240,8 @@ final class LegacyMediaPlayerQuirksTests: XCTestCase {
     let ratio = Double(sandiskPrefixed.count) / Double(sandiskEntries.count)
     XCTAssertGreaterThan(
       ratio, 0.95,
-      "At least 95% of VID 0x0781 entries should start with 'sandisk-' (\(sandiskPrefixed.count)/\(sandiskEntries.count))")
+      "At least 95% of VID 0x0781 entries should start with 'sandisk-' (\(sandiskPrefixed.count)/\(sandiskEntries.count))"
+    )
   }
 
   func testCreativeIDsStartWithCreative() {
@@ -243,6 +249,7 @@ final class LegacyMediaPlayerQuirksTests: XCTestCase {
     let ratio = Double(creativePrefixed.count) / Double(creativeEntries.count)
     XCTAssertGreaterThan(
       ratio, 0.95,
-      "At least 95% of VID 0x041e entries should start with 'creative-' (\(creativePrefixed.count)/\(creativeEntries.count))")
+      "At least 95% of VID 0x041e entries should start with 'creative-' (\(creativePrefixed.count)/\(creativeEntries.count))"
+    )
   }
 }

@@ -185,7 +185,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
       let flags = entry.resolvedFlags()
       XCTAssertFalse(
         flags.supportsGetObjectPropList,
-        "Philips HDD6320 should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST_ALL)")
+        "Philips HDD6320 should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST_ALL)"
+      )
     }
   }
 
@@ -226,7 +227,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
     for entry in gogearEntries {
       XCTAssertEqual(
         entry.category, "media-player",
-        "Philips GoGear '\(entry.id)' should have category 'media-player', got '\(entry.category ?? "nil")'")
+        "Philips GoGear '\(entry.id)' should have category 'media-player', got '\(entry.category ?? "nil")'"
+      )
     }
   }
 
@@ -236,7 +238,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
     for entry in hddEntries {
       XCTAssertEqual(
         entry.category, "media-player",
-        "Philips HDD '\(entry.id)' should have category 'media-player', got '\(entry.category ?? "nil")'")
+        "Philips HDD '\(entry.id)' should have category 'media-player', got '\(entry.category ?? "nil")'"
+      )
     }
   }
 
@@ -247,7 +250,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
     let ratio = Double(philipsPrefixed.count) / Double(max(philipsEntries.count, 1))
     XCTAssertGreaterThan(
       ratio, 0.90,
-      "At least 90% of VID 0x0471 entries should start with 'philips-' (\(philipsPrefixed.count)/\(philipsEntries.count))")
+      "At least 90% of VID 0x0471 entries should start with 'philips-' (\(philipsPrefixed.count)/\(philipsEntries.count))"
+    )
   }
 
   // MARK: - Toshiba Gigabeat: NO_RELEASE_INTERFACE + BROKEN_SEND_OBJECT_PROPLIST
@@ -290,7 +294,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
       let flags = entry.resolvedFlags()
       XCTAssertFalse(
         flags.supportsGetObjectPropList,
-        "Toshiba Gigabeat S should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST_ALL)")
+        "Toshiba Gigabeat S should have supportsGetObjectPropList=false (BROKEN_MTPGETOBJPROPLIST_ALL)"
+      )
     }
   }
 
@@ -302,7 +307,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
     for entry in gigabeatEntries {
       XCTAssertEqual(
         entry.category, "media-player",
-        "Toshiba Gigabeat '\(entry.id)' should have category 'media-player', got '\(entry.category ?? "nil")'")
+        "Toshiba Gigabeat '\(entry.id)' should have category 'media-player', got '\(entry.category ?? "nil")'"
+      )
     }
   }
 
@@ -326,7 +332,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
       let flags = entry.resolvedFlags()
       XCTAssertFalse(
         flags.supportsGetObjectPropList,
-        "Toshiba Excite AT300 should have supportsGetObjectPropList=false (DEVICE_FLAGS_ANDROID_BUGS)")
+        "Toshiba Excite AT300 should have supportsGetObjectPropList=false (DEVICE_FLAGS_ANDROID_BUGS)"
+      )
     }
   }
 
@@ -348,7 +355,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
       let flags = entry.resolvedFlags()
       XCTAssertTrue(
         flags.requiresKernelDetach,
-        "Toshiba Android tablet '\(entry.id)' should require kernel detach (DEVICE_FLAGS_ANDROID_BUGS)")
+        "Toshiba Android tablet '\(entry.id)' should require kernel detach (DEVICE_FLAGS_ANDROID_BUGS)"
+      )
     }
   }
 
@@ -359,7 +367,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
     let ratio = Double(toshibaPrefixed.count) / Double(max(toshibaEntries.count, 1))
     XCTAssertGreaterThan(
       ratio, 0.50,
-      "At least 50% of VID 0x0930 entries should start with 'toshiba-' (\(toshibaPrefixed.count)/\(toshibaEntries.count))")
+      "At least 50% of VID 0x0930 entries should start with 'toshiba-' (\(toshibaPrefixed.count)/\(toshibaEntries.count))"
+    )
   }
 
   // MARK: - Acer Iconia Tab: DEVICE_FLAGS_ANDROID_BUGS
@@ -418,7 +427,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
     let ratio = Double(withKernelDetach.count) / Double(max(acerWithFlags.count, 1))
     XCTAssertGreaterThan(
       ratio, 0.5,
-      "Most Acer entries with flags should require kernel detach (\(withKernelDetach.count)/\(acerWithFlags.count))")
+      "Most Acer entries with flags should require kernel detach (\(withKernelDetach.count)/\(acerWithFlags.count))"
+    )
   }
 
   func testAcerAndroidDevicesDisableGetObjectPropList() {
@@ -442,7 +452,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
     let ratio = Double(acerPrefixed.count) / Double(max(acerEntries.count, 1))
     XCTAssertGreaterThan(
       ratio, 0.90,
-      "At least 90% of VID 0x0502 entries should start with 'acer-' (\(acerPrefixed.count)/\(acerEntries.count))")
+      "At least 90% of VID 0x0502 entries should start with 'acer-' (\(acerPrefixed.count)/\(acerEntries.count))"
+    )
   }
 
   // MARK: - Cross-Vendor Legacy Media Player Chunk Sizes
@@ -453,7 +464,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
       if let chunk = entry.maxChunkBytes {
         XCTAssertLessThanOrEqual(
           chunk, 4_194_304,
-          "Philips media player '\(entry.id)' chunk size \(chunk) exceeds safe 4MB maximum for legacy devices")
+          "Philips media player '\(entry.id)' chunk size \(chunk) exceeds safe 4MB maximum for legacy devices"
+        )
       }
     }
   }
@@ -464,7 +476,8 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
       if let chunk = entry.maxChunkBytes {
         XCTAssertLessThanOrEqual(
           chunk, 4_194_304,
-          "Toshiba Gigabeat '\(entry.id)' chunk size \(chunk) exceeds safe 4MB maximum for legacy devices")
+          "Toshiba Gigabeat '\(entry.id)' chunk size \(chunk) exceeds safe 4MB maximum for legacy devices"
+        )
       }
     }
   }

@@ -289,10 +289,11 @@ final class QuirksMergePropertyTests: XCTestCase {
   func testOperationsFromQuirkAreMerged() {
     property("Operations from quirk appear in built tuning")
       <- forAll(
-        Gen<String>.fromElements(of: [
-          "partialRead", "partialWrite", "supportsEvents",
-          "supportsGetObjectPropList", "supportsGetPartialObject",
-        ]),
+        Gen<String>
+          .fromElements(of: [
+            "partialRead", "partialWrite", "supportsEvents",
+            "supportsGetObjectPropList", "supportsGetPartialObject",
+          ]),
         Bool.arbitrary
       ) { (opKey: String, opValue: Bool) in
         let built = EffectiveTuningBuilder.build(

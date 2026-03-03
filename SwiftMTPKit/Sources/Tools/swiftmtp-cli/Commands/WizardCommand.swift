@@ -107,7 +107,8 @@ struct WizardCommand {
         if let vid = selected.vendorID, let pid = selected.productID {
           let vidStr = String(format: "0x%04x", vid)
           let pidStr = String(format: "0x%04x", pid)
-          let inferredClass = inferDeviceClass(manufacturer: selected.manufacturer, model: selected.model)
+          let inferredClass = inferDeviceClass(
+            manufacturer: selected.manufacturer, model: selected.model)
           print("")
           print("   Quick-start: generate a profile template with:")
           print(
@@ -229,8 +230,10 @@ struct WizardCommand {
   /// Guess Android vs PTP from manufacturer/model strings.
   private static func inferDeviceClass(manufacturer: String, model: String) -> String {
     let combined = (manufacturer + " " + model).lowercased()
-    let ptpKeywords = ["canon", "nikon", "sony", "fuji", "olympus", "panasonic", "pentax", "ricoh",
-                       "leica", "sigma", "hasselblad", "gopro", "dji", "camera", "dslr", "mirrorless"]
+    let ptpKeywords = [
+      "canon", "nikon", "sony", "fuji", "olympus", "panasonic", "pentax", "ricoh",
+      "leica", "sigma", "hasselblad", "gopro", "dji", "camera", "dslr", "mirrorless",
+    ]
     for kw in ptpKeywords where combined.contains(kw) {
       return "ptp"
     }

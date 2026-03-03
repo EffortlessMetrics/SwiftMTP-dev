@@ -119,7 +119,8 @@ final class UXFlowIDExtendedTests: XCTestCase {
 
   func testSpecificFlowValues() {
     XCTAssertEqual(UXFlowID.discoveryStateMarker.rawValue, "ux.discovery.state.marker")
-    XCTAssertEqual(UXFlowID.selectionPlaceholderVisible.rawValue, "ux.selection.placeholder.visible")
+    XCTAssertEqual(
+      UXFlowID.selectionPlaceholderVisible.rawValue, "ux.selection.placeholder.visible")
     XCTAssertEqual(UXFlowID.deviceLoadingPhase.rawValue, "ux.device.loading.phase")
     XCTAssertEqual(UXFlowID.detailContainerVisible.rawValue, "ux.detail.container.visible")
     XCTAssertEqual(UXFlowID.filesLoadingPhase.rawValue, "ux.files.loading.phase")
