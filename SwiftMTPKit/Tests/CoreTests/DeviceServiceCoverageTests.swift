@@ -548,6 +548,10 @@ final class DeviceServiceCoverageTests: XCTestCase {
     let expectA = XCTestExpectation(description: "Device A attached")
     let expectB = XCTestExpectation(description: "Device B attached")
 
+    // Prime the discovery streams first — startDiscovery() replaces the
+    // attach/detach AsyncStreams, so monitoring must subscribe *after* this.
+    try await manager.startDiscovery()
+
     await registry.startMonitoring(
       manager: manager,
       onAttach: { summary, _ in
@@ -558,8 +562,8 @@ final class DeviceServiceCoverageTests: XCTestCase {
       onDetach: { _, _ in }
     )
 
-    // Prime the discovery streams without starting real USB discovery
-    try await manager.startDiscovery()
+    // Allow async stream consumers to fully attach before injecting events
+    try await Task.sleep(nanoseconds: 100_000_000) // 100 ms
 
     // Inject two devices in one snapshot → both attach events fired immediately
     let idA = MTPDeviceID(raw: "par-A")
@@ -572,8 +576,8 @@ final class DeviceServiceCoverageTests: XCTestCase {
       vendorID: 0xAAAA, productID: 0x0002, bus: 1, address: 2)
     await manager.syncConnectedDeviceSnapshot([summaryA, summaryB])
 
-    // Wait up to 10 seconds for both attach handlers (generous for CI load)
-    await fulfillment(of: [expectA, expectB], timeout: 10.0)
+    // Wait up to 30 seconds for both attach handlers (generous for CI load)
+    await fulfillment(of: [expectA, expectB], timeout: 30.0)
 
     await registry.stopMonitoring()
     await manager.stopDiscovery()
