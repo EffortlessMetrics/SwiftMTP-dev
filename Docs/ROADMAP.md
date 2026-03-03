@@ -8,7 +8,7 @@ This roadmap is the execution plan for the next implementation sprints in the 2.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **6,659 test methods** across 20 targets (**7,112 tests executed** including parameterized sets; 40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices).
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **7,475 tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices).
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
@@ -25,7 +25,7 @@ All items below are code-complete and mock-tested. None have been validated on r
 - [x] **Multi-device parallel transfers** — 8 scenario tests, DeviceServiceRegistry routing (mock-tested)
 - [x] **FallbackAllFailedError** — carries full attempt history (name, duration, error per rung)
 - [x] **Automatic documentation** — `swiftmtp-docs` SPM executable target for hands-off DocC generation
-- [x] **6,659 test methods / 7,112 executed, 0 unexpected failures** (up from 1,849; 40 skipped, 3 expected failures across 20 test targets)
+- [x] **7,475 tests executed, 0 unexpected failures** (up from 1,849; 40 skipped, 3 expected failures across 20 test targets)
 
 ## Sprint Execution Rules
 
@@ -46,9 +46,19 @@ Minimum expectations for each item:
 | 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
 | 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
 
+## Wave 30 Activity (2026-03-05)
+
+Key development activity in this wave:
+
+- **Test expansion**: 7,475 tests executed across 20 targets (up from 7,112 in wave 29; +363 new tests)
+- **All 20 test targets expanded**: observability, store errors, XPC, FileProvider, BDD, CLI/tooling, and integration tests all received new coverage
+- **Flaky test fix** (#364): concurrent attach test — root cause was non-deterministic stream ordering; fixed with deterministic sort
+- **Format sweep** (#363): full swift-format pass across all Sources and Tests
+- **PRs merged**: #363–#372
+
 ## Wave 29 Activity (2026-03-04)
 
-Key development activity in the current wave:
+Key development activity in this wave:
 
 - **Test expansion + CI stabilization**: 6,659 test methods across 20 targets (7,112 tests executed including parameterized sets); up from 6,978 executed in wave 28
 - **Documentation refresh**: synced ROADMAP, README, CLAUDE.md, Troubleshooting, and FIXUP_QUEUE with current project state
