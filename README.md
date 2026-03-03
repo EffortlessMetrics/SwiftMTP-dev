@@ -6,7 +6,7 @@ A Swift-native MTP (Media Transfer Protocol) implementation for macOS. The proto
 
 ## Project Status
 
-SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session management are implemented and covered by an extensive test suite (6,978 tests across 20 targets) using in-memory mock devices (`VirtualMTPDevice`). However, real-device validation is minimal — only one device (Xiaomi Mi Note 2) has completed successful file transfers through SwiftMTP.
+SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session management are implemented and covered by an extensive test suite (6,659 test methods across 20 targets, 7,112 executed including parameterized sets) using in-memory mock devices (`VirtualMTPDevice`). However, real-device validation is minimal — only one device (Xiaomi Mi Note 2) has completed successful file transfers through SwiftMTP.
 
 ### What Works
 
@@ -56,7 +56,7 @@ Built with Swift 6 strict concurrency and actor-based isolation:
 
 ### Key Features
 
-- **Device Quirks Database**: 20,041 entries across 38 categories and 1,154 vendor IDs, sourced from libmtp data and vendor specs. This is research-based scaffolding — only a handful of devices have been tested with SwiftMTP directly.
+- **Device Quirks Database**: 20,026 entries across 38 categories and 1,154 vendor IDs, sourced from libmtp data and vendor specs. This is research-based scaffolding — only a handful of devices have been tested with SwiftMTP directly.
 - **Transfer Journaling**: Resumable file operations with automatic recovery. Implemented and tested with mocks; limited real-device validation.
 - **File Provider Integration**: Native Finder integration on macOS via XPC. Tech preview, read-only.
 - **Demo Mode**: Simulated device profiles (pixel7, galaxy, iphone, canon) for development without physical hardware.
@@ -113,7 +113,7 @@ swift run SwiftMTPApp
 
 ## Verification & Testing
 
-6,978 test cases across 20 test targets, using `VirtualMTPDevice` (in-memory mock) extensively. Includes unit, BDD (CucumberSwift), property-based (SwiftCheck), snapshot, and fuzz tests. Real-device tests require physical hardware.
+6,659 test methods across 20 test targets (7,112 executed including parameterized sets), using `VirtualMTPDevice` (in-memory mock) extensively. Includes unit, BDD (CucumberSwift), property-based (SwiftCheck), snapshot, and fuzz tests. Real-device tests require physical hardware.
 
 ### Full Verification Suite
 ```bash
