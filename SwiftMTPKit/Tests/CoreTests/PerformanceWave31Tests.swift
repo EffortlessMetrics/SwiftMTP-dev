@@ -36,10 +36,12 @@ final class PerformanceWave31Tests: XCTestCase {
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
     // 10x headroom: 10K encodes should finish well under 5s even in debug
-    XCTAssertLessThan(elapsed, 5.0,
+    XCTAssertLessThan(
+      elapsed, 5.0,
       "PTP container encode 10K took \(elapsed)s, expected <5s")
     let opsPerSec = Double(iterations) / elapsed
-    XCTAssertGreaterThan(opsPerSec, 2000,
+    XCTAssertGreaterThan(
+      opsPerSec, 2000,
       "PTP container encode ops/sec: \(Int(opsPerSec)), expected >2000")
   }
 
@@ -65,7 +67,8 @@ final class PerformanceWave31Tests: XCTestCase {
     }
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
-    XCTAssertLessThan(elapsed, 5.0,
+    XCTAssertLessThan(
+      elapsed, 5.0,
       "PTP string unicode encode/decode 1K took \(elapsed)s, expected <5s")
   }
 
@@ -86,10 +89,12 @@ final class PerformanceWave31Tests: XCTestCase {
     }
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
-    XCTAssertLessThan(elapsed, 5.0,
+    XCTAssertLessThan(
+      elapsed, 5.0,
       "ObjectInfo serialization 1K took \(elapsed)s, expected <5s")
     let opsPerSec = Double(iterations) / elapsed
-    XCTAssertGreaterThan(opsPerSec, 200,
+    XCTAssertGreaterThan(
+      opsPerSec, 200,
       "ObjectInfo serialization ops/sec: \(Int(opsPerSec)), expected >200")
   }
 
@@ -111,19 +116,20 @@ final class PerformanceWave31Tests: XCTestCase {
     var objects: [IndexedObject] = []
     objects.reserveCapacity(objectCount)
     for i in 0..<objectCount {
-      objects.append(IndexedObject(
-        deviceId: deviceId,
-        storageId: storageId,
-        handle: MTPObjectHandle(i + 1),
-        parentHandle: i > 0 ? MTPObjectHandle(i / 10 + 1) : nil,
-        name: "file_\(i).jpg",
-        pathKey: "/DCIM/batch/file_\(i).jpg",
-        sizeBytes: UInt64(i * 512),
-        mtime: Date(),
-        formatCode: 0x3801,
-        isDirectory: false,
-        changeCounter: 1
-      ))
+      objects.append(
+        IndexedObject(
+          deviceId: deviceId,
+          storageId: storageId,
+          handle: MTPObjectHandle(i + 1),
+          parentHandle: i > 0 ? MTPObjectHandle(i / 10 + 1) : nil,
+          name: "file_\(i).jpg",
+          pathKey: "/DCIM/batch/file_\(i).jpg",
+          sizeBytes: UInt64(i * 512),
+          mtime: Date(),
+          formatCode: 0x3801,
+          isDirectory: false,
+          changeCounter: 1
+        ))
     }
 
     let start = CFAbsoluteTimeGetCurrent()
@@ -131,10 +137,12 @@ final class PerformanceWave31Tests: XCTestCase {
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
     // 10K inserts should complete in well under 30s even in debug
-    XCTAssertLessThan(elapsed, 30.0,
+    XCTAssertLessThan(
+      elapsed, 30.0,
       "SQLite bulk insert 10K took \(elapsed)s, expected <30s")
     let objPerSec = Double(objectCount) / elapsed
-    XCTAssertGreaterThan(objPerSec, 300,
+    XCTAssertGreaterThan(
+      objPerSec, 300,
       "SQLite insert rate: \(Int(objPerSec)) obj/s, expected >300 obj/s")
   }
 
@@ -157,19 +165,20 @@ final class PerformanceWave31Tests: XCTestCase {
     var objects: [IndexedObject] = []
     objects.reserveCapacity(objectCount)
     for i in 0..<objectCount {
-      objects.append(IndexedObject(
-        deviceId: deviceId,
-        storageId: storageId,
-        handle: MTPObjectHandle(i + 1),
-        parentHandle: nil,
-        name: "lookup_\(i).jpg",
-        pathKey: "/DCIM/lookup_\(i).jpg",
-        sizeBytes: UInt64(i * 1024),
-        mtime: Date(),
-        formatCode: 0x3801,
-        isDirectory: false,
-        changeCounter: 1
-      ))
+      objects.append(
+        IndexedObject(
+          deviceId: deviceId,
+          storageId: storageId,
+          handle: MTPObjectHandle(i + 1),
+          parentHandle: nil,
+          name: "lookup_\(i).jpg",
+          pathKey: "/DCIM/lookup_\(i).jpg",
+          sizeBytes: UInt64(i * 1024),
+          mtime: Date(),
+          formatCode: 0x3801,
+          isDirectory: false,
+          changeCounter: 1
+        ))
     }
     try await index.upsertObjects(objects, deviceId: deviceId)
 
@@ -183,10 +192,12 @@ final class PerformanceWave31Tests: XCTestCase {
     }
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
-    XCTAssertLessThan(elapsed, 30.0,
+    XCTAssertLessThan(
+      elapsed, 30.0,
       "SQLite lookup 10K took \(elapsed)s, expected <30s")
     let lookupsPerSec = Double(lookupCount) / elapsed
-    XCTAssertGreaterThan(lookupsPerSec, 500,
+    XCTAssertGreaterThan(
+      lookupsPerSec, 500,
       "SQLite lookup rate: \(Int(lookupsPerSec)) ops/s, expected >500 ops/s")
   }
 
@@ -210,35 +221,37 @@ final class PerformanceWave31Tests: XCTestCase {
 
     for dirIdx in 0..<10 {
       let dirHandle = handle
-      objects.append(IndexedObject(
-        deviceId: deviceId,
-        storageId: storageId,
-        handle: dirHandle,
-        parentHandle: nil,
-        name: "dir_\(dirIdx)",
-        pathKey: "/dir_\(dirIdx)",
-        sizeBytes: nil,
-        mtime: Date(),
-        formatCode: 0x3001,
-        isDirectory: true,
-        changeCounter: 1
-      ))
+      objects.append(
+        IndexedObject(
+          deviceId: deviceId,
+          storageId: storageId,
+          handle: dirHandle,
+          parentHandle: nil,
+          name: "dir_\(dirIdx)",
+          pathKey: "/dir_\(dirIdx)",
+          sizeBytes: nil,
+          mtime: Date(),
+          formatCode: 0x3001,
+          isDirectory: true,
+          changeCounter: 1
+        ))
       handle += 1
 
       for fileIdx in 0..<100 {
-        objects.append(IndexedObject(
-          deviceId: deviceId,
-          storageId: storageId,
-          handle: handle,
-          parentHandle: dirHandle,
-          name: "file_\(fileIdx).jpg",
-          pathKey: "/dir_\(dirIdx)/file_\(fileIdx).jpg",
-          sizeBytes: UInt64(fileIdx * 1024),
-          mtime: Date(),
-          formatCode: 0x3801,
-          isDirectory: false,
-          changeCounter: 1
-        ))
+        objects.append(
+          IndexedObject(
+            deviceId: deviceId,
+            storageId: storageId,
+            handle: handle,
+            parentHandle: dirHandle,
+            name: "file_\(fileIdx).jpg",
+            pathKey: "/dir_\(dirIdx)/file_\(fileIdx).jpg",
+            sizeBytes: UInt64(fileIdx * 1024),
+            mtime: Date(),
+            formatCode: 0x3801,
+            isDirectory: false,
+            changeCounter: 1
+          ))
         handle += 1
       }
     }
@@ -258,10 +271,12 @@ final class PerformanceWave31Tests: XCTestCase {
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
     let resolutions = iterations * 10
-    XCTAssertLessThan(elapsed, 30.0,
+    XCTAssertLessThan(
+      elapsed, 30.0,
       "SQLite path resolution 1K took \(elapsed)s, expected <30s")
     let opsPerSec = Double(resolutions) / elapsed
-    XCTAssertGreaterThan(opsPerSec, 100,
+    XCTAssertGreaterThan(
+      opsPerSec, 100,
       "SQLite path resolution rate: \(Int(opsPerSec)) ops/s, expected >100 ops/s")
   }
 
@@ -285,10 +300,12 @@ final class PerformanceWave31Tests: XCTestCase {
     }
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
-    XCTAssertLessThan(elapsed, 60.0,
+    XCTAssertLessThan(
+      elapsed, 60.0,
       "PathKey normalization 10K took \(elapsed)s, expected <60s")
     let opsPerSec = Double(iterations) / elapsed
-    XCTAssertGreaterThan(opsPerSec, 200,
+    XCTAssertGreaterThan(
+      opsPerSec, 200,
       "PathKey normalization ops/sec: \(Int(opsPerSec)), expected >200")
   }
 
@@ -302,12 +319,13 @@ final class PerformanceWave31Tests: XCTestCase {
     for i in 0..<entryCount {
       let vid = UInt16(truncatingIfNeeded: (i / 256) + 1)
       let pid = UInt16(truncatingIfNeeded: (i % 256) + 1)
-      entries.append(DeviceQuirk(
-        id: "w31-device-\(i)",
-        vid: vid,
-        pid: pid,
-        maxChunkBytes: 1_048_576
-      ))
+      entries.append(
+        DeviceQuirk(
+          id: "w31-device-\(i)",
+          vid: vid,
+          pid: pid,
+          maxChunkBytes: 1_048_576
+        ))
     }
     let db = QuirkDatabase(schemaVersion: "2.0", entries: entries)
 
@@ -325,10 +343,12 @@ final class PerformanceWave31Tests: XCTestCase {
     }
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
-    XCTAssertLessThan(elapsed, 60.0,
+    XCTAssertLessThan(
+      elapsed, 60.0,
       "QuirkDatabase lookup 1K took \(elapsed)s, expected <60s")
     let lookupsPerSec = Double(lookupCount) / elapsed
-    XCTAssertGreaterThan(lookupsPerSec, 10,
+    XCTAssertGreaterThan(
+      lookupsPerSec, 10,
       "QuirkDatabase lookup ops/sec: \(Int(lookupsPerSec)), expected >10")
   }
 
@@ -345,22 +365,23 @@ final class PerformanceWave31Tests: XCTestCase {
 
     // Manually create the objects table & populate two generations
     let db = try SQLiteDB(path: dbPath)
-    try db.exec("""
-      CREATE TABLE IF NOT EXISTS objects(
-          deviceId TEXT NOT NULL,
-          storageId INTEGER NOT NULL,
-          handle INTEGER NOT NULL,
-          parentHandle INTEGER,
-          name TEXT NOT NULL,
-          pathKey TEXT NOT NULL,
-          size INTEGER,
-          mtime INTEGER,
-          format INTEGER NOT NULL,
-          gen INTEGER NOT NULL,
-          tombstone INTEGER NOT NULL DEFAULT 0,
-          PRIMARY KEY(deviceId, handle, gen)
-      )
-    """)
+    try db.exec(
+      """
+        CREATE TABLE IF NOT EXISTS objects(
+            deviceId TEXT NOT NULL,
+            storageId INTEGER NOT NULL,
+            handle INTEGER NOT NULL,
+            parentHandle INTEGER,
+            name TEXT NOT NULL,
+            pathKey TEXT NOT NULL,
+            size INTEGER,
+            mtime INTEGER,
+            format INTEGER NOT NULL,
+            gen INTEGER NOT NULL,
+            tombstone INTEGER NOT NULL DEFAULT 0,
+            PRIMARY KEY(deviceId, handle, gen)
+        )
+      """)
 
     let deviceId = "diff-bench-device"
     let now = Int(Date().timeIntervalSince1970)
@@ -368,20 +389,22 @@ final class PerformanceWave31Tests: XCTestCase {
     // Gen 1: 5,000 objects (these will be "deleted" in gen 2)
     try db.exec("BEGIN TRANSACTION")
     for i in 0..<5_000 {
-      try db.exec("""
-        INSERT INTO objects (deviceId, storageId, handle, name, pathKey, size, mtime, format, gen, tombstone)
-        VALUES ('\(deviceId)', 65537, \(i + 1), 'old_\(i).jpg', '/DCIM/old_\(i).jpg', \(i * 1024), \(now), 14337, 1, 0)
-      """)
+      try db.exec(
+        """
+          INSERT INTO objects (deviceId, storageId, handle, name, pathKey, size, mtime, format, gen, tombstone)
+          VALUES ('\(deviceId)', 65537, \(i + 1), 'old_\(i).jpg', '/DCIM/old_\(i).jpg', \(i * 1024), \(now), 14337, 1, 0)
+        """)
     }
     try db.exec("COMMIT")
 
     // Gen 2: 5,000 different objects (these will be "added" relative to gen 1)
     try db.exec("BEGIN TRANSACTION")
     for i in 0..<5_000 {
-      try db.exec("""
-        INSERT INTO objects (deviceId, storageId, handle, name, pathKey, size, mtime, format, gen, tombstone)
-        VALUES ('\(deviceId)', 65537, \(i + 10001), 'new_\(i).jpg', '/DCIM/new_\(i).jpg', \(i * 2048), \(now), 14337, 2, 0)
-      """)
+      try db.exec(
+        """
+          INSERT INTO objects (deviceId, storageId, handle, name, pathKey, size, mtime, format, gen, tombstone)
+          VALUES ('\(deviceId)', 65537, \(i + 10001), 'new_\(i).jpg', '/DCIM/new_\(i).jpg', \(i * 2048), \(now), 14337, 2, 0)
+        """)
     }
     try db.exec("COMMIT")
 
@@ -391,11 +414,14 @@ final class PerformanceWave31Tests: XCTestCase {
       deviceId: MTPDeviceID(raw: deviceId), oldGen: 1, newGen: 2)
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
-    XCTAssertEqual(result.added.count, 5_000,
+    XCTAssertEqual(
+      result.added.count, 5_000,
       "Expected 5000 added, got \(result.added.count)")
-    XCTAssertEqual(result.removed.count, 5_000,
+    XCTAssertEqual(
+      result.removed.count, 5_000,
       "Expected 5000 removed, got \(result.removed.count)")
-    XCTAssertLessThan(elapsed, 30.0,
+    XCTAssertLessThan(
+      elapsed, 30.0,
       "Diff engine computation took \(elapsed)s, expected <30s")
   }
 
@@ -407,17 +433,19 @@ final class PerformanceWave31Tests: XCTestCase {
     let start = CFAbsoluteTimeGetCurrent()
     for i in 0..<iterations {
       let rungs: [FallbackRung<Int>] = [
-        FallbackRung(name: "primary") { return i },
+        FallbackRung(name: "primary") { return i }
       ]
       let result = try await FallbackLadder.execute(rungs)
       XCTAssertEqual(result.value, i)
     }
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
-    XCTAssertLessThan(elapsed, 5.0,
+    XCTAssertLessThan(
+      elapsed, 5.0,
       "FallbackLadder 100 iterations took \(elapsed)s, expected <5s")
     let opsPerSec = Double(iterations) / elapsed
-    XCTAssertGreaterThan(opsPerSec, 20,
+    XCTAssertGreaterThan(
+      opsPerSec, 20,
       "FallbackLadder ops/sec: \(Int(opsPerSec)), expected >20")
   }
 
@@ -437,7 +465,8 @@ final class PerformanceWave31Tests: XCTestCase {
     }
     let elapsed = CFAbsoluteTimeGetCurrent() - start
 
-    XCTAssertLessThan(elapsed, 10.0,
+    XCTAssertLessThan(
+      elapsed, 10.0,
       "FallbackLadder with failures 100 iterations took \(elapsed)s, expected <10s")
   }
 }

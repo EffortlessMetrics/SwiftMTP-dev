@@ -256,8 +256,9 @@ final class ErrorRecoveryWave31Tests: XCTestCase {
   func testVerificationFailedIncludesSizes() {
     let err = MTPError.verificationFailed(expected: 1_048_576, actual: 524_288)
     let desc = err.errorDescription ?? ""
-    XCTAssertTrue(desc.contains("1048576") || desc.contains("524288"),
-                  "Verification error must include size details: \(desc)")
+    XCTAssertTrue(
+      desc.contains("1048576") || desc.contains("524288"),
+      "Verification error must include size details: \(desc)")
   }
 
   func testTransportPhaseDescriptionsAreMeaningful() {
@@ -412,7 +413,7 @@ final class ErrorRecoveryWave31Tests: XCTestCase {
   func testSequentialErrorsOnSameDeviceDontCorruptState() async throws {
     let inner = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
-      ScheduledFault(trigger: .onOperation(.getStorageIDs), error: .timeout, repeatCount: 2),
+      ScheduledFault(trigger: .onOperation(.getStorageIDs), error: .timeout, repeatCount: 2)
     ])
     let link = FaultInjectingLink(wrapping: inner, schedule: schedule)
     try await link.openSession(id: 1)
@@ -502,8 +503,9 @@ final class ErrorRecoveryWave31Tests: XCTestCase {
       descriptions.insert(desc)
     }
 
-    XCTAssertEqual(descriptions.count, 3,
-                   "Each phase timeout should produce a unique message")
+    XCTAssertEqual(
+      descriptions.count, 3,
+      "Each phase timeout should produce a unique message")
   }
 
   func testFallbackLadderTimeoutEscalation() async throws {
@@ -525,8 +527,9 @@ final class ErrorRecoveryWave31Tests: XCTestCase {
       XCTAssertEqual(err.attempts.count, 3)
       // Errors escalate in severity
       XCTAssertTrue(err.attempts[0].error?.contains("timeout") == true)
-      XCTAssertTrue(err.attempts[2].error?.contains("disconnected") == true
-                    || err.attempts[2].error?.contains("Disconnected") == true)
+      XCTAssertTrue(
+        err.attempts[2].error?.contains("disconnected") == true
+          || err.attempts[2].error?.contains("Disconnected") == true)
     }
   }
 
@@ -562,49 +565,55 @@ final class ErrorRecoveryWave31Tests: XCTestCase {
     ]
 
     for (i, (outcome, desc)) in outcomes.enumerated() {
-      await log.append(TransactionRecord(
-        txID: UInt32(i + 1), opcode: 0x1004,
-        opcodeLabel: "GetStorageIDs", sessionID: 1,
-        startedAt: Date(), duration: Double(i) * 0.1,
-        bytesIn: 0, bytesOut: 12,
-        outcomeClass: outcome, errorDescription: desc))
+      await log.append(
+        TransactionRecord(
+          txID: UInt32(i + 1), opcode: 0x1004,
+          opcodeLabel: "GetStorageIDs", sessionID: 1,
+          startedAt: Date(), duration: Double(i) * 0.1,
+          bytesIn: 0, bytesOut: 12,
+          outcomeClass: outcome, errorDescription: desc))
     }
 
     let recent = await log.recent(limit: 10)
     XCTAssertEqual(recent.count, 4)
-    XCTAssertEqual(recent.filter { $0.outcomeClass != .ok }.count, 3,
-                   "Three error outcomes should be recorded")
+    XCTAssertEqual(
+      recent.filter { $0.outcomeClass != .ok }.count, 3,
+      "Three error outcomes should be recorded")
   }
 
   func testTransactionLogDumpRedactsHexSequences() async {
     let log = TransactionLog()
 
-    await log.append(TransactionRecord(
-      txID: 1, opcode: 0x1001, opcodeLabel: "GetDeviceInfo",
-      sessionID: 1, startedAt: Date(), duration: 0.1,
-      bytesIn: 100, bytesOut: 0,
-      outcomeClass: .deviceError,
-      errorDescription: "Device serial ABCDEF0123456789 returned error"))
+    await log.append(
+      TransactionRecord(
+        txID: 1, opcode: 0x1001, opcodeLabel: "GetDeviceInfo",
+        sessionID: 1, startedAt: Date(), duration: 0.1,
+        bytesIn: 100, bytesOut: 0,
+        outcomeClass: .deviceError,
+        errorDescription: "Device serial ABCDEF0123456789 returned error"))
 
     let json = await log.dump(redacting: true)
-    XCTAssertFalse(json.contains("ABCDEF0123456789"),
-                   "Hex serial should be redacted")
+    XCTAssertFalse(
+      json.contains("ABCDEF0123456789"),
+      "Hex serial should be redacted")
     XCTAssertTrue(json.contains("<redacted>"))
   }
 
   func testTransactionLogDumpPreservesNonRedacted() async {
     let log = TransactionLog()
 
-    await log.append(TransactionRecord(
-      txID: 1, opcode: 0x1001, opcodeLabel: "GetDeviceInfo",
-      sessionID: 1, startedAt: Date(), duration: 0.1,
-      bytesIn: 100, bytesOut: 0,
-      outcomeClass: .deviceError,
-      errorDescription: "Device serial ABCDEF0123456789 returned error"))
+    await log.append(
+      TransactionRecord(
+        txID: 1, opcode: 0x1001, opcodeLabel: "GetDeviceInfo",
+        sessionID: 1, startedAt: Date(), duration: 0.1,
+        bytesIn: 100, bytesOut: 0,
+        outcomeClass: .deviceError,
+        errorDescription: "Device serial ABCDEF0123456789 returned error"))
 
     let json = await log.dump(redacting: false)
-    XCTAssertTrue(json.contains("ABCDEF0123456789"),
-                  "Non-redacted dump should preserve hex")
+    XCTAssertTrue(
+      json.contains("ABCDEF0123456789"),
+      "Non-redacted dump should preserve hex")
   }
 
   func testMTPOpcodeLabelsForCommonOps() {
@@ -619,8 +628,9 @@ final class ErrorRecoveryWave31Tests: XCTestCase {
       .ok, .deviceError, .timeout, .stall, .ioError, .cancelled,
     ]
     let rawValues = Set(outcomes.map { $0.rawValue })
-    XCTAssertEqual(rawValues.count, outcomes.count,
-                   "Each outcome must have a unique raw value")
+    XCTAssertEqual(
+      rawValues.count, outcomes.count,
+      "Each outcome must have a unique raw value")
   }
 
   // MARK: - Helpers

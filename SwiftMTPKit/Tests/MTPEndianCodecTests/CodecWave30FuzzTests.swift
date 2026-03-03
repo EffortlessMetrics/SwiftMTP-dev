@@ -62,9 +62,11 @@ struct RandomByteContainerFuzzTests {
       _ = PTPString.parse(from: data, at: &offset)
 
       var r = PTPReader(data: data)
-      for dt: UInt16 in [0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006,
-                         0x0007, 0x0008, 0x0009, 0x000A, 0xFFFF,
-                         0x4004, 0x4006] {
+      for dt: UInt16 in [
+        0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006,
+        0x0007, 0x0008, 0x0009, 0x000A, 0xFFFF,
+        0x4004, 0x4006,
+      ] {
         var r2 = PTPReader(data: data)
         _ = r2.value(dt: dt)
       }
@@ -198,7 +200,7 @@ struct NestedArrayDepthTests {
   func testArrayCountExceedsData() {
     var encoder = MTPDataEncoder()
     encoder.append(UInt32(100))  // claims 100 UInt32 elements
-    encoder.append(UInt32(42))   // only 1 element provided
+    encoder.append(UInt32(42))  // only 1 element provided
 
     var reader = PTPReader(data: encoder.encodedData)
     let value = reader.value(dt: 0x4006)
@@ -365,10 +367,10 @@ struct IntegerOverflowTests {
   func testDeviceInfoArrayOverflow() {
     var encoder = MTPDataEncoder()
     encoder.append(UInt16(100))  // standardVersion
-    encoder.append(UInt32(6))    // vendorExtensionID
+    encoder.append(UInt32(6))  // vendorExtensionID
     encoder.append(UInt16(100))  // vendorExtensionVersion
     encoder.append(PTPString.encode(""))  // vendorExtensionDesc
-    encoder.append(UInt16(0))    // functionalMode
+    encoder.append(UInt16(0))  // functionalMode
     // operationsSupported with overflow count
     encoder.append(UInt32(PTPReader.maxSafeCount + 1))
 
@@ -420,8 +422,10 @@ struct ZeroLengthTests {
 
   @Test("PTPReader value with zero-count array for all base types")
   func testZeroCountArrayAllTypes() {
-    let arrayTypes: [UInt16] = [0x4001, 0x4002, 0x4003, 0x4004,
-                                0x4005, 0x4006, 0x4007, 0x4008]
+    let arrayTypes: [UInt16] = [
+      0x4001, 0x4002, 0x4003, 0x4004,
+      0x4005, 0x4006, 0x4007, 0x4008,
+    ]
     for dt in arrayTypes {
       var encoder = MTPDataEncoder()
       encoder.append(UInt32(0))
@@ -521,10 +525,10 @@ struct ReservedOperationCodeTests {
   @Test("Container with operation code 0xFFFF (reserved) parses header safely")
   func testReservedOpCode0xFFFF() {
     var encoder = MTPDataEncoder()
-    encoder.append(UInt32(12))      // length
-    encoder.append(UInt16(1))       // type = command
+    encoder.append(UInt32(12))  // length
+    encoder.append(UInt16(1))  // type = command
     encoder.append(UInt16(0xFFFF))  // reserved op code
-    encoder.append(UInt32(1))       // txid
+    encoder.append(UInt32(1))  // txid
 
     var r = PTPReader(data: encoder.encodedData)
     #expect(r.u32() == 12)

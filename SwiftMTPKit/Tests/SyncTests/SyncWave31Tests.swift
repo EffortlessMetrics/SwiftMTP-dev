@@ -89,7 +89,8 @@ final class SyncWave31Tests: XCTestCase {
     writeFile("doc.txt", content: "remote edited", in: remoteDir)
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
-    XCTAssertEqual(changes.remoteOnly.count, 1, "Deleted-local + modified-remote appears as remote-only")
+    XCTAssertEqual(
+      changes.remoteOnly.count, 1, "Deleted-local + modified-remote appears as remote-only")
   }
 
   func testBidirectionalSyncLocalModifyRemoteDelete() {
@@ -99,7 +100,8 @@ final class SyncWave31Tests: XCTestCase {
     writeFile("doc.txt", content: "local edited", in: localDir)
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
-    XCTAssertEqual(changes.localOnly.count, 1, "Modified-local + deleted-remote appears as local-only")
+    XCTAssertEqual(
+      changes.localOnly.count, 1, "Modified-local + deleted-remote appears as local-only")
   }
 
   // MARK: - Three-Way Merge: Common Ancestor, Local Change, Remote Change
@@ -329,7 +331,8 @@ final class SyncWave31Tests: XCTestCase {
       .withObject(
         VirtualObjectConfig(
           handle: 100, storage: storage, name: "existing.txt",
-          sizeBytes: 10, formatCode: 0x3000, data: Data(repeating: 0xAA, count: 10)))
+          sizeBytes: 10, formatCode: 0x3000, data: Data(repeating: 0xAA, count: 10))
+      )
       .withObject(
         VirtualObjectConfig(
           handle: 101, storage: storage, name: "new_file.txt",
@@ -466,10 +469,12 @@ final class SyncWave31Tests: XCTestCase {
     let localDir = makeSubDir("local")
     let remoteDir = makeSubDir("remote")
 
-    try! Data(repeating: 0xAA, count: 64).write(
-      to: localDir.appendingPathComponent("before.bin"))
-    try! Data(repeating: 0xBB, count: 64).write(
-      to: remoteDir.appendingPathComponent("after.bin"))
+    try! Data(repeating: 0xAA, count: 64)
+      .write(
+        to: localDir.appendingPathComponent("before.bin"))
+    try! Data(repeating: 0xBB, count: 64)
+      .write(
+        to: remoteDir.appendingPathComponent("after.bin"))
 
     let changes = detectChanges(local: localDir, remote: remoteDir)
     let renames = findPotentialRenames(
@@ -492,7 +497,8 @@ final class SyncWave31Tests: XCTestCase {
     let renames = findPotentialRenames(
       localDir: localDir, remoteDir: remoteDir,
       localOnly: changes.localOnly, remoteOnly: changes.remoteOnly)
-    XCTAssertEqual(renames.count, 1, "Same content moved to subdirectory should be a potential rename")
+    XCTAssertEqual(
+      renames.count, 1, "Same content moved to subdirectory should be a potential rename")
   }
 
   // MARK: - Sync Progress Reporting

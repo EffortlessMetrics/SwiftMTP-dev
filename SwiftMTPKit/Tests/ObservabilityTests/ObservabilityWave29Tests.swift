@@ -241,8 +241,10 @@ final class Wave29LogSinkFormatTests: XCTestCase {
     await log.append(makeRecord(txID: 1, errorDescription: "err"))
     let json = await log.dump(redacting: false)
     // With sortedKeys: bytesIn < bytesOut < duration < errorDescription < opcode < ...
-    let keys = ["bytesIn", "bytesOut", "duration", "errorDescription", "opcode",
-                "opcodeLabel", "outcomeClass", "sessionID", "startedAt", "txID"]
+    let keys = [
+      "bytesIn", "bytesOut", "duration", "errorDescription", "opcode",
+      "opcodeLabel", "outcomeClass", "sessionID", "startedAt", "txID",
+    ]
     var lastIndex = json.startIndex
     for key in keys {
       if let range = json.range(of: "\"\(key)\"") {
@@ -445,7 +447,7 @@ final class Wave29PerformanceRegressionThresholdTests: XCTestCase {
   func testNoRegressionWithinTolerance() {
     var ewma = ThroughputEWMA()
     let baseline = 10_000_000.0
-    let tolerance = 5.0 // 5%
+    let tolerance = 5.0  // 5%
     // Simulate very close to baseline
     for _ in 0..<50 { ewma.update(bytes: 9_800_000, dt: 1.0) }
     let deviationPct = abs(baseline - ewma.bytesPerSecond) / baseline * 100
@@ -465,7 +467,7 @@ final class Wave29PerformanceRegressionThresholdTests: XCTestCase {
     var buf = ThroughputRingBuffer(maxSamples: 200)
     // Simulate slower p95
     for _ in 0..<95 { buf.addSample(30.0) }
-    for _ in 0..<5 { buf.addSample(200.0) } // tail latency spike
+    for _ in 0..<5 { buf.addSample(200.0) }  // tail latency spike
     let current_p95 = buf.p95!
     XCTAssertGreaterThan(current_p95, baseline_p95)
   }
@@ -473,7 +475,7 @@ final class Wave29PerformanceRegressionThresholdTests: XCTestCase {
   func testStablePerformanceNoFalseRegressionAlarm() {
     var ewma = ThroughputEWMA()
     let baseline = 8_000_000.0
-    let threshold = 10.0 // 10%
+    let threshold = 10.0  // 10%
     // Feed stable rate
     for _ in 0..<100 { ewma.update(bytes: 8_000_000, dt: 1.0) }
     let deviationPct = abs(ewma.bytesPerSecond - baseline) / baseline * 100

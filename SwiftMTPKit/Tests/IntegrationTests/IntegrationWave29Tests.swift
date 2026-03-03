@@ -543,10 +543,11 @@ final class IntegrationWave29Tests: XCTestCase {
     // We add a file then delete it from the tree before read,
     // causing objectNotFound during mirror download
     let config = VirtualDeviceConfig.pixel7
-      .withObject(VirtualObjectConfig(
-        handle: 50, storage: MTPStorageID(raw: 0x0001_0001),
-        parent: nil, name: "will_fail.dat",
-        sizeBytes: 1000, formatCode: 0x3000))
+      .withObject(
+        VirtualObjectConfig(
+          handle: 50, storage: MTPStorageID(raw: 0x0001_0001),
+          parent: nil, name: "will_fail.dat",
+          sizeBytes: 1000, formatCode: 0x3000))
     let device = VirtualMTPDevice(config: config)
     let deviceId = await device.id
     let dbPath = makeTempDBPath()
@@ -678,7 +679,8 @@ final class IntegrationWave29Tests: XCTestCase {
 
     // All tests should succeed on a virtual device
     let allSupported = report.capabilityTests.filter { $0.supported }
-    XCTAssertEqual(allSupported.count, report.capabilityTests.count,
+    XCTAssertEqual(
+      allSupported.count, report.capabilityTests.count,
       "All capability tests should pass on virtual device")
   }
 
@@ -695,9 +697,11 @@ final class IntegrationWave29Tests: XCTestCase {
       let harness = DeviceLabHarness()
       let report = try await harness.collect(device: device)
 
-      XCTAssertEqual(report.manufacturer, expectedManufacturer,
+      XCTAssertEqual(
+        report.manufacturer, expectedManufacturer,
         "Manufacturer mismatch for \(config.summary.model)")
-      XCTAssertFalse(report.capabilityTests.isEmpty,
+      XCTAssertFalse(
+        report.capabilityTests.isEmpty,
         "Should have capability tests for \(config.summary.model)")
     }
   }
@@ -717,11 +721,12 @@ final class IntegrationWave29Tests: XCTestCase {
     let gen1 = try await snapshotter.capture(device: device, deviceId: deviceId)
 
     // Add a root-level file (parent: nil so list(parent: nil) captures it)
-    await device.addObject(VirtualObjectConfig(
-      handle: 200, storage: MTPStorageID(raw: 0x0001_0001),
-      parent: nil, name: "new_file.txt",
-      sizeBytes: 512, formatCode: 0x3000,
-      data: Data(repeating: 0x42, count: 512)))
+    await device.addObject(
+      VirtualObjectConfig(
+        handle: 200, storage: MTPStorageID(raw: 0x0001_0001),
+        parent: nil, name: "new_file.txt",
+        sizeBytes: 512, formatCode: 0x3000,
+        data: Data(repeating: 0x42, count: 512)))
 
     // Remove DCIM folder (handle 1, a root-level object)
     await device.removeObject(handle: 1)
@@ -764,10 +769,12 @@ final class IntegrationWave29Tests: XCTestCase {
     XCTAssertEqual(transcript.count, 6, "Should record all 6 operations")
 
     let opNames = transcript.map(\.operation)
-    XCTAssertEqual(opNames, [
-      "openUSBIfNeeded", "openSession", "getDeviceInfo",
-      "getStorageIDs", "getObjectHandles", "closeSession",
-    ])
+    XCTAssertEqual(
+      opNames,
+      [
+        "openUSBIfNeeded", "openSession", "getDeviceInfo",
+        "getStorageIDs", "getObjectHandles", "closeSession",
+      ])
 
     // Verify JSON export
     let jsonData = try recorder.exportJSON()

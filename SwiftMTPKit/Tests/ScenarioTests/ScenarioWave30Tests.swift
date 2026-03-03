@@ -43,9 +43,11 @@ final class ScenarioWave30Tests: XCTestCase {
       version: "1.0",
       serialNumber: "W30-\(index)",
       operationsSupported: Set(
-        [0x1001, 0x1002, 0x1003, 0x1004, 0x1005,
-         0x1007, 0x1008, 0x1009, 0x100B, 0x100C, 0x100D]
-          .map { UInt16($0) }),
+        [
+          0x1001, 0x1002, 0x1003, 0x1004, 0x1005,
+          0x1007, 0x1008, 0x1009, 0x100B, 0x100C, 0x100D,
+        ]
+        .map { UInt16($0) }),
       eventsSupported: Set([0x4002, 0x4003].map { UInt16($0) })
     )
     let defaultStorage = VirtualStorageConfig(
@@ -259,27 +261,29 @@ final class ScenarioWave30Tests: XCTestCase {
     var parentHandle: MTPObjectHandle? = nil
     for (level, name) in unicodeNames.enumerated() {
       let handle = MTPObjectHandle(100 + level)
-      objects.append(VirtualObjectConfig(
-        handle: handle,
-        storage: storageId,
-        parent: parentHandle,
-        name: name,
-        formatCode: 0x3001  // folder
-      ))
+      objects.append(
+        VirtualObjectConfig(
+          handle: handle,
+          storage: storageId,
+          parent: parentHandle,
+          name: name,
+          formatCode: 0x3001  // folder
+        ))
       parentHandle = handle
     }
 
     // Add a file at the deepest level
     let deepFileData = Data(repeating: 0xDD, count: 256)
-    objects.append(VirtualObjectConfig(
-      handle: MTPObjectHandle(200),
-      storage: storageId,
-      parent: parentHandle,
-      name: "深いファイル.txt",
-      sizeBytes: UInt64(deepFileData.count),
-      formatCode: 0x3000,
-      data: deepFileData
-    ))
+    objects.append(
+      VirtualObjectConfig(
+        handle: MTPObjectHandle(200),
+        storage: storageId,
+        parent: parentHandle,
+        name: "深いファイル.txt",
+        sizeBytes: UInt64(deepFileData.count),
+        formatCode: 0x3000,
+        data: deepFileData
+      ))
 
     let device = makeDevice(index: 3, objects: objects)
 
@@ -524,24 +528,26 @@ final class ScenarioWave30Tests: XCTestCase {
     // Build parent folder + 10,500 file objects
     var objects: [VirtualObjectConfig] = []
     let folderHandle = MTPObjectHandle(1)
-    objects.append(VirtualObjectConfig(
-      handle: folderHandle,
-      storage: storageId,
-      parent: nil,
-      name: "MassFolder",
-      formatCode: 0x3001
-    ))
+    objects.append(
+      VirtualObjectConfig(
+        handle: folderHandle,
+        storage: storageId,
+        parent: nil,
+        name: "MassFolder",
+        formatCode: 0x3001
+      ))
 
     for i in 0..<objectCount {
       let handle = MTPObjectHandle(100 + i)
-      objects.append(VirtualObjectConfig(
-        handle: handle,
-        storage: storageId,
-        parent: folderHandle,
-        name: String(format: "IMG_%05d.jpg", i),
-        sizeBytes: UInt64(1024 + (i % 4096)),
-        formatCode: 0x3801
-      ))
+      objects.append(
+        VirtualObjectConfig(
+          handle: handle,
+          storage: storageId,
+          parent: folderHandle,
+          name: String(format: "IMG_%05d.jpg", i),
+          sizeBytes: UInt64(1024 + (i % 4096)),
+          formatCode: 0x3801
+        ))
     }
 
     let device = makeDevice(index: 5, objects: objects)
@@ -703,13 +709,19 @@ final class ScenarioWave30Tests: XCTestCase {
     let operations: [(String, () async throws -> Void)] = [
       ("getStorageIDs", { _ = try await faultyLink.getStorageIDs() }),
       ("getDeviceInfo", { _ = try await faultyLink.getDeviceInfo() }),
-      ("getObjectHandles", {
-        _ = try await faultyLink.getObjectHandles(
-          storage: MTPStorageID(raw: 0x0001_0001), parent: nil)
-      }),
-      ("getStorageInfo", {
-        _ = try await faultyLink.getStorageInfo(id: MTPStorageID(raw: 0x0001_0001))
-      }),
+      (
+        "getObjectHandles",
+        {
+          _ = try await faultyLink.getObjectHandles(
+            storage: MTPStorageID(raw: 0x0001_0001), parent: nil)
+        }
+      ),
+      (
+        "getStorageInfo",
+        {
+          _ = try await faultyLink.getStorageInfo(id: MTPStorageID(raw: 0x0001_0001))
+        }
+      ),
     ]
 
     var recoveredCount = 0

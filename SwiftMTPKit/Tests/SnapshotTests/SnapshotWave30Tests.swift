@@ -733,7 +733,8 @@ final class SnapshotWave30Tests: XCTestCase {
   }
 
   func testDeviceStatusResponseNSCodingRoundTrip() throws {
-    let original = DeviceStatusResponse(connected: true, sessionOpen: true, lastCrawlTimestamp: 1234)
+    let original = DeviceStatusResponse(
+      connected: true, sessionOpen: true, lastCrawlTimestamp: 1234)
     let data = try NSKeyedArchiver.archivedData(
       withRootObject: original, requiringSecureCoding: true)
     let decoded = try NSKeyedUnarchiver.unarchivedObject(
