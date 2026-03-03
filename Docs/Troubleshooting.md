@@ -375,6 +375,13 @@ If `usb-dump.txt` contains serial numbers or paths:
 swift run swiftmtp probe
 ```
 
+### List Tests (verify test count)
+```bash
+cd SwiftMTPKit
+swift test list                    # preferred (--list-tests is deprecated)
+swift test list 2>&1 | grep -c '/' # count test methods
+```
+
 ### Full Diagnostics
 ```bash
 swift run swiftmtp device-lab connected --json
@@ -416,6 +423,38 @@ swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --fi
 ```
 
 All five must pass before pushing. CI runs the same checks. The full matrix run (`./run-all-tests.sh`) is recommended for release PRs.
+
+---
+
+## CI & Build Troubleshooting (Wave 28-29)
+
+### TSAN Interceptor Failure on Xcode 26.x
+
+**Error:** `Interceptors are not working. This may be caused by a non-instrumented library`
+
+**Cause:** Xcode 26.3 RC2 TSAN runtime conflicts with DTXConnectionServices on CI runners.
+
+**Solutions:**
+- Pin Xcode 16.2 in CI: `xcode-version: '16.2'`
+- Use `setup-swift` action for Swift 6.2 toolchain
+- CI uses `continue-on-error: true` on TSAN jobs as mitigation
+- Monitor Xcode 26.x releases for a fix
+
+### `--list-tests` Deprecation Warning
+
+**Warning:** `'--list-tests' option is deprecated; use 'swift test list' instead`
+
+**Solutions:**
+- Use `swift test list` instead of `swift test --list-tests`
+- Both produce identical output; the new form is preferred from Swift 6.2+
+
+### SPM Cache Missing on CI Jobs
+
+**Issue:** TSAN and smoke CI jobs lack SPM dependency caching, causing full resolves on every run.
+
+**Solutions:**
+- Add `actions/cache` for `.build` directory in CI workflow
+- This was fixed for the main `build-test` job; ensure TSAN and smoke jobs also cache
 
 ---
 
