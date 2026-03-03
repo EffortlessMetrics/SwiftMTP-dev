@@ -20,6 +20,7 @@ jobs:
   tsan:
     name: Thread Sanitizer (Core / Index / Scenario)
     runs-on: macos-15
+    timeout-minutes: 25
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +32,17 @@ jobs:
       - uses: swift-actions/setup-swift@v2
         with:
           swift-version: '6.2'
+
+      - name: Cache SPM
+        uses: actions/cache@v4
+        with:
+          path: |
+            SwiftMTPKit/.build/repositories
+            SwiftMTPKit/.build/artifacts
+          key: ${{ runner.os }}-spm-tsan-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-tsan-
+            ${{ runner.os }}-spm-
 
       - name: Build tests (TSAN)
         working-directory: SwiftMTPKit
@@ -102,6 +114,7 @@ jobs:
   compat-matrix:
     name: Compatibility Matrix
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -114,6 +127,7 @@ jobs:
   license-check:
     name: SPDX License Header Check
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 

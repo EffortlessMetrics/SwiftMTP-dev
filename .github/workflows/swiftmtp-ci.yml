@@ -30,6 +30,7 @@ jobs:
   test:
     name: Test (Unit, BDD, Property, Fuzz, Integration, E2E, Snapshot, Storybook)
     runs-on: macos-15
+    timeout-minutes: 45
     permissions:
       contents: read
       checks: write
@@ -48,6 +49,17 @@ jobs:
         uses: swift-actions/setup-swift@v2
         with:
           swift-version: '6.2' 
+
+      - name: Cache SPM
+        uses: actions/cache@v4
+        with:
+          path: |
+            SwiftMTPKit/.build/repositories
+            SwiftMTPKit/.build/artifacts
+          key: ${{ runner.os }}-spm-test-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-test-
+            ${{ runner.os }}-spm-
 
       - name: Cache Homebrew packages
         uses: actions/cache@v4
@@ -86,6 +98,7 @@ jobs:
         if: always()
         with:
           name: test-results
+          retention-days: 7
           path: |
             ~/.swiftpm/xcode/results
             **/.swiftpm/xcode/logs
@@ -96,6 +109,7 @@ jobs:
   fuzz:
     name: Fuzz Testing
     runs-on: macos-15
+    timeout-minutes: 20
     permissions:
       contents: read
       actions: read
@@ -113,6 +127,17 @@ jobs:
         uses: swift-actions/setup-swift@v2
         with:
           swift-version: '6.2' 
+
+      - name: Cache SPM
+        uses: actions/cache@v4
+        with:
+          path: |
+            SwiftMTPKit/.build/repositories
+            SwiftMTPKit/.build/artifacts
+          key: ${{ runner.os }}-spm-fuzz-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-fuzz-
+            ${{ runner.os }}-spm-
 
       - name: Cache Homebrew packages
         uses: actions/cache@v4
@@ -169,6 +194,7 @@ jobs:
         if: always()
         with:
           name: fuzz-results
+          retention-days: 7
           path: SwiftMTPKit/fuzz_*.log
 
   # =========================================================================
@@ -177,6 +203,7 @@ jobs:
   coverage:
     name: Code Coverage
     runs-on: macos-15
+    timeout-minutes: 45
     permissions:
       contents: read
       checks: write
@@ -196,6 +223,17 @@ jobs:
         uses: swift-actions/setup-swift@v2
         with:
           swift-version: '6.2' 
+
+      - name: Cache SPM
+        uses: actions/cache@v4
+        with:
+          path: |
+            SwiftMTPKit/.build/repositories
+            SwiftMTPKit/.build/artifacts
+          key: ${{ runner.os }}-spm-coverage-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-coverage-
+            ${{ runner.os }}-spm-
 
       - name: Cache Homebrew packages
         uses: actions/cache@v4
@@ -229,6 +267,7 @@ jobs:
         if: always()
         with:
           name: code-coverage-report
+          retention-days: 14
           path: |
             SwiftMTPKit/coverage/coverage.json
             SwiftMTPKit/coverage/summary.txt
@@ -240,6 +279,7 @@ jobs:
   nightly-integration:
     name: Nightly Integration Tests
     runs-on: macos-15
+    timeout-minutes: 90
     if: github.event_name == 'schedule'
     permissions:
       contents: read
@@ -258,6 +298,17 @@ jobs:
         uses: swift-actions/setup-swift@v2
         with:
           swift-version: '6.2' 
+
+      - name: Cache SPM
+        uses: actions/cache@v4
+        with:
+          path: |
+            SwiftMTPKit/.build/repositories
+            SwiftMTPKit/.build/artifacts
+          key: ${{ runner.os }}-spm-nightly-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-nightly-
+            ${{ runner.os }}-spm-
 
       - name: Cache Homebrew packages
         uses: actions/cache@v4
@@ -304,6 +355,7 @@ jobs:
         if: always()
         with:
           name: nightly-integration-results
+          retention-days: 7
           path: |
             ~/.swiftpm/xcode/results
             **/.swiftpm/xcode/logs
@@ -332,6 +384,17 @@ jobs:
         uses: swift-actions/setup-swift@v2
         with:
           swift-version: '6.2' 
+
+      - name: Cache SPM
+        uses: actions/cache@v4
+        with:
+          path: |
+            SwiftMTPKit/.build/repositories
+            SwiftMTPKit/.build/artifacts
+          key: ${{ runner.os }}-spm-bench-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-bench-
+            ${{ runner.os }}-spm-
 
       - name: Cache Homebrew packages
         uses: actions/cache@v4
@@ -399,4 +462,5 @@ jobs:
         if: always()
         with:
           name: benchmark-results
+          retention-days: 30
           path: benchmark-results-*/
