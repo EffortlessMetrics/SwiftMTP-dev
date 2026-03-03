@@ -1,6 +1,6 @@
 # SwiftMTP Roadmap
 
-*Last updated: 2026-03-07*
+*Last updated: 2026-03-08*
 
 > **Pre-Alpha Status**: SwiftMTP has extensive protocol and test infrastructure but minimal real-device validation. Only 1 device (Xiaomi Mi Note 2) has completed real file transfers. The version numbers below (2.x) reflect internal development milestones, not production readiness. Items marked as "shipped" or "complete" are code-complete and mock-tested unless noted otherwise — most have not been validated on real hardware.
 
@@ -8,7 +8,7 @@ This roadmap is the execution plan for the next implementation sprints in the 2.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **7,909 tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices).
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **8,177 tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices).
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
@@ -25,7 +25,7 @@ All items below are code-complete and mock-tested. None have been validated on r
 - [x] **Multi-device parallel transfers** — 8 scenario tests, DeviceServiceRegistry routing (mock-tested)
 - [x] **FallbackAllFailedError** — carries full attempt history (name, duration, error per rung)
 - [x] **Automatic documentation** — `swiftmtp-docs` SPM executable target for hands-off DocC generation
-- [x] **7,909 tests executed, 0 unexpected failures** (up from 1,849; 40 skipped, 3 expected failures across 20 test targets)
+- [x] **8,177 tests executed, 0 unexpected failures** (up from 1,849; 40 skipped, 3 expected failures across 20 test targets)
 
 ## Sprint Execution Rules
 
@@ -45,6 +45,16 @@ Minimum expectations for each item:
 | 2.1-A | Transport stability + error clarity | Complete | Real-device timeout reproduction drift | `./scripts/smoke.sh` + targeted device artifacts |
 | 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
 | 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
+
+## Wave 32–33 Activity (2026-03-07)
+
+Key development activity in these waves:
+
+- **PRs merged**: #390–#399 (10 PRs across format, fuzz, store, FP-XPC, core, transport, quirks, schema fix, DocC fix)
+- **Schema validation fix**: `quirks.schema.json` corrected — 77,654 validation errors eliminated
+- **DocC generator fix**: `docc-generator-tool` model updated to match current module structure
+- **Test expansion**: 8,177 tests executed across 20 targets (up from 7,909 in wave 31; +268 new tests)
+- **37 total PRs merged** this session (#362–#399)
 
 ## Wave 31 Activity (2026-03-06)
 

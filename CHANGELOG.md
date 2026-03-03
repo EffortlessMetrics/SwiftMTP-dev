@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Wave 33 Schema & DocC Fixes (PRs #398–#399)
+
+> **Summary**: Quirks schema validation fixed (77,654 errors eliminated), DocC generator model updated. Tests at **8,177** (+268 from wave 31).
+
+#### Key Stats
+- **8,177 tests** executed across 20 test targets (up from 7,909)
+- **268 new tests** added across waves 32–33
+- **77,654 schema validation errors** eliminated by fixing `quirks.schema.json`
+- **0 unexpected failures**
+
+#### Merged PRs
+- **#398** — Quirks schema fix: corrected `quirks.schema.json` definitions to match actual data (77,654 validation errors → 0)
+- **#399** — DocC generator fix: updated `docc-generator-tool` model to match current module structure
+
+#### Highlights
+- **Schema validation clean** (#398): the quirks JSON schema had drifted from the actual data format; fixed `additionalProperties`, enum values, and nested object definitions to eliminate all 77,654 validation errors
+- **DocC generator** (#399): generator tool model updated so `docc-generator-tool` produces valid documentation catalogs
+
+---
+
+### Wave 32 Broad Sweep (PRs #390–#397)
+
+> **Summary**: Format sweep, fuzz expansion, store/FileProvider/XPC hardening, core protocol coverage, transport edge cases, and quirks research. Tests grow from 7,909 → **8,177** (+268 new tests).
+
+#### Key Stats
+- **8,177 tests** executed across 20 test targets (up from 7,909)
+- **268 new tests** added
+- **0 unexpected failures**
+
+#### Merged PRs
+- **#390** — Format sweep (swift-format across codebase)
+- **#391** — Fuzz harness expansion
+- **#392** — Store layer hardening
+- **#393** — FileProvider & XPC tests
+- **#394** — Core protocol coverage
+- **#395** — Transport edge case tests
+- **#396** — Quirks research expansion
+- **#397** — Documentation update
+
+---
+
 ### Wave 31 Coverage, Benchmarks & Enforcement (PRs #381–#388)
 
 > **Summary**: Performance benchmarks, per-module coverage gate enforcement, UI accessibility tests, CLI smoke tests, and error recovery paths. Tests grow from 7,720 → **7,909** (+189 new tests).
