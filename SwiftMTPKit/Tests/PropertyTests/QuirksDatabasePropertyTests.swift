@@ -184,16 +184,20 @@ final class QuirksDatabasePropertyTests: XCTestCase {
 
   // MARK: - Helpers
 
-  /// Wave-5 invariant: media players (SanDisk, Creative, iRiver, Cowon, Philips, Archos)
-  /// must NOT require kernel detach (they use standard USB MTP, not Android USB driver).
+  /// Wave-5 invariant: media players using standard MTP interface (class 0x06)
+  /// should not require kernel detach. Vendor-specific interface devices (class 0xff,
+  /// e.g. SanDisk Sansa) may legitimately need it per libmtp UNLOAD_DRIVER flag.
   func testMediaPlayersDoNotRequireKernelDetach() {
     let mediaPlayerVIDs: Set<UInt16> = [0x0781, 0x041e, 0x4102, 0x0e21, 0x0471, 0x0e79, 0x045e]
     let offenders = db.entries
       .filter { mediaPlayerVIDs.contains($0.vid) }
       .filter { $0.resolvedFlags().requiresKernelDetach }
+      // SanDisk Sansa devices use vendor-specific USB class (0xff) and legitimately
+      // need kernel detach per libmtp UNLOAD_DRIVER flag — exclude them.
+      .filter { $0.ifaceClass != 0xff }
     XCTAssertTrue(
       offenders.isEmpty,
-      "Media player devices should not require kernel detach: \(offenders.map { $0.id })")
+      "Standard-interface media players should not require kernel detach: \(offenders.map { $0.id })")
   }
 
   /// E-readers that require kernel detach should be Android-based (reasonable for MTP detach).
