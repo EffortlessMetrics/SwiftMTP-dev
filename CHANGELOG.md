@@ -7,17 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
-### Wave 38 Troubleshooting Update
+### Wave 37–38 Protocol Expansion & Research (PRs #415–#435)
 
-> **Summary**: Comprehensive troubleshooting documentation overhaul with concrete device debugging guidance. New sections for USB claim debugging, device-specific troubleshooting (Samsung, Pixel, OnePlus), common macOS issues, and expanded diagnostic commands.
+> **Summary**: 21 PRs across two waves delivering MTP 1.1 full-spectrum protocol coverage (50+ object formats, 50+ property codes, full event handling), Android MTP edit extensions, server-side CopyObject, write-path hardening, SQLite index optimization, CLI UX improvements, and deep device research for Samsung and Pixel 7. Session totals: **~8,377 tests**, **20,026 quirks entries**, **72 PRs merged** (#363–#435).
+
+#### Key Stats
+- **~8,377 tests** executed across 20 test targets, **0 unexpected failures**
+- **20,026 device quirk entries** across 1,154 VIDs and 38 categories
+- **72 PRs merged** this session (#363–#435)
+- Build: **GREEN**, all smoke tests pass
+
+#### Wave 38 — Protocol & Research (PRs #425–#435)
+- **#425** — Comprehensive troubleshooting documentation overhaul with device-specific debugging guides
+- **#426** — FUSE-T integration research for MTP filesystem mount
+- **#427** — Fix wave 37 code review findings
+- **#428** — Samsung MTP initialization research and quirk fixes (512-byte packet boundary bug, init sequence)
+- **#429** — Pixel 7 bulk transfer research with libmtp source comparison
+- **#430** — Expand MTP object format database to full MTP 1.1 coverage (50+ formats)
+- **#431** — Expand MTP object property codes to full MTP 1.1 coverage (50+ properties)
+- **#432** — Expand MTP event handling to full MTP 1.1 coverage
+- **#433** — Fix MTP 1.1 spec alignment issues
+- **#434** — Implement Android MTP edit extensions: `BeginEditObject`, `EndEditObject`, `TruncateObject`
+- **#435** — Implement MTP `CopyObject` for server-side file copy
+
+#### Wave 37 — Hardening & UX (PRs #415–#424)
+- **#415** — Wave 36–37 changelog and roadmap update
+- **#416** — swift-format sweep across all sources and tests
+- **#417** — FileProvider enumeration and XPC error handling hardening
+- **#418** — Transfer journal hardening for resume edge cases (WAL mode, orphan detection)
+- **#419** — Targeted coverage for write-path and error edge cases
+- **#420** — Write-path validation guards for data integrity
+- **#421** — Transport error diagnostics and structured logging improvements
+- **#422** — CLI error messages and user guidance improvements ("did you mean?" suggestions, categorized help)
+- **#423** — SQLite index optimization (8 dedicated indexes for query performance)
+- **#424** — Fix missing SwiftCheck dependency in SyncTests target
 
 #### Highlights
-- **USB claim debugging**: how to identify and resolve process claim conflicts using `lsof`, `ioreg`, and `system_profiler`; disable Image Capture auto-grabbing
-- **Samsung Galaxy guide**: 512-byte packet boundary bug, MTP mode configuration, init sequence theory
-- **Google Pixel guide**: bulk transfer timeout diagnosis, libmtp workaround limitations, macOS kernel issue documentation
-- **OnePlus guide**: 0x201D write rejection analysis, folder targeting requirements, chunk size recommendations
-- **Common macOS issues**: TSAN interceptor failure on macOS 26 (pin Xcode 16.2), libusb Homebrew vs system conflict resolution, SIP and USB entitlements for distribution
-- **Diagnostic commands**: expanded quick-reference block with verbose probe, ioreg inspection, and system profiler commands
+- **MTP 1.1 full coverage** (#430–#433): object formats, property codes, and event handling expanded to complete MTP 1.1 specification coverage
+- **Android MTP extensions** (#434): `BeginEditObject`, `EndEditObject`, `TruncateObject` enable in-place file editing on Android devices
+- **Server-side CopyObject** (#435): device-side file copy without re-transferring data through host
+- **Write-path safety** (#420): validation guards on all mutating operations — partial write detection, delete safety, read-only storage enforcement
+- **Transfer journal hardening** (#418): WAL mode, atomic downloads, orphan detection for robust resume
+- **SQLite index optimization** (#423): 8 dedicated indexes for device content queries
+- **CLI UX** (#422): "did you mean?" typo suggestions, categorized help, structured error messages
+- **Device research** (#428, #429): deep analysis of Samsung init sequence and Pixel 7 bulk transfer issues, with libmtp source comparison
 
 ---
 

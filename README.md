@@ -10,19 +10,22 @@ SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session manageme
 
 ### What Works
 
-- MTP protocol codec, session management, and object operations (mock-tested)
-- CLI tool: `probe`, `ls`, `pull`, `push`, `snapshot`, `mirror`, `bench`, `events`, `quirks`
-- Device quirks database with 20,000+ entries (research-based — see caveat below)
-- SQLite-based device content indexing and snapshots
-- Transfer journaling with resume support (mock-tested)
-- File Provider extension for Finder integration (tech preview, read-only, mock-tested)
-- SwiftUI GUI application (demo mode only)
+- **MTP 1.1 protocol**: 50+ object formats, 50+ property codes, full event handling (mock-tested)
+- **Android MTP extensions**: `BeginEditObject`, `EndEditObject`, `TruncateObject` for in-place file editing
+- **Server-side CopyObject**: device-side file copy without re-transfer
+- **Write-path safety**: validation guards on all mutating operations
+- **Transfer journaling**: WAL-mode SQLite, atomic downloads, orphan detection, resume support
+- **SQLite-indexed device content**: optimized queries with 8 dedicated indexes
+- **CLI tool**: 12+ commands (`probe`, `ls`, `pull`, `push`, `snapshot`, `mirror`, `bench`, `events`, `quirks`, `device-lab`, `wizard`, `copy`) with "did you mean?" suggestions and categorized help
+- **Device quirks database**: 20,026 entries across 1,154 vendors (research-based — see caveat below)
+- **File Provider integration**: native Finder support on macOS via XPC (tech preview, read-only)
+- **SwiftUI GUI application** (demo mode only)
 
 ### What Doesn't Work (Yet)
 
 - Most real MTP devices — only 1 of 7 tested devices can transfer files
-- Samsung Galaxy: MTP handshake fails after USB claim
-- Google Pixel 7: bulk transfer timeout (likely macOS kernel issue)
+- Samsung Galaxy: MTP handshake fails after USB claim (research done, transport fixes in progress)
+- Google Pixel 7: bulk transfer timeout (research done, transport fixes in progress — see [debug report](Docs/pixel7-usb-debug-report.md))
 - OnePlus 3T: reads work but writes fail with InvalidParameter
 - Canon/Nikon cameras: never connected to SwiftMTP (research-only quirks)
 - File Provider write operations (implemented but no real-device validation)
@@ -56,10 +59,30 @@ Built with Swift 6 strict concurrency and actor-based isolation:
 
 ### Key Features
 
+- **MTP 1.1 Protocol Coverage**: 50+ object formats, 50+ property codes, full event handling, Android MTP extensions, and server-side CopyObject.
 - **Device Quirks Database**: 20,026 entries across 38 categories and 1,154 vendor IDs, sourced from libmtp data and vendor specs. This is research-based scaffolding — only a handful of devices have been tested with SwiftMTP directly.
-- **Transfer Journaling**: Resumable file operations with automatic recovery. Implemented and tested with mocks; limited real-device validation.
+- **Transfer Journaling**: WAL-mode SQLite with atomic downloads, orphan detection, and automatic resume support. Implemented and tested with mocks; limited real-device validation.
+- **Write-Path Safety**: Validation guards on all mutating operations — partial write detection, delete safety, read-only storage enforcement.
 - **File Provider Integration**: Native Finder integration on macOS via XPC. Tech preview, read-only.
+- **CLI**: 12+ commands with "did you mean?" suggestions, categorized help, and structured error messages.
 - **Demo Mode**: Simulated device profiles (pixel7, galaxy, iphone, canon) for development without physical hardware.
+
+## MTP Operation Coverage
+
+| Operation | Status |
+|-----------|--------|
+| GetDeviceInfo | ✅ Implemented |
+| OpenSession / CloseSession | ✅ Implemented |
+| GetStorageIDs / GetStorageInfo | ✅ Implemented |
+| GetObjectHandles / GetObjectInfo | ✅ Implemented |
+| GetObject / GetPartialObject(64) | ✅ Implemented |
+| SendObject / SendPartialObject | ✅ Implemented |
+| DeleteObject / MoveObject | ✅ Implemented |
+| CopyObject | ✅ Implemented (wave 38) |
+| BeginEditObject / EndEditObject | ✅ Implemented (wave 38, Android) |
+| TruncateObject | ✅ Implemented (wave 38, Android) |
+| GetObjectPropList | ✅ Implemented |
+| SetObjectPropList | 🔨 Stub only |
 
 ## Device Status
 
@@ -69,8 +92,8 @@ Honest status of devices that have quirk entries with any level of real testing:
 |--------|---------|--------|-------|
 | Xiaomi Mi Note 2 | 2717:ff10 | Partial | Only device with real file transfer data. Requires kernel detach; no GetObjectPropList. |
 | Xiaomi Mi Note 2 (alt) | 2717:ff40 | Untested | Has quirk entry. Recent lab run returned 0 storages. |
-| Samsung Galaxy S7 | 04e8:6860 | Not Working | USB claim succeeds but MTP handshake fails. |
-| Google Pixel 7 | 18d1:4ee1 | Blocked | Bulk transfer timeout — likely macOS kernel-level issue. See [debug report](Docs/pixel7-usb-debug-report.md). |
+| Samsung Galaxy S7 | 04e8:6860 | Blocked | USB claim succeeds but MTP handshake fails. Research done (#428), transport fixes in progress. |
+| Google Pixel 7 | 18d1:4ee1 | Blocked | Bulk transfer timeout — research done (#429), transport fixes in progress. See [debug report](Docs/pixel7-usb-debug-report.md). |
 | OnePlus 3T | 2a70:f003 | Partial | Probe and read work. Writes fail with 0x201D (InvalidParameter). |
 | Canon EOS Rebel / R-class | 04a9:3139 | Research Only | Quirks from libmtp/vendor specs. Never connected to SwiftMTP. |
 | Nikon DSLR / Z-series | 04b0:0410 | Research Only | Quirks from libmtp/vendor specs. Never connected to SwiftMTP. |
