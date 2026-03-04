@@ -50,7 +50,9 @@ final class DataIntegrityWave35Tests: XCTestCase {
 
     // Find the written object by scanning operations
     let ops = await device.operations
-    let writeOps = ops.filter { $0.operation == "write" && $0.parameters["name"] == "verify_test.bin" }
+    let writeOps = ops.filter {
+      $0.operation == "write" && $0.parameters["name"] == "verify_test.bin"
+    }
     XCTAssertEqual(writeOps.count, 1, "Should have exactly one write operation recorded")
 
     // List objects under DCIM to find our file

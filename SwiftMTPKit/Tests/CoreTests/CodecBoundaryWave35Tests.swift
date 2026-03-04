@@ -29,7 +29,8 @@ final class CodecBoundaryWave35Tests: XCTestCase {
     var offset = 0
     let result = PTPString.parse(from: data, at: &offset)
     if let result = result {
-      XCTAssertTrue(result.isEmpty || result == "\0",
+      XCTAssertTrue(
+        result.isEmpty || result == "\0",
         "Single null-char PTP string should be empty or contain null")
     }
   }
@@ -153,7 +154,8 @@ final class CodecBoundaryWave35Tests: XCTestCase {
     XCTAssertEqual(written, 12, "Encode always writes actual header regardless of length field")
 
     // The length field in the buffer should be 100 (as specified), not 12
-    let encodedLength = UInt32(buf[0]) | (UInt32(buf[1]) << 8)
+    let encodedLength =
+      UInt32(buf[0]) | (UInt32(buf[1]) << 8)
       | (UInt32(buf[2]) << 16) | (UInt32(buf[3]) << 24)
     XCTAssertEqual(encodedLength, 100)
   }
@@ -171,7 +173,8 @@ final class CodecBoundaryWave35Tests: XCTestCase {
     }
     XCTAssertEqual(written, 12)
 
-    let encodedLength = UInt32(buf[0]) | (UInt32(buf[1]) << 8)
+    let encodedLength =
+      UInt32(buf[0]) | (UInt32(buf[1]) << 8)
       | (UInt32(buf[2]) << 16) | (UInt32(buf[3]) << 24)
     XCTAssertEqual(encodedLength, 0, "Zero length should round-trip")
   }

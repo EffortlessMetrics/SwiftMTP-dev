@@ -55,7 +55,8 @@ final class SyncResilienceWave35Tests: XCTestCase {
       .withObject(
         VirtualObjectConfig(
           handle: 10, storage: storage, name: "ok.txt",
-          sizeBytes: 8, formatCode: 0x3000, data: Data(repeating: 0xAA, count: 8)))
+          sizeBytes: 8, formatCode: 0x3000, data: Data(repeating: 0xAA, count: 8))
+      )
       .withObject(
         VirtualObjectConfig(
           handle: 11, storage: storage, name: "fail.txt",
@@ -92,8 +93,11 @@ final class SyncResilienceWave35Tests: XCTestCase {
       etag: (size: 100_000, mtime: nil))
 
     try journal.updateProgress(id: transferId, committed: 60_000)
-    try journal.fail(id: transferId, error: NSError(domain: "transport", code: -1,
-      userInfo: [NSLocalizedDescriptionKey: "Device disconnected"]))
+    try journal.fail(
+      id: transferId,
+      error: NSError(
+        domain: "transport", code: -1,
+        userInfo: [NSLocalizedDescriptionKey: "Device disconnected"]))
 
     // Verify partial state is recoverable
     let resumables = try journal.loadResumables(for: deviceId)
@@ -172,8 +176,11 @@ final class SyncResilienceWave35Tests: XCTestCase {
         tempURL: tmpDir.appendingPathComponent("tmp_retry_\(attempt)"),
         finalURL: tmpDir.appendingPathComponent("retry_file.dat"),
         etag: (size: 1024, mtime: nil))
-      try journal.fail(id: id, error: NSError(domain: "transport", code: -1,
-        userInfo: [NSLocalizedDescriptionKey: "Device busy (attempt \(attempt))"]))
+      try journal.fail(
+        id: id,
+        error: NSError(
+          domain: "transport", code: -1,
+          userInfo: [NSLocalizedDescriptionKey: "Device busy (attempt \(attempt))"]))
     }
 
     // Final successful attempt
@@ -201,7 +208,8 @@ final class SyncResilienceWave35Tests: XCTestCase {
       .withObject(
         VirtualObjectConfig(
           handle: 30, storage: storage, name: "a.txt",
-          sizeBytes: 4, formatCode: 0x3000, data: Data(repeating: 0x01, count: 4)))
+          sizeBytes: 4, formatCode: 0x3000, data: Data(repeating: 0x01, count: 4))
+      )
       .withObject(
         VirtualObjectConfig(
           handle: 31, storage: storage, name: "b.txt",
@@ -454,7 +462,8 @@ final class SyncResilienceWave35Tests: XCTestCase {
       contentsOf: mergedDir.appendingPathComponent("photo.jpg"), encoding: .utf8)
     let conflict = try! String(
       contentsOf: mergedDir.appendingPathComponent("photo_conflict.jpg"), encoding: .utf8)
-    XCTAssertNotEqual(original, conflict, "Both versions should be preserved with different content")
+    XCTAssertNotEqual(
+      original, conflict, "Both versions should be preserved with different content")
   }
 
   func testNewerWinsPolicySelectsNewestByMtime() {
@@ -474,10 +483,12 @@ final class SyncResilienceWave35Tests: XCTestCase {
     writeFile("report.pdf", content: "new remote report", in: remoteDir)
 
     // Resolve: pick the one with newer mtime
-    let localMtime = (try? FileManager.default.attributesOfItem(atPath: localFile.path))?[
-      .modificationDate] as? Date ?? .distantPast
-    let remoteMtime = (try? FileManager.default.attributesOfItem(atPath: remoteFile.path))?[
-      .modificationDate] as? Date ?? .distantPast
+    let localMtime =
+      (try? FileManager.default.attributesOfItem(atPath: localFile.path))?[
+        .modificationDate] as? Date ?? .distantPast
+    let remoteMtime =
+      (try? FileManager.default.attributesOfItem(atPath: remoteFile.path))?[
+        .modificationDate] as? Date ?? .distantPast
     let winner = localMtime > remoteMtime ? localFile : remoteFile
 
     try! FileManager.default.copyItem(
@@ -499,10 +510,12 @@ final class SyncResilienceWave35Tests: XCTestCase {
       [.modificationDate: Date(timeIntervalSinceNow: -86400)], ofItemAtPath: remoteFile.path)
 
     let localFile = localDir.appendingPathComponent("data.csv")
-    let localMtime = (try? FileManager.default.attributesOfItem(atPath: localFile.path))?[
-      .modificationDate] as? Date ?? .distantPast
-    let remoteMtime = (try? FileManager.default.attributesOfItem(atPath: remoteFile.path))?[
-      .modificationDate] as? Date ?? .distantPast
+    let localMtime =
+      (try? FileManager.default.attributesOfItem(atPath: localFile.path))?[
+        .modificationDate] as? Date ?? .distantPast
+    let remoteMtime =
+      (try? FileManager.default.attributesOfItem(atPath: remoteFile.path))?[
+        .modificationDate] as? Date ?? .distantPast
     let winner = localMtime > remoteMtime ? localFile : remoteFile
 
     try! FileManager.default.copyItem(
@@ -549,11 +562,13 @@ final class SyncResilienceWave35Tests: XCTestCase {
       .withObject(
         VirtualObjectConfig(
           handle: 40, storage: storage, name: "a.txt",
-          sizeBytes: 4, formatCode: 0x3000, data: Data(repeating: 0x01, count: 4)))
+          sizeBytes: 4, formatCode: 0x3000, data: Data(repeating: 0x01, count: 4))
+      )
       .withObject(
         VirtualObjectConfig(
           handle: 41, storage: storage, name: "b.txt",
-          sizeBytes: 4, formatCode: 0x3000, data: Data(repeating: 0x02, count: 4)))
+          sizeBytes: 4, formatCode: 0x3000, data: Data(repeating: 0x02, count: 4))
+      )
       .withObject(
         VirtualObjectConfig(
           handle: 42, storage: storage, name: "c.txt",
@@ -574,7 +589,8 @@ final class SyncResilienceWave35Tests: XCTestCase {
       .withObject(
         VirtualObjectConfig(
           handle: 50, storage: storage, name: "photo.jpg",
-          sizeBytes: 8, formatCode: 0x3801, data: Data(repeating: 0xAB, count: 8)))
+          sizeBytes: 8, formatCode: 0x3801, data: Data(repeating: 0xAB, count: 8))
+      )
       .withObject(
         VirtualObjectConfig(
           handle: 51, storage: storage, name: "readme.txt",
@@ -665,7 +681,8 @@ final class SyncResilienceWave35Tests: XCTestCase {
 
     // On case-insensitive filesystems these may resolve to the same path,
     // but the URL strings themselves should differ
-    XCTAssertNotEqual(url1.lastPathComponent, url2.lastPathComponent,
+    XCTAssertNotEqual(
+      url1.lastPathComponent, url2.lastPathComponent,
       "Path components should preserve original case")
   }
 

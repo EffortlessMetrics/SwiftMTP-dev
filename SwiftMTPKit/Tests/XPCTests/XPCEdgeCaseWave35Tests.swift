@@ -450,7 +450,8 @@ final class XPCEdgeCaseWave35Tests: XCTestCase {
   // MARK: - NSSecureCoding round-trip edge cases
 
   func testReadRequestRoundTrip() throws {
-    let original = ReadRequest(deviceId: "test-device", objectHandle: 42, bookmark: Data([1, 2, 3]))
+    let original = ReadRequest(
+      deviceId: "test-device", objectHandle: 42, bookmark: Data([1, 2, 3]))
     let data = try NSKeyedArchiver.archivedData(
       withRootObject: original, requiringSecureCoding: true)
     let decoded = try NSKeyedUnarchiver.unarchivedObject(ofClass: ReadRequest.self, from: data)
@@ -484,7 +485,8 @@ final class XPCEdgeCaseWave35Tests: XCTestCase {
   }
 
   func testDeviceStatusResponseRoundTrip() throws {
-    let original = DeviceStatusResponse(connected: true, sessionOpen: false, lastCrawlTimestamp: 123)
+    let original = DeviceStatusResponse(
+      connected: true, sessionOpen: false, lastCrawlTimestamp: 123)
     let data = try NSKeyedArchiver.archivedData(
       withRootObject: original, requiringSecureCoding: true)
     let decoded = try NSKeyedUnarchiver.unarchivedObject(

@@ -12,7 +12,8 @@ final class SubmissionWorkflowWave35Tests: XCTestCase {
   // Resolve project root from the test bundle location.
   private static let projectRoot: String = {
     let fileURL = URL(fileURLWithPath: #filePath)
-    return fileURL
+    return
+      fileURL
       .deletingLastPathComponent()  // ToolingTests
       .deletingLastPathComponent()  // Tests
       .deletingLastPathComponent()  // SwiftMTPKit
@@ -37,7 +38,8 @@ final class SubmissionWorkflowWave35Tests: XCTestCase {
     try process.run()
     process.waitUntilExit()
 
-    let output = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+    let output =
+      String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
     XCTAssertEqual(process.terminationStatus, 2, "Should exit with code 2 (usage error)")
     XCTAssertTrue(output.contains("Usage:"), "Should print usage information")
     XCTAssertTrue(
@@ -196,7 +198,9 @@ final class SubmissionWorkflowWave35Tests: XCTestCase {
     let schema = try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
     let required = try XCTUnwrap(schema["required"] as? [String])
 
-    let expectedFields = ["schemaVersion", "tool", "host", "timestamp", "device", "artifacts", "consent"]
+    let expectedFields = [
+      "schemaVersion", "tool", "host", "timestamp", "device", "artifacts", "consent",
+    ]
     for field in expectedFields {
       XCTAssertTrue(
         required.contains(field),

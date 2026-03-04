@@ -238,7 +238,8 @@ final class SnapshotWave30Tests: XCTestCase {
   func testActionableTransportNoDevice() {
     XCTAssertEqual(
       TransportError.noDevice.actionableDescription,
-      "No MTP device found. Ensure the device is connected, unlocked, and set to File Transfer mode.")
+      "No MTP device found. Ensure the device is connected, unlocked, and set to File Transfer mode."
+    )
   }
 
   func testActionableTransportAccessDenied() {

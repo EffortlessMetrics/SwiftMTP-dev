@@ -409,7 +409,8 @@ final class FileProviderEdgeCaseWave35Tests: XCTestCase {
 
     let exp = expectation(description: "modify-storage-full")
     _ = ext.modifyItem(
-      item, baseVersion: NSFileProviderItemVersion(
+      item,
+      baseVersion: NSFileProviderItemVersion(
         contentVersion: Data([1]), metadataVersion: Data([1])),
       changedFields: .contents, contents: tempURL,
       options: [], request: NSFileProviderRequest()
@@ -444,7 +445,8 @@ final class FileProviderEdgeCaseWave35Tests: XCTestCase {
 
     let exp = expectation(description: "modify-delete-fails")
     _ = ext.modifyItem(
-      item, baseVersion: NSFileProviderItemVersion(
+      item,
+      baseVersion: NSFileProviderItemVersion(
         contentVersion: Data([1]), metadataVersion: Data([1])),
       changedFields: .contents, contents: tempURL,
       options: [], request: NSFileProviderRequest()
@@ -606,9 +608,10 @@ final class FileProviderEdgeCaseWave35Tests: XCTestCase {
     reader.setChangeCounter(5, deviceId: "device1")
 
     let deletedObj = makeObject(handle: 100, name: "removed.jpg")
-    reader.setChanges([
-      IndexedObjectChange(kind: .deleted, object: deletedObj),
-    ], deviceId: "device1")
+    reader.setChanges(
+      [
+        IndexedObjectChange(kind: .deleted, object: deletedObj)
+      ], deviceId: "device1")
 
     let enumerator = DomainEnumerator(
       deviceId: "device1", storageId: 1, parentHandle: nil, indexReader: reader)
@@ -753,7 +756,8 @@ final class FileProviderEdgeCaseWave35Tests: XCTestCase {
     let reader = MockLiveIndexReader()
     let ext = makeExtension(reader: reader)
 
-    XCTAssertThrowsError(try ext.enumerator(for: .rootContainer, request: NSFileProviderRequest())) {
+    XCTAssertThrowsError(try ext.enumerator(for: .rootContainer, request: NSFileProviderRequest()))
+    {
       let nsError = $0 as NSError
       XCTAssertEqual(nsError.domain, NSFileProviderErrorDomain)
       XCTAssertEqual(nsError.code, NSFileProviderError.noSuchItem.rawValue)

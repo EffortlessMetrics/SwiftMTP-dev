@@ -27,7 +27,8 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     storages: [VirtualStorageConfig] = [],
     objects: [VirtualObjectConfig] = []
   ) -> VirtualMTPDevice {
-    let deviceId = MTPDeviceID(raw: "\(String(format: "%04x", vid)):\(String(format: "%04x", pid))@1:1")
+    let deviceId = MTPDeviceID(
+      raw: "\(String(format: "%04x", vid)):\(String(format: "%04x", pid))@1:1")
     let summary = MTPDeviceSummary(
       id: deviceId,
       manufacturer: manufacturer,
@@ -202,19 +203,21 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
   /// like GetPartialObject64 or SendObjectPropList.
   func testPTPOnlyDeviceLacksAndroidMTPExtensions() async throws {
     // Minimal PTP operation set (no MTP vendor extensions)
-    let ptpOps: Set<UInt16> = Set([
-      0x1001,  // GetDeviceInfo
-      0x1002,  // OpenSession
-      0x1003,  // CloseSession
-      0x1004,  // GetStorageIDs
-      0x1005,  // GetStorageInfo
-      0x1007,  // GetObjectHandles
-      0x1008,  // GetObjectInfo
-      0x1009,  // GetObject
-      0x100C,  // SendObjectInfo
-      0x100D,  // SendObject
-      0x100B,  // DeleteObject
-    ].map { UInt16($0) })
+    let ptpOps: Set<UInt16> = Set(
+      [
+        0x1001,  // GetDeviceInfo
+        0x1002,  // OpenSession
+        0x1003,  // CloseSession
+        0x1004,  // GetStorageIDs
+        0x1005,  // GetStorageInfo
+        0x1007,  // GetObjectHandles
+        0x1008,  // GetObjectInfo
+        0x1009,  // GetObject
+        0x100C,  // SendObjectInfo
+        0x100D,  // SendObject
+        0x100B,  // DeleteObject
+      ]
+      .map { UInt16($0) })
 
     let device = makeDevice(
       manufacturer: "Canon", model: "EOS Rebel T7",
@@ -224,24 +227,30 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     let info = try await device.info
 
     // PTP-only should NOT support Android MTP extensions
-    XCTAssertFalse(info.operationsSupported.contains(0x95C4), "PTP device should not support GetPartialObject64")
-    XCTAssertFalse(info.operationsSupported.contains(0x95C1), "PTP device should not support SendPartialObject")
-    XCTAssertFalse(info.operationsSupported.contains(0x9805), "PTP device should not support GetObjectPropList")
+    XCTAssertFalse(
+      info.operationsSupported.contains(0x95C4), "PTP device should not support GetPartialObject64")
+    XCTAssertFalse(
+      info.operationsSupported.contains(0x95C1), "PTP device should not support SendPartialObject")
+    XCTAssertFalse(
+      info.operationsSupported.contains(0x9805), "PTP device should not support GetObjectPropList")
 
     // PTP-only must still support core operations
     XCTAssertTrue(info.operationsSupported.contains(0x1009), "PTP device must support GetObject")
-    XCTAssertTrue(info.operationsSupported.contains(0x100C), "PTP device must support SendObjectInfo")
+    XCTAssertTrue(
+      info.operationsSupported.contains(0x100C), "PTP device must support SendObjectInfo")
     XCTAssertTrue(info.operationsSupported.contains(0x100D), "PTP device must support SendObject")
   }
 
   /// Nikon PTP device with capture-specific extensions but no MTP partial transfers.
   func testNikonPTPWithCaptureExtensions() async throws {
-    let nikonOps: Set<UInt16> = Set([
-      0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1007, 0x1008, 0x1009,
-      0x100B, 0x100C, 0x100D,
-      0x9001,  // Nikon capture
-      0x9003,  // Nikon get preview
-    ].map { UInt16($0) })
+    let nikonOps: Set<UInt16> = Set(
+      [
+        0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1007, 0x1008, 0x1009,
+        0x100B, 0x100C, 0x100D,
+        0x9001,  // Nikon capture
+        0x9003,  // Nikon get preview
+      ]
+      .map { UInt16($0) })
 
     let device = makeDevice(
       manufacturer: "Nikon", model: "Z6III",
@@ -264,17 +273,19 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
   /// Full Android MTP device with vendor-specific extensions including
   /// partial object transfer and property list enumeration.
   func testAndroidDeviceWithFullMTPExtensions() async throws {
-    let androidOps: Set<UInt16> = Set([
-      // Core PTP
-      0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1007, 0x1008, 0x1009,
-      0x100B, 0x100C, 0x100D, 0x100E,
-      // MTP extensions
-      0x101B,  // GetPartialObject (32-bit)
-      0x9805,  // GetObjectPropList
-      0x9806,  // SetObjectPropValue
-      0x95C1,  // SendPartialObject
-      0x95C4,  // GetPartialObject64
-    ].map { UInt16($0) })
+    let androidOps: Set<UInt16> = Set(
+      [
+        // Core PTP
+        0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1007, 0x1008, 0x1009,
+        0x100B, 0x100C, 0x100D, 0x100E,
+        // MTP extensions
+        0x101B,  // GetPartialObject (32-bit)
+        0x9805,  // GetObjectPropList
+        0x9806,  // SetObjectPropValue
+        0x95C1,  // SendPartialObject
+        0x95C4,  // GetPartialObject64
+      ]
+      .map { UInt16($0) })
 
     let device = makeDevice(
       manufacturer: "Google", model: "Pixel 7",
@@ -284,20 +295,26 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     let info = try await device.info
 
     // Partial read: 64-bit preferred over 32-bit
-    XCTAssertTrue(info.operationsSupported.contains(0x95C4), "Pixel 7 should support GetPartialObject64")
-    XCTAssertTrue(info.operationsSupported.contains(0x101B), "Pixel 7 should support GetPartialObject (32)")
-    XCTAssertTrue(info.operationsSupported.contains(0x95C1), "Pixel 7 should support SendPartialObject")
-    XCTAssertTrue(info.operationsSupported.contains(0x9805), "Pixel 7 should support GetObjectPropList")
+    XCTAssertTrue(
+      info.operationsSupported.contains(0x95C4), "Pixel 7 should support GetPartialObject64")
+    XCTAssertTrue(
+      info.operationsSupported.contains(0x101B), "Pixel 7 should support GetPartialObject (32)")
+    XCTAssertTrue(
+      info.operationsSupported.contains(0x95C1), "Pixel 7 should support SendPartialObject")
+    XCTAssertTrue(
+      info.operationsSupported.contains(0x9805), "Pixel 7 should support GetObjectPropList")
   }
 
   /// Samsung devices sometimes support MTP but not partial write.
   func testSamsungMTPWithoutPartialWrite() async throws {
-    let samsungOps: Set<UInt16> = Set([
-      0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1007, 0x1008, 0x1009,
-      0x100B, 0x100C, 0x100D,
-      0x101B,  // GetPartialObject (32)
-      0x9805,  // GetObjectPropList
-    ].map { UInt16($0) })
+    let samsungOps: Set<UInt16> = Set(
+      [
+        0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1007, 0x1008, 0x1009,
+        0x100B, 0x100C, 0x100D,
+        0x101B,  // GetPartialObject (32)
+        0x9805,  // GetObjectPropList
+      ]
+      .map { UInt16($0) })
 
     let device = makeDevice(
       manufacturer: "Samsung", model: "Galaxy S7",
@@ -306,9 +323,12 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     )
     let info = try await device.info
 
-    XCTAssertTrue(info.operationsSupported.contains(0x9805), "Samsung should support GetObjectPropList")
-    XCTAssertFalse(info.operationsSupported.contains(0x95C1), "Samsung S7 should NOT support SendPartialObject")
-    XCTAssertFalse(info.operationsSupported.contains(0x95C4), "Samsung S7 should NOT support GetPartialObject64")
+    XCTAssertTrue(
+      info.operationsSupported.contains(0x9805), "Samsung should support GetObjectPropList")
+    XCTAssertFalse(
+      info.operationsSupported.contains(0x95C1), "Samsung S7 should NOT support SendPartialObject")
+    XCTAssertFalse(
+      info.operationsSupported.contains(0x95C4), "Samsung S7 should NOT support GetPartialObject64")
   }
 
   // MARK: - 6. Quirk Matching for Unusual USB Descriptors
@@ -322,7 +342,9 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     )
     let db = QuirkDatabase(schemaVersion: "1.0", entries: [quirk])
 
-    let result = db.match(vid: 0x1234, pid: 0x5678, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    let result = db.match(
+      vid: 0x1234, pid: 0x5678, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil,
+      ifaceProtocol: nil)
     XCTAssertNotNil(result)
     XCTAssertEqual(result?.id, "test-device-1234")
     XCTAssertEqual(result?.ioTimeoutMs, 5000)
@@ -383,7 +405,9 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     let quirk = DeviceQuirk(id: "known-device", vid: 0x1111, pid: 0x2222)
     let db = QuirkDatabase(schemaVersion: "1.0", entries: [quirk])
 
-    let result = db.match(vid: 0x9999, pid: 0x8888, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    let result = db.match(
+      vid: 0x9999, pid: 0x8888, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil,
+      ifaceProtocol: nil)
     XCTAssertNil(result, "Unknown VID:PID must not match any quirk")
   }
 
@@ -400,11 +424,15 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     )
     let db = QuirkDatabase(schemaVersion: "1.0", entries: [quirk])
 
-    let result = db.match(vid: 0xDEAD, pid: 0xBEEF, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    let result = db.match(
+      vid: 0xDEAD, pid: 0xBEEF, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil,
+      ifaceProtocol: nil)
     XCTAssertNotNil(result)
     XCTAssertEqual(result?.ioTimeoutMs, 15000, "I/O timeout must match quirk specification")
-    XCTAssertEqual(result?.handshakeTimeoutMs, 30000, "Handshake timeout must match quirk specification")
-    XCTAssertEqual(result?.overallDeadlineMs, 120_000, "Overall deadline must match quirk specification")
+    XCTAssertEqual(
+      result?.handshakeTimeoutMs, 30000, "Handshake timeout must match quirk specification")
+    XCTAssertEqual(
+      result?.overallDeadlineMs, 120_000, "Overall deadline must match quirk specification")
   }
 
   /// Quirk with stabilization delays for post-claim and post-probe phases.
@@ -418,7 +446,9 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     )
     let db = QuirkDatabase(schemaVersion: "1.0", entries: [quirk])
 
-    let result = db.match(vid: 0x2A70, pid: 0xF003, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    let result = db.match(
+      vid: 0x2A70, pid: 0xF003, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil,
+      ifaceProtocol: nil)
     XCTAssertNotNil(result)
     XCTAssertEqual(result?.stabilizeMs, 500)
     XCTAssertEqual(result?.postClaimStabilizeMs, 1000)
@@ -438,7 +468,9 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     )
     let db = QuirkDatabase(schemaVersion: "1.0", entries: [quirk])
 
-    let result = db.match(vid: 0xBBBB, pid: 0xCCCC, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+    let result = db.match(
+      vid: 0xBBBB, pid: 0xCCCC, bcdDevice: nil, ifaceClass: nil, ifaceSubclass: nil,
+      ifaceProtocol: nil)
     XCTAssertNotNil(result)
     XCTAssertEqual(result?.hooks?.count, 1)
     XCTAssertEqual(result?.hooks?.first?.phase, .onDeviceBusy)
