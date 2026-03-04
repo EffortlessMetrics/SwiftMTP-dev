@@ -12,6 +12,7 @@ struct CollectCLICommand {
       strict: flags.strict,
       runBench: [],
       json: flags.json,
+      redact: true,
       noninteractive: false,
       bundlePath: nil,
       deviceName: nil,
@@ -34,6 +35,10 @@ struct CollectCLICommand {
           .map { String($0) }
       } else if arg == "--noninteractive" {
         collectFlags.noninteractive = true
+      } else if arg == "--no-redact" {
+        collectFlags.redact = false
+      } else if arg == "--redact" {
+        collectFlags.redact = true
       } else if arg == "--bundle" && i + 1 < args.count {
         collectFlags.bundlePath = args[i + 1]
         i += 1
@@ -64,5 +69,11 @@ struct CollectCLICommand {
     print("  --bundle <path>      - Custom output location for submission bundle")
     print("  --device-name <name> - Custom device name for generated bundle path")
     print("  --open-pr            - Run submit flow against GitHub after collect")
+    print("  --no-redact          - Disable PrivacyRedactor on submission artifacts")
+    print("  --redact             - Enable PrivacyRedactor (default)")
+    print("")
+    print("Inherited flags:")
+    print("  --strict / --no-strict  - Enable/disable strict validation (default: strict)")
+    print("  --json                  - Output structured JSON for machine consumption")
   }
 }
