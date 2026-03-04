@@ -44,6 +44,35 @@ public enum QuirkStatus: String, Codable, Sendable {
   }
 }
 
+/// High-level governance classification for filtering and display.
+public enum QuirkGovernanceLevel: String, Sendable, CaseIterable {
+  case promoted     // Battle-tested with real device evidence
+  case research     // Research-based, never tested with SwiftMTP
+  case community    // Community-contributed, limited verification
+  case deprecated   // Superseded or known-bad entries
+
+  /// Derive the governance level from a ``DeviceQuirk`` entry.
+  public static func classify(_ quirk: DeviceQuirk) -> QuirkGovernanceLevel {
+    switch quirk.status {
+    case .promoted:
+      return .promoted
+    case .verified:
+      // Verified entries are close to promoted but still research-tier
+      // until they graduate.
+      return .research
+    case .proposed, .none:
+      return .research
+    }
+  }
+}
+
+/// Result of validating governance invariants on a ``QuirkDatabase``.
+public struct GovernanceValidationResult: Sendable {
+  public let violations: [String]
+  public var isValid: Bool { violations.isEmpty }
+}
+
+
 public struct DeviceQuirk: Codable, Sendable {
   public var id: String  // e.g. "xiaomi-mi-note-2-ff10"
   public var deviceName: String?  // Human-readable device name
@@ -335,5 +364,45 @@ public struct QuirkDatabase: Codable, Sendable {
     let scored = entries.map { (entry: $0, score: score($0)) }
     let valid = scored.filter { $0.score >= 0 }
     return valid.max(by: { $0.score < $1.score })?.entry
+  }
+
+  // MARK: - Governance queries
+
+  /// Returns only promoted (battle-tested) entries with real device evidence.
+  public func testedDevices() -> [DeviceQuirk] {
+    entries.filter { $0.status == .promoted }
+  }
+
+  /// Returns entries that have never been verified on a real device.
+  public func researchEntries() -> [DeviceQuirk] {
+    entries.filter { QuirkGovernanceLevel.classify($0) == .research }
+  }
+
+  /// Summary counts grouped by ``QuirkGovernanceLevel``.
+  public func governanceSummary() -> [QuirkGovernanceLevel: Int] {
+    var counts: [QuirkGovernanceLevel: Int] = [:]
+    for entry in entries {
+      let level = QuirkGovernanceLevel.classify(entry)
+      counts[level, default: 0] += 1
+    }
+    return counts
+  }
+
+  /// Validate governance invariants.
+  /// Promoted entries MUST have non-empty `evidenceRequired`.
+  public func validateGovernance() -> GovernanceValidationResult {
+    var violations: [String] = []
+    for entry in entries where entry.status == .promoted {
+      if let evidence = entry.evidenceRequired {
+        if evidence.isEmpty {
+          violations.append(
+            "Promoted entry '\(entry.id)' has empty evidenceRequired")
+        }
+      } else {
+        violations.append(
+          "Promoted entry '\(entry.id)' is missing evidenceRequired")
+      }
+    }
+    return GovernanceValidationResult(violations: violations)
   }
 }

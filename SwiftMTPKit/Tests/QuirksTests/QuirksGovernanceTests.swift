@@ -451,3 +451,108 @@ final class TransportConfigValidationTests: XCTestCase {
     }
   }
 }
+
+// MARK: - Governance Level Classification
+
+final class GovernanceLevelTests: XCTestCase {
+
+  func testPromotedEntryClassifiesAsPromoted() {
+    let q = DeviceQuirk(id: "p1", vid: 1, pid: 1, status: .promoted)
+    XCTAssertEqual(QuirkGovernanceLevel.classify(q), .promoted)
+  }
+
+  func testVerifiedEntryClassifiesAsResearch() {
+    let q = DeviceQuirk(id: "v1", vid: 1, pid: 1, status: .verified)
+    XCTAssertEqual(QuirkGovernanceLevel.classify(q), .research)
+  }
+
+  func testProposedEntryClassifiesAsResearch() {
+    let q = DeviceQuirk(id: "r1", vid: 1, pid: 1, status: .proposed)
+    XCTAssertEqual(QuirkGovernanceLevel.classify(q), .research)
+  }
+
+  func testNilStatusClassifiesAsResearch() {
+    let q = DeviceQuirk(id: "n1", vid: 1, pid: 1)
+    XCTAssertEqual(QuirkGovernanceLevel.classify(q), .research)
+  }
+}
+
+// MARK: - Database Governance Queries
+
+final class DatabaseGovernanceQueryTests: XCTestCase {
+
+  func testTestedDevicesReturnsOnlyPromoted() {
+    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
+      DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted),
+      DeviceQuirk(id: "b", vid: 2, pid: 2, status: .verified),
+      DeviceQuirk(id: "c", vid: 3, pid: 3, status: .proposed),
+      DeviceQuirk(id: "d", vid: 4, pid: 4),
+    ])
+    let tested = db.testedDevices()
+    XCTAssertEqual(tested.count, 1)
+    XCTAssertEqual(tested.first?.id, "a")
+  }
+
+  func testResearchEntriesExcludesPromoted() {
+    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
+      DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted),
+      DeviceQuirk(id: "b", vid: 2, pid: 2, status: .verified),
+      DeviceQuirk(id: "c", vid: 3, pid: 3, status: .proposed),
+    ])
+    let research = db.researchEntries()
+    XCTAssertEqual(research.count, 2)
+    XCTAssertTrue(research.contains(where: { $0.id == "b" }))
+    XCTAssertTrue(research.contains(where: { $0.id == "c" }))
+  }
+
+  func testGovernanceSummaryCountsLevels() {
+    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
+      DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted),
+      DeviceQuirk(id: "b", vid: 2, pid: 2, status: .promoted),
+      DeviceQuirk(id: "c", vid: 3, pid: 3, status: .proposed),
+    ])
+    let summary = db.governanceSummary()
+    XCTAssertEqual(summary[.promoted], 2)
+    XCTAssertEqual(summary[.research], 1)
+  }
+
+  func testValidateGovernancePassesForValidDatabase() {
+    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
+      DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted, evidenceRequired: ["probe_log"]),
+      DeviceQuirk(id: "b", vid: 2, pid: 2, status: .proposed),
+    ])
+    let result = db.validateGovernance()
+    XCTAssertTrue(result.isValid)
+    XCTAssertTrue(result.violations.isEmpty)
+  }
+
+  func testValidateGovernanceFailsWhenPromotedMissingEvidence() {
+    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
+      DeviceQuirk(id: "bad", vid: 1, pid: 1, status: .promoted),
+    ])
+    let result = db.validateGovernance()
+    XCTAssertFalse(result.isValid)
+    XCTAssertEqual(result.violations.count, 1)
+    XCTAssertTrue(result.violations[0].contains("bad"))
+  }
+
+  func testValidateGovernanceFailsWhenPromotedHasEmptyEvidence() {
+    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
+      DeviceQuirk(id: "empty-ev", vid: 1, pid: 1, status: .promoted, evidenceRequired: []),
+    ])
+    let result = db.validateGovernance()
+    XCTAssertFalse(result.isValid)
+  }
+
+  func testBundledDatabasePassesGovernanceValidation() throws {
+    let db = try QuirkDatabase.load()
+    let result = db.validateGovernance()
+    XCTAssertTrue(result.isValid, "Bundled database governance violations: \(result.violations)")
+  }
+
+  func testBundledTestedDevicesMatchPromotedCount() throws {
+    let db = try QuirkDatabase.load()
+    let promoted = db.entries.filter { $0.status == .promoted }
+    XCTAssertEqual(db.testedDevices().count, promoted.count)
+  }
+}

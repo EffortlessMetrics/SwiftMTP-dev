@@ -18,6 +18,7 @@ struct SystemCommands {
       print("     --explain                        Show how device config is computed")
       print("     matrix                           Display full device compatibility matrix")
       print("     lookup --vid 0xXXXX --pid 0xXXXX Look up a specific device")
+      print("     stats                            Show governance summary statistics")
       print("")
       print("   Example: swiftmtp quirks lookup --vid 0x18d1 --pid 0x4ee1")
       exitNow(.usage)
@@ -28,9 +29,11 @@ struct SystemCommands {
       await runQuirksMatrix(flags: flags)
     } else if subcommand == "lookup" {
       await runQuirksLookup(flags: flags, args: Array(args.dropFirst()))
+    } else if subcommand == "stats" {
+      await runQuirksStats(flags: flags)
     } else {
       print("❌ Unknown quirks subcommand: '\(subcommand)'")
-      print("   Available: --explain, matrix, lookup")
+      print("   Available: --explain, matrix, lookup, stats")
       print("   Example: swiftmtp quirks lookup --vid 0x18d1 --pid 0x4ee1")
       exitNow(.usage)
     }
@@ -203,6 +206,8 @@ struct SystemCommands {
   static func runQuirksMatrix(flags: CLIFlags) async {
     do {
       let db = try QuirkDatabase.load()
+      let tested = db.testedDevices()
+      let research = db.researchEntries()
       if flags.json {
         let rows = db.entries.map { e -> [String: Any] in
           var row: [String: Any] = [
@@ -210,27 +215,102 @@ struct SystemCommands {
             "vidpid": String(format: "0x%04x:0x%04x", e.vid, e.pid),
             "status": e.status?.rawValue ?? "proposed",
             "confidence": e.confidence ?? "unknown",
+            "governanceLevel": QuirkGovernanceLevel.classify(e).rawValue,
           ]
           if let d = e.lastVerifiedDate { row["lastVerifiedDate"] = d }
           if let by = e.lastVerifiedBy { row["lastVerifiedBy"] = by }
           if let ev = e.evidenceRequired { row["evidenceRequired"] = ev }
           return row
         }
-        printJSON(["matrix": rows], type: "quirksMatrix")
+        printJSON(["matrix": rows, "tested": tested.count, "research": research.count], type: "quirksMatrix")
         return
       }
-      print("| Device | VID:PID | Status | Last Verified | Confidence |")
-      print("| --- | --- | --- | --- | --- |")
+      print("\(db.entries.count) quirk entries (\(tested.count) tested, \(research.count) research-based)")
+      print("")
+      print("| Device | VID:PID | Status | Governance | Last Verified | Confidence |")
+      print("| --- | --- | --- | --- | --- | --- |")
       for e in db.entries {
         let vidpid = String(format: "0x%04x:0x%04x", e.vid, e.pid)
         let status = e.status?.rawValue ?? "proposed"
+        let govLevel = QuirkGovernanceLevel.classify(e)
+        let govTag: String
+        switch govLevel {
+        case .promoted:   govTag = "✅ tested"
+        case .research:   govTag = "🔬 research"
+        case .community:  govTag = "👥 community"
+        case .deprecated: govTag = "⚠️  deprecated"
+        }
         let date = e.lastVerifiedDate ?? "—"
         let confidence = e.confidence ?? "—"
-        print("| \(e.id) | \(vidpid) | \(status) | \(date) | \(confidence) |")
+        print("| \(e.id) | \(vidpid) | \(status) | \(govTag) | \(date) | \(confidence) |")
       }
     } catch {
       print("❌ Failed to load quirks database: \(error)")
       print("   Ensure quirks.json is present in SwiftMTPQuirks/Resources/.")
+      exitNow(.unavailable)
+    }
+  }
+
+  static func runQuirksStats(flags: CLIFlags) async {
+    do {
+      let db = try QuirkDatabase.load()
+      let summary = db.governanceSummary()
+      let validation = db.validateGovernance()
+      let tested = db.testedDevices()
+
+      if flags.json {
+        var info: [String: Any] = [
+          "totalEntries": db.entries.count,
+          "governance": Dictionary(uniqueKeysWithValues: summary.map { ($0.key.rawValue, $0.value) }),
+          "governanceValid": validation.isValid,
+        ]
+        if !validation.isValid {
+          info["violations"] = validation.violations
+        }
+        info["testedDeviceIds"] = tested.map(\.id)
+        printJSON(info, type: "quirksStats")
+        return
+      }
+
+      print("📊 Quirks Governance Summary")
+      print("============================")
+      print("   Total entries:  \(db.entries.count)")
+      print("")
+      print("   By governance level:")
+      for level in QuirkGovernanceLevel.allCases {
+        let count = summary[level] ?? 0
+        let icon: String
+        switch level {
+        case .promoted:   icon = "✅"
+        case .research:   icon = "🔬"
+        case .community:  icon = "👥"
+        case .deprecated: icon = "⚠️ "
+        }
+        let label = level.rawValue + String(repeating: " ", count: max(0, 12 - level.rawValue.count))
+        print("     \(icon) \(label) \(count)")
+      }
+
+      if !tested.isEmpty {
+        print("")
+        print("   Tested devices:")
+        for entry in tested {
+          let vidpid = String(format: "0x%04x:0x%04x", entry.vid, entry.pid)
+          print("     ✅ \(entry.id) (\(vidpid))")
+        }
+      }
+
+      if !validation.isValid {
+        print("")
+        print("   ⚠️  Governance violations:")
+        for v in validation.violations {
+          print("     - \(v)")
+        }
+      } else {
+        print("")
+        print("   ✅ All governance invariants satisfied")
+      }
+    } catch {
+      print("❌ Failed to load quirks database: \(error)")
       exitNow(.unavailable)
     }
   }
@@ -274,6 +354,8 @@ struct SystemCommands {
       let byStatus = Dictionary(grouping: entries) { $0.status?.rawValue ?? "unknown" }
       let proplistCount = entries.filter { $0.resolvedFlags().supportsGetObjectPropList }.count
       let kernelDetachCount = entries.filter { $0.resolvedFlags().requiresKernelDetach }.count
+      let tested = qdb.testedDevices().count
+      let research = qdb.researchEntries().count
 
       if flags.json {
         let info: [String: Any] = [
@@ -282,6 +364,8 @@ struct SystemCommands {
           "byStatus": byStatus.mapValues { $0.count },
           "supportsGetObjectPropList": proplistCount,
           "requiresKernelDetach": kernelDetachCount,
+          "testedDevices": tested,
+          "researchEntries": research,
         ]
         if let data = try? JSONSerialization.data(withJSONObject: info, options: [.prettyPrinted]),
           let str = String(data: data, encoding: .utf8)
@@ -291,7 +375,7 @@ struct SystemCommands {
       } else {
         print("📦 SwiftMTP Device Database")
         print("")
-        print("   Entries:          \(entries.count)")
+        print("   Entries:          \(entries.count) (\(tested) tested, \(research) research-based)")
         print("   Unique VIDs:      \(vids.count)")
         print("   Proplist-capable: \(proplistCount)")
         print("   Kernel-detach:    \(kernelDetachCount)")
