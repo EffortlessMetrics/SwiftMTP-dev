@@ -189,7 +189,7 @@ let package = Package(
       name: "CoreTests",
       dependencies: [
         "SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks", "SwiftMTPTestKit",
-        "SwiftMTPCLI", "SwiftMTPIndex",
+        "SwiftMTPCLI", "SwiftMTPIndex", "SwiftMTPSync", "SwiftMTPObservability",
       ],
       resources: [.copy("Fixtures")]),
     .testTarget(
