@@ -102,7 +102,6 @@ public final class MirrorEngine: Sendable {
   private func downloadFile(_ file: MTPDiff.Row, from device: any MTPDevice, to root: URL)
     async throws
   {
-    // Convert path key to local file URL
     let localURL = pathKeyToLocalURL(file.pathKey, root: root)
 
     // Ensure parent directory exists
@@ -115,13 +114,36 @@ public final class MirrorEngine: Sendable {
       return
     }
 
-    // Download the file (this will use resumable transfers automatically via the device actor)
-    // MTPDevice.read returns a Progress object. We must wait for its completion.
-    let progress = try await device.read(handle: file.handle, range: nil, to: localURL)
+    // Write to a temp file first, then atomically move on success
+    let tempURL = localURL.appendingPathExtension("swiftmtp-partial")
 
-    // The read call itself returns once the download is complete or failed.
-    // We just need to check the final unit count for logging.
-    log.debug("Downloaded file successfully")
+    // Register with journal so the transfer is resumable
+    let transferId = try await journal.beginRead(
+      device: await device.id,
+      handle: file.handle,
+      name: localURL.lastPathComponent,
+      size: file.size,
+      supportsPartial: false,
+      tempURL: tempURL,
+      finalURL: localURL,
+      etag: (size: file.size, mtime: file.mtime)
+    )
+
+    do {
+      let progress = try await device.read(handle: file.handle, range: nil, to: tempURL)
+      // Atomic move from temp to final destination
+      if FileManager.default.fileExists(atPath: localURL.path) {
+        try FileManager.default.removeItem(at: localURL)
+      }
+      try FileManager.default.moveItem(at: tempURL, to: localURL)
+      try await journal.complete(id: transferId)
+      log.debug("Downloaded file successfully")
+    } catch {
+      // Clean up partial temp file on failure
+      try? FileManager.default.removeItem(at: tempURL)
+      try? await journal.fail(id: transferId, error: error)
+      throw error
+    }
   }
 
   /// Convert a path key to a local file URL
@@ -142,16 +164,16 @@ public final class MirrorEngine: Sendable {
 
     // Get local file attributes
     let attributes = try FileManager.default.attributesOfItem(atPath: localURL.path)
-    let localSize = (attributes[.size] as! NSNumber).uint64Value
 
-    // Compare sizes
-    if let remoteSize = file.size, localSize != remoteSize {
-      return false
+    // Compare sizes (guard against missing attribute)
+    if let remoteSize = file.size {
+      guard let localSizeVal = attributes[.size] as? NSNumber else { return false }
+      if localSizeVal.uint64Value != remoteSize { return false }
     }
 
     // Compare modification times (with tolerance)
     if let remoteMtime = file.mtime {
-      let localMtime = attributes[.modificationDate] as! Date
+      guard let localMtime = attributes[.modificationDate] as? Date else { return false }
       let timeDiff = abs(localMtime.timeIntervalSince1970 - remoteMtime.timeIntervalSince1970)
       if timeDiff > 300 {  // 5 minute tolerance
         return false
