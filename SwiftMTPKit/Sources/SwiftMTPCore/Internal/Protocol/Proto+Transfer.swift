@@ -3,6 +3,7 @@
 
 import Foundation
 import MTPEndianCodec
+import SwiftMTPObservability
 
 enum TransferMode { case whole, partial }
 
@@ -146,16 +147,16 @@ public enum ProtoTransfer {
     )
 
     if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
-      print(
-        "   [USB] SendObjectInfo: storage=\(String(format: "0x%08x", targetStorage)) parent=\(String(format: "0x%08x", commandParentParam)) format=\(String(format: "0x%04x", formatCode)) size=\(size) name=\(name)"
+      MTPLog.transfer.debug(
+        "SendObjectInfo: storage=\(String(format: "0x%08x", targetStorage), privacy: .public) parent=\(String(format: "0x%08x", commandParentParam), privacy: .public) format=\(String(format: "0x%04x", formatCode), privacy: .public) size=\(size) name=\(name, privacy: .public)"
       )
       let formatSource = useUndefinedObjectFormat ? "forced-undefined" : "filename"
-      print(
-        "   [USB] SendObjectInfo fields: emptyDates=\(useEmptyDates) unknownSize=\(useUnknownObjectInfoSize) formatSource=\(formatSource) omitOptionalObjectInfoFields=\(omitOptionalObjectInfoFields) zeroObjectInfoParentHandle=\(zeroObjectInfoParentHandle) useRootCommandParentHandle=\(useRootCommandParentHandle) nameUTF16Units=\(name.utf16.count)"
+      MTPLog.transfer.debug(
+        "SendObjectInfo fields: emptyDates=\(useEmptyDates) unknownSize=\(useUnknownObjectInfoSize) formatSource=\(formatSource, privacy: .public) nameUTF16Units=\(name.utf16.count)"
       )
-      print("   [USB] SendObjectInfo dataset length: \(dataset.count) bytes")
+      MTPLog.transfer.debug("SendObjectInfo dataset length: \(dataset.count) bytes")
       let hex = dataset.map { String(format: "%02x", $0) }.joined(separator: " ")
-      print("   [USB] Dataset hex: \(hex.prefix(128))\(dataset.count > 64 ? "..." : "")")
+      MTPLog.transfer.debug("Dataset hex: \(hex.prefix(128), privacy: .public)\(dataset.count > 64 ? "..." : "")")
     }
 
     let infoOffset = BoxedOffset()
@@ -240,13 +241,13 @@ public enum ProtoTransfer {
 
     if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
       let formatSource = useUndefinedObjectFormat ? "forced-undefined" : "filename"
-      print(
-        "   [USB] SendObjectPropList: storage=\(String(format: "0x%08x", storageID)) parent=\(String(format: "0x%08x", parentParam)) format=\(String(format: "0x%04x", formatCode)) size=\(size) name=\(name)"
+      MTPLog.transfer.debug(
+        "SendObjectPropList: storage=\(String(format: "0x%08x", storageID), privacy: .public) parent=\(String(format: "0x%08x", parentParam), privacy: .public) format=\(String(format: "0x%04x", formatCode), privacy: .public) size=\(size) name=\(name, privacy: .public)"
       )
-      print(
-        "   [USB] SendObjectPropList fields: formatSource=\(formatSource) zeroObjectInfoParentHandle=\(zeroObjectInfoParentHandle)"
+      MTPLog.transfer.debug(
+        "SendObjectPropList fields: formatSource=\(formatSource, privacy: .public) zeroObjectInfoParentHandle=\(zeroObjectInfoParentHandle)"
       )
-      print("   [USB] SendObjectPropList dataset length: \(propList.count) bytes")
+      MTPLog.transfer.debug("SendObjectPropList dataset length: \(propList.count) bytes")
     }
 
     let propListOffset = BoxedOffset()
@@ -323,10 +324,10 @@ extension ProtoTransfer {
     )
 
     if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
-      print(
-        "   [USB] SendObjectInfo: storage=\(String(format: "0x%08x", storageID)) parent=\(String(format: "0x%08x", parent)) format=0x3001 size=0 name=\(name)"
+      MTPLog.transfer.debug(
+        "SendObjectInfo: storage=\(String(format: "0x%08x", storageID), privacy: .public) parent=\(String(format: "0x%08x", parent), privacy: .public) format=0x3001 size=0 name=\(name, privacy: .public)"
       )
-      print("   [USB] SendObjectInfo dataset length: \(dataset.count) bytes")
+      MTPLog.transfer.debug("SendObjectInfo dataset length: \(dataset.count) bytes")
     }
 
     let sendObjectInfoCommand = PTPContainer(
