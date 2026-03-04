@@ -198,6 +198,47 @@ final class QuirkFlagsIntegrationTests: XCTestCase {
     XCTAssertTrue(flags.brokenSendObjectPropList)
   }
 
+  // MARK: - 10. forceUndefinedFormatOnWrite flag
+
+  func testForceUndefinedFormatOnWrite_flagExists() {
+    var flags = QuirkFlags()
+    XCTAssertFalse(flags.forceUndefinedFormatOnWrite)
+    flags.forceUndefinedFormatOnWrite = true
+    XCTAssertTrue(flags.forceUndefinedFormatOnWrite)
+  }
+
+  func testForceUndefinedFormatOnWrite_roundTrip() throws {
+    var flags = QuirkFlags()
+    flags.forceUndefinedFormatOnWrite = true
+    flags.emptyDatesInSendObject = true
+    flags.brokenSendObjectPropList = true
+
+    let data = try JSONEncoder().encode(flags)
+    let decoded = try JSONDecoder().decode(QuirkFlags.self, from: data)
+
+    XCTAssertTrue(decoded.forceUndefinedFormatOnWrite)
+    XCTAssertTrue(decoded.emptyDatesInSendObject)
+    XCTAssertTrue(decoded.brokenSendObjectPropList)
+  }
+
+  func testForceUndefinedFormatOnWrite_decodesFromJSON() throws {
+    let json = """
+      {"forceUndefinedFormatOnWrite": true, "emptyDatesInSendObject": true, "brokenSendObjectPropList": true}
+      """
+    let flags = try JSONDecoder().decode(QuirkFlags.self, from: Data(json.utf8))
+    XCTAssertTrue(flags.forceUndefinedFormatOnWrite)
+    XCTAssertTrue(flags.emptyDatesInSendObject)
+    XCTAssertTrue(flags.brokenSendObjectPropList)
+  }
+
+  func testForceUndefinedFormatOnWrite_defaultsFalseWhenMissingFromJSON() throws {
+    let json = """
+      {"emptyDatesInSendObject": true}
+      """
+    let flags = try JSONDecoder().decode(QuirkFlags.self, from: Data(json.utf8))
+    XCTAssertFalse(flags.forceUndefinedFormatOnWrite)
+  }
+
   // MARK: - Config wiring from quirk flags
 
   func testQuirkFlagsConfigWiring() {
@@ -212,6 +253,7 @@ final class QuirkFlagsIntegrationTests: XCTestCase {
     flags.skipCloseSession = true
     flags.propListOverridesObjectInfo = true
     flags.samsungPartialObjectBoundaryBug = true
+    flags.forceUndefinedFormatOnWrite = true
 
     XCTAssertTrue(flags.forceResetOnClose)
     XCTAssertTrue(flags.noZeroReads)
@@ -222,6 +264,7 @@ final class QuirkFlagsIntegrationTests: XCTestCase {
     XCTAssertTrue(flags.skipCloseSession)
     XCTAssertTrue(flags.propListOverridesObjectInfo)
     XCTAssertTrue(flags.samsungPartialObjectBoundaryBug)
+    XCTAssertTrue(flags.forceUndefinedFormatOnWrite)
   }
 
   func testQuirkFlagsRoundTrip() throws {
@@ -235,6 +278,7 @@ final class QuirkFlagsIntegrationTests: XCTestCase {
     flags.skipCloseSession = true
     flags.propListOverridesObjectInfo = true
     flags.samsungPartialObjectBoundaryBug = true
+    flags.forceUndefinedFormatOnWrite = true
 
     let data = try JSONEncoder().encode(flags)
     let decoded = try JSONDecoder().decode(QuirkFlags.self, from: data)
