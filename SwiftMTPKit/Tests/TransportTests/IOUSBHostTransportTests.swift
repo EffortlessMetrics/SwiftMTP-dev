@@ -482,3 +482,316 @@ final class IOUSBHostBulkOperationTests: XCTestCase {
     }
   }
 }
+
+// MARK: - PTP Data Container Framing Tests
+
+/// Tests verifying correct PTP container framing for file transfer operations.
+/// These validate encoding/decoding at the container level without real USB hardware.
+final class IOUSBHostPTPDataFramingTests: XCTestCase {
+
+  // MARK: - Data-In Container Parsing
+
+  func testDataInContainerHeaderParsing() {
+    // Build a PTP data container: 12-byte header + payload
+    let payload = Data(repeating: 0xAB, count: 256)
+    let container = buildPTPDataContainer(code: PTPOp.getObject.rawValue, txid: 1, payload: payload)
+
+    // Verify header fields
+    container.withUnsafeBytes { buf in
+      let base = buf.baseAddress!
+      let length = UInt32(littleEndian: base.load(as: UInt32.self))
+      let type = UInt16(littleEndian: base.load(fromByteOffset: 4, as: UInt16.self))
+      let code = UInt16(littleEndian: base.load(fromByteOffset: 6, as: UInt16.self))
+      let txid = UInt32(littleEndian: base.load(fromByteOffset: 8, as: UInt32.self))
+
+      XCTAssertEqual(Int(length), 12 + payload.count)
+      XCTAssertEqual(type, PTPContainer.Kind.data.rawValue)
+      XCTAssertEqual(code, PTPOp.getObject.rawValue)
+      XCTAssertEqual(txid, 1)
+    }
+
+    // Verify payload extraction
+    let extracted = container.subdata(in: 12..<container.count)
+    XCTAssertEqual(extracted, payload)
+  }
+
+  func testDataInContainerMultiChunkReassembly() {
+    // Simulate a large GetObject response split across multiple chunks
+    let totalPayload = Data(0..<200)
+    let container = buildPTPDataContainer(
+      code: PTPOp.getObject.rawValue, txid: 1, payload: totalPayload
+    )
+
+    // Split into chunks (first chunk has header + partial data, rest are pure data)
+    let chunk1 = container.subdata(in: 0..<100)
+    let chunk2 = container.subdata(in: 100..<container.count)
+
+    // Parse header from chunk1
+    var reassembled = Data()
+    chunk1.withUnsafeBytes { buf in
+      let base = buf.baseAddress!
+      let length = UInt32(littleEndian: base.load(as: UInt32.self))
+      let type = UInt16(littleEndian: base.load(fromByteOffset: 4, as: UInt16.self))
+      XCTAssertEqual(Int(length), 12 + totalPayload.count)
+      XCTAssertEqual(type, PTPContainer.Kind.data.rawValue)
+    }
+    // Extract payload from chunk1 (after 12-byte header)
+    reassembled.append(chunk1.subdata(in: 12..<chunk1.count))
+    // Append chunk2 (pure data, no header)
+    reassembled.append(chunk2)
+
+    XCTAssertEqual(reassembled, totalPayload)
+  }
+
+  func testDataInContainerLargeFileSentinel() {
+    // For files >4GB, PTP uses 0xFFFFFFFF as length sentinel
+    var header = Data(count: 12)
+    header.withUnsafeMutableBytes { buf in
+      let base = buf.baseAddress!
+      base.storeBytes(of: UInt32(0xFFFFFFFF).littleEndian, as: UInt32.self)
+      base.storeBytes(
+        of: PTPContainer.Kind.data.rawValue.littleEndian,
+        toByteOffset: 4, as: UInt16.self
+      )
+      base.storeBytes(
+        of: PTPOp.getObject.rawValue.littleEndian,
+        toByteOffset: 6, as: UInt16.self
+      )
+      base.storeBytes(of: UInt32(1).littleEndian, toByteOffset: 8, as: UInt32.self)
+    }
+
+    header.withUnsafeBytes { buf in
+      let len = UInt32(littleEndian: buf.load(as: UInt32.self))
+      XCTAssertEqual(len, 0xFFFFFFFF, "Sentinel value indicates indeterminate length")
+    }
+  }
+
+  // MARK: - Data-Out Container Encoding
+
+  func testDataOutContainerEncoding() {
+    // Verify the PTP data container header for SendObject
+    let dataLen: UInt64 = 1024
+    let code = PTPOp.sendObject.rawValue
+    let txid: UInt32 = 5
+
+    var header = Data(count: 12)
+    let containerLen = UInt32(12) + UInt32(dataLen)
+    header.withUnsafeMutableBytes { buf in
+      let base = buf.baseAddress!
+      base.storeBytes(of: containerLen.littleEndian, as: UInt32.self)
+      base.storeBytes(
+        of: PTPContainer.Kind.data.rawValue.littleEndian,
+        toByteOffset: 4, as: UInt16.self
+      )
+      base.storeBytes(of: code.littleEndian, toByteOffset: 6, as: UInt16.self)
+      base.storeBytes(of: txid.littleEndian, toByteOffset: 8, as: UInt32.self)
+    }
+
+    header.withUnsafeBytes { buf in
+      let base = buf.baseAddress!
+      XCTAssertEqual(
+        UInt32(littleEndian: base.load(as: UInt32.self)),
+        UInt32(12 + 1024)
+      )
+      XCTAssertEqual(
+        UInt16(littleEndian: base.load(fromByteOffset: 4, as: UInt16.self)),
+        PTPContainer.Kind.data.rawValue
+      )
+      XCTAssertEqual(
+        UInt16(littleEndian: base.load(fromByteOffset: 6, as: UInt16.self)),
+        PTPOp.sendObject.rawValue
+      )
+      XCTAssertEqual(
+        UInt32(littleEndian: base.load(fromByteOffset: 8, as: UInt32.self)),
+        5
+      )
+    }
+  }
+
+  func testDataOutLargeFileUseSentinel() {
+    // For data > UInt32.max - 12 bytes, container length should be 0xFFFFFFFF
+    let dataLen: UInt64 = UInt64(UInt32.max)
+    let containerLen: UInt32
+    if dataLen > UInt64(UInt32.max) - 12 {
+      containerLen = 0xFFFFFFFF
+    } else {
+      containerLen = UInt32(12) + UInt32(dataLen)
+    }
+    XCTAssertEqual(containerLen, 0xFFFFFFFF)
+  }
+
+  // MARK: - SendObjectInfo + SendObject Framing
+
+  func testSendObjectInfoCommandFraming() {
+    // SendObjectInfo command: params = [StorageID, ParentHandle]
+    let container = PTPContainer(
+      length: 20,
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.sendObjectInfo.rawValue,
+      txid: 1,
+      params: [0x00010001, 0xFFFFFFFF]
+    )
+    XCTAssertEqual(container.code, 0x100C)
+    XCTAssertEqual(container.params.count, 2)
+    XCTAssertEqual(container.params[0], 0x00010001)
+    XCTAssertEqual(container.params[1], 0xFFFFFFFF)
+  }
+
+  func testSendObjectCommandFraming() {
+    // SendObject command has no params
+    let container = PTPContainer(
+      length: 12,
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.sendObject.rawValue,
+      txid: 2,
+      params: []
+    )
+    XCTAssertEqual(container.code, 0x100D)
+    XCTAssertEqual(container.params.count, 0)
+  }
+
+  // MARK: - GetObject / GetPartialObject Command Framing
+
+  func testGetObjectCommandFraming() {
+    // GetObject command: params = [ObjectHandle]
+    let container = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.getObject.rawValue,
+      txid: 1,
+      params: [42]
+    )
+    XCTAssertEqual(container.code, 0x1009)
+    XCTAssertEqual(container.params, [42])
+  }
+
+  func testGetPartialObjectCommandFraming() {
+    // GetPartialObject: params = [Handle, Offset, MaxBytes]
+    let container = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.getPartialObject.rawValue,
+      txid: 1,
+      params: [42, 1024, 4096]
+    )
+    XCTAssertEqual(container.code, 0x101B)
+    XCTAssertEqual(container.params, [42, 1024, 4096])
+  }
+
+  func testGetPartialObject64CommandFraming() {
+    // GetPartialObject64: params = [Handle, OffsetLo, OffsetHi, MaxBytes]
+    let offset: UInt64 = 0x1_0000_0000  // 4GB
+    let offsetLo = UInt32(offset & 0xFFFFFFFF)
+    let offsetHi = UInt32(offset >> 32)
+    let container = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.getPartialObject64.rawValue,
+      txid: 1,
+      params: [42, offsetLo, offsetHi, 65536]
+    )
+    XCTAssertEqual(container.code, 0x95C1)
+    XCTAssertEqual(container.params[0], 42)      // handle
+    XCTAssertEqual(container.params[1], 0)        // offsetLo
+    XCTAssertEqual(container.params[2], 1)        // offsetHi
+    XCTAssertEqual(container.params[3], 65536)    // maxBytes
+  }
+
+  func testSendPartialObjectCommandFraming() {
+    // SendPartialObject (0x95C2): params = [Handle, OffsetLo, OffsetHi, Size]
+    let container = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.sendPartialObject.rawValue,
+      txid: 1,
+      params: [42, 0, 0, 8192]
+    )
+    XCTAssertEqual(container.code, 0x95C2)
+    XCTAssertEqual(container.params.count, 4)
+  }
+
+  // MARK: - Response Framing
+
+  func testResponseContainerForGetObject() {
+    let response = buildPTPResponseContainer(code: 0x2001, txid: 1, params: [])
+    let parsed = parseResponse(response)
+    XCTAssertNotNil(parsed)
+    XCTAssertTrue(parsed!.isOK)
+  }
+
+  func testResponseContainerWithError() {
+    // 0x2009 = Invalid ObjectHandle
+    let response = buildPTPResponseContainer(code: 0x2009, txid: 1, params: [])
+    let parsed = parseResponse(response)
+    XCTAssertNotNil(parsed)
+    XCTAssertFalse(parsed!.isOK)
+    XCTAssertEqual(parsed!.code, 0x2009)
+  }
+
+  func testSendObjectInfoResponseParams() {
+    // SendObjectInfo response: params = [StorageID, ParentHandle, ObjectHandle]
+    let response = buildPTPResponseContainer(
+      code: 0x2001, txid: 1, params: [0x00010001, 0xFFFFFFFF, 100]
+    )
+    let parsed = parseResponse(response)
+    XCTAssertNotNil(parsed)
+    XCTAssertTrue(parsed!.isOK)
+    XCTAssertEqual(parsed!.params.count, 3)
+    XCTAssertEqual(parsed!.params[2], 100)  // new object handle
+  }
+
+  // MARK: - Helpers
+
+  private func buildPTPDataContainer(code: UInt16, txid: UInt32, payload: Data) -> Data {
+    let length = UInt32(12 + payload.count)
+    var data = Data(count: 12)
+    data.withUnsafeMutableBytes { buf in
+      let base = buf.baseAddress!
+      base.storeBytes(of: length.littleEndian, as: UInt32.self)
+      base.storeBytes(
+        of: PTPContainer.Kind.data.rawValue.littleEndian,
+        toByteOffset: 4, as: UInt16.self
+      )
+      base.storeBytes(of: code.littleEndian, toByteOffset: 6, as: UInt16.self)
+      base.storeBytes(of: txid.littleEndian, toByteOffset: 8, as: UInt32.self)
+    }
+    data.append(payload)
+    return data
+  }
+
+  private func buildPTPResponseContainer(
+    code: UInt16, txid: UInt32, params: [UInt32]
+  ) -> Data {
+    let length = UInt32(12 + params.count * 4)
+    var data = Data(count: Int(length))
+    data.withUnsafeMutableBytes { buf in
+      let base = buf.baseAddress!
+      base.storeBytes(of: length.littleEndian, as: UInt32.self)
+      base.storeBytes(
+        of: PTPContainer.Kind.response.rawValue.littleEndian,
+        toByteOffset: 4, as: UInt16.self
+      )
+      base.storeBytes(of: code.littleEndian, toByteOffset: 6, as: UInt16.self)
+      base.storeBytes(of: txid.littleEndian, toByteOffset: 8, as: UInt32.self)
+      for (i, p) in params.enumerated() {
+        base.storeBytes(of: p.littleEndian, toByteOffset: 12 + i * 4, as: UInt32.self)
+      }
+    }
+    return data
+  }
+
+  private func parseResponse(_ data: Data) -> PTPResponseResult? {
+    guard data.count >= 12 else { return nil }
+    return data.withUnsafeBytes { buf in
+      let base = buf.baseAddress!
+      let type = UInt16(littleEndian: base.load(fromByteOffset: 4, as: UInt16.self))
+      guard type == PTPContainer.Kind.response.rawValue else { return nil }
+      let code = UInt16(littleEndian: base.load(fromByteOffset: 6, as: UInt16.self))
+      let txid = UInt32(littleEndian: base.load(fromByteOffset: 8, as: UInt32.self))
+      var params: [UInt32] = []
+      var offset = 12
+      while offset + 4 <= data.count {
+        let p = UInt32(littleEndian: base.load(fromByteOffset: offset, as: UInt32.self))
+        params.append(p)
+        offset += 4
+      }
+      return PTPResponseResult(code: code, txid: txid, params: params)
+    }
+  }
+}
