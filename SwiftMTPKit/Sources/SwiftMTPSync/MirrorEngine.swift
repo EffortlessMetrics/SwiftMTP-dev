@@ -203,6 +203,24 @@ public final class MirrorEngine: Sendable {
     return try await mirror(device: device, deviceId: deviceId, to: root, include: filter)
   }
 
+  /// Mirror with format-based filtering
+  /// - Parameters:
+  ///   - device: The MTP device to mirror
+  ///   - deviceId: Unique identifier for the device
+  ///   - root: Local directory to mirror into
+  ///   - formatFilter: Format filter controlling which object types to include/exclude
+  /// - Returns: Report of the mirror operation
+  public func mirror(
+    device: any MTPDevice, deviceId: MTPDeviceID, to root: URL,
+    formatFilter: MTPFormatFilter
+  ) async throws -> MTPSyncReport {
+    let filter: @Sendable (MTPDiff.Row) -> Bool = { row in
+      return formatFilter.matches(format: row.format)
+    }
+
+    return try await mirror(device: device, deviceId: deviceId, to: root, include: filter)
+  }
+
   /// Check if a path matches a glob pattern
   internal func matchesPattern(_ pathKey: String, pattern: String) -> Bool {
     // 1. Strip storage ID and get components
