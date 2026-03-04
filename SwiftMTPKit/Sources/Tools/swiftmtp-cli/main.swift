@@ -253,6 +253,8 @@ struct SwiftMTPCLI {
       await BDDCommand.run(flags: flags)
     case "snapshot":
       await SnapshotCommand.run(flags: flags, args: remainingArgs)
+    case "thumb":
+      await ThumbCommand.run(flags: flags, args: remainingArgs)
     case "version":
       await SystemCommands.runVersion(flags: flags, args: remainingArgs)
     default:
@@ -270,7 +272,7 @@ struct SwiftMTPCLI {
     "probe", "usb-dump", "device-lab", "diag", "storages", "ls", "pull", "push",
     "bench", "mirror", "quirks", "info", "health", "collect", "submit",
     "add-device", "wizard", "delete", "move", "cp", "copy", "edit", "events",
-    "learn-promote", "bdd", "snapshot", "version", "storybook", "profile",
+    "learn-promote", "bdd", "snapshot", "thumb", "version", "storybook", "profile",
   ]
 
   /// Suggest the closest known command for a typo using simple edit-distance heuristics.
@@ -324,6 +326,7 @@ struct SwiftMTPCLI {
     print("  storages          List available storage volumes")
     print("  pull <h> <dest>   Download a file by handle")
     print("  push <src> <dst>  Upload a file to a folder")
+    print("  thumb <handle>    Download object thumbnail")
     print("  delete <handle>   Delete an object on the device")
     print("  move <h> <parent> Move an object to a new parent")
     print("  cp <h> <storage>  Copy an object (server-side)")

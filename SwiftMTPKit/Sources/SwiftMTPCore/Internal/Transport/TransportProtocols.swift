@@ -130,6 +130,14 @@ public protocol MTPLink: Sendable {
   /// No-op on links that do not support an interrupt endpoint.
   func startEventPump()
 
+  // MARK: - Thumbnail
+
+  /// GetThumb (0x100A): retrieve the embedded thumbnail for an object.
+  ///
+  /// - Parameter handle: Object handle whose thumbnail to retrieve.
+  /// - Returns: Raw thumbnail image data (typically JPEG).
+  func getThumb(handle: MTPObjectHandle) async throws -> Data
+
   // MARK: - Android Edit Extensions
 
   /// BeginEditObject (0x95C4): enter in-place edit mode for an object.
@@ -156,6 +164,27 @@ public extension MTPLink {
 
   /// Default: immediately-finishing stream for links without an interrupt endpoint.
   var eventStream: AsyncStream<Data> { AsyncStream { $0.finish() } }
+
+  /// Default: execute GetThumb (0x100A) via executeStreamingCommand.
+  func getThumb(handle: MTPObjectHandle) async throws -> Data {
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: PTPOp.getThumb.rawValue,
+      txid: 0,
+      params: [handle]
+    )
+    let buf = _PropValueBuffer()
+    let response = try await executeStreamingCommand(
+      command, dataPhaseLength: nil,
+      dataInHandler: { chunk in
+        buf.data.append(contentsOf: chunk)
+        return chunk.count
+      },
+      dataOutHandler: nil
+    )
+    try response.checkOK()
+    return buf.data
+  }
 
   /// Default: send BeginEditObject (0x95C4) via executeCommand.
   func beginEditObject(handle: UInt32) async throws {

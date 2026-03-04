@@ -264,6 +264,24 @@ public actor VirtualMTPDevice: MTPDevice {
     return newHandle
   }
 
+  public func getThumbnail(handle: MTPObjectHandle) async throws -> Data {
+    record("getThumbnail", parameters: ["handle": "\(handle)"])
+    guard objectTree[handle] != nil else {
+      throw MTPError.objectNotFound
+    }
+    // Return a minimal stub JPEG thumbnail (SOI + EOI with padding)
+    return VirtualMTPDevice.stubThumbnail
+  }
+
+  /// A minimal JPEG-like blob used as a stub thumbnail for testing.
+  /// Starts with JPEG SOI marker (0xFFD8) and ends with EOI (0xFFD9).
+  private static let stubThumbnail: Data = {
+    var d = Data([0xFF, 0xD8])  // SOI
+    d.append(contentsOf: [UInt8](repeating: 0x00, count: 62))  // padding (64 bytes total)
+    d.append(contentsOf: [0xFF, 0xD9] as [UInt8])  // EOI
+    return d
+  }()
+
   public var probedCapabilities: [String: Bool] {
     get async { [:] }
   }

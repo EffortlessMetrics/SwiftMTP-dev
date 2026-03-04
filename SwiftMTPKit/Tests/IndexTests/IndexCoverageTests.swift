@@ -312,6 +312,10 @@ private actor MockSchedulerDevice: MTPDevice {
     throw MTPError.notSupported("copyObject is not needed in this test double")
   }
 
+  func getThumbnail(handle: MTPObjectHandle) async throws -> Data {
+    throw MTPError.notSupported("getThumbnail is not needed in this test double")
+  }
+
   var probedCapabilities: [String: Bool] { get async { [:] } }
   var effectiveTuning: EffectiveTuning { get async { .defaults() } }
 

@@ -131,6 +131,10 @@ private class MockDevice: MTPDevice, @unchecked Sendable {
     throw MTPError.notSupported("Mock implementation")
   }
 
+  func getThumbnail(handle: MTPObjectHandle) async throws -> Data {
+    throw MTPError.notSupported("Mock implementation")
+  }
+
   var probedCapabilities: [String: Bool] { get async { [:] } }
   var effectiveTuning: EffectiveTuning { get async { .defaults() } }
 
