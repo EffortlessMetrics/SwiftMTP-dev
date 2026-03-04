@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import os
 import SQLite3
 import SwiftMTPCore
 
@@ -31,13 +32,14 @@ public struct SQLiteTransferRecord: Sendable {
 
 public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @unchecked Sendable {
   private var db: OpaquePointer?
+  private static let log = Logger(subsystem: "SwiftMTP", category: "journal")
 
   public init(dbPath: String) throws {
     if sqlite3_open(dbPath, &db) != SQLITE_OK {
       defer { if db != nil { sqlite3_close(db) } }
       throw makeError("sqlite3_open failed")
     }
-    try enableWAL()
+    try enableWAL(dbPath: dbPath)
     try setupSchema()
     try migrateSchema()
     try markOrphanedTransfers()
@@ -46,13 +48,25 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
   deinit { if db != nil { sqlite3_close(db) } }
 
   /// Enable WAL journal mode for crash resilience and better concurrent read performance.
-  private func enableWAL() throws {
+  private func enableWAL(dbPath: String) throws {
     var stmt: OpaquePointer?
     guard sqlite3_prepare_v2(db, "PRAGMA journal_mode=WAL", -1, &stmt, nil) == SQLITE_OK else {
       throw makeError("WAL pragma prepare")
     }
     defer { sqlite3_finalize(stmt) }
-    _ = sqlite3_step(stmt)
+    guard sqlite3_step(stmt) == SQLITE_ROW else {
+      throw makeError("WAL pragma step")
+    }
+    if let modePtr = sqlite3_column_text(stmt, 0) {
+      let mode = String(cString: modePtr)
+      if mode != "wal" {
+        if dbPath == ":memory:" || dbPath.isEmpty {
+          Self.log.warning("WAL not supported on in-memory database; using \(mode) journal mode")
+        } else {
+          throw makeError("WAL mode not enabled, got '\(mode)'")
+        }
+      }
+    }
   }
 
   private func setupSchema() throws {
