@@ -41,14 +41,19 @@ public actor EventBridge {
           case .storageInfoChanged:
             // Re-seed the crawl to pick up storage changes
             await self.scheduler.seedOnConnect(deviceId: deviceId, device: device)
-          case .storageAdded, .storageRemoved:
+          case .storageAdded, .storageRemoved, .storeFull:
             // Storage topology change — re-seed crawl
             await self.scheduler.seedOnConnect(deviceId: deviceId, device: device)
-          case .objectInfoChanged:
+          case .objectInfoChanged, .requestObjectTransfer:
             // Object metadata changed — re-seed to pick up updated metadata
             await self.scheduler.seedOnConnect(deviceId: deviceId, device: device)
-          case .deviceInfoChanged:
+          case .deviceInfoChanged, .devicePropChanged:
             break  // No index action needed for device-level info changes
+          case .deviceReset:
+            // Device reset — full re-seed required
+            await self.scheduler.seedOnConnect(deviceId: deviceId, device: device)
+          case .cancelTransaction, .captureComplete, .unreportedStatus:
+            break  // No index action needed
           case .unknown:
             break  // Unrecognised event — ignore
           }

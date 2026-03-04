@@ -740,14 +740,17 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   /// Invalidate actor-local caches in response to a device-generated MTP event.
   private func handleMTPEvent(_ event: MTPEvent) {
     switch event {
-    case .objectAdded, .objectRemoved, .objectInfoChanged:
+    case .objectAdded, .objectRemoved, .objectInfoChanged, .requestObjectTransfer:
       parentStorageIDCache.removeAll(keepingCapacity: true)
-    case .storageAdded, .storageRemoved, .storageInfoChanged:
+    case .storageAdded, .storageRemoved, .storageInfoChanged, .storeFull:
       parentStorageIDCache.removeAll(keepingCapacity: true)
-    case .deviceInfoChanged:
+    case .deviceInfoChanged, .devicePropChanged:
       deviceInfo = nil
       parentStorageIDCache.removeAll(keepingCapacity: true)
-    case .unknown:
+    case .deviceReset:
+      deviceInfo = nil
+      parentStorageIDCache.removeAll(keepingCapacity: true)
+    case .cancelTransaction, .captureComplete, .unreportedStatus, .unknown:
       break
     }
   }

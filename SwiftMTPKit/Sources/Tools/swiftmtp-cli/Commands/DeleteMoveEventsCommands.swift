@@ -207,6 +207,27 @@ func runEventsCommand(
       case .deviceInfoChanged:
         code = 0x4008
         params = []
+      case .cancelTransaction(let txId):
+        code = 0x4001
+        params = [txId]
+      case .devicePropChanged(let prop):
+        code = 0x4006
+        params = [UInt32(prop)]
+      case .requestObjectTransfer(let handle):
+        code = 0x4009
+        params = [handle]
+      case .storeFull(let storageId):
+        code = 0x400A
+        params = [storageId.raw]
+      case .deviceReset:
+        code = 0x400B
+        params = []
+      case .captureComplete(let txId):
+        code = 0x400D
+        params = [txId]
+      case .unreportedStatus:
+        code = 0x400E
+        params = []
       case .unknown(let c, let p):
         code = UInt16(c)
         params = p
@@ -220,7 +241,7 @@ func runEventsCommand(
       if json {
         out.append(e)
       } else {
-        print(String(format: "0x%04X  params=%@", e.code, "\(e.params)"))
+        print(String(format: "0x%04X  %@", e.code, ev.eventDescription))
       }
       if DispatchTime.now().uptimeNanoseconds >= deadline { break }
     }

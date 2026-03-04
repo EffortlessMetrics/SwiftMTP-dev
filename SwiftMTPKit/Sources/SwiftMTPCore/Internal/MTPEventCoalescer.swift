@@ -15,6 +15,9 @@ public final class MTPEventCoalescer: @unchecked Sendable {
     case deleteObject(deviceId: String, storageId: UInt32, objectHandle: UInt32)
     case storageAdded(deviceId: String, storageId: UInt32)
     case storageRemoved(deviceId: String, storageId: UInt32)
+    case devicePropChanged(deviceId: String, propertyCode: UInt16)
+    case storeFull(deviceId: String, storageId: UInt32)
+    case deviceReset(deviceId: String)
   }
 
   public let window: TimeInterval
