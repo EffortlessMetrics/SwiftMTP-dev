@@ -238,7 +238,21 @@ struct TransferCommands {
       print(
         "   Target: storage=0x\(String(format: "%08x", storageID.raw)) parent=0x\(String(format: "%08x", parentHandle))"
       )
-      var csvRows = ["timestamp,operation,size_bytes,duration_seconds,speed_mbps"]
+
+      // Load persisted tuning for this device (if available).
+      let tuningStore = DeviceTuningStore()
+      let vidPid = await deviceVIDPID(device)
+      let existingRecord = tuningStore.load(vid: vidPid.vid, pid: vidPid.pid)
+      let initialChunk = existingRecord?.optimalChunkSize
+      let tuner = AdaptiveChunkTuner(initialChunkSize: initialChunk)
+
+      if let existing = existingRecord {
+        print("   Loaded tuning: chunk=\(formatBytes(UInt64(existing.optimalChunkSize))) peak=\(String(format: "%.1f", existing.maxObservedThroughput / 1_000_000)) MB/s")
+      } else {
+        print("   No prior tuning data — starting at \(formatBytes(UInt64(await tuner.currentChunkSize)))")
+      }
+
+      var csvRows = ["timestamp,operation,size_bytes,duration_seconds,speed_mbps,chunk_size"]
       let iso = ISO8601DateFormatter()
 
       for pass in 1...repeatCount {
@@ -247,7 +261,8 @@ struct TransferCommands {
         let tempURL = try createBenchPayloadFile(name: benchFilename, sizeBytes: sizeBytes)
         defer { try? FileManager.default.removeItem(at: tempURL) }
 
-        print("   Run \(pass)/\(repeatCount): upload \(benchFilename)...")
+        let chunkBefore = await tuner.currentChunkSize
+        print("   Run \(pass)/\(repeatCount): upload \(benchFilename) chunk=\(formatBytes(UInt64(chunkBefore)))...")
         let startTime = Date()
         let progress = try await device.write(
           parent: parentHandle == 0xFFFFFFFF ? nil : parentHandle,
@@ -256,16 +271,44 @@ struct TransferCommands {
         while !progress.isFinished { try await Task.sleep(nanoseconds: 100_000_000) }
 
         let duration = max(Date().timeIntervalSince(startTime), 0.001)
-        let speedMBps = Double(sizeBytes) / duration / 1_000_000
+        let speedBps = Double(sizeBytes) / duration
+        let speedMBps = speedBps / 1_000_000
+
+        // Feed result into the adaptive tuner.
+        let newChunk = await tuner.recordChunk(bytes: Int(sizeBytes), duration: duration)
+        if newChunk != chunkBefore {
+          let direction = newChunk > chunkBefore ? "▲" : "▼"
+          print("   \(direction) Tuning adjusted: \(formatBytes(UInt64(chunkBefore))) → \(formatBytes(UInt64(newChunk)))")
+        }
+
         print(String(format: "   Run %d: %.2f MB/s (%.2f seconds)", pass, speedMBps, duration))
 
         csvRows.append(
-          "\(iso.string(from: startTime)),write,\(sizeBytes),\(String(format: "%.6f", duration)),\(String(format: "%.3f", speedMBps))"
+          "\(iso.string(from: startTime)),write,\(sizeBytes),\(String(format: "%.6f", duration)),\(String(format: "%.3f", speedMBps)),\(chunkBefore)"
         )
 
         await cleanupBenchFile(
           device: device, storage: storageID, parent: parentHandle, name: benchFilename)
       }
+
+      // Print tuning summary.
+      let snap = await tuner.snapshot
+      print("")
+      print("   ── Tuning Report ──")
+      print("   Optimal chunk size : \(formatBytes(UInt64(snap.currentChunkSize)))")
+      print(String(format: "   Avg throughput      : %.2f MB/s", snap.averageThroughput / 1_000_000))
+      print(String(format: "   Peak throughput     : %.2f MB/s", snap.maxObservedThroughput / 1_000_000))
+      print("   Errors              : \(snap.errorCount)")
+      print("   Samples             : \(snap.sampleCount)")
+      let adjustments = await tuner.adjustments
+      let adjustCount = adjustments.filter { $0.reason != .initial }.count
+      if adjustCount > 0 {
+        print("   Adjustments         : \(adjustCount)")
+      }
+
+      // Persist tuning data.
+      tuningStore.update(vid: vidPid.vid, pid: vidPid.pid, from: snap)
+      print("   Tuning saved to ~/.swiftmtp/device-tuning.json")
 
       if let outPath {
         let outURL = URL(fileURLWithPath: outPath)
@@ -281,6 +324,14 @@ struct TransferCommands {
       }
       exitNow(.tempfail)
     }
+  }
+
+  /// Extract VID/PID from a device (falls back to "0000" if unavailable).
+  private static func deviceVIDPID(_ device: any MTPDevice) async -> (vid: String, pid: String) {
+    let summary = device.summary
+    let vid = summary.vendorID.map { String(format: "%04x", $0) } ?? "0000"
+    let pid = summary.productID.map { String(format: "%04x", $0) } ?? "0000"
+    return (vid: vid, pid: pid)
   }
 
   private static func createBenchPayloadFile(name: String, sizeBytes: UInt64) throws -> URL {
