@@ -23,6 +23,16 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// extra time for large transfers or slow USB bus recovery.
   public var extendedBulkTimeout: Bool = false
 
+  /// Skip `libusb_set_interface_alt_setting` after claim on macOS.
+  /// Samsung devices reset their MTP state machine when this call is issued.
+  /// libmtp guards this with `#ifndef __APPLE__`.
+  public var skipAltSetting: Bool = false
+
+  /// Skip the pre-claim `libusb_reset_device` + 300ms settle delay.
+  /// Samsung devices have a ~3s session window; the reset eats into it.
+  /// libmtp does not perform this reset.
+  public var skipPreClaimReset: Bool = false
+
   // MARK: - Protocol-level
 
   /// Device requires an open session before GetDeviceInfo responds.
@@ -134,6 +144,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case requiresKernelDetach
     case needsLongerOpenTimeout
     case extendedBulkTimeout
+    case skipAltSetting
+    case skipPreClaimReset
     case requiresSessionBeforeDeviceInfo
     case transactionIdResetsOnSession
     case resetReopenOnOpenSessionIOError
@@ -167,6 +179,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .needsLongerOpenTimeout) ?? false
     self.extendedBulkTimeout =
       try container.decodeIfPresent(Bool.self, forKey: .extendedBulkTimeout) ?? false
+    self.skipAltSetting =
+      try container.decodeIfPresent(Bool.self, forKey: .skipAltSetting) ?? false
+    self.skipPreClaimReset =
+      try container.decodeIfPresent(Bool.self, forKey: .skipPreClaimReset) ?? false
     self.requiresSessionBeforeDeviceInfo =
       try container.decodeIfPresent(Bool.self, forKey: .requiresSessionBeforeDeviceInfo) ?? false
     self.transactionIdResetsOnSession =
@@ -218,6 +234,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(requiresKernelDetach, forKey: .requiresKernelDetach)
     try container.encodeIfPresent(needsLongerOpenTimeout, forKey: .needsLongerOpenTimeout)
     try container.encodeIfPresent(extendedBulkTimeout, forKey: .extendedBulkTimeout)
+    try container.encodeIfPresent(skipAltSetting, forKey: .skipAltSetting)
+    try container.encodeIfPresent(skipPreClaimReset, forKey: .skipPreClaimReset)
     try container.encodeIfPresent(
       requiresSessionBeforeDeviceInfo, forKey: .requiresSessionBeforeDeviceInfo)
     try container.encodeIfPresent(

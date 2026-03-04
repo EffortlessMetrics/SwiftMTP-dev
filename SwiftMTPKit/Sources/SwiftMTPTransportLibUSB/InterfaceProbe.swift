@@ -218,7 +218,7 @@ private func isPixelDeadPipeError(_ rc: Int32) -> Bool {
 /// Enhanced with retry logic for vendor-specific devices (Samsung, Xiaomi, etc.)
 func claimCandidate(
   handle: OpaquePointer, device: OpaquePointer, _ c: InterfaceCandidate, retryCount: Int = 2,
-  postClaimStabilizeMs: Int = 250
+  postClaimStabilizeMs: Int = 250, skipAltSetting: Bool = false
 ) throws {
   let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
   let iface = Int32(c.ifaceNumber)
@@ -278,44 +278,53 @@ func claimCandidate(
     }
 
     if claimRC == LIBUSB_SUCCESS {
-      // Successfully claimed - proceed with alt setting
-      let setAltRC = libusb_set_interface_alt_setting(handle, iface, Int32(c.altSetting))
-      var effectiveSetAltRC = setAltRC
-      if debug {
-        print(
-          String(format: "   [Claim] set_interface_alt_setting(%d) rc=%d", c.altSetting, setAltRC))
-      }
-      // Some Pixel 7 states reject explicit alt=0 activation even when alt=0 is already active.
-      if isPixel && c.altSetting == 0 && setAltRC != LIBUSB_SUCCESS
-        && shouldAllowPixelAlt0Fallback(setAltRC)
-      {
-        effectiveSetAltRC = LIBUSB_SUCCESS
+      // Successfully claimed - proceed with alt setting.
+      // Samsung quirk: skip set_interface_alt_setting on macOS — libmtp guards
+      // this with #ifndef __APPLE__ because Samsung's MTP state machine resets.
+      if skipAltSetting {
+        if debug {
+          print("   [Claim] Skipping set_interface_alt_setting (skipAltSetting quirk)")
+        }
+        log.info("Skipping alt-setting (Samsung quirk)")
+      } else {
+        let setAltRC = libusb_set_interface_alt_setting(handle, iface, Int32(c.altSetting))
+        var effectiveSetAltRC = setAltRC
         if debug {
           print(
-            "   [Claim] Pixel alt=0 fallback: continuing without set_interface_alt_setting (rc=\(setAltRC))"
-          )
+            String(format: "   [Claim] set_interface_alt_setting(%d) rc=%d", c.altSetting, setAltRC))
         }
-      }
-      if effectiveSetAltRC != LIBUSB_SUCCESS {
-        if debug {
-          print("   [Claim] set_interface_alt_setting failed; releasing interface and retrying")
-        }
-        _ = libusb_release_interface(handle, iface)
-        if attempt == retryCount {
-          if isPixel && isPixelDeadPipeError(setAltRC) {
-            log.error(
-              "Pixel alt-setting failed: rc=\(setAltRC) — macOS IOService unavailable or exclusive USB claim"
-            )
-            throw TransportError.io(
-              "set_interface_alt_setting failed: rc=\(setAltRC) (macOS IOService unavailable or exclusive USB claim)"
+        // Some Pixel 7 states reject explicit alt=0 activation even when alt=0 is already active.
+        if isPixel && c.altSetting == 0 && setAltRC != LIBUSB_SUCCESS
+          && shouldAllowPixelAlt0Fallback(setAltRC)
+        {
+          effectiveSetAltRC = LIBUSB_SUCCESS
+          if debug {
+            print(
+              "   [Claim] Pixel alt=0 fallback: continuing without set_interface_alt_setting (rc=\(setAltRC))"
             )
           }
-          log.error(
-            "set_interface_alt_setting failed after retries: rc=\(setAltRC) iface=\(c.ifaceNumber). Possible macOS IOService or exclusive USB claim conflict."
-          )
-          throw TransportError.io("set_interface_alt_setting failed: rc=\(setAltRC) on interface \(c.ifaceNumber) — check for competing USB processes")
         }
-        continue
+        if effectiveSetAltRC != LIBUSB_SUCCESS {
+          if debug {
+            print("   [Claim] set_interface_alt_setting failed; releasing interface and retrying")
+          }
+          _ = libusb_release_interface(handle, iface)
+          if attempt == retryCount {
+            if isPixel && isPixelDeadPipeError(setAltRC) {
+              log.error(
+                "Pixel alt-setting failed: rc=\(setAltRC) — macOS IOService unavailable or exclusive USB claim"
+              )
+              throw TransportError.io(
+                "set_interface_alt_setting failed: rc=\(setAltRC) (macOS IOService unavailable or exclusive USB claim)"
+              )
+            }
+            log.error(
+              "set_interface_alt_setting failed after retries: rc=\(setAltRC) iface=\(c.ifaceNumber). Possible macOS IOService or exclusive USB claim conflict."
+            )
+            throw TransportError.io("set_interface_alt_setting failed: rc=\(setAltRC) on interface \(c.ifaceNumber) — check for competing USB processes")
+          }
+          continue
+        }
       }
 
       // Brief pause for pipe setup (alt-setting does the real work, but some devices need more time)
@@ -1208,7 +1217,8 @@ func tryProbeAllCandidates(
   handshakeTimeoutMs: Int,
   postClaimStabilizeMs: Int,
   postProbeStabilizeMs: Int,
-  debug: Bool
+  debug: Bool,
+  skipAltSetting: Bool = false
 ) -> ProbeAllResult {
   var lastProbeStep: String?
 
@@ -1225,7 +1235,8 @@ func tryProbeAllCandidates(
 
     do {
       try claimCandidate(
-        handle: handle, device: device, candidate, postClaimStabilizeMs: postClaimStabilizeMs)
+        handle: handle, device: device, candidate, postClaimStabilizeMs: postClaimStabilizeMs,
+        skipAltSetting: skipAltSetting)
     } catch {
       if debug { print("   [Probe] Claim failed: \(error)") }
       continue
@@ -1277,7 +1288,8 @@ func tryProbeAllCandidatesAggressive(
   candidates: [InterfaceCandidate],
   handshakeTimeoutMs: Int,
   postClaimStabilizeMs: Int,
-  debug: Bool
+  debug: Bool,
+  skipAltSetting: Bool = false
 ) -> ProbeAllResult {
   var lastProbeStep: String?
   let settleMs = max(postClaimStabilizeMs, 500)
@@ -1298,7 +1310,8 @@ func tryProbeAllCandidatesAggressive(
         handle: handle,
         device: device,
         candidate,
-        postClaimStabilizeMs: settleMs
+        postClaimStabilizeMs: settleMs,
+        skipAltSetting: skipAltSetting
       )
     } catch {
       if debug { print("   [Probe][Aggressive] Claim failed: \(error)") }
@@ -1306,8 +1319,12 @@ func tryProbeAllCandidatesAggressive(
     }
 
     let iface = Int32(candidate.ifaceNumber)
-    let setAltRC = libusb_set_interface_alt_setting(handle, iface, 0)
-    if debug { print("   [Probe][Aggressive] set_interface_alt_setting(0) rc=\(setAltRC)") }
+    if !skipAltSetting {
+      let setAltRC = libusb_set_interface_alt_setting(handle, iface, 0)
+      if debug { print("   [Probe][Aggressive] set_interface_alt_setting(0) rc=\(setAltRC)") }
+    } else if debug {
+      print("   [Probe][Aggressive] Skipping set_interface_alt_setting (skipAltSetting quirk)")
+    }
 
     let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
     let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
