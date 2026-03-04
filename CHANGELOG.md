@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Wave 36–37 Test Hardening (PRs #409–#414)
+
+> **Summary**: Six PRs of focused test hardening across write-path safety, submission workflow validation, deep device compatibility research, boundary conditions, sync resilience, and FileProvider/XPC edge cases. ~200 new tests added. Session totals: **50 PRs merged** (#363–#414).
+
+#### Key Stats
+- **~8,377 tests** executed across 20 test targets, **0 unexpected failures** (up from 8,177)
+- **20,026 device quirk entries** across 1,154 VIDs and 38 categories
+- **50 PRs merged** this session (#363–#414)
+- Build: **GREEN**, all smoke tests pass
+
+#### Merged PRs
+- **#409** — Submission workflow and validation tests: script validation, privacy redaction, bundle structure, duplicate detection (24 tests)
+- **#410** — Deep device compatibility research: multi-storage topologies, PTP/MTP extension negotiation, quirk matching edge cases, unusual object formats (21 tests)
+- **#411** — Write-path safety and data integrity tests: partial write detection, delete safety, read-only storage, concurrent write serialization, end-to-end data integrity (21 tests)
+- **#412** — Sync resilience and error recovery tests: device disconnection recovery, transient failure retry, corrupted baseline handling (39 tests)
+- **#413** — Boundary condition and edge case tests: codec zero/max-length, invalid UTF-16, index empty DB/SQL injection/deep paths, sync empty sets/path traversal/Unicode normalization (41 tests)
+- **#414** — FileProvider and XPC edge case tests: disconnection mid-enumeration, invalid filenames, storage-full modify, stale identifiers, XPC interruption recovery, malformed messages, timeout handling, concurrent requests (54 tests)
+
+#### Highlights
+- **Write-path safety** (#411): partial write detection, delete safety guards, and data integrity verification ensure no silent data corruption in write operations
+- **Sync resilience** (#412): device disconnection mid-sync now journals partial state for resumable recovery; transient failures retry correctly
+- **Boundary conditions** (#413): codec, index, and sync modules all tested at their extremes — zero-length payloads, max-length strings, SQL injection attempts, path traversal, Unicode normalization
+- **FileProvider/XPC hardening** (#414): edge cases for disconnection mid-enumeration, stale identifiers, XPC interruption recovery, and NSSecureCoding round-trips
+
+---
+
 ### Wave 34–35 Error Diagnostics & CI (PRs #403–#406)
 
 > **Summary**: Improved error diagnostics for MTPError/TransportError, CI workflow reliability improvements, lint fixes, and docs update. 3 wave-34 agents failed due to API 503 errors and were retried in wave 35. Session totals: **47 PRs merged** (#363–#406).
