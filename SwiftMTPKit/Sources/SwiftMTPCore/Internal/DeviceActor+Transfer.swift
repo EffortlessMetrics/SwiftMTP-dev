@@ -302,6 +302,7 @@ extension MTPDeviceActor {
         let preferredWriteFolder = policy?.flags.preferredWriteFolder
 
         let useEmptyDates = policy?.flags.emptyDatesInSendObject ?? false
+        let useUndefinedFormat = policy?.flags.forceUndefinedFormatOnWrite ?? false
         let allowUnknownObjectInfoSizeRetry = policy?.flags.unknownSizeInSendObjectInfo ?? false
         let isXiaomiFF40 = Self.isXiaomiMiNote2FF40(summary: summary)
         let isOnePlusF003 = Self.isOnePlus3TF003(summary: summary)
@@ -454,7 +455,7 @@ extension MTPDeviceActor {
         let isLabSmokeWrite = name.hasPrefix("swiftmtp-smoke-")
         let primaryParams = SendObjectRetryParameters(
           useEmptyDates: useEmptyDates,
-          useUndefinedObjectFormat: false,
+          useUndefinedObjectFormat: useUndefinedFormat,
           useUnknownObjectInfoSize: false,
           omitOptionalObjectInfoFields: false,
           zeroObjectInfoParentHandle: false,

@@ -1,6 +1,11 @@
 # OnePlus 3T (2a70:f003) Write Failure Debug Report
 
-## Status: PARTIALLY MITIGATED — Further fixes identified below
+## Status: IMPLEMENTED — All 7 identified fixes applied (wave46)
+
+**Wave 46 changes**: Added `forceUndefinedFormatOnWrite` QuirkFlag and wired
+it (along with `emptyDatesInSendObject` and `brokenSendObjectPropList`) into
+the primary write parameters. Updated quirks entries with `brokenSetObjectPropList`,
+`forceResetOnClose`, and `extendedBulkTimeout`. Awaiting real-device retest.
 
 ## Executive Summary
 
@@ -152,16 +157,16 @@ Android MTP stacks are strict about:
 |---|-----------|--------|---------------|
 | 1 | `writeToSubfolderOnly` flag | ✅ Active | `DeviceActor+Transfer.swift:307-308` |
 | 2 | Media target policy (shared with Xiaomi FF40) | ✅ Active | `DeviceActor+Transfer.swift:308` |
-| 3 | Format-undefined retry on 0x201D | ✅ Active | `DeviceActor+Transfer.swift:549-553` |
+| 3 | Format-undefined as PRIMARY (via `forceUndefinedFormatOnWrite`) | ✅ Active (wave46) | `DeviceActor+Transfer.swift:456` |
 | 4 | OnePlus parent handle refresh | ✅ Active | `DeviceActor+Transfer.swift:561-567` |
 | 5 | `WriteTargetLadder` folder resolution | ✅ Active | `DeviceActor+Transfer.swift:325-340` |
-| 6 | `SendObjectPropList` fallback | ❌ Skipped | `DeviceActor+Transfer.swift:807` |
+| 6 | `SendObjectPropList` blocked by `brokenSendObjectPropList` | ✅ Active | `DeviceActor+Transfer.swift:809` |
 | 7 | `skipPTPReset: true` | ✅ Active | quirks.json |
 | 8 | Session recovery on 0x2003 | ✅ Active | `DeviceActor+Transfer.swift:1162` |
-
-Note: Mitigation #6 is intentionally skipped for OnePlus because
-`useMediaTargetPolicy == true` bypasses the `SendObjectPropList` fallback.
-This is correct per libmtp's `DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST`.
+| 9 | Empty dates via `emptyDatesInSendObject` | ✅ Active (wave46) | `DeviceActor+Transfer.swift:304` |
+| 10 | `forceResetOnClose` for session cleanup | ✅ Active (wave46) | quirks.json flags |
+| 11 | `extendedBulkTimeout` for long operations | ✅ Active (wave46) | quirks.json flags |
+| 12 | `brokenSetObjectPropList` for metadata updates | ✅ Active (wave46) | quirks.json flags |
 
 ---
 

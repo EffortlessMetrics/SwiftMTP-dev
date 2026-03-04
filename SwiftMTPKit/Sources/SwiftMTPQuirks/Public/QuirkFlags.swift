@@ -149,6 +149,12 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// Some devices reject date strings with InvalidParameter.
   public var emptyDatesInSendObject: Bool = false
 
+  /// Force format code 0x3000 (Undefined Object) as the primary format in SendObjectInfo.
+  /// libmtp always uses Undefined format for generic files on Android. Eliminates the
+  /// retry round-trip for devices that reject specific format codes (e.g., OnePlus 3T).
+  /// Maps to libmtp behavior under `DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST`.
+  public var forceUndefinedFormatOnWrite: Bool = false
+
   /// Force ObjectCompressedSize to 0xFFFFFFFF in SendObjectInfo.
   /// Disabled by default; some devices reject unknown-size semantics.
   public var unknownSizeInSendObjectInfo: Bool = false
@@ -223,6 +229,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case preferredWriteFolder
     case forceFFFFFFFForSendObject
     case emptyDatesInSendObject
+    case forceUndefinedFormatOnWrite
     case unknownSizeInSendObjectInfo
     case skipGetObjectPropValue
     case supportsGetObjectPropList
@@ -294,6 +301,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .forceFFFFFFFForSendObject) ?? false
     self.emptyDatesInSendObject =
       try container.decodeIfPresent(Bool.self, forKey: .emptyDatesInSendObject) ?? false
+    self.forceUndefinedFormatOnWrite =
+      try container.decodeIfPresent(Bool.self, forKey: .forceUndefinedFormatOnWrite) ?? false
     self.unknownSizeInSendObjectInfo =
       try container.decodeIfPresent(Bool.self, forKey: .unknownSizeInSendObjectInfo) ?? false
     self.skipGetObjectPropValue =
@@ -345,6 +354,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(preferredWriteFolder, forKey: .preferredWriteFolder)
     try container.encodeIfPresent(forceFFFFFFFForSendObject, forKey: .forceFFFFFFFForSendObject)
     try container.encodeIfPresent(emptyDatesInSendObject, forKey: .emptyDatesInSendObject)
+    try container.encodeIfPresent(
+      forceUndefinedFormatOnWrite, forKey: .forceUndefinedFormatOnWrite)
     try container.encodeIfPresent(unknownSizeInSendObjectInfo, forKey: .unknownSizeInSendObjectInfo)
     try container.encodeIfPresent(skipGetObjectPropValue, forKey: .skipGetObjectPropValue)
     try container.encodeIfPresent(supportsGetObjectPropList, forKey: .supportsGetObjectPropList)
