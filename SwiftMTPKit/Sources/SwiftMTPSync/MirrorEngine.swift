@@ -14,6 +14,10 @@ public struct MTPSyncReport: Sendable {
   public var skipped: Int = 0
   /// Number of files that failed to download
   public var failed: Int = 0
+  /// Number of conflicts detected during the mirror
+  public var conflictsDetected: Int = 0
+  /// Records of how each conflict was resolved
+  public var conflictResolutions: [ConflictResolutionRecord] = []
 
   /// Total number of files processed
   public var totalProcessed: Int {
@@ -33,11 +37,21 @@ public final class MirrorEngine: Sendable {
   private let diffEngine: DiffEngine
   private let journal: any TransferJournal
   private let log = MTPLog.sync
+  /// Strategy applied when both sides have changed since last sync.
+  public let conflictStrategy: ConflictResolutionStrategy
+  /// Optional resolver callback used when `conflictStrategy == .ask`.
+  private let conflictResolver: ConflictResolver?
 
-  public init(snapshotter: Snapshotter, diffEngine: DiffEngine, journal: any TransferJournal) {
+  public init(
+    snapshotter: Snapshotter, diffEngine: DiffEngine, journal: any TransferJournal,
+    conflictStrategy: ConflictResolutionStrategy = .newerWins,
+    conflictResolver: ConflictResolver? = nil
+  ) {
     self.snapshotter = snapshotter
     self.diffEngine = diffEngine
     self.journal = journal
+    self.conflictStrategy = conflictStrategy
+    self.conflictResolver = conflictResolver
   }
 
   /// Mirror device contents to local directory
@@ -78,6 +92,48 @@ public final class MirrorEngine: Sendable {
         continue
       }
 
+      let localURL = pathKeyToLocalURL(file.pathKey, root: root)
+
+      // Conflict detection: if the file is in "modified" and a local copy exists
+      // with different content (size or mtime), we have a conflict.
+      if delta.modified.contains(where: { $0.pathKey == file.pathKey }),
+        FileManager.default.fileExists(atPath: localURL.path)
+      {
+        let conflict = try detectConflict(file: file, localURL: localURL)
+        if let conflict = conflict {
+          report.conflictsDetected += 1
+          let resolution = try await resolveConflict(
+            conflict: conflict, file: file, localURL: localURL, device: device, root: root)
+          report.conflictResolutions.append(resolution)
+          try? await journal.recordConflictResolution(
+            pathKey: file.pathKey, strategy: conflictStrategy.rawValue,
+            outcome: resolution.outcome.rawValue)
+          switch resolution.outcome {
+          case .skipped, .pending:
+            report.skipped += 1
+          case .keptLocal:
+            report.skipped += 1
+          case .keptDevice:
+            do {
+              try await downloadFile(file, from: device, to: root)
+              report.downloaded += 1
+            } catch {
+              log.error("Failed to download conflicted file \(file.pathKey): \(error.localizedDescription)")
+              report.failed += 1
+            }
+          case .keptBoth:
+            do {
+              try await downloadFile(file, from: device, to: root, suffix: "-device")
+              report.downloaded += 1
+            } catch {
+              log.error("Failed to download conflicted file \(file.pathKey): \(error.localizedDescription)")
+              report.failed += 1
+            }
+          }
+          continue
+        }
+      }
+
       do {
         try await downloadFile(file, from: device, to: root)
         report.downloaded += 1
@@ -99,10 +155,18 @@ public final class MirrorEngine: Sendable {
   }
 
   /// Download a single file from device to local mirror directory
-  private func downloadFile(_ file: MTPDiff.Row, from device: any MTPDevice, to root: URL)
-    async throws
-  {
-    let localURL = pathKeyToLocalURL(file.pathKey, root: root)
+  private func downloadFile(
+    _ file: MTPDiff.Row, from device: any MTPDevice, to root: URL, suffix: String? = nil
+  ) async throws {
+    var localURL = pathKeyToLocalURL(file.pathKey, root: root)
+
+    // Apply suffix for keep-both conflict resolution (e.g. "photo-device.jpg")
+    if let suffix = suffix {
+      let ext = localURL.pathExtension
+      let base = localURL.deletingPathExtension().lastPathComponent
+      let newName = ext.isEmpty ? "\(base)\(suffix)" : "\(base)\(suffix).\(ext)"
+      localURL = localURL.deletingLastPathComponent().appendingPathComponent(newName)
+    }
 
     // Ensure parent directory exists
     let parentDir = localURL.deletingLastPathComponent()
@@ -280,5 +344,89 @@ public final class MirrorEngine: Sendable {
     }
 
     return match(pIdx: 0, cIdx: 0)
+  }
+
+  // MARK: - Conflict Detection & Resolution
+
+  /// Detect whether a modified device file conflicts with its local counterpart.
+  /// A conflict exists when the local file differs in size or modification time
+  /// from the device version — meaning both sides changed since the last sync.
+  internal func detectConflict(file: MTPDiff.Row, localURL: URL) throws -> MTPConflictInfo? {
+    guard FileManager.default.fileExists(atPath: localURL.path) else { return nil }
+
+    let attrs = try FileManager.default.attributesOfItem(atPath: localURL.path)
+    let localSize = (attrs[.size] as? NSNumber)?.uint64Value
+    let localMtime = attrs[.modificationDate] as? Date
+
+    let sizeDiffers: Bool
+    if let ls = localSize, let ds = file.size {
+      sizeDiffers = ls != ds
+    } else {
+      sizeDiffers = false
+    }
+
+    let timeDiffers: Bool
+    if let lm = localMtime, let dm = file.mtime {
+      timeDiffers = abs(lm.timeIntervalSince1970 - dm.timeIntervalSince1970) > 300
+    } else {
+      timeDiffers = false
+    }
+
+    guard sizeDiffers || timeDiffers else { return nil }
+
+    return MTPConflictInfo(
+      pathKey: file.pathKey, handle: file.handle,
+      deviceSize: file.size, deviceMtime: file.mtime,
+      localSize: localSize, localMtime: localMtime)
+  }
+
+  /// Apply the configured conflict resolution strategy to a detected conflict.
+  internal func resolveConflict(
+    conflict: MTPConflictInfo, file: MTPDiff.Row, localURL: URL,
+    device: any MTPDevice, root: URL
+  ) async throws -> ConflictResolutionRecord {
+    let outcome: ConflictOutcome
+
+    switch conflictStrategy {
+    case .newerWins:
+      let localMtime = conflict.localMtime ?? .distantPast
+      let deviceMtime = conflict.deviceMtime ?? .distantPast
+      outcome = deviceMtime > localMtime ? .keptDevice : .keptLocal
+      log.info("Conflict on \(conflict.pathKey): newer-wins → \(outcome.rawValue)")
+
+    case .localWins:
+      outcome = .keptLocal
+      log.info("Conflict on \(conflict.pathKey): local-wins → kept local")
+
+    case .deviceWins:
+      outcome = .keptDevice
+      log.info("Conflict on \(conflict.pathKey): device-wins → kept device")
+
+    case .keepBoth:
+      outcome = .keptBoth
+      // Rename local file with "-local" suffix to preserve it
+      let ext = localURL.pathExtension
+      let base = localURL.deletingPathExtension().lastPathComponent
+      let localRename = ext.isEmpty ? "\(base)-local" : "\(base)-local.\(ext)"
+      let renamedURL = localURL.deletingLastPathComponent().appendingPathComponent(localRename)
+      try? FileManager.default.moveItem(at: localURL, to: renamedURL)
+      log.info("Conflict on \(conflict.pathKey): keep-both → renamed local, downloading device")
+
+    case .skip:
+      outcome = .skipped
+      log.info("Conflict on \(conflict.pathKey): skip → skipped")
+
+    case .ask:
+      if let resolver = conflictResolver {
+        outcome = await resolver(conflict)
+        log.info("Conflict on \(conflict.pathKey): ask → user chose \(outcome.rawValue)")
+      } else {
+        outcome = .pending
+        log.warning("Conflict on \(conflict.pathKey): ask strategy but no resolver — marking pending")
+      }
+    }
+
+    return ConflictResolutionRecord(
+      pathKey: conflict.pathKey, strategy: conflictStrategy, outcome: outcome)
   }
 }
