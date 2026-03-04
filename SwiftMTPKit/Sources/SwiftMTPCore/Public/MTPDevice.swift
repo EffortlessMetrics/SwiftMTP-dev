@@ -440,6 +440,16 @@ public protocol MTPDevice: Sendable {
   func copyObject(handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?)
     async throws -> MTPObjectHandle
 
+  /// Retrieve the embedded thumbnail for an object (GetThumb 0x100A).
+  ///
+  /// Returns the raw image data (typically JPEG) for the object's thumbnail.
+  /// Not all objects have thumbnails; the device will return a protocol error
+  /// (0x2010 NoThumbnailPresent) for objects without one.
+  ///
+  /// - Parameter handle: Handle of the object whose thumbnail to retrieve
+  /// - Returns: Raw thumbnail image data
+  func getThumbnail(handle: MTPObjectHandle) async throws -> Data
+
   /// Probed capabilities of the device
   var probedCapabilities: [String: Bool] { get async }
 

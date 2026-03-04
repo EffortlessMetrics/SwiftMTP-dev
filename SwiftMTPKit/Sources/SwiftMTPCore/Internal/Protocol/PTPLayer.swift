@@ -397,4 +397,16 @@ public enum PTPLayer {
   ) async throws -> UInt32 {
     try await link.setObjectPropList(entries: entries)
   }
+
+  /// GetThumb (0x100A): retrieve the embedded thumbnail image for an object.
+  ///
+  /// - Parameters:
+  ///   - handle: Object handle whose thumbnail to retrieve.
+  ///   - link: The MTP link to communicate over.
+  /// - Returns: Raw thumbnail image data (typically JPEG).
+  public static func getThumb(
+    handle: MTPObjectHandle, on link: MTPLink
+  ) async throws -> Data {
+    try await link.getThumb(handle: handle)
+  }
 }

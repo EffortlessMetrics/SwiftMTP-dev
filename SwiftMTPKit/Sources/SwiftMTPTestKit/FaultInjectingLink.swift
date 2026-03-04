@@ -148,6 +148,13 @@ public final class FaultInjectingLink: MTPLink, @unchecked Sendable {
     try await inner.truncateObject(handle: handle, offset: offset)
   }
 
+  // MARK: - Thumbnail
+
+  public func getThumb(handle: MTPObjectHandle) async throws -> Data {
+    try checkFault(.getThumb)
+    return try await inner.getThumb(handle: handle)
+  }
+
   // MARK: - Private
 
   private func checkFault(_ operation: LinkOperationType) throws {

@@ -21,6 +21,7 @@ public enum LinkOperationType: String, Sendable, CaseIterable {
   case copyObject
   case executeCommand
   case executeStreamingCommand
+  case getThumb
 }
 
 // MARK: - Fault Trigger

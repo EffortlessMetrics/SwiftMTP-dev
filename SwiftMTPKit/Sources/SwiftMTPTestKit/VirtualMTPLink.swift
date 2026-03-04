@@ -216,6 +216,21 @@ public final class VirtualMTPLink: MTPLink, @unchecked Sendable {
     }
   }
 
+  // MARK: - Thumbnail
+
+  public func getThumb(handle: MTPObjectHandle) async throws -> Data {
+    try checkFault(.getThumb)
+    try await applyLatency(.getThumb)
+    guard config.objects.contains(where: { $0.handle == handle }) else {
+      throw TransportError.io("Object \(handle) not found")
+    }
+    // Return a minimal stub JPEG (SOI + padding + EOI)
+    var d = Data([0xFF, 0xD8])
+    d.append(contentsOf: [UInt8](repeating: 0x00, count: 62))
+    d.append(contentsOf: [0xFF, 0xD9] as [UInt8])
+    return d
+  }
+
   public func endEditObject(handle: UInt32) async throws {
     try checkFault(.executeCommand)
     guard config.objects.contains(where: { $0.handle == handle }) else {

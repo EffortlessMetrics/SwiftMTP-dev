@@ -392,6 +392,10 @@ final class DeviceServiceCoverageTests: XCTestCase {
 
       func copyObject(handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?) async throws -> MTPObjectHandle { 0 }
 
+      func getThumbnail(handle: MTPObjectHandle) async throws -> Data {
+        throw MTPError.objectNotFound
+      }
+
       var probedCapabilities: [String: Bool] { get async { [:] } }
       var effectiveTuning: EffectiveTuning { get async { .defaults() } }
 

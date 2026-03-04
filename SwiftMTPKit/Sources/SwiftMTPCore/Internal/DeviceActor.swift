@@ -349,6 +349,21 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     }
   }
 
+  /// Retrieve the embedded thumbnail for an object (GetThumb 0x100A).
+  ///
+  /// - Parameter handle: Handle of the object whose thumbnail to retrieve.
+  /// - Returns: Raw thumbnail image data (typically JPEG).
+  public func getThumbnail(handle: MTPObjectHandle) async throws -> Data {
+    guard handle != 0 else {
+      throw MTPError.preconditionFailed("GetThumb requires a valid object handle (got 0).")
+    }
+    try await openIfNeeded()
+    let link = try await getMTPLink()
+    return try await BusyBackoff.onDeviceBusy {
+      try await link.getThumb(handle: handle)
+    }
+  }
+
   public nonisolated var events: AsyncStream<MTPEvent> {
     AsyncStream { continuation in
       Task {
