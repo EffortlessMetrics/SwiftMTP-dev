@@ -1,286 +1,367 @@
 # SwiftMTP Contribution Guide
 
-*Last updated: 2026-03-01*
+*Last updated: 2026-07-11*
 
-> **Pre-Alpha Context**: SwiftMTP is in pre-alpha. The project has extensive scaffolding (~4,800 tests, 20K+ quirks entries, 9 CI workflows) but only 1 device (Xiaomi Mi Note 2) has completed real file transfers. Real-device testing contributions are the single highest-impact way to help the project. Some test targets (PropertyTests, IntegrationTests) have pre-existing build errors — CI workflow consolidation is in progress.
+> **Pre-Alpha Context**: SwiftMTP is in pre-alpha. The project has extensive scaffolding (~9,191+ tests across 20 targets, 20,026 quirks entries, CI workflows) but minimal real-device validation. Most test coverage uses `VirtualMTPDevice` (in-memory mock). Real-device testing contributions are the single highest-impact way to help the project.
 
-This guide covers how to contribute during the active implementation sprints, including code changes, device evidence, and documentation updates.
+This guide covers how to contribute to SwiftMTP, including code changes, device evidence, and documentation updates.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+Run the bootstrap script to install dependencies and verify your environment:
+
+```bash
+./scripts/bootstrap.sh
+```
+
+This checks for Xcode, Swift, and libusb, builds the libusb XCFramework if needed, and performs an initial build.
+
+If you need to rebuild the libusb XCFramework separately:
+
+```bash
+./scripts/build-libusb-xcframework.sh
+```
+
+### First build
+
+```bash
+cd SwiftMTPKit
+swift build -v
+```
+
+All package-level commands (build, test, run) should be executed from the `SwiftMTPKit/` directory.
+
+---
 
 ## Legal Requirements
 
-All contributions to SwiftMTP require a signed Contributor License Agreement (CLA).
+All contributions require a signed Contributor License Agreement (CLA).
 
 - **Individuals:** Sign the [Individual CLA](../legal/inbound/CLA-INDIVIDUAL.md) before your first PR.
 - **Entities:** Have an authorized signatory complete the [Entity CLA](../legal/inbound/CLA-ENTITY.md).
 
-All commits must also include a [Developer Certificate of Origin](../legal/inbound/DCO.txt) sign-off. Use `git commit -s` to add the `Signed-off-by` trailer automatically.
+All commits must include a [Developer Certificate of Origin](../legal/inbound/DCO.txt) sign-off. Use `git commit -s` to add the `Signed-off-by` trailer automatically.
 
-PRs without a signed CLA and DCO sign-off cannot be merged.
+---
 
-## Contribution Lanes
+## Code Zones
 
-Choose the lane that matches your work:
+The codebase is organized into focused modules under `SwiftMTPKit/Sources/`:
 
-- **Core/transport code:** behavior fixes, stability, performance
-- **Device support:** submission bundles and quirk updates
-- **Testing/CI:** test coverage, TSAN, workflow reliability
-- **Docs/runbooks:** roadmap, troubleshooting, release process
+| Zone | Directory | Purpose |
+|------|-----------|---------|
+| **Core** | `SwiftMTPCore/` | Actor-isolated MTP protocol, public APIs, CLI utilities |
+| **Transport (libusb)** | `SwiftMTPTransportLibUSB/` | libusb-based USB transport layer |
+| **Transport (IOUSBHost)** | `SwiftMTPTransportIOUSBHost/` | Native macOS USB transport (scaffold, throws `notImplemented`) |
+| **Index** | `SwiftMTPIndex/` | SQLite-based device content indexing, snapshots, `SQLiteLiveIndex` |
+| **Sync** | `SwiftMTPSync/` | Mirror, diff, sync operations, conflict resolution, format filtering |
+| **Quirks** | `SwiftMTPQuirks/` | Device quirks database and learned profiles |
+| **Observability** | `SwiftMTPObservability/` | Structured logging, performance monitoring, `RecoveryLog` |
+| **Store** | `SwiftMTPStore/` | Persistence — transfer journals, metadata |
+| **UI** | `SwiftMTPUI/` | SwiftUI views and GUI application |
+| **FileProvider** | `SwiftMTPFileProvider/` | macOS File Provider extension for Finder integration |
+| **XPC** | `SwiftMTPXPC/` | XPC service bridging File Provider and main app |
+| **TestKit** | `SwiftMTPTestKit/` | Test utilities — `VirtualMTPDevice`, `FaultInjectingLink` |
+| **CLI** | `Tools/swiftmtp-cli/` | CLI entry point (`swiftmtp`) |
+| **Codec** | `MTPEndianCodec/` | MTP binary encoding/decoding |
+| **Types** | `MTPCoreTypes/` | Shared type definitions |
 
-## Sprint Workflow (Recommended)
+---
 
-1. Pick an item from `Docs/ROADMAP.md`.
-2. Confirm DoR in `Docs/SPRINT-PLAYBOOK.md`.
-3. Open a focused branch from current mainline.
-4. Implement and test with targeted commands.
-5. Run sprint checkpoint gates (below).
-6. Open PR with evidence links and a short risk note.
+## Development Workflow
 
-### Sprint Checkpoint Gates
-
-Minimal pre-PR gate (must pass before every PR):
+### 1. Branch from main
 
 ```bash
-# Format (CI requires)
-swift-format -i -r SwiftMTPKit/Sources SwiftMTPKit/Tests
-swift-format lint -r SwiftMTPKit/Sources SwiftMTPKit/Tests
-
-# Build + targeted tests
-swift build --package-path SwiftMTPKit
-swift test --package-path SwiftMTPKit --filter <RelevantSuite>
-
-# Quirks validation (required if quirks.json changed)
-./scripts/validate-quirks.sh
+git checkout -b feat/<short-topic>
+# or: fix/<short-topic>, docs/<short-topic>
 ```
 
-For milestone merges and release prep:
+### 2. Make changes and run targeted tests
+
+Use the [Test Discovery Guide](#test-discovery-guide) below to run the right tests for your change.
+
+### 3. Run the pre-PR gate
+
+Before opening a pull request, run the automated gate script:
+
+```bash
+./scripts/pre-pr.sh
+```
+
+This runs formatting lint, build, targeted tests, quirks validation, and large-file scanning in one step.
+
+Alternatively, run checks manually:
+
+```bash
+cd SwiftMTPKit
+
+# Format
+swift-format -i -r Sources Tests
+
+# Lint
+swift-format lint -r Sources Tests --strict
+
+# Build
+swift build -v
+
+# Targeted tests (see Test Discovery below)
+swift test --filter <RelevantSuite>
+
+# Quirks validation (if quirks.json changed)
+../scripts/validate-quirks.sh
+```
+
+For milestone merges, run the full suite:
 
 ```bash
 ./run-all-tests.sh
 ```
 
-If concurrency-related code changes:
+For concurrency-related changes, run with Thread Sanitizer:
 
 ```bash
-swift test --package-path SwiftMTPKit -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
+cd SwiftMTPKit
+swift test -Xswiftc -sanitize=thread \
+  --filter CoreTests --filter IndexTests --filter ScenarioTests
 ```
 
-See `Docs/Troubleshooting.md#pre-pr-local-gate` for the full canonical sequence.
+---
 
-## Branch and PR Naming
+## Test Discovery Guide
 
-Use sprint-prefixed names for active roadmap work.
+There are **20 test targets**. Run the one matching your change area:
 
-- Branch: `feat/2.1-A-<short-topic>` or `fix/2.1-B-<short-topic>`
-- PR title: `[2.1-A] <behavior change summary>`
-- If work is not tied to sprint scope, use `[infra]` or `[docs]` prefixes
+| Change area | Test command |
+|-------------|-------------|
+| Core protocol (operations, codecs, actor) | `swift test --filter CoreTests` |
+| Transport layer (USB, libusb, IOUSBHost) | `swift test --filter TransportTests` |
+| Index / SQLite (live index, snapshots) | `swift test --filter IndexTests` |
+| Sync / mirror (diff, conflict resolution, format filter) | `swift test --filter SyncTests` |
+| CLI (commands, argument parsing) | `swift test --filter ToolingTests` |
+| CLI module tests | `swift test --filter SwiftMTPCLITests` |
+| File Provider (Finder integration) | `swift test --filter FileProviderTests` |
+| Quirks (device profiles, schema) | `swift test --filter QuirksTests` |
+| Error handling (recovery layer, fallback) | `swift test --filter ErrorHandlingTests` |
+| Observability (logging, recovery log) | `swift test --filter ObservabilityTests` |
+| Store / persistence (transfer journal) | `swift test --filter StoreTests` |
+| XPC service | `swift test --filter XPCTests` |
+| Binary codec | `swift test --filter MTPEndianCodecTests` |
+| TestKit self-tests | `swift test --filter TestKitTests` |
+| End-to-end scenarios | `swift test --filter ScenarioTests` |
+| Cross-module integration | `swift test --filter IntegrationTests` |
+| BDD / Gherkin scenarios | `swift test --filter BDDTests` |
+| Property-based tests | `swift test --filter PropertyTests` |
+| Visual regression | `swift test --filter SnapshotTests` |
+| UI tests | `swift test --filter UITests` |
+| **Full suite with coverage** | `swift test -v --enable-code-coverage` |
 
-## PR Expectations
+All test commands run from the `SwiftMTPKit/` directory.
 
-Each PR should include:
+---
 
-- Summary of behavior change
-- Test evidence (commands run + result)
-- Any real-device artifacts (if transport/quirk behavior changed)
-- Docs updates for operator-facing behavior changes
-- Changelog update under `Unreleased` when behavior is user-visible
-- Roadmap checkbox/risk-table update when a sprint item closes or changes scope
+## Code Style
 
-For quirks/submission PRs, also include:
-
-- `Specs/quirks.json` diff rationale
-- Bundle validation output
-- Privacy/redaction confirmation
-
-## Device Contribution Quick Start
-
-### Find your device's VID:PID
-
-You need the USB Vendor ID (VID) and Product ID (PID) — four hex digits each.
-
-| Platform | How to find VID:PID |
-|----------|---------------------|
-| **macOS** |  → About This Mac → More Info → System Report → **USB**. Look for *Vendor ID* and *Product ID* under your device. |
-| **Linux** | Run `lsusb` — output looks like `Bus 001 Device 005: ID 04e8:6860 Samsung…` where `04e8` is VID and `6860` is PID. |
-| **Windows** | Device Manager → your device → Properties → Details → *Hardware Ids*. Look for `USB\VID_04E8&PID_6860`. |
-| **SwiftMTP CLI** | `cd SwiftMTPKit && swift run swiftmtp --real-only probe` — prints VID:PID for every connected MTP device. |
-
-### Option A: Automated submission (recommended)
-
-The fastest path — the script prompts for device info, generates a valid quirk
-entry, validates it, and can create a branch + PR for you:
+SwiftMTP uses [swift-format](https://github.com/swiftlang/swift-format) with the repo's `.swift-format` config (2-space indentation, early exits, no parens around conditions).
 
 ```bash
-./scripts/submit-device.sh
+# Auto-format before committing
+swift-format -i -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+
+# Check for violations
+swift-format lint -r SwiftMTPKit/Sources SwiftMTPKit/Tests --strict
 ```
 
-### Option B: File an issue
+CI enforces formatting — PRs with lint violations will fail.
 
-Don't have a build environment? Open a
-[Device Report issue](https://github.com/your-org/SwiftMTP/issues/new?template=device-report.yml)
-on GitHub. Fill in VID:PID and observed behavior — a maintainer will create the
-quirk entry.
+---
 
-### Option C: Manual collection + PR
+## Mock Testing
 
-#### 1) Prepare device
+### VirtualMTPDevice
 
-- USB connected, unlocked, File Transfer (MTP) mode enabled
-- Prefer direct USB port over hub
+`SwiftMTPTestKit` provides `VirtualMTPDevice`, an in-memory MTP device implementation for testing without hardware. Use it for unit and integration tests:
 
-#### 2) Collect bundle
+```swift
+import SwiftMTPTestKit
+
+let device = VirtualMTPDevice()
+// Use device through the MTPDevice protocol
+```
+
+### FaultInjectingLink
+
+`FaultInjectingLink` enables deterministic failure injection for testing error recovery paths.
+
+### Mock profiles
+
+Enable simulated device profiles via environment variables:
 
 ```bash
-swift run --package-path SwiftMTPKit swiftmtp collect \
-  --device-name "Your Device Name" \
-  --noninteractive --strict --run-bench 100M,1G --json
+export SWIFTMTP_DEMO_MODE=1
+export SWIFTMTP_MOCK_PROFILE=pixel7   # Options: pixel7, galaxy, iphone, canon
 ```
 
-#### 3) Validate bundle
+Failure scenarios: `timeout`, `busy`, `disconnected`.
 
-```bash
-./scripts/validate-submission.sh Contrib/submissions/<bundle-dir>
-./scripts/validate-quirks.sh
-```
+---
 
-#### 4) Submit
+## Device Testing
 
-```bash
-git checkout -b device/<device-name>
-git add Contrib/submissions/<bundle-dir> Specs/quirks.json
-git commit -s -m "Device submission: <device-name>"
-git push -u origin HEAD
-```
-
-### Test with your device
-
-After adding a quirk entry (or using an existing one), verify it works:
+When hardware is available, use these commands to validate with a real device:
 
 ```bash
 cd SwiftMTPKit
 
-# Confirm your device is detected
+# Discover connected devices
 swift run swiftmtp --real-only probe
 
-# List files on the device
+# List device contents
 swift run swiftmtp --real-only ls
 
-# Run a quick benchmark
+# Benchmark transfers
 swift run swiftmtp --real-only bench 100M --repeat 3
 
-# Run quirk-matching tests to ensure the entry is valid
-swift test --filter QuirkMatchingTests
+# Run automated device-lab test matrix
+swift run swiftmtp device-lab connected --json
+
+# Mode-specific bring-up capture
+../scripts/device-bringup.sh --mode mtp-unlocked --vid 0x18d1 --pid 0x4ee1
 ```
 
-## Device Submission Privacy Checklist
+See [Troubleshooting](Troubleshooting.md) for device connection issues.
 
-- [ ] No personal paths, hostnames, or emails in artifacts
-- [ ] No raw serials in committed files
-- [ ] `.salt` is not committed
-- [ ] Bundle validated locally with `validate-submission.sh`
+---
+
+## PR Requirements
+
+Each PR must:
+
+- **Build**: `swift build -v` succeeds (from `SwiftMTPKit/`)
+- **Tests**: relevant test target(s) pass (see [Test Discovery](#test-discovery-guide))
+- **Formatting**: `swift-format lint` passes with `--strict`
+- **Docs**: updated if the change affects user-visible behavior or APIs
+- **Changelog**: entry under `Unreleased` for user-visible changes
+- **Single-purpose**: one bug fix + tests, one feature + tests, or one docs update
+
+For quirks/submission PRs, also include:
+
+- `Specs/quirks.json` diff rationale
+- Validation output from `./scripts/validate-quirks.sh`
+- Privacy/redaction confirmation
+
+### PR evidence snippet
+
+Include a short command/result block in the PR body:
+
+```text
+Commands:
+  ./scripts/pre-pr.sh
+  swift test --filter CoreTests
+
+Result:
+  Pass (macOS 15.x, Xcode 16.x)
+```
+
+---
+
+## Documentation
+
+### Generating DocC docs
+
+```bash
+./scripts/generate-docs.sh         # Generate
+./scripts/generate-docs.sh --open  # Generate and open in browser
+```
+
+This builds DocC documentation for `SwiftMTPCore` and outputs to `Docs/SwiftMTP.doccarchive/`.
+
+### Shell completions
+
+Shell completions for the `swiftmtp` CLI are in the `completions/` directory:
+
+| Shell | File | Installation |
+|-------|------|-------------|
+| Bash | `completions/swiftmtp.bash` | `source completions/swiftmtp.bash` |
+| Fish | `completions/swiftmtp.fish` | Copy to `~/.config/fish/completions/` |
+| Zsh | `completions/_swiftmtp` | Copy to a directory in `$fpath` |
+
+---
 
 ## CI Workflows
 
 | Workflow | Trigger | Required for merge | What it checks |
 |----------|---------|-------------------|----------------|
-| `ci.yml` | All branches/PRs | ✅ Yes | Build, full test suite, coverage gate, TSAN, fuzz harness, SBOM (tags) |
-| `swiftmtp-ci.yml` | main merges | No (supplemental) | Deeper coverage reporting, docs build, CLI smoke |
-| `smoke.yml` | Schedule + PRs | No (advisory) | Real-device smoke check |
+| `ci.yml` | All pushes/PRs | ✅ Yes | Build, full test suite, coverage gate, TSAN, fuzz harness, SBOM (tags) |
+| `swiftmtp-ci.yml` | main + nightly | No (supplemental) | Coverage reporting, DocC docs, CLI smoke |
+| `smoke.yml` | Schedule + PRs | No (advisory) | Minimal sanity build |
 | `validate-quirks.yml` | PRs touching quirks | ✅ Yes (if quirks changed) | JSON schema + required fields |
 | `validate-submission.yml` | Device submission PRs | ✅ Yes | Bundle completeness + redaction |
 | `release.yml` | Tags | Release gate | Changelog, artifacts, SBOM |
 | `nightly-real-device-ux-smoke.yml` | Nightly | No (advisory) | End-to-end with physical device |
 
-**The only required check for merging a PR is `ci.yml`.** All other workflows are supplemental or advisory. Device submission PRs also require `validate-submission.yml`.
+**`ci.yml` is the only required check for merging.** Device submission PRs also require `validate-submission.yml`.
 
-## Troubleshooting During Contribution
+---
 
-- Device not found: `swift run --package-path SwiftMTPKit swiftmtp --real-only probe`
-- Collect flow issues: rerun with `--strict --json` and inspect stderr
-- CI mismatch: run `./scripts/smoke.sh` then `./run-all-tests.sh`
-- Quirk schema issues: run `./scripts/validate-quirks.sh`
+## Device Contribution Quick Start
 
-For mode-specific bring-up evidence:
+### Find your device's VID:PID
+
+| Platform | How to find VID:PID |
+|----------|---------------------|
+| **macOS** |  → About This Mac → System Report → **USB** |
+| **Linux** | `lsusb` — e.g., `ID 04e8:6860` |
+| **Windows** | Device Manager → Properties → Hardware Ids → `USB\VID_04E8&PID_6860` |
+| **SwiftMTP CLI** | `cd SwiftMTPKit && swift run swiftmtp --real-only probe` |
+
+### Option A: Automated submission (recommended)
 
 ```bash
-./scripts/device-bringup.sh --mode mtp-unlocked --vid 0x18d1 --pid 0x4ee1
+./scripts/submit-device.sh
 ```
 
-## Suggested Commit Scope
+Prompts for device info, generates the quirk entry, validates, and optionally creates a branch + PR.
 
-Keep PRs single-purpose when possible:
+### Option B: File an issue
 
-- one bug fix + its tests
-- one quirk update + evidence
-- one docs/runbook update set
+Open a [Device Report issue](https://github.com/your-org/SwiftMTP/issues/new?template=device-report.yml) with VID:PID and observed behavior.
 
-This keeps review and rollback manageable in sprint cadence.
+### Option C: Manual collection + PR
 
-## Recognition
+1. Connect device (USB, unlocked, MTP mode)
+2. Collect: `swift run --package-path SwiftMTPKit swiftmtp collect --device-name "Device" --noninteractive --strict --json`
+3. Validate: `./scripts/validate-submission.sh Contrib/submissions/<dir> && ./scripts/validate-quirks.sh`
+4. Submit: branch, add files, `git commit -s`, push, PR
 
-Contributors are recognized through:
+### Privacy checklist
 
-- `Specs/quirks.json` provenance entries
-- `CHANGELOG.md` for notable contributions
-- GitHub release notes and PR history
+- [ ] No personal paths, hostnames, or emails in artifacts
+- [ ] No raw serials in committed files
+- [ ] `.salt` is not committed
+- [ ] Bundle validated with `validate-submission.sh`
+
+---
 
 ## Contributing Device Quirks
 
-### Adding a New Device Entry
+### Adding a new entry
 
-The easiest way to add a new MTP device:
+1. **Automated (recommended)**: `./scripts/submit-device.sh`
+2. **Interactive builder**: `./scripts/add-device.sh`
+3. **CLI**: `swiftmtp add-device --vid 0x1234 --pid 0x5678 --name "Device" --class android`
+4. **Manual**: add to `Specs/quirks.json` per [`Specs/quirks.schema.json`](../Specs/quirks.schema.json)
 
-1. **Automated (recommended)**: Run `./scripts/submit-device.sh` — it prompts
-   for device info, generates the entry, validates it, and can open a PR
-2. **Interactive builder**: Run `./scripts/add-device.sh` for a simpler entry builder
-3. **Issue-only**: Open a [Device Report issue](https://github.com/your-org/SwiftMTP/issues/new?template=device-report.yml) with VID:PID and observed behavior
-4. **Manual**: Add an entry to `Specs/quirks.json` following the format below
-5. **Validate**: Run `./scripts/validate-device-entry.sh <your-entry-id>`
-6. **Test**: Run `swift test --filter QuirkMatchingTests` in SwiftMTPKit/
-7. **Submit**: Create a PR with your changes
-
-#### Finding VID:PID
-
-See the [detailed VID:PID table](#find-your-devices-vidpid) above for all
-platforms. The quickest method on macOS:
-
-1. Open **System Information** ( → About This Mac → System Report)
-2. Select **USB** in the sidebar
-3. Find your device and note the **Vendor ID** and **Product ID**
-
-Or use the SwiftMTP CLI:
-
-```bash
-cd SwiftMTPKit && swift run swiftmtp --real-only probe
-```
-
-#### CLI alternative
-
-You can also use the `add-device` CLI subcommand:
-
-```bash
-swiftmtp add-device --vid 0x1234 --pid 0x5678 --name "My Device" --class android
-```
-
-This generates a ready-to-use quirk entry template. Copy the output into
-`Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json`,
-validate with `./scripts/validate-quirks.sh`, then open a PR.
-
-> **Prefer `./scripts/submit-device.sh`** — it does all of the above in one step
-> including validation, syncing both quirks files, and optionally creating the PR.
-
-### Manual entry format
-
-Each device entry in `Specs/quirks.json` follows the schema defined in
-[`Specs/quirks.schema.json`](../Specs/quirks.schema.json). A minimal entry looks
-like this:
+### Minimal entry format
 
 ```json
 {
   "id": "acme-widget-phone-abcd",
-  "match": {
-    "vid": "0x1234",
-    "pid": "0xabcd"
-  },
+  "match": { "vid": "0x1234", "pid": "0xabcd" },
   "tuning": {
     "maxChunkBytes": 2097152,
     "handshakeTimeoutMs": 5000,
@@ -297,46 +378,45 @@ like this:
 }
 ```
 
-Key fields:
-
 | Field | Description |
 |-------|-------------|
-| `id` | Unique kebab-case identifier: `brand-model-pid` |
-| `match.vid` / `match.pid` | USB Vendor and Product IDs (hex with `0x` prefix) |
-| `tuning` | Timeout and chunk-size overrides for the device |
-| `ops` | Boolean capability flags (see schema for full list) |
-| `status` | Governance status: `proposed`, `verified`, or `promoted` |
+| `id` | Unique kebab-case: `brand-model-pid` |
+| `match.vid` / `match.pid` | USB Vendor/Product IDs (hex with `0x` prefix) |
+| `tuning` | Timeout and chunk-size overrides |
+| `ops` | Boolean capability flags (see schema) |
+| `status` | `proposed`, `verified`, or `promoted` |
 | `confidence` | `low`, `medium`, or `high` |
 
-### Testing your entry
+### Validating and submitting
 
 ```bash
 cd SwiftMTPKit
-
-# Validate both quirks files
-./scripts/validate-quirks.sh
-
-# Run quirk-matching tests
+../scripts/validate-quirks.sh
 swift test --filter QuirkMatchingTests
 ```
 
-### Submitting
+Add your entry to **both** `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json`, then open a PR with supporting evidence in `Contrib/submissions/<your-device>/`.
 
-1. Add your entry to **both** `Specs/quirks.json` and
-   `SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json`.
-2. Run the validation and tests above.
-3. Open a PR with the device entry and any supporting evidence (USB dump, probe
-   log) in `Contrib/submissions/<your-device>/`.
+See [Device Submission Guide](DeviceSubmission.md) for full instructions.
 
-See [Device Submission Guide](DeviceSubmission.md) for full instructions, device
-class descriptions, and authoritative VID/PID sources.
+---
+
+## Recognition
+
+Contributors are recognized through:
+
+- `Specs/quirks.json` provenance entries
+- `CHANGELOG.md` for notable contributions
+- GitHub release notes and PR history
+
+---
 
 ## Related Docs
 
 - [Roadmap](ROADMAP.md)
-- [Sprint Playbook](SPRINT-PLAYBOOK.md)
 - [Testing Guide](ROADMAP.testing.md)
 - [Device Submission Guide](DeviceSubmission.md)
 - [Release Checklist](ROADMAP.release-checklist.md)
 - [Troubleshooting](Troubleshooting.md)
+- [File Provider Tech Preview](FileProvider-TechPreview.md)
 - [Device Report Issue Template](https://github.com/your-org/SwiftMTP/issues/new?template=device-report.yml)
