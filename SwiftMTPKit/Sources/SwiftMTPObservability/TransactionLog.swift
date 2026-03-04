@@ -129,8 +129,11 @@ public enum MTPOpcodeLabel {
     0x1016: "SetDevicePropValue",
     0x1017: "ResetDevicePropValue",
     0x101B: "GetPartialObject",
-    0x95C1: "SendPartialObject",
-    0x95C4: "GetPartialObject64",
+    0x95C1: "GetPartialObject64",
+    0x95C2: "SendPartialObject",
+    0x95C3: "TruncateObject",
+    0x95C4: "BeginEditObject",
+    0x95C5: "EndEditObject",
   ]
 
   /// Human-readable name for an MTP opcode, e.g. `0x1001` → `"GetDeviceInfo"`.

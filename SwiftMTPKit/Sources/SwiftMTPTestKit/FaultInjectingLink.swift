@@ -124,6 +124,23 @@ public final class FaultInjectingLink: MTPLink, @unchecked Sendable {
     )
   }
 
+  // MARK: - Android Edit Extensions
+
+  public func beginEditObject(handle: UInt32) async throws {
+    try checkFault(.executeCommand)
+    try await inner.beginEditObject(handle: handle)
+  }
+
+  public func endEditObject(handle: UInt32) async throws {
+    try checkFault(.executeCommand)
+    try await inner.endEditObject(handle: handle)
+  }
+
+  public func truncateObject(handle: UInt32, offset: UInt64) async throws {
+    try checkFault(.executeCommand)
+    try await inner.truncateObject(handle: handle, offset: offset)
+  }
+
   // MARK: - Private
 
   private func checkFault(_ operation: LinkOperationType) throws {

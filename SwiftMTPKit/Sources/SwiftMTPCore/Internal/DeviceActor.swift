@@ -257,6 +257,51 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     }
   }
 
+  // MARK: - Android Edit Extensions
+
+  /// Begin in-place editing of an object (Android MTP extension 0x95C4).
+  ///
+  /// Must be paired with a corresponding ``endEdit(handle:)`` call.
+  /// While editing, `SendPartialObject` and `TruncateObject` can modify the file in place.
+  public func beginEdit(handle: UInt32) async throws {
+    guard handle != 0 else {
+      throw MTPError.preconditionFailed("BeginEditObject requires a valid object handle (got 0).")
+    }
+    try await openIfNeeded()
+    let link = try await getMTPLink()
+    try await BusyBackoff.onDeviceBusy {
+      try await link.beginEditObject(handle: handle)
+    }
+  }
+
+  /// Commit in-place edits for an object (Android MTP extension 0x95C5).
+  ///
+  /// Call after ``beginEdit(handle:)`` and any partial writes or truncations.
+  public func endEdit(handle: UInt32) async throws {
+    guard handle != 0 else {
+      throw MTPError.preconditionFailed("EndEditObject requires a valid object handle (got 0).")
+    }
+    try await openIfNeeded()
+    let link = try await getMTPLink()
+    try await BusyBackoff.onDeviceBusy {
+      try await link.endEditObject(handle: handle)
+    }
+  }
+
+  /// Truncate a file to the given size (Android MTP extension 0x95C3).
+  ///
+  /// Typically used between ``beginEdit(handle:)`` and ``endEdit(handle:)`` calls.
+  public func truncateFile(handle: UInt32, size: UInt64) async throws {
+    guard handle != 0 else {
+      throw MTPError.preconditionFailed("TruncateObject requires a valid object handle (got 0).")
+    }
+    try await openIfNeeded()
+    let link = try await getMTPLink()
+    try await BusyBackoff.onDeviceBusy {
+      try await link.truncateObject(handle: handle, offset: size)
+    }
+  }
+
   public nonisolated var events: AsyncStream<MTPEvent> {
     AsyncStream { continuation in
       Task {

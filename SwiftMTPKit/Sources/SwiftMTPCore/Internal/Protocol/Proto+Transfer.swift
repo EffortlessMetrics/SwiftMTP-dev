@@ -384,7 +384,7 @@ extension ProtoTransfer {
 
 extension ProtoTransfer {
 
-  /// GetPartialObject64 (0x95C4): 64-bit offset partial read.
+  /// GetPartialObject64 (0x95C1): 64-bit offset partial read.
   public static func readPartialObject64(
     handle: UInt32, offset: UInt64, maxBytes: UInt32,
     on link: MTPLink, dataHandler: @escaping MTPDataIn
@@ -420,6 +420,52 @@ extension ProtoTransfer {
       dataInHandler: dataHandler, dataOutHandler: nil
     )
     .checkOK()
+  }
+}
+
+// MARK: - Android Edit Extensions
+
+extension ProtoTransfer {
+
+  /// BeginEditObject (0x95C4): enter in-place edit mode for an object.
+  public static func beginEditObject(
+    handle: UInt32, on link: MTPLink
+  ) async throws {
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: MTPOp.beginEditObject.rawValue,
+      txid: 0,
+      params: [handle]
+    )
+    try await link.executeCommand(command).checkOK()
+  }
+
+  /// EndEditObject (0x95C5): commit in-place edits for an object.
+  public static func endEditObject(
+    handle: UInt32, on link: MTPLink
+  ) async throws {
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: MTPOp.endEditObject.rawValue,
+      txid: 0,
+      params: [handle]
+    )
+    try await link.executeCommand(command).checkOK()
+  }
+
+  /// TruncateObject (0x95C3): truncate an object to the given byte offset.
+  public static func truncateObject(
+    handle: UInt32, offset: UInt64, on link: MTPLink
+  ) async throws {
+    let offsetLo = UInt32(offset & 0xFFFFFFFF)
+    let offsetHi = UInt32(offset >> 32)
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: MTPOp.truncateObject.rawValue,
+      txid: 0,
+      params: [handle, offsetLo, offsetHi]
+    )
+    try await link.executeCommand(command).checkOK()
   }
 }
 

@@ -64,8 +64,11 @@ public enum PTPOp: UInt16 {
   case setDevicePropValue = 0x1016
   case resetDevicePropValue = 0x1017
   case getPartialObject = 0x101B
-  case getPartialObject64 = 0x95C4
-  case sendPartialObject = 0x95C1
+  case getPartialObject64 = 0x95C1
+  case sendPartialObject = 0x95C2
+  case truncateObject = 0x95C3
+  case beginEditObject = 0x95C4
+  case endEditObject = 0x95C5
 }
 
 // PTP/MTP Unicode String format: count-prefixed UTF-16LE

@@ -570,10 +570,14 @@ public struct DeviceLabHarness: Sendable {
 
     // Build suggested flags from actual capabilities
     var flags = QuirkFlags()
-    flags.supportsPartialRead64 = info.operationsSupported.contains(0x95C4)
+    flags.supportsPartialRead64 = info.operationsSupported.contains(0x95C1)
     flags.supportsPartialRead32 = info.operationsSupported.contains(0x101B)
-    flags.supportsPartialWrite = info.operationsSupported.contains(0x95C1)
+    flags.supportsPartialWrite = info.operationsSupported.contains(0x95C2)
     flags.prefersPropListEnumeration = info.operationsSupported.contains(0x9805)
+    flags.supportsAndroidEditExtensions =
+      info.operationsSupported.contains(MTPOp.beginEditObject.rawValue)
+      && info.operationsSupported.contains(MTPOp.endEditObject.rawValue)
+      && info.operationsSupported.contains(MTPOp.truncateObject.rawValue)
     flags.disableEventPump = info.eventsSupported.isEmpty
 
     // Suggest tuning based on what we learned
