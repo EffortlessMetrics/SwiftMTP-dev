@@ -591,53 +591,101 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
 
     // Phase 2: Data phase (if any)
     if let dataOut = dataOutHandler, let dataLen = dataPhaseLength {
-      // Data-out: build data container header, fill from callback, send to device
-      let headerSize = UInt32(ptpHeaderSize)
-      let totalLen = headerSize + UInt32(dataLen)
+      // Data-out: build PTP data container header, then stream payload in chunks.
+      // For large files (>4GB), PTP uses 0xFFFFFFFF as a sentinel length.
+      let containerLen: UInt32
+      if dataLen > UInt64(UInt32.max) - UInt64(ptpHeaderSize) {
+        containerLen = 0xFFFFFFFF
+      } else {
+        containerLen = UInt32(ptpHeaderSize) + UInt32(dataLen)
+      }
       var header = Data(count: ptpHeaderSize)
       header.withUnsafeMutableBytes { buf in
         let base = buf.baseAddress!
-        base.storeBytes(of: totalLen.littleEndian, as: UInt32.self)
+        base.storeBytes(of: containerLen.littleEndian, as: UInt32.self)
         base.storeBytes(of: PTPContainer.Kind.data.rawValue.littleEndian, toByteOffset: 4, as: UInt16.self)
         base.storeBytes(of: cmd.code.littleEndian, toByteOffset: 6, as: UInt16.self)
         base.storeBytes(of: cmd.txid.littleEndian, toByteOffset: 8, as: UInt32.self)
       }
+      try bulkWrite(header)
 
-      // Collect payload from callback
-      var payload = Data()
-      payload.reserveCapacity(Int(dataLen))
+      // Stream payload in chunks from the callback
       let chunkSize = 65536
-      var buf = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: chunkSize)
+      let buf = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: chunkSize)
       defer { buf.deallocate() }
       var remaining = Int(dataLen)
       while remaining > 0 {
-        let requested = min(remaining, chunkSize)
         let wrote = dataOut(UnsafeMutableRawBufferPointer(buf))
         if wrote == 0 { break }
-        payload.append(buf.baseAddress!, count: min(wrote, requested))
-        remaining -= wrote
+        let toSend = min(wrote, remaining)
+        try bulkWrite(Data(bytes: buf.baseAddress!, count: toSend))
+        remaining -= toSend
       }
-
-      try bulkWrite(header + payload)
     }
 
-    if dataInHandler != nil {
-      // Data-in: read data container from device, pass payload to callback
-      let rawData = try bulkRead()
-      if rawData.count >= ptpHeaderSize {
-        let containerType = rawData.withUnsafeBytes { buf in
-          UInt16(littleEndian: buf.load(fromByteOffset: 4, as: UInt16.self))
+    if let handler = dataInHandler {
+      // Data-in: read PTP data container header, then stream payload in chunks.
+      var firstRead = try bulkRead()
+      guard firstRead.count >= ptpHeaderSize else {
+        return PTPResponseResult(code: 0x2002, txid: cmd.txid)
+      }
+
+      let (containerType, containerLen) = firstRead.withUnsafeBytes { buf -> (UInt16, UInt32) in
+        let base = buf.baseAddress!
+        let len = UInt32(littleEndian: base.load(as: UInt32.self))
+        let type = UInt16(littleEndian: base.load(fromByteOffset: 4, as: UInt16.self))
+        return (type, len)
+      }
+
+      if containerType == PTPContainer.Kind.response.rawValue {
+        // Device sent response directly (no data phase)
+        if let resp = parsePTPResponse(firstRead) { return resp }
+        return PTPResponseResult(code: 0x2002, txid: cmd.txid)
+      }
+
+      guard containerType == PTPContainer.Kind.data.rawValue else {
+        return PTPResponseResult(code: 0x2002, txid: cmd.txid)
+      }
+
+      // Total payload = containerLen - header, or indeterminate if 0xFFFFFFFF
+      let knownLength = containerLen != 0xFFFFFFFF
+      let totalPayload = knownLength ? Int(containerLen) - ptpHeaderSize : Int.max
+
+      // Deliver payload from the first read (after PTP header)
+      var delivered = 0
+      if firstRead.count > ptpHeaderSize {
+        let payload = firstRead.subdata(in: ptpHeaderSize..<firstRead.count)
+        payload.withUnsafeBytes { buf in
+          _ = handler(UnsafeRawBufferPointer(buf))
         }
-        if containerType == PTPContainer.Kind.data.rawValue {
-          // Strip PTP header, pass payload to handler
-          let payload = rawData.subdata(in: ptpHeaderSize..<rawData.count)
-          payload.withUnsafeBytes { buf in
-            _ = dataInHandler!(UnsafeRawBufferPointer(buf))
+        delivered += payload.count
+      }
+
+      // Continue reading chunks until we have all data
+      while delivered < totalPayload {
+        let chunk: Data
+        do {
+          chunk = try bulkRead()
+        } catch {
+          break  // Transfer ended (stall, ZLP, or timeout)
+        }
+        if chunk.isEmpty { break }
+
+        // Check if this chunk contains a PTP response (end of data phase)
+        if chunk.count >= ptpHeaderSize {
+          let chunkType = chunk.withUnsafeBytes { buf in
+            UInt16(littleEndian: buf.load(fromByteOffset: 4, as: UInt16.self))
           }
-        } else if containerType == PTPContainer.Kind.response.rawValue {
-          // Device sent response directly (no data phase)
-          if let resp = parsePTPResponse(rawData) { return resp }
+          if chunkType == PTPContainer.Kind.response.rawValue {
+            if let resp = parsePTPResponse(chunk) { return resp }
+            break
+          }
         }
+
+        chunk.withUnsafeBytes { buf in
+          _ = handler(UnsafeRawBufferPointer(buf))
+        }
+        delivered += chunk.count
       }
     }
 
