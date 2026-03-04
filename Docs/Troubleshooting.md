@@ -235,6 +235,8 @@ The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.
 
 ## Error-Specific Solutions
 
+> **See also**: [Error Catalog](ErrorCatalog.md) for a complete reference of all MTP response codes, transport errors, and recovery strategies.
+
 ### Exit Code 69 - No Device
 
 **Command:** `swiftmtp events` exits with code 69
@@ -666,6 +668,7 @@ All five must pass before pushing. CI runs the same checks. The full matrix run 
 
 ## Related Documentation
 
+- [Error Catalog](ErrorCatalog.md) — complete error code reference with troubleshooting
 - [Error Codes Reference](ErrorCodes.md)
 - [Migration Guide](MigrationGuide.md)
 - [Benchmarks](benchmarks.md)
