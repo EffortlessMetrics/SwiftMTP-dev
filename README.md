@@ -1,256 +1,328 @@
+<div align="center">
+
 # SwiftMTP
 
-> **Pre-Alpha** — Heavily scaffolded protocol and test infrastructure, but only 1 device has completed real file transfers. Not ready for production use.
+**A Swift-native MTP (Media Transfer Protocol) implementation for macOS**
 
-A Swift-native MTP (Media Transfer Protocol) implementation for macOS. The protocol layer is well-tested with mocks, but real-device support is still being built out.
+[![CI](https://github.com/EffortlessMetrics/SwiftMTP-dev/actions/workflows/ci.yml/badge.svg)](https://github.com/EffortlessMetrics/SwiftMTP-dev/actions/workflows/ci.yml)
+[![Swift 6.2](https://img.shields.io/badge/Swift-6.2-F05138.svg?logo=swift)](https://swift.org)
+[![Platform](https://img.shields.io/badge/platform-macOS%2015%2B-blue.svg)](https://developer.apple.com/macos/)
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-green.svg)](LICENSE-AGPL-3.0.md)
 
-## Project Status
+Connect Android phones, cameras, and other MTP devices to your Mac — no Android File Transfer needed.
 
-SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session management are implemented and covered by an extensive test suite (**~9,191+ tests executed** across 20 targets) using in-memory mock devices (`VirtualMTPDevice`). However, real-device validation is minimal — only one device (Xiaomi Mi Note 2) has completed successful file transfers through SwiftMTP.
+</div>
 
-### What Works
+> **⚠️ Pre-Alpha** — The protocol layer is well-tested with mocks (~9,000+ tests across 20 targets), but only 1 device has completed real file transfers. Not ready for production use.
 
-- **MTP 1.1 protocol**: 50+ object formats, 50+ property codes, full event handling (mock-tested)
-- **Android MTP extensions**: `BeginEditObject`, `EndEditObject`, `TruncateObject` for in-place file editing
-- **Server-side CopyObject**: device-side file copy without re-transfer
-- **Adaptive chunk tuning**: auto-tunes transfer sizes 512KB–8MB with device persistence
-- **Error recovery layer**: session reset, stall recovery, timeout escalation, disconnect handling
-- **Conflict resolution**: 6 strategies for mirror/sync (newer-wins, local-wins, device-wins, keep-both, skip, ask)
-- **Format-based mirror filtering**: --photos-only, --format, --exclude-format
-- **Write-path safety**: validation guards on all mutating operations
-- **Transfer journaling**: WAL-mode SQLite, atomic downloads, orphan detection, resume support
-- **SQLite-indexed device content**: optimized queries with 8 dedicated indexes
-- **CLI tool**: 15+ commands (`probe`, `ls`, `pull`, `push`, `snapshot`, `mirror`, `bench`, `events`, `quirks`, `device-lab`, `wizard`, `cp`, `edit`, `thumb`, `info`) with "did you mean?" suggestions and categorized help
-- **Device quirks database**: 20,026 entries across 1,154 vendors (research-based — see caveat below)
-- **File Provider integration**: native Finder support on macOS via XPC (tech preview, mock-tested only — no real-device or Finder validation)
-- **SwiftUI GUI application** (demo mode only)
+---
 
-### What Doesn't Work (Yet)
+## Quick Start
 
-- Most real MTP devices — only 1 of 7 tested devices can transfer files
-- Samsung Galaxy: MTP handshake fails after USB claim (research done, transport fixes shipped — awaiting retest)
-- Google Pixel 7: bulk transfer timeout (research done, transport fixes shipped — awaiting retest; see [debug report](Docs/pixel7-usb-debug-report.md))
-- OnePlus 3T: reads work but writes fail with InvalidParameter
-- Canon/Nikon cameras: never connected to SwiftMTP (research-only quirks)
-- File Provider integration — all operations (enumerate, download, upload, delete, rename, move) are scaffolded and mock-tested but unvalidated on real devices or Finder
-
-### Quirks Database Caveat
-
-The 20,000+ entry quirks database is **research-based scaffolding**, sourced from libmtp data and vendor specifications. Only a handful of devices have been tested with SwiftMTP directly. The database represents intended tuning parameters, not validated device support.
-
-- Change tracking: [`CHANGELOG.md`](CHANGELOG.md)
-- Docs index: [`Docs/README.md`](Docs/README.md)
-- Roadmap: [`Docs/ROADMAP.md`](Docs/ROADMAP.md)
-- Testing gates: [`Docs/ROADMAP.testing.md`](Docs/ROADMAP.testing.md)
-- Contribution workflow: [`Docs/ContributionGuide.md`](Docs/ContributionGuide.md)
-- Troubleshooting: [`Docs/Troubleshooting.md`](Docs/Troubleshooting.md)
-
-## Architecture
-
-Built with Swift 6 strict concurrency and actor-based isolation:
-
-- **`SwiftMTPCore`**: Actor-isolated MTP protocol implementation with async/await
-- **`SwiftMTPTransportLibUSB`**: USB transport layer using libusb with fallback support
-- **`SwiftMTPIndex`**: SQLite-based device content indexing and snapshots
-- **`SwiftMTPSync`**: Mirror, sync, and diff operations
-- **`SwiftMTPUI`**: SwiftUI views using `@Observable`
-- **`SwiftMTPQuirks`**: Device-specific tuning database
-- **`SwiftMTPObservability`**: Structured logging and performance monitoring
-- **`SwiftMTPStore`**: Persistence layer for device metadata and transfer journals
-- **`SwiftMTPFileProvider`**: macOS File Provider extension (tech preview, mock-tested only)
-- **`swiftmtp-cli`**: CLI tool for automation and power users
-- **`SwiftMTPApp`**: Standalone macOS GUI application
-
-### Key Features
-
-- **MTP 1.1 Protocol Coverage**: 50+ object formats, 50+ property codes, full event handling, Android MTP extensions, and server-side CopyObject.
-- **Device Quirks Database**: 20,026 entries across 38 categories and 1,154 vendor IDs, sourced from libmtp data and vendor specs. This is research-based scaffolding — only a handful of devices have been tested with SwiftMTP directly.
-- **Transfer Journaling**: WAL-mode SQLite with atomic downloads, orphan detection, and automatic resume support. Implemented and tested with mocks; limited real-device validation.
-- **Write-Path Safety**: Validation guards on all mutating operations — partial write detection, delete safety, read-only storage enforcement.
-- **File Provider Integration**: Native Finder integration on macOS via XPC. Tech preview — read and write operations scaffolded and mock-tested; no real-device or Finder validation.
-- **CLI**: 12+ commands with "did you mean?" suggestions, categorized help, and structured error messages.
-- **Demo Mode**: Simulated device profiles (pixel7, galaxy, iphone, canon) for development without physical hardware.
-
-## MTP Operation Coverage
-
-| Operation | Status |
-|-----------|--------|
-| GetDeviceInfo | ✅ Implemented |
-| OpenSession / CloseSession | ✅ Implemented |
-| GetStorageIDs / GetStorageInfo | ✅ Implemented |
-| GetObjectHandles / GetObjectInfo | ✅ Implemented |
-| GetObject / GetPartialObject(64) | ✅ Implemented |
-| SendObject / SendPartialObject | ✅ Implemented |
-| DeleteObject / MoveObject | ✅ Implemented |
-| CopyObject | ✅ Implemented (wave 38) |
-| BeginEditObject / EndEditObject | ✅ Implemented (wave 38, Android) |
-| TruncateObject | ✅ Implemented (wave 38, Android) |
-| GetThumb | ✅ Implemented (wave 40) |
-| GetObjectPropList | ✅ Implemented |
-| SetObjectPropList | ✅ Implemented (wave 40) |
-
-## Device Status
-
-Honest status of devices that have quirk entries with any level of real testing:
-
-| Device | VID:PID | Status | Notes |
-|--------|---------|--------|-------|
-| Xiaomi Mi Note 2 | 2717:ff10 | Partial | Only device with real file transfer data. Requires kernel detach; no GetObjectPropList. |
-| Xiaomi Mi Note 2 (alt) | 2717:ff40 | Untested | Has quirk entry. Recent lab run returned 0 storages. |
-| Samsung Galaxy S7 | 04e8:6860 | Blocked | USB claim succeeds but MTP handshake fails. Research done (#428), transport fixes shipped (#445: skipAltSetting, skipPreClaimReset). Awaiting retest. |
-| Google Pixel 7 | 18d1:4ee1 | Blocked | Bulk transfer timeout — research done (#429), transport fixes shipped (#443: handle re-open, set_configuration, extended timeouts). Awaiting retest. See [debug report](Docs/pixel7-usb-debug-report.md). |
-| OnePlus 3T | 2a70:f003 | Partial | Probe and read work. Writes fail with 0x201D (InvalidParameter). |
-| Canon EOS Rebel / R-class | 04a9:3139 | Research Only | Quirks from libmtp/vendor specs. Never connected to SwiftMTP. |
-| Nikon DSLR / Z-series | 04b0:0410 | Research Only | Quirks from libmtp/vendor specs. Never connected to SwiftMTP. |
-
-The quirks database contains entries for many additional devices (phones, cameras, tablets, audio players, drones, etc.) but these are sourced from libmtp data and vendor specifications, not from SwiftMTP testing. See `Specs/quirks.json` for the full database.
-
-## Help Wanted
-
-Real-device testing is the main bottleneck. If you have an MTP device and want to help:
-
-1. **Run a probe**: `swift run --package-path SwiftMTPKit swiftmtp probe` and share the output
-2. **Try file listing**: `swift run --package-path SwiftMTPKit swiftmtp ls`
-3. **Report results**: Open an issue with your device model, VID:PID, and what worked/failed
-4. **Submit a snapshot**: `swift run --package-path SwiftMTPKit swiftmtp snapshot` captures device metadata for debugging
-
-Known blockers we need help with:
-- Samsung Galaxy: MTP handshake fails after USB claim — transport fixes shipped, awaiting retest with real device
-- Pixel 7: bulk transfer timeout on macOS — transport fixes shipped, awaiting retest
-- OnePlus: write path returns InvalidParameter — need to determine if this is a path or format issue
-- Canon/Nikon: no one has tried connecting a camera yet
-
-## Installation & Setup
-
-### Homebrew (recommended)
+### Install via Homebrew
 
 ```bash
 brew tap EffortlessMetrics/swiftmtp https://github.com/EffortlessMetrics/SwiftMTP-dev.git
 brew install swiftmtp
 ```
 
-See [Docs/Installation.md](Docs/Installation.md) for source builds, shell completions, and more.
+### Or build from source
 
-### Prerequisites (for building from source)
-- **macOS 26.0+** (Apple Silicon or Intel)
-- **Xcode 16.0+** with Swift 6
+```bash
+git clone https://github.com/EffortlessMetrics/SwiftMTP-dev.git
+cd SwiftMTP-dev
+./scripts/bootstrap.sh
+```
+
+### Usage
+
+```bash
+swiftmtp probe              # Discover connected MTP devices
+swiftmtp ls                 # List files on device
+swiftmtp pull photo.jpg     # Download a file
+swiftmtp push track.mp3     # Upload a file
+swiftmtp mirror ~/Photos    # Mirror device content locally
+swiftmtp snapshot           # Capture device metadata for debugging
+```
+
+See the [CLI Command Map](Docs/CLICommandMap.md) for all 15+ commands.
+
+---
+
+## Feature Matrix
+
+### MTP Operations
+
+| Operation | Status | Notes |
+|-----------|--------|-------|
+| GetDeviceInfo | ✅ Implemented | |
+| OpenSession / CloseSession | ✅ Implemented | |
+| GetStorageIDs / GetStorageInfo | ✅ Implemented | |
+| GetObjectHandles / GetObjectInfo | ✅ Implemented | |
+| GetObject / GetPartialObject(64) | ✅ Implemented | |
+| SendObject / SendPartialObject | ✅ Implemented | |
+| DeleteObject / MoveObject | ✅ Implemented | |
+| CopyObject | ✅ Implemented | Server-side copy, no re-transfer |
+| GetThumb | ✅ Implemented | Download object thumbnails |
+| GetObjectPropList / SetObjectPropList | ✅ Implemented | |
+| BeginEditObject / EndEditObject | ✅ Implemented | Android MTP extension |
+| TruncateObject | ✅ Implemented | Android MTP extension |
+
+### Platform Features
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| MTP 1.1 protocol coverage | ✅ Done | 50+ object formats, 50+ property codes, all 14 events, all 42 response codes |
+| Android MTP edit extensions | ✅ Done | In-place file editing on Android devices |
+| Adaptive chunk tuning | ✅ Done | Auto-tunes 512 KB–8 MB with per-device persistence |
+| Error recovery layer | ✅ Done | Session reset, stall recovery, timeout escalation, disconnect handling |
+| Transfer journaling | ✅ Done | WAL-mode SQLite, atomic downloads, orphan detection, resume |
+| Conflict resolution | ✅ Done | 6 strategies: newer-wins, local-wins, device-wins, keep-both, skip, ask |
+| Format-based mirror filtering | ✅ Done | `--photos-only`, `--format`, `--exclude-format` |
+| SQLite content indexing | ✅ Done | Optimized queries with 8 dedicated indexes |
+| Device quirks database | ✅ Done | 20,026 entries across 1,154 vendors (research-based — see [caveat](#quirks-database-caveat)) |
+| CLI tool | ✅ Done | 15+ commands with "did you mean?" suggestions and categorized help |
+| SwiftUI GUI | 🔨 In Progress | Demo mode functional; real-device integration pending |
+| File Provider (Finder) | 🔨 In Progress | Tech preview — scaffolded and mock-tested; no real-device validation |
+| IOUSBHost native transport | 📋 Planned | Scaffold only; currently uses libusb |
+
+---
+
+## Device Compatibility
+
+> **Transparency note**: Most quirks entries are research-based, sourced from libmtp data and vendor specifications. The "Mock-Tested" and "Real-Device" columns reflect actual SwiftMTP testing.
+
+| Device | VID:PID | Mock-Tested | Real-Device | Status |
+|--------|---------|:-----------:|:-----------:|--------|
+| Xiaomi Mi Note 2 | `2717:ff10` | ✅ | ✅ Partial | Only device with real file transfers. Requires kernel detach. |
+| Xiaomi Mi Note 2 (alt) | `2717:ff40` | ✅ | ⚠️ | Recent lab run returned 0 storages. |
+| Samsung Galaxy S7 | `04e8:6860` | ✅ | ❌ Blocked | USB claim succeeds but MTP handshake fails. Transport fixes shipped ([#445](https://github.com/EffortlessMetrics/SwiftMTP-dev/pull/445)) — awaiting retest. |
+| Google Pixel 7 | `18d1:4ee1` | ✅ | ❌ Blocked | Bulk transfer timeout. Transport fixes shipped ([#443](https://github.com/EffortlessMetrics/SwiftMTP-dev/pull/443)) — awaiting retest. See [debug report](Docs/pixel7-usb-debug-report.md). |
+| OnePlus 3T | `2a70:f003` | ✅ | ⚠️ Partial | Probe and read work. Writes fail with `0x201D` (InvalidParameter). |
+| Canon EOS Rebel / R-class | `04a9:3139` | ✅ | — | Research-only quirks from libmtp/vendor specs. Never connected. |
+| Nikon DSLR / Z-series | `04b0:0410` | ✅ | — | Research-only quirks from libmtp/vendor specs. Never connected. |
+
+The full quirks database covers 20,026 device entries (phones, cameras, tablets, audio players, drones, etc.). See [`Specs/quirks.json`](Specs/quirks.json).
+
+### Quirks Database Caveat
+
+The quirks database is **research-based scaffolding** sourced from libmtp data and vendor specifications. It represents intended tuning parameters, not validated device support. Only a handful of devices listed above have been tested with SwiftMTP directly.
+
+---
+
+## Architecture
+
+Built with **Swift 6 strict concurrency** and **actor-based isolation**.
+
+```
+┌──────────────────────────────────────────────────────┐
+│                    SwiftMTP CLI / GUI                 │
+├──────────┬───────────┬───────────┬───────────────────┤
+│ SwiftMTP │ SwiftMTP  │ SwiftMTP  │   SwiftMTP        │
+│   Sync   │   Index   │   Store   │   Observability   │
+├──────────┴───────────┴───────────┴───────────────────┤
+│                   SwiftMTPCore                        │
+│   MTPDeviceActor · ErrorRecoveryLayer · ChunkTuner   │
+├──────────────────────┬───────────────────────────────┤
+│  TransportLibUSB     │  TransportIOUSBHost (scaffold) │
+├──────────────────────┴───────────────────────────────┤
+│              SwiftMTPQuirks (20,026 entries)          │
+└──────────────────────────────────────────────────────┘
+```
+
+| Module | Responsibility |
+|--------|---------------|
+| **SwiftMTPCore** | Actor-isolated MTP protocol, async/await I/O, error recovery |
+| **SwiftMTPTransportLibUSB** | USB transport via libusb with fallback support |
+| **SwiftMTPTransportIOUSBHost** | Native macOS USB transport (scaffold only) |
+| **SwiftMTPIndex** | SQLite-based device content indexing and snapshots |
+| **SwiftMTPSync** | Mirror, diff, and sync with conflict resolution |
+| **SwiftMTPUI** | SwiftUI views using `@Observable` |
+| **SwiftMTPQuirks** | Device-specific tuning database |
+| **SwiftMTPObservability** | Structured logging and performance monitoring |
+| **SwiftMTPStore** | Transfer journals and device metadata persistence |
+| **SwiftMTPFileProvider** | macOS File Provider extension via XPC (tech preview) |
+| **SwiftMTPTestKit** | `VirtualMTPDevice`, `FaultInjectingLink`, test utilities |
+
+---
+
+## Installation & Setup
+
+### Prerequisites
+
+- **macOS 15+** (Apple Silicon or Intel)
+- **Xcode 16+** with Swift 6
 - `libusb` via Homebrew: `brew install libusb`
 
-### Quick Start (CLI)
+### From Source
+
+```bash
+git clone https://github.com/EffortlessMetrics/SwiftMTP-dev.git
+cd SwiftMTP-dev/SwiftMTPKit
+swift build -v
+```
+
+### Build libusb XCFramework (first time only)
+
+```bash
+./scripts/build-libusb-xcframework.sh
+```
+
+### Run the CLI
+
 ```bash
 cd SwiftMTPKit
 swift run swiftmtp --help
 ```
 
-### Quick Start (GUI)
+### Run the GUI
+
 ```bash
 cd SwiftMTPKit
 swift run SwiftMTPApp
 ```
 
-## Verification & Testing
+See [Docs/Installation.md](Docs/Installation.md) for shell completions, Homebrew details, and more.
 
-~9,191+ tests executed across 20 test targets, using `VirtualMTPDevice` (in-memory mock) extensively. Includes unit, BDD (CucumberSwift), property-based (SwiftCheck), snapshot, and fuzz tests. Real-device tests require physical hardware.
-
-### Full Verification Suite
-```bash
-./run-all-tests.sh
-```
-
-### Targeted Tests
-```bash
-# From SwiftMTPKit directory
-cd SwiftMTPKit
-
-swift test --filter CoreTests           # Core protocol and codec
-swift test --filter BDDTests            # CucumberSwift scenarios
-swift test --filter PropertyTests       # SwiftCheck property tests
-swift test --filter SnapshotTests       # Visual regression
-```
-
-### Protocol Fuzzing
-```bash
-./SwiftMTPKit/run-fuzz.sh
-```
+---
 
 ## Demo Mode
 
-Develop without physical hardware using simulated profiles:
+Develop without physical hardware using simulated device profiles:
 
 ```bash
 export SWIFTMTP_DEMO_MODE=1
 export SWIFTMTP_MOCK_PROFILE=pixel7  # Options: pixel7, galaxy, iphone, canon
 
-cd SwiftMTPKit
-swift run swiftmtp probe
+swiftmtp probe    # Shows simulated Pixel 7
+swiftmtp ls       # Lists simulated files
 ```
 
 GUI users can toggle simulation via the Orange Play button in the toolbar.
 
-## Building from Source
+---
+
+## Testing
+
+~9,000+ tests across 20 targets using `VirtualMTPDevice` (in-memory mock). Includes unit, BDD ([CucumberSwift](https://github.com/Tyler-Keith-Thompson/CucumberSwift)), property-based ([SwiftCheck](https://github.com/typelift/SwiftCheck)), snapshot, and fuzz tests.
 
 ```bash
-git clone https://github.com/effortlessmetrics/swiftmtp.git
-cd swiftmtp/SwiftMTPKit
-swift build
-```
+# Full verification suite
+./run-all-tests.sh
 
-### Building XCFramework (Required for libusb)
-```bash
-./scripts/build-libusb-xcframework.sh
+# Targeted tests (from SwiftMTPKit/)
+cd SwiftMTPKit
+swift test --filter CoreTests           # Core protocol and codec
+swift test --filter SyncTests           # Mirror/sync/diff
+swift test --filter ToolingTests        # CLI commands
+swift test --filter BDDTests            # Gherkin scenarios
+swift test --filter PropertyTests       # Property-based tests
+
+# Thread Sanitizer
+swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests
+
+# Fuzzing
+./run-fuzz.sh
 ```
 
 ### Code Quality
+
 ```bash
+# Format (required before commits)
 swift-format -i -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+
+# Lint
 swift-format lint -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+
+# Full pre-PR checks
+./scripts/pre-pr.sh
 ```
+
+---
+
+## Help Wanted
+
+Real-device testing is the main bottleneck. If you have an MTP device and want to help:
+
+1. **Run a probe**: `swiftmtp probe` and share the output
+2. **Try file listing**: `swiftmtp ls`
+3. **Report results**: Open an issue with your device model, VID:PID, and what worked/failed
+4. **Submit a snapshot**: `swiftmtp snapshot` captures device metadata for debugging
+
+**Known blockers needing real-device retests:**
+- **Samsung Galaxy**: MTP handshake fails after USB claim — transport fixes shipped, awaiting retest
+- **Pixel 7**: bulk transfer timeout — transport fixes shipped, awaiting retest
+- **OnePlus**: write path returns InvalidParameter — needs diagnosis
+- **Canon/Nikon**: no one has tried connecting a camera yet
+
+---
+
+## Documentation
+
+| Resource | Description |
+|----------|-------------|
+| [Error Catalog](Docs/ErrorCatalog.md) | Complete error code reference with causes and fixes |
+| [CLI Command Map](Docs/CLICommandMap.md) | All CLI commands, flags, and usage patterns |
+| [Installation Guide](Docs/Installation.md) | Homebrew, source builds, shell completions |
+| [Troubleshooting](Docs/Troubleshooting.md) | Common issues and device-specific solutions |
+| [Contribution Guide](Docs/ContributionGuide.md) | Development workflow and PR process |
+| [Roadmap](Docs/ROADMAP.md) | Project roadmap and priorities |
+| [Testing Guide](Docs/ROADMAP.testing.md) | Test targets, coverage gates, and CI |
+| [Device Submission](Docs/ROADMAP.device-submission.md) | How to submit device test results |
+| [File Provider Tech Preview](Docs/FileProvider-TechPreview.md) | Finder integration status |
+| [Pixel 7 Debug Report](Docs/pixel7-usb-debug-report.md) | Detailed USB debug analysis |
+| [Changelog](CHANGELOG.md) | Release notes and change history |
+
+---
 
 ## Project Structure
 
 ```
 SwiftMTP/
-├── SwiftMTPKit/           # Swift Package root
+├── SwiftMTPKit/               # Swift Package root (build from here)
 │   ├── Sources/
-│   │   ├── SwiftMTPCore/          # Core MTP protocol
-│   │   ├── SwiftMTPTransportLibUSB/
-│   │   ├── SwiftMTPIndex/         # SQLite indexing
-│   │   ├── SwiftMTPSync/           # Mirror/sync
-│   │   ├── SwiftMTPUI/             # SwiftUI views
-│   │   ├── SwiftMTPQuirks/        # Device quirks
-│   │   ├── SwiftMTPObservability/  # Logging
-│   │   ├── SwiftMTPStore/         # Persistence
-│   │   └── Tools/                 # CLI & App targets
-│   └── Tests/                    # 20 test targets
-├── Docs/                  # Documentation
-│   ├── SwiftMTP.docc/     # DocC documentation
-│   └── benchmarks/       # Performance data
-├── Specs/                 # Schemas & quirks
-├── legal/                 # Licensing
-└── scripts/              # Build & release tools
+│   │   ├── SwiftMTPCore/              # Core MTP protocol
+│   │   ├── SwiftMTPTransportLibUSB/   # libusb transport
+│   │   ├── SwiftMTPTransportIOUSBHost/# Native transport (scaffold)
+│   │   ├── SwiftMTPIndex/             # SQLite indexing
+│   │   ├── SwiftMTPSync/              # Mirror/sync/diff
+│   │   ├── SwiftMTPUI/               # SwiftUI views
+│   │   ├── SwiftMTPQuirks/           # Device quirks
+│   │   ├── SwiftMTPObservability/     # Logging & monitoring
+│   │   ├── SwiftMTPStore/            # Persistence
+│   │   ├── SwiftMTPFileProvider/      # File Provider extension
+│   │   ├── SwiftMTPXPC/              # XPC bridge
+│   │   ├── SwiftMTPTestKit/          # Test utilities
+│   │   └── Tools/                    # CLI, GUI, fuzz harnesses
+│   └── Tests/                        # 20 test targets
+├── Docs/                              # Documentation
+├── Specs/                             # Schemas & quirks database
+├── scripts/                           # Build, release & CI tools
+└── legal/                             # Licensing
 ```
 
-## Documentation
+---
 
-- [Contribution guide](Docs/ContributionGuide.md)
-- [Roadmap](Docs/ROADMAP.md)
-- [Testing guide](Docs/ROADMAP.testing.md)
-- [Device submission workflow](Docs/ROADMAP.device-submission.md)
-- [Pixel 7 debug report](Docs/pixel7-usb-debug-report.md)
-- [File Provider tech preview](Docs/FileProvider-TechPreview.md)
-- [Troubleshooting](Docs/Troubleshooting.md)
+## Contributing
 
-## Licensing
+We welcome contributions! See the [Contribution Guide](Docs/ContributionGuide.md) for development workflow, coding standards, and PR process.
+
+---
+
+## License
 
 SwiftMTP is dual-licensed:
-- **AGPL-3.0** for open-source use
-- **Commercial license** for closed-source/App Store distribution
 
-See [`legal/outbound/COMMERCIAL-LICENSE.md`](legal/outbound/COMMERCIAL-LICENSE.md) or contact git@effortlesssteven.com.
+- **[AGPL-3.0](LICENSE-AGPL-3.0.md)** for open-source use
+- **[Commercial license](legal/outbound/COMMERCIAL-LICENSE.md)** for closed-source / App Store distribution
+
+Contact git@effortlesssteven.com for commercial licensing inquiries.
+
+---
 
 ## Acknowledgments
 
-- [libusb](https://libusb.info/) for cross-platform USB access
-- [CucumberSwift](https://github.com/Tyler-Keith-Thompson/CucumberSwift) for BDD testing
-- [SwiftCheck](https://github.com/typelift/SwiftCheck) for property-based testing
-- [swift-snapshot-testing](https://github.com/pointfreeco/swift-snapshot-testing) for visual regression
+- [libusb](https://libusb.info/) — cross-platform USB access
+- [CucumberSwift](https://github.com/Tyler-Keith-Thompson/CucumberSwift) — BDD testing
+- [SwiftCheck](https://github.com/typelift/SwiftCheck) — property-based testing
+- [swift-snapshot-testing](https://github.com/pointfreeco/swift-snapshot-testing) — visual regression testing
