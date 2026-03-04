@@ -450,6 +450,7 @@ struct TransferCommands {
     var photosOnly = false
     var formatInclude: [String] = []
     var formatExclude: [String] = []
+    var conflictStrategy: String = "newer-wins"
 
     var i = 0
     while i < args.count {
@@ -470,6 +471,11 @@ struct TransferCommands {
         formatExclude = String(arg.dropFirst("--exclude-format=".count)).split(separator: ",")
           .map(
             String.init)
+      } else if arg == "--on-conflict", i + 1 < args.count {
+        i += 1
+        conflictStrategy = args[i]
+      } else if arg.hasPrefix("--on-conflict=") {
+        conflictStrategy = String(arg.dropFirst("--on-conflict=".count))
       } else {
         positionalArgs.append(arg)
       }
@@ -478,12 +484,20 @@ struct TransferCommands {
 
     guard let destPath = positionalArgs.first else {
       print("❌ Missing required argument: <destination>")
-      print("   Usage: swiftmtp mirror <destination>")
+      print("   Usage: swiftmtp mirror <destination> [options]")
       print("   Example: swiftmtp mirror ./device-backup")
       print("   Options:")
-      print("     --photos-only            Only mirror image files")
-      print("     --format jpeg,png,heic   Only mirror specified formats")
-      print("     --exclude-format mp4,avi Exclude specified formats")
+      print("     --photos-only                Only mirror image files")
+      print("     --format jpeg,png,heic        Only mirror specified formats")
+      print("     --exclude-format mp4,avi      Exclude specified formats")
+      print("     --on-conflict <strategy>      Conflict strategy: newer-wins, local-wins, device-wins, keep-both, skip")
+      exitNow(.usage)
+    }
+
+    let validStrategies = ["newer-wins", "local-wins", "device-wins", "keep-both", "skip"]
+    guard validStrategies.contains(conflictStrategy) else {
+      print("❌ Unknown conflict strategy: '\(conflictStrategy)'")
+      print("   Valid strategies: \(validStrategies.joined(separator: ", "))")
       exitNow(.usage)
     }
 
@@ -499,7 +513,7 @@ struct TransferCommands {
       formatFilter = .all
     }
 
-    print("🔄 Mirroring device to \(destPath)...")
+    print("🔄 Mirroring device to \(destPath) (conflict strategy: \(conflictStrategy))...")
     do {
       let device = try await openDevice(flags: flags)
       let storages = try await device.storages()

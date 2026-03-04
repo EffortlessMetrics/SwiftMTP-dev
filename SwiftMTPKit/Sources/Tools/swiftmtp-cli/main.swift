@@ -325,6 +325,7 @@ struct SwiftMTPCLI {
     print("    --photos-only            Only mirror image files")
     print("    --format ext[,ext...]    Only mirror specified formats")
     print("    --exclude-format ext[,ext...] Exclude specified formats")
+    print("    --on-conflict <strategy> (newer-wins|local-wins|device-wins|keep-both|skip)")
     print("  snapshot          Capture full device content snapshot")
     print("")
     print("Edit Extensions (Android):")

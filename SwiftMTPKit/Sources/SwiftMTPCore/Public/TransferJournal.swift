@@ -34,6 +34,9 @@ public protocol TransferJournal: Sendable {
   func addContentHash(id: String, hash: String) async throws
   func loadResumables(for device: MTPDeviceID) async throws -> [TransferRecord]
   func clearStaleTemps(olderThan: TimeInterval) async throws
+  /// Record the outcome of a conflict resolution during mirror/sync.
+  /// Default implementation is a no-op for backwards compatibility.
+  func recordConflictResolution(pathKey: String, strategy: String, outcome: String) async throws
 }
 
 extension TransferJournal {
@@ -43,6 +46,8 @@ extension TransferJournal {
   public func recordRemoteHandle(id: String, handle: UInt32) async throws {}
   /// Default no-op so existing journal implementations don't need to change.
   public func addContentHash(id: String, hash: String) async throws {}
+  /// Default no-op so existing journal implementations don't need to change.
+  public func recordConflictResolution(pathKey: String, strategy: String, outcome: String) async throws {}
 }
 
 /// Snapshot of a single transfer's state, used for resume and progress tracking.

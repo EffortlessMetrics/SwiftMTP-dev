@@ -25,6 +25,67 @@ final class ConflictResolutionTests: XCTestCase {
     try super.tearDownWithError()
   }
 
+  // MARK: - ConflictResolutionStrategy Enum
+
+  func testStrategyRawValues() {
+    XCTAssertEqual(ConflictResolutionStrategy.newerWins.rawValue, "newer-wins")
+    XCTAssertEqual(ConflictResolutionStrategy.localWins.rawValue, "local-wins")
+    XCTAssertEqual(ConflictResolutionStrategy.deviceWins.rawValue, "device-wins")
+    XCTAssertEqual(ConflictResolutionStrategy.keepBoth.rawValue, "keep-both")
+    XCTAssertEqual(ConflictResolutionStrategy.skip.rawValue, "skip")
+    XCTAssertEqual(ConflictResolutionStrategy.ask.rawValue, "ask")
+  }
+
+  func testStrategyFromRawValue() {
+    XCTAssertEqual(ConflictResolutionStrategy(rawValue: "newer-wins"), .newerWins)
+    XCTAssertEqual(ConflictResolutionStrategy(rawValue: "local-wins"), .localWins)
+    XCTAssertEqual(ConflictResolutionStrategy(rawValue: "device-wins"), .deviceWins)
+    XCTAssertEqual(ConflictResolutionStrategy(rawValue: "keep-both"), .keepBoth)
+    XCTAssertEqual(ConflictResolutionStrategy(rawValue: "skip"), .skip)
+    XCTAssertEqual(ConflictResolutionStrategy(rawValue: "ask"), .ask)
+    XCTAssertNil(ConflictResolutionStrategy(rawValue: "invalid"))
+  }
+
+  func testAllCasesCount() {
+    XCTAssertEqual(ConflictResolutionStrategy.allCases.count, 6)
+  }
+
+  // MARK: - ConflictResolutionRecord
+
+  func testConflictResolutionRecordInit() {
+    let record = ConflictResolutionRecord(
+      pathKey: "65537/DCIM/photo.jpg",
+      strategy: .newerWins,
+      outcome: .keptDevice)
+    XCTAssertEqual(record.pathKey, "65537/DCIM/photo.jpg")
+    XCTAssertEqual(record.strategy, .newerWins)
+    XCTAssertEqual(record.outcome, .keptDevice)
+  }
+
+  // MARK: - ConflictOutcome
+
+  func testConflictOutcomeRawValues() {
+    XCTAssertEqual(ConflictOutcome.keptLocal.rawValue, "kept-local")
+    XCTAssertEqual(ConflictOutcome.keptDevice.rawValue, "kept-device")
+    XCTAssertEqual(ConflictOutcome.keptBoth.rawValue, "kept-both")
+    XCTAssertEqual(ConflictOutcome.skipped.rawValue, "skipped")
+    XCTAssertEqual(ConflictOutcome.pending.rawValue, "pending")
+  }
+
+  // MARK: - MTPSyncReport Conflict Tracking
+
+  func testSyncReportTracksConflicts() {
+    var report = MTPSyncReport()
+    XCTAssertEqual(report.conflictsDetected, 0)
+    XCTAssertTrue(report.conflictResolutions.isEmpty)
+
+    report.conflictsDetected = 3
+    report.conflictResolutions.append(
+      ConflictResolutionRecord(pathKey: "a", strategy: .skip, outcome: .skipped))
+    XCTAssertEqual(report.conflictsDetected, 3)
+    XCTAssertEqual(report.conflictResolutions.count, 1)
+  }
+
   // MARK: - Same File Modified Both Sides
 
   func testBothSidesModifiedSameFileDetected() async throws {
@@ -220,6 +281,57 @@ final class ConflictResolutionTests: XCTestCase {
     XCTAssertEqual(merged, "newer remote")
   }
 
+  // MARK: - Keep Both Strategy
+
+  func testKeepBothCreatesDeviceSuffixedCopy() async throws {
+    let localDir = tempDirectory.appendingPathComponent("local")
+    let remoteDir = tempDirectory.appendingPathComponent("remote")
+    let mergedDir = tempDirectory.appendingPathComponent("merged")
+    try FileManager.default.createDirectory(at: localDir, withIntermediateDirectories: true)
+    try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
+    try FileManager.default.createDirectory(at: mergedDir, withIntermediateDirectories: true)
+
+    try "local data"
+      .write(to: localDir.appendingPathComponent("photo.jpg"), atomically: true, encoding: .utf8)
+    try "device data"
+      .write(to: remoteDir.appendingPathComponent("photo.jpg"), atomically: true, encoding: .utf8)
+
+    resolveConflict(
+      file: "photo.jpg", localDir: localDir, remoteDir: remoteDir, mergedDir: mergedDir,
+      strategy: .keepBoth)
+
+    // Both files should exist in merged dir
+    let localCopy = try String(
+      contentsOf: mergedDir.appendingPathComponent("photo-local.jpg"), encoding: .utf8)
+    let deviceCopy = try String(
+      contentsOf: mergedDir.appendingPathComponent("photo-device.jpg"), encoding: .utf8)
+    XCTAssertEqual(localCopy, "local data")
+    XCTAssertEqual(deviceCopy, "device data")
+  }
+
+  // MARK: - Skip Strategy
+
+  func testSkipStrategyProducesNoMergedFile() async throws {
+    let localDir = tempDirectory.appendingPathComponent("local")
+    let remoteDir = tempDirectory.appendingPathComponent("remote")
+    let mergedDir = tempDirectory.appendingPathComponent("merged")
+    try FileManager.default.createDirectory(at: localDir, withIntermediateDirectories: true)
+    try FileManager.default.createDirectory(at: remoteDir, withIntermediateDirectories: true)
+    try FileManager.default.createDirectory(at: mergedDir, withIntermediateDirectories: true)
+
+    try "local"
+      .write(to: localDir.appendingPathComponent("skip.txt"), atomically: true, encoding: .utf8)
+    try "remote"
+      .write(to: remoteDir.appendingPathComponent("skip.txt"), atomically: true, encoding: .utf8)
+
+    resolveConflict(
+      file: "skip.txt", localDir: localDir, remoteDir: remoteDir, mergedDir: mergedDir,
+      strategy: .skip)
+
+    XCTAssertFalse(
+      FileManager.default.fileExists(atPath: mergedDir.appendingPathComponent("skip.txt").path))
+  }
+
   // MARK: - Conflict with Size-Only Change
 
   func testSizeDifferenceDetectedAsConflict() async throws {
@@ -252,10 +364,23 @@ final class ConflictResolutionTests: XCTestCase {
     XCTAssertEqual(conflicts.count, 1)
   }
 
+  // MARK: - MTPConflictInfo
+
+  func testMTPConflictInfoInit() {
+    let info = MTPConflictInfo(
+      pathKey: "65537/DCIM/photo.jpg", handle: 42,
+      deviceSize: 1024, deviceMtime: Date(),
+      localSize: 2048, localMtime: Date(timeIntervalSinceNow: -600))
+    XCTAssertEqual(info.pathKey, "65537/DCIM/photo.jpg")
+    XCTAssertEqual(info.handle, 42)
+    XCTAssertEqual(info.deviceSize, 1024)
+    XCTAssertEqual(info.localSize, 2048)
+  }
+
   // MARK: - Helpers
 
   private enum ConflictStrategy {
-    case localWins, remoteWins, newestWins
+    case localWins, remoteWins, newestWins, keepBoth, skip
   }
 
   private struct ChangeSet {
@@ -303,6 +428,17 @@ final class ConflictResolutionTests: XCTestCase {
         as? Date ?? .distantPast
       let winner = localMtime > remoteMtime ? localFile : remoteFile
       try? FileManager.default.copyItem(at: winner, to: mergedFile)
+    case .keepBoth:
+      let ext = (file as NSString).pathExtension
+      let base = (file as NSString).deletingPathExtension
+      let localName = ext.isEmpty ? "\(base)-local" : "\(base)-local.\(ext)"
+      let deviceName = ext.isEmpty ? "\(base)-device" : "\(base)-device.\(ext)"
+      try? FileManager.default.copyItem(
+        at: localFile, to: mergedDir.appendingPathComponent(localName))
+      try? FileManager.default.copyItem(
+        at: remoteFile, to: mergedDir.appendingPathComponent(deviceName))
+    case .skip:
+      break  // Do nothing
     }
   }
 
