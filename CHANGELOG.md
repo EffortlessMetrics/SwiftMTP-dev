@@ -7,28 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
-### Wave 37–38 Protocol Expansion & Research (PRs #415–#435)
+### Wave 38–39 Protocol Expansion & Transport Fixes (PRs #425–#445)
 
-> **Summary**: 21 PRs across two waves delivering MTP 1.1 full-spectrum protocol coverage (50+ object formats, 50+ property codes, full event handling), Android MTP edit extensions, server-side CopyObject, write-path hardening, SQLite index optimization, CLI UX improvements, and deep device research for Samsung and Pixel 7. Session totals: **~8,377 tests**, **20,026 quirks entries**, **72 PRs merged** (#363–#435).
+> **Summary**: 21 PRs across two waves delivering MTP 1.1 full-spectrum protocol coverage (50+ object formats, 50+ property codes, all 14 events, full response code coverage), Android MTP edit extensions, server-side CopyObject, IOUSBHost native transport scaffold, Samsung and Pixel 7 transport fixes, quirks governance enforcement, and comprehensive test coverage expansion. Session totals: **~8,577 tests**, **20,026 quirks entries**, **83 PRs merged** (#363–#445).
 
 #### Key Stats
-- **~8,377 tests** executed across 20 test targets, **0 unexpected failures**
+- **~8,577 tests** executed across 20 test targets, **0 unexpected failures**
 - **20,026 device quirk entries** across 1,154 VIDs and 38 categories
-- **72 PRs merged** this session (#363–#435)
+- **83 PRs merged** this session (#363–#445)
 - Build: **GREEN**, all smoke tests pass
 
+#### Wave 39 — Transport Fixes & Testing (PRs #436–#445)
+- **#436** — README refresh with MTP operation coverage table showing supported operations
+- **#437** — 56 object format mapping tests: verify all MTP 1.1 format→MIME mappings and edge cases
+- **#438** — 19 Android edit extension tests: `BeginEditObject`, `EndEditObject`, `TruncateObject` round-trips
+- **#439** — CLI `copy` and `edit` commands: device-side copy and in-place edit via CLI
+- **#440** — 61 coverage tests for property codes, events, spec alignment fixes, and response codes
+- **#441** — IOUSBHost native transport scaffold: macOS-native USB transport alternative to libusb
+- **#442** — Full MTP 1.1 response code coverage: all 42 response codes with descriptions and categorization
+- **#443** — Pixel 7 transport fixes: handle re-open after close, `set_configuration` before claim, extended timeouts
+- **#444** — Quirks governance enforcement: CI validation of quirks JSON schema + CLI `quirks stats` command
+- **#445** — Samsung transport fixes: skip alternate-setting selection, skip pre-claim device reset
+
 #### Wave 38 — Protocol & Research (PRs #425–#435)
-- **#425** — Comprehensive troubleshooting documentation overhaul with device-specific debugging guides
-- **#426** — FUSE-T integration research for MTP filesystem mount
-- **#427** — Fix wave 37 code review findings
-- **#428** — Samsung MTP initialization research and quirk fixes (512-byte packet boundary bug, init sequence)
-- **#429** — Pixel 7 bulk transfer research with libmtp source comparison
-- **#430** — Expand MTP object format database to full MTP 1.1 coverage (50+ formats)
-- **#431** — Expand MTP object property codes to full MTP 1.1 coverage (50+ properties)
-- **#432** — Expand MTP event handling to full MTP 1.1 coverage
-- **#433** — Fix MTP 1.1 spec alignment issues
-- **#434** — Implement Android MTP edit extensions: `BeginEditObject`, `EndEditObject`, `TruncateObject`
-- **#435** — Implement MTP `CopyObject` for server-side file copy
+- **#425** — Comprehensive troubleshooting documentation with Samsung/Pixel/OnePlus device-specific debugging guides
+- **#426** — FUSE-T integration research doc for MTP filesystem mount architecture
+- **#427** — WAL mode verification, atomic rename fix, redundant index removed (wave 37 review findings)
+- **#428** — Samsung MTP initialization research: 8 differences found vs standard MTP, quirks updated (512-byte packet boundary, init sequence)
+- **#429** — Pixel 7 bulk transfer research: 5 concrete differences documented vs libmtp source comparison
+- **#430** — Object formats expanded 7→50+ with full MIME type mapping for MTP 1.1 coverage
+- **#431** — Property codes expanded 11→50 with `dataType` and `displayName` for MTP 1.1 coverage
+- **#432** — Event handling expanded to all 14 MTP 1.1 events with structured dispatch
+- **#433** — 5 MTP spec alignment fixes: transaction ID wrap-around, DeviceBusy retry, session close cleanup
+- **#434** — Android edit extensions (`BeginEditObject`/`EndEditObject`/`TruncateObject`) + opcode range fix
+- **#435** — `CopyObject` implementation with VirtualMTPDevice support for server-side file copy
 
 #### Wave 37 — Hardening & UX (PRs #415–#424)
 - **#415** — Wave 36–37 changelog and roadmap update
@@ -43,14 +55,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **#424** — Fix missing SwiftCheck dependency in SyncTests target
 
 #### Highlights
-- **MTP 1.1 full coverage** (#430–#433): object formats, property codes, and event handling expanded to complete MTP 1.1 specification coverage
-- **Android MTP extensions** (#434): `BeginEditObject`, `EndEditObject`, `TruncateObject` enable in-place file editing on Android devices
-- **Server-side CopyObject** (#435): device-side file copy without re-transferring data through host
+- **MTP 1.1 full coverage** (#430–#433, #442): object formats, property codes, event handling, and all 42 response codes — complete MTP 1.1 specification coverage
+- **Transport fixes for real devices** (#443, #445): Pixel 7 handle re-open/set_configuration/timeout fixes; Samsung skip alt-setting/pre-claim reset — direct results of wave 38 research
+- **IOUSBHost native transport** (#441): scaffold for macOS-native USB transport, eliminating libusb dependency for future releases
+- **Android MTP extensions** (#434, #438): `BeginEditObject`, `EndEditObject`, `TruncateObject` with 19 round-trip tests
+- **Comprehensive test expansion** (#437, #438, #440): 136 new tests covering object formats (56), Android edit (19), properties/events/spec/responses (61)
+- **Quirks governance** (#444): CI-enforced schema validation for quirks JSON + `quirks stats` CLI command
+- **Server-side CopyObject** (#435, #439): device-side file copy with CLI `copy` and `edit` commands
+- **Device research** (#428, #429): Samsung init sequence (8 differences) and Pixel 7 bulk transfer (5 differences) — directly informed transport fixes in wave 39
 - **Write-path safety** (#420): validation guards on all mutating operations — partial write detection, delete safety, read-only storage enforcement
-- **Transfer journal hardening** (#418): WAL mode, atomic downloads, orphan detection for robust resume
 - **SQLite index optimization** (#423): 8 dedicated indexes for device content queries
-- **CLI UX** (#422): "did you mean?" typo suggestions, categorized help, structured error messages
-- **Device research** (#428, #429): deep analysis of Samsung init sequence and Pixel 7 bulk transfer issues, with libmtp source comparison
 
 ---
 

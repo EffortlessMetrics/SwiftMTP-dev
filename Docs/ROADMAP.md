@@ -8,7 +8,7 @@ This roadmap is the execution plan for the next implementation sprints in the 2.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **~8,377 tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices). **50 PRs merged** this session (#363–#414).
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **~8,577 tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices). **83 PRs merged** this session (#363–#445).
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
@@ -46,16 +46,41 @@ Minimum expectations for each item:
 | 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
 | 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
 
-## Wave 38 Activity (2026-03-10)
+## Wave 38–39 Activity (2026-03-10)
 
-Key development activity in this wave — comprehensive troubleshooting documentation update:
+Key development activity across these two waves — 21 PRs (#425–#445) covering protocol expansion, transport fixes, and testing:
 
-- **Troubleshooting overhaul**: major update to `Docs/Troubleshooting.md` with concrete device debugging guidance
-- **USB claim debugging**: new section covering process claim conflicts, `ioreg`/`lsof` inspection, and Image Capture auto-grab disabling
-- **Device-specific guides**: dedicated Samsung Galaxy, Google Pixel, and OnePlus troubleshooting sections with symptoms, debugging steps, and current theories
-- **Common macOS issues**: TSAN interceptor failures on macOS 26, libusb Homebrew vs system conflicts, SIP/USB entitlement guidance
-- **Diagnostic commands**: expanded quick-reference with `probe --verbose`, `ioreg`, and `system_profiler` commands
-- **Table of contents**: updated to reflect all new sections
+### Wave 39 — Transport Fixes & Testing (PRs #436–#445)
+- **README refresh** (#436): MTP operation coverage table showing all supported operations
+- **Object format tests** (#437): 56 tests verifying all MTP 1.1 format→MIME mappings
+- **Android edit tests** (#438): 19 round-trip tests for BeginEdit/EndEdit/Truncate extensions
+- **CLI copy/edit** (#439): device-side copy and in-place edit CLI commands
+- **Coverage tests** (#440): 61 tests for property codes, events, spec alignment, response codes
+- **IOUSBHost transport** (#441): native macOS USB transport scaffold (alternative to libusb)
+- **Response code coverage** (#442): all 42 MTP 1.1 response codes with descriptions
+- **Pixel 7 transport fixes** (#443): handle re-open, set_configuration before claim, extended timeouts
+- **Quirks governance** (#444): CI schema validation enforcement + `quirks stats` CLI command
+- **Samsung transport fixes** (#445): skip alt-setting selection, skip pre-claim device reset
+
+### Wave 38 — Protocol & Research (PRs #425–#435)
+- **Troubleshooting overhaul** (#425): device-specific debugging guides for Samsung/Pixel/OnePlus
+- **FUSE-T research** (#426): integration architecture doc for MTP filesystem mount
+- **Index fixes** (#427): WAL mode verification, atomic rename fix, redundant index removed
+- **Samsung research** (#428): 8 MTP init differences found, quirks updated
+- **Pixel 7 research** (#429): 5 bulk transfer differences documented vs libmtp
+- **Object formats** (#430): expanded 7→50+ with MIME type mapping
+- **Property codes** (#431): expanded 11→50 with dataType/displayName
+- **Event handling** (#432): expanded to all 14 MTP 1.1 events
+- **Spec alignment** (#433): 5 fixes (txid wrap, DeviceBusy retry, session close)
+- **Android edit extensions** (#434): BeginEditObject/EndEditObject/TruncateObject + opcode fix
+- **CopyObject** (#435): server-side file copy with VirtualMTPDevice support
+
+### Key Outcomes
+- **~8,577 tests** (up from ~8,377), 0 unexpected failures
+- **83 PRs merged** this session (#363–#445)
+- Samsung and Pixel 7 transport fixes directly informed by wave 38 research
+- IOUSBHost native transport scaffold opens path to removing libusb dependency
+- Full MTP 1.1 response code coverage (42 codes)
 
 ## Wave 36–37 Activity (2026-03-09)
 
