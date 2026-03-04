@@ -41,6 +41,12 @@ public enum MTPOp: UInt16, Sendable {
   /// SetObjectPropValue — write a single object property.
   case setObjectPropValue = 0x9804
 
+  /// GetObjectPropList — batch property retrieval.
+  /// (Already declared above as 0x9805.)
+
+  /// SetObjectPropList — batch property write.
+  case setObjectPropList = 0x9806
+
   /// GetObjectReferences — list references from an object.
   case getObjectReferences = 0x9810
 

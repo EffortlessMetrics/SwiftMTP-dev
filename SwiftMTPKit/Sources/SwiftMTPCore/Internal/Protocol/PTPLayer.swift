@@ -222,6 +222,67 @@ public enum MTPDateString {
   }
 }
 
+// MARK: - MTPPropListEntry
+
+/// A single entry for batch property writes via SetObjectPropList (0x9806).
+///
+/// Each entry specifies the target object handle, the MTP property code,
+/// the MTP data type, and the pre-encoded value bytes (little-endian per MTP spec).
+public struct MTPPropListEntry: Sendable, Equatable {
+  public let handle: MTPObjectHandle
+  public let propCode: UInt16
+  public let datatype: UInt16
+  public let value: Data
+
+  public init(handle: MTPObjectHandle, propCode: UInt16, datatype: UInt16, value: Data) {
+    self.handle = handle
+    self.propCode = propCode
+    self.datatype = datatype
+    self.value = value
+  }
+
+  /// Convenience: create an entry with the data type auto-resolved from `MTPObjectPropCode`.
+  public init(handle: MTPObjectHandle, propCode: UInt16, value: Data) {
+    self.handle = handle
+    self.propCode = propCode
+    self.datatype = MTPObjectPropCode.dataType(for: propCode)
+    self.value = value
+  }
+
+  /// Convenience: create a string property entry.
+  public static func string(
+    handle: MTPObjectHandle, propCode: UInt16, value: String
+  ) -> MTPPropListEntry {
+    MTPPropListEntry(handle: handle, propCode: propCode, datatype: 0xFFFF, value: PTPString.encode(value))
+  }
+
+  /// Convenience: create a UInt32 property entry.
+  public static func uint32(
+    handle: MTPObjectHandle, propCode: UInt16, value: UInt32
+  ) -> MTPPropListEntry {
+    var enc = MTPDataEncoder()
+    enc.append(value)
+    return MTPPropListEntry(handle: handle, propCode: propCode, datatype: 0x0006, value: enc.encodedData)
+  }
+
+  /// Convenience: create a UInt16 property entry.
+  public static func uint16(
+    handle: MTPObjectHandle, propCode: UInt16, value: UInt16
+  ) -> MTPPropListEntry {
+    var enc = MTPDataEncoder()
+    enc.append(value)
+    return MTPPropListEntry(handle: handle, propCode: propCode, datatype: 0x0004, value: enc.encodedData)
+  }
+
+  /// Encode this entry into a data buffer (MTP wire format).
+  func encode(into enc: inout MTPDataEncoder) {
+    enc.append(handle)
+    enc.append(propCode)
+    enc.append(datatype)
+    enc.append(value)
+  }
+}
+
 // MARK: - PTPLayer
 
 /// Pure PTP-standard operations that work on any PTP device (cameras, DAPs)
@@ -322,5 +383,18 @@ public enum PTPLayer {
       handle: handle, property: MTPObjectPropCode.objectSize)
     var dec = MTPDataDecoder(data: data)
     return dec.readUInt64()
+  }
+
+  /// SetObjectPropList (0x9806): write multiple object properties in a single transaction.
+  ///
+  /// - Parameters:
+  ///   - entries: Array of property entries to write.
+  ///   - link: MTP link to execute on.
+  /// - Returns: The number of entries successfully written (from device response param1).
+  @discardableResult
+  public static func setObjectPropList(
+    entries: [MTPPropListEntry], on link: MTPLink
+  ) async throws -> UInt32 {
+    try await link.setObjectPropList(entries: entries)
   }
 }

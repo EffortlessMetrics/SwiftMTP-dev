@@ -210,6 +210,16 @@ public actor VirtualMTPDevice: MTPDevice {
     objectTree[handle] = renamed
   }
 
+  public func setObjectPropList(entries: [MTPPropListEntry]) async throws -> UInt32 {
+    record("setObjectPropList", parameters: ["count": "\(entries.count)"])
+    for entry in entries {
+      guard objectTree[entry.handle] != nil else {
+        throw MTPError.objectNotFound
+      }
+    }
+    return UInt32(entries.count)
+  }
+
   public func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {
     record("move", parameters: ["handle": "\(handle)", "newParent": "\(newParent ?? 0)"])
     guard let existing = objectTree[handle] else {

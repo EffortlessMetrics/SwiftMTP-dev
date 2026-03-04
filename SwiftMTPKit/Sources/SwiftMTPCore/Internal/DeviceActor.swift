@@ -322,6 +322,33 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     }
   }
 
+  // MARK: - Batch Property Writes
+
+  /// Write multiple object properties in a single transaction via SetObjectPropList (0x9806).
+  ///
+  /// This is more efficient than individual ``rename(_:to:)`` or `setObjectPropValue` calls
+  /// when updating metadata on multiple objects (e.g., file names, dates, audio tags).
+  ///
+  /// - Parameter entries: Array of property entries to write.
+  /// - Returns: The number of entries successfully written.
+  @discardableResult
+  public func setObjectPropList(entries: [MTPPropListEntry]) async throws -> UInt32 {
+    guard !entries.isEmpty else {
+      throw MTPError.preconditionFailed("SetObjectPropList requires at least one entry.")
+    }
+    for entry in entries {
+      guard entry.handle != 0 else {
+        throw MTPError.preconditionFailed(
+          "SetObjectPropList requires valid object handles (got 0).")
+      }
+    }
+    try await openIfNeeded()
+    let link = try await getMTPLink()
+    return try await BusyBackoff.onDeviceBusy {
+      try await link.setObjectPropList(entries: entries)
+    }
+  }
+
   public nonisolated var events: AsyncStream<MTPEvent> {
     AsyncStream { continuation in
       Task {
