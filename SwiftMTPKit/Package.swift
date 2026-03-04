@@ -198,7 +198,7 @@ let package = Package(
         "SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPSync", "SwiftMTPTransportLibUSB", "CLibusb",
         "SwiftMTPQuirks", "SwiftMTPTestKit",
       ]),
-    .testTarget(name: "TransportTests", dependencies: ["SwiftMTPTransportLibUSB", "SwiftMTPTestKit", "CLibusb"]),
+    .testTarget(name: "TransportTests", dependencies: ["SwiftMTPTransportLibUSB", "SwiftMTPTransportIOUSBHost", "SwiftMTPTestKit", "CLibusb"]),
     .testTarget(
       name: "BDDTests",
       dependencies: [
