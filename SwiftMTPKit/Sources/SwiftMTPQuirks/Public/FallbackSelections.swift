@@ -21,7 +21,7 @@ public struct FallbackSelections: Sendable, Codable, Equatable {
 
   /// How to read file data from the device.
   public enum ReadStrategy: String, Sendable, Codable {
-    /// GetPartialObject64 (0x95C4) — 64-bit offsets.
+    /// GetPartialObject64 (0x95C1) — 64-bit offsets.
     case partial64
     /// GetPartialObject (0x101B) — 32-bit offsets.
     case partial32
@@ -33,7 +33,7 @@ public struct FallbackSelections: Sendable, Codable, Equatable {
 
   /// How to write file data to the device.
   public enum WriteStrategy: String, Sendable, Codable {
-    /// SendPartialObject (0x95C1) — resumable.
+    /// SendPartialObject (0x95C2) — resumable.
     case partial
     /// SendObjectInfo + SendObject — whole-file only.
     case wholeObject

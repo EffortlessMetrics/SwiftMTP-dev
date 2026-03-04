@@ -122,6 +122,17 @@ public protocol MTPLink: Sendable {
   /// No-op on links that do not support an interrupt endpoint.
   func startEventPump()
 
+  // MARK: - Android Edit Extensions
+
+  /// BeginEditObject (0x95C4): enter in-place edit mode for an object.
+  func beginEditObject(handle: UInt32) async throws
+
+  /// EndEditObject (0x95C5): commit in-place edits for an object.
+  func endEditObject(handle: UInt32) async throws
+
+  /// TruncateObject (0x95C3): truncate an object to the given byte offset.
+  func truncateObject(handle: UInt32, offset: UInt64) async throws
+
   /// Stream of raw MTP event container bytes as they arrive from the device.
   /// Completes when the link is closed. Empty on links without an interrupt endpoint.
   var eventStream: AsyncStream<Data> { get }
@@ -137,6 +148,41 @@ public extension MTPLink {
 
   /// Default: immediately-finishing stream for links without an interrupt endpoint.
   var eventStream: AsyncStream<Data> { AsyncStream { $0.finish() } }
+
+  /// Default: send BeginEditObject (0x95C4) via executeCommand.
+  func beginEditObject(handle: UInt32) async throws {
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: MTPOp.beginEditObject.rawValue,
+      txid: 0,
+      params: [handle]
+    )
+    try await executeCommand(command).checkOK()
+  }
+
+  /// Default: send EndEditObject (0x95C5) via executeCommand.
+  func endEditObject(handle: UInt32) async throws {
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: MTPOp.endEditObject.rawValue,
+      txid: 0,
+      params: [handle]
+    )
+    try await executeCommand(command).checkOK()
+  }
+
+  /// Default: send TruncateObject (0x95C3) via executeCommand.
+  func truncateObject(handle: UInt32, offset: UInt64) async throws {
+    let offsetLo = UInt32(offset & 0xFFFFFFFF)
+    let offsetHi = UInt32(offset >> 32)
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: MTPOp.truncateObject.rawValue,
+      txid: 0,
+      params: [handle, offsetLo, offsetHi]
+    )
+    try await executeCommand(command).checkOK()
+  }
 
   /// Default: execute GetObjectPropValue via executeStreamingCommand.
   func getObjectPropValue(handle: MTPObjectHandle, property: UInt16) async throws -> Data {

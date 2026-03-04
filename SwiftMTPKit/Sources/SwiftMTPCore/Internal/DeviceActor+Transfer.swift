@@ -103,7 +103,7 @@ extension MTPDeviceActor {
       .info("Transfer begin: read \(info.name) handle=\(handle) size=\(info.sizeBytes ?? 0)")
 
     // Check if partial read is supported
-    let supportsPartial = deviceInfo.operationsSupported.contains(0x95C4)  // GetPartialObject64
+    let supportsPartial = deviceInfo.operationsSupported.contains(0x95C1)  // GetPartialObject64
 
     var journalTransferId: String?
     var sink: any ByteSink
@@ -258,7 +258,7 @@ extension MTPDeviceActor {
         .info("Transfer begin: write \(name) size=\(size)")
 
       // Check if partial write is supported
-      let supportsPartial = deviceInfo.operationsSupported.contains(0x95C1)  // SendPartialObject
+      let supportsPartial = deviceInfo.operationsSupported.contains(0x95C2)  // SendPartialObject
       let supportsSendObjectPropList = deviceInfo.operationsSupported.contains(
         MTPOp.sendObjectPropList.rawValue)
 

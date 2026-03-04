@@ -32,13 +32,13 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
 
   // MARK: - Transfer-level
 
-  /// Device supports GetPartialObject64 (0x95C4).
+  /// Device supports GetPartialObject64 (0x95C1).
   public var supportsPartialRead64: Bool = true
 
   /// Device supports GetPartialObject (0x101B).
   public var supportsPartialRead32: Bool = true
 
-  /// Device supports SendPartialObject (0x95C1).
+  /// Device supports SendPartialObject (0x95C2).
   public var supportsPartialWrite: Bool = true
 
   /// Prefer GetObjectPropList (batch) over GetObjectInfo (per-handle).
@@ -62,6 +62,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   public var skipPTPReset: Bool = false
 
   // MARK: - Write-level
+
+  /// Device supports Android edit extensions (BeginEditObject/EndEditObject/TruncateObject).
+  /// When true, in-place file editing is possible without full re-upload.
+  public var supportsAndroidEditExtensions: Bool = false
 
   /// Device requires writes to a subfolder (not storage root).
   /// Some Xiaomi/OnePlus devices return InvalidParameter (0x201D) when writing to root.
@@ -136,6 +140,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case disableEventPump
     case requireStabilization
     case skipPTPReset
+    case supportsAndroidEditExtensions
     case writeToSubfolderOnly
     case preferredWriteFolder
     case forceFFFFFFFForSendObject
@@ -177,6 +182,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     self.requireStabilization =
       try container.decodeIfPresent(Bool.self, forKey: .requireStabilization) ?? false
     self.skipPTPReset = try container.decodeIfPresent(Bool.self, forKey: .skipPTPReset) ?? false
+    self.supportsAndroidEditExtensions =
+      try container.decodeIfPresent(Bool.self, forKey: .supportsAndroidEditExtensions) ?? false
     self.writeToSubfolderOnly =
       try container.decodeIfPresent(Bool.self, forKey: .writeToSubfolderOnly) ?? false
     self.preferredWriteFolder = try container.decodeIfPresent(
@@ -217,6 +224,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(disableEventPump, forKey: .disableEventPump)
     try container.encodeIfPresent(requireStabilization, forKey: .requireStabilization)
     try container.encodeIfPresent(skipPTPReset, forKey: .skipPTPReset)
+    try container.encodeIfPresent(
+      supportsAndroidEditExtensions, forKey: .supportsAndroidEditExtensions)
     try container.encodeIfPresent(writeToSubfolderOnly, forKey: .writeToSubfolderOnly)
     try container.encodeIfPresent(preferredWriteFolder, forKey: .preferredWriteFolder)
     try container.encodeIfPresent(forceFFFFFFFForSendObject, forKey: .forceFFFFFFFForSendObject)
