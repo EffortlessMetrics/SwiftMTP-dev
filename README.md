@@ -22,7 +22,7 @@ SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session manageme
 - **SQLite-indexed device content**: optimized queries with 8 dedicated indexes
 - **CLI tool**: 15+ commands (`probe`, `ls`, `pull`, `push`, `snapshot`, `mirror`, `bench`, `events`, `quirks`, `device-lab`, `wizard`, `cp`, `edit`, `thumb`, `info`) with "did you mean?" suggestions and categorized help
 - **Device quirks database**: 20,026 entries across 1,154 vendors (research-based — see caveat below)
-- **File Provider integration**: native Finder support on macOS via XPC (tech preview, read-only)
+- **File Provider integration**: native Finder support on macOS via XPC (tech preview, mock-tested only — no real-device or Finder validation)
 - **SwiftUI GUI application** (demo mode only)
 
 ### What Doesn't Work (Yet)
@@ -32,7 +32,7 @@ SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session manageme
 - Google Pixel 7: bulk transfer timeout (research done, transport fixes shipped — awaiting retest; see [debug report](Docs/pixel7-usb-debug-report.md))
 - OnePlus 3T: reads work but writes fail with InvalidParameter
 - Canon/Nikon cameras: never connected to SwiftMTP (research-only quirks)
-- File Provider write operations (implemented but no real-device validation)
+- File Provider integration — all operations (enumerate, download, upload, delete, rename, move) are scaffolded and mock-tested but unvalidated on real devices or Finder
 
 ### Quirks Database Caveat
 
@@ -57,7 +57,7 @@ Built with Swift 6 strict concurrency and actor-based isolation:
 - **`SwiftMTPQuirks`**: Device-specific tuning database
 - **`SwiftMTPObservability`**: Structured logging and performance monitoring
 - **`SwiftMTPStore`**: Persistence layer for device metadata and transfer journals
-- **`SwiftMTPFileProvider`**: macOS File Provider extension (tech preview, read-only)
+- **`SwiftMTPFileProvider`**: macOS File Provider extension (tech preview, mock-tested only)
 - **`swiftmtp-cli`**: CLI tool for automation and power users
 - **`SwiftMTPApp`**: Standalone macOS GUI application
 
@@ -67,7 +67,7 @@ Built with Swift 6 strict concurrency and actor-based isolation:
 - **Device Quirks Database**: 20,026 entries across 38 categories and 1,154 vendor IDs, sourced from libmtp data and vendor specs. This is research-based scaffolding — only a handful of devices have been tested with SwiftMTP directly.
 - **Transfer Journaling**: WAL-mode SQLite with atomic downloads, orphan detection, and automatic resume support. Implemented and tested with mocks; limited real-device validation.
 - **Write-Path Safety**: Validation guards on all mutating operations — partial write detection, delete safety, read-only storage enforcement.
-- **File Provider Integration**: Native Finder integration on macOS via XPC. Tech preview, read-only.
+- **File Provider Integration**: Native Finder integration on macOS via XPC. Tech preview — read and write operations scaffolded and mock-tested; no real-device or Finder validation.
 - **CLI**: 12+ commands with "did you mean?" suggestions, categorized help, and structured error messages.
 - **Demo Mode**: Simulated device profiles (pixel7, galaxy, iphone, canon) for development without physical hardware.
 

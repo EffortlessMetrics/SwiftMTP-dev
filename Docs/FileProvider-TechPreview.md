@@ -90,28 +90,44 @@ The extension automatically:
 
 ## Current Status
 
-### ✅ Implemented
-- XPC service protocol and implementation
-- Basic File Provider domain enumeration
-- On-demand content hydration
-- Temp file management with cleanup
-- Cache-first architecture (metadata from local index)
-- Background crawl triggering via XPC
-- Device lifecycle coordination
+> **Validation level**: All capabilities below are tested exclusively with in-memory
+> stubs (`VirtualMTPDevice`, `W41StubXPCService`, mock `LiveIndexReader`).
+> No capability has been validated with a real MTP device or with macOS Finder.
+> 473 FileProvider tests + 335 XPC tests exist — all mock-based.
 
-### 🚧 Tech Preview Limitations
-- Read-only access (no upload support)
-- Simplified device tracking
-- Basic error handling
-- No incremental change notifications
-- Limited content type detection
+### Capability Truth Table
 
-### 🔄 Future Enhancements
-- Bidirectional sync (upload support)
-- Change notifications for device modifications
-- Improved content type detection
-- Background sync capabilities
-- Conflict resolution
+| Capability | Code exists? | Mock-tested? | Real-device tested? | Notes |
+|---|---|---|---|---|
+| Enumerate root storages | ✅ Yes | ✅ Yes | ❌ No | `DomainEnumerator` reads from `LiveIndexReader` |
+| Enumerate folder contents | ✅ Yes | ✅ Yes | ❌ No | Paged via `NSFileProviderPage` cursor |
+| File download (`fetchContents`) | ✅ Yes | ✅ Yes | ❌ No | Goes through XPC → host app → MTP device |
+| File upload (`createItem`) | ✅ Yes | ✅ Yes | ❌ No | XPC `writeObject` / `createFolder` |
+| File deletion (`deleteItem`) | ✅ Yes | ✅ Yes | ❌ No | XPC `deleteObject` with recursive flag |
+| File rename (`modifyItem` `.filename`) | ✅ Yes | ✅ Yes | ❌ No | XPC `renameObject` |
+| File move (`modifyItem` `.parentItemIdentifier`) | ✅ Yes | ✅ Yes | ❌ No | XPC `moveObject` |
+| Content update (`modifyItem` `.contents`) | ✅ Yes | ✅ Partial | ❌ No | Delete-then-reupload pattern (MTP has no in-place modify) |
+| Change tracking (sync anchors) | ✅ Yes | ✅ Yes | ❌ No | Dual-path: `SyncAnchorStore` (push) and `LiveIndexReader` (poll) |
+| Working set signaling | ✅ Yes | ✅ Partial | ❌ No | Signals on attach/reconnect; not deeply tested |
+| Thumbnail provision | ❌ No | ❌ No | ❌ No | `NSFileProviderThumbnailing` not adopted |
+| XPC bridge (protocol + service) | ✅ Yes | ✅ Yes | ❌ No | Full protocol: read, write, delete, rename, move, crawl, status |
+| Domain lifecycle (register/unregister) | ✅ Yes | ✅ Yes | ❌ No | `FileProviderManager` + `MTPDeviceService` |
+| Background crawl triggering | ✅ Yes | ✅ Partial | ❌ No | Fire-and-forget XPC call with debounce |
+| Error mapping to NSFileProviderError | ✅ Yes | ✅ Yes | ❌ No | Disconnect/timeout → `.serverUnreachable` |
+
+### Summary
+
+- **Read operations**: Scaffolded and mock-tested (enumeration, download, metadata lookup).
+- **Write operations**: Scaffolded and mock-tested (upload, delete, rename, move, content update). These were added in Wave 32–41 but remain unvalidated on real devices.
+- **Not implemented**: Thumbnail provision (`NSFileProviderThumbnailing`).
+- **Not validated**: No capability has been tested with macOS Finder or a real MTP device.
+
+### 🔄 Future Work
+- Real-device validation with at least one working MTP device
+- Thumbnail provision via `NSFileProviderThumbnailing`
+- Improved content type detection beyond file extension mapping
+- Background sync / periodic re-enumeration
+- Conflict resolution UI for bidirectional sync scenarios
 
 ## Testing
 
