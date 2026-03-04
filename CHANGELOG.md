@@ -5,9 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] — Waves 37–41
+## [Unreleased] — Waves 37–44
 
-> **Summary**: 49 PRs (#415–#467) across five waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, and comprehensive test backfill. Session totals: **~9,191+ tests**, **20,026 quirks entries**, **101 PRs merged** (#363–#467).
+> **Summary**: 75 PRs (#415–#493) across eight waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, comprehensive test backfill, shell completions, IOUSBHost bulk/file transfer, Homebrew formula, CLI progress bars, DocC pipeline, and quirk flags wired into transport. Session totals: **~9,191+ tests**, **20,026 quirks entries**, **127 PRs merged** (#363–#493).
+
+### Wave 44 — Release Prep & Quirk Flags (PRs #486–#493)
+
+- **#486** — Release checklist for pre-alpha v0.1.0
+- **#487** — Comprehensive CLI command map and UX reference
+- **#488** — FileProvider truth audit — honest capability status documentation
+- **#489** — TSAN local validation and status documentation
+- **#490** — Refresh contribution guide with wave 37–43 patterns
+- **#491** — IOUSBHost file transfer: `getObject`/`sendObject` implementation
+- **#492** — Expanded end-to-end scenario tests for full device workflows
+- **#493** — Wire 9 new device flags into transport and protocol logic
+
+### Wave 43 — Bootstrap & Homebrew (PRs #477–#485)
+
+- **#477** — Bootstrap script and mock profile documentation
+- **#478** — Homebrew formula and installation documentation
+- **#479** — CLI transfer progress indicators with ETA and throughput
+- **#480** — Comprehensive error recovery escalation integration tests
+- **#481** — IOUSBHost bulk transfer MTP operations
+- **#482** — Index query benchmarks and hot-path optimization
+- **#483** — DocC documentation generation pipeline setup
+- **#484** — MTP compatibility research from libmtp device flags analysis (9 new QuirkFlags)
+- **#485** — Harden mirror resume-from-journal with edge case tests
+
+### Wave 42 — Shell Completions & CI (PRs #468–#476)
+
+- **#468** — Shell completion scripts for bash, zsh, and fish
+- **#469** — CI consolidation: TSAN, pin fuzz runner, optimize coverage pipeline
+- **#470** — Detailed wave-by-wave development log
+- **#471** — Comprehensive ROADMAP and CHANGELOG refresh for waves 37–41
+- **#472** — Comprehensive error catalog with troubleshooting guide
+- **#473** — PrivacyRedactor for submission artifact obfuscation
+- **#474** — Snapshot tests for CLI output and report formatting
+- **#475** — IOUSBHost device discovery and session scaffold
+- **#476** — Extract LibUSBTransport helpers into focused files
 
 ### Added
 - Android MTP edit extensions: BeginEditObject, EndEditObject, TruncateObject
@@ -23,6 +58,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - IOUSBHost native transport scaffold module
 - Pre-PR gate script (scripts/pre-pr.sh)
 - 100+ new tests across FileProvider, Store, XPC, BDD, Property, Snapshot targets
+- Shell completion scripts for bash, zsh, and fish
+- PrivacyRedactor for submission artifact obfuscation
+- Snapshot tests for CLI output and report formatting
+- Error catalog with troubleshooting guide
+- Bootstrap script and mock profile documentation
+- Homebrew formula and installation documentation
+- CLI transfer progress indicators with ETA and throughput
+- IOUSBHost bulk transfer and file transfer (getObject/sendObject)
+- Index query benchmarks and hot-path optimization
+- DocC documentation generation pipeline
+- 9 new QuirkFlags from libmtp device flags analysis wired into transport
+- Release checklist for pre-alpha v0.1.0
+- CLI command map and UX reference
+- FileProvider truth audit documentation
+- End-to-end scenario tests for full device workflows
 
 ### Fixed
 - Samsung transport: skip alt-setting on macOS, skip pre-claim reset
@@ -35,6 +85,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Quirks governance: CI-enforced schema validation, status field required
 - 239 Samsung quirk entries updated with skipAltSetting/skipPreClaimReset
+- LibUSBTransport refactored into focused helper files
+- CI consolidated: TSAN pinned, fuzz runner pinned, coverage pipeline optimized
+- Contribution guide refreshed with wave 37–43 patterns
 - CLAUDE.md comprehensive refresh with test discovery guide
 - FIXUP_QUEUE cleanup: 12 resolved items archived
 
