@@ -63,7 +63,27 @@ else
   die "Quirks validation failed"
 fi
 
-# ── Step 5: No large binary diffs ───────────────────────────────────
+# ── Step 5: Coverage gate (optional) ─────────────────────────────────
+if [ "${SKIP_COVERAGE:-0}" = "1" ]; then
+  step "Coverage gate (skipped — SKIP_COVERAGE=1)"
+  ok "Coverage gate skipped"
+else
+  step "Running tests with coverage and checking threshold…"
+  if (cd SwiftMTPKit && swift test --enable-code-coverage 2>&1 | tail -5); then
+    COV_JSON="$(cd SwiftMTPKit && swift test --show-codecov-path)"
+    if python3 SwiftMTPKit/scripts/coverage_gate.py \
+         --coverage-json "$COV_JSON" \
+         --threshold 60 2>&1 | tail -10; then
+      ok "Coverage gate passed (≥60%)"
+    else
+      die "Coverage gate failed (<60%). Run: SKIP_COVERAGE=1 ./scripts/pre-pr.sh to skip"
+    fi
+  else
+    die "Tests failed (coverage run)"
+  fi
+fi
+
+# ── Step 6: No large binary diffs ───────────────────────────────────
 step "Checking for large file changes (>1 MB)…"
 large_files=$(git diff --cached --name-only --diff-filter=d 2>/dev/null | while read -r f; do
   if [ -f "$f" ]; then

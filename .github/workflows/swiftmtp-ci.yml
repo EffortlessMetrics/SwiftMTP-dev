@@ -91,7 +91,15 @@ jobs:
           # Skip xcodebuild tests to avoid DTXConnectionServices interceptor
           # crashes on CI runners. TSAN is handled by tsan-and-compat.yml.
           RUN_XCODE_TESTS: "0"
+          COVERAGE_THRESHOLD: "60"
         run: ./run-all-tests.sh
+      - name: Coverage gate (60% minimum)
+        working-directory: SwiftMTPKit
+        run: |
+          COV_JSON="$(swift test --show-codecov-path)"
+          python3 scripts/coverage_gate.py \
+            --coverage-json "$COV_JSON" \
+            --threshold 60
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
