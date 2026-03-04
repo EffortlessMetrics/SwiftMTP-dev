@@ -65,6 +65,9 @@ extension MTPDeviceActor {
   public func createFolder(parent: MTPObjectHandle?, name: String, storage: MTPStorageID)
     async throws -> MTPObjectHandle
   {
+    guard !name.isEmpty else {
+      throw MTPError.preconditionFailed("createFolder requires a non-empty folder name.")
+    }
     try await openIfNeeded()
     let link = try await getMTPLink()
     let resolvedParent = (parent == 0xFFFFFFFF) ? nil : parent
@@ -240,6 +243,9 @@ extension MTPDeviceActor {
   public func write(parent: MTPObjectHandle?, name: String, size: UInt64, from url: URL)
     async throws -> Progress
   {
+    guard !name.isEmpty else {
+      throw MTPError.preconditionFailed("write requires a non-empty file name.")
+    }
     return try await withTransaction {
       let link = try await getMTPLink()
       let deviceInfo = try await self.info

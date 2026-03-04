@@ -161,6 +161,12 @@ public extension MTPLink {
 
   /// Default: execute SetObjectPropValue via executeStreamingCommand.
   func setObjectPropValue(handle: MTPObjectHandle, property: UInt16, value: Data) async throws {
+    guard handle != 0 else {
+      throw MTPError.preconditionFailed("SetObjectPropValue requires a valid object handle (got 0).")
+    }
+    guard !value.isEmpty else {
+      throw MTPError.preconditionFailed("SetObjectPropValue requires non-empty property value data.")
+    }
     let command = PTPContainer(
       type: PTPContainer.Kind.command.rawValue,
       code: MTPOp.setObjectPropValue.rawValue,
