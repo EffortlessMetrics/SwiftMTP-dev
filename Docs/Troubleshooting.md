@@ -666,6 +666,44 @@ All five must pass before pushing. CI runs the same checks. The full matrix run 
 
 ---
 
+## CLI Diagnostic Output
+
+When a CLI command fails, SwiftMTP displays a structured diagnostic message:
+
+```
+❌ Failed to upload
+  Error:   Device storage is full.
+  Cause:   No free space remains on the target storage volume.
+  Try:     Free space on the device, then retry the transfer.
+  Run:     swiftmtp storages
+```
+
+The diagnostic includes:
+- **Error** — one-line summary of what happened
+- **Cause** — likely reason for the failure
+- **Try** — suggested next step to resolve the issue
+- **Run** — a CLI command for more information (when applicable)
+
+### Verbose mode
+
+Use `--verbose` (or `-v`) to see the full error chain, including the underlying Swift error type, failure reason, and recovery suggestion from the MTP protocol layer:
+
+```
+❌ Failed to upload
+  Error:   Device storage is full.
+  Cause:   No free space remains on the target storage volume.
+  Try:     Free space on the device, then retry the transfer.
+  Run:     swiftmtp storages
+
+  Detail:  storageFull
+  Reason:  The device storage has no remaining free space for this transfer.
+  Recover: Free space on the device by deleting unneeded files, then re-attempt the transfer.
+```
+
+This is useful for bug reports and when the one-line summary doesn't provide enough context.
+
+---
+
 ## Related Documentation
 
 - [Error Catalog](ErrorCatalog.md) — complete error code reference with troubleshooting
