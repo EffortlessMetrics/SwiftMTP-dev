@@ -52,6 +52,15 @@ extension MTPXPCListener: @preconcurrency NSXPCListenerDelegate {
     // Configure the connection
     newConnection.exportedInterface = NSXPCInterface(with: MTPXPCService.self)
     newConnection.exportedObject = self.serviceImpl
+
+    // Handle XPC connection lifecycle events for diagnostics and cleanup
+    newConnection.interruptionHandler = {
+      // Client process crashed or was suspended — connection will auto-resume
+    }
+    newConnection.invalidationHandler = {
+      // Connection permanently closed — no cleanup needed as exportedObject is shared
+    }
+
     newConnection.resume()
 
     return true
