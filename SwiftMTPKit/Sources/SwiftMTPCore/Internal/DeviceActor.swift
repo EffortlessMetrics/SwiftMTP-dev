@@ -199,6 +199,9 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   // Note: read/write methods are implemented in DeviceActor+Transfer.swift
 
   public func delete(_ handle: MTPObjectHandle, recursive: Bool) async throws {
+    guard handle != 0 else {
+      throw MTPError.preconditionFailed("DeleteObject requires a valid object handle (got 0).")
+    }
     try await openIfNeeded()
     let link = try await getMTPLink()
 
@@ -218,6 +221,12 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   }
 
   public func rename(_ handle: MTPObjectHandle, to newName: String) async throws {
+    guard handle != 0 else {
+      throw MTPError.preconditionFailed("Rename requires a valid object handle (got 0).")
+    }
+    guard !newName.isEmpty else {
+      throw MTPError.preconditionFailed("Rename requires a non-empty name.")
+    }
     try await openIfNeeded()
     let link = try await getMTPLink()
     // SetObjectPropValue (0x9804) on ObjectFileName (0xDC07)
@@ -229,6 +238,9 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   }
 
   public func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {
+    guard handle != 0 else {
+      throw MTPError.preconditionFailed("MoveObject requires a valid object handle (got 0).")
+    }
     // Default to current storage
     let info = try await getInfo(handle: handle)
     try await move(handle, to: newParent, storage: info.storage)

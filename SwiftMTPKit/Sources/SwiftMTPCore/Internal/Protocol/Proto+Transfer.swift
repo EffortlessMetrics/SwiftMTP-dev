@@ -115,6 +115,11 @@ public enum ProtoTransfer {
     // InvalidStorageID (0x2008) on multiple Android stacks.
     let parentParam = parent ?? 0xFFFFFFFF
     let commandParentParam = useRootCommandParentHandle ? UInt32(0xFFFFFFFF) : parentParam
+    guard !name.isEmpty else {
+      throw MTPError.preconditionFailed(
+        "SendObjectInfo requires a non-empty object name."
+      )
+    }
     guard storageID != 0 && storageID != 0xFFFFFFFF else {
       throw MTPError.preconditionFailed(
         "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID)))."
@@ -197,6 +202,11 @@ public enum ProtoTransfer {
     handleOut: AtomicHandleBox? = nil
   ) async throws {
     let parentParam = parent ?? 0xFFFFFFFF
+    guard !name.isEmpty else {
+      throw MTPError.preconditionFailed(
+        "SendObjectPropList requires a non-empty object name."
+      )
+    }
     guard storageID != 0 && storageID != 0xFFFFFFFF else {
       throw MTPError.preconditionFailed(
         "SendObjectPropList requires a concrete storage ID (got \(String(format: "0x%08x", storageID)))."
@@ -293,6 +303,11 @@ extension ProtoTransfer {
     storageID: UInt32, parent: UInt32, name: String,
     on link: MTPLink, ioTimeoutMs: Int
   ) async throws -> MTPObjectHandle {
+    guard !name.isEmpty else {
+      throw MTPError.preconditionFailed(
+        "createFolder requires a non-empty folder name."
+      )
+    }
     guard storageID != 0 && storageID != 0xFFFFFFFF else {
       throw MTPError.preconditionFailed(
         "SendObjectInfo requires a concrete storage ID (got \(String(format: "0x%08x", storageID)))."
