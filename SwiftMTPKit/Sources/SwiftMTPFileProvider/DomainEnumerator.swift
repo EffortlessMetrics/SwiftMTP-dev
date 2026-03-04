@@ -5,6 +5,7 @@ import Foundation
 @preconcurrency import FileProvider
 import SwiftMTPCore
 import SwiftMTPXPC
+import OSLog
 
 /// Cache-first File Provider domain enumerator.
 ///
@@ -14,6 +15,9 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
   /// Maximum items yielded per enumeration page.
   private static let pageSize: Int = 500
 
+  /// Timeout for index read operations during enumeration.
+  static let enumerationTimeoutSeconds: UInt64 = 15
+
   private let deviceId: String
   private let storageId: UInt32?
   private let parentHandle: UInt32?
@@ -21,6 +25,8 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
   private let syncAnchorStore: SyncAnchorStore?
   /// Lazily-established XPC connection; created once and reused.
   nonisolated(unsafe) private var xpcConnection: NSXPCConnection?
+
+  private let log = Logger(subsystem: "SwiftMTP", category: "DomainEnumerator")
 
   public init(
     deviceId: String, storageId: UInt32? = nil, parentHandle: UInt32? = nil,
@@ -41,6 +47,7 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
 
   public func invalidate() {
     xpcConnection?.invalidate()
+    xpcConnection = nil
   }
 
   // MARK: - Enumeration
@@ -60,8 +67,10 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
         var allItems: [NSFileProviderItem] = []
 
         if storageId == nil {
-          // Enumerate storages
-          let storages = try await reader.storages(deviceId: deviceId)
+          // Enumerate storages (with timeout guard)
+          let storages = try await withEnumerationTimeout {
+            try await reader.storages(deviceId: self.deviceId)
+          }
           for storage in storages {
             let item = MTPFileProviderItem(
               deviceId: deviceId,
@@ -79,12 +88,16 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
             triggerCrawl(storageId: 0, parentHandle: nil)
           }
         } else {
-          // Enumerate objects in a directory
-          let objects = try await reader.children(
-            deviceId: deviceId,
-            storageId: storageId!,
-            parentHandle: parentHandle
-          )
+          // Enumerate objects in a directory (with timeout guard)
+          let sid = storageId!
+          let ph = parentHandle
+          let objects = try await withEnumerationTimeout {
+            try await reader.children(
+              deviceId: self.deviceId,
+              storageId: sid,
+              parentHandle: ph
+            )
+          }
           for obj in objects {
             let item = MTPFileProviderItem(
               deviceId: deviceId,
@@ -101,7 +114,7 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
 
           if objects.isEmpty {
             // Cache is empty for this folder — trigger background crawl
-            triggerCrawl(storageId: storageId!, parentHandle: parentHandle)
+            triggerCrawl(storageId: sid, parentHandle: ph)
           }
         }
 
@@ -116,7 +129,8 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
           observer.finishEnumerating(upTo: nil)
         }
       } catch {
-        observer.finishEnumeratingWithError(error)
+        log.error("Enumeration failed for device=\(self.deviceId): \(error.localizedDescription)")
+        observer.finishEnumeratingWithError(Self.mapToFileProviderError(error))
       }
     }
   }
@@ -193,7 +207,10 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
         }
 
         let anchorValue = decodeSyncAnchor(anchor)
-        let changes = try await reader.changesSince(deviceId: deviceId, anchor: anchorValue)
+        let did = self.deviceId
+        let changes = try await withEnumerationTimeout {
+          try await reader.changesSince(deviceId: did, anchor: anchorValue)
+        }
 
         var updatedItems: [NSFileProviderItem] = []
         var deletedIdentifiers: [NSFileProviderItemIdentifier] = []
@@ -223,11 +240,14 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
         observer.didUpdate(updatedItems)
         observer.didDeleteItems(withIdentifiers: deletedIdentifiers)
 
-        let currentCounter = try await reader.currentChangeCounter(deviceId: deviceId)
+        let currentCounter = try await withEnumerationTimeout {
+          try await reader.currentChangeCounter(deviceId: did)
+        }
         let newAnchor = encodeSyncAnchor(currentCounter)
         observer.finishEnumeratingChanges(upTo: newAnchor, moreComing: false)
       } catch {
-        observer.finishEnumeratingWithError(error)
+        log.error("Change enumeration failed for device=\(self.deviceId): \(error.localizedDescription)")
+        observer.finishEnumeratingWithError(Self.mapToFileProviderError(error))
       }
     }
   }
@@ -310,8 +330,91 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
     if let conn = xpcConnection { return conn }
     let conn = NSXPCConnection(machServiceName: MTPXPCServiceName, options: [])
     conn.remoteObjectInterface = NSXPCInterface(with: MTPXPCService.self)
+    conn.interruptionHandler = { [weak self] in
+      self?.log.warning("XPC connection interrupted — will reconnect on next use")
+    }
+    conn.invalidationHandler = { [weak self] in
+      self?.log.warning("XPC connection invalidated — will recreate on next use")
+      self?.xpcConnection = nil
+    }
     conn.resume()
     xpcConnection = conn
     return conn
+  }
+
+  // MARK: - Timeout & Error Helpers
+
+  /// Wraps an async index read with a timeout to prevent hangs during device disconnection.
+  private func withEnumerationTimeout<T: Sendable>(
+    _ operation: @escaping @Sendable () async throws -> T
+  ) async throws -> T {
+    try await withThrowingTaskGroup(of: T.self) { group in
+      group.addTask { try await operation() }
+      group.addTask {
+        try await Task.sleep(nanoseconds: Self.enumerationTimeoutSeconds * 1_000_000_000)
+        throw EnumerationError.timeout
+      }
+      guard let result = try await group.next() else {
+        throw EnumerationError.timeout
+      }
+      group.cancelAll()
+      return result
+    }
+  }
+
+  /// Maps internal/transport errors to appropriate NSFileProviderError codes.
+  static func mapToFileProviderError(_ error: Error) -> NSError {
+    let nsError = error as NSError
+
+    // Already an NSFileProviderError — pass through
+    if nsError.domain == NSFileProviderErrorDomain {
+      return nsError
+    }
+
+    // Timeout during enumeration
+    if error is EnumerationError {
+      return NSError(
+        domain: NSFileProviderErrorDomain,
+        code: NSFileProviderError.serverUnreachable.rawValue,
+        userInfo: [NSUnderlyingErrorKey: error])
+    }
+
+    // Cancellation (e.g. user navigated away)
+    if error is CancellationError {
+      return NSError(
+        domain: NSFileProviderErrorDomain,
+        code: NSFileProviderError.serverUnreachable.rawValue,
+        userInfo: [NSUnderlyingErrorKey: error])
+    }
+
+    // Check error description for disconnect-related keywords
+    let msg = error.localizedDescription.lowercased()
+    let isDisconnect =
+      msg.contains("not connected") || msg.contains("disconnected")
+      || msg.contains("unavailable") || msg.contains("timeout")
+      || msg.contains("no device") || msg.contains("interrupted")
+    if isDisconnect {
+      return NSError(
+        domain: NSFileProviderErrorDomain,
+        code: NSFileProviderError.serverUnreachable.rawValue,
+        userInfo: [NSUnderlyingErrorKey: error])
+    }
+
+    // Default: treat as a transient server error
+    return NSError(
+      domain: NSFileProviderErrorDomain,
+      code: NSFileProviderError.serverUnreachable.rawValue,
+      userInfo: [NSUnderlyingErrorKey: error])
+  }
+}
+
+/// Errors raised by the enumeration timeout guard.
+enum EnumerationError: Error, CustomStringConvertible {
+  case timeout
+
+  var description: String {
+    switch self {
+    case .timeout: return "Enumeration timed out — device may be disconnected"
+    }
   }
 }

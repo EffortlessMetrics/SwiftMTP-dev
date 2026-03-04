@@ -62,6 +62,15 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
     if xpcConnection == nil {
       let connection = NSXPCConnection(machServiceName: MTPXPCServiceName, options: [])
       connection.remoteObjectInterface = NSXPCInterface(with: MTPXPCService.self)
+      connection.interruptionHandler = { [weak self] in
+        // XPC service crashed or was killed — connection remains valid and will reconnect
+        // automatically on next message, but log for diagnostics.
+        _ = self  // prevent unused capture warning
+      }
+      connection.invalidationHandler = { [weak self] in
+        // Connection permanently invalid — must recreate on next use.
+        self?.xpcConnection = nil
+      }
       connection.resume()
       xpcConnection = connection
     }
@@ -550,11 +559,13 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
   }
 
   /// Classifies an XPC error message into the appropriate `NSFileProviderError` code.
-  /// Disconnect-related messages map to `.serverUnreachable`; all others to `.noSuchItem`.
+  /// Disconnect-related and timeout messages map to `.serverUnreachable`; all others to `.noSuchItem`.
   private func xpcError(from message: String?) -> NSError {
     let msg = (message ?? "").lowercased()
     let isDisconnect =
       msg.contains("not connected") || msg.contains("disconnected") || msg.contains("unavailable")
+      || msg.contains("timeout") || msg.contains("no device") || msg.contains("interrupted")
+      || msg.contains("not found")
     let code =
       isDisconnect
       ? NSFileProviderError.serverUnreachable.rawValue : NSFileProviderError.noSuchItem.rawValue

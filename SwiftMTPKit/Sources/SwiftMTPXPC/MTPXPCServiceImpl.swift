@@ -20,6 +20,9 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
   public var crawlBoostHandler:
     ((_ deviceId: String, _ storageId: UInt32, _ parentHandle: UInt32?) async -> Bool)?
 
+  /// Timeout for XPC device operations (seconds).
+  static let deviceOperationTimeoutNanos: UInt64 = 30 * 1_000_000_000
+
   public init(deviceManager: MTPDeviceManager = .shared) {
     self.deviceManager = deviceManager
 
@@ -36,6 +39,24 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
     try? FileManager.default.createDirectory(at: tempDirectory, withIntermediateDirectories: true)
   }
 
+  /// Wraps a device operation with a timeout to prevent indefinite hangs.
+  private func withDeviceTimeout<T: Sendable>(
+    _ operation: @escaping @Sendable () async throws -> T
+  ) async throws -> T {
+    try await withThrowingTaskGroup(of: T.self) { group in
+      group.addTask { try await operation() }
+      group.addTask {
+        try await Task.sleep(nanoseconds: Self.deviceOperationTimeoutNanos)
+        throw XPCDeviceError.operationTimeout
+      }
+      guard let result = try await group.next() else {
+        throw XPCDeviceError.operationTimeout
+      }
+      group.cancelAll()
+      return result
+    }
+  }
+
   public func ping(reply: @escaping (String) -> Void) {
     reply("MTP XPC Service is running")
   }
@@ -43,21 +64,19 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
   public func readObject(_ request: ReadRequest, withReply reply: @escaping (ReadResponse) -> Void)
   {
     Task {
+      let tempURL = tempDirectory.appendingPathComponent(UUID().uuidString)
       do {
         let deviceId = MTPDeviceID(raw: request.deviceId)
 
-        // Find the device (this would need to be enhanced to track active devices)
-        // For now, we'll assume the device is already connected
         guard let device = try await findDevice(with: deviceId) else {
           reply(ReadResponse(success: false, errorMessage: "Device not found or not connected"))
           return
         }
 
-        // Create a temp file for the download
-        let tempURL = tempDirectory.appendingPathComponent(UUID().uuidString)
-
-        // Read the object to temp file
-        _ = try await device.read(handle: request.objectHandle, range: nil, to: tempURL)
+        // Read object with timeout guard
+        _ = try await withDeviceTimeout { [request] in
+          try await device.read(handle: request.objectHandle, range: nil, to: tempURL)
+        }
 
         // Get file size
         let attributes = try FileManager.default.attributesOfItem(atPath: tempURL.path)
@@ -66,6 +85,8 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
         reply(ReadResponse(success: true, tempFileURL: tempURL, fileSize: fileSize))
 
       } catch {
+        // Clean up partial temp file on failure
+        try? FileManager.default.removeItem(at: tempURL)
         reply(ReadResponse(success: false, errorMessage: error.localizedDescription))
       }
     }
@@ -116,20 +137,24 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
         }
 
         let storageId = MTPStorageID(raw: request.storageId)
-        let stream = device.list(parent: request.parentHandle, in: storageId)
 
-        var objects: [ObjectInfo] = []
-        for try await objectInfos in stream {
-          for objectInfo in objectInfos {
-            let object = ObjectInfo(
-              handle: objectInfo.handle,
-              name: objectInfo.name,
-              sizeBytes: objectInfo.sizeBytes,
-              isDirectory: objectInfo.formatCode == 0x3001,
-              modifiedDate: objectInfo.modified
-            )
-            objects.append(object)
+        // Wrap stream iteration with timeout to prevent hanging on device disconnect
+        let objects: [ObjectInfo] = try await withDeviceTimeout { [request] in
+          let stream = device.list(parent: request.parentHandle, in: storageId)
+          var result: [ObjectInfo] = []
+          for try await objectInfos in stream {
+            for objectInfo in objectInfos {
+              let object = ObjectInfo(
+                handle: objectInfo.handle,
+                name: objectInfo.name,
+                sizeBytes: objectInfo.sizeBytes,
+                isDirectory: objectInfo.formatCode == 0x3001,
+                modifiedDate: objectInfo.modified
+              )
+              result.append(object)
+            }
           }
+          return result
         }
 
         reply(ObjectListResponse(success: true, objects: objects))
@@ -359,6 +384,17 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
         // Ignore cleanup errors
         continue
       }
+    }
+  }
+}
+
+/// Errors raised by XPC device operation timeout guards.
+enum XPCDeviceError: Error, CustomStringConvertible {
+  case operationTimeout
+
+  var description: String {
+    switch self {
+    case .operationTimeout: return "Device operation timed out — device may be disconnected"
     }
   }
 }
