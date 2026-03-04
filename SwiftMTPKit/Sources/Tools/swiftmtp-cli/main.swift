@@ -127,7 +127,8 @@ struct SwiftMTPCLI {
     case "storages":
       await StorageListCommands.runStorages(flags: flags)
     case "ls":
-      await StorageListCommands.runList(flags: flags, args: remainingArgs)
+      let detail = remainingArgs.contains("--detail")
+      await StorageListCommands.runList(flags: flags, args: remainingArgs, detail: detail)
     case "pull":
       await TransferCommands.runPull(flags: flags, args: remainingArgs)
     case "push":
@@ -217,7 +218,11 @@ struct SwiftMTPCLI {
       }
       await CollectCLICommand.run(args: remainingArgs, flags: flags)
     case "info":
-      await SystemCommands.runInfo(flags: flags)
+      if remainingArgs.isEmpty || remainingArgs.first == "--help" || remainingArgs.first == "-h" {
+        await SystemCommands.runInfo(flags: flags)
+      } else {
+        await InfoCommand.runObjectInfo(flags: flags, args: remainingArgs)
+      }
     case "add-device":
       AddDeviceCommand.run(flags: flags, args: remainingArgs)
     case "wizard":
@@ -315,6 +320,7 @@ struct SwiftMTPCLI {
     print("")
     print("File Operations:")
     print("  ls <storage>      List files in a storage")
+    print("  ls <storage> --detail  List files with rich metadata")
     print("  storages          List available storage volumes")
     print("  pull <h> <dest>   Download a file by handle")
     print("  push <src> <dst>  Upload a file to a folder")
@@ -340,6 +346,7 @@ struct SwiftMTPCLI {
     print("Device Database:")
     print("  quirks            Query/explain device quirk profiles")
     print("  info              Show quirks database summary")
+    print("  info <handle>     Show rich metadata for an object")
     print("  add-device        Generate a new device quirk template")
     print("  learn-promote     Promote a learned profile to quirks DB")
     print("")

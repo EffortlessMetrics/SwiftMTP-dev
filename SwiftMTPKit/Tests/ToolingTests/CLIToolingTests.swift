@@ -719,3 +719,107 @@ final class DataHexStringTests: XCTestCase {
     XCTAssertEqual(Data([0x00, 0x00]).hexString(), "0000")
   }
 }
+
+// MARK: - Info Command Tests
+
+@MainActor
+final class InfoCommandTests: XCTestCase {
+
+  func testPrintObjectInfoTextBasic() {
+    let obj = MTPObjectInfo(
+      handle: 3,
+      storage: MTPStorageID(raw: 0x0001_0001),
+      parent: 1,
+      name: "IMG_001.jpg",
+      sizeBytes: 4_521_234,
+      modified: Date(timeIntervalSince1970: 1_705_326_622),
+      formatCode: 0x3801,
+      properties: [:]
+    )
+    // Should not crash when printing
+    InfoCommand.printObjectInfoText(obj)
+  }
+
+  func testPrintObjectInfoTextWithProperties() {
+    let obj = MTPObjectInfo(
+      handle: 5,
+      storage: MTPStorageID(raw: 0x0001_0001),
+      parent: nil,
+      name: "song.mp3",
+      sizeBytes: 8_000_000,
+      modified: nil,
+      formatCode: 0x3009,
+      properties: [
+        MTPObjectPropCode.artist: "Test Artist",
+        MTPObjectPropCode.albumName: "Test Album",
+        MTPObjectPropCode.dateCreated: "20240115T143022",
+      ]
+    )
+    InfoCommand.printObjectInfoText(obj)
+  }
+
+  func testPrintObjectInfoJSON() {
+    let obj = MTPObjectInfo(
+      handle: 7,
+      storage: MTPStorageID(raw: 0x0001_0001),
+      parent: 2,
+      name: "photo.png",
+      sizeBytes: 1_234_567,
+      modified: Date(timeIntervalSince1970: 1_705_326_622),
+      formatCode: 0x3808,
+      properties: [MTPObjectPropCode.width: "1920", MTPObjectPropCode.height: "1080"]
+    )
+    // Should not crash when printing JSON
+    InfoCommand.printObjectInfoJSON(obj)
+  }
+
+  func testFormatDetailLine() {
+    let obj = MTPObjectInfo(
+      handle: 10,
+      storage: MTPStorageID(raw: 0x0001_0001),
+      parent: 1,
+      name: "video.mp4",
+      sizeBytes: 50_000_000,
+      modified: Date(timeIntervalSince1970: 1_705_326_622),
+      formatCode: 0xB802,
+      properties: [:]
+    )
+    let line = InfoCommand.formatDetailLine(obj)
+    XCTAssertTrue(line.contains("video.mp4"))
+    XCTAssertTrue(line.contains("handle: 10"))
+    XCTAssertTrue(line.contains("MP4"))
+  }
+
+  func testFormatDetailLineDirectory() {
+    let obj = MTPObjectInfo(
+      handle: 1,
+      storage: MTPStorageID(raw: 0x0001_0001),
+      parent: nil,
+      name: "DCIM",
+      sizeBytes: nil,
+      modified: nil,
+      formatCode: 0x3001,
+      properties: [:]
+    )
+    let line = InfoCommand.formatDetailLine(obj)
+    XCTAssertTrue(line.contains("📁"))
+    XCTAssertTrue(line.contains("DCIM"))
+    XCTAssertTrue(line.contains("Association"))
+  }
+
+  func testFormatDetailLineNoSize() {
+    let obj = MTPObjectInfo(
+      handle: 2,
+      storage: MTPStorageID(raw: 0x0001_0001),
+      parent: 1,
+      name: "unknown.bin",
+      sizeBytes: nil,
+      modified: nil,
+      formatCode: 0x3000,
+      properties: [:]
+    )
+    let line = InfoCommand.formatDetailLine(obj)
+    XCTAssertTrue(line.contains("-"))
+    XCTAssertTrue(line.contains("unknown.bin"))
+  }
+}
