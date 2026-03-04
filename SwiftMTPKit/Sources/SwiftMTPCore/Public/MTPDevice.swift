@@ -580,6 +580,22 @@ public struct SwiftMTPConfig: Sendable {
   /// Defaults to false.
   public var disableEventPump = false
 
+  /// Issue `libusb_reset_device` before closing the handle (AOSP/Sony quirk).
+  /// Defaults to false.
+  public var forceResetOnClose = false
+
+  /// Skip zero-length packet reads that some devices choke on.
+  /// Defaults to false.
+  public var noZeroReads = false
+
+  /// Skip `libusb_release_interface` on close — device locks up if released.
+  /// Defaults to false.
+  public var noReleaseInterface = false
+
+  /// Tolerate broken PTP response headers (Creative ZEN, Aricent stacks).
+  /// Defaults to false.
+  public var ignoreHeaderErrors = false
+
   /// Enable resumable transfers when device supports partial operations.
   ///
   /// When disabled, all transfers restart from beginning on interruption. Default: true

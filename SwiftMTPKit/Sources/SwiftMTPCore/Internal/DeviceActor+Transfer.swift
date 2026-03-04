@@ -806,6 +806,7 @@ extension MTPDeviceActor {
 
           if !useMediaTargetPolicy && !recovered && retryClass == .invalidParameter
             && supportsSendObjectPropList
+            && !(policy?.flags.brokenSendObjectPropList ?? false)
           {
             let propListParams = retryParameters.last ?? primaryParams
             do {
