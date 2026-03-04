@@ -87,9 +87,10 @@ struct IndexBoundaryConcurrentTests {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     let batchSize = 50
-    let objects = (0..<batchSize).map { i in
-      makeObj(handle: UInt32(i + 1), name: "concurrent-\(i).txt")
-    }
+    let objects = (0..<batchSize)
+      .map { i in
+        makeObj(handle: UInt32(i + 1), name: "concurrent-\(i).txt")
+      }
 
     try await withThrowingTaskGroup(of: Void.self) { group in
       // Writer: insert batch
@@ -229,9 +230,10 @@ struct IndexBoundarySpecialCharTests {
       "한국어.png",
     ]
 
-    let objects = names.enumerated().map { i, name in
-      makeObj(handle: UInt32(i + 1), name: name, pathKey: "00010001/\(name)")
-    }
+    let objects = names.enumerated()
+      .map { i, name in
+        makeObj(handle: UInt32(i + 1), name: name, pathKey: "00010001/\(name)")
+      }
 
     try await idx.upsertObjects(objects, deviceId: "dev-boundary")
 
