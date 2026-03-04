@@ -1404,11 +1404,12 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   }
 
   private var allowPixelCommandResetRecovery: Bool {
-    ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_ALLOW_COMMAND_RESET"] == "1"
+    ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_DISABLE_COMMAND_RESET"] != "1"
   }
 
   private var shouldSkipPixelCommandResetRecovery: Bool {
-    isPixelClassNoProgressTarget && !allowPixelCommandResetRecovery
+    isPixelClassNoProgressTarget
+      && ProcessInfo.processInfo.environment["SWIFTMTP_PIXEL_DISABLE_COMMAND_RESET"] == "1"
   }
 
   private func shouldAttemptPixelResetReopenRecovery(after attempt: CommandWriteAttempt) -> Bool {
@@ -1463,16 +1464,17 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     return true
   }
 
-  /// Hard recovery rung: full USB device reset followed by endpoint reconfiguration.
+  /// Hard recovery rung: full USB device reset followed by handle close/re-open.
   ///
   /// `libusb_reset_device` causes the host to issue a USB bus reset signal, which
-  /// forces the device firmware to re-initialize its USB stack. The device retains
-  /// its bus address but all endpoint state is wiped.
+  /// forces the device firmware to re-initialize its USB stack. After reset, the old
+  /// handle is stale on macOS/Darwin — libmtp always does a full close → re-open
+  /// cycle to obtain a fresh handle with valid IOKit resources.
   ///
-  /// 300ms post-reset delay: USB 2.0 spec requires devices to be ready within 10ms
-  /// of reset completion, but Android MTP implementations (Samsung, Xiaomi) often
-  /// take 100-250ms to re-initialize their MTP responder. 300ms provides margin.
-  /// 200ms post-clear delay: same as light recovery — host controller pipe setup.
+  /// 350ms post-reset delay: USB 2.0 spec requires devices to be ready within 10ms
+  /// of reset completion, but Android MTP implementations (Samsung, Xiaomi, Pixel)
+  /// take 100-250ms to re-initialize their MTP responder. 350ms provides margin.
+  /// 200ms post-claim delay: allows host controller pipe setup after re-claim.
   private func performCommandNoProgressHardRecovery(opcode: UInt16, txid: UInt32, debug: Bool)
     -> Bool
   {
@@ -1481,14 +1483,25 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
         print(
           String(
             format:
-              "   [USB][Recover][Hard] op=0x%04x tx=%u skipping reset rung for Pixel 7 (set SWIFTMTP_PIXEL_ALLOW_COMMAND_RESET=1 to override)",
+              "   [USB][Recover][Hard] op=0x%04x tx=%u skipping reset rung (set SWIFTMTP_PIXEL_DISABLE_COMMAND_RESET=0 or unset to re-enable)",
             opcode, txid))
       }
       return false
     }
 
-    let resetRC = libusb_reset_device(h)
-    if resetRC != 0 {
+    // Cancel event pump to avoid reads on stale handle during close/reopen.
+    eventPumpTask?.cancel()
+    eventPumpTask = nil
+
+    let oldHandle = h
+    let oldDevice = dev
+
+    let oldBus = libusb_get_bus_number(oldDevice)
+    var oldPortPath = [UInt8](repeating: 0, count: 7)
+    let oldPortDepth = libusb_get_port_numbers(oldDevice, &oldPortPath, Int32(oldPortPath.count))
+
+    let resetRC = libusb_reset_device(oldHandle)
+    if resetRC != 0 && resetRC != Int32(LIBUSB_ERROR_NOT_FOUND.rawValue) {
       log.error(
         "Hard recovery: libusb_reset_device failed \(libusbErrorName(resetRC), privacy: .public) (rc=\(resetRC)) for op=\(String(format: "0x%04x", opcode), privacy: .public)"
       )
@@ -1502,23 +1515,50 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       return false
     }
 
-    usleep(300_000)
+    // Full close/re-open per libmtp recovery sequence (Difference 1 fix).
+    // Release interface first, then attempt to find + open + claim a new handle.
+    // Keep old handle open until new one is ready for safe fallback.
+    let releaseRC = libusb_release_interface(oldHandle, Int32(iface))
 
-    setConfigurationIfNeeded(handle: h, device: dev, force: true, debug: debug)
-    let setAltRC = libusb_set_interface_alt_setting(h, Int32(iface), 0)
-    let clearOutRC = libusb_clear_halt(h, outEP)
-    let clearInRC = libusb_clear_halt(h, inEP)
-    let clearEventRC: Int32 =
-      evtEP != 0 ? libusb_clear_halt(h, evtEP) : Int32(LIBUSB_SUCCESS.rawValue)
+    usleep(350_000)
 
+    guard
+      let reopenedDevice = findRecoveryDevice(
+        bus: oldBus,
+        address: libusb_get_device_address(oldDevice),
+        portPath: oldPortPath,
+        portDepth: oldPortDepth
+      ),
+      let reopenedHandle = openAndClaimRecoveryHandle(device: reopenedDevice, debug: debug)
+    else {
+      // Reopen failed — try to reclaim on old handle as fallback.
+      let reclaimRC = libusb_claim_interface(oldHandle, Int32(iface))
+      if reclaimRC == 0 {
+        _ = libusb_set_interface_alt_setting(oldHandle, Int32(iface), 0)
+      }
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover][Hard] op=0x%04x tx=%u close/reopen failed (reset=%d release=%d reclaim=%d)",
+            opcode, txid, resetRC, releaseRC, reclaimRC))
+      }
+      return false
+    }
+
+    h = reopenedHandle
+    dev = reopenedDevice
+
+    libusb_close(oldHandle)
+    libusb_unref_device(oldDevice)
     usleep(200_000)
 
     if debug {
       print(
         String(
           format:
-            "   [USB][Recover][Hard] op=0x%04x tx=%u reset_device=0 setAlt0=%d clear(out=%d in=%d evt=%d)",
-          opcode, txid, setAltRC, clearOutRC, clearInRC, clearEventRC))
+            "   [USB][Recover][Hard] op=0x%04x tx=%u reset=%d release=%d reopened iface=%d",
+          opcode, txid, resetRC, releaseRC, iface))
     }
     return true
   }
@@ -1533,7 +1573,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
         print(
           String(
             format:
-              "   [USB][Recover][Reopen] op=0x%04x tx=%u skipping reset+reopen for Pixel 7 (set SWIFTMTP_PIXEL_ALLOW_COMMAND_RESET=1 to override)",
+              "   [USB][Recover][Reopen] op=0x%04x tx=%u skipping reset+reopen (set SWIFTMTP_PIXEL_DISABLE_COMMAND_RESET=0 or unset to re-enable)",
             opcode, txid))
       }
       return false

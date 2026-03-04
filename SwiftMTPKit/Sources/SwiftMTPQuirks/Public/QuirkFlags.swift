@@ -18,6 +18,11 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// Use longer handshake timeout for slow-to-respond devices.
   public var needsLongerOpenTimeout: Bool = false
 
+  /// Use extended bulk transfer timeout (60s) for operational I/O.
+  /// Matches libmtp's `DEVICE_FLAG_LONG_TIMEOUT` for devices that need
+  /// extra time for large transfers or slow USB bus recovery.
+  public var extendedBulkTimeout: Bool = false
+
   // MARK: - Protocol-level
 
   /// Device requires an open session before GetDeviceInfo responds.
@@ -128,6 +133,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case resetOnOpen
     case requiresKernelDetach
     case needsLongerOpenTimeout
+    case extendedBulkTimeout
     case requiresSessionBeforeDeviceInfo
     case transactionIdResetsOnSession
     case resetReopenOnOpenSessionIOError
@@ -159,6 +165,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .requiresKernelDetach) ?? true
     self.needsLongerOpenTimeout =
       try container.decodeIfPresent(Bool.self, forKey: .needsLongerOpenTimeout) ?? false
+    self.extendedBulkTimeout =
+      try container.decodeIfPresent(Bool.self, forKey: .extendedBulkTimeout) ?? false
     self.requiresSessionBeforeDeviceInfo =
       try container.decodeIfPresent(Bool.self, forKey: .requiresSessionBeforeDeviceInfo) ?? false
     self.transactionIdResetsOnSession =
@@ -209,6 +217,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(resetOnOpen, forKey: .resetOnOpen)
     try container.encodeIfPresent(requiresKernelDetach, forKey: .requiresKernelDetach)
     try container.encodeIfPresent(needsLongerOpenTimeout, forKey: .needsLongerOpenTimeout)
+    try container.encodeIfPresent(extendedBulkTimeout, forKey: .extendedBulkTimeout)
     try container.encodeIfPresent(
       requiresSessionBeforeDeviceInfo, forKey: .requiresSessionBeforeDeviceInfo)
     try container.encodeIfPresent(

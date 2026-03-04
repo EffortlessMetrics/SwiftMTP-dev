@@ -153,6 +153,11 @@ public struct EffectiveTuningBuilder: Sendable {
     } else {
       flags = QuirkFlags()
     }
+    // Apply extendedBulkTimeout flag: use 60s operational timeout (matches libmtp LONG_TIMEOUT).
+    var finalTuning = tuning
+    if flags.extendedBulkTimeout {
+      finalTuning.ioTimeoutMs = max(finalTuning.ioTimeoutMs, 60_000)
+    }
     var sources = PolicySources()
     if overrides?.isEmpty == false {
       sources.chunkSizeSource = .userOverride
@@ -167,7 +172,7 @@ public struct EffectiveTuningBuilder: Sendable {
       sources.chunkSizeSource = .learned
       sources.ioTimeoutSource = .learned
     }
-    return DevicePolicy(tuning: tuning, flags: flags, sources: sources)
+    return DevicePolicy(tuning: finalTuning, flags: flags, sources: sources)
   }
 
   private static func clamp(_ t: inout EffectiveTuning) {
