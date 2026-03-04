@@ -441,6 +441,9 @@ extension PTPResponseResult {
       throw MTPError.permissionDenied
     case 0x2019:
       throw MTPError.busy
+    case 0x201F:
+      throw MTPError.protocolError(
+        code: code, message: "TransactionCancelled (0x201f)")
     default:
       throw MTPError.protocolError(code: code, message: PTPResponseCode.describe(code))
     }

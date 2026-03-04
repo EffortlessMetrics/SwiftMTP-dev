@@ -30,7 +30,18 @@ enum BusyBackoff {
       do {
         return try await op()
       } catch let e as MTPError {
-        guard case .protocolError(let code, _) = e, code == 0x2003, attempt < retries else {
+        let isBusyRetryable: Bool
+        switch e {
+        case .protocolError(let code, _):
+          // 0x2003 (SessionNotOpen) — Xiaomi uses this as a "not ready" signal.
+          // 0x2019 (DeviceBusy) — MTP 1.1 standard device-busy response.
+          isBusyRetryable = (code == 0x2003 || code == 0x2019)
+        case .busy:
+          isBusyRetryable = true
+        default:
+          isBusyRetryable = false
+        }
+        guard isBusyRetryable, attempt < retries else {
           throw e
         }
         attempt += 1

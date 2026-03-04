@@ -654,7 +654,9 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
   private let evtEP: UInt8
   private let ioQ = DispatchQueue(
     label: "com.effortlessmetrics.swiftmtp.usbio", qos: .userInitiated)
-  private var nextTx: UInt32 = 1
+  // MTP 1.1 §9.3.1: 0 = no session open (pre-session commands use txid 0);
+  // after OpenSession the counter starts at 1 and wraps from 0xFFFFFFFE → 1.
+  private var nextTx: UInt32 = 0
   private let config: SwiftMTPConfig
   private let manufacturer: String
   private let model: String
@@ -840,6 +842,7 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
       dataInHandler: nil, dataOutHandler: nil
     )
     .checkOK()
+    nextTx = 0
   }
 
   public func getDeviceInfo() async throws -> MTPDeviceInfo {
@@ -1082,14 +1085,15 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     )
     defer { signposter.endInterval("executeCommand", state) }
 
-    let txid =
-      (command.code == 0x1002)
-      ? 0
-      : { () -> UInt32 in
-        let t = nextTx
-        nextTx = (nextTx == 0xFFFFFFFF) ? 1 : nextTx + 1
-        return t
-      }()
+    // MTP 1.1 §9.3.1: OpenSession and pre-session commands use txid 0.
+    // Valid transaction IDs are 1…0xFFFFFFFE; 0xFFFFFFFF is reserved.
+    let txid: UInt32
+    if command.code == 0x1002 || nextTx == 0 {
+      txid = 0
+    } else {
+      txid = nextTx
+      nextTx = (nextTx >= 0xFFFFFFFE) ? 1 : nextTx + 1
+    }
     let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
     if debug { print(String(format: "   [USB] op=0x%04x tx=%u phase=COMMAND", command.code, txid)) }
     let cmdBytes = makePTPCommand(opcode: command.code, txid: txid, params: command.params)
