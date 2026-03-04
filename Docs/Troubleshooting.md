@@ -8,13 +8,18 @@ Comprehensive troubleshooting guide for SwiftMTP operations.
 
 1. [Quick Fixes](#quick-fixes)
 2. [Known Device Status](#known-device-status)
-3. [Device Detection Issues](#device-detection-issues)
-4. [Transfer Problems](#transfer-problems)
-5. [Performance Issues](#performance-issues)
-6. [Error-Specific Solutions](#error-specific-solutions)
-7. [macOS-Specific Issues](#macos-specific-issues)
-8. [Submission & Benchmark Issues](#submission--benchmark-issues)
-9. [Diagnostic Commands](#diagnostic-commands)
+3. [USB Claim Debugging](#usb-claim-debugging)
+4. [Device Detection Issues](#device-detection-issues)
+5. [Transfer Problems](#transfer-problems)
+6. [Performance Issues](#performance-issues)
+7. [Error-Specific Solutions](#error-specific-solutions)
+8. [Samsung Galaxy Troubleshooting](#samsung-galaxy-troubleshooting)
+9. [Google Pixel Troubleshooting](#google-pixel-troubleshooting)
+10. [OnePlus Troubleshooting](#oneplus-troubleshooting)
+11. [macOS-Specific Issues](#macos-specific-issues)
+12. [Common macOS Issues](#common-macos-issues)
+13. [Submission & Benchmark Issues](#submission--benchmark-issues)
+14. [Diagnostic Commands](#diagnostic-commands)
 
 ---
 
@@ -45,6 +50,66 @@ Current real-device test status (see CLAUDE.md for full details):
 | Nikon DSLR / Z-series | 04b0:0410 | **Research Only** | Never connected to SwiftMTP |
 
 > **Note:** SwiftMTP is pre-alpha. Most test coverage uses `VirtualMTPDevice` (in-memory mock). Only the Xiaomi Mi Note 2 (ff10) has completed real file transfers.
+
+---
+
+## USB Claim Debugging
+
+When SwiftMTP cannot claim a USB device, another process is usually holding the interface. Use these steps to diagnose and resolve claim conflicts.
+
+### Check Which Process Has the Device
+
+```bash
+# List processes using USB devices
+lsof /dev/cu.usbmodem*
+
+# Inspect the macOS USB device tree
+ioreg -p IOUSB -l
+
+# Show USB devices with vendor/product info
+system_profiler SPUSBDataType
+```
+
+### Common macOS Processes That Grab USB Devices
+
+These macOS services automatically claim MTP/PTP devices on connection:
+
+| Process | What It Does | How to Stop |
+|---------|-------------|-------------|
+| `PTPd` | PTP camera daemon | `killall PTPd` (restarts automatically) |
+| `Photos` | Imports from cameras/phones | Quit Photos before connecting |
+| `Image Capture` | Image import agent | Quit or disable (see below) |
+| `AMPDeviceDiscoveryAgent` | Apple Music/device pairing | Usually harmless; quit if conflicting |
+| `adb` | Android Debug Bridge | `adb kill-server` |
+
+### Disable Auto-Grabbing (Image Capture)
+
+Prevent macOS Image Capture from automatically claiming USB devices:
+
+```bash
+defaults write com.apple.ImageCapture disableHotPlug -bool YES
+```
+
+To re-enable:
+
+```bash
+defaults delete com.apple.ImageCapture disableHotPlug
+```
+
+### Inspect the USB Tree with `ioreg`
+
+```bash
+# Full USB tree with properties
+ioreg -p IOUSB -l
+
+# Filter to a specific vendor (e.g., Samsung 04e8)
+ioreg -p IOUSB -l | grep -A 20 "Samsung"
+
+# Show just device names and addresses
+ioreg -p IOUSB -w 0 | grep -i "+-o"
+```
+
+Look for `IOService` entries with `USBDeviceFunction` — if another driver is listed under `IOProviderClass`, that driver has claimed the device.
 
 ---
 
@@ -210,6 +275,85 @@ The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.
 
 ---
 
+## Samsung Galaxy Troubleshooting
+
+**Status:** Not Working — handshake fails after USB claim (tested on Galaxy S7, SM-G930W8, VID:PID 04e8:6860)
+
+### Symptoms
+- `swiftmtp probe` detects the device but `OpenSession` never completes
+- Log shows `USB claim succeeded` followed by handshake timeout or protocol error
+- Known 512-byte packet boundary bug in Samsung's MTP stack
+
+### Debugging Steps
+
+1. **Ensure MTP mode** (Samsung defaults to charging-only on many cables):
+   - Settings → Developer Options → USB Configuration → **MTP (Media Transfer Protocol)**
+   - If Developer Options isn't visible: Settings → About Phone → tap Build Number 7 times
+2. **Unlock the screen** and authorize the computer when prompted
+3. **Disable USB debugging** — ADB and MTP cannot share the USB interface simultaneously
+4. **Replug the cable** after changing USB mode (Samsung doesn't hot-switch reliably)
+5. Try toggling: switch to PTP, wait 5 seconds, switch back to MTP
+6. Use a **USB-A cable** directly to the Mac (USB-C adapters add negotiation latency)
+
+### Current Theory
+
+Samsung's MTP stack requires a specific initialization sequence with precise timing on the 512-byte packet boundaries. SwiftMTP's current handshake does not yet match this sequence. Reboot the phone and reconnect within 10 seconds as a workaround — the Samsung USB stack may hold stale sessions.
+
+---
+
+## Google Pixel Troubleshooting
+
+**Status:** Blocked — bulk transfer timeout, likely macOS kernel issue (tested on Pixel 7, VID:PID 18d1:4ee1)
+
+### Symptoms
+- USB claim works, control transfers work (OpenSession succeeds)
+- Bulk OUT returns `sent=0` — data path is broken
+- `LIBUSB_ERROR_TIMEOUT` in logs after a successful handshake
+- `swiftmtp probe` succeeds but `swiftmtp ls` hangs or returns timeout
+
+### Debugging Steps
+
+1. **Verify MTP mode** on the Pixel:
+   - Settings → Connected Devices → USB → **File Transfer / Android Auto**
+2. Use a **direct USB-A port** (not a hub or USB-C adapter) — macOS 26 Tahoe has known USB-C timing regressions
+3. Keep `stabilizeMs` elevated (≥ 600 ms): `swiftmtp quirks` to confirm active quirk
+4. Run `swiftmtp probe` first and wait for ✅ before any transfer command
+
+### libmtp Workaround
+
+libmtp uses a reset+retry loop for Pixel bulk transfer failures. This does not currently work in SwiftMTP's implementation because the macOS kernel does not re-enumerate the device after a USB reset in the same process.
+
+### Current Theory
+
+The bulk transfer timeout is a macOS kernel-level issue with the Pixel 7's USB controller. Control-plane operations succeed, but the data plane (bulk OUT endpoint) never completes. This is documented in detail in `Docs/pixel7-usb-debug-report.md`. Awaiting kernel-level fix in macOS 26 Tahoe.
+
+---
+
+## OnePlus Troubleshooting
+
+**Status:** Partial — probe and read work, writes fail with 0x201D InvalidParameter (tested on OnePlus 3T, VID:PID 2a70:f003)
+
+### Symptoms
+- `swiftmtp probe` and `swiftmtp ls` succeed normally
+- All write operations (`push`, `SendObject`) return `Protocol error InvalidParameter (0x201D)`
+- Large writes (> 512 MB) stall at 50–80% with timeout
+
+### Debugging Steps
+
+1. Confirm device is on **Android 9+** (earlier firmware has wider write restrictions)
+2. Write to a specific folder — OnePlus may require explicit storage/folder targeting:
+   - Try: `Internal storage/Download/`, `DCIM/`, or other user-writable folders
+   - Root-level writes are rejected on all tested firmware
+3. Run `swiftmtp quirks` and verify the `oneplus-3t-f003` profile is active
+4. For large files: use `--chunk 1M` to limit write-chunk size (device firmware rejects 8 MB default chunks)
+5. Keep transfers under 500 MB per session; reconnect between large sessions
+
+### Current Theory
+
+OnePlus requires specific storage/folder targeting for write operations. The device's MTP stack rejects `SendObjectInfo` when the parent object handle doesn't match an explicitly writable directory. This is distinct from a permission error — the device returns `InvalidParameter` rather than `AccessDenied`.
+
+---
+
 ## macOS-Specific Issues
 
 ### Trust Prompt Not Appearing
@@ -308,6 +452,42 @@ The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.
 
 ---
 
+## Common macOS Issues
+
+### TSAN Interceptor Failure on macOS 26 / Xcode 26.x
+
+**Error:** `Interceptors are not working. This may be caused by a non-instrumented library`
+
+**Cause:** Xcode 26.x TSAN runtime conflicts with DTXConnectionServices.
+
+**Solutions:**
+- Pin **Xcode 16.2** for TSAN runs: `xcode-version: '16.2'` in CI
+- Use `setup-swift` action for Swift 6.2 toolchain independent of Xcode
+- CI uses `continue-on-error: true` on TSAN jobs as mitigation
+- Monitor Xcode 26.x releases for a fix
+
+### libusb Homebrew vs System Conflict
+
+**Symptoms:** Build fails with `ld: library not found for -lusb-1.0` or runtime crash with mismatched libusb versions.
+
+**Solutions:**
+1. Use the project's XCFramework: `./scripts/build-libusb-xcframework.sh`
+2. If using Homebrew libusb: ensure `PKG_CONFIG_PATH` includes `/opt/homebrew/lib/pkgconfig`
+3. Do not mix Homebrew and system libusb — pick one and remove the other
+4. After switching: `cd SwiftMTPKit && swift package clean && swift build`
+
+### SIP and USB Entitlements
+
+**Issue:** App Store distribution requires USB entitlements that conflict with SIP (System Integrity Protection).
+
+**Solutions:**
+- Development: use `com.apple.security.device.usb` entitlement in debug signing
+- For App Store: USB access requires a DriverKit extension or approved entitlement
+- File Provider extension uses XPC bridge to avoid direct USB entitlement in the app target
+- See `Docs/FileProvider-TechPreview.md` for the sandboxed architecture
+
+---
+
 ## Submission & Benchmark Issues
 
 ### Canonical `collect` + `benchmark` Sequence
@@ -370,9 +550,23 @@ If `usb-dump.txt` contains serial numbers or paths:
 
 ## Diagnostic Commands
 
+### Quick Reference
+
+```bash
+swift run swiftmtp probe --verbose    # Detailed USB/MTP probe
+swift run swiftmtp device-lab         # Full device test matrix
+ioreg -p IOUSB -l                     # macOS USB device tree
+system_profiler SPUSBDataType          # USB device info
+```
+
 ### Basic Probe
 ```bash
 swift run swiftmtp probe
+```
+
+### Verbose Probe (detailed USB/MTP negotiation output)
+```bash
+swift run swiftmtp probe --verbose
 ```
 
 ### List Tests (verify test count)
@@ -390,6 +584,18 @@ swift run swiftmtp device-lab connected --json
 ### USB Traffic Capture
 ```bash
 swift run swiftmtp usb-dump
+```
+
+### macOS USB Inspection
+```bash
+# Full USB device tree with all properties
+ioreg -p IOUSB -l
+
+# Compact USB tree (device names only)
+ioreg -p IOUSB -w 0 | grep -i "+-o"
+
+# System-level USB device report
+system_profiler SPUSBDataType
 ```
 
 ### Device Bring-Up
