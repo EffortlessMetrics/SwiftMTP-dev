@@ -5,11 +5,65 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] — Release Candidate
+## [Unreleased] — Waves 37–41
+
+> **Summary**: 49 PRs (#415–#467) across five waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, and comprehensive test backfill. Session totals: **~9,191+ tests**, **20,026 quirks entries**, **101 PRs merged** (#363–#467).
+
+### Added
+- Android MTP edit extensions: BeginEditObject, EndEditObject, TruncateObject
+- CopyObject (0x101A) server-side file copy
+- GetThumb (0x100A) thumbnail retrieval
+- SetObjectPropList (0x9806) batch metadata writes
+- Full MTP 1.1 coverage: 50+ object formats, 50+ property codes, 14 events, 42 response codes
+- Adaptive chunk tuning with device persistence (AdaptiveChunkTuner)
+- Error recovery layer: session reset, stall recovery, timeout escalation, disconnect handling
+- Conflict resolution for mirror/sync: 6 strategies (newer-wins, local-wins, device-wins, keep-both, skip, ask)
+- Format-based mirror filtering (--photos-only, --format, --exclude-format)
+- CLI commands: cp, edit, thumb, info, quirks stats
+- IOUSBHost native transport scaffold module
+- Pre-PR gate script (scripts/pre-pr.sh)
+- 100+ new tests across FileProvider, Store, XPC, BDD, Property, Snapshot targets
+
+### Fixed
+- Samsung transport: skip alt-setting on macOS, skip pre-claim reset
+- Pixel 7 transport: handle re-open, set_configuration, extended timeouts
+- Android opcode mislabeling (GetPartialObject64/SendPartialObject swapped)
+- TransferJournal WAL mode, orphan detection, atomic downloads
+- 106 swift-format lint warnings
+- SyncTests missing SwiftCheck dependency
+
+### Changed
+- Quirks governance: CI-enforced schema validation, status field required
+- 239 Samsung quirk entries updated with skipAltSetting/skipPreClaimReset
+- CLAUDE.md comprehensive refresh with test discovery guide
+- FIXUP_QUEUE cleanup: 12 resolved items archived
+
+---
+
+### Wave 40–41 — Features & Test Backfill (PRs #446–#467)
+
+- **#446** — Comprehensive wave 38–39 changelog, roadmap, and architecture update
+- **#447** — Format-based filtering for mirror engine (--photos-only, --format, --exclude-format)
+- **#448** — CLI `info` command with rich metadata display
+- **#449** — Layered error recovery: session reset, stall recovery, timeout escalation, disconnect handling
+- **#450** — Conflict resolution strategies for mirror/sync (6 strategies)
+- **#451** — Adaptive chunk size auto-tuning with device persistence
+- **#452** — SetObjectPropList (0x9806) batch metadata writes
+- **#457** — GetThumb (0x100A) thumbnail retrieval
+- **#458** — Comprehensive protocol integration tests
+- **#459** — CLAUDE.md refresh with wave 37–40 additions and test discovery guide
+- **#460** — FIXUP_QUEUE cleanup: 12 resolved items archived
+- **#461** — XPC bridge test backfill: protocol conformance and error handling
+- **#462** — BDD scenario expansion: copy, edit, mirror, and metadata features
+- **#463** — FileProvider test backfill: timeout, reconnection, and error handling
+- **#464** — Property-based test expansion for wave 38–40 features
+- **#465** — Pre-PR gate script for automated quality checks
+- **#466** — Store test backfill: journal, tuning, and persistence
+- **#467** — Unit test backfill: format filter, recovery log, and thumbnails
 
 ### Wave 38–39 Protocol Expansion & Transport Fixes (PRs #425–#445)
 
-> **Summary**: 21 PRs across two waves delivering MTP 1.1 full-spectrum protocol coverage (50+ object formats, 50+ property codes, all 14 events, full response code coverage), Android MTP edit extensions, server-side CopyObject, IOUSBHost native transport scaffold, Samsung and Pixel 7 transport fixes, quirks governance enforcement, and comprehensive test coverage expansion. Session totals: **~8,577 tests**, **20,026 quirks entries**, **83 PRs merged** (#363–#445).
+> 21 PRs delivering MTP 1.1 full-spectrum protocol coverage, Android MTP edit extensions, server-side CopyObject, IOUSBHost native transport scaffold, Samsung and Pixel 7 transport fixes, and quirks governance enforcement.
 
 #### Key Stats
 - **~8,577 tests** executed across 20 test targets, **0 unexpected failures**
