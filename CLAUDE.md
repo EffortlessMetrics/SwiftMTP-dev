@@ -133,7 +133,7 @@ SwiftMTPKit/
 │   ├── SwiftMTPQuirks/             # Device quirks database
 │   ├── SwiftMTPObservability/      # Logging and performance monitoring
 │   ├── SwiftMTPStore/              # Persistence layer
-│   ├── SwiftMTPFileProvider/       # File Provider extension (macOS)
+│   ├── SwiftMTPFileProvider/       # File Provider extension (macOS) — scaffolded, mock-tested only
 │   ├── SwiftMTPXPC/                # XPC service for File Provider ↔ app bridge
 │   ├── SwiftMTPTestKit/            # Test utilities (VirtualMTPDevice, FaultInjectingLink)
 │   └── Tools/
