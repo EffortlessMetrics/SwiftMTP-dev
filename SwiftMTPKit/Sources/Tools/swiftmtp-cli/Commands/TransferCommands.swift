@@ -4,6 +4,7 @@
 import Foundation
 import SwiftMTPCore
 import SwiftMTPCLI
+import SwiftMTPSync
 
 @MainActor
 struct TransferCommands {
@@ -168,7 +169,9 @@ struct TransferCommands {
   static func runBench(flags: CLIFlags, args: [String]) async {
     guard let sizeStr = args.first else {
       print("❌ Missing required argument: <size>")
-      print("   Usage: swiftmtp bench <size> [--storage <id>] [--parent <handle>] [--repeat <n>] [--out <csv>]")
+      print(
+        "   Usage: swiftmtp bench <size> [--storage <id>] [--parent <handle>] [--repeat <n>] [--out <csv>]"
+      )
       print("   Example: swiftmtp bench 10M --repeat 3 --out results.csv")
       print("   Sizes: 1M, 10M, 100M, 1G")
       exitNow(.usage)
@@ -391,12 +394,60 @@ struct TransferCommands {
   }
 
   static func runMirror(flags: CLIFlags, args: [String]) async {
-    guard let destPath = args.first else {
+    // Parse mirror-specific flags
+    var positionalArgs: [String] = []
+    var photosOnly = false
+    var formatInclude: [String] = []
+    var formatExclude: [String] = []
+
+    var i = 0
+    while i < args.count {
+      let arg = args[i]
+      if arg == "--photos-only" {
+        photosOnly = true
+      } else if arg == "--format", i + 1 < args.count {
+        i += 1
+        formatInclude = args[i].split(separator: ",").map(String.init)
+      } else if arg.hasPrefix("--format=") {
+        formatInclude = String(arg.dropFirst("--format=".count)).split(separator: ",")
+          .map(
+            String.init)
+      } else if arg == "--exclude-format", i + 1 < args.count {
+        i += 1
+        formatExclude = args[i].split(separator: ",").map(String.init)
+      } else if arg.hasPrefix("--exclude-format=") {
+        formatExclude = String(arg.dropFirst("--exclude-format=".count)).split(separator: ",")
+          .map(
+            String.init)
+      } else {
+        positionalArgs.append(arg)
+      }
+      i += 1
+    }
+
+    guard let destPath = positionalArgs.first else {
       print("❌ Missing required argument: <destination>")
       print("   Usage: swiftmtp mirror <destination>")
       print("   Example: swiftmtp mirror ./device-backup")
+      print("   Options:")
+      print("     --photos-only            Only mirror image files")
+      print("     --format jpeg,png,heic   Only mirror specified formats")
+      print("     --exclude-format mp4,avi Exclude specified formats")
       exitNow(.usage)
     }
+
+    // Build format filter
+    let formatFilter: MTPFormatFilter
+    if photosOnly {
+      formatFilter = .category(.images)
+    } else if !formatInclude.isEmpty {
+      formatFilter = .including(extensions: formatInclude)
+    } else if !formatExclude.isEmpty {
+      formatFilter = .excluding(extensions: formatExclude)
+    } else {
+      formatFilter = .all
+    }
+
     print("🔄 Mirroring device to \(destPath)...")
     do {
       let device = try await openDevice(flags: flags)

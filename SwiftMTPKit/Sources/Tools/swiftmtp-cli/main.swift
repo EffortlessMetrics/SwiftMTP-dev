@@ -275,7 +275,9 @@ struct SwiftMTPCLI {
     let prefixMatches = Self.knownCommands.filter { $0.hasPrefix(lowered) }
     if prefixMatches.count == 1 { return prefixMatches[0] }
     // Substring match (e.g. "irror" -> "mirror")
-    let substringMatches = Self.knownCommands.filter { $0.contains(lowered) || lowered.contains($0) }
+    let substringMatches = Self.knownCommands.filter {
+      $0.contains(lowered) || lowered.contains($0)
+    }
     if substringMatches.count == 1 { return substringMatches[0] }
     // Levenshtein distance ≤ 2
     for cmd in Self.knownCommands {
@@ -289,7 +291,8 @@ struct SwiftMTPCLI {
     let a = Array(a), b = Array(b)
     var dp = Array(0...b.count)
     for i in 1...a.count {
-      var prev = dp[0]; dp[0] = i
+      var prev = dp[0]
+      dp[0] = i
       for j in 1...b.count {
         let tmp = dp[j]
         dp[j] = a[i - 1] == b[j - 1] ? prev : min(prev, dp[j], dp[j - 1]) + 1
@@ -319,6 +322,9 @@ struct SwiftMTPCLI {
     print("  move <h> <parent> Move an object to a new parent")
     print("  cp <h> <storage>  Copy an object (server-side)")
     print("  mirror <dest>     Mirror device contents locally")
+    print("    --photos-only            Only mirror image files")
+    print("    --format ext[,ext...]    Only mirror specified formats")
+    print("    --exclude-format ext[,ext...] Exclude specified formats")
     print("  snapshot          Capture full device content snapshot")
     print("")
     print("Edit Extensions (Android):")

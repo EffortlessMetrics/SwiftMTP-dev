@@ -73,4 +73,93 @@ final class MirrorEngineTests: XCTestCase {
     XCTAssertEqual(report.totalProcessed, 5)
     XCTAssertEqual(report.successRate, 60.0)
   }
+
+  // MARK: - Format Filter Tests
+
+  func testFormatFilterAllPassesEverything() {
+    let filter = MTPFormatFilter.all
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.exifJPEG))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.mp3))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.undefined))
+  }
+
+  func testFormatFilterCategoryImages() {
+    let filter = MTPFormatFilter.category(.images)
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.exifJPEG))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.png))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.heif))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.mp3))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.mp4Container))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.text))
+  }
+
+  func testFormatFilterCategoryAudio() {
+    let filter = MTPFormatFilter.category(.audio)
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.mp3))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.flac))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.wav))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.exifJPEG))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.mp4Container))
+  }
+
+  func testFormatFilterCategoryVideo() {
+    let filter = MTPFormatFilter.category(.video)
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.mp4Container))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.avi))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.mkv))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.mp3))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.exifJPEG))
+  }
+
+  func testFormatFilterCategoryDocuments() {
+    let filter = MTPFormatFilter.category(.documents)
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.text))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.msWordDocument))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.exifJPEG))
+  }
+
+  func testFormatFilterIncludingExtensions() {
+    let filter = MTPFormatFilter.including(extensions: ["jpg", "png", "heic"])
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.exifJPEG))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.png))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.heif))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.mp3))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.mp4Container))
+  }
+
+  func testFormatFilterExcludingExtensions() {
+    let filter = MTPFormatFilter.excluding(extensions: ["mp4", "avi"])
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.exifJPEG))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.mp3))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.mp4Container))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.avi))
+  }
+
+  func testFormatFilterExcludeTakesPrecedenceOverInclude() {
+    // If a code is in both include and exclude, exclude wins
+    let filter = MTPFormatFilter(
+      includeCodes: [PTPObjectFormat.exifJPEG, PTPObjectFormat.png],
+      excludeCodes: [PTPObjectFormat.png]
+    )
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.exifJPEG))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.png))
+  }
+
+  func testFormatFilterExtensionsWithDotPrefix() {
+    let filter = MTPFormatFilter.including(extensions: [".jpg", ".png"])
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.exifJPEG))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.png))
+    XCTAssertFalse(filter.matches(format: PTPObjectFormat.mp3))
+  }
+
+  func testFormatCategoryAllPassesEverything() {
+    let filter = MTPFormatFilter.category(.all)
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.exifJPEG))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.mp3))
+    XCTAssertTrue(filter.matches(format: PTPObjectFormat.undefined))
+  }
+
+  func testMTPFormatCategoryIsCaseIterable() {
+    XCTAssertEqual(MTPFormatCategory.allCases.count, 5)
+  }
 }
