@@ -93,6 +93,26 @@ func makePTPDataContainer(length: UInt32, code: UInt16, txid: UInt32) -> [UInt8]
 
 // MARK: - Error Mapping
 
+/// Human-readable name for a libusb error code.
+@inline(__always)
+func libusbErrorName(_ rc: Int32) -> String {
+  switch rc {
+  case Int32(LIBUSB_ERROR_IO.rawValue): return "IO"
+  case Int32(LIBUSB_ERROR_INVALID_PARAM.rawValue): return "INVALID_PARAM"
+  case Int32(LIBUSB_ERROR_ACCESS.rawValue): return "ACCESS"
+  case Int32(LIBUSB_ERROR_NO_DEVICE.rawValue): return "NO_DEVICE"
+  case Int32(LIBUSB_ERROR_NOT_FOUND.rawValue): return "NOT_FOUND"
+  case Int32(LIBUSB_ERROR_BUSY.rawValue): return "BUSY"
+  case Int32(LIBUSB_ERROR_TIMEOUT.rawValue): return "TIMEOUT"
+  case Int32(LIBUSB_ERROR_OVERFLOW.rawValue): return "OVERFLOW"
+  case Int32(LIBUSB_ERROR_PIPE.rawValue): return "PIPE"
+  case Int32(LIBUSB_ERROR_INTERRUPTED.rawValue): return "INTERRUPTED"
+  case Int32(LIBUSB_ERROR_NO_MEM.rawValue): return "NO_MEM"
+  case Int32(LIBUSB_ERROR_NOT_SUPPORTED.rawValue): return "NOT_SUPPORTED"
+  default: return "UNKNOWN(\(rc))"
+  }
+}
+
 @inline(__always)
 func mapLibusb(_ rc: Int32) -> TransportError {
   switch rc {
@@ -101,7 +121,7 @@ func mapLibusb(_ rc: Int32) -> TransportError {
   case Int32(LIBUSB_ERROR_ACCESS.rawValue): return .accessDenied
   case Int32(LIBUSB_ERROR_NO_DEVICE.rawValue): return .noDevice
   case Int32(LIBUSB_ERROR_PIPE.rawValue): return .stall
-  default: return .io("libusb rc=\(rc)")
+  default: return .io("libusb error \(libusbErrorName(rc)) (rc=\(rc))")
   }
 }
 
