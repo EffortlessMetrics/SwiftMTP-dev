@@ -348,15 +348,158 @@ public enum PTPResponseCode {
 }
 
 public enum PTPObjectFormat {
+
+  // MARK: - MTP 1.1 Standard Object Format Codes
+
+  // Undefined / General
+  public static let undefined: UInt16 = 0x3000
+  public static let association: UInt16 = 0x3001
+  public static let script: UInt16 = 0x3002
+  public static let executable: UInt16 = 0x3003
+
+  // Text
+  public static let text: UInt16 = 0x3004
+  public static let html: UInt16 = 0x3005
+  public static let dpof: UInt16 = 0x3006
+  public static let aiff: UInt16 = 0x3007
+  public static let wav: UInt16 = 0x3008
+
+  // Audio
+  public static let mp3: UInt16 = 0x3009
+  public static let avi: UInt16 = 0x300A
+  public static let mpeg: UInt16 = 0x300B
+  public static let asf: UInt16 = 0x300C
+  public static let wma: UInt16 = 0xB901
+  public static let aac: UInt16 = 0xB903
+  public static let audible: UInt16 = 0xB904
+  public static let flac: UInt16 = 0xB906
+  public static let ogg: UInt16 = 0xB980
+
+  // Image
+  public static let undefinedImage: UInt16 = 0x3800
+  public static let exifJPEG: UInt16 = 0x3801
+  public static let tiffEP: UInt16 = 0x3802
+  public static let bmp: UInt16 = 0x3804
+  public static let gif: UInt16 = 0x3805
+  public static let jfif: UInt16 = 0x3806
+  public static let pict: UInt16 = 0x3807
+  public static let png: UInt16 = 0x3808
+  public static let tiff: UInt16 = 0x3809
+  public static let jp2: UInt16 = 0x380B
+  public static let heif: UInt16 = 0x380D
+
+  // Video
+  public static let undefinedVideo: UInt16 = 0xB800
+  public static let wmv: UInt16 = 0xB801
+  public static let mp4Container: UInt16 = 0xB802
+  public static let mp2: UInt16 = 0xB803
+  public static let threeGP: UInt16 = 0xB804
+  public static let undefinedCollection: UInt16 = 0xB880
+  public static let mkv: UInt16 = 0xB982
+
+  // Document
+  public static let undefinedDocument: UInt16 = 0xBA00
+  public static let abstractMultimediaAlbum: UInt16 = 0xBA01
+  public static let abstractAudioAlbum: UInt16 = 0xBA05
+  public static let wplPlaylist: UInt16 = 0xBA10
+  public static let m3uPlaylist: UInt16 = 0xBA11
+  public static let xmlDocument: UInt16 = 0xBA82
+  public static let msWordDocument: UInt16 = 0xBA83
+  public static let msExcelSpreadsheet: UInt16 = 0xBA85
+  public static let msPowerPointPresentation: UInt16 = 0xBA86
+
+  // MARK: - Extension → Format mapping
+
+  private static let extensionMap: [String: UInt16] = [
+    // Image
+    ".jpg": exifJPEG, ".jpeg": exifJPEG, ".jfif": jfif,
+    ".png": png, ".gif": gif, ".bmp": bmp,
+    ".tiff": tiff, ".tif": tiff, ".tiff-ep": tiffEP,
+    ".heic": heif, ".heif": heif,
+    ".jp2": jp2, ".pict": pict, ".pct": pict,
+    // Audio
+    ".mp3": mp3, ".wav": wav, ".aiff": aiff, ".aif": aiff,
+    ".flac": flac, ".aac": aac, ".ogg": ogg, ".oga": ogg,
+    ".wma": wma, ".aa": audible, ".aax": audible,
+    // Video
+    ".mp4": mp4Container, ".m4v": mp4Container, ".m4a": mp4Container,
+    ".avi": avi, ".wmv": wmv, ".mkv": mkv,
+    ".3gp": threeGP, ".3g2": threeGP,
+    ".mov": mpeg, ".mpg": mpeg, ".mpeg": mpeg,
+    ".mp2": mp2, ".asf": asf,
+    // Text / Document
+    ".txt": text, ".html": html, ".htm": html,
+    ".xml": xmlDocument,
+    ".doc": msWordDocument, ".docx": msWordDocument,
+    ".xls": msExcelSpreadsheet, ".xlsx": msExcelSpreadsheet,
+    ".ppt": msPowerPointPresentation, ".pptx": msPowerPointPresentation,
+    ".m3u": m3uPlaylist, ".m3u8": m3uPlaylist,
+    ".wpl": wplPlaylist,
+    // Executable / Script
+    ".sh": script, ".bat": script, ".exe": executable,
+  ]
+
+  /// Infer MTP object-format code from a filename extension.
   public static func forFilename(_ name: String) -> UInt16 {
     let lower = name.lowercased()
-    if lower.hasSuffix(".txt") { return 0x3004 }  // Text
-    if lower.hasSuffix(".jpg") || lower.hasSuffix(".jpeg") { return 0x3801 }  // EXIF/JPEG
-    if lower.hasSuffix(".png") { return 0x380b }  // PNG
-    if lower.hasSuffix(".mp4") { return 0x300b }  // MP4
-    if lower.hasSuffix(".mp3") { return 0x3009 }  // MP3
-    if lower.hasSuffix(".aac") { return 0xb903 }  // AAC
-    return 0x3000  // Undefined
+    if let dot = lower.lastIndex(of: ".") {
+      let ext = String(lower[dot...])
+      if let code = extensionMap[ext] { return code }
+    }
+    return undefined
+  }
+
+  // MARK: - Human-readable name
+
+  private static let names: [UInt16: String] = [
+    undefined: "Undefined", association: "Association", script: "Script",
+    executable: "Executable", text: "Text", html: "HTML", dpof: "DPOF",
+    aiff: "AIFF", wav: "WAV", mp3: "MP3", avi: "AVI", mpeg: "MPEG",
+    asf: "ASF", wma: "WMA", aac: "AAC", audible: "Audible", flac: "FLAC",
+    ogg: "OGG", undefinedImage: "UndefinedImage", exifJPEG: "EXIF/JPEG",
+    tiffEP: "TIFF/EP", bmp: "BMP", gif: "GIF", jfif: "JFIF", pict: "PICT",
+    png: "PNG", tiff: "TIFF", jp2: "JP2", heif: "HEIF",
+    undefinedVideo: "UndefinedVideo", wmv: "WMV", mp4Container: "MP4",
+    mp2: "MP2", threeGP: "3GP", undefinedCollection: "UndefinedCollection",
+    mkv: "MKV", undefinedDocument: "UndefinedDocument",
+    abstractMultimediaAlbum: "AbstractMultimediaAlbum",
+    abstractAudioAlbum: "AbstractAudioAlbum",
+    wplPlaylist: "WPLPlaylist", m3uPlaylist: "M3UPlaylist",
+    xmlDocument: "XMLDocument", msWordDocument: "MSWordDocument",
+    msExcelSpreadsheet: "MSExcelSpreadsheet",
+    msPowerPointPresentation: "MSPowerPointPresentation",
+  ]
+
+  /// Human-readable name for a format code, e.g. `"EXIF/JPEG (0x3801)"`.
+  public static func describe(_ code: UInt16) -> String {
+    let n = names[code] ?? "Unknown"
+    return "\(n) (0x\(String(format: "%04x", code)))"
+  }
+
+  // MARK: - MIME type
+
+  private static let mimeTypes: [UInt16: String] = [
+    text: "text/plain", html: "text/html", xmlDocument: "text/xml",
+    exifJPEG: "image/jpeg", jfif: "image/jpeg", png: "image/png",
+    gif: "image/gif", bmp: "image/bmp", tiff: "image/tiff",
+    tiffEP: "image/tiff", jp2: "image/jp2", heif: "image/heif",
+    pict: "image/x-pict",
+    mp3: "audio/mpeg", wav: "audio/wav", aiff: "audio/aiff",
+    flac: "audio/flac", aac: "audio/aac", ogg: "audio/ogg",
+    wma: "audio/x-ms-wma", audible: "audio/vnd.audible.aax",
+    mp4Container: "video/mp4", avi: "video/x-msvideo", wmv: "video/x-ms-wmv",
+    mpeg: "video/mpeg", mkv: "video/x-matroska", threeGP: "video/3gpp",
+    mp2: "video/mpeg", asf: "video/x-ms-asf",
+    msWordDocument: "application/msword",
+    msExcelSpreadsheet: "application/vnd.ms-excel",
+    msPowerPointPresentation: "application/vnd.ms-powerpoint",
+    executable: "application/octet-stream", script: "text/x-script",
+    association: "inode/directory",
+  ]
+
+  /// MIME type for a format code, or `"application/octet-stream"` if unknown.
+  public static func mimeType(for code: UInt16) -> String {
+    mimeTypes[code] ?? "application/octet-stream"
   }
 }
 
