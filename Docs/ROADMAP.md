@@ -1,6 +1,6 @@
 # SwiftMTP Roadmap
 
-*Last updated: 2026-03-12*
+*Last updated: 2026-03-14*
 
 > **Pre-Alpha Status**: SwiftMTP has extensive protocol and test infrastructure but minimal real-device validation. Only 1 device (Xiaomi Mi Note 2) has completed real file transfers. The version numbers below (2.x) reflect internal development milestones, not production readiness. Items marked as "shipped" or "complete" are code-complete and mock-tested unless noted otherwise — most have not been validated on real hardware.
 
@@ -8,7 +8,7 @@ This roadmap is the execution plan for the next implementation sprints in the 2.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **~9,191+ tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices). **101 PRs merged** this session (#363–#467).
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **~9,191+ tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices). **500+ PRs merged** (#1–#500) including **134 PRs this session** (#363–#500).
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
@@ -46,19 +46,82 @@ Minimum expectations for each item:
 | 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
 | 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
 
-## Next Priorities (Post Wave 41)
+## Next Priorities (Post Wave 45)
 
 | Priority | Area | Status | Notes |
 |----------|------|--------|-------|
-| IOUSBHost transport implementation | Transport | Planned | Scaffold shipped (#441); full implementation needed to replace libusb dependency |
-| OnePlus 3T write failure investigation | Device support | Blocked | Writes fail with 0x201D (InvalidParameter); device absent from recent lab runs |
+| IOUSBHost transport implementation | Transport | In Progress | Discovery (#475), bulk ops (#481), file transfer (#491) shipped; events and integration testing remain |
+| OnePlus 3T write failure investigation | Device support | Researched | Write failure root-cause analysis shipped (#498): 0x201D traced to MTP session state; debug recommendations documented |
 | Samsung Galaxy retest | Device support | Ready | Transport fixes shipped (#445); awaiting retest with skipAltSetting/skipPreClaimReset |
 | Pixel 7 retest | Device support | Ready | Transport fixes shipped (#443); awaiting retest with handle re-open and timeout tuning |
 | Real-device validation expansion | Testing | Ongoing | Only 1 of 7 devices transfers files; need community help-wanted push |
-| Homebrew formula for CLI | Distribution | Planned | Package `swiftmtp` CLI for `brew install swiftmtp` |
-| DocC documentation generation | Documentation | Planned | DocC generator exists (#399) but needs CI integration and hosting |
+| Homebrew formula for CLI | Distribution | ✅ Shipped | Homebrew formula and install docs shipped (#478) |
+| DocC documentation generation | Documentation | ✅ Shipped | DocC pipeline with CI integration shipped (#483) |
 | Error recovery real-device validation | Core | Planned | ErrorRecoveryLayer (#449) is mock-tested only; needs real-device stress testing |
 | Adaptive chunk tuner validation | Performance | Planned | AdaptiveChunkTuner (#451) needs real transfer benchmarks to validate tuning curves |
+
+## Wave 44–45 Activity (2026-03-13 → 2026-03-14)
+
+Key development activity across these two waves — 15 PRs (#486–#500) covering release prep, IOUSBHost file transfer, licensing, structured logging, and test hardening:
+
+### Wave 45 — Licensing & Observability (PRs #494–#500)
+- **SPDX headers** (#494): license headers across all source files
+- **SPDX test sweep** (#495): license header compliance tests
+- **README polish** (#496): feature matrix, badges, and presentation refresh
+- **Structured OSLog logging** (#497): module-categorized OSLog integration
+- **OnePlus 3T research** (#498): write failure root-cause analysis and debug recommendations
+- **Collect enhancements** (#499): strict validation and JSON output for `swiftmtp collect`
+- **Journal crash tests** (#500): comprehensive TransferJournal crash recovery tests
+
+### Wave 44 — Release Prep & Quirk Flags (PRs #486–#493)
+- **Release checklist** (#486): pre-alpha v0.1.0 release checklist
+- **CLI command map** (#487): comprehensive CLI UX reference
+- **FileProvider truth audit** (#488): honest capability status documentation
+- **TSAN status docs** (#489): local validation and status documentation
+- **Contribution guide refresh** (#490): wave 37–43 patterns
+- **IOUSBHost file transfer** (#491): `getObject`/`sendObject` implementation
+- **Scenario tests** (#492): expanded end-to-end device workflow tests
+- **QuirkFlags wiring** (#493): 9 new device flags wired into transport and protocol
+
+### Key Outcomes
+- **~9,191+ tests**, 0 unexpected failures
+- **134 PRs merged** this session (#363–#500) — **500+ total PRs** in the repository
+- IOUSBHost transport progressed from scaffold to discovery → bulk → file transfer
+- Homebrew formula (#478) and DocC pipeline (#483) shipped in wave 43
+- OnePlus 3T write failure researched (#498): 0x201D traced to MTP session state issues
+- Structured OSLog logging replaces ad-hoc print statements
+
+## Wave 42–43 Activity (2026-03-12)
+
+Key development activity across these two waves — 18 PRs (#468–#485) covering IOUSBHost discovery, Homebrew distribution, CLI UX, and documentation:
+
+### Wave 43 — Bootstrap & Homebrew (PRs #477–#485)
+- **Bootstrap script** (#477): bootstrap and mock profile documentation
+- **Homebrew formula** (#478): `brew install swiftmtp` formula and install docs
+- **CLI progress bars** (#479): transfer progress indicators with ETA and throughput
+- **Error recovery tests** (#480): comprehensive escalation integration tests
+- **IOUSBHost bulk ops** (#481): bulk transfer MTP operations
+- **Index benchmarks** (#482): query benchmarks and hot-path optimization
+- **DocC pipeline** (#483): documentation generation pipeline with CI setup
+- **MTP compat research** (#484): libmtp device flags analysis → 9 new QuirkFlags
+- **Mirror resume tests** (#485): harden resume-from-journal edge cases
+
+### Wave 42 — Shell Completions & CI (PRs #468–#476)
+- **Shell completions** (#468): bash, zsh, and fish completion scripts
+- **CI consolidation** (#469): TSAN, fuzz runner pinning, coverage pipeline optimization
+- **Development log** (#470): detailed wave-by-wave development log
+- **ROADMAP/CHANGELOG refresh** (#471): waves 37–41 documentation
+- **Error catalog** (#472): comprehensive error catalog with troubleshooting guide
+- **PrivacyRedactor** (#473): submission artifact obfuscation
+- **Snapshot tests** (#474): CLI output and report formatting tests
+- **IOUSBHost discovery** (#475): device discovery and session scaffold
+- **Transport refactor** (#476): LibUSBTransport helpers extracted into focused files
+
+### Key Outcomes
+- IOUSBHost transport progressed from scaffold (#441) to discovery (#475) and bulk ops (#481)
+- Homebrew formula shipped — `brew install swiftmtp` now available
+- DocC documentation pipeline operational with CI integration
+- 9 new QuirkFlags discovered from libmtp device flags analysis and wired into transport
 
 ## Wave 40–41 Activity (2026-03-11)
 
@@ -88,7 +151,7 @@ Key development activity across these two waves — 18 PRs (#446–#467) coverin
 
 ### Key Outcomes
 - **~9,191+ tests** (up from ~8,577), 0 unexpected failures
-- **101 PRs merged** this session (#363–#467)
+- **101 PRs merged** in waves 37–41 (#363–#467)
 - All major wave 38 protocol features now have layered error recovery and adaptive tuning
 - Mirror engine gained conflict resolution (6 strategies) and format-based filtering
 - Comprehensive test backfill across 10 targets ensures coverage of waves 37–40 features
