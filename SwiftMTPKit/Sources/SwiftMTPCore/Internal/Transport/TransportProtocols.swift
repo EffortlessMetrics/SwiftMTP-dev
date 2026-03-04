@@ -120,6 +120,12 @@ public protocol MTPLink: Sendable {
   /// - Returns: Array of supported property codes, or empty if not supported by device.
   func getObjectPropsSupported(format: UInt16) async throws -> [UInt16]
 
+  /// SetObjectPropList (0x9806): write multiple object properties in a single transaction.
+  ///
+  /// - Parameter entries: Array of property entries (handle, propCode, datatype, value).
+  /// - Returns: The number of entries successfully written.
+  func setObjectPropList(entries: [MTPPropListEntry]) async throws -> UInt32
+
   /// Begin reading raw MTP event packets from the interrupt endpoint.
   /// No-op on links that do not support an interrupt endpoint.
   func startEventPump()
@@ -264,6 +270,52 @@ public extension MTPLink {
       props.append(code)
     }
     return props
+  }
+
+  /// Default: execute SetObjectPropList via executeStreamingCommand.
+  func setObjectPropList(entries: [MTPPropListEntry]) async throws -> UInt32 {
+    guard !entries.isEmpty else {
+      throw MTPError.preconditionFailed("SetObjectPropList requires at least one entry.")
+    }
+    for (i, entry) in entries.enumerated() {
+      guard entry.handle != 0 else {
+        throw MTPError.preconditionFailed(
+          "SetObjectPropList entry \(i) has invalid object handle 0.")
+      }
+    }
+
+    // Encode the MTP SetObjectPropList dataset:
+    // UInt32 numElements, then for each: UInt32 handle, UInt16 propCode, UInt16 datatype, value
+    var enc = MTPDataEncoder()
+    enc.append(UInt32(entries.count))
+    for entry in entries {
+      entry.encode(into: &enc)
+    }
+    let payload = enc.encodedData
+
+    let command = PTPContainer(
+      type: PTPContainer.Kind.command.rawValue,
+      code: MTPOp.setObjectPropList.rawValue,
+      txid: 0,
+      params: []
+    )
+    let boxed = BoxedOffset()
+    let response = try await executeStreamingCommand(
+      command, dataPhaseLength: UInt64(payload.count),
+      dataInHandler: nil,
+      dataOutHandler: { buf in
+        let off = boxed.get()
+        let remaining = payload.count - off
+        guard remaining > 0 else { return 0 }
+        let toCopy = min(buf.count, remaining)
+        payload.copyBytes(to: buf, from: off..<off + toCopy)
+        _ = boxed.getAndAdd(toCopy)
+        return toCopy
+      }
+    )
+    try response.checkOK()
+    // Response param1 contains the number of properties successfully set.
+    return response.params.first ?? UInt32(entries.count)
   }
 }
 

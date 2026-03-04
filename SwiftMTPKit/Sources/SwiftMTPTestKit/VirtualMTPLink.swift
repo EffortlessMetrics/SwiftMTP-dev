@@ -197,6 +197,16 @@ public final class VirtualMTPLink: MTPLink, @unchecked Sendable {
     // VirtualMTPLink accepts all set-prop operations without persisting them
   }
 
+  public func setObjectPropList(entries: [MTPPropListEntry]) async throws -> UInt32 {
+    try checkFault(.executeCommand)
+    for entry in entries {
+      guard config.objects.contains(where: { $0.handle == entry.handle }) else {
+        throw TransportError.io("Object \(entry.handle) not found")
+      }
+    }
+    return UInt32(entries.count)
+  }
+
   // MARK: - Android Edit Extensions
 
   public func beginEditObject(handle: UInt32) async throws {

@@ -104,6 +104,86 @@ final class ObjectPropAPITests: XCTestCase {
     }
   }
 
+  // MARK: - SetObjectPropList tests
+
+  func testSetObjectPropListSucceedsWithSingleEntry() async throws {
+    let link = makeLinkWithSamplePhoto()
+    let entry = MTPPropListEntry.string(
+      handle: 0x0003, propCode: MTPObjectPropCode.objectFileName, value: "RENAMED.JPG")
+    let count = try await link.setObjectPropList(entries: [entry])
+    XCTAssertEqual(count, 1)
+  }
+
+  func testSetObjectPropListSucceedsWithMultipleEntries() async throws {
+    let link = makeLinkWithSamplePhoto()
+    let entries: [MTPPropListEntry] = [
+      .string(handle: 0x0003, propCode: MTPObjectPropCode.objectFileName, value: "NEW.JPG"),
+      .string(handle: 0x0003, propCode: MTPObjectPropCode.dateModified, value: "20250601T120000"),
+      .uint16(handle: 0x0003, propCode: MTPObjectPropCode.rating, value: 5),
+    ]
+    let count = try await link.setObjectPropList(entries: entries)
+    XCTAssertEqual(count, 3)
+  }
+
+  func testSetObjectPropListThrowsForMissingHandle() async throws {
+    let link = makeLinkWithSamplePhoto()
+    let entry = MTPPropListEntry.string(
+      handle: 0xDEAD, propCode: MTPObjectPropCode.objectFileName, value: "FAIL.JPG")
+    do {
+      _ = try await link.setObjectPropList(entries: [entry])
+      XCTFail("Should have thrown for missing object")
+    } catch {
+      // Expected
+    }
+  }
+
+  func testSetObjectPropListConvenienceUInt32() async throws {
+    let link = makeLinkWithSamplePhoto()
+    let entry = MTPPropListEntry.uint32(
+      handle: 0x0003, propCode: MTPObjectPropCode.duration, value: 180_000)
+    let count = try await link.setObjectPropList(entries: [entry])
+    XCTAssertEqual(count, 1)
+  }
+
+  func testMTPPropListEntryAutoResolvesDataType() {
+    let entry = MTPPropListEntry(
+      handle: 0x0003, propCode: MTPObjectPropCode.objectFileName,
+      value: PTPString.encode("test.jpg"))
+    XCTAssertEqual(entry.datatype, 0xFFFF)  // String type
+
+    let entry2 = MTPPropListEntry(
+      handle: 0x0003, propCode: MTPObjectPropCode.duration, value: Data([0, 0, 0, 0]))
+    XCTAssertEqual(entry2.datatype, 0x0006)  // UInt32 type
+  }
+
+  func testMTPPropListEntryEncoding() {
+    var enc = MTPDataEncoder()
+    let entry = MTPPropListEntry.uint16(
+      handle: 0x0003, propCode: MTPObjectPropCode.rating, value: 5)
+    entry.encode(into: &enc)
+    let data = enc.encodedData
+    // handle (4) + propCode (2) + datatype (2) + value (2) = 10 bytes
+    XCTAssertEqual(data.count, 10)
+    var dec = MTPDataDecoder(data: data)
+    XCTAssertEqual(dec.readUInt32(), 0x0003)
+    XCTAssertEqual(dec.readUInt16(), MTPObjectPropCode.rating)
+    XCTAssertEqual(dec.readUInt16(), 0x0004)  // UInt16 type
+    XCTAssertEqual(dec.readUInt16(), 5)
+  }
+
+  func testPTPLayerSetObjectPropListHelper() async throws {
+    let link = makeLinkWithSamplePhoto()
+    let entries: [MTPPropListEntry] = [
+      .string(handle: 0x0003, propCode: MTPObjectPropCode.objectFileName, value: "VIA_PTPLAYER.JPG"),
+    ]
+    let count = try await PTPLayer.setObjectPropList(entries: entries, on: link)
+    XCTAssertEqual(count, 1)
+  }
+
+  func testSetObjectPropListOpcodeValue() {
+    XCTAssertEqual(MTPOp.setObjectPropList.rawValue, 0x9806)
+  }
+
   // MARK: - PTPLayer date helpers
 
   func testGetObjectModificationDateParsesDate() async throws {
