@@ -212,6 +212,9 @@ func claimCandidate(
   let iface = Int32(c.ifaceNumber)
   let isPixel = probeIsPixelNoProgressTarget(handle: handle)
 
+  log.info(
+    "USB claim starting: iface=\(c.ifaceNumber) bulkIn=\(String(format: "0x%02x", c.bulkIn), privacy: .public) bulkOut=\(String(format: "0x%02x", c.bulkOut), privacy: .public) class=\(String(format: "0x%02x", c.ifaceClass), privacy: .public) retries=\(retryCount)"
+  )
   if debug {
     print(
       String(
@@ -296,9 +299,9 @@ func claimCandidate(
             )
           }
           log.error(
-            "set_interface_alt_setting failed after retries: rc=\(setAltRC) iface=\(c.ifaceNumber)"
+            "set_interface_alt_setting failed after retries: rc=\(setAltRC) iface=\(c.ifaceNumber). Possible macOS IOService or exclusive USB claim conflict."
           )
-          throw TransportError.io("set_interface_alt_setting failed: rc=\(setAltRC)")
+          throw TransportError.io("set_interface_alt_setting failed: rc=\(setAltRC) on interface \(c.ifaceNumber) — check for competing USB processes")
         }
         continue
       }
@@ -353,37 +356,27 @@ func claimCandidate(
         )
       }
 
+      log.info(
+        "USB claim succeeded: iface=\(c.ifaceNumber) attempt=\(attempt + 1)/\(retryCount + 1) stabilizeMs=\(postClaimStabilizeMs)"
+      )
       return  // Success - exit the retry loop
     }
 
     // Claim failed - log the error and retry if we have attempts left
+    let errorName = libusbErrorName(claimRC)
     if debug {
-      let errorName: String
-      switch claimRC {
-      case LIBUSB_ERROR_ACCESS_DENIED:
-        errorName = "ACCESS_DENIED"
-      case LIBUSB_ERROR_NO_DEVICE:
-        errorName = "NO_DEVICE"
-      case LIBUSB_ERROR_BUSY:
-        errorName = "BUSY"
-      case LIBUSB_ERROR_NOT_FOUND:
-        errorName = "NOT_FOUND"
-      case LIBUSB_ERROR_TIMEOUT:
-        errorName = "TIMEOUT"
-      case LIBUSB_ERROR_NOT_SUPPORTED:
-        errorName = "NOT_SUPPORTED"
-      default:
-        errorName = "UNKNOWN (\(claimRC))"
-      }
       print("   [Claim] FAILED: \(errorName), attempt \(attempt + 1)/\(retryCount + 1)")
     }
 
     // If this was the last attempt, throw the error
     if attempt == retryCount {
       log.error(
-        "USB claim failed after \(retryCount + 1) attempts: rc=\(claimRC) iface=\(c.ifaceNumber)"
+        "USB claim failed after \(retryCount + 1) attempts: rc=\(claimRC) (\(errorName, privacy: .public)) iface=\(c.ifaceNumber). Close competing USB apps (Android File Transfer, adb, Chrome) and retry."
       )
-      throw TransportError.io("libusb_claim_interface failed: rc=\(claimRC)")
+      throw TransportError.io(
+        "libusb_claim_interface failed: \(errorName) (rc=\(claimRC)) on interface \(c.ifaceNumber) after \(retryCount + 1) attempts. "
+          + "Another process may hold an exclusive claim. Close Android File Transfer, adb, or browser USB access and retry."
+      )
     }
 
     // Brief delay before retry to allow device to settle
