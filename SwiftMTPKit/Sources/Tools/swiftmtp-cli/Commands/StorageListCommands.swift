@@ -46,13 +46,14 @@ struct StorageListCommands {
     }
   }
 
-  static func runList(flags: CLIFlags, args: [String]) async {
-    guard let handleStr = args.first, let handle = UInt32(handleStr) else {
+  static func runList(flags: CLIFlags, args: [String], detail: Bool = false) async {
+    let filteredArgs = args.filter { $0 != "--detail" }
+    guard let handleStr = filteredArgs.first, let handle = UInt32(handleStr) else {
       if flags.json {
         printJSON(["error": "Usage: ls <storage_handle>"], type: "listResult")
       } else {
         print("❌ Missing or invalid storage handle.")
-        print("   Usage: swiftmtp ls <storage_handle>")
+        print("   Usage: swiftmtp ls <storage_handle> [--detail]")
         print("   Tip: Run 'swiftmtp storages' to find available storage IDs.")
       }
       exitNow(.usage)
@@ -65,13 +66,37 @@ struct StorageListCommands {
       for try await batch in stream {
         for item in batch {
           if flags.json {
-            items.append([
+            var entry: [String: Any] = [
               "handle": item.handle,
               "name": item.name,
               "sizeBytes": item.sizeBytes ?? 0,
               "formatCode": item.formatCode,
+              "formatDescription": PTPObjectFormat.describe(item.formatCode),
               "isDirectory": item.formatCode == 0x3001,
-            ])
+            ]
+            if detail {
+              if let modified = item.modified {
+                entry["modified"] = ISO8601DateFormatter().string(from: modified)
+              }
+              entry["storageId"] = item.storage.raw
+              if let parent = item.parent {
+                entry["parentHandle"] = parent
+              }
+              if !item.properties.isEmpty {
+                var props: [[String: Any]] = []
+                for (code, value) in item.properties.sorted(by: { $0.key < $1.key }) {
+                  props.append([
+                    "code": String(format: "0x%04X", code),
+                    "name": MTPObjectPropCode.displayName(for: code),
+                    "value": value,
+                  ])
+                }
+                entry["properties"] = props
+              }
+            }
+            items.append(entry)
+          } else if detail {
+            print(InfoCommand.formatDetailLine(item))
           } else {
             let type = item.formatCode == 0x3001 ? "📁" : "📄"
             print("\(type) \(item.name) (handle: \(item.handle))")
