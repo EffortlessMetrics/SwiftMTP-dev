@@ -1,0 +1,88 @@
+#compdef swiftmtp
+# Zsh completion for swiftmtp
+# Install: cp completions/_swiftmtp to a directory in your $fpath
+
+_swiftmtp_commands() {
+    local -a commands
+    commands=(
+        'probe:discover connected MTP devices'
+        'ls:list device contents'
+        'pull:download files from device'
+        'push:upload files to device'
+        'cp:copy objects on device (server-side)'
+        'copy:copy objects on device (server-side)'
+        'edit:edit files on Android devices'
+        'delete:delete objects on device'
+        'move:move objects on device'
+        'thumb:download object thumbnails'
+        'info:show detailed object/device info'
+        'snapshot:create device snapshot'
+        'mirror:mirror device content'
+        'bench:benchmark transfers'
+        'events:monitor device events'
+        'quirks:show device quirks'
+        'health:device health check'
+        'storages:list device storages'
+        'collect:collect device diagnostics'
+        'submit:submit device report'
+        'add-device:add a new device profile'
+        'wizard:interactive guided device setup'
+        'device-lab:automated device testing matrix'
+        'profile:device profile management'
+        'diag:run diagnostics'
+        'usb-dump:dump raw USB descriptors'
+        'learn-promote:promote learned quirk to static'
+        'bdd:run BDD scenarios'
+        'storybook:run storybook demo'
+        'version:show version information'
+    )
+    _describe -t commands 'swiftmtp command' commands
+}
+
+_swiftmtp() {
+    local -a global_opts
+    global_opts=(
+        '--real-only[only use real devices]'
+        '--mock[use mock device]'
+        '--mock-profile=[mock profile to use]:profile:(pixel7 galaxy iphone canon default)'
+        '--json[output as JSON]'
+        '--jsonl[output as JSON Lines]'
+        '--trace-usb[enable USB tracing]'
+        '--trace-usb-details[enable detailed USB tracing]'
+        '--strict[enable strict mode]'
+        '--safe[enable safe mode]'
+        '--vid=[filter by vendor ID]:vendor id'
+        '--pid=[filter by product ID]:product id'
+        '--bus=[filter by USB bus]:bus number'
+        '--address=[filter by USB address]:address'
+        '--help[show help]'
+    )
+
+    _arguments -C \
+        $global_opts \
+        '1:command:_swiftmtp_commands' \
+        '*::arg:->args'
+
+    case $state in
+        args)
+            case ${words[1]} in
+                pull|push|ls|delete|move|cp|copy|edit|thumb|info)
+                    _files
+                    ;;
+                mirror)
+                    _arguments \
+                        '--dry-run[preview without changes]' \
+                        '--delete[delete extraneous files]' \
+                        '--format=[filter by MTP format]:format' \
+                        '--conflict=[conflict resolution strategy]:strategy:(newest largest source destination skip ask)' \
+                        '*:path:_files'
+                    ;;
+                *)
+                    _arguments $global_opts
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+_swiftmtp "$@"
