@@ -1051,6 +1051,18 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     )
     .checkOK()
   }
+  public func copyObject(
+    handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle {
+    let result = try await executeStreamingCommand(
+      PTPContainer(
+        type: 1, code: PTPOp.copyObject.rawValue, txid: 0,
+        params: [handle, storage.raw, parent ?? 0xFFFFFFFF]),
+      dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil
+    )
+    try result.checkOK()
+    return result.params.first ?? 0
+  }
 
   public func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     try await executeStreamingCommand(

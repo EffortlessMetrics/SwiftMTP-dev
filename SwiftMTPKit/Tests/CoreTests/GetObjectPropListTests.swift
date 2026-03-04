@@ -233,6 +233,7 @@ final class CapturingLink: MTPLink, @unchecked Sendable {
   {
     try await inner.moveObject(handle: handle, to: storage, parent: parent)
   }
+  func copyObject(handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> MTPObjectHandle { 0 }
   func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     lock.withLock { capturedCodes.append(command.code) }
     return try await inner.executeCommand(command)

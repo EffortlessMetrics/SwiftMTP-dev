@@ -227,6 +227,33 @@ public actor VirtualMTPDevice: MTPDevice {
     objectTree[handle] = moved
   }
 
+  public func copyObject(
+    handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle {
+    record(
+      "copyObject",
+      parameters: [
+        "handle": "\(handle)", "toStorage": "\(toStorage.raw)",
+        "parentFolder": "\(parentFolder ?? 0)",
+      ])
+    guard let existing = objectTree[handle] else {
+      throw MTPError.objectNotFound
+    }
+    let newHandle = nextHandle
+    nextHandle += 1
+    let copy = VirtualObjectConfig(
+      handle: newHandle,
+      storage: toStorage,
+      parent: parentFolder,
+      name: existing.name,
+      sizeBytes: existing.sizeBytes,
+      formatCode: existing.formatCode,
+      data: existing.data
+    )
+    objectTree[newHandle] = copy
+    return newHandle
+  }
+
   public var probedCapabilities: [String: Bool] {
     get async { [:] }
   }

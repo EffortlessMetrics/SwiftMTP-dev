@@ -349,6 +349,7 @@ private final class QuirkBDDNotSupportedLink: MTPLink, @unchecked Sendable {
   {
     try await inner.moveObject(handle: handle, to: storage, parent: parent)
   }
+  func copyObject(handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> MTPObjectHandle { 0 }
   func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     try await inner.executeCommand(command)
   }

@@ -114,6 +114,19 @@ public protocol MTPDevice: Sendable {
   ///   - newParent: New parent directory handle, or `nil` for root
   func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws
 
+  /// Copy an object on the device, returning the new object's handle.
+  ///
+  /// Uses the MTP CopyObject (0x101A) operation to perform a server-side copy
+  /// without transferring file data over USB.
+  ///
+  /// - Parameters:
+  ///   - handle: Handle of the object to copy
+  ///   - toStorage: Destination storage ID
+  ///   - parentFolder: Destination parent folder handle, or `nil` for root
+  /// - Returns: Handle of the newly created copy
+  func copyObject(handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?)
+    async throws -> MTPObjectHandle
+
   /// Ensure the device session is open, opening it if necessary.
   func openIfNeeded() async throws
 

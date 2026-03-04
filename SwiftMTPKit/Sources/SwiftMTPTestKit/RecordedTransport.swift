@@ -148,6 +148,12 @@ public final class RecordedMTPLink: MTPLink, @unchecked Sendable {
     throw MTPError.notSupported("RecordedMTPLink: moveObject not supported in replay")
   }
 
+  public func copyObject(
+    handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle {
+    throw MTPError.notSupported("RecordedMTPLink: copyObject not supported in replay")
+  }
+
   public func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     let response = try nextResponse()
     let code = readLE16(from: response, at: 6) ?? 0x2001

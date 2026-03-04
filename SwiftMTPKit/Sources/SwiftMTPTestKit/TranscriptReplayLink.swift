@@ -148,6 +148,13 @@ public final class TranscriptReplayLink: MTPLink, @unchecked Sendable {
     try consumeNext("moveObject")
   }
 
+  public func copyObject(
+    handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle {
+    let entry = try consumeNext("copyObject")
+    return entry.response?.params?.first ?? 0
+  }
+
   public func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     let entry = try consumeNext("executeCommand")
     return PTPResponseResult(

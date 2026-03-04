@@ -308,6 +308,10 @@ private actor MockSchedulerDevice: MTPDevice {
     throw MTPError.notSupported("move is not needed in this test double")
   }
 
+  func copyObject(handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?) async throws -> MTPObjectHandle {
+    throw MTPError.notSupported("copyObject is not needed in this test double")
+  }
+
   var probedCapabilities: [String: Bool] { get async { [:] } }
   var effectiveTuning: EffectiveTuning { get async { .defaults() } }
 

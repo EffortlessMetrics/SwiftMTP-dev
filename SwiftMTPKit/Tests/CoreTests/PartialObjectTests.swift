@@ -185,6 +185,7 @@ final class RespondingLink: MTPLink, @unchecked Sendable {
   func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?)
     async throws
   {}
+  func copyObject(handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> MTPObjectHandle { 0 }
   func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     lastCommand = command
     return PTPResponseResult(code: 0x2001, txid: command.txid)
@@ -244,6 +245,7 @@ final class CapturingLinkWrapper: MTPLink, @unchecked Sendable {
   func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?)
     async throws
   { try await inner.moveObject(handle: handle, to: storage, parent: parent) }
+  func copyObject(handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> MTPObjectHandle { 0 }
   func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     lock.withLock { capturedCodes.append(command.code) }
     return try await inner.executeCommand(command)

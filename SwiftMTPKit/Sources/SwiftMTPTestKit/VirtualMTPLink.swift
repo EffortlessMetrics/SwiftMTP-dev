@@ -117,6 +117,17 @@ public final class VirtualMTPLink: MTPLink, @unchecked Sendable {
     }
   }
 
+  public func copyObject(
+    handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle {
+    try checkFault(.copyObject)
+    guard config.objects.contains(where: { $0.handle == handle }) else {
+      throw TransportError.io("Object \(handle) not found")
+    }
+    // Return a synthetic new handle
+    return handle &+ 1000
+  }
+
   public func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     try checkFault(.executeCommand)
     try await applyLatency(.executeCommand)

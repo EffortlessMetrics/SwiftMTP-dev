@@ -192,6 +192,19 @@ public final class TranscriptRecorder: MTPLink, @unchecked Sendable {
     }
   }
 
+  public func copyObject(
+    handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle {
+    let params: [UInt32] = [handle, storage.raw] + (parent.map { [$0] } ?? [])
+    var newHandle: MTPObjectHandle = 0
+    try await record("copyObject", request: TranscriptData(params: params)) {
+      newHandle = try await inner.copyObject(
+        handle: handle, toStorage: storage, parent: parent)
+      return TranscriptData(params: [newHandle])
+    }
+    return newHandle
+  }
+
   public func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     var result: PTPResponseResult!
     try await record(

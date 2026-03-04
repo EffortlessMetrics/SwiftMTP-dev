@@ -18,6 +18,7 @@ public enum LinkOperationType: String, Sendable, CaseIterable {
   case getObjectInfos
   case deleteObject
   case moveObject
+  case copyObject
   case executeCommand
   case executeStreamingCommand
 }

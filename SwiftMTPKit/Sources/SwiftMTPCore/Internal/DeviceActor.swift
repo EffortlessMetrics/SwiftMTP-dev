@@ -302,6 +302,26 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     }
   }
 
+  /// Copy an object on the device, returning the new object's handle.
+  ///
+  /// - Parameters:
+  ///   - handle: Handle of the object to copy
+  ///   - toStorage: Destination storage ID
+  ///   - parentFolder: Destination parent folder handle, or `nil` for root
+  /// - Returns: Handle of the newly created copy
+  public func copyObject(
+    handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle {
+    guard handle != 0 else {
+      throw MTPError.preconditionFailed("CopyObject requires a valid object handle (got 0).")
+    }
+    try await openIfNeeded()
+    let link = try await getMTPLink()
+    return try await BusyBackoff.onDeviceBusy {
+      try await link.copyObject(handle: handle, toStorage: toStorage, parent: parentFolder)
+    }
+  }
+
   public nonisolated var events: AsyncStream<MTPEvent> {
     AsyncStream { continuation in
       Task {

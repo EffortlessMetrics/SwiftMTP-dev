@@ -85,6 +85,8 @@ public protocol MTPLink: Sendable {
   func deleteObject(handle: MTPObjectHandle) async throws
   func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?)
     async throws
+  func copyObject(handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?)
+    async throws -> MTPObjectHandle
 
   func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult
 
