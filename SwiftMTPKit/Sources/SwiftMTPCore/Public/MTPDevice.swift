@@ -558,6 +558,14 @@ public struct SwiftMTPConfig: Sendable {
   /// Defaults to false.
   public var resetOnOpen = false
 
+  /// Skip `libusb_set_interface_alt_setting` after claim (Samsung quirk).
+  /// Defaults to false.
+  public var skipAltSetting = false
+
+  /// Skip pre-claim `libusb_reset_device` + settle delay (Samsung quirk).
+  /// Defaults to false.
+  public var skipPreClaimReset = false
+
   /// Whether to temporarily disable the interrupt event pump.
   /// Defaults to false.
   public var disableEventPump = false

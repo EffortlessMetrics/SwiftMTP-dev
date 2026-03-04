@@ -288,8 +288,16 @@ public actor LibUSBTransport: MTPTransport {
 
     // For vendor-specific devices (class 0xff), try USB reset before probing.
     // Pixel 7 is explicitly excluded by default to avoid re-enumeration collapse.
+    // Samsung devices skip this entirely (skipPreClaimReset quirk) — the reset
+    // eats into Samsung's ~3-second MTP session window.
     if isVendorSpecificMTP {
-      if skipPixelResetByPolicy {
+      if config.skipPreClaimReset {
+        if debug {
+          print(
+            "   [Open] Skipping pre-claim reset (skipPreClaimReset quirk)"
+          )
+        }
+      } else if skipPixelResetByPolicy {
         if debug {
           print(
             "   [Open] Vendor-specific MTP device is Pixel 7; skipping pre-claim reset (set SWIFTMTP_PIXEL_ALLOW_OPEN_RESET=1 to override)"
@@ -314,7 +322,7 @@ public actor LibUSBTransport: MTPTransport {
       // Brief pause after reset for device to stabilize.
       // 300ms: USB 2.0 spec allows 10ms, but Android devices with vendor-specific
       // MTP stacks need 100-250ms for firmware re-initialization. 300ms adds margin.
-      if !skipPixelResetByPolicy {
+      if !skipPixelResetByPolicy && !config.skipPreClaimReset {
         usleep(300_000)
       }
     }
@@ -341,7 +349,8 @@ public actor LibUSBTransport: MTPTransport {
     var result = tryProbeAllCandidates(
       handle: handle, device: dev, candidates: candidates,
       handshakeTimeoutMs: effectiveTimeout, postClaimStabilizeMs: config.postClaimStabilizeMs,
-      postProbeStabilizeMs: config.postProbeStabilizeMs, debug: debug
+      postProbeStabilizeMs: config.postProbeStabilizeMs, debug: debug,
+      skipAltSetting: config.skipAltSetting
     )
 
     // Pass 1b (aggressive, no reset): force configuration + re-claim + alt=0 + clear_halt,
@@ -361,7 +370,8 @@ public actor LibUSBTransport: MTPTransport {
         candidates: candidates,
         handshakeTimeoutMs: max(effectiveTimeout, config.handshakeTimeoutMs),
         postClaimStabilizeMs: max(config.postClaimStabilizeMs, 500),
-        debug: debug
+        debug: debug,
+        skipAltSetting: config.skipAltSetting
       )
     } else if result.candidate == nil && debug {
       print("   [Open] Pass 1 failed; skipping aggressive rung for this device family")
@@ -433,7 +443,8 @@ public actor LibUSBTransport: MTPTransport {
             handle: handle, device: dev, candidates: candidates,
             handshakeTimeoutMs: effectiveTimeout,
             postClaimStabilizeMs: config.postClaimStabilizeMs,
-            postProbeStabilizeMs: config.postProbeStabilizeMs, debug: debug
+            postProbeStabilizeMs: config.postProbeStabilizeMs, debug: debug,
+            skipAltSetting: config.skipAltSetting
           )
           if result.candidate != nil { break }
         }
@@ -517,7 +528,8 @@ public actor LibUSBTransport: MTPTransport {
             handshakeTimeoutMs: config.handshakeTimeoutMs,
             postClaimStabilizeMs: config.postClaimStabilizeMs,
             postProbeStabilizeMs: config.postProbeStabilizeMs,
-            debug: debug
+            debug: debug,
+            skipAltSetting: config.skipAltSetting
           )
         } else if debug {
           print("   [Open] USB reset failed (rc=\(resetRC)), skipping pass 2")

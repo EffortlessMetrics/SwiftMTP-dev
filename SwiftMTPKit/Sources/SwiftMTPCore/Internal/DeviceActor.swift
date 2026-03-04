@@ -366,6 +366,22 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   public func openIfNeeded() async throws {
     guard !sessionOpen else { return }
     parentStorageIDCache.removeAll(keepingCapacity: true)
+
+    // Pre-resolve transport-level quirk flags (skipAltSetting, skipPreClaimReset)
+    // before the first transport.open() call, since quirks are normally resolved
+    // after the link is already established.
+    if let vid = summary.vendorID, let pid = summary.productID {
+      if let qdb = try? QuirkDatabase.load(),
+        let quirk = qdb.match(
+          vid: vid, pid: pid, bcdDevice: nil,
+          ifaceClass: nil, ifaceSubclass: nil, ifaceProtocol: nil)
+      {
+        let flags = quirk.resolvedFlags()
+        config.skipAltSetting = flags.skipAltSetting
+        config.skipPreClaimReset = flags.skipPreClaimReset
+      }
+    }
+
     let link = try await getMTPLink()
     try await applyTuningAndOpenSession(link: link)
     sessionOpen = true
