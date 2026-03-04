@@ -142,82 +142,99 @@ extension MTPError: LocalizedError {
   private func protocolMessage(for code: UInt16, message: String?) -> String {
     let codeHex = String(format: "0x%04X", code)
     let codeName = message ?? Self.protocolCodeName(for: code)
-    switch code {
-    case 0x201D:
-      return "Protocol error \(codeName) (\(codeHex)): write request rejected by device."
-    case 0x2002:
-      return "\(codeName) (\(codeHex)): the device reported an unspecified failure."
-    case 0x2003:
-      return "\(codeName) (\(codeHex)): no MTP session is currently open."
-    case 0x2005:
-      return "\(codeName) (\(codeHex)): the device does not support this operation."
-    case 0x2007:
-      return "\(codeName) (\(codeHex)): the transfer did not complete."
-    case 0x2008:
-      return "\(codeName) (\(codeHex)): the storage ID is not recognized by the device."
-    case 0x2009:
-      return "\(codeName) (\(codeHex)): the object handle does not refer to a valid object."
-    case 0x200C:
-      return "\(codeName) (\(codeHex)): the device storage is full."
-    case 0x200D:
-      return "\(codeName) (\(codeHex)): the object is write-protected."
-    case 0x200E:
-      return "\(codeName) (\(codeHex)): the device storage is read-only."
-    case 0x200F:
-      return "\(codeName) (\(codeHex)): access to the object was denied by the device."
-    case 0x2019:
-      return "\(codeName) (\(codeHex)): the device is busy processing another request."
-    case 0x201A:
-      return "\(codeName) (\(codeHex)): the specified parent object is invalid."
-    case 0x201E:
-      return "\(codeName) (\(codeHex)): an MTP session is already open on this device."
-    case 0x201F:
-      return "\(codeName) (\(codeHex)): the transaction was cancelled."
-    default:
-      return "\(codeName) (\(codeHex))"
-    }
+    // Use the centralized user message for all known codes.
+    let userMsg = PTPResponseCode.userMessage(for: code)
+    return "\(codeName) (\(codeHex)): \(userMsg)"
   }
 
   private static func protocolCodeName(for code: UInt16) -> String {
-    switch code {
-    case 0x2001: return "OK"
-    case 0x2002: return "GeneralError"
-    case 0x2003: return "SessionNotOpen"
-    case 0x2004: return "InvalidTransactionID"
-    case 0x2005: return "OperationNotSupported"
-    case 0x2006: return "ParameterNotSupported"
-    case 0x2007: return "IncompleteTransfer"
-    case 0x2008: return "InvalidStorageID"
-    case 0x2009: return "InvalidObjectHandle"
-    case 0x200A: return "DevicePropNotSupported"
-    case 0x200B: return "InvalidObjectFormatCode"
-    case 0x200C: return "StoreFull"
-    case 0x200D: return "ObjectWriteProtected"
-    case 0x200E: return "StoreReadOnly"
-    case 0x200F: return "AccessDenied"
-    case 0x2019: return "DeviceBusy"
-    case 0x201A: return "InvalidParentObject"
-    case 0x201D: return "InvalidParameter"
-    case 0x201E: return "SessionAlreadyOpen"
-    case 0x201F: return "TransactionCancelled"
-    default: return "UnknownResponse"
-    }
+    PTPResponseCode.name(for: code) ?? "UnknownResponse"
   }
 
   private func protocolFailureReason(for code: UInt16) -> String {
     switch code {
-    case 0x201D:
-      return "This device rejected invalid write parameters."
+    case 0x2002:
+      return "The device encountered an internal error it could not classify."
     case 0x2003:
       return "The MTP session was closed or never opened."
+    case 0x2004:
+      return "The transaction ID is out of sequence or does not match the device expectation."
+    case 0x2005:
+      return "The device firmware does not implement this MTP operation."
+    case 0x2006:
+      return "One or more command parameters are not recognized by the device."
+    case 0x2007:
+      return "The data phase was interrupted before all bytes were transferred."
     case 0x2008:
       return "The storage ID sent to the device does not match any available storage."
     case 0x2009:
       return "The object handle was deleted or invalidated on the device."
+    case 0x200A:
+      return "The device does not recognize or support the requested device property."
+    case 0x200B:
+      return "The object format code does not match any format the device accepts."
+    case 0x200C:
+      return "The device storage has no remaining space for this transfer."
+    case 0x200D:
+      return "The object is marked write-protected by the device firmware."
+    case 0x200E:
+      return "The storage volume is mounted read-only (e.g. SD card write-protect switch)."
+    case 0x200F:
+      return "The device denied access, possibly due to DRM or permission restrictions."
+    case 0x2010:
+      return "The object does not have an embedded thumbnail."
+    case 0x2011:
+      return "The device hardware self-test reported a failure."
+    case 0x2012:
+      return "Some objects could not be deleted; a subset was removed."
+    case 0x2013:
+      return "The storage may have been ejected, unmounted, or is otherwise unavailable."
+    case 0x2014:
+      return "The device does not support filtering objects by format code."
+    case 0x2015:
+      return "SendObjectInfo must be called before SendObject to describe the file."
+    case 0x2016:
+      return "The code format value is not recognized by the device."
+    case 0x2017:
+      return "The vendor extension code is not recognized by the device."
+    case 0x2018:
+      return "The capture was already stopped before the termination request."
     case 0x2019:
       return "The device is processing a prior request and cannot accept a new one."
+    case 0x201A:
+      return "The parent object handle does not refer to a valid folder."
+    case 0x201B:
+      return "The format of the device property value does not match the expected type."
+    case 0x201C:
+      return "The device property value is outside the allowed range."
+    case 0x201D:
+      return "This device rejected invalid write parameters."
     case 0x201E:
       return "A session is already open; MTP allows only one session per connection."
+    case 0x201F:
+      return "The initiator or responder cancelled the in-progress transaction."
+    case 0x2020:
+      return "The device does not support the specified copy/move destination."
+    case 0xA801:
+      return "The object property code is not recognized by the device."
+    case 0xA802:
+      return "The object property format does not match the expected type."
+    case 0xA803:
+      return "The object property value is outside the allowed range."
+    case 0xA804:
+      return "The referenced object does not exist or the reference is broken."
+    case 0xA805:
+      return "The device does not support group-based operations."
+    case 0xA806:
+      return "The property dataset sent to the device is malformed or incomplete."
+    case 0xA807:
+      return "The device does not support filtering by object property group."
+    case 0xA808:
+      return "The device does not support filtering by hierarchy depth."
+    case 0xA809:
+      return "The file exceeds the maximum object size the device can store."
+    case 0xA80A:
+      return "The specified object property is not implemented by the device."
     default:
       return "The device response indicates a protocol error."
     }
@@ -225,27 +242,79 @@ extension MTPError: LocalizedError {
 
   private func protocolRecoverySuggestion(for code: UInt16) -> String {
     switch code {
-    case 0x201D:
-      return
-        "Write to a writable folder (for example Download, DCIM, or a nested folder) instead of root."
+    case 0x2002:
+      return "Retry the operation. If it persists, reconnect the device."
     case 0x2003:
       return "Re-open the MTP session (disconnect and reconnect if needed), then retry."
+    case 0x2004:
+      return "Reconnect the device to reset the transaction counter."
     case 0x2005:
       return "This operation is not supported by the device firmware. Try an alternative approach."
+    case 0x2006:
+      return "Check that all parameters are valid for this device and firmware version."
     case 0x2007:
       return "Retry the transfer. If it fails repeatedly, try a smaller file or check the cable."
     case 0x2008:
       return "Refresh the storage list and retry with a valid storage ID."
     case 0x2009:
       return "Refresh the object listing and retry with a valid object handle."
+    case 0x200A:
+      return "Use a different device property, or check the device's supported properties list."
+    case 0x200B:
+      return "Verify the file format is supported by the device."
     case 0x200C:
       return "Free space on the device, then retry."
+    case 0x200D:
+      return "Remove write-protection on the device, or choose a different target file."
     case 0x200E:
       return "Check the device for a read-only lock (e.g. SD card switch) and remount as writable."
+    case 0x200F:
+      return "Check device permissions and DRM restrictions."
+    case 0x2010:
+      return "Thumbnails are not available for all objects. Skip thumbnail requests for this object."
+    case 0x2011:
+      return "The device may need servicing. Check the device manufacturer's support resources."
+    case 0x2012:
+      return "Retry deleting the remaining objects individually."
+    case 0x2013:
+      return "Check that the storage media is inserted and the device is unlocked, then retry."
+    case 0x2014, 0xA807, 0xA808:
+      return "Remove the unsupported filter and retry the operation."
+    case 0x2015:
+      return "Send ObjectInfo (SendObjectInfo) before attempting to send the object data."
+    case 0x2016:
+      return "Verify the code format matches the MTP specification."
+    case 0x2017:
+      return "Use only standard MTP codes unless the device's vendor extension is confirmed."
+    case 0x2018:
+      return "The capture is already stopped. No further action is needed."
     case 0x2019:
       return "Wait a moment for the device to finish its current task, then retry."
+    case 0x201A:
+      return "Verify the parent folder exists and use a valid parent object handle."
+    case 0x201B, 0xA802:
+      return "Check the property type and send the value in the correct format."
+    case 0x201C, 0xA803:
+      return "Check the allowed range for this property and send a valid value."
+    case 0x201D:
+      return
+        "Write to a writable folder (for example Download, DCIM, or a nested folder) instead of root."
     case 0x201E:
       return "Close the existing session first, or disconnect and reconnect the device."
+    case 0x201F:
+      return "Retry the operation if the cancellation was unintentional."
+    case 0x2020:
+      return "Choose a different destination that the device supports."
+    case 0xA801, 0xA80A:
+      return "Use only object property codes supported by the device."
+    case 0xA804:
+      return "Refresh the object listing and use a valid object reference."
+    case 0xA805:
+      return "Perform operations on individual objects instead of groups."
+    case 0xA806:
+      return "Verify the property dataset structure matches the MTP specification."
+    case 0xA809:
+      return "Reduce the file size or split the file into smaller parts."
     default:
       return "Retry the operation. If the error persists, reconnect the device."
     }

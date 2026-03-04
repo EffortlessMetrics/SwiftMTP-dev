@@ -305,6 +305,7 @@ public struct PTPPropList: Sendable {
 
 public enum PTPResponseCode {
   private static let names: [UInt16: String] = [
+    // MTP 1.1 Standard Response Codes
     0x2001: "OK",
     0x2002: "GeneralError",
     0x2003: "SessionNotOpen",
@@ -337,6 +338,17 @@ public enum PTPResponseCode {
     0x201E: "SessionAlreadyOpen",
     0x201F: "TransactionCancelled",
     0x2020: "SpecificationOfDestinationUnsupported",
+    // MTP Extension Response Codes
+    0xA801: "InvalidObjectPropCode",
+    0xA802: "InvalidObjectPropFormat",
+    0xA803: "InvalidObjectPropValue",
+    0xA804: "InvalidObjectReference",
+    0xA805: "GroupNotSupported",
+    0xA806: "InvalidDataset",
+    0xA807: "SpecificationByGroupUnsupported",
+    0xA808: "SpecificationByDepthUnsupported",
+    0xA809: "ObjectTooLarge",
+    0xA80A: "ObjectPropNotSupported",
   ]
 
   /// Return the standard PTP name for a response code, or nil if unknown.
@@ -348,6 +360,56 @@ public enum PTPResponseCode {
   public static func describe(_ code: UInt16) -> String {
     let n = names[code] ?? "Unknown"
     return "\(n) (0x\(String(format: "%04x", code)))"
+  }
+
+  /// User-friendly error message for a response code.
+  public static func userMessage(for code: UInt16) -> String {
+    switch code {
+    case 0x2001: return "The operation completed successfully."
+    case 0x2002: return "The device reported an unspecified failure."
+    case 0x2003: return "No MTP session is currently open."
+    case 0x2004: return "The transaction ID is invalid or out of sequence."
+    case 0x2005: return "The device does not support this operation."
+    case 0x2006: return "One or more parameters are not supported by the device."
+    case 0x2007: return "The transfer did not complete; data may be partial."
+    case 0x2008: return "The storage ID is not recognized by the device."
+    case 0x2009: return "The object handle does not refer to a valid object."
+    case 0x200A: return "The specified device property is not supported."
+    case 0x200B: return "The object format code is not valid for this operation."
+    case 0x200C: return "The device storage is full."
+    case 0x200D: return "The target object is write-protected."
+    case 0x200E: return "The device storage is read-only."
+    case 0x200F: return "Access to the object was denied by the device."
+    case 0x2010: return "No thumbnail is available for this object."
+    case 0x2011: return "The device self-test failed."
+    case 0x2012: return "Only some of the requested objects were deleted."
+    case 0x2013: return "The specified storage is not currently available."
+    case 0x2014: return "Filtering by object format is not supported."
+    case 0x2015: return "No valid ObjectInfo was sent before the transfer."
+    case 0x2016: return "The code format is not valid."
+    case 0x2017: return "The vendor extension code is not recognized."
+    case 0x2018: return "The capture operation has already been terminated."
+    case 0x2019: return "The device is busy processing another request."
+    case 0x201A: return "The specified parent object is invalid."
+    case 0x201B: return "The device property format is invalid."
+    case 0x201C: return "The device property value is out of range or invalid."
+    case 0x201D: return "One or more parameters in the request are invalid."
+    case 0x201E: return "An MTP session is already open on this device."
+    case 0x201F: return "The transaction was cancelled."
+    case 0x2020: return "The specified destination is not supported."
+    // MTP Extension codes
+    case 0xA801: return "The object property code is not valid."
+    case 0xA802: return "The object property format is not valid."
+    case 0xA803: return "The object property value is out of range or invalid."
+    case 0xA804: return "The object reference is invalid."
+    case 0xA805: return "Group operations are not supported by this device."
+    case 0xA806: return "The dataset is invalid or malformed."
+    case 0xA807: return "Filtering by group is not supported."
+    case 0xA808: return "Filtering by depth is not supported."
+    case 0xA809: return "The object is too large for the device to handle."
+    case 0xA80A: return "The specified object property is not supported."
+    default: return "Unknown response code 0x\(String(format: "%04X", code))."
+    }
   }
 }
 
