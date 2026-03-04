@@ -116,9 +116,9 @@ discovered during development. Items are grouped by area.
 
 | # | Issue | Impact | Status |
 |---|-------|--------|--------|
-| F-D-1 | **Entries without `evidenceRequired`** — Some quirks entries lack the `evidenceRequired` field, making it unclear what validation is needed. | Inconsistent data quality. | Validate in `validate-quirks.sh`; backfill missing fields. |
+| F-D-1 | **Entries without `evidenceRequired`** — Some quirks entries lack the `evidenceRequired` field, making it unclear what validation is needed. | Inconsistent data quality. | **Resolved** — `validate-quirks.sh` enforces `evidenceRequired` + verification metadata on promoted entries; Python validator cross-checks in CI. |
 | F-D-2 | **Proposed entries needing verification** — Entries with `"status": "proposed"` have no real-device evidence. | Cannot promote to `stable` without testing. | Track in device-lab pipeline; flag in PR reviews. |
-| F-D-3 | **hooks encoding (dict vs array)** — 57 entries had `"hooks": {}` instead of `"hooks": []`, causing decode failures. | BDD and QuirkMatchingTests broke. | **Fixed** in PR #66 — add format validation to CI. |
+| F-D-3 | **hooks encoding (dict vs array)** — 57 entries had `"hooks": {}` instead of `"hooks": []`, causing decode failures. | BDD and QuirkMatchingTests broke. | **Resolved** — `validate-quirks.sh` enforces hooks-are-arrays (shell + Python); both quirks files validated and kept in sync. |
 | F-D-4 | **VID:PID duplicate/estimated PIDs** — Some entries use estimated PIDs that may collide with real devices. | False matches in quirk lookup. | **Resolved** — `validate-quirks.sh` enforces unique VID:PID pairs; Python validator checks format + uniqueness in CI. |
 
 ### Developer experience
