@@ -16,6 +16,7 @@ let package = Package(
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
     .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
     .library(name: "MTPEndianCodec", targets: ["MTPEndianCodec"]),
+    .library(name: "SwiftMTPPathing", targets: ["SwiftMTPPathing"]),
     .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
     .library(name: "SwiftMTPUI", targets: ["SwiftMTPUI"]),
     .library(name: "SwiftMTPQuirks", targets: ["SwiftMTPQuirks"]),
@@ -38,7 +39,7 @@ let package = Package(
     // Core MTP functionality
     .target(name: "SwiftMTPCore",
             dependencies: [
-                "SwiftMTPQuirks", "SwiftMTPObservability", "SwiftMTPCLI", "MTPEndianCodec",
+                "SwiftMTPQuirks", "SwiftMTPObservability", "SwiftMTPCLI", "MTPEndianCodec", "SwiftMTPPathing",
                 .product(name: "Collections", package: "swift-collections"),
             ],
             path: "SwiftMTPKit/Sources/SwiftMTPCore",
@@ -52,6 +53,10 @@ let package = Package(
     .target(name: "MTPEndianCodec",
             dependencies: [],
             path: "SwiftMTPKit/Sources/MTPEndianCodec"),
+
+    .target(name: "SwiftMTPPathing",
+            dependencies: [],
+            path: "SwiftMTPKit/Sources/SwiftMTPPathing"),
 
     // Transport layer for libusb
     .target(name: "SwiftMTPTransportLibUSB",
@@ -176,6 +181,10 @@ let package = Package(
       resources: [.copy("Corpus")]
     ),
                 
+    .testTarget(name: "SwiftMTPPathingTests",
+                dependencies: ["SwiftMTPPathing"],
+                path: "SwiftMTPKit/Tests/SwiftMTPPathingTests"),
+
     .testTarget(name: "PropertyTests",
                 dependencies: [
                     "SwiftMTPCore",
@@ -183,6 +192,7 @@ let package = Package(
                     "SwiftMTPObservability",
                     "SwiftMTPStore",
                     "SwiftMTPQuirks",
+                    "SwiftMTPPathing",
                     "SwiftCheck",
                 ],
                 path: "SwiftMTPKit/Tests/PropertyTests"),

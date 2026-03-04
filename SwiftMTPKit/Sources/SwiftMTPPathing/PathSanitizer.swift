@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
+import Foundation
+
 /// Sanitizes device-provided filenames for safe use as local filesystem path components.
 ///
 /// MTP devices can return arbitrary filenames, including names with path traversal sequences
