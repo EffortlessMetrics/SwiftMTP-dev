@@ -5,6 +5,91 @@ For earlier waves see `CHANGELOG.md`.
 
 ---
 
+## Wave 44 — Release Prep & Quirk Flags (PRs #486–#493)
+
+**Focus**: Release documentation, FileProvider audit, IOUSBHost file transfer, scenario tests, quirk flags wired into transport
+
+| PR | Title | Zone |
+|----|-------|------|
+| #486 | Update release checklist for pre-alpha v0.1.0 | docs |
+| #487 | Comprehensive CLI command map and UX reference | docs |
+| #488 | FileProvider truth audit — honest capability status | docs |
+| #489 | TSAN local validation and status documentation | ci |
+| #490 | Refresh contribution guide with wave 37-43 patterns | docs |
+| #491 | IOUSBHost file transfer: getObject/sendObject | transport |
+| #492 | Expand end-to-end scenario tests for full device workflows | tests |
+| #493 | Wire 9 new device flags into transport and protocol logic | quirks |
+
+**Highlights**:
+- IOUSBHost now supports `getObject`/`sendObject` file transfer operations
+- 9 new `QuirkFlags` from libmtp research wired into transport and protocol layers
+- End-to-end scenario tests cover full device workflows (probe → transfer → disconnect)
+- FileProvider truth audit documents honest capability status and known gaps
+- Release checklist and contribution guide updated for v0.1.0 pre-alpha milestone
+
+**Total**: 8 PRs
+
+---
+
+## Wave 43 — Bootstrap & Homebrew (PRs #477–#485)
+
+**Focus**: Developer onboarding, Homebrew distribution, CLI polish, DocC pipeline, IOUSBHost bulk transfer, MTP compat research
+
+| PR | Title | Zone |
+|----|-------|------|
+| #477 | Bootstrap script and mock profile documentation | devex |
+| #478 | Homebrew formula and installation documentation | devex |
+| #479 | CLI transfer progress indicators with ETA and throughput | cli |
+| #480 | Comprehensive error recovery escalation integration tests | tests |
+| #481 | IOUSBHost bulk transfer MTP operations | transport |
+| #482 | Index query benchmarks and hot-path optimization | perf |
+| #483 | DocC documentation generation pipeline | docs |
+| #484 | MTP compatibility research from libmtp device flags analysis | docs |
+| #485 | Harden mirror resume-from-journal with edge case tests | tests |
+
+**Highlights**:
+- `./scripts/bootstrap.sh` — one-command dev environment setup
+- Homebrew formula: `brew install swiftmtp` (tap-based)
+- CLI progress bars with ETA, throughput, and color-coded transfer status
+- IOUSBHost bulk transfer implements `sendObject`/`getPartialObject` MTP operations
+- Index benchmarks measure query latency; hot-path optimization reduces lookup time
+- DocC pipeline generates browsable API documentation
+- libmtp device flags analysis yields 9 new `QuirkFlags`: `noReleaseDev`, `unloadDriver`, `longTimeout`, `noZeroRead`, `rawDevice`, `initialEventReq`, `alternateVendorCmd`, `switchMTPMode`, `osFirmwareInfo`
+- Mirror resume hardened with edge-case journal tests
+
+**Total**: 9 PRs
+
+---
+
+## Wave 42 — Shell Completions & CI (PRs #468–#476)
+
+**Focus**: Shell completions, CI consolidation, error catalog, privacy redactor, snapshot tests, IOUSBHost discovery, transport refactoring
+
+| PR | Title | Zone |
+|----|-------|------|
+| #468 | Shell completion scripts for bash, zsh, and fish | cli |
+| #469 | CI consolidation: TSAN, pin fuzz runner, optimize coverage pipeline | ci |
+| #470 | Detailed wave-by-wave development log | docs |
+| #471 | Comprehensive ROADMAP and CHANGELOG refresh for waves 37-41 | docs |
+| #472 | Comprehensive error catalog with troubleshooting guide | docs |
+| #473 | PrivacyRedactor for submission artifact obfuscation | core |
+| #474 | Snapshot tests for CLI output and report formatting | tests |
+| #475 | IOUSBHost device discovery and session scaffold | transport |
+| #476 | Extract LibUSBTransport helpers into focused files | refactor |
+
+**Highlights**:
+- Shell completions: bash, zsh, and fish scripts for all CLI commands and flags
+- CI consolidation: TSAN job pinned, fuzz runner pinned to prevent flake, coverage pipeline optimized
+- Error catalog: comprehensive error code reference with troubleshooting steps
+- `PrivacyRedactor` strips PII from device submission artifacts
+- Snapshot tests capture CLI output formatting for regression detection
+- IOUSBHost device discovery and session scaffold (building toward native macOS transport)
+- LibUSBTransport refactored: helpers extracted into focused files for maintainability
+
+**Total**: 9 PRs
+
+---
+
 ## Wave 41 — Test Coverage & DevEx (PRs #459–#467)
 
 **Focus**: Test backfill, documentation refresh, developer experience
