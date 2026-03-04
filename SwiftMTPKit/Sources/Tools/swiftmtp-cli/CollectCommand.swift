@@ -513,6 +513,10 @@ public enum CollectCommand {
     t = t.replacingOccurrences(
       of: #"\b[A-Za-z0-9._-]+\.local\b"#, with: "<redacted>.local", options: .regularExpression)
 
+    // Apply core PrivacyRedactor for path and owner-name redaction
+    t = PrivacyRedactor.redactPath(t)
+    t = PrivacyRedactor.redactOwnerName(t)
+
     return t
   }
 
