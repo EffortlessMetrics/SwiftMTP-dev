@@ -122,7 +122,16 @@ Known blockers we need help with:
 
 ## Installation & Setup
 
-### Prerequisites
+### Homebrew (recommended)
+
+```bash
+brew tap EffortlessMetrics/swiftmtp https://github.com/EffortlessMetrics/SwiftMTP-dev.git
+brew install swiftmtp
+```
+
+See [Docs/Installation.md](Docs/Installation.md) for source builds, shell completions, and more.
+
+### Prerequisites (for building from source)
 - **macOS 26.0+** (Apple Silicon or Intel)
 - **Xcode 16.0+** with Swift 6
 - `libusb` via Homebrew: `brew install libusb`
