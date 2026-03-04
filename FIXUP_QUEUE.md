@@ -125,7 +125,7 @@ discovered during development. Items are grouped by area.
 
 | # | Issue | Impact | Status |
 |---|-------|--------|--------|
-| F-DX-1 | **First-time setup friction** — New contributors must: install libusb, build XCFramework, set mock profile env vars, and know to `cd SwiftMTPKit` before building. | High onboarding barrier. | Documented in CLAUDE.md; consider a `scripts/bootstrap.sh` one-liner. |
-| F-DX-2 | **Mock profile documentation scattered** — Available profiles (`pixel7`, `galaxy`, `iphone`, `canon`) and env vars (`SWIFTMTP_DEMO_MODE`, `SWIFTMTP_MOCK_PROFILE`) are documented in multiple places but not in a single quick-reference. | Developers grep across docs. | Consolidate in Troubleshooting.md or a dedicated `Docs/MockProfiles.md`. |
+| F-DX-1 | ~~**First-time setup friction**~~ | ~~High onboarding barrier.~~ | **Resolved** — `scripts/bootstrap.sh` automates libusb install, XCFramework build, initial build, and smoke test. |
+| F-DX-2 | ~~**Mock profile documentation scattered**~~ | ~~Developers grep across docs.~~ | **Resolved** — Consolidated in `Docs/MockProfiles.md` with profiles, env vars, and failure scenarios. |
 | F-DX-3 | **20 test targets with no discovery guide** — The test suite has 20 targets but no guidance on which to run for which change. | Developers run all tests or guess. | Add a test-target map to CLAUDE.md (e.g., "changed Core → run CoreTests + ScenarioTests"). |
 | F-DX-4 | ~~**Pre-PR gate not automated**~~ | ~~Developers may skip steps.~~ | **Resolved** — `scripts/pre-pr.sh` runs format-lint, build, CoreTests, quirks validation, and large-file check in one command. |
