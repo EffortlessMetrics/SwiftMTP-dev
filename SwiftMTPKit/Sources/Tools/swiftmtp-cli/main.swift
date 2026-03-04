@@ -174,6 +174,30 @@ struct SwiftMTPCLI {
         args: &cmdArgs, json: flags.json, noninteractive: true, filter: filter,
         strict: flags.strict, safe: flags.safe)
       exitNow(exitCode)
+    case "cp", "copy":
+      let filter = DeviceFilter(
+        vid: parseUSBIdentifier(flags.targetVID),
+        pid: parseUSBIdentifier(flags.targetPID),
+        bus: flags.targetBus,
+        address: flags.targetAddress
+      )
+      var cmdArgs = remainingArgs
+      let exitCode = await runCopyCommand(
+        args: &cmdArgs, json: flags.json, noninteractive: true, filter: filter,
+        strict: flags.strict, safe: flags.safe)
+      exitNow(exitCode)
+    case "edit":
+      let filter = DeviceFilter(
+        vid: parseUSBIdentifier(flags.targetVID),
+        pid: parseUSBIdentifier(flags.targetPID),
+        bus: flags.targetBus,
+        address: flags.targetAddress
+      )
+      var cmdArgs = remainingArgs
+      let exitCode = await runEditCommand(
+        args: &cmdArgs, json: flags.json, noninteractive: true, filter: filter,
+        strict: flags.strict, safe: flags.safe)
+      exitNow(exitCode)
     case "events":
       let filter = DeviceFilter(
         vid: parseUSBIdentifier(flags.targetVID),
@@ -240,8 +264,8 @@ struct SwiftMTPCLI {
   private static let knownCommands = [
     "probe", "usb-dump", "device-lab", "diag", "storages", "ls", "pull", "push",
     "bench", "mirror", "quirks", "info", "health", "collect", "submit",
-    "add-device", "wizard", "delete", "move", "events", "learn-promote",
-    "bdd", "snapshot", "version", "storybook", "profile",
+    "add-device", "wizard", "delete", "move", "cp", "copy", "edit", "events",
+    "learn-promote", "bdd", "snapshot", "version", "storybook", "profile",
   ]
 
   /// Suggest the closest known command for a typo using simple edit-distance heuristics.
@@ -293,8 +317,14 @@ struct SwiftMTPCLI {
     print("  push <src> <dst>  Upload a file to a folder")
     print("  delete <handle>   Delete an object on the device")
     print("  move <h> <parent> Move an object to a new parent")
+    print("  cp <h> <storage>  Copy an object (server-side)")
     print("  mirror <dest>     Mirror device contents locally")
     print("  snapshot          Capture full device content snapshot")
+    print("")
+    print("Edit Extensions (Android):")
+    print("  edit begin <h>    Begin in-place editing of an object")
+    print("  edit end <h>      Commit in-place edits for an object")
+    print("  edit truncate <h> <size>  Truncate a file to given size")
     print("")
     print("Performance:")
     print("  bench <size>      Benchmark transfer speed")

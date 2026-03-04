@@ -85,11 +85,11 @@ final class HelpTextTests: XCTestCase {
       "probe", "usb-dump", "device-lab", "diag", "storages",
       "ls", "pull", "push", "bench", "mirror", "quirks",
       "info", "health", "collect", "submit", "add-device",
-      "wizard", "delete", "move", "events", "learn-promote",
-      "bdd", "snapshot", "version",
+      "wizard", "delete", "move", "cp", "edit", "events",
+      "learn-promote", "bdd", "snapshot", "version",
     ]
     // Verify the command count matches expectations
-    XCTAssertEqual(expectedCommands.count, 24)
+    XCTAssertEqual(expectedCommands.count, 26)
     // Each command should be unique
     XCTAssertEqual(Set(expectedCommands).count, expectedCommands.count)
   }
