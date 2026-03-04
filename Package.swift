@@ -17,6 +17,7 @@ let package = Package(
     .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
     .library(name: "MTPEndianCodec", targets: ["MTPEndianCodec"]),
     .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
+    .library(name: "SwiftMTPPathing", targets: ["SwiftMTPPathing"]),
     .library(name: "SwiftMTPUI", targets: ["SwiftMTPUI"]),
     .library(name: "SwiftMTPQuirks", targets: ["SwiftMTPQuirks"]),
     .library(name: "SwiftMTPCLI", targets: ["SwiftMTPCLI"]),
@@ -38,11 +39,15 @@ let package = Package(
     // Core MTP functionality
     .target(name: "SwiftMTPCore",
             dependencies: [
-                "SwiftMTPQuirks", "SwiftMTPObservability", "SwiftMTPCLI", "MTPEndianCodec",
+                "SwiftMTPQuirks", "SwiftMTPObservability", "SwiftMTPCLI", "MTPEndianCodec", "SwiftMTPPathing",
                 .product(name: "Collections", package: "swift-collections"),
             ],
             path: "SwiftMTPKit/Sources/SwiftMTPCore",
             sources: ["Internal", "Public"]),
+
+    .target(name: "SwiftMTPPathing",
+            dependencies: [],
+            path: "SwiftMTPKit/Sources/SwiftMTPPathing"),
 
     // Shared CLI parsing/output surfaces extracted to a dedicated module.
     .target(name: "SwiftMTPCLI",
@@ -164,6 +169,10 @@ let package = Package(
     .testTarget(name: "SwiftMTPCLITests",
                 dependencies: ["SwiftMTPCLI", "SwiftMTPCore", "SwiftCheck"],
                 path: "SwiftMTPKit/Tests/SwiftMTPCLITests"),
+
+    .testTarget(name: "SwiftMTPPathingTests",
+                dependencies: ["SwiftMTPPathing"],
+                path: "SwiftMTPKit/Tests/SwiftMTPPathingTests"),
 
     .testTarget(
       name: "MTPEndianCodecTests",
