@@ -8,6 +8,8 @@ SwiftMTP is a macOS/iOS library and tool for interacting with MTP (Media Transfe
 
 **Maturity note**: SwiftMTP is **pre-alpha**. The project has extensive scaffolding (~8,377 tests executed, 20,026 quirks entries, 80+ doc files) but minimal real-device validation. Most test coverage uses `VirtualMTPDevice` (in-memory mock). The quirks database (~20,026 entries) is research-based scaffolding sourced from libmtp data and vendor specs — only a handful of devices have been tested with SwiftMTP directly. Only the Xiaomi Mi Note 2 (ff10) has completed real file transfers.
 
+**Wave 38 additions**: Full MTP 1.1 protocol coverage (50+ object formats, 50+ property codes, full event handling), Android MTP edit extensions (`BeginEditObject`, `EndEditObject`, `TruncateObject`), server-side `CopyObject`, write-path validation guards, transfer journal WAL mode with orphan detection, SQLite index optimization (8 indexes), CLI "did you mean?" suggestions.
+
 ## Development Commands
 
 ### Building
@@ -131,8 +133,10 @@ SwiftMTPKit/
 1. **Actor-based concurrency**: All device operations go through `MTPDeviceActor` for thread safety
 2. **Protocol-oriented**: `MTPDevice` protocol allows mock implementations for testing
 3. **Async/await**: All I/O operations use Swift concurrency
-4. **Transfer journaling**: Automatic resume support via `TransferJournal`
+4. **Transfer journaling**: WAL-mode SQLite with atomic downloads, orphan detection, and automatic resume via `TransferJournal`
 5. **Device quirks**: Static and learned profiles for device-specific tuning
+6. **Write-path safety**: Validation guards on all mutating operations (partial write detection, delete safety, read-only storage enforcement)
+7. **MTP 1.1 coverage**: 50+ object formats, 50+ property codes, full event handling, Android edit extensions, server-side CopyObject
 
 ### Key Files and Locations
 - Core protocol: `SwiftMTPKit/Sources/SwiftMTPCore/Public/MTPDevice.swift`
@@ -167,9 +171,9 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 |--------|---------|--------|----------|
 | Xiaomi Mi Note 2 | 2717:ff10 | Partial — only device with real transfer data | xiaomi-mi-note-2-ff10 |
 | Xiaomi Mi Note 2 (alt) | 2717:ff40 | Partial — recent lab run returned 0 storages | xiaomi-mi-note-2-ff40 |
-| Samsung Galaxy S7 (SM-G930W8) | 04e8:6860 | Not Working — handshake fails after USB claim | samsung-android-6860 |
+| Samsung Galaxy S7 (SM-G930W8) | 04e8:6860 | Blocked — handshake fails after USB claim; research done (#428), transport fixes in progress | samsung-android-6860 |
 | OnePlus 3T | 2a70:f003 | Partial — probe/read works, writes fail (0x201D) | oneplus-3t-f003 |
-| Google Pixel 7 | 18d1:4ee1 | Blocked — bulk transfer timeout, macOS kernel issue | google-pixel-7-4ee1 |
+| Google Pixel 7 | 18d1:4ee1 | Blocked — bulk transfer timeout; research done (#429), transport fixes in progress | google-pixel-7-4ee1 |
 | Canon EOS Rebel / R-class | 04a9:3139 | Research Only — never connected to SwiftMTP | canon-eos-rebel-3139 |
 | Nikon DSLR / Z-series | 04b0:0410 | Research Only — never connected to SwiftMTP | nikon-dslr-0410 |
 
