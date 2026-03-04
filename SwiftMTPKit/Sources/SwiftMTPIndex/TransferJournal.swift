@@ -63,6 +63,10 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
         lastError TEXT,
         updatedAt INTEGER NOT NULL
       );
+      CREATE INDEX IF NOT EXISTS idx_transfers_state
+          ON transfers(state, updatedAt);
+      CREATE INDEX IF NOT EXISTS idx_transfers_device_state
+          ON transfers(deviceId, state);
       """
     try exec(sql)
   }

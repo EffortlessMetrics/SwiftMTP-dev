@@ -113,6 +113,8 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
           ON live_changes(deviceId, changeCounter);
       CREATE INDEX IF NOT EXISTS idx_live_changes_device_parent
           ON live_changes(deviceId, storageId, parentHandle, changeCounter);
+      CREATE INDEX IF NOT EXISTS idx_live_changes_prune
+          ON live_changes(deviceId, createdAt);
 
       CREATE TABLE IF NOT EXISTS cached_content (
           deviceId       TEXT    NOT NULL,
@@ -127,6 +129,9 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
           PRIMARY KEY (deviceId, storageId, handle)
       );
       CREATE INDEX IF NOT EXISTS idx_cache_lru ON cached_content(lastAccessedAt ASC);
+      CREATE INDEX IF NOT EXISTS idx_cache_state ON cached_content(state, lastAccessedAt);
+
+      CREATE INDEX IF NOT EXISTS idx_live_handle ON live_objects(deviceId, handle);
       """
     // Execute each statement separately — sqlite3_exec handles multiple statements
     try db.exec(sql)

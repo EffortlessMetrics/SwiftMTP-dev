@@ -60,6 +60,21 @@ public final class Snapshotter: Sendable {
           )
       """)
 
+    // Indexes for objects table — DiffEngine queries by (deviceId, gen)
+    // and tombstone marking filters on (deviceId, gen, tombstone)
+    try db.exec(
+      """
+          CREATE INDEX IF NOT EXISTS idx_objects_device_gen
+              ON objects(deviceId, gen);
+          CREATE INDEX IF NOT EXISTS idx_objects_device_gen_tombstone
+              ON objects(deviceId, gen, tombstone)
+              WHERE tombstone = 0;
+      """)
+
+    // Index for storages table — lookups by deviceId
+    try db.exec(
+      "CREATE INDEX IF NOT EXISTS idx_storages_device ON storages(deviceId);")
+
     // Snapshots table
     try db.exec(
       """
