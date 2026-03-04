@@ -1,12 +1,12 @@
-# SwiftMTP Release Runbook (2.x)
+# SwiftMTP Release Runbook
 
-*Last updated: 2026-02-28*
+*Last updated: 2026-07-14*
 
-This runbook describes how to prepare and ship SwiftMTP releases in the current 2.x train.
+This runbook describes how to prepare and ship SwiftMTP releases. The first public milestone is **v0.1.0** (pre-alpha).
 
 ## Scope
 
-- Applies to `v2.x.y` patch releases and `v2.x.0` minor releases.
+- Applies to `v0.x.y` pre-alpha releases and future stable releases.
 - Assumes release artifacts are produced by GitHub Actions (`.github/workflows/release.yml`).
 
 ## Current State
@@ -14,7 +14,7 @@ This runbook describes how to prepare and ship SwiftMTP releases in the current 
 Note: SwiftMTP is in early development. Metrics below reflect mock-based test coverage, not real-device validation.
 
 - **Quirks database**: 20,020 research-based entries across 38 categories and ~1,150 vendor IDs (sourced from libmtp/vendor specs; 1 device validated with real transfers)
-- **Test suite**: 4,300+ test cases across 20 targets, 0 failures (using in-memory mock devices)
+- **Test suite**: 9,191+ test cases across 20 targets, 0 failures (using in-memory mock devices)
 - **Gated module coverage**: 100% on SwiftMTPQuirks, SwiftMTPStore, SwiftMTPSync, SwiftMTPObservability
 - **Milestones captured**: 15K → 16K → 17K → 18K → 19K → 20K
 
@@ -29,7 +29,7 @@ Minimum readiness gates:
 - Smoke gate passes: `./scripts/smoke.sh`
 - Quirk and submission validators pass for touched evidence paths
 - Changelog and roadmap docs are up to date
-- Required CI workflows are green for the release commit (`ci`, `Smoke`, `validate-quirks`, `validate-submission`)
+- Required CI workflows are green for the release commit (`ci`, `Smoke`, `tsan-and-compat`, `validate-quirks`, `validate-submission`)
 
 ## Version Preparation
 
@@ -44,7 +44,7 @@ Example:
 ```bash
 git add CHANGELOG.md Docs/ROADMAP.md Docs/SPRINT-PLAYBOOK.md Docs/ROADMAP.release-checklist.md
 # Add any version/build metadata files you changed
-git commit -m "chore: prepare v2.1.0"
+git commit -m "chore: prepare v0.1.0"
 ```
 
 ## Tag and Trigger Release Pipeline
@@ -52,8 +52,8 @@ git commit -m "chore: prepare v2.1.0"
 Create and push an annotated tag:
 
 ```bash
-git tag -a v2.1.0 -m "Release v2.1.0"
-git push origin v2.1.0
+git tag -a v0.1.0 -m "Release v0.1.0"
+git push origin v0.1.0
 ```
 
 This triggers `.github/workflows/release.yml`, which builds and validates:
@@ -61,6 +61,7 @@ This triggers `.github/workflows/release.yml`, which builds and validates:
 - macOS artifact (`swiftmtp-macos-arm64.tar.gz` + checksum)
 - Linux artifact (`swiftmtp-linux-x86_64-<tag>.tar.gz` + checksum)
 - SPDX SBOM artifact
+- Homebrew formula update (if install behavior changed)
 - Draft GitHub release with artifacts attached
 
 ## Release Artifact Validation
@@ -100,9 +101,9 @@ For urgent patches after release:
 
 1. Branch from the release tag.
 2. Apply minimal fix + tests.
-3. Update changelog for `v2.x.(y+1)`.
+3. Update changelog for `v0.x.(y+1)`.
 4. Tag and publish patch release through same pipeline.
 
 ## Historical Notes
 
-Legacy 1.0/1.1 checklist content was replaced by this 2.x runbook. See git history for archival release procedures.
+Legacy 1.0/1.1/2.x checklist content was replaced by this pre-alpha runbook. See git history for archival release procedures.

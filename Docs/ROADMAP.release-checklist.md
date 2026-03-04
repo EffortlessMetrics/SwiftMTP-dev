@@ -1,15 +1,44 @@
 # SwiftMTP Release Checklist
 
-*Last updated: 2026-03-01*
+*Last updated: 2026-07-14*
 
-> **Pre-Alpha Context**: This checklist applies to internal development milestone releases during the pre-alpha phase. These releases are not production-ready — real-device transfer validation is limited to 1 device (Xiaomi Mi Note 2). The version tags (v2.x) represent development milestones, not production readiness.
+> **Pre-Alpha Context**: This checklist applies to internal development milestone releases during the pre-alpha phase. These releases are not production-ready — real-device transfer validation is limited to 1 device (Xiaomi Mi Note 2). The first public milestone is **v0.1.0**.
 
 This checklist is the operational companion to `Docs/ROADMAP.md` and is intended to be used throughout each sprint, not only at tag time.
+
+## Pre-Alpha v0.1.0 Milestone Checklist
+
+The following gates must all pass before tagging `v0.1.0`:
+
+### CI & Test Gates
+
+- [ ] All CI workflows green (`ci.yml`, `smoke.yml`, `tsan-and-compat.yml`)
+- [ ] CoreTests, TransportTests, IndexTests, SyncTests pass
+- [ ] `scripts/pre-pr.sh` passes
+- [ ] TSAN clean on CoreTests + IndexTests + ScenarioTests
+
+### Documentation & Metadata
+
+- [ ] `CHANGELOG.md` updated with v0.1.0 heading and date
+- [ ] Version bump in code (if applicable — see `SwiftMTPKit/Sources/Tools/swiftmtp-cli/Autogen/BuildInfo.swift`)
+- [ ] `README.md` reflects current reality (features, limitations, install steps)
+- [ ] Device status table is honest (tested vs. research-only clearly marked)
+
+### Packaging & Distribution
+
+- [ ] Homebrew formula builds from tagged release
+- [ ] DocC generates without errors
+
+### Legal & Compliance
+
+- [ ] No secrets in committed files
+- [ ] SPDX headers present on source files
+- [ ] License files current (`LICENSE`, `LICENSE-AGPL-3.0.md`)
 
 ## How to Use This Checklist
 
 - Use **Sprint Checkpoints** during implementation (weekly or at sprint end).
-- Use **Release Cut Gates** when preparing `v2.x.0`/`v2.x.y` tags.
+- Use **Release Cut Gates** when preparing release tags.
 - Use **Post-Release** after artifacts and notes are published.
 - Use `Docs/SPRINT-PLAYBOOK.md` for DoR/DoD and carry-over rules.
 
@@ -73,8 +102,8 @@ Run these before creating a release tag.
   - `SwiftMTPKit/Sources/Tools/swiftmtp-cli/Autogen/BuildInfo.swift`
   - `RELEASE.md` metadata references
   - Any package metadata updated for release train consistency
-- [ ] Release commit created with clear message (for example `chore: prepare v2.1.0`)
-- [ ] Annotated tag created and pushed (for example `v2.1.0`)
+- [ ] Release commit created with clear message (for example `chore: prepare v0.1.0`)
+- [ ] Annotated tag created and pushed (for example `v0.1.0`)
 
 ## Suggested Validation Commands
 
