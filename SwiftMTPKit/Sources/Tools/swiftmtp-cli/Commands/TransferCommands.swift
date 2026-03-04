@@ -27,7 +27,7 @@ struct TransferCommands {
       while !progress.isFinished { try await Task.sleep(nanoseconds: 100_000_000) }
       print("✅ Downloaded successfully")
     } catch {
-      log("❌ Failed to download: \(actionableMessage(for: error))")
+      displayError("Failed to download", error: error, flags: flags)
       if let mtpError = error as? MTPError, case .transport(let te) = mtpError, case .noDevice = te
       {
         exitNow(.unavailable)
@@ -92,7 +92,7 @@ struct TransferCommands {
       while !progress.isFinished { try await Task.sleep(nanoseconds: 100_000_000) }
       print("✅ Uploaded successfully")
     } catch {
-      log("❌ Failed to upload: \(actionableMessage(for: error))")
+      displayError("Failed to upload", error: error, flags: flags)
       if let mtpError = error as? MTPError, case .transport(let te) = mtpError, case .noDevice = te
       {
         exitNow(.unavailable)
@@ -317,7 +317,7 @@ struct TransferCommands {
         print("   CSV written: \(outURL.path)")
       }
     } catch {
-      log("❌ Benchmark failed: \(actionableMessage(for: error))")
+      displayError("Benchmark failed", error: error, flags: flags)
       if let mtpError = error as? MTPError, case .transport(let te) = mtpError, case .noDevice = te
       {
         exitNow(.unavailable)
@@ -532,7 +532,7 @@ struct TransferCommands {
       }
       print("✅ Found \(count) items in root.")
     } catch {
-      print("❌ Mirror failed: \(actionableMessage(for: error))")
+      displayError("Mirror failed", error: error, flags: flags)
       if let mtpError = error as? MTPError {
         switch mtpError {
         case .notSupported:

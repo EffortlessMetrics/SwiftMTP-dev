@@ -18,6 +18,7 @@ struct SwiftMTPCLI {
   var traceUSBDetails = false
   var strict = false
   var safe = false
+  var verbose = false
   var targetVID: String?
   var targetPID: String?
   var targetBus: Int?
@@ -48,6 +49,8 @@ struct SwiftMTPCLI {
         strict = true
       } else if arg == "--safe" {
         safe = true
+      } else if arg == "--verbose" || arg == "-v" {
+        verbose = true
       } else if arg == "--vid" {
         if i + 1 < args.count {
           targetVID = args[i + 1]
@@ -107,6 +110,7 @@ struct SwiftMTPCLI {
       strict: mutableSelf.strict,
       safe: mutableSelf.safe,
       traceUSBDetails: mutableSelf.traceUSBDetails,
+      verbose: mutableSelf.verbose,
       targetVID: mutableSelf.targetVID,
       targetPID: mutableSelf.targetPID,
       targetBus: mutableSelf.targetBus,
@@ -375,6 +379,7 @@ struct SwiftMTPCLI {
     print("  --safe            Enable safe mode (extra checks)")
     print("  --strict          Enable strict mode (fail on warnings)")
     print("  --trace-usb       Enable USB trace logging")
+    print("  --verbose, -v     Show detailed error diagnostics")
     print("")
     print("Examples:")
     print("  swiftmtp probe")

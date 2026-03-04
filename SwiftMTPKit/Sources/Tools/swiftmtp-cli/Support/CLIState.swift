@@ -15,6 +15,7 @@ public struct CLIFlags: Sendable {
   public let strict: Bool
   public let safe: Bool
   public let traceUSBDetails: Bool
+  public let verbose: Bool
   public let targetVID: String?
   public let targetPID: String?
   public let targetBus: Int?
@@ -22,7 +23,8 @@ public struct CLIFlags: Sendable {
 
   public init(
     realOnly: Bool, useMock: Bool, mockProfile: String, json: Bool, jsonlOutput: Bool,
-    traceUSB: Bool, strict: Bool, safe: Bool, traceUSBDetails: Bool, targetVID: String?,
+    traceUSB: Bool, strict: Bool, safe: Bool, traceUSBDetails: Bool, verbose: Bool = false,
+    targetVID: String?,
     targetPID: String?, targetBus: Int?, targetAddress: Int?
   ) {
     self.realOnly = realOnly
@@ -34,6 +36,7 @@ public struct CLIFlags: Sendable {
     self.strict = strict
     self.safe = safe
     self.traceUSBDetails = traceUSBDetails
+    self.verbose = verbose
     self.targetVID = targetVID
     self.targetPID = targetPID
     self.targetBus = targetBus
@@ -148,6 +151,29 @@ public func actionableMessage(for error: Error) -> String {
     }
   }
   return error.localizedDescription
+}
+
+/// Returns a multi-line diagnostic message with actionable next steps.
+/// When `verbose` is true, includes the full error chain and recovery details.
+public func diagnosticMessage(for error: Error, verbose: Bool) -> String {
+  let diag = DiagnosticFormatter.format(error, verbose: verbose)
+  return diag
+}
+
+/// Display an error to stderr with diagnostic formatting.
+/// Uses the verbose diagnostic block when the verbose flag is set,
+/// otherwise falls back to the one-line actionable message.
+public func displayError(_ prefix: String, error: Error, flags: CLIFlags) {
+  if flags.verbose {
+    log("❌ \(prefix)")
+    log(diagnosticMessage(for: error, verbose: true))
+  } else {
+    log("❌ \(prefix): \(actionableMessage(for: error))")
+    let diag = DiagnosticFormatter.diagnose(error)
+    if let cmd = diag.relatedCommand {
+      log("   Hint: try `\(cmd)` for more info. Use --verbose for full diagnostics.")
+    }
+  }
 }
 
 @MainActor

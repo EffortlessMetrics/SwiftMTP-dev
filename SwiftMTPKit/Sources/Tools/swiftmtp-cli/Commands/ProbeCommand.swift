@@ -82,7 +82,7 @@ struct ProbeCommand {
           break
         }
       }
-      log("❌ Probe failed: \(actionableMessage(for: error))")
+      displayError("Probe failed", error: error, flags: flags)
       exitNow(.tempfail)
     }
   }
@@ -146,7 +146,7 @@ struct ProbeCommand {
           break
         }
       }
-      log("❌ Probe failed: \(actionableMessage(for: error))")
+      displayError("Probe failed", error: error, flags: flags)
       exitNow(.tempfail)
     }
   }
@@ -167,7 +167,7 @@ struct ProbeCommand {
       }
     } catch {
       if !flags.json {
-        print("❌ USB dump failed: \(actionableMessage(for: error))")
+        displayError("USB dump failed", error: error, flags: flags)
       }
       exitNow(.tempfail)
     }
