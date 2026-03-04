@@ -83,6 +83,10 @@ let package = Package(
       ]),
 
     .target(
+      name: "SwiftMTPTransportIOUSBHost",
+      dependencies: ["SwiftMTPCore"]),
+
+    .target(
       name: "SwiftMTPIndex",
       dependencies: [
         "SwiftMTPCore", "SwiftMTPStore",
