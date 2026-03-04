@@ -12,6 +12,23 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// Issue `libusb_reset_device` after opening the handle.
   public var resetOnOpen: Bool = false
 
+  /// Issue `libusb_reset_device` after closing the session.
+  /// Required by Android (AOSP) and Sony NWZ Walkman devices to leave the
+  /// device in a clean state. Maps to libmtp `DEVICE_FLAG_FORCE_RESET_ON_CLOSE`.
+  public var forceResetOnClose: Bool = false
+
+  /// Device does not send zero-length packets (ZLP) at USB transfer boundaries
+  /// that are multiples of 64 bytes; instead it sends one extra byte.
+  /// Without this workaround reads can hang waiting for a terminator that
+  /// never arrives. Affects Samsung YP-series, iRiver, and many legacy players.
+  /// Maps to libmtp `DEVICE_FLAG_NO_ZERO_READS`.
+  public var noZeroReads: Bool = false
+
+  /// Skip `libusb_release_interface` on close — device locks up if released.
+  /// Affects SanDisk Sansa and some Creative devices.
+  /// Maps to libmtp `DEVICE_FLAG_NO_RELEASE_INTERFACE`.
+  public var noReleaseInterface: Bool = false
+
   /// Detach macOS kernel driver before claiming the interface.
   public var requiresKernelDetach: Bool = true
 
@@ -45,6 +62,28 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// reset+reopen recovery ladder before giving up.
   public var resetReopenOnOpenSessionIOError: Bool = false
 
+  /// Tolerate broken PTP response headers where the code and transaction-ID
+  /// fields contain junk bytes. Found in Creative ZEN and Aricent MTP stacks.
+  /// Maps to libmtp `DEVICE_FLAG_IGNORE_HEADER_ERRORS`.
+  public var ignoreHeaderErrors: Bool = false
+
+  /// SendObjectPropList (0x9808) is broken — fall back to
+  /// SendObjectInfo (0x100C) + SendObject (0x100D) for new objects.
+  /// This is the #1 Android compatibility flag; affects all AOSP MTP devices.
+  /// Maps to libmtp `DEVICE_FLAG_BROKEN_SEND_OBJECT_PROPLIST`.
+  public var brokenSendObjectPropList: Bool = false
+
+  /// SetObjectPropList (0x9806) is broken for metadata updates.
+  /// Fall back to individual SetObjectPropValue (0x9804) calls.
+  /// Affects Motorola RAZR2 and Android devices.
+  /// Maps to libmtp `DEVICE_FLAG_BROKEN_SET_OBJECT_PROPLIST`.
+  public var brokenSetObjectPropList: Bool = false
+
+  /// Skip CloseSession on disconnect — 2016+ Canon EOS cameras enter an
+  /// error state after CloseSession and refuse further PTP commands.
+  /// Maps to libmtp `DEVICE_FLAG_DONT_CLOSE_SESSION`.
+  public var skipCloseSession: Bool = false
+
   // MARK: - Transfer-level
 
   /// Device supports GetPartialObject64 (0x95C1).
@@ -58,6 +97,18 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
 
   /// Prefer GetObjectPropList (batch) over GetObjectInfo (per-handle).
   public var prefersPropListEnumeration: Bool = true
+
+  /// Prefer MTP property list data over GetObjectInfo results.
+  /// Samsung Galaxy devices return malformed ObjectInfo with 64-bit fields
+  /// packed into 32-bit slots. When set, always use property list values.
+  /// Maps to libmtp `DEVICE_FLAG_PROPLIST_OVERRIDES_OI`.
+  public var propListOverridesObjectInfo: Bool = false
+
+  /// Samsung GetPartialObject hangs when the last USB packet in the response
+  /// exactly matches 512-byte USB 2.0 packet size. Workaround: adjust
+  /// read offset or size to avoid the boundary.
+  /// Maps to libmtp `DEVICE_FLAG_SAMSUNG_OFFSET_BUG`.
+  public var samsungPartialObjectBoundaryBug: Bool = false
 
   /// Device stalls on reads larger than its internal buffer.
   public var needsShortReads: Bool = false
@@ -141,6 +192,9 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
 
   private enum CodingKeys: String, CodingKey {
     case resetOnOpen
+    case forceResetOnClose
+    case noZeroReads
+    case noReleaseInterface
     case requiresKernelDetach
     case needsLongerOpenTimeout
     case extendedBulkTimeout
@@ -149,10 +203,16 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case requiresSessionBeforeDeviceInfo
     case transactionIdResetsOnSession
     case resetReopenOnOpenSessionIOError
+    case ignoreHeaderErrors
+    case brokenSendObjectPropList
+    case brokenSetObjectPropList
+    case skipCloseSession
     case supportsPartialRead64
     case supportsPartialRead32
     case supportsPartialWrite
     case prefersPropListEnumeration
+    case propListOverridesObjectInfo
+    case samsungPartialObjectBoundaryBug
     case needsShortReads
     case stallOnLargeReads
     case disableEventPump
@@ -173,6 +233,12 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     self.resetOnOpen = try container.decodeIfPresent(Bool.self, forKey: .resetOnOpen) ?? false
+    self.forceResetOnClose =
+      try container.decodeIfPresent(Bool.self, forKey: .forceResetOnClose) ?? false
+    self.noZeroReads =
+      try container.decodeIfPresent(Bool.self, forKey: .noZeroReads) ?? false
+    self.noReleaseInterface =
+      try container.decodeIfPresent(Bool.self, forKey: .noReleaseInterface) ?? false
     self.requiresKernelDetach =
       try container.decodeIfPresent(Bool.self, forKey: .requiresKernelDetach) ?? true
     self.needsLongerOpenTimeout =
@@ -189,6 +255,14 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .transactionIdResetsOnSession) ?? false
     self.resetReopenOnOpenSessionIOError =
       try container.decodeIfPresent(Bool.self, forKey: .resetReopenOnOpenSessionIOError) ?? false
+    self.ignoreHeaderErrors =
+      try container.decodeIfPresent(Bool.self, forKey: .ignoreHeaderErrors) ?? false
+    self.brokenSendObjectPropList =
+      try container.decodeIfPresent(Bool.self, forKey: .brokenSendObjectPropList) ?? false
+    self.brokenSetObjectPropList =
+      try container.decodeIfPresent(Bool.self, forKey: .brokenSetObjectPropList) ?? false
+    self.skipCloseSession =
+      try container.decodeIfPresent(Bool.self, forKey: .skipCloseSession) ?? false
     self.supportsPartialRead64 =
       try container.decodeIfPresent(Bool.self, forKey: .supportsPartialRead64) ?? true
     self.supportsPartialRead32 =
@@ -197,6 +271,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .supportsPartialWrite) ?? true
     self.prefersPropListEnumeration =
       try container.decodeIfPresent(Bool.self, forKey: .prefersPropListEnumeration) ?? true
+    self.propListOverridesObjectInfo =
+      try container.decodeIfPresent(Bool.self, forKey: .propListOverridesObjectInfo) ?? false
+    self.samsungPartialObjectBoundaryBug =
+      try container.decodeIfPresent(Bool.self, forKey: .samsungPartialObjectBoundaryBug) ?? false
     self.needsShortReads =
       try container.decodeIfPresent(Bool.self, forKey: .needsShortReads) ?? false
     self.stallOnLargeReads =
@@ -231,6 +309,9 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encodeIfPresent(resetOnOpen, forKey: .resetOnOpen)
+    try container.encodeIfPresent(forceResetOnClose, forKey: .forceResetOnClose)
+    try container.encodeIfPresent(noZeroReads, forKey: .noZeroReads)
+    try container.encodeIfPresent(noReleaseInterface, forKey: .noReleaseInterface)
     try container.encodeIfPresent(requiresKernelDetach, forKey: .requiresKernelDetach)
     try container.encodeIfPresent(needsLongerOpenTimeout, forKey: .needsLongerOpenTimeout)
     try container.encodeIfPresent(extendedBulkTimeout, forKey: .extendedBulkTimeout)
@@ -242,10 +323,17 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       transactionIdResetsOnSession, forKey: .transactionIdResetsOnSession)
     try container.encodeIfPresent(
       resetReopenOnOpenSessionIOError, forKey: .resetReopenOnOpenSessionIOError)
+    try container.encodeIfPresent(ignoreHeaderErrors, forKey: .ignoreHeaderErrors)
+    try container.encodeIfPresent(brokenSendObjectPropList, forKey: .brokenSendObjectPropList)
+    try container.encodeIfPresent(brokenSetObjectPropList, forKey: .brokenSetObjectPropList)
+    try container.encodeIfPresent(skipCloseSession, forKey: .skipCloseSession)
     try container.encodeIfPresent(supportsPartialRead64, forKey: .supportsPartialRead64)
     try container.encodeIfPresent(supportsPartialRead32, forKey: .supportsPartialRead32)
     try container.encodeIfPresent(supportsPartialWrite, forKey: .supportsPartialWrite)
     try container.encodeIfPresent(prefersPropListEnumeration, forKey: .prefersPropListEnumeration)
+    try container.encodeIfPresent(propListOverridesObjectInfo, forKey: .propListOverridesObjectInfo)
+    try container.encodeIfPresent(
+      samsungPartialObjectBoundaryBug, forKey: .samsungPartialObjectBoundaryBug)
     try container.encodeIfPresent(needsShortReads, forKey: .needsShortReads)
     try container.encodeIfPresent(stallOnLargeReads, forKey: .stallOnLargeReads)
     try container.encodeIfPresent(disableEventPump, forKey: .disableEventPump)
