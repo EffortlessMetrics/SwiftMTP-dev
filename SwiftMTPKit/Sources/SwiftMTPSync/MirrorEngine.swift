@@ -132,10 +132,12 @@ public final class MirrorEngine: Sendable {
     do {
       let progress = try await device.read(handle: file.handle, range: nil, to: tempURL)
       // Atomic move from temp to final destination
-      if FileManager.default.fileExists(atPath: localURL.path) {
+      do {
+        try FileManager.default.moveItem(at: tempURL, to: localURL)
+      } catch CocoaError.fileWriteFileExists {
         try FileManager.default.removeItem(at: localURL)
+        try FileManager.default.moveItem(at: tempURL, to: localURL)
       }
-      try FileManager.default.moveItem(at: tempURL, to: localURL)
       try await journal.complete(id: transferId)
       log.debug("Downloaded file successfully")
     } catch {
