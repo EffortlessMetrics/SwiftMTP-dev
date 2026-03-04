@@ -15,6 +15,7 @@ let package = Package(
     .executable(name: "simple-probe", targets: ["simple-probe"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
     .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
+    .library(name: "MTPPathSanitizer", targets: ["MTPPathSanitizer"]),
     .library(name: "MTPEndianCodec", targets: ["MTPEndianCodec"]),
     .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
     .library(name: "SwiftMTPUI", targets: ["SwiftMTPUI"]),
@@ -35,10 +36,14 @@ let package = Package(
     // libusb via Homebrew for dev (dynamic)
     .systemLibrary(name: "CLibusb", path: "SwiftMTPKit/Sources/CLibusb", pkgConfig: "libusb-1.0", providers: [.brew(["libusb"])]),
 
+    .target(name: "MTPPathSanitizer",
+            dependencies: [],
+            path: "SwiftMTPKit/Sources/MTPPathSanitizer"),
+
     // Core MTP functionality
     .target(name: "SwiftMTPCore",
             dependencies: [
-                "SwiftMTPQuirks", "SwiftMTPObservability", "SwiftMTPCLI", "MTPEndianCodec",
+                "SwiftMTPQuirks", "SwiftMTPObservability", "SwiftMTPCLI", "MTPEndianCodec", "MTPPathSanitizer",
                 .product(name: "Collections", package: "swift-collections"),
             ],
             path: "SwiftMTPKit/Sources/SwiftMTPCore",
@@ -164,6 +169,12 @@ let package = Package(
     .testTarget(name: "SwiftMTPCLITests",
                 dependencies: ["SwiftMTPCLI", "SwiftMTPCore", "SwiftCheck"],
                 path: "SwiftMTPKit/Tests/SwiftMTPCLITests"),
+
+    .testTarget(
+      name: "MTPPathSanitizerTests",
+      dependencies: ["MTPPathSanitizer"],
+      path: "SwiftMTPKit/Tests/MTPPathSanitizerTests"
+    ),
 
     .testTarget(
       name: "MTPEndianCodecTests",

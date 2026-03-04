@@ -3,7 +3,7 @@
 
 import Foundation
 import XCTest
-@testable import SwiftMTPCore
+@testable import MTPPathSanitizer
 
 final class PathSanitizerTests: XCTestCase {
 
