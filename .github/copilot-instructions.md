@@ -17,7 +17,7 @@ Note: most package-level commands are intended to be run from the SwiftMTPKit di
 
 - Run CLI (help and common commands):
   - cd SwiftMTPKit && swift run swiftmtp --help
-  - Examples: swift run swiftmtp probe | ls | pull | push | snapshot | mirror | bench | events | quirks | device-lab | wizard
+  - Examples: swift run swiftmtp probe | ls | pull | push | snapshot | mirror | bench | events | quirks | device-lab | wizard | cp | edit | thumb | info
 
 - Run GUI app:
   - cd SwiftMTPKit && swift run SwiftMTPApp
@@ -46,6 +46,7 @@ Note: most package-level commands are intended to be run from the SwiftMTPKit di
 - Major modules and responsibilities:
   - SwiftMTPCore: actor-isolated MTP protocol implementation (core device logic, public APIs, CLI utilities)
   - SwiftMTPTransportLibUSB: libusb-based USB transport layer
+  - SwiftMTPTransportIOUSBHost: native macOS USB transport (scaffold only, throws notImplemented)
   - SwiftMTPIndex: SQLite-based device content indexing and snapshots
   - SwiftMTPSync: mirror, diff, and sync operations with conflict resolution
   - SwiftMTPUI: SwiftUI views / GUI application
@@ -65,8 +66,14 @@ Note: most package-level commands are intended to be run from the SwiftMTPKit di
 - Where to look for authoritative files / resources:
   - Core protocol: SwiftMTPKit/Sources/SwiftMTPCore/Public/MTPDevice.swift
   - Actor: SwiftMTPKit/Sources/SwiftMTPCore/Internal/DeviceActor.swift
+  - Error recovery: SwiftMTPKit/Sources/SwiftMTPCore/Internal/ErrorRecoveryLayer.swift
+  - Adaptive chunk tuner: SwiftMTPKit/Sources/SwiftMTPCore/Public/AdaptiveChunkTuner.swift
   - CLI: SwiftMTPKit/Sources/Tools/swiftmtp-cli/
+  - Conflict resolution: SwiftMTPKit/Sources/SwiftMTPSync/ConflictResolutionStrategy.swift
+  - Format filter: SwiftMTPKit/Sources/SwiftMTPSync/FormatFilter.swift
+  - Recovery log: SwiftMTPKit/Sources/SwiftMTPObservability/RecoveryLog.swift
   - Quirks: Specs/quirks.json and SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json
+  - IOUSBHost transport: SwiftMTPKit/Sources/SwiftMTPTransportIOUSBHost/ (scaffold)
   - CI / validation workflows: .github/workflows/*.yml
 
 ---
@@ -79,7 +86,19 @@ Note: most package-level commands are intended to be run from the SwiftMTPKit di
 - Mocking & demo mode: unit and verification tests use simulated profiles; enable with environment variables:
   - export SWIFTMTP_DEMO_MODE=1
   - export SWIFTMTP_MOCK_PROFILE=pixel7  # options: pixel7, galaxy, iphone, canon
-- 15 test targets: CoreTests, TransportTests, IndexTests, FileProviderTests, ErrorHandlingTests, StoreTests, SyncTests, ScenarioTests, TestKitTests, IntegrationTests, XPCTests, ToolingTests, BDDTests, PropertyTests, SnapshotTests. Use --filter to run a single test or category in CI or locally.
+- 20 test targets: CoreTests, TransportTests, IndexTests, FileProviderTests, ErrorHandlingTests, StoreTests, SyncTests, ScenarioTests, TestKitTests, IntegrationTests, XPCTests, ToolingTests, BDDTests, PropertyTests, SnapshotTests, MTPEndianCodecTests, QuirksTests, ObservabilityTests, SwiftMTPCLITests, UITests. Use --filter to run a single test or category in CI or locally.
+
+### Test discovery — which tests to run per change
+- Core protocol → `swift test --filter CoreTests`
+- Transport → `swift test --filter TransportTests`
+- Index/SQLite → `swift test --filter IndexTests`
+- Sync/mirror → `swift test --filter SyncTests`
+- CLI → `swift test --filter ToolingTests`
+- FileProvider → `swift test --filter FileProviderTests`
+- Quirks → `swift test --filter QuirksTests`
+- Error handling → `swift test --filter ErrorHandlingTests`
+- Full suite → `swift test -v --enable-code-coverage`
+
 - Coverage gating: `SwiftMTPKit/scripts/coverage_gate.py` enforces minimum thresholds in CI.
 - Device quirks must be declared/edited in Specs/quirks.json (source of truth) and validated by the validate-quirks CI workflow.
 - Formatting is enforced: run swift-format prior to commits; CI expects code to be formatted and lint-free.
