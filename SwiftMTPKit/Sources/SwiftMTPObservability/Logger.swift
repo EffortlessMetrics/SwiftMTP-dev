@@ -10,6 +10,7 @@ public enum MTPLog {
   public static let index = Logger(subsystem: subsystem, category: "index")
   public static let sync = Logger(subsystem: subsystem, category: "sync")
   public static let perf = Logger(subsystem: subsystem, category: "performance")
+  public static let recovery = Logger(subsystem: subsystem, category: "recovery")
 
   // Signpost loggers for performance measurement
   public enum Signpost {
