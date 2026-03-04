@@ -152,6 +152,17 @@ if [[ -n "$missing_status" ]]; then
 fi
 echo "✅ All entries have a 'status' field"
 
+# Validate that all status values are recognized
+echo "🔍 Checking status values are valid..."
+VALID_STATUSES='["promoted","verified","proposed","experimental","stable","blocked","community","legacy"]'
+invalid_status=$(jq -r --argjson valid "$VALID_STATUSES" '.entries[] | select(.status as $s | $valid | index($s) | not) | "\(.id): \(.status)"' "$QUIRKS_FILE")
+if [[ -n "$invalid_status" ]]; then
+    echo "❌ Entries with invalid status values:"
+    echo "$invalid_status"
+    exit 1
+fi
+echo "✅ All status values are valid"
+
 # Warn (not fail) if any entry has status=proposed
 proposed_count=$(jq '[.entries[] | select(.status == "proposed")] | length' "$QUIRKS_FILE")
 if [[ "$proposed_count" -gt 0 ]]; then
