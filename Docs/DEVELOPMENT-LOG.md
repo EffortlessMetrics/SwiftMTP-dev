@@ -5,6 +5,33 @@ For earlier waves see `CHANGELOG.md`.
 
 ---
 
+## Wave 45 — Compliance, Logging & Hardening (PRs #494–#500)
+
+**Focus**: Licensing compliance, structured logging, device research, collect improvements, journal crash recovery. 🎉 **PR #500 milestone reached.**
+
+| PR | Title | Zone | Tests Added |
+|----|-------|------|-------------|
+| #494 | SPDX-License-Identifier headers on all source files | compliance | — |
+| #495 | CHANGELOG/DEVELOPMENT-LOG update for waves 42–44 | docs | — |
+| #496 | README comprehensive polish with badges, feature matrix, architecture diagram | docs | — |
+| #497 | Structured OSLog logging with 10 module categories | observability | — |
+| #498 | OnePlus 3T write failure research + quirks update | quirks | — |
+| #499 | Collect command enhancements (--strict, --redact, JSON output) | cli | — |
+| #500 | 23 TransferJournal crash recovery tests | tests | 23 |
+
+**Highlights**:
+- Every source file now carries an `SPDX-License-Identifier` header for licensing compliance
+- Structured `OSLog` logging across 10 module categories: transport, protocol, session, transfer, index, sync, recovery, quirks, fileProvider, cli
+- OnePlus 3T write failure root-caused to `SendObjectPropList` + format mismatch; quirks updated
+- `collect` command gains `--strict` validation, `--redact` PII stripping, and JSON output
+- 23 new `TransferJournal` crash recovery tests covering WAL integrity, orphan detection, and concurrent access
+- README polished with shields.io badges, feature matrix table, and architecture diagram
+- **PR #500** — a project milestone marking sustained development velocity
+
+**Total**: 7 PRs, 23 new tests
+
+---
+
 ## Wave 44 — Release Prep & Quirk Flags (PRs #486–#493)
 
 **Focus**: Release documentation, FileProvider audit, IOUSBHost file transfer, scenario tests, quirk flags wired into transport

@@ -5,9 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] — Waves 37–44
+## [Unreleased] — Waves 37–45
 
-> **Summary**: 75 PRs (#415–#493) across eight waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, comprehensive test backfill, shell completions, IOUSBHost bulk/file transfer, Homebrew formula, CLI progress bars, DocC pipeline, and quirk flags wired into transport. Session totals: **~9,191+ tests**, **20,026 quirks entries**, **127 PRs merged** (#363–#493).
+> **Summary**: 82 PRs (#415–#500) across nine waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, comprehensive test backfill, shell completions, IOUSBHost bulk/file transfer, Homebrew formula, CLI progress bars, DocC pipeline, quirk flags wired into transport, SPDX licensing, structured OSLog logging, and journal crash recovery tests. Session totals: **~9,214+ tests**, **20,026 quirks entries**, **134 PRs merged** (#363–#500). 🎉 **PR #500 milestone reached.**
+
+### Wave 45 — Compliance, Logging & Hardening (PRs #494–#500)
+
+- **#494** — SPDX-License-Identifier headers on all source files (licensing compliance)
+- **#495** — CHANGELOG/DEVELOPMENT-LOG update for waves 42–44
+- **#496** — README comprehensive polish with badges, feature matrix, architecture diagram
+- **#497** — Structured OSLog logging with 10 module categories (transport, protocol, session, transfer, index, sync, recovery, quirks, fileProvider, cli)
+- **#498** — OnePlus 3T write failure research + quirks update (root cause: SendObjectPropList + format mismatch)
+- **#499** — Collect command enhancements (--strict, --redact, JSON output, validation)
+- **#500** — 23 TransferJournal crash recovery tests (WAL, orphan detection, concurrent access)
 
 ### Wave 44 — Release Prep & Quirk Flags (PRs #486–#493)
 
@@ -73,6 +83,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CLI command map and UX reference
 - FileProvider truth audit documentation
 - End-to-end scenario tests for full device workflows
+- SPDX-License-Identifier headers on all source files
+- Structured OSLog logging with 10 module categories
+- Collect command: --strict, --redact, JSON output, validation
+- 23 TransferJournal crash recovery tests
 
 ### Fixed
 - Samsung transport: skip alt-setting on macOS, skip pre-claim reset
@@ -90,6 +104,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Contribution guide refreshed with wave 37–43 patterns
 - CLAUDE.md comprehensive refresh with test discovery guide
 - FIXUP_QUEUE cleanup: 12 resolved items archived
+- README polished with badges, feature matrix, and architecture diagram
+- OnePlus 3T quirks updated with write failure root cause (SendObjectPropList + format mismatch)
 
 ---
 
