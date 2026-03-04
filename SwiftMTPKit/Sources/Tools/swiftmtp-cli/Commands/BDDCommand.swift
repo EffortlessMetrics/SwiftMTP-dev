@@ -48,11 +48,12 @@ struct BDDCommand {
           exitNow(.software)
         }
       } else {
-        print("❌ BDD requires a device implementation that exposes its MTP link")
+        print("❌ BDD requires a device that exposes its MTP link (e.g. MTPDeviceActor).")
+        print("   Tip: Use '--mock' to run against a simulated device.")
         exitNow(.unavailable)
       }
     } catch {
-      print("\n❌ BDD runner failed: \(error)")
+      print("❌ BDD runner failed: \(actionableMessage(for: error))")
       exitNow(.tempfail)
     }
   }

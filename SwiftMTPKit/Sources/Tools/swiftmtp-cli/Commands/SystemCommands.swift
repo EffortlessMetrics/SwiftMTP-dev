@@ -11,7 +11,15 @@ import SwiftMTPCLI
 struct SystemCommands {
   static func runQuirks(flags: CLIFlags, args: [String]) async {
     guard let subcommand = args.first else {
-      print("❌ Usage: quirks --explain | quirks matrix | quirks lookup --vid 0xXXXX --pid 0xXXXX")
+      print("❌ Missing quirks subcommand.")
+      print("   Usage: swiftmtp quirks <subcommand>")
+      print("")
+      print("   Subcommands:")
+      print("     --explain                        Show how device config is computed")
+      print("     matrix                           Display full device compatibility matrix")
+      print("     lookup --vid 0xXXXX --pid 0xXXXX Look up a specific device")
+      print("")
+      print("   Example: swiftmtp quirks lookup --vid 0x18d1 --pid 0x4ee1")
       exitNow(.usage)
     }
     if subcommand == "--explain" {
@@ -21,8 +29,9 @@ struct SystemCommands {
     } else if subcommand == "lookup" {
       await runQuirksLookup(flags: flags, args: Array(args.dropFirst()))
     } else {
-      print("❌ Unknown quirks subcommand: \(subcommand)")
-      print("   Usage: quirks --explain | quirks matrix | quirks lookup --vid 0xXXXX --pid 0xXXXX")
+      print("❌ Unknown quirks subcommand: '\(subcommand)'")
+      print("   Available: --explain, matrix, lookup")
+      print("   Example: swiftmtp quirks lookup --vid 0x18d1 --pid 0x4ee1")
       exitNow(.usage)
     }
   }
@@ -49,8 +58,10 @@ struct SystemCommands {
       i += 1
     }
     guard let vidRaw = vidStr, let pidRaw = pidStr else {
-      print("❌ Usage: quirks lookup --vid 0xXXXX --pid 0xXXXX")
-      print("   Example: quirks lookup --vid 0x18d1 --pid 0x4ee1")
+      print("❌ Missing --vid and/or --pid arguments.")
+      print("   Usage: swiftmtp quirks lookup --vid 0xXXXX --pid 0xXXXX")
+      print("   Example: swiftmtp quirks lookup --vid 0x18d1 --pid 0x4ee1")
+      print("   Tip: Run 'system_profiler SPUSBDataType' to find your device's VID/PID.")
       exitNow(.usage)
     }
     // Normalize to lowercase 0xXXXX format and parse to UInt16
@@ -59,7 +70,8 @@ struct SystemCommands {
     let pidHex =
       pidRaw.lowercased().hasPrefix("0x") ? String(pidRaw.dropFirst(2)) : pidRaw.lowercased()
     guard let vidVal = UInt16(vidHex, radix: 16), let pidVal = UInt16(pidHex, radix: 16) else {
-      print("❌ Invalid VID/PID format. Use hex like 0x18d1 or 18d1")
+      print("❌ Invalid VID/PID format: '\(vidRaw)'/'\(pidRaw)'")
+      print("   Use hex values like 0x18d1 or 18d1 (with or without 0x prefix).")
       exitNow(.usage)
     }
     let vidFormatted = String(format: "0x%04x", vidVal)
@@ -120,7 +132,8 @@ struct SystemCommands {
         }
       }
     } catch {
-      print("❌ Failed to load quirks: \(error)")
+      print("❌ Failed to load quirks database: \(error)")
+      print("   Ensure quirks.json is present in SwiftMTPQuirks/Resources/.")
       exitNow(.unavailable)
     }
   }
@@ -216,7 +229,8 @@ struct SystemCommands {
         print("| \(e.id) | \(vidpid) | \(status) | \(date) | \(confidence) |")
       }
     } catch {
-      print("❌ Failed to load quirks: \(error)")
+      print("❌ Failed to load quirks database: \(error)")
+      print("   Ensure quirks.json is present in SwiftMTPQuirks/Resources/.")
       exitNow(.unavailable)
     }
   }
@@ -225,9 +239,14 @@ struct SystemCommands {
     print("🏥 SwiftMTP Health Check")
     do {
       let devices = try await LibUSBDiscovery.enumerateMTPDevices()
-      print("✅ Found \(devices.count) MTP device(s)")
+      if devices.isEmpty {
+        print("⚠️  No MTP devices found. Connect a device via USB and enable MTP/File Transfer mode.")
+      } else {
+        print("✅ Found \(devices.count) MTP device(s)")
+      }
     } catch {
-      print("❌ Health check failed: \(error)")
+      print("❌ Health check failed: \(actionableMessage(for: error))")
+      print("   Tip: Check that no other app (Android File Transfer, adb) is holding the USB device.")
       exitNow(.unavailable)
     }
   }

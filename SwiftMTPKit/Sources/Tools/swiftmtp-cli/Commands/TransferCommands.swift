@@ -9,7 +9,10 @@ import SwiftMTPCLI
 struct TransferCommands {
   static func runPull(flags: CLIFlags, args: [String]) async {
     guard args.count >= 2, let handle = UInt32(args[0]) else {
-      print("❌ Usage: pull <handle> <destination>")
+      print("❌ Missing required arguments for pull.")
+      print("   Usage: swiftmtp pull <handle> <destination>")
+      print("   Example: swiftmtp pull 42 ./photo.jpg")
+      print("   Tip: Run 'swiftmtp ls <storage>' to find object handles.")
       exitNow(.usage)
     }
 
@@ -34,9 +37,11 @@ struct TransferCommands {
 
   static func runPush(flags: CLIFlags, args: [String]) async {
     guard args.count >= 2 else {
-      print("❌ Usage: push <source> <parent-handle-or-folder-name>")
-      print("   Example: push file.txt Download")
-      print("   Example: push file.txt 0xFFFFFFF1")
+      print("❌ Missing required arguments for push.")
+      print("   Usage: swiftmtp push <source> <parent-handle-or-folder-name>")
+      print("   Example: swiftmtp push photo.jpg Download")
+      print("   Example: swiftmtp push file.txt 0xFFFFFFF1")
+      print("   Tip: Use a folder name (e.g. 'Download') or a hex handle.")
       exitNow(.usage)
     }
 
@@ -46,6 +51,7 @@ struct TransferCommands {
 
     guard FileManager.default.fileExists(atPath: srcPath) else {
       print("❌ Source file not found: \(srcPath)")
+      print("   Check that the path is correct and the file exists.")
       exitNow(.usage)
     }
 
@@ -161,13 +167,17 @@ struct TransferCommands {
 
   static func runBench(flags: CLIFlags, args: [String]) async {
     guard let sizeStr = args.first else {
-      print("Usage: bench <size> [--storage <id>] [--parent <handle>] [--repeat <n>] [--out <csv>]")
+      print("❌ Missing required argument: <size>")
+      print("   Usage: swiftmtp bench <size> [--storage <id>] [--parent <handle>] [--repeat <n>] [--out <csv>]")
+      print("   Example: swiftmtp bench 10M --repeat 3 --out results.csv")
+      print("   Sizes: 1M, 10M, 100M, 1G")
       exitNow(.usage)
     }
 
     let sizeBytes = parseSize(sizeStr)
     guard sizeBytes > 0 else {
-      print("Invalid size format: \(sizeStr)")
+      print("❌ Invalid size format: '\(sizeStr)'")
+      print("   Use a number with optional suffix: 1M, 10M, 100M, 1G")
       exitNow(.usage)
     }
 
@@ -191,7 +201,7 @@ struct TransferCommands {
           repeatCount = n
           i += 2
         } else {
-          print("Invalid value for --repeat: \(args[i + 1])")
+          print("❌ Invalid value for --repeat: '\(args[i + 1])'. Must be a positive integer.")
           exitNow(.usage)
         }
       } else if args[i].hasPrefix("--repeat=") {
@@ -200,7 +210,7 @@ struct TransferCommands {
           repeatCount = n
           i += 1
         } else {
-          print("Invalid value for --repeat: \(value)")
+          print("❌ Invalid value for --repeat: '\(value)'. Must be a positive integer.")
           exitNow(.usage)
         }
       } else if args[i] == "--out", i + 1 < args.count {
@@ -382,7 +392,9 @@ struct TransferCommands {
 
   static func runMirror(flags: CLIFlags, args: [String]) async {
     guard let destPath = args.first else {
-      print("❌ Usage: mirror <destination>")
+      print("❌ Missing required argument: <destination>")
+      print("   Usage: swiftmtp mirror <destination>")
+      print("   Example: swiftmtp mirror ./device-backup")
       exitNow(.usage)
     }
     print("🔄 Mirroring device to \(destPath)...")
@@ -390,7 +402,8 @@ struct TransferCommands {
       let device = try await openDevice(flags: flags)
       let storages = try await device.storages()
       guard let firstStorage = storages.first else {
-        print("❌ No storage available")
+        print("❌ No storage available on the device.")
+        print("   Ensure the device is unlocked and set to MTP/File Transfer mode.")
         exitNow(.tempfail)
       }
       let rootStream = device.list(parent: nil as MTPObjectHandle?, in: firstStorage.id)
@@ -403,7 +416,7 @@ struct TransferCommands {
       }
       print("✅ Found \(count) items in root.")
     } catch {
-      print("❌ Mirror failed: \(error)")
+      print("❌ Mirror failed: \(actionableMessage(for: error))")
       if let mtpError = error as? MTPError {
         switch mtpError {
         case .notSupported:

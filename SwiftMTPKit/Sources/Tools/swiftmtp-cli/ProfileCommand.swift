@@ -79,7 +79,7 @@ struct ProfileCommand {
       }
 
     } catch {
-      print("❌ Profiling failed: \(error)")
+      print("❌ Profiling failed: \(actionableMessage(for: error))")
     }
   }
 
@@ -100,7 +100,7 @@ struct ProfileCommand {
 
       try await device.devClose()
     } catch {
-      print("❌ Device lab harness failed: \(error)")
+      print("❌ Device lab harness failed: \(actionableMessage(for: error))")
     }
   }
 }

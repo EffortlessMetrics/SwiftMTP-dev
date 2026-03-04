@@ -30,7 +30,7 @@ struct StorageListCommands {
       if flags.json {
         printJSON(["error": error.localizedDescription], type: "storagesResult")
       } else {
-        print("❌ Storages failed: \(error)")
+        print("❌ Failed to list storages: \(actionableMessage(for: error))")
       }
       if let mtpError = error as? MTPError {
         switch mtpError {
@@ -51,7 +51,9 @@ struct StorageListCommands {
       if flags.json {
         printJSON(["error": "Usage: ls <storage_handle>"], type: "listResult")
       } else {
-        print("❌ Usage: ls <storage_handle>")
+        print("❌ Missing or invalid storage handle.")
+        print("   Usage: swiftmtp ls <storage_handle>")
+        print("   Tip: Run 'swiftmtp storages' to find available storage IDs.")
       }
       exitNow(.usage)
     }
@@ -83,7 +85,7 @@ struct StorageListCommands {
       if flags.json {
         printJSON(["error": error.localizedDescription], type: "listResult")
       } else {
-        print("❌ List failed: \(error)")
+        print("❌ Failed to list objects: \(actionableMessage(for: error))")
       }
       if let mtpError = error as? MTPError {
         switch mtpError {

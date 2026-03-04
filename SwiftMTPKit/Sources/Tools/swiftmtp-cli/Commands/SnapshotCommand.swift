@@ -44,7 +44,10 @@ struct SnapshotCommand {
       print("✅ Snapshot captured: \(filename)")
       print("   (\(storages.count) storages, \(allObjects.count) objects)")
     } catch {
-      print("❌ Snapshot failed: \(error)")
+      print("❌ Snapshot failed: \(actionableMessage(for: error))")
+      if let mtpError = error as? MTPError, case .transport(let te) = mtpError, case .noDevice = te {
+        exitNow(.unavailable)
+      }
       exitNow(.tempfail)
     }
   }
