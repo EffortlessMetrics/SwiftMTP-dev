@@ -52,7 +52,7 @@ Minimum expectations for each item:
 |----------|------|--------|-------|
 | IOUSBHost transport implementation | Transport | In Progress | Discovery (#475), bulk ops (#481), file transfer (#491) shipped; events and integration testing remain |
 | OnePlus 3T write failure investigation | Device support | Researched | Write failure root-cause analysis shipped (#498): 0x201D traced to MTP session state; debug recommendations documented |
-| Samsung Galaxy retest | Device support | Ready | Transport fixes shipped (#445); awaiting retest with skipAltSetting/skipPreClaimReset |
+| Samsung Galaxy retest | Device support | Ready | Transport fixes shipped (#445); wave 46 research identified 3 remaining gaps (skipClearHalt wiring, reset-reopen recovery, forceResetOnClose). See Docs/samsung-mtp-debug-report.md |
 | Pixel 7 retest | Device support | Ready | Transport fixes shipped (#443); awaiting retest with handle re-open and timeout tuning |
 | Real-device validation expansion | Testing | Ongoing | Only 1 of 7 devices transfers files; need community help-wanted push |
 | Homebrew formula for CLI | Distribution | ✅ Shipped | Homebrew formula and install docs shipped (#478) |
@@ -343,7 +343,7 @@ Sprint exit criteria:
 | Item | Type | Owner Lane | Mitigation |
 |------|------|------------|------------|
 | Pixel 7 Tahoe bulk timeout remains intermittent | Technical risk | Core/transport | Transport fixes shipped (#443): handle re-open, set_configuration, extended timeouts. Awaiting retest. |
-| Samsung Galaxy MTP handshake failure | Technical risk | Core/transport | Transport fixes shipped (#445): skipAltSetting, skipPreClaimReset. Awaiting retest. |
+| Samsung Galaxy MTP handshake failure | Technical risk | Core/transport | Transport fixes shipped (#445): skipAltSetting, skipPreClaimReset. Wave 46 deep research: 3 gaps remain (reset-reopen recovery, skipClearHalt wiring, forceResetOnClose). Awaiting retest. |
 | OnePlus large write behavior differs by folder target | Technical risk | Core/transport + docs | Keep write-target fallback guidance synchronized with troubleshooting and device docs |
 | Redaction validation drift between docs and scripts | Process risk | Device support + tooling | Treat `validate-submission` output as source of truth; update docs and template together |
 | Overlapping CI workflows create unclear required checks | Process risk | Testing/CI | Complete 2.1-C consolidation and document required vs nightly checks |
