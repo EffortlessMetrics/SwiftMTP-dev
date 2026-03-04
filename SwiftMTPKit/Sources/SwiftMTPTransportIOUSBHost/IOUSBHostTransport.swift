@@ -389,29 +389,101 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
 
   /// Read storage info for a given storage ID (0x1005).
   public func getStorageInfo(id: MTPStorageID) async throws -> MTPStorageInfo {
-    throw IOUSBHostTransportError.notImplemented("getStorageInfo — data parsing not yet implemented")
+    let data = try await executeDataInCommand(
+      code: PTPOp.getStorageInfo.rawValue, params: [id.raw]
+    )
+    var r = PTPReader(data: data)
+    _ = r.u16()  // StorageType
+    _ = r.u16()  // FilesystemType
+    let accessCapability = r.u16()
+    let maxCapacity = r.u64()
+    let freeSpace = r.u64()
+    _ = r.u32()  // FreeSpaceInObjects
+    let description = r.string() ?? ""
+    return MTPStorageInfo(
+      id: id, description: description,
+      capacityBytes: maxCapacity ?? 0, freeBytes: freeSpace ?? 0,
+      isReadOnly: accessCapability == 0x0001
+    )
   }
 
   /// Enumerate object handles in the given storage/parent (0x1007).
   public func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws
     -> [MTPObjectHandle]
   {
-    throw IOUSBHostTransportError.notImplemented(
-      "getObjectHandles — data parsing not yet implemented")
+    let data = try await executeDataInCommand(
+      code: PTPOp.getObjectHandles.rawValue,
+      params: [storage.raw, 0, parent ?? 0x00000000]
+    )
+    guard data.count >= 4 else { return [] }
+    return data.withUnsafeBytes { buf in
+      let base = buf.baseAddress!
+      let count = Int(UInt32(littleEndian: base.load(as: UInt32.self)))
+      let available = (data.count - 4) / 4
+      let total = min(count, available)
+      var handles: [MTPObjectHandle] = []
+      handles.reserveCapacity(total)
+      for i in 0..<total {
+        let h = UInt32(littleEndian: base.load(fromByteOffset: 4 + i * 4, as: UInt32.self))
+        handles.append(h)
+      }
+      return handles
+    }
   }
 
   /// Batch-fetch object info for the given handles.
   public func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo] {
-    throw IOUSBHostTransportError.notImplemented(
-      "getObjectInfos(handles:) — data parsing not yet implemented")
+    var out: [MTPObjectInfo] = []
+    for handle in handles {
+      let collector = DataCollector()
+      let result = try await executeStreamingCommand(
+        PTPContainer(
+          type: PTPContainer.Kind.command.rawValue,
+          code: PTPOp.getObjectInfo.rawValue,
+          txid: nextTx, params: [handle]
+        ),
+        dataPhaseLength: nil,
+        dataInHandler: { chunk in
+          collector.append(chunk)
+          return chunk.count
+        },
+        dataOutHandler: nil
+      )
+      if !result.isOK { continue }
+      var r = PTPReader(data: collector.data)
+      guard let sid = r.u32(), let fmt = r.u16() else { continue }
+      _ = r.u16()  // ProtectionStatus
+      let size = r.u32()
+      _ = r.u16()  // ThumbFormat
+      _ = r.u32()  // ThumbCompressedSize
+      _ = r.u32()  // ThumbPixWidth
+      _ = r.u32()  // ThumbPixHeight
+      _ = r.u32()  // ImagePixWidth
+      _ = r.u32()  // ImagePixHeight
+      _ = r.u32()  // ImageBitDepth
+      let par = r.u32()
+      _ = r.u16()  // AssociationType
+      _ = r.u32()  // AssociationDesc
+      _ = r.u32()  // SequenceNumber
+      let name = r.string() ?? "Unknown"
+      out.append(
+        MTPObjectInfo(
+          handle: handle, storage: MTPStorageID(raw: sid),
+          parent: par == 0 ? nil : par, name: name,
+          sizeBytes: (size == nil || size == 0xFFFFFFFF) ? nil : UInt64(size!),
+          modified: nil as Date?, formatCode: fmt, properties: [:]
+        )
+      )
+    }
+    return out
   }
 
   /// Fetch object infos filtered by storage/parent/format.
   public func getObjectInfos(storage: MTPStorageID, parent: MTPObjectHandle?, format: UInt16?)
     async throws -> [MTPObjectInfo]
   {
-    throw IOUSBHostTransportError.notImplemented(
-      "getObjectInfos(storage:parent:format:) — data parsing not yet implemented")
+    let handles = try await getObjectHandles(storage: storage, parent: parent)
+    return try await getObjectInfos(handles)
   }
 
   /// Send MTP ResetDevice via USB class-specific request.
@@ -424,18 +496,36 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
     try await executeSimpleCommand(code: PTPOp.deleteObject.rawValue, params: [handle])
   }
 
-  /// Move an object on the device.
+  /// Move an object on the device (0x100E).
   public func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?)
     async throws
   {
-    throw IOUSBHostTransportError.notImplemented("moveObject")
+    try await executeSimpleCommand(
+      code: PTPOp.moveObject.rawValue,
+      params: [handle, storage.raw, parent ?? 0xFFFFFFFF]
+    )
   }
 
-  /// Copy an object on the device.
+  /// Copy an object on the device (0x101A).
   public func copyObject(
     handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
   ) async throws -> MTPObjectHandle {
-    throw IOUSBHostTransportError.notImplemented("copyObject")
+    let result = try await executeStreamingCommand(
+      PTPContainer(
+        type: PTPContainer.Kind.command.rawValue,
+        code: PTPOp.copyObject.rawValue,
+        txid: nextTx,
+        params: [handle, storage.raw, parent ?? 0xFFFFFFFF]
+      ),
+      dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil
+    )
+    guard result.isOK else {
+      throw MTPError.protocolError(
+        code: result.code,
+        message: "CopyObject failed: response 0x\(String(format: "%04x", result.code))"
+      )
+    }
+    return result.params.first ?? 0
   }
 
   // MARK: - Command Execution
@@ -500,11 +590,35 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
     try bulkWrite(cmdData)
 
     // Phase 2: Data phase (if any)
-    if let dataOut = dataOutHandler {
-      // Data-out: read from callback, send to device
-      // TODO: Implement chunked data-out transfers
-      _ = dataOut
-      throw IOUSBHostTransportError.notImplemented("data-out phase")
+    if let dataOut = dataOutHandler, let dataLen = dataPhaseLength {
+      // Data-out: build data container header, fill from callback, send to device
+      let headerSize = UInt32(ptpHeaderSize)
+      let totalLen = headerSize + UInt32(dataLen)
+      var header = Data(count: ptpHeaderSize)
+      header.withUnsafeMutableBytes { buf in
+        let base = buf.baseAddress!
+        base.storeBytes(of: totalLen.littleEndian, as: UInt32.self)
+        base.storeBytes(of: PTPContainer.Kind.data.rawValue.littleEndian, toByteOffset: 4, as: UInt16.self)
+        base.storeBytes(of: cmd.code.littleEndian, toByteOffset: 6, as: UInt16.self)
+        base.storeBytes(of: cmd.txid.littleEndian, toByteOffset: 8, as: UInt32.self)
+      }
+
+      // Collect payload from callback
+      var payload = Data()
+      payload.reserveCapacity(Int(dataLen))
+      let chunkSize = 65536
+      var buf = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: chunkSize)
+      defer { buf.deallocate() }
+      var remaining = Int(dataLen)
+      while remaining > 0 {
+        let requested = min(remaining, chunkSize)
+        let wrote = dataOut(UnsafeMutableRawBufferPointer(buf))
+        if wrote == 0 { break }
+        payload.append(buf.baseAddress!, count: min(wrote, requested))
+        remaining -= wrote
+      }
+
+      try bulkWrite(header + payload)
     }
 
     if dataInHandler != nil {
