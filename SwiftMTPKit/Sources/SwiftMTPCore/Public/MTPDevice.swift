@@ -64,25 +64,97 @@ public struct MTPDeviceSummary: Sendable {
 }
 /// Events that can be emitted by an MTP device during operation.
 ///
+/// Covers all standard MTP 1.1 event codes (0x4001–0x400E).
 /// These events notify about changes to the device's content or state
 /// that may require UI updates or re-indexing.
 public enum MTPEvent: Sendable {
-  /// A new object was added to the device
+  /// 0x4001 – The initiator cancelled the current transaction
+  case cancelTransaction(transactionId: UInt32)
+  /// 0x4002 – A new object was added to the device
   case objectAdded(MTPObjectHandle)
-  /// An object was removed from the device
+  /// 0x4003 – An object was removed from the device
   case objectRemoved(MTPObjectHandle)
-  /// Storage information changed (capacity, free space, etc.)
-  case storageInfoChanged(MTPStorageID)
-  /// A new storage (SD card, etc.) was added
+  /// 0x4004 – A new storage (SD card, etc.) was added
   case storageAdded(MTPStorageID)
-  /// A storage was removed
+  /// 0x4005 – A storage was removed
   case storageRemoved(MTPStorageID)
-  /// Object metadata was updated (name, date, etc.)
+  /// 0x4006 – A device property value changed
+  case devicePropChanged(propertyCode: UInt16)
+  /// 0x4007 – Object metadata was updated (name, date, etc.)
   case objectInfoChanged(MTPObjectHandle)
-  /// Device info changed (e.g. battery level property updated)
+  /// 0x4008 – Device info changed (e.g. battery level property updated)
   case deviceInfoChanged
+  /// 0x4009 – Device requests the host to initiate a data transfer
+  case requestObjectTransfer(MTPObjectHandle)
+  /// 0x400A – Storage is full
+  case storeFull(MTPStorageID)
+  /// 0x400B – Device has been reset
+  case deviceReset
+  /// 0x400C – Storage information changed (capacity, free space, etc.)
+  case storageInfoChanged(MTPStorageID)
+  /// 0x400D – A capture operation completed
+  case captureComplete(transactionId: UInt32)
+  /// 0x400E – Device has unreported status
+  case unreportedStatus
   /// An unknown event code was received; carries the raw 16-bit code and parameters
   case unknown(code: UInt16, params: [UInt32])
+
+  /// Human-readable description suitable for CLI output.
+  public var eventDescription: String {
+    switch self {
+    case .cancelTransaction(let txId):
+      return "CancelTransaction (txId: \(txId))"
+    case .objectAdded(let handle):
+      return "ObjectAdded (handle: 0x\(String(handle, radix: 16)))"
+    case .objectRemoved(let handle):
+      return "ObjectRemoved (handle: 0x\(String(handle, radix: 16)))"
+    case .storageAdded(let sid):
+      return "StoreAdded (storageId: 0x\(String(sid.raw, radix: 16)))"
+    case .storageRemoved(let sid):
+      return "StoreRemoved (storageId: 0x\(String(sid.raw, radix: 16)))"
+    case .devicePropChanged(let prop):
+      return "DevicePropChanged (property: 0x\(String(prop, radix: 16)))"
+    case .objectInfoChanged(let handle):
+      return "ObjectInfoChanged (handle: 0x\(String(handle, radix: 16)))"
+    case .deviceInfoChanged:
+      return "DeviceInfoChanged"
+    case .requestObjectTransfer(let handle):
+      return "RequestObjectTransfer (handle: 0x\(String(handle, radix: 16)))"
+    case .storeFull(let sid):
+      return "StoreFull (storageId: 0x\(String(sid.raw, radix: 16)))"
+    case .deviceReset:
+      return "DeviceReset"
+    case .storageInfoChanged(let sid):
+      return "StorageInfoChanged (storageId: 0x\(String(sid.raw, radix: 16)))"
+    case .captureComplete(let txId):
+      return "CaptureComplete (txId: \(txId))"
+    case .unreportedStatus:
+      return "UnreportedStatus"
+    case .unknown(let code, let params):
+      return "Unknown (code: 0x\(String(code, radix: 16)), params: \(params))"
+    }
+  }
+
+  /// The MTP event code for this event.
+  public var eventCode: UInt16 {
+    switch self {
+    case .cancelTransaction: return 0x4001
+    case .objectAdded: return 0x4002
+    case .objectRemoved: return 0x4003
+    case .storageAdded: return 0x4004
+    case .storageRemoved: return 0x4005
+    case .devicePropChanged: return 0x4006
+    case .objectInfoChanged: return 0x4007
+    case .deviceInfoChanged: return 0x4008
+    case .requestObjectTransfer: return 0x4009
+    case .storeFull: return 0x400A
+    case .deviceReset: return 0x400B
+    case .storageInfoChanged: return 0x400C
+    case .captureComplete: return 0x400D
+    case .unreportedStatus: return 0x400E
+    case .unknown(let code, _): return code
+    }
+  }
 
   /// Parse MTP event from raw PTP/MTP event container data.
   ///
@@ -103,6 +175,8 @@ public enum MTPEvent: Sendable {
     }
 
     switch code {
+    case 0x4001:  // CancelTransaction
+      return .cancelTransaction(transactionId: params.first ?? 0)
     case 0x4002:  // ObjectAdded
       guard let handle = params.first else { return nil }
       return .objectAdded(handle)
@@ -115,14 +189,28 @@ public enum MTPEvent: Sendable {
     case 0x4005:  // StoreRemoved
       guard let raw = params.first else { return nil }
       return .storageRemoved(MTPStorageID(raw: raw))
+    case 0x4006:  // DevicePropChanged
+      return .devicePropChanged(propertyCode: params.first.map { UInt16($0 & 0xFFFF) } ?? 0)
     case 0x4007:  // ObjectInfoChanged
       guard let handle = params.first else { return nil }
       return .objectInfoChanged(handle)
     case 0x4008:  // DeviceInfoChanged
       return .deviceInfoChanged
+    case 0x4009:  // RequestObjectTransfer
+      guard let handle = params.first else { return nil }
+      return .requestObjectTransfer(handle)
+    case 0x400A:  // StoreFull
+      guard let raw = params.first else { return nil }
+      return .storeFull(MTPStorageID(raw: raw))
+    case 0x400B:  // DeviceReset
+      return .deviceReset
     case 0x400C:  // StorageInfoChanged
       guard let raw = params.first else { return nil }
       return .storageInfoChanged(MTPStorageID(raw: raw))
+    case 0x400D:  // CaptureComplete
+      return .captureComplete(transactionId: params.first ?? 0)
+    case 0x400E:  // UnreportedStatus
+      return .unreportedStatus
     default:
       return .unknown(code: code, params: params)
     }

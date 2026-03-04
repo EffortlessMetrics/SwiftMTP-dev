@@ -555,6 +555,16 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
       let identifier = NSFileProviderItemIdentifier("\(deviceId):\(storageId)")
       syncAnchorStore.recordChange(added: [], deleted: [identifier], for: key)
       signalRootContainer()
+
+    case .devicePropChanged:
+      break  // No file provider action needed for property changes
+
+    case .storeFull(let deviceId, let storageId):
+      signalContainer(NSFileProviderItemIdentifier("\(deviceId):\(storageId)"))
+
+    case .deviceReset(let deviceId):
+      signalRootContainer()
+      _ = deviceId  // Silence unused variable warning
     }
   }
 

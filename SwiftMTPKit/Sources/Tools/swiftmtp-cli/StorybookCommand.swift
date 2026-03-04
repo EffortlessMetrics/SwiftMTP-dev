@@ -78,6 +78,20 @@ struct StorybookCommand {
             print("   🔔 EVENT: Object info changed (Handle: \(handle))")
           case .deviceInfoChanged:
             print("   🔔 EVENT: Device info changed")
+          case .cancelTransaction(let txId):
+            print("   🔔 EVENT: Cancel transaction (txId: \(txId))")
+          case .devicePropChanged(let prop):
+            print("   🔔 EVENT: Device property changed (property: 0x\(String(prop, radix: 16)))")
+          case .requestObjectTransfer(let handle):
+            print("   🔔 EVENT: Request object transfer (Handle: \(handle))")
+          case .storeFull(let storageID):
+            print("   ⚠️ EVENT: Storage full! (ID: \(storageID.raw))")
+          case .deviceReset:
+            print("   ⚠️ EVENT: Device reset!")
+          case .captureComplete(let txId):
+            print("   🔔 EVENT: Capture complete (txId: \(txId))")
+          case .unreportedStatus:
+            print("   🔔 EVENT: Unreported status")
           case .unknown(let code, let params):
             print(
               "   🔔 EVENT: Unknown event code=\(String(format: "0x%04X", code)) params=\(params)")
