@@ -167,7 +167,7 @@ struct ProbeCommand {
       }
     } catch {
       if !flags.json {
-        print("❌ USB dump failed: \(error)")
+        print("❌ USB dump failed: \(actionableMessage(for: error))")
       }
       exitNow(.tempfail)
     }

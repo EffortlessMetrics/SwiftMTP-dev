@@ -200,7 +200,10 @@ struct SwiftMTPCLI {
       await WizardCommand.run(flags: flags, args: remainingArgs)
     case "submit":
       guard let bundlePath = remainingArgs.first else {
-        print("❌ Usage: submit <bundle-path> [--gh]")
+        print("❌ Missing required argument: <bundle-path>")
+        print("   Usage: swiftmtp submit <bundle-path> [--gh]")
+        print("   Example: swiftmtp submit ./my-device-bundle --gh")
+        print("   Tip: Run 'swiftmtp collect' first to create a submission bundle.")
         exitNow(.usage)
       }
       let gh = remainingArgs.contains("--gh")
@@ -224,18 +227,115 @@ struct SwiftMTPCLI {
     case "version":
       await SystemCommands.runVersion(flags: flags, args: remainingArgs)
     default:
-      print("Unknown command: \(command)")
+      print("❌ Unknown command: '\(command)'")
+      if let suggestion = suggestCommand(command) {
+        print("   Did you mean '\(suggestion)'?")
+      }
+      print("   Run 'swiftmtp --help' to see available commands.")
       exitNow(.usage)
     }
   }
 
+  /// Known commands for "did you mean?" suggestions.
+  private static let knownCommands = [
+    "probe", "usb-dump", "device-lab", "diag", "storages", "ls", "pull", "push",
+    "bench", "mirror", "quirks", "info", "health", "collect", "submit",
+    "add-device", "wizard", "delete", "move", "events", "learn-promote",
+    "bdd", "snapshot", "version", "storybook", "profile",
+  ]
+
+  /// Suggest the closest known command for a typo using simple edit-distance heuristics.
+  private func suggestCommand(_ input: String) -> String? {
+    let lowered = input.lowercased()
+    // Prefix match first (e.g. "prob" -> "probe")
+    let prefixMatches = Self.knownCommands.filter { $0.hasPrefix(lowered) }
+    if prefixMatches.count == 1 { return prefixMatches[0] }
+    // Substring match (e.g. "irror" -> "mirror")
+    let substringMatches = Self.knownCommands.filter { $0.contains(lowered) || lowered.contains($0) }
+    if substringMatches.count == 1 { return substringMatches[0] }
+    // Levenshtein distance ≤ 2
+    for cmd in Self.knownCommands {
+      if levenshtein(lowered, cmd) <= 2 { return cmd }
+    }
+    return nil
+  }
+
+  /// Minimal Levenshtein distance for short strings.
+  private func levenshtein(_ a: String, _ b: String) -> Int {
+    let a = Array(a), b = Array(b)
+    var dp = Array(0...b.count)
+    for i in 1...a.count {
+      var prev = dp[0]; dp[0] = i
+      for j in 1...b.count {
+        let tmp = dp[j]
+        dp[j] = a[i - 1] == b[j - 1] ? prev : min(prev, dp[j], dp[j - 1]) + 1
+        prev = tmp
+      }
+    }
+    return dp[b.count]
+  }
+
   func printHelp() {
-    print("SwiftMTP CLI - Modular Refactor")
-    print("Usage: swift run swiftmtp [flags] <command>")
+    print("SwiftMTP CLI — MTP device management for macOS")
     print("")
-    print(
-      "Commands: probe, usb-dump, device-lab, diag, storages, ls, pull, push, bench, mirror, quirks, info, health, collect, submit, add-device, wizard, delete, move, events, learn-promote, bdd, snapshot, version"
-    )
+    print("Usage: swiftmtp [flags] <command> [arguments]")
+    print("")
+    print("Device Discovery:")
+    print("  probe             Detect and display MTP device info")
+    print("  usb-dump          Dump raw USB interface descriptors")
+    print("  diag              Run probe + usb-dump diagnostics")
+    print("  health            Quick USB/MTP connectivity check")
+    print("")
+    print("File Operations:")
+    print("  ls <storage>      List files in a storage")
+    print("  storages          List available storage volumes")
+    print("  pull <h> <dest>   Download a file by handle")
+    print("  push <src> <dst>  Upload a file to a folder")
+    print("  delete <handle>   Delete an object on the device")
+    print("  move <h> <parent> Move an object to a new parent")
+    print("  mirror <dest>     Mirror device contents locally")
+    print("  snapshot          Capture full device content snapshot")
+    print("")
+    print("Performance:")
+    print("  bench <size>      Benchmark transfer speed")
+    print("  profile           Profile device transfer characteristics")
+    print("")
+    print("Device Database:")
+    print("  quirks            Query/explain device quirk profiles")
+    print("  info              Show quirks database summary")
+    print("  add-device        Generate a new device quirk template")
+    print("  learn-promote     Promote a learned profile to quirks DB")
+    print("")
+    print("Device Contribution:")
+    print("  collect           Collect device evidence for submission")
+    print("  submit <bundle>   Submit a device profile bundle")
+    print("  wizard            Interactive guided device setup")
+    print("  device-lab        Automated device testing matrix")
+    print("")
+    print("Other:")
+    print("  events [secs]     Monitor MTP device events")
+    print("  bdd               Run BDD scenario tests on a device")
+    print("  storybook         Run demo storybook scenarios")
+    print("  version           Show version and build info")
+    print("")
+    print("Global Flags:")
+    print("  --json            Output results as JSON")
+    print("  --vid <hex>       Filter by USB Vendor ID  (e.g. 0x18d1)")
+    print("  --pid <hex>       Filter by USB Product ID (e.g. 0x4ee1)")
+    print("  --bus <n>         Filter by USB bus number")
+    print("  --address <n>     Filter by USB device address")
+    print("  --mock            Use simulated demo device")
+    print("  --safe            Enable safe mode (extra checks)")
+    print("  --strict          Enable strict mode (fail on warnings)")
+    print("  --trace-usb       Enable USB trace logging")
+    print("")
+    print("Examples:")
+    print("  swiftmtp probe")
+    print("  swiftmtp ls 65537")
+    print("  swiftmtp pull 42 ./photo.jpg")
+    print("  swiftmtp push ./file.txt Download")
+    print("  swiftmtp quirks lookup --vid 0x18d1 --pid 0x4ee1")
+    print("  swiftmtp bench 10M --repeat 3 --out results.csv")
   }
 }
 

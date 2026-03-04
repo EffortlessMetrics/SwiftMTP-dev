@@ -13,7 +13,8 @@ struct SubmitCommand {
     let manifestURL = bundleURL.appendingPathComponent("submission.json")
 
     guard FileManager.default.fileExists(atPath: manifestURL.path) else {
-      print("❌ Invalid bundle: submission.json missing at \(manifestURL.path)")
+      print("❌ Invalid bundle: submission.json not found at \(manifestURL.path)")
+      print("   Ensure the bundle was created with 'swiftmtp collect'.")
       return .usage
     }
 
@@ -38,12 +39,15 @@ struct SubmitCommand {
 
       if gh {
         guard await GitHubIntegration.isGitHubCLIInstalled() else {
-          print("❌ GitHub CLI (gh) is not installed. Please install it or use manual submission.")
+          print("❌ GitHub CLI (gh) is not installed.")
+          print("   Install it with: brew install gh")
+          print("   Or submit manually by attaching the bundle to a GitHub issue.")
           return .unavailable
         }
 
         guard await GitHubIntegration.isGitHubCLIAuthenticated() else {
-          print("❌ GitHub CLI is not authenticated. Run 'gh auth login'.")
+          print("❌ GitHub CLI is not authenticated.")
+          print("   Run 'gh auth login' to authenticate, then retry.")
           return .unavailable
         }
 
@@ -79,6 +83,7 @@ struct SubmitCommand {
       return .ok
     } catch {
       print("❌ Submission failed: \(error)")
+      print("   You can manually submit by attaching the bundle to a GitHub issue.")
       return .software
     }
   }

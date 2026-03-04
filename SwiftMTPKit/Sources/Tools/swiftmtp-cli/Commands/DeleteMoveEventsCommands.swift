@@ -14,7 +14,9 @@ func runDeleteCommand(
 ) async -> ExitCode {
   guard args.count >= 1, let handle = UInt32(args.removeFirst(), radix: 0) else {
     if json { printJSONErrorAndExit("missing_handle", code: .usage) }
-    fputs("usage: swiftmtp delete <handle> [--recursive]\n", stderr)
+    fputs("❌ Missing required argument: <handle>\n", stderr)
+    fputs("   Usage: swiftmtp delete <handle> [--recursive]\n", stderr)
+    fputs("   Tip: Run 'swiftmtp ls <storage>' to find object handles.\n", stderr)
     return .usage
   }
   let recursive = args.contains("--recursive")
@@ -50,23 +52,23 @@ func runDeleteCommand(
       switch mtpError {
       case .notSupported:
         guard json else {
-          fputs("No device matched the provided filter.\n", stderr)
+          fputs("❌ No MTP device found. Check USB connection and MTP/File Transfer mode.\n", stderr)
           return .unavailable
         }
-        printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+        printJSONErrorAndExit("No MTP device found.", code: .unavailable)
       case .transport(let te) where te == .noDevice:
         guard json else {
-          fputs("No device matched the provided filter.\n", stderr)
+          fputs("❌ No MTP device found. Check USB connection and MTP/File Transfer mode.\n", stderr)
           return .unavailable
         }
-        printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+        printJSONErrorAndExit("No MTP device found.", code: .unavailable)
       default:
         break
       }
     }
 
     guard json else {
-      fputs("❌ delete failed: \(error)\n", stderr)
+      fputs("❌ Delete failed: \(actionableMessage(for: error))\n", stderr)
       return .software
     }
     printJSONErrorAndExit(error.localizedDescription, code: .software)
@@ -83,7 +85,9 @@ func runMoveCommand(
     let parent = UInt32(args.removeFirst(), radix: 0)
   else {
     if json { printJSONErrorAndExit("missing_args", code: .usage) }
-    fputs("usage: swiftmtp move <handle> <new-parent-handle>\n", stderr)
+    fputs("❌ Missing required arguments for move.\n", stderr)
+    fputs("   Usage: swiftmtp move <handle> <new-parent-handle>\n", stderr)
+    fputs("   Tip: Run 'swiftmtp ls <storage>' to find object handles.\n", stderr)
     return .usage
   }
 
@@ -117,23 +121,23 @@ func runMoveCommand(
       switch mtpError {
       case .notSupported:
         guard json else {
-          fputs("No device matched the provided filter.\n", stderr)
+          fputs("❌ No MTP device found. Check USB connection and MTP/File Transfer mode.\n", stderr)
           return .unavailable
         }
-        printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+        printJSONErrorAndExit("No MTP device found.", code: .unavailable)
       case .transport(let te) where te == .noDevice:
         guard json else {
-          fputs("No device matched the provided filter.\n", stderr)
+          fputs("❌ No MTP device found. Check USB connection and MTP/File Transfer mode.\n", stderr)
           return .unavailable
         }
-        printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+        printJSONErrorAndExit("No MTP device found.", code: .unavailable)
       default:
         break
       }
     }
 
     guard json else {
-      fputs("❌ move failed: \(error)\n", stderr)
+      fputs("❌ Move failed: \(actionableMessage(for: error))\n", stderr)
       return .software
     }
     printJSONErrorAndExit(error.localizedDescription, code: .software)
@@ -232,23 +236,23 @@ func runEventsCommand(
       switch mtpError {
       case .notSupported:
         guard json else {
-          fputs("No device matched the provided filter.\n", stderr)
+          fputs("❌ No MTP device found. Check USB connection and MTP/File Transfer mode.\n", stderr)
           return .unavailable
         }
-        printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+        printJSONErrorAndExit("No MTP device found.", code: .unavailable)
       case .transport(let te) where te == .noDevice:
         guard json else {
-          fputs("No device matched the provided filter.\n", stderr)
+          fputs("❌ No MTP device found. Check USB connection and MTP/File Transfer mode.\n", stderr)
           return .unavailable
         }
-        printJSONErrorAndExit("No device matched the provided filter.", code: .unavailable)
+        printJSONErrorAndExit("No MTP device found.", code: .unavailable)
       default:
         break
       }
     }
 
     guard json else {
-      fputs("events failed: \(error)\n", stderr)
+      fputs("❌ Events failed: \(actionableMessage(for: error))\n", stderr)
       return .software
     }
     printJSONErrorAndExit(error.localizedDescription, code: .software)

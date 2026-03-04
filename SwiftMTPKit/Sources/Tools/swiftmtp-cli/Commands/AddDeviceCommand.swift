@@ -99,7 +99,7 @@ struct AddDeviceCommand {
     }
 
     guard let vid = vid, let pid = pid, let name = name else {
-      print("❌ --vid, --pid, and --name are required.")
+      print("❌ Missing required arguments: --vid, --pid, and --name are all required.")
       print("")
       printHelp()
       return
