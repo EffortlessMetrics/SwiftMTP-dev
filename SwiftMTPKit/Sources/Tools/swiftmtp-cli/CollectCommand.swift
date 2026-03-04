@@ -40,6 +40,8 @@ func printJSONErrorAndExit(_ error: any Error, flags: CollectCommand.CollectFlag
       details["redactionIssues"] = issues.joined(separator: ", ")
     case .invalidBenchSize(let size):
       details["invalidBenchSize"] = size
+    case .validationFailed(let issues):
+      details["validationIssues"] = issues.joined(separator: ", ")
     case .timeout:
       break
     }
@@ -65,6 +67,7 @@ public enum CollectCommand {
     public var safe: Bool = false  // --safe
     public var runBench: [String] = []  // default no bench
     public var json: Bool = false  // --json
+    public var redact: Bool = true  // --redact (default: true)
     public var noninteractive: Bool = false  // --noninteractive
     public var bundlePath: String?  // --bundle
     public var deviceName: String?  // --device-name
@@ -79,6 +82,7 @@ public enum CollectCommand {
       safe: Bool = false,
       runBench: [String] = [],
       json: Bool = false,
+      redact: Bool = true,
       noninteractive: Bool = false,
       bundlePath: String? = nil,
       deviceName: String? = nil,
@@ -89,6 +93,7 @@ public enum CollectCommand {
       self.safe = safe
       self.runBench = runBench
       self.json = json
+      self.redact = redact
       self.noninteractive = noninteractive
       self.bundlePath = bundlePath
       self.deviceName = deviceName
@@ -174,6 +179,17 @@ public enum CollectCommand {
       let summary = result.summary
       spinner.succeed("Bundle ready: \(bundleURL.path)")
 
+      // Print collection summary (non-JSON mode)
+      if !jsonMode {
+        let manifestURL = bundleURL.appendingPathComponent("submission.json")
+        if let manifestData = try? Data(contentsOf: manifestURL),
+          let manifest = try? JSONDecoder().decode(SubmissionManifest.self, from: manifestData)
+        {
+          let summaryText = buildCollectionSummary(
+            bundleURL: bundleURL, manifest: manifest, redacted: flags.redact)
+          print(summaryText)
+        }
+      }
       // Record submission in persistence
       Task {
         let persistence = await MTPDeviceManager.shared.persistence
@@ -211,7 +227,9 @@ public enum CollectCommand {
           bundlePath: bundleURL.path,
           deviceVID: summary.vendorID ?? 0, devicePID: summary.productID ?? 0,
           bus: Int(summary.bus ?? 0), address: Int(summary.address ?? 0),
-          mode: mode
+          mode: mode,
+          redacted: flags.redact,
+          validated: flags.strict
         )
         printJSON(out)
       }
@@ -238,6 +256,9 @@ public enum CollectCommand {
         case .invalidBenchSize:
           fputs("❌ collect failed: \(error)\n", stderr)
           return .usage
+        case .validationFailed:
+          fputs("❌ collect failed: \(error)\n", stderr)
+          return .software
         }
       }
 
@@ -385,6 +406,20 @@ public enum CollectCommand {
     )
     try writeJSONFile(
       quirkSuggestion, to: bundleURL.appendingPathComponent("quirk-suggestion.json"))
+
+    // Apply PrivacyRedactor to submission.json when redaction is enabled
+    if flags.redact {
+      let submissionURL = bundleURL.appendingPathComponent("submission.json")
+      try applyPrivacyRedaction(to: submissionURL)
+    }
+
+    // Strict-mode validation: verify all required fields present in manifest
+    if flags.strict {
+      let issues = validateSubmissionManifest(manifest)
+      if !issues.isEmpty {
+        throw CollectError.validationFailed(issues)
+      }
+    }
   }
 
   // MARK: - Probe capture
@@ -955,6 +990,77 @@ public enum CollectCommand {
     return slug.isEmpty ? "device" : slug
   }
 
+  // MARK: - Submission Validation
+
+  /// Validates required fields in a submission manifest for strict mode.
+  /// Returns an array of human-readable issue descriptions (empty = valid).
+  public static func validateSubmissionManifest(_ manifest: SubmissionManifest) -> [String] {
+    var issues: [String] = []
+    if manifest.device.vendorId.isEmpty || manifest.device.vendorId == "0x0000" {
+      issues.append("missing or zero vendorId")
+    }
+    if manifest.device.productId.isEmpty || manifest.device.productId == "0x0000" {
+      issues.append("missing or zero productId")
+    }
+    if manifest.device.vendor.trimmingCharacters(in: .whitespaces).isEmpty {
+      issues.append("missing vendor name")
+    }
+    if manifest.device.model.trimmingCharacters(in: .whitespaces).isEmpty {
+      issues.append("missing model name")
+    }
+    if manifest.device.serialRedacted.isEmpty {
+      issues.append("missing redacted serial")
+    }
+    if manifest.artifacts.probe.isEmpty {
+      issues.append("missing probe artifact")
+    }
+    if manifest.artifacts.usbDump.isEmpty {
+      issues.append("missing usb-dump artifact")
+    }
+    if manifest.tool.version == "0.0.0" {
+      issues.append("tool version not set")
+    }
+    if manifest.timestamp.isEmpty {
+      issues.append("missing timestamp")
+    }
+    return issues
+  }
+
+  /// Applies PrivacyRedactor to a JSON file on disk, rewriting in-place.
+  private static func applyPrivacyRedaction(to url: URL) throws {
+    let data = try Data(contentsOf: url)
+    guard
+      let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+    else { return }
+    let redacted = PrivacyRedactor.redactSubmission(json)
+    let output = try JSONSerialization.data(
+      withJSONObject: redacted,
+      options: [.prettyPrinted, .sortedKeys, .fragmentsAllowed])
+    try output.write(to: url, options: .atomic)
+  }
+
+  /// Builds a human-readable summary of what was collected.
+  public static func buildCollectionSummary(
+    bundleURL: URL,
+    manifest: SubmissionManifest,
+    redacted: Bool
+  ) -> String {
+    var lines: [String] = []
+    lines.append("📦 Collection Summary")
+    lines.append("  Bundle: \(PrivacyRedactor.redactPath(bundleURL.path))")
+    lines.append(
+      "  Device: \(manifest.device.vendor) \(manifest.device.model) (\(manifest.device.vendorId):\(manifest.device.productId))"
+    )
+    lines.append("  Serial: \(manifest.device.serialRedacted)")
+    lines.append("  Artifacts: \(manifest.artifacts.probe), \(manifest.artifacts.usbDump)")
+    if let bench = manifest.artifacts.bench, !bench.isEmpty {
+      lines.append("  Benchmarks: \(bench.joined(separator: ", "))")
+    }
+    lines.append("  Redaction: \(redacted ? "applied" : "disabled")")
+    lines.append("  Mode: \(manifest.consent.anonymizeSerial ? "strict" : "normal")")
+    return lines.joined(separator: "\n")
+  }
+
   // MARK: - Common utilities
 
   private static func writeJSONFile<T: Encodable>(_ value: T, to url: URL) throws {
@@ -1013,6 +1119,7 @@ public enum CollectCommand {
     case timeout(Int)
     case redactionCheckFailed([String])
     case invalidBenchSize(String)
+    case validationFailed([String])
 
     var errorDescription: String? {
       switch self {
@@ -1038,6 +1145,11 @@ public enum CollectCommand {
         return
           "Invalid benchmark size '\(size)'. "
           + "Expected values like 100M, 500M, 1G, or 2G (must be ≥ 1 MB and ≤ 4 GB)."
+      case .validationFailed(let issues):
+        let issueList = issues.joined(separator: ", ")
+        return
+          "Submission validation failed in strict mode: [\(issueList)]. "
+          + "Fix the reported issues or re-run with --no-strict to skip validation."
       }
     }
   }
@@ -1069,6 +1181,8 @@ public enum CollectCommand {
     let bus: Int
     let address: Int
     let mode: String
+    let redacted: Bool
+    let validated: Bool
   }
 
   // MARK: - Public types for external consumption (e.g., LearnPromoteCommand)
