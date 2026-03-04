@@ -17,6 +17,7 @@ let package = Package(
     .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
     .library(name: "MTPEndianCodec", targets: ["MTPEndianCodec"]),
     .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
+    .library(name: "SwiftMTPThroughput", targets: ["SwiftMTPThroughput"]),
     .library(name: "SwiftMTPUI", targets: ["SwiftMTPUI"]),
     .library(name: "SwiftMTPQuirks", targets: ["SwiftMTPQuirks"]),
     .library(name: "SwiftMTPCLI", targets: ["SwiftMTPCLI"]),
@@ -69,9 +70,14 @@ let package = Package(
             dependencies: ["SwiftMTPCore", "SwiftMTPIndex"],
             path: "SwiftMTPKit/Sources/SwiftMTPSync"),
 
+    // Throughput measurement primitives
+    .target(name: "SwiftMTPThroughput",
+            dependencies: [],
+            path: "SwiftMTPKit/Sources/SwiftMTPThroughput"),
+
     // Observability utilities
     .target(name: "SwiftMTPObservability",
-            dependencies: [],
+            dependencies: ["SwiftMTPThroughput"],
             path: "SwiftMTPKit/Sources/SwiftMTPObservability"),
 
     // Device quirks and tuning database
@@ -164,6 +170,10 @@ let package = Package(
     .testTarget(name: "SwiftMTPCLITests",
                 dependencies: ["SwiftMTPCLI", "SwiftMTPCore", "SwiftCheck"],
                 path: "SwiftMTPKit/Tests/SwiftMTPCLITests"),
+
+    .testTarget(name: "SwiftMTPThroughputTests",
+                dependencies: ["SwiftMTPThroughput"],
+                path: "SwiftMTPKit/Tests/SwiftMTPThroughputTests"),
 
     .testTarget(
       name: "MTPEndianCodecTests",
