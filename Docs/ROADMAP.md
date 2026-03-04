@@ -1,6 +1,6 @@
 # SwiftMTP Roadmap
 
-*Last updated: 2026-03-10*
+*Last updated: 2026-03-12*
 
 > **Pre-Alpha Status**: SwiftMTP has extensive protocol and test infrastructure but minimal real-device validation. Only 1 device (Xiaomi Mi Note 2) has completed real file transfers. The version numbers below (2.x) reflect internal development milestones, not production readiness. Items marked as "shipped" or "complete" are code-complete and mock-tested unless noted otherwise — most have not been validated on real hardware.
 
@@ -8,7 +8,7 @@ This roadmap is the execution plan for the next implementation sprints in the 2.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **~8,577 tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices). **83 PRs merged** this session (#363–#445).
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **~9,191+ tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices). **101 PRs merged** this session (#363–#467).
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
@@ -45,6 +45,53 @@ Minimum expectations for each item:
 | 2.1-A | Transport stability + error clarity | Complete | Real-device timeout reproduction drift | `./scripts/smoke.sh` + targeted device artifacts |
 | 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
 | 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
+
+## Next Priorities (Post Wave 41)
+
+| Priority | Area | Status | Notes |
+|----------|------|--------|-------|
+| IOUSBHost transport implementation | Transport | Planned | Scaffold shipped (#441); full implementation needed to replace libusb dependency |
+| OnePlus 3T write failure investigation | Device support | Blocked | Writes fail with 0x201D (InvalidParameter); device absent from recent lab runs |
+| Samsung Galaxy retest | Device support | Ready | Transport fixes shipped (#445); awaiting retest with skipAltSetting/skipPreClaimReset |
+| Pixel 7 retest | Device support | Ready | Transport fixes shipped (#443); awaiting retest with handle re-open and timeout tuning |
+| Real-device validation expansion | Testing | Ongoing | Only 1 of 7 devices transfers files; need community help-wanted push |
+| Homebrew formula for CLI | Distribution | Planned | Package `swiftmtp` CLI for `brew install swiftmtp` |
+| DocC documentation generation | Documentation | Planned | DocC generator exists (#399) but needs CI integration and hosting |
+| Error recovery real-device validation | Core | Planned | ErrorRecoveryLayer (#449) is mock-tested only; needs real-device stress testing |
+| Adaptive chunk tuner validation | Performance | Planned | AdaptiveChunkTuner (#451) needs real transfer benchmarks to validate tuning curves |
+
+## Wave 40–41 Activity (2026-03-11)
+
+Key development activity across these two waves — 18 PRs (#446–#467) covering feature implementation and comprehensive test backfill:
+
+### Wave 41 — Test Backfill (PRs #458–#467)
+- **Protocol integration tests** (#458): comprehensive cross-module integration tests
+- **CLAUDE.md refresh** (#459): wave 37–40 additions, test discovery guide
+- **FIXUP_QUEUE cleanup** (#460): 12 resolved items archived
+- **XPC bridge tests** (#461): protocol conformance and error handling backfill
+- **BDD scenarios** (#462): copy, edit, mirror, and metadata feature scenarios
+- **FileProvider tests** (#463): timeout, reconnection, and error handling backfill
+- **Property-based tests** (#464): wave 38–40 feature property tests
+- **Pre-PR gate script** (#465): automated quality checks before PR submission
+- **Store tests** (#466): journal, tuning, and persistence backfill
+- **Unit tests** (#467): format filter, recovery log, and thumbnail tests
+
+### Wave 40 — Feature Implementation (PRs #446–#452, #457)
+- **Changelog/roadmap update** (#446): comprehensive wave 38–39 documentation
+- **Format-based filtering** (#447): --photos-only, --format, --exclude-format for mirror engine
+- **CLI info command** (#448): rich metadata display with device and object info
+- **Error recovery layer** (#449): session reset, stall recovery, timeout escalation, disconnect handling
+- **Conflict resolution** (#450): 6 strategies for mirror/sync conflicts
+- **Adaptive chunk tuning** (#451): auto-tunes transfer sizes 512KB–8MB with device persistence
+- **SetObjectPropList** (#452): batch metadata writes (0x9806)
+- **GetThumb** (#457): thumbnail retrieval (0x100A)
+
+### Key Outcomes
+- **~9,191+ tests** (up from ~8,577), 0 unexpected failures
+- **101 PRs merged** this session (#363–#467)
+- All major wave 38 protocol features now have layered error recovery and adaptive tuning
+- Mirror engine gained conflict resolution (6 strategies) and format-based filtering
+- Comprehensive test backfill across 10 targets ensures coverage of waves 37–40 features
 
 ## Wave 38–39 Activity (2026-03-10)
 
@@ -184,7 +231,7 @@ Key development activity in this wave:
 
 Primary outcome: reduce high-severity real-device failures and make first-line failures actionable.
 
-- [ ] Resolve Pixel 7 Tahoe 26 bulk-transfer timeout path — documented root cause and troubleshooting; device remains blocked
+- [ ] Resolve Pixel 7 Tahoe 26 bulk-transfer timeout path — transport fixes shipped (#443: handle re-open, set_configuration, extended timeouts); awaiting retest on device
 - [ ] Stabilize OnePlus 3T `SendObject` / `0x201D` large-write behavior — documented workaround; device absent from recent lab runs
 - [x] Improve first-line error messages for `probe`, `collect`, and write-path operations
 - [x] Refresh per-device behavior notes in `Docs/Troubleshooting.md` and device pages
@@ -232,7 +279,8 @@ Sprint exit criteria:
 
 | Item | Type | Owner Lane | Mitigation |
 |------|------|------------|------------|
-| Pixel 7 Tahoe bulk timeout remains intermittent | Technical risk | Core/transport | Capture standardized bring-up artifacts with `scripts/device-bringup.sh`; gate merges on before/after evidence |
+| Pixel 7 Tahoe bulk timeout remains intermittent | Technical risk | Core/transport | Transport fixes shipped (#443): handle re-open, set_configuration, extended timeouts. Awaiting retest. |
+| Samsung Galaxy MTP handshake failure | Technical risk | Core/transport | Transport fixes shipped (#445): skipAltSetting, skipPreClaimReset. Awaiting retest. |
 | OnePlus large write behavior differs by folder target | Technical risk | Core/transport + docs | Keep write-target fallback guidance synchronized with troubleshooting and device docs |
 | Redaction validation drift between docs and scripts | Process risk | Device support + tooling | Treat `validate-submission` output as source of truth; update docs and template together |
 | Overlapping CI workflows create unclear required checks | Process risk | Testing/CI | Complete 2.1-C consolidation and document required vs nightly checks |

@@ -6,17 +6,21 @@ A Swift-native MTP (Media Transfer Protocol) implementation for macOS. The proto
 
 ## Project Status
 
-SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session management are implemented and covered by an extensive test suite (**~8,377 tests executed** across 20 targets) using in-memory mock devices (`VirtualMTPDevice`). However, real-device validation is minimal — only one device (Xiaomi Mi Note 2) has completed successful file transfers through SwiftMTP.
+SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session management are implemented and covered by an extensive test suite (**~9,191+ tests executed** across 20 targets) using in-memory mock devices (`VirtualMTPDevice`). However, real-device validation is minimal — only one device (Xiaomi Mi Note 2) has completed successful file transfers through SwiftMTP.
 
 ### What Works
 
 - **MTP 1.1 protocol**: 50+ object formats, 50+ property codes, full event handling (mock-tested)
 - **Android MTP extensions**: `BeginEditObject`, `EndEditObject`, `TruncateObject` for in-place file editing
 - **Server-side CopyObject**: device-side file copy without re-transfer
+- **Adaptive chunk tuning**: auto-tunes transfer sizes 512KB–8MB with device persistence
+- **Error recovery layer**: session reset, stall recovery, timeout escalation, disconnect handling
+- **Conflict resolution**: 6 strategies for mirror/sync (newer-wins, local-wins, device-wins, keep-both, skip, ask)
+- **Format-based mirror filtering**: --photos-only, --format, --exclude-format
 - **Write-path safety**: validation guards on all mutating operations
 - **Transfer journaling**: WAL-mode SQLite, atomic downloads, orphan detection, resume support
 - **SQLite-indexed device content**: optimized queries with 8 dedicated indexes
-- **CLI tool**: 12+ commands (`probe`, `ls`, `pull`, `push`, `snapshot`, `mirror`, `bench`, `events`, `quirks`, `device-lab`, `wizard`, `copy`) with "did you mean?" suggestions and categorized help
+- **CLI tool**: 15+ commands (`probe`, `ls`, `pull`, `push`, `snapshot`, `mirror`, `bench`, `events`, `quirks`, `device-lab`, `wizard`, `cp`, `edit`, `thumb`, `info`) with "did you mean?" suggestions and categorized help
 - **Device quirks database**: 20,026 entries across 1,154 vendors (research-based — see caveat below)
 - **File Provider integration**: native Finder support on macOS via XPC (tech preview, read-only)
 - **SwiftUI GUI application** (demo mode only)
@@ -24,8 +28,8 @@ SwiftMTP is in **pre-alpha**. The core MTP protocol, codec, and session manageme
 ### What Doesn't Work (Yet)
 
 - Most real MTP devices — only 1 of 7 tested devices can transfer files
-- Samsung Galaxy: MTP handshake fails after USB claim (research done, transport fixes in progress)
-- Google Pixel 7: bulk transfer timeout (research done, transport fixes in progress — see [debug report](Docs/pixel7-usb-debug-report.md))
+- Samsung Galaxy: MTP handshake fails after USB claim (research done, transport fixes shipped — awaiting retest)
+- Google Pixel 7: bulk transfer timeout (research done, transport fixes shipped — awaiting retest; see [debug report](Docs/pixel7-usb-debug-report.md))
 - OnePlus 3T: reads work but writes fail with InvalidParameter
 - Canon/Nikon cameras: never connected to SwiftMTP (research-only quirks)
 - File Provider write operations (implemented but no real-device validation)
@@ -81,8 +85,9 @@ Built with Swift 6 strict concurrency and actor-based isolation:
 | CopyObject | ✅ Implemented (wave 38) |
 | BeginEditObject / EndEditObject | ✅ Implemented (wave 38, Android) |
 | TruncateObject | ✅ Implemented (wave 38, Android) |
+| GetThumb | ✅ Implemented (wave 40) |
 | GetObjectPropList | ✅ Implemented |
-| SetObjectPropList | 🔨 Stub only |
+| SetObjectPropList | ✅ Implemented (wave 40) |
 
 ## Device Status
 
@@ -92,8 +97,8 @@ Honest status of devices that have quirk entries with any level of real testing:
 |--------|---------|--------|-------|
 | Xiaomi Mi Note 2 | 2717:ff10 | Partial | Only device with real file transfer data. Requires kernel detach; no GetObjectPropList. |
 | Xiaomi Mi Note 2 (alt) | 2717:ff40 | Untested | Has quirk entry. Recent lab run returned 0 storages. |
-| Samsung Galaxy S7 | 04e8:6860 | Blocked | USB claim succeeds but MTP handshake fails. Research done (#428), transport fixes in progress. |
-| Google Pixel 7 | 18d1:4ee1 | Blocked | Bulk transfer timeout — research done (#429), transport fixes in progress. See [debug report](Docs/pixel7-usb-debug-report.md). |
+| Samsung Galaxy S7 | 04e8:6860 | Blocked | USB claim succeeds but MTP handshake fails. Research done (#428), transport fixes shipped (#445: skipAltSetting, skipPreClaimReset). Awaiting retest. |
+| Google Pixel 7 | 18d1:4ee1 | Blocked | Bulk transfer timeout — research done (#429), transport fixes shipped (#443: handle re-open, set_configuration, extended timeouts). Awaiting retest. See [debug report](Docs/pixel7-usb-debug-report.md). |
 | OnePlus 3T | 2a70:f003 | Partial | Probe and read work. Writes fail with 0x201D (InvalidParameter). |
 | Canon EOS Rebel / R-class | 04a9:3139 | Research Only | Quirks from libmtp/vendor specs. Never connected to SwiftMTP. |
 | Nikon DSLR / Z-series | 04b0:0410 | Research Only | Quirks from libmtp/vendor specs. Never connected to SwiftMTP. |
@@ -110,8 +115,8 @@ Real-device testing is the main bottleneck. If you have an MTP device and want t
 4. **Submit a snapshot**: `swift run --package-path SwiftMTPKit swiftmtp snapshot` captures device metadata for debugging
 
 Known blockers we need help with:
-- Samsung Galaxy: MTP session open fails after USB claim — need someone with a Samsung device to debug
-- Pixel 7: bulk transfer timeout on macOS — may be a kernel/driver issue
+- Samsung Galaxy: MTP handshake fails after USB claim — transport fixes shipped, awaiting retest with real device
+- Pixel 7: bulk transfer timeout on macOS — transport fixes shipped, awaiting retest
 - OnePlus: write path returns InvalidParameter — need to determine if this is a path or format issue
 - Canon/Nikon: no one has tried connecting a camera yet
 
@@ -136,7 +141,7 @@ swift run SwiftMTPApp
 
 ## Verification & Testing
 
-~8,377 tests executed across 20 test targets, using `VirtualMTPDevice` (in-memory mock) extensively. Includes unit, BDD (CucumberSwift), property-based (SwiftCheck), snapshot, and fuzz tests. Real-device tests require physical hardware.
+~9,191+ tests executed across 20 test targets, using `VirtualMTPDevice` (in-memory mock) extensively. Includes unit, BDD (CucumberSwift), property-based (SwiftCheck), snapshot, and fuzz tests. Real-device tests require physical hardware.
 
 ### Full Verification Suite
 ```bash
