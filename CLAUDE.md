@@ -91,6 +91,9 @@ swift run SwiftMTPApp
 
 ### Code Quality
 ```bash
+# Run all pre-PR checks (format, build, test, quirks, large-file scan)
+./scripts/pre-pr.sh
+
 # Format code (required before commits)
 swift-format -i -r SwiftMTPKit/Sources SwiftMTPKit/Tests
 
