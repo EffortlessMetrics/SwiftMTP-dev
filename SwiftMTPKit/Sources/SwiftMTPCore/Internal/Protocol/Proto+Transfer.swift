@@ -473,8 +473,11 @@ extension PTPResponseResult {
   public func checkOK() throws {
     if isOK { return }
     switch code {
-    case 0x2005:
-      throw MTPError.notSupported("Operation not supported (\(PTPResponseCode.describe(code)))")
+    case 0x2003:
+      throw MTPError.protocolError(
+        code: code, message: PTPResponseCode.describe(code))
+    case 0x2005, 0x2006, 0x2014, 0x2020, 0xA805, 0xA807, 0xA808:
+      throw MTPError.notSupported(PTPResponseCode.userMessage(for: code))
     case 0x2009:
       throw MTPError.objectNotFound
     case 0x200C:
@@ -485,11 +488,19 @@ extension PTPResponseResult {
       throw MTPError.readOnly
     case 0x200F:
       throw MTPError.permissionDenied
+    case 0x2013:
+      throw MTPError.protocolError(
+        code: code, message: PTPResponseCode.describe(code))
     case 0x2019:
       throw MTPError.busy
+    case 0x201E:
+      throw MTPError.protocolError(
+        code: code, message: PTPResponseCode.describe(code))
     case 0x201F:
       throw MTPError.protocolError(
         code: code, message: "TransactionCancelled (0x201f)")
+    case 0xA809:
+      throw MTPError.storageFull
     default:
       throw MTPError.protocolError(code: code, message: PTPResponseCode.describe(code))
     }
