@@ -401,6 +401,7 @@ final class MockMTPLinkForBDD: MTPLink, @unchecked Sendable {
   {
     // Mock implementation
   }
+  func copyObject(handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> MTPObjectHandle { 0 }
 
   func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     PTPResponseResult(code: 0x2001, txid: command.txid)

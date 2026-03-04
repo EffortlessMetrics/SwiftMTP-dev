@@ -59,6 +59,7 @@ public enum PTPOp: UInt16 {
   case sendObjectInfo = 0x100C
   case sendObject = 0x100D
   case moveObject = 0x100E
+  case copyObject = 0x101A
   case getDevicePropDesc = 0x1014
   case getDevicePropValue = 0x1015
   case setDevicePropValue = 0x1016

@@ -104,6 +104,13 @@ public final class FaultInjectingLink: MTPLink, @unchecked Sendable {
     try await inner.moveObject(handle: handle, to: storage, parent: parent)
   }
 
+  public func copyObject(
+    handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle {
+    try checkFault(.copyObject)
+    return try await inner.copyObject(handle: handle, toStorage: storage, parent: parent)
+  }
+
   public func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     try checkFault(.executeCommand)
     return try await inner.executeCommand(command)

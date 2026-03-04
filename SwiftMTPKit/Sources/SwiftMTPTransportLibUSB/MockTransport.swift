@@ -123,6 +123,13 @@ public final class MockMTPLink: @unchecked Sendable, MTPLink {
     try await Task.sleep(nanoseconds: 10_000_000)
   }
 
+  public func copyObject(
+    handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle {
+    try await Task.sleep(nanoseconds: 10_000_000)
+    return handle &+ 1
+  }
+
   public func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     return try await executeStreamingCommand(
       command, dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil)
