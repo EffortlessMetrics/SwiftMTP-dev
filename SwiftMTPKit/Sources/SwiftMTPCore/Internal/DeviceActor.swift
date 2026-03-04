@@ -504,9 +504,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       "applyTuningAndOpenSession", id: signposter.makeSignpostID())
     defer { signposter.endInterval("applyTuningAndOpenSession", totalState) }
 
-    let debugEnabled = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
     let probeStart = DispatchTime.now()
-    if debugEnabled { print("   [Actor] applyTuningAndOpenSession starting...") }
+    MTPLog.session.debug("applyTuningAndOpenSession starting...")
 
     // 1) Build fingerprint from USB IDs and interface details
     let fingerprint = try await self.buildFingerprint()
@@ -518,7 +517,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     )
 
     // 2) Load quirks DB and learned profile
-    if debugEnabled { print("   [Actor] Loading quirks DB...") }
+    MTPLog.session.debug("Loading quirks DB...")
     let qdb = try QuirkDatabase.load()
 
     let persistence = await MTPDeviceManager.shared.persistence
@@ -572,14 +571,15 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       ifaceSubclass: linkDesc?.interfaceSubclass,
       ifaceProtocol: linkDesc?.interfaceProtocol
     )
-    if debugEnabled, let q = quirk { print("   [Actor] Matched quirk: \(q.id)") }
-    if debugEnabled && quirk == nil {
+    if let q = quirk {
+      MTPLog.quirks.debug("Matched quirk: \(q.id, privacy: .public)")
+    } else {
       let ifClass = linkDesc?.interfaceClass
       if ifClass == 0x06 {
-        print("   [Actor] No quirk match — applying PTP camera class heuristic (class=0x06)")
+        MTPLog.quirks.debug("No quirk match — applying PTP camera class heuristic (class=0x06)")
       } else {
-        print(
-          "   [Actor] No quirk match — using conservative defaults (ifaceClass=\(ifClass.map { String($0, radix: 16) } ?? "nil"))"
+        MTPLog.quirks.debug(
+          "No quirk match — using conservative defaults (ifaceClass=\(ifClass.map { String($0, radix: 16) } ?? "nil", privacy: .public))"
         )
       }
     }
@@ -598,18 +598,18 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     self.apply(initialTuning)
 
     // 8) Run hooks: postOpenUSB
-    if debugEnabled { print("   [Actor] Running postOpenUSB hooks...") }
+    MTPLog.session.debug("Running postOpenUSB hooks...")
     try await self.runHook(.postOpenUSB, tuning: initialTuning)
 
     let enableResetReopenLadder = initialPolicy.flags.resetReopenOnOpenSessionIOError
 
     // 9) Open session + stabilization (with optional quirk-gated reset/reopen ladder)
-    if debugEnabled { print("   [Actor] Opening MTP session...") }
+    MTPLog.session.debug("Opening MTP session...")
     var sessionResult = SessionProbeResult()
     let sessionStart = DispatchTime.now()
 
     // Preemptive CloseSession to clear any stale session from a previous crash
-    if debugEnabled { print("   [Actor] Preemptive CloseSession (clear stale)...") }
+    MTPLog.session.debug("Preemptive CloseSession (clear stale)...")
     try? await link.closeSession()
 
     do {
@@ -617,12 +617,12 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       sessionResult.succeeded = true
     } catch let error as MTPError where error.isSessionAlreadyOpen {
       // Session already open — close it and retry
-      if debugEnabled { print("   [Actor] SessionAlreadyOpen (0x201E), closing and retrying...") }
+      MTPLog.session.debug("SessionAlreadyOpen (0x201E), closing and retrying...")
       sessionResult.requiredRetry = true
       try? await link.closeSession()
       try await link.openSession(id: 1)
       sessionResult.succeeded = true
-      if debugEnabled { print("   [Actor] OpenSession succeeded after close+retry.") }
+      MTPLog.session.debug("OpenSession succeeded after close+retry.")
     } catch {
       guard isTimeoutOrIOError(error) else {
         sessionResult.error = "\(error)"
@@ -635,9 +635,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         receipt.sessionEstablishment = sessionResult
         throw error
       }
-      if debugEnabled {
-        print("   [Actor] OpenSession failed (\(error)), applying quirk reset+reopen ladder...")
-      }
+      MTPLog.session.warning("OpenSession failed (\(error, privacy: .public)), applying quirk reset+reopen ladder...")
       sessionResult.requiredRetry = true
       sessionResult.recoveryAction = "reset-reopen"
 
@@ -668,23 +666,23 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
       // Step 4: Retry OpenSession once with fresh link state.
       try await newLink.openSession(id: 1)
       sessionResult.succeeded = true
-      if debugEnabled { print("   [Actor] OpenSession succeeded after reset+reopen.") }
+      MTPLog.session.debug("OpenSession succeeded after reset+reopen.")
     }
     sessionResult.durationMs = Int(
       (DispatchTime.now().uptimeNanoseconds - sessionStart.uptimeNanoseconds) / 1_000_000)
     receipt.sessionEstablishment = sessionResult
 
     if initialTuning.stabilizeMs > 0 {
-      if debugEnabled { print("   [Actor] Stabilizing for \(initialTuning.stabilizeMs)ms...") }
+      MTPLog.session.debug("Stabilizing for \(initialTuning.stabilizeMs)ms...")
       try await Task.sleep(nanoseconds: UInt64(initialTuning.stabilizeMs) * 1_000_000)
     }
 
     // 10) Hooks after session
-    if debugEnabled { print("   [Actor] Running postOpenSession hooks...") }
+    MTPLog.session.debug("Running postOpenSession hooks...")
     try await self.runHook(.postOpenSession, tuning: initialTuning)
 
     // 11) Probe capabilities NOW that session is open
-    if debugEnabled { print("   [Actor] Probing capabilities (post-open)...") }
+    MTPLog.session.debug("Probing capabilities (post-open)...")
     let realCaps: [String: Bool] = [
       "partialRead": await self.capabilityPartialRead(),
       "partialWrite": await self.capabilityPartialWrite(),
@@ -694,11 +692,9 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
     // Determine fallback selections from device capabilities
     let fallbacks = await self.determineFallbackSelections()
-    if debugEnabled {
-      print(
-        "   [Actor] Fallbacks: enum=\(fallbacks.enumeration) read=\(fallbacks.read) write=\(fallbacks.write)"
-      )
-    }
+    MTPLog.session.debug(
+      "Fallbacks: enum=\(String(describing: fallbacks.enumeration), privacy: .public) read=\(String(describing: fallbacks.read), privacy: .public) write=\(String(describing: fallbacks.write), privacy: .public)"
+    )
 
     // Re-build tuning + policy with real capabilities
     var finalPolicy = EffectiveTuningBuilder.buildPolicy(
@@ -730,7 +726,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
     // 12) Start event pump
     if realCaps["supportsEvents"] == true {
-      if debugEnabled { print("   [Actor] Starting event pump...") }
+      MTPLog.session.debug("Starting event pump...")
       try await self.startEventPump()
     }
 
@@ -758,7 +754,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         ))
     try await persistence.learnedProfiles.saveProfile(updatedProfile, for: self.id)
 
-    if debugEnabled { print("   [Actor] applyTuningAndOpenSession complete.") }
+    MTPLog.session.debug("applyTuningAndOpenSession complete.")
   }
 
   // MARK: - Helper Methods

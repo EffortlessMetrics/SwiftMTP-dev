@@ -37,6 +37,31 @@ final class LogLevelFilteringTests: XCTestCase {
     _ = logger
   }
 
+  func testSessionLoggerUsesSessionCategory() {
+    let logger = MTPLog.session
+    _ = logger
+  }
+
+  func testTransferLoggerUsesTransferCategory() {
+    let logger = MTPLog.transfer
+    _ = logger
+  }
+
+  func testQuirksLoggerUsesQuirksCategory() {
+    let logger = MTPLog.quirks
+    _ = logger
+  }
+
+  func testFileProviderLoggerUsesFileProviderCategory() {
+    let logger = MTPLog.fileProvider
+    _ = logger
+  }
+
+  func testCLILoggerUsesCLICategory() {
+    let logger = MTPLog.cli
+    _ = logger
+  }
+
   func testAllCategoryLoggersShareSubsystem() {
     // All loggers are created with the same subsystem constant.
     XCTAssertEqual(MTPLog.subsystem, "com.effortlessmetrics.swiftmtp")

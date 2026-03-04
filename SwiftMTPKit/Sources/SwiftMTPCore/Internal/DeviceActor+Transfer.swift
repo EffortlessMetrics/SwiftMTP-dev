@@ -1234,20 +1234,14 @@ extension MTPDeviceActor {
   private func hardResetWriteSessionIfNeeded(reason: String, debugEnabled: Bool) async -> Bool {
     guard Self.requiresHardWriteSessionRecovery(for: reason) else { return false }
     do {
-      if debugEnabled {
-        print("   [USB] Session recovery: hard reset for \(reason) (close/reopen/reset tx)")
-      }
+      MTPLog.session.warning("Session recovery: hard reset for \(reason, privacy: .public) (close/reopen/reset tx)")
       try? await self.devClose()
       try await self.openIfNeeded()
       parentStorageIDCache.removeAll(keepingCapacity: true)
-      if debugEnabled {
-        print("   [USB] Session recovery: hard reset complete")
-      }
+      MTPLog.session.info("Session recovery: hard reset complete")
       return true
     } catch {
-      if debugEnabled {
-        print("   [USB] Session recovery: hard reset failed (\(error))")
-      }
+      MTPLog.session.error("Session recovery: hard reset failed (\(error, privacy: .public))")
       return false
     }
   }

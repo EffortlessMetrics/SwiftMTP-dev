@@ -7,10 +7,15 @@ public enum MTPLog {
   public static let subsystem = "com.effortlessmetrics.swiftmtp"
   public static let transport = Logger(subsystem: subsystem, category: "transport")
   public static let proto = Logger(subsystem: subsystem, category: "protocol")
+  public static let session = Logger(subsystem: subsystem, category: "session")
+  public static let transfer = Logger(subsystem: subsystem, category: "transfer")
   public static let index = Logger(subsystem: subsystem, category: "index")
   public static let sync = Logger(subsystem: subsystem, category: "sync")
   public static let perf = Logger(subsystem: subsystem, category: "performance")
   public static let recovery = Logger(subsystem: subsystem, category: "recovery")
+  public static let quirks = Logger(subsystem: subsystem, category: "quirks")
+  public static let fileProvider = Logger(subsystem: subsystem, category: "fileprovider")
+  public static let cli = Logger(subsystem: subsystem, category: "cli")
 
   // Signpost loggers for performance measurement
   public enum Signpost {
