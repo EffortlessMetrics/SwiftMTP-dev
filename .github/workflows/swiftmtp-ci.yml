@@ -103,6 +103,17 @@ jobs:
             ~/.swiftpm/xcode/results
             **/.swiftpm/xcode/logs
 
+      - name: Upload coverage data for downstream jobs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-data
+          retention-days: 7
+          path: |
+            SwiftMTPKit/coverage/coverage.json
+            SwiftMTPKit/coverage/summary.txt
+            SwiftMTPKit/coverage/test_output.log
+
   # =========================================================================
   # Fuzz Testing Job - Runs for 10 minutes on push/PR to main
   # =========================================================================
@@ -202,8 +213,8 @@ jobs:
   # =========================================================================
   coverage:
     name: Code Coverage
-    runs-on: macos-15
-    timeout-minutes: 45
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: read
       checks: write
@@ -211,56 +222,16 @@ jobs:
     needs: test
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Select Xcode
-        uses: maxim-lobanov/setup-xcode@v1
+      - name: Download coverage data from test job
+        uses: actions/download-artifact@v4
         with:
-          xcode-version: "16.2"
+          name: coverage-data
+          path: coverage-data
 
-      - name: Set up Swift
-        uses: swift-actions/setup-swift@v2
-        with:
-          swift-version: '6.2' 
-
-      - name: Cache SPM
-        uses: actions/cache@v4
-        with:
-          path: |
-            SwiftMTPKit/.build/repositories
-            SwiftMTPKit/.build/artifacts
-          key: ${{ runner.os }}-spm-coverage-${{ hashFiles('**/Package.resolved') }}
-          restore-keys: |
-            ${{ runner.os }}-spm-coverage-
-            ${{ runner.os }}-spm-
-
-      - name: Cache Homebrew packages
-        uses: actions/cache@v4
-        id: brew-cache-coverage
-        with:
-          path: |
-            ~/Library/Caches/Homebrew
-            /usr/local/Cellar/libusb
-          key: ${{ runner.os }}-brew-libusb-coverage-${{ hashFiles('**/Package.resolved') }}
-          restore-keys: |
-            ${{ runner.os }}-brew-libusb-coverage-
-
-      - name: Install Homebrew dependencies
-        if: steps.brew-cache-coverage.outputs.cache-hit != 'true'
+      - name: Display coverage summary
         run: |
-          brew update
-          brew install libusb
-
-      - name: Resolve Swift dependencies
-        working-directory: SwiftMTPKit
-        run: swift package resolve
-
-      - name: Build with code coverage enabled + enforce gate
-        env:
-          # Skip xcodebuild tests — coverage only needs SPM test data.
-          RUN_XCODE_TESTS: "0"
-        run: ./run-all-tests.sh
+          echo "=== Coverage Summary ==="
+          cat coverage-data/SwiftMTPKit/coverage/summary.txt
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
@@ -269,9 +240,9 @@ jobs:
           name: code-coverage-report
           retention-days: 14
           path: |
-            SwiftMTPKit/coverage/coverage.json
-            SwiftMTPKit/coverage/summary.txt
-            SwiftMTPKit/coverage/test_output.log
+            coverage-data/SwiftMTPKit/coverage/coverage.json
+            coverage-data/SwiftMTPKit/coverage/summary.txt
+            coverage-data/SwiftMTPKit/coverage/test_output.log
 
   # =========================================================================
   # Nightly Extended Integration Tests - Runs on schedule only
