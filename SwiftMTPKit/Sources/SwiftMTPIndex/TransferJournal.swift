@@ -37,10 +37,23 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
       defer { if db != nil { sqlite3_close(db) } }
       throw makeError("sqlite3_open failed")
     }
+    try enableWAL()
     try setupSchema()
+    try migrateSchema()
+    try markOrphanedTransfers()
   }
 
   deinit { if db != nil { sqlite3_close(db) } }
+
+  /// Enable WAL journal mode for crash resilience and better concurrent read performance.
+  private func enableWAL() throws {
+    var stmt: OpaquePointer?
+    guard sqlite3_prepare_v2(db, "PRAGMA journal_mode=WAL", -1, &stmt, nil) == SQLITE_OK else {
+      throw makeError("WAL pragma prepare")
+    }
+    defer { sqlite3_finalize(stmt) }
+    _ = sqlite3_step(stmt)
+  }
 
   private func setupSchema() throws {
     let sql = """
@@ -65,6 +78,34 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
       );
       """
     try exec(sql)
+  }
+
+  /// Add columns introduced after the initial schema. Each ALTER is idempotent —
+  /// SQLite returns an error if the column already exists, which we silently ignore.
+  private func migrateSchema() throws {
+    let migrations = [
+      "ALTER TABLE transfers ADD COLUMN throughputMBps REAL",
+      "ALTER TABLE transfers ADD COLUMN remoteHandle INTEGER",
+      "ALTER TABLE transfers ADD COLUMN contentHash TEXT",
+    ]
+    for sql in migrations {
+      var stmt: OpaquePointer?
+      guard sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK else { continue }
+      defer { sqlite3_finalize(stmt) }
+      _ = sqlite3_step(stmt)  // ignore "duplicate column" errors
+    }
+  }
+
+  /// Mark any transfers left in 'active' state from a previous run as failed.
+  /// These are orphans from a crash or unclean shutdown.
+  private func markOrphanedTransfers() throws {
+    let now = nowSec()
+    try exec(
+      "UPDATE transfers SET state = 'failed', lastError = 'orphaned: process exited before completion', updatedAt = ? WHERE state = 'active'",
+      bind: { stmt in
+        sqlite3_bind_int64(stmt, 1, now)
+      }
+    )
   }
 
   // MARK: - Public API (TransferJournal Conformance)
@@ -109,7 +150,8 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
   }
 
   public func updateProgress(id: String, committed: UInt64) throws {
-    try updateCommitted(id: id, committed: Int64(committed))
+    let clamped = Int64(clamping: committed)
+    try updateCommitted(id: id, committed: clamped)
   }
 
   public func fail(id: String, error: Error) throws {
@@ -159,16 +201,57 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
     )
   }
 
+  public func recordThroughput(id: String, throughputMBps: Double) throws {
+    let now = nowSec()
+    try exec(
+      "UPDATE transfers SET throughputMBps = ?, updatedAt = ? WHERE id = ?",
+      bind: { s in
+        sqlite3_bind_double(s, 1, throughputMBps)
+        sqlite3_bind_int64(s, 2, now)
+        sqlite3_bind_text(s, 3, id, -1, SQLITE_TRANSIENT)
+      }
+    )
+  }
+
+  public func recordRemoteHandle(id: String, handle: UInt32) throws {
+    let now = nowSec()
+    try exec(
+      "UPDATE transfers SET remoteHandle = ?, updatedAt = ? WHERE id = ?",
+      bind: { s in
+        sqlite3_bind_int64(s, 1, Int64(handle))
+        sqlite3_bind_int64(s, 2, now)
+        sqlite3_bind_text(s, 3, id, -1, SQLITE_TRANSIENT)
+      }
+    )
+  }
+
+  public func addContentHash(id: String, hash: String) throws {
+    let now = nowSec()
+    try exec(
+      "UPDATE transfers SET contentHash = ?, updatedAt = ? WHERE id = ?",
+      bind: { s in
+        sqlite3_bind_text(s, 1, hash, -1, SQLITE_TRANSIENT)
+        sqlite3_bind_int64(s, 2, now)
+        sqlite3_bind_text(s, 3, id, -1, SQLITE_TRANSIENT)
+      }
+    )
+  }
+
   // MARK: - Internal implementations
 
   private func updateCommitted(id: String, committed: Int64) throws {
     let now = nowSec()
+    // Clamp committed bytes: never go negative and never exceed totalBytes when known.
     try exec(
-      "UPDATE transfers SET committedBytes = ?, updatedAt = ? WHERE id = ?",
+      """
+      UPDATE transfers SET committedBytes = MIN(?, COALESCE(totalBytes, ?)), updatedAt = ?
+      WHERE id = ? AND state = 'active'
+      """,
       bind: { stmt in
-        sqlite3_bind_int64(stmt, 1, committed)
-        sqlite3_bind_int64(stmt, 2, now)
-        sqlite3_bind_text(stmt, 3, id, -1, SQLITE_TRANSIENT)
+        sqlite3_bind_int64(stmt, 1, max(0, committed))
+        sqlite3_bind_int64(stmt, 2, max(0, committed))
+        sqlite3_bind_int64(stmt, 3, now)
+        sqlite3_bind_text(stmt, 4, id, -1, SQLITE_TRANSIENT)
       }
     )
   }
