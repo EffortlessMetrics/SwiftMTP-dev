@@ -497,6 +497,11 @@ struct VacuumTests {
     defer { cleanup(path) }
     let idx = try openIndex(at: path)
 
+    // Measure empty schema baseline (after checkpoint so WAL is folded in)
+    try idx.database.exec("PRAGMA wal_checkpoint(TRUNCATE)")
+    let emptySize =
+      try FileManager.default.attributesOfItem(atPath: path)[.size] as? UInt64 ?? 0
+
     // Insert many objects with long names to ensure multi-page DB
     var objects: [IndexedObject] = []
     for i in 0..<5000 {
@@ -521,14 +526,28 @@ struct VacuumTests {
     // Also prune the change log entries that were created
     try await idx.pruneChangeLog(deviceId: "dev", olderThan: Date().addingTimeInterval(10))
 
+    // Checkpoint before VACUUM so all deletes are in the main DB
+    try idx.database.exec("PRAGMA wal_checkpoint(TRUNCATE)")
+
     // VACUUM via the underlying database
     try idx.database.exec("VACUUM")
 
+    // In WAL mode VACUUM writes the compact result through the WAL;
+    // checkpoint again so the main DB file reflects the compacted size.
+    try idx.database.exec("PRAGMA wal_checkpoint(TRUNCATE)")
+
     let sizeAfterVacuum =
       try FileManager.default.attributesOfItem(atPath: path)[.size] as? UInt64 ?? 0
+
+    // The populated DB should be significantly larger than the empty schema
     #expect(
-      sizeAfterVacuum < sizeBeforeDelete,
-      "VACUUM should reduce file size: before=\(sizeBeforeDelete), after=\(sizeAfterVacuum)")
+      sizeBeforeDelete > emptySize * 2,
+      "Data should at least double the DB size: empty=\(emptySize), populated=\(sizeBeforeDelete)")
+    // After VACUUM the DB should shrink back close to the empty schema size
+    // (allow 3× headroom for empty index pages and metadata)
+    #expect(
+      sizeAfterVacuum < emptySize * 3,
+      "VACUUM should reclaim bulk data: empty=\(emptySize), after=\(sizeAfterVacuum)")
   }
 
   @Test("Database remains functional after VACUUM")
