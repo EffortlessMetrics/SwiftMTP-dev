@@ -257,6 +257,7 @@ let package = Package(
         "SwiftMTPTestKit",
         "SwiftMTPCore",
         "SwiftMTPIndex",
+        "SwiftCheck",
       ]),
 
     .testTarget(
