@@ -57,6 +57,7 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
       );
       CREATE INDEX IF NOT EXISTS idx_live_parent ON live_objects(deviceId, storageId, parentHandle);
       CREATE INDEX IF NOT EXISTS idx_live_change ON live_objects(deviceId, changeCounter);
+      CREATE INDEX IF NOT EXISTS idx_live_name ON live_objects(deviceId, name);
 
       CREATE TABLE IF NOT EXISTS live_storages (
           deviceId    TEXT    NOT NULL,
@@ -171,6 +172,17 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     }
   }
 
+  /// Search for objects by name pattern using SQL LIKE syntax (e.g. `%photo%`).
+  public func searchByName(deviceId: String, pattern: String) async throws -> [IndexedObject] {
+    let sql =
+      "SELECT * FROM live_objects WHERE deviceId = ? AND name LIKE ? AND stale = 0"
+    return try db.withStatement(sql) { stmt in
+      try db.bind(stmt, 1, deviceId)
+      try db.bind(stmt, 2, pattern)
+      return try readObjects(stmt)
+    }
+  }
+
   public func storages(deviceId: String) async throws -> [IndexedStorage] {
     let sql = "SELECT * FROM live_storages WHERE deviceId = ?"
     return try db.withStatement(sql) { stmt in
@@ -203,67 +215,48 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
   }
 
   public func changesSince(deviceId: String, anchor: Int64) async throws -> [IndexedObjectChange] {
-    // Read from live_changes, deduplicate: latest change per (storageId, handle) wins.
-    let changesSQL = """
-      SELECT c.storageId, c.handle, c.kind, c.changeCounter
-      FROM live_changes c
-      WHERE c.deviceId = ? AND c.changeCounter > ?
-      ORDER BY c.changeCounter ASC
+    // Single query: deduplicate changes via subquery, then JOIN to live_objects.
+    // Eliminates the N+1 pattern of querying each changed object individually.
+    let sql = """
+      SELECT lc.kind, o.deviceId, o.storageId, o.handle, o.parentHandle,
+             o.name, o.pathKey, o.sizeBytes, o.mtime, o.formatCode,
+             o.isDirectory, o.changeCounter, o.crawledAt, o.stale
+      FROM (
+        SELECT storageId, handle, kind, MAX(changeCounter) AS maxCounter
+        FROM live_changes
+        WHERE deviceId = ? AND changeCounter > ?
+        GROUP BY storageId, handle
+      ) lc
+      JOIN live_objects o
+        ON o.deviceId = ? AND o.storageId = lc.storageId AND o.handle = lc.handle
+      WHERE (lc.kind = 'delete') OR (lc.kind != 'delete' AND o.stale = 0)
       """
-    // Build deduplicated map: (storageId, handle) → latest kind
-    struct ChangeKey: Hashable {
-      let storageId: UInt32
-      let handle: UInt32
-    }
-    var latestChanges: [ChangeKey: (kind: String, counter: Int64)] = [:]
 
-    try db.withStatement(changesSQL) { stmt in
+    return try db.withStatement(sql) { stmt in
       try db.bind(stmt, 1, deviceId)
       try db.bind(stmt, 2, anchor)
+      try db.bind(stmt, 3, deviceId)
+      var result: [IndexedObjectChange] = []
       while try db.step(stmt) {
-        let sid = UInt32(db.colInt64(stmt, 0) ?? 0)
-        guard let handle = db.colInt64(stmt, 1).map({ UInt32($0) }) else { continue }
-        let kind = db.colText(stmt, 2) ?? "upsert"
-        let counter = db.colInt64(stmt, 3) ?? 0
-        let key = ChangeKey(storageId: sid, handle: handle)
-        // Later entries overwrite earlier ones (higher counter wins)
-        latestChanges[key] = (kind: kind, counter: counter)
+        let kind = db.colText(stmt, 0) ?? "upsert"
+        let obj = IndexedObject(
+          deviceId: db.colText(stmt, 1) ?? "",
+          storageId: UInt32(db.colInt64(stmt, 2) ?? 0),
+          handle: MTPObjectHandle(db.colInt64(stmt, 3) ?? 0),
+          parentHandle: db.colInt64(stmt, 4).map { MTPObjectHandle($0) },
+          name: db.colText(stmt, 5) ?? "",
+          pathKey: db.colText(stmt, 6) ?? "",
+          sizeBytes: db.colInt64(stmt, 7).map { UInt64($0) },
+          mtime: db.colInt64(stmt, 8).map { Date(timeIntervalSince1970: TimeInterval($0)) },
+          formatCode: UInt16(db.colInt64(stmt, 9) ?? 0),
+          isDirectory: (db.colInt64(stmt, 10) ?? 0) != 0,
+          changeCounter: db.colInt64(stmt, 11) ?? 0
+        )
+        let changeKind: IndexedObjectChange.ChangeKind = kind == "delete" ? .deleted : .upserted
+        result.append(IndexedObjectChange(kind: changeKind, object: obj))
       }
+      return result
     }
-
-    var result: [IndexedObjectChange] = []
-    for (key, change) in latestChanges {
-      if change.kind == "delete" {
-        // Return tombstone from live_objects (stale row)
-        let sql =
-          "SELECT * FROM live_objects WHERE deviceId = ? AND storageId = ? AND handle = ? LIMIT 1"
-        let obj: IndexedObject? = try db.withStatement(sql) { stmt in
-          try db.bind(stmt, 1, deviceId)
-          try db.bind(stmt, 2, Int64(key.storageId))
-          try db.bind(stmt, 3, Int64(key.handle))
-          return try readObjects(stmt).first
-        }
-        if let obj = obj {
-          result.append(IndexedObjectChange(kind: .deleted, object: obj))
-        }
-      } else {
-        // Upsert: fetch current (non-stale) object
-        let sql =
-          "SELECT * FROM live_objects WHERE deviceId = ? AND storageId = ? AND handle = ? AND stale = 0 LIMIT 1"
-        let obj: IndexedObject? = try db.withStatement(sql) { stmt in
-          try db.bind(stmt, 1, deviceId)
-          try db.bind(stmt, 2, Int64(key.storageId))
-          try db.bind(stmt, 3, Int64(key.handle))
-          return try readObjects(stmt).first
-        }
-        if let obj = obj {
-          result.append(IndexedObjectChange(kind: .upserted, object: obj))
-        }
-        // If object was upserted then deleted (stale=1), the dedup already picked delete
-      }
-    }
-
-    return result
   }
 
   // MARK: - LiveIndexWriter
