@@ -89,6 +89,19 @@ cd SwiftMTPKit
 swift run SwiftMTPApp
 ```
 
+### Generating Documentation
+```bash
+# Generate DocC documentation for SwiftMTPCore
+cd SwiftMTPKit
+swift package generate-documentation --target SwiftMTPCore
+
+# Or use the convenience script (copies archive to Docs/SwiftMTP.doccarchive)
+./scripts/generate-docs.sh
+
+# Generate and open in browser
+./scripts/generate-docs.sh --open
+```
+
 ### Code Quality
 ```bash
 # Run all pre-PR checks (format, build, test, quirks, large-file scan)

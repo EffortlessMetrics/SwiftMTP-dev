@@ -26,11 +26,19 @@ fi
 
 echo "Generating DocC documentation for SwiftMTPCore..."
 swift package generate-documentation \
-  --target SwiftMTPCore \
-  --output-path "$OUTPUT_PATH" 2>&1
+  --target SwiftMTPCore 2>&1
 
-echo "Documentation generated: $OUTPUT_PATH"
+# The plugin writes the archive into .build/plugins/Swift-DocC/outputs/
+PLUGIN_OUTPUT="$REPO_ROOT/SwiftMTPKit/.build/plugins/Swift-DocC/outputs/SwiftMTPCore.doccarchive"
 
-if $OPEN; then
+if [[ -d "$PLUGIN_OUTPUT" ]]; then
+  rm -rf "$OUTPUT_PATH"
+  cp -R "$PLUGIN_OUTPUT" "$OUTPUT_PATH"
+  echo "✅ Documentation generated: $OUTPUT_PATH"
+else
+  echo "✅ Documentation generated (see .build/plugins/Swift-DocC/outputs/)"
+fi
+
+if $OPEN && [[ -d "$OUTPUT_PATH" ]]; then
   open "$OUTPUT_PATH"
 fi
