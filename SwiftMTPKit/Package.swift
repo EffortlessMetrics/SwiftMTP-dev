@@ -39,6 +39,7 @@ let package = Package(
     .package(url: "https://github.com/Tyler-Keith-Thompson/CucumberSwift", from: "5.0.0"),
     .package(url: "https://github.com/typelift/SwiftCheck", from: "0.12.0"),
     .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.10.0"),
+    .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.4.0"),
   ],
   targets: [
     // MARK: - Foundation Layer
