@@ -67,7 +67,15 @@ jobs:
       - name: Full Test Suite + Coverage Gate + Xcode Unit/UI Tests
         env:
           RUN_XCODE_UI_TESTS: "1"
+          COVERAGE_THRESHOLD: "60"
         run: ./run-all-tests.sh
+      - name: Coverage gate (60% minimum)
+        working-directory: SwiftMTPKit
+        run: |
+          COV_JSON="$(swift test --show-codecov-path)"
+          python3 scripts/coverage_gate.py \
+            --coverage-json "$COV_JSON" \
+            --threshold 60
       - name: Swift format (lint)
         run: brew install swift-format && swift-format lint -r . --strict
 
