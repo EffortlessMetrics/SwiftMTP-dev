@@ -15,11 +15,17 @@ if ! command -v jq &> /dev/null; then
 fi
 
 QUIRKS_FILE="Specs/quirks.json"
+QUIRKS_EMBEDDED="SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json"
 SCHEMA_FILE="Specs/quirks.schema.json"
 
 # Check that files exist
 if [[ ! -f "$QUIRKS_FILE" ]]; then
     echo "❌ Quirks file not found: $QUIRKS_FILE"
+    exit 1
+fi
+
+if [[ ! -f "$QUIRKS_EMBEDDED" ]]; then
+    echo "❌ Embedded quirks file not found: $QUIRKS_EMBEDDED"
     exit 1
 fi
 
@@ -29,6 +35,17 @@ if [[ ! -f "$SCHEMA_FILE" ]]; then
 fi
 
 echo "✅ Files found"
+
+# Check that both quirks files are in sync
+echo "🔍 Checking quirks files are in sync..."
+if ! diff -q "$QUIRKS_FILE" "$QUIRKS_EMBEDDED" >/dev/null 2>&1; then
+    echo "❌ Quirks files are out of sync:"
+    echo "   $QUIRKS_FILE"
+    echo "   $QUIRKS_EMBEDDED"
+    echo "   Copy the canonical file: cp $QUIRKS_FILE $QUIRKS_EMBEDDED"
+    exit 1
+fi
+echo "✅ Quirks files are in sync"
 
 # Basic JSON validation
 echo "🔍 Checking JSON syntax..."
@@ -179,6 +196,22 @@ if [[ -n "$missing_evidence" ]]; then
     exit 1
 fi
 echo "✅ All promoted profiles have evidenceRequired"
+
+# Fail if a promoted profile is missing verification metadata
+echo "🔍 Checking promoted profiles have verification metadata..."
+missing_verified_date=$(jq -r '.entries[] | select(.status == "promoted") | select(.lastVerifiedDate == null or .lastVerifiedDate == "") | .id' "$QUIRKS_FILE")
+if [[ -n "$missing_verified_date" ]]; then
+    echo "❌ Promoted profiles missing 'lastVerifiedDate':"
+    echo "$missing_verified_date"
+    exit 1
+fi
+missing_verified_by=$(jq -r '.entries[] | select(.status == "promoted") | select(.lastVerifiedBy == null or .lastVerifiedBy == "") | .id' "$QUIRKS_FILE")
+if [[ -n "$missing_verified_by" ]]; then
+    echo "❌ Promoted profiles missing 'lastVerifiedBy':"
+    echo "$missing_verified_by"
+    exit 1
+fi
+echo "✅ All promoted profiles have verification metadata"
 
 # Validate bench gates against actual benchmark results
 echo "🔍 Validating bench gates..."
@@ -419,10 +452,24 @@ for i, entry in enumerate(data.get("entries", [])):
         elif not all(isinstance(x, str) for x in evr):
             errors.append(f"{prefix}: evidenceRequired contains non-string elements")
 
+    # hooks — must be array (not dict or other type)
+    hooks = entry.get("hooks")
+    if hooks is not None and not isinstance(hooks, list):
+        errors.append(f"{prefix}: hooks is {type(hooks).__name__}, expected array")
+
     # status enum
     status = entry.get("status")
     if status and status not in VALID_STATUS:
         errors.append(f"{prefix}: status '{status}' not in {sorted(VALID_STATUS)}")
+
+    # promoted entries must have evidenceRequired and verification metadata
+    if status == "promoted":
+        if not evr or len(evr) == 0:
+            errors.append(f"{prefix}: promoted entry missing non-empty evidenceRequired")
+        if not entry.get("lastVerifiedDate"):
+            errors.append(f"{prefix}: promoted entry missing lastVerifiedDate")
+        if not entry.get("lastVerifiedBy"):
+            errors.append(f"{prefix}: promoted entry missing lastVerifiedBy")
 
     # confidence enum
     conf = entry.get("confidence")
