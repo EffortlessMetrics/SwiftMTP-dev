@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] — Release Candidate
 
+### Wave 38 Troubleshooting Update
+
+> **Summary**: Comprehensive troubleshooting documentation overhaul with concrete device debugging guidance. New sections for USB claim debugging, device-specific troubleshooting (Samsung, Pixel, OnePlus), common macOS issues, and expanded diagnostic commands.
+
+#### Highlights
+- **USB claim debugging**: how to identify and resolve process claim conflicts using `lsof`, `ioreg`, and `system_profiler`; disable Image Capture auto-grabbing
+- **Samsung Galaxy guide**: 512-byte packet boundary bug, MTP mode configuration, init sequence theory
+- **Google Pixel guide**: bulk transfer timeout diagnosis, libmtp workaround limitations, macOS kernel issue documentation
+- **OnePlus guide**: 0x201D write rejection analysis, folder targeting requirements, chunk size recommendations
+- **Common macOS issues**: TSAN interceptor failure on macOS 26 (pin Xcode 16.2), libusb Homebrew vs system conflict resolution, SIP and USB entitlements for distribution
+- **Diagnostic commands**: expanded quick-reference block with verbose probe, ioreg inspection, and system profiler commands
+
+---
+
 ### Wave 36–37 Test Hardening (PRs #409–#414)
 
 > **Summary**: Six PRs of focused test hardening across write-path safety, submission workflow validation, deep device compatibility research, boundary conditions, sync resilience, and FileProvider/XPC edge cases. ~200 new tests added. Session totals: **50 PRs merged** (#363–#414).

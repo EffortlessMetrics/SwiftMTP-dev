@@ -1,6 +1,6 @@
 # SwiftMTP Roadmap
 
-*Last updated: 2026-03-09*
+*Last updated: 2026-03-10*
 
 > **Pre-Alpha Status**: SwiftMTP has extensive protocol and test infrastructure but minimal real-device validation. Only 1 device (Xiaomi Mi Note 2) has completed real file transfers. The version numbers below (2.x) reflect internal development milestones, not production readiness. Items marked as "shipped" or "complete" are code-complete and mock-tested unless noted otherwise — most have not been validated on real hardware.
 
@@ -45,6 +45,17 @@ Minimum expectations for each item:
 | 2.1-A | Transport stability + error clarity | Complete | Real-device timeout reproduction drift | `./scripts/smoke.sh` + targeted device artifacts |
 | 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
 | 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
+
+## Wave 38 Activity (2026-03-10)
+
+Key development activity in this wave — comprehensive troubleshooting documentation update:
+
+- **Troubleshooting overhaul**: major update to `Docs/Troubleshooting.md` with concrete device debugging guidance
+- **USB claim debugging**: new section covering process claim conflicts, `ioreg`/`lsof` inspection, and Image Capture auto-grab disabling
+- **Device-specific guides**: dedicated Samsung Galaxy, Google Pixel, and OnePlus troubleshooting sections with symptoms, debugging steps, and current theories
+- **Common macOS issues**: TSAN interceptor failures on macOS 26, libusb Homebrew vs system conflicts, SIP/USB entitlement guidance
+- **Diagnostic commands**: expanded quick-reference with `probe --verbose`, `ioreg`, and `system_profiler` commands
+- **Table of contents**: updated to reflect all new sections
 
 ## Wave 36–37 Activity (2026-03-09)
 
