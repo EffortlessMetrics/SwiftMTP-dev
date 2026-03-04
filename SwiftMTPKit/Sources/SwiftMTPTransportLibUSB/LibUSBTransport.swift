@@ -715,9 +715,19 @@ public final class MTPUSBLink: @unchecked Sendable, MTPLink {
     log.info("Closing MTPUSBLink: \(self.manufacturer, privacy: .public) \(self.model, privacy: .public) iface=\(self.iface)")
     eventPumpTask?.cancel()
     eventContinuation?.finish()
-    let releaseRC = libusb_release_interface(h, Int32(iface))
-    if releaseRC != 0 {
-      log.warning("libusb_release_interface \(libusbErrorName(releaseRC), privacy: .public) (rc=\(releaseRC)) during close (non-fatal)")
+    // noReleaseInterface: skip release if device locks up on release (SanDisk/Creative quirk)
+    if !config.noReleaseInterface {
+      let releaseRC = libusb_release_interface(h, Int32(iface))
+      if releaseRC != 0 {
+        log.warning("libusb_release_interface \(libusbErrorName(releaseRC), privacy: .public) (rc=\(releaseRC)) during close (non-fatal)")
+      }
+    }
+    // forceResetOnClose: reset device before closing handle (AOSP/Sony quirk)
+    if config.forceResetOnClose {
+      let resetRC = libusb_reset_device(h)
+      if resetRC != 0 && resetRC != Int32(LIBUSB_ERROR_NOT_FOUND.rawValue) {
+        log.warning("forceResetOnClose: libusb_reset_device \(libusbErrorName(resetRC), privacy: .public) (rc=\(resetRC)) during close (non-fatal)")
+      }
     }
     libusb_close(h)
     libusb_unref_device(dev)

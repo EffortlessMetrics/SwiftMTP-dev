@@ -153,6 +153,19 @@ extension MTPDeviceActor {
   public func resumeRead(
     handle: MTPObjectHandle, offset: UInt64, length: UInt64
   ) async throws -> Data {
+    var adjustedOffset = offset
+    var adjustedLength = length
+    // samsungPartialObjectBoundaryBug: adjust to avoid 512-byte USB packet boundary
+    if currentPolicy?.flags.samsungPartialObjectBoundaryBug == true {
+      let endByte = offset + length
+      if endByte > 0 && (endByte % 512) == 0 {
+        adjustedLength = length - 1
+      }
+      if adjustedOffset > 0 && (adjustedOffset % 512) == 0 {
+        adjustedOffset = offset - 1
+        adjustedLength += 1
+      }
+    }
     let link = try await getMTPLink()
     let buffer = LockedDataBuffer()
     let result = try await link.executeStreamingCommand(
@@ -162,9 +175,9 @@ extension MTPDeviceActor {
         txid: 0,
         params: [
           handle,
-          UInt32(offset & 0xFFFF_FFFF),
-          UInt32(offset >> 32),
-          UInt32(min(length, UInt64(UInt32.max))),
+          UInt32(adjustedOffset & 0xFFFF_FFFF),
+          UInt32(adjustedOffset >> 32),
+          UInt32(min(adjustedLength, UInt64(UInt32.max))),
         ]
       ),
       dataPhaseLength: nil,
@@ -175,6 +188,11 @@ extension MTPDeviceActor {
       dataOutHandler: nil
     )
     try result.checkOK()
-    return buffer.snapshot()
+    let data = buffer.snapshot()
+    // If we adjusted offset backwards, trim the leading byte
+    if adjustedOffset != offset, data.count > 0 {
+      return Data(data.dropFirst(1))
+    }
+    return data
   }
 }

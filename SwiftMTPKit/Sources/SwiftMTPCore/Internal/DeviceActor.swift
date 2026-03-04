@@ -51,8 +51,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
   private let transport: any MTPTransport
   private var config: SwiftMTPConfig
   private var deviceInfo: MTPDeviceInfo?
-  private var mtpLink: (any MTPLink)?
-  private var sessionOpen = false
+  var mtpLink: (any MTPLink)?
+  var sessionOpen = false
   let transferJournal: (any TransferJournal)?
   public var probedCapabilities: [String: Bool] = [:]
   /// When `true`, after each successful write the remote object size is verified against
@@ -344,6 +344,18 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     }
     try await openIfNeeded()
     let link = try await getMTPLink()
+    // brokenSetObjectPropList: fall back to individual SetObjectPropValue calls
+    if currentPolicy?.flags.brokenSetObjectPropList == true {
+      var written: UInt32 = 0
+      for entry in entries {
+        try await BusyBackoff.onDeviceBusy {
+          try await link.setObjectPropValue(
+            handle: entry.handle, property: entry.propCode, value: entry.value)
+        }
+        written += 1
+      }
+      return written
+    }
     return try await BusyBackoff.onDeviceBusy {
       try await link.setObjectPropList(entries: entries)
     }
@@ -421,6 +433,10 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         let flags = quirk.resolvedFlags()
         config.skipAltSetting = flags.skipAltSetting
         config.skipPreClaimReset = flags.skipPreClaimReset
+        config.forceResetOnClose = flags.forceResetOnClose
+        config.noZeroReads = flags.noZeroReads
+        config.noReleaseInterface = flags.noReleaseInterface
+        config.ignoreHeaderErrors = flags.ignoreHeaderErrors
       }
     }
 
@@ -436,8 +452,10 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
     eventPump.stop()
 
     if sessionOpen, let link = mtpLink {
-      // Attempt to close session, but ignore errors if it fails
-      try? await link.closeSession()
+      // skipCloseSession: some Canon EOS cameras enter error state after CloseSession
+      if currentPolicy?.flags.skipCloseSession != true {
+        try? await link.closeSession()
+      }
     }
 
     // Always close transport to release interface and handles
@@ -465,6 +483,16 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
 
   public func devGetObjectInfoUncached(handle: MTPObjectHandle) async throws -> MTPObjectInfo {
     let link = try await getMTPLink()
+    // propListOverridesObjectInfo: prefer PropList data over GetObjectInfo
+    if currentPolicy?.flags.propListOverridesObjectInfo == true,
+      currentPolicy?.flags.supportsGetObjectPropList == true
+    {
+      if let propInfos = try? await getObjectPropList(parentHandle: handle, depth: 0),
+        let first = propInfos.first
+      {
+        return first
+      }
+    }
     let infos = try await link.getObjectInfos([handle])
     guard let info = infos.first else { throw MTPError.objectNotFound }
     return info

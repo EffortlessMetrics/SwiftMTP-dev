@@ -63,11 +63,12 @@ extension MTPUSBLink {
         MTPLog.Signpost.chunkSignposter.endInterval("writeChunk", chunkState)
         sent += wrote
       }
-      if sent % 512 == 0 {
+      if sent % 512 == 0 && !config.noZeroReads {
         // USB bulk transfers require a zero-length packet (ZLP) to signal end of
         // transfer when the payload is an exact multiple of the max packet size (512
         // bytes for Hi-Speed). Without this, the device may wait indefinitely for
         // more data. 100ms timeout is ample for a zero-byte transfer.
+        // noZeroReads: some devices (Samsung YP, iRiver) choke on ZLP.
         var dummy: UInt8 = 0
         _ = libusb_bulk_transfer(h, outEP, &dummy, 0, nil, 100)
       }
@@ -140,6 +141,19 @@ extension MTPUSBLink {
       initial = Data()
     }
     let paramBytes = max(0, Int(rHdr.length) - PTPHeader.size)
+    // ignoreHeaderErrors: validate response header type, but tolerate junk when flag is set
+    let expectedResponseType: UInt16 = PTPContainer.Kind.response.rawValue
+    if rHdr.type != expectedResponseType && rHdr.type != PTPContainer.Kind.data.rawValue {
+      if config.ignoreHeaderErrors {
+        log.warning(
+          "Ignoring malformed response header: type=\(rHdr.type) code=\(String(format: "0x%04x", rHdr.code)) (expected type=\(expectedResponseType)) for op=\(String(format: "0x%04x", command.code), privacy: .public)"
+        )
+      } else {
+        log.error(
+          "Unexpected response header type=\(rHdr.type) (expected \(expectedResponseType)) for op=\(String(format: "0x%04x", command.code), privacy: .public)"
+        )
+      }
+    }
     let pCount = paramBytes / 4
     var params = [UInt32]()
     params.reserveCapacity(pCount)
