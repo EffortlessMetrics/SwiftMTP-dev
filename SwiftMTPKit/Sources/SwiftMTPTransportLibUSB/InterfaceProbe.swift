@@ -155,6 +155,12 @@ func configurationValue(for device: OpaquePointer) -> Int32 {
 }
 
 /// Set USB configuration only if needed (current != target), or if `force` is true.
+///
+/// On Darwin (macOS), `libusb_set_configuration()` is always called regardless of the
+/// `force` parameter. Darwin does not automatically set the configuration for
+/// vendor-specific devices, so an explicit call is required even when the current
+/// configuration appears to match the target. This matches libmtp behaviour and
+/// fixes bulk transfer failures on devices like Pixel 7.
 func setConfigurationIfNeeded(
   handle: OpaquePointer, device: OpaquePointer, force: Bool = false, debug: Bool
 ) {
@@ -164,7 +170,13 @@ func setConfigurationIfNeeded(
   if debug {
     print(String(format: "   [Config] current=%d target=%d (getRC=%d)", current, target, getRC))
   }
-  if !force && getRC == 0 && current == target {
+  #if os(macOS)
+    // Darwin requires explicit set_configuration for vendor-specific devices (libmtp compat).
+    let effectiveForce = true
+  #else
+    let effectiveForce = force
+  #endif
+  if !effectiveForce && getRC == 0 && current == target {
     if debug { print("   [Config] already at target config, skipping set_configuration") }
     return
   }
@@ -845,7 +857,7 @@ private func probeWriteCommandWithRecovery(
 func probeCandidateWithLadder(
   handle: OpaquePointer,
   _ c: InterfaceCandidate,
-  timeoutMs: UInt32 = 2000,
+  timeoutMs: UInt32 = 5000,
   debug: Bool = false,
   includeStorageProbe: Bool = true
 ) -> ProbeLadderResult {
@@ -1003,7 +1015,7 @@ func probeGetStorageIDs(
 /// device mid-transaction, which would wedge subsequent bulk transfers.
 ///
 /// Returns (success, cached raw device-info bytes).
-func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32 = 2000) -> (
+func probeCandidate(handle: OpaquePointer, _ c: InterfaceCandidate, timeoutMs: UInt32 = 5000) -> (
   Bool, Data?
 ) {
   let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
