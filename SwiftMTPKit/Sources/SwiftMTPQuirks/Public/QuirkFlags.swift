@@ -239,6 +239,15 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
 
   public init() {}
 
+  /// The set of all recognised flag names (boolean + string).
+  /// Used by governance checks to detect typos / unknown flags in quirks.json.
+  public static let knownFlagNames: Set<String> = {
+    let f = QuirkFlags()
+    var names = Set(f.boolFlagMap.map(\.name))
+    names.insert("preferredWriteFolder")
+    return names
+  }()
+
   /// All boolean flag names and their current values, for introspection.
   public var boolFlagMap: [(name: String, value: Bool)] {
     [
