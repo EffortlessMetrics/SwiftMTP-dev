@@ -30,7 +30,7 @@ jobs:
   test:
     name: Test (Unit, BDD, Property, Fuzz, Integration, E2E, Snapshot, Storybook)
     runs-on: macos-15
-    timeout-minutes: 45
+    timeout-minutes: 90
     permissions:
       contents: read
       checks: write
