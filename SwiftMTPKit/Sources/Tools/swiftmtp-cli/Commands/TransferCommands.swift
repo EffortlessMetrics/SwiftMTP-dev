@@ -522,6 +522,42 @@ struct TransferCommands {
         print("   Ensure the device is unlocked and set to MTP/File Transfer mode.")
         exitNow(.tempfail)
       }
+
+      // Set up progress reporting
+      let mirrorProgress = MirrorProgress()
+      await mirrorProgress.onUpdate { snapshot in
+        let filePct = Int(snapshot.fileFraction * 100)
+        let bytePct = Int(snapshot.byteFraction * 100)
+        let bps = snapshot.bytesPerSecond
+        let throughput: String
+        if bps >= 1_048_576 {
+          throughput = String(format: "%.1f MB/s", bps / 1_048_576)
+        } else if bps >= 1024 {
+          throughput = String(format: "%.0f KB/s", bps / 1024)
+        } else {
+          throughput = String(format: "%.0f B/s", bps)
+        }
+        let eta: String
+        if let remaining = snapshot.estimatedTimeRemaining {
+          if remaining >= 3600 {
+            eta = String(format: "%.0fh %02.0fm", remaining / 3600, remaining.truncatingRemainder(dividingBy: 3600) / 60)
+          } else if remaining >= 60 {
+            eta = String(format: "%.0fm %02.0fs", remaining / 60, remaining.truncatingRemainder(dividingBy: 60))
+          } else {
+            eta = String(format: "%.0fs", remaining)
+          }
+        } else {
+          eta = "--"
+        }
+        let current = snapshot.currentFileName ?? "—"
+        print(
+          "\r   [\(filePct)%] \(snapshot.filesCompleted + snapshot.filesSkipped + snapshot.filesFailed)/\(snapshot.totalFiles) files"
+          + " | \(bytePct)% bytes | \(throughput) | ETA \(eta) | \(current)",
+          terminator: ""
+        )
+        fflush(stdout)
+      }
+
       let rootStream = device.list(parent: nil as MTPObjectHandle?, in: firstStorage.id)
       var count = 0
       for try await batch in rootStream {
@@ -531,6 +567,9 @@ struct TransferCommands {
         }
       }
       print("✅ Found \(count) items in root.")
+      // TODO: Wire full MirrorEngine invocation with mirrorProgress once
+      // Snapshotter/DiffEngine are initialised from device storage.
+      _ = mirrorProgress
     } catch {
       displayError("Mirror failed", error: error, flags: flags)
       if let mtpError = error as? MTPError {
