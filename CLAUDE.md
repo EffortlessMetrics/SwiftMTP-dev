@@ -325,9 +325,9 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 | Device | VID:PID | Status | Quirk ID |
 |--------|---------|--------|----------|
 | Xiaomi Mi Note 2 | 2717:ff10 | Partial — only device with real transfer data | xiaomi-mi-note-2-ff10 |
-| Xiaomi Mi Note 2 (alt) | 2717:ff40 | Partial — recent lab run returned 0 storages | xiaomi-mi-note-2-ff40 |
+| Xiaomi Mi Note 2 (alt) | 2717:ff40 | Working — probe, listing, storage enumeration confirmed (wave 50 evidence). File transfer status TBD. | xiaomi-mi-note-2-ff40 |
 | Samsung Galaxy S7 (SM-G930W8) | 04e8:6860 | In Progress — handshake fails after USB claim; research (#428) identified 8 init differences; transport fixes (#445) skip alt-setting and skip pre-claim reset; wave 46 deep research identified 3 remaining gaps (reset-reopen recovery, skipClearHalt wiring, forceResetOnClose) — awaiting retest | samsung-android-6860 |
-| OnePlus 3T | 2a70:f003 | In Progress — probe/read works, writes fail (0x201D); wave 45 research identified root cause (SendObjectPropList + format mismatch); wave 46 added 3 write-path QuirkFlags (`forceUndefinedFormatOnWrite`, `emptyDatesInSendObject`, `brokenSetObjectPropList`) — awaiting retest | oneplus-3t-f003 |
+| OnePlus 3T | 2a70:f003 | Partial — probe, listing, and search confirmed working (wave 50). Writes still fail with 0x201D; wave 45 research identified root cause (SendObjectPropList + format mismatch); wave 46 added 3 write-path QuirkFlags (`forceUndefinedFormatOnWrite`, `emptyDatesInSendObject`, `brokenSetObjectPropList`) | oneplus-3t-f003 |
 | Google Pixel 7 | 18d1:4ee1 | In Progress — bulk transfer timeout; research (#429) identified 5 differences; transport fixes (#443) add handle re-open, set_configuration, and timeout tuning — awaiting retest | google-pixel-7-4ee1 |
 | Canon EOS Rebel / R-class | 04a9:3139 | Research Only — PTP camera protocol research in `Docs/camera-ptp-research.md`; never connected to SwiftMTP | canon-eos-rebel-3139 |
 | Nikon DSLR / Z-series | 04b0:0410 | Research Only — PTP camera protocol research in `Docs/camera-ptp-research.md`; never connected to SwiftMTP | nikon-dslr-0410 |
