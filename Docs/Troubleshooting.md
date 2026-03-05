@@ -602,10 +602,17 @@ system_profiler SPUSBDataType
 
 ### Device Bring-Up
 ```bash
+# Full bring-up with evidence capture
+./scripts/device-bringup.sh --mode mtp-unlocked --device 18d1:4ee1
+
+# Dry-run to see what would be captured
+./scripts/device-bringup.sh --mode mtp-unlocked --device 18d1:4ee1 --dry-run
+
+# Using separate --vid/--pid flags
 ./scripts/device-bringup.sh --mode <label> --vid <vid> --pid <pid>
 ```
 
-See [Docs/device-bringup.md](device-bringup.md) for mode options.
+See [Docs/device-bringup.md](device-bringup.md) for mode options and evidence stages.
 
 ---
 
