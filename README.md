@@ -95,10 +95,10 @@ See the [CLI Command Map](Docs/CLICommandMap.md) for all 15+ commands.
 | Device | VID:PID | Mock-Tested | Real-Device | Status |
 |--------|---------|:-----------:|:-----------:|--------|
 | Xiaomi Mi Note 2 | `2717:ff10` | ✅ | ✅ Partial | Only device with real file transfers. Requires kernel detach. |
-| Xiaomi Mi Note 2 (alt) | `2717:ff40` | ✅ | ⚠️ | Recent lab run returned 0 storages. |
+| Xiaomi Mi Note 2 (alt) | `2717:ff40` | ✅ | ✅ Partial | Probe, listing, and storage enumeration confirmed (wave 50). File transfers TBD. |
 | Samsung Galaxy S7 | `04e8:6860` | ✅ | ❌ Blocked | USB claim succeeds but MTP handshake fails. Transport fixes shipped ([#445](https://github.com/EffortlessMetrics/SwiftMTP-dev/pull/445)) — awaiting retest. |
 | Google Pixel 7 | `18d1:4ee1` | ✅ | ❌ Blocked | Bulk transfer timeout. Transport fixes shipped ([#443](https://github.com/EffortlessMetrics/SwiftMTP-dev/pull/443)) — awaiting retest. See [debug report](Docs/pixel7-usb-debug-report.md). |
-| OnePlus 3T | `2a70:f003` | ✅ | ⚠️ Partial | Probe and read work. Writes fail with `0x201D` (InvalidParameter). |
+| OnePlus 3T | `2a70:f003` | ✅ | ⚠️ Partial | Probe, listing, and search confirmed working (wave 50). Writes still fail with `0x201D`. |
 | Canon EOS Rebel / R-class | `04a9:3139` | ✅ | — | Research-only quirks from libmtp/vendor specs. Never connected. |
 | Nikon DSLR / Z-series | `04b0:0410` | ✅ | — | Research-only quirks from libmtp/vendor specs. Never connected. |
 
