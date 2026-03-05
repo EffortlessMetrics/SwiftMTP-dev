@@ -15,6 +15,7 @@ let package = Package(
     .executable(name: "simple-probe", targets: ["simple-probe"]),
     .executable(name: "swiftmtp", targets: ["swiftmtp-cli"]),
     .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
+    .library(name: "SwiftMTPDeviceTypes", targets: ["SwiftMTPDeviceTypes"]),
     .library(name: "MTPEndianCodec", targets: ["MTPEndianCodec"]),
     .library(name: "SwiftMTPStore", targets: ["SwiftMTPStore"]),
     .library(name: "SwiftMTPUI", targets: ["SwiftMTPUI"]),
@@ -38,7 +39,7 @@ let package = Package(
     // Core MTP functionality
     .target(name: "SwiftMTPCore",
             dependencies: [
-                "SwiftMTPQuirks", "SwiftMTPObservability", "SwiftMTPCLI", "MTPEndianCodec",
+                "SwiftMTPDeviceTypes", "SwiftMTPQuirks", "SwiftMTPObservability", "SwiftMTPCLI", "MTPEndianCodec",
                 .product(name: "Collections", package: "swift-collections"),
             ],
             path: "SwiftMTPKit/Sources/SwiftMTPCore",
@@ -52,6 +53,10 @@ let package = Package(
     .target(name: "MTPEndianCodec",
             dependencies: [],
             path: "SwiftMTPKit/Sources/MTPEndianCodec"),
+
+    .target(name: "SwiftMTPDeviceTypes",
+            dependencies: ["MTPEndianCodec"],
+            path: "SwiftMTPKit/Sources/SwiftMTPDeviceTypes"),
 
     // Transport layer for libusb
     .target(name: "SwiftMTPTransportLibUSB",
@@ -164,6 +169,10 @@ let package = Package(
     .testTarget(name: "SwiftMTPCLITests",
                 dependencies: ["SwiftMTPCLI", "SwiftMTPCore", "SwiftCheck"],
                 path: "SwiftMTPKit/Tests/SwiftMTPCLITests"),
+
+    .testTarget(name: "SwiftMTPDeviceTypesTests",
+                dependencies: ["SwiftMTPDeviceTypes"],
+                path: "SwiftMTPKit/Tests/SwiftMTPDeviceTypesTests"),
 
     .testTarget(
       name: "MTPEndianCodecTests",
