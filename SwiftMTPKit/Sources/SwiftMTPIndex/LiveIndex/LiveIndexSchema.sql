@@ -19,6 +19,9 @@ CREATE TABLE IF NOT EXISTS live_objects (
 );
 CREATE INDEX IF NOT EXISTS idx_live_parent ON live_objects(deviceId, storageId, parentHandle);
 CREATE INDEX IF NOT EXISTS idx_live_change ON live_objects(deviceId, changeCounter);
+CREATE INDEX IF NOT EXISTS idx_live_format ON live_objects(deviceId, formatCode, stale);
+CREATE INDEX IF NOT EXISTS idx_live_stale ON live_objects(deviceId, storageId, stale);
+CREATE INDEX IF NOT EXISTS idx_live_parent_stale ON live_objects(deviceId, storageId, parentHandle, stale);
 
 CREATE TABLE IF NOT EXISTS live_storages (
     deviceId    TEXT    NOT NULL,
