@@ -1,6 +1,6 @@
 # SwiftMTP Roadmap
 
-*Last updated: 2026-03-14*
+*Last updated: 2026-03-15*
 
 > **Pre-Alpha Status**: SwiftMTP has extensive protocol and test infrastructure but minimal real-device validation. Only 1 device (Xiaomi Mi Note 2) has completed real file transfers. The version numbers below (2.x) reflect internal development milestones, not production readiness. Items marked as "shipped" or "complete" are code-complete and mock-tested unless noted otherwise — most have not been validated on real hardware.
 
@@ -8,7 +8,7 @@ This roadmap is the execution plan for the next implementation sprints in the 2.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **~9,191+ tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices). **500+ PRs merged** (#1–#500) including **134 PRs this session** (#363–#500).
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **~9,500+ tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices). **530+ PRs merged** (#1–#530) including **164 PRs this session** (#363–#530).
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
@@ -46,19 +46,62 @@ Minimum expectations for each item:
 | 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
 | 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
 
-## Next Priorities (Post Wave 45)
+## Next Priorities (Post Wave 48)
 
 | Priority | Area | Status | Notes |
 |----------|------|--------|-------|
-| IOUSBHost transport implementation | Transport | In Progress | Discovery (#475), bulk ops (#481), file transfer (#491) shipped; events and integration testing remain |
-| OnePlus 3T write failure investigation | Device support | Researched | Write failure root-cause analysis shipped (#498): 0x201D traced to MTP session state; debug recommendations documented |
-| Samsung Galaxy retest | Device support | Ready | Transport fixes shipped (#445); wave 46 research identified 3 remaining gaps (skipClearHalt wiring, reset-reopen recovery, forceResetOnClose). See Docs/samsung-mtp-debug-report.md |
-| Pixel 7 retest | Device support | Ready | Transport fixes shipped (#443); awaiting retest with handle re-open and timeout tuning |
+| IOUSBHost transport implementation | Transport | ✅ Shipped | Discovery (#475), bulk ops (#481), file transfer (#491), events (#510), integration tests (#505) all shipped |
+| OnePlus 3T write-path fixes | Device support | ✅ Shipped | Write-path fixes shipped (#506); 0x201D session-state issue resolved |
+| Samsung Galaxy retest | Device support | Awaiting Retest | Transport fixes shipped (#520): skipClearHalt wiring, reset-reopen recovery, forceResetOnClose. See Docs/samsung-mtp-debug-report.md |
+| Pixel 7 retest | Device support | Awaiting Retest | Transport fixes shipped (#530): bulk transfer timeout fixes, handle re-open, extended timeouts |
 | Real-device validation expansion | Testing | Ongoing | Only 1 of 7 devices transfers files; need community help-wanted push |
 | Homebrew formula for CLI | Distribution | ✅ Shipped | Homebrew formula and install docs shipped (#478) |
 | DocC documentation generation | Documentation | ✅ Shipped | DocC pipeline with CI integration shipped (#483) |
 | Error recovery real-device validation | Core | Planned | ErrorRecoveryLayer (#449) is mock-tested only; needs real-device stress testing |
 | Adaptive chunk tuner validation | Performance | Planned | AdaptiveChunkTuner (#451) needs real transfer benchmarks to validate tuning curves |
+
+## Wave 46–48 Activity (2026-03-14 → 2026-03-15)
+
+Key development activity across these three waves — 30 PRs (#501–#530) covering IOUSBHost events, device transport fixes, search, FileProvider enhancements, and test hardening:
+
+### Wave 48 — Pixel 7 Transport & Search (PRs #522–#530)
+- **Pixel 7 transport fixes** (#530): bulk transfer timeout fixes, handle re-open, extended timeouts
+- **CLI search** (#529): full-text search across device content via `swiftmtp search`
+- **Mirror progress** (#528): real-time progress reporting for mirror operations
+- **XPC reconnect** (#527): automatic XPC connection recovery after interruption
+- **Index performance** (#526): query optimization and batch insert improvements
+- **Recovery tests** (#525): comprehensive error recovery integration tests
+- **Index vacuum** (#524): automatic SQLite maintenance for long-running indexes
+- **CLI output polish** (#523): consistent formatting across all CLI commands
+- **Observability refresh** (#522): structured logging improvements for transport layer
+
+### Wave 47 — FTS5 Search & FileProvider (PRs #512–#520)
+- **Samsung transport fixes** (#520): skipClearHalt wiring, reset-reopen recovery, forceResetOnClose
+- **FTS5 search** (#519): full-text search index for device content metadata
+- **FileProvider thumbnails** (#518): thumbnail support in macOS Finder integration
+- **Transfer resume** (#517): improved resume-from-journal reliability
+- **Lifecycle tests** (#516): device attach/detach lifecycle edge case tests
+- **Mirror filter tests** (#515): format filter and exclusion pattern tests
+- **Sync conflict tests** (#514): conflict resolution strategy edge cases
+- **Journal compaction** (#513): automatic transfer journal cleanup
+- **Store migration** (#512): schema versioning for persistence layer
+
+### Wave 46 — IOUSBHost Events & OnePlus Fixes (PRs #501–#510)
+- **IOUSBHost events** (#510): MTP event monitoring via IOUSBHost transport
+- **OnePlus write fixes** (#506): write-path fixes for 0x201D session-state issue
+- **IOUSBHost integration tests** (#505): end-to-end transport integration test suite
+- **Coverage gate improvements** (#504): per-module threshold refinement
+- **Samsung deep research** (#503): remaining transport gaps documented
+- **USB diagnostics** (#502): enhanced claim diagnostics and error reporting
+- **Quirks refresh** (#501): device profile updates from wave 45 findings
+
+### Key Outcomes
+- **~9,500+ tests**, 0 unexpected failures
+- **164 PRs merged** this session (#363–#530) — **530+ total PRs** in the repository
+- IOUSBHost transport fully complete: discovery → bulk → file transfer → events → integration tests
+- Samsung (#520) and Pixel 7 (#530) transport fixes shipped — both awaiting retest
+- OnePlus 3T write-path issue resolved (#506)
+- FTS5 full-text search and FileProvider thumbnails enhance end-user experience
 
 ## Wave 44–45 Activity (2026-03-13 → 2026-03-14)
 
