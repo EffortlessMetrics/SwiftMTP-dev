@@ -5,9 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] — Waves 37–48
+## [Unreleased] — Waves 37–50
 
-> **Summary**: 111 PRs (#415–#530) across twelve waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, comprehensive test backfill, shell completions, IOUSBHost bulk/file transfer, Homebrew formula, CLI progress bars, DocC pipeline, quirk flags wired into transport, SPDX licensing, structured OSLog logging, journal crash recovery tests, FTS5 full-text search, FileProvider thumbnails, transfer resume journaling, Samsung/OnePlus/Pixel transport fixes, CLI search, mirror progress reporting, XPC auto-reconnect, and index performance optimization. Session totals: **~9,500+ tests**, **20,026 quirks entries**, **163 PRs merged** (#363–#530).
+> **Summary**: 128 PRs (#415–#551) across fourteen waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, comprehensive test backfill, shell completions, IOUSBHost bulk/file transfer, Homebrew formula, CLI progress bars, DocC pipeline, quirk flags wired into transport, SPDX licensing, structured OSLog logging, journal crash recovery tests, FTS5 full-text search, FileProvider thumbnails, transfer resume journaling, Samsung/OnePlus/Pixel transport fixes, CLI search, mirror progress reporting, XPC auto-reconnect, index performance optimization, camera quirks research, write-path safety tests, CLI probe polish, WAL hygiene tests, diagnostic formatter expansion, and CI hardening. Session totals: **~9,600+ tests**, **20,026 quirks entries**, **180 PRs merged** (#363–#551).
+
+### Wave 50 — Diagnostics, WAL Hygiene & CI Hardening (PRs #543–#551)
+
+- **#543** — Pin Xcode version for DocC generation (FIXUP F-CI-6 resolved)
+- **#544** — CLAUDE.md refresh for waves 46–49
+- **#545** — Troubleshooting.md update with device-specific tips
+- **#546** — SQLite WAL hygiene tests (14 tests)
+- **#547** — DiagnosticFormatter expanded (transport, index, and XPC error coverage)
+- **#548** — Sync conflict resolution edge case tests
+- **#549** — Quirks governance CI tightening
+- **#550** — IOUSBHost transport parity coverage tests
+- **#551** — CI timeout increase to 90 minutes
+
+### Wave 49 — Write-Path Safety & Camera Quirks (PRs #531–#538)
+
+- **#531** — Regenerate compat-matrix.md (CI fix)
+- **#532** — CHANGELOG wave 48 entries
+- **#533** — ROADMAP update for waves 46–48
+- **#534** — Canon EOS & Nikon PTP camera quirks research
+- **#535** — Write-path safety validation tests (34 tests)
+- **#536** — Android MTP operation tests (54 tests)
+- **#537** — FileProvider write-path safety audit (9 test suites)
+- **#538** — CLI probe polish (--timeout, --verbose, troubleshooting hints, 18 tests)
 
 ### Wave 48 — Search, Progress & Pixel Transport (PRs #522–#530)
 
