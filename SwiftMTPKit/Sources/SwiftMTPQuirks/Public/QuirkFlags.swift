@@ -50,6 +50,12 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// libmtp does not perform this reset.
   public var skipPreClaimReset: Bool = false
 
+  /// Skip `libusb_clear_halt` on bulk endpoints before the first probe command.
+  /// Samsung devices do not need clear_halt during init — libmtp never calls it.
+  /// The unconditional clear_halt can waste time in Samsung's tight 3-second
+  /// session window and is unnecessary when endpoints are not halted.
+  public var skipClearHaltBeforeProbe: Bool = false
+
   // MARK: - Protocol-level
 
   /// Device requires an open session before GetDeviceInfo responds.
@@ -246,6 +252,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case extendedBulkTimeout
     case skipAltSetting
     case skipPreClaimReset
+    case skipClearHaltBeforeProbe
     case requiresSessionBeforeDeviceInfo
     case transactionIdResetsOnSession
     case resetReopenOnOpenSessionIOError
@@ -302,6 +309,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .skipAltSetting) ?? false
     self.skipPreClaimReset =
       try container.decodeIfPresent(Bool.self, forKey: .skipPreClaimReset) ?? false
+    self.skipClearHaltBeforeProbe =
+      try container.decodeIfPresent(Bool.self, forKey: .skipClearHaltBeforeProbe) ?? false
     self.requiresSessionBeforeDeviceInfo =
       try container.decodeIfPresent(Bool.self, forKey: .requiresSessionBeforeDeviceInfo) ?? false
     self.transactionIdResetsOnSession =
@@ -384,6 +393,7 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(extendedBulkTimeout, forKey: .extendedBulkTimeout)
     try container.encodeIfPresent(skipAltSetting, forKey: .skipAltSetting)
     try container.encodeIfPresent(skipPreClaimReset, forKey: .skipPreClaimReset)
+    try container.encodeIfPresent(skipClearHaltBeforeProbe, forKey: .skipClearHaltBeforeProbe)
     try container.encodeIfPresent(
       requiresSessionBeforeDeviceInfo, forKey: .requiresSessionBeforeDeviceInfo)
     try container.encodeIfPresent(

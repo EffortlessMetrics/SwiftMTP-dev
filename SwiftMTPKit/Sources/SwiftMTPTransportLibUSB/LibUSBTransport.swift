@@ -350,7 +350,8 @@ public actor LibUSBTransport: MTPTransport {
       handle: handle, device: dev, candidates: candidates,
       handshakeTimeoutMs: effectiveTimeout, postClaimStabilizeMs: config.postClaimStabilizeMs,
       postProbeStabilizeMs: config.postProbeStabilizeMs, debug: debug,
-      skipAltSetting: config.skipAltSetting
+      skipAltSetting: config.skipAltSetting,
+      skipClearHaltBeforeProbe: config.skipClearHaltBeforeProbe
     )
 
     // Pass 1b (aggressive, no reset): force configuration + re-claim + alt=0 + clear_halt,
@@ -371,7 +372,8 @@ public actor LibUSBTransport: MTPTransport {
         handshakeTimeoutMs: max(effectiveTimeout, config.handshakeTimeoutMs),
         postClaimStabilizeMs: max(config.postClaimStabilizeMs, 500),
         debug: debug,
-        skipAltSetting: config.skipAltSetting
+        skipAltSetting: config.skipAltSetting,
+        skipClearHaltBeforeProbe: config.skipClearHaltBeforeProbe
       )
     } else if result.candidate == nil && debug {
       print("   [Open] Pass 1 failed; skipping aggressive rung for this device family")
@@ -444,7 +446,8 @@ public actor LibUSBTransport: MTPTransport {
             handshakeTimeoutMs: effectiveTimeout,
             postClaimStabilizeMs: config.postClaimStabilizeMs,
             postProbeStabilizeMs: config.postProbeStabilizeMs, debug: debug,
-            skipAltSetting: config.skipAltSetting
+            skipAltSetting: config.skipAltSetting,
+            skipClearHaltBeforeProbe: config.skipClearHaltBeforeProbe
           )
           if result.candidate != nil { break }
         }
@@ -529,7 +532,8 @@ public actor LibUSBTransport: MTPTransport {
             postClaimStabilizeMs: config.postClaimStabilizeMs,
             postProbeStabilizeMs: config.postProbeStabilizeMs,
             debug: debug,
-            skipAltSetting: config.skipAltSetting
+            skipAltSetting: config.skipAltSetting,
+            skipClearHaltBeforeProbe: config.skipClearHaltBeforeProbe
           )
         } else if debug {
           print("   [Open] USB reset failed (rc=\(resetRC)), skipping pass 2")

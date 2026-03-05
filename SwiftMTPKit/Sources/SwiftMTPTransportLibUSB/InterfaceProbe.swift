@@ -218,7 +218,8 @@ private func isPixelDeadPipeError(_ rc: Int32) -> Bool {
 /// Enhanced with retry logic for vendor-specific devices (Samsung, Xiaomi, etc.)
 func claimCandidate(
   handle: OpaquePointer, device: OpaquePointer, _ c: InterfaceCandidate, retryCount: Int = 2,
-  postClaimStabilizeMs: Int = 250, skipAltSetting: Bool = false
+  postClaimStabilizeMs: Int = 250, skipAltSetting: Bool = false,
+  skipClearHaltBeforeProbe: Bool = false
 ) throws {
   let debug = ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1"
   let iface = Int32(c.ifaceNumber)
@@ -334,47 +335,57 @@ func claimCandidate(
       }
       usleep(UInt32(postClaimStabilizeMs) * 1000)
 
-      // CRITICAL: Clear HALT state on both bulk endpoints before first command.
-      // This fixes "sent=0/12" timeouts on devices like Pixel 7 where endpoints may be
-      // left in halted state from Chrome/WebUSB interference or previous failed attempts.
-      // libusb_clear_halt is safe to call even if endpoint is not halted (returns success).
-      let clearInRC = libusb_clear_halt(handle, c.bulkIn)
-      let clearOutRC = libusb_clear_halt(handle, c.bulkOut)
-      if debug {
-        print(
-          String(
-            format: "   [Claim] clear_halt: bulkIn=0x%02x rc=%d, bulkOut=0x%02x rc=%d",
-            c.bulkIn, clearInRC, c.bulkOut, clearOutRC))
-
-        // Additional endpoint diagnostics (debug only, non-fatal)
-        let inMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkIn)
-        let outMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkOut)
-        print(String(format: "   [Claim] maxPacketSize: bulkIn=%d bulkOut=%d", inMax, outMax))
-        if inMax < 0 { print("   [Claim] WARNING: bulkIn max_packet_size negative (bad pipe)") }
-        if outMax < 0 { print("   [Claim] WARNING: bulkOut max_packet_size negative (bad pipe)") }
-      }
-
-      if isPixel && (isPixelDeadPipeError(clearInRC) || isPixelDeadPipeError(clearOutRC)) {
-        log.warning("Pixel dead pipe detected during clear_halt: in=\(clearInRC) out=\(clearOutRC)")
+      // Samsung quirk: skip clear_halt before probe. libmtp never calls clear_halt
+      // during init — Samsung devices don't need it and the ~10ms overhead eats into
+      // the tight 3-second session window.
+      if skipClearHaltBeforeProbe {
+        if debug {
+          print("   [Claim] Skipping clear_halt (skipClearHaltBeforeProbe quirk)")
+        }
+        log.info("Skipping clear_halt before probe (Samsung quirk)")
+      } else {
+        // CRITICAL: Clear HALT state on both bulk endpoints before first command.
+        // This fixes "sent=0/12" timeouts on devices like Pixel 7 where endpoints may be
+        // left in halted state from Chrome/WebUSB interference or previous failed attempts.
+        // libusb_clear_halt is safe to call even if endpoint is not halted (returns success).
+        let clearInRC = libusb_clear_halt(handle, c.bulkIn)
+        let clearOutRC = libusb_clear_halt(handle, c.bulkOut)
         if debug {
           print(
-            "   [Claim] Pixel clear_halt indicates dead pipe (in=\(clearInRC) out=\(clearOutRC)); releasing interface and retrying"
-          )
-        }
-        _ = libusb_release_interface(handle, iface)
-        if attempt == retryCount {
-          log.error("Pixel endpoint pipe unavailable: clear_halt in=\(clearInRC) out=\(clearOutRC)")
-          throw TransportError.io(
-            "Pixel endpoint pipe unavailable after claim: clear_halt in=\(clearInRC) out=\(clearOutRC) (macOS IOService unavailable or exclusive USB claim)"
-          )
-        }
-        continue
-      }
+            String(
+              format: "   [Claim] clear_halt: bulkIn=0x%02x rc=%d, bulkOut=0x%02x rc=%d",
+              c.bulkIn, clearInRC, c.bulkOut, clearOutRC))
 
-      if isPixel && (clearInRC != LIBUSB_SUCCESS || clearOutRC != LIBUSB_SUCCESS), debug {
-        print(
-          "   [Claim] Pixel clear_halt failed (in=\(clearInRC) out=\(clearOutRC)); continuing to command probe"
-        )
+          // Additional endpoint diagnostics (debug only, non-fatal)
+          let inMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkIn)
+          let outMax = libusb_get_max_packet_size(libusb_get_device(handle), c.bulkOut)
+          print(String(format: "   [Claim] maxPacketSize: bulkIn=%d bulkOut=%d", inMax, outMax))
+          if inMax < 0 { print("   [Claim] WARNING: bulkIn max_packet_size negative (bad pipe)") }
+          if outMax < 0 { print("   [Claim] WARNING: bulkOut max_packet_size negative (bad pipe)") }
+        }
+
+        if isPixel && (isPixelDeadPipeError(clearInRC) || isPixelDeadPipeError(clearOutRC)) {
+          log.warning("Pixel dead pipe detected during clear_halt: in=\(clearInRC) out=\(clearOutRC)")
+          if debug {
+            print(
+              "   [Claim] Pixel clear_halt indicates dead pipe (in=\(clearInRC) out=\(clearOutRC)); releasing interface and retrying"
+            )
+          }
+          _ = libusb_release_interface(handle, iface)
+          if attempt == retryCount {
+            log.error("Pixel endpoint pipe unavailable: clear_halt in=\(clearInRC) out=\(clearOutRC)")
+            throw TransportError.io(
+              "Pixel endpoint pipe unavailable after claim: clear_halt in=\(clearInRC) out=\(clearOutRC) (macOS IOService unavailable or exclusive USB claim)"
+            )
+          }
+          continue
+        }
+
+        if isPixel && (clearInRC != LIBUSB_SUCCESS || clearOutRC != LIBUSB_SUCCESS), debug {
+          print(
+            "   [Claim] Pixel clear_halt failed (in=\(clearInRC) out=\(clearOutRC)); continuing to command probe"
+          )
+        }
       }
 
       log.info(
@@ -1218,7 +1229,8 @@ func tryProbeAllCandidates(
   postClaimStabilizeMs: Int,
   postProbeStabilizeMs: Int,
   debug: Bool,
-  skipAltSetting: Bool = false
+  skipAltSetting: Bool = false,
+  skipClearHaltBeforeProbe: Bool = false
 ) -> ProbeAllResult {
   var lastProbeStep: String?
 
@@ -1236,7 +1248,7 @@ func tryProbeAllCandidates(
     do {
       try claimCandidate(
         handle: handle, device: device, candidate, postClaimStabilizeMs: postClaimStabilizeMs,
-        skipAltSetting: skipAltSetting)
+        skipAltSetting: skipAltSetting, skipClearHaltBeforeProbe: skipClearHaltBeforeProbe)
     } catch {
       if debug { print("   [Probe] Claim failed: \(error)") }
       continue
@@ -1289,7 +1301,8 @@ func tryProbeAllCandidatesAggressive(
   handshakeTimeoutMs: Int,
   postClaimStabilizeMs: Int,
   debug: Bool,
-  skipAltSetting: Bool = false
+  skipAltSetting: Bool = false,
+  skipClearHaltBeforeProbe: Bool = false
 ) -> ProbeAllResult {
   var lastProbeStep: String?
   let settleMs = max(postClaimStabilizeMs, 500)
@@ -1311,7 +1324,8 @@ func tryProbeAllCandidatesAggressive(
         device: device,
         candidate,
         postClaimStabilizeMs: settleMs,
-        skipAltSetting: skipAltSetting
+        skipAltSetting: skipAltSetting,
+        skipClearHaltBeforeProbe: skipClearHaltBeforeProbe
       )
     } catch {
       if debug { print("   [Probe][Aggressive] Claim failed: \(error)") }
@@ -1326,14 +1340,20 @@ func tryProbeAllCandidatesAggressive(
       print("   [Probe][Aggressive] Skipping set_interface_alt_setting (skipAltSetting quirk)")
     }
 
-    let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
-    let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
-    if debug {
-      print(
-        String(
-          format:
-            "   [Probe][Aggressive] clear_halt in=0x%02x rc=%d out=0x%02x rc=%d",
-          candidate.bulkIn, clearInRC, candidate.bulkOut, clearOutRC))
+    if skipClearHaltBeforeProbe {
+      if debug {
+        print("   [Probe][Aggressive] Skipping clear_halt (skipClearHaltBeforeProbe quirk)")
+      }
+    } else {
+      let clearInRC = libusb_clear_halt(handle, candidate.bulkIn)
+      let clearOutRC = libusb_clear_halt(handle, candidate.bulkOut)
+      if debug {
+        print(
+          String(
+            format:
+              "   [Probe][Aggressive] clear_halt in=0x%02x rc=%d out=0x%02x rc=%d",
+            candidate.bulkIn, clearInRC, candidate.bulkOut, clearOutRC))
+      }
     }
 
     usleep(UInt32(settleMs) * 1000)
