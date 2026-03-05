@@ -5,9 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] — Waves 37–47
+## [Unreleased] — Waves 37–48
 
-> **Summary**: 102 PRs (#415–#520) across eleven waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, comprehensive test backfill, shell completions, IOUSBHost bulk/file transfer, Homebrew formula, CLI progress bars, DocC pipeline, quirk flags wired into transport, SPDX licensing, structured OSLog logging, journal crash recovery tests, FTS5 full-text search, FileProvider thumbnails, transfer resume journaling, and Samsung/OnePlus/Pixel transport fixes. Session totals: **~9,400+ tests**, **20,026 quirks entries**, **154 PRs merged** (#363–#520). 🎉 **PR #520 milestone — 150+ PRs this session.**
+> **Summary**: 111 PRs (#415–#530) across twelve waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, comprehensive test backfill, shell completions, IOUSBHost bulk/file transfer, Homebrew formula, CLI progress bars, DocC pipeline, quirk flags wired into transport, SPDX licensing, structured OSLog logging, journal crash recovery tests, FTS5 full-text search, FileProvider thumbnails, transfer resume journaling, Samsung/OnePlus/Pixel transport fixes, CLI search, mirror progress reporting, XPC auto-reconnect, and index performance optimization. Session totals: **~9,500+ tests**, **20,026 quirks entries**, **163 PRs merged** (#363–#530).
+
+### Wave 48 — Search, Progress & Pixel Transport (PRs #522–#530)
+
+- **#522** — CHANGELOG waves 46–47 entries
+- **#523** — Device-bringup.sh enhanced (--dry-run, --device, evidence JSON, 7 stages)
+- **#524** — Mirror progress reporting with ETA (MirrorProgress actor, 11 tests)
+- **#525** — Quirks stats enhancement (flag coverage, validation analysis, 12 tests)
+- **#526** — 30 error recovery ladder end-to-end tests
+- **#527** — CLI search command with FTS5 full-text filename search (13 tests)
+- **#528** — Index performance optimization (batch ops, pagination, compound indexes, 13 tests)
+- **#529** — XPC connection manager with auto-reconnect (16 tests)
+- **#530** — Pixel 7 transport fixes (double-reset, long timeout, ZLP, endpoint drain)
 
 ### Wave 47 — Search, Thumbnails & Transfer Resume (PRs #512–#520)
 
@@ -121,12 +133,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced smoke tests with CLI contract checks (29 commands)
 - Coverage gate wired into pre-pr.sh and CI
 - 6 new libmtp compat flags (22 of 32 total coverage)
+- Device-bringup.sh: --dry-run, --device filter, evidence JSON, 7-stage pipeline
+- MirrorProgress actor with ETA reporting
+- Quirks stats: flag coverage analysis and validation reporting
+- 30 error recovery ladder end-to-end tests
+- CLI search command with FTS5 full-text filename search
+- Index performance: batch operations, pagination, compound indexes
+- XPC connection manager with auto-reconnect
 
 ### Fixed
 - OnePlus 3T write-path: forceUndefinedFormatOnWrite, skip SendObjectPropList
 - Samsung transport: skipClearHalt, delayAfterClaim, forceResetOnClose
 - Samsung transport: skip alt-setting on macOS, skip pre-claim reset
 - Pixel 7 transport: handle re-open, set_configuration, extended timeouts
+- Pixel 7 transport: double-reset guard, long timeout, ZLP handling, endpoint drain
 - Android opcode mislabeling (GetPartialObject64/SendPartialObject swapped)
 - TransferJournal WAL mode, orphan detection, atomic downloads
 - 106 swift-format lint warnings
