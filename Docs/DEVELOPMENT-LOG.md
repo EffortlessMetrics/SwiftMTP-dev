@@ -5,6 +5,65 @@ For earlier waves see `CHANGELOG.md`.
 
 ---
 
+## Wave 47 — Search, Thumbnails & Transfer Resume (PRs #512–#520)
+
+**Focus**: FTS5 search for device index, FileProvider thumbnails, transfer resume journaling, device lifecycle tests, Samsung transport fixes, Pixel 7 deep analysis, libmtp compat expansion
+
+| PR | Title | Zone | Tests Added |
+|----|-------|------|-------------|
+| #512 | Enhanced smoke tests with CLI contract checks (29 commands verified) | ci | 29 |
+| #513 | CLAUDE.md comprehensive refresh for waves 42–46 | docs | — |
+| #514 | FTS5 full-text search for device file index | index | 16 |
+| #515 | 20 device lifecycle scenario tests (probe→transfer→close) | tests | 20 |
+| #516 | FileProvider thumbnail provision via GetThumb | fileProvider | 9 |
+| #517 | Pixel 7 bulk timeout deep analysis (6 fix recommendations) | docs | — |
+| #518 | 6 new libmtp compat flags (22 of 32 total coverage) | quirks | — |
+| #519 | TransferJournal wired into download/upload for automatic resume | core | 10 |
+| #520 | Samsung transport fixes (skipClearHalt, delayAfterClaim, forceResetOnClose) | transport | — |
+
+**Highlights**:
+- **FTS5 full-text search** (#514): device file index now supports full-text search queries with ranking, 16 tests
+- **FileProvider thumbnails** (#516): macOS Finder thumbnails served via MTP `GetThumb` operation, 9 tests
+- **Transfer resume** (#519): `TransferJournal` wired into download/upload paths for automatic crash-safe resume, 10 tests
+- **Samsung transport fixes** (#520): `skipClearHalt`, `delayAfterClaim`, `forceResetOnClose` — three new transport flags for Samsung devices
+- **Pixel 7 deep analysis** (#517): bulk timeout root-caused with 6 concrete fix recommendations
+- **libmtp compat** (#518): 6 new compat flags bring coverage to 22 of 32 libmtp device flags
+- **Device lifecycle tests** (#515): 20 end-to-end scenarios covering probe→transfer→close workflows
+- **Smoke test hardening** (#512): 29 CLI commands verified for contract compliance
+
+**Total**: 9 PRs, 84 new tests
+
+---
+
+## Wave 46 — Coverage, Diagnostics & OnePlus Fixes (PRs #501–#510)
+
+**Focus**: Coverage gating, IOUSBHost test expansion, OnePlus write-path fixes, Samsung debug analysis, diagnostic formatting, quirks validation
+
+| PR | Title | Zone | Tests Added |
+|----|-------|------|-------------|
+| #501 | CHANGELOG wave 45 entries | docs | — |
+| #502 | ROADMAP refresh with waves 42–45, mark shipped items | docs | — |
+| #503 | Coverage gate wired into pre-pr.sh and CI | ci | — |
+| #504 | Quirks hooks validation + evidenceRequired checks | quirks | — |
+| #505 | 48 IOUSBHost transport integration tests | tests | 48 |
+| #506 | OnePlus 3T write-path fixes (forceUndefinedFormatOnWrite, skip SendObjectPropList) | transport | — |
+| #507 | Samsung MTP debug report (init sequence analysis, 5 new flags) | docs | — |
+| #508 | DiagnosticFormatter for actionable CLI error messages | cli | 28 |
+| #510 | IOUSBHost interrupt endpoint event polling | transport | — |
+
+**Highlights**:
+- **Coverage gate** (#503): `coverage_gate.py` wired into `pre-pr.sh` and CI for automated threshold enforcement
+- **IOUSBHost tests** (#505): 48 integration tests covering IOUSBHost transport layer
+- **OnePlus 3T fixes** (#506): `forceUndefinedFormatOnWrite` and skip `SendObjectPropList` resolve write failures
+- **Samsung debug report** (#507): init sequence analysis identifies 5 new flags for Samsung MTP compatibility
+- **DiagnosticFormatter** (#508): actionable CLI error messages with contextual help, 28 tests
+- **IOUSBHost events** (#510): interrupt endpoint event polling for native macOS transport
+- **Quirks validation** (#504): hooks validation and `evidenceRequired` checks enforce data quality
+
+**Total**: 9 PRs, 76 new tests
+
+---
+
 ## Wave 45 — Compliance, Logging & Hardening (PRs #494–#500)
 
 **Focus**: Licensing compliance, structured logging, device research, collect improvements, journal crash recovery. 🎉 **PR #500 milestone reached.**

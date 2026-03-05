@@ -5,9 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] — Waves 37–45
+## [Unreleased] — Waves 37–47
 
-> **Summary**: 82 PRs (#415–#500) across nine waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, comprehensive test backfill, shell completions, IOUSBHost bulk/file transfer, Homebrew formula, CLI progress bars, DocC pipeline, quirk flags wired into transport, SPDX licensing, structured OSLog logging, and journal crash recovery tests. Session totals: **~9,214+ tests**, **20,026 quirks entries**, **134 PRs merged** (#363–#500). 🎉 **PR #500 milestone reached.**
+> **Summary**: 102 PRs (#415–#520) across eleven waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, comprehensive test backfill, shell completions, IOUSBHost bulk/file transfer, Homebrew formula, CLI progress bars, DocC pipeline, quirk flags wired into transport, SPDX licensing, structured OSLog logging, journal crash recovery tests, FTS5 full-text search, FileProvider thumbnails, transfer resume journaling, and Samsung/OnePlus/Pixel transport fixes. Session totals: **~9,400+ tests**, **20,026 quirks entries**, **154 PRs merged** (#363–#520). 🎉 **PR #520 milestone — 150+ PRs this session.**
+
+### Wave 47 — Search, Thumbnails & Transfer Resume (PRs #512–#520)
+
+- **#512** — Enhanced smoke tests with CLI contract checks (29 commands verified)
+- **#513** — CLAUDE.md comprehensive refresh for waves 42–46
+- **#514** — FTS5 full-text search for device file index (16 tests)
+- **#515** — 20 device lifecycle scenario tests (probe→transfer→close)
+- **#516** — FileProvider thumbnail provision via GetThumb (9 tests)
+- **#517** — Pixel 7 bulk timeout deep analysis (6 fix recommendations)
+- **#518** — 6 new libmtp compat flags (22 of 32 total coverage)
+- **#519** — TransferJournal wired into download/upload for automatic resume (10 tests)
+- **#520** — Samsung transport fixes (skipClearHalt, delayAfterClaim, forceResetOnClose)
+
+### Wave 46 — Coverage, Diagnostics & OnePlus Fixes (PRs #501–#510)
+
+- **#501** — CHANGELOG wave 45 entries
+- **#502** — ROADMAP refresh with waves 42–45, mark shipped items (Homebrew, DocC)
+- **#503** — Coverage gate wired into pre-pr.sh and CI
+- **#504** — Quirks hooks validation + evidenceRequired checks
+- **#505** — 48 IOUSBHost transport integration tests
+- **#506** — OnePlus 3T write-path fixes (forceUndefinedFormatOnWrite, skip SendObjectPropList)
+- **#507** — Samsung MTP debug report (init sequence analysis, 5 new flags)
+- **#508** — DiagnosticFormatter for actionable CLI error messages (28 tests)
+- **#510** — IOUSBHost interrupt endpoint event polling
 
 ### Wave 45 — Compliance, Logging & Hardening (PRs #494–#500)
 
@@ -87,8 +111,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Structured OSLog logging with 10 module categories
 - Collect command: --strict, --redact, JSON output, validation
 - 23 TransferJournal crash recovery tests
+- FTS5 full-text search for device file index
+- FileProvider thumbnail provision via GetThumb
+- TransferJournal wired into download/upload for automatic resume
+- DiagnosticFormatter for actionable CLI error messages
+- IOUSBHost interrupt endpoint event polling
+- 48 IOUSBHost transport integration tests
+- 20 device lifecycle scenario tests
+- Enhanced smoke tests with CLI contract checks (29 commands)
+- Coverage gate wired into pre-pr.sh and CI
+- 6 new libmtp compat flags (22 of 32 total coverage)
 
 ### Fixed
+- OnePlus 3T write-path: forceUndefinedFormatOnWrite, skip SendObjectPropList
+- Samsung transport: skipClearHalt, delayAfterClaim, forceResetOnClose
 - Samsung transport: skip alt-setting on macOS, skip pre-claim reset
 - Pixel 7 transport: handle re-open, set_configuration, extended timeouts
 - Android opcode mislabeling (GetPartialObject64/SendPartialObject swapped)
@@ -97,8 +133,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - SyncTests missing SwiftCheck dependency
 
 ### Changed
-- Quirks governance: CI-enforced schema validation, status field required
+- Quirks governance: CI-enforced schema validation, status field required, evidenceRequired checks
 - 239 Samsung quirk entries updated with skipAltSetting/skipPreClaimReset
+- Samsung debug report: init sequence analysis with 5 new flags
+- Pixel 7 bulk timeout deep analysis with 6 fix recommendations
+- CLAUDE.md comprehensive refresh for waves 42–46
+- ROADMAP refresh with waves 42–45, mark shipped items (Homebrew, DocC)
 - LibUSBTransport refactored into focused helper files
 - CI consolidated: TSAN pinned, fuzz runner pinned, coverage pipeline optimized
 - Contribution guide refreshed with wave 37–43 patterns
