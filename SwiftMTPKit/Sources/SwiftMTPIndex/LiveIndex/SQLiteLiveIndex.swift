@@ -132,6 +132,33 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
       CREATE INDEX IF NOT EXISTS idx_cache_lru ON cached_content(lastAccessedAt ASC);
       CREATE INDEX IF NOT EXISTS idx_cache_state ON cached_content(state, lastAccessedAt);
 
+      -- FTS5 full-text search for fast filename and path queries.
+      -- Standalone table synced via triggers (not content= shadow mode)
+      -- so we can store deviceId alongside the indexed text.
+      CREATE VIRTUAL TABLE IF NOT EXISTS objects_fts USING fts5(
+          deviceId,
+          name,
+          pathKey,
+          content='live_objects',
+          content_rowid='rowid'
+      );
+
+      -- Triggers to keep FTS table in sync with live_objects.
+      CREATE TRIGGER IF NOT EXISTS fts_insert AFTER INSERT ON live_objects BEGIN
+          INSERT INTO objects_fts(rowid, deviceId, name, pathKey)
+          VALUES (NEW.rowid, NEW.deviceId, NEW.name, NEW.pathKey);
+      END;
+      CREATE TRIGGER IF NOT EXISTS fts_delete AFTER DELETE ON live_objects BEGIN
+          INSERT INTO objects_fts(objects_fts, rowid, deviceId, name, pathKey)
+          VALUES ('delete', OLD.rowid, OLD.deviceId, OLD.name, OLD.pathKey);
+      END;
+      CREATE TRIGGER IF NOT EXISTS fts_update AFTER UPDATE ON live_objects BEGIN
+          INSERT INTO objects_fts(objects_fts, rowid, deviceId, name, pathKey)
+          VALUES ('delete', OLD.rowid, OLD.deviceId, OLD.name, OLD.pathKey);
+          INSERT INTO objects_fts(rowid, deviceId, name, pathKey)
+          VALUES (NEW.rowid, NEW.deviceId, NEW.name, NEW.pathKey);
+      END;
+
       """
     // Execute each statement separately — sqlite3_exec handles multiple statements
     try db.exec(sql)
@@ -181,6 +208,77 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
       try db.bind(stmt, 2, pattern)
       return try readObjects(stmt)
     }
+  }
+
+  // MARK: - FTS5 Search
+
+  /// FTS5 full-text search by filename. Uses MATCH syntax for fast token-based search.
+  /// The query is automatically escaped for FTS5 safety. Supports prefix matching with `*`.
+  /// - Parameters:
+  ///   - deviceId: Device to search within.
+  ///   - query: Search term (e.g. `photo`, `IMG*`, `vacation`).
+  ///   - limit: Maximum number of results (default 100).
+  /// - Returns: Non-stale objects whose filename matches the FTS5 query.
+  public func searchByFilename(deviceId: String, query: String, limit: Int = 100) async throws
+    -> [IndexedObject]
+  {
+    let escaped = Self.escapeFTS5Query(query)
+    guard !escaped.isEmpty else { return [] }
+    let sql = """
+      SELECT o.* FROM live_objects o
+      JOIN objects_fts f ON o.rowid = f.rowid
+      WHERE objects_fts MATCH ? AND o.deviceId = ? AND o.stale = 0
+      LIMIT ?
+      """
+    return try db.withStatement(sql) { stmt in
+      try db.bind(stmt, 1, "name : \(escaped)")
+      try db.bind(stmt, 2, deviceId)
+      try db.bind(stmt, 3, Int64(limit))
+      return try readObjects(stmt)
+    }
+  }
+
+  /// FTS5 full-text search by path prefix. Matches objects whose pathKey contains the query tokens.
+  /// - Parameters:
+  ///   - deviceId: Device to search within.
+  ///   - query: Path prefix or search term (e.g. `DCIM`, `Pictures/vacation`).
+  ///   - limit: Maximum number of results (default 100).
+  /// - Returns: Non-stale objects whose path matches the FTS5 query.
+  public func searchByPath(deviceId: String, query: String, limit: Int = 100) async throws
+    -> [IndexedObject]
+  {
+    let escaped = Self.escapeFTS5Query(query)
+    guard !escaped.isEmpty else { return [] }
+    let sql = """
+      SELECT o.* FROM live_objects o
+      JOIN objects_fts f ON o.rowid = f.rowid
+      WHERE objects_fts MATCH ? AND o.deviceId = ? AND o.stale = 0
+      LIMIT ?
+      """
+    return try db.withStatement(sql) { stmt in
+      try db.bind(stmt, 1, "pathKey : \(escaped)")
+      try db.bind(stmt, 2, deviceId)
+      try db.bind(stmt, 3, Int64(limit))
+      return try readObjects(stmt)
+    }
+  }
+
+  /// Escape a user-provided string for safe use in an FTS5 MATCH expression.
+  /// Wraps the query in double quotes to treat it as a phrase, escaping any
+  /// internal double quotes. Preserves trailing `*` for prefix matching.
+  public static func escapeFTS5Query(_ raw: String) -> String {
+    let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !trimmed.isEmpty else { return "" }
+    let hasStar = trimmed.hasSuffix("*")
+    let base = hasStar ? String(trimmed.dropLast()) : trimmed
+    let escaped = base.replacingOccurrences(of: "\"", with: "\"\"")
+    return hasStar ? "\"\(escaped)\"*" : "\"\(escaped)\""
+  }
+
+  /// Rebuild the FTS index from the current live_objects table.
+  /// Call after bulk imports or schema migrations that bypass triggers.
+  public func rebuildFTSIndex() throws {
+    try db.exec("INSERT INTO objects_fts(objects_fts) VALUES('rebuild');")
   }
 
   public func storages(deviceId: String) async throws -> [IndexedStorage] {

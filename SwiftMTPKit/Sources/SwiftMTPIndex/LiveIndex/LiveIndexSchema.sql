@@ -91,3 +91,28 @@ CREATE TABLE IF NOT EXISTS cached_content (
     PRIMARY KEY (deviceId, storageId, handle)
 );
 CREATE INDEX IF NOT EXISTS idx_cache_lru ON cached_content(lastAccessedAt ASC);
+
+-- FTS5 full-text search for fast filename and path queries.
+CREATE VIRTUAL TABLE IF NOT EXISTS objects_fts USING fts5(
+    deviceId,
+    name,
+    pathKey,
+    content='live_objects',
+    content_rowid='rowid'
+);
+
+-- Triggers to keep FTS table in sync with live_objects.
+CREATE TRIGGER IF NOT EXISTS fts_insert AFTER INSERT ON live_objects BEGIN
+    INSERT INTO objects_fts(rowid, deviceId, name, pathKey)
+    VALUES (NEW.rowid, NEW.deviceId, NEW.name, NEW.pathKey);
+END;
+CREATE TRIGGER IF NOT EXISTS fts_delete AFTER DELETE ON live_objects BEGIN
+    INSERT INTO objects_fts(objects_fts, rowid, deviceId, name, pathKey)
+    VALUES ('delete', OLD.rowid, OLD.deviceId, OLD.name, OLD.pathKey);
+END;
+CREATE TRIGGER IF NOT EXISTS fts_update AFTER UPDATE ON live_objects BEGIN
+    INSERT INTO objects_fts(objects_fts, rowid, deviceId, name, pathKey)
+    VALUES ('delete', OLD.rowid, OLD.deviceId, OLD.name, OLD.pathKey);
+    INSERT INTO objects_fts(rowid, deviceId, name, pathKey)
+    VALUES (NEW.rowid, NEW.deviceId, NEW.name, NEW.pathKey);
+END;
