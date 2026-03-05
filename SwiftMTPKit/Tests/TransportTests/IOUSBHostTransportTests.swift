@@ -795,3 +795,294 @@ final class IOUSBHostPTPDataFramingTests: XCTestCase {
     }
   }
 }
+
+// MARK: - IOUSBHost Event Polling Tests
+
+/// Tests for MTP event container parsing and event stream behavior
+/// used by IOUSBHostLink's interrupt endpoint event polling.
+final class IOUSBHostEventPollingTests: XCTestCase {
+
+  // MARK: - Event Container Building Helper
+
+  /// Build an MTP event container: [length(4) type(2)=0x0004 code(2) txid(4) params...]
+  private func buildEventContainer(code: UInt16, txid: UInt32, params: [UInt32] = []) -> Data {
+    let length = UInt32(12 + params.count * 4)
+    var data = Data(count: Int(length))
+    data.withUnsafeMutableBytes { buf in
+      let base = buf.baseAddress!
+      base.storeBytes(of: length.littleEndian, as: UInt32.self)
+      base.storeBytes(of: UInt16(0x0004).littleEndian, toByteOffset: 4, as: UInt16.self)  // event type
+      base.storeBytes(of: code.littleEndian, toByteOffset: 6, as: UInt16.self)
+      base.storeBytes(of: txid.littleEndian, toByteOffset: 8, as: UInt32.self)
+      for (i, param) in params.enumerated() {
+        base.storeBytes(of: param.littleEndian, toByteOffset: 12 + i * 4, as: UInt32.self)
+      }
+    }
+    return data
+  }
+
+  // MARK: - Event Container Parsing
+
+  func testParseObjectAddedEvent() {
+    let data = buildEventContainer(code: 0x4002, txid: 1, params: [0x00000042])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .objectAdded(let handle) = event {
+      XCTAssertEqual(handle, 0x42)
+    } else {
+      XCTFail("Expected objectAdded, got \(String(describing: event))")
+    }
+  }
+
+  func testParseObjectRemovedEvent() {
+    let data = buildEventContainer(code: 0x4003, txid: 2, params: [0x00000099])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .objectRemoved(let handle) = event {
+      XCTAssertEqual(handle, 0x99)
+    } else {
+      XCTFail("Expected objectRemoved, got \(String(describing: event))")
+    }
+  }
+
+  func testParseStorageAddedEvent() {
+    let data = buildEventContainer(code: 0x4004, txid: 3, params: [0x00010001])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .storageAdded(let sid) = event {
+      XCTAssertEqual(sid.raw, 0x00010001)
+    } else {
+      XCTFail("Expected storageAdded, got \(String(describing: event))")
+    }
+  }
+
+  func testParseStorageRemovedEvent() {
+    let data = buildEventContainer(code: 0x4005, txid: 4, params: [0x00020001])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .storageRemoved(let sid) = event {
+      XCTAssertEqual(sid.raw, 0x00020001)
+    } else {
+      XCTFail("Expected storageRemoved, got \(String(describing: event))")
+    }
+  }
+
+  func testParseDevicePropChangedEvent() {
+    let data = buildEventContainer(code: 0x4006, txid: 5, params: [0x00005001])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .devicePropChanged(let propCode) = event {
+      XCTAssertEqual(propCode, 0x5001)
+    } else {
+      XCTFail("Expected devicePropChanged, got \(String(describing: event))")
+    }
+  }
+
+  func testParseDeviceInfoChangedEvent() {
+    let data = buildEventContainer(code: 0x4008, txid: 6)
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .deviceInfoChanged = event {
+      // OK
+    } else {
+      XCTFail("Expected deviceInfoChanged, got \(String(describing: event))")
+    }
+  }
+
+  func testParseDeviceResetEvent() {
+    let data = buildEventContainer(code: 0x400B, txid: 7)
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .deviceReset = event {
+      // OK
+    } else {
+      XCTFail("Expected deviceReset, got \(String(describing: event))")
+    }
+  }
+
+  func testParseCancelTransactionEvent() {
+    let data = buildEventContainer(code: 0x4001, txid: 8, params: [42])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .cancelTransaction(let txId) = event {
+      XCTAssertEqual(txId, 42)
+    } else {
+      XCTFail("Expected cancelTransaction, got \(String(describing: event))")
+    }
+  }
+
+  func testParseStoreFullEvent() {
+    let data = buildEventContainer(code: 0x400A, txid: 9, params: [0x00010001])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .storeFull(let sid) = event {
+      XCTAssertEqual(sid.raw, 0x00010001)
+    } else {
+      XCTFail("Expected storeFull, got \(String(describing: event))")
+    }
+  }
+
+  func testParseCaptureCompleteEvent() {
+    let data = buildEventContainer(code: 0x400D, txid: 10, params: [77])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .captureComplete(let txId) = event {
+      XCTAssertEqual(txId, 77)
+    } else {
+      XCTFail("Expected captureComplete, got \(String(describing: event))")
+    }
+  }
+
+  func testParseUnreportedStatusEvent() {
+    let data = buildEventContainer(code: 0x400E, txid: 11)
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .unreportedStatus = event {
+      // OK
+    } else {
+      XCTFail("Expected unreportedStatus, got \(String(describing: event))")
+    }
+  }
+
+  func testParseStorageInfoChangedEvent() {
+    let data = buildEventContainer(code: 0x400C, txid: 12, params: [0x00010001])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .storageInfoChanged(let sid) = event {
+      XCTAssertEqual(sid.raw, 0x00010001)
+    } else {
+      XCTFail("Expected storageInfoChanged, got \(String(describing: event))")
+    }
+  }
+
+  func testParseObjectInfoChangedEvent() {
+    let data = buildEventContainer(code: 0x4007, txid: 13, params: [0x55])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .objectInfoChanged(let handle) = event {
+      XCTAssertEqual(handle, 0x55)
+    } else {
+      XCTFail("Expected objectInfoChanged, got \(String(describing: event))")
+    }
+  }
+
+  func testParseRequestObjectTransferEvent() {
+    let data = buildEventContainer(code: 0x4009, txid: 14, params: [0xAA])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .requestObjectTransfer(let handle) = event {
+      XCTAssertEqual(handle, 0xAA)
+    } else {
+      XCTFail("Expected requestObjectTransfer, got \(String(describing: event))")
+    }
+  }
+
+  // MARK: - Unknown / Vendor Events
+
+  func testParseUnknownVendorEvent() {
+    let data = buildEventContainer(code: 0xC801, txid: 15, params: [1, 2, 3])
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .unknown(let code, let params) = event {
+      XCTAssertEqual(code, 0xC801)
+      XCTAssertEqual(params, [1, 2, 3])
+    } else {
+      XCTFail("Expected unknown, got \(String(describing: event))")
+    }
+  }
+
+  // MARK: - Edge Cases
+
+  func testParseEventTooShort() {
+    // Less than 12 bytes — should return nil
+    let data = Data([0x0C, 0x00, 0x00, 0x00, 0x04, 0x00, 0x02, 0x40])  // 8 bytes
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNil(event)
+  }
+
+  func testParseEventExactlyMinimumSize() {
+    // 12 bytes, no params — e.g. DeviceInfoChanged (0x4008)
+    let data = buildEventContainer(code: 0x4008, txid: 0)
+    XCTAssertEqual(data.count, 12)
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .deviceInfoChanged = event {
+      // OK
+    } else {
+      XCTFail("Expected deviceInfoChanged, got \(String(describing: event))")
+    }
+  }
+
+  func testParseEventWithMultipleParams() {
+    // Fabricated event with 3 params
+    let data = buildEventContainer(code: 0xC802, txid: 99, params: [0x11, 0x22, 0x33])
+    XCTAssertEqual(data.count, 24)  // 12 header + 12 params
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    if case .unknown(let code, let params) = event {
+      XCTAssertEqual(code, 0xC802)
+      XCTAssertEqual(params.count, 3)
+      XCTAssertEqual(params[0], 0x11)
+      XCTAssertEqual(params[1], 0x22)
+      XCTAssertEqual(params[2], 0x33)
+    } else {
+      XCTFail("Expected unknown, got \(String(describing: event))")
+    }
+  }
+
+  func testEventCodeProperty() {
+    let data = buildEventContainer(code: 0x4002, txid: 1, params: [0x42])
+    let event = MTPEvent.fromRaw(data)!
+    XCTAssertEqual(event.eventCode, 0x4002)
+  }
+
+  func testEventDescriptionNotEmpty() {
+    let data = buildEventContainer(code: 0x4004, txid: 1, params: [0x00010001])
+    let event = MTPEvent.fromRaw(data)!
+    XCTAssertFalse(event.eventDescription.isEmpty)
+    XCTAssertTrue(event.eventDescription.contains("StoreAdded"))
+  }
+
+  // MARK: - Default Event Stream (No Interrupt Endpoint)
+
+  func testDefaultLinkEventStreamFinishesImmediately() async {
+    let link = IOUSBHostLink()
+    var events: [Data] = []
+    for await data in link.eventStream {
+      events.append(data)
+    }
+    XCTAssertTrue(events.isEmpty)
+  }
+
+  func testDefaultLinkStartEventPumpIsNoOp() {
+    let link = IOUSBHostLink()
+    // Should not crash even without interrupt pipe
+    link.startEventPump()
+  }
+
+  func testAllFourteenStandardEventCodes() {
+    let codes: [(UInt16, Bool)] = [
+      (0x4001, true),   // CancelTransaction — needs param but returns with 0
+      (0x4002, true),   // ObjectAdded
+      (0x4003, true),   // ObjectRemoved
+      (0x4004, true),   // StorageAdded
+      (0x4005, true),   // StorageRemoved
+      (0x4006, true),   // DevicePropChanged
+      (0x4007, true),   // ObjectInfoChanged
+      (0x4008, false),  // DeviceInfoChanged — no param needed
+      (0x4009, true),   // RequestObjectTransfer
+      (0x400A, true),   // StoreFull
+      (0x400B, false),  // DeviceReset — no param needed
+      (0x400C, true),   // StorageInfoChanged
+      (0x400D, true),   // CaptureComplete — needs param but returns with 0
+      (0x400E, false),  // UnreportedStatus — no param needed
+    ]
+    for (code, needsParam) in codes {
+      let params: [UInt32] = needsParam ? [0x00000001] : []
+      let data = buildEventContainer(code: code, txid: 0, params: params)
+      let event = MTPEvent.fromRaw(data)
+      XCTAssertNotNil(event, "Event code 0x\(String(code, radix: 16)) should parse")
+      XCTAssertEqual(event!.eventCode, code)
+    }
+  }
+}

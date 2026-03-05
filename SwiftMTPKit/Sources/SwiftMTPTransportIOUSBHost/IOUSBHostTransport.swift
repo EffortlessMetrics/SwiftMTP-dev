@@ -125,6 +125,11 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
   // Queue for synchronous USB operations
   private let usbQueue = DispatchQueue(label: "com.swiftmtp.iousbhost.io", qos: .userInitiated)
 
+  // Event polling state
+  private var eventContinuation: AsyncStream<Data>.Continuation?
+  private var eventPumpTask: Task<Void, Never>?
+  public let eventStream: AsyncStream<Data>
+
   // Link descriptor
   public private(set) var linkDescriptor: MTPLinkDescriptor?
   public private(set) var cachedDeviceInfo: MTPDeviceInfo?
@@ -151,6 +156,10 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
     self.bulkInAddress = bulkInAddress
     self.bulkOutAddress = bulkOutAddress
     self.interruptInAddress = interruptInAddress
+
+    var cont: AsyncStream<Data>.Continuation!
+    self.eventStream = AsyncStream(Data.self, bufferingPolicy: .bufferingNewest(16)) { cont = $0 }
+    self.eventContinuation = cont
 
     self.linkDescriptor = MTPLinkDescriptor(
       interfaceNumber: interfaceNumber,
@@ -240,6 +249,9 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
     log.info(
       "Closing IOUSBHost link: \(self.manufacturer, privacy: .public) \(self.model, privacy: .public)"
     )
+    eventPumpTask?.cancel()
+    eventPumpTask = nil
+    eventContinuation?.finish()
     interruptInPipe = nil
     bulkInPipe = nil
     bulkOutPipe = nil
@@ -286,6 +298,52 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
     try? bulkOutPipe?.clearStall()
     try? bulkInPipe?.clearStall()
     try? interruptInPipe?.clearStall()
+  }
+
+  // MARK: - Interrupt Endpoint Event Polling
+
+  /// Read up to `maxLength` bytes from the interrupt-in pipe.
+  /// Returns `nil` on timeout or pipe error (non-fatal for event polling).
+  private func interruptRead(
+    maxLength: Int = 1024, timeout: TimeInterval = 1.0
+  ) -> Data? {
+    guard let pipe = interruptInPipe else { return nil }
+    let mutableData = NSMutableData(length: maxLength)!
+    var transferred: Int = 0
+    do {
+      try pipe.__sendIORequest(
+        with: mutableData, bytesTransferred: &transferred,
+        completionTimeout: timeout
+      )
+    } catch {
+      return nil
+    }
+    guard transferred > 0 else { return nil }
+    return Data(mutableData.subdata(with: NSRange(location: 0, length: transferred)))
+  }
+
+  /// Begin polling the interrupt-in endpoint for MTP event containers.
+  ///
+  /// Reads are performed with a 1-second timeout so the loop can check for
+  /// cancellation between reads. Parsed event data is yielded into `eventStream`.
+  public func startEventPump() {
+    guard interruptInPipe != nil else { return }
+    guard eventPumpTask == nil else { return }
+    let coalescer = MTPEventCoalescer()
+    eventPumpTask = Task {
+      while !Task.isCancelled {
+        guard let data = self.interruptRead() else { continue }
+        if coalescer.shouldForward() {
+          if let event = MTPEvent.fromRaw(data) {
+            log.debug(
+              "IOUSBHost MTP event: \(event.eventDescription, privacy: .public)"
+            )
+          }
+          self.eventContinuation?.yield(data)
+        }
+        try? await Task.sleep(nanoseconds: 10_000_000)
+      }
+    }
   }
 
   // MARK: - PTP Container Encoding/Decoding
