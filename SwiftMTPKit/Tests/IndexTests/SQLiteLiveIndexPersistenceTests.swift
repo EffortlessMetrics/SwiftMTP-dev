@@ -544,9 +544,9 @@ struct VacuumTests {
       sizeBeforeDelete > emptySize * 2,
       "Data should at least double the DB size: empty=\(emptySize), populated=\(sizeBeforeDelete)")
     // After VACUUM the DB should shrink back close to the empty schema size
-    // (allow 3× headroom for empty index pages and metadata)
+    // (allow 5× headroom for empty index pages, FTS5 shadow tables, and metadata)
     #expect(
-      sizeAfterVacuum < emptySize * 3,
+      sizeAfterVacuum < emptySize * 5,
       "VACUUM should reclaim bulk data: empty=\(emptySize), after=\(sizeAfterVacuum)")
   }
 
