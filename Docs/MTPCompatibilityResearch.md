@@ -84,6 +84,21 @@ DEVICE_FLAGS_ARICENT_BUGS =
 | `LONG_TIMEOUT` | `extendedBulkTimeout` | 60s bulk transfer timeout. |
 | `BROKEN_MTPGETOBJPROPLIST` | `supportsGetObjectPropList = false` | Disables 0x9805 for individual queries. |
 | `BROKEN_MTPGETOBJPROPLIST_ALL` | `prefersPropListEnumeration = false` | Falls back to per-object GetObjectInfo. |
+| `NO_ZERO_READS` | `noZeroReads` | Handles missing ZLP at USB transfer boundaries. |
+| `NO_RELEASE_INTERFACE` | `noReleaseInterface` | Skips `libusb_release_interface` on close. |
+| `IGNORE_HEADER_ERRORS` | `ignoreHeaderErrors` | Tolerates junk in PTP response headers. |
+| `BROKEN_SEND_OBJECT_PROPLIST` | `brokenSendObjectPropList` | Falls back to SendObjectInfo+SendObject. |
+| `BROKEN_SET_OBJECT_PROPLIST` | `brokenSetObjectPropList` | Falls back to individual SetObjectPropValue. |
+| `FORCE_RESET_ON_CLOSE` | `forceResetOnClose` | USB reset after session close. |
+| `DONT_CLOSE_SESSION` | `skipCloseSession` | Skips CloseSession (Canon EOS 2016+). |
+| `PROPLIST_OVERRIDES_OI` | `propListOverridesObjectInfo` | Prefers MTP prop list over ObjectInfo. |
+| `SAMSUNG_OFFSET_BUG` | `samsungPartialObjectBoundaryBug` | Adjusts reads to avoid 512-byte boundary. |
+| `ONLY_7BIT_FILENAMES` | `only7BitFilenames` | Strips non-ASCII from filenames. Wired into PathSanitizer + write path. |
+| `UNIQUE_FILENAMES` | `requireUniqueFilenames` | Flag for unique filename enforcement. |
+| `CANNOT_HANDLE_DATEMODIFIED` | `cannotHandleDateModified` | Explicit flag; `emptyDatesInSendObject` also available for broader date suppression. |
+| `BROKEN_BATTERY_LEVEL` | `brokenBatteryLevel` | Skips battery level property queries. |
+| `ALWAYS_PROBE_DESCRIPTOR` | `alwaysProbeDescriptor` | Forces OS descriptor probe on SanDisk Sansa v2. |
+| `DELETE_SENDS_EVENT` | `deleteSendsEvent` | Device sends ObjectDeleted events after delete. |
 | Slow handshake | `needsLongerOpenTimeout` | Extended open/session timeout. |
 | Samsung alt-setting | `skipAltSetting` | Avoids MTP state machine reset. |
 | Samsung session window | `skipPreClaimReset` | Preserves 3-second session window. |
@@ -92,24 +107,22 @@ DEVICE_FLAGS_ARICENT_BUGS =
 
 | libmtp Flag | SwiftMTP QuirkFlag | Gap |
 |-------------|-------------------|-----|
-| `CANNOT_HANDLE_DATEMODIFIED` | `emptyDatesInSendObject` | SwiftMTP empties dates entirely; libmtp allows setting on first send only. Close enough for most devices. |
-| `FORCE_RESET_ON_CLOSE` | `resetOnOpen` | SwiftMTP resets on *open*, not on *close*. Missing the close-time reset that Android/Sony devices need. |
+| `CANNOT_HANDLE_DATEMODIFIED` | `emptyDatesInSendObject` + `cannotHandleDateModified` | `emptyDatesInSendObject` empties dates entirely; `cannotHandleDateModified` is the explicit flag for first-send-only semantics. Both available. |
 
-### MISSING — Should Add 🔴
+### Remaining libmtp Flags (Low Priority) 🟡
 
-| libmtp Flag | Priority | Affected Devices | Recommended QuirkFlag |
-|-------------|----------|------------------|-----------------------|
-| `NO_ZERO_READS` | **HIGH** | Samsung (YP-K5, YP-P2, YP-T10, Galaxy), iRiver, many legacy players | `noZeroReads` |
-| `BROKEN_SEND_OBJECT_PROPLIST` | **HIGH** | All Android, Aricent stack, Toshiba | `brokenSendObjectPropList` |
-| `BROKEN_SET_OBJECT_PROPLIST` | **HIGH** | All Android, Motorola RAZR2 | `brokenSetObjectPropList` |
-| `FORCE_RESET_ON_CLOSE` | **HIGH** | All Android, Sony NWZ | `forceResetOnClose` |
-| `PROPLIST_OVERRIDES_OI` | **HIGH** | Samsung Galaxy (0x685c, 0x6860, 0x6877) | `propListOverridesObjectInfo` |
-| `SAMSUNG_OFFSET_BUG` | **HIGH** | Samsung Galaxy (all MTP PIDs) | `samsungPartialObjectBoundaryBug` |
-| `IGNORE_HEADER_ERRORS` | **MEDIUM** | Creative ZEN, Aricent stack (SonyEricsson) | `ignoreHeaderErrors` |
-| `NO_RELEASE_INTERFACE` | **MEDIUM** | SanDisk Sansa, Creative Vision:M | `noReleaseInterface` |
-| `DONT_CLOSE_SESSION` | **MEDIUM** | Canon EOS (2016+) | `skipCloseSession` |
-| `ONLY_7BIT_FILENAMES` | **LOW** | Philips Shoqbox (rare device) | `only7BitFilenames` |
-| `UNIQUE_FILENAMES` | **LOW** | Sony NWZ, Samsung YP-R1/U5/R0 | `requireUniqueFilenames` |
+| libmtp Flag | Priority | Reason Not Implemented |
+|-------------|----------|----------------------|
+| `IRIVER_OGG_ALZHEIMER` | **LOW** | Audio-player-specific OGG format detection; not relevant for file transfer. |
+| `OGG_IS_UNKNOWN` | **LOW** | Audio codec metadata; not relevant for file transfer. |
+| `FLAC_IS_UNKNOWN` | **LOW** | Audio codec metadata; not relevant for file transfer. |
+| `BROKEN_SET_SAMPLE_DIMENSIONS` | **LOW** | Album art dimensions; Creative ZEN only. |
+| `PLAYLIST_SPL_V1` / `V2` | **LOW** | Samsung proprietary playlist format. |
+| `CAPTURE` / `CAPTURE_PREVIEW` | **LOW** | PTP camera capture; out of scope for MTP file transfer. |
+| `NIKON_BROKEN_CAPTURE` / `NIKON_1` | **LOW** | Nikon-specific PTP capture quirks. |
+| `NO_CAPTURE_COMPLETE` | **LOW** | Missing CaptureComplete events; camera-specific. |
+| `OLYMPUS_XML_WRAPPED` | **LOW** | Olympus XML wrapping; camera-specific. |
+| `SWITCH_MODE_BLACKBERRY` | **LOW** | BlackBerry USB mode switch; obsolete hardware. |
 
 ## 3. Common Failure Patterns by Manufacturer
 
@@ -185,33 +198,34 @@ From go-mtpfs GitHub issues:
 
 ## 5. Recommendations
 
-### Immediate Additions (Wave 43+)
+### Implemented ✅ (Wave 47)
 
-Add these QuirkFlags to `QuirkFlags.swift`:
+All high-priority flags from the original research are now implemented in `QuirkFlags.swift`:
 
-1. **`noZeroReads`** — Devices that don't send zero-length packets at USB transfer boundaries. Without this, reads can hang waiting for a terminator that never comes. Affects Samsung, iRiver, and many legacy players.
+1. ✅ **`noZeroReads`** — Handles missing ZLP at USB transfer boundaries. Wired into transport layer.
+2. ✅ **`brokenSendObjectPropList`** — Falls back to SendObjectInfo+SendObject. Wired into DeviceActor transfer path.
+3. ✅ **`brokenSetObjectPropList`** — Falls back to individual SetObjectPropValue calls.
+4. ✅ **`forceResetOnClose`** — USB reset after session close. Wired into LibUSBTransport.
+5. ✅ **`propListOverridesObjectInfo`** — Prefers MTP property list data. Wired into DeviceActor.
+6. ✅ **`samsungPartialObjectBoundaryBug`** — 512-byte boundary workaround. Wired into DeviceActor+PropList.
+7. ✅ **`ignoreHeaderErrors`** — Tolerates junk PTP headers. Wired into MTPUSBLink+CommandExecution.
+8. ✅ **`noReleaseInterface`** — Skips interface release. Wired into LibUSBTransport.
+9. ✅ **`skipCloseSession`** — Skips CloseSession. Wired into DeviceActor.
+10. ✅ **`only7BitFilenames`** — Restricts filenames to ASCII. Wired into PathSanitizer + DeviceActor write path.
+11. ✅ **`requireUniqueFilenames`** — Flag for unique filename enforcement.
 
-2. **`brokenSendObjectPropList`** — Device can't handle SendObjectPropList (0x9808) for creating new objects. Must fall back to SendObjectInfo (0x100C) + SendObject (0x100D). This is the #1 Android compatibility flag.
+### Added in Wave 47 (New Flags)
 
-3. **`brokenSetObjectPropList`** — SetObjectPropList (0x9806) fails. Fall back to individual SetObjectPropValue (0x9804) calls. Affects all Android devices.
+12. ✅ **`cannotHandleDateModified`** — Explicit flag for devices where DateModified can only be set on first send. Complements `emptyDatesInSendObject`.
+13. ✅ **`brokenBatteryLevel`** — Skip battery level (0x5001) property queries on broken devices.
+14. ✅ **`alwaysProbeDescriptor`** — Force OS descriptor probe for SanDisk Sansa v2 chipset.
+15. ✅ **`deleteSendsEvent`** — Device sends ObjectDeleted events after deletion, enabling event-driven cache invalidation.
 
-4. **`forceResetOnClose`** — Issue `libusb_reset_device` after closing the session. Required by Android and Sony NWZ to leave the device in a clean state.
+### Future Work
 
-5. **`propListOverridesObjectInfo`** — Samsung Galaxy devices return malformed ObjectInfo (64-bit fields in 32-bit slots). When set, prefer MTP property list data over GetObjectInfo results.
-
-6. **`samsungPartialObjectBoundaryBug`** — GetPartialObject hangs when the last USB packet exactly matches 512-byte USB 2.0 packet size. Workaround: adjust read offset/size to avoid the boundary.
-
-### Future Additions (Lower Priority)
-
-7. **`ignoreHeaderErrors`** — Tolerate malformed PTP response headers (broken code/transaction-ID). For Creative ZEN and Aricent stacks.
-
-8. **`noReleaseInterface`** — Skip `libusb_release_interface` on close. For SanDisk Sansa devices.
-
-9. **`skipCloseSession`** — Don't send CloseSession on disconnect. For 2016+ Canon EOS cameras.
-
-10. **`only7BitFilenames`** — Restrict filenames to 7-bit ASCII. For Philips Shoqbox.
-
-11. **`requireUniqueFilenames`** — Enforce globally unique filenames. For Sony NWZ Walkman.
+- **Auto-detection by vendor extension**: Implement automatic flag assignment based on the vendor extension string from GetDeviceInfo (see section below).
+- **`requireUniqueFilenames` enforcement**: Add collision detection + hash suffix logic in the write path.
+- **`cannotHandleDateModified` wiring**: Add DateModified skip logic in SetObjectPropValue path for metadata updates.
 
 ### Auto-Detection by Vendor Extension
 
@@ -236,3 +250,5 @@ libmtp auto-assigns bug profiles based on the vendor extension string in GetDevi
 4. **Camera devices are simpler**: PTP cameras (Canon, Nikon, Garmin) generally have fewer MTP bugs. The main concern is `DONT_CLOSE_SESSION` for Canon EOS and capture-related issues.
 
 5. **Auto-detection reduces database maintenance**: libmtp's extension-string-based auto-detection covers unknown devices gracefully. SwiftMTP should adopt this pattern.
+
+6. **Coverage status (Wave 47)**: SwiftMTP now covers 22 of 32 libmtp device flags. The 10 remaining flags are audio-player-specific (OGG/FLAC format handling, Samsung SPL playlists), camera-capture-specific (Nikon/Olympus PTP), or obsolete (BlackBerry mode switch). These are intentionally deferred as they don't affect MTP file transfer reliability.

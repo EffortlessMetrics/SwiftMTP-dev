@@ -78,4 +78,28 @@ final class PathSanitizerTests: XCTestCase {
   func testMaxNameLengthConstant() {
     XCTAssertEqual(PathSanitizer.maxNameLength, 255)
   }
+
+  // MARK: - sanitizeForMTP (libmtp ONLY_7BIT_FILENAMES)
+
+  func testSanitizeForMTPPassesThroughAscii() {
+    XCTAssertEqual(PathSanitizer.sanitizeForMTP("photo.jpg", only7Bit: true), "photo.jpg")
+  }
+
+  func testSanitizeForMTPStripsNonAscii() {
+    // German umlaut (ü = 0xFC) should be stripped in 7-bit mode
+    XCTAssertEqual(PathSanitizer.sanitizeForMTP("über.txt", only7Bit: true), "ber.txt")
+  }
+
+  func testSanitizeForMTPPreservesUnicodeWhenNot7Bit() {
+    XCTAssertEqual(PathSanitizer.sanitizeForMTP("über.txt", only7Bit: false), "über.txt")
+  }
+
+  func testSanitizeForMTPReturnsNilForAllNonAscii() {
+    // All characters > 0x7F → empty after stripping → nil
+    XCTAssertNil(PathSanitizer.sanitizeForMTP("日本語", only7Bit: true))
+  }
+
+  func testSanitizeForMTPDefaultOnly7BitIsFalse() {
+    XCTAssertEqual(PathSanitizer.sanitizeForMTP("日本語.txt"), "日本語.txt")
+  }
 }

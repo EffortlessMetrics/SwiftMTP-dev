@@ -40,4 +40,21 @@ public enum PathSanitizer {
     // Return nil if result is empty
     return name.isEmpty ? nil : name
   }
+
+  /// Sanitize a filename for sending to an MTP device.
+  ///
+  /// Applies standard sanitization plus device-specific restrictions:
+  /// - When `only7Bit` is true, strips characters with code points > 0x7F
+  ///   (libmtp `DEVICE_FLAG_ONLY_7BIT_FILENAMES`).
+  ///
+  /// - Parameter deviceName: Raw filename to send.
+  /// - Parameter only7Bit: Restrict to 7-bit ASCII characters.
+  /// - Returns: A sanitized name, or `nil` if the name is invalid after sanitization.
+  public static func sanitizeForMTP(_ deviceName: String, only7Bit: Bool = false) -> String? {
+    guard var name = sanitize(deviceName) else { return nil }
+    if only7Bit {
+      name = String(name.unicodeScalars.filter { $0.value <= 0x7F })
+    }
+    return name.isEmpty ? nil : name
+  }
 }
