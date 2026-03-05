@@ -25,8 +25,51 @@ swift build --package-path "$PKG_PATH" -c debug >"$LOGS_DIR/build.log" 2>&1 || {
   echo "❌ build failed"; exit 70;
 }
 
+# ==========================================================
+# CLI CONTRACT CHECKS (no hardware required)
+# ==========================================================
+
+# ---------- help output / command discovery ----------
+echo "📋 CLI contract: help output"
+run_swiftmtp 1> "$LOGS_DIR/help.txt" 2> "$LOGS_DIR/help-stderr.log" || {
+  echo "❌ help (no-args) failed"; exit 70;
+}
+
+# Verify help contains expected structural keywords
+for keyword in "Usage:" "Global Flags:" "Examples:"; do
+  grep -q "$keyword" "$LOGS_DIR/help.txt" || {
+    echo "❌ help output missing keyword: $keyword"; exit 70;
+  }
+done
+
+# All registered commands must appear in help output
+REGISTERED_COMMANDS=(
+  probe usb-dump diag health
+  ls storages pull push thumb delete move cp mirror snapshot
+  edit
+  bench profile
+  quirks info add-device learn-promote
+  collect submit wizard device-lab
+  events bdd storybook version
+)
+
+MISSING=0
+for cmd in "${REGISTERED_COMMANDS[@]}"; do
+  if ! grep -qw "$cmd" "$LOGS_DIR/help.txt"; then
+    echo "❌ command '$cmd' not found in help output"
+    MISSING=1
+  fi
+done
+[ "$MISSING" -eq 0 ] || { echo "❌ CLI contract: missing commands in help"; exit 70; }
+echo "  ✅ All ${#REGISTERED_COMMANDS[@]} commands discoverable in help"
+
 # ---------- version validation ----------
 echo "🏷️ Version validation"
+run_swiftmtp version 1> "$LOGS_DIR/version.txt" 2> "$LOGS_DIR/version-txt-stderr.log" || {
+  echo "❌ version (text) failed"; exit 70;
+}
+grep -q "SwiftMTP" "$LOGS_DIR/version.txt" || { echo "❌ version text missing 'SwiftMTP'"; exit 70; }
+
 if ! run_swiftmtp version --json \
      1> "$LOGS_DIR/version.json" 2> "$LOGS_DIR/version-stderr.log"; then
   echo "❌ version command failed"; exit 70;
@@ -34,6 +77,58 @@ fi
 cat "$LOGS_DIR/version.json" | json_ok || { echo "❌ version JSON invalid"; exit 70; }
 # Structure validation guards
 jq -e 'has("version") and has("git") and has("schemaVersion")' "$LOGS_DIR/version.json" >/dev/null || { echo "❌ version JSON missing required fields"; exit 70; }
+
+# ---------- subcommand smoke (no hardware) ----------
+echo "🔍 Subcommand smoke checks (no hardware)"
+
+# info (no args) — shows database summary
+run_swiftmtp info \
+  1> "$LOGS_DIR/info.txt" 2> "$LOGS_DIR/info-stderr.log" || {
+  echo "❌ info command failed"; exit 70;
+}
+grep -q "Device Database" "$LOGS_DIR/info.txt" || { echo "❌ info output missing 'Device Database'"; exit 70; }
+echo "  ✅ info"
+
+# storybook — runs with simulated data, no hardware
+run_swiftmtp storybook \
+  1> "$LOGS_DIR/storybook.txt" 2> "$LOGS_DIR/storybook-stderr.log" || {
+  echo "❌ storybook command failed"; exit 70;
+}
+grep -q "Storybook" "$LOGS_DIR/storybook.txt" || { echo "❌ storybook output missing 'Storybook'"; exit 70; }
+echo "  ✅ storybook"
+
+# add-device (no args) — prints usage
+run_swiftmtp add-device \
+  1> "$LOGS_DIR/add-device.txt" 2> "$LOGS_DIR/add-device-stderr.log" || true
+grep -q "Usage:" "$LOGS_DIR/add-device.txt" || { echo "❌ add-device output missing usage text"; exit 70; }
+echo "  ✅ add-device (usage)"
+
+# ---------- invalid command handling ----------
+echo "🚫 Invalid command handling"
+set +e
+run_swiftmtp nonexistent-cmd-12345 \
+  1> "$LOGS_DIR/invalid.txt" 2> "$LOGS_DIR/invalid-stderr.log"
+invalid_exit=$?
+set -e
+if [ "$invalid_exit" -eq 0 ]; then
+  echo "⚠️  invalid command exited 0 (non-zero preferred but accepted)"
+else
+  echo "  ✅ invalid command exited $invalid_exit"
+fi
+grep -qi "unknown command" "$LOGS_DIR/invalid.txt" || {
+  echo "❌ invalid command output missing error message"; exit 70;
+}
+
+# ---------- demo mode ----------
+echo "🎭 Demo mode"
+SWIFTMTP_DEMO_MODE=1 run_swiftmtp probe --json \
+  1> "$LOGS_DIR/demo-probe.json" 2> "$LOGS_DIR/demo-probe-stderr.log" || true
+if [ -s "$LOGS_DIR/demo-probe.json" ]; then
+  cat "$LOGS_DIR/demo-probe.json" | json_ok || { echo "❌ demo probe JSON invalid"; exit 70; }
+  echo "  ✅ demo probe produced valid JSON"
+else
+  echo "  ⚠️  demo probe produced no output (accepted)"
+fi
 
 # ---------- quirks explain ----------
 echo "🧩 Quirks (explain)"
@@ -169,8 +264,8 @@ fi
 # Validate bundle (only if collect succeeded)
 if [ $code -eq 0 ]; then
   ./scripts/validate-submission.sh "$BUNDLE"
-  echo "✅ Smoke OK"
+  echo "✅ Smoke OK (${#REGISTERED_COMMANDS[@]} commands verified)"
 else
   echo "ℹ️ Skipping bundle validation (collect failed as expected)"
-  echo "✅ Smoke OK (no device connected)"
+  echo "✅ Smoke OK — CLI contract verified (${#REGISTERED_COMMANDS[@]} commands), no device connected"
 fi
