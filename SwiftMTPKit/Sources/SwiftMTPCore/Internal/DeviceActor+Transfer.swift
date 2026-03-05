@@ -114,14 +114,25 @@ extension MTPDeviceActor {
       do {
         let resumables = try await journal.loadResumables(for: id)
         if let existing = resumables.first(where: { $0.handle == handle && $0.kind == "read" }) {
-          // Resume from existing temp file
-          if FileManager.default.fileExists(atPath: existing.localTempURL.path) {
+          // ETag validation: verify file hasn't changed on device since partial was saved
+          let sizeMatch = existing.totalBytes == nil || existing.totalBytes == info.sizeBytes
+          if sizeMatch, FileManager.default.fileExists(atPath: existing.localTempURL.path) {
+            // Use actual file size on disk as resume offset (more reliable than journal committed bytes)
+            let attrs = try? FileManager.default.attributesOfItem(
+              atPath: existing.localTempURL.path)
+            let actualFileSize = (attrs?[.size] as? UInt64) ?? 0
             sink = try FileSink(url: existing.localTempURL, append: true)
             journalTransferId = existing.id
-            progress.completedUnitCount = Int64(existing.committedBytes)
-            resumingFromOffset = existing.committedBytes
+            resumingFromOffset = actualFileSize
+            progress.completedUnitCount = Int64(actualFileSize)
+            // Sync journal with actual disk state
+            try? await journal.updateProgress(id: existing.id, committed: actualFileSize)
           } else {
-            // Temp file missing, start fresh
+            // File changed on device or temp missing — discard old entry and start fresh
+            if !sizeMatch {
+              try? await journal.fail(id: existing.id, error: MTPError.etagMismatch)
+              try? FileManager.default.removeItem(at: existing.localTempURL)
+            }
             sink = try FileSink(url: temp)
             journalTransferId = try await journal.beginRead(
               device: id,
@@ -168,7 +179,8 @@ extension MTPDeviceActor {
       // Use thread-safe progress tracking
       let progressTracker = AtomicProgressTracker()
 
-      let supportsPartialResume = currentPolicy?.flags.supportsGetPartialObject ?? false
+      let supportsPartialResume =
+        (currentPolicy?.flags.supportsGetPartialObject ?? false) || supportsPartial
       if resumingFromOffset > 0 && supportsPartialResume,
         let totalSize = info.sizeBytes, totalSize > resumingFromOffset
       {
@@ -222,7 +234,21 @@ extension MTPDeviceActor {
       return progress
     } catch {
       try? sink.close()
-      try? FileManager.default.removeItem(at: temp)
+
+      // When journal is tracking this transfer, preserve temp file and record actual bytes
+      // written to disk so that resume can pick up from the correct offset.
+      if let journal = transferJournal, let transferId = journalTransferId {
+        let fileSize =
+          (try? FileManager.default.attributesOfItem(atPath: temp.path)[.size] as? UInt64) ?? 0
+        if fileSize > 0 {
+          try? await journal.updateProgress(id: transferId, committed: fileSize)
+        }
+        try? await journal.fail(id: transferId, error: error)
+        // Keep temp file for resume — do NOT delete
+      } else {
+        // No journal — clean up since resume is impossible
+        try? FileManager.default.removeItem(at: temp)
+      }
 
       // Performance logging: end transfer (failure)
       let duration = Date().timeIntervalSince(startTime)
@@ -230,11 +256,6 @@ extension MTPDeviceActor {
         .error(
           "Transfer failed: read after \(String(format: "%.2f", duration))s - \(error.localizedDescription)"
         )
-
-      // Mark as failed in journal
-      if let journal = transferJournal, let transferId = journalTransferId {
-        try? await journal.fail(id: transferId, error: error)
-      }
 
       throw error
     }
@@ -1076,8 +1097,12 @@ extension MTPDeviceActor {
             "Transfer failed: write after \(String(format: "%.2f", duration))s - \(error.localizedDescription)"
           )
 
-        // Mark as failed in journal
+        // Update journal with actual progress before marking failure
         if let journal = transferJournal, let transferId = journalTransferId {
+          let sent = UInt64(progress.completedUnitCount)
+          if sent > 0 {
+            try? await journal.updateProgress(id: transferId, committed: sent)
+          }
           try? await journal.fail(id: transferId, error: error)
         }
 

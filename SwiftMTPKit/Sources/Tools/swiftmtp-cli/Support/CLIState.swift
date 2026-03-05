@@ -148,6 +148,8 @@ public func actionableMessage(for error: Error) -> String {
     case .verificationFailed(let expected, let actual):
       return
         "Write verification failed: remote size \(actual) != expected \(expected). The file may be corrupted on the device."
+    case .etagMismatch:
+      return "The remote file changed since the partial download began. Restart the transfer."
     }
   }
   return error.localizedDescription

@@ -40,6 +40,9 @@ extension MTPError: ActionableError {
     case .verificationFailed:
       return
         "Write verification failed: remote file size does not match expected size. The file may be corrupted — re-send to ensure integrity."
+    case .etagMismatch:
+      return
+        "The remote file changed since the partial download began. Discard the partial and restart."
     }
   }
 

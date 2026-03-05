@@ -165,6 +165,13 @@ public enum DiagnosticFormatter {
         cause: "The file may have been truncated or corrupted during transfer.",
         suggestion: "Re-send the file and verify the transfer completes without interruption."
       )
+    case .etagMismatch:
+      return ErrorDiagnostic(
+        summary: "The remote file changed since the partial download began.",
+        cause: "The object size or modification time changed on the device.",
+        suggestion: "Discard the partial download and restart the transfer.",
+        relatedCommand: "swiftmtp pull"
+      )
     }
   }
 
