@@ -3,24 +3,24 @@
 
 import Foundation
 import MTPEndianCodec
+import SwiftMTPConcurrency
 import SwiftMTPObservability
 
 enum TransferMode { case whole, partial }
 
 final class BoxedOffset: @unchecked Sendable {
-  var value: Int = 0
-  private let lock = NSLock()
+  private let value = LockedValue<Int>(0)
+
   func getAndAdd(_ n: Int) -> Int {
-    lock.lock()
-    defer { lock.unlock() }
-    let old = value
-    value += n
-    return old
+    value.withLock { offset in
+      let old = offset
+      offset += n
+      return old
+    }
   }
+
   func get() -> Int {
-    lock.lock()
-    defer { lock.unlock() }
-    return value
+    value.read { $0 }
   }
 }
 

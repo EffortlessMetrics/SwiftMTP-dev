@@ -4,6 +4,7 @@
 import Foundation
 import OSLog
 import SwiftMTPObservability
+import SwiftMTPConcurrency
 
 // MARK: - Post-write size verification
 
@@ -25,19 +26,16 @@ func postWriteVerify(device: any MTPDevice, handle: MTPObjectHandle, expectedSiz
 
 extension MTPDeviceActor {
   final class LockedDataBuffer: @unchecked Sendable {
-    private var data = Data()
-    private let lock = NSLock()
+    private let data = LockedValue<Data>(Data())
 
     func append(_ raw: UnsafeRawBufferPointer) {
-      lock.lock()
-      data.append(contentsOf: raw.bindMemory(to: UInt8.self))
-      lock.unlock()
+      data.withLock { buffer in
+        buffer.append(contentsOf: raw.bindMemory(to: UInt8.self))
+      }
     }
 
     func snapshot() -> Data {
-      lock.lock()
-      defer { lock.unlock() }
-      return data
+      data.read { $0 }
     }
   }
 
