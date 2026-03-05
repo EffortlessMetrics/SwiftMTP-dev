@@ -823,3 +823,140 @@ final class InfoCommandTests: XCTestCase {
     XCTAssertTrue(line.contains("unknown.bin"))
   }
 }
+
+// MARK: - Probe Command Tests
+
+@MainActor
+final class ProbeCommandTests: XCTestCase {
+
+  // MARK: - --timeout flag
+
+  func testCLIFlagsDefaultProbeTimeout() {
+    let flags = CLIFlags(
+      realOnly: false, useMock: false, mockProfile: "default",
+      json: false, jsonlOutput: false, traceUSB: false,
+      strict: false, safe: false, traceUSBDetails: false,
+      targetVID: nil, targetPID: nil, targetBus: nil, targetAddress: nil
+    )
+    XCTAssertEqual(flags.probeTimeoutSeconds, 5)
+  }
+
+  func testCLIFlagsCustomProbeTimeout() {
+    let flags = CLIFlags(
+      realOnly: false, useMock: false, mockProfile: "default",
+      json: false, jsonlOutput: false, traceUSB: false,
+      strict: false, safe: false, traceUSBDetails: false,
+      targetVID: nil, targetPID: nil, targetBus: nil, targetAddress: nil,
+      probeTimeoutSeconds: 30
+    )
+    XCTAssertEqual(flags.probeTimeoutSeconds, 30)
+  }
+
+  // MARK: - No-device troubleshooting hints
+
+  func testNoDeviceHintsContainUSBCable() {
+    let hints = ProbeCommand.noDeviceHints
+    XCTAssertTrue(hints.contains(where: { $0.contains("cable") }), "Should mention USB cable")
+  }
+
+  func testNoDeviceHintsContainMTPMode() {
+    let hints = ProbeCommand.noDeviceHints
+    XCTAssertTrue(hints.contains(where: { $0.contains("MTP") }), "Should mention MTP mode")
+  }
+
+  func testNoDeviceHintsContainPrivacy() {
+    let hints = ProbeCommand.noDeviceHints
+    XCTAssertTrue(
+      hints.contains(where: { $0.contains("Privacy") }),
+      "Should mention macOS Privacy settings")
+  }
+
+  func testNoDeviceHintsContainTimeoutFlag() {
+    let hints = ProbeCommand.noDeviceHints
+    XCTAssertTrue(
+      hints.contains(where: { $0.contains("--timeout") }),
+      "Should mention --timeout flag")
+  }
+
+  func testNoDeviceHintsAreNumbered() {
+    let hints = ProbeCommand.noDeviceHints
+    XCTAssertGreaterThanOrEqual(hints.count, 5, "Should have at least 5 troubleshooting hints")
+  }
+
+  // MARK: - Duration formatting
+
+  func testFormatDurationMilliseconds() {
+    let result = ProbeCommand.formatDuration(0.045)
+    XCTAssertEqual(result, "45ms")
+  }
+
+  func testFormatDurationSeconds() {
+    let result = ProbeCommand.formatDuration(2.35)
+    XCTAssertEqual(result, "2.35s")
+  }
+
+  func testFormatDurationSubMillisecond() {
+    let result = ProbeCommand.formatDuration(0.0005)
+    XCTAssertEqual(result, "0ms")
+  }
+
+  func testFormatDurationExactlyOneSecond() {
+    let result = ProbeCommand.formatDuration(1.0)
+    XCTAssertEqual(result, "1.00s")
+  }
+
+  // MARK: - isNoDeviceError
+
+  func testIsNoDeviceErrorTransportNoDevice() {
+    let err = MTPError.transport(.noDevice)
+    XCTAssertTrue(ProbeCommand.isNoDeviceError(err))
+  }
+
+  func testIsNoDeviceErrorNotSupported() {
+    let err = MTPError.notSupported("MTP")
+    XCTAssertTrue(ProbeCommand.isNoDeviceError(err))
+  }
+
+  func testIsNoDeviceErrorTimeout() {
+    let err = MTPError.timeout
+    XCTAssertFalse(ProbeCommand.isNoDeviceError(err))
+  }
+
+  func testIsNoDeviceErrorBusy() {
+    let err = MTPError.busy
+    XCTAssertFalse(ProbeCommand.isNoDeviceError(err))
+  }
+
+  func testIsNoDeviceErrorTransportTimeout() {
+    let err = MTPError.transport(.timeout)
+    XCTAssertFalse(ProbeCommand.isNoDeviceError(err))
+  }
+
+  func testIsNoDeviceErrorNonMTPError() {
+    struct CustomError: Error {}
+    XCTAssertFalse(ProbeCommand.isNoDeviceError(CustomError()))
+  }
+
+  // MARK: - --verbose flag interaction
+
+  func testVerboseFlagDefaultsToFalse() {
+    let flags = CLIFlags(
+      realOnly: false, useMock: false, mockProfile: "default",
+      json: false, jsonlOutput: false, traceUSB: false,
+      strict: false, safe: false, traceUSBDetails: false,
+      targetVID: nil, targetPID: nil, targetBus: nil, targetAddress: nil
+    )
+    XCTAssertFalse(flags.verbose)
+  }
+
+  func testVerboseFlagCanBeEnabled() {
+    let flags = CLIFlags(
+      realOnly: false, useMock: false, mockProfile: "default",
+      json: false, jsonlOutput: false, traceUSB: false,
+      strict: false, safe: false, traceUSBDetails: false,
+      verbose: true,
+      targetVID: nil, targetPID: nil, targetBus: nil, targetAddress: nil
+    )
+    XCTAssertTrue(flags.verbose)
+  }
+}

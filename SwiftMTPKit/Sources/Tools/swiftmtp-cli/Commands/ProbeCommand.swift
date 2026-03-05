@@ -9,33 +9,85 @@ import SwiftMTPCLI
 
 @MainActor
 struct ProbeCommand {
+
+  /// Troubleshooting hints shown when no devices are found.
+  static let noDeviceHints: [String] = [
+    "Check the USB cable — try a different cable or port.",
+    "On the device, enable MTP / File Transfer mode (not charging-only).",
+    "Unlock the device screen and accept any 'Trust This Computer' or USB permission prompts.",
+    "On macOS, check System Settings > Privacy & Security > Files and Folders for USB access.",
+    "Quit other apps that may claim the device (Android File Transfer, adb, Samsung Smart Switch).",
+    "Try disconnecting and reconnecting the device.",
+    "Use --timeout <sec> to increase the detection window for slow devices.",
+  ]
+
+  /// Formats elapsed duration in human-readable form.
+  static func formatDuration(_ interval: TimeInterval) -> String {
+    if interval < 1.0 {
+      return String(format: "%.0fms", interval * 1000)
+    }
+    return String(format: "%.2fs", interval)
+  }
+
   static func runProbe(flags: CLIFlags) async {
     if flags.json {
       await runProbeJSON(flags: flags)
       return
     }
-    log("🔍 Probing for MTP devices...")
+    let overallStart = Date()
+    log("🔍 Probing for MTP devices (timeout: \(flags.probeTimeoutSeconds)s)...")
     do {
-      // Pre-enumerate to get VID/PID for quirk lookup
+      // Phase 1: USB enumeration
+      let enumStart = Date()
       let listings = try await LibUSBDiscovery.enumerateMTPDevices()
+      let enumElapsed = Date().timeIntervalSince(enumStart)
+
+      if flags.verbose {
+        log("  ↳ USB enumeration: \(formatDuration(enumElapsed)) — found \(listings.count) candidate(s)")
+      }
+
       var selectedVID: UInt16? = nil
       var selectedPID: UInt16? = nil
+      var selectedSerial: String? = nil
+      var selectedManufacturer: String? = nil
       if let first = listings.first {
         selectedVID = first.vendorID
         selectedPID = first.productID
+        selectedSerial = first.usbSerial
+        selectedManufacturer = first.manufacturer
       }
 
+      // Phase 2: Device open
+      let openStart = Date()
       let device = try await openDevice(flags: flags)
+      let openElapsed = Date().timeIntervalSince(openStart)
       log("✅ Device found and opened!")
 
+      if flags.verbose {
+        log("  ↳ Device open: \(formatDuration(openElapsed))")
+      }
+
+      // Phase 3: MTP handshake
+      let handshakeStart = Date()
       try await device.openIfNeeded()
       let info = try await device.getDeviceInfo()
       let storages = try await device.storages()
+      let handshakeElapsed = Date().timeIntervalSince(handshakeStart)
 
-      // Show VID:PID and quirk status
+      if flags.verbose {
+        log("  ↳ MTP handshake: \(formatDuration(handshakeElapsed))")
+      }
+
+      // USB descriptor details
       if let vid = selectedVID, let pid = selectedPID {
         let vidpid = String(format: "0x%04x:0x%04x", vid, pid)
         print("USB ID:  \(vidpid)")
+        if let mfr = selectedManufacturer, !mfr.isEmpty {
+          print("USB Mfr: \(mfr)")
+        }
+        if let serial = selectedSerial, !serial.isEmpty {
+          print("Serial:  \(serial)")
+        }
         if let db = try? QuirkDatabase.load(),
           let q = db.entries.first(where: { $0.vid == vid && $0.pid == pid })
         {
@@ -46,8 +98,6 @@ struct ProbeCommand {
         } else {
           let vidStr = String(format: "0x%04x", vid)
           let pidStr = String(format: "0x%04x", pid)
-          // Try to infer device class from manufacturer/model (available after probe)
-          // For now note the device class will be guessed; user can correct it
           print("Quirk:   ⚠️  not in database — connected via heuristic defaults")
           print(
             "         Contribute a profile: swiftmtp add-device --vid \(vidStr) --pid \(pidStr) --class android|ptp --name \"<brand model>\""
@@ -67,20 +117,14 @@ struct ProbeCommand {
           "  - \(storage.description): \(formatBytes(storage.capacityBytes)) total, \(formatBytes(storage.freeBytes)) free (\(String(format: "%.1f", usedPercent))% used)"
         )
       }
+
+      // Timing summary
+      let overallElapsed = Date().timeIntervalSince(overallStart)
+      print("Probe completed in \(formatDuration(overallElapsed))")
     } catch {
-      if let mtpError = error as? MTPError {
-        switch mtpError {
-        case .notSupported:
-          log("❌ No MTP-capable device found.")
-          exitNow(.unavailable)
-        case .transport(let te):
-          if case .noDevice = te {
-            log("❌ No MTP device connected. Check USB connection and MTP mode.")
-            exitNow(.unavailable)
-          }
-        default:
-          break
-        }
+      if isNoDeviceError(error) {
+        printNoDeviceMessage(verbose: flags.verbose)
+        exitNow(.unavailable)
       }
       displayError("Probe failed", error: error, flags: flags)
       exitNow(.tempfail)
@@ -132,19 +176,8 @@ struct ProbeCommand {
         "effective": [:],
       ]
       printJSON(errorOutput, type: "probeResult")
-      if let mtpError = error as? MTPError {
-        switch mtpError {
-        case .notSupported:
-          log("❌ No MTP-capable device found.")
-          exitNow(.unavailable)
-        case .transport(let te):
-          if case .noDevice = te {
-            log("❌ No MTP device connected. Check USB connection and MTP mode.")
-            exitNow(.unavailable)
-          }
-        default:
-          break
-        }
+      if isNoDeviceError(error) {
+        exitNow(.unavailable)
       }
       displayError("Probe failed", error: error, flags: flags)
       exitNow(.tempfail)
@@ -179,5 +212,37 @@ struct ProbeCommand {
     print("\n== USB Dump ==")
     await runUSBDump(flags: flags)
     print("\n✅ Diagnostic complete")
+  }
+
+  // MARK: - Helpers
+
+  /// Returns true if the error indicates no MTP device was found.
+  static func isNoDeviceError(_ error: Error) -> Bool {
+    if let mtpError = error as? MTPError {
+      switch mtpError {
+      case .notSupported:
+        return true
+      case .transport(let te):
+        if case .noDevice = te { return true }
+      default:
+        break
+      }
+    }
+    return false
+  }
+
+  /// Prints a user-friendly message when no devices are found.
+  static func printNoDeviceMessage(verbose: Bool) {
+    log("❌ No MTP device found.")
+    log("")
+    log("Troubleshooting:")
+    for (i, hint) in noDeviceHints.enumerated() {
+      log("  \(i + 1). \(hint)")
+    }
+    if verbose {
+      log("")
+      log("Run 'swiftmtp usb-dump' to see all connected USB devices.")
+      log("Run 'swiftmtp diag' for a full diagnostic report.")
+    }
   }
 }

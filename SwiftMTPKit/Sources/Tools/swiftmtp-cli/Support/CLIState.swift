@@ -20,12 +20,14 @@ public struct CLIFlags: Sendable {
   public let targetPID: String?
   public let targetBus: Int?
   public let targetAddress: Int?
+  public let probeTimeoutSeconds: Int
 
   public init(
     realOnly: Bool, useMock: Bool, mockProfile: String, json: Bool, jsonlOutput: Bool,
     traceUSB: Bool, strict: Bool, safe: Bool, traceUSBDetails: Bool, verbose: Bool = false,
     targetVID: String?,
-    targetPID: String?, targetBus: Int?, targetAddress: Int?
+    targetPID: String?, targetBus: Int?, targetAddress: Int?,
+    probeTimeoutSeconds: Int = 5
   ) {
     self.realOnly = realOnly
     self.useMock = useMock
@@ -41,6 +43,7 @@ public struct CLIFlags: Sendable {
     self.targetPID = targetPID
     self.targetBus = targetBus
     self.targetAddress = targetAddress
+    self.probeTimeoutSeconds = probeTimeoutSeconds
   }
 
   // Back-compat property
