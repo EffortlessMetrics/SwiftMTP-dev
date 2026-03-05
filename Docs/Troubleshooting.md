@@ -10,16 +10,23 @@ Comprehensive troubleshooting guide for SwiftMTP operations.
 2. [Known Device Status](#known-device-status)
 3. [USB Claim Debugging](#usb-claim-debugging)
 4. [Device Detection Issues](#device-detection-issues)
-5. [Transfer Problems](#transfer-problems)
-6. [Performance Issues](#performance-issues)
-7. [Error-Specific Solutions](#error-specific-solutions)
-8. [Samsung Galaxy Troubleshooting](#samsung-galaxy-troubleshooting)
-9. [Google Pixel Troubleshooting](#google-pixel-troubleshooting)
-10. [OnePlus Troubleshooting](#oneplus-troubleshooting)
-11. [macOS-Specific Issues](#macos-specific-issues)
-12. [Common macOS Issues](#common-macos-issues)
-13. [Submission & Benchmark Issues](#submission--benchmark-issues)
-14. [Diagnostic Commands](#diagnostic-commands)
+5. [Searching for Files](#searching-for-files)
+6. [Transfer Problems](#transfer-problems)
+7. [Performance Issues](#performance-issues)
+8. [Common Error Messages](#common-error-messages)
+9. [Error-Specific Solutions](#error-specific-solutions)
+10. [Device-Specific Troubleshooting](#device-specific-troubleshooting)
+11. [Samsung Galaxy Troubleshooting](#samsung-galaxy-troubleshooting)
+12. [Google Pixel Troubleshooting](#google-pixel-troubleshooting)
+13. [OnePlus Troubleshooting](#oneplus-troubleshooting)
+14. [Xiaomi Troubleshooting](#xiaomi-troubleshooting)
+15. [Canon / Nikon Camera Troubleshooting](#canon--nikon-camera-troubleshooting)
+16. [macOS Permissions & USB Access](#macos-permissions--usb-access)
+17. [macOS-Specific Issues](#macos-specific-issues)
+18. [Common macOS Issues](#common-macos-issues)
+19. [Submission & Benchmark Issues](#submission--benchmark-issues)
+20. [Diagnostic Commands](#diagnostic-commands)
+21. [Capturing Evidence](#capturing-evidence)
 
 ---
 
@@ -125,7 +132,11 @@ Look for `IOService` entries with `USBDeviceFunction` — if another driver is l
 1. Verify device is in **File Transfer (MTP)** mode
 2. Check USB cable is data-capable (not charge-only)
 3. Try direct USB port (not hub)
-4. Run: `swift run swiftmtp probe`
+4. Run with verbose output and extended timeout for slow devices:
+   ```bash
+   swift run swiftmtp probe --verbose --timeout 30
+   ```
+   The `--timeout` flag (in seconds) gives slow-initializing devices more time to respond. Default is 10 s; use 30 s for Samsung, Pixel, and older Android devices.
 
 ### Device Detected But Not Accessible
 
@@ -149,6 +160,28 @@ Look for `IOService` entries with `USBDeviceFunction` — if another driver is l
 2. Connect directly to Mac (not via hub)
 3. Ensure device has sufficient battery
 4. Disable USB power saving: `sudo pmset -a usbpowersleep 0`
+
+---
+
+## Searching for Files
+
+Use `swiftmtp search` to find files on a connected device without browsing the full tree:
+
+```bash
+# Search for files matching a pattern
+swift run swiftmtp search "*.jpg"
+
+# Case-insensitive search for a filename
+swift run swiftmtp search "vacation"
+
+# Search within a specific storage/folder
+swift run swiftmtp search "report.pdf" --storage 0x00010001
+```
+
+**Tips:**
+- Search runs against the device's MTP object list, not a local index — it requires an active connection.
+- For large devices (10,000+ objects), the first search may take several seconds while the object tree is enumerated.
+- Combine with `swiftmtp ls` to browse interactively, or `swiftmtp info <handle>` to inspect a specific object.
 
 ---
 
@@ -233,6 +266,27 @@ The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.
 
 ---
 
+## Common Error Messages
+
+SwiftMTP uses `DiagnosticFormatter` to present user-friendly error output. Here is a quick reference for the most common messages:
+
+| Error Message | Code | Meaning | What to Do |
+|---------------|------|---------|------------|
+| `No MTP device connected` | Exit 69 | No device found on USB bus | Check cable, USB mode, and run `swiftmtp probe --verbose` |
+| `Device storage is full` | 0x200C | Target storage has no free space | Free space on device, then retry |
+| `Object not found` | 0x2009 | Requested file/folder handle is invalid | Refresh listing; file may have been deleted externally |
+| `Invalid parameter` | 0x201D | Device rejected the operation parameters | Check folder targeting; see [0x201D section](#write-fails-with-0x201d-error) |
+| `Session already open` | 0x201E | Another MTP session is active | Close other MTP apps, disconnect and reconnect |
+| `Permission denied` | — | macOS or device blocked USB access | See [macOS Permissions](#macos-permissions--usb-access); accept trust prompt |
+| `Device busy` | 0x2019 | Device is processing another operation | Wait 30 s and retry; close background sync apps |
+| `Transport timeout` | — | USB transfer did not complete in time | Increase timeout: `--timeout 30` or `SWIFTMTP_IO_TIMEOUT_MS=30000` |
+| `Read-only storage` | 0x200E | Storage is write-protected | Check SD card lock switch; verify MTP (not PTP) mode |
+| `Specification by format unsupported` | 0x2014 | Device does not support the requested format filter | Remove format filter; device has limited MTP 1.1 support |
+
+> **Tip:** Run any command with `--verbose` to see the full error chain including the underlying Swift error type, MTP response code, and recovery suggestion from `DiagnosticFormatter`.
+
+---
+
 ## Error-Specific Solutions
 
 > **See also**: [Error Catalog](ErrorCatalog.md) for a complete reference of all MTP response codes, transport errors, and recovery strategies.
@@ -277,6 +331,36 @@ The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.
 
 ---
 
+## Device-Specific Troubleshooting
+
+Each device family has unique MTP quirks. The sections below provide targeted guidance. Run `swiftmtp quirks` to see which device profile is active for your connected device.
+
+---
+
+## Xiaomi Troubleshooting
+
+**Status:** Partial — only device with confirmed real file transfers (tested on Mi Note 2, VID:PID 2717:ff10)
+
+### Prerequisites
+
+1. **Enable USB debugging**: Settings → Developer Options → USB Debugging → ON
+2. **Set File Transfer mode**: when connected, pull down the notification shade and select **File Transfer (MTP)** — Xiaomi defaults to charging-only
+3. On MIUI 12+, you may also need: Settings → Developer Options → **USB Debugging (Security settings)** → ON
+
+### Symptoms & Solutions
+
+- **0 storages returned** (ff40 variant): the device is in charging mode — switch to File Transfer via the notification shade, then re-run `swiftmtp probe --verbose`
+- **Intermittent disconnects**: use a USB-A cable directly to the Mac; MIUI's USB power management is aggressive with hubs
+- **Slow initial probe**: run `swiftmtp probe --verbose --timeout 30` — Xiaomi devices can take 10–15 s to initialize MTP after mode switch
+
+### Evidence Capture
+
+```bash
+swift run swiftmtp probe --verbose --json > xiaomi-evidence.json
+```
+
+---
+
 ## Samsung Galaxy Troubleshooting
 
 **Status:** Not Working — handshake fails after USB claim (tested on Galaxy S7, SM-G930W8, VID:PID 04e8:6860)
@@ -300,6 +384,21 @@ The tuner automatically adjusts chunk size. See [Docs/benchmarks.md](benchmarks.
 ### Current Theory
 
 Samsung's MTP stack requires a specific initialization sequence with precise timing on the 512-byte packet boundaries. SwiftMTP's current handshake does not yet match this sequence. Reboot the phone and reconnect within 10 seconds as a workaround — the Samsung USB stack may hold stale sessions.
+
+### Quirk Flags
+
+Samsung devices may benefit from these quirk flags (check with `swiftmtp quirks`):
+
+- **`skipClearHalt`** — Samsung's USB stack does not expect a `CLEAR_HALT` after claiming the interface; sending one can cause the handshake to stall
+- **`delayAfterClaim`** — adds a 500 ms pause after USB claim before sending the first MTP packet; Samsung's init sequence requires settling time
+- **`skipPreClaimReset`** — skips the USB device reset before claiming (Samsung re-enumerates on reset, breaking the claim)
+
+If your Samsung model is not in the quirks database, try setting these flags manually via environment variables:
+```bash
+export SWIFTMTP_SKIP_CLEAR_HALT=1
+export SWIFTMTP_DELAY_AFTER_CLAIM_MS=500
+swift run swiftmtp probe --verbose --timeout 30
+```
 
 ---
 
@@ -329,6 +428,20 @@ libmtp uses a reset+retry loop for Pixel bulk transfer failures. This does not c
 
 The bulk transfer timeout is a macOS kernel-level issue with the Pixel 7's USB controller. Control-plane operations succeed, but the data plane (bulk OUT endpoint) never completes. This is documented in detail in `Docs/pixel7-usb-debug-report.md`. Awaiting kernel-level fix in macOS 26 Tahoe.
 
+### Quirk Flags
+
+Pixel 7 requires these quirk flags (check with `swiftmtp quirks`):
+
+- **`doubleReset`** — performs two USB device resets before claiming; the Pixel's USB controller needs a full re-enumeration cycle
+- **`longTimeout`** — extends I/O timeout to 30 s (default 10 s); the Pixel's bulk transfer path has high latency on first contact
+- **`handleReopen`** — re-opens the device handle after reset to pick up the new USB address
+- **`setConfiguration`** — explicitly sets USB configuration 1 before claiming the MTP interface
+
+```bash
+# Probe with extended timeout for Pixel 7
+swift run swiftmtp probe --verbose --timeout 30
+```
+
 ---
 
 ## OnePlus Troubleshooting
@@ -353,6 +466,81 @@ The bulk transfer timeout is a macOS kernel-level issue with the Pixel 7's USB c
 ### Current Theory
 
 OnePlus requires specific storage/folder targeting for write operations. The device's MTP stack rejects `SendObjectInfo` when the parent object handle doesn't match an explicitly writable directory. This is distinct from a permission error — the device returns `InvalidParameter` rather than `AccessDenied`.
+
+### Recommended Workaround
+
+Until write support is resolved, use **read-only mode** for OnePlus devices:
+
+```bash
+# Read-only operations work reliably
+swift run swiftmtp ls
+swift run swiftmtp pull <handle> --out ./local-copy/
+swift run swiftmtp search "*.jpg"
+
+# Avoid write operations (push, edit, cp) — they will fail with 0x201D
+```
+
+---
+
+## Canon / Nikon Camera Troubleshooting
+
+### Canon EOS / R-series
+
+**Status:** Research Only — never connected to SwiftMTP (VID:PID 04a9:3139)
+
+1. Set the camera to **MTP mode** (not PTP or PC Remote) in the USB connection menu
+2. Quit **Image Capture** and **Photos** before connecting — macOS auto-claims PTP devices
+3. For Canon R-series: enable "WiFi + USB" in connection settings to force MTP over PTP
+4. Canon cameras may require a **vendor-specific init sequence** — if `swiftmtp probe` detects the device but `OpenSession` fails, the camera's PTP extensions are interfering
+5. Run probe within 5 s of connection: `swift run swiftmtp probe --verbose --timeout 30`
+
+### Nikon DSLR / Z-series
+
+**Status:** Research Only — never connected to SwiftMTP (VID:PID 04b0:0410)
+
+1. Set Nikon USB to **MTP/PTP** (not PC Control) — PC Control mode disables file access
+2. Nikon Z-series and D-series require the `Nikon Object` vendor extension for NEF raw files; standard `GetObject` may return 0-byte blobs
+3. Use `swiftmtp quirks` to confirm the `allowNikonExtensions` flag is active
+4. For large NEF files (> 50 MB): use `swift run swiftmtp probe --verbose --timeout 30` and increase I/O timeout
+5. **Vendor-specific init**: Nikon cameras may need a proprietary init handshake before MTP operations work — this is not yet implemented in SwiftMTP
+
+> **Note:** Both Canon and Nikon cameras expose PTP interfaces that macOS claims automatically. Always disable Image Capture auto-grab before connecting: `defaults write com.apple.ImageCapture disableHotPlug -bool YES`
+
+---
+
+## macOS Permissions & USB Access
+
+Starting with macOS 13 Ventura, apps must be granted USB device access through **Privacy & Security** settings.
+
+### Granting USB Access
+
+1. Open **System Settings** → **Privacy & Security** → **USB Accessories** (or **USB** on macOS 15+)
+2. If SwiftMTP (or Terminal) is not listed, connect a device and run `swiftmtp probe` — macOS will prompt for permission
+3. Click **Allow** when the system dialog appears
+4. If the prompt does not appear:
+   - Disconnect and reconnect the device
+   - Restart Terminal / your terminal emulator
+   - Check that SIP is enabled (`csrutil status`) — USB permissions require SIP
+
+### Entitlements (Developer Builds)
+
+- Development builds need the `com.apple.security.device.usb` entitlement in the signing profile
+- App Store distribution requires a DriverKit extension or an Apple-approved USB entitlement
+- The File Provider extension uses an XPC bridge to avoid requiring direct USB entitlements in the app target
+- See `Docs/FileProvider-TechPreview.md` for the sandboxed architecture
+
+### Troubleshooting Permission Issues
+
+```bash
+# Check if USB access is granted
+tccutil reset SystemPolicyUSB
+
+# Verify entitlements on a built binary
+codesign -d --entitlements - $(which swiftmtp) 2>/dev/null
+
+# If all else fails, run from a non-sandboxed terminal
+swift run swiftmtp probe --verbose
+```
 
 ---
 
@@ -571,6 +759,16 @@ swift run swiftmtp probe
 swift run swiftmtp probe --verbose
 ```
 
+### Probe with Extended Timeout (slow devices)
+```bash
+swift run swiftmtp probe --verbose --timeout 30
+```
+
+### Search for Files on Device
+```bash
+swift run swiftmtp search "*.jpg"
+```
+
 ### List Tests (verify test count)
 ```bash
 cd SwiftMTPKit
@@ -675,7 +873,7 @@ All five must pass before pushing. CI runs the same checks. The full matrix run 
 
 ## CLI Diagnostic Output
 
-When a CLI command fails, SwiftMTP displays a structured diagnostic message:
+When a CLI command fails, SwiftMTP's `DiagnosticFormatter` displays a structured, user-friendly error message:
 
 ```
 ❌ Failed to upload
@@ -708,6 +906,53 @@ Use `--verbose` (or `-v`) to see the full error chain, including the underlying 
 ```
 
 This is useful for bug reports and when the one-line summary doesn't provide enough context.
+
+---
+
+## Capturing Evidence
+
+When reporting issues or preparing device submissions, capture structured evidence using the `--json` flag:
+
+### Quick Evidence Capture
+
+```bash
+# Capture verbose probe output as JSON for bug reports
+swift run swiftmtp probe --verbose --json > evidence.json
+
+# Include timeout for slow devices
+swift run swiftmtp probe --verbose --timeout 30 --json > evidence.json
+```
+
+The JSON output includes:
+- Device VID:PID and USB descriptor details
+- MTP session negotiation steps and timing
+- Active quirk profile and flags
+- Any errors with full diagnostic chain from `DiagnosticFormatter`
+
+### Full Diagnostic Bundle
+
+```bash
+# Step 1: Probe with evidence
+swift run swiftmtp probe --verbose --json > probe-evidence.json
+
+# Step 2: Capture device info
+swift run swiftmtp info --json > device-info.json 2>&1
+
+# Step 3: Collect submission bundle
+swift run swiftmtp collect --strict --json --noninteractive
+
+# Step 4: macOS USB tree (for USB claim issues)
+system_profiler SPUSBDataType > usb-tree.txt
+ioreg -p IOUSB -l > ioreg-usb.txt
+```
+
+### What to Include in Bug Reports
+
+1. `evidence.json` from `swiftmtp probe --verbose --json`
+2. Exact command that failed and its exit code
+3. macOS version: `sw_vers -productVersion`
+4. SwiftMTP version: `swift run swiftmtp version`
+5. Device model, VID:PID, and Android/firmware version
 
 ---
 
