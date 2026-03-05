@@ -22,6 +22,9 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
   nonisolated(unsafe) private var xpcConnection: NSXPCConnection?
   private let xpcServiceResolver: (() -> MTPXPCService?)?
 
+  /// Resilient connection manager with auto-reconnect (used when no resolver override is set).
+  nonisolated(unsafe) private var connectionManager: XPCConnectionManager?
+
   /// Read-only index reader opened from the shared app group container.
   private let indexReader: (any LiveIndexReader)?
 
@@ -60,6 +63,9 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
 
   public func invalidate() {
     xpcConnection?.invalidate()
+    if let mgr = connectionManager {
+      Task { await mgr.invalidate() }
+    }
   }
 
   private func getXPCService() -> MTPXPCService? {
@@ -69,14 +75,20 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
     if xpcConnection == nil {
       let connection = NSXPCConnection(machServiceName: MTPXPCServiceName, options: [])
       connection.remoteObjectInterface = NSXPCInterface(with: MTPXPCService.self)
+
+      // Initialize the resilient connection manager for monitoring.
+      let manager = XPCConnectionManager()
+      connectionManager = manager
+
       connection.interruptionHandler = { [weak self] in
-        // XPC service crashed or was killed — connection remains valid and will reconnect
-        // automatically on next message, but log for diagnostics.
-        _ = self  // prevent unused capture warning
+        guard let self else { return }
+        if let mgr = self.connectionManager {
+          Task { try? await mgr.connect() }
+        }
       }
       connection.invalidationHandler = { [weak self] in
-        // Connection permanently invalid — must recreate on next use.
         self?.xpcConnection = nil
+        self?.connectionManager = nil
       }
       connection.resume()
       xpcConnection = connection
