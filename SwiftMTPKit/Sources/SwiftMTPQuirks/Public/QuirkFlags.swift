@@ -56,6 +56,17 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// session window and is unnecessary when endpoints are not halted.
   public var skipClearHaltBeforeProbe: Bool = false
 
+  /// Perform a double `libusb_reset_device()` during hard recovery, matching
+  /// libmtp's `DEVICE_FLAG_FORCE_RESET_ON_CLOSE` pattern. The first reset
+  /// triggers `USBDeviceReEnumerate()` on Darwin; the second (after
+  /// `libusb_release_interface`) forces IOKit to fully flush stale pipe state.
+  /// Required for Google Pixel 7 and other FunctionFS-based Android devices.
+  public var forceDoubleReset: Bool = false
+
+  /// Alias for `extendedBulkTimeout` — marks devices that need 60 000 ms
+  /// operational timeout. Matches libmtp `DEVICE_FLAG_LONG_TIMEOUT`.
+  public var longTimeout: Bool = false
+
   // MARK: - Protocol-level
 
   /// Device requires an open session before GetDeviceInfo responds.
@@ -303,6 +314,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case skipAltSetting
     case skipPreClaimReset
     case skipClearHaltBeforeProbe
+    case forceDoubleReset
+    case longTimeout
     case requiresSessionBeforeDeviceInfo
     case transactionIdResetsOnSession
     case resetReopenOnOpenSessionIOError
@@ -361,6 +374,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .skipPreClaimReset) ?? false
     self.skipClearHaltBeforeProbe =
       try container.decodeIfPresent(Bool.self, forKey: .skipClearHaltBeforeProbe) ?? false
+    self.forceDoubleReset =
+      try container.decodeIfPresent(Bool.self, forKey: .forceDoubleReset) ?? false
+    self.longTimeout =
+      try container.decodeIfPresent(Bool.self, forKey: .longTimeout) ?? false
     self.requiresSessionBeforeDeviceInfo =
       try container.decodeIfPresent(Bool.self, forKey: .requiresSessionBeforeDeviceInfo) ?? false
     self.transactionIdResetsOnSession =
@@ -444,6 +461,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(skipAltSetting, forKey: .skipAltSetting)
     try container.encodeIfPresent(skipPreClaimReset, forKey: .skipPreClaimReset)
     try container.encodeIfPresent(skipClearHaltBeforeProbe, forKey: .skipClearHaltBeforeProbe)
+    try container.encodeIfPresent(forceDoubleReset, forKey: .forceDoubleReset)
+    try container.encodeIfPresent(longTimeout, forKey: .longTimeout)
     try container.encodeIfPresent(
       requiresSessionBeforeDeviceInfo, forKey: .requiresSessionBeforeDeviceInfo)
     try container.encodeIfPresent(
