@@ -6,9 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 SwiftMTP is a macOS/iOS library and tool for interacting with MTP (Media Transfer Protocol) devices over USB. The project uses modern Swift 6 with strict concurrency and actor-based architecture.
 
-**Maturity note**: SwiftMTP is **pre-alpha**. The project has extensive scaffolding (~9,191+ tests across 20 targets, 20,026 quirks entries, 80+ doc files) but minimal real-device validation. Most test coverage uses `VirtualMTPDevice` (in-memory mock). The quirks database (~20,026 entries) is research-based scaffolding sourced from libmtp data and vendor specs — only a handful of devices have been tested with SwiftMTP directly. Only the Xiaomi Mi Note 2 (ff10) has completed real file transfers.
+**Maturity note**: SwiftMTP is **pre-alpha**. The project has extensive scaffolding (~8,400+ test functions across 20 targets, 20,026 quirks entries, 90+ doc files) but minimal real-device validation. Most test coverage uses `VirtualMTPDevice` (in-memory mock). The quirks database (~20,026 entries) is research-based scaffolding sourced from libmtp data and vendor specs — only a handful of devices have been tested with SwiftMTP directly. Only the Xiaomi Mi Note 2 (ff10) has completed real file transfers.
 
-**Waves 37–40 additions**:
+**Waves 37–41 additions**:
 - **MTP 1.1 full coverage**: 50+ object formats, 50+ property codes, all 14 events, all 42 response codes
 - **Android MTP edit extensions**: `BeginEditObject`, `EndEditObject`, `TruncateObject`
 - **New operations**: `CopyObject`, `GetThumb`, `SetObjectPropList`
@@ -22,10 +22,39 @@ SwiftMTP is a macOS/iOS library and tool for interacting with MTP (Media Transfe
 - **Transport fixes**: Pixel 7 (handle re-open, set_configuration, timeouts), Samsung (skip alt-setting, skip pre-claim reset)
 - **Quirks governance**: CI-enforced schema validation
 
+**Waves 42–46 additions**:
+- **IOUSBHost full implementation**: discovery (`IOUSBHostDeviceLocator`), session management, bulk transfers, file transfer (`getObject`/`sendObject`), interrupt-endpoint event polling — no longer scaffold-only
+- **Shell completions**: bash, zsh, fish completions in `completions/`
+- **PrivacyRedactor**: SHA-256 serial obfuscation for safe device submission artifacts
+- **LibUSBTransport refactor**: helpers extracted into focused files for maintainability
+- **Snapshot tests**: CLI output and report formatting regression tests
+- **Error catalog**: `Docs/ErrorCatalog.md` comprehensive troubleshooting guide
+- **Bootstrap & Homebrew**: `scripts/bootstrap.sh` dev setup; Homebrew formula in `homebrew-tap/`
+- **CLI progress bars**: transfer progress with ETA and throughput display
+- **Error recovery integration tests**: escalation path coverage
+- **DocC pipeline**: `scripts/generate-docs.sh` for documentation generation
+- **MTP compatibility research**: libmtp device flags analysis → 9 new `QuirkFlags` wired into transport/protocol
+- **Mirror resume hardening**: journal edge-case tests for resume-from-journal
+- **Release checklist**: `Docs/ROADMAP.release-checklist.md` for pre-alpha v0.1.0
+- **CLI command map**: `Docs/CLICommandMap.md` UX reference
+- **FileProvider truth audit**: honest capability status documentation
+- **SPDX headers**: `SPDX-License-Identifier: AGPL-3.0-only` on all source files
+- **Structured OSLog logging**: 10 module categories via `MTPLog` (transport, protocol, session, transfer, index, sync, recovery, quirks, fileprovider, cli) + Signpost performance instrumentation
+- **OnePlus write-path research**: root cause analysis (SendObjectPropList + format mismatch); 3 new QuirkFlags (`forceUndefinedFormatOnWrite`, `emptyDatesInSendObject`, `brokenSetObjectPropList`)
+- **Samsung deep research**: identified 3 remaining gaps (reset-reopen recovery, skipClearHalt wiring, forceResetOnClose)
+- **Collect command enhancements**: `--strict`, `--redact`, JSON output, validation
+- **TransferJournal crash tests**: 23 WAL/orphan/concurrent-access crash recovery tests
+- **DiagnosticFormatter**: structured error diagnostics with cause, suggestion, and related CLI commands
+- **Coverage gate**: `SwiftMTPKit/scripts/coverage_gate.py` enforces minimum coverage thresholds in CI
+- **IOUSBHost integration tests**: protocol conformance, MTP transactions, error cascading without real USB hardware
+
 ## Development Commands
 
 ### Building
 ```bash
+# Bootstrap development environment (checks Xcode, Swift, libusb prerequisites)
+./scripts/bootstrap.sh
+
 # Build all targets (always build from SwiftMTPKit directory)
 cd SwiftMTPKit
 swift build -v
@@ -56,6 +85,12 @@ swift test --filter TestName
 
 # Run storybook demo
 ./run-storybook.sh
+
+# Coverage gate (enforces minimum thresholds; used in CI)
+python3 SwiftMTPKit/scripts/coverage_gate.py
+
+# Smoke test (minimal sanity build)
+cd SwiftMTPKit && swift build --product swiftmtp
 ```
 
 ### Running the CLI
@@ -104,7 +139,7 @@ swift package generate-documentation --target SwiftMTPCore
 
 ### Code Quality
 ```bash
-# Run all pre-PR checks (format, build, test, quirks, large-file scan)
+# Run all pre-PR checks (format, build, test, quirks, large-file scan, SPDX headers)
 ./scripts/pre-pr.sh
 
 # Format code (required before commits)
@@ -112,6 +147,9 @@ swift-format -i -r SwiftMTPKit/Sources SwiftMTPKit/Tests
 
 # Lint code
 swift-format lint -r SwiftMTPKit/Sources SwiftMTPKit/Tests
+
+# Install shell completions (bash, zsh, fish available in completions/)
+cp completions/swiftmtp.bash ~/.local/share/bash-completion/completions/swiftmtp
 ```
 
 ## Architecture
@@ -125,7 +163,7 @@ SwiftMTPKit/
 │   │   ├── Public/                 # Public APIs
 │   │   └── CLI/                    # CLI utilities
 │   ├── SwiftMTPTransportLibUSB/     # USB transport layer using libusb
-│   ├── SwiftMTPTransportIOUSBHost/ # Native macOS USB transport (scaffold only)
+│   ├── SwiftMTPTransportIOUSBHost/ # Native macOS USB transport (discovery, session, bulk, file transfer, events)
 │   ├── SwiftMTPIndex/              # SQLite-based device content indexing
 │   │   └── LiveIndex/              # Cache-first live index (SQLiteLiveIndex)
 │   ├── SwiftMTPSync/               # Snapshot, diff, and mirror functionality
@@ -133,7 +171,7 @@ SwiftMTPKit/
 │   ├── SwiftMTPQuirks/             # Device quirks database
 │   ├── SwiftMTPObservability/      # Logging and performance monitoring
 │   ├── SwiftMTPStore/              # Persistence layer
-│   ├── SwiftMTPFileProvider/       # File Provider extension (macOS) — scaffolded, mock-tested only
+│   ├── SwiftMTPFileProvider/       # File Provider extension (macOS) — scaffolded, mock-tested; truth audit in Docs/FileProvider-TechPreview.md
 │   ├── SwiftMTPXPC/                # XPC service for File Provider ↔ app bridge
 │   ├── SwiftMTPTestKit/            # Test utilities (VirtualMTPDevice, FaultInjectingLink)
 │   └── Tools/
@@ -170,28 +208,39 @@ SwiftMTPKit/
 5. **Device quirks**: Static and learned profiles for device-specific tuning; CI-enforced schema validation
 6. **Write-path safety**: Validation guards on all mutating operations (partial write detection, delete safety, read-only storage enforcement)
 7. **MTP 1.1 coverage**: 50+ object formats, 50+ property codes, all 14 events, all 42 response codes, Android edit extensions, server-side CopyObject
-8. **Dual transport**: libusb-based transport (current) with IOUSBHost native transport scaffold for future macOS-native USB access
+8. **Dual transport**: libusb-based transport (primary) with IOUSBHost native transport fully implemented (discovery, session, bulk, file transfer, event polling) — awaiting real-device validation
+9. **Structured logging**: 10 OSLog categories via `MTPLog` with Signpost performance instrumentation
+10. **Privacy**: `PrivacyRedactor` obfuscates USB serial numbers for safe artifact submission
 
 ### Key Files and Locations
 - Core protocol: `SwiftMTPKit/Sources/SwiftMTPCore/Public/MTPDevice.swift`
 - Actor isolation: `SwiftMTPKit/Sources/SwiftMTPCore/Internal/DeviceActor.swift`
 - Error recovery: `SwiftMTPKit/Sources/SwiftMTPCore/Internal/ErrorRecoveryLayer.swift`
 - Adaptive chunk tuner: `SwiftMTPKit/Sources/SwiftMTPCore/Public/AdaptiveChunkTuner.swift`
+- Diagnostic formatter: `SwiftMTPKit/Sources/SwiftMTPCore/Public/DiagnosticFormatter.swift`
+- Privacy redactor: `SwiftMTPKit/Sources/SwiftMTPCore/Public/PrivacyRedactor.swift`
 - CLI entry point: `SwiftMTPKit/Sources/Tools/swiftmtp-cli/`
 - Index database: `SwiftMTPKit/Sources/SwiftMTPIndex/`
 - Conflict resolution: `SwiftMTPKit/Sources/SwiftMTPSync/ConflictResolutionStrategy.swift`
 - Format filter: `SwiftMTPKit/Sources/SwiftMTPSync/FormatFilter.swift`
+- Structured logging: `SwiftMTPKit/Sources/SwiftMTPObservability/Logger.swift` (MTPLog categories + Signpost)
 - Recovery log: `SwiftMTPKit/Sources/SwiftMTPObservability/RecoveryLog.swift`
 - Device quirks: `SwiftMTPKit/Sources/SwiftMTPQuirks/Resources/quirks.json`
+- Quirk flags: `SwiftMTPKit/Sources/SwiftMTPQuirks/Public/QuirkFlags.swift` (37 transport/protocol/write flags)
 - Specifications: `Specs/quirks.json`
 - Interface probing: `SwiftMTPKit/Sources/SwiftMTPTransportLibUSB/InterfaceProbe.swift`
-- IOUSBHost transport: `SwiftMTPKit/Sources/SwiftMTPTransportIOUSBHost/` (scaffold)
+- IOUSBHost transport: `SwiftMTPKit/Sources/SwiftMTPTransportIOUSBHost/IOUSBHostTransport.swift`
+- IOUSBHost discovery: `SwiftMTPKit/Sources/SwiftMTPTransportIOUSBHost/IOUSBHostDeviceLocator.swift`
 - Fallback ladder: `SwiftMTPKit/Sources/SwiftMTPCore/Internal/FallbackLadder.swift`
 - USB claim diagnostics: `SwiftMTPKit/Sources/SwiftMTPCore/Internal/Transport/USBClaimDiagnostics.swift`
 - Device lab harness: `SwiftMTPKit/Sources/SwiftMTPCore/Public/DeviceLabHarness.swift`
 - Device service registry: `SwiftMTPKit/Sources/SwiftMTPCore/Public/DeviceServiceRegistry.swift`
 - SQLite live index: `SwiftMTPKit/Sources/SwiftMTPIndex/LiveIndex/SQLiteLiveIndex.swift`
 - Virtual test device: `SwiftMTPKit/Sources/SwiftMTPTestKit/VirtualMTPDevice.swift`
+- Coverage gate: `SwiftMTPKit/scripts/coverage_gate.py`
+- Pre-PR checks: `scripts/pre-pr.sh`
+- Bootstrap: `scripts/bootstrap.sh`
+- Shell completions: `completions/` (bash, zsh, fish)
 
 ### Testing Approach
 - Use mock profiles for unit tests without real devices
@@ -200,6 +249,9 @@ SwiftMTPKit/
 - Tests use XCTest with async/await support
 - `SwiftMTPTestKit` provides `VirtualMTPDevice` (in-memory MTP device) and `FaultInjectingLink` for deterministic failure injection
 - 20 test targets: CoreTests, TransportTests, IndexTests, FileProviderTests, ErrorHandlingTests, StoreTests, SyncTests, ScenarioTests, TestKitTests, IntegrationTests, XPCTests, ToolingTests, BDDTests, PropertyTests, SnapshotTests, MTPEndianCodecTests, QuirksTests, ObservabilityTests, SwiftMTPCLITests, UITests
+- IOUSBHost integration tests: protocol conformance, MTP transactions, error cascading (in TransportTests/IOUSBHostIntegrationTests.swift)
+- Snapshot tests: CLI output and report formatting regression tests
+- TransferJournal crash tests: WAL recovery, orphan detection, concurrent access scenarios
 - Coverage gating via `SwiftMTPKit/scripts/coverage_gate.py`
 
 ### Test Discovery Guide
@@ -250,7 +302,7 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 | Xiaomi Mi Note 2 | 2717:ff10 | Partial — only device with real transfer data | xiaomi-mi-note-2-ff10 |
 | Xiaomi Mi Note 2 (alt) | 2717:ff40 | Partial — recent lab run returned 0 storages | xiaomi-mi-note-2-ff40 |
 | Samsung Galaxy S7 (SM-G930W8) | 04e8:6860 | In Progress — handshake fails after USB claim; research (#428) identified 8 init differences; transport fixes (#445) skip alt-setting and skip pre-claim reset; wave 46 deep research identified 3 remaining gaps (reset-reopen recovery, skipClearHalt wiring, forceResetOnClose) — awaiting retest | samsung-android-6860 |
-| OnePlus 3T | 2a70:f003 | Partial — probe/read works, writes fail (0x201D) | oneplus-3t-f003 |
+| OnePlus 3T | 2a70:f003 | In Progress — probe/read works, writes fail (0x201D); wave 45 research identified root cause (SendObjectPropList + format mismatch); wave 46 added 3 write-path QuirkFlags (`forceUndefinedFormatOnWrite`, `emptyDatesInSendObject`, `brokenSetObjectPropList`) — awaiting retest | oneplus-3t-f003 |
 | Google Pixel 7 | 18d1:4ee1 | In Progress — bulk transfer timeout; research (#429) identified 5 differences; transport fixes (#443) add handle re-open, set_configuration, and timeout tuning — awaiting retest | google-pixel-7-4ee1 |
 | Canon EOS Rebel / R-class | 04a9:3139 | Research Only — never connected to SwiftMTP | canon-eos-rebel-3139 |
 | Nikon DSLR / Z-series | 04b0:0410 | Research Only — never connected to SwiftMTP | nikon-dslr-0410 |
@@ -271,7 +323,10 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
   - Local: `cd SwiftMTPKit && swift test -Xswiftc -sanitize=thread --filter CoreTests --filter IndexTests --filter ScenarioTests`
   - Scope: TransportTests excluded (USB I/O is inherently single-threaded at the libusb level).
   - Exit criteria: zero race warnings or TSan-reported errors.
-- Coverage gating: `SwiftMTPKit/scripts/coverage_gate.py` enforces minimum thresholds
+  - Status documented: `Docs/TSANStatus.md`
+- **Coverage gating**: `SwiftMTPKit/scripts/coverage_gate.py` parses codecov JSON and enforces minimum line-coverage thresholds; fails CI if coverage drops below gate.
+- **SPDX compliance**: all source files carry `SPDX-License-Identifier: AGPL-3.0-only` headers; `scripts/pre-pr.sh` validates.
+- **Quirks validation**: CI-enforced schema validation for `Specs/quirks.json`; hooks ensure quirks.json stays in sync.
 - Run locally: `./run-all-tests.sh` (full verification suite)
 
 ## Documentation
@@ -284,7 +339,18 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 - Device submission: `Docs/ROADMAP.device-submission.md`
 - Testing roadmap: `Docs/ROADMAP.testing.md`
 - Release checklist: `Docs/ROADMAP.release-checklist.md`
+- Sprint playbook: `Docs/SPRINT-PLAYBOOK.md`
+- CLI command map: `Docs/CLICommandMap.md`
+- Error catalog: `Docs/ErrorCatalog.md`
+- Shell completions: `Docs/ShellCompletions.md`
+- Mock profiles: `Docs/MockProfiles.md`
+- Installation: `Docs/Installation.md`
+- MTP compat research: `Docs/MTPCompatibilityResearch.md`
+- TSAN status: `Docs/TSANStatus.md`
 - Pixel 7 debug report: `Docs/pixel7-usb-debug-report.md`
+- OnePlus write debug: `Docs/oneplus-write-debug-report.md`
+- Samsung MTP research: `Docs/samsung-mtp-research.md`
+- Device bringup: `Docs/device-bringup.md`
 - File Provider tech preview: `Docs/FileProvider-TechPreview.md`
 - Troubleshooting: `Docs/Troubleshooting.md`
 
