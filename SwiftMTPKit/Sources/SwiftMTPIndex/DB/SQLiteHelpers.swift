@@ -167,6 +167,26 @@ public final class SQLiteDB: @unchecked Sendable {
     }
   }
 
+  /// Reset a prepared statement for reuse with new bindings.
+  public func resetStatement(_ stmt: OpaquePointer) {
+    dbLock.lock()
+    defer { dbLock.unlock() }
+    sqlite3_reset(stmt)
+    sqlite3_clear_bindings(stmt)
+  }
+
+  /// Run EXPLAIN QUERY PLAN and return the plan lines for diagnostic use.
+  public func explainQueryPlan(_ sql: String) throws -> [String] {
+    let eqp = "EXPLAIN QUERY PLAN \(sql)"
+    return try withStatement(eqp) { stmt in
+      var lines: [String] = []
+      while try step(stmt) {
+        if let detail = colText(stmt, 3) { lines.append(detail) }
+      }
+      return lines
+    }
+  }
+
   public func colInt64(_ stmt: OpaquePointer, _ idx: Int32) -> Int64? {
     dbLock.lock()
     defer { dbLock.unlock() }

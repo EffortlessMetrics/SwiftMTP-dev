@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import SQLite3
 import SwiftMTPCore
 
 /// SQLite-backed implementation of the live object index.
@@ -58,6 +59,9 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
       CREATE INDEX IF NOT EXISTS idx_live_parent ON live_objects(deviceId, storageId, parentHandle);
       CREATE INDEX IF NOT EXISTS idx_live_change ON live_objects(deviceId, changeCounter);
       CREATE INDEX IF NOT EXISTS idx_live_name ON live_objects(deviceId, name);
+      CREATE INDEX IF NOT EXISTS idx_live_format ON live_objects(deviceId, formatCode, stale);
+      CREATE INDEX IF NOT EXISTS idx_live_stale ON live_objects(deviceId, storageId, stale);
+      CREATE INDEX IF NOT EXISTS idx_live_parent_stale ON live_objects(deviceId, storageId, parentHandle, stale);
 
       CREATE TABLE IF NOT EXISTS live_storages (
           deviceId    TEXT    NOT NULL,
@@ -383,31 +387,35 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
         INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, createdAt)
         VALUES (?, ?, ?, ?, ?, 'upsert', ?)
         """
+      let upsertStmt = try db.prepare(upsertSQL)
+      defer { sqlite3_finalize(upsertStmt) }
+      let changeStmt = try db.prepare(changeSQL)
+      defer { sqlite3_finalize(changeStmt) }
+
       for obj in objects {
-        try db.withStatement(upsertSQL) { stmt in
-          try db.bind(stmt, 1, deviceId)
-          try db.bind(stmt, 2, Int64(obj.storageId))
-          try db.bind(stmt, 3, Int64(obj.handle))
-          try db.bind(stmt, 4, obj.parentHandle.map { Int64($0) })
-          try db.bind(stmt, 5, obj.name)
-          try db.bind(stmt, 6, obj.pathKey)
-          try db.bind(stmt, 7, obj.sizeBytes.map { Int64($0) })
-          try db.bind(stmt, 8, obj.mtime.map { Int64($0.timeIntervalSince1970) })
-          try db.bind(stmt, 9, Int64(obj.formatCode))
-          try db.bind(stmt, 10, obj.isDirectory ? Int64(1) : Int64(0))
-          try db.bind(stmt, 11, counter)
-          try db.bind(stmt, 12, now)
-          _ = try db.step(stmt)
-        }
-        try db.withStatement(changeSQL) { stmt in
-          try db.bind(stmt, 1, deviceId)
-          try db.bind(stmt, 2, counter)
-          try db.bind(stmt, 3, Int64(obj.storageId))
-          try db.bind(stmt, 4, Int64(obj.handle))
-          try db.bind(stmt, 5, obj.parentHandle.map { Int64($0) })
-          try db.bind(stmt, 6, now)
-          _ = try db.step(stmt)
-        }
+        try db.bind(upsertStmt, 1, deviceId)
+        try db.bind(upsertStmt, 2, Int64(obj.storageId))
+        try db.bind(upsertStmt, 3, Int64(obj.handle))
+        try db.bind(upsertStmt, 4, obj.parentHandle.map { Int64($0) })
+        try db.bind(upsertStmt, 5, obj.name)
+        try db.bind(upsertStmt, 6, obj.pathKey)
+        try db.bind(upsertStmt, 7, obj.sizeBytes.map { Int64($0) })
+        try db.bind(upsertStmt, 8, obj.mtime.map { Int64($0.timeIntervalSince1970) })
+        try db.bind(upsertStmt, 9, Int64(obj.formatCode))
+        try db.bind(upsertStmt, 10, obj.isDirectory ? Int64(1) : Int64(0))
+        try db.bind(upsertStmt, 11, counter)
+        try db.bind(upsertStmt, 12, now)
+        _ = try db.step(upsertStmt)
+        db.resetStatement(upsertStmt)
+
+        try db.bind(changeStmt, 1, deviceId)
+        try db.bind(changeStmt, 2, counter)
+        try db.bind(changeStmt, 3, Int64(obj.storageId))
+        try db.bind(changeStmt, 4, Int64(obj.handle))
+        try db.bind(changeStmt, 5, obj.parentHandle.map { Int64($0) })
+        try db.bind(changeStmt, 6, now)
+        _ = try db.step(changeStmt)
+        db.resetStatement(changeStmt)
       }
     }
   }
@@ -593,6 +601,231 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     }
   }
 
+  // MARK: - Batch Operations
+
+  /// Batch insert objects in a single transaction, bypassing change log for bulk imports.
+  /// Use this for initial device scans where change tracking is not needed.
+  public func batchInsertObjects(_ objects: [IndexedObject]) async throws {
+    guard !objects.isEmpty else { return }
+    let now = Int64(Date().timeIntervalSince1970)
+
+    try db.withTransaction {
+      let sql = """
+        INSERT OR REPLACE INTO live_objects (deviceId, storageId, handle, parentHandle, name, pathKey, sizeBytes, mtime, formatCode, isDirectory, changeCounter, crawledAt, stale)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 0)
+        """
+      let stmt = try db.prepare(sql)
+      defer { sqlite3_finalize(stmt) }
+
+      for obj in objects {
+        try db.bind(stmt, 1, obj.deviceId)
+        try db.bind(stmt, 2, Int64(obj.storageId))
+        try db.bind(stmt, 3, Int64(obj.handle))
+        try db.bind(stmt, 4, obj.parentHandle.map { Int64($0) })
+        try db.bind(stmt, 5, obj.name)
+        try db.bind(stmt, 6, obj.pathKey)
+        try db.bind(stmt, 7, obj.sizeBytes.map { Int64($0) })
+        try db.bind(stmt, 8, obj.mtime.map { Int64($0.timeIntervalSince1970) })
+        try db.bind(stmt, 9, Int64(obj.formatCode))
+        try db.bind(stmt, 10, obj.isDirectory ? Int64(1) : Int64(0))
+        try db.bind(stmt, 11, now)
+        _ = try db.step(stmt)
+        db.resetStatement(stmt)
+      }
+    }
+  }
+
+  /// Batch delete objects by handle in a single transaction.
+  public func batchDeleteObjects(
+    deviceId: String, storageId: UInt32, handles: [MTPObjectHandle]
+  ) async throws {
+    guard !handles.isEmpty else { return }
+    let now = Int64(Date().timeIntervalSince1970)
+
+    try db.withTransaction {
+      let counter = try nextChangeCounterSync(deviceId: deviceId)
+
+      let deleteSQL =
+        "UPDATE live_objects SET stale = 1, changeCounter = ? WHERE deviceId = ? AND storageId = ? AND handle = ?"
+      let deleteStmt = try db.prepare(deleteSQL)
+      defer { sqlite3_finalize(deleteStmt) }
+
+      let changeSQL = """
+        INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, createdAt)
+        VALUES (?, ?, ?, ?, NULL, 'delete', ?)
+        """
+      let changeStmt = try db.prepare(changeSQL)
+      defer { sqlite3_finalize(changeStmt) }
+
+      for handle in handles {
+        try db.bind(deleteStmt, 1, counter)
+        try db.bind(deleteStmt, 2, deviceId)
+        try db.bind(deleteStmt, 3, Int64(storageId))
+        try db.bind(deleteStmt, 4, Int64(handle))
+        _ = try db.step(deleteStmt)
+        db.resetStatement(deleteStmt)
+
+        try db.bind(changeStmt, 1, deviceId)
+        try db.bind(changeStmt, 2, counter)
+        try db.bind(changeStmt, 3, Int64(storageId))
+        try db.bind(changeStmt, 4, Int64(handle))
+        try db.bind(changeStmt, 5, now)
+        _ = try db.step(changeStmt)
+        db.resetStatement(changeStmt)
+      }
+    }
+  }
+
+  /// Batch update mtime values in a single transaction.
+  public func batchUpdateModifiedDates(
+    deviceId: String, storageId: UInt32, updates: [(handle: MTPObjectHandle, date: Date)]
+  ) async throws {
+    guard !updates.isEmpty else { return }
+
+    try db.withTransaction {
+      let counter = try nextChangeCounterSync(deviceId: deviceId)
+      let sql =
+        "UPDATE live_objects SET mtime = ?, changeCounter = ? WHERE deviceId = ? AND storageId = ? AND handle = ?"
+      let stmt = try db.prepare(sql)
+      defer { sqlite3_finalize(stmt) }
+
+      for update in updates {
+        try db.bind(stmt, 1, Int64(update.date.timeIntervalSince1970))
+        try db.bind(stmt, 2, counter)
+        try db.bind(stmt, 3, deviceId)
+        try db.bind(stmt, 4, Int64(storageId))
+        try db.bind(stmt, 5, Int64(update.handle))
+        _ = try db.step(stmt)
+        db.resetStatement(stmt)
+      }
+    }
+  }
+
+  // MARK: - Pagination
+
+  /// Paginated children query for large directories.
+  /// - Parameters:
+  ///   - deviceId: Device identifier.
+  ///   - storageId: Storage identifier.
+  ///   - parentHandle: Parent handle (nil for root).
+  ///   - limit: Maximum results to return.
+  ///   - offset: Number of results to skip.
+  /// - Returns: Array of indexed objects for the requested page.
+  public func children(
+    deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?,
+    limit: Int, offset: Int
+  ) async throws -> [IndexedObject] {
+    let sql: String
+    if let ph = parentHandle {
+      sql =
+        "SELECT * FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0 ORDER BY name LIMIT ? OFFSET ?"
+      return try db.withStatement(sql) { stmt in
+        try db.bind(stmt, 1, deviceId)
+        try db.bind(stmt, 2, Int64(storageId))
+        try db.bind(stmt, 3, Int64(ph))
+        try db.bind(stmt, 4, Int64(limit))
+        try db.bind(stmt, 5, Int64(offset))
+        return try readObjects(stmt)
+      }
+    } else {
+      sql =
+        "SELECT * FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0 ORDER BY name LIMIT ? OFFSET ?"
+      return try db.withStatement(sql) { stmt in
+        try db.bind(stmt, 1, deviceId)
+        try db.bind(stmt, 2, Int64(storageId))
+        try db.bind(stmt, 3, Int64(limit))
+        try db.bind(stmt, 4, Int64(offset))
+        return try readObjects(stmt)
+      }
+    }
+  }
+
+  // MARK: - Lazy Loading (handles only)
+
+  /// Fetch only object handles for a parent, deferring full object loading.
+  /// Useful for large directories where only handles are needed initially.
+  public func childHandles(
+    deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?
+  ) async throws -> [MTPObjectHandle] {
+    let sql: String
+    if let ph = parentHandle {
+      sql =
+        "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
+      return try db.withStatement(sql) { stmt in
+        try db.bind(stmt, 1, deviceId)
+        try db.bind(stmt, 2, Int64(storageId))
+        try db.bind(stmt, 3, Int64(ph))
+        return try readHandles(stmt)
+      }
+    } else {
+      sql =
+        "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
+      return try db.withStatement(sql) { stmt in
+        try db.bind(stmt, 1, deviceId)
+        try db.bind(stmt, 2, Int64(storageId))
+        return try readHandles(stmt)
+      }
+    }
+  }
+
+  /// Fetch objects by a list of handles (for on-demand detail loading).
+  public func objectsByHandles(
+    deviceId: String, handles: [MTPObjectHandle]
+  ) async throws -> [IndexedObject] {
+    guard !handles.isEmpty else { return [] }
+    let placeholders = handles.map { _ in "?" }.joined(separator: ",")
+    let sql =
+      "SELECT * FROM live_objects WHERE deviceId = ? AND handle IN (\(placeholders)) AND stale = 0"
+    return try db.withStatement(sql) { stmt in
+      try db.bind(stmt, 1, deviceId)
+      for (i, handle) in handles.enumerated() {
+        try db.bind(stmt, Int32(i + 2), Int64(handle))
+      }
+      return try readObjects(stmt)
+    }
+  }
+
+  /// Count children for a parent (useful for UI pagination metadata).
+  public func childCount(
+    deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?
+  ) async throws -> Int {
+    let sql: String
+    if let ph = parentHandle {
+      sql =
+        "SELECT COUNT(*) FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
+      return try db.withStatement(sql) { stmt in
+        try db.bind(stmt, 1, deviceId)
+        try db.bind(stmt, 2, Int64(storageId))
+        try db.bind(stmt, 3, Int64(ph))
+        _ = try db.step(stmt)
+        return Int(db.colInt64(stmt, 0) ?? 0)
+      }
+    } else {
+      sql =
+        "SELECT COUNT(*) FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
+      return try db.withStatement(sql) { stmt in
+        try db.bind(stmt, 1, deviceId)
+        try db.bind(stmt, 2, Int64(storageId))
+        _ = try db.step(stmt)
+        return Int(db.colInt64(stmt, 0) ?? 0)
+      }
+    }
+  }
+
+  /// Filter objects by format code (e.g., images only).
+  public func objectsByFormat(
+    deviceId: String, formatCode: UInt16, limit: Int = 1000
+  ) async throws -> [IndexedObject] {
+    let sql =
+      "SELECT * FROM live_objects WHERE deviceId = ? AND formatCode = ? AND stale = 0 LIMIT ?"
+    return try db.withStatement(sql) { stmt in
+      try db.bind(stmt, 1, deviceId)
+      try db.bind(stmt, 2, Int64(formatCode))
+      try db.bind(stmt, 3, Int64(limit))
+      return try readObjects(stmt)
+    }
+  }
+
   // MARK: - Crawl State Reader
 
   public func crawlState(deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?)
@@ -690,6 +923,14 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
           isDirectory: (db.colInt64(stmt, 9) ?? 0) != 0,
           changeCounter: db.colInt64(stmt, 10) ?? 0
         ))
+    }
+    return result
+  }
+
+  private func readHandles(_ stmt: OpaquePointer) throws -> [MTPObjectHandle] {
+    var result: [MTPObjectHandle] = []
+    while try db.step(stmt) {
+      if let h = db.colInt64(stmt, 0) { result.append(MTPObjectHandle(h)) }
     }
     return result
   }
