@@ -63,7 +63,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Nokia Android 6 | 2e04:c025 | ⚪ proposed | — |
 | Nokia Android 61 | 2e04:c026 | ⚪ proposed | — |
 | Nokia Android 62 | 2e04:c02a | ⚪ proposed | — |
-| Zte Blade3 | 19d2:0306 | ⚪ proposed | — |
 | Zte Grand X In | 19d2:0343 | ⚪ proposed | — |
 | Zte V985 | 19d2:0383 | ⚪ proposed | — |
 | Zte Blade L3 | 19d2:2008 | ⚪ proposed | — |
@@ -86,7 +85,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Blackberry Dtek60 | 0fca:8041 | ⚪ proposed | — |
 | Blackberry Keyone | 0fca:8042 | ⚪ proposed | — |
 | Meizu Mx | 2a45:2008 | ⚪ proposed | — |
-| Meizu Mx Adb | 2a45:0c02 | ⚪ proposed | — |
 | Vivo V11 | 2d95:6002 | ⚪ proposed | — |
 | Vivo V19 | 2d95:6003 | ⚪ proposed | — |
 | Vivo Iqoo Neo9s | 2d95:6012 | ⚪ proposed | — |
@@ -552,17 +550,12 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Kobo Kobo Libra H2o | 2237:4184 | ⚪ proposed | supportsGetObjectPropList |
 | Kobo Kobo Nia | 2237:4186 | ⚪ proposed | supportsGetObjectPropList |
 | Kobo Kobo Libra 2 | 2237:4187 | ⚪ proposed | supportsGetObjectPropList |
-| Mediatek Mt5xx | 0e8d:0050 | ⚪ proposed | — |
 | Mediatek Mt65xx MTP | 0e8d:2008 | ⚪ proposed | — |
 | Mediatek Mt65xx MTP Cdc Adb | 0e8d:200a | ⚪ proposed | — |
 | Mediatek Mt65xx MTP Adb | 0e8d:201d | ⚪ proposed | — |
 | Mediatek Wiko Sunny | 0e8d:4001 | ⚪ proposed | — |
-| Vivo Y21 Mediatek | 0e8d:ff00 | ⚪ proposed | — |
 | Oneplus 9 5g | 2a70:9012 | experimental | supportsGetObjectPropList, preferGetObjectPropList, supportsGetPartialObject |
 | Asus Zenfone Go | 0b05:2008 | ⚪ proposed | — |
-| Asus Zenfone5 MTP | 0b05:5480 | ⚪ proposed | — |
-| Asus Zenfone6 MTP | 0b05:5490 | ⚪ proposed | — |
-| Asus Zenfone2 MTP | 0b05:5600 | ⚪ proposed | — |
 | Asus Zenfone5 A500kl | 0b05:7780 | ⚪ proposed | — |
 | Asus Memopad7 Me572cl | 0b05:7772 | ⚪ proposed | — |
 | Asus Fonepad7 Fe375cxg | 0b05:7773 | ⚪ proposed | — |
@@ -736,7 +729,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Sony Nwz B153f | 054c:04be | ⚪ proposed | — |
 | Sony Nwz S754 | 054c:04cc | ⚪ proposed | — |
 | Sony Nwz B163f | 054c:059a | ⚪ proposed | — |
-| Lenovo P70 A | 17ef:0c02 | ⚪ proposed | — |
 | Lenovo P700 | 17ef:7497 | ⚪ proposed | — |
 | Lenovo P780 | 17ef:74a6 | ⚪ proposed | — |
 | Lenovo K900 | 17ef:75b5 | ⚪ proposed | — |
@@ -1759,8 +1751,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Acer Iconia Tab A510 | 0502:3326 | ⚪ proposed | — |
 | Acer Iconia One 8 | 0502:3327 | ⚪ proposed | — |
 | Acer Iconia Tab 10 | 0502:3328 | ⚪ proposed | — |
-| Asus Zenpad 3s10 | 0b05:4c80 | ⚪ proposed | useAndroidExtensions |
-| Asus Zenpad10 Z301m | 0b05:4c81 | ⚪ proposed | useAndroidExtensions |
 | Asus Zenpad8 Z380kl | 0b05:4c82 | ⚪ proposed | useAndroidExtensions |
 | Asus Transformer Pad | 0b05:4c83 | ⚪ proposed | useAndroidExtensions |
 | Asus Zenpad Z10 | 0b05:4c84 | ⚪ proposed | useAndroidExtensions |
@@ -1769,7 +1759,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Asus Memopad8 | 0b05:7778 | ⚪ proposed | useAndroidExtensions |
 | Asus Fonepad7 | 0b05:7779 | ⚪ proposed | useAndroidExtensions |
 | Asus Padfone2 | 0b05:777a | ⚪ proposed | useAndroidExtensions |
-| Lenovo Tab P11 Gen2 | 17ef:7498 | ⚪ proposed | useAndroidExtensions |
 | Lenovo Tab M10 Plus | 17ef:7499 | ⚪ proposed | useAndroidExtensions |
 | Lenovo Tab P11 Plus | 17ef:749a | ⚪ proposed | useAndroidExtensions |
 | Lenovo Tab M8 Hd | 17ef:749b | ⚪ proposed | useAndroidExtensions |
@@ -2190,7 +2179,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Acer Iconia Tab A500 Id2 | 0502:3341 | ⚪ proposed | — |
 | Acer Iconia Tab A501 Id1 | 0502:3344 | ⚪ proposed | — |
 | Acer Iconia Tab A501 Id2 | 0502:3345 | ⚪ proposed | — |
-| Asus Tf700 Transformer MTP | 0b05:4c90 | ⚪ proposed | — |
 | Asus Tf700 Transformer MTP Adb | 0b05:4c91 | ⚪ proposed | — |
 | Asus Tf701t Transformer Pad MTP | 0b05:4ca0 | ⚪ proposed | — |
 | Asus Tf701t Transformer Pad MTP Adb | 0b05:4ca1 | ⚪ proposed | — |
@@ -2225,7 +2213,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Lenovo S660 | 17ef:74f8 | ⚪ proposed | — |
 | Lenovo Ideatab A2109a | 17ef:7542 | ⚪ proposed | — |
 | Lenovo Ideatab S2210a | 17ef:757d | ⚪ proposed | — |
-| Lenovo K900 Id2 | 17ef:75b3 | ⚪ proposed | — |
 | Lg Vx8550 V Cast Mobile Phone | 1004:6010 | ⚪ proposed | — |
 | Lg Kc910 Renoir Mobile Phone | 1004:608f | ⚪ proposed | — |
 | Lg Gr 500 Music Player | 1004:611b | ⚪ proposed | — |
@@ -2763,9 +2750,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Thomson Scenium E308 | 069b:3028 | ⚪ proposed | supportsGetObjectPropList |
 | Thomson Lyra Hc308a | 069b:3035 | ⚪ proposed | supportsGetObjectPropList |
 | Coby Coby Mp705 | 1e74:6512 | ⚪ proposed | supportsGetObjectPropList |
-| Bravis A401 Neo | 0e8d:0c03 | ⚪ proposed | supportsGetObjectPropList |
-| Mediatek Mt65xx 67xx Mtppluscdc Mode | 0e8d:2012 | ⚪ proposed | supportsGetObjectPropList |
-| Mediatek Qin Phone F21 Pro | 0e8d:2026 | ⚪ proposed | supportsGetObjectPropList |
 | Lenovo Tab P12 2nd Id | 0e8d:7e16 | ⚪ proposed | supportsGetObjectPropList |
 | Trekstor Vibez 8 12gb | 066f:842a | ⚪ proposed | — |
 | Medion Md8333 Id1 | 066f:8550 | ⚪ proposed | — |
@@ -3271,19 +3255,18 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Medion Md99000 P9514 Olivetti Olipad 110 | 0408:b009 | ⚪ proposed | — |
 | Medion Lifetab P9514 | 0408:b00a | ⚪ proposed | — |
 | Trekstor Surftab Breeze 70 Quad 3g | 1e68:1045 | ⚪ proposed | — |
-| Sony Nwz A845 | 054c:0404 | ⚪ proposed | supportsGetObjectPropList |
+| Sony Nwz A845 | 054c:0404 | ⚪ proposed | — |
 | Sony Sony Tablet P1 | 054c:04d1 | ⚪ proposed | — |
 | Sony Sony Tablet S | 054c:05b3 | ⚪ proposed | — |
 | Sony Sony Tablet S1 | 054c:05b4 | ⚪ proposed | — |
 | Sony Xperia Tablet S Sgpt12 | 054c:06ac | ⚪ proposed | supportsGetObjectPropList |
-| Sony Nwz E384 | 054c:0882 | ⚪ proposed | supportsGetObjectPropList |
+| Sony Nwz E384 | 054c:0882 | ⚪ proposed | — |
 | Sony Dcr Sr75 | 054c:1294 | ⚪ proposed | supportsGetObjectPropList |
 | Panasonic P905i | 04da:2145 | ⚪ proposed | supportsGetObjectPropList |
 | Panasonic P906i | 04da:2158 | ⚪ proposed | supportsGetObjectPropList |
 | Pioneer Xmp3 | 08e4:0148 | ⚪ proposed | supportsGetObjectPropList |
 | Curitel Communications Inc Verizon Wireless Device | 106c:3215 | ⚪ proposed | supportsGetObjectPropList |
 | Pantech Crux | 106c:f003 | ⚪ proposed | supportsGetObjectPropList |
-| Asus Me302kl Memo Pad Fhd10 MTP | 0b05:4cc0 | ⚪ proposed | — |
 | Asus Me302kl Memo Pad Fhd10 Mtpadb | 0b05:4cc1 | ⚪ proposed | — |
 | Asus Me301t Memo Pad Smart 10 MTP | 0b05:4cd0 | ⚪ proposed | — |
 | Asus Me301t Memo Pad Smart 10 Mtpadb | 0b05:4cd1 | ⚪ proposed | — |
@@ -3296,7 +3279,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Asus Tf101 Eeepad Transformer MTP | 0b05:4e0f | ⚪ proposed | — |
 | Asus Tf101 Eeepad Transformer Mtpadb | 0b05:4e1f | ⚪ proposed | — |
 | Asus Fonepad | 0b05:514f | ⚪ proposed | — |
-| Asus Padfone MTP | 0b05:5200 | ⚪ proposed | — |
 | Asus Padfone Mtpadb | 0b05:5201 | ⚪ proposed | — |
 | Asus Me302c Memopad MTP | 0b05:520f | ⚪ proposed | — |
 | Asus Padfone 2 MTP | 0b05:5210 | ⚪ proposed | — |
@@ -3315,7 +3297,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Asus Memo K00f MTP | 0b05:5460 | ⚪ proposed | — |
 | Asus Memo Pad 8 MTP | 0b05:5466 | ⚪ proposed | — |
 | Asus Memo K00f Mtpadb | 0b05:5468 | ⚪ proposed | — |
-| Asus Zenfone 5 Mtpadb | 0b05:5481 | ⚪ proposed | — |
 | Asus Zenfone 6 Mtpadb | 0b05:5491 | ⚪ proposed | — |
 | Asus K010 MTP | 0b05:5500 | ⚪ proposed | — |
 | Asus Memopad 7 Mtpadb | 0b05:5506 | ⚪ proposed | — |
@@ -3323,14 +3304,12 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Asus Memopad 8 Me181 Cx MTP | 0b05:5561 | ⚪ proposed | — |
 | Asus Z00ad MTP | 0b05:5601 | ⚪ proposed | — |
 | Asus Tx201la MTP | 0b05:561f | ⚪ proposed | — |
-| Asus Zenfone 4 MTP | 0b05:580f | ⚪ proposed | — |
 | Asus Zenfone 4 A400cg MTP | 0b05:581f | ⚪ proposed | — |
 | Asus Asus Fonepad 8 Fe380cg MTP | 0b05:590f | ⚪ proposed | — |
 | Asus A450cg MTP | 0b05:5a0f | ⚪ proposed | — |
 | Asus Zenpad 80 MTP | 0b05:5e0f | ⚪ proposed | — |
 | Asus Zenfone 2 Ze550ml MTP | 0b05:5f02 | ⚪ proposed | — |
 | Asus Zenfone 2 Ze551ml MTP | 0b05:5f03 | ⚪ proposed | — |
-| Asus Zenpad 10 | 0b05:600f | ⚪ proposed | — |
 | Asus Zenfone V MTP | 0b05:610f | ⚪ proposed | — |
 | Asus Zenfone 5 A500kl Mtpadb | 0b05:7781 | ⚪ proposed | — |
 | Medion Lifetab P9516 | 17ef:7483 | ⚪ proposed | — |
@@ -3339,7 +3318,6 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Lenovo A706 | 17ef:7614 | ⚪ proposed | — |
 | Lenovo Ideatab S5000 | 17ef:76e8 | ⚪ proposed | — |
 | Lenovo Toga Tablet B6000 F | 17ef:76f2 | ⚪ proposed | — |
-| Lenovo Yoga Tablet 10 B8000 H | 17ef:76ff | ⚪ proposed | — |
 | Lenovo S960 | 17ef:770a | ⚪ proposed | — |
 | Lenovo K910ss | 17ef:7713 | ⚪ proposed | — |
 | Lenovo S930 | 17ef:7718 | ⚪ proposed | — |
@@ -20024,3 +20002,31 @@ Auto-generated from Specs/quirks.json — do not edit manually.
 | Lenovo Smart Display | 17ef:7941 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject, sendObject |
 | Pioneer Avh Car Headunit | 08e4:0160 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
 | Kenwood Dmx Car Headunit | 0b28:0200 | ⚪ proposed | openSession, getDeviceInfo, getStorageIDs, getObjectHandles, getObject |
+| Microsoft Kin One | 045e:04c1 | community | — |
+| Microsoft Kin Twom | 045e:04c2 | community | — |
+| Fujitsu F02e | 04c5:13f5 | community | — |
+| Fujitsu Arrows 202f | 04c5:1409 | community | — |
+| Fujitsu Tone M17 | 04c5:145c | community | — |
+| Insignia Pilot 4002 | 19ff:0304 | community | — |
+| Lenovo P70a | 17ef:0c02 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Lenovo A820 | 17ef:7498 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Lenovo K900 | 17ef:75b3 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Lenovo Yoga Tablet 10 | 17ef:76ff | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Zte V790 Blade3 | 19d2:0306 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Meizu Mx | 2a45:0c02 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Asus Tf300 Transformer | 0b05:4c80 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Asus Tf300 Transformer | 0b05:4c81 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Asus Tf700 Transformer | 0b05:4c90 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Asus Memo Me302kl | 0b05:4cc0 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Asus Padfone | 0b05:5200 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Asus Zenfone5 | 0b05:5480 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Asus Zenfone5 | 0b05:5481 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Asus Zenfone6 | 0b05:5490 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Asus Zenfone2 | 0b05:5600 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Asus Zenfone4 | 0b05:580f | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Asus Zenpad10 | 0b05:600f | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Mediatek Mt5xx Mt6xx | 0e8d:0050 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Mediatek Bravis A401 | 0e8d:0c03 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Mediatek Mt65xx MTP Cdc | 0e8d:2012 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Mediatek Qin F21 Pro | 0e8d:2026 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
+| Mediatek Vivo Y21 | 0e8d:ff00 | ⚪ proposed | supportsGetPartialObject64, supportsSendPartialObject, supportsGetPartialObject |
