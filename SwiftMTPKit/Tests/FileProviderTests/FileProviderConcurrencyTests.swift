@@ -195,6 +195,10 @@ final class FileProviderConcurrencyTests: XCTestCase {
     ) {
       r(DeviceStatusResponse(connected: true, sessionOpen: true))
     }
+
+    func getThumbnail(
+      _ req: ThumbnailRequest, withReply r: @escaping (ThumbnailResponse) -> Void
+    ) { r(ThumbnailResponse(success: false, errorMessage: "stub")) }
   }
 
   // MARK: - Helpers
