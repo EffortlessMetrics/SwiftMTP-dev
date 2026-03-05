@@ -60,10 +60,12 @@ public final class MirrorEngine: Sendable {
   ///   - deviceId: Unique identifier for the device
   ///   - root: Local directory to mirror into
   ///   - include: Optional filter function to include/exclude objects
+  ///   - progress: Optional progress tracker for real-time status updates
   /// - Returns: Report of the mirror operation
   public func mirror(
     device: any MTPDevice, deviceId: MTPDeviceID, to root: URL,
-    include: (@Sendable (MTPDiff.Row) -> Bool)? = nil
+    include: (@Sendable (MTPDiff.Row) -> Bool)? = nil,
+    progress: MirrorProgress? = nil
   ) async throws -> MTPSyncReport {
     log.info("Starting mirror operation for device \(deviceId.raw) to \(root.path)")
 
@@ -86,13 +88,20 @@ public final class MirrorEngine: Sendable {
     // Process added and modified files
     let filesToDownload = delta.added + delta.modified
 
+    // Initialize progress tracking
+    let totalBytes = filesToDownload.compactMap(\.size).reduce(UInt64(0), +)
+    await progress?.setTotal(files: filesToDownload.count, bytes: totalBytes)
+
     for file in filesToDownload {
       if let include = include, !include(file) {
         report.skipped += 1
+        await progress?.skipFile()
         continue
       }
 
       let localURL = pathKeyToLocalURL(file.pathKey, root: root)
+      let fileName = localURL.lastPathComponent
+      let fileSize = file.size ?? 0
 
       // Conflict detection: if the file is in "modified" and a local copy exists
       // with different content (size or mtime), we have a conflict.
@@ -111,35 +120,46 @@ public final class MirrorEngine: Sendable {
           switch resolution.outcome {
           case .skipped, .pending:
             report.skipped += 1
+            await progress?.skipFile()
           case .keptLocal:
             report.skipped += 1
+            await progress?.skipFile()
           case .keptDevice:
+            await progress?.beginFile(name: fileName, size: fileSize)
             do {
               try await downloadFile(file, from: device, to: root)
               report.downloaded += 1
+              await progress?.completeFile(size: fileSize)
             } catch {
               log.error("Failed to download conflicted file \(file.pathKey): \(error.localizedDescription)")
               report.failed += 1
+              await progress?.failFile()
             }
           case .keptBoth:
+            await progress?.beginFile(name: fileName, size: fileSize)
             do {
               try await downloadFile(file, from: device, to: root, suffix: "-device")
               report.downloaded += 1
+              await progress?.completeFile(size: fileSize)
             } catch {
               log.error("Failed to download conflicted file \(file.pathKey): \(error.localizedDescription)")
               report.failed += 1
+              await progress?.failFile()
             }
           }
           continue
         }
       }
 
+      await progress?.beginFile(name: fileName, size: fileSize)
       do {
         try await downloadFile(file, from: device, to: root)
         report.downloaded += 1
+        await progress?.completeFile(size: fileSize)
       } catch {
         log.error("Failed to download file \(file.pathKey): \(error.localizedDescription)")
         report.failed += 1
+        await progress?.failFile()
       }
     }
 
@@ -255,16 +275,18 @@ public final class MirrorEngine: Sendable {
   ///   - deviceId: Unique identifier for the device
   ///   - root: Local directory to mirror into
   ///   - includePattern: Glob pattern to match files (e.g., "DCIM/**", "*.jpg")
+  ///   - progress: Optional progress tracker for real-time status updates
   /// - Returns: Report of the mirror operation
   public func mirror(
     device: any MTPDevice, deviceId: MTPDeviceID, to root: URL,
-    includePattern: String
+    includePattern: String, progress: MirrorProgress? = nil
   ) async throws -> MTPSyncReport {
     let filter: @Sendable (MTPDiff.Row) -> Bool = { [self] row in
       return self.matchesPattern(row.pathKey, pattern: includePattern)
     }
 
-    return try await mirror(device: device, deviceId: deviceId, to: root, include: filter)
+    return try await mirror(
+      device: device, deviceId: deviceId, to: root, include: filter, progress: progress)
   }
 
   /// Mirror with format-based filtering
@@ -273,16 +295,18 @@ public final class MirrorEngine: Sendable {
   ///   - deviceId: Unique identifier for the device
   ///   - root: Local directory to mirror into
   ///   - formatFilter: Format filter controlling which object types to include/exclude
+  ///   - progress: Optional progress tracker for real-time status updates
   /// - Returns: Report of the mirror operation
   public func mirror(
     device: any MTPDevice, deviceId: MTPDeviceID, to root: URL,
-    formatFilter: MTPFormatFilter
+    formatFilter: MTPFormatFilter, progress: MirrorProgress? = nil
   ) async throws -> MTPSyncReport {
     let filter: @Sendable (MTPDiff.Row) -> Bool = { row in
       return formatFilter.matches(format: row.format)
     }
 
-    return try await mirror(device: device, deviceId: deviceId, to: root, include: filter)
+    return try await mirror(
+      device: device, deviceId: deviceId, to: root, include: filter, progress: progress)
   }
 
   /// Check if a path matches a glob pattern
