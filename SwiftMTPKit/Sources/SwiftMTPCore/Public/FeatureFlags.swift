@@ -2,13 +2,13 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import SwiftMTPConcurrency
 
 /// Centralized feature flag management for SwiftMTP.
 public final class FeatureFlags: @unchecked Sendable {
   public static let shared = FeatureFlags()
 
-  private var flags: [String: Bool] = [:]
-  private let lock = NSLock()
+  private let flags = LockedValue<[String: Bool]>([:])
 
   // MARK: - Known Flags
 
@@ -42,26 +42,22 @@ public final class FeatureFlags: @unchecked Sendable {
     // Load initial values from Environment
     for (key, value) in ProcessInfo.processInfo.environment {
       if key.starts(with: "SWIFTMTP_") {
-        flags[key] = (value == "1" || value.lowercased() == "true")
+        flags.withValue { $0[key] = (value == "1" || value.lowercased() == "true") }
       }
     }
 
     // Load from arguments (useful for XCTest / CLI flags like --demo-mode)
     let args = ProcessInfo.processInfo.arguments
-    if args.contains("--demo-mode") { flags["SWIFTMTP_DEMO_MODE"] = true }
-    if args.contains("--storybook") { flags["SWIFTMTP_SHOW_STORYBOOK"] = true }
-    if args.contains("--trace-usb") { flags["SWIFTMTP_TRACE_USB"] = true }
+    if args.contains("--demo-mode") { flags.withValue { $0["SWIFTMTP_DEMO_MODE"] = true } }
+    if args.contains("--storybook") { flags.withValue { $0["SWIFTMTP_SHOW_STORYBOOK"] = true } }
+    if args.contains("--trace-usb") { flags.withValue { $0["SWIFTMTP_TRACE_USB"] = true } }
   }
 
   public func isEnabled(_ key: String) -> Bool {
-    lock.lock()
-    defer { lock.unlock() }
-    return flags[key] ?? false
+    flags.read { $0[key] ?? false }
   }
 
   public func set(_ key: String, enabled: Bool) {
-    lock.lock()
-    defer { lock.unlock() }
-    flags[key] = enabled
+    flags.withValue { $0[key] = enabled }
   }
 }

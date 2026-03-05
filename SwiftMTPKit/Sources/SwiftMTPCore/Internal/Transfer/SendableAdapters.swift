@@ -2,16 +2,17 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import SwiftMTPConcurrency
 
 // MARK: - Thread-Safe Lock Implementation
 
-/// Cross-platform lock for thread safety
 final class _Lock: @unchecked Sendable {
-  private let l = NSLock()
+  private let lock = LockedValue(())
+
   func with<T>(_ body: () throws -> T) rethrows -> T {
-    l.lock()
-    defer { l.unlock() }
-    return try body()
+    try lock.withValue { _ in
+      try body()
+    }
   }
 }
 
@@ -40,21 +41,16 @@ final class AtomicProgressTracker: @unchecked Sendable {
 /// Thread-safe container for capturing the remote handle assigned by SendObjectInfo.
 /// Used to persist the handle to the journal even when SendObject subsequently fails.
 public final class AtomicHandleBox: @unchecked Sendable {
-  private var _value: UInt32?
-  private let lock = NSLock()
+  private let storage = LockedValue<UInt32?>(nil)
 
   public init() {}
 
   public func set(_ value: UInt32) {
-    lock.lock()
-    defer { lock.unlock() }
-    _value = value
+    storage.withValue { $0 = value }
   }
 
   public var value: UInt32? {
-    lock.lock()
-    defer { lock.unlock() }
-    return _value
+    storage.read { $0 }
   }
 }
 

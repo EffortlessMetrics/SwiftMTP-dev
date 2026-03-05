@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import SwiftMTPConcurrency
 
 // MARK: - Feature Flagging
 
@@ -14,35 +15,30 @@ public enum MTPFeature: String, CaseIterable, Sendable {
 }
 
 public final class MTPFeatureFlags: @unchecked Sendable {
-  private var flags: [MTPFeature: Bool] = [:]
-  private let lock = NSLock()
+  private let flags = LockedValue<[MTPFeature: Bool]>([:])
   public static let shared = MTPFeatureFlags()
 
   private init() {
     for feature in MTPFeature.allCases {
       let envVal = ProcessInfo.processInfo.environment["SWIFTMTP_FEATURE_\(feature.rawValue)"]
-      flags[feature] = (envVal == "1" || envVal == "true")
+      flags.withValue { $0[feature] = (envVal == "1" || envVal == "true") }
     }
   }
 
   public func isEnabled(_ feature: MTPFeature) -> Bool {
-    lock.lock()
-    defer { lock.unlock() }
-    return flags[feature] ?? false
+    flags.read { $0[feature] ?? false }
   }
 
   public func setEnabled(_ feature: MTPFeature, _ enabled: Bool) {
-    lock.lock()
-    defer { lock.unlock() }
-    flags[feature] = enabled
+    flags.withValue { $0[feature] = enabled }
   }
 
   public func resetAllFeatures() {
-    lock.lock()
-    defer { lock.unlock() }
-    for feature in MTPFeature.allCases {
-      let envVal = ProcessInfo.processInfo.environment["SWIFTMTP_FEATURE_\(feature.rawValue)"]
-      flags[feature] = (envVal == "1" || envVal == "true")
+    flags.withValue { storage in
+      for feature in MTPFeature.allCases {
+        let envVal = ProcessInfo.processInfo.environment["SWIFTMTP_FEATURE_\(feature.rawValue)"]
+        storage[feature] = (envVal == "1" || envVal == "true")
+      }
     }
   }
 }
@@ -56,15 +52,12 @@ public protocol BDDScenario: Sendable {
 
 public final class BDDContext: @unchecked Sendable {
   public let link: MTPLink
-  private var logs: [String] = []
-  private let lock = NSLock()
+  private let logs = LockedValue<[String]>([])
 
   public init(link: MTPLink) { self.link = link }
 
   public func step(_ description: String) {
-    lock.lock()
-    defer { lock.unlock() }
-    logs.append(description)
+    logs.withValue { $0.append(description) }
     if ProcessInfo.processInfo.environment["SWIFTMTP_DEBUG"] == "1" {
       print("   [BDD] \(description)")
     }
