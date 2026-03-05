@@ -195,6 +195,80 @@ final class DiagnosticFormatterTests: XCTestCase {
     XCTAssertFalse(output.contains("Run:"))
   }
 
+  // MARK: - Index (DBError) diagnostics
+
+  func testDiagnoseIndexCorruption() {
+    let diag = DiagnosticFormatter.diagnoseIndexDB("database disk image is malformed")
+    XCTAssertTrue(diag.summary.contains("corrupted"))
+    XCTAssertEqual(diag.relatedCommand, "swiftmtp index --rebuild")
+  }
+
+  func testDiagnoseIndexCorruptionAlt() {
+    let diag = DiagnosticFormatter.diagnoseIndexDB("file is corrupt")
+    XCTAssertTrue(diag.summary.contains("corrupted"))
+  }
+
+  func testDiagnoseIndexDiskFull() {
+    let diag = DiagnosticFormatter.diagnoseIndexDB("database or disk is full")
+    XCTAssertTrue(diag.summary.contains("Disk full"))
+    XCTAssertTrue(diag.suggestion.contains("Free disk space"))
+  }
+
+  func testDiagnoseIndexDiskFullNoSpace() {
+    let diag = DiagnosticFormatter.diagnoseIndexDB("no space left on device")
+    XCTAssertTrue(diag.summary.contains("Disk full"))
+  }
+
+  func testDiagnoseIndexGeneric() {
+    let diag = DiagnosticFormatter.diagnoseIndexDB("constraint violation")
+    XCTAssertTrue(diag.summary.contains("Index database error"))
+    XCTAssertTrue(diag.cause.contains("constraint violation"))
+    XCTAssertEqual(diag.relatedCommand, "swiftmtp index --rebuild")
+  }
+
+  func testDiagnoseDBErrorViaTypeName() {
+    // Local type matching cross-module DBError by type name.
+    enum DBError: Error, CustomStringConvertible {
+      case open(String)
+      var description: String {
+        switch self { case .open(let m): return m }
+      }
+    }
+    let diag = DiagnosticFormatter.diagnose(DBError.open("database disk image is malformed"))
+    XCTAssertTrue(diag.summary.contains("corrupted"))
+    XCTAssertEqual(diag.relatedCommand, "swiftmtp index --rebuild")
+  }
+
+  // MARK: - XPC diagnostics
+
+  func testDiagnoseXPCConnectionInvalidated() {
+    let diag = DiagnosticFormatter.diagnoseXPC("XPC connection permanently invalidated")
+    XCTAssertTrue(diag.summary.contains("disconnected"))
+    XCTAssertTrue(diag.suggestion.contains("retry automatically"))
+  }
+
+  func testDiagnoseXPCQueueFull() {
+    let diag = DiagnosticFormatter.diagnoseXPC("XPC operation queue full — service unreachable")
+    XCTAssertTrue(diag.summary.contains("overloaded"))
+    XCTAssertTrue(diag.suggestion.contains("Wait"))
+  }
+
+  func testDiagnoseXPCGeneric() {
+    let diag = DiagnosticFormatter.diagnoseXPC("unknown XPC error")
+    XCTAssertTrue(diag.summary.contains("System service error"))
+    XCTAssertTrue(diag.suggestion.contains("restart"))
+  }
+
+  func testDiagnoseXPCErrorViaTypeName() {
+    // Local type matching cross-module XPCConnectionError by type name.
+    enum XPCConnectionError: Error, CustomStringConvertible {
+      case connectionInvalidated
+      var description: String { "XPC connection permanently invalidated" }
+    }
+    let diag = DiagnosticFormatter.diagnose(XPCConnectionError.connectionInvalidated)
+    XCTAssertTrue(diag.summary.contains("disconnected"))
+  }
+
   // MARK: - ErrorDiagnostic equatable
 
   func testErrorDiagnosticEquatable() {
