@@ -257,12 +257,28 @@ struct SystemCommands {
       let summary = db.governanceSummary()
       let validation = db.validateGovernance()
       let tested = db.testedDevices()
+      let stats = db.coverageStats()
 
       if flags.json {
         var info: [String: Any] = [
-          "totalEntries": db.entries.count,
+          "totalEntries": stats.totalEntries,
+          "uniqueVIDs": stats.uniqueVIDs,
           "governance": Dictionary(uniqueKeysWithValues: summary.map { ($0.key.rawValue, $0.value) }),
           "governanceValid": validation.isValid,
+          "status": stats.statusCounts,
+          "flagUsage": stats.flagUsage,
+          "categories": stats.categoryCounts,
+          "validation": [
+            "withEvidence": stats.withEvidence,
+            "withoutEvidence": stats.withoutEvidence,
+          ],
+          "testing": [
+            "tested": stats.testedCount,
+            "untested": stats.untestedCount,
+          ],
+          "confidence": stats.confidenceCounts,
+          "topVIDs": stats.topVIDs.map { ["vid": $0.formatted, "count": $0.count] },
+          "unusedFlags": stats.unusedFlags,
         ]
         if !validation.isValid {
           info["violations"] = validation.violations
@@ -274,7 +290,8 @@ struct SystemCommands {
 
       print("📊 Quirks Governance Summary")
       print("============================")
-      print("   Total entries:  \(db.entries.count)")
+      print("   Total entries:  \(stats.totalEntries)")
+      print("   Unique VIDs:    \(stats.uniqueVIDs)")
       print("")
       print("   By governance level:")
       for level in QuirkGovernanceLevel.allCases {
@@ -288,6 +305,91 @@ struct SystemCommands {
         }
         let label = level.rawValue + String(repeating: " ", count: max(0, 12 - level.rawValue.count))
         print("     \(icon) \(label) \(count)")
+      }
+
+      // Status breakdown
+      print("")
+      print("   By status:")
+      for (status, count) in stats.statusCounts.sorted(by: { $0.key < $1.key }) {
+        let padded = status + String(repeating: " ", count: max(0, 14 - status.count))
+        print("     \(padded) \(count)")
+      }
+
+      // Flag usage (top 10)
+      let topFlags = stats.flagUsage.sorted { $0.value > $1.value }.prefix(10)
+      if !topFlags.isEmpty {
+        print("")
+        print("   Top flag usage (non-default):")
+        for (name, count) in topFlags {
+          let padded = name + String(repeating: " ", count: max(0, 38 - name.count))
+          print("     \(padded) \(count)")
+        }
+      }
+
+      // Unused flags
+      if !stats.unusedFlags.isEmpty {
+        print("")
+        print("   Unused flags (\(stats.unusedFlags.count)):")
+        for name in stats.unusedFlags.prefix(flags.verbose ? stats.unusedFlags.count : 5) {
+          print("     ⚪ \(name)")
+        }
+        if !flags.verbose && stats.unusedFlags.count > 5 {
+          print("     ... and \(stats.unusedFlags.count - 5) more (use --verbose)")
+        }
+      }
+
+      // Validation status
+      print("")
+      print("   Validation:")
+      print("     With evidence:    \(stats.withEvidence)")
+      print("     Without evidence: \(stats.withoutEvidence)")
+
+      // Testing status
+      print("")
+      print("   Device testing:")
+      print("     Tested:   \(stats.testedCount)")
+      print("     Untested: \(stats.untestedCount)")
+
+      // Confidence breakdown
+      print("")
+      print("   By confidence:")
+      for (conf, count) in stats.confidenceCounts.sorted(by: { $0.key < $1.key }) {
+        let padded = conf + String(repeating: " ", count: max(0, 14 - conf.count))
+        print("     \(padded) \(count)")
+      }
+
+      // Top categories
+      let topCats = stats.topCategories(10)
+      if !topCats.isEmpty {
+        print("")
+        print("   Top categories:")
+        for (cat, count) in topCats {
+          let padded = cat + String(repeating: " ", count: max(0, 20 - cat.count))
+          print("     \(padded) \(count)")
+        }
+      }
+
+      // Top VIDs
+      if !stats.topVIDs.isEmpty {
+        print("")
+        print("   Top VIDs:")
+        for entry in stats.topVIDs.prefix(10) {
+          let padded = entry.formatted + String(repeating: " ", count: max(0, 10 - entry.formatted.count))
+          print("     \(padded) \(entry.count) entries")
+        }
+      }
+
+      if flags.verbose {
+        // Full category breakdown
+        let allCats = stats.categoryCounts.sorted { $0.value > $1.value }
+        if allCats.count > 10 {
+          print("")
+          print("   All categories (\(allCats.count)):")
+          for (cat, count) in allCats {
+            let padded = cat + String(repeating: " ", count: max(0, 20 - cat.count))
+            print("     \(padded) \(count)")
+          }
+        }
       }
 
       if !tested.isEmpty {

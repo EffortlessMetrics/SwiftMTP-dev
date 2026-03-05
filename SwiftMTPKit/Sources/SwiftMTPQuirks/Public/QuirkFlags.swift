@@ -228,6 +228,56 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
 
   public init() {}
 
+  /// All boolean flag names and their current values, for introspection.
+  public var boolFlagMap: [(name: String, value: Bool)] {
+    [
+      ("resetOnOpen", resetOnOpen),
+      ("forceResetOnClose", forceResetOnClose),
+      ("noZeroReads", noZeroReads),
+      ("noReleaseInterface", noReleaseInterface),
+      ("requiresKernelDetach", requiresKernelDetach),
+      ("needsLongerOpenTimeout", needsLongerOpenTimeout),
+      ("extendedBulkTimeout", extendedBulkTimeout),
+      ("skipAltSetting", skipAltSetting),
+      ("skipPreClaimReset", skipPreClaimReset),
+      ("skipClearHaltBeforeProbe", skipClearHaltBeforeProbe),
+      ("requiresSessionBeforeDeviceInfo", requiresSessionBeforeDeviceInfo),
+      ("transactionIdResetsOnSession", transactionIdResetsOnSession),
+      ("resetReopenOnOpenSessionIOError", resetReopenOnOpenSessionIOError),
+      ("ignoreHeaderErrors", ignoreHeaderErrors),
+      ("brokenSendObjectPropList", brokenSendObjectPropList),
+      ("brokenSetObjectPropList", brokenSetObjectPropList),
+      ("skipCloseSession", skipCloseSession),
+      ("supportsPartialRead64", supportsPartialRead64),
+      ("supportsPartialRead32", supportsPartialRead32),
+      ("supportsPartialWrite", supportsPartialWrite),
+      ("prefersPropListEnumeration", prefersPropListEnumeration),
+      ("propListOverridesObjectInfo", propListOverridesObjectInfo),
+      ("samsungPartialObjectBoundaryBug", samsungPartialObjectBoundaryBug),
+      ("needsShortReads", needsShortReads),
+      ("stallOnLargeReads", stallOnLargeReads),
+      ("disableEventPump", disableEventPump),
+      ("requireStabilization", requireStabilization),
+      ("skipPTPReset", skipPTPReset),
+      ("alwaysProbeDescriptor", alwaysProbeDescriptor),
+      ("deleteSendsEvent", deleteSendsEvent),
+      ("supportsAndroidEditExtensions", supportsAndroidEditExtensions),
+      ("writeToSubfolderOnly", writeToSubfolderOnly),
+      ("forceFFFFFFFForSendObject", forceFFFFFFFForSendObject),
+      ("emptyDatesInSendObject", emptyDatesInSendObject),
+      ("forceUndefinedFormatOnWrite", forceUndefinedFormatOnWrite),
+      ("unknownSizeInSendObjectInfo", unknownSizeInSendObjectInfo),
+      ("skipGetObjectPropValue", skipGetObjectPropValue),
+      ("only7BitFilenames", only7BitFilenames),
+      ("requireUniqueFilenames", requireUniqueFilenames),
+      ("cannotHandleDateModified", cannotHandleDateModified),
+      ("brokenBatteryLevel", brokenBatteryLevel),
+      ("supportsGetObjectPropList", supportsGetObjectPropList),
+      ("supportsGetPartialObject", supportsGetPartialObject),
+      ("cameraClass", cameraClass),
+    ]
+  }
+
   /// Reasonable defaults for an unrecognized PTP/Still-Image-Capture class device
   /// (USB interface class 0x06, subclass 0x01, protocol 0x01).
   /// Used when a device connects with no matching quirk entry.

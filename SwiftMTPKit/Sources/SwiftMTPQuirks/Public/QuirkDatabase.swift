@@ -405,4 +405,108 @@ public struct QuirkDatabase: Codable, Sendable {
     }
     return GovernanceValidationResult(violations: violations)
   }
+
+  // MARK: - Coverage statistics
+
+  /// Comprehensive coverage statistics for the quirks database.
+  public func coverageStats() -> QuirksCoverageStats {
+    // Category breakdown
+    var categoryCounts: [String: Int] = [:]
+    for entry in entries {
+      let cat = entry.category ?? "uncategorized"
+      categoryCounts[cat, default: 0] += 1
+    }
+
+    // Flag usage: count entries where each flag differs from default
+    let defaultFlags = QuirkFlags()
+    var flagUsage: [String: Int] = [:]
+    for entry in entries {
+      let resolved = entry.resolvedFlags()
+      for (name, value) in resolved.boolFlagMap {
+        let defaultValue = defaultFlags.boolFlagMap.first(where: { $0.name == name })?.value ?? false
+        if value != defaultValue {
+          flagUsage[name, default: 0] += 1
+        }
+      }
+    }
+
+    // Status breakdown
+    var statusCounts: [String: Int] = [:]
+    for entry in entries {
+      let status = entry.status?.rawValue ?? "proposed"
+      statusCounts[status, default: 0] += 1
+    }
+
+    // Validation: entries with vs without evidenceRequired
+    let withEvidence = entries.filter { $0.evidenceRequired != nil && !($0.evidenceRequired!.isEmpty) }.count
+    let withoutEvidence = entries.count - withEvidence
+
+    // Tested vs untested
+    let testedCount = testedDevices().count
+    let untestedCount = entries.count - testedCount
+
+    // Unique VIDs and top VIDs
+    var vidCounts: [UInt16: Int] = [:]
+    for entry in entries {
+      vidCounts[entry.vid, default: 0] += 1
+    }
+
+    let topVIDs = vidCounts.sorted { $0.value > $1.value }.prefix(10).map {
+      QuirksCoverageStats.VIDEntry(vid: $0.key, count: $0.value)
+    }
+
+    // Confidence breakdown
+    var confidenceCounts: [String: Int] = [:]
+    for entry in entries {
+      let conf = entry.confidence ?? "unspecified"
+      confidenceCounts[conf, default: 0] += 1
+    }
+
+    return QuirksCoverageStats(
+      totalEntries: entries.count,
+      categoryCounts: categoryCounts,
+      flagUsage: flagUsage,
+      statusCounts: statusCounts,
+      withEvidence: withEvidence,
+      withoutEvidence: withoutEvidence,
+      testedCount: testedCount,
+      untestedCount: untestedCount,
+      uniqueVIDs: vidCounts.count,
+      topVIDs: Array(topVIDs),
+      confidenceCounts: confidenceCounts
+    )
+  }
+}
+
+/// Comprehensive coverage statistics for the quirks database.
+public struct QuirksCoverageStats: Sendable {
+  public struct VIDEntry: Sendable {
+    public let vid: UInt16
+    public let count: Int
+    public var formatted: String { String(format: "0x%04x", vid) }
+  }
+
+  public let totalEntries: Int
+  public let categoryCounts: [String: Int]
+  public let flagUsage: [String: Int]
+  public let statusCounts: [String: Int]
+  public let withEvidence: Int
+  public let withoutEvidence: Int
+  public let testedCount: Int
+  public let untestedCount: Int
+  public let uniqueVIDs: Int
+  public let topVIDs: [VIDEntry]
+  public let confidenceCounts: [String: Int]
+
+  /// Top N categories by entry count.
+  public func topCategories(_ n: Int = 10) -> [(category: String, count: Int)] {
+    categoryCounts.sorted { $0.value > $1.value }.prefix(n).map { ($0.key, $0.value) }
+  }
+
+  /// Flag names with zero usage (never set to non-default).
+  public var unusedFlags: [String] {
+    let defaults = QuirkFlags()
+    let allNames = defaults.boolFlagMap.map(\.name)
+    return allNames.filter { flagUsage[$0] == nil }.sorted()
+  }
 }
