@@ -392,6 +392,8 @@ public struct QuirkDatabase: Codable, Sendable {
   /// Promoted entries MUST have non-empty `evidenceRequired`.
   public func validateGovernance() -> GovernanceValidationResult {
     var violations: [String] = []
+
+    // Promoted entries must have non-empty evidenceRequired
     for entry in entries where entry.status == .promoted {
       if let evidence = entry.evidenceRequired {
         if evidence.isEmpty {
@@ -403,6 +405,29 @@ public struct QuirkDatabase: Codable, Sendable {
           "Promoted entry '\(entry.id)' is missing evidenceRequired")
       }
     }
+
+    // Duplicate VID:PID detection
+    var seenPairs: [String: String] = [:]  // "vid:pid" → first entry id
+    for entry in entries {
+      let key = "\(entry.vid):\(entry.pid)"
+      if let first = seenPairs[key] {
+        violations.append(
+          "Duplicate VID:PID \(key) in entries '\(first)' and '\(entry.id)'")
+      } else {
+        seenPairs[key] = entry.id
+      }
+    }
+
+    // Flag name validation — detect unrecognised flag names
+    let known = QuirkFlags.knownFlagNames
+    for entry in entries {
+      let resolved = entry.resolvedFlags()
+      for (name, _) in resolved.boolFlagMap where !known.contains(name) {
+        violations.append(
+          "Entry '\(entry.id)' uses unknown flag '\(name)'")
+      }
+    }
+
     return GovernanceValidationResult(violations: violations)
   }
 

@@ -295,6 +295,65 @@ done
 
 echo "✅ Bench gates validation complete"
 
+# ──────────────────────────────────────────────────────────
+# Flag name validation (all flags must be known QuirkFlags)
+# ──────────────────────────────────────────────────────────
+echo "🔍 Checking flag names against known QuirkFlags..."
+KNOWN_FLAGS='["resetOnOpen","forceResetOnClose","noZeroReads","noReleaseInterface","requiresKernelDetach","needsLongerOpenTimeout","extendedBulkTimeout","skipAltSetting","skipPreClaimReset","skipClearHaltBeforeProbe","forceDoubleReset","longTimeout","requiresSessionBeforeDeviceInfo","transactionIdResetsOnSession","resetReopenOnOpenSessionIOError","ignoreHeaderErrors","brokenSendObjectPropList","brokenSetObjectPropList","skipCloseSession","supportsPartialRead64","supportsPartialRead32","supportsPartialWrite","prefersPropListEnumeration","propListOverridesObjectInfo","samsungPartialObjectBoundaryBug","needsShortReads","stallOnLargeReads","disableEventPump","requireStabilization","skipPTPReset","alwaysProbeDescriptor","deleteSendsEvent","supportsAndroidEditExtensions","writeToSubfolderOnly","preferredWriteFolder","forceFFFFFFFForSendObject","emptyDatesInSendObject","forceUndefinedFormatOnWrite","unknownSizeInSendObjectInfo","skipGetObjectPropValue","only7BitFilenames","requireUniqueFilenames","cannotHandleDateModified","brokenBatteryLevel","supportsGetObjectPropList","supportsGetPartialObject","cameraClass"]'
+unknown_flags=$(jq -r --argjson known "$KNOWN_FLAGS" '
+  [.entries[] | .flags // {} | keys[] | select(. as $k | $known | index($k) | not)] | unique[]
+' "$QUIRKS_FILE")
+if [[ -n "$unknown_flags" ]]; then
+    echo "❌ Unknown flag names found (not in QuirkFlags):"
+    echo "$unknown_flags" | while read -r flag; do
+        count=$(jq --arg f "$flag" '[.entries[] | select(.flags[$f] != null)] | length' "$QUIRKS_FILE")
+        echo "   '$flag' (used by $count entries)"
+    done
+    exit 1
+fi
+echo "✅ All flag names are recognised"
+
+# ──────────────────────────────────────────────────────────
+# Category consistency (entries in same category have flags object)
+# ──────────────────────────────────────────────────────────
+echo "🔍 Checking category consistency..."
+categories_without_flags=$(jq -r '
+  [.entries[] | select(.flags == null and .ops == null) | .category // "uncategorized"] | group_by(.) | map({cat: .[0], count: length}) | sort_by(-.count) | .[] | select(.count > 50) | "\(.cat): \(.count) entries missing flags"
+' "$QUIRKS_FILE")
+if [[ -n "$categories_without_flags" ]]; then
+    echo "⚠️  WARNING: Categories with many entries missing flags/ops:"
+    echo "$categories_without_flags"
+fi
+echo "✅ Category consistency check complete"
+
+# ──────────────────────────────────────────────────────────
+# Required fields by status level
+# ──────────────────────────────────────────────────────────
+echo "🔍 Checking required fields by status level..."
+# Verified entries should have confidence
+verified_no_confidence=$(jq -r '.entries[] | select(.status == "verified") | select(.confidence == null or .confidence == "") | .id' "$QUIRKS_FILE")
+if [[ -n "$verified_no_confidence" ]]; then
+    echo "⚠️  WARNING: Verified entries missing 'confidence':"
+    echo "$verified_no_confidence" | head -10
+fi
+# Promoted entries must have lastVerifiedDate (already checked above, but reinforce)
+echo "✅ Required-fields-by-status check complete"
+
+# ──────────────────────────────────────────────────────────
+# Orphan evidenceRequired check
+# ──────────────────────────────────────────────────────────
+echo "🔍 Checking for orphan evidenceRequired references..."
+VALID_EVIDENCE='["probe_log","write_test","disconnect_recovery","bench_100m","bench_1g","bench_10m","read_test","delete_test","event_log","device_info","storage_enum","session_reset","partial_read","prop_list","thumbnail"]'
+orphan_evidence=$(jq -r --argjson valid "$VALID_EVIDENCE" '
+  [.entries[] | select(.evidenceRequired != null) | {id: .id, orphans: [.evidenceRequired[] | select(. as $e | $valid | index($e) | not)]} | select(.orphans | length > 0) | "\(.id): \(.orphans | join(", "))"][]
+' "$QUIRKS_FILE")
+if [[ -n "$orphan_evidence" ]]; then
+    echo "⚠️  WARNING: Entries with unrecognised evidenceRequired values:"
+    echo "$orphan_evidence" | head -10
+    echo "   (Known values: $(echo "$VALID_EVIDENCE" | jq -r 'join(", ")'))"
+fi
+echo "✅ Orphan evidenceRequired check complete"
+
 # Check that DocC generator source exists (built binary is 'swiftmtp-docs')
 echo "🔍 Checking DocC generator..."
 docc_generator_src="SwiftMTPKit/Sources/Tools/docc-generator-tool"

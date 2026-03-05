@@ -556,3 +556,93 @@ final class DatabaseGovernanceQueryTests: XCTestCase {
     XCTAssertEqual(db.testedDevices().count, promoted.count)
   }
 }
+
+// MARK: - Wave 50: Tightened Governance Checks
+
+final class QuirksGovernanceTightenedTests: XCTestCase {
+
+  // MARK: Duplicate VID:PID detection
+
+  func testNoDuplicateVIDPIDInBundledDatabase() throws {
+    let db = try QuirkDatabase.load()
+    var seen: [String: String] = [:]
+    var duplicates: [String] = []
+    for entry in db.entries {
+      let key = "\(entry.vid):\(entry.pid)"
+      if let first = seen[key] {
+        duplicates.append("\(key) in '\(first)' and '\(entry.id)'")
+      } else {
+        seen[key] = entry.id
+      }
+    }
+    XCTAssertTrue(duplicates.isEmpty, "Duplicate VID:PID pairs: \(duplicates)")
+  }
+
+  func testDuplicateVIDPIDCaughtByGovernance() {
+    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
+      DeviceQuirk(id: "dup-a", vid: 0x1234, pid: 0x5678, status: .proposed),
+      DeviceQuirk(id: "dup-b", vid: 0x1234, pid: 0x5678, status: .proposed),
+    ])
+    let result = db.validateGovernance()
+    XCTAssertFalse(result.isValid)
+    XCTAssertTrue(result.violations.contains(where: { $0.contains("Duplicate VID:PID") }))
+  }
+
+  // MARK: Flag name validation
+
+  func testAllBundledFlagNamesAreKnown() throws {
+    let db = try QuirkDatabase.load()
+    let known = QuirkFlags.knownFlagNames
+    var unknown: [String] = []
+    for entry in db.entries {
+      let resolved = entry.resolvedFlags()
+      for (name, _) in resolved.boolFlagMap where !known.contains(name) {
+        unknown.append("\(entry.id).\(name)")
+      }
+    }
+    XCTAssertTrue(unknown.isEmpty, "Unknown flag names: \(unknown.prefix(10))")
+  }
+
+  func testKnownFlagNamesIncludesPreferredWriteFolder() {
+    XCTAssertTrue(QuirkFlags.knownFlagNames.contains("preferredWriteFolder"))
+  }
+
+  func testKnownFlagNamesIncludesAllBoolFlags() {
+    let flags = QuirkFlags()
+    for (name, _) in flags.boolFlagMap {
+      XCTAssertTrue(
+        QuirkFlags.knownFlagNames.contains(name),
+        "boolFlagMap name '\(name)' missing from knownFlagNames")
+    }
+  }
+
+  // MARK: Promoted entries require evidence
+
+  func testPromotedEntriesHaveEvidenceRequired() throws {
+    let db = try QuirkDatabase.load()
+    let promoted = db.entries.filter { $0.status == .promoted }
+    for entry in promoted {
+      XCTAssertNotNil(
+        entry.evidenceRequired,
+        "Promoted entry '\(entry.id)' missing evidenceRequired")
+      XCTAssertFalse(
+        entry.evidenceRequired?.isEmpty ?? true,
+        "Promoted entry '\(entry.id)' has empty evidenceRequired")
+    }
+  }
+
+  // MARK: Governance catches multiple violation types at once
+
+  func testGovernanceCatchesMultipleViolations() {
+    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
+      DeviceQuirk(id: "bad-promoted", vid: 1, pid: 1, status: .promoted),
+      DeviceQuirk(id: "dup-1", vid: 0xAAAA, pid: 0xBBBB, status: .proposed),
+      DeviceQuirk(id: "dup-2", vid: 0xAAAA, pid: 0xBBBB, status: .proposed),
+    ])
+    let result = db.validateGovernance()
+    XCTAssertFalse(result.isValid)
+    XCTAssertTrue(result.violations.count >= 2, "Expected at least 2 violations, got \(result.violations)")
+    XCTAssertTrue(result.violations.contains(where: { $0.contains("evidenceRequired") }))
+    XCTAssertTrue(result.violations.contains(where: { $0.contains("Duplicate VID:PID") }))
+  }
+}
