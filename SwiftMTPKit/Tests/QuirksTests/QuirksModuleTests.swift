@@ -385,6 +385,12 @@ final class QuirkSerializationTests: XCTestCase {
     flags.writeToSubfolderOnly = true
     flags.preferredWriteFolder = "Download"
     flags.cameraClass = true
+    flags.only7BitFilenames = true
+    flags.requireUniqueFilenames = true
+    flags.cannotHandleDateModified = true
+    flags.brokenBatteryLevel = true
+    flags.alwaysProbeDescriptor = true
+    flags.deleteSendsEvent = true
 
     let data = try JSONEncoder().encode(flags)
     let decoded = try JSONDecoder().decode(QuirkFlags.self, from: data)
@@ -402,6 +408,41 @@ final class QuirkSerializationTests: XCTestCase {
     XCTAssertEqual(decoded.busyBackoff?.retries, 3)
     XCTAssertEqual(decoded.busyBackoff?.baseMs, 500)
     XCTAssertEqual(decoded.busyBackoff?.jitterPct ?? 0, 0.15, accuracy: 0.001)
+  }
+
+  func testNewLibmtpFlagsDefaultToFalse() throws {
+    // Verify backward compatibility: decoding JSON without new flags uses defaults.
+    let json = """
+      { "resetOnOpen": true }
+      """
+    let decoded = try JSONDecoder().decode(QuirkFlags.self, from: Data(json.utf8))
+    XCTAssertTrue(decoded.resetOnOpen)
+    XCTAssertFalse(decoded.only7BitFilenames)
+    XCTAssertFalse(decoded.requireUniqueFilenames)
+    XCTAssertFalse(decoded.cannotHandleDateModified)
+    XCTAssertFalse(decoded.brokenBatteryLevel)
+    XCTAssertFalse(decoded.alwaysProbeDescriptor)
+    XCTAssertFalse(decoded.deleteSendsEvent)
+  }
+
+  func testNewLibmtpFlagsDecodeFromJSON() throws {
+    let json = """
+      {
+        "only7BitFilenames": true,
+        "requireUniqueFilenames": true,
+        "cannotHandleDateModified": true,
+        "brokenBatteryLevel": true,
+        "alwaysProbeDescriptor": true,
+        "deleteSendsEvent": true
+      }
+      """
+    let decoded = try JSONDecoder().decode(QuirkFlags.self, from: Data(json.utf8))
+    XCTAssertTrue(decoded.only7BitFilenames)
+    XCTAssertTrue(decoded.requireUniqueFilenames)
+    XCTAssertTrue(decoded.cannotHandleDateModified)
+    XCTAssertTrue(decoded.brokenBatteryLevel)
+    XCTAssertTrue(decoded.alwaysProbeDescriptor)
+    XCTAssertTrue(decoded.deleteSendsEvent)
   }
 
   func testQuirkStatusRoundTrip() throws {

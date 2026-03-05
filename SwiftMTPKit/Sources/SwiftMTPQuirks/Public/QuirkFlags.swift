@@ -127,6 +127,18 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// Skip PTP Device Reset (0x66) control transfer on open.
   public var skipPTPReset: Bool = false
 
+  /// Always probe the USB OS Descriptor for proper MTP operation.
+  /// Required by SanDisk Sansa v2 chipset (AMS AD3525) which needs the
+  /// extra descriptor probe to initialize its MTP stack correctly.
+  /// Maps to libmtp `DEVICE_FLAG_ALWAYS_PROBE_DESCRIPTOR`.
+  public var alwaysProbeDescriptor: Bool = false
+
+  /// Device sends ObjectDeleted (0x4003) events after delete operations.
+  /// When set, the event pump expects and processes these events for cache
+  /// invalidation. When false, caches are invalidated eagerly on delete.
+  /// Maps to libmtp `DEVICE_FLAG_DELETE_SENDS_EVENT`.
+  public var deleteSendsEvent: Bool = false
+
   // MARK: - Write-level
 
   /// Device supports Android edit extensions (BeginEditObject/EndEditObject/TruncateObject).
@@ -159,7 +171,35 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
   /// Disabled by default; some devices reject unknown-size semantics.
   public var unknownSizeInSendObjectInfo: Bool = false
 
+  // MARK: - Filename-level
+
+  /// Device only accepts 7-bit ASCII filenames (characters ≤ 0x7F).
+  /// Violates PTP spec which mandates Unicode. Found on Philips Shoqbox and
+  /// some legacy media players. When set, filenames are sanitized to ASCII
+  /// before SendObjectInfo. Maps to libmtp `DEVICE_FLAG_ONLY_7BIT_FILENAMES`.
+  public var only7BitFilenames: Bool = false
+
+  /// Device requires globally unique filenames — no two files on the device
+  /// may share the same name, even across different folders. When set, the
+  /// write path appends a short hash suffix when a name collision is detected.
+  /// Affects Sony NWZ Walkman and some Samsung YP-series players.
+  /// Maps to libmtp `DEVICE_FLAG_UNIQUE_FILENAMES`.
+  public var requireUniqueFilenames: Bool = false
+
   // MARK: - Property-level
+
+  /// Device claims DateModified is read/write but silently fails to update it.
+  /// The date can only be set correctly on the first SendObjectInfo; subsequent
+  /// SetObjectPropValue calls for DateModified are ignored. When set, metadata
+  /// update paths skip DateModified writes to avoid silent failures.
+  /// Affects SanDisk Sansa E250 and similar firmware. Maps to libmtp
+  /// `DEVICE_FLAG_CANNOT_HANDLE_DATEMODIFIED`.
+  public var cannotHandleDateModified: Bool = false
+
+  /// GetDevicePropValue for battery level (0x5001) is broken and returns
+  /// errors or hangs. When set, battery level queries are skipped.
+  /// Maps to libmtp `DEVICE_FLAG_BROKEN_BATTERY_LEVEL`.
+  public var brokenBatteryLevel: Bool = false
 
   /// Skip GetObjectPropValue / SetObjectPropValue calls for all objects.
   /// Some devices hang or return error codes on these operations.
@@ -224,6 +264,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case disableEventPump
     case requireStabilization
     case skipPTPReset
+    case alwaysProbeDescriptor
+    case deleteSendsEvent
     case supportsAndroidEditExtensions
     case writeToSubfolderOnly
     case preferredWriteFolder
@@ -232,6 +274,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     case forceUndefinedFormatOnWrite
     case unknownSizeInSendObjectInfo
     case skipGetObjectPropValue
+    case only7BitFilenames
+    case requireUniqueFilenames
+    case cannotHandleDateModified
+    case brokenBatteryLevel
     case supportsGetObjectPropList
     case supportsGetPartialObject
     case cameraClass
@@ -291,6 +337,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     self.requireStabilization =
       try container.decodeIfPresent(Bool.self, forKey: .requireStabilization) ?? false
     self.skipPTPReset = try container.decodeIfPresent(Bool.self, forKey: .skipPTPReset) ?? false
+    self.alwaysProbeDescriptor =
+      try container.decodeIfPresent(Bool.self, forKey: .alwaysProbeDescriptor) ?? false
+    self.deleteSendsEvent =
+      try container.decodeIfPresent(Bool.self, forKey: .deleteSendsEvent) ?? false
     self.supportsAndroidEditExtensions =
       try container.decodeIfPresent(Bool.self, forKey: .supportsAndroidEditExtensions) ?? false
     self.writeToSubfolderOnly =
@@ -307,6 +357,14 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       try container.decodeIfPresent(Bool.self, forKey: .unknownSizeInSendObjectInfo) ?? false
     self.skipGetObjectPropValue =
       try container.decodeIfPresent(Bool.self, forKey: .skipGetObjectPropValue) ?? false
+    self.only7BitFilenames =
+      try container.decodeIfPresent(Bool.self, forKey: .only7BitFilenames) ?? false
+    self.requireUniqueFilenames =
+      try container.decodeIfPresent(Bool.self, forKey: .requireUniqueFilenames) ?? false
+    self.cannotHandleDateModified =
+      try container.decodeIfPresent(Bool.self, forKey: .cannotHandleDateModified) ?? false
+    self.brokenBatteryLevel =
+      try container.decodeIfPresent(Bool.self, forKey: .brokenBatteryLevel) ?? false
     self.supportsGetObjectPropList =
       try container.decodeIfPresent(Bool.self, forKey: .supportsGetObjectPropList) ?? false
     self.supportsGetPartialObject =
@@ -348,6 +406,8 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
     try container.encodeIfPresent(disableEventPump, forKey: .disableEventPump)
     try container.encodeIfPresent(requireStabilization, forKey: .requireStabilization)
     try container.encodeIfPresent(skipPTPReset, forKey: .skipPTPReset)
+    try container.encodeIfPresent(alwaysProbeDescriptor, forKey: .alwaysProbeDescriptor)
+    try container.encodeIfPresent(deleteSendsEvent, forKey: .deleteSendsEvent)
     try container.encodeIfPresent(
       supportsAndroidEditExtensions, forKey: .supportsAndroidEditExtensions)
     try container.encodeIfPresent(writeToSubfolderOnly, forKey: .writeToSubfolderOnly)
@@ -358,6 +418,10 @@ public struct QuirkFlags: Sendable, Codable, Equatable {
       forceUndefinedFormatOnWrite, forKey: .forceUndefinedFormatOnWrite)
     try container.encodeIfPresent(unknownSizeInSendObjectInfo, forKey: .unknownSizeInSendObjectInfo)
     try container.encodeIfPresent(skipGetObjectPropValue, forKey: .skipGetObjectPropValue)
+    try container.encodeIfPresent(only7BitFilenames, forKey: .only7BitFilenames)
+    try container.encodeIfPresent(requireUniqueFilenames, forKey: .requireUniqueFilenames)
+    try container.encodeIfPresent(cannotHandleDateModified, forKey: .cannotHandleDateModified)
+    try container.encodeIfPresent(brokenBatteryLevel, forKey: .brokenBatteryLevel)
     try container.encodeIfPresent(supportsGetObjectPropList, forKey: .supportsGetObjectPropList)
     try container.encodeIfPresent(supportsGetPartialObject, forKey: .supportsGetPartialObject)
     try container.encodeIfPresent(cameraClass, forKey: .cameraClass)

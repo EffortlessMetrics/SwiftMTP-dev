@@ -304,6 +304,16 @@ extension MTPDeviceActor {
         let useEmptyDates = policy?.flags.emptyDatesInSendObject ?? false
         let useUndefinedFormat = policy?.flags.forceUndefinedFormatOnWrite ?? false
         let allowUnknownObjectInfoSizeRetry = policy?.flags.unknownSizeInSendObjectInfo ?? false
+        let only7Bit = policy?.flags.only7BitFilenames ?? false
+
+        // Apply 7-bit filename restriction if device requires it (libmtp ONLY_7BIT_FILENAMES)
+        let effectiveName: String
+        if only7Bit {
+          effectiveName = PathSanitizer.sanitizeForMTP(name, only7Bit: true) ?? name
+        } else {
+          effectiveName = name
+        }
+
         let isXiaomiFF40 = Self.isXiaomiMiNote2FF40(summary: summary)
         let isOnePlusF003 = Self.isOnePlus3TF003(summary: summary)
         let useMediaTargetPolicy = isXiaomiFF40 || isOnePlusF003
@@ -403,7 +413,7 @@ extension MTPDeviceActor {
           let progressTracker = AtomicProgressTracker()
           let currentLink = try await self.getMTPLink()
           try await ProtoTransfer.writeWholeObject(
-            storageID: storageRaw, parent: parent, name: name, size: size,
+            storageID: storageRaw, parent: parent, name: effectiveName, size: size,
             dataHandler: { buf in
               let produced = sourceAdapter.produce(buf)
               let totalBytes = progressTracker.add(Int(produced))
@@ -435,7 +445,7 @@ extension MTPDeviceActor {
           let progressTracker = AtomicProgressTracker()
           let currentLink = try await self.getMTPLink()
           try await ProtoTransfer.writeWholeObjectViaPropList(
-            storageID: storageRaw, parent: parent, name: name, size: size,
+            storageID: storageRaw, parent: parent, name: effectiveName, size: size,
             dataHandler: { buf in
               let produced = sourceAdapter.produce(buf)
               let totalBytes = progressTracker.add(Int(produced))
