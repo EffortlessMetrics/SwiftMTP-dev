@@ -92,7 +92,7 @@ discovered during development. Items are grouped by area.
 | F-CI-3 | **Missing SPM cache on TSAN and smoke jobs** — `ci.yml` `tsan` job and `smoke.yml` lack SPM dependency caching while `build-test` job has it. | Slower CI runs; full SPM resolve on every run. | **Fixed** in this PR — added `actions/cache` for `.build` directory. |
 | F-CI-4 | **Coverage job re-runs full test suite** — `swiftmtp-ci.yml` `coverage` job has `needs: test` but then runs `./run-all-tests.sh` again instead of reusing test artifacts. | Doubles CI time on main branch pushes. | **Resolved** — `test` job now uploads coverage artifacts; `coverage` job downloads and reuses them (runs on `ubuntu-latest` in ~1 min). |
 | F-CI-5 | **`fuzz-test` in ci.yml uses `macos-latest`** while all other jobs pin `macos-15`. | Could hit DTXConnectionServices issues if `macos-latest` resolves to a different image. | **Resolved** — `fuzz-test` job already pinned to `macos-15`. |
-| F-CI-6 | **DocC generation has no Xcode/Swift version pin** — `docs.yml` runs `generate-docs.sh` without `setup-xcode` or `setup-swift` actions. | DocC output may vary across runner image updates. | Documented — add version pins if docs become flaky. |
+| F-CI-6 | ~~**DocC generation has no Xcode/Swift version pin**~~ | ~~DocC output may vary across runner image updates.~~ | **DONE** — pinned Xcode 16.2 in `docs.yml` (wave 50). |
 | F-CI-7 | **macOS runner queuing** — macos-15 runners can queue for 5–15 min during peak hours. | Slows PR feedback loop. | Unavoidable on GitHub-hosted runners. The `smoke.yml` fast-path helps. |
 
 ### Test issues
