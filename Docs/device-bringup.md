@@ -10,7 +10,13 @@ This avoids binary "works/doesn't work" decisions and gives repeatable evidence 
 
 ```bash
 # Full bring-up with automatic artifact collection
+./scripts/device-bringup.sh --mode mtp-unlocked --device 18d1:4ee1
+
+# Same using --vid/--pid flags
 ./scripts/device-bringup.sh --mode mtp-unlocked --vid 0x18d1 --pid 0x4ee1
+
+# Dry-run — show what would be captured without running commands
+./scripts/device-bringup.sh --mode mtp-unlocked --device 18d1:4ee1 --dry-run
 
 # Full bring-up with strict unlocked gate (all green checks required)
 ./scripts/device-bringup.sh --mode mtp-unlocked --strict-unlocked \
@@ -21,6 +27,46 @@ swift run swiftmtp --real-only probe
 
 # Run device lab
 swift run swiftmtp device-lab connected --json
+```
+
+## Evidence Capture Stages
+
+The bring-up script runs these stages in order, saving all output to a timestamped
+evidence directory under `Docs/benchmarks/device-bringup/`:
+
+| Stage | Command | Output |
+|-------|---------|--------|
+| 1. Host snapshot | `sw_vers`, `uname`, `system_profiler` | `host/` |
+| 2. USB dump | `swiftmtp usb-dump` | `host/swiftmtp-usb-dump.txt` |
+| 3. Probe (JSON) | `swiftmtp probe --json` | `evidence/probe.json` |
+| 4. Device info | `swiftmtp info` | `evidence/info.txt` |
+| 5. Storage listing | `swiftmtp ls` | `evidence/ls.txt` |
+| 6. Test read | `swiftmtp pull` (first file < 1 MB) | `evidence/test-read-file` |
+| 7. Evidence collection | `swiftmtp collect --json` | `evidence/collect.json` |
+| 8. Device lab | `swiftmtp device-lab connected --json` | `device-lab/` |
+| 9. Strict validation | `validate-mtp-unlocked.sh` (optional) | `logs/` |
+
+Each stage is non-fatal: failures are logged but the script continues to capture
+as much evidence as possible. Both `summary.json` and `summary.md` are generated
+at the end.
+
+### Output Structure
+
+```
+Docs/benchmarks/device-bringup/<timestamp>-<mode>/
+├── mode.json              # Run metadata
+├── preflight.md           # Pre-run checklist
+├── summary.json           # Machine-readable summary
+├── summary.md             # Human-readable summary
+├── host/                  # Host environment snapshots
+├── evidence/              # Probe, info, ls, collect output
+│   ├── probe.json
+│   ├── info.txt
+│   ├── ls.txt
+│   ├── collect.json
+│   └── test-read-file     # Downloaded test file (if found)
+├── device-lab/            # device-lab artifacts
+└── logs/                  # stderr and intermediate logs
 ```
 
 ## Modes
