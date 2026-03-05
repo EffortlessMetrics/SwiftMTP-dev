@@ -23,6 +23,7 @@ struct SwiftMTPCLI {
   var targetPID: String?
   var targetBus: Int?
   var targetAddress: Int?
+  var probeTimeoutSeconds: Int = 5
   var filteredArgs = [String]()
 
   mutating func parseArgs() {
@@ -79,6 +80,15 @@ struct SwiftMTPCLI {
         }
       } else if arg.hasPrefix("--address=") {
         targetAddress = Int(arg.dropFirst("--address=".count))
+      } else if arg == "--timeout" {
+        if i + 1 < args.count, let t = Int(args[i + 1]), t > 0 {
+          probeTimeoutSeconds = t
+          i += 1
+        }
+      } else if arg.hasPrefix("--timeout=") {
+        if let t = Int(arg.dropFirst("--timeout=".count)), t > 0 {
+          probeTimeoutSeconds = t
+        }
       } else {
         filteredArgs.append(arg)
       }
@@ -114,7 +124,8 @@ struct SwiftMTPCLI {
       targetVID: mutableSelf.targetVID,
       targetPID: mutableSelf.targetPID,
       targetBus: mutableSelf.targetBus,
-      targetAddress: mutableSelf.targetAddress
+      targetAddress: mutableSelf.targetAddress,
+      probeTimeoutSeconds: mutableSelf.probeTimeoutSeconds
     )
 
     switch command {
@@ -386,6 +397,7 @@ struct SwiftMTPCLI {
     print("  --safe            Enable safe mode (extra checks)")
     print("  --strict          Enable strict mode (fail on warnings)")
     print("  --trace-usb       Enable USB trace logging")
+    print("  --timeout <sec>   Probe timeout in seconds (default: 5)")
     print("  --verbose, -v     Show detailed error diagnostics")
     print("")
     print("Examples:")
