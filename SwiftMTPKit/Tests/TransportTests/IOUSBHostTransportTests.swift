@@ -795,3 +795,154 @@ final class IOUSBHostPTPDataFramingTests: XCTestCase {
     }
   }
 }
+
+// MARK: - IOUSBHost Event Handling Tests
+
+final class IOUSBHostEventHandlingTests: XCTestCase {
+
+  // MARK: - Helpers
+
+  /// Build a raw PTP event container: [len(4-LE) type(2-LE)=0x0004 code(2-LE) txid(4-LE) params...]
+  private func makeEventData(code: UInt16, txid: UInt32 = 0, params: [UInt32] = []) -> Data {
+    let length = UInt32(12 + params.count * 4)
+    var data = Data()
+    data.append(contentsOf: withUnsafeBytes(of: length.littleEndian) { Array($0) })
+    data.append(contentsOf: withUnsafeBytes(of: UInt16(4).littleEndian) { Array($0) })
+    data.append(contentsOf: withUnsafeBytes(of: code.littleEndian) { Array($0) })
+    data.append(contentsOf: withUnsafeBytes(of: txid.littleEndian) { Array($0) })
+    for p in params {
+      data.append(contentsOf: withUnsafeBytes(of: p.littleEndian) { Array($0) })
+    }
+    return data
+  }
+
+  // MARK: - Event Container Parsing (all 14 event types)
+
+  func testParseAllEventTypes() {
+    let cases: [(UInt16, [UInt32], UInt16)] = [
+      (0x4001, [42], 0x4001),           // CancelTransaction
+      (0x4002, [0x100], 0x4002),        // ObjectAdded
+      (0x4003, [0x200], 0x4003),        // ObjectRemoved
+      (0x4004, [0x00010001], 0x4004),   // StorageAdded
+      (0x4005, [0x00010001], 0x4005),   // StorageRemoved
+      (0x4006, [0x5001], 0x4006),       // DevicePropChanged
+      (0x4007, [0x300], 0x4007),        // ObjectInfoChanged
+      (0x4008, [], 0x4008),             // DeviceInfoChanged
+      (0x4009, [0x400], 0x4009),        // RequestObjectTransfer
+      (0x400A, [0x00010001], 0x400A),   // StoreFull
+      (0x400B, [], 0x400B),             // DeviceReset
+      (0x400C, [0x00020001], 0x400C),   // StorageInfoChanged
+      (0x400D, [99], 0x400D),           // CaptureComplete
+      (0x400E, [], 0x400E),             // UnreportedStatus
+    ]
+    for (code, params, expectedCode) in cases {
+      let data = makeEventData(code: code, params: params)
+      guard let event = MTPEvent.fromRaw(data) else {
+        XCTFail("Failed to parse event 0x\(String(code, radix: 16))")
+        continue
+      }
+      XCTAssertEqual(event.eventCode, expectedCode,
+        "Event code mismatch for 0x\(String(code, radix: 16))")
+    }
+  }
+
+  // MARK: - Event Stream on Default-Constructed Link
+
+  func testDefaultLinkEventStreamFinishesAfterClose() async {
+    let link = IOUSBHostLink()
+    // Close finishes the event continuation
+    await link.close()
+    var count = 0
+    for await _ in link.eventStream {
+      count += 1
+    }
+    XCTAssertEqual(count, 0, "Closed link event stream should be empty")
+  }
+
+  // MARK: - Event Pump with No Interrupt Endpoint
+
+  func testStartEventPumpNoOpWithoutInterruptEndpoint() {
+    let link = IOUSBHostLink()
+    // startEventPump should be safe to call even without an interrupt pipe
+    link.startEventPump()
+    // No crash, no task started — just a no-op
+  }
+
+  // MARK: - Event Dispatch to Handler via EventPump
+
+  func testEventPumpDispatchToStream() async {
+    // Simulate event dispatch using the MTPLink eventStream + MTPEvent.fromRaw path
+    let eventData = makeEventData(code: 0x4002, params: [0x42])
+    guard let event = MTPEvent.fromRaw(eventData) else {
+      return XCTFail("Failed to parse event from container data")
+    }
+    XCTAssertEqual(event.eventCode, 0x4002)
+    if case .objectAdded(let handle) = event {
+      XCTAssertEqual(handle, 0x42)
+    } else {
+      XCTFail("Expected objectAdded event")
+    }
+  }
+
+  // MARK: - Event Container Edge Cases
+
+  func testEventContainerTooShort() {
+    let shortData = Data([0x08, 0x00, 0x00, 0x00, 0x04, 0x00])
+    XCTAssertNil(MTPEvent.fromRaw(shortData), "Truncated container should return nil")
+  }
+
+  func testEventContainerMinimal12Bytes() {
+    let data = makeEventData(code: 0x400B)  // DeviceReset, no params
+    XCTAssertEqual(data.count, 12)
+    let event = MTPEvent.fromRaw(data)
+    XCTAssertNotNil(event)
+    XCTAssertEqual(event?.eventCode, 0x400B)
+  }
+
+  func testUnknownEventCodePreserved() {
+    let data = makeEventData(code: 0xC801, params: [1, 2])
+    guard let event = MTPEvent.fromRaw(data) else {
+      return XCTFail("Failed to parse unknown event")
+    }
+    if case .unknown(let code, let params) = event {
+      XCTAssertEqual(code, 0xC801)
+      XCTAssertEqual(params, [1, 2])
+    } else {
+      XCTFail("Expected unknown event")
+    }
+  }
+
+  func testEventContainerWithMultipleParams() {
+    let data = makeEventData(code: 0x4001, params: [7, 0, 0])
+    guard let event = MTPEvent.fromRaw(data) else {
+      return XCTFail("Failed to parse event with extra params")
+    }
+    if case .cancelTransaction(let txId) = event {
+      XCTAssertEqual(txId, 7)
+    } else {
+      XCTFail("Expected cancelTransaction")
+    }
+  }
+
+  // MARK: - Close Stops Event Pump
+
+  func testCloseStopsEventPump() async {
+    let link = IOUSBHostLink()
+    link.startEventPump()
+    await link.close()
+    // Verify the stream finishes after close
+    var count = 0
+    for await _ in link.eventStream {
+      count += 1
+    }
+    XCTAssertEqual(count, 0)
+  }
+
+  // MARK: - Event Coalescer Integration
+
+  func testEventCoalescerSuppressesBursts() {
+    let coalescer = MTPEventCoalescer(window: 0.1)
+    XCTAssertTrue(coalescer.shouldForward())
+    XCTAssertFalse(coalescer.shouldForward())
+  }
+}

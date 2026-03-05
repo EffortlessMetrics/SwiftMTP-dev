@@ -125,6 +125,11 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
   // Queue for synchronous USB operations
   private let usbQueue = DispatchQueue(label: "com.swiftmtp.iousbhost.io", qos: .userInitiated)
 
+  // Event pump state
+  private var eventContinuation: AsyncStream<Data>.Continuation?
+  private var eventPumpTask: Task<Void, Never>?
+  public let eventStream: AsyncStream<Data>
+
   // Link descriptor
   public private(set) var linkDescriptor: MTPLinkDescriptor?
   public private(set) var cachedDeviceInfo: MTPDeviceInfo?
@@ -151,6 +156,10 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
     self.bulkInAddress = bulkInAddress
     self.bulkOutAddress = bulkOutAddress
     self.interruptInAddress = interruptInAddress
+
+    var cont: AsyncStream<Data>.Continuation!
+    self.eventStream = AsyncStream(Data.self, bufferingPolicy: .bufferingNewest(16)) { cont = $0 }
+    self.eventContinuation = cont
 
     self.linkDescriptor = MTPLinkDescriptor(
       interfaceNumber: interfaceNumber,
@@ -240,6 +249,9 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
     log.info(
       "Closing IOUSBHost link: \(self.manufacturer, privacy: .public) \(self.model, privacy: .public)"
     )
+    eventPumpTask?.cancel()
+    eventPumpTask = nil
+    eventContinuation?.finish()
     interruptInPipe = nil
     bulkInPipe = nil
     bulkOutPipe = nil
@@ -286,6 +298,63 @@ public final class IOUSBHostLink: @unchecked Sendable, MTPLink {
     try? bulkOutPipe?.clearStall()
     try? bulkInPipe?.clearStall()
     try? interruptInPipe?.clearStall()
+  }
+
+  // MARK: - Interrupt Endpoint Event Pump
+
+  /// Read a single packet from the interrupt-in pipe.
+  private func interruptRead(timeout: TimeInterval = 1.0) throws -> Data? {
+    guard let pipe = interruptInPipe else { return nil }
+    let bufSize = 1024
+    let mutableData = NSMutableData(length: bufSize)!
+    var transferred: Int = 0
+    do {
+      try pipe.__sendIORequest(
+        with: mutableData, bytesTransferred: &transferred,
+        completionTimeout: timeout
+      )
+    } catch {
+      // Timeout or aborted are expected during polling
+      let nsError = error as NSError
+      let code = Int32(nsError.code)
+      if code == kIOReturnTimeout || code == kIOReturnAborted {
+        return nil
+      }
+      throw error
+    }
+    guard transferred > 0 else { return nil }
+    return Data(mutableData.subdata(with: NSRange(location: 0, length: transferred)))
+  }
+
+  /// Begin polling the interrupt endpoint for MTP event containers.
+  ///
+  /// Events are parsed and yielded to `eventStream`. The pump runs until
+  /// the link is closed or the task is cancelled.
+  public func startEventPump() {
+    guard interruptInPipe != nil else { return }
+    guard eventPumpTask == nil else { return }
+    let coalescer = MTPEventCoalescer()
+    eventPumpTask = Task { [weak self] in
+      while !Task.isCancelled {
+        guard let self else { break }
+        do {
+          if let data = try self.interruptRead(timeout: 1.0) {
+            if coalescer.shouldForward() {
+              if let event = MTPEvent.fromRaw(data) {
+                log.debug("IOUSBHost MTP event: \(event.eventDescription, privacy: .public)")
+              }
+              self.eventContinuation?.yield(data)
+            }
+          }
+        } catch {
+          log.warning(
+            "IOUSBHost event pump error: \(error.localizedDescription, privacy: .public)")
+          break
+        }
+        // Brief pause for burst coalescing before next read.
+        try? await Task.sleep(nanoseconds: 10_000_000)
+      }
+    }
   }
 
   // MARK: - PTP Container Encoding/Decoding
