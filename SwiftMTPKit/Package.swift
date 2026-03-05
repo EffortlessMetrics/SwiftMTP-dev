@@ -296,6 +296,7 @@ let package = Package(
       dependencies: [
         "swiftmtp-cli",
         "SwiftMTPCore",
+        "SwiftMTPIndex",
       ]),
     .testTarget(
       name: "UITests",
