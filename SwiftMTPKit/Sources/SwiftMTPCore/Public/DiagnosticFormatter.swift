@@ -60,6 +60,10 @@ public enum DiagnosticFormatter {
     if let transportError = error as? TransportError {
       return diagnoseTransport(transportError)
     }
+    // Cross-module errors matched by type name to avoid circular dependencies.
+    if let crossModule = diagnoseByTypeName(error) {
+      return crossModule
+    }
     return ErrorDiagnostic(
       summary: error.localizedDescription,
       cause: "An unexpected error occurred.",
@@ -234,6 +238,69 @@ public enum DiagnosticFormatter {
         suggestion: "Try a different USB port or cable. Reconnect the device and retry."
       )
     }
+  }
+
+  // MARK: - Cross-module error diagnostics
+
+  private static func diagnoseByTypeName(_ error: Error) -> ErrorDiagnostic? {
+    let typeName = String(describing: type(of: error))
+    let desc = String(describing: error)
+    switch typeName {
+    case "DBError":
+      return diagnoseIndexDB(desc)
+    case "XPCConnectionError":
+      return diagnoseXPC(desc)
+    default:
+      return nil
+    }
+  }
+
+  static func diagnoseIndexDB(_ description: String) -> ErrorDiagnostic {
+    let lower = description.lowercased()
+    if lower.contains("corrupt") || lower.contains("malformed") {
+      return ErrorDiagnostic(
+        summary: "Index database corrupted.",
+        cause: "The SQLite index file may have been damaged by an interrupted write or disk error.",
+        suggestion: "Rebuild the index database.",
+        relatedCommand: "swiftmtp index --rebuild"
+      )
+    }
+    if lower.contains("disk is full") || lower.contains("no space") {
+      return ErrorDiagnostic(
+        summary: "Disk full. Free space and retry.",
+        cause: "The local disk has no free space for the index database.",
+        suggestion: "Free disk space and retry the operation."
+      )
+    }
+    return ErrorDiagnostic(
+      summary: "Index database error.",
+      cause: "A SQLite operation failed: \(description)",
+      suggestion: "Retry the operation. If it persists, rebuild the index.",
+      relatedCommand: "swiftmtp index --rebuild"
+    )
+  }
+
+  static func diagnoseXPC(_ description: String) -> ErrorDiagnostic {
+    let lower = description.lowercased()
+    if lower.contains("invalidated") {
+      return ErrorDiagnostic(
+        summary: "System service disconnected.",
+        cause: "The XPC connection to the helper service was permanently invalidated.",
+        suggestion: "The connection will retry automatically. If it persists, restart the application."
+      )
+    }
+    if lower.contains("queue full") || lower.contains("unreachable") {
+      return ErrorDiagnostic(
+        summary: "System service overloaded.",
+        cause: "The XPC service operation queue is full.",
+        suggestion: "Wait a moment and retry. If it persists, restart the application."
+      )
+    }
+    return ErrorDiagnostic(
+      summary: "System service error.",
+      cause: "An XPC communication error occurred.",
+      suggestion: "Retry the operation. If it persists, restart the application."
+    )
   }
 
   // MARK: - Protocol code diagnostics
