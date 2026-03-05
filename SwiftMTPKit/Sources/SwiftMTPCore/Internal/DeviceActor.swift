@@ -433,6 +433,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         let flags = quirk.resolvedFlags()
         config.skipAltSetting = flags.skipAltSetting
         config.skipPreClaimReset = flags.skipPreClaimReset
+        config.skipClearHaltBeforeProbe = flags.skipClearHaltBeforeProbe
         config.forceResetOnClose = flags.forceResetOnClose
         config.noZeroReads = flags.noZeroReads
         config.noReleaseInterface = flags.noReleaseInterface

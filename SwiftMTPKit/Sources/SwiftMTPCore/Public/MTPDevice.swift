@@ -576,6 +576,10 @@ public struct SwiftMTPConfig: Sendable {
   /// Defaults to false.
   public var skipPreClaimReset = false
 
+  /// Skip `libusb_clear_halt` on bulk endpoints before probe (Samsung quirk).
+  /// Defaults to false.
+  public var skipClearHaltBeforeProbe = false
+
   /// Whether to temporarily disable the interrupt event pump.
   /// Defaults to false.
   public var disableEventPump = false
