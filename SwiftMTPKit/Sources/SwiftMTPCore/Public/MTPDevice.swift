@@ -588,6 +588,11 @@ public struct SwiftMTPConfig: Sendable {
   /// Defaults to false.
   public var forceResetOnClose = false
 
+  /// Perform double `libusb_reset_device()` during hard recovery to match
+  /// libmtp's FORCE_RESET_ON_CLOSE pattern (Pixel 7 / FunctionFS quirk).
+  /// Defaults to false.
+  public var forceDoubleReset = false
+
   /// Skip zero-length packet reads that some devices choke on.
   /// Defaults to false.
   public var noZeroReads = false

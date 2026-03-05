@@ -435,6 +435,7 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         config.skipPreClaimReset = flags.skipPreClaimReset
         config.skipClearHaltBeforeProbe = flags.skipClearHaltBeforeProbe
         config.forceResetOnClose = flags.forceResetOnClose
+        config.forceDoubleReset = flags.forceDoubleReset
         config.noZeroReads = flags.noZeroReads
         config.noReleaseInterface = flags.noReleaseInterface
         config.ignoreHeaderErrors = flags.ignoreHeaderErrors

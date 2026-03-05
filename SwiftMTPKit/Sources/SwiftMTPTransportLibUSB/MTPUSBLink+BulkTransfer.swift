@@ -154,4 +154,67 @@ extension MTPUSBLink {
       got += g
     }
   }
+
+  /// Drain stale data from the bulk IN endpoint before starting a new transfer.
+  ///
+  /// Some devices (notably Pixel 7 with FunctionFS) may leave residual data in
+  /// the IN endpoint from a previous interrupted transaction. Reading with a short
+  /// timeout (50ms) discards any buffered bytes so the next command/response cycle
+  /// starts cleanly.
+  func drainEndpoint(_ ep: UInt8, debug: Bool = false) {
+    var drained = 0
+    var buf = [UInt8](repeating: 0, count: 512)
+    for _ in 0..<8 {
+      var got: Int32 = 0
+      let rc = libusb_bulk_transfer(h, ep, &buf, Int32(buf.count), &got, 50)
+      if got > 0 {
+        drained += Int(got)
+        continue
+      }
+      // Timeout or error means no more stale data
+      if rc == Int32(LIBUSB_ERROR_TIMEOUT.rawValue) || rc != 0 { break }
+      break
+    }
+    if drained > 0 {
+      log.info("Drained \(drained) stale bytes from ep=\(String(format: "0x%02x", ep), privacy: .public)")
+      if debug {
+        print(
+          String(format: "   [USB][Drain] drained %d stale bytes from ep=0x%02x", drained, ep))
+      }
+    }
+  }
+
+  /// Query USB endpoint status via GET_STATUS control transfer.
+  ///
+  /// Returns the 2-byte endpoint status word (bit 0 = halted) or nil on error.
+  /// Provides diagnostic information without changing device state.
+  func getEndpointStatus(_ ep: UInt8) -> UInt16? {
+    var status: UInt16 = 0
+    let rc = withUnsafeMutableBytes(of: &status) { ptr -> Int32 in
+      libusb_control_transfer(
+        h,
+        UInt8(LIBUSB_ENDPOINT_IN.rawValue) | UInt8(LIBUSB_RECIPIENT_ENDPOINT.rawValue),
+        0x00,  // GET_STATUS
+        0,     // USB_FEATURE_HALT
+        UInt16(ep),
+        ptr.baseAddress!.assumingMemoryBound(to: UInt8.self),
+        2,
+        1000)
+    }
+    return rc == 2 ? status : nil
+  }
+
+  /// Log diagnostic endpoint status for all bulk endpoints.
+  func logEndpointStatus(context: String, debug: Bool) {
+    guard debug else { return }
+    let outStatus = getEndpointStatus(outEP)
+    let inStatus = getEndpointStatus(inEP)
+    let outHalted = outStatus.map { $0 & 1 != 0 } ?? false
+    let inHalted = inStatus.map { $0 & 1 != 0 } ?? false
+    print(
+      String(
+        format: "   [USB][Status] %@ out=0x%02x(%@) in=0x%02x(%@)",
+        context, outEP, outHalted ? "HALTED" : "ok",
+        inEP, inHalted ? "HALTED" : "ok"))
+  }
 }

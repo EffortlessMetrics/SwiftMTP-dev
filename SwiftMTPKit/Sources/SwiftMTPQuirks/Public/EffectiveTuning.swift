@@ -154,8 +154,9 @@ public struct EffectiveTuningBuilder: Sendable {
       flags = QuirkFlags()
     }
     // Apply extendedBulkTimeout flag: use 60s operational timeout (matches libmtp LONG_TIMEOUT).
+    // longTimeout is an alias for the same behavior.
     var finalTuning = tuning
-    if flags.extendedBulkTimeout {
+    if flags.extendedBulkTimeout || flags.longTimeout {
       finalTuning.ioTimeoutMs = max(finalTuning.ioTimeoutMs, 60_000)
     }
     var sources = PolicySources()

@@ -208,6 +208,8 @@ extension MTPUSBLink {
     log.debug(
       "Light recovery: clearing endpoints and re-asserting alt-setting (op=\(String(format: "0x%04x", opcode)))"
     )
+    // Diagnostic: log endpoint status before clearing (Fix 6 from analysis)
+    logEndpointStatus(context: "pre-recovery", debug: debug)
     let clearOutRC = libusb_clear_halt(h, outEP)
     let clearInRC = libusb_clear_halt(h, inEP)
     let clearEventRC: Int32 =
@@ -291,10 +293,28 @@ extension MTPUSBLink {
       return false
     }
 
+    // libmtp compat: clear_stall before release (check+clear endpoints)
+    recoverStall()
+
     // Full close/re-open per libmtp recovery sequence (Difference 1 fix).
     // Release interface first, then attempt to find + open + claim a new handle.
     // Keep old handle open until new one is ready for safe fallback.
     let releaseRC = libusb_release_interface(oldHandle, Int32(iface))
+
+    // forceDoubleReset: second libusb_reset_device after release, matching
+    // libmtp's FORCE_RESET_ON_CLOSE. Triggers a second USBDeviceReEnumerate
+    // on Darwin to fully flush IOKit pipe state for FunctionFS devices.
+    var resetRC2: Int32 = 0
+    if config.forceDoubleReset {
+      resetRC2 = libusb_reset_device(oldHandle)
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover][Hard] op=0x%04x tx=%u forceDoubleReset: 2nd reset rc=%d",
+            opcode, txid, resetRC2))
+      }
+    }
 
     usleep(350_000)
 
@@ -368,7 +388,21 @@ extension MTPUSBLink {
     let oldPortDepth = libusb_get_port_numbers(oldDevice, &oldPortPath, Int32(oldPortPath.count))
 
     let resetRC = libusb_reset_device(oldHandle)
+    recoverStall()  // libmtp compat: clear_stall before release
     let releaseRC = libusb_release_interface(oldHandle, Int32(iface))
+
+    // forceDoubleReset: second reset after release (libmtp FORCE_RESET_ON_CLOSE)
+    var resetRC2: Int32 = 0
+    if config.forceDoubleReset {
+      resetRC2 = libusb_reset_device(oldHandle)
+      if debug {
+        print(
+          String(
+            format:
+              "   [USB][Recover][Reopen] op=0x%04x tx=%u forceDoubleReset: 2nd reset rc=%d",
+            opcode, txid, resetRC2))
+      }
+    }
 
     guard
       let reopenedDevice = findRecoveryDevice(
@@ -474,6 +508,15 @@ extension MTPUSBLink {
     if evtEP != 0 {
       _ = libusb_clear_halt(reopenedHandle, evtEP)
     }
+
+    // Drain stale data from IN endpoint after re-claim to prevent residual
+    // bytes from a previous interrupted transaction from corrupting the next
+    // command/response cycle.
+    let savedHandle = h
+    h = reopenedHandle
+    drainEndpoint(inEP, debug: debug)
+    h = savedHandle
+
     return reopenedHandle
   }
 }
