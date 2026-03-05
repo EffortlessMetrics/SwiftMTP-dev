@@ -19,6 +19,8 @@ public enum MTPError: Error, Sendable, Equatable {
   case preconditionFailed(String)
   /// The remote object size after a write does not match the expected size.
   case verificationFailed(expected: UInt64, actual: UInt64)
+  /// The remote file changed since the partial download began (size or modification time differs).
+  case etagMismatch
 }
 
 public extension MTPError {
@@ -66,6 +68,8 @@ extension MTPError: LocalizedError {
     case .verificationFailed(let expected, let actual):
       return
         "Write verification failed: remote size \(actual) does not match expected \(expected)."
+    case .etagMismatch:
+      return "The remote file changed since the partial download began."
     }
   }
 
@@ -95,6 +99,8 @@ extension MTPError: LocalizedError {
       return "A required precondition was not met before the operation could proceed."
     case .verificationFailed:
       return "The file may have been truncated or corrupted during transfer."
+    case .etagMismatch:
+      return "The object size or modification time changed on the device since the partial was saved."
     case .protocolError(let code, _):
       return protocolFailureReason(for: code)
     case .transport(let transportError):
@@ -132,6 +138,8 @@ extension MTPError: LocalizedError {
       return "Verify that the device session is open and storage IDs are valid."
     case .verificationFailed:
       return "Re-send the file and verify the transfer completes without interruption."
+    case .etagMismatch:
+      return "Discard the partial download and restart the transfer from the beginning."
     case .protocolError(let code, _):
       return protocolRecoverySuggestion(for: code)
     case .transport(let transportError):
