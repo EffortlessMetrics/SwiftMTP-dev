@@ -20,6 +20,7 @@ let package = Package(
     .library(name: "SwiftMTPUI", targets: ["SwiftMTPUI"]),
     .library(name: "SwiftMTPQuirks", targets: ["SwiftMTPQuirks"]),
     .library(name: "SwiftMTPCLI", targets: ["SwiftMTPCLI"]),
+    .library(name: "SwiftMTPConcurrency", targets: ["SwiftMTPConcurrency"]),
     .executable(name: "SwiftMTPApp", targets: ["SwiftMTPApp"]),
   ],
   dependencies: [
@@ -38,7 +39,7 @@ let package = Package(
     // Core MTP functionality
     .target(name: "SwiftMTPCore",
             dependencies: [
-                "SwiftMTPQuirks", "SwiftMTPObservability", "SwiftMTPCLI", "MTPEndianCodec",
+                "SwiftMTPQuirks", "SwiftMTPObservability", "SwiftMTPCLI", "SwiftMTPConcurrency", "MTPEndianCodec",
                 .product(name: "Collections", package: "swift-collections"),
             ],
             path: "SwiftMTPKit/Sources/SwiftMTPCore",
@@ -48,6 +49,11 @@ let package = Package(
     .target(name: "SwiftMTPCLI",
             dependencies: [],
             path: "SwiftMTPKit/Sources/SwiftMTPCLI"),
+
+
+    .target(name: "SwiftMTPConcurrency",
+            dependencies: [],
+            path: "SwiftMTPKit/Sources/SwiftMTPConcurrency"),
 
     .target(name: "MTPEndianCodec",
             dependencies: [],
@@ -164,6 +170,11 @@ let package = Package(
     .testTarget(name: "SwiftMTPCLITests",
                 dependencies: ["SwiftMTPCLI", "SwiftMTPCore", "SwiftCheck"],
                 path: "SwiftMTPKit/Tests/SwiftMTPCLITests"),
+
+    .testTarget(name: "SwiftMTPConcurrencyTests",
+                dependencies: ["SwiftMTPConcurrency"],
+                path: "SwiftMTPKit/Tests/SwiftMTPConcurrencyTests"),
+
 
     .testTarget(
       name: "MTPEndianCodecTests",
