@@ -105,7 +105,7 @@ final class ConflictEdgeCaseTests: XCTestCase {
     XCTAssertEqual(record.strategy, .newerWins)
   }
 
-  func testNewerWinsDeviceNewer() throws {
+  func testNewerWinsDeviceNewer() async throws {
     let older = Date(timeIntervalSince1970: 1_700_000_000)
     let newer = Date(timeIntervalSince1970: 1_700_001_000)
     let conflict = MTPConflictInfo(
@@ -122,16 +122,14 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let localURL = tempDirectory.appendingPathComponent("newer.jpg")
     try "old local".write(to: localURL, atomically: true, encoding: .utf8)
 
-    let record = try awaitSync {
-      try await engine.resolveConflict(
+    let record = try await engine.resolveConflict(
         conflict: conflict, file: row, localURL: localURL,
         device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
-    }
 
     XCTAssertEqual(record.outcome, .keptDevice)
   }
 
-  func testNewerWinsNilTimestampsFallBackToDistantPast() throws {
+  func testNewerWinsNilTimestampsFallBackToDistantPast() async throws {
     // Both nil mtimes → both treated as .distantPast → equal → keptLocal
     let conflict = MTPConflictInfo(
       pathKey: "00010001/file.bin", handle: 3,
@@ -147,11 +145,9 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let localURL = tempDirectory.appendingPathComponent("file.bin")
     try Data(count: 200).write(to: localURL)
 
-    let record = try awaitSync {
-      try await engine.resolveConflict(
+    let record = try await engine.resolveConflict(
         conflict: conflict, file: row, localURL: localURL,
         device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
-    }
 
     // Both nil → .distantPast == .distantPast → device NOT > local → keptLocal
     XCTAssertEqual(record.outcome, .keptLocal)
@@ -374,7 +370,7 @@ final class ConflictEdgeCaseTests: XCTestCase {
 
   // MARK: - All 6 Resolution Strategies Produce Consistent Results
 
-  func testAllSixStrategiesProduceValidOutcomes() throws {
+  func testAllSixStrategiesProduceValidOutcomes() async throws {
     let fixedDate = Date(timeIntervalSince1970: 1_700_000_000)
     let newerDate = Date(timeIntervalSince1970: 1_700_002_000)
 
@@ -400,11 +396,9 @@ final class ConflictEdgeCaseTests: XCTestCase {
       let localURL = tempDirectory.appendingPathComponent("test-\(strategy.rawValue).jpg")
       try "local content".write(to: localURL, atomically: true, encoding: .utf8)
 
-      let record = try awaitSync {
-        try await engine.resolveConflict(
+      let record = try await engine.resolveConflict(
           conflict: conflict, file: row, localURL: localURL,
           device: device, root: self.tempDirectory)
-      }
 
       XCTAssertEqual(record.strategy, strategy, "Record strategy should match configured strategy")
 
@@ -427,7 +421,7 @@ final class ConflictEdgeCaseTests: XCTestCase {
 
   // MARK: - newerWins Equal Timestamps Falls Back to Source Preference
 
-  func testNewerWinsEqualTimestampsConsistentlyPicksLocal() throws {
+  func testNewerWinsEqualTimestampsConsistentlyPicksLocal() async throws {
     let fixedDate = Date(timeIntervalSince1970: 1_700_000_000)
     let journal = try SQLiteTransferJournal(dbPath: dbPath)
     let engine = MirrorEngine(
@@ -446,11 +440,9 @@ final class ConflictEdgeCaseTests: XCTestCase {
       let localURL = tempDirectory.appendingPathComponent("run\(i).jpg")
       try "content".write(to: localURL, atomically: true, encoding: .utf8)
 
-      let record = try awaitSync {
-        try await engine.resolveConflict(
+      let record = try await engine.resolveConflict(
           conflict: conflict, file: row, localURL: localURL,
           device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
-      }
 
       XCTAssertEqual(record.outcome, .keptLocal,
         "Equal timestamps should consistently yield keptLocal (run \(i))")
@@ -499,7 +491,7 @@ final class ConflictEdgeCaseTests: XCTestCase {
 
   // MARK: - Manual/Ask Strategy Captures Without Auto-Resolving
 
-  func testAskStrategyWithoutResolverReturnsPending() throws {
+  func testAskStrategyWithoutResolverReturnsPending() async throws {
     let conflict = MTPConflictInfo(
       pathKey: "00010001/manual.txt", handle: 50,
       deviceSize: 100, deviceMtime: Date(),
@@ -515,18 +507,16 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let localURL = tempDirectory.appendingPathComponent("manual.txt")
     try "local".write(to: localURL, atomically: true, encoding: .utf8)
 
-    let record = try awaitSync {
-      try await engine.resolveConflict(
+    let record = try await engine.resolveConflict(
         conflict: conflict, file: row, localURL: localURL,
         device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
-    }
 
     XCTAssertEqual(record.outcome, .pending,
       "Ask without resolver should mark as pending")
     XCTAssertEqual(record.strategy, .ask)
   }
 
-  func testAskStrategyWithResolverDelegates() throws {
+  func testAskStrategyWithResolverDelegates() async throws {
     final class ConflictCapture: @unchecked Sendable {
       var conflicts: [MTPConflictInfo] = []
     }
@@ -550,18 +540,16 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let localURL = tempDirectory.appendingPathComponent("ask.txt")
     try "local".write(to: localURL, atomically: true, encoding: .utf8)
 
-    let record = try awaitSync {
-      try await engine.resolveConflict(
+    let record = try await engine.resolveConflict(
         conflict: conflict, file: row, localURL: localURL,
         device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
-    }
 
     XCTAssertEqual(record.outcome, .keptDevice)
     XCTAssertEqual(capture.conflicts.count, 1)
     XCTAssertEqual(capture.conflicts.first?.pathKey, "00010001/ask.txt")
   }
 
-  func testSkipStrategyProducesSkippedOutcome() throws {
+  func testSkipStrategyProducesSkippedOutcome() async throws {
     let conflict = MTPConflictInfo(
       pathKey: "00010001/skip.txt", handle: 52,
       deviceSize: 100, deviceMtime: Date(),
@@ -576,11 +564,9 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let localURL = tempDirectory.appendingPathComponent("skip.txt")
     try "local".write(to: localURL, atomically: true, encoding: .utf8)
 
-    let record = try awaitSync {
-      try await engine.resolveConflict(
+    let record = try await engine.resolveConflict(
         conflict: conflict, file: row, localURL: localURL,
         device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
-    }
 
     XCTAssertEqual(record.outcome, .skipped)
     XCTAssertEqual(record.strategy, .skip)
@@ -782,28 +768,5 @@ final class ConflictEdgeCaseTests: XCTestCase {
       files.append(resolvedFile.path.replacingOccurrences(of: resolvedDir.path + "/", with: ""))
     }
     return files
-  }
-
-  private func awaitSync<T: Sendable>(_ block: @Sendable @escaping () async throws -> T) throws -> T {
-    final class Box<V: Sendable>: @unchecked Sendable {
-      var value: Result<V, Error>?
-    }
-    let box = Box<T>()
-    let expectation = XCTestExpectation(description: "async")
-    Task {
-      do {
-        let value = try await block()
-        box.value = .success(value)
-      } catch {
-        box.value = .failure(error)
-      }
-      expectation.fulfill()
-    }
-    wait(for: [expectation], timeout: 10)
-    switch box.value {
-    case .success(let value): return value
-    case .failure(let error): throw error
-    case .none: throw NSError(domain: "test", code: -1, userInfo: [NSLocalizedDescriptionKey: "Timeout"])
-    }
   }
 }
