@@ -257,6 +257,8 @@ struct SwiftMTPCLI {
       await BDDCommand.run(flags: flags)
     case "snapshot":
       await SnapshotCommand.run(flags: flags, args: remainingArgs)
+    case "search":
+      await SearchCommand.run(flags: flags, args: remainingArgs)
     case "thumb":
       await ThumbCommand.run(flags: flags, args: remainingArgs)
     case "version":
@@ -277,6 +279,7 @@ struct SwiftMTPCLI {
     "bench", "mirror", "quirks", "info", "health", "collect", "submit",
     "add-device", "wizard", "delete", "move", "cp", "copy", "edit", "events",
     "learn-promote", "bdd", "snapshot", "thumb", "version", "storybook", "profile",
+    "search",
   ]
 
   /// Suggest the closest known command for a typo using simple edit-distance heuristics.
@@ -340,6 +343,10 @@ struct SwiftMTPCLI {
     print("    --exclude-format ext[,ext...] Exclude specified formats")
     print("    --on-conflict <strategy> (newer-wins|local-wins|device-wins|keep-both|skip)")
     print("  snapshot          Capture full device content snapshot")
+    print("  search <query>    Full-text search over the device file index")
+    print("    --path                   Search by path instead of filename")
+    print("    --device <id>            Scope to a specific device ID")
+    print("    --limit <n>              Maximum results (default: 50)")
     print("")
     print("Edit Extensions (Android):")
     print("  edit begin <h>    Begin in-place editing of an object")
