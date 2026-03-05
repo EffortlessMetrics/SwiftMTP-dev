@@ -109,7 +109,7 @@ The extension automatically:
 | Content update (`modifyItem` `.contents`) | ✅ Yes | ✅ Partial | ❌ No | Delete-then-reupload pattern (MTP has no in-place modify) |
 | Change tracking (sync anchors) | ✅ Yes | ✅ Yes | ❌ No | Dual-path: `SyncAnchorStore` (push) and `LiveIndexReader` (poll) |
 | Working set signaling | ✅ Yes | ✅ Partial | ❌ No | Signals on attach/reconnect; not deeply tested |
-| Thumbnail provision | ❌ No | ❌ No | ❌ No | `NSFileProviderThumbnailing` not adopted |
+| Thumbnail provision | ✅ Yes | ✅ Yes | ❌ No | `NSFileProviderThumbnailing` via MTP GetThumb (0x100A); cached in-memory |
 | XPC bridge (protocol + service) | ✅ Yes | ✅ Yes | ❌ No | Full protocol: read, write, delete, rename, move, crawl, status |
 | Domain lifecycle (register/unregister) | ✅ Yes | ✅ Yes | ❌ No | `FileProviderManager` + `MTPDeviceService` |
 | Background crawl triggering | ✅ Yes | ✅ Partial | ❌ No | Fire-and-forget XPC call with debounce |
@@ -117,14 +117,13 @@ The extension automatically:
 
 ### Summary
 
-- **Read operations**: Scaffolded and mock-tested (enumeration, download, metadata lookup).
+- **Read operations**: Scaffolded and mock-tested (enumeration, download, metadata lookup, thumbnails).
 - **Write operations**: Scaffolded and mock-tested (upload, delete, rename, move, content update). These were added in Wave 32–41 but remain unvalidated on real devices.
-- **Not implemented**: Thumbnail provision (`NSFileProviderThumbnailing`).
+- **Thumbnails**: Implemented via `NSFileProviderThumbnailing` using MTP GetThumb (0x100A) with in-memory caching. Added in Wave 47.
 - **Not validated**: No capability has been tested with macOS Finder or a real MTP device.
 
 ### 🔄 Future Work
 - Real-device validation with at least one working MTP device
-- Thumbnail provision via `NSFileProviderThumbnailing`
 - Improved content type detection beyond file extension mapping
 - Background sync / periodic re-enumeration
 - Conflict resolution UI for bidirectional sync scenarios

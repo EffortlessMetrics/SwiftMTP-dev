@@ -92,6 +92,10 @@ final class MockXPCService: NSObject, MTPXPCService {
   ) {
     reply(DeviceStatusResponse(connected: false, sessionOpen: false))
   }
+
+  func getThumbnail(
+    _ request: ThumbnailRequest, withReply reply: @escaping (ThumbnailResponse) -> Void
+  ) { reply(ThumbnailResponse(success: false, errorMessage: "stub")) }
 }
 
 // MARK: - FileProvider Write Integration Tests

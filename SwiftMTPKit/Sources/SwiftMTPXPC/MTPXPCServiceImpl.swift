@@ -363,6 +363,32 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
     }
   }
 
+  // MARK: - Thumbnail API
+
+  public func getThumbnail(
+    _ request: ThumbnailRequest, withReply reply: @escaping (ThumbnailResponse) -> Void
+  ) {
+    Task {
+      do {
+        let deviceId = MTPDeviceID(raw: request.deviceId)
+
+        guard let device = try await findDevice(with: deviceId) else {
+          reply(ThumbnailResponse(success: false, errorMessage: "Device not found or not connected"))
+          return
+        }
+
+        let data = try await withDeviceTimeout { [request] in
+          try await device.getThumbnail(handle: request.objectHandle)
+        }
+
+        reply(ThumbnailResponse(success: true, thumbnailData: data))
+
+      } catch {
+        reply(ThumbnailResponse(success: false, errorMessage: error.localizedDescription))
+      }
+    }
+  }
+
   /// Clean up old temp files to prevent disk space issues
   public func cleanupOldTempFiles(olderThan hours: Double = 24) {
     let cutoffDate = Date(timeIntervalSinceNow: -hours * 3600)

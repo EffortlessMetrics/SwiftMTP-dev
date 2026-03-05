@@ -7,12 +7,14 @@ import UniformTypeIdentifiers
 import SwiftMTPXPC
 import SwiftMTPCore
 import SwiftMTPIndex
+import CoreGraphics
 
 /// Main File Provider extension for MTP devices.
 ///
 /// Cache-first architecture: metadata reads come from the local SQLite index,
 /// content materialization goes through XPC to the host app.
 public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedExtension,
+  NSFileProviderThumbnailing,
   @unchecked Sendable
 {
   private let domain: NSFileProviderDomain
@@ -29,6 +31,11 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
   /// Optional override for `NSFileProviderManager.signalEnumerator`; used in unit tests.
   nonisolated(unsafe) private var signalEnumeratorOverride:
     ((NSFileProviderItemIdentifier) -> Void)?
+
+  /// In-memory thumbnail cache keyed by item identifier string.
+  /// Values are raw image data (JPEG/PNG). Limited to `thumbnailCacheLimit` entries.
+  nonisolated(unsafe) private var thumbnailCache: [String: Data] = [:]
+  static let thumbnailCacheLimit = 200
 
   public init(domain: NSFileProviderDomain) {
     self.xpcServiceResolver = nil
@@ -526,6 +533,88 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
         }
       }
     }
+    return progress
+  }
+
+  // MARK: - Thumbnails (NSFileProviderThumbnailing)
+
+  public func fetchThumbnails(
+    for itemIdentifiers: [NSFileProviderItemIdentifier],
+    requestedSize size: CGSize,
+    perThumbnailCompletionHandler: @escaping (
+      NSFileProviderItemIdentifier, Data?, Error?
+    ) -> Void,
+    completionHandler: @escaping (Error?) -> Void
+  ) -> Progress {
+    let progress = Progress(totalUnitCount: Int64(itemIdentifiers.count))
+
+    guard let xpcService = getXPCService() else {
+      for id in itemIdentifiers {
+        perThumbnailCompletionHandler(id, nil, xpcError(from: "XPC service unavailable"))
+        progress.completedUnitCount += 1
+      }
+      completionHandler(nil)
+      return progress
+    }
+
+    let xpcBox = SendableBox(xpcService)
+    let group = DispatchGroup()
+
+    for identifier in itemIdentifiers {
+      // Check cache first
+      let key = identifier.rawValue
+      if let cached = thumbnailCache[key] {
+        perThumbnailCompletionHandler(identifier, cached, nil)
+        progress.completedUnitCount += 1
+        continue
+      }
+
+      guard let components = MTPFileProviderItem.parseItemIdentifier(identifier),
+        let objectHandle = components.objectHandle
+      else {
+        perThumbnailCompletionHandler(
+          identifier, nil,
+          NSError(
+            domain: NSFileProviderErrorDomain, code: NSFileProviderError.noSuchItem.rawValue))
+        progress.completedUnitCount += 1
+        continue
+      }
+
+      let request = ThumbnailRequest(deviceId: components.deviceId, objectHandle: objectHandle)
+
+      group.enter()
+      let capturedId = identifier
+      let cb = SendableBox(perThumbnailCompletionHandler)
+      Task {
+        let perThumbnailCompletionHandler = cb.value
+        await MainActor.run {
+          xpcBox.value.getThumbnail(request) { [weak self] response in
+            if response.success, let data = response.thumbnailData {
+              // Cache the thumbnail
+              if let self = self {
+                if self.thumbnailCache.count >= MTPFileProviderExtension.thumbnailCacheLimit {
+                  // Evict oldest entry (simple FIFO-ish: remove first key)
+                  if let firstKey = self.thumbnailCache.keys.first {
+                    self.thumbnailCache.removeValue(forKey: firstKey)
+                  }
+                }
+                self.thumbnailCache[key] = data
+              }
+              perThumbnailCompletionHandler(capturedId, data, nil)
+            } else {
+              perThumbnailCompletionHandler(capturedId, nil, nil)
+            }
+            progress.completedUnitCount += 1
+            group.leave()
+          }
+        }
+      }
+    }
+
+    group.notify(queue: .global()) {
+      completionHandler(nil)
+    }
+
     return progress
   }
 

@@ -288,6 +288,10 @@ public final class ObjectListResponse: NSObject, NSSecureCoding, Sendable {
     _ request: CrawlTriggerRequest, withReply reply: @escaping (CrawlTriggerResponse) -> Void)
   func deviceStatus(
     _ request: DeviceStatusRequest, withReply reply: @escaping (DeviceStatusResponse) -> Void)
+
+  // Thumbnail API
+  func getThumbnail(
+    _ request: ThumbnailRequest, withReply reply: @escaping (ThumbnailResponse) -> Void)
 }
 
 /// XPC service name for the host app
@@ -594,6 +598,63 @@ public final class DeviceStatusRequest: NSObject, NSSecureCoding, Sendable {
       return nil
     }
     self.deviceId = deviceId
+  }
+}
+
+// MARK: - Thumbnail Request/Response
+
+@objc(ThumbnailRequest)
+public final class ThumbnailRequest: NSObject, NSSecureCoding, Sendable {
+  public static let supportsSecureCoding: Bool = true
+
+  public let deviceId: String
+  public let objectHandle: UInt32
+
+  public init(deviceId: String, objectHandle: UInt32) {
+    self.deviceId = deviceId
+    self.objectHandle = objectHandle
+    super.init()
+  }
+
+  public func encode(with coder: NSCoder) {
+    coder.encode(deviceId, forKey: "deviceId")
+    coder.encode(Int64(objectHandle), forKey: "objectHandle")
+  }
+
+  public init?(coder: NSCoder) {
+    guard let deviceId = coder.decodeObject(of: NSString.self, forKey: "deviceId") as String? else {
+      return nil
+    }
+    self.deviceId = deviceId
+    self.objectHandle = UInt32(coder.decodeInt64(forKey: "objectHandle"))
+  }
+}
+
+@objc(ThumbnailResponse)
+public final class ThumbnailResponse: NSObject, NSSecureCoding, Sendable {
+  public static let supportsSecureCoding: Bool = true
+
+  public let success: Bool
+  public let errorMessage: String?
+  public let thumbnailData: Data?
+
+  public init(success: Bool, errorMessage: String? = nil, thumbnailData: Data? = nil) {
+    self.success = success
+    self.errorMessage = errorMessage
+    self.thumbnailData = thumbnailData
+    super.init()
+  }
+
+  public func encode(with coder: NSCoder) {
+    coder.encode(success, forKey: "success")
+    coder.encode(errorMessage, forKey: "errorMessage")
+    coder.encode(thumbnailData, forKey: "thumbnailData")
+  }
+
+  public init?(coder: NSCoder) {
+    self.success = coder.decodeBool(forKey: "success")
+    self.errorMessage = coder.decodeObject(of: NSString.self, forKey: "errorMessage") as String?
+    self.thumbnailData = coder.decodeObject(of: NSData.self, forKey: "thumbnailData") as Data?
   }
 }
 

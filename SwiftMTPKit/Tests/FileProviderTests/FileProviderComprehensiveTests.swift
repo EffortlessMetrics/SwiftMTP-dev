@@ -144,6 +144,10 @@ private final class StubXPCService: NSObject, MTPXPCService {
   func deviceStatus(
     _ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void
   ) { r(DeviceStatusResponse(connected: true, sessionOpen: true)) }
+
+  func getThumbnail(
+    _ req: ThumbnailRequest, withReply r: @escaping (ThumbnailResponse) -> Void
+  ) { r(ThumbnailResponse(success: false, errorMessage: "stub")) }
 }
 
 /// Mock enumeration observer capturing results.
