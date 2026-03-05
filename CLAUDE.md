@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 SwiftMTP is a macOS/iOS library and tool for interacting with MTP (Media Transfer Protocol) devices over USB. The project uses modern Swift 6 with strict concurrency and actor-based architecture.
 
-**Maturity note**: SwiftMTP is **pre-alpha**. The project has extensive scaffolding (~8,400+ test functions across 20 targets, 20,026 quirks entries, 90+ doc files) but minimal real-device validation. Most test coverage uses `VirtualMTPDevice` (in-memory mock). The quirks database (~20,026 entries) is research-based scaffolding sourced from libmtp data and vendor specs — only a handful of devices have been tested with SwiftMTP directly. Only the Xiaomi Mi Note 2 (ff10) has completed real file transfers.
+**Maturity note**: SwiftMTP is **pre-alpha**. The project has extensive scaffolding (~9,700+ test functions across 20 targets, 20,026 quirks entries, 90+ doc files, 538+ PRs merged) but minimal real-device validation. Most test coverage uses `VirtualMTPDevice` (in-memory mock). The quirks database (~20,026 entries) is research-based scaffolding sourced from libmtp data and vendor specs — only a handful of devices have been tested with SwiftMTP directly. Only the Xiaomi Mi Note 2 (ff10) has completed real file transfers.
 
 **Waves 37–41 additions**:
 - **MTP 1.1 full coverage**: 50+ object formats, 50+ property codes, all 14 events, all 42 response codes
@@ -47,6 +47,24 @@ SwiftMTP is a macOS/iOS library and tool for interacting with MTP (Media Transfe
 - **DiagnosticFormatter**: structured error diagnostics with cause, suggestion, and related CLI commands
 - **Coverage gate**: `SwiftMTPKit/scripts/coverage_gate.py` enforces minimum coverage thresholds in CI
 - **IOUSBHost integration tests**: protocol conformance, MTP transactions, error cascading without real USB hardware
+
+**Waves 47–49 additions**:
+- **FTS5 full-text search**: SQLite FTS5-based device content search in SwiftMTPIndex
+- **FileProvider thumbnails**: thumbnail support in File Provider extension
+- **Transfer resume**: journal-based transfer resume hardening
+- **Samsung transport fixes**: additional Samsung-specific transport layer fixes
+- **Lifecycle tests**: device connection/disconnection lifecycle test coverage
+- **Pixel 7 transport**: further Pixel 7 bulk transfer fixes and timeout tuning
+- **CLI search command**: search device contents from CLI
+- **Mirror progress**: progress reporting for mirror/sync operations
+- **XPC reconnect**: automatic XPC service reconnection on failure
+- **Index performance**: SQLite index query optimization
+- **Recovery tests**: expanded error recovery integration tests
+- **Android protocol tests**: 54 operation tests covering all Android MTP extensions (`Tests/CoreTests/AndroidMTPOperationTests.swift`)
+- **Write-path safety tests**: 34 tests for partial write detection, delete safety, read-only enforcement (`Tests/CoreTests/WritePathSafetyTests.swift`)
+- **FileProvider safety audit**: 9 safety classes covering FileProvider write-path guards (`Tests/FileProviderTests/FileProviderWriteSafetyTests.swift`)
+- **CLI probe polish**: `probe --timeout`, `--verbose` flags, troubleshooting output improvements (18 probe tests)
+- **Canon/Nikon camera research**: PTP camera protocol research for Canon EOS and Nikon DSLR/Z-series (`Docs/camera-ptp-research.md`)
 
 ## Development Commands
 
@@ -101,7 +119,7 @@ cd SwiftMTPKit
 swift run swiftmtp --help
 
 # Common commands:
-swift run swiftmtp probe          # Discover devices
+swift run swiftmtp probe          # Discover devices (--timeout, --verbose flags available)
 swift run swiftmtp ls              # List device contents
 swift run swiftmtp pull            # Download files
 swift run swiftmtp push            # Upload files
@@ -237,6 +255,9 @@ SwiftMTPKit/
 - Device service registry: `SwiftMTPKit/Sources/SwiftMTPCore/Public/DeviceServiceRegistry.swift`
 - SQLite live index: `SwiftMTPKit/Sources/SwiftMTPIndex/LiveIndex/SQLiteLiveIndex.swift`
 - Virtual test device: `SwiftMTPKit/Sources/SwiftMTPTestKit/VirtualMTPDevice.swift`
+- Android protocol tests: `SwiftMTPKit/Tests/CoreTests/AndroidMTPOperationTests.swift`
+- Write-path safety tests: `SwiftMTPKit/Tests/CoreTests/WritePathSafetyTests.swift`
+- FileProvider safety tests: `SwiftMTPKit/Tests/FileProviderTests/FileProviderWriteSafetyTests.swift`
 - Coverage gate: `SwiftMTPKit/scripts/coverage_gate.py`
 - Pre-PR checks: `scripts/pre-pr.sh`
 - Bootstrap: `scripts/bootstrap.sh`
@@ -252,6 +273,10 @@ SwiftMTPKit/
 - IOUSBHost integration tests: protocol conformance, MTP transactions, error cascading (in TransportTests/IOUSBHostIntegrationTests.swift)
 - Snapshot tests: CLI output and report formatting regression tests
 - TransferJournal crash tests: WAL recovery, orphan detection, concurrent access scenarios
+- Android MTP operation tests: 54 tests covering all Android extensions (BeginEdit, EndEdit, Truncate, etc.)
+- Write-path safety tests: 34 tests for partial write detection, delete safety, read-only storage enforcement
+- FileProvider write safety: 9 safety classes covering FileProvider mutation guards
+- CLI probe tests: 18 tests for device discovery output, timeout, and verbose modes
 - Coverage gating via `SwiftMTPKit/scripts/coverage_gate.py`
 
 ### Test Discovery Guide
@@ -304,8 +329,8 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 | Samsung Galaxy S7 (SM-G930W8) | 04e8:6860 | In Progress — handshake fails after USB claim; research (#428) identified 8 init differences; transport fixes (#445) skip alt-setting and skip pre-claim reset; wave 46 deep research identified 3 remaining gaps (reset-reopen recovery, skipClearHalt wiring, forceResetOnClose) — awaiting retest | samsung-android-6860 |
 | OnePlus 3T | 2a70:f003 | In Progress — probe/read works, writes fail (0x201D); wave 45 research identified root cause (SendObjectPropList + format mismatch); wave 46 added 3 write-path QuirkFlags (`forceUndefinedFormatOnWrite`, `emptyDatesInSendObject`, `brokenSetObjectPropList`) — awaiting retest | oneplus-3t-f003 |
 | Google Pixel 7 | 18d1:4ee1 | In Progress — bulk transfer timeout; research (#429) identified 5 differences; transport fixes (#443) add handle re-open, set_configuration, and timeout tuning — awaiting retest | google-pixel-7-4ee1 |
-| Canon EOS Rebel / R-class | 04a9:3139 | Research Only — never connected to SwiftMTP | canon-eos-rebel-3139 |
-| Nikon DSLR / Z-series | 04b0:0410 | Research Only — never connected to SwiftMTP | nikon-dslr-0410 |
+| Canon EOS Rebel / R-class | 04a9:3139 | Research Only — PTP camera protocol research in `Docs/camera-ptp-research.md`; never connected to SwiftMTP | canon-eos-rebel-3139 |
+| Nikon DSLR / Z-series | 04b0:0410 | Research Only — PTP camera protocol research in `Docs/camera-ptp-research.md`; never connected to SwiftMTP | nikon-dslr-0410 |
 
 ## Performance Considerations
 - Chunk sizes auto-tune from 512KB to 8MB based on device performance via `AdaptiveChunkTuner`
@@ -350,6 +375,7 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 - Pixel 7 debug report: `Docs/pixel7-usb-debug-report.md`
 - OnePlus write debug: `Docs/oneplus-write-debug-report.md`
 - Samsung MTP research: `Docs/samsung-mtp-research.md`
+- Camera PTP research: `Docs/camera-ptp-research.md`
 - Device bringup: `Docs/device-bringup.md`
 - File Provider tech preview: `Docs/FileProvider-TechPreview.md`
 - Troubleshooting: `Docs/Troubleshooting.md`
