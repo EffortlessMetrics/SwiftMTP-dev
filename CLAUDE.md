@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 SwiftMTP is a macOS/iOS library and tool for interacting with MTP (Media Transfer Protocol) devices over USB. The project uses modern Swift 6 with strict concurrency and actor-based architecture.
 
-**Maturity note**: SwiftMTP is **pre-alpha**. The project has extensive scaffolding (~9,700+ test functions across 20 targets, 20,026 quirks entries, 90+ doc files, 538+ PRs merged) but minimal real-device validation. Most test coverage uses `VirtualMTPDevice` (in-memory mock). The quirks database (~20,026 entries) is research-based scaffolding sourced from libmtp data and vendor specs — only a handful of devices have been tested with SwiftMTP directly. Only the Xiaomi Mi Note 2 (ff10) has completed real file transfers.
+**Maturity note**: SwiftMTP is **pre-alpha**. The project has extensive scaffolding (~8,700+ test functions across 20 targets, 20,026 quirks entries, 40+ doc files, 553+ PRs merged) but minimal real-device validation. Most test coverage uses `VirtualMTPDevice` (in-memory mock). The quirks database (~20,026 entries) is research-based scaffolding sourced from libmtp data and vendor specs — only a handful of devices have been tested with SwiftMTP directly. Only the Xiaomi Mi Note 2 (ff10) has completed real file transfers.
 
 **Waves 37–41 additions**:
 - **MTP 1.1 full coverage**: 50+ object formats, 50+ property codes, all 14 events, all 42 response codes
@@ -65,6 +65,19 @@ SwiftMTP is a macOS/iOS library and tool for interacting with MTP (Media Transfe
 - **FileProvider safety audit**: 9 safety classes covering FileProvider write-path guards (`Tests/FileProviderTests/FileProviderWriteSafetyTests.swift`)
 - **CLI probe polish**: `probe --timeout`, `--verbose` flags, troubleshooting output improvements (18 probe tests)
 - **Canon/Nikon camera research**: PTP camera protocol research for Canon EOS and Nikon DSLR/Z-series (`Docs/camera-ptp-research.md`)
+
+**Waves 49–50 additions**:
+- **WAL hygiene tests**: 14 SQLite WAL checkpoint/recovery tests (`#546`)
+- **DiagnosticFormatter expansion**: transport, index, and XPC error coverage (`#547`)
+- **Quirks governance CI**: duplicate and flag validation tightened (`#549`)
+- **IOUSBHost parity tests**: transport parity coverage tests (`#550`)
+- **CI timeout increase**: test job timeout raised to 90 minutes (`#551`)
+- **Device status updates**: ff40 probe/listing/storage confirmed; OnePlus 3T probe/listing/search confirmed (`#552`)
+- **Write-path safety tests**: 34 tests for partial write detection, delete safety, read-only enforcement (`#535`)
+- **Android MTP operation tests**: 54 tests covering all Android extensions (`#536`)
+- **FileProvider write safety audit**: 9 safety suites covering FileProvider mutation guards (`#537`)
+- **CLI probe polish**: `--timeout`, `--verbose` flags, troubleshooting output (18 tests) (`#538`)
+- **Canon/Nikon camera quirks**: PTP camera protocol research for Canon EOS and Nikon DSLR/Z-series (`#534`)
 
 ## Development Commands
 
@@ -132,6 +145,7 @@ swift run swiftmtp edit            # Edit files on Android devices (BeginEdit/En
 swift run swiftmtp thumb           # Download object thumbnails
 swift run swiftmtp info            # Show detailed object/device info
 swift run swiftmtp quirks          # Show device quirks
+swift run swiftmtp search          # Search device contents (FTS5)
 swift run swiftmtp device-lab      # Automated device testing matrix
 swift run swiftmtp wizard          # Interactive guided device setup
 ```
@@ -180,6 +194,11 @@ SwiftMTPKit/
 │   │   ├── Internal/               # Implementation details
 │   │   ├── Public/                 # Public APIs
 │   │   └── CLI/                    # CLI utilities
+│   ├── MTPCoreTypes/               # Shared MTP type definitions (extracted from Core)
+│   ├── MTPEndianCodec/             # PTP/MTP binary codec (little-endian wire format)
+│   ├── SwiftMTPCLI/                # CLI shared utilities (flags, formatting, output helpers)
+│   ├── CLibusb/                    # C module map for libusb
+│   ├── CSQLite/                    # C module map for SQLite
 │   ├── SwiftMTPTransportLibUSB/     # USB transport layer using libusb
 │   ├── SwiftMTPTransportIOUSBHost/ # Native macOS USB transport (discovery, session, bulk, file transfer, events)
 │   ├── SwiftMTPIndex/              # SQLite-based device content indexing
@@ -262,6 +281,10 @@ SwiftMTPKit/
 - Pre-PR checks: `scripts/pre-pr.sh`
 - Bootstrap: `scripts/bootstrap.sh`
 - Shell completions: `completions/` (bash, zsh, fish)
+- MTP core types: `SwiftMTPKit/Sources/MTPCoreTypes/`
+- Endian codec: `SwiftMTPKit/Sources/MTPEndianCodec/`
+- CLI shared utilities: `SwiftMTPKit/Sources/SwiftMTPCLI/`
+- Search command: `SwiftMTPKit/Sources/Tools/swiftmtp-cli/Commands/SearchCommand.swift`
 
 ### Testing Approach
 - Use mock profiles for unit tests without real devices
@@ -379,6 +402,13 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 - Device bringup: `Docs/device-bringup.md`
 - File Provider tech preview: `Docs/FileProvider-TechPreview.md`
 - Troubleshooting: `Docs/Troubleshooting.md`
+- Development log: `Docs/DEVELOPMENT-LOG.md`
+- Microcrate architecture: `Docs/MICROCRATE-ARCHITECTURE.md`
+- Migration guide: `Docs/MigrationGuide.md`
+- SRP analysis: `Docs/SRP-Analysis.md`
+- Compat matrix: `Docs/compat-matrix.md`
+- Samsung debug report: `Docs/samsung-mtp-debug-report.md`
+- Error codes: `Docs/ErrorCodes.md`
 
 ## Pre-PR Checklist
 
