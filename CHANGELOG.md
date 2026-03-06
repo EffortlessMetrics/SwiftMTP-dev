@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > **Summary**: 130 PRs (#415–#553) across fourteen waves delivering MTP 1.1 full-spectrum coverage, Android edit extensions, adaptive performance tuning, layered error recovery, conflict resolution, format-based filtering, comprehensive test backfill, shell completions, IOUSBHost bulk/file transfer, Homebrew formula, CLI progress bars, DocC pipeline, quirk flags wired into transport, SPDX licensing, structured OSLog logging, journal crash recovery tests, FTS5 full-text search, FileProvider thumbnails, transfer resume journaling, Samsung/OnePlus/Pixel transport fixes, CLI search, mirror progress reporting, XPC auto-reconnect, index performance optimization, camera quirks research, write-path safety tests, CLI probe polish, WAL hygiene tests, diagnostic formatter expansion, device status updates, and CI hardening. Session totals: **~8,700+ tests**, **20,026 quirks entries**, **~190 PRs merged** (#363–#553).
 
-### Wave 50 — Diagnostics, WAL Hygiene & CI Hardening (PRs #543–#551)
+### Wave 50 — Diagnostics, WAL Hygiene & CI Hardening (PRs #543–#553)
 
 - **#543** — Pin Xcode version for DocC generation (FIXUP F-CI-6 resolved)
 - **#544** — CLAUDE.md refresh for waves 46–49

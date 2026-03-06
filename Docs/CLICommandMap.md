@@ -141,17 +141,17 @@ swift run swiftmtp ls 65537      # List files on storage
 
 | Category | Commands |
 |----------|----------|
-| Device Discovery & Diagnostics | 7 |
+| Device Discovery & Diagnostics | 8 |
 | File Operations | 9 |
 | Sync & Mirror | 2 |
 | Edit Extensions (Android) | 3 |
-| Performance & Benchmarking | 2 |
+| Performance & Benchmarking | 3 |
 | Device Database & Quirks | 3 |
 | Device Contribution | 4 |
 | Events & Monitoring | 1 |
 | Search | 4 |
 | Other | 3 |
-| **Total** | **38 command forms** |
+| **Total** | **40 command forms** |
 
 ---
 

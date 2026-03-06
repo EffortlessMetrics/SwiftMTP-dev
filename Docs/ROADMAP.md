@@ -62,7 +62,7 @@ Minimum expectations for each item:
 
 ## Wave 49–50 Activity (2026-03-15)
 
-Key development activity across these two waves — 20 PRs (#531–#553) covering write-path safety, camera quirks research, CLI probe polish, WAL hygiene, diagnostics expansion, quirks governance, IOUSBHost parity tests, and documentation updates:
+Key development activity across these two waves — 19 PRs (#531–#553) covering write-path safety, camera quirks research, CLI probe polish, WAL hygiene, diagnostics expansion, quirks governance, IOUSBHost parity tests, and documentation updates:
 
 ### Wave 50 — Diagnostics, WAL Hygiene & CI Hardening (PRs #543–#553)
 - **Xcode DocC pin** (#543): pin Xcode version for DocC generation
