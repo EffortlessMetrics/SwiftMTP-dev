@@ -8,7 +8,7 @@ This roadmap is the execution plan for the next implementation sprints in the 2.
 
 ## Current Operating Goal
 
-Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **~9,500+ tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices). **530+ PRs merged** (#1–#530) including **164 PRs this session** (#363–#530).
+Ship `v2.1.0` with improved real-device stability, better operator troubleshooting paths, and submission pipeline hardening, while keeping release gates green. Test suite now at **~8,700+ tests executed** across 20 targets (40 skipped, 3 expected failures / 0 unexpected). Device quirks database at **20,026 entries** across **1,154 VIDs** and **38 categories** (research-based scaffolding from libmtp data and vendor specs — not validated on real devices). **553+ PRs merged** (#1–#553) including **~190 PRs this session** (#363–#553).
 
 ## Recently Shipped (PR #8 — feat/device-robustness-and-docs-overhaul)
 
@@ -46,7 +46,7 @@ Minimum expectations for each item:
 | 2.1-B | Submission workflow hardening | Complete | Privacy/redaction false positives or misses | `./scripts/validate-submission.sh` |
 | 2.1-C | CI + verification consolidation | Complete | Ambiguous required checks across workflows | CI workflow mapping + TSAN parity |
 
-## Next Priorities (Post Wave 48)
+## Next Priorities (Post Wave 50)
 
 | Priority | Area | Status | Notes |
 |----------|------|--------|-------|
@@ -59,6 +59,41 @@ Minimum expectations for each item:
 | DocC documentation generation | Documentation | ✅ Shipped | DocC pipeline with CI integration shipped (#483) |
 | Error recovery real-device validation | Core | Planned | ErrorRecoveryLayer (#449) is mock-tested only; needs real-device stress testing |
 | Adaptive chunk tuner validation | Performance | Planned | AdaptiveChunkTuner (#451) needs real transfer benchmarks to validate tuning curves |
+
+## Wave 49–50 Activity (2026-03-15)
+
+Key development activity across these two waves — 19 PRs (#531–#553) covering write-path safety, camera quirks research, CLI probe polish, WAL hygiene, diagnostics expansion, quirks governance, IOUSBHost parity tests, and documentation updates:
+
+### Wave 50 — Diagnostics, WAL Hygiene & CI Hardening (PRs #543–#553)
+- **Xcode DocC pin** (#543): pin Xcode version for DocC generation
+- **CLAUDE.md refresh** (#544): waves 46–49 documentation update
+- **Troubleshooting update** (#545): device-specific troubleshooting tips
+- **WAL hygiene tests** (#546): 14 SQLite WAL checkpoint/recovery tests
+- **DiagnosticFormatter expansion** (#547): transport, index, and XPC error coverage
+- **Sync conflict edge cases** (#548): conflict resolution edge case tests
+- **Quirks governance CI** (#549): duplicate and flag validation tightening
+- **IOUSBHost parity tests** (#550): transport parity coverage tests
+- **CI timeout increase** (#551): test job timeout raised to 90 minutes
+- **Device status updates** (#552): ff40 and OnePlus 3T real probe evidence documented
+- **CHANGELOG update** (#553): waves 49–50 changelog entries
+
+### Wave 49 — Write-Path Safety & Camera Quirks (PRs #531–#538)
+- **Compat matrix regen** (#531): CI fix for compat-matrix.md
+- **CHANGELOG wave 48** (#532): wave 48 changelog entries
+- **ROADMAP update** (#533): waves 46–48 roadmap refresh
+- **Camera quirks research** (#534): Canon EOS & Nikon PTP camera protocol research
+- **Write-path safety tests** (#535): 34 tests for partial write detection, delete safety, read-only enforcement
+- **Android MTP operation tests** (#536): 54 tests covering all Android extensions
+- **FileProvider write safety** (#537): 9 safety test suites covering FileProvider mutation guards
+- **CLI probe polish** (#538): `--timeout`, `--verbose` flags, troubleshooting hints, 18 tests
+
+### Key Outcomes
+- **~8,700+ tests**, 0 unexpected failures
+- **~190 PRs merged** this session (#363–#553) — **553+ total PRs** in the repository
+- Write-path safety validated across Core, FileProvider, and Android extensions
+- IOUSBHost transport parity confirmed with dedicated coverage tests
+- CLI probe UX improved with timeout and verbose flags
+- Device status tables updated with real probe evidence (ff40, OnePlus 3T)
 
 ## Wave 46–48 Activity (2026-03-14 → 2026-03-15)
 
@@ -96,7 +131,7 @@ Key development activity across these three waves — 30 PRs (#501–#530) cover
 - **Quirks refresh** (#501): device profile updates from wave 45 findings
 
 ### Key Outcomes
-- **~9,500+ tests**, 0 unexpected failures
+- **~8,500+ tests**, 0 unexpected failures
 - **164 PRs merged** this session (#363–#530) — **530+ total PRs** in the repository
 - IOUSBHost transport fully complete: discovery → bulk → file transfer → events → integration tests
 - Samsung (#520) and Pixel 7 (#530) transport fixes shipped — both awaiting retest
