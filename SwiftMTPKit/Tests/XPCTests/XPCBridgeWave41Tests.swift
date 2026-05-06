@@ -5,6 +5,7 @@ import Foundation
 import XCTest
 
 @testable import SwiftMTPCore
+import SwiftMTPBroker
 @testable import SwiftMTPXPC
 import SwiftMTPTestKit
 

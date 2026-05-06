@@ -7,40 +7,40 @@ import XCTest
 
 final class BrokerScaffoldTests: XCTestCase {
   func testBrokerInstantiates() async {
-    let broker = Broker()
-    let lookup = await broker.service(for: MTPDeviceID(raw: "nonexistent-device"))
+    let registry = DeviceServiceRegistry()
+    let lookup = await registry.service(for: MTPDeviceID(raw: "nonexistent-device"))
     XCTAssertNil(lookup)
   }
 
   func testDomainMappingRoundTrip() async {
-    let broker = Broker()
+    let registry = DeviceServiceRegistry()
     let devA = MTPDeviceID(raw: "dev-a")
-    await broker.registerDomainMapping(deviceId: devA, domainId: "domain-1")
-    let domain = await broker.domainId(for: devA)
-    let device = await broker.deviceId(for: "domain-1")
+    await registry.registerDomainMapping(deviceId: devA, domainId: "domain-1")
+    let domain = await registry.domainId(for: devA)
+    let device = await registry.deviceId(for: "domain-1")
     XCTAssertEqual(domain, "domain-1")
     XCTAssertEqual(device, devA)
   }
 
   func testRemapEvictsStaleDomain() async {
-    let broker = Broker()
+    let registry = DeviceServiceRegistry()
     let devA = MTPDeviceID(raw: "dev-a")
-    await broker.registerDomainMapping(deviceId: devA, domainId: "domain-1")
-    await broker.registerDomainMapping(deviceId: devA, domainId: "domain-2")
-    let oldReverse = await broker.deviceId(for: "domain-1")
-    let newReverse = await broker.deviceId(for: "domain-2")
+    await registry.registerDomainMapping(deviceId: devA, domainId: "domain-1")
+    await registry.registerDomainMapping(deviceId: devA, domainId: "domain-2")
+    let oldReverse = await registry.deviceId(for: "domain-1")
+    let newReverse = await registry.deviceId(for: "domain-2")
     XCTAssertNil(oldReverse)
     XCTAssertEqual(newReverse, devA)
   }
 
   func testPriorityOrdering() {
-    XCTAssertLessThan(BrokerOperationPriority.low, BrokerOperationPriority.medium)
-    XCTAssertLessThan(BrokerOperationPriority.medium, BrokerOperationPriority.high)
-    XCTAssertLessThan(BrokerOperationPriority.high, BrokerOperationPriority.critical)
+    XCTAssertLessThan(DeviceOperationPriority.low, DeviceOperationPriority.medium)
+    XCTAssertLessThan(DeviceOperationPriority.medium, DeviceOperationPriority.high)
+    XCTAssertLessThan(DeviceOperationPriority.high, DeviceOperationPriority.critical)
   }
 
   func testDefaultDeadline() {
-    let deadline = BrokerOperationDeadline.default
+    let deadline = OperationDeadline.default
     XCTAssertGreaterThan(deadline.timeout, 0)
     XCTAssertGreaterThanOrEqual(deadline.maxRetries, 0)
   }

@@ -5,6 +5,7 @@ import Foundation
 import Observation
 import FileProvider
 import SwiftMTPCore
+import SwiftMTPBroker
 import SwiftMTPTransportLibUSB
 import SwiftMTPIndex
 import SwiftMTPQuirks

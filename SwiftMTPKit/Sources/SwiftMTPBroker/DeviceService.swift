@@ -3,6 +3,7 @@
 
 import Foundation
 import Collections
+import SwiftMTPCore
 
 // MARK: - Priority + Deadline
 

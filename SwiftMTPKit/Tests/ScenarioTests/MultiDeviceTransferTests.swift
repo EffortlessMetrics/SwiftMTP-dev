@@ -4,6 +4,7 @@
 import Foundation
 import XCTest
 @testable import SwiftMTPCore
+import SwiftMTPBroker
 @testable import SwiftMTPTestKit
 
 // MARK: - Multi-Device Parallel Transfer Tests

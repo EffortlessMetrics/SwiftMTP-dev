@@ -4,6 +4,7 @@
 import Foundation
 import XCTest
 @testable import SwiftMTPCore
+import SwiftMTPBroker
 import SwiftMTPQuirks
 import SwiftMTPTestKit
 import SwiftMTPCLI

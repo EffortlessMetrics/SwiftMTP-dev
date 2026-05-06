@@ -5,6 +5,7 @@ import Foundation
 import XCTest
 import FileProvider
 @testable import SwiftMTPCore
+import SwiftMTPBroker
 @testable import SwiftMTPFileProvider
 @testable import SwiftMTPXPC
 

@@ -125,7 +125,9 @@ let package = Package(
 
     .target(
       name: "SwiftMTPXPC",
-      dependencies: ["SwiftMTPCore", "SwiftMTPTransportLibUSB", "SwiftMTPIndex"]),
+      dependencies: [
+        "SwiftMTPCore", "SwiftMTPBroker", "SwiftMTPTransportLibUSB", "SwiftMTPIndex",
+      ]),
 
     .target(
       name: "SwiftMTPFileProvider",
@@ -137,6 +139,7 @@ let package = Package(
       name: "SwiftMTPUI",
       dependencies: [
         "SwiftMTPCore",
+        "SwiftMTPBroker",
         "SwiftMTPTransportLibUSB",
         "SwiftMTPIndex",
         "SwiftMTPQuirks",
@@ -198,8 +201,8 @@ let package = Package(
     .testTarget(
       name: "CoreTests",
       dependencies: [
-        "SwiftMTPCore", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks", "SwiftMTPTestKit",
-        "SwiftMTPCLI", "SwiftMTPIndex", "SwiftMTPSync", "SwiftMTPObservability",
+        "SwiftMTPCore", "SwiftMTPBroker", "SwiftMTPTransportLibUSB", "CLibusb", "SwiftMTPQuirks",
+        "SwiftMTPTestKit", "SwiftMTPCLI", "SwiftMTPIndex", "SwiftMTPSync", "SwiftMTPObservability",
       ],
       resources: [.copy("Fixtures")]),
     .testTarget(
@@ -240,12 +243,14 @@ let package = Package(
     .testTarget(
       name: "FileProviderTests",
       dependencies: [
-        "SwiftMTPFileProvider", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore", "SwiftMTPXPC",
+        "SwiftMTPFileProvider", "SwiftMTPBroker", "SwiftMTPTestKit", "SwiftMTPIndex", "SwiftMTPCore",
+        "SwiftMTPXPC",
       ]),
     .testTarget(
       name: "XPCTests",
       dependencies: [
         "SwiftMTPXPC",
+        "SwiftMTPBroker",
         "SwiftMTPCore",
         "SwiftMTPTestKit",
       ]),
@@ -284,6 +289,7 @@ let package = Package(
       name: "ErrorHandlingTests",
       dependencies: [
         "SwiftMTPCore",
+        "SwiftMTPBroker",
         "SwiftMTPIndex",
         "SwiftMTPStore",
         "SwiftMTPSync",
@@ -294,6 +300,7 @@ let package = Package(
       name: "ScenarioTests",
       dependencies: [
         "SwiftMTPCore",
+        "SwiftMTPBroker",
         "SwiftMTPTransportLibUSB",
         "SwiftMTPIndex",
         "SwiftMTPSync",

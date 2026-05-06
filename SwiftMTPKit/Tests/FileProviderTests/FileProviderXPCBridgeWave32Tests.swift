@@ -4,6 +4,7 @@
 import XCTest
 @testable import SwiftMTPFileProvider
 @testable import SwiftMTPCore
+import SwiftMTPBroker
 @testable import SwiftMTPXPC
 import SwiftMTPTestKit
 import FileProvider
