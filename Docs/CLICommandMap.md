@@ -1,7 +1,7 @@
 # SwiftMTP CLI Command Map
 
 > Comprehensive reference for all `swiftmtp` CLI commands, global flags, and usage patterns.
-> Last updated: Wave 44
+> Last updated: Wave 50
 
 ---
 
@@ -21,6 +21,8 @@ swift run swiftmtp ls 65537      # List files on storage
 | Command | Syntax | Description | Status |
 |---------|--------|-------------|--------|
 | `probe` | `swiftmtp probe` | Detect and display MTP device info | ✅ Implemented |
+| `probe` | `swiftmtp probe --timeout <secs>` | Set probe timeout (default: device-dependent) | ✅ Implemented |
+| `probe` | `swiftmtp probe --verbose` | Show detailed probe output with troubleshooting hints | ✅ Implemented |
 | `usb-dump` | `swiftmtp usb-dump` | Dump raw USB interface descriptors | ✅ Implemented |
 | `diag` | `swiftmtp diag` | Run probe + usb-dump combined diagnostics | ✅ Implemented |
 | `health` | `swiftmtp health` | Quick USB/MTP connectivity check | ✅ Implemented |
@@ -96,6 +98,15 @@ swift run swiftmtp ls 65537      # List files on storage
 |---------|--------|-------------|--------|
 | `events` | `swiftmtp events [secs]` | Monitor MTP device events in real-time | ✅ Implemented |
 
+## Search
+
+| Command | Syntax | Description | Status |
+|---------|--------|-------------|--------|
+| `search` | `swiftmtp search <query>` | Full-text search over device file index (FTS5) | ✅ Implemented |
+| `search` | `swiftmtp search <query> --path` | Search by path instead of filename | ✅ Implemented |
+| `search` | `swiftmtp search <query> --device <id>` | Scope search to a specific device | ✅ Implemented |
+| `search` | `swiftmtp search <query> --limit <n>` | Limit number of results (default: 50) | ✅ Implemented |
+
 ## Other
 
 | Command | Syntax | Description | Status |
@@ -130,16 +141,17 @@ swift run swiftmtp ls 65537      # List files on storage
 
 | Category | Commands |
 |----------|----------|
-| Device Discovery & Diagnostics | 5 |
+| Device Discovery & Diagnostics | 8 |
 | File Operations | 9 |
 | Sync & Mirror | 2 |
 | Edit Extensions (Android) | 3 |
-| Performance & Benchmarking | 2 |
+| Performance & Benchmarking | 3 |
 | Device Database & Quirks | 3 |
 | Device Contribution | 4 |
 | Events & Monitoring | 1 |
+| Search | 4 |
 | Other | 3 |
-| **Total** | **32 command forms** |
+| **Total** | **40 command forms** |
 
 ---
 
@@ -184,6 +196,12 @@ swiftmtp quirks lookup --vid 0x18d1 --pid 0x4ee1
 swiftmtp collect
 swiftmtp submit ./my-device-bundle --gh
 
+# Search device contents
+swiftmtp search photo
+swiftmtp search "IMG_20*" --limit 10
+swiftmtp search DCIM --path
+swiftmtp search vacation --json
+
 # Demo mode
 swiftmtp probe --mock
 swiftmtp ls 65537 --mock-profile=pixel7
@@ -216,5 +234,6 @@ The CLI uses manual argument parsing (not ArgumentParser) in `Sources/Tools/swif
 | `DeviceLabCommand.swift` | `device-lab` |
 | `AddDeviceCommand.swift` | `add-device` |
 | `LearnPromoteCommand.swift` | `learn-promote` |
+| `SearchCommand.swift` | `search` |
 | `BDDScenarios.swift` / `BDDCommand.swift` | `bdd` |
 | `StorybookCommand.swift` | `storybook` |

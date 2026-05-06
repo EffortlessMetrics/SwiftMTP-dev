@@ -13,7 +13,7 @@ Connect Android phones, cameras, and other MTP devices to your Mac — no Androi
 
 </div>
 
-> **⚠️ Pre-Alpha** — The protocol layer is well-tested with mocks (~9,000+ tests across 20 targets), but only 1 device has completed real file transfers. Not ready for production use.
+> **⚠️ Pre-Alpha** — The protocol layer is well-tested with mocks (~8,700+ tests across 20 targets), but only 1 device has completed real file transfers. Not ready for production use.
 
 ---
 
@@ -42,10 +42,11 @@ swiftmtp ls                 # List files on device
 swiftmtp pull photo.jpg     # Download a file
 swiftmtp push track.mp3     # Upload a file
 swiftmtp mirror ~/Photos    # Mirror device content locally
+swiftmtp search vacation    # Search device contents (FTS5)
 swiftmtp snapshot           # Capture device metadata for debugging
 ```
 
-See the [CLI Command Map](Docs/CLICommandMap.md) for all 15+ commands.
+See the [CLI Command Map](Docs/CLICommandMap.md) for all 30+ commands.
 
 ---
 
@@ -81,10 +82,15 @@ See the [CLI Command Map](Docs/CLICommandMap.md) for all 15+ commands.
 | Format-based mirror filtering | ✅ Done | `--photos-only`, `--format`, `--exclude-format` |
 | SQLite content indexing | ✅ Done | Optimized queries with 8 dedicated indexes |
 | Device quirks database | ✅ Done | 20,026 entries across 1,154 vendors (research-based — see [caveat](#quirks-database-caveat)) |
-| CLI tool | ✅ Done | 15+ commands with "did you mean?" suggestions and categorized help |
+| FTS5 full-text search | ✅ Done | SQLite FTS5-based device content search |
+| CLI tool | ✅ Done | 30+ commands with "did you mean?" suggestions and categorized help |
+| XPC auto-reconnect | ✅ Done | Automatic XPC service reconnection on failure |
+| Mirror progress | ✅ Done | Real-time progress reporting with ETA for mirror operations |
+| DiagnosticFormatter | ✅ Done | Structured error diagnostics with cause, suggestion, and related commands |
+| PrivacyRedactor | ✅ Done | SHA-256 serial obfuscation for safe device submission artifacts |
 | SwiftUI GUI | 🔨 In Progress | Demo mode functional; real-device integration pending |
 | File Provider (Finder) | 🔨 In Progress | Tech preview — scaffolded and mock-tested; no real-device validation |
-| IOUSBHost native transport | 📋 Planned | Scaffold only; currently uses libusb |
+| IOUSBHost native transport | ✅ Done | Discovery, session, bulk transfers, file transfer, event polling — awaiting real-device validation |
 
 ---
 
@@ -124,7 +130,7 @@ Built with **Swift 6 strict concurrency** and **actor-based isolation**.
 │                   SwiftMTPCore                        │
 │   MTPDeviceActor · ErrorRecoveryLayer · ChunkTuner   │
 ├──────────────────────┬───────────────────────────────┤
-│  TransportLibUSB     │  TransportIOUSBHost (scaffold) │
+│  TransportLibUSB     │  TransportIOUSBHost             │
 ├──────────────────────┴───────────────────────────────┤
 │              SwiftMTPQuirks (20,026 entries)          │
 └──────────────────────────────────────────────────────┘
@@ -134,7 +140,7 @@ Built with **Swift 6 strict concurrency** and **actor-based isolation**.
 |--------|---------------|
 | **SwiftMTPCore** | Actor-isolated MTP protocol, async/await I/O, error recovery |
 | **SwiftMTPTransportLibUSB** | USB transport via libusb with fallback support |
-| **SwiftMTPTransportIOUSBHost** | Native macOS USB transport (scaffold only) |
+| **SwiftMTPTransportIOUSBHost** | Native macOS USB transport (discovery, session, bulk, file transfer, events) — awaiting real-device validation |
 | **SwiftMTPIndex** | SQLite-based device content indexing and snapshots |
 | **SwiftMTPSync** | Mirror, diff, and sync with conflict resolution |
 | **SwiftMTPUI** | SwiftUI views using `@Observable` |
@@ -143,6 +149,9 @@ Built with **Swift 6 strict concurrency** and **actor-based isolation**.
 | **SwiftMTPStore** | Transfer journals and device metadata persistence |
 | **SwiftMTPFileProvider** | macOS File Provider extension via XPC (tech preview) |
 | **SwiftMTPTestKit** | `VirtualMTPDevice`, `FaultInjectingLink`, test utilities |
+| **MTPCoreTypes** | Shared MTP type definitions (extracted from Core) |
+| **MTPEndianCodec** | PTP/MTP binary codec (little-endian wire format) |
+| **SwiftMTPCLI** | CLI shared utilities (flags, formatting, output helpers) |
 
 ---
 
@@ -204,7 +213,7 @@ GUI users can toggle simulation via the Orange Play button in the toolbar.
 
 ## Testing
 
-~9,000+ tests across 20 targets using `VirtualMTPDevice` (in-memory mock). Includes unit, BDD ([CucumberSwift](https://github.com/Tyler-Keith-Thompson/CucumberSwift)), property-based ([SwiftCheck](https://github.com/typelift/SwiftCheck)), snapshot, and fuzz tests.
+~8,700+ tests across 20 targets using `VirtualMTPDevice` (in-memory mock). Includes unit, BDD ([CucumberSwift](https://github.com/Tyler-Keith-Thompson/CucumberSwift)), property-based ([SwiftCheck](https://github.com/typelift/SwiftCheck)), snapshot, and fuzz tests.
 
 ```bash
 # Full verification suite
@@ -252,7 +261,7 @@ Real-device testing is the main bottleneck. If you have an MTP device and want t
 **Known blockers needing real-device retests:**
 - **Samsung Galaxy**: MTP handshake fails after USB claim — transport fixes shipped, awaiting retest
 - **Pixel 7**: bulk transfer timeout — transport fixes shipped, awaiting retest
-- **OnePlus**: write path returns InvalidParameter — needs diagnosis
+- **OnePlus**: write path returns InvalidParameter — root cause identified (SendObjectPropList + format mismatch), awaiting retest with quirk flags
 - **Canon/Nikon**: no one has tried connecting a camera yet
 
 ---
@@ -282,8 +291,13 @@ SwiftMTP/
 ├── SwiftMTPKit/               # Swift Package root (build from here)
 │   ├── Sources/
 │   │   ├── SwiftMTPCore/              # Core MTP protocol
+│   │   ├── MTPCoreTypes/             # Shared MTP type definitions
+│   │   ├── MTPEndianCodec/           # PTP/MTP binary codec
+│   │   ├── SwiftMTPCLI/             # CLI shared utilities
+│   │   ├── CLibusb/                  # C module map for libusb
+│   │   ├── CSQLite/                  # C module map for SQLite
 │   │   ├── SwiftMTPTransportLibUSB/   # libusb transport
-│   │   ├── SwiftMTPTransportIOUSBHost/# Native transport (scaffold)
+│   │   ├── SwiftMTPTransportIOUSBHost/# Native transport (fully implemented)
 │   │   ├── SwiftMTPIndex/             # SQLite indexing
 │   │   ├── SwiftMTPSync/              # Mirror/sync/diff
 │   │   ├── SwiftMTPUI/               # SwiftUI views
