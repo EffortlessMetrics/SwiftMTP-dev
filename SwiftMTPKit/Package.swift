@@ -11,6 +11,7 @@ let package = Package(
   products: [
     .library(name: "MTPEndianCodec", targets: ["MTPEndianCodec"]),
     .library(name: "SwiftMTPCore", targets: ["SwiftMTPCore"]),
+    .library(name: "SwiftMTPBroker", targets: ["SwiftMTPBroker"]),
     .library(name: "SwiftMTPTransportLibUSB", targets: ["SwiftMTPTransportLibUSB"]),
     .library(name: "SwiftMTPIndex", targets: ["SwiftMTPIndex"]),
     .library(name: "SwiftMTPSync", targets: ["SwiftMTPSync"]),
@@ -69,6 +70,14 @@ let package = Package(
 
     .target(
       name: "SwiftMTPStore",
+      dependencies: ["SwiftMTPCore"],
+      swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+
+    // Scaffold for the broker/driver layer. Today this re-exports a small set of
+    // session/lifecycle primitives that still live in SwiftMTPCore; future PRs will
+    // migrate the implementations here. See Docs/ROADMAP.broker-architecture.md.
+    .target(
+      name: "SwiftMTPBroker",
       dependencies: ["SwiftMTPCore"],
       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
@@ -316,5 +325,9 @@ let package = Package(
     .testTarget(
       name: "SwiftMTPCLITests",
       dependencies: ["SwiftMTPCLI", "SwiftMTPCore"]),
+
+    .testTarget(
+      name: "BrokerTests",
+      dependencies: ["SwiftMTPBroker", "SwiftMTPCore", "SwiftMTPTestKit"]),
   ]
 )
