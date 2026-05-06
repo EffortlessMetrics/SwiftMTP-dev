@@ -112,6 +112,12 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
           handle        INTEGER,
           parentHandle  INTEGER,
           kind          TEXT    NOT NULL,
+          name          TEXT,
+          pathKey       TEXT,
+          sizeBytes     INTEGER,
+          mtime         INTEGER,
+          formatCode    INTEGER,
+          isDirectory   INTEGER,
           createdAt     INTEGER NOT NULL
       );
       CREATE INDEX IF NOT EXISTS idx_live_changes_device_counter
@@ -166,6 +172,34 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
       """
     // Execute each statement separately — sqlite3_exec handles multiple statements
     try db.exec(sql)
+    try migrateLiveChangesSnapshotColumns()
+  }
+
+  private func migrateLiveChangesSnapshotColumns() throws {
+    let requiredColumns: [(name: String, definition: String)] = [
+      ("name", "TEXT"),
+      ("pathKey", "TEXT"),
+      ("sizeBytes", "INTEGER"),
+      ("mtime", "INTEGER"),
+      ("formatCode", "INTEGER"),
+      ("isDirectory", "INTEGER"),
+    ]
+    let existing = try liveChangesColumns()
+    for column in requiredColumns where !existing.contains(column.name) {
+      try db.exec("ALTER TABLE live_changes ADD COLUMN \(column.name) \(column.definition);")
+    }
+  }
+
+  private func liveChangesColumns() throws -> Set<String> {
+    try db.withStatement("PRAGMA table_info(live_changes)") { stmt in
+      var columns = Set<String>()
+      while try db.step(stmt) {
+        if let name = db.colText(stmt, 1) {
+          columns.insert(name)
+        }
+      }
+      return columns
+    }
   }
 
   // MARK: - LiveIndexReader
@@ -317,27 +351,42 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
   }
 
   public func changesSince(deviceId: String, anchor: Int64) async throws -> [IndexedObjectChange] {
-    // Single query: deduplicate changes via subquery, then JOIN to live_objects.
-    // Eliminates the N+1 pattern of querying each changed object individually.
+    // Single query: deduplicate changes, then LEFT JOIN to current objects.
+    // Delete rows are self-contained so sync anchors survive stale-row purges.
     let sql = """
-      SELECT lc.kind, o.deviceId, o.storageId, o.handle, o.parentHandle,
-             o.name, o.pathKey, o.sizeBytes, o.mtime, o.formatCode,
-             o.isDirectory, o.changeCounter, o.crawledAt, o.stale
-      FROM (
-        SELECT storageId, handle, kind, MAX(changeCounter) AS maxCounter
+      SELECT lc.kind,
+             COALESCE(o.deviceId, ?) AS deviceId,
+             lc.storageId,
+             lc.handle,
+             COALESCE(o.parentHandle, lc.parentHandle) AS parentHandle,
+             COALESCE(o.name, lc.name, '') AS name,
+             COALESCE(o.pathKey, lc.pathKey, '') AS pathKey,
+             COALESCE(o.sizeBytes, lc.sizeBytes) AS sizeBytes,
+             COALESCE(o.mtime, lc.mtime) AS mtime,
+             COALESCE(o.formatCode, lc.formatCode, 0) AS formatCode,
+             COALESCE(o.isDirectory, lc.isDirectory, 0) AS isDirectory,
+             COALESCE(o.changeCounter, lc.changeCounter) AS changeCounter
+      FROM live_changes lc
+      JOIN (
+        SELECT storageId, handle, MAX(changeCounter) AS maxCounter
         FROM live_changes
         WHERE deviceId = ? AND changeCounter > ?
         GROUP BY storageId, handle
-      ) lc
-      JOIN live_objects o
-        ON o.deviceId = ? AND o.storageId = lc.storageId AND o.handle = lc.handle
-      WHERE (lc.kind = 'delete') OR (lc.kind != 'delete' AND o.stale = 0)
+      ) latest
+        ON latest.storageId = lc.storageId
+       AND latest.handle = lc.handle
+       AND latest.maxCounter = lc.changeCounter
+      LEFT JOIN live_objects o
+        ON o.deviceId = lc.deviceId AND o.storageId = lc.storageId AND o.handle = lc.handle
+      WHERE lc.deviceId = ?
+        AND (lc.kind = 'delete' OR (lc.kind != 'delete' AND COALESCE(o.stale, 0) = 0))
       """
 
     return try db.withStatement(sql) { stmt in
       try db.bind(stmt, 1, deviceId)
-      try db.bind(stmt, 2, anchor)
-      try db.bind(stmt, 3, deviceId)
+      try db.bind(stmt, 2, deviceId)
+      try db.bind(stmt, 3, anchor)
+      try db.bind(stmt, 4, deviceId)
       var result: [IndexedObjectChange] = []
       while try db.step(stmt) {
         let kind = db.colText(stmt, 0) ?? "upsert"
@@ -384,8 +433,8 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
             stale = 0
         """
       let changeSQL = """
-        INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, createdAt)
-        VALUES (?, ?, ?, ?, ?, 'upsert', ?)
+        INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, name, pathKey, sizeBytes, mtime, formatCode, isDirectory, createdAt)
+        VALUES (?, ?, ?, ?, ?, 'upsert', ?, ?, ?, ?, ?, ?, ?)
         """
       let upsertStmt = try db.prepare(upsertSQL)
       defer { sqlite3_finalize(upsertStmt) }
@@ -413,7 +462,13 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
         try db.bind(changeStmt, 3, Int64(obj.storageId))
         try db.bind(changeStmt, 4, Int64(obj.handle))
         try db.bind(changeStmt, 5, obj.parentHandle.map { Int64($0) })
-        try db.bind(changeStmt, 6, now)
+        try db.bind(changeStmt, 6, obj.name)
+        try db.bind(changeStmt, 7, obj.pathKey)
+        try db.bind(changeStmt, 8, obj.sizeBytes.map { Int64($0) })
+        try db.bind(changeStmt, 9, obj.mtime.map { Int64($0.timeIntervalSince1970) })
+        try db.bind(changeStmt, 10, Int64(obj.formatCode))
+        try db.bind(changeStmt, 11, obj.isDirectory ? Int64(1) : Int64(0))
+        try db.bind(changeStmt, 12, now)
         _ = try db.step(changeStmt)
         db.resetStatement(changeStmt)
       }
@@ -430,25 +485,38 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
       let selectSQL: String
       if parentHandle != nil {
         selectSQL =
-          "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
+          "SELECT handle, parentHandle, name, pathKey, sizeBytes, mtime, formatCode, isDirectory FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
       } else {
         selectSQL =
-          "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
+          "SELECT handle, parentHandle, name, pathKey, sizeBytes, mtime, formatCode, isDirectory FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
       }
-      let handles: [UInt32] = try db.withStatement(selectSQL) { stmt in
+      let deletedObjects: [IndexedObject] = try db.withStatement(selectSQL) { stmt in
         try db.bind(stmt, 1, deviceId)
         try db.bind(stmt, 2, Int64(storageId))
         if let ph = parentHandle {
           try db.bind(stmt, 3, Int64(ph))
         }
-        var result: [UInt32] = []
+        var result: [IndexedObject] = []
         while try db.step(stmt) {
-          if let h = db.colInt64(stmt, 0) { result.append(UInt32(h)) }
+          result.append(
+            IndexedObject(
+              deviceId: deviceId,
+              storageId: storageId,
+              handle: MTPObjectHandle(db.colInt64(stmt, 0) ?? 0),
+              parentHandle: db.colInt64(stmt, 1).map { MTPObjectHandle($0) },
+              name: db.colText(stmt, 2) ?? "",
+              pathKey: db.colText(stmt, 3) ?? "",
+              sizeBytes: db.colInt64(stmt, 4).map { UInt64($0) },
+              mtime: db.colInt64(stmt, 5).map { Date(timeIntervalSince1970: TimeInterval($0)) },
+              formatCode: UInt16(db.colInt64(stmt, 6) ?? 0),
+              isDirectory: (db.colInt64(stmt, 7) ?? 0) != 0,
+              changeCounter: 0
+            ))
         }
         return result
       }
 
-      guard !handles.isEmpty else { return }
+      guard !deletedObjects.isEmpty else { return }
 
       let counter = try nextChangeCounterSync(deviceId: deviceId)
 
@@ -473,17 +541,23 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
 
       // Insert delete change records for each affected handle
       let changeSQL = """
-        INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, createdAt)
-        VALUES (?, ?, ?, ?, ?, 'delete', ?)
+        INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, name, pathKey, sizeBytes, mtime, formatCode, isDirectory, createdAt)
+        VALUES (?, ?, ?, ?, ?, 'delete', ?, ?, ?, ?, ?, ?, ?)
         """
-      for handle in handles {
+      for object in deletedObjects {
         try db.withStatement(changeSQL) { stmt in
           try db.bind(stmt, 1, deviceId)
           try db.bind(stmt, 2, counter)
           try db.bind(stmt, 3, Int64(storageId))
-          try db.bind(stmt, 4, Int64(handle))
-          try db.bind(stmt, 5, parentHandle.map { Int64($0) })
-          try db.bind(stmt, 6, now)
+          try db.bind(stmt, 4, Int64(object.handle))
+          try db.bind(stmt, 5, object.parentHandle.map { Int64($0) })
+          try db.bind(stmt, 6, object.name)
+          try db.bind(stmt, 7, object.pathKey)
+          try db.bind(stmt, 8, object.sizeBytes.map { Int64($0) })
+          try db.bind(stmt, 9, object.mtime.map { Int64($0.timeIntervalSince1970) })
+          try db.bind(stmt, 10, Int64(object.formatCode))
+          try db.bind(stmt, 11, object.isDirectory ? Int64(1) : Int64(0))
+          try db.bind(stmt, 12, now)
           _ = try db.step(stmt)
         }
       }
@@ -498,14 +572,28 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     try db.withTransaction {
       let counter = try nextChangeCounterSync(deviceId: deviceId)
 
-      // Get parent handle for the change record
-      let parentHandle: Int64? = try db.withStatement(
-        "SELECT parentHandle FROM live_objects WHERE deviceId = ? AND storageId = ? AND handle = ?"
+      // Snapshot object metadata before stale rows can be purged.
+      let deletedObject: IndexedObject? = try db.withStatement(
+        "SELECT parentHandle, name, pathKey, sizeBytes, mtime, formatCode, isDirectory FROM live_objects WHERE deviceId = ? AND storageId = ? AND handle = ?"
       ) { stmt in
         try db.bind(stmt, 1, deviceId)
         try db.bind(stmt, 2, Int64(storageId))
         try db.bind(stmt, 3, Int64(handle))
-        if try db.step(stmt) { return db.colInt64(stmt, 0) }
+        if try db.step(stmt) {
+          return IndexedObject(
+            deviceId: deviceId,
+            storageId: storageId,
+            handle: handle,
+            parentHandle: db.colInt64(stmt, 0).map { MTPObjectHandle($0) },
+            name: db.colText(stmt, 1) ?? "",
+            pathKey: db.colText(stmt, 2) ?? "",
+            sizeBytes: db.colInt64(stmt, 3).map { UInt64($0) },
+            mtime: db.colInt64(stmt, 4).map { Date(timeIntervalSince1970: TimeInterval($0)) },
+            formatCode: UInt16(db.colInt64(stmt, 5) ?? 0),
+            isDirectory: (db.colInt64(stmt, 6) ?? 0) != 0,
+            changeCounter: counter
+          )
+        }
         return nil
       }
 
@@ -522,16 +610,22 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
 
       // Insert delete change record
       let changeSQL = """
-        INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, createdAt)
-        VALUES (?, ?, ?, ?, ?, 'delete', ?)
+        INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, name, pathKey, sizeBytes, mtime, formatCode, isDirectory, createdAt)
+        VALUES (?, ?, ?, ?, ?, 'delete', ?, ?, ?, ?, ?, ?, ?)
         """
       try db.withStatement(changeSQL) { stmt in
         try db.bind(stmt, 1, deviceId)
         try db.bind(stmt, 2, counter)
         try db.bind(stmt, 3, Int64(storageId))
         try db.bind(stmt, 4, Int64(handle))
-        try db.bind(stmt, 5, parentHandle)
-        try db.bind(stmt, 6, now)
+        try db.bind(stmt, 5, deletedObject?.parentHandle.map { Int64($0) })
+        try db.bind(stmt, 6, deletedObject?.name)
+        try db.bind(stmt, 7, deletedObject?.pathKey)
+        try db.bind(stmt, 8, deletedObject?.sizeBytes.map { Int64($0) })
+        try db.bind(stmt, 9, deletedObject?.mtime.map { Int64($0.timeIntervalSince1970) })
+        try db.bind(stmt, 10, deletedObject.map { Int64($0.formatCode) })
+        try db.bind(stmt, 11, deletedObject.map { $0.isDirectory ? Int64(1) : Int64(0) })
+        try db.bind(stmt, 12, now)
         _ = try db.step(stmt)
       }
     }
@@ -645,19 +739,47 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     try db.withTransaction {
       let counter = try nextChangeCounterSync(deviceId: deviceId)
 
+      let snapshotSQL =
+        "SELECT parentHandle, name, pathKey, sizeBytes, mtime, formatCode, isDirectory FROM live_objects WHERE deviceId = ? AND storageId = ? AND handle = ?"
+      let snapshotStmt = try db.prepare(snapshotSQL)
+      defer { sqlite3_finalize(snapshotStmt) }
+
       let deleteSQL =
         "UPDATE live_objects SET stale = 1, changeCounter = ? WHERE deviceId = ? AND storageId = ? AND handle = ?"
       let deleteStmt = try db.prepare(deleteSQL)
       defer { sqlite3_finalize(deleteStmt) }
 
       let changeSQL = """
-        INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, createdAt)
-        VALUES (?, ?, ?, ?, NULL, 'delete', ?)
+        INSERT INTO live_changes (deviceId, changeCounter, storageId, handle, parentHandle, kind, name, pathKey, sizeBytes, mtime, formatCode, isDirectory, createdAt)
+        VALUES (?, ?, ?, ?, ?, 'delete', ?, ?, ?, ?, ?, ?, ?)
         """
       let changeStmt = try db.prepare(changeSQL)
       defer { sqlite3_finalize(changeStmt) }
 
       for handle in handles {
+        try db.bind(snapshotStmt, 1, deviceId)
+        try db.bind(snapshotStmt, 2, Int64(storageId))
+        try db.bind(snapshotStmt, 3, Int64(handle))
+        let deletedObject: IndexedObject?
+        if try db.step(snapshotStmt) {
+          deletedObject = IndexedObject(
+            deviceId: deviceId,
+            storageId: storageId,
+            handle: handle,
+            parentHandle: db.colInt64(snapshotStmt, 0).map { MTPObjectHandle($0) },
+            name: db.colText(snapshotStmt, 1) ?? "",
+            pathKey: db.colText(snapshotStmt, 2) ?? "",
+            sizeBytes: db.colInt64(snapshotStmt, 3).map { UInt64($0) },
+            mtime: db.colInt64(snapshotStmt, 4)
+              .map { Date(timeIntervalSince1970: TimeInterval($0)) },
+            formatCode: UInt16(db.colInt64(snapshotStmt, 5) ?? 0),
+            isDirectory: (db.colInt64(snapshotStmt, 6) ?? 0) != 0,
+            changeCounter: counter
+          )
+        } else {
+          deletedObject = nil
+        }
+        db.resetStatement(snapshotStmt)
         try db.bind(deleteStmt, 1, counter)
         try db.bind(deleteStmt, 2, deviceId)
         try db.bind(deleteStmt, 3, Int64(storageId))
@@ -669,7 +791,14 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
         try db.bind(changeStmt, 2, counter)
         try db.bind(changeStmt, 3, Int64(storageId))
         try db.bind(changeStmt, 4, Int64(handle))
-        try db.bind(changeStmt, 5, now)
+        try db.bind(changeStmt, 5, deletedObject?.parentHandle.map { Int64($0) })
+        try db.bind(changeStmt, 6, deletedObject?.name)
+        try db.bind(changeStmt, 7, deletedObject?.pathKey)
+        try db.bind(changeStmt, 8, deletedObject?.sizeBytes.map { Int64($0) })
+        try db.bind(changeStmt, 9, deletedObject?.mtime.map { Int64($0.timeIntervalSince1970) })
+        try db.bind(changeStmt, 10, deletedObject.map { Int64($0.formatCode) })
+        try db.bind(changeStmt, 11, deletedObject.map { $0.isDirectory ? Int64(1) : Int64(0) })
+        try db.bind(changeStmt, 12, now)
         _ = try db.step(changeStmt)
         db.resetStatement(changeStmt)
       }
@@ -716,18 +845,7 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     limit: Int, offset: Int
   ) async throws -> [IndexedObject] {
     let sql: String
-    if let ph = parentHandle {
-      sql =
-        "SELECT * FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0 ORDER BY name LIMIT ? OFFSET ?"
-      return try db.withStatement(sql) { stmt in
-        try db.bind(stmt, 1, deviceId)
-        try db.bind(stmt, 2, Int64(storageId))
-        try db.bind(stmt, 3, Int64(ph))
-        try db.bind(stmt, 4, Int64(limit))
-        try db.bind(stmt, 5, Int64(offset))
-        return try readObjects(stmt)
-      }
-    } else {
+    guard let ph = parentHandle else {
       sql =
         "SELECT * FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0 ORDER BY name LIMIT ? OFFSET ?"
       return try db.withStatement(sql) { stmt in
@@ -737,6 +855,16 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
         try db.bind(stmt, 4, Int64(offset))
         return try readObjects(stmt)
       }
+    }
+    sql =
+      "SELECT * FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0 ORDER BY name LIMIT ? OFFSET ?"
+    return try db.withStatement(sql) { stmt in
+      try db.bind(stmt, 1, deviceId)
+      try db.bind(stmt, 2, Int64(storageId))
+      try db.bind(stmt, 3, Int64(ph))
+      try db.bind(stmt, 4, Int64(limit))
+      try db.bind(stmt, 5, Int64(offset))
+      return try readObjects(stmt)
     }
   }
 
@@ -748,16 +876,7 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?
   ) async throws -> [MTPObjectHandle] {
     let sql: String
-    if let ph = parentHandle {
-      sql =
-        "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
-      return try db.withStatement(sql) { stmt in
-        try db.bind(stmt, 1, deviceId)
-        try db.bind(stmt, 2, Int64(storageId))
-        try db.bind(stmt, 3, Int64(ph))
-        return try readHandles(stmt)
-      }
-    } else {
+    guard let ph = parentHandle else {
       sql =
         "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
       return try db.withStatement(sql) { stmt in
@@ -765,6 +884,14 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
         try db.bind(stmt, 2, Int64(storageId))
         return try readHandles(stmt)
       }
+    }
+    sql =
+      "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
+    return try db.withStatement(sql) { stmt in
+      try db.bind(stmt, 1, deviceId)
+      try db.bind(stmt, 2, Int64(storageId))
+      try db.bind(stmt, 3, Int64(ph))
+      return try readHandles(stmt)
     }
   }
 
@@ -790,17 +917,7 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?
   ) async throws -> Int {
     let sql: String
-    if let ph = parentHandle {
-      sql =
-        "SELECT COUNT(*) FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
-      return try db.withStatement(sql) { stmt in
-        try db.bind(stmt, 1, deviceId)
-        try db.bind(stmt, 2, Int64(storageId))
-        try db.bind(stmt, 3, Int64(ph))
-        _ = try db.step(stmt)
-        return Int(db.colInt64(stmt, 0) ?? 0)
-      }
-    } else {
+    guard let ph = parentHandle else {
       sql =
         "SELECT COUNT(*) FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
       return try db.withStatement(sql) { stmt in
@@ -809,6 +926,15 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
         _ = try db.step(stmt)
         return Int(db.colInt64(stmt, 0) ?? 0)
       }
+    }
+    sql =
+      "SELECT COUNT(*) FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
+    return try db.withStatement(sql) { stmt in
+      try db.bind(stmt, 1, deviceId)
+      try db.bind(stmt, 2, Int64(storageId))
+      try db.bind(stmt, 3, Int64(ph))
+      _ = try db.step(stmt)
+      return Int(db.colInt64(stmt, 0) ?? 0)
     }
   }
 

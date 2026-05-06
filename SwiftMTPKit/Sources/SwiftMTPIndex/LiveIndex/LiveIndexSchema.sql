@@ -74,6 +74,12 @@ CREATE TABLE IF NOT EXISTS live_changes (
     handle        INTEGER,
     parentHandle  INTEGER,
     kind          TEXT    NOT NULL,  -- 'upsert', 'delete', 'refresh'
+    name          TEXT,
+    pathKey       TEXT,
+    sizeBytes     INTEGER,
+    mtime         INTEGER,
+    formatCode    INTEGER,
+    isDirectory   INTEGER,
     createdAt     INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_live_changes_device_counter

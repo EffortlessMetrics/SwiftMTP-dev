@@ -517,6 +517,27 @@ struct Wave30CacheInvalidationTests {
     #expect(deleted.contains { $0.object.handle == 1 })
   }
 
+  @Test("changesSince preserves delete metadata after stale purge")
+  func changesSincePreservesDeleteAfterPurge() async throws {
+    let (idx, path) = try makeTempDB()
+    defer { try? FileManager.default.removeItem(atPath: path) }
+
+    try await idx.insertObject(
+      makeObj(handle: 10, parentHandle: 7, name: "purged-victim.txt"), deviceId: "dev")
+    let anchor = try await idx.currentChangeCounter(deviceId: "dev")
+
+    try await idx.removeObject(deviceId: "dev", storageId: 0x10001, handle: 10)
+    try await idx.purgeStale(deviceId: "dev", storageId: 0x10001, parentHandle: 7)
+
+    let changes = try await idx.changesSince(deviceId: "dev", anchor: anchor)
+    let deleted = changes.first { $0.kind == .deleted && $0.object.handle == 10 }
+
+    #expect(deleted != nil)
+    #expect(deleted?.object.parentHandle == 7)
+    #expect(deleted?.object.name == "purged-victim.txt")
+    #expect(deleted?.object.pathKey.contains("purged-victim.txt") == true)
+  }
+
   @Test("Read-only reader sees writer's changes via WAL")
   func readerSeesWriterChanges() async throws {
     let (writer, path) = try makeTempDB()
