@@ -21,6 +21,7 @@ jobs:
       (github.event_name == 'issues' && (contains(github.event.issue.body, '@droid') || contains(github.event.issue.title, '@droid'))) ||
       (github.event_name == 'pull_request' && (contains(github.event.pull_request.body, '@droid') || contains(github.event.pull_request.title, '@droid')))
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: read
       pull-requests: write
@@ -35,10 +36,22 @@ jobs:
         run: |
           if [ -z "${FACTORY_API_KEY:-}" ]; then
             echo "FACTORY_API_KEY secret not set; skipping Droid Exec."
+            echo "::notice title=Droid skipped::FACTORY_API_KEY secret is not available in this workflow context."
             echo "has_key=false" >> "$GITHUB_OUTPUT"
+            echo "skip_reason=FACTORY_API_KEY secret is not available in this workflow context." >> "$GITHUB_OUTPUT"
           else
             echo "has_key=true" >> "$GITHUB_OUTPUT"
           fi
+      - name: Report skipped Droid Exec
+        if: steps.check_key.outputs.has_key != 'true'
+        run: |
+          {
+            echo "### Droid Exec skipped"
+            echo
+            echo "${{ steps.check_key.outputs.skip_reason }}"
+            echo
+            echo 'Configure the repository secret `FACTORY_API_KEY` to enable Factory Droid runs.'
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Checkout repository
         if: steps.check_key.outputs.has_key == 'true'
         uses: actions/checkout@v5
