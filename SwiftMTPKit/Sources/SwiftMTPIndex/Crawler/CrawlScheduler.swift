@@ -45,6 +45,7 @@ public actor CrawlScheduler {
   private var queue: [CrawlJob] = []
   private var nextId: UInt64 = 0
   private var crawlTask: Task<Void, Never>?
+  private var activeDevice: (any MTPDevice)?
   private var cancelled = false
 
   /// Called when the index changes. Parameters: (deviceId, set of changed parentHandles).
@@ -90,6 +91,7 @@ public actor CrawlScheduler {
     }) {
       queue[idx].priority = .immediate
       queue.sort()
+      startCrawlTaskIfNeeded()
     } else {
       enqueueJob(
         deviceId: deviceId, storageId: storageId, parentHandle: parentHandle, priority: .immediate)
@@ -99,15 +101,14 @@ public actor CrawlScheduler {
   /// Start crawling with the given device.
   public func startCrawling(device: any MTPDevice) {
     cancelled = false
-    crawlTask = Task { [weak self] in
-      guard let self else { return }
-      await self.crawlLoop(device: device)
-    }
+    activeDevice = device
+    startCrawlTaskIfNeeded()
   }
 
   /// Stop crawling.
   public func stop() {
     cancelled = true
+    activeDevice = nil
     crawlTask?.cancel()
     crawlTask = nil
   }
@@ -186,6 +187,24 @@ public actor CrawlScheduler {
     nextId += 1
     queue.append(job)
     queue.sort()
+    startCrawlTaskIfNeeded()
+  }
+
+  private func startCrawlTaskIfNeeded() {
+    guard crawlTask == nil, !cancelled, !queue.isEmpty, let device = activeDevice else {
+      return
+    }
+
+    crawlTask = Task { [weak self] in
+      guard let self else { return }
+      await self.crawlLoop(device: device)
+      await self.crawlTaskDidFinish()
+    }
+  }
+
+  private func crawlTaskDidFinish() {
+    crawlTask = nil
+    startCrawlTaskIfNeeded()
   }
 
   private func crawlLoop(device: any MTPDevice) async {
