@@ -308,7 +308,9 @@ private actor MockSchedulerDevice: MTPDevice {
     throw MTPError.notSupported("move is not needed in this test double")
   }
 
-  func copyObject(handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?) async throws -> MTPObjectHandle {
+  func copyObject(handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?)
+    async throws -> MTPObjectHandle
+  {
     throw MTPError.notSupported("copyObject is not needed in this test double")
   }
 
@@ -539,6 +541,29 @@ final class IndexCoverageTests: XCTestCase {
     let recordedChanges = await recorder.snapshot()
     XCTAssertFalse(recordedChanges.isEmpty)
     await device.finishEvents()
+  }
+
+  func testCrawlSchedulerRestartsAfterQueueDrainOnBoost() async throws {
+    let store = MockIndexStore()
+    let scheduler = CrawlScheduler(indexWriter: store)
+    let device = makeDevice()
+
+    await scheduler.seedOnConnect(deviceId: "dev", device: device)
+    await scheduler.startCrawling(device: device)
+    try await Task.sleep(for: .milliseconds(200))
+
+    let drainedSnapshot = await store.snapshot()
+    await scheduler.boostSubtree(deviceId: "dev", storageId: 1, parentHandle: 10)
+    try await Task.sleep(for: .milliseconds(120))
+    await scheduler.stop()
+
+    let boostedSnapshot = await store.snapshot()
+    XCTAssertGreaterThan(
+      boostedSnapshot.markStaleCalls,
+      drainedSnapshot.markStaleCalls,
+      "boostSubtree should restart crawling after the previous crawl task drained"
+    )
+    XCTAssertGreaterThan(boostedSnapshot.purgeCalls, drainedSnapshot.purgeCalls)
   }
 
   func testEventBridgeCoversEventAndPeriodicBranches() async throws {
