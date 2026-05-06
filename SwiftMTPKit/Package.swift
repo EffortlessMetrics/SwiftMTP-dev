@@ -73,13 +73,17 @@ let package = Package(
       dependencies: ["SwiftMTPCore"],
       swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
 
-    // Scaffold for the broker/driver layer. Today this re-exports a small set of
-    // session/lifecycle primitives that still live in SwiftMTPCore; future PRs will
-    // migrate the implementations here. See Docs/ROADMAP.broker-architecture.md.
+    // Broker / driver layer: session ownership, the device-service registry,
+    // priority queue, lifecycle. See Docs/ROADMAP.broker-architecture.md.
+    // Note: matches SwiftMTPCore's concurrency settings (no `-strict-concurrency=complete`)
+    // since the moved sources were authored under those settings; tightening is a
+    // follow-up audit.
     .target(
       name: "SwiftMTPBroker",
-      dependencies: ["SwiftMTPCore"],
-      swiftSettings: [.unsafeFlags(["-strict-concurrency=complete"])]),
+      dependencies: [
+        "SwiftMTPCore",
+        .product(name: "Collections", package: "swift-collections"),
+      ]),
 
     // libusb via Homebrew for dev (dynamic)
     .systemLibrary(
