@@ -336,6 +336,27 @@ struct LiveIndexGenerationSnapshotTests {
     #expect(deleted.contains { $0.object.handle == 1 })
   }
 
+  @Test("changesSince preserves delete tombstone after stale row purge")
+  func changesSinceDeleteAfterPurge() async throws {
+    let (idx, path) = try makeTempIndex()
+    defer { try? FileManager.default.removeItem(atPath: path) }
+
+    try await idx.insertObject(
+      makeObj(handle: 10, name: "deleted.txt", pathKey: "00010001/folder/deleted.txt"),
+      deviceId: "dev")
+    let anchor = try await idx.currentChangeCounter(deviceId: "dev")
+
+    try await idx.removeObject(deviceId: "dev", storageId: 0x10001, handle: 10)
+    try await idx.purgeStale(deviceId: "dev", storageId: 0x10001, parentHandle: nil)
+
+    let changes = try await idx.changesSince(deviceId: "dev", anchor: anchor)
+    let deleted = changes.first { $0.kind == .deleted && $0.object.handle == 10 }
+
+    #expect(deleted != nil)
+    #expect(deleted?.object.name == "deleted.txt")
+    #expect(deleted?.object.pathKey == "00010001/folder/deleted.txt")
+  }
+
   @Test("changesSince with anchor 0 returns all changes")
   func changesSinceZero() async throws {
     let (idx, path) = try makeTempIndex()

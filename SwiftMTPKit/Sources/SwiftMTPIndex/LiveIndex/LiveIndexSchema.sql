@@ -73,6 +73,12 @@ CREATE TABLE IF NOT EXISTS live_changes (
     storageId     INTEGER NOT NULL,
     handle        INTEGER,
     parentHandle  INTEGER,
+    name          TEXT,
+    pathKey       TEXT,
+    sizeBytes     INTEGER,
+    mtime         INTEGER,
+    formatCode    INTEGER,
+    isDirectory   INTEGER,
     kind          TEXT    NOT NULL,  -- 'upsert', 'delete', 'refresh'
     createdAt     INTEGER NOT NULL
 );
