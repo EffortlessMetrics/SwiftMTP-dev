@@ -48,15 +48,32 @@ signal that this code wants its own home.
 
 ### Phase 1 — Source migration (next PR)
 
-1. Move `DeviceService.swift` and `DeviceServiceRegistry.swift` into
-   `Sources/SwiftMTPBroker/` and flip the typealias direction inside
-   `SwiftMTPCore` so existing `import SwiftMTPCore` callers keep compiling.
-2. Replace the `AnyObject` orchestrator handle with a typed
-   `BrokerOrchestrator` protocol (or a concrete generic) so the registry no
-   longer leaks an `AnyObject` escape hatch.
-3. Update `swiftmtp-cli`, `SwiftMTPXPC`, `SwiftMTPFileProvider`, and
-   `SwiftMTPUI` to depend on `SwiftMTPBroker` for these types. Internal
-   imports inside `SwiftMTPCore` go away.
+The order below avoids a circular dependency between `SwiftMTPCore` and
+`SwiftMTPBroker`: SPM does not permit cycles, and `SwiftMTPBroker` already
+depends on `SwiftMTPCore` for base protocols (`MTPDevice`, `MTPError`, …).
+We therefore migrate *callers first*, then move the source.
+
+1. **Caller migration.** Update every in-repo caller of
+   `DeviceService` / `DeviceServiceRegistry` (in `swiftmtp-cli`,
+   `SwiftMTPXPC`, `SwiftMTPFileProvider`, `SwiftMTPUI`, and tests) to
+   `import SwiftMTPBroker` and to use the broker-flavored names
+   (`Broker`, `BrokerDeviceService`, …). The typealiases shipped by this
+   scaffold PR make that migration a no-op at runtime.
+2. **Source move.** Once no in-repo caller refers to these types via
+   `SwiftMTPCore`, move `DeviceService.swift` and
+   `DeviceServiceRegistry.swift` into `Sources/SwiftMTPBroker/`. In the
+   same PR, replace the typealiases in `SwiftMTPBroker.swift` with the
+   real declarations and drop the `@_exported import SwiftMTPCore` shim
+   (callers explicitly import what they need).
+3. **No back-typealiases in Core.** We deliberately do *not* add reverse
+   typealiases inside `SwiftMTPCore` after the move — that would require
+   `SwiftMTPCore` to depend on `SwiftMTPBroker` and create the cycle.
+   External (out-of-repo) consumers, if any, take a one-time import
+   change documented in the migration guide.
+4. **Typed orchestrator.** Replace the `AnyObject` orchestrator handle
+   on `Broker` with a typed `BrokerOrchestrator` protocol (or a concrete
+   generic) so the registry no longer leaks an `AnyObject` escape hatch.
+   `SwiftMTPIndex` conforms its orchestrator type to that protocol.
 
 ### Phase 2 — Lifecycle and scheduling
 
@@ -109,10 +126,16 @@ signal that this code wants its own home.
 
 - No public API renames in this scaffold PR. Existing `import SwiftMTPCore`
   call sites keep working.
-- Future Phase 1 PR will not change call sites that already imported through
-  `SwiftMTPBroker` typealiases, even after the source move.
-- A deprecation pass on `SwiftMTPCore` re-exports of broker types will only
-  start after every in-repo caller has migrated.
+- The scaffold's `@_exported import SwiftMTPCore` means a caller can switch
+  to `import SwiftMTPBroker` *before* the source move and still call methods
+  on `Broker`, `BrokerDeviceService`, etc. without an extra Core import.
+- The Phase 1 source move drops the `@_exported` shim and replaces the
+  typealiases with the real declarations; in-repo call sites that already
+  switched their imports keep compiling unchanged.
+- Out-of-repo consumers (if any) take a one-time import change at the
+  source-move PR; we do not add reverse typealiases inside `SwiftMTPCore`
+  because that would require `SwiftMTPCore → SwiftMTPBroker` and form a
+  cycle with the existing `SwiftMTPBroker → SwiftMTPCore` dependency.
 
 ## Done criteria for "the broker exists"
 
