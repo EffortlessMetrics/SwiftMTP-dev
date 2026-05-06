@@ -3,6 +3,7 @@
 
 import XCTest
 
+import SwiftMTPCore
 @testable import SwiftMTPBroker
 
 final class BrokerScaffoldTests: XCTestCase {
