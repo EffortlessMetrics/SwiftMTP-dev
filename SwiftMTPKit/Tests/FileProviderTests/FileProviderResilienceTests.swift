@@ -6,6 +6,7 @@ import XCTest
 @testable import SwiftMTPFileProvider
 import FileProvider
 import SwiftMTPCore
+import SwiftMTPBroker
 import SwiftMTPIndex
 import SwiftMTPXPC
 import UniformTypeIdentifiers

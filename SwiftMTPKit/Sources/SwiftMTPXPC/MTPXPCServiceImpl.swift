@@ -3,6 +3,7 @@
 
 import Foundation
 import SwiftMTPCore
+import SwiftMTPBroker
 import SwiftMTPTransportLibUSB
 
 /// Implementation of the XPC service that handles File Provider requests

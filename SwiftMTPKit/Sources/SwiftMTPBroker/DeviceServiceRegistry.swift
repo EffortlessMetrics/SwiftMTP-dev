@@ -2,6 +2,7 @@
 // Copyright (c) 2025 Effortless Metrics, Inc.
 
 import Foundation
+import SwiftMTPCore
 
 /// Central coordinator managing per-device `DeviceService` instances.
 ///

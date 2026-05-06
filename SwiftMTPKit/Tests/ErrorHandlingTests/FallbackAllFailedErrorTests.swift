@@ -3,6 +3,7 @@
 
 import XCTest
 @testable import SwiftMTPCore
+import SwiftMTPBroker
 @testable import SwiftMTPTestKit
 
 /// Tests for FallbackAllFailedError surfacing — ensures that when all fallback
