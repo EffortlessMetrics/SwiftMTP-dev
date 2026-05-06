@@ -12,6 +12,7 @@ jobs:
   droid-review:
     if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: write
       pull-requests: write
@@ -26,10 +27,22 @@ jobs:
         run: |
           if [ -z "${FACTORY_API_KEY:-}" ]; then
             echo "FACTORY_API_KEY secret not set; skipping Droid auto review."
+            echo "::notice title=Droid review skipped::FACTORY_API_KEY secret is not available in this workflow context."
             echo "has_key=false" >> "$GITHUB_OUTPUT"
+            echo "skip_reason=FACTORY_API_KEY secret is not available in this workflow context." >> "$GITHUB_OUTPUT"
           else
             echo "has_key=true" >> "$GITHUB_OUTPUT"
           fi
+      - name: Report skipped Droid auto review
+        if: steps.check_key.outputs.has_key != 'true'
+        run: |
+          {
+            echo "### Droid auto review skipped"
+            echo
+            echo "${{ steps.check_key.outputs.skip_reason }}"
+            echo
+            echo 'Configure the repository secret `FACTORY_API_KEY` to enable Factory Droid reviews.'
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Checkout repository
         if: steps.check_key.outputs.has_key == 'true'
         uses: actions/checkout@v5
