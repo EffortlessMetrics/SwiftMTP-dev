@@ -1,8 +1,10 @@
 # SwiftMTP Individual Contributor License Agreement (ICLA)
 
-**Project:** SwiftMTP
-**Licensor:** Effortless Metrics, Inc. ("Project")
-**You:** The individual contributor identified in your signature.
+**Project:** SwiftMTP  
+**Licensor:** Effortless Metrics, Inc. ("Project")  
+**You:** The individual contributor identified through the GitHub-authenticated signing record.
+
+This Agreement is for individual contributors. If an employer or another entity owns or controls rights in a Contribution, or must grant the rights itself, do not use the individual signing flow. Have an authorized signatory complete the [Entity Contributor License Agreement](https://github.com/EffortlessMetrics/SwiftMTP-dev/blob/main/legal/inbound/CLA-ENTITY.md) and contact the maintainers privately about the authorization process.
 
 ## 1. Contributions
 
@@ -20,7 +22,7 @@ You grant the Project a perpetual, worldwide, royalty-free patent license to mak
 
 ## 4. Representations
 
-You represent that you are the author of the Contribution or have sufficient rights to grant this license; the Contribution is provided under the Project's policies; and you are not knowingly infringing third-party rights.
+You represent that you are the author of the Contribution or have sufficient rights to grant this license; the Contribution is provided under the Project's policies; and you are not knowingly infringing third-party rights. If your employer has rights in intellectual property you create, you have obtained permission or a waiver sufficient for you to grant the rights in this Agreement in your individual capacity.
 
 ## 5. No Requirement to Use
 
@@ -30,16 +32,10 @@ The Project may accept, reject, or modify Contributions.
 
 Contributions are provided "as is".
 
-## Signature
+## 7. Signing
 
-By using the Project's CLA workflow (e.g., GitHub app) you agree to these terms.
+The hosted CLA Assistant service at `cla-assistant.io` presents this Agreement when your first pull request requires a signature and whenever the linked Agreement changes. Sign through its GitHub-authenticated flow and provide the required full legal name, email address, and acknowledgement that you are signing in your individual capacity and have authority to grant the stated rights. GitHub identity and signing time are recorded by the service.
 
----
+Do not sign this individual Agreement on behalf of an employer or another entity. Corporate contributions remain subject to the separate [Entity Contributor License Agreement](https://github.com/EffortlessMetrics/SwiftMTP-dev/blob/main/legal/inbound/CLA-ENTITY.md) and authorization process.
 
-**Name:** _______________________________________
-
-**Email:** ______________________________________
-
-**GitHub Username:** ____________________________
-
-**Date:** _______________________________________
+See [Contributor Licensing Records Privacy Notice](https://github.com/EffortlessMetrics/SwiftMTP-dev/blob/main/legal/inbound/CLA-PRIVACY.md) for how licensing-record personal information is handled.
