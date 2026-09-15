@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-15",
+  "activation_state": "pending_hosted_service_configuration",
+  "service": "CLA Assistant",
+  "service_url": "https://cla-assistant.io/",
+  "status_context": "license/cla",
+  "repositories": [
+    "EffortlessMetrics/SwiftMTP-dev"
+  ],
+  "agreement": {
+    "repository_path": "legal/inbound/CLA-INDIVIDUAL.md",
+    "gist_url": null,
+    "gist_id": null,
+    "gist_revision": null,
+    "gist_filename": "CLA.md",
+    "sha256": "ffc4b19a67d2529998b6dbb15d3383133c74ac13d873ac6b3aedeed2b3aa06e3"
+  },
+  "metadata": {
+    "repository_path": "legal/inbound/CLA-ASSISTANT-METADATA.json",
+    "gist_filename": "metadata",
+    "sha256": "d22c951e9ae4cf33643681f1710d5f4e026627525ea5e3c9f54546c1979d041f",
+    "required_fields": [
+      "fullLegalName",
+      "email",
+      "individualAuthority"
+    ]
+  },
+  "allowlist": [],
+  "activation_requirements": [
+    "Create the public Gist from the repository ICLA and metadata payload.",
+    "Install and link the hosted CLA Assistant GitHub App.",
+    "Observe a successful license/cla status on the migration pull request.",
+    "Replace the pending Gist fields with the live URL, ID, and revision before merge.",
+    "Require license/cla on the default branch and pin the expected source to CLA Assistant."
+  ]
+}
