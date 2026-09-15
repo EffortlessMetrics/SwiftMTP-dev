@@ -5,7 +5,7 @@
 
 ## Information collected
 
-The hosted CLA Assistant service records the signer's GitHub identity, full legal name, email address, required individual-capacity and authority acknowledgement, signing time, agreement/Gist version, and the repository and pull-request context associated with the signing event.
+When the hosted CLA Assistant flow is active, the service records the signer's GitHub identity, full legal name, email address, required individual-capacity and authority acknowledgement, signing time, agreement/Gist version, and the repository and pull-request context associated with the signing event.
 
 ## Purpose
 
@@ -13,7 +13,7 @@ We use this information only to present and enforce the applicable Contributor L
 
 ## Service and disclosure
 
-Signing is handled by the hosted CLA Assistant service at `cla-assistant.io`; GitHub authenticates the signer. The service stores the operational signature record. Maintainers may export the register and retain private evidence copies with the agreement text, version, and configuration receipts. Records are not intentionally published in the repository.
+The hosted flow is not treated as active until the linked Gist and App configuration are recorded in [`CLA-ASSISTANT-SOURCE.json`](CLA-ASSISTANT-SOURCE.json), a live `license/cla` status is observed, and default-branch enforcement is configured. Once active, signing is handled by the hosted CLA Assistant service at `cla-assistant.io`, with GitHub authenticating the signer. The service stores the operational signature record. Maintainers may export the register and retain private evidence copies with the agreement text, version, and configuration receipts. Records are not intentionally published in the repository.
 
 ## Retention
 
