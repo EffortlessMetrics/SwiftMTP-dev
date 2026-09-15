@@ -22,6 +22,7 @@ jobs:
       - name: Verify canonical agreement and metadata
         shell: bash
         run: |
+          set -euo pipefail
           git diff --check origin/main...HEAD
           python - <<'PY'
           from hashlib import sha256
@@ -51,13 +52,24 @@ jobs:
           assert '(CLA-PRIVACY.md)' in cla
           privacy = Path('legal/inbound/CLA-PRIVACY.md').read_text(encoding='utf-8')
           assert 'not treated as active until' in privacy
+
+          verifier = Path('.github/workflows/verify-cla-migration.yml')
+          other_workflows = '\n'.join(
+              path.read_text(encoding='utf-8')
+              for path in Path('.github/workflows').glob('*.y*ml')
+              if path != verifier
+          )
+          assert 'contributor-assistant/github-action' not in other_workflows
+          print(f"CLA_SHA256={source['agreement']['sha256']}")
+          print(f"METADATA_SHA256={source['metadata']['sha256']}")
+          print('staged_cla_migration=verified')
           PY
           git diff --quiet origin/main...HEAD -- legal/inbound/CLA-ENTITY.md legal/inbound/DCO.txt
-          ! git grep -n 'contributor-assistant/github-action' -- .github/workflows
 
       - name: Remove verification workflow and preserve receipt in Actions
         shell: bash
         run: |
+          set -euo pipefail
           rm .github/workflows/verify-cla-migration.yml
           git config user.name "EffortlessSteven"
           git config user.email "git@effortlesssteven.com"
