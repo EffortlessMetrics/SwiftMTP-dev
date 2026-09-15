@@ -3,7 +3,7 @@
 **Repository:** `EffortlessMetrics/SwiftMTP-dev`  
 **Status:** Pending activation; this change must remain draft until the activation receipts below are complete.  
 **Expected status context:** `license/cla`  
-**Repository ICLA SHA-256:** `de65038227ca11f98102665393e0868fd92469b964ec047a6a8dda7a059fb846`
+**Repository ICLA SHA-256:** `60c40c8b87428e93f88453cf62be3e15cd65c8d1f258dd68c5a3e10b4463dfaa`
 
 ## Decision
 
