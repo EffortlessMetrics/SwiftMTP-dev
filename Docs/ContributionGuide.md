@@ -185,7 +185,7 @@ CI enforces formatting — PRs with lint violations will fail.
 
 ### VirtualMTPDevice
 
-`SwiftMTPTestKit` provides a `VirtualMTPDevice`, an in-memory MTP device implementation for testing without hardware. Use it for unit and integration tests:
+`SwiftMTPTestKit` provides `VirtualMTPDevice`, an in-memory MTP device implementation for testing without hardware. Use it for unit and integration tests:
 
 ```swift
 import SwiftMTPTestKit
