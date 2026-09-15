@@ -4,7 +4,7 @@
 **Licensor:** Effortless Metrics, Inc. ("Project")  
 **You:** The individual contributor identified through the GitHub-authenticated signing record.
 
-This Agreement is for individual contributors. If an employer or another entity owns or controls rights in a Contribution, or must grant the rights itself, do not use the individual signing flow. Have an authorized signatory complete the [Entity Contributor License Agreement](https://github.com/EffortlessMetrics/SwiftMTP-dev/blob/main/legal/inbound/CLA-ENTITY.md) and contact the maintainers privately about the authorization process.
+This Agreement is for individual contributors. If an employer or another entity owns or controls rights in a Contribution, or must grant the rights itself, do not use the individual signing flow. Have an authorized signatory complete the [Entity Contributor License Agreement](CLA-ENTITY.md) and contact the maintainers privately about the authorization process.
 
 ## 1. Contributions
 
@@ -36,6 +36,6 @@ Contributions are provided "as is".
 
 The hosted CLA Assistant service at `cla-assistant.io` presents this Agreement when your first pull request requires a signature and again when a change to the linked Gist Agreement or its signing metadata requires re-signing. Sign through its GitHub-authenticated flow and provide the required full legal name, email address, and acknowledgement that you are signing in your individual capacity and have authority to grant the stated rights. GitHub identity and signing time are recorded by the service.
 
-Do not sign this individual Agreement on behalf of an employer or another entity. Corporate contributions remain subject to the separate [Entity Contributor License Agreement](https://github.com/EffortlessMetrics/SwiftMTP-dev/blob/main/legal/inbound/CLA-ENTITY.md) and authorization process.
+Do not sign this individual Agreement on behalf of an employer or another entity. Corporate contributions remain subject to the separate [Entity Contributor License Agreement](CLA-ENTITY.md) and authorization process.
 
-See [Contributor Licensing Records Privacy Notice](https://github.com/EffortlessMetrics/SwiftMTP-dev/blob/main/legal/inbound/CLA-PRIVACY.md) for how licensing-record personal information is handled.
+See [Contributor Licensing Records Privacy Notice](CLA-PRIVACY.md) for how licensing-record personal information is handled.
