@@ -1,0 +1,66 @@
+name: Verify staged CLA migration
+
+on:
+  push:
+    branches:
+      - chore/hosted-cla-assistant
+    paths:
+      - .github/workflows/verify-cla-migration.yml
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chore/hosted-cla-assistant
+          fetch-depth: 0
+
+      - name: Verify canonical agreement and metadata
+        shell: bash
+        run: |
+          git diff --check origin/main...HEAD
+          python - <<'PY'
+          from hashlib import sha256
+          from pathlib import Path
+          import json
+
+          metadata_path = Path('legal/inbound/CLA-ASSISTANT-METADATA.json')
+          source_path = Path('legal/inbound/CLA-ASSISTANT-SOURCE.json')
+          metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
+          source = json.loads(source_path.read_text(encoding='utf-8'))
+          assert set(metadata) == {'fullLegalName', 'email', 'individualAuthority'}
+          assert all(metadata[key]['required'] is True for key in metadata)
+          assert metadata['fullLegalName']['type'] == 'string'
+          assert metadata['email']['type'] == 'string'
+          assert metadata['individualAuthority']['type'] == 'boolean'
+          assert source['activation_state'] == 'pending_hosted_service_configuration'
+          assert source['agreement']['gist_url'] is None
+          assert source['agreement']['gist_id'] is None
+          assert source['agreement']['gist_revision'] is None
+          assert source['agreement']['sha256'] == sha256(Path('legal/inbound/CLA-INDIVIDUAL.md').read_bytes()).hexdigest()
+          assert source['metadata']['sha256'] == sha256(metadata_path.read_bytes()).hexdigest()
+          assert source['allowlist'] == []
+          assert Path('legal/inbound/CLA-ENTITY.md').is_file()
+          assert Path('legal/inbound/DCO.txt').is_file()
+          cla = Path('legal/inbound/CLA-INDIVIDUAL.md').read_text(encoding='utf-8')
+          assert '(CLA-ENTITY.md)' in cla
+          assert '(CLA-PRIVACY.md)' in cla
+          privacy = Path('legal/inbound/CLA-PRIVACY.md').read_text(encoding='utf-8')
+          assert 'not treated as active until' in privacy
+          PY
+          git diff --quiet origin/main...HEAD -- legal/inbound/CLA-ENTITY.md legal/inbound/DCO.txt
+          ! git grep -n 'contributor-assistant/github-action' -- .github/workflows
+
+      - name: Remove verification workflow and preserve receipt in Actions
+        shell: bash
+        run: |
+          rm .github/workflows/verify-cla-migration.yml
+          git config user.name "EffortlessSteven"
+          git config user.email "git@effortlesssteven.com"
+          git add .github/workflows/verify-cla-migration.yml
+          git commit -m "ci: record staged CLA verification"
+          git push origin HEAD:chore/hosted-cla-assistant
