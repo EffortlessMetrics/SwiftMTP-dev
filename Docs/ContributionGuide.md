@@ -1,6 +1,6 @@
 # SwiftMTP Contribution Guide
 
-*Last updated: 2026-07-11*
+*Last updated: 2026-09-15*
 
 > **Pre-Alpha Context**: SwiftMTP is in pre-alpha. The project has extensive scaffolding (~9,191+ tests across 20 targets, 20,026 quirks entries, CI workflows) but minimal real-device validation. Most test coverage uses `VirtualMTPDevice` (in-memory mock). Real-device testing contributions are the single highest-impact way to help the project.
 
@@ -39,12 +39,13 @@ All package-level commands (build, test, run) should be executed from the `Swift
 
 ## Legal Requirements
 
-All contributions require a signed Contributor License Agreement (CLA).
+All contributions require the applicable Contributor License Agreement (CLA).
 
-- **Individuals:** Sign the [Individual CLA](../legal/inbound/CLA-INDIVIDUAL.md) before your first PR.
-- **Entities:** Have an authorized signatory complete the [Entity CLA](../legal/inbound/CLA-ENTITY.md).
+- **Individuals:** Open a pull request and follow the signing link posted by the hosted CLA Assistant GitHub App for the [Individual CLA](../legal/inbound/CLA-INDIVIDUAL.md). The flow requires a full legal name, email address, and acknowledgement of individual capacity and authority.
+- **Entities:** Have an authorized signatory complete the [Entity CLA](../legal/inbound/CLA-ENTITY.md) and contact the maintainers before the Contribution is accepted. Do not use the individual app flow on an entity's behalf.
+- **Privacy:** Licensing records are handled under the [Contributor CLA Privacy Notice](../legal/inbound/CONTRIBUTOR-PRIVACY.md).
 
-All commits must include a [Developer Certificate of Origin](../legal/inbound/DCO.txt) sign-off. Use `git commit -s` to add the `Signed-off-by` trailer automatically.
+All commits must also include a [Developer Certificate of Origin](../legal/inbound/DCO.txt) sign-off. Use `git commit -s` to add the `Signed-off-by` trailer automatically. The DCO sign-off does not replace either CLA.
 
 ---
 
@@ -244,6 +245,7 @@ Each PR must:
 - **Build**: `swift build -v` succeeds (from `SwiftMTPKit/`)
 - **Tests**: relevant test target(s) pass (see [Test Discovery](#test-discovery-guide))
 - **Formatting**: `swift-format lint` passes with `--strict`
+- **CLA**: the hosted `license/cla` status passes after CLA Assistant activation
 - **Docs**: updated if the change affects user-visible behavior or APIs
 - **Changelog**: entry under `Unreleased` for user-visible changes
 - **Single-purpose**: one bug fix + tests, one feature + tests, or one docs update
@@ -304,7 +306,7 @@ Shell completions for the `swiftmtp` CLI are in the `completions/` directory:
 | `release.yml` | Tags | Release gate | Changelog, artifacts, SBOM |
 | `nightly-real-device-ux-smoke.yml` | Nightly | No (advisory) | End-to-end with physical device |
 
-**`ci.yml` is the only required check for merging.** Device submission PRs also require `validate-submission.yml`.
+**`ci.yml` is the only repository workflow required for every merge.** Device submission PRs also require `validate-submission.yml`. After hosted CLA Assistant activation, the GitHub App status `license/cla` is also required; it is not a repository workflow.
 
 ---
 
