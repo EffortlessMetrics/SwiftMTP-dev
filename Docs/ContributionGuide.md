@@ -1,6 +1,6 @@
 # SwiftMTP Contribution Guide
 
-*Last updated: 2026-07-11*
+*Last updated: 2026-09-15*
 
 > **Pre-Alpha Context**: SwiftMTP is in pre-alpha. The project has extensive scaffolding (~9,191+ tests across 20 targets, 20,026 quirks entries, CI workflows) but minimal real-device validation. Most test coverage uses `VirtualMTPDevice` (in-memory mock). Real-device testing contributions are the single highest-impact way to help the project.
 
@@ -41,10 +41,11 @@ All package-level commands (build, test, run) should be executed from the `Swift
 
 All contributions require a signed Contributor License Agreement (CLA).
 
-- **Individuals:** Sign the [Individual CLA](../legal/inbound/CLA-INDIVIDUAL.md) before your first PR.
-- **Entities:** Have an authorized signatory complete the [Entity CLA](../legal/inbound/CLA-ENTITY.md).
+- **Individuals:** Open a pull request and complete the GitHub-authenticated hosted CLA Assistant flow for the [Individual CLA](../legal/inbound/CLA-INDIVIDUAL.md). The `license/cla` check must pass before merge.
+- **Entities:** Do not use the individual form on an entity's behalf. Have an authorized signatory complete the [Entity CLA](../legal/inbound/CLA-ENTITY.md) and contact the maintainers privately about the authorization process.
+- **Privacy:** See the [Contributor Licensing Records Privacy Notice](../legal/inbound/CLA-PRIVACY.md).
 
-All commits must include a [Developer Certificate of Origin](../legal/inbound/DCO.txt) sign-off. Use `git commit -s` to add the `Signed-off-by` trailer automatically.
+All commits must include a [Developer Certificate of Origin](../legal/inbound/DCO.txt) sign-off. Use `git commit -s` to add the `Signed-off-by` trailer automatically. The DCO is additional provenance evidence and does not replace the applicable CLA.
 
 ---
 
