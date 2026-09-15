@@ -1,4 +1,5 @@
 name: Verify staged CLA migration
+# Re-run after privacy-notice diff hygiene correction.
 
 on:
   push:
