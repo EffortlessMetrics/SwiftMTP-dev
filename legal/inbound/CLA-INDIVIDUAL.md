@@ -1,8 +1,8 @@
 # SwiftMTP Individual Contributor License Agreement (ICLA)
 
-**Project:** SwiftMTP
-**Licensor:** Effortless Metrics, Inc. ("Project")
-**You:** The individual contributor identified in your signature.
+**Project:** SwiftMTP  
+**Licensor:** Effortless Metrics, Inc. ("Project")  
+**You:** The individual contributor identified by the authenticated signing event.
 
 ## 1. Contributions
 
@@ -28,18 +28,16 @@ The Project may accept, reject, or modify Contributions.
 
 ## 6. No Warranty
 
-Contributions are provided "as is".
+Contributions are provided "as is."
 
 ## Signature
 
-By using the Project's CLA workflow (e.g., GitHub app) you agree to these terms.
+Open a pull request. The hosted **CLA Assistant** GitHub App will link to the exact ICLA version and ask you to authenticate through GitHub. Complete the required full legal name, email address, and acknowledgement:
 
----
+> I am signing in my individual capacity and have authority to grant the rights stated in this Agreement.
 
-**Name:** _______________________________________
+The authenticated GitHub identity, signing time, and agreement version are recorded by the signing event. Do not enter a date or GitHub username separately.
 
-**Email:** ______________________________________
+Do not use this individual flow for a Contribution owned by an employer or another entity. Have an authorized signatory complete the [Entity Contributor License Agreement](CLA-ENTITY.md) and contact the maintainers before the Contribution is accepted.
 
-**GitHub Username:** ____________________________
-
-**Date:** _______________________________________
+See [Contributor CLA Privacy Notice](CONTRIBUTOR-PRIVACY.md) for how licensing records are handled.
