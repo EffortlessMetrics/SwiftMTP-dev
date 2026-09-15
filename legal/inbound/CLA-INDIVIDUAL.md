@@ -1,7 +1,7 @@
 # SwiftMTP Individual Contributor License Agreement (ICLA)
 
-**Project:** SwiftMTP  
-**Licensor:** Effortless Metrics, Inc. ("Project")  
+**Project:** SwiftMTP
+**Licensor:** Effortless Metrics, Inc. ("Project")
 **You:** The individual contributor identified by the authenticated signing event.
 
 ## 1. Contributions
