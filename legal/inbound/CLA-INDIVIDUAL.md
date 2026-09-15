@@ -28,7 +28,7 @@ The Project may accept, reject, or modify Contributions.
 
 ## 6. No Warranty
 
-Contributions are provided "as is."
+Contributions are provided "as is".
 
 ## Signature
 
