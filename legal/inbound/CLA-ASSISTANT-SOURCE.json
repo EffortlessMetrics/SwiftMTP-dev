@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-15",
+  "activation_state": "pending_hosted_service_configuration",
+  "service": "CLA Assistant",
+  "service_url": "https://cla-assistant.io/",
+  "status_context": "license/cla",
+  "repositories": [
+    "EffortlessMetrics/SwiftMTP-dev"
+  ],
+  "agreement": {
+    "repository_path": "legal/inbound/CLA-INDIVIDUAL.md",
+    "gist_url": null,
+    "gist_id": null,
+    "gist_revision": null,
+    "gist_filename": "CLA.md",
+    "sha256": "caf9cf4cf7bc0fe6e7854f4215317461461fd370cc64bd8b6909964a4c6496a7"
+  },
+  "metadata": {
+    "repository_path": "legal/inbound/CLA-ASSISTANT-METADATA.json",
+    "gist_filename": "metadata",
+    "sha256": "d22c951e9ae4cf33643681f1710d5f4e026627525ea5e3c9f54546c1979d041f",
+    "required_fields": [
+      "fullLegalName",
+      "email",
+      "individualAuthority"
+    ]
+  },
+  "allowlist": [],
+  "enforcement": {
+    "baseline_ruleset_id": 12546950,
+    "baseline_ruleset_name": "main",
+    "baseline_ruleset_preserved": true,
+    "cla_ruleset_id": null,
+    "cla_ruleset_name": "cla",
+    "expected_source": "CLA Assistant GitHub App",
+    "entity_bypass_team": "cla-corporate-approvers",
+    "entity_bypass_mode": "pull_request",
+    "entity_bypass_enabled": false
+  },
+  "activation_requirements": [
+    "Create the public Gist from the repository ICLA and metadata payload.",
+    "Install and link the hosted CLA Assistant GitHub App.",
+    "Observe a successful license/cla status on the migration pull request.",
+    "Replace the pending Gist fields with the live URL, ID, and revision before merge.",
+    "Create a dedicated default-branch CLA ruleset requiring license/cla and pin the expected source to CLA Assistant.",
+    "Preserve the existing baseline ruleset unchanged and without bypass actors.",
+    "Leave the CLA ruleset without bypass actors unless the documented Entity CLA process is activated.",
+    "Export the hosted signature register to private storage and record the export date."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "fullLegalName": {
+    "title": "Full legal name",
+    "description": "Enter the legal name under which you are entering this agreement.",
+    "type": "string",
+    "githubKey": "name",
+    "required": true
+  },
+  "email": {
+    "title": "Email address",
+    "description": "Used to maintain and administer the project licensing record.",
+    "type": "string",
+    "githubKey": "email",
+    "required": true
+  },
+  "individualAuthority": {
+    "title": "I am signing in my individual capacity and I have authority to grant the rights stated in this agreement.",
+    "type": "boolean",
+    "required": true
+  }
+}
