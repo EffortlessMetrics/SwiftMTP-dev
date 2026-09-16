@@ -27,11 +27,25 @@
     ]
   },
   "allowlist": [],
+  "enforcement": {
+    "baseline_ruleset_id": 12546950,
+    "baseline_ruleset_name": "main",
+    "baseline_ruleset_preserved": true,
+    "cla_ruleset_id": null,
+    "cla_ruleset_name": "cla",
+    "expected_source": "CLA Assistant GitHub App",
+    "entity_bypass_team": "cla-corporate-approvers",
+    "entity_bypass_mode": "pull_request",
+    "entity_bypass_enabled": false
+  },
   "activation_requirements": [
     "Create the public Gist from the repository ICLA and metadata payload.",
     "Install and link the hosted CLA Assistant GitHub App.",
     "Observe a successful license/cla status on the migration pull request.",
     "Replace the pending Gist fields with the live URL, ID, and revision before merge.",
-    "Require license/cla on the default branch and pin the expected source to CLA Assistant."
+    "Create a dedicated default-branch CLA ruleset requiring license/cla and pin the expected source to CLA Assistant.",
+    "Preserve the existing baseline ruleset unchanged and without bypass actors.",
+    "Leave the CLA ruleset without bypass actors unless the documented Entity CLA process is activated.",
+    "Export the hosted signature register to private storage and record the export date."
   ]
 }
