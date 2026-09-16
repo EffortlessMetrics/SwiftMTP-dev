@@ -45,6 +45,8 @@ All contributions require a signed Contributor License Agreement (CLA).
 - **Entities:** Do not use the individual form on an entity's behalf. Have an authorized signatory complete the [Entity CLA](../legal/inbound/CLA-ENTITY.md) and contact the maintainers privately about the authorization process.
 - **Privacy:** See the [Contributor Licensing Records Privacy Notice](../legal/inbound/CLA-PRIVACY.md).
 
+After an Entity CLA is executed, a covered pull request remains blocked until maintainers verify the private authorization record and approve the audited, pull-request-only exception on the dedicated CLA ruleset. Entity contributors are not placed on the CLA Assistant allowlist, and every ordinary review, CI, and DCO control still applies. Until that exception path is configured and approved for the pull request, the contribution cannot merge. See [Hosted CLA Assistant governance](../legal/inbound/CLA-ASSISTANT.md).
+
 All commits must include a [Developer Certificate of Origin](../legal/inbound/DCO.txt) sign-off. Use `git commit -s` to add the `Signed-off-by` trailer automatically. The DCO is additional provenance evidence and does not replace the applicable CLA.
 
 ---
