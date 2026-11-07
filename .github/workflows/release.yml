@@ -9,6 +9,12 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+      - name: Select Swift 6.2
+        uses: swift-actions/setup-swift@7ca6abe6b3b0e8b5421b88be48feee39cbf52c6a # v2.4.0
+        with:
+          swift-version: '6.2'
+      - name: Swift version
+        run: swift --version
       - name: Generate build info
         run: ./scripts/gen-build-info.sh SwiftMTPKit/Sources/Tools/swiftmtp-cli/Autogen/BuildInfo.swift
       - name: Build
