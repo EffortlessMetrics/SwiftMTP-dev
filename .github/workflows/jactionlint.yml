@@ -30,6 +30,7 @@ jobs:
       - name: Lint workflows and composite actions
         uses: jdx/jactionlint@9e87e8f34edfc00b849a27807e26eff9d00b936d # v2.5.0
         with:
+          config-file: .github/jactionlint.yaml
           version: '2.5.0'
           profile: correctness
           online: 'false'

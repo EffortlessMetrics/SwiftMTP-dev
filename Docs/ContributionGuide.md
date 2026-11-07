@@ -297,8 +297,13 @@ Shell completions for the `swiftmtp` CLI are in the `completions/` directory:
 Validate GitHub Actions changes from the repository root with:
 
 ```bash
-uvx --from jactionlint==2.5.0 jactionlint --profile correctness --no-online --shellcheck= --pyflakes=
+uvx --from jactionlint==2.5.0 jactionlint --config-file .github/jactionlint.yaml --profile correctness --no-online --shellcheck= --pyflakes=
 ```
+
+The explicit repository config excludes user-global rule overrides and fails
+closed if the config is missing; it adds no suppressions or inline-ignore changes.
+`github-script-syntax` requires Node.js 20+ on PATH. Without it, jactionlint skips
+that rule with a note, so a clean run does not prove embedded JavaScript syntax.
 
 The pinned, offline correctness gate checks workflow semantics, composite
 actions, and Dependabot configuration. Optional ShellCheck/Pyflakes integration
