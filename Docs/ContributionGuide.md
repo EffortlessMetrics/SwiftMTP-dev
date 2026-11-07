@@ -294,8 +294,20 @@ Shell completions for the `swiftmtp` CLI are in the `completions/` directory:
 
 ## CI Workflows
 
+Validate GitHub Actions changes from the repository root with:
+
+```bash
+uvx --from jactionlint==2.5.0 jactionlint --profile correctness --no-online --shellcheck= --pyflakes=
+```
+
+The pinned, offline correctness gate checks workflow semantics, composite
+actions, and Dependabot configuration. Optional ShellCheck/Pyflakes integration
+is excluded from this gate; existing script checks remain separate. Do not
+substitute a plain YAML parse or run the workflows locally to satisfy it.
+
 | Workflow | Trigger | Required for merge | What it checks |
 |----------|---------|-------------------|----------------|
+| `jactionlint.yml` | Workflow/action/config PR changes, manual | No new required check | Offline workflow semantics; no Swift build |
 | `ci.yml` | All pushes/PRs | ✅ Yes | Build, full test suite, coverage gate, TSAN, fuzz harness, SBOM (tags) |
 | `swiftmtp-ci.yml` | main + nightly | No (supplemental) | Coverage reporting, DocC docs, CLI smoke |
 | `smoke.yml` | Schedule + PRs | No (advisory) | Minimal sanity build |
