@@ -81,7 +81,7 @@ final class ResponseCodeTests: XCTestCase {
 
   func testUnknownResponseCodeReturnsNilName() {
     XCTAssertNil(PTPResponseCode.name(for: 0xBEEF))
-    XCTAssertNil(PTPResponseCode.name(for: 0xA801))
+    XCTAssertNil(PTPResponseCode.name(for: 0xAFFF))
     XCTAssertNil(PTPResponseCode.name(for: 0x0000))
   }
 
@@ -92,9 +92,13 @@ final class ResponseCodeTests: XCTestCase {
   }
 
   func testUnknownVendorExtensionCode() {
-    let desc = PTPResponseCode.describe(0xA801)
-    XCTAssertTrue(desc.contains("Unknown"), "Vendor extension codes are not in standard table")
-    XCTAssertTrue(desc.contains("a801"))
+    let desc = PTPResponseCode.describe(0xAFFF)
+    XCTAssertEqual(desc, "Unknown (0xafff)")
+  }
+
+  func testKnownObjectPropertyExtensionCode() {
+    XCTAssertEqual(PTPResponseCode.name(for: 0xA801), "InvalidObjectPropCode")
+    XCTAssertEqual(PTPResponseCode.describe(0xA801), "InvalidObjectPropCode (0xa801)")
   }
 
   // MARK: - Boundary Codes

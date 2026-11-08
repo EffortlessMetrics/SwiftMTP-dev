@@ -78,19 +78,19 @@ final class SnapshotWave30Tests: XCTestCase {
   func testErrorDescriptionProtocolGeneric() {
     XCTAssertEqual(
       MTPError.protocolError(code: 0x2002, message: nil).errorDescription,
-      "GeneralError (0x2002): the device reported an unspecified failure.")
+      "GeneralError (0x2002): The device reported an unspecified failure.")
   }
 
   func testErrorDescriptionProtocolWithMessage() {
     XCTAssertEqual(
       MTPError.protocolError(code: 0x2005, message: "OperationNotSupported").errorDescription,
-      "OperationNotSupported (0x2005): the device does not support this operation.")
+      "OperationNotSupported (0x2005): The device does not support this operation.")
   }
 
   func testErrorDescriptionProtocol201D() {
     XCTAssertEqual(
       MTPError.protocolError(code: 0x201D, message: nil).errorDescription,
-      "Protocol error InvalidParameter (0x201D): write request rejected by device.")
+      "InvalidParameter (0x201D): One or more parameters in the request are invalid.")
   }
 
   func testErrorDescriptionObjectNotFound() {
