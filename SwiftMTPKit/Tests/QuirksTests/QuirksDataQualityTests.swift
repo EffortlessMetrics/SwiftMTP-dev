@@ -17,6 +17,11 @@ final class QuirksDataQualityTests: XCTestCase {
     db = try QuirkDatabase.load()
   }
 
+  override func tearDownWithError() throws {
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - VID:PID Uniqueness
 
   func testNoDuplicateVIDPIDPairs() {

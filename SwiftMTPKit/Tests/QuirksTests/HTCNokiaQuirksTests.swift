@@ -43,6 +43,14 @@ final class HTCNokiaQuirksTests: XCTestCase {
     }
   }
 
+  override func tearDownWithError() throws {
+    htcEntries = nil
+    nokiaEntries = nil
+    nokiaAndroidEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - HTC VID Consistency
 
   func testAllHTCEntriesHaveCorrectVID() {

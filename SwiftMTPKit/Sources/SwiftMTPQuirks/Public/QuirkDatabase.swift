@@ -46,10 +46,10 @@ public enum QuirkStatus: String, Codable, Sendable {
 
 /// High-level governance classification for filtering and display.
 public enum QuirkGovernanceLevel: String, Sendable, CaseIterable {
-  case promoted     // Battle-tested with real device evidence
-  case research     // Research-based, never tested with SwiftMTP
-  case community    // Community-contributed, limited verification
-  case deprecated   // Superseded or known-bad entries
+  case promoted  // Battle-tested with real device evidence
+  case research  // Research-based, never tested with SwiftMTP
+  case community  // Community-contributed, limited verification
+  case deprecated  // Superseded or known-bad entries
 
   /// Derive the governance level from a ``DeviceQuirk`` entry.
   public static func classify(_ quirk: DeviceQuirk) -> QuirkGovernanceLevel {
@@ -71,7 +71,6 @@ public struct GovernanceValidationResult: Sendable {
   public let violations: [String]
   public var isValid: Bool { violations.isEmpty }
 }
-
 
 public struct DeviceQuirk: Codable, Sendable {
   public var id: String  // e.g. "xiaomi-mi-note-2-ff10"
@@ -448,7 +447,8 @@ public struct QuirkDatabase: Codable, Sendable {
     for entry in entries {
       let resolved = entry.resolvedFlags()
       for (name, value) in resolved.boolFlagMap {
-        let defaultValue = defaultFlags.boolFlagMap.first(where: { $0.name == name })?.value ?? false
+        let defaultValue =
+          defaultFlags.boolFlagMap.first(where: { $0.name == name })?.value ?? false
         if value != defaultValue {
           flagUsage[name, default: 0] += 1
         }
@@ -463,7 +463,8 @@ public struct QuirkDatabase: Codable, Sendable {
     }
 
     // Validation: entries with vs without evidenceRequired
-    let withEvidence = entries.filter { $0.evidenceRequired != nil && !($0.evidenceRequired!.isEmpty) }.count
+    let withEvidence =
+      entries.filter { $0.evidenceRequired != nil && !($0.evidenceRequired!.isEmpty) }.count
     let withoutEvidence = entries.count - withEvidence
 
     // Tested vs untested
@@ -476,9 +477,10 @@ public struct QuirkDatabase: Codable, Sendable {
       vidCounts[entry.vid, default: 0] += 1
     }
 
-    let topVIDs = vidCounts.sorted { $0.value > $1.value }.prefix(10).map {
-      QuirksCoverageStats.VIDEntry(vid: $0.key, count: $0.value)
-    }
+    let topVIDs = vidCounts.sorted { $0.value > $1.value }.prefix(10)
+      .map {
+        QuirksCoverageStats.VIDEntry(vid: $0.key, count: $0.value)
+      }
 
     // Confidence breakdown
     var confidenceCounts: [String: Int] = [:]

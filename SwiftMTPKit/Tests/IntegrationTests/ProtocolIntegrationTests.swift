@@ -40,7 +40,8 @@ final class ProtocolIntegrationTests: XCTestCase {
   ) async throws -> MTPObjectHandle {
     let sourceURL = tmpDir.appendingPathComponent(UUID().uuidString)
     try content.write(to: sourceURL)
-    _ = try await device.write(parent: parent, name: name, size: UInt64(content.count), from: sourceURL)
+    _ = try await device.write(
+      parent: parent, name: name, size: UInt64(content.count), from: sourceURL)
     // Find the handle by listing objects under the parent
     var handle: MTPObjectHandle?
     for try await batch in device.list(parent: parent, in: storage) {

@@ -40,7 +40,8 @@ final class QuirkFlagsIntegrationTests: XCTestCase {
     try await actor.devClose()
 
     // closeSession should NOT have been called
-    XCTAssertFalse(link.closeSessionCalled, "closeSession should be skipped when skipCloseSession is true")
+    XCTAssertFalse(
+      link.closeSessionCalled, "closeSession should be skipped when skipCloseSession is true")
   }
 
   func testSkipCloseSession_defaultCallsCloseSession() async throws {
@@ -56,7 +57,8 @@ final class QuirkFlagsIntegrationTests: XCTestCase {
 
     try await actor.devClose()
 
-    XCTAssertTrue(link.closeSessionCalled, "closeSession should be called when skipCloseSession is false")
+    XCTAssertTrue(
+      link.closeSessionCalled, "closeSession should be called when skipCloseSession is false")
   }
 
   // MARK: - 2. brokenSetObjectPropList
@@ -73,16 +75,20 @@ final class QuirkFlagsIntegrationTests: XCTestCase {
     await actor.setTestSessionOpen(true, link: link)
 
     let entries = [
-      MTPPropListEntry(handle: 1, propCode: 0xDC07, datatype: 0xFFFF, value: PTPString.encode("a.txt")),
-      MTPPropListEntry(handle: 2, propCode: 0xDC07, datatype: 0xFFFF, value: PTPString.encode("b.txt")),
+      MTPPropListEntry(
+        handle: 1, propCode: 0xDC07, datatype: 0xFFFF, value: PTPString.encode("a.txt")),
+      MTPPropListEntry(
+        handle: 2, propCode: 0xDC07, datatype: 0xFFFF, value: PTPString.encode("b.txt")),
     ]
     let written = try await actor.setObjectPropList(entries: entries)
 
     XCTAssertEqual(written, 2)
     // Should have called setObjectPropValue individually, not setObjectPropList
-    XCTAssertEqual(link.setObjectPropValueCallCount, 2,
+    XCTAssertEqual(
+      link.setObjectPropValueCallCount, 2,
       "brokenSetObjectPropList should fall back to per-entry setObjectPropValue")
-    XCTAssertEqual(link.setObjectPropListCallCount, 0,
+    XCTAssertEqual(
+      link.setObjectPropListCallCount, 0,
       "setObjectPropList should not be called when brokenSetObjectPropList is true")
   }
 
@@ -128,7 +134,8 @@ final class QuirkFlagsIntegrationTests: XCTestCase {
 
     if let cmd = link.lastCommand {
       // 500 is not a multiple of 512, no adjustment needed
-      XCTAssertEqual(cmd.params[3], 500, "Length should remain unchanged when not on 512-byte boundary")
+      XCTAssertEqual(
+        cmd.params[3], 500, "Length should remain unchanged when not on 512-byte boundary")
     }
   }
 
@@ -322,18 +329,26 @@ private final class TrackingLink: MTPLink, @unchecked Sendable {
   func getStorageInfo(id: MTPStorageID) async throws -> MTPStorageInfo {
     MTPStorageInfo(id: id, description: "Test", capacityBytes: 0, freeBytes: 0, isReadOnly: false)
   }
-  func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> [MTPObjectHandle] {
+  func getObjectHandles(storage: MTPStorageID, parent: MTPObjectHandle?) async throws
+    -> [MTPObjectHandle]
+  {
     objectInfos.map { $0.handle }
   }
   func getObjectInfos(_ handles: [MTPObjectHandle]) async throws -> [MTPObjectInfo] {
     objectInfos.filter { handles.contains($0.handle) }
   }
-  func getObjectInfos(storage: MTPStorageID, parent: MTPObjectHandle?, format: UInt16?) async throws -> [MTPObjectInfo] {
+  func getObjectInfos(storage: MTPStorageID, parent: MTPObjectHandle?, format: UInt16?) async throws
+    -> [MTPObjectInfo]
+  {
     objectInfos
   }
   func deleteObject(handle: MTPObjectHandle) async throws {}
-  func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?) async throws {}
-  func copyObject(handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> MTPObjectHandle { 0 }
+  func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?)
+    async throws
+  {}
+  func copyObject(
+    handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle { 0 }
 
   func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     lastCommand = command
@@ -364,7 +379,9 @@ private final class TrackingLink: MTPLink, @unchecked Sendable {
 private final class InjectableTransport: MTPTransport, @unchecked Sendable {
   private let link: any MTPLink
   init(link: any MTPLink) { self.link = link }
-  func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig) async throws -> any MTPLink { link }
+  func open(_ summary: MTPDeviceSummary, config: SwiftMTPConfig) async throws -> any MTPLink {
+    link
+  }
   func close() async throws {}
 }
 

@@ -162,13 +162,21 @@ final class WritePathAndErrorEdgeCaseTests: XCTestCase {
     // 12-byte container for DeviceInfoChanged (0x4008) — no params needed
     var data = Data(count: 12)
     // length (4 LE)
-    data[0] = 12; data[1] = 0; data[2] = 0; data[3] = 0
+    data[0] = 12
+    data[1] = 0
+    data[2] = 0
+    data[3] = 0
     // type (2 LE) = 4 (event)
-    data[4] = 4; data[5] = 0
+    data[4] = 4
+    data[5] = 0
     // code (2 LE) = 0x4008
-    data[6] = 0x08; data[7] = 0x40
+    data[6] = 0x08
+    data[7] = 0x40
     // txid (4 LE)
-    data[8] = 0; data[9] = 0; data[10] = 0; data[11] = 0
+    data[8] = 0
+    data[9] = 0
+    data[10] = 0
+    data[11] = 0
 
     if case .deviceInfoChanged = MTPEvent.fromRaw(data) {
       // expected
@@ -180,18 +188,27 @@ final class WritePathAndErrorEdgeCaseTests: XCTestCase {
   func testEventFromRawStorageAddedAndRemoved() {
     func makeEvent(code: UInt16, param: UInt32) -> Data {
       var data = Data(count: 16)
-      data[0] = 16; data[1] = 0; data[2] = 0; data[3] = 0
-      data[4] = 4; data[5] = 0
-      data[6] = UInt8(code & 0xFF); data[7] = UInt8(code >> 8)
-      data[8] = 0; data[9] = 0; data[10] = 0; data[11] = 0
-      data[12] = UInt8(param & 0xFF); data[13] = UInt8((param >> 8) & 0xFF)
-      data[14] = UInt8((param >> 16) & 0xFF); data[15] = UInt8((param >> 24) & 0xFF)
+      data[0] = 16
+      data[1] = 0
+      data[2] = 0
+      data[3] = 0
+      data[4] = 4
+      data[5] = 0
+      data[6] = UInt8(code & 0xFF)
+      data[7] = UInt8(code >> 8)
+      data[8] = 0
+      data[9] = 0
+      data[10] = 0
+      data[11] = 0
+      data[12] = UInt8(param & 0xFF)
+      data[13] = UInt8((param >> 8) & 0xFF)
+      data[14] = UInt8((param >> 16) & 0xFF)
+      data[15] = UInt8((param >> 24) & 0xFF)
       return data
     }
 
     // StoreAdded (0x4004)
-    if case .storageAdded(let sid) = MTPEvent.fromRaw(makeEvent(code: 0x4004, param: 0x0001_0001))
-    {
+    if case .storageAdded(let sid) = MTPEvent.fromRaw(makeEvent(code: 0x4004, param: 0x0001_0001)) {
       XCTAssertEqual(sid.raw, 0x0001_0001)
     } else {
       XCTFail("Should parse StoreAdded")
@@ -219,10 +236,18 @@ final class WritePathAndErrorEdgeCaseTests: XCTestCase {
   func testEventFromRawMissingRequiredParamReturnsNil() {
     // ObjectAdded (0x4002) requires a handle param — send no params (12 bytes only)
     var data = Data(count: 12)
-    data[0] = 12; data[1] = 0; data[2] = 0; data[3] = 0
-    data[4] = 4; data[5] = 0
-    data[6] = 0x02; data[7] = 0x40
-    data[8] = 0; data[9] = 0; data[10] = 0; data[11] = 0
+    data[0] = 12
+    data[1] = 0
+    data[2] = 0
+    data[3] = 0
+    data[4] = 4
+    data[5] = 0
+    data[6] = 0x02
+    data[7] = 0x40
+    data[8] = 0
+    data[9] = 0
+    data[10] = 0
+    data[11] = 0
     XCTAssertNil(MTPEvent.fromRaw(data), "ObjectAdded without param should return nil")
   }
 

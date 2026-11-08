@@ -48,21 +48,23 @@ public enum ErrorRecoveryLayer {
       do {
         let result = try await operation()
         if attempt > 0 {
-          await RecoveryLog.shared.record(RecoveryEvent(
-            strategy: RecoveryStrategy.sessionRecovery.rawValue,
-            attempt: attempt, maxAttempts: maxRetries,
-            succeeded: true
-          ))
+          await RecoveryLog.shared.record(
+            RecoveryEvent(
+              strategy: RecoveryStrategy.sessionRecovery.rawValue,
+              attempt: attempt, maxAttempts: maxRetries,
+              succeeded: true
+            ))
         }
         return result
       } catch let error as MTPError {
         lastError = error
         guard isSessionRecoverable(error), attempt < maxRetries else {
-          await RecoveryLog.shared.record(RecoveryEvent(
-            strategy: RecoveryStrategy.sessionRecovery.rawValue,
-            attempt: attempt + 1, maxAttempts: maxRetries,
-            succeeded: false, errorDescription: "\(error)"
-          ))
+          await RecoveryLog.shared.record(
+            RecoveryEvent(
+              strategy: RecoveryStrategy.sessionRecovery.rawValue,
+              attempt: attempt + 1, maxAttempts: maxRetries,
+              succeeded: false, errorDescription: "\(error)"
+            ))
           throw error
         }
         MTPLog.recovery.info(
@@ -72,11 +74,12 @@ public enum ErrorRecoveryLayer {
         try await link.openSession(id: sessionId)
       } catch {
         lastError = error
-        await RecoveryLog.shared.record(RecoveryEvent(
-          strategy: RecoveryStrategy.sessionRecovery.rawValue,
-          attempt: attempt + 1, maxAttempts: maxRetries,
-          succeeded: false, errorDescription: "\(error)"
-        ))
+        await RecoveryLog.shared.record(
+          RecoveryEvent(
+            strategy: RecoveryStrategy.sessionRecovery.rawValue,
+            attempt: attempt + 1, maxAttempts: maxRetries,
+            succeeded: false, errorDescription: "\(error)"
+          ))
         throw error
       }
     }
@@ -105,27 +108,30 @@ public enum ErrorRecoveryLayer {
         MTPLog.recovery.error(
           "Stall recovery: device reset failed — \(error.localizedDescription, privacy: .public)"
         )
-        await RecoveryLog.shared.record(RecoveryEvent(
-          strategy: RecoveryStrategy.stallRecovery.rawValue,
-          attempt: 1, maxAttempts: 1,
-          succeeded: false, errorDescription: "\(error)"
-        ))
+        await RecoveryLog.shared.record(
+          RecoveryEvent(
+            strategy: RecoveryStrategy.stallRecovery.rawValue,
+            attempt: 1, maxAttempts: 1,
+            succeeded: false, errorDescription: "\(error)"
+          ))
         throw error
       }
       do {
         let result = try await operation()
-        await RecoveryLog.shared.record(RecoveryEvent(
-          strategy: RecoveryStrategy.stallRecovery.rawValue,
-          attempt: 1, maxAttempts: 1,
-          succeeded: true
-        ))
+        await RecoveryLog.shared.record(
+          RecoveryEvent(
+            strategy: RecoveryStrategy.stallRecovery.rawValue,
+            attempt: 1, maxAttempts: 1,
+            succeeded: true
+          ))
         return result
       } catch {
-        await RecoveryLog.shared.record(RecoveryEvent(
-          strategy: RecoveryStrategy.stallRecovery.rawValue,
-          attempt: 1, maxAttempts: 1,
-          succeeded: false, errorDescription: "\(error)"
-        ))
+        await RecoveryLog.shared.record(
+          RecoveryEvent(
+            strategy: RecoveryStrategy.stallRecovery.rawValue,
+            attempt: 1, maxAttempts: 1,
+            succeeded: false, errorDescription: "\(error)"
+          ))
         throw error
       }
     }
@@ -148,22 +154,24 @@ public enum ErrorRecoveryLayer {
       do {
         let result = try await operation(currentTimeoutMs)
         if attempt > 0 {
-          await RecoveryLog.shared.record(RecoveryEvent(
-            strategy: RecoveryStrategy.timeoutEscalation.rawValue,
-            attempt: attempt, maxAttempts: maxRetries,
-            succeeded: true, timeoutMs: currentTimeoutMs
-          ))
+          await RecoveryLog.shared.record(
+            RecoveryEvent(
+              strategy: RecoveryStrategy.timeoutEscalation.rawValue,
+              attempt: attempt, maxAttempts: maxRetries,
+              succeeded: true, timeoutMs: currentTimeoutMs
+            ))
         }
         return result
       } catch let error as MTPError where isTimeoutError(error) {
         lastError = error
         guard attempt < maxRetries else {
-          await RecoveryLog.shared.record(RecoveryEvent(
-            strategy: RecoveryStrategy.timeoutEscalation.rawValue,
-            attempt: attempt + 1, maxAttempts: maxRetries,
-            succeeded: false, errorDescription: "\(error)",
-            timeoutMs: currentTimeoutMs
-          ))
+          await RecoveryLog.shared.record(
+            RecoveryEvent(
+              strategy: RecoveryStrategy.timeoutEscalation.rawValue,
+              attempt: attempt + 1, maxAttempts: maxRetries,
+              succeeded: false, errorDescription: "\(error)",
+              timeoutMs: currentTimeoutMs
+            ))
           throw error
         }
         let previousTimeout = currentTimeoutMs
@@ -208,11 +216,12 @@ public enum ErrorRecoveryLayer {
       }
     }
 
-    await RecoveryLog.shared.record(RecoveryEvent(
-      strategy: RecoveryStrategy.disconnectRecovery.rawValue,
-      attempt: 1, maxAttempts: 1,
-      succeeded: false, errorDescription: "\(error)"
-    ))
+    await RecoveryLog.shared.record(
+      RecoveryEvent(
+        strategy: RecoveryStrategy.disconnectRecovery.rawValue,
+        attempt: 1, maxAttempts: 1,
+        succeeded: false, errorDescription: "\(error)"
+      ))
 
     return true
   }

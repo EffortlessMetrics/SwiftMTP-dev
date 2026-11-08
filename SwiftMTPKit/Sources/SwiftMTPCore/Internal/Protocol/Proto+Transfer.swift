@@ -156,7 +156,8 @@ public enum ProtoTransfer {
       )
       MTPLog.transfer.debug("SendObjectInfo dataset length: \(dataset.count) bytes")
       let hex = dataset.map { String(format: "%02x", $0) }.joined(separator: " ")
-      MTPLog.transfer.debug("Dataset hex: \(hex.prefix(128), privacy: .public)\(dataset.count > 64 ? "..." : "")")
+      MTPLog.transfer.debug(
+        "Dataset hex: \(hex.prefix(128), privacy: .public)\(dataset.count > 64 ? "..." : "")")
     }
 
     let infoOffset = BoxedOffset()

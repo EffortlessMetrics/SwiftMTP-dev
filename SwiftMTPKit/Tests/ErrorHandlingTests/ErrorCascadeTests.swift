@@ -861,7 +861,9 @@ final class ErrorCascadeTests: XCTestCase {
 
   func testMTPErrorProtocolErrorDescription() {
     let error = MTPError.protocolError(code: 0x201D, message: nil)
-    XCTAssertTrue(error.errorDescription?.contains("write request rejected") ?? false)
+    XCTAssertEqual(
+      error.errorDescription,
+      "InvalidParameter (0x201D): One or more parameters in the request are invalid.")
     XCTAssertNotNil(error.recoverySuggestion)
   }
 

@@ -40,6 +40,14 @@ final class PhilipsToshibaAcerQuirksTests: XCTestCase {
     acerEntries = db.entries.filter { $0.vid == Self.acerVID }
   }
 
+  override func tearDownWithError() throws {
+    philipsEntries = nil
+    toshibaEntries = nil
+    acerEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Vendor ID Consistency
 
   func testAllPhilipsEntriesHaveCorrectVID() {

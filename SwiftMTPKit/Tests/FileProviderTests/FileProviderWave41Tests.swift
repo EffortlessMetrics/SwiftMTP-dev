@@ -274,7 +274,8 @@ final class FPEnumerationTimeoutTests: XCTestCase {
     let exp = expectation(description: "timeout")
     observer.onFinish = { exp.fulfill() }
 
-    enumerator.enumerateItems(for: observer, startingAt: NSFileProviderPage.initialPageSortedByName as NSFileProviderPage)
+    enumerator.enumerateItems(
+      for: observer, startingAt: NSFileProviderPage.initialPageSortedByName as NSFileProviderPage)
 
     await fulfillment(of: [exp], timeout: Double(DomainEnumerator.enumerationTimeoutSeconds) + 5)
 
@@ -293,7 +294,8 @@ final class FPEnumerationTimeoutTests: XCTestCase {
     let exp = expectation(description: "children timeout")
     observer.onFinish = { exp.fulfill() }
 
-    enumerator.enumerateItems(for: observer, startingAt: NSFileProviderPage.initialPageSortedByName as NSFileProviderPage)
+    enumerator.enumerateItems(
+      for: observer, startingAt: NSFileProviderPage.initialPageSortedByName as NSFileProviderPage)
 
     await fulfillment(of: [exp], timeout: Double(DomainEnumerator.enumerationTimeoutSeconds) + 5)
 
@@ -350,7 +352,8 @@ final class FPXPCReconnectionTests: XCTestCase {
     let exp = expectation(description: "post-invalidate enum")
     observer.onFinish = { exp.fulfill() }
 
-    enumerator.enumerateItems(for: observer, startingAt: NSFileProviderPage.initialPageSortedByName as NSFileProviderPage)
+    enumerator.enumerateItems(
+      for: observer, startingAt: NSFileProviderPage.initialPageSortedByName as NSFileProviderPage)
     wait(for: [exp], timeout: 2)
 
     // No items expected (empty reader), but should finish without error
@@ -469,7 +472,8 @@ final class FPDeviceDisconnectTests: XCTestCase {
     let exp = expectation(description: "disconnect enum")
     observer.onFinish = { exp.fulfill() }
 
-    enumerator.enumerateItems(for: observer, startingAt: NSFileProviderPage.initialPageSortedByName as NSFileProviderPage)
+    enumerator.enumerateItems(
+      for: observer, startingAt: NSFileProviderPage.initialPageSortedByName as NSFileProviderPage)
 
     await fulfillment(of: [exp], timeout: Double(DomainEnumerator.enumerationTimeoutSeconds) + 5)
 
@@ -529,9 +533,11 @@ final class FPErrorMappingWave41Tests: XCTestCase {
       "timeout", "no device", "interrupted",
     ]
     for keyword in keywords {
-      let error = NSError(domain: "MTP", code: -1, userInfo: [
-        NSLocalizedDescriptionKey: "Error: \(keyword) occurred"
-      ])
+      let error = NSError(
+        domain: "MTP", code: -1,
+        userInfo: [
+          NSLocalizedDescriptionKey: "Error: \(keyword) occurred"
+        ])
       let mapped = DomainEnumerator.mapToFileProviderError(error)
       XCTAssertEqual(
         mapped.code, NSFileProviderError.serverUnreachable.rawValue,
@@ -541,9 +547,11 @@ final class FPErrorMappingWave41Tests: XCTestCase {
   }
 
   func testUnknownErrorDefaultsToServerUnreachable() {
-    let error = NSError(domain: "SomeOther", code: 42, userInfo: [
-      NSLocalizedDescriptionKey: "Something completely different"
-    ])
+    let error = NSError(
+      domain: "SomeOther", code: 42,
+      userInfo: [
+        NSLocalizedDescriptionKey: "Something completely different"
+      ])
     let mapped = DomainEnumerator.mapToFileProviderError(error)
     XCTAssertEqual(mapped.domain, NSFileProviderErrorDomain)
     XCTAssertEqual(mapped.code, NSFileProviderError.serverUnreachable.rawValue)

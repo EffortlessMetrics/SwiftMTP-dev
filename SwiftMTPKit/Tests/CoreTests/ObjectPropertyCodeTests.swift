@@ -153,10 +153,13 @@ final class ObjectPropertyCodeTests: XCTestCase {
 
   func testDisplayNameReturnsReadableNames() {
     XCTAssertEqual(MTPObjectPropCode.displayName(for: MTPObjectPropCode.storageID), "Storage ID")
-    XCTAssertEqual(MTPObjectPropCode.displayName(for: MTPObjectPropCode.objectFileName), "File Name")
+    XCTAssertEqual(
+      MTPObjectPropCode.displayName(for: MTPObjectPropCode.objectFileName), "File Name")
     XCTAssertEqual(MTPObjectPropCode.displayName(for: MTPObjectPropCode.objectSize), "Object Size")
-    XCTAssertEqual(MTPObjectPropCode.displayName(for: MTPObjectPropCode.dateCreated), "Date Created")
-    XCTAssertEqual(MTPObjectPropCode.displayName(for: MTPObjectPropCode.parentObject), "Parent Object")
+    XCTAssertEqual(
+      MTPObjectPropCode.displayName(for: MTPObjectPropCode.dateCreated), "Date Created")
+    XCTAssertEqual(
+      MTPObjectPropCode.displayName(for: MTPObjectPropCode.parentObject), "Parent Object")
   }
 
   func testDisplayNameAudioProperties() {
@@ -169,7 +172,8 @@ final class ObjectPropertyCodeTests: XCTestCase {
   func testDisplayNameVideoProperties() {
     XCTAssertEqual(MTPObjectPropCode.displayName(for: MTPObjectPropCode.width), "Width")
     XCTAssertEqual(MTPObjectPropCode.displayName(for: MTPObjectPropCode.height), "Height")
-    XCTAssertEqual(MTPObjectPropCode.displayName(for: MTPObjectPropCode.videoBitRate), "Video Bit Rate")
+    XCTAssertEqual(
+      MTPObjectPropCode.displayName(for: MTPObjectPropCode.videoBitRate), "Video Bit Rate")
   }
 
   func testDisplayNameUnknownCode() {

@@ -159,7 +159,7 @@ final class WritePathSafetyTests: XCTestCase {
         handle: 10, storage: defaultStorage, parent: nil,
         name: "mismatch.bin", sizeBytes: 500, formatCode: 0x3000,
         data: Data(repeating: 0xAA, count: 500)
-      ),
+      )
     ])
 
     // Declared size was 1000, but device reports 500
@@ -183,7 +183,7 @@ final class WritePathSafetyTests: XCTestCase {
         handle: 11, storage: defaultStorage, parent: nil,
         name: "exact.bin", sizeBytes: 2048, formatCode: 0x3000,
         data: Data(repeating: 0xBB, count: 2048)
-      ),
+      )
     ])
 
     // Should not throw — sizes match
@@ -312,7 +312,7 @@ final class WritePathSafetyTests: XCTestCase {
         error: .accessDenied,
         repeatCount: 1,
         label: "delete-protected"
-      ),
+      )
     ])
     let link = FaultInjectingLink(
       wrapping: VirtualMTPLink(config: .pixel7), schedule: schedule)
@@ -351,7 +351,7 @@ final class WritePathSafetyTests: XCTestCase {
       VirtualObjectConfig(
         handle: 99, storage: defaultStorage, parent: nil,
         name: "zero.dat", sizeBytes: 0, formatCode: 0x3000, data: Data()
-      ),
+      )
     ])
     try await postWriteVerify(device: device, handle: 99, expectedSize: 0)
   }
@@ -448,7 +448,7 @@ final class WritePathSafetyTests: XCTestCase {
         error: .disconnected,
         repeatCount: 0,
         label: "permanent-disconnect"
-      ),
+      )
     ])
     let link = VirtualMTPLink(config: .pixel7, faultSchedule: schedule)
 
@@ -470,7 +470,7 @@ final class WritePathSafetyTests: XCTestCase {
         error: .disconnected,
         repeatCount: 0,
         label: "persistent-disconnect"
-      ),
+      )
     ])
     let link = VirtualMTPLink(config: .pixel7, faultSchedule: schedule)
 
@@ -531,7 +531,8 @@ final class WritePathSafetyTests: XCTestCase {
 
     // Even with full progress, state must still be "active" — not "completed"
     let beforeComplete = await journal.entries[transferId]
-    XCTAssertEqual(beforeComplete?.state, "active",
+    XCTAssertEqual(
+      beforeComplete?.state, "active",
       "Must not auto-complete; requires explicit complete() call")
     XCTAssertEqual(beforeComplete?.committedBytes, 100_000)
 
@@ -759,7 +760,8 @@ final class WritePathSafetyTests: XCTestCase {
 
     let entries = await journal.entries
     let record = try XCTUnwrap(entries[transferId])
-    XCTAssertEqual(record.remoteHandle, 0x0042,
+    XCTAssertEqual(
+      record.remoteHandle, 0x0042,
       "Remote handle must be persisted for cleanup on retry")
 
     // Verify it appears in state log

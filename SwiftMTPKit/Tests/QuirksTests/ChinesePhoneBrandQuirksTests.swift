@@ -37,6 +37,14 @@ final class ChinesePhoneBrandQuirksTests: XCTestCase {
     oppoRealmeEntries = db.entries.filter { $0.vid == Self.oppoRealmeVID }
   }
 
+  override func tearDownWithError() throws {
+    xiaomiEntries = nil
+    oneplusEntries = nil
+    oppoRealmeEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Entry Existence
 
   func testXiaomiEntriesExist() {

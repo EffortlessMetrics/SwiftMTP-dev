@@ -3,32 +3,32 @@
 
 import SwiftUI
 #if canImport(SwiftMTPUI)
-import SwiftMTPUI
+  import SwiftMTPUI
 #endif
 
 struct ContentView: View {
-    #if canImport(SwiftMTPUI)
+  #if canImport(SwiftMTPUI)
     @State private var coordinator = DeviceLifecycleCoordinator()
-    #endif
+  #endif
 
-    var body: some View {
-        Group {
-            #if canImport(SwiftMTPUI)
-            DeviceBrowserView(coordinator: coordinator)
-            #else
-            VStack(spacing: 12) {
-                Text("SwiftMTP")
-                    .font(.title)
-                Text("SwiftMTPKit UI modules are unavailable in this build configuration.")
-                    .font(.callout)
-                    .multilineTextAlignment(.center)
-            }
-            #endif
+  var body: some View {
+    Group {
+      #if canImport(SwiftMTPUI)
+        DeviceBrowserView(coordinator: coordinator)
+      #else
+        VStack(spacing: 12) {
+          Text("SwiftMTP")
+            .font(.title)
+          Text("SwiftMTPKit UI modules are unavailable in this build configuration.")
+            .font(.callout)
+            .multilineTextAlignment(.center)
         }
-        .frame(minWidth: 800, minHeight: 500)
+      #endif
     }
+    .frame(minWidth: 800, minHeight: 500)
+  }
 }
 
 #Preview {
-    ContentView()
+  ContentView()
 }

@@ -53,8 +53,8 @@ public final class DeviceTuningStore: @unchecked Sendable {
     self.fileURL =
       fileURL
       ?? FileManager.default.homeDirectoryForCurrentUser
-        .appendingPathComponent(".swiftmtp")
-        .appendingPathComponent("device-tuning.json")
+      .appendingPathComponent(".swiftmtp")
+      .appendingPathComponent("device-tuning.json")
   }
 
   // MARK: - Read
@@ -88,8 +88,9 @@ public final class DeviceTuningStore: @unchecked Sendable {
       vid: vid,
       pid: pid,
       optimalChunkSize: snapshot.currentChunkSize,
-      maxObservedThroughput: max(snapshot.maxObservedThroughput,
-                                 existing?.maxObservedThroughput ?? 0),
+      maxObservedThroughput: max(
+        snapshot.maxObservedThroughput,
+        existing?.maxObservedThroughput ?? 0),
       errorCount: (existing?.errorCount ?? 0) + snapshot.errorCount,
       lastTunedDate: iso.string(from: Date())
     )

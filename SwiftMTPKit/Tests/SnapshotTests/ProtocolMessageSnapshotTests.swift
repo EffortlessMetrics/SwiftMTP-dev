@@ -479,9 +479,8 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
   // MARK: - Additional Object Format Code Lookups
 
   func testObjectFormatCodeGIF() {
-    // GIF maps to undefined (0x3000) if not explicitly mapped
     let code = PTPObjectFormat.forFilename("anim.gif")
-    XCTAssertTrue(code == 0x380A || code == 0x3000)
+    XCTAssertEqual(code, 0x3807)
   }
 
   func testObjectFormatCodeWAV() {
@@ -491,7 +490,7 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
 
   func testObjectFormatCodeCaseInsensitive() {
     XCTAssertEqual(PTPObjectFormat.forFilename("PHOTO.JPG"), 0x3801)
-    XCTAssertEqual(PTPObjectFormat.forFilename("Video.MP4"), 0x300B)
+    XCTAssertEqual(PTPObjectFormat.forFilename("Video.MP4"), 0xB982)
     XCTAssertEqual(PTPObjectFormat.forFilename("Song.MP3"), 0x3009)
   }
 
@@ -648,28 +647,28 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
     let err = MTPError.protocolError(code: 0x2002, message: nil)
     XCTAssertEqual(
       err.errorDescription,
-      "GeneralError (0x2002): the device reported an unspecified failure.")
+      "GeneralError (0x2002): The device reported an unspecified failure.")
   }
 
   func testErrorProtocolErrorWithMessage() {
     let err = MTPError.protocolError(code: 0x2005, message: "OperationNotSupported")
     XCTAssertEqual(
       err.errorDescription,
-      "OperationNotSupported (0x2005): the device does not support this operation.")
+      "OperationNotSupported (0x2005): The device does not support this operation.")
   }
 
   func testErrorProtocolError201DSpecialFormat() {
     let err = MTPError.protocolError(code: 0x201D, message: nil)
     XCTAssertEqual(
       err.errorDescription,
-      "Protocol error InvalidParameter (0x201D): write request rejected by device.")
+      "InvalidParameter (0x201D): One or more parameters in the request are invalid.")
   }
 
   func testErrorRecoverySuggestionGenericProtocol() {
     let err = MTPError.protocolError(code: 0x2002, message: nil)
     XCTAssertEqual(
       err.recoverySuggestion,
-      "Retry the operation. If the error persists, reconnect the device.")
+      "Retry the operation. If it persists, reconnect the device.")
   }
 
   func testErrorFailureReasonProtocol201D() {
@@ -679,7 +678,8 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
 
   func testErrorFailureReasonGenericProtocol() {
     let err = MTPError.protocolError(code: 0x2002, message: nil)
-    XCTAssertEqual(err.failureReason, "The device response indicates a protocol error.")
+    XCTAssertEqual(
+      err.failureReason, "The device encountered an internal error it could not classify.")
   }
 
   func testErrorFailureReasonNilForNonProtocol() {

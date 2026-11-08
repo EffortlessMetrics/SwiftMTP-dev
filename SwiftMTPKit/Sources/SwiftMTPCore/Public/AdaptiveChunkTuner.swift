@@ -28,10 +28,10 @@ public actor AdaptiveChunkTuner {
 
   /// Default tier ladder (ascending).
   public static let defaultTiers: [Tier] = [
-    Tier(thresholdBytesPerSec: 0, chunkSize: 512 * 1024),             // 512 KB (baseline)
-    Tier(thresholdBytesPerSec: 10_000_000, chunkSize: 1024 * 1024),   // 1 MB @ >10 MB/s
-    Tier(thresholdBytesPerSec: 20_000_000, chunkSize: 2 * 1024 * 1024), // 2 MB @ >20 MB/s
-    Tier(thresholdBytesPerSec: 40_000_000, chunkSize: 4 * 1024 * 1024), // 4 MB @ >40 MB/s
+    Tier(thresholdBytesPerSec: 0, chunkSize: 512 * 1024),  // 512 KB (baseline)
+    Tier(thresholdBytesPerSec: 10_000_000, chunkSize: 1024 * 1024),  // 1 MB @ >10 MB/s
+    Tier(thresholdBytesPerSec: 20_000_000, chunkSize: 2 * 1024 * 1024),  // 2 MB @ >20 MB/s
+    Tier(thresholdBytesPerSec: 40_000_000, chunkSize: 4 * 1024 * 1024),  // 4 MB @ >40 MB/s
   ]
 
   /// Absolute maximum chunk size regardless of throughput.
@@ -99,9 +99,10 @@ public actor AdaptiveChunkTuner {
       if tier.chunkSize <= start { self.currentTierIndex = i }
     }
 
-    adjustmentLog.append(TuningAdjustment(
-      timestamp: Date(), previousChunkSize: start, newChunkSize: start,
-      throughputBytesPerSec: 0, reason: .initial))
+    adjustmentLog.append(
+      TuningAdjustment(
+        timestamp: Date(), previousChunkSize: start, newChunkSize: start,
+        throughputBytesPerSec: 0, reason: .initial))
   }
 
   // MARK: - Public API
@@ -138,16 +139,18 @@ public actor AdaptiveChunkTuner {
       // Promote
       currentTierIndex = bestTier
       _currentChunkSize = min(tiers[bestTier].chunkSize, Self.maxChunkSize)
-      adjustmentLog.append(TuningAdjustment(
-        timestamp: Date(), previousChunkSize: previous, newChunkSize: _currentChunkSize,
-        throughputBytesPerSec: avgThroughput, reason: .promoted))
+      adjustmentLog.append(
+        TuningAdjustment(
+          timestamp: Date(), previousChunkSize: previous, newChunkSize: _currentChunkSize,
+          throughputBytesPerSec: avgThroughput, reason: .promoted))
     } else if bestTier < currentTierIndex && sampleCount > 3 {
       // Demote only after a few samples to avoid reacting to transient dips.
       currentTierIndex = bestTier
       _currentChunkSize = max(tiers[bestTier].chunkSize, Self.minChunkSize)
-      adjustmentLog.append(TuningAdjustment(
-        timestamp: Date(), previousChunkSize: previous, newChunkSize: _currentChunkSize,
-        throughputBytesPerSec: avgThroughput, reason: .demoted))
+      adjustmentLog.append(
+        TuningAdjustment(
+          timestamp: Date(), previousChunkSize: previous, newChunkSize: _currentChunkSize,
+          throughputBytesPerSec: avgThroughput, reason: .demoted))
     }
 
     return _currentChunkSize
@@ -161,9 +164,10 @@ public actor AdaptiveChunkTuner {
     if currentTierIndex > 0 {
       currentTierIndex -= 1
       _currentChunkSize = max(tiers[currentTierIndex].chunkSize, Self.minChunkSize)
-      adjustmentLog.append(TuningAdjustment(
-        timestamp: Date(), previousChunkSize: previous, newChunkSize: _currentChunkSize,
-        throughputBytesPerSec: averageThroughput, reason: .errorBackoff))
+      adjustmentLog.append(
+        TuningAdjustment(
+          timestamp: Date(), previousChunkSize: previous, newChunkSize: _currentChunkSize,
+          throughputBytesPerSec: averageThroughput, reason: .errorBackoff))
     }
     return _currentChunkSize
   }

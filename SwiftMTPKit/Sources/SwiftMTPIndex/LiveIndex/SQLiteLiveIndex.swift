@@ -716,18 +716,7 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     limit: Int, offset: Int
   ) async throws -> [IndexedObject] {
     let sql: String
-    if let ph = parentHandle {
-      sql =
-        "SELECT * FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0 ORDER BY name LIMIT ? OFFSET ?"
-      return try db.withStatement(sql) { stmt in
-        try db.bind(stmt, 1, deviceId)
-        try db.bind(stmt, 2, Int64(storageId))
-        try db.bind(stmt, 3, Int64(ph))
-        try db.bind(stmt, 4, Int64(limit))
-        try db.bind(stmt, 5, Int64(offset))
-        return try readObjects(stmt)
-      }
-    } else {
+    guard let ph = parentHandle else {
       sql =
         "SELECT * FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0 ORDER BY name LIMIT ? OFFSET ?"
       return try db.withStatement(sql) { stmt in
@@ -737,6 +726,16 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
         try db.bind(stmt, 4, Int64(offset))
         return try readObjects(stmt)
       }
+    }
+    sql =
+      "SELECT * FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0 ORDER BY name LIMIT ? OFFSET ?"
+    return try db.withStatement(sql) { stmt in
+      try db.bind(stmt, 1, deviceId)
+      try db.bind(stmt, 2, Int64(storageId))
+      try db.bind(stmt, 3, Int64(ph))
+      try db.bind(stmt, 4, Int64(limit))
+      try db.bind(stmt, 5, Int64(offset))
+      return try readObjects(stmt)
     }
   }
 
@@ -748,16 +747,7 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?
   ) async throws -> [MTPObjectHandle] {
     let sql: String
-    if let ph = parentHandle {
-      sql =
-        "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
-      return try db.withStatement(sql) { stmt in
-        try db.bind(stmt, 1, deviceId)
-        try db.bind(stmt, 2, Int64(storageId))
-        try db.bind(stmt, 3, Int64(ph))
-        return try readHandles(stmt)
-      }
-    } else {
+    guard let ph = parentHandle else {
       sql =
         "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
       return try db.withStatement(sql) { stmt in
@@ -765,6 +755,14 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
         try db.bind(stmt, 2, Int64(storageId))
         return try readHandles(stmt)
       }
+    }
+    sql =
+      "SELECT handle FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
+    return try db.withStatement(sql) { stmt in
+      try db.bind(stmt, 1, deviceId)
+      try db.bind(stmt, 2, Int64(storageId))
+      try db.bind(stmt, 3, Int64(ph))
+      return try readHandles(stmt)
     }
   }
 
@@ -790,17 +788,7 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
     deviceId: String, storageId: UInt32, parentHandle: MTPObjectHandle?
   ) async throws -> Int {
     let sql: String
-    if let ph = parentHandle {
-      sql =
-        "SELECT COUNT(*) FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
-      return try db.withStatement(sql) { stmt in
-        try db.bind(stmt, 1, deviceId)
-        try db.bind(stmt, 2, Int64(storageId))
-        try db.bind(stmt, 3, Int64(ph))
-        _ = try db.step(stmt)
-        return Int(db.colInt64(stmt, 0) ?? 0)
-      }
-    } else {
+    guard let ph = parentHandle else {
       sql =
         "SELECT COUNT(*) FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle IS NULL AND stale = 0"
       return try db.withStatement(sql) { stmt in
@@ -809,6 +797,15 @@ public final class SQLiteLiveIndex: LiveIndexReader, LiveIndexWriter, @unchecked
         _ = try db.step(stmt)
         return Int(db.colInt64(stmt, 0) ?? 0)
       }
+    }
+    sql =
+      "SELECT COUNT(*) FROM live_objects WHERE deviceId = ? AND storageId = ? AND parentHandle = ? AND stale = 0"
+    return try db.withStatement(sql) { stmt in
+      try db.bind(stmt, 1, deviceId)
+      try db.bind(stmt, 2, Int64(storageId))
+      try db.bind(stmt, 3, Int64(ph))
+      _ = try db.step(stmt)
+      return Int(db.colInt64(stmt, 0) ?? 0)
     }
   }
 

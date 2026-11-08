@@ -29,6 +29,12 @@ final class GooglePixelQuirksTests: XCTestCase {
     googleEntries = db.entries.filter { $0.vid == Self.googleVID }
   }
 
+  override func tearDownWithError() throws {
+    googleEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Vendor ID Consistency
 
   func testAllGoogleEntriesHaveCorrectVID() {

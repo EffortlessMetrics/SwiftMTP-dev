@@ -292,7 +292,8 @@ func claimCandidate(
         var effectiveSetAltRC = setAltRC
         if debug {
           print(
-            String(format: "   [Claim] set_interface_alt_setting(%d) rc=%d", c.altSetting, setAltRC))
+            String(format: "   [Claim] set_interface_alt_setting(%d) rc=%d", c.altSetting, setAltRC)
+          )
         }
         // Some Pixel 7 states reject explicit alt=0 activation even when alt=0 is already active.
         if isPixel && c.altSetting == 0 && setAltRC != LIBUSB_SUCCESS
@@ -322,7 +323,9 @@ func claimCandidate(
             log.error(
               "set_interface_alt_setting failed after retries: rc=\(setAltRC) iface=\(c.ifaceNumber). Possible macOS IOService or exclusive USB claim conflict."
             )
-            throw TransportError.io("set_interface_alt_setting failed: rc=\(setAltRC) on interface \(c.ifaceNumber) — check for competing USB processes")
+            throw TransportError.io(
+              "set_interface_alt_setting failed: rc=\(setAltRC) on interface \(c.ifaceNumber) — check for competing USB processes"
+            )
           }
           continue
         }
@@ -365,7 +368,8 @@ func claimCandidate(
         }
 
         if isPixel && (isPixelDeadPipeError(clearInRC) || isPixelDeadPipeError(clearOutRC)) {
-          log.warning("Pixel dead pipe detected during clear_halt: in=\(clearInRC) out=\(clearOutRC)")
+          log.warning(
+            "Pixel dead pipe detected during clear_halt: in=\(clearInRC) out=\(clearOutRC)")
           if debug {
             print(
               "   [Claim] Pixel clear_halt indicates dead pipe (in=\(clearInRC) out=\(clearOutRC)); releasing interface and retrying"
@@ -373,7 +377,8 @@ func claimCandidate(
           }
           _ = libusb_release_interface(handle, iface)
           if attempt == retryCount {
-            log.error("Pixel endpoint pipe unavailable: clear_halt in=\(clearInRC) out=\(clearOutRC)")
+            log.error(
+              "Pixel endpoint pipe unavailable: clear_halt in=\(clearInRC) out=\(clearOutRC)")
             throw TransportError.io(
               "Pixel endpoint pipe unavailable after claim: clear_halt in=\(clearInRC) out=\(clearOutRC) (macOS IOService unavailable or exclusive USB claim)"
             )

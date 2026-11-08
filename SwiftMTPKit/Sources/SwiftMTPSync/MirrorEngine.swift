@@ -131,7 +131,8 @@ public final class MirrorEngine: Sendable {
               report.downloaded += 1
               await progress?.completeFile(size: fileSize)
             } catch {
-              log.error("Failed to download conflicted file \(file.pathKey): \(error.localizedDescription)")
+              log.error(
+                "Failed to download conflicted file \(file.pathKey): \(error.localizedDescription)")
               report.failed += 1
               await progress?.failFile()
             }
@@ -142,7 +143,8 @@ public final class MirrorEngine: Sendable {
               report.downloaded += 1
               await progress?.completeFile(size: fileSize)
             } catch {
-              log.error("Failed to download conflicted file \(file.pathKey): \(error.localizedDescription)")
+              log.error(
+                "Failed to download conflicted file \(file.pathKey): \(error.localizedDescription)")
               report.failed += 1
               await progress?.failFile()
             }
@@ -446,7 +448,8 @@ public final class MirrorEngine: Sendable {
         log.info("Conflict on \(conflict.pathKey): ask → user chose \(outcome.rawValue)")
       } else {
         outcome = .pending
-        log.warning("Conflict on \(conflict.pathKey): ask strategy but no resolver — marking pending")
+        log.warning(
+          "Conflict on \(conflict.pathKey): ask strategy but no resolver — marking pending")
       }
     }
 

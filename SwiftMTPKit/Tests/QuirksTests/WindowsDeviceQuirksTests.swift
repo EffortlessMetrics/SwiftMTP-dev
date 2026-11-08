@@ -27,6 +27,12 @@ final class MicrosoftDeviceQuirksTests: XCTestCase {
     microsoftEntries = db.entries.filter { $0.vid == Self.microsoftVID }
   }
 
+  override func tearDownWithError() throws {
+    microsoftEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Vendor Presence
 
   func testMicrosoftEntriesExist() {
@@ -188,6 +194,12 @@ final class DellDeviceQuirksTests: XCTestCase {
     dellEntries = db.entries.filter { $0.vid == Self.dellVID }
   }
 
+  override func tearDownWithError() throws {
+    dellEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Vendor Presence
 
   func testDellEntriesExist() {
@@ -323,6 +335,12 @@ final class FujitsuDeviceQuirksTests: XCTestCase {
   override func setUpWithError() throws {
     db = try QuirkDatabase.load()
     fujitsuEntries = db.entries.filter { $0.vid == Self.fujitsuVID }
+  }
+
+  override func tearDownWithError() throws {
+    fujitsuEntries = nil
+    db = nil
+    try super.tearDownWithError()
   }
 
   // MARK: - Vendor Presence
@@ -490,6 +508,14 @@ final class NicheDeviceQuirksTests: XCTestCase {
     insigniaEntries = db.entries.filter { $0.vid == Self.insigniaVID }
     jvcEntries = db.entries.filter { $0.vid == Self.jvcVID }
     siriusEntries = db.entries.filter { $0.vid == Self.siriusVID }
+  }
+
+  override func tearDownWithError() throws {
+    insigniaEntries = nil
+    jvcEntries = nil
+    siriusEntries = nil
+    db = nil
+    try super.tearDownWithError()
   }
 
   // MARK: - Insignia: UNLOAD_DRIVER

@@ -19,6 +19,12 @@ final class SamsungQuirksTests: XCTestCase {
     samsungEntries = db.entries.filter { $0.vid == Self.samsungVID }
   }
 
+  override func tearDownWithError() throws {
+    samsungEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Vendor ID Consistency
 
   func testAllSamsungEntriesHaveCorrectVID() {

@@ -157,7 +157,9 @@ final class PropertyCodeRoundtripPropertyTests: XCTestCase {
         let dataType = MTPObjectPropCode.dataType(for: code)
         // Valid data types: UInt8=0x0002, UInt16=0x0004, UInt32=0x0006,
         // UInt64=0x0008, UInt128=0x000A, String=0xFFFF, Array=0x4004, ByteArray=0x4002
-        let validTypes: Set<UInt16> = [0x0002, 0x0004, 0x0006, 0x0008, 0x000A, 0xFFFF, 0x4004, 0x4002]
+        let validTypes: Set<UInt16> = [
+          0x0002, 0x0004, 0x0006, 0x0008, 0x000A, 0xFFFF, 0x4004, 0x4002,
+        ]
         return validTypes.contains(dataType)
       }
   }
@@ -309,7 +311,8 @@ final class ResponseCodeRoundtripPropertyTests: XCTestCase {
     ]
     for code in knownCodes {
       let message = PTPResponseCode.userMessage(for: code)
-      XCTAssertFalse(message.isEmpty, "userMessage for 0x\(String(format: "%04x", code)) should be non-empty")
+      XCTAssertFalse(
+        message.isEmpty, "userMessage for 0x\(String(format: "%04x", code)) should be non-empty")
     }
   }
 }
@@ -334,7 +337,8 @@ final class HandleValidationPropertyTests: XCTestCase {
     for op in operations {
       XCTAssertThrowsError(try validateHandle(0, operation: op)) { error in
         guard let mtpError = error as? MTPError,
-              case .preconditionFailed(let msg) = mtpError else {
+          case .preconditionFailed(let msg) = mtpError
+        else {
           XCTFail("Expected preconditionFailed for \(op), got \(error)")
           return
         }
@@ -407,7 +411,8 @@ final class TransactionIDMonotonicityPropertyTests: XCTestCase {
         let written = container.encode(into: &buf)
         guard written >= 12 else { return false }
         // txid is at offset 8 in a PTP container (little-endian)
-        let decoded = UInt32(buf[8])
+        let decoded =
+          UInt32(buf[8])
           | (UInt32(buf[9]) << 8)
           | (UInt32(buf[10]) << 16)
           | (UInt32(buf[11]) << 24)

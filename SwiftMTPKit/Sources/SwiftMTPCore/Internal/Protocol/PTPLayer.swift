@@ -93,16 +93,16 @@ public enum MTPObjectPropCode {
     switch code {
     // UInt16 properties
     case objectFormat, protectionStatus, associationType, hidden, systemObject,
-         numberOfChannels, rating, track, effectiveRating, metaGenre,
-         representativeSampleFormat:
+      numberOfChannels, rating, track, effectiveRating, metaGenre,
+      representativeSampleFormat:
       return 0x0004
     // UInt32 properties
     case storageID, associationDesc, parentObject, duration, useCount,
-         representativeSampleSize, representativeSampleHeight,
-         representativeSampleWidth, representativeSampleDuration,
-         width, height, dpi, fourCCCodec, videoBitRate,
-         sampleRate, audioBitDepth, audioBitRate, audioBlockAlignment,
-         audioDuration, audioWAVECodec:
+      representativeSampleSize, representativeSampleHeight,
+      representativeSampleWidth, representativeSampleDuration,
+      width, height, dpi, fourCCCodec, videoBitRate,
+      sampleRate, audioBitDepth, audioBitRate, audioBlockAlignment,
+      audioDuration, audioWAVECodec:
       return 0x0006
     // UInt64 properties
     case objectSize:
@@ -112,9 +112,9 @@ public enum MTPObjectPropCode {
       return 0x000A
     // String properties (including date-strings)
     case objectFileName, dateCreated, dateModified, keywords, syncID, name,
-         createdBy, artist, dateAuthored, objectDescription, urlReference,
-         languageLocale, copyrightInformation, source, originLocation,
-         dateAdded, producerSerialNumber, genre, albumName, albumArtist:
+      createdBy, artist, dateAuthored, objectDescription, urlReference,
+      languageLocale, copyrightInformation, source, originLocation,
+      dateAdded, producerSerialNumber, genre, albumName, albumArtist:
       return 0xFFFF
     // UInt8 properties
     case nonConsumable, corruptOrUnplayable:
@@ -253,7 +253,8 @@ public struct MTPPropListEntry: Sendable, Equatable {
   public static func string(
     handle: MTPObjectHandle, propCode: UInt16, value: String
   ) -> MTPPropListEntry {
-    MTPPropListEntry(handle: handle, propCode: propCode, datatype: 0xFFFF, value: PTPString.encode(value))
+    MTPPropListEntry(
+      handle: handle, propCode: propCode, datatype: 0xFFFF, value: PTPString.encode(value))
   }
 
   /// Convenience: create a UInt32 property entry.
@@ -262,7 +263,8 @@ public struct MTPPropListEntry: Sendable, Equatable {
   ) -> MTPPropListEntry {
     var enc = MTPDataEncoder()
     enc.append(value)
-    return MTPPropListEntry(handle: handle, propCode: propCode, datatype: 0x0006, value: enc.encodedData)
+    return MTPPropListEntry(
+      handle: handle, propCode: propCode, datatype: 0x0006, value: enc.encodedData)
   }
 
   /// Convenience: create a UInt16 property entry.
@@ -271,7 +273,8 @@ public struct MTPPropListEntry: Sendable, Equatable {
   ) -> MTPPropListEntry {
     var enc = MTPDataEncoder()
     enc.append(value)
-    return MTPPropListEntry(handle: handle, propCode: propCode, datatype: 0x0004, value: enc.encodedData)
+    return MTPPropListEntry(
+      handle: handle, propCode: propCode, datatype: 0x0004, value: enc.encodedData)
   }
 
   /// Encode this entry into a data buffer (MTP wire format).

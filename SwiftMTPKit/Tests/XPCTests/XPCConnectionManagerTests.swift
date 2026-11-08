@@ -206,8 +206,14 @@ final class XPCConnectionManagerTests: XCTestCase {
     try await Task.sleep(nanoseconds: 50_000_000)
 
     // Fill the queue by launching tasks that will suspend.
-    let task1 = Task { try await manager.service(); () }
-    let task2 = Task { try await manager.service(); () }
+    let task1 = Task {
+      try await manager.service()
+      ()
+    }
+    let task2 = Task {
+      try await manager.service()
+      ()
+    }
     try await Task.sleep(nanoseconds: 50_000_000)
 
     // Third request should fail with queueFull.
@@ -243,7 +249,10 @@ final class XPCConnectionManagerTests: XCTestCase {
     conn.simulateInterruption()
     try await Task.sleep(nanoseconds: 50_000_000)
 
-    let task1 = Task { try await manager.service(); () }
+    let task1 = Task {
+      try await manager.service()
+      ()
+    }
     try await Task.sleep(nanoseconds: 50_000_000)
 
     let count = await manager.pendingOperationCount

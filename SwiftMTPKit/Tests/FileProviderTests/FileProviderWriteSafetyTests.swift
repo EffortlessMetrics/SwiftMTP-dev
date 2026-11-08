@@ -82,7 +82,9 @@ private final class WriteSafetyStubXPC: NSObject, MTPXPCService {
     r(CrawlTriggerResponse(accepted: false))
   }
 
-  func deviceStatus(_ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void) {
+  func deviceStatus(
+    _ req: DeviceStatusRequest, withReply r: @escaping (DeviceStatusResponse) -> Void
+  ) {
     r(DeviceStatusResponse(connected: true, sessionOpen: true))
   }
 
@@ -94,7 +96,8 @@ private final class WriteSafetyStubXPC: NSObject, MTPXPCService {
 // MARK: - Helpers
 
 private func wsMakeDomain(_ id: String = "ws-test") -> NSFileProviderDomain {
-  NSFileProviderDomain(identifier: NSFileProviderDomainIdentifier(id), displayName: "WriteSafetyTest")
+  NSFileProviderDomain(
+    identifier: NSFileProviderDomainIdentifier(id), displayName: "WriteSafetyTest")
 }
 
 private func wsMakeTempFile(name: String = "ws-test.txt", content: String = "write-safety") -> URL {
@@ -253,7 +256,8 @@ final class FileProviderModifyWriteSafetyTests: XCTestCase {
 
     let exp = expectation(description: "modify fails on delete")
     _ = ext.modifyItem(
-      item, baseVersion: NSFileProviderItemVersion(
+      item,
+      baseVersion: NSFileProviderItemVersion(
         contentVersion: "v1".data(using: .utf8)!,
         metadataVersion: "v1".data(using: .utf8)!),
       changedFields: .contents, contents: sourceURL,
@@ -289,7 +293,8 @@ final class FileProviderModifyWriteSafetyTests: XCTestCase {
 
     let exp = expectation(description: "modify write fails")
     _ = ext.modifyItem(
-      item, baseVersion: NSFileProviderItemVersion(
+      item,
+      baseVersion: NSFileProviderItemVersion(
         contentVersion: "v1".data(using: .utf8)!,
         metadataVersion: "v1".data(using: .utf8)!),
       changedFields: .contents, contents: sourceURL,
@@ -319,7 +324,8 @@ final class FileProviderModifyWriteSafetyTests: XCTestCase {
 
     let exp = expectation(description: "modify noop")
     _ = ext.modifyItem(
-      item, baseVersion: NSFileProviderItemVersion(
+      item,
+      baseVersion: NSFileProviderItemVersion(
         contentVersion: "v1".data(using: .utf8)!,
         metadataVersion: "v1".data(using: .utf8)!),
       changedFields: [], contents: nil,
@@ -352,7 +358,8 @@ final class FileProviderModifyWriteSafetyTests: XCTestCase {
 
     let exp = expectation(description: "modify bad id")
     _ = ext.modifyItem(
-      item, baseVersion: NSFileProviderItemVersion(
+      item,
+      baseVersion: NSFileProviderItemVersion(
         contentVersion: "v1".data(using: .utf8)!,
         metadataVersion: "v1".data(using: .utf8)!),
       changedFields: .contents, contents: nil,
@@ -828,7 +835,8 @@ final class FileProviderRenameMoveSafetyTests: XCTestCase {
 
     let exp = expectation(description: "rename fails")
     _ = ext.modifyItem(
-      item, baseVersion: NSFileProviderItemVersion(
+      item,
+      baseVersion: NSFileProviderItemVersion(
         contentVersion: "v1".data(using: .utf8)!,
         metadataVersion: "v1".data(using: .utf8)!),
       changedFields: .filename, contents: nil,
@@ -860,7 +868,8 @@ final class FileProviderRenameMoveSafetyTests: XCTestCase {
 
     let exp = expectation(description: "move fails")
     _ = ext.modifyItem(
-      item, baseVersion: NSFileProviderItemVersion(
+      item,
+      baseVersion: NSFileProviderItemVersion(
         contentVersion: "v1".data(using: .utf8)!,
         metadataVersion: "v1".data(using: .utf8)!),
       changedFields: .parentItemIdentifier, contents: nil,

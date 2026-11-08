@@ -390,7 +390,9 @@ final class DeviceServiceCoverageTests: XCTestCase {
 
       func move(_ handle: MTPObjectHandle, to newParent: MTPObjectHandle?) async throws {}
 
-      func copyObject(handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?) async throws -> MTPObjectHandle { 0 }
+      func copyObject(
+        handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?
+      ) async throws -> MTPObjectHandle { 0 }
 
       func getThumbnail(handle: MTPObjectHandle) async throws -> Data {
         throw MTPError.objectNotFound

@@ -23,6 +23,13 @@ final class LegacyMediaPlayerQuirksTests: XCTestCase {
     creativeEntries = db.entries.filter { $0.vid == Self.creativeVID }
   }
 
+  override func tearDownWithError() throws {
+    sandiskEntries = nil
+    creativeEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Vendor ID Consistency
 
   func testAllSanDiskEntriesHaveCorrectVID() {

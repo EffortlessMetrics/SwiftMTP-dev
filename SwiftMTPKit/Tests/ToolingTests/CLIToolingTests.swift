@@ -766,7 +766,7 @@ final class InfoCommandTests: XCTestCase {
       name: "photo.png",
       sizeBytes: 1_234_567,
       modified: Date(timeIntervalSince1970: 1_705_326_622),
-      formatCode: 0x3808,
+      formatCode: 0x380B,
       properties: [MTPObjectPropCode.width: "1920", MTPObjectPropCode.height: "1080"]
     )
     // Should not crash when printing JSON
@@ -781,7 +781,7 @@ final class InfoCommandTests: XCTestCase {
       name: "video.mp4",
       sizeBytes: 50_000_000,
       modified: Date(timeIntervalSince1970: 1_705_326_622),
-      formatCode: 0xB802,
+      formatCode: 0xB982,
       properties: [:]
     )
     let line = InfoCommand.formatDetailLine(obj)

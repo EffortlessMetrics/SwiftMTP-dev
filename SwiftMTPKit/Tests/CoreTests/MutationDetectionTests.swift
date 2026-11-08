@@ -336,7 +336,7 @@ final class MutationDetectionTests: XCTestCase {
   }
 
   func testObjectFormatMP4() {
-    XCTAssertEqual(PTPObjectFormat.forFilename("video.mp4"), 0x300B)
+    XCTAssertEqual(PTPObjectFormat.forFilename("video.mp4"), 0xB982)
   }
 
   func testObjectFormatMP3() {

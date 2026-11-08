@@ -482,23 +482,27 @@ final class GovernanceLevelTests: XCTestCase {
 final class DatabaseGovernanceQueryTests: XCTestCase {
 
   func testTestedDevicesReturnsOnlyPromoted() {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted),
-      DeviceQuirk(id: "b", vid: 2, pid: 2, status: .verified),
-      DeviceQuirk(id: "c", vid: 3, pid: 3, status: .proposed),
-      DeviceQuirk(id: "d", vid: 4, pid: 4),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted),
+        DeviceQuirk(id: "b", vid: 2, pid: 2, status: .verified),
+        DeviceQuirk(id: "c", vid: 3, pid: 3, status: .proposed),
+        DeviceQuirk(id: "d", vid: 4, pid: 4),
+      ])
     let tested = db.testedDevices()
     XCTAssertEqual(tested.count, 1)
     XCTAssertEqual(tested.first?.id, "a")
   }
 
   func testResearchEntriesExcludesPromoted() {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted),
-      DeviceQuirk(id: "b", vid: 2, pid: 2, status: .verified),
-      DeviceQuirk(id: "c", vid: 3, pid: 3, status: .proposed),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted),
+        DeviceQuirk(id: "b", vid: 2, pid: 2, status: .verified),
+        DeviceQuirk(id: "c", vid: 3, pid: 3, status: .proposed),
+      ])
     let research = db.researchEntries()
     XCTAssertEqual(research.count, 2)
     XCTAssertTrue(research.contains(where: { $0.id == "b" }))
@@ -506,30 +510,36 @@ final class DatabaseGovernanceQueryTests: XCTestCase {
   }
 
   func testGovernanceSummaryCountsLevels() {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted),
-      DeviceQuirk(id: "b", vid: 2, pid: 2, status: .promoted),
-      DeviceQuirk(id: "c", vid: 3, pid: 3, status: .proposed),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted),
+        DeviceQuirk(id: "b", vid: 2, pid: 2, status: .promoted),
+        DeviceQuirk(id: "c", vid: 3, pid: 3, status: .proposed),
+      ])
     let summary = db.governanceSummary()
     XCTAssertEqual(summary[.promoted], 2)
     XCTAssertEqual(summary[.research], 1)
   }
 
   func testValidateGovernancePassesForValidDatabase() {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted, evidenceRequired: ["probe_log"]),
-      DeviceQuirk(id: "b", vid: 2, pid: 2, status: .proposed),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(id: "a", vid: 1, pid: 1, status: .promoted, evidenceRequired: ["probe_log"]),
+        DeviceQuirk(id: "b", vid: 2, pid: 2, status: .proposed),
+      ])
     let result = db.validateGovernance()
     XCTAssertTrue(result.isValid)
     XCTAssertTrue(result.violations.isEmpty)
   }
 
   func testValidateGovernanceFailsWhenPromotedMissingEvidence() {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "bad", vid: 1, pid: 1, status: .promoted),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(id: "bad", vid: 1, pid: 1, status: .promoted)
+      ])
     let result = db.validateGovernance()
     XCTAssertFalse(result.isValid)
     XCTAssertEqual(result.violations.count, 1)
@@ -537,9 +547,11 @@ final class DatabaseGovernanceQueryTests: XCTestCase {
   }
 
   func testValidateGovernanceFailsWhenPromotedHasEmptyEvidence() {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "empty-ev", vid: 1, pid: 1, status: .promoted, evidenceRequired: []),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(id: "empty-ev", vid: 1, pid: 1, status: .promoted, evidenceRequired: [])
+      ])
     let result = db.validateGovernance()
     XCTAssertFalse(result.isValid)
   }
@@ -579,10 +591,12 @@ final class QuirksGovernanceTightenedTests: XCTestCase {
   }
 
   func testDuplicateVIDPIDCaughtByGovernance() {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "dup-a", vid: 0x1234, pid: 0x5678, status: .proposed),
-      DeviceQuirk(id: "dup-b", vid: 0x1234, pid: 0x5678, status: .proposed),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(id: "dup-a", vid: 0x1234, pid: 0x5678, status: .proposed),
+        DeviceQuirk(id: "dup-b", vid: 0x1234, pid: 0x5678, status: .proposed),
+      ])
     let result = db.validateGovernance()
     XCTAssertFalse(result.isValid)
     XCTAssertTrue(result.violations.contains(where: { $0.contains("Duplicate VID:PID") }))
@@ -634,14 +648,17 @@ final class QuirksGovernanceTightenedTests: XCTestCase {
   // MARK: Governance catches multiple violation types at once
 
   func testGovernanceCatchesMultipleViolations() {
-    let db = QuirkDatabase(schemaVersion: "1.0", entries: [
-      DeviceQuirk(id: "bad-promoted", vid: 1, pid: 1, status: .promoted),
-      DeviceQuirk(id: "dup-1", vid: 0xAAAA, pid: 0xBBBB, status: .proposed),
-      DeviceQuirk(id: "dup-2", vid: 0xAAAA, pid: 0xBBBB, status: .proposed),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "1.0",
+      entries: [
+        DeviceQuirk(id: "bad-promoted", vid: 1, pid: 1, status: .promoted),
+        DeviceQuirk(id: "dup-1", vid: 0xAAAA, pid: 0xBBBB, status: .proposed),
+        DeviceQuirk(id: "dup-2", vid: 0xAAAA, pid: 0xBBBB, status: .proposed),
+      ])
     let result = db.validateGovernance()
     XCTAssertFalse(result.isValid)
-    XCTAssertTrue(result.violations.count >= 2, "Expected at least 2 violations, got \(result.violations)")
+    XCTAssertTrue(
+      result.violations.count >= 2, "Expected at least 2 violations, got \(result.violations)")
     XCTAssertTrue(result.violations.contains(where: { $0.contains("evidenceRequired") }))
     XCTAssertTrue(result.violations.contains(where: { $0.contains("Duplicate VID:PID") }))
   }

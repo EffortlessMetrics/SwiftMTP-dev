@@ -138,7 +138,8 @@ struct WALCheckpointTests {
       try await idx.upsertObjects([makeObj(handle: i, name: "a\(i).txt")], deviceId: "dev")
     }
     try db.exec("PRAGMA wal_checkpoint(TRUNCATE);")
-    let sizeAfterFirst = (try? FileManager.default.attributesOfItem(atPath: walPath))?[.size]
+    let sizeAfterFirst =
+      (try? FileManager.default.attributesOfItem(atPath: walPath))?[.size]
       as? UInt64 ?? 0
 
     // Write 100 more, checkpoint again
@@ -146,7 +147,8 @@ struct WALCheckpointTests {
       try await idx.upsertObjects([makeObj(handle: i, name: "b\(i).txt")], deviceId: "dev")
     }
     try db.exec("PRAGMA wal_checkpoint(TRUNCATE);")
-    let sizeAfterSecond = (try? FileManager.default.attributesOfItem(atPath: walPath))?[.size]
+    let sizeAfterSecond =
+      (try? FileManager.default.attributesOfItem(atPath: walPath))?[.size]
       as? UInt64 ?? 0
 
     // Both should be truncated (0 bytes)
@@ -236,7 +238,8 @@ struct WALConcurrencyTests {
     let (items, _) = try await (readResult, writeResult)
 
     // Reader should see either the pre-write or post-write state, never partial
-    #expect(items.count == 20 || items.count == 40,
+    #expect(
+      items.count == 20 || items.count == 40,
       "Reader saw \(items.count) objects — expected 20 or 40 (never partial)")
   }
 }
@@ -274,9 +277,10 @@ struct WALRecoveryTests {
     for cycle in 0..<10 {
       let idx = try SQLiteLiveIndex(path: path)
       let base = UInt32(cycle * 5)
-      let objs = (base..<(base + 5)).map {
-        makeObj(handle: $0, name: "cyc\(cycle)_\($0).txt")
-      }
+      let objs = (base..<(base + 5))
+        .map {
+          makeObj(handle: $0, name: "cyc\(cycle)_\($0).txt")
+        }
       try await idx.upsertObjects(objs, deviceId: "dev")
     }
 
@@ -312,7 +316,8 @@ struct WALRecoveryTests {
     let idx2 = try SQLiteLiveIndex(path: path)
     let objects = try await idx2.children(
       deviceId: "dev", storageId: 0x10001, parentHandle: nil)
-    #expect(objects.count == 10,
+    #expect(
+      objects.count == 10,
       "Expected 10 objects after WAL recovery, walExisted=\(walExisted)")
   }
 }

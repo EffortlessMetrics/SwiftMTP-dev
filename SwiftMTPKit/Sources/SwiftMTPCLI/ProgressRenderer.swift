@@ -76,10 +76,9 @@ public struct ProgressRenderer: Sendable {
     let m = (totalSeconds % 3600) / 60
     let s = totalSeconds % 60
 
-    if h > 0 {
-      return String(format: "%d:%02d:%02d", h, m, s)
-    } else {
+    guard h > 0 else {
       return String(format: "%d:%02d", m, s)
     }
+    return String(format: "%d:%02d:%02d", h, m, s)
   }
 }

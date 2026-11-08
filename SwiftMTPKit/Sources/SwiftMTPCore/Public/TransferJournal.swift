@@ -47,7 +47,9 @@ extension TransferJournal {
   /// Default no-op so existing journal implementations don't need to change.
   public func addContentHash(id: String, hash: String) async throws {}
   /// Default no-op so existing journal implementations don't need to change.
-  public func recordConflictResolution(pathKey: String, strategy: String, outcome: String) async throws {}
+  public func recordConflictResolution(pathKey: String, strategy: String, outcome: String)
+    async throws
+  {}
 }
 
 /// Snapshot of a single transfer's state, used for resume and progress tracking.

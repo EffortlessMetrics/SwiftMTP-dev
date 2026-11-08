@@ -22,8 +22,8 @@ final class CoreSupplementalCoverageTests: XCTestCase {
 
   func testMTPExtensionOpcodesAndPTPOpAliases() {
     XCTAssertEqual(MTPOp.getObjectPropList.rawValue, 0x9805)
-    XCTAssertEqual(MTPOp.getPartialObject64.rawValue, 0x95C4)
-    XCTAssertEqual(MTPOp.sendPartialObject.rawValue, 0x95C1)
+    XCTAssertEqual(MTPOp.getPartialObject64.rawValue, 0x95C1)
+    XCTAssertEqual(MTPOp.sendPartialObject.rawValue, 0x95C2)
     XCTAssertEqual(MTPOp.getObjectPropDesc.rawValue, 0x9802)
     XCTAssertEqual(MTPOp.getObjectPropValue.rawValue, 0x9803)
     XCTAssertEqual(MTPOp.setObjectPropValue.rawValue, 0x9804)

@@ -347,7 +347,7 @@ final class RecoveryLadderE2ETests: XCTestCase {
           }
           return "recovered"
         }
-      },
+      }
     ]
 
     let result = try await FallbackLadder.execute(ladder)
@@ -485,15 +485,16 @@ final class RecoveryLadderE2ETests: XCTestCase {
     try await link.openSession(id: 1)
 
     // Pre-build 5 independent ladders with per-task counters
-    let ladders: [[FallbackRung<[MTPStorageID]>]] = (0..<5).map { _ in
-      let counter = CallCounter()
-      return self.buildLadder(link: link) {
-        if counter.increment() <= 1 {
-          throw MTPError.transport(.stall)
+    let ladders: [[FallbackRung<[MTPStorageID]>]] = (0..<5)
+      .map { _ in
+        let counter = CallCounter()
+        return self.buildLadder(link: link) {
+          if counter.increment() <= 1 {
+            throw MTPError.transport(.stall)
+          }
+          return try await link.getStorageIDs()
         }
-        return try await link.getStorageIDs()
       }
-    }
 
     try await withThrowingTaskGroup(of: FallbackResult<[MTPStorageID]>.self) { group in
       for ladder in ladders {
@@ -524,7 +525,7 @@ final class RecoveryLadderE2ETests: XCTestCase {
       // Task 1: succeeds immediately (rung 1)
       group.addTask {
         let ladder: [FallbackRung<String>] = [
-          FallbackRung(name: "retry") { "immediate" },
+          FallbackRung(name: "retry") { "immediate" }
         ]
         let result = try await FallbackLadder.execute(ladder)
         outcomes.append(result.winningRung)
@@ -634,7 +635,7 @@ final class RecoveryLadderE2ETests: XCTestCase {
 
   func testEdge_SingleRungSuccess() async throws {
     let ladder: [FallbackRung<Int>] = [
-      FallbackRung(name: "only") { 42 },
+      FallbackRung(name: "only") { 42 }
     ]
 
     let result = try await FallbackLadder.execute(ladder)
@@ -645,7 +646,7 @@ final class RecoveryLadderE2ETests: XCTestCase {
 
   func testEdge_SingleRungFailure() async throws {
     let ladder: [FallbackRung<Int>] = [
-      FallbackRung(name: "only") { throw MTPError.timeout },
+      FallbackRung(name: "only") { throw MTPError.timeout }
     ]
 
     do {
@@ -681,7 +682,7 @@ final class RecoveryLadderE2ETests: XCTestCase {
   func testFaultInjection_TimeoutOnGetStorageIDs() async throws {
     let inner = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
-      .timeoutOnce(on: .getStorageIDs),
+      .timeoutOnce(on: .getStorageIDs)
     ])
     let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
     try await faultyLink.openSession(id: 1)
@@ -704,7 +705,7 @@ final class RecoveryLadderE2ETests: XCTestCase {
   func testFaultInjection_PipeStallThenRecovery() async throws {
     let inner = VirtualMTPLink(config: .pixel7)
     let schedule = FaultSchedule([
-      .pipeStall(on: .getObjectHandles),
+      .pipeStall(on: .getObjectHandles)
     ])
     let faultyLink = FaultInjectingLink(wrapping: inner, schedule: schedule)
     try await faultyLink.openSession(id: 1)

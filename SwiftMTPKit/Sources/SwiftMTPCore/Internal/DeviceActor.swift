@@ -637,7 +637,8 @@ public actor MTPDeviceActor: MTPDevice, @unchecked Sendable {
         receipt.sessionEstablishment = sessionResult
         throw error
       }
-      MTPLog.session.warning("OpenSession failed (\(error, privacy: .public)), applying quirk reset+reopen ladder...")
+      MTPLog.session.warning(
+        "OpenSession failed (\(error, privacy: .public)), applying quirk reset+reopen ladder...")
       sessionResult.requiredRetry = true
       sessionResult.recoveryAction = "reset-reopen"
 

@@ -85,7 +85,9 @@ public protocol MTPLink: Sendable {
   func deleteObject(handle: MTPObjectHandle) async throws
   func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?)
     async throws
-  func copyObject(handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?)
+  func copyObject(
+    handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
+  )
     async throws -> MTPObjectHandle
 
   func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult
@@ -245,10 +247,12 @@ public extension MTPLink {
   /// Default: execute SetObjectPropValue via executeStreamingCommand.
   func setObjectPropValue(handle: MTPObjectHandle, property: UInt16, value: Data) async throws {
     guard handle != 0 else {
-      throw MTPError.preconditionFailed("SetObjectPropValue requires a valid object handle (got 0).")
+      throw MTPError.preconditionFailed(
+        "SetObjectPropValue requires a valid object handle (got 0).")
     }
     guard !value.isEmpty else {
-      throw MTPError.preconditionFailed("SetObjectPropValue requires non-empty property value data.")
+      throw MTPError.preconditionFailed(
+        "SetObjectPropValue requires non-empty property value data.")
     }
     let command = PTPContainer(
       type: PTPContainer.Kind.command.rawValue,

@@ -174,7 +174,7 @@ final class ObjectPropAPITests: XCTestCase {
   func testPTPLayerSetObjectPropListHelper() async throws {
     let link = makeLinkWithSamplePhoto()
     let entries: [MTPPropListEntry] = [
-      .string(handle: 0x0003, propCode: MTPObjectPropCode.objectFileName, value: "VIA_PTPLAYER.JPG"),
+      .string(handle: 0x0003, propCode: MTPObjectPropCode.objectFileName, value: "VIA_PTPLAYER.JPG")
     ]
     let count = try await PTPLayer.setObjectPropList(entries: entries, on: link)
     XCTAssertEqual(count, 1)

@@ -38,6 +38,13 @@ final class HuaweiQuirksTests: XCTestCase {
     honorEntries = huaweiEntries.filter { $0.id.hasPrefix("honor-") }
   }
 
+  override func tearDownWithError() throws {
+    huaweiEntries = nil
+    honorEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Entry Existence
 
   func testHuaweiEntriesExist() {

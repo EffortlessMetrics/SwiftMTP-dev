@@ -212,16 +212,19 @@ final class XPCErrorCascadeTests: XCTestCase {
     let badId = "nonexistent-device"
 
     // Write
-    let writeResp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
+    let writeResp = await withCheckedContinuation {
+      (c: CheckedContinuation<WriteResponse, Never>) in
       svc.impl.writeObject(
-        WriteRequest(deviceId: badId, storageId: 1, parentHandle: nil, name: "f", size: 0, bookmark: nil)
+        WriteRequest(
+          deviceId: badId, storageId: 1, parentHandle: nil, name: "f", size: 0, bookmark: nil)
       ) { c.resume(returning: $0) }
     }
     XCTAssertFalse(writeResp.success)
     XCTAssertNotNil(writeResp.errorMessage)
 
     // Delete
-    let deleteResp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
+    let deleteResp = await withCheckedContinuation {
+      (c: CheckedContinuation<WriteResponse, Never>) in
       svc.impl.deleteObject(DeleteRequest(deviceId: badId, objectHandle: 1)) {
         c.resume(returning: $0)
       }
@@ -230,7 +233,8 @@ final class XPCErrorCascadeTests: XCTestCase {
     XCTAssertNotNil(deleteResp.errorMessage)
 
     // CreateFolder
-    let folderResp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
+    let folderResp = await withCheckedContinuation {
+      (c: CheckedContinuation<WriteResponse, Never>) in
       svc.impl.createFolder(
         CreateFolderRequest(deviceId: badId, storageId: 1, parentHandle: nil, name: "d")
       ) { c.resume(returning: $0) }
@@ -239,7 +243,8 @@ final class XPCErrorCascadeTests: XCTestCase {
     XCTAssertNotNil(folderResp.errorMessage)
 
     // Rename
-    let renameResp = await withCheckedContinuation { (c: CheckedContinuation<WriteResponse, Never>) in
+    let renameResp = await withCheckedContinuation {
+      (c: CheckedContinuation<WriteResponse, Never>) in
       svc.impl.renameObject(
         RenameRequest(deviceId: badId, objectHandle: 1, newName: "x")
       ) { c.resume(returning: $0) }

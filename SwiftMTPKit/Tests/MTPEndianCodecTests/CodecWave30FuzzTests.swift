@@ -690,7 +690,7 @@ struct PTPObjectFormatTests {
     #expect(PTPObjectFormat.forFilename("photo.jpeg") == 0x3801)
     #expect(PTPObjectFormat.forFilename("image.png") == 0x380b)
     #expect(PTPObjectFormat.forFilename("notes.txt") == 0x3004)
-    #expect(PTPObjectFormat.forFilename("video.mp4") == 0x300b)
+    #expect(PTPObjectFormat.forFilename("video.mp4") == 0xb982)
     #expect(PTPObjectFormat.forFilename("song.mp3") == 0x3009)
     #expect(PTPObjectFormat.forFilename("audio.aac") == 0xb903)
   }

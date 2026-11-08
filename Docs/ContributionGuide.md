@@ -306,6 +306,32 @@ Shell completions for the `swiftmtp` CLI are in the `completions/` directory:
 
 **`ci.yml` is the only required check for merging.** Device submission PRs also require `validate-submission.yml`.
 
+The full-suite step keeps its existing command, test selection and 60% coverage
+threshold. Its 75-minute step deadline sits inside the unchanged 90-minute job;
+an always-run upload has a five-minute limit and retains `full-suite-diagnostics`
+for seven days. Upload is best effort: earlier setup has no separate deadline,
+and a whole-job timeout or runner loss can still prevent retention.
+
+The artifact includes partial suite/coverage logs and a resource watcher that
+writes outside the suite's stdout pipeline. Every 30 seconds it records only
+the suite shell's descendants (PID, parent/group IDs, RSS, CPU, state, elapsed
+time and executable names, never full command arguments), plus log sizes. It
+excludes its own diagnostic processes. Only after an XCTest host and test-start
+output are seen does 120 seconds without log growth arm one bounded batch of
+up to four two-second macOS `sample` captures. Each command has a hard timeout;
+process identity and ancestry are rechecked before and after capture. Missing
+tools, changed identities and capture errors are diagnostic limits, not test
+success. The watcher never signals test processes, and its status cannot replace
+the suite/tee result. A stop marker and wait clean up the watcher on shell exit;
+if writing the marker fails, the original status is preserved and the watcher
+stops on parent loss instead. An in-flight diagnostic command may finish its
+bounded timeout before that cleanup completes.
+
+Run the portable watcher, workflow-order and shell-lifecycle fixtures with
+`python3 -m unittest discover -s scripts -p test_ci_diagnostics.py -v`.
+These fixtures do not establish native macOS sampling or Swift test success;
+the hosted artifact and required CI result remain the integration evidence.
+
 ---
 
 ## Device Contribution Quick Start

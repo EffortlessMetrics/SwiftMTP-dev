@@ -100,13 +100,14 @@ final class ProbeOutputSnapshotTests: XCTestCase {
     result.selectionReason = "Highest PTP score"
     result.attempts = [
       InterfaceAttemptResult(interfaceNumber: 0, score: 12, succeeded: true, durationMs: 45),
-      InterfaceAttemptResult(interfaceNumber: 1, score: 6, succeeded: false, durationMs: 30, error: "claim failed"),
+      InterfaceAttemptResult(
+        interfaceNumber: 1, score: 6, succeeded: false, durationMs: 30, error: "claim failed"),
     ]
     result.skippedAlternatives = [
       SkippedInterface(
         interfaceNumber: 2, interfaceClass: 0xFF, interfaceSubclass: 0x00,
         interfaceProtocol: 0x00, score: 0, reason: "vendor-specific"
-      ),
+      )
     ]
 
     let data = try sortedJSON(result)

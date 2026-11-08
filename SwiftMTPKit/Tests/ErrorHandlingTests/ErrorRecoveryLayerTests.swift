@@ -255,13 +255,16 @@ final class ErrorRecoveryLayerTests: XCTestCase {
   // MARK: - Recovery Log
 
   func testRecoveryLog_TracksRates() async {
-    await RecoveryLog.shared.record(RecoveryEvent(
-      strategy: "test", attempt: 1, maxAttempts: 3, succeeded: true))
-    await RecoveryLog.shared.record(RecoveryEvent(
-      strategy: "test", attempt: 2, maxAttempts: 3, succeeded: false,
-      errorDescription: "fail"))
-    await RecoveryLog.shared.record(RecoveryEvent(
-      strategy: "test", attempt: 1, maxAttempts: 1, succeeded: true))
+    await RecoveryLog.shared.record(
+      RecoveryEvent(
+        strategy: "test", attempt: 1, maxAttempts: 3, succeeded: true))
+    await RecoveryLog.shared.record(
+      RecoveryEvent(
+        strategy: "test", attempt: 2, maxAttempts: 3, succeeded: false,
+        errorDescription: "fail"))
+    await RecoveryLog.shared.record(
+      RecoveryEvent(
+        strategy: "test", attempt: 1, maxAttempts: 1, succeeded: true))
 
     let rates = await RecoveryLog.shared.rates()
     XCTAssertEqual(rates.successes, 2)
@@ -270,8 +273,9 @@ final class ErrorRecoveryLayerTests: XCTestCase {
 
   func testRecoveryLog_RecentEvents() async {
     for i in 0..<5 {
-      await RecoveryLog.shared.record(RecoveryEvent(
-        strategy: "test-\(i)", attempt: 1, maxAttempts: 1, succeeded: true))
+      await RecoveryLog.shared.record(
+        RecoveryEvent(
+          strategy: "test-\(i)", attempt: 1, maxAttempts: 1, succeeded: true))
     }
 
     let recent = await RecoveryLog.shared.recent(limit: 3)
@@ -281,8 +285,9 @@ final class ErrorRecoveryLayerTests: XCTestCase {
   }
 
   func testRecoveryLog_Clear() async {
-    await RecoveryLog.shared.record(RecoveryEvent(
-      strategy: "test", attempt: 1, maxAttempts: 1, succeeded: true))
+    await RecoveryLog.shared.record(
+      RecoveryEvent(
+        strategy: "test", attempt: 1, maxAttempts: 1, succeeded: true))
     await RecoveryLog.shared.clear()
 
     let rates = await RecoveryLog.shared.rates()

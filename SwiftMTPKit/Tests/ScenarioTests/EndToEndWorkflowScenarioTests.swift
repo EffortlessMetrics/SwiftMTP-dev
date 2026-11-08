@@ -152,7 +152,9 @@ final class EndToEndWorkflowScenarioTests: XCTestCase {
 
     // Re-enumerate and find only new files
     let updatedFiles = try await listAll(device: device, parent: 2, in: storages[0].id)
-    let newFiles = updatedFiles.filter { !mirroredHandles.contains($0.handle) && $0.formatCode != 0x3001 }
+    let newFiles = updatedFiles.filter {
+      !mirroredHandles.contains($0.handle) && $0.formatCode != 0x3001
+    }
     XCTAssertEqual(newFiles.count, 1)
     XCTAssertEqual(newFiles[0].name, "IMG_NEW.jpg")
 
@@ -339,7 +341,8 @@ final class EndToEndWorkflowScenarioTests: XCTestCase {
     try uploadData2.write(to: src2)
 
     // Upload to internal (parent nil → uses first storage)
-    let wp1 = try await device.write(parent: nil, name: "upload_internal.dat", size: 1024, from: src1)
+    let wp1 = try await device.write(
+      parent: nil, name: "upload_internal.dat", size: 1024, from: src1)
     XCTAssertEqual(wp1.completedUnitCount, 1024)
 
     // Verify storages have different capacities
@@ -395,7 +398,8 @@ final class EndToEndWorkflowScenarioTests: XCTestCase {
     let downloadedData = try Data(contentsOf: downloadURL)
     XCTAssertEqual(downloadedData.count, tenMB)
     let downloadedHash = sha256(downloadedData)
-    XCTAssertEqual(originalHash, downloadedHash, "SHA-256 hash mismatch after upload/download round-trip")
+    XCTAssertEqual(
+      originalHash, downloadedHash, "SHA-256 hash mismatch after upload/download round-trip")
 
     // Verify byte-level equality
     XCTAssertEqual(largeData, downloadedData)
@@ -514,10 +518,12 @@ final class EndToEndWorkflowScenarioTests: XCTestCase {
     flags685c.skipAltSetting = true
     flags685c.propListOverridesObjectInfo = true
 
-    let db = QuirkDatabase(schemaVersion: "2.0", entries: [
-      DeviceQuirk(id: "samsung-mtp", vid: 0x04e8, pid: 0x6860, flags: flags6860),
-      DeviceQuirk(id: "samsung-mtp-adb", vid: 0x04e8, pid: 0x685c, flags: flags685c),
-    ])
+    let db = QuirkDatabase(
+      schemaVersion: "2.0",
+      entries: [
+        DeviceQuirk(id: "samsung-mtp", vid: 0x04e8, pid: 0x6860, flags: flags6860),
+        DeviceQuirk(id: "samsung-mtp-adb", vid: 0x04e8, pid: 0x685c, flags: flags685c),
+      ])
 
     // Match standard MTP PID
     let match1 = db.match(
