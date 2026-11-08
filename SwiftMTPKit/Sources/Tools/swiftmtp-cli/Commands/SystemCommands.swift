@@ -222,10 +222,14 @@ struct SystemCommands {
           if let ev = e.evidenceRequired { row["evidenceRequired"] = ev }
           return row
         }
-        printJSON(["matrix": rows, "tested": tested.count, "research": research.count], type: "quirksMatrix")
+        printJSON(
+          ["matrix": rows, "tested": tested.count, "research": research.count], type: "quirksMatrix"
+        )
         return
       }
-      print("\(db.entries.count) quirk entries (\(tested.count) tested, \(research.count) research-based)")
+      print(
+        "\(db.entries.count) quirk entries (\(tested.count) tested, \(research.count) research-based)"
+      )
       print("")
       print("| Device | VID:PID | Status | Governance | Last Verified | Confidence |")
       print("| --- | --- | --- | --- | --- | --- |")
@@ -235,9 +239,9 @@ struct SystemCommands {
         let govLevel = QuirkGovernanceLevel.classify(e)
         let govTag: String
         switch govLevel {
-        case .promoted:   govTag = "✅ tested"
-        case .research:   govTag = "🔬 research"
-        case .community:  govTag = "👥 community"
+        case .promoted: govTag = "✅ tested"
+        case .research: govTag = "🔬 research"
+        case .community: govTag = "👥 community"
         case .deprecated: govTag = "⚠️  deprecated"
         }
         let date = e.lastVerifiedDate ?? "—"
@@ -263,7 +267,8 @@ struct SystemCommands {
         var info: [String: Any] = [
           "totalEntries": stats.totalEntries,
           "uniqueVIDs": stats.uniqueVIDs,
-          "governance": Dictionary(uniqueKeysWithValues: summary.map { ($0.key.rawValue, $0.value) }),
+          "governance": Dictionary(
+            uniqueKeysWithValues: summary.map { ($0.key.rawValue, $0.value) }),
           "governanceValid": validation.isValid,
           "status": stats.statusCounts,
           "flagUsage": stats.flagUsage,
@@ -298,12 +303,13 @@ struct SystemCommands {
         let count = summary[level] ?? 0
         let icon: String
         switch level {
-        case .promoted:   icon = "✅"
-        case .research:   icon = "🔬"
-        case .community:  icon = "👥"
+        case .promoted: icon = "✅"
+        case .research: icon = "🔬"
+        case .community: icon = "👥"
         case .deprecated: icon = "⚠️ "
         }
-        let label = level.rawValue + String(repeating: " ", count: max(0, 12 - level.rawValue.count))
+        let label =
+          level.rawValue + String(repeating: " ", count: max(0, 12 - level.rawValue.count))
         print("     \(icon) \(label) \(count)")
       }
 
@@ -374,7 +380,8 @@ struct SystemCommands {
         print("")
         print("   Top VIDs:")
         for entry in stats.topVIDs.prefix(10) {
-          let padded = entry.formatted + String(repeating: " ", count: max(0, 10 - entry.formatted.count))
+          let padded =
+            entry.formatted + String(repeating: " ", count: max(0, 10 - entry.formatted.count))
           print("     \(padded) \(entry.count) entries")
         }
       }
@@ -422,13 +429,15 @@ struct SystemCommands {
     do {
       let devices = try await LibUSBDiscovery.enumerateMTPDevices()
       if devices.isEmpty {
-        print("⚠️  No MTP devices found. Connect a device via USB and enable MTP/File Transfer mode.")
+        print(
+          "⚠️  No MTP devices found. Connect a device via USB and enable MTP/File Transfer mode.")
       } else {
         print("✅ Found \(devices.count) MTP device(s)")
       }
     } catch {
       print("❌ Health check failed: \(actionableMessage(for: error))")
-      print("   Tip: Check that no other app (Android File Transfer, adb) is holding the USB device.")
+      print(
+        "   Tip: Check that no other app (Android File Transfer, adb) is holding the USB device.")
       exitNow(.unavailable)
     }
   }
@@ -477,7 +486,8 @@ struct SystemCommands {
       } else {
         print("📦 SwiftMTP Device Database")
         print("")
-        print("   Entries:          \(entries.count) (\(tested) tested, \(research) research-based)")
+        print(
+          "   Entries:          \(entries.count) (\(tested) tested, \(research) research-based)")
         print("   Unique VIDs:      \(vids.count)")
         print("   Proplist-capable: \(proplistCount)")
         print("   Kernel-detach:    \(kernelDetachCount)")

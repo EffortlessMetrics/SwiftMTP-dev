@@ -289,9 +289,9 @@ final class IOUSBHostBulkOperationTests: XCTestCase {
   func testStorageIDArrayParsing() {
     // Simulate a GetStorageIDs response payload: count=2, IDs=[0x00010001, 0x00020001]
     var data = Data()
-    appendUInt32(&data, 2)         // count
-    appendUInt32(&data, 0x00010001) // storage 1
-    appendUInt32(&data, 0x00020001) // storage 2
+    appendUInt32(&data, 2)  // count
+    appendUInt32(&data, 0x00010001)  // storage 1
+    appendUInt32(&data, 0x00020001)  // storage 2
 
     let ids = parseStorageIDs(from: data)
     XCTAssertEqual(ids.count, 2)
@@ -358,8 +358,8 @@ final class IOUSBHostBulkOperationTests: XCTestCase {
     appendUInt16(&data, 0x0002)  // FilesystemType = GenericHierarchical
     appendUInt16(&data, 0x0000)  // AccessCapability = ReadWrite
     appendUInt64(&data, 16_000_000_000)  // MaxCapacity
-    appendUInt64(&data, 8_000_000_000)   // FreeSpaceInBytes
-    appendUInt32(&data, 0)       // FreeSpaceInObjects
+    appendUInt64(&data, 8_000_000_000)  // FreeSpaceInBytes
+    appendUInt32(&data, 0)  // FreeSpaceInObjects
     appendPTPString(&data, "Internal Storage")  // StorageDescription
 
     var r = PTPReader(data: data)
@@ -388,7 +388,8 @@ final class IOUSBHostBulkOperationTests: XCTestCase {
     appendPTPString(&data, "SD Card")
 
     var r = PTPReader(data: data)
-    _ = r.u16(); _ = r.u16()
+    _ = r.u16()
+    _ = r.u16()
     let accessCap = r.u16()
     XCTAssertEqual(accessCap, 0x0001)  // ReadOnly
   }
@@ -688,10 +689,10 @@ final class IOUSBHostPTPDataFramingTests: XCTestCase {
       params: [42, offsetLo, offsetHi, 65536]
     )
     XCTAssertEqual(container.code, 0x95C1)
-    XCTAssertEqual(container.params[0], 42)      // handle
-    XCTAssertEqual(container.params[1], 0)        // offsetLo
-    XCTAssertEqual(container.params[2], 1)        // offsetHi
-    XCTAssertEqual(container.params[3], 65536)    // maxBytes
+    XCTAssertEqual(container.params[0], 42)  // handle
+    XCTAssertEqual(container.params[1], 0)  // offsetLo
+    XCTAssertEqual(container.params[2], 1)  // offsetHi
+    XCTAssertEqual(container.params[3], 65536)  // maxBytes
   }
 
   func testSendPartialObjectCommandFraming() {
@@ -811,7 +812,8 @@ final class IOUSBHostEventPollingTests: XCTestCase {
     data.withUnsafeMutableBytes { buf in
       let base = buf.baseAddress!
       base.storeBytes(of: length.littleEndian, as: UInt32.self)
-      base.storeBytes(of: UInt16(0x0004).littleEndian, toByteOffset: 4, as: UInt16.self)  // event type
+      // event type
+      base.storeBytes(of: UInt16(0x0004).littleEndian, toByteOffset: 4, as: UInt16.self)
       base.storeBytes(of: code.littleEndian, toByteOffset: 6, as: UInt16.self)
       base.storeBytes(of: txid.littleEndian, toByteOffset: 8, as: UInt32.self)
       for (i, param) in params.enumerated() {
@@ -1062,19 +1064,19 @@ final class IOUSBHostEventPollingTests: XCTestCase {
 
   func testAllFourteenStandardEventCodes() {
     let codes: [(UInt16, Bool)] = [
-      (0x4001, true),   // CancelTransaction — needs param but returns with 0
-      (0x4002, true),   // ObjectAdded
-      (0x4003, true),   // ObjectRemoved
-      (0x4004, true),   // StorageAdded
-      (0x4005, true),   // StorageRemoved
-      (0x4006, true),   // DevicePropChanged
-      (0x4007, true),   // ObjectInfoChanged
+      (0x4001, true),  // CancelTransaction — needs param but returns with 0
+      (0x4002, true),  // ObjectAdded
+      (0x4003, true),  // ObjectRemoved
+      (0x4004, true),  // StorageAdded
+      (0x4005, true),  // StorageRemoved
+      (0x4006, true),  // DevicePropChanged
+      (0x4007, true),  // ObjectInfoChanged
       (0x4008, false),  // DeviceInfoChanged — no param needed
-      (0x4009, true),   // RequestObjectTransfer
-      (0x400A, true),   // StoreFull
+      (0x4009, true),  // RequestObjectTransfer
+      (0x400A, true),  // StoreFull
       (0x400B, false),  // DeviceReset — no param needed
-      (0x400C, true),   // StorageInfoChanged
-      (0x400D, true),   // CaptureComplete — needs param but returns with 0
+      (0x400C, true),  // StorageInfoChanged
+      (0x400D, true),  // CaptureComplete — needs param but returns with 0
       (0x400E, false),  // UnreportedStatus — no param needed
     ]
     for (code, needsParam) in codes {

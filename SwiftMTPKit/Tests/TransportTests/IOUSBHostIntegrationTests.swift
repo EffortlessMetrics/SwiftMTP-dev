@@ -506,20 +506,20 @@ final class IOUSBHostObjectInfoParsingTests: XCTestCase {
     // Build a minimal MTP ObjectInfo dataset per PTP/MTP spec
     var data = Data()
     appendUInt32(&data, 0x00010001)  // StorageID
-    appendUInt16(&data, 0x3001)      // ObjectFormat (GenericFile)
-    appendUInt16(&data, 0x0000)      // ProtectionStatus
-    appendUInt32(&data, 1024)        // ObjectCompressedSize
-    appendUInt16(&data, 0x3801)      // ThumbFormat (JPEG)
-    appendUInt32(&data, 0)           // ThumbCompressedSize
-    appendUInt32(&data, 0)           // ThumbPixWidth
-    appendUInt32(&data, 0)           // ThumbPixHeight
-    appendUInt32(&data, 0)           // ImagePixWidth
-    appendUInt32(&data, 0)           // ImagePixHeight
-    appendUInt32(&data, 0)           // ImageBitDepth
+    appendUInt16(&data, 0x3001)  // ObjectFormat (GenericFile)
+    appendUInt16(&data, 0x0000)  // ProtectionStatus
+    appendUInt32(&data, 1024)  // ObjectCompressedSize
+    appendUInt16(&data, 0x3801)  // ThumbFormat (JPEG)
+    appendUInt32(&data, 0)  // ThumbCompressedSize
+    appendUInt32(&data, 0)  // ThumbPixWidth
+    appendUInt32(&data, 0)  // ThumbPixHeight
+    appendUInt32(&data, 0)  // ImagePixWidth
+    appendUInt32(&data, 0)  // ImagePixHeight
+    appendUInt32(&data, 0)  // ImageBitDepth
     appendUInt32(&data, 0xFFFFFFFF)  // ParentObject (root)
-    appendUInt16(&data, 0x0000)      // AssociationType
-    appendUInt32(&data, 0)           // AssociationDesc
-    appendUInt32(&data, 0)           // SequenceNumber
+    appendUInt16(&data, 0x0000)  // AssociationType
+    appendUInt32(&data, 0)  // AssociationDesc
+    appendUInt32(&data, 0)  // SequenceNumber
     appendPTPString(&data, "test-file.jpg")  // Filename
 
     var r = PTPReader(data: data)
@@ -528,10 +528,16 @@ final class IOUSBHostObjectInfoParsingTests: XCTestCase {
     _ = r.u16()  // protection
     let size = r.u32()
     _ = r.u16()  // thumb format
-    _ = r.u32(); _ = r.u32(); _ = r.u32()  // thumb size/width/height
-    _ = r.u32(); _ = r.u32(); _ = r.u32()  // image width/height/depth
+    _ = r.u32()
+    _ = r.u32()
+    _ = r.u32()  // thumb size/width/height
+    _ = r.u32()
+    _ = r.u32()
+    _ = r.u32()  // image width/height/depth
     let parent = r.u32()
-    _ = r.u16(); _ = r.u32(); _ = r.u32()  // assoc type/desc/seq
+    _ = r.u16()
+    _ = r.u32()
+    _ = r.u32()  // assoc type/desc/seq
     let name = r.string()
 
     XCTAssertEqual(storageID, 0x00010001)
@@ -618,89 +624,90 @@ final class IOUSBHostFallbackBehaviorTests: XCTestCase {
   /// On platforms where IOUSBHost is unavailable, all link operations should throw.
   func testFallbackLinkAllMethodsThrow() async {
     #if !canImport(IOUSBHost)
-    let link = IOUSBHostLink()
+      let link = IOUSBHostLink()
 
-    await assertThrowsUnavailable { try await link.openUSBIfNeeded() }
-    await assertThrowsUnavailable { try await link.openSession(id: 1) }
-    await assertThrowsUnavailable { try await link.closeSession() }
-    await assertThrowsUnavailable { _ = try await link.getDeviceInfo() }
-    await assertThrowsUnavailable { _ = try await link.getStorageIDs() }
-    await assertThrowsUnavailable {
-      _ = try await link.getStorageInfo(id: MTPStorageID(raw: 1))
-    }
-    await assertThrowsUnavailable {
-      _ = try await link.getObjectHandles(storage: MTPStorageID(raw: 1), parent: nil)
-    }
-    await assertThrowsUnavailable { _ = try await link.getObjectInfos([1]) }
-    await assertThrowsUnavailable {
-      _ = try await link.getObjectInfos(storage: MTPStorageID(raw: 1), parent: nil, format: nil)
-    }
-    await assertThrowsUnavailable { try await link.resetDevice() }
-    await assertThrowsUnavailable { try await link.deleteObject(handle: 1) }
-    await assertThrowsUnavailable {
-      try await link.moveObject(handle: 1, to: MTPStorageID(raw: 1), parent: nil)
-    }
-    await assertThrowsUnavailable {
-      _ = try await link.copyObject(handle: 1, toStorage: MTPStorageID(raw: 1), parent: nil)
-    }
-    await assertThrowsUnavailable {
-      _ = try await link.executeCommand(PTPContainer(
-        type: 1, code: 0x1001, txid: 0, params: []
-      ))
-    }
-    await assertThrowsUnavailable {
-      _ = try await link.executeStreamingCommand(
-        PTPContainer(type: 1, code: 0x1001, txid: 0, params: []),
-        dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil
-      )
-    }
+      await assertThrowsUnavailable { try await link.openUSBIfNeeded() }
+      await assertThrowsUnavailable { try await link.openSession(id: 1) }
+      await assertThrowsUnavailable { try await link.closeSession() }
+      await assertThrowsUnavailable { _ = try await link.getDeviceInfo() }
+      await assertThrowsUnavailable { _ = try await link.getStorageIDs() }
+      await assertThrowsUnavailable {
+        _ = try await link.getStorageInfo(id: MTPStorageID(raw: 1))
+      }
+      await assertThrowsUnavailable {
+        _ = try await link.getObjectHandles(storage: MTPStorageID(raw: 1), parent: nil)
+      }
+      await assertThrowsUnavailable { _ = try await link.getObjectInfos([1]) }
+      await assertThrowsUnavailable {
+        _ = try await link.getObjectInfos(storage: MTPStorageID(raw: 1), parent: nil, format: nil)
+      }
+      await assertThrowsUnavailable { try await link.resetDevice() }
+      await assertThrowsUnavailable { try await link.deleteObject(handle: 1) }
+      await assertThrowsUnavailable {
+        try await link.moveObject(handle: 1, to: MTPStorageID(raw: 1), parent: nil)
+      }
+      await assertThrowsUnavailable {
+        _ = try await link.copyObject(handle: 1, toStorage: MTPStorageID(raw: 1), parent: nil)
+      }
+      await assertThrowsUnavailable {
+        _ = try await link.executeCommand(
+          PTPContainer(
+            type: 1, code: 0x1001, txid: 0, params: []
+          ))
+      }
+      await assertThrowsUnavailable {
+        _ = try await link.executeStreamingCommand(
+          PTPContainer(type: 1, code: 0x1001, txid: 0, params: []),
+          dataPhaseLength: nil, dataInHandler: nil, dataOutHandler: nil
+        )
+      }
 
-    // close is always safe
-    await link.close()
+      // close is always safe
+      await link.close()
     #else
-    // On IOUSBHost platforms, the real implementation is tested by other test classes
+      // On IOUSBHost platforms, the real implementation is tested by other test classes
     #endif
   }
 
   func testFallbackTransportOpenThrows() async {
     #if !canImport(IOUSBHost)
-    let transport = IOUSBHostTransport()
-    let summary = MTPDeviceSummary(
-      id: MTPDeviceID(raw: "test"), manufacturer: "Test", model: "Device"
-    )
-    do {
-      _ = try await transport.open(summary, config: SwiftMTPConfig())
-      XCTFail("Expected unavailable error")
-    } catch let error as IOUSBHostTransportError {
-      if case .unavailable = error {
-        // expected
-      } else {
-        XCTFail("Expected unavailable, got \(error)")
+      let transport = IOUSBHostTransport()
+      let summary = MTPDeviceSummary(
+        id: MTPDeviceID(raw: "test"), manufacturer: "Test", model: "Device"
+      )
+      do {
+        _ = try await transport.open(summary, config: SwiftMTPConfig())
+        XCTFail("Expected unavailable error")
+      } catch let error as IOUSBHostTransportError {
+        if case .unavailable = error {
+          // expected
+        } else {
+          XCTFail("Expected unavailable, got \(error)")
+        }
+      } catch {
+        XCTFail("Unexpected error: \(error)")
       }
-    } catch {
-      XCTFail("Unexpected error: \(error)")
-    }
     #endif
   }
 
   #if !canImport(IOUSBHost)
-  private func assertThrowsUnavailable(
-    _ block: () async throws -> Void,
-    file: StaticString = #filePath, line: UInt = #line
-  ) async {
-    do {
-      try await block()
-      XCTFail("Expected unavailable error", file: file, line: line)
-    } catch let error as IOUSBHostTransportError {
-      if case .unavailable = error {
-        // expected
-      } else {
-        XCTFail("Expected unavailable, got \(error)", file: file, line: line)
+    private func assertThrowsUnavailable(
+      _ block: () async throws -> Void,
+      file: StaticString = #filePath, line: UInt = #line
+    ) async {
+      do {
+        try await block()
+        XCTFail("Expected unavailable error", file: file, line: line)
+      } catch let error as IOUSBHostTransportError {
+        if case .unavailable = error {
+          // expected
+        } else {
+          XCTFail("Expected unavailable, got \(error)", file: file, line: line)
+        }
+      } catch {
+        XCTFail("Unexpected error type: \(error)", file: file, line: line)
       }
-    } catch {
-      XCTFail("Unexpected error type: \(error)", file: file, line: line)
     }
-  }
   #endif
 }
 
@@ -749,7 +756,8 @@ final class IOUSBHostDataContainerIntegrationTests: XCTestCase {
 
     // 2. Data container (device response with file data)
     let fileData = Data(repeating: 0xFF, count: 100)
-    let dataContainer = buildDataContainer(code: PTPOp.getObject.rawValue, txid: 1, payload: fileData)
+    let dataContainer = buildDataContainer(
+      code: PTPOp.getObject.rawValue, txid: 1, payload: fileData)
     XCTAssertEqual(dataContainer.count, 12 + 100)
 
     // 3. Response container
@@ -774,7 +782,8 @@ final class IOUSBHostDataContainerIntegrationTests: XCTestCase {
     XCTAssertEqual(infoLen, 20, "SendObjectInfo = 12 + 2*4")
 
     // 2. SendObjectInfo response with new handle
-    let infoResp = buildResponseContainer(code: 0x2001, txid: 1, params: [0x00010001, 0xFFFFFFFF, 100])
+    let infoResp = buildResponseContainer(
+      code: 0x2001, txid: 1, params: [0x00010001, 0xFFFFFFFF, 100])
     let parsed = parseResponseContainer(infoResp)!
     XCTAssertTrue(parsed.isOK)
     XCTAssertEqual(parsed.params[2], 100, "New object handle")

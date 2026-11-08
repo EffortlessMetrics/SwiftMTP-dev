@@ -84,11 +84,12 @@ struct FTSSearchTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "vacation_photo.jpg", pathKey: "DCIM/vacation_photo.jpg"),
-      makeObj(handle: 2, name: "work_doc.pdf", pathKey: "Documents/work_doc.pdf"),
-      makeObj(handle: 3, name: "photo_album.zip", pathKey: "Downloads/photo_album.zip"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "vacation_photo.jpg", pathKey: "DCIM/vacation_photo.jpg"),
+        makeObj(handle: 2, name: "work_doc.pdf", pathKey: "Documents/work_doc.pdf"),
+        makeObj(handle: 3, name: "photo_album.zip", pathKey: "Downloads/photo_album.zip"),
+      ], deviceId: "dev")
 
     let results = try await idx.searchByFilename(deviceId: "dev", query: "photo")
     #expect(results.count == 2)
@@ -102,11 +103,12 @@ struct FTSSearchTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "IMG_0001.jpg", pathKey: "DCIM/IMG_0001.jpg"),
-      makeObj(handle: 2, name: "IMG_0002.jpg", pathKey: "DCIM/IMG_0002.jpg"),
-      makeObj(handle: 3, name: "screenshot.png", pathKey: "DCIM/screenshot.png"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "IMG_0001.jpg", pathKey: "DCIM/IMG_0001.jpg"),
+        makeObj(handle: 2, name: "IMG_0002.jpg", pathKey: "DCIM/IMG_0002.jpg"),
+        makeObj(handle: 3, name: "screenshot.png", pathKey: "DCIM/screenshot.png"),
+      ], deviceId: "dev")
 
     let results = try await idx.searchByFilename(deviceId: "dev", query: "IMG*")
     #expect(results.count == 2)
@@ -117,9 +119,10 @@ struct FTSSearchTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "readme.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "readme.txt")
+      ], deviceId: "dev")
 
     let results = try await idx.searchByFilename(deviceId: "dev", query: "nonexistent")
     #expect(results.isEmpty)
@@ -130,9 +133,10 @@ struct FTSSearchTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "file.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "file.txt")
+      ], deviceId: "dev")
 
     let results = try await idx.searchByFilename(deviceId: "dev", query: "")
     #expect(results.isEmpty)
@@ -143,10 +147,11 @@ struct FTSSearchTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "photo.jpg", pathKey: "DCIM/photo.jpg"),
-      makeObj(handle: 2, name: "photo_old.jpg", pathKey: "DCIM/photo_old.jpg"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "photo.jpg", pathKey: "DCIM/photo.jpg"),
+        makeObj(handle: 2, name: "photo_old.jpg", pathKey: "DCIM/photo_old.jpg"),
+      ], deviceId: "dev")
 
     try await idx.removeObject(deviceId: "dev", storageId: 0x10001, handle: 2)
 
@@ -160,14 +165,16 @@ struct FTSSearchTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "old_name.txt", pathKey: "root/old_name.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "old_name.txt", pathKey: "root/old_name.txt")
+      ], deviceId: "dev")
 
     // Rename via upsert
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "new_name.txt", pathKey: "root/new_name.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "new_name.txt", pathKey: "root/new_name.txt")
+      ], deviceId: "dev")
 
     let oldResults = try await idx.searchByFilename(deviceId: "dev", query: "old_name")
     #expect(oldResults.isEmpty)
@@ -181,11 +188,12 @@ struct FTSSearchTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "photo1.jpg", pathKey: "DCIM/Camera/photo1.jpg"),
-      makeObj(handle: 2, name: "photo2.jpg", pathKey: "DCIM/Camera/photo2.jpg"),
-      makeObj(handle: 3, name: "notes.txt", pathKey: "Documents/notes.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "photo1.jpg", pathKey: "DCIM/Camera/photo1.jpg"),
+        makeObj(handle: 2, name: "photo2.jpg", pathKey: "DCIM/Camera/photo2.jpg"),
+        makeObj(handle: 3, name: "notes.txt", pathKey: "Documents/notes.txt"),
+      ], deviceId: "dev")
 
     let results = try await idx.searchByPath(deviceId: "dev", query: "DCIM")
     #expect(results.count == 2)
@@ -196,9 +204,10 @@ struct FTSSearchTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "shared.txt", pathKey: "root/shared.txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "shared.txt", pathKey: "root/shared.txt")
+      ], deviceId: "dev")
 
     // Insert object for different device directly
     let obj2 = IndexedObject(
@@ -230,10 +239,11 @@ struct FTSSearchTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "file (1).txt", pathKey: "root/file (1).txt"),
-      makeObj(handle: 2, name: "file [copy].txt", pathKey: "root/file [copy].txt"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "file (1).txt", pathKey: "root/file (1).txt"),
+        makeObj(handle: 2, name: "file [copy].txt", pathKey: "root/file [copy].txt"),
+      ], deviceId: "dev")
 
     // These should not crash — FTS5 special chars are safely escaped
     let r1 = try await idx.searchByFilename(deviceId: "dev", query: "file (1)")
@@ -263,9 +273,10 @@ struct FTSSearchTests {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    try await idx.upsertObjects([
-      makeObj(handle: 1, name: "test.jpg", pathKey: "DCIM/test.jpg"),
-    ], deviceId: "dev")
+    try await idx.upsertObjects(
+      [
+        makeObj(handle: 1, name: "test.jpg", pathKey: "DCIM/test.jpg")
+      ], deviceId: "dev")
 
     // Should not throw
     try idx.rebuildFTSIndex()

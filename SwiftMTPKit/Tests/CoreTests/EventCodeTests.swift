@@ -16,7 +16,8 @@ final class EventCodeTests: XCTestCase {
     let length = UInt32(12 + params.count * 4)
     var data = Data()
     data.append(contentsOf: withUnsafeBytes(of: length.littleEndian) { Array($0) })
-    data.append(contentsOf: withUnsafeBytes(of: UInt16(4).littleEndian) { Array($0) })  // event type
+    // event type
+    data.append(contentsOf: withUnsafeBytes(of: UInt16(4).littleEndian) { Array($0) })
     data.append(contentsOf: withUnsafeBytes(of: code.littleEndian) { Array($0) })
     data.append(contentsOf: withUnsafeBytes(of: txid.littleEndian) { Array($0) })
     for p in params {
@@ -108,7 +109,8 @@ final class EventCodeTests: XCTestCase {
     let data = makeEventData(code: 0x4008)
     guard let event = MTPEvent.fromRaw(data) else { return XCTFail("Failed to parse") }
     XCTAssertEqual(event.eventCode, 0x4008)
-    if case .deviceInfoChanged = event {} else {
+    if case .deviceInfoChanged = event {
+    } else {
       XCTFail("Expected deviceInfoChanged")
     }
   }
@@ -139,7 +141,8 @@ final class EventCodeTests: XCTestCase {
     let data = makeEventData(code: 0x400B)
     guard let event = MTPEvent.fromRaw(data) else { return XCTFail("Failed to parse") }
     XCTAssertEqual(event.eventCode, 0x400B)
-    if case .deviceReset = event {} else {
+    if case .deviceReset = event {
+    } else {
       XCTFail("Expected deviceReset")
     }
   }
@@ -170,7 +173,8 @@ final class EventCodeTests: XCTestCase {
     let data = makeEventData(code: 0x400E)
     guard let event = MTPEvent.fromRaw(data) else { return XCTFail("Failed to parse") }
     XCTAssertEqual(event.eventCode, 0x400E)
-    if case .unreportedStatus = event {} else {
+    if case .unreportedStatus = event {
+    } else {
       XCTFail("Expected unreportedStatus")
     }
   }

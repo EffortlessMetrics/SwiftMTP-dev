@@ -48,13 +48,14 @@ final class IndexBenchmarkTests: XCTestCase {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    let objects = (1...10_000).map { i in
-      makeObj(
-        handle: UInt32(i),
-        parentHandle: UInt32(i % 100 + 1),
-        name: "file-\(i).jpg"
-      )
-    }
+    let objects = (1...10_000)
+      .map { i in
+        makeObj(
+          handle: UInt32(i),
+          parentHandle: UInt32(i % 100 + 1),
+          name: "file-\(i).jpg"
+        )
+      }
 
     // Batch insert in chunks to mirror real usage
     let chunkSize = 500
@@ -82,13 +83,14 @@ final class IndexBenchmarkTests: XCTestCase {
     let folder = makeObj(handle: parentHandle, name: "Photos", isDirectory: true)
     try await idx.upsertObjects([folder], deviceId: "dev-bench")
 
-    let children = (2...1_001).map { i in
-      makeObj(
-        handle: UInt32(i),
-        parentHandle: parentHandle,
-        name: "IMG_\(String(format: "%04d", i)).jpg"
-      )
-    }
+    let children = (2...1_001)
+      .map { i in
+        makeObj(
+          handle: UInt32(i),
+          parentHandle: parentHandle,
+          name: "IMG_\(String(format: "%04d", i)).jpg"
+        )
+      }
     try await idx.upsertObjects(children, deviceId: "dev-bench")
 
     measure {
@@ -109,13 +111,14 @@ final class IndexBenchmarkTests: XCTestCase {
     let (idx, path) = try makeTempIndex()
     defer { try? FileManager.default.removeItem(atPath: path) }
 
-    let objects = (1...10_000).map { i in
-      makeObj(
-        handle: UInt32(i),
-        parentHandle: 1,
-        name: i % 5 == 0 ? "photo-\(i).jpg" : "document-\(i).pdf"
-      )
-    }
+    let objects = (1...10_000)
+      .map { i in
+        makeObj(
+          handle: UInt32(i),
+          parentHandle: 1,
+          name: i % 5 == 0 ? "photo-\(i).jpg" : "document-\(i).pdf"
+        )
+      }
     try await idx.upsertObjects(objects, deviceId: "dev-bench")
 
     measure {
@@ -175,9 +178,10 @@ final class IndexBenchmarkTests: XCTestCase {
     defer { try? FileManager.default.removeItem(atPath: path) }
 
     // Insert 5,000 objects to create change records
-    let objects = (1...5_000).map { i in
-      makeObj(handle: UInt32(i), parentHandle: 1, name: "change-\(i).dat")
-    }
+    let objects = (1...5_000)
+      .map { i in
+        makeObj(handle: UInt32(i), parentHandle: 1, name: "change-\(i).dat")
+      }
     try await idx.upsertObjects(objects, deviceId: "dev-bench")
 
     // Now query changes since anchor 0

@@ -244,12 +244,13 @@ final class IOUSBHostErrorParityTests: XCTestCase {
   func testErrorCasesCoverLibUSBFailureModes() {
     // LibUSB maps: LIBUSB_ERROR_TIMEOUT → timeout, stall → pipeStall,
     // ACCESS/BUSY → claim, IO → ioError. Verify IOUSBHost has equivalents.
-    _ = IOUSBHostTransportError.transferTimeout     // ↔ LIBUSB_ERROR_TIMEOUT
-    _ = IOUSBHostTransportError.pipeStall           // ↔ LIBUSB_ERROR_PIPE (stall)
-    _ = IOUSBHostTransportError.claimFailed("")     // ↔ LIBUSB_ERROR_ACCESS / BUSY
-    _ = IOUSBHostTransportError.ioError("", 0)      // ↔ LIBUSB_ERROR_IO
-    _ = IOUSBHostTransportError.deviceNotFound(vendorID: 0, productID: 0)  // ↔ LIBUSB_ERROR_NO_DEVICE
-    _ = IOUSBHostTransportError.invalidState("")    // ↔ no-session guard
+    _ = IOUSBHostTransportError.transferTimeout  // ↔ LIBUSB_ERROR_TIMEOUT
+    _ = IOUSBHostTransportError.pipeStall  // ↔ LIBUSB_ERROR_PIPE (stall)
+    _ = IOUSBHostTransportError.claimFailed("")  // ↔ LIBUSB_ERROR_ACCESS / BUSY
+    _ = IOUSBHostTransportError.ioError("", 0)  // ↔ LIBUSB_ERROR_IO
+    // ↔ LIBUSB_ERROR_NO_DEVICE
+    _ = IOUSBHostTransportError.deviceNotFound(vendorID: 0, productID: 0)
+    _ = IOUSBHostTransportError.invalidState("")  // ↔ no-session guard
   }
 }
 
@@ -284,9 +285,9 @@ final class IOUSBHostAPISurfaceParityTests: XCTestCase {
     let iousbLink = IOUSBHostLink()
 
     // Both link types must expose these MTPLink properties:
-    _ = iousbLink.cachedDeviceInfo     // MTPDeviceInfo?
-    _ = iousbLink.linkDescriptor       // MTPLinkDescriptor?
-    _ = iousbLink.eventStream          // AsyncStream<Data>
+    _ = iousbLink.cachedDeviceInfo  // MTPDeviceInfo?
+    _ = iousbLink.linkDescriptor  // MTPLinkDescriptor?
+    _ = iousbLink.eventStream  // AsyncStream<Data>
   }
 
   /// MTPLinkDescriptor fields should be the same struct on both transports.

@@ -9,10 +9,12 @@ struct SwiftMTPBuildTool: CommandPlugin {
   func performCommand(context: PluginContext, arguments: [String]) async throws {
     // Use the URL-based API (Path.appending(_:) is deprecated in Swift Package Plugin API v2)
     let pkgURL = context.package.directoryURL
-    let quirksURL = pkgURL.deletingLastPathComponent().appendingPathComponent(
-      "Specs/quirks.json", isDirectory: false)
-    let outputURL = pkgURL.deletingLastPathComponent().appendingPathComponent(
-      "Docs/SwiftMTP.docc/Devices", isDirectory: true)
+    let quirksURL = pkgURL.deletingLastPathComponent()
+      .appendingPathComponent(
+        "Specs/quirks.json", isDirectory: false)
+    let outputURL = pkgURL.deletingLastPathComponent()
+      .appendingPathComponent(
+        "Docs/SwiftMTP.docc/Devices", isDirectory: true)
 
     let quirksPath = quirksURL.path
     let outputPath = outputURL.path

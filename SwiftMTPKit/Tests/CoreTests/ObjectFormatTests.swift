@@ -137,8 +137,10 @@ final class ObjectFormatTests: XCTestCase {
   }
 
   func testPowerPointExtensions() {
-    XCTAssertEqual(PTPObjectFormat.forFilename("slides.ppt"), PTPObjectFormat.msPowerPointPresentation)
-    XCTAssertEqual(PTPObjectFormat.forFilename("slides.pptx"), PTPObjectFormat.msPowerPointPresentation)
+    XCTAssertEqual(
+      PTPObjectFormat.forFilename("slides.ppt"), PTPObjectFormat.msPowerPointPresentation)
+    XCTAssertEqual(
+      PTPObjectFormat.forFilename("slides.pptx"), PTPObjectFormat.msPowerPointPresentation)
   }
 
   func testXMLExtension() {
@@ -234,7 +236,8 @@ final class ObjectFormatTests: XCTestCase {
   }
 
   func testDocumentMIMETypes() {
-    XCTAssertEqual(PTPObjectFormat.mimeType(for: PTPObjectFormat.msWordDocument), "application/msword")
+    XCTAssertEqual(
+      PTPObjectFormat.mimeType(for: PTPObjectFormat.msWordDocument), "application/msword")
     XCTAssertEqual(
       PTPObjectFormat.mimeType(for: PTPObjectFormat.msExcelSpreadsheet), "application/vnd.ms-excel")
     XCTAssertEqual(
@@ -247,7 +250,8 @@ final class ObjectFormatTests: XCTestCase {
 
   func testUnknownFormatMIMEFallback() {
     XCTAssertEqual(PTPObjectFormat.mimeType(for: 0xFFFF), "application/octet-stream")
-    XCTAssertEqual(PTPObjectFormat.mimeType(for: PTPObjectFormat.undefined), "application/octet-stream")
+    XCTAssertEqual(
+      PTPObjectFormat.mimeType(for: PTPObjectFormat.undefined), "application/octet-stream")
   }
 
   // MARK: - describe() human-readable names

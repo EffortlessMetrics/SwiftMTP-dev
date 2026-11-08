@@ -109,9 +109,10 @@ public actor XPCConnectionManager {
     self.configuration = configuration
     self.monitor = monitor
     self.currentDelay = configuration.baseDelay
-    self.connectionFactory = connectionFactory ?? { name in
-      NSXPCConnection(machServiceName: name, options: [])
-    }
+    self.connectionFactory =
+      connectionFactory ?? { name in
+        NSXPCConnection(machServiceName: name, options: [])
+      }
   }
 
   // MARK: - Public API
@@ -241,7 +242,8 @@ public actor XPCConnectionManager {
     while state == .reconnecting {
       let delay = currentDelay
       reconnectAttempts += 1
-      log.info("Reconnect attempt \(self.reconnectAttempts) in \(delay, format: .fixed(precision: 1))s")
+      log.info(
+        "Reconnect attempt \(self.reconnectAttempts) in \(delay, format: .fixed(precision: 1))s")
 
       try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
 

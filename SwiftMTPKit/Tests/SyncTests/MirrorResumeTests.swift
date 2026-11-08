@@ -252,8 +252,9 @@ final class MirrorResumeJournalEdgeCaseTests: XCTestCase {
 
   func testJournalCorruptionStartsFresh() async throws {
     let corruptPath = tempDir.appendingPathComponent("corrupt.sqlite").path
-    try Data("not a sqlite database".utf8).write(
-      to: URL(fileURLWithPath: corruptPath), options: .atomic)
+    try Data("not a sqlite database".utf8)
+      .write(
+        to: URL(fileURLWithPath: corruptPath), options: .atomic)
 
     // Opening a corrupt journal should throw
     XCTAssertThrowsError(try SQLiteTransferJournal(dbPath: corruptPath)) { error in

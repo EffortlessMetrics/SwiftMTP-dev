@@ -28,7 +28,8 @@ final class Pixel7TransportFixesTests: XCTestCase {
   func testForceDoubleResetDecodesFromJSON() throws {
     let json = """
       { "forceDoubleReset": true }
-      """.data(using: .utf8)!
+      """
+      .data(using: .utf8)!
     let flags = try JSONDecoder().decode(QuirkFlags.self, from: json)
     XCTAssertTrue(flags.forceDoubleReset)
   }
@@ -51,7 +52,8 @@ final class Pixel7TransportFixesTests: XCTestCase {
   func testLongTimeoutDecodesFromJSON() throws {
     let json = """
       { "longTimeout": true }
-      """.data(using: .utf8)!
+      """
+      .data(using: .utf8)!
     let flags = try JSONDecoder().decode(QuirkFlags.self, from: json)
     XCTAssertTrue(flags.longTimeout)
   }
@@ -141,7 +143,8 @@ final class Pixel7TransportFixesTests: XCTestCase {
         "forceDoubleReset": true,
         "longTimeout": true
       }
-      """.data(using: .utf8)!
+      """
+      .data(using: .utf8)!
     let flags = try JSONDecoder().decode(QuirkFlags.self, from: json)
     XCTAssertTrue(flags.forceDoubleReset)
     XCTAssertTrue(flags.longTimeout)
@@ -157,7 +160,8 @@ final class Pixel7TransportFixesTests: XCTestCase {
         "requiresKernelDetach": true,
         "resetOnOpen": false
       }
-      """.data(using: .utf8)!
+      """
+      .data(using: .utf8)!
     let flags = try JSONDecoder().decode(QuirkFlags.self, from: json)
     XCTAssertFalse(flags.forceDoubleReset, "forceDoubleReset must default to false")
     XCTAssertFalse(flags.longTimeout, "longTimeout must default to false")

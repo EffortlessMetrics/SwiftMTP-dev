@@ -127,7 +127,9 @@ private class MockDevice: MTPDevice, @unchecked Sendable {
     throw MTPError.notSupported("Mock implementation")
   }
 
-  func copyObject(handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?) async throws -> MTPObjectHandle {
+  func copyObject(handle: MTPObjectHandle, toStorage: MTPStorageID, parentFolder: MTPObjectHandle?)
+    async throws -> MTPObjectHandle
+  {
     throw MTPError.notSupported("Mock implementation")
   }
 

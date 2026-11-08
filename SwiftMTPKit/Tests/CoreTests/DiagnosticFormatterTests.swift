@@ -67,7 +67,8 @@ final class DiagnosticFormatterTests: XCTestCase {
   }
 
   func testDiagnoseVerificationFailed() {
-    let diag = DiagnosticFormatter.diagnose(MTPError.verificationFailed(expected: 1000, actual: 500))
+    let diag = DiagnosticFormatter.diagnose(
+      MTPError.verificationFailed(expected: 1000, actual: 500))
     XCTAssertTrue(diag.summary.contains("1000"))
     XCTAssertTrue(diag.summary.contains("500"))
   }
@@ -231,7 +232,9 @@ final class DiagnosticFormatterTests: XCTestCase {
     enum DBError: Error, CustomStringConvertible {
       case open(String)
       var description: String {
-        switch self { case .open(let m): return m }
+        switch self {
+        case .open(let m): return m
+        }
       }
     }
     let diag = DiagnosticFormatter.diagnose(DBError.open("database disk image is malformed"))

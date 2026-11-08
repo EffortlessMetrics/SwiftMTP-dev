@@ -553,9 +553,10 @@ public final class MTPFileProviderExtension: NSObject, NSFileProviderReplicatedE
   public func fetchThumbnails(
     for itemIdentifiers: [NSFileProviderItemIdentifier],
     requestedSize size: CGSize,
-    perThumbnailCompletionHandler: @escaping (
-      NSFileProviderItemIdentifier, Data?, Error?
-    ) -> Void,
+    perThumbnailCompletionHandler:
+      @escaping (
+        NSFileProviderItemIdentifier, Data?, Error?
+      ) -> Void,
     completionHandler: @escaping (Error?) -> Void
   ) -> Progress {
     let progress = Progress(totalUnitCount: Int64(itemIdentifiers.count))

@@ -12,32 +12,32 @@ import XCTest
 
 final class SwiftMTPUITestsLaunchTests: XCTestCase {
 
-    override class var runsForEachTargetApplicationUIConfiguration: Bool {
-        true
-    }
+  override class var runsForEachTargetApplicationUIConfiguration: Bool {
+    true
+  }
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
+  override func setUpWithError() throws {
+    continueAfterFailure = false
+  }
 
-    @MainActor
-    func testLaunch() throws {
-        let app = XCUIApplication()
-        app.launchArguments = ["-ApplePersistenceIgnoreState", "YES"]
-        app.launchEnvironment["SWIFTMTP_UI_TEST"] = "1"
-        app.launchEnvironment["SWIFTMTP_UI_SCENARIO"] = "empty-state"
-        app.launchEnvironment["SWIFTMTP_DEMO_MODE"] = "1"
-        app.launchEnvironment["SWIFTMTP_MOCK_PROFILE"] = "pixel7"
-        app.launch()
+  @MainActor
+  func testLaunch() throws {
+    let app = XCUIApplication()
+    app.launchArguments = ["-ApplePersistenceIgnoreState", "YES"]
+    app.launchEnvironment["SWIFTMTP_UI_TEST"] = "1"
+    app.launchEnvironment["SWIFTMTP_UI_SCENARIO"] = "empty-state"
+    app.launchEnvironment["SWIFTMTP_DEMO_MODE"] = "1"
+    app.launchEnvironment["SWIFTMTP_MOCK_PROFILE"] = "pixel7"
+    app.launch()
 
-        // Insert steps here to perform after app launch but before taking a screenshot,
-        // such as logging into a test account or navigating somewhere in the app
+    // Insert steps here to perform after app launch but before taking a screenshot,
+    // such as logging into a test account or navigating somewhere in the app
 
-        let attachment = XCTAttachment(screenshot: app.screenshot())
-        attachment.name = "Launch Screen"
-        attachment.lifetime = .keepAlways
-        add(attachment)
+    let attachment = XCTAttachment(screenshot: app.screenshot())
+    attachment.name = "Launch Screen"
+    attachment.lifetime = .keepAlways
+    add(attachment)
 
-        XCTAssertTrue(app.otherElements["swiftmtp.browser.root"].waitForExistence(timeout: 10))
-    }
+    XCTAssertTrue(app.otherElements["swiftmtp.browser.root"].waitForExistence(timeout: 10))
+  }
 }

@@ -373,7 +373,8 @@ public final class MTPXPCServiceImpl: NSObject, MTPXPCService {
         let deviceId = MTPDeviceID(raw: request.deviceId)
 
         guard let device = try await findDevice(with: deviceId) else {
-          reply(ThumbnailResponse(success: false, errorMessage: "Device not found or not connected"))
+          reply(
+            ThumbnailResponse(success: false, errorMessage: "Device not found or not connected"))
           return
         }
 

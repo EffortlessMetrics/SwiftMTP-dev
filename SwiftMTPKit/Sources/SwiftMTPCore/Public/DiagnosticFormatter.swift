@@ -286,7 +286,8 @@ public enum DiagnosticFormatter {
       return ErrorDiagnostic(
         summary: "System service disconnected.",
         cause: "The XPC connection to the helper service was permanently invalidated.",
-        suggestion: "The connection will retry automatically. If it persists, restart the application."
+        suggestion:
+          "The connection will retry automatically. If it persists, restart the application."
       )
     }
     if lower.contains("queue full") || lower.contains("unreachable") {

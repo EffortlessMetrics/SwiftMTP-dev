@@ -117,7 +117,9 @@ extension MTPUSBLink {
           let g = try bulkReadOnce(inEP, into: &buf, max: buf.count, timeout: 1000)
           MTPLog.Signpost.chunkSignposter.endInterval("readChunk", chunkState)
           if g == 0 {
-            log.error("Data-IN chunk read timeout: 0 bytes after 1000ms (remaining=\(left) bytes) for op=\(String(format: "0x%04x", command.code), privacy: .public). Device may have stalled mid-transfer.")
+            log.error(
+              "Data-IN chunk read timeout: 0 bytes after 1000ms (remaining=\(left) bytes) for op=\(String(format: "0x%04x", command.code), privacy: .public). Device may have stalled mid-transfer."
+            )
             throw MTPError.timeout
           }
           _ = buf.withUnsafeBytes { dataInHandler!($0) }

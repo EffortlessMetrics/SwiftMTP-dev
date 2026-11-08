@@ -101,13 +101,16 @@ final class ErrorMessageSnapshotTests: XCTestCase {
 
   func testActionableDescriptionDeviceDisconnectedContainsReconnect() {
     let msg = MTPError.deviceDisconnected.actionableDescription
-    XCTAssertTrue(msg.lowercased().contains("reconnect") || msg.lowercased().contains("disconnect"),
+    XCTAssertTrue(
+      msg.lowercased().contains("reconnect") || msg.lowercased().contains("disconnect"),
       "Message should address disconnection: \(msg)")
   }
 
   func testActionableDescriptionPermissionDeniedContainsAccess() {
     let msg = MTPError.permissionDenied.actionableDescription
-    XCTAssertTrue(msg.lowercased().contains("permission") || msg.lowercased().contains("denied") || msg.lowercased().contains("access"),
+    XCTAssertTrue(
+      msg.lowercased().contains("permission") || msg.lowercased().contains("denied")
+        || msg.lowercased().contains("access"),
       "Message should mention access/permission: \(msg)")
   }
 
@@ -118,7 +121,8 @@ final class ErrorMessageSnapshotTests: XCTestCase {
 
   func testActionableDescriptionTimeoutContainsTimeout() {
     let msg = MTPError.timeout.actionableDescription
-    XCTAssertTrue(msg.lowercased().contains("timeout") || msg.lowercased().contains("timed"),
+    XCTAssertTrue(
+      msg.lowercased().contains("timeout") || msg.lowercased().contains("timed"),
       "Message should mention timeout: \(msg)")
   }
 
@@ -129,7 +133,8 @@ final class ErrorMessageSnapshotTests: XCTestCase {
 
   func testActionableDescriptionStorageFullContainsStorage() {
     let msg = MTPError.storageFull.actionableDescription
-    XCTAssertTrue(msg.lowercased().contains("storage") || msg.lowercased().contains("full"),
+    XCTAssertTrue(
+      msg.lowercased().contains("storage") || msg.lowercased().contains("full"),
       "Message should mention storage: \(msg)")
   }
 
@@ -148,7 +153,8 @@ final class ErrorMessageSnapshotTests: XCTestCase {
   func testProtocolErrorIncludesHexCode() {
     let error = MTPError.protocolError(code: 0x2005, message: nil)
     let desc = error.errorDescription!
-    XCTAssertTrue(desc.contains("0x2005") || desc.contains("0x2005"),
+    XCTAssertTrue(
+      desc.contains("0x2005") || desc.contains("0x2005"),
       "Protocol error should include hex code: \(desc)")
   }
 
@@ -156,21 +162,24 @@ final class ErrorMessageSnapshotTests: XCTestCase {
     let error = MTPError.protocolError(code: 0x201E, message: nil)
     XCTAssertTrue(error.isSessionAlreadyOpen)
     let desc = error.errorDescription!
-    XCTAssertTrue(desc.contains("201E") || desc.contains("session"),
+    XCTAssertTrue(
+      desc.contains("201E") || desc.contains("session"),
       "Should mention session: \(desc)")
   }
 
   func testProtocolErrorStorageFullViaCode() {
     let error = MTPError.protocolError(code: 0x200C, message: nil)
     let suggestion = error.recoverySuggestion!
-    XCTAssertTrue(suggestion.contains("Free") || suggestion.contains("space"),
+    XCTAssertTrue(
+      suggestion.contains("Free") || suggestion.contains("space"),
       "Should suggest freeing space: \(suggestion)")
   }
 
   func testProtocolErrorObjectNotFound() {
     let error = MTPError.protocolError(code: 0x2009, message: nil)
     let reason = error.failureReason!
-    XCTAssertTrue(reason.contains("object") || reason.contains("handle") || reason.contains("deleted"),
+    XCTAssertTrue(
+      reason.contains("object") || reason.contains("handle") || reason.contains("deleted"),
       "Should explain object handle issue: \(reason)")
   }
 
@@ -191,7 +200,8 @@ final class ErrorMessageSnapshotTests: XCTestCase {
   func testTimeoutInPhaseIncludesPhaseInDescription() {
     let error = TransportError.timeoutInPhase(.bulkIn)
     let desc = error.errorDescription!
-    XCTAssertTrue(desc.contains("bulk-in"),
+    XCTAssertTrue(
+      desc.contains("bulk-in"),
       "Phase-specific timeout should include phase name: \(desc)")
   }
 

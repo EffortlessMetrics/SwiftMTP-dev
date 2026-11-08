@@ -63,7 +63,9 @@ extension MTPUSBLink {
             mutating: ptr.advanced(by: sent).assumingMemoryBound(to: UInt8.self)),
           Int32(count - sent), &r, timeout)
         if rc2 != 0 {
-          log.error("Bulk write retry after stall recovery failed: \(libusbErrorName(rc2), privacy: .public) (rc=\(rc2)) ep=\(String(format: "0x%02x", ep), privacy: .public) sent=\(sent)/\(count)")
+          log.error(
+            "Bulk write retry after stall recovery failed: \(libusbErrorName(rc2), privacy: .public) (rc=\(rc2)) ep=\(String(format: "0x%02x", ep), privacy: .public) sent=\(sent)/\(count)"
+          )
           throw MTPError.transport(mapLibusb(rc2))
         }
         sent += Int(r)
@@ -98,7 +100,9 @@ extension MTPUSBLink {
         var g2: Int32 = 0
         let rc2 = libusb_bulk_transfer(h, ep, &tmp, 512, &g2, timeout)
         if rc2 != 0 && rc2 != -8 {
-          log.error("Bulk read retry after stall recovery failed: \(libusbErrorName(rc2), privacy: .public) (rc=\(rc2)) ep=\(String(format: "0x%02x", ep), privacy: .public)")
+          log.error(
+            "Bulk read retry after stall recovery failed: \(libusbErrorName(rc2), privacy: .public) (rc=\(rc2)) ep=\(String(format: "0x%02x", ep), privacy: .public)"
+          )
           throw MTPError.transport(mapLibusb(rc2))
         }
         let c = min(Int(g2), max)
@@ -106,7 +110,9 @@ extension MTPUSBLink {
         return c
       }
       if rc != 0 && rc != -8 {
-        log.error("Bulk read failed: \(libusbErrorName(rc), privacy: .public) (rc=\(rc)) ep=\(String(format: "0x%02x", ep), privacy: .public) requested=\(max) timeout=\(timeout)ms")
+        log.error(
+          "Bulk read failed: \(libusbErrorName(rc), privacy: .public) (rc=\(rc)) ep=\(String(format: "0x%02x", ep), privacy: .public) requested=\(max) timeout=\(timeout)ms"
+        )
         throw MTPError.transport(mapLibusb(rc))
       }
       let c = min(Int(g), max)
@@ -125,13 +131,17 @@ extension MTPUSBLink {
       let rc2 = libusb_bulk_transfer(
         h, ep, buf.assumingMemoryBound(to: UInt8.self), Int32(max), &g2, timeout)
       if rc2 != 0 {
-        log.error("Bulk read retry after stall recovery failed: \(libusbErrorName(rc2), privacy: .public) (rc=\(rc2)) ep=\(String(format: "0x%02x", ep), privacy: .public)")
+        log.error(
+          "Bulk read retry after stall recovery failed: \(libusbErrorName(rc2), privacy: .public) (rc=\(rc2)) ep=\(String(format: "0x%02x", ep), privacy: .public)"
+        )
         throw MTPError.transport(mapLibusb(rc2))
       }
       return Int(g2)
     }
     if rc != 0 {
-      log.error("Bulk read failed: \(libusbErrorName(rc), privacy: .public) (rc=\(rc)) ep=\(String(format: "0x%02x", ep), privacy: .public) requested=\(max) timeout=\(timeout)ms")
+      log.error(
+        "Bulk read failed: \(libusbErrorName(rc), privacy: .public) (rc=\(rc)) ep=\(String(format: "0x%02x", ep), privacy: .public) requested=\(max) timeout=\(timeout)ms"
+      )
       throw MTPError.transport(mapLibusb(rc))
     }
     return Int(g)
@@ -147,7 +157,9 @@ extension MTPUSBLink {
       var tmp = [UInt8](repeating: 0, count: need - got)
       let g = try bulkReadOnce(ep, into: &tmp, max: tmp.count, timeout: timeout)
       if g == 0 {
-        log.error("bulkReadExact timeout: got=\(got)/\(need) bytes on ep=\(String(format: "0x%02x", ep), privacy: .public) timeout=\(timeout)ms — device may have stopped responding")
+        log.error(
+          "bulkReadExact timeout: got=\(got)/\(need) bytes on ep=\(String(format: "0x%02x", ep), privacy: .public) timeout=\(timeout)ms — device may have stopped responding"
+        )
         throw MTPError.timeout
       }
       memcpy(dst.advanced(by: got), &tmp, g)
@@ -176,7 +188,8 @@ extension MTPUSBLink {
       break
     }
     if drained > 0 {
-      log.info("Drained \(drained) stale bytes from ep=\(String(format: "0x%02x", ep), privacy: .public)")
+      log.info(
+        "Drained \(drained) stale bytes from ep=\(String(format: "0x%02x", ep), privacy: .public)")
       if debug {
         print(
           String(format: "   [USB][Drain] drained %d stale bytes from ep=0x%02x", drained, ep))
@@ -195,7 +208,7 @@ extension MTPUSBLink {
         h,
         UInt8(LIBUSB_ENDPOINT_IN.rawValue) | UInt8(LIBUSB_RECIPIENT_ENDPOINT.rawValue),
         0x00,  // GET_STATUS
-        0,     // USB_FEATURE_HALT
+        0,  // USB_FEATURE_HALT
         UInt16(ep),
         ptr.baseAddress!.assumingMemoryBound(to: UInt8.self),
         2,

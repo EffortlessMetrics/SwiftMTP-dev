@@ -43,7 +43,9 @@ struct ProbeCommand {
       let enumElapsed = Date().timeIntervalSince(enumStart)
 
       if flags.verbose {
-        log("  ↳ USB enumeration: \(formatDuration(enumElapsed)) — found \(listings.count) candidate(s)")
+        log(
+          "  ↳ USB enumeration: \(formatDuration(enumElapsed)) — found \(listings.count) candidate(s)"
+        )
       }
 
       var selectedVID: UInt16? = nil

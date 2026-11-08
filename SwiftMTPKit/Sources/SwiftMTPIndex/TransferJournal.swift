@@ -60,11 +60,10 @@ public final class SQLiteTransferJournal: SwiftMTPCore.TransferJournal, @uncheck
     if let modePtr = sqlite3_column_text(stmt, 0) {
       let mode = String(cString: modePtr)
       if mode != "wal" {
-        if dbPath == ":memory:" || dbPath.isEmpty {
-          Self.log.warning("WAL not supported on in-memory database; using \(mode) journal mode")
-        } else {
+        guard dbPath == ":memory:" || dbPath.isEmpty else {
           throw makeError("WAL mode not enabled, got '\(mode)'")
         }
+        Self.log.warning("WAL not supported on in-memory database; using \(mode) journal mode")
       }
     }
   }

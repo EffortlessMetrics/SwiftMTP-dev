@@ -217,12 +217,14 @@ final class DeviceTuningStoreTests: XCTestCase {
     defer { try? FileManager.default.removeItem(at: url.deletingLastPathComponent()) }
 
     let store = DeviceTuningStore(fileURL: url)
-    store.save(DeviceTuningRecord(
-      vid: "aaaa", pid: "1111", optimalChunkSize: 512 * 1024,
-      maxObservedThroughput: 5_000_000, errorCount: 0, lastTunedDate: "2025-01-01T00:00:00Z"))
-    store.save(DeviceTuningRecord(
-      vid: "bbbb", pid: "2222", optimalChunkSize: 4 * 1024 * 1024,
-      maxObservedThroughput: 50_000_000, errorCount: 1, lastTunedDate: "2025-01-02T00:00:00Z"))
+    store.save(
+      DeviceTuningRecord(
+        vid: "aaaa", pid: "1111", optimalChunkSize: 512 * 1024,
+        maxObservedThroughput: 5_000_000, errorCount: 0, lastTunedDate: "2025-01-01T00:00:00Z"))
+    store.save(
+      DeviceTuningRecord(
+        vid: "bbbb", pid: "2222", optimalChunkSize: 4 * 1024 * 1024,
+        maxObservedThroughput: 50_000_000, errorCount: 1, lastTunedDate: "2025-01-02T00:00:00Z"))
 
     let all = store.loadAll()
     XCTAssertEqual(all.count, 2)

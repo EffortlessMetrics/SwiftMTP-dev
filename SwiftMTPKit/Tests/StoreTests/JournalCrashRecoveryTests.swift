@@ -432,9 +432,12 @@ final class JournalCrashRecoveryTests: XCTestCase {
     try journal.updateProgress(id: id, committed: 250_000)
     try journal.updateProgress(id: id, committed: 500_000)
     try journal.fail(
-      id: id, error: NSError(domain: "USB", code: -1, userInfo: [
-        NSLocalizedDescriptionKey: "Device disconnected"
-      ]))
+      id: id,
+      error: NSError(
+        domain: "USB", code: -1,
+        userInfo: [
+          NSLocalizedDescriptionKey: "Device disconnected"
+        ]))
 
     // Journal is consistent
     let failed = try journal.listFailed()
@@ -463,9 +466,12 @@ final class JournalCrashRecoveryTests: XCTestCase {
       let progress = UInt64(cycle * 1000 + 500)
       try journal.updateProgress(id: id, committed: progress)
       try journal.fail(
-        id: id, error: NSError(domain: "USB", code: -1, userInfo: [
-          NSLocalizedDescriptionKey: "disconnect cycle \(cycle)"
-        ]))
+        id: id,
+        error: NSError(
+          domain: "USB", code: -1,
+          userInfo: [
+            NSLocalizedDescriptionKey: "disconnect cycle \(cycle)"
+          ]))
     }
 
     let failed = try journal.listFailed()

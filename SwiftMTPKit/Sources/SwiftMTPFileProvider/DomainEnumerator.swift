@@ -246,7 +246,8 @@ public final class DomainEnumerator: NSObject, NSFileProviderEnumerator, @unchec
         let newAnchor = encodeSyncAnchor(currentCounter)
         observer.finishEnumeratingChanges(upTo: newAnchor, moreComing: false)
       } catch {
-        log.error("Change enumeration failed for device=\(self.deviceId): \(error.localizedDescription)")
+        log.error(
+          "Change enumeration failed for device=\(self.deviceId): \(error.localizedDescription)")
         observer.finishEnumeratingWithError(Self.mapToFileProviderError(error))
       }
     }

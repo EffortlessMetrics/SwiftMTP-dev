@@ -11,17 +11,17 @@
 import XCTest
 
 final class SwiftMTPUITests: XCTestCase {
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
+  override func setUpWithError() throws {
+    continueAfterFailure = false
+  }
 
-    @MainActor
-    func testHarnessLaunchesInMockMode() throws {
-        let appRobot = AppRobot(testName: "harness_launch_mock")
-        appRobot.launch(scenario: "mock-default", demoMode: true)
+  @MainActor
+  func testHarnessLaunchesInMockMode() throws {
+    let appRobot = AppRobot(testName: "harness_launch_mock")
+    appRobot.launch(scenario: "mock-default", demoMode: true)
 
-        DeviceBrowserRobot(app: appRobot.app)
-            .waitForBrowser()
-            .waitForAnyDeviceRow()
-    }
+    DeviceBrowserRobot(app: appRobot.app)
+      .waitForBrowser()
+      .waitForAnyDeviceRow()
+  }
 }

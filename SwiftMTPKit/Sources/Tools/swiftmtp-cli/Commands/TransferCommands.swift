@@ -247,9 +247,13 @@ struct TransferCommands {
       let tuner = AdaptiveChunkTuner(initialChunkSize: initialChunk)
 
       if let existing = existingRecord {
-        print("   Loaded tuning: chunk=\(formatBytes(UInt64(existing.optimalChunkSize))) peak=\(String(format: "%.1f", existing.maxObservedThroughput / 1_000_000)) MB/s")
+        print(
+          "   Loaded tuning: chunk=\(formatBytes(UInt64(existing.optimalChunkSize))) peak=\(String(format: "%.1f", existing.maxObservedThroughput / 1_000_000)) MB/s"
+        )
       } else {
-        print("   No prior tuning data — starting at \(formatBytes(UInt64(await tuner.currentChunkSize)))")
+        print(
+          "   No prior tuning data — starting at \(formatBytes(UInt64(await tuner.currentChunkSize)))"
+        )
       }
 
       var csvRows = ["timestamp,operation,size_bytes,duration_seconds,speed_mbps,chunk_size"]
@@ -262,7 +266,9 @@ struct TransferCommands {
         defer { try? FileManager.default.removeItem(at: tempURL) }
 
         let chunkBefore = await tuner.currentChunkSize
-        print("   Run \(pass)/\(repeatCount): upload \(benchFilename) chunk=\(formatBytes(UInt64(chunkBefore)))...")
+        print(
+          "   Run \(pass)/\(repeatCount): upload \(benchFilename) chunk=\(formatBytes(UInt64(chunkBefore)))..."
+        )
         let startTime = Date()
         let progress = try await device.write(
           parent: parentHandle == 0xFFFFFFFF ? nil : parentHandle,
@@ -278,7 +284,9 @@ struct TransferCommands {
         let newChunk = await tuner.recordChunk(bytes: Int(sizeBytes), duration: duration)
         if newChunk != chunkBefore {
           let direction = newChunk > chunkBefore ? "▲" : "▼"
-          print("   \(direction) Tuning adjusted: \(formatBytes(UInt64(chunkBefore))) → \(formatBytes(UInt64(newChunk)))")
+          print(
+            "   \(direction) Tuning adjusted: \(formatBytes(UInt64(chunkBefore))) → \(formatBytes(UInt64(newChunk)))"
+          )
         }
 
         print(String(format: "   Run %d: %.2f MB/s (%.2f seconds)", pass, speedMBps, duration))
@@ -296,8 +304,11 @@ struct TransferCommands {
       print("")
       print("   ── Tuning Report ──")
       print("   Optimal chunk size : \(formatBytes(UInt64(snap.currentChunkSize)))")
-      print(String(format: "   Avg throughput      : %.2f MB/s", snap.averageThroughput / 1_000_000))
-      print(String(format: "   Peak throughput     : %.2f MB/s", snap.maxObservedThroughput / 1_000_000))
+      print(
+        String(format: "   Avg throughput      : %.2f MB/s", snap.averageThroughput / 1_000_000))
+      print(
+        String(format: "   Peak throughput     : %.2f MB/s", snap.maxObservedThroughput / 1_000_000)
+      )
       print("   Errors              : \(snap.errorCount)")
       print("   Samples             : \(snap.sampleCount)")
       let adjustments = await tuner.adjustments
@@ -490,7 +501,9 @@ struct TransferCommands {
       print("     --photos-only                Only mirror image files")
       print("     --format jpeg,png,heic        Only mirror specified formats")
       print("     --exclude-format mp4,avi      Exclude specified formats")
-      print("     --on-conflict <strategy>      Conflict strategy: newer-wins, local-wins, device-wins, keep-both, skip")
+      print(
+        "     --on-conflict <strategy>      Conflict strategy: newer-wins, local-wins, device-wins, keep-both, skip"
+      )
       exitNow(.usage)
     }
 
@@ -540,9 +553,13 @@ struct TransferCommands {
         let eta: String
         if let remaining = snapshot.estimatedTimeRemaining {
           if remaining >= 3600 {
-            eta = String(format: "%.0fh %02.0fm", remaining / 3600, remaining.truncatingRemainder(dividingBy: 3600) / 60)
+            eta = String(
+              format: "%.0fh %02.0fm", remaining / 3600,
+              remaining.truncatingRemainder(dividingBy: 3600) / 60)
           } else if remaining >= 60 {
-            eta = String(format: "%.0fm %02.0fs", remaining / 60, remaining.truncatingRemainder(dividingBy: 60))
+            eta = String(
+              format: "%.0fm %02.0fs", remaining / 60, remaining.truncatingRemainder(dividingBy: 60)
+            )
           } else {
             eta = String(format: "%.0fs", remaining)
           }
@@ -552,7 +569,7 @@ struct TransferCommands {
         let current = snapshot.currentFileName ?? "—"
         print(
           "\r   [\(filePct)%] \(snapshot.filesCompleted + snapshot.filesSkipped + snapshot.filesFailed)/\(snapshot.totalFiles) files"
-          + " | \(bytePct)% bytes | \(throughput) | ETA \(eta) | \(current)",
+            + " | \(bytePct)% bytes | \(throughput) | ETA \(eta) | \(current)",
           terminator: ""
         )
         fflush(stdout)

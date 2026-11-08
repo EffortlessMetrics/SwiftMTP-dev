@@ -590,7 +590,8 @@ final class DeviceLifecycleTests: XCTestCase {
       name: "readme.pdf", sizeBytes: 2048,
       formatCode: 0x3000, data: Data(repeating: 0x01, count: 2048))
 
-    config = config
+    config =
+      config
       .withObject(musicFolder).withObject(artist).withObject(song)
       .withObject(downloadsFolder).withObject(downloadedFile)
 
@@ -926,7 +927,8 @@ final class DeviceLifecycleTests: XCTestCase {
       let data = Data(repeating: 0x55, count: 512)
       let srcURL = dir.appendingPathComponent("cross_profile.dat")
       try data.write(to: srcURL)
-      let p = try await device.write(parent: nil, name: "cross_profile.dat", size: 512, from: srcURL)
+      let p = try await device.write(
+        parent: nil, name: "cross_profile.dat", size: 512, from: srcURL)
       XCTAssertEqual(p.completedUnitCount, 512, "\(label): upload")
 
       try await device.devClose()
@@ -953,12 +955,14 @@ final class DeviceLifecycleTests: XCTestCase {
     let reportData = Data("Q4 Report".utf8)
     let reportURL = dir.appendingPathComponent("report.txt")
     try reportData.write(to: reportURL)
-    _ = try await device.write(parent: work, name: "report.txt", size: UInt64(reportData.count), from: reportURL)
+    _ = try await device.write(
+      parent: work, name: "report.txt", size: UInt64(reportData.count), from: reportURL)
 
     let notesData = Data("Personal notes".utf8)
     let notesURL = dir.appendingPathComponent("notes.txt")
     try notesData.write(to: notesURL)
-    _ = try await device.write(parent: personal, name: "notes.txt", size: UInt64(notesData.count), from: notesURL)
+    _ = try await device.write(
+      parent: personal, name: "notes.txt", size: UInt64(notesData.count), from: notesURL)
 
     // Verify tree
     let docsChildren = try await listAll(device: device, parent: docs, in: storageId)
@@ -1045,7 +1049,8 @@ final class DeviceLifecycleTests: XCTestCase {
     // Set properties on existing photo (handle 3)
     let entries = [
       MTPPropListEntry(handle: 3, propCode: 0xDC07, datatype: 0xFFFF, value: Data()),
-      MTPPropListEntry(handle: 3, propCode: 0xDC44, datatype: 0x0004, value: Data([0x01, 0x00, 0x00, 0x00])),
+      MTPPropListEntry(
+        handle: 3, propCode: 0xDC44, datatype: 0x0004, value: Data([0x01, 0x00, 0x00, 0x00])),
     ]
     let result = try await device.setObjectPropList(entries: entries)
     XCTAssertEqual(result, UInt32(entries.count))

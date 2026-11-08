@@ -100,7 +100,8 @@ extension MTPError: LocalizedError {
     case .verificationFailed:
       return "The file may have been truncated or corrupted during transfer."
     case .etagMismatch:
-      return "The object size or modification time changed on the device since the partial was saved."
+      return
+        "The object size or modification time changed on the device since the partial was saved."
     case .protocolError(let code, _):
       return protocolFailureReason(for: code)
     case .transport(let transportError):
@@ -279,7 +280,8 @@ extension MTPError: LocalizedError {
     case 0x200F:
       return "Check device permissions and DRM restrictions."
     case 0x2010:
-      return "Thumbnails are not available for all objects. Skip thumbnail requests for this object."
+      return
+        "Thumbnails are not available for all objects. Skip thumbnail requests for this object."
     case 0x2011:
       return "The device may need servicing. Check the device manufacturer's support resources."
     case 0x2012:

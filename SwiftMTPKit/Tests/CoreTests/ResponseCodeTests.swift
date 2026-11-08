@@ -115,7 +115,8 @@ final class ResponseCodeTests: XCTestCase {
     // When MTPError.protocolError has no message, it should derive a name from the code
     let error = MTPError.protocolError(code: 0x2019, message: nil)
     let desc = error.errorDescription ?? ""
-    XCTAssertTrue(desc.contains("DeviceBusy"), "Error description should contain code name: \(desc)")
+    XCTAssertTrue(
+      desc.contains("DeviceBusy"), "Error description should contain code name: \(desc)")
   }
 
   func testMTPErrorWithCustomMessage() {

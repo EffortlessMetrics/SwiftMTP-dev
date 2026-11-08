@@ -88,7 +88,9 @@ private final class DelayingMTPLink: @unchecked Sendable, MTPLink {
   {
     try await Task.sleep(nanoseconds: delayNs)
   }
-  func copyObject(handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> MTPObjectHandle { 0 }
+  func copyObject(
+    handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle { 0 }
   func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     PTPResponseResult(code: 0x2001, txid: command.txid)
   }
@@ -153,7 +155,9 @@ private final class FailAfterOpenLink: @unchecked Sendable, MTPLink {
   func moveObject(handle: MTPObjectHandle, to storage: MTPStorageID, parent: MTPObjectHandle?)
     async throws
   { throw errorToThrow }
-  func copyObject(handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?) async throws -> MTPObjectHandle { throw errorToThrow }
+  func copyObject(
+    handle: MTPObjectHandle, toStorage storage: MTPStorageID, parent: MTPObjectHandle?
+  ) async throws -> MTPObjectHandle { throw errorToThrow }
   func executeCommand(_ command: PTPContainer) async throws -> PTPResponseResult {
     PTPResponseResult(code: 0x2001, txid: command.txid)
   }

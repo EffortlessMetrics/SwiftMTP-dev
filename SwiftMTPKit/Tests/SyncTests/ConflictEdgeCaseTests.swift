@@ -46,10 +46,12 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let localDir = makeSubDir("local")
     let remoteDir = makeSubDir("remote")
 
-    try "LOCAL version".write(
-      to: localDir.appendingPathComponent("Photo.jpg"), atomically: true, encoding: .utf8)
-    try "REMOTE version".write(
-      to: remoteDir.appendingPathComponent("photo.jpg"), atomically: true, encoding: .utf8)
+    try "LOCAL version"
+      .write(
+        to: localDir.appendingPathComponent("Photo.jpg"), atomically: true, encoding: .utf8)
+    try "REMOTE version"
+      .write(
+        to: remoteDir.appendingPathComponent("photo.jpg"), atomically: true, encoding: .utf8)
 
     // On case-insensitive FS, both names resolve to the same file — detect as conflict
     let localFiles = Set(listRelativeFiles(in: localDir).map { $0.lowercased() })
@@ -63,10 +65,12 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let remoteDir = makeSubDir("remote")
     let mergedDir = makeSubDir("merged")
 
-    try "local PHOTO".write(
-      to: localDir.appendingPathComponent("Photo.JPG"), atomically: true, encoding: .utf8)
-    try "device photo".write(
-      to: remoteDir.appendingPathComponent("photo.jpg"), atomically: true, encoding: .utf8)
+    try "local PHOTO"
+      .write(
+        to: localDir.appendingPathComponent("Photo.JPG"), atomically: true, encoding: .utf8)
+    try "device photo"
+      .write(
+        to: remoteDir.appendingPathComponent("photo.jpg"), atomically: true, encoding: .utf8)
 
     // localWins should keep local regardless of case
     resolveConflictCaseInsensitive(
@@ -99,8 +103,8 @@ final class ConflictEdgeCaseTests: XCTestCase {
     try "local content".write(to: localURL, atomically: true, encoding: .utf8)
 
     let record = try await engine.resolveConflict(
-        conflict: conflict, file: row, localURL: localURL,
-        device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
+      conflict: conflict, file: row, localURL: localURL,
+      device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
     XCTAssertEqual(record.outcome, .keptLocal)
     XCTAssertEqual(record.strategy, .newerWins)
   }
@@ -123,8 +127,8 @@ final class ConflictEdgeCaseTests: XCTestCase {
     try "old local".write(to: localURL, atomically: true, encoding: .utf8)
 
     let record = try await engine.resolveConflict(
-        conflict: conflict, file: row, localURL: localURL,
-        device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
+      conflict: conflict, file: row, localURL: localURL,
+      device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
 
     XCTAssertEqual(record.outcome, .keptDevice)
   }
@@ -146,8 +150,8 @@ final class ConflictEdgeCaseTests: XCTestCase {
     try Data(count: 200).write(to: localURL)
 
     let record = try await engine.resolveConflict(
-        conflict: conflict, file: row, localURL: localURL,
-        device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
+      conflict: conflict, file: row, localURL: localURL,
+      device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
 
     // Both nil → .distantPast == .distantPast → device NOT > local → keptLocal
     XCTAssertEqual(record.outcome, .keptLocal)
@@ -160,8 +164,9 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let remoteDir = makeSubDir("remote-zero")
 
     try Data().write(to: localDir.appendingPathComponent("empty.bin"))
-    try Data(repeating: 0xFF, count: 128).write(
-      to: remoteDir.appendingPathComponent("empty.bin"))
+    try Data(repeating: 0xFF, count: 128)
+      .write(
+        to: remoteDir.appendingPathComponent("empty.bin"))
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
     XCTAssertEqual(conflicts.count, 1, "Zero-byte vs non-zero should be a conflict")
@@ -171,8 +176,9 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let localDir = makeSubDir("local-nonzero")
     let remoteDir = makeSubDir("remote-nonzero")
 
-    try Data(repeating: 0xAA, count: 64).write(
-      to: localDir.appendingPathComponent("data.bin"))
+    try Data(repeating: 0xAA, count: 64)
+      .write(
+        to: localDir.appendingPathComponent("data.bin"))
     try Data().write(to: remoteDir.appendingPathComponent("data.bin"))
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
@@ -202,10 +208,12 @@ final class ConflictEdgeCaseTests: XCTestCase {
     try FileManager.default.createDirectory(at: localNested, withIntermediateDirectories: true)
     try FileManager.default.createDirectory(at: remoteNested, withIntermediateDirectories: true)
 
-    try "local deep".write(
-      to: localNested.appendingPathComponent("deep.txt"), atomically: true, encoding: .utf8)
-    try "remote deep".write(
-      to: remoteNested.appendingPathComponent("deep.txt"), atomically: true, encoding: .utf8)
+    try "local deep"
+      .write(
+        to: localNested.appendingPathComponent("deep.txt"), atomically: true, encoding: .utf8)
+    try "remote deep"
+      .write(
+        to: remoteNested.appendingPathComponent("deep.txt"), atomically: true, encoding: .utf8)
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
     XCTAssertEqual(conflicts.count, 1)
@@ -230,10 +238,12 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let localDir = makeSubDir("local-spaces")
     let remoteDir = makeSubDir("remote-spaces")
 
-    try "local".write(
-      to: localDir.appendingPathComponent("my photo (1).jpg"), atomically: true, encoding: .utf8)
-    try "remote".write(
-      to: remoteDir.appendingPathComponent("my photo (1).jpg"), atomically: true, encoding: .utf8)
+    try "local"
+      .write(
+        to: localDir.appendingPathComponent("my photo (1).jpg"), atomically: true, encoding: .utf8)
+    try "remote"
+      .write(
+        to: remoteDir.appendingPathComponent("my photo (1).jpg"), atomically: true, encoding: .utf8)
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
     XCTAssertEqual(conflicts.count, 1)
@@ -243,10 +253,12 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let localDir = makeSubDir("local-unicode")
     let remoteDir = makeSubDir("remote-unicode")
 
-    try "local".write(
-      to: localDir.appendingPathComponent("写真.jpg"), atomically: true, encoding: .utf8)
-    try "remote".write(
-      to: remoteDir.appendingPathComponent("写真.jpg"), atomically: true, encoding: .utf8)
+    try "local"
+      .write(
+        to: localDir.appendingPathComponent("写真.jpg"), atomically: true, encoding: .utf8)
+    try "remote"
+      .write(
+        to: remoteDir.appendingPathComponent("写真.jpg"), atomically: true, encoding: .utf8)
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
     XCTAssertEqual(conflicts.count, 1)
@@ -256,10 +268,12 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let localDir = makeSubDir("local-emoji")
     let remoteDir = makeSubDir("remote-emoji")
 
-    try "local".write(
-      to: localDir.appendingPathComponent("📸vacation.jpg"), atomically: true, encoding: .utf8)
-    try "remote".write(
-      to: remoteDir.appendingPathComponent("📸vacation.jpg"), atomically: true, encoding: .utf8)
+    try "local"
+      .write(
+        to: localDir.appendingPathComponent("📸vacation.jpg"), atomically: true, encoding: .utf8)
+    try "remote"
+      .write(
+        to: remoteDir.appendingPathComponent("📸vacation.jpg"), atomically: true, encoding: .utf8)
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
     XCTAssertEqual(conflicts.count, 1)
@@ -286,10 +300,12 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let longName = "\(longBase).jpg"  // 252 chars total
     XCTAssertEqual(longName.count, 252)
 
-    try "local".write(
-      to: localDir.appendingPathComponent(longName), atomically: true, encoding: .utf8)
-    try "remote".write(
-      to: remoteDir.appendingPathComponent(longName), atomically: true, encoding: .utf8)
+    try "local"
+      .write(
+        to: localDir.appendingPathComponent(longName), atomically: true, encoding: .utf8)
+    try "remote"
+      .write(
+        to: remoteDir.appendingPathComponent(longName), atomically: true, encoding: .utf8)
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
     XCTAssertEqual(conflicts.count, 1)
@@ -303,10 +319,12 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let longBase = String(repeating: "b", count: 200)
     let longName = "\(longBase).txt"
 
-    try "local long".write(
-      to: localDir.appendingPathComponent(longName), atomically: true, encoding: .utf8)
-    try "remote long".write(
-      to: remoteDir.appendingPathComponent(longName), atomically: true, encoding: .utf8)
+    try "local long"
+      .write(
+        to: localDir.appendingPathComponent(longName), atomically: true, encoding: .utf8)
+    try "remote long"
+      .write(
+        to: remoteDir.appendingPathComponent(longName), atomically: true, encoding: .utf8)
 
     resolveConflict(
       file: longName, localDir: localDir, remoteDir: remoteDir,
@@ -328,10 +346,12 @@ final class ConflictEdgeCaseTests: XCTestCase {
 
     let filenames = ["alpha.txt", "beta.txt", "gamma.txt", "delta.txt", "epsilon.txt"]
     for name in filenames {
-      try "local-\(name)".write(
-        to: localDir.appendingPathComponent(name), atomically: true, encoding: .utf8)
-      try "remote-\(name)".write(
-        to: remoteDir.appendingPathComponent(name), atomically: true, encoding: .utf8)
+      try "local-\(name)"
+        .write(
+          to: localDir.appendingPathComponent(name), atomically: true, encoding: .utf8)
+      try "remote-\(name)"
+        .write(
+          to: remoteDir.appendingPathComponent(name), atomically: true, encoding: .utf8)
     }
 
     let conflicts = detectConflicts(local: localDir, remote: remoteDir)
@@ -343,14 +363,18 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let remoteDir = makeSubDir("remote-indep")
     let mergedDir = makeSubDir("merged-indep")
 
-    try "local A".write(
-      to: localDir.appendingPathComponent("a.txt"), atomically: true, encoding: .utf8)
-    try "remote A".write(
-      to: remoteDir.appendingPathComponent("a.txt"), atomically: true, encoding: .utf8)
-    try "local B".write(
-      to: localDir.appendingPathComponent("b.txt"), atomically: true, encoding: .utf8)
-    try "remote B".write(
-      to: remoteDir.appendingPathComponent("b.txt"), atomically: true, encoding: .utf8)
+    try "local A"
+      .write(
+        to: localDir.appendingPathComponent("a.txt"), atomically: true, encoding: .utf8)
+    try "remote A"
+      .write(
+        to: remoteDir.appendingPathComponent("a.txt"), atomically: true, encoding: .utf8)
+    try "local B"
+      .write(
+        to: localDir.appendingPathComponent("b.txt"), atomically: true, encoding: .utf8)
+    try "remote B"
+      .write(
+        to: remoteDir.appendingPathComponent("b.txt"), atomically: true, encoding: .utf8)
 
     // Resolve first with localWins, second with remoteWins
     resolveConflict(
@@ -397,8 +421,8 @@ final class ConflictEdgeCaseTests: XCTestCase {
       try "local content".write(to: localURL, atomically: true, encoding: .utf8)
 
       let record = try await engine.resolveConflict(
-          conflict: conflict, file: row, localURL: localURL,
-          device: device, root: self.tempDirectory)
+        conflict: conflict, file: row, localURL: localURL,
+        device: device, root: self.tempDirectory)
 
       XCTAssertEqual(record.strategy, strategy, "Record strategy should match configured strategy")
 
@@ -441,10 +465,11 @@ final class ConflictEdgeCaseTests: XCTestCase {
       try "content".write(to: localURL, atomically: true, encoding: .utf8)
 
       let record = try await engine.resolveConflict(
-          conflict: conflict, file: row, localURL: localURL,
-          device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
+        conflict: conflict, file: row, localURL: localURL,
+        device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
 
-      XCTAssertEqual(record.outcome, .keptLocal,
+      XCTAssertEqual(
+        record.outcome, .keptLocal,
         "Equal timestamps should consistently yield keptLocal (run \(i))")
     }
   }
@@ -476,10 +501,12 @@ final class ConflictEdgeCaseTests: XCTestCase {
     let remoteDir = makeSubDir("remote-larger")
     let mergedDir = makeSubDir("merged-larger")
 
-    try Data(repeating: 0xAA, count: 50).write(
-      to: localDir.appendingPathComponent("size.bin"))
-    try Data(repeating: 0xBB, count: 500).write(
-      to: remoteDir.appendingPathComponent("size.bin"))
+    try Data(repeating: 0xAA, count: 50)
+      .write(
+        to: localDir.appendingPathComponent("size.bin"))
+    try Data(repeating: 0xBB, count: 500)
+      .write(
+        to: remoteDir.appendingPathComponent("size.bin"))
 
     resolveConflict(
       file: "size.bin", localDir: localDir, remoteDir: remoteDir,
@@ -508,10 +535,11 @@ final class ConflictEdgeCaseTests: XCTestCase {
     try "local".write(to: localURL, atomically: true, encoding: .utf8)
 
     let record = try await engine.resolveConflict(
-        conflict: conflict, file: row, localURL: localURL,
-        device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
+      conflict: conflict, file: row, localURL: localURL,
+      device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
 
-    XCTAssertEqual(record.outcome, .pending,
+    XCTAssertEqual(
+      record.outcome, .pending,
       "Ask without resolver should mark as pending")
     XCTAssertEqual(record.strategy, .ask)
   }
@@ -541,8 +569,8 @@ final class ConflictEdgeCaseTests: XCTestCase {
     try "local".write(to: localURL, atomically: true, encoding: .utf8)
 
     let record = try await engine.resolveConflict(
-        conflict: conflict, file: row, localURL: localURL,
-        device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
+      conflict: conflict, file: row, localURL: localURL,
+      device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
 
     XCTAssertEqual(record.outcome, .keptDevice)
     XCTAssertEqual(capture.conflicts.count, 1)
@@ -565,8 +593,8 @@ final class ConflictEdgeCaseTests: XCTestCase {
     try "local".write(to: localURL, atomically: true, encoding: .utf8)
 
     let record = try await engine.resolveConflict(
-        conflict: conflict, file: row, localURL: localURL,
-        device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
+      conflict: conflict, file: row, localURL: localURL,
+      device: VirtualMTPDevice(config: .emptyDevice), root: self.tempDirectory)
 
     XCTAssertEqual(record.outcome, .skipped)
     XCTAssertEqual(record.strategy, .skip)
@@ -596,7 +624,8 @@ final class ConflictEdgeCaseTests: XCTestCase {
     try Data(repeating: 0xBB, count: 300).write(to: localURL)
 
     // The original conflict info still reflects the 100-byte snapshot
-    XCTAssertEqual(conflict?.localSize, 100,
+    XCTAssertEqual(
+      conflict?.localSize, 100,
       "Conflict info should be a snapshot, not live")
   }
 

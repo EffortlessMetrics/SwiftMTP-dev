@@ -55,9 +55,10 @@ final class IndexPerfOptTests: XCTestCase {
     let (idx, path) = try makeTempIndex()
     defer { cleanup(path) }
 
-    let objects = (1...2_000).map { i in
-      makeObj(handle: UInt32(i), parentHandle: 1, name: "batch-\(i).jpg")
-    }
+    let objects = (1...2_000)
+      .map { i in
+        makeObj(handle: UInt32(i), parentHandle: 1, name: "batch-\(i).jpg")
+      }
 
     // Measure batch insert (single transaction, no change log)
     let batchStart = CFAbsoluteTimeGetCurrent()
@@ -82,7 +83,9 @@ final class IndexPerfOptTests: XCTestCase {
     XCTAssertGreaterThan(individualElapsed, 0)
     XCTAssertGreaterThan(batchElapsed, 0)
     // Batch bypasses change log so should generally be faster
-    print("Batch: \(String(format: "%.3f", batchElapsed))s, Individual: \(String(format: "%.3f", individualElapsed))s")
+    print(
+      "Batch: \(String(format: "%.3f", batchElapsed))s, Individual: \(String(format: "%.3f", individualElapsed))s"
+    )
   }
 
   // MARK: - Batch Delete
@@ -91,9 +94,10 @@ final class IndexPerfOptTests: XCTestCase {
     let (idx, path) = try makeTempIndex()
     defer { cleanup(path) }
 
-    let objects = (1...500).map { i in
-      makeObj(handle: UInt32(i), parentHandle: 1, name: "del-\(i).jpg")
-    }
+    let objects = (1...500)
+      .map { i in
+        makeObj(handle: UInt32(i), parentHandle: 1, name: "del-\(i).jpg")
+      }
     try await idx.batchInsertObjects(objects)
 
     // Delete handles 1-250
@@ -113,15 +117,17 @@ final class IndexPerfOptTests: XCTestCase {
     let (idx, path) = try makeTempIndex()
     defer { cleanup(path) }
 
-    let objects = (1...100).map { i in
-      makeObj(handle: UInt32(i), parentHandle: 1, name: "upd-\(i).jpg")
-    }
+    let objects = (1...100)
+      .map { i in
+        makeObj(handle: UInt32(i), parentHandle: 1, name: "upd-\(i).jpg")
+      }
     try await idx.batchInsertObjects(objects)
 
     let newDate = Date(timeIntervalSince1970: 2_000_000_000)
-    let updates: [(handle: UInt32, date: Date)] = (1...100).map { i in
-      (handle: UInt32(i), date: newDate)
-    }
+    let updates: [(handle: UInt32, date: Date)] = (1...100)
+      .map { i in
+        (handle: UInt32(i), date: newDate)
+      }
     try await idx.batchUpdateModifiedDates(
       deviceId: "dev-perf", storageId: 0x10001, updates: updates)
 
@@ -139,9 +145,10 @@ final class IndexPerfOptTests: XCTestCase {
     let (idx, path) = try makeTempIndex()
     defer { cleanup(path) }
 
-    let objects = (1...100).map { i in
-      makeObj(handle: UInt32(i), parentHandle: 1, name: "page-\(String(format: "%03d", i)).jpg")
-    }
+    let objects = (1...100)
+      .map { i in
+        makeObj(handle: UInt32(i), parentHandle: 1, name: "page-\(String(format: "%03d", i)).jpg")
+      }
     try await idx.batchInsertObjects(objects)
 
     // Page 1: first 25
@@ -174,9 +181,10 @@ final class IndexPerfOptTests: XCTestCase {
     let (idx, path) = try makeTempIndex()
     defer { cleanup(path) }
 
-    let objects = (1...500).map { i in
-      makeObj(handle: UInt32(i), parentHandle: 1, name: "lazy-\(i).jpg")
-    }
+    let objects = (1...500)
+      .map { i in
+        makeObj(handle: UInt32(i), parentHandle: 1, name: "lazy-\(i).jpg")
+      }
     try await idx.batchInsertObjects(objects)
 
     // Step 1: get handles only (fast)
@@ -200,9 +208,10 @@ final class IndexPerfOptTests: XCTestCase {
     let (idx, path) = try makeTempIndex()
     defer { cleanup(path) }
 
-    let objects = (1...200).map { i in
-      makeObj(handle: UInt32(i), parentHandle: 1, name: "cnt-\(i).jpg")
-    }
+    let objects = (1...200)
+      .map { i in
+        makeObj(handle: UInt32(i), parentHandle: 1, name: "cnt-\(i).jpg")
+      }
     try await idx.batchInsertObjects(objects)
 
     let count = try await idx.childCount(
@@ -225,10 +234,11 @@ final class IndexPerfOptTests: XCTestCase {
     var objects: [IndexedObject] = []
     for i in 1...100 {
       let fmt: UInt16 = i % 3 == 0 ? 0x3804 : 0x3801
-      objects.append(makeObj(
-        handle: UInt32(i), parentHandle: 1,
-        name: "fmt-\(i).\(fmt == 0x3801 ? "jpg" : "png")",
-        formatCode: fmt))
+      objects.append(
+        makeObj(
+          handle: UInt32(i), parentHandle: 1,
+          name: "fmt-\(i).\(fmt == 0x3801 ? "jpg" : "png")",
+          formatCode: fmt))
     }
     try await idx.batchInsertObjects(objects)
 
@@ -295,12 +305,14 @@ final class IndexPerfOptTests: XCTestCase {
 
     // 10 L1 folders
     for _ in 0..<10 {
-      objects.append(makeObj(handle: handle, parentHandle: nil, name: "L1-\(handle)", isDirectory: true))
+      objects.append(
+        makeObj(handle: handle, parentHandle: nil, name: "L1-\(handle)", isDirectory: true))
       let l1 = handle
       handle += 1
       // 10 L2 folders under each L1
       for _ in 0..<10 {
-        objects.append(makeObj(handle: handle, parentHandle: l1, name: "L2-\(handle)", isDirectory: true))
+        objects.append(
+          makeObj(handle: handle, parentHandle: l1, name: "L2-\(handle)", isDirectory: true))
         let l2 = handle
         handle += 1
         // 10 files under each L2
@@ -330,13 +342,14 @@ final class IndexPerfOptTests: XCTestCase {
     let (idx, path) = try makeTempIndex()
     defer { cleanup(path) }
 
-    let objects = (1...10_000).map { i in
-      makeObj(
-        handle: UInt32(i),
-        parentHandle: UInt32(i % 100 + 1),
-        name: "bulk-\(i).jpg"
-      )
-    }
+    let objects = (1...10_000)
+      .map { i in
+        makeObj(
+          handle: UInt32(i),
+          parentHandle: UInt32(i % 100 + 1),
+          name: "bulk-\(i).jpg"
+        )
+      }
 
     let start = CFAbsoluteTimeGetCurrent()
     try await idx.batchInsertObjects(objects)
