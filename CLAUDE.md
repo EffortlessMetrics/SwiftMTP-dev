@@ -362,6 +362,26 @@ Quirks are defined in `Specs/quirks.json` and `SwiftMTPKit/Sources/SwiftMTPQuirk
 - Benchmark results in `Docs/benchmarks/`
 
 ## CI & Coverage
+
+For workflow, composite-action, or Dependabot edits, run the pinned semantic
+check from the repository root before pushing:
+
+```bash
+uvx --from jactionlint==2.5.0 jactionlint --config-file .github/jactionlint.yaml --profile correctness --no-online --shellcheck= --pyflakes=
+```
+
+The explicit repository config excludes user-global rule overrides and fails
+closed if the config is missing; it adds no suppressions or inline-ignore changes.
+`github-script-syntax` requires Node.js 20+ on PATH. Without it, jactionlint skips
+that rule with a note, so a clean run does not prove embedded JavaScript syntax.
+
+If installed with `uv tool install jactionlint==2.5.0`, the same arguments work
+with `jactionlint` directly. This is static validation, not `jactionlint run`.
+The initial gate deliberately excludes optional ShellCheck/Pyflakes integration
+so results do not depend on the runner's tool inventory; preserve other script
+checks. YAML parsing alone does not replace this check, and a missing executable
+is a tooling blocker, not a successful validation.
+
 - CI workflows: `.github/workflows/ci.yml`, `.github/workflows/swiftmtp-ci.yml`, `.github/workflows/smoke.yml`
   - `ci.yml`: runs on ALL pushes and PRs; covers build, full tests, **TSAN**, fuzz, SBOM on tags.
   - `swiftmtp-ci.yml`: runs on main branch and nightly; covers full coverage report, CLI smoke, DocC docs.

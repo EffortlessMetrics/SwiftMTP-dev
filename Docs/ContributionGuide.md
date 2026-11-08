@@ -294,8 +294,25 @@ Shell completions for the `swiftmtp` CLI are in the `completions/` directory:
 
 ## CI Workflows
 
+Validate GitHub Actions changes from the repository root with:
+
+```bash
+uvx --from jactionlint==2.5.0 jactionlint --config-file .github/jactionlint.yaml --profile correctness --no-online --shellcheck= --pyflakes=
+```
+
+The explicit repository config excludes user-global rule overrides and fails
+closed if the config is missing; it adds no suppressions or inline-ignore changes.
+`github-script-syntax` requires Node.js 20+ on PATH. Without it, jactionlint skips
+that rule with a note, so a clean run does not prove embedded JavaScript syntax.
+
+The pinned, offline correctness gate checks workflow semantics, composite
+actions, and Dependabot configuration. Optional ShellCheck/Pyflakes integration
+is excluded from this gate; existing script checks remain separate. Do not
+substitute a plain YAML parse or run the workflows locally to satisfy it.
+
 | Workflow | Trigger | Required for merge | What it checks |
 |----------|---------|-------------------|----------------|
+| `jactionlint.yml` | Workflow/action/config PR changes, manual | No new required check | Offline workflow semantics; no Swift build |
 | `ci.yml` | All pushes/PRs | ✅ Yes | Build, full test suite, coverage gate, TSAN, fuzz harness, SBOM (tags) |
 | `swiftmtp-ci.yml` | main + nightly | No (supplemental) | Coverage reporting, DocC docs, CLI smoke |
 | `smoke.yml` | Schedule + PRs | No (advisory) | Minimal sanity build |
@@ -305,6 +322,14 @@ Shell completions for the `swiftmtp` CLI are in the `completions/` directory:
 | `nightly-real-device-ux-smoke.yml` | Nightly | No (advisory) | End-to-end with physical device |
 
 **`ci.yml` is the only required check for merging.** Device submission PRs also require `validate-submission.yml`.
+
+The full-suite step retains stdout/stderr and any produced coverage logs in the
+`full-suite-diagnostics` artifact for seven days, including on failure or step
+timeout. Its 75-minute step limit leaves room within the existing 90-minute job
+for setup and a five-minute diagnostic upload. Test selection, the 60% coverage
+gate, and failure exit codes remain unchanged; a timeout is not a passing result.
+The shell-pipeline contract can be tested without Swift or macOS using
+`python3 -m unittest discover -s scripts -p test_ci_diagnostics.py -v`.
 
 ---
 

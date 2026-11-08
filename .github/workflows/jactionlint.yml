@@ -1,0 +1,39 @@
+name: Workflow Lint
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - '.github/actions/**'
+      - '.github/*actionlint.*'
+      - '.github/dependabot.*'
+      - '**/action.yml'
+      - '**/action.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  jactionlint:
+    name: Workflow semantics
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+        with:
+          persist-credentials: false
+      - name: Lint workflows and composite actions
+        uses: jdx/jactionlint@9e87e8f34edfc00b849a27807e26eff9d00b936d # v2.5.0
+        with:
+          config-file: .github/jactionlint.yaml
+          version: '2.5.0'
+          profile: correctness
+          online: 'false'
+          # Keep this semantic gate independent of optional tools on the runner.
+          # Shell/Python analysis is separate; no existing script lint is removed.
+          args: --shellcheck= --pyflakes=

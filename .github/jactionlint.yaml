@@ -1,0 +1,3 @@
+# Keep workflow rules independent of user-global overrides; add no suppressions.
+profile: correctness
+online: false
