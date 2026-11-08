@@ -323,6 +323,14 @@ substitute a plain YAML parse or run the workflows locally to satisfy it.
 
 **`ci.yml` is the only required check for merging.** Device submission PRs also require `validate-submission.yml`.
 
+The full-suite step retains stdout/stderr and any produced coverage logs in the
+`full-suite-diagnostics` artifact for seven days, including on failure or step
+timeout. Its 75-minute step limit leaves room within the existing 90-minute job
+for setup and a five-minute diagnostic upload. Test selection, the 60% coverage
+gate, and failure exit codes remain unchanged; a timeout is not a passing result.
+The shell-pipeline contract can be tested without Swift or macOS using
+`python3 -m unittest discover -s scripts -p test_ci_diagnostics.py -v`.
+
 ---
 
 ## Device Contribution Quick Start
