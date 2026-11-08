@@ -284,7 +284,7 @@ final class ExtendedPropertyTests: XCTestCase {
   }
 
   func testObjectFormatForMP4() {
-    XCTAssertEqual(PTPObjectFormat.forFilename("video.mp4"), 0x300b)
+    XCTAssertEqual(PTPObjectFormat.forFilename("video.mp4"), 0xb982)
   }
 
   func testObjectFormatForUnknownExtension() {

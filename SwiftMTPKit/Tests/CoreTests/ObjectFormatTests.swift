@@ -101,8 +101,12 @@ final class ObjectFormatTests: XCTestCase {
     XCTAssertEqual(PTPObjectFormat.forFilename("video.wmv"), PTPObjectFormat.wmv)
   }
 
-  func testMKVExtension() {
-    XCTAssertEqual(PTPObjectFormat.forFilename("video.mkv"), PTPObjectFormat.mkv)
+  func testMKVExtensionUsesGenericVideoFallback() {
+    XCTAssertEqual(PTPObjectFormat.mkv, PTPObjectFormat.undefinedVideo)
+    let code = PTPObjectFormat.forFilename("video.mkv")
+    XCTAssertEqual(code, 0xB980)
+    XCTAssertEqual(PTPObjectFormat.describe(code), "UndefinedVideo (0xb980)")
+    XCTAssertEqual(PTPObjectFormat.mimeType(for: code), "application/octet-stream")
   }
 
   func testThreeGPExtensions() {
@@ -229,7 +233,7 @@ final class ObjectFormatTests: XCTestCase {
     XCTAssertEqual(PTPObjectFormat.mimeType(for: PTPObjectFormat.mp4Container), "video/mp4")
     XCTAssertEqual(PTPObjectFormat.mimeType(for: PTPObjectFormat.avi), "video/x-msvideo")
     XCTAssertEqual(PTPObjectFormat.mimeType(for: PTPObjectFormat.wmv), "video/x-ms-wmv")
-    XCTAssertEqual(PTPObjectFormat.mimeType(for: PTPObjectFormat.mkv), "video/x-matroska")
+    XCTAssertEqual(PTPObjectFormat.mimeType(for: PTPObjectFormat.mkv), "application/octet-stream")
     XCTAssertEqual(PTPObjectFormat.mimeType(for: PTPObjectFormat.threeGP), "video/3gpp")
     XCTAssertEqual(PTPObjectFormat.mimeType(for: PTPObjectFormat.mpeg), "video/mpeg")
     XCTAssertEqual(PTPObjectFormat.mimeType(for: PTPObjectFormat.asf), "video/x-ms-asf")
@@ -258,11 +262,11 @@ final class ObjectFormatTests: XCTestCase {
 
   func testDescribeImageFormats() {
     XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.exifJPEG), "EXIF/JPEG (0x3801)")
-    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.png), "PNG (0x3808)")
-    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.gif), "GIF (0x3805)")
+    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.png), "PNG (0x380b)")
+    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.gif), "GIF (0x3807)")
     XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.bmp), "BMP (0x3804)")
-    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.tiff), "TIFF (0x3809)")
-    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.heif), "HEIF (0x380d)")
+    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.tiff), "TIFF (0x380d)")
+    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.heif), "HEIF (0x3812)")
   }
 
   func testDescribeAudioFormats() {
@@ -270,16 +274,16 @@ final class ObjectFormatTests: XCTestCase {
     XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.wav), "WAV (0x3008)")
     XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.flac), "FLAC (0xb906)")
     XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.aac), "AAC (0xb903)")
-    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.ogg), "OGG (0xb980)")
+    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.ogg), "OGG (0xb902)")
     XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.wma), "WMA (0xb901)")
   }
 
   func testDescribeVideoFormats() {
-    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.mp4Container), "MP4 (0xb802)")
+    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.mp4Container), "MP4 (0xb982)")
     XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.avi), "AVI (0x300a)")
-    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.wmv), "WMV (0xb801)")
-    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.mkv), "MKV (0xb982)")
-    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.threeGP), "3GP (0xb804)")
+    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.wmv), "WMV (0xb981)")
+    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.mkv), "UndefinedVideo (0xb980)")
+    XCTAssertEqual(PTPObjectFormat.describe(PTPObjectFormat.threeGP), "3GP (0xb984)")
   }
 
   func testDescribeDocumentFormats() {
@@ -349,22 +353,66 @@ final class ObjectFormatTests: XCTestCase {
   // MARK: - Format code constants
 
   func testFormatCodeValues() {
+    // Literal oracles from AOSP media/mtp/mtp.h, linked beside PTPObjectFormat.
     XCTAssertEqual(PTPObjectFormat.undefined, 0x3000)
     XCTAssertEqual(PTPObjectFormat.association, 0x3001)
     XCTAssertEqual(PTPObjectFormat.exifJPEG, 0x3801)
-    XCTAssertEqual(PTPObjectFormat.png, 0x3808)
+    XCTAssertEqual(PTPObjectFormat.gif, 0x3807)
+    XCTAssertEqual(PTPObjectFormat.jfif, 0x3808)
+    XCTAssertEqual(PTPObjectFormat.pict, 0x380A)
+    XCTAssertEqual(PTPObjectFormat.png, 0x380B)
+    XCTAssertEqual(PTPObjectFormat.tiff, 0x380D)
+    XCTAssertEqual(PTPObjectFormat.jp2, 0x380F)
+    XCTAssertEqual(PTPObjectFormat.heif, 0x3812)
     XCTAssertEqual(PTPObjectFormat.mp3, 0x3009)
-    XCTAssertEqual(PTPObjectFormat.mp4Container, 0xB802)
-    XCTAssertEqual(PTPObjectFormat.wmv, 0xB801)
+    XCTAssertEqual(PTPObjectFormat.undefinedVideo, 0xB980)
+    XCTAssertEqual(PTPObjectFormat.mp4Container, 0xB982)
+    XCTAssertEqual(PTPObjectFormat.wmv, 0xB981)
+    XCTAssertEqual(PTPObjectFormat.mp2, 0xB983)
     XCTAssertEqual(PTPObjectFormat.wma, 0xB901)
     XCTAssertEqual(PTPObjectFormat.flac, 0xB906)
-    XCTAssertEqual(PTPObjectFormat.ogg, 0xB980)
-    XCTAssertEqual(PTPObjectFormat.mkv, 0xB982)
-    XCTAssertEqual(PTPObjectFormat.threeGP, 0xB804)
-    XCTAssertEqual(PTPObjectFormat.heif, 0x380D)
+    XCTAssertEqual(PTPObjectFormat.ogg, 0xB902)
+    XCTAssertEqual(PTPObjectFormat.threeGP, 0xB984)
+    XCTAssertEqual(PTPObjectFormat.undefinedCollection, 0xBA00)
+    XCTAssertEqual(PTPObjectFormat.undefinedDocument, 0xBA80)
+    XCTAssertEqual(PTPObjectFormat.abstractAudioAlbum, 0xBA03)
     XCTAssertEqual(PTPObjectFormat.xmlDocument, 0xBA82)
     XCTAssertEqual(PTPObjectFormat.msWordDocument, 0xBA83)
     XCTAssertEqual(PTPObjectFormat.msExcelSpreadsheet, 0xBA85)
     XCTAssertEqual(PTPObjectFormat.msPowerPointPresentation, 0xBA86)
+  }
+
+  func testMetadataUsesWireFormatCodes() {
+    // Independent wire-code inputs also force both metadata dictionaries to initialize.
+    // A partial correction can otherwise leave duplicate keys (e.g. PNG/JP2 or MP4/MKV).
+    let formats: [(code: UInt16, description: String, mimeType: String)] = [
+      (0xB902, "OGG (0xb902)", "audio/ogg"),
+      (0x3807, "GIF (0x3807)", "image/gif"),
+      (0x3808, "JFIF (0x3808)", "image/jpeg"),
+      (0x380A, "PICT (0x380a)", "image/x-pict"),
+      (0x380B, "PNG (0x380b)", "image/png"),
+      (0x380D, "TIFF (0x380d)", "image/tiff"),
+      (0x380F, "JP2 (0x380f)", "image/jp2"),
+      (0x3812, "HEIF (0x3812)", "image/heif"),
+      (0xB980, "UndefinedVideo (0xb980)", "application/octet-stream"),
+      (0xB981, "WMV (0xb981)", "video/x-ms-wmv"),
+      (0xB982, "MP4 (0xb982)", "video/mp4"),
+      (0xB983, "MP2 (0xb983)", "video/mpeg"),
+      (0xB984, "3GP (0xb984)", "video/3gpp"),
+      (0xBA00, "UndefinedCollection (0xba00)", "application/octet-stream"),
+      (0xBA80, "UndefinedDocument (0xba80)", "application/octet-stream"),
+      (0xBA03, "AbstractAudioAlbum (0xba03)", "application/octet-stream"),
+    ]
+
+    for format in formats {
+      XCTAssertEqual(PTPObjectFormat.describe(format.code), format.description)
+      XCTAssertEqual(PTPObjectFormat.mimeType(for: format.code), format.mimeType)
+    }
+  }
+
+  func testFirmwareCodeDoesNotUseMP4Metadata() {
+    // AOSP assigns 0xB802 to firmware, not MP4 containers.
+    XCTAssertFalse(PTPObjectFormat.describe(0xB802).contains("MP4"))
+    XCTAssertNotEqual(PTPObjectFormat.mimeType(for: 0xB802), "video/mp4")
   }
 }

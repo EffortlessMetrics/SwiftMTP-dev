@@ -491,7 +491,7 @@ final class ProtocolMessageSnapshotTests: XCTestCase {
 
   func testObjectFormatCodeCaseInsensitive() {
     XCTAssertEqual(PTPObjectFormat.forFilename("PHOTO.JPG"), 0x3801)
-    XCTAssertEqual(PTPObjectFormat.forFilename("Video.MP4"), 0x300B)
+    XCTAssertEqual(PTPObjectFormat.forFilename("Video.MP4"), 0xB982)
     XCTAssertEqual(PTPObjectFormat.forFilename("Song.MP3"), 0x3009)
   }
 

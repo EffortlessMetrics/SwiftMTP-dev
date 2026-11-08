@@ -494,13 +494,14 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     let dngFile = VirtualObjectConfig(
       handle: 2, storage: storage.id, parent: nil,
       name: "photo.dng", sizeBytes: 30_000_000,
-      formatCode: 0xB811,  // DNG
+      formatCode: 0xB811,  // Opaque device-reported code, not the standard DNG assignment.
       data: Data(repeating: 0x02, count: 64)
     )
     let heifFile = VirtualObjectConfig(
       handle: 3, storage: storage.id, parent: nil,
       name: "photo.heif", sizeBytes: 5_000_000,
-      formatCode: 0xB802,  // HEIF
+      // Deliberately opaque device-reported code; not inferred from the filename.
+      formatCode: 0xB802,
       data: Data(repeating: 0x03, count: 64)
     )
     let mp4Variant = VirtualObjectConfig(
@@ -528,8 +529,10 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     // Verify format codes are preserved through the virtual device
     let formatCodes = Set(allObjects.map(\.formatCode))
     XCTAssertTrue(formatCodes.contains(0xB104), "Canon RAW format should be preserved")
-    XCTAssertTrue(formatCodes.contains(0xB811), "DNG format should be preserved")
-    XCTAssertTrue(formatCodes.contains(0xB802), "HEIF format should be preserved")
+    XCTAssertTrue(
+      formatCodes.contains(0xB811), "Device-reported format should be preserved unchanged")
+    XCTAssertTrue(
+      formatCodes.contains(0xB802), "Device-reported format should be preserved unchanged")
     XCTAssertTrue(formatCodes.contains(0xB984), "3GP format should be preserved")
     XCTAssertTrue(formatCodes.contains(0x3000), "Undefined format should be preserved")
   }
@@ -540,7 +543,8 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     XCTAssertEqual(PTPObjectFormat.forFilename("photo.jpg"), 0x3801)
     XCTAssertEqual(PTPObjectFormat.forFilename("photo.jpeg"), 0x3801)
     XCTAssertEqual(PTPObjectFormat.forFilename("image.png"), 0x380B)
-    XCTAssertEqual(PTPObjectFormat.forFilename("video.mp4"), 0x300B)
+    XCTAssertEqual(PTPObjectFormat.forFilename("video.mp4"), 0xB982)
+    XCTAssertEqual(PTPObjectFormat.forFilename("video.3gp"), 0xB984)
     XCTAssertEqual(PTPObjectFormat.forFilename("song.mp3"), 0x3009)
     XCTAssertEqual(PTPObjectFormat.forFilename("notes.txt"), 0x3004)
 
@@ -548,7 +552,6 @@ final class DeviceCompatibilityWave35Tests: XCTestCase {
     XCTAssertEqual(PTPObjectFormat.forFilename("archive.tar.gz"), 0x3000)
     XCTAssertEqual(PTPObjectFormat.forFilename("photo.cr3"), 0x3000)
     XCTAssertEqual(PTPObjectFormat.forFilename("photo.dng"), 0x3000)
-    XCTAssertEqual(PTPObjectFormat.forFilename("video.3gp"), 0x3000)
   }
 
   /// Objects with the association format code (0x3001) must report as folders.

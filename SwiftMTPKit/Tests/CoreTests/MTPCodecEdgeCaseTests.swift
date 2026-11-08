@@ -791,7 +791,7 @@ final class MTPCodecEdgeCaseTests: XCTestCase {
     XCTAssertEqual(PTPObjectFormat.forFilename("photo.jpg"), 0x3801)
     XCTAssertEqual(PTPObjectFormat.forFilename("PHOTO.JPEG"), 0x3801)
     XCTAssertEqual(PTPObjectFormat.forFilename("image.png"), 0x380b)
-    XCTAssertEqual(PTPObjectFormat.forFilename("video.mp4"), 0x300b)
+    XCTAssertEqual(PTPObjectFormat.forFilename("video.mp4"), 0xb982)
     XCTAssertEqual(PTPObjectFormat.forFilename("song.mp3"), 0x3009)
     XCTAssertEqual(PTPObjectFormat.forFilename("audio.aac"), 0xb903)
     XCTAssertEqual(PTPObjectFormat.forFilename("notes.txt"), 0x3004)

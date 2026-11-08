@@ -35,6 +35,13 @@ final class MotorolaLGQuirksTests: XCTestCase {
     lgEntries = db.entries.filter { $0.vid == Self.lgVID }
   }
 
+  override func tearDownWithError() throws {
+    motorolaEntries = nil
+    lgEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Motorola VID Consistency
 
   func testAllMotorolaEntriesHaveCorrectVID() {

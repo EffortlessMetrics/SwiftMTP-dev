@@ -22,6 +22,13 @@ final class CameraPTPQuirksTests: XCTestCase {
     nikonEntries = db.entries.filter { $0.vid == 0x04b0 && $0.category == "camera" }
   }
 
+  override func tearDownWithError() throws {
+    canonEntries = nil
+    nikonEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Camera Class Flag
 
   func testCanonNikonCameraEntriesHaveCameraClassFlag() {

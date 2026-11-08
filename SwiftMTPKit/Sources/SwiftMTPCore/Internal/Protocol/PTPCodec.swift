@@ -415,7 +415,10 @@ public enum PTPResponseCode {
 
 public enum PTPObjectFormat {
 
-  // MARK: - MTP 1.1 Standard Object Format Codes
+  // MARK: - MTP/PTP Object Format Codes
+
+  // Wire assignments from AOSP media/mtp/mtp.h:
+  // https://android.googlesource.com/platform/frameworks/av/+/6e02bc5d58ce473952ffa4710aa6d7c4d327164a/media/mtp/mtp.h
 
   // Undefined / General
   public static let undefined: UInt16 = 0x3000
@@ -439,34 +442,37 @@ public enum PTPObjectFormat {
   public static let aac: UInt16 = 0xB903
   public static let audible: UInt16 = 0xB904
   public static let flac: UInt16 = 0xB906
-  public static let ogg: UInt16 = 0xB980
+  public static let ogg: UInt16 = 0xB902
 
   // Image
   public static let undefinedImage: UInt16 = 0x3800
   public static let exifJPEG: UInt16 = 0x3801
   public static let tiffEP: UInt16 = 0x3802
   public static let bmp: UInt16 = 0x3804
-  public static let gif: UInt16 = 0x3805
-  public static let jfif: UInt16 = 0x3806
-  public static let pict: UInt16 = 0x3807
-  public static let png: UInt16 = 0x3808
-  public static let tiff: UInt16 = 0x3809
-  public static let jp2: UInt16 = 0x380B
-  public static let heif: UInt16 = 0x380D
+  public static let gif: UInt16 = 0x3807
+  public static let jfif: UInt16 = 0x3808
+  public static let pict: UInt16 = 0x380A
+  public static let png: UInt16 = 0x380B
+  public static let tiff: UInt16 = 0x380D
+  public static let jp2: UInt16 = 0x380F
+  public static let heif: UInt16 = 0x3812
 
   // Video
-  public static let undefinedVideo: UInt16 = 0xB800
-  public static let wmv: UInt16 = 0xB801
-  public static let mp4Container: UInt16 = 0xB802
-  public static let mp2: UInt16 = 0xB803
-  public static let threeGP: UInt16 = 0xB804
-  public static let undefinedCollection: UInt16 = 0xB880
-  public static let mkv: UInt16 = 0xB982
+  public static let undefinedVideo: UInt16 = 0xB980
+  public static let wmv: UInt16 = 0xB981
+  public static let mp4Container: UInt16 = 0xB982
+  public static let mp2: UInt16 = 0xB983
+  public static let threeGP: UInt16 = 0xB984
+  public static let undefinedCollection: UInt16 = 0xBA00
+
+  /// Compatibility alias for the generic video fallback used for Matroska files.
+  /// This is not a Matroska-specific wire code; 0xB982 identifies MP4 containers.
+  public static let mkv: UInt16 = undefinedVideo
 
   // Document
-  public static let undefinedDocument: UInt16 = 0xBA00
+  public static let undefinedDocument: UInt16 = 0xBA80
   public static let abstractMultimediaAlbum: UInt16 = 0xBA01
-  public static let abstractAudioAlbum: UInt16 = 0xBA05
+  public static let abstractAudioAlbum: UInt16 = 0xBA03
   public static let wplPlaylist: UInt16 = 0xBA10
   public static let m3uPlaylist: UInt16 = 0xBA11
   public static let xmlDocument: UInt16 = 0xBA82
@@ -527,7 +533,7 @@ public enum PTPObjectFormat {
     png: "PNG", tiff: "TIFF", jp2: "JP2", heif: "HEIF",
     undefinedVideo: "UndefinedVideo", wmv: "WMV", mp4Container: "MP4",
     mp2: "MP2", threeGP: "3GP", undefinedCollection: "UndefinedCollection",
-    mkv: "MKV", undefinedDocument: "UndefinedDocument",
+    undefinedDocument: "UndefinedDocument",
     abstractMultimediaAlbum: "AbstractMultimediaAlbum",
     abstractAudioAlbum: "AbstractAudioAlbum",
     wplPlaylist: "WPLPlaylist", m3uPlaylist: "M3UPlaylist",
@@ -554,7 +560,7 @@ public enum PTPObjectFormat {
     flac: "audio/flac", aac: "audio/aac", ogg: "audio/ogg",
     wma: "audio/x-ms-wma", audible: "audio/vnd.audible.aax",
     mp4Container: "video/mp4", avi: "video/x-msvideo", wmv: "video/x-ms-wmv",
-    mpeg: "video/mpeg", mkv: "video/x-matroska", threeGP: "video/3gpp",
+    mpeg: "video/mpeg", threeGP: "video/3gpp",
     mp2: "video/mpeg", asf: "video/x-ms-asf",
     msWordDocument: "application/msword",
     msExcelSpreadsheet: "application/vnd.ms-excel",

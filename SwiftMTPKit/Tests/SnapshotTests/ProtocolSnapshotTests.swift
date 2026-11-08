@@ -383,7 +383,7 @@ final class ProtocolSnapshotTests: XCTestCase {
     XCTAssertEqual(PTPObjectFormat.forFilename("image.jpeg"), 0x3801)
     XCTAssertEqual(PTPObjectFormat.forFilename("doc.txt"), 0x3004)
     XCTAssertEqual(PTPObjectFormat.forFilename("image.png"), 0x380B)
-    XCTAssertEqual(PTPObjectFormat.forFilename("video.mp4"), 0x300B)
+    XCTAssertEqual(PTPObjectFormat.forFilename("video.mp4"), 0xB982)
     XCTAssertEqual(PTPObjectFormat.forFilename("song.mp3"), 0x3009)
     XCTAssertEqual(PTPObjectFormat.forFilename("audio.aac"), 0xB903)
     XCTAssertEqual(PTPObjectFormat.forFilename("unknown.xyz"), 0x3000)

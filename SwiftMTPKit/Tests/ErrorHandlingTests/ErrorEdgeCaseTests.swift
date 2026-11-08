@@ -562,9 +562,11 @@ final class ErrorEdgeCaseTests: XCTestCase {
     XCTAssertTrue(err.errorDescription?.contains("2005") ?? false)
   }
 
-  func testProtocolError201D_SpecialHandling() {
+  func testProtocolError201D_DescriptionAndRecovery() {
     let err = MTPError.protocolError(code: 0x201D, message: nil)
-    XCTAssertTrue(err.errorDescription?.contains("write request rejected") ?? false)
+    XCTAssertEqual(
+      err.errorDescription,
+      "InvalidParameter (0x201D): One or more parameters in the request are invalid.")
     XCTAssertNotNil(err.failureReason)
     XCTAssertTrue(err.failureReason?.contains("rejected") ?? false)
     XCTAssertNotNil(err.recoverySuggestion)

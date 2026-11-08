@@ -27,6 +27,12 @@ final class AmazonKindleQuirksTests: XCTestCase {
     amazonEntries = db.entries.filter { $0.vid == Self.amazonVID }
   }
 
+  override func tearDownWithError() throws {
+    amazonEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Vendor ID Consistency
 
   func testAllAmazonEntriesHaveCorrectVID() {
@@ -141,6 +147,12 @@ final class GarminDeviceQuirksTests: XCTestCase {
     garminEntries = db.entries.filter { $0.vid == Self.garminVID }
   }
 
+  override func tearDownWithError() throws {
+    garminEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Vendor ID Consistency
 
   func testAllGarminEntriesHaveCorrectVID() {
@@ -245,6 +257,12 @@ final class GoProQuirksTests: XCTestCase {
   override func setUpWithError() throws {
     db = try QuirkDatabase.load()
     goProEntries = db.entries.filter { $0.vid == Self.goProVID }
+  }
+
+  override func tearDownWithError() throws {
+    goProEntries = nil
+    db = nil
+    try super.tearDownWithError()
   }
 
   // MARK: - Vendor ID Consistency
@@ -360,6 +378,12 @@ final class ArchosDeviceQuirksTests: XCTestCase {
     archosEntries = db.entries.filter { $0.vid == Self.archosVID }
   }
 
+  override func tearDownWithError() throws {
+    archosEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   func testArchosEntriesExist() {
     XCTAssertGreaterThanOrEqual(
       archosEntries.count, 3,
@@ -423,6 +447,12 @@ final class IRiverDeviceQuirksTests: XCTestCase {
     }
   }
 
+  override func tearDownWithError() throws {
+    iriverEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   func testIRiverEntriesExist() {
     XCTAssertGreaterThanOrEqual(
       iriverEntries.count, 5,
@@ -483,6 +513,12 @@ final class CowonDeviceQuirksTests: XCTestCase {
   override func setUpWithError() throws {
     db = try QuirkDatabase.load()
     cowonEntries = db.entries.filter { $0.vid == Self.cowonVID }
+  }
+
+  override func tearDownWithError() throws {
+    cowonEntries = nil
+    db = nil
+    try super.tearDownWithError()
   }
 
   func testCowonEntriesExist() {

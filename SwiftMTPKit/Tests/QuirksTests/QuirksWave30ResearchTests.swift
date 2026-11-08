@@ -36,6 +36,11 @@ final class QuirksWave30ResearchTests: XCTestCase {
     db = try QuirkDatabase.load()
   }
 
+  override func tearDownWithError() throws {
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Helper: filter entries by brand ID prefix
 
   private func entries(matching prefix: String) -> [DeviceQuirk] {

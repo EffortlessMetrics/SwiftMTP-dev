@@ -167,6 +167,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - XPC connection manager with auto-reconnect
 
 ### Fixed
+- Corrected 16 PTP/MTP object-format wire assignments and their filename/metadata results, including PNG (`0x380B`), HEIF (`0x3812`), OGG (`0xB902`), and MP4 (`0xB982`).
+- Preserved `PTPObjectFormat.mkv` as an alias for generic video (`0xB980`), with `UndefinedVideo` and `application/octet-stream` metadata; the previously used `0xB982` code identifies MP4, not Matroska.
 - OnePlus 3T write-path: forceUndefinedFormatOnWrite, skip SendObjectPropList
 - Samsung transport: skipClearHalt, delayAfterClaim, forceResetOnClose
 - Samsung transport: skip alt-setting on macOS, skip pre-claim reset

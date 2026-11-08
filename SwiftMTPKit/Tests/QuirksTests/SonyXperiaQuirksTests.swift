@@ -27,6 +27,12 @@ final class SonyXperiaQuirksTests: XCTestCase {
     allEntries = db.entries.filter { $0.vid == Self.sonyEricssonVID }
   }
 
+  override func tearDownWithError() throws {
+    allEntries = nil
+    db = nil
+    try super.tearDownWithError()
+  }
+
   // MARK: - Vendor ID Consistency
 
   func testAllEntriesHaveCorrectVID() {
